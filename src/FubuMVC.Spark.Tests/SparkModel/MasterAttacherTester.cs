@@ -1,4 +1,5 @@
-﻿using FubuMVC.Spark.SparkModel;
+﻿using FubuMVC.Core.View.Model;
+using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -6,10 +7,10 @@ using Rhino.Mocks;
 namespace FubuMVC.Spark.Tests.SparkModel
 {
     [TestFixture]
-    public class MasterAttacherTester : InteractionContext<MasterAttacher>
+    public class MasterAttacherTester : InteractionContext<MasterAttacher<ITemplate>>
     {
-        private AttachRequest _request;
-        private ViewDescriptor _viewDescriptor;
+        private AttachRequest<ITemplate> _request;
+        private SparkDescriptor _viewDescriptor;
         private Parsing _parsing;
         private ITemplate _template;
 
@@ -17,7 +18,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         {
             _template = new Template("b/a.spark", "b", "c")
             {
-                Descriptor = _viewDescriptor = new ViewDescriptor(_template)
+                Descriptor = _viewDescriptor = new SparkDescriptor(_template)
                 {
                     ViewModel = typeof(ProductModel)
                 }
@@ -29,13 +30,13 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 ViewModelType = _viewDescriptor.ViewModel.FullName
             };
 
-            _request = new AttachRequest
+            _request = new AttachRequest<ITemplate>
             {
                 Template = _template,
-                Logger = MockFor<ISparkLogger>()
+                Logger = MockFor<ITemplateLogger>()
             };
 
-            MockFor<IParsingRegistrations>().Expect(x => x.ParsingFor(_template)).Return(_parsing);
+            MockFor<IParsingRegistrations<ITemplate>>().Expect(x => x.ParsingFor(_template)).Return(_parsing);
         }
 
         [Test]
@@ -96,7 +97,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
             _parsing.Master = null;
             ClassUnderTest.Attach(_request);
 
-            MockFor<ISharedTemplateLocator>()
+            MockFor<ISharedTemplateLocator<ITemplate>>()
                 .AssertWasCalled(x => x.LocateMaster(ClassUnderTest.MasterName, _template));
         }
 
@@ -104,7 +105,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         public void when_master_is_set_it_is_used_by_locator()
         {
             ClassUnderTest.Attach(_request);
-            MockFor<ISharedTemplateLocator>()
+            MockFor<ISharedTemplateLocator<ITemplate>>()
                 .AssertWasCalled(x => x.LocateMaster(_parsing.Master, _template));
         }
 
@@ -134,13 +135,13 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
         private void verify_log_contains(string snippet)
         {
-            MockFor<ISparkLogger>()
+            MockFor<ITemplateLogger>()
                 .AssertWasCalled(x => x.Log(Arg<ITemplate>.Is.Equal(_template), Arg<string>.Matches(s => s.Contains(snippet))));            
         }
 
         private void master_is_found()
         {
-            MockFor<ISharedTemplateLocator>()
+            MockFor<ISharedTemplateLocator<ITemplate>>()
                 .Stub(x => x.LocateMaster(_parsing.Master, _template))
                 .Return(MockFor<ITemplate>());            
         }

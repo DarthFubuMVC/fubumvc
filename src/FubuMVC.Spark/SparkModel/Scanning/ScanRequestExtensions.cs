@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using FubuCore;
+using FubuMVC.Core.View.Model.Scanning;
 using Spark;
 
 namespace FubuMVC.Spark.SparkModel.Scanning
@@ -10,11 +10,6 @@ namespace FubuMVC.Spark.SparkModel.Scanning
 		{
 			var pattern = "*{0}".ToFormat(Constants.DotSpark);
 			request.Include(pattern);
-        }
-		
-		public static void AddRoots(this ScanRequest request, IEnumerable<string> roots)
-		{
-			roots.Each(request.AddRoot);
         }
     }
 }

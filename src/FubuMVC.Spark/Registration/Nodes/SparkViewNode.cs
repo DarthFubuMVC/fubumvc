@@ -1,16 +1,18 @@
 ﻿using System;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Core.View;
+using FubuMVC.Core.View.Rendering;
 using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.SparkModel;
 
 namespace FubuMVC.Spark.Registration.Nodes
 {
-    public class SparkViewNode : OutputNode<RenderSparkBehavior>, IMayHaveInputType
+    public class SparkViewNode : OutputNode<RenderViewBehavior>, IMayHaveInputType
     {
-        private readonly ViewDescriptor _descriptor;
+        private readonly SparkDescriptor _descriptor;
 
-        public SparkViewNode(ViewDescriptor descriptor)
+        public SparkViewNode(SparkDescriptor descriptor)
         {
             _descriptor = descriptor;
         }

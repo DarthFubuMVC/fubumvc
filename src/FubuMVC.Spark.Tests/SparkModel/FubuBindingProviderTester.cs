@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -13,7 +14,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
     [TestFixture]
     public class FubuBindingProviderTester : InteractionContext<FubuBindingProvider>
     {
-        private ITemplateRegistry _templateRegistry;
+        private ISparkTemplateRegistry _templateRegistry;
         private BindingRequest _request;
         private IViewFolder _viewFolder;
 
@@ -24,8 +25,8 @@ namespace FubuMVC.Spark.Tests.SparkModel
             var packageRoot = Path.Combine(appRoot, "App", "fubu-packages", "Package1", "WebContent");
             
             var binding1 = new Template(Path.Combine(packageRoot, "Handlers", "Shared", "bindings.xml"), packageRoot, "Package1");
-            var binding2 = new Template(Path.Combine(appRoot, "Shared", "bindings.xml"), appRoot, FubuSparkConstants.HostOrigin);
-            var viewPathPolicy = new ViewPathPolicy();
+            var binding2 = new Template(Path.Combine(appRoot, "Shared", "bindings.xml"), appRoot, TemplateConstants.HostOrigin);
+            var viewPathPolicy = new ViewPathPolicy<ITemplate>();
             viewPathPolicy.Apply(binding1);
             viewPathPolicy.Apply(binding2);
 
@@ -35,8 +36,8 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
             _request = new BindingRequest(_viewFolder) {ViewPath = viewPath};
 
-            _templateRegistry = MockFor<ITemplateRegistry>();
-            _templateRegistry.Expect(x => x.BindingsForView(viewPath)).Return(new[] {binding1, binding2});
+            _templateRegistry = MockFor<ISparkTemplateRegistry>();
+            _templateRegistry.Expect(x => x.BindingsForView(viewPath)).Return(new[]{binding1, binding2});
         }
 
         [Test]

@@ -14,10 +14,10 @@ namespace FubuMVC.Spark
 {
     public class SparkActivator : IActivator
 	{
-		private readonly ITemplateRegistry _templateRegistry;
+		private readonly ISparkTemplateRegistry _templateRegistry;
 		private readonly ISparkViewEngine _engine;
 
-		public SparkActivator (ITemplateRegistry templateRegistry, ISparkViewEngine engine)
+		public SparkActivator (ISparkTemplateRegistry templateRegistry, ISparkViewEngine engine)
 		{
 			_templateRegistry = templateRegistry;
 			_engine = engine;

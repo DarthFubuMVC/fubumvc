@@ -2,65 +2,13 @@
 using System.IO;
 using FubuCore;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.View.Activation;
+using FubuMVC.Core.View.Rendering;
 using Spark;
 using FubuMVC.Core;
+
 namespace FubuMVC.Spark.Rendering
 {
-    public interface IViewModifier
-    {
-        bool Applies(IFubuSparkView view);
-        IFubuSparkView Modify(IFubuSparkView view);
-    }
-
-    public interface IViewModifierService
-    {
-        IFubuSparkView Modify(IFubuSparkView view);
-    }
-
-    public class ViewModifierService : IViewModifierService
-    {
-        private readonly IEnumerable<IViewModifier> _modifications;
-
-        public ViewModifierService(IEnumerable<IViewModifier> modifications)
-        {
-            _modifications = modifications;
-        }
-
-        public IFubuSparkView Modify(IFubuSparkView view)
-        {
-            foreach (var modification in _modifications)
-            {
-                if (modification.Applies(view))
-                {
-                    view = modification.Modify(view); // consider if we should add a "?? view;" or just let it fail
-                }
-            }
-            return view;
-        }
-    }
-
-    public abstract class BasicViewModifier : IViewModifier
-    {
-        public virtual bool Applies(IFubuSparkView view) { return true; }
-        public abstract IFubuSparkView Modify(IFubuSparkView view);
-    }
-
-    public class PageActivation : BasicViewModifier
-    {
-        private readonly IPageActivator _activator;
-        public PageActivation(IPageActivator activator)
-        {
-            _activator = activator;
-        }
-
-        public override IFubuSparkView Modify(IFubuSparkView view)
-        {
-            return view.Modify(v => _activator.Activate(v));
-        }
-    }
-
-    public class CacheAttacher : BasicViewModifier
+    public class CacheAttacher : BasicViewModifier<IFubuSparkView>
     {
         private readonly ICacheService _cacheService;
         public CacheAttacher(ICacheService cacheService)
@@ -74,7 +22,7 @@ namespace FubuMVC.Spark.Rendering
         }
     }
 
-    public class SiteResourceAttacher : BasicViewModifier
+    public class SiteResourceAttacher : BasicViewModifier<IFubuSparkView>
     {
         private readonly ISparkViewEngine _engine;
         private readonly CurrentRequest _request;
@@ -103,7 +51,7 @@ namespace FubuMVC.Spark.Rendering
         }
     }
 
-    public class ContentActivation : BasicViewModifier
+    public class ContentActivation : BasicViewModifier<IFubuSparkView>
     {
         private readonly Dictionary<string, TextWriter> _content;
         public ContentActivation()
@@ -117,9 +65,10 @@ namespace FubuMVC.Spark.Rendering
         }
     }
 
-    public class OnceTableActivation : BasicViewModifier
+    public class OnceTableActivation : BasicViewModifier<IFubuSparkView>
     {
         private readonly Dictionary<string, string> _once;
+
         public OnceTableActivation()
         {
             _once = new Dictionary<string, string>();
@@ -131,7 +80,7 @@ namespace FubuMVC.Spark.Rendering
         }
     }
 
-    public class ViewContentDisposer : IViewModifier
+    public class ViewContentDisposer : IViewModifier<IFubuSparkView>
     {
         private readonly NestedOutput _nestedOutput;
         public ViewContentDisposer(NestedOutput nestedOutput)
@@ -156,7 +105,7 @@ namespace FubuMVC.Spark.Rendering
         }
     }
 
-    public class OuterViewOutputActivator : IViewModifier
+    public class OuterViewOutputActivator : IViewModifier<IFubuSparkView>
     {
         private readonly NestedOutput _nestedOutput;
         private readonly ViewOutput _viewOutput;
@@ -178,7 +127,7 @@ namespace FubuMVC.Spark.Rendering
         }
     }
 
-    public class NestedViewOutputActivator : IViewModifier
+    public class NestedViewOutputActivator : IViewModifier<IFubuSparkView>
     {
         private readonly NestedOutput _nestedOutput;
         public NestedViewOutputActivator(NestedOutput nestedOutput)
@@ -188,7 +137,8 @@ namespace FubuMVC.Spark.Rendering
 
         public bool Applies(IFubuSparkView view)
         {
-            return view.Output == null;
+            return view != null
+                && view.Output == null;
         }
 
         public IFubuSparkView Modify(IFubuSparkView view)
@@ -197,7 +147,7 @@ namespace FubuMVC.Spark.Rendering
         }
     }
 
-    public class NestedOutputActivation : IViewModifier
+    public class NestedOutputActivation : IViewModifier<IFubuSparkView>
     {
         private readonly NestedOutput _nestedOutput;
         public NestedOutputActivation(NestedOutput nestedOutput)

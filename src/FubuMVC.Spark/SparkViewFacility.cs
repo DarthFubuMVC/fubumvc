@@ -3,15 +3,16 @@ using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.SparkModel;
 
 namespace FubuMVC.Spark
 {
     public class SparkViewFacility : IViewFacility
     {
-        private readonly ITemplateRegistry _templateRegistry;
+        private readonly ITemplateRegistry<ITemplate> _templateRegistry;
 
-        public SparkViewFacility(ITemplateRegistry templateRegistry)
+        public SparkViewFacility(ITemplateRegistry<ITemplate> templateRegistry)
         {
             _templateRegistry = templateRegistry;
         }
@@ -25,8 +26,8 @@ namespace FubuMVC.Spark
 
             return _templateRegistry
                 .AllTemplates()
-                .Where(x => x.Descriptor is ViewDescriptor)
-                .Select(x => x.Descriptor.As<ViewDescriptor>())
+                .Where(x => x.Descriptor is SparkDescriptor)
+                .Select(x => x.Descriptor.As<SparkDescriptor>())
                 .Where(x => x.HasViewModel())
                 .Select(x => new SparkViewToken(x));
         }

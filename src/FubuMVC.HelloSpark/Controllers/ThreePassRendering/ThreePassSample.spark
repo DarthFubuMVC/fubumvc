@@ -1,2 +1,0 @@
-﻿<viewdata model="FubuMVC.HelloSpark.Controllers.ThreePassRendering.ThreePassModel" />
-<h1>${Model.Message}</h1>

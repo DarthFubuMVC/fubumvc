@@ -3,9 +3,11 @@ using Bottles;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.View.Model;
+using FubuMVC.Core.View.Model.Sharing;
+using FubuMVC.Core.View.Rendering;
 using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.SparkModel;
-using FubuMVC.Spark.SparkModel.Sharing;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Spark;
@@ -28,14 +30,14 @@ namespace FubuMVC.Spark.Tests
         [Test]
         public void template_registry()
         {
-            _services.DefaultServiceFor<ITemplateRegistry>()
-                .Value.ShouldBeOfType<TemplateRegistry>();
+            _services.DefaultServiceFor<ITemplateRegistry<ITemplate>>()
+                .Value.ShouldBeOfType<TemplateRegistry<ITemplate>>();
         }
 
         [Test]
         public void parsing_registration()
         {
-            _services.DefaultServiceFor<IParsingRegistrations>()
+            _services.DefaultServiceFor<IParsingRegistrations<ITemplate>>()
                 .Value.ShouldBeOfType<Parsings>();
         }
 
@@ -83,7 +85,7 @@ namespace FubuMVC.Spark.Tests
         [Test]
         public void sharing_attacher_activator()
         {
-            defaultServicesCheck<IActivator, SharingAttacherActivator>(2);
+            defaultServicesCheck<IActivator, SharingAttacherActivator<ITemplate>>(2);
         }
 
         [Test]
@@ -95,19 +97,19 @@ namespace FubuMVC.Spark.Tests
         [Test]
         public void sharing_attachers()
         {
-            countForServiceCheck<ISharingAttacher>(2);
+            countForServiceCheck<ISharingAttacher<ITemplate>>(2);
         }
 
         [Test]
         public void master_attacher()
         {
-            defaultServicesCheck<ISharingAttacher, MasterAttacher>(0);
+            defaultServicesCheck<ISharingAttacher<ITemplate>, MasterAttacher<ITemplate>>(0);
         }
 
         [Test]
         public void bindings_attacher()
         {
-            defaultServicesCheck<ISharingAttacher, BindingsAttacher>(1);
+            defaultServicesCheck<ISharingAttacher<ITemplate>, BindingsAttacher>(1);
         }
 
         [Test]
@@ -120,7 +122,7 @@ namespace FubuMVC.Spark.Tests
         [Test]
         public void template_directory_provider()
         {
-            defaultServiceCheck<ITemplateDirectoryProvider, TemplateDirectoryProvider>();
+            defaultServiceCheck<ITemplateDirectoryProvider<ITemplate>, TemplateDirectoryProvider<ITemplate>>();
         }
 
         [Test]
@@ -162,61 +164,61 @@ namespace FubuMVC.Spark.Tests
         [Test]
         public void view_modifier_service()
         {
-            defaultServiceCheck<IViewModifierService, ViewModifierService>();
+            defaultServiceCheck<IViewModifierService<IFubuSparkView>, ViewModifierService<IFubuSparkView>>();
         }
 
         [Test]
         public void view_modifiers()
         {
-            countForServiceCheck<IViewModifier>(8);
+            countForServiceCheck<IViewModifier<IFubuSparkView>>(8);
         }
 
         [Test]
         public void page_activation_view_modifier()
         {
-            defaultServicesCheck<IViewModifier, PageActivation>(0);
+            defaultServicesCheck<IViewModifier<IFubuSparkView>, PageActivation<IFubuSparkView>>(0);
         }
 
         [Test]
         public void site_resource_attacher_view_modifier()
         {
-            defaultServicesCheck<IViewModifier, SiteResourceAttacher>(1);
+            defaultServicesCheck<IViewModifier<IFubuSparkView>, SiteResourceAttacher>(1);
         }
 
         [Test]
         public void content_activation_view_modifier()
         {
-            defaultServicesCheck<IViewModifier, ContentActivation>(2);
+            defaultServicesCheck<IViewModifier<IFubuSparkView>, ContentActivation>(2);
         }
 
         [Test]
         public void once_table_activation_view_modifier()
         {
-            defaultServicesCheck<IViewModifier, OnceTableActivation>(3);
+            defaultServicesCheck<IViewModifier<IFubuSparkView>, OnceTableActivation>(3);
         }
 
         [Test]
         public void outer_view_output_activator_view_modifier()
         {
-            defaultServicesCheck<IViewModifier, OuterViewOutputActivator>(4);
+            defaultServicesCheck<IViewModifier<IFubuSparkView>, OuterViewOutputActivator>(4);
         }
 
         [Test]
         public void nested_view_output_activator_view_modifier()
         {
-            defaultServicesCheck<IViewModifier, NestedViewOutputActivator>(5);
+            defaultServicesCheck<IViewModifier<IFubuSparkView>, NestedViewOutputActivator>(5);
         }
 
         [Test]
         public void view_content_disposer_view_modifier()
         {
-            defaultServicesCheck<IViewModifier, ViewContentDisposer>(6);
+            defaultServicesCheck<IViewModifier<IFubuSparkView>, ViewContentDisposer>(6);
         }
 
         [Test]
         public void nested_output_activation_view_modifier()
         {
-            defaultServicesCheck<IViewModifier, NestedOutputActivation>(7);
+            defaultServicesCheck<IViewModifier<IFubuSparkView>, NestedOutputActivation>(7);
         }
 
         [Test]

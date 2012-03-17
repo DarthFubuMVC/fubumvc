@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -11,26 +12,26 @@ namespace FubuMVC.Spark.Tests
     public class SparkViewFacilityTester : InteractionContext<SparkViewFacility>
     {
         private string _root;
-        private TemplateRegistry _templateRegistry;
+        private TemplateRegistry<ITemplate> _templateRegistry;
 
         protected override void beforeEach()
         {
             _root = AppDomain.CurrentDomain.BaseDirectory;
-            _templateRegistry = new TemplateRegistry
+            _templateRegistry = new TemplateRegistry<ITemplate>
             {
-                new Template(Path.Combine(_root, "Views", "Home", "ModelAView.spark"), _root, FubuSparkConstants.HostOrigin),
-                new Template(Path.Combine(_root, "Views", "Home", "_partial1.spark"), _root, FubuSparkConstants.HostOrigin),
-                new Template(Path.Combine(_root, "Views", "Home", "ModelBView.spark"), _root, FubuSparkConstants.HostOrigin),
-                new Template(Path.Combine(_root, "Views", "Home", "_partial2.spark"), _root, FubuSparkConstants.HostOrigin),
-                new Template(Path.Combine(_root, "Views", "Home", "ModelCView.spark"), _root, FubuSparkConstants.HostOrigin),
-                new Template(Path.Combine(_root, "Views", "Home", "_partial3.spark"), _root, FubuSparkConstants.HostOrigin)
+                new Template(Path.Combine(_root, "Views", "Home", "ModelAView.spark"), _root, TemplateConstants.HostOrigin),
+                new Template(Path.Combine(_root, "Views", "Home", "_partial1.spark"), _root, TemplateConstants.HostOrigin),
+                new Template(Path.Combine(_root, "Views", "Home", "ModelBView.spark"), _root, TemplateConstants.HostOrigin),
+                new Template(Path.Combine(_root, "Views", "Home", "_partial2.spark"), _root, TemplateConstants.HostOrigin),
+                new Template(Path.Combine(_root, "Views", "Home", "ModelCView.spark"), _root, TemplateConstants.HostOrigin),
+                new Template(Path.Combine(_root, "Views", "Home", "_partial3.spark"), _root, TemplateConstants.HostOrigin)
             };
             
-            _templateRegistry[0].Descriptor = new ViewDescriptor(_templateRegistry[0]) { ViewModel = typeof(ModelA) };
-            _templateRegistry[2].Descriptor = new ViewDescriptor(_templateRegistry[2]) { ViewModel = typeof(ModelB) };
-            _templateRegistry[4].Descriptor = new ViewDescriptor(_templateRegistry[4]) { ViewModel = typeof(ModelC) };
+            _templateRegistry[0].Descriptor = new SparkDescriptor(_templateRegistry[0]) { ViewModel = typeof(ModelA) };
+            _templateRegistry[2].Descriptor = new SparkDescriptor(_templateRegistry[2]) { ViewModel = typeof(ModelB) };
+            _templateRegistry[4].Descriptor = new SparkDescriptor(_templateRegistry[4]) { ViewModel = typeof(ModelC) };
 
-            Services.Inject<ITemplateRegistry>(_templateRegistry);
+            Services.Inject<ITemplateRegistry<ITemplate>>(_templateRegistry);
         }
 
         public class ModelA { }

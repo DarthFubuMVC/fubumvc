@@ -1,4 +1,5 @@
-﻿using FubuMVC.Spark.Rendering;
+﻿using FubuMVC.Core.View.Rendering;
+using FubuMVC.Spark.Rendering;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -9,7 +10,7 @@ namespace FubuMVC.Spark.Tests.Rendering
     [TestFixture]
     public class ViewFactoryTester : InteractionContext<ViewFactory>
     {
-        private IViewModifierService _service;
+        private IViewModifierService<IFubuSparkView> _service;
         private IViewEntrySource _entrySource;
 
         private ISparkViewEntry _sourceEntry;
@@ -18,7 +19,7 @@ namespace FubuMVC.Spark.Tests.Rendering
 
         protected override void beforeEach()
         {
-            _service = MockFor<IViewModifierService>();
+            _service = MockFor<IViewModifierService<IFubuSparkView>>();
             _entrySource = MockFor<IViewEntrySource>();
 
             _sourceEntry = MockRepository.GenerateMock<ISparkViewEntry>();

@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.Registration.Nodes;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
@@ -12,15 +13,15 @@ namespace FubuMVC.Spark.Tests
     {
         private SparkViewToken _token;
         private ITemplate _template;
-        private ViewDescriptor _descriptor;
+        private SparkDescriptor _descriptor;
 
         [SetUp]
         public void SetUp()
         {
             var root = AppDomain.CurrentDomain.BaseDirectory;
-            _template = new Template(Path.Combine(root, "Views", "Home", "Home.spark"), root, FubuSparkConstants.HostOrigin);
+            _template = new Template(Path.Combine(root, "Views", "Home", "Home.spark"), root, TemplateConstants.HostOrigin);
             
-            _descriptor = new ViewDescriptor(_template)
+            _descriptor = new SparkDescriptor(_template)
             {
                 Namespace = String.Join(".", new[] {GetType().Name, "Views", "Home"}),
                 ViewModel = typeof (ProductModel)

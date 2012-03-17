@@ -1,31 +1,26 @@
 ﻿using System;
+using FubuMVC.Core.View.Rendering;
 using Spark;
 
 namespace FubuMVC.Spark.Rendering
 {
-    public interface IViewFactory
-    {
-        IFubuSparkView GetView();
-        IFubuSparkView GetPartialView();
-    }
-
     public class ViewFactory : IViewFactory
     {
         private readonly IViewEntrySource _viewEntrySource;
-        private readonly IViewModifierService _service;
+        private readonly IViewModifierService<IFubuSparkView> _service;
 
-        public ViewFactory(IViewEntrySource viewEntrySource, IViewModifierService service)
+        public ViewFactory(IViewEntrySource viewEntrySource, IViewModifierService<IFubuSparkView> service)
         {
             _service = service;
             _viewEntrySource = viewEntrySource;
         }
 
-        public IFubuSparkView GetView()
+        public IRenderableView GetView()
         {
             return getView(_viewEntrySource.GetViewEntry);
         }
 
-        public IFubuSparkView GetPartialView()
+        public IRenderableView GetPartialView()
         {
             return getView(_viewEntrySource.GetPartialViewEntry);
         }

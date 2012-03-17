@@ -1,4 +1,5 @@
-﻿using FubuMVC.Spark.Rendering;
+﻿using FubuMVC.Core.View.Rendering;
+using FubuMVC.Spark.Rendering;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -6,18 +7,18 @@ using Rhino.Mocks;
 namespace FubuMVC.Spark.Tests.Rendering
 {
     [TestFixture]
-    public class ViewModifierServiceTester : InteractionContext<ViewModifierService>
+    public class ViewModifierServiceTester : InteractionContext<ViewModifierService<IFubuSparkView>>
     {
         private FubuSparkView _sparkView1;
         private FubuSparkView _sparkView2;
         private FubuSparkView _sparkView3;
-        private IViewModifier _modification1;
-        private IViewModifier _modification2;
-        private IViewModifier _modification3;
+        private IViewModifier<IFubuSparkView> _modification1;
+        private IViewModifier<IFubuSparkView> _modification2;
+        private IViewModifier<IFubuSparkView> _modification3;
 
         protected override void beforeEach()
         {
-            var modifications = Services.CreateMockArrayFor<IViewModifier>(3);
+            var modifications = Services.CreateMockArrayFor<IViewModifier<IFubuSparkView>>(3);
             _sparkView1 = MockRepository.GenerateMock<FubuSparkView>();
             _sparkView2 = MockRepository.GenerateMock<FubuSparkView>();
             _sparkView3 = MockRepository.GenerateMock<FubuSparkView>();

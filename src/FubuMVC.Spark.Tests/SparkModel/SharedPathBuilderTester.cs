@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using FubuCore;
-using FubuMVC.Spark.SparkModel;
+using FubuMVC.Core.View.Model;
 using FubuTestingSupport;
 using NUnit.Framework;
 

@@ -15,7 +15,7 @@ namespace FubuMVC.Spark.Rendering
             _defaultPolicy = defaultPolicy;
         }
 
-        public ViewDefinition Resolve(ViewDescriptor descriptor)
+        public ViewDefinition Resolve(SparkDescriptor descriptor)
         {
             var policy = _policies.FirstOrDefault(x => x.Matches(descriptor)) ?? _defaultPolicy;
             return policy.Create(descriptor);
@@ -23,7 +23,7 @@ namespace FubuMVC.Spark.Rendering
     }
     public interface IViewDefinitionResolver
     {
-        ViewDefinition Resolve(ViewDescriptor descriptor);
+        ViewDefinition Resolve(SparkDescriptor descriptor);
     }
 
 }

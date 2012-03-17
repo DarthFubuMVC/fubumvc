@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using FubuCore;
 using FubuMVC.Spark.Rendering;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -21,7 +22,7 @@ namespace FubuMVC.Spark.Tests.Rendering
         [Test]
         public void modify_attaches_cache_service_on_views()
         {
-            _views.Each(v => ClassUnderTest.Modify(v).CacheService.ShouldEqual(MockFor<ICacheService>()));
+            _views.Each(v => ClassUnderTest.Modify(v).As<IFubuSparkView>().CacheService.ShouldEqual(MockFor<ICacheService>()));
         }
     }
 }

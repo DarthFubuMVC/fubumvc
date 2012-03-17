@@ -9,9 +9,12 @@ using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.View.Conventions;
+using FubuMVC.Core.View.Model;
+using FubuMVC.Core.View.Model.Sharing;
+using FubuMVC.Core.View.Rendering;
 using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.SparkModel;
-using FubuMVC.Spark.SparkModel.Sharing;
 using Spark;
 using Spark.Caching;
 
@@ -24,20 +27,20 @@ namespace FubuMVC.Spark
     {
         private static bool _hasScanned;
         private static readonly Parsings _parsings = new Parsings();
-        private static readonly TemplateRegistry _templateRegistry = new TemplateRegistry();
+        private static readonly SparkTemplateRegistry _templateRegistry = new SparkTemplateRegistry();
         private static readonly Lazy<TypePool> _types = new Lazy<TypePool>(getTypes);
 
-        private ITemplateFinder _finder;
-        private ITemplateComposer _composer;
+        private ITemplateFinder<Template> _finder;
+        private ITemplateComposer<ITemplate> _composer;
         private readonly IPackageLog _logger;
-        private readonly IList<ITemplateFinderConvention> _finderConventions = new List<ITemplateFinderConvention>();
-        private readonly IList<ITemplateComposerConvention> _composerConventions = new List<ITemplateComposerConvention>();
+        private readonly IList<ITemplateFinderConvention<Template>> _finderConventions = new List<ITemplateFinderConvention<Template>>();
+        private readonly IList<ITemplateComposerConvention<ITemplate>> _composerConventions = new List<ITemplateComposerConvention<ITemplate>>();
 
         public SparkEngine()
         {
             _logger = getLogger();
-            _finder = new TemplateFinder();
-            _composer = new TemplateComposer(_types.Value, _parsings);
+            _finder = new TemplateFinder<Template>();
+            _composer = new TemplateComposer<ITemplate>(_types.Value, _parsings);
 
             setupFinderDefaults();
             setupComposerDefaults();
@@ -53,10 +56,10 @@ namespace FubuMVC.Spark
             _composerConventions.Apply(
                 composer => composer
                     .AddBinder<ViewDescriptorBinder>()
-                    .AddBinder<GenericViewModelBinder>()
-                    .AddBinder<ViewModelBinder>()
+                    .AddBinder<GenericViewModelBinder<ITemplate>>()
+                    .AddBinder<ViewModelBinder<ITemplate>>()
                     .Apply<NamespacePolicy>()
-                    .Apply<ViewPathPolicy>());
+                    .Apply<ViewPathPolicy<ITemplate>>());
         }
 
         void IFubuRegistryExtension.Configure(FubuRegistry registry)
@@ -90,7 +93,7 @@ namespace FubuMVC.Spark
 
         private void findTemplates()
         {
-            var finder = _finder as TemplateFinder;
+            var finder = _finder as TemplateFinder<Template>;
             if (finder != null)
             {
                 _finderConventions.Each(t => t.Configure(finder));
@@ -108,7 +111,7 @@ namespace FubuMVC.Spark
 
         private void composeTemplates()
         {
-            var composer = _composer as TemplateComposer;
+            var composer = _composer as TemplateComposer<ITemplate>;
             if(composer != null)
             {
                 _composerConventions.Each(c => c.Configure(composer));
@@ -134,8 +137,9 @@ namespace FubuMVC.Spark
 
         private static void configureServices(IServiceRegistry services)
         {
-            services.SetServiceIfNone<ITemplateRegistry>(_templateRegistry);
-            services.SetServiceIfNone<IParsingRegistrations>(_parsings);
+            services.SetServiceIfNone<ISparkTemplateRegistry>(_templateRegistry);
+            services.SetServiceIfNone<ITemplateRegistry<ITemplate>>(_templateRegistry);
+            services.SetServiceIfNone<IParsingRegistrations<ITemplate>>(_parsings);
             
             var graph = new SharingGraph();
             services.SetServiceIfNone(graph);
@@ -148,31 +152,34 @@ namespace FubuMVC.Spark
 
             services.FillType<IActivator, SharingConfigActivator>();
             services.FillType<IActivator, SharingPolicyActivator>();
-            services.FillType<IActivator, SharingAttacherActivator>();
+            services.FillType<IActivator, SharingAttacherActivator<ITemplate>>();
             services.FillType<IActivator, SparkActivator>();
 
-            services.FillType<ISharingAttacher, MasterAttacher>();
-            services.FillType<ISharingAttacher, BindingsAttacher>();
+            services.FillType<ISharingAttacher<ITemplate>, MasterAttacher<ITemplate>>();
+            services.FillType<ISharingAttacher<ITemplate>, BindingsAttacher>();
 
             services.SetServiceIfNone<ISharedPathBuilder>(new SharedPathBuilder());
-            services.SetServiceIfNone<ITemplateDirectoryProvider, TemplateDirectoryProvider>();
+            services.SetServiceIfNone<ITemplateDirectoryProvider<ITemplate>, TemplateDirectoryProvider<ITemplate>>();
             services.SetServiceIfNone<ISharedTemplateLocator, SharedTemplateLocator>();
+            services.FillType<ISharedTemplateLocator<ITemplate>, SharedTemplateLocator>();
 
             services.FillType<IRenderStrategy, NestedRenderStrategy>();
             services.FillType<IRenderStrategy, AjaxRenderStrategy>();
             services.FillType<IRenderStrategy, DefaultRenderStrategy>();
 
-            services.SetServiceIfNone<IViewEntryProviderCache, ViewEntryProviderCache>();
-            services.SetServiceIfNone<IViewModifierService, ViewModifierService>();
+            services.FillType<ITemplateSelector<ITemplate>, SparkTemplateSelector>();
 
-            services.FillType<IViewModifier, PageActivation>();
-            services.FillType<IViewModifier, SiteResourceAttacher>();
-            services.FillType<IViewModifier, ContentActivation>();
-            services.FillType<IViewModifier, OnceTableActivation>();
-            services.FillType<IViewModifier, OuterViewOutputActivator>();
-            services.FillType<IViewModifier, NestedViewOutputActivator>();
-            services.FillType<IViewModifier, ViewContentDisposer>();
-            services.FillType<IViewModifier, NestedOutputActivation>();
+            services.SetServiceIfNone<IViewEntryProviderCache, ViewEntryProviderCache>();
+            services.SetServiceIfNone<IViewModifierService<IFubuSparkView>, ViewModifierService<IFubuSparkView>>();
+
+            services.FillType<IViewModifier<IFubuSparkView>, PageActivation<IFubuSparkView>>();
+            services.FillType<IViewModifier<IFubuSparkView>, SiteResourceAttacher>();
+            services.FillType<IViewModifier<IFubuSparkView>, ContentActivation>();
+            services.FillType<IViewModifier<IFubuSparkView>, OnceTableActivation>();
+            services.FillType<IViewModifier<IFubuSparkView>, OuterViewOutputActivator>();
+            services.FillType<IViewModifier<IFubuSparkView>, NestedViewOutputActivator>();
+            services.FillType<IViewModifier<IFubuSparkView>, ViewContentDisposer>();
+            services.FillType<IViewModifier<IFubuSparkView>, NestedOutputActivation>();
 
             services.SetServiceIfNone<IHtmlEncoder, DefaultHtmlEncoder>();
 
@@ -187,25 +194,25 @@ namespace FubuMVC.Spark
                 : new PackageLog();
         }
 
-        public SparkEngine FindWith(ITemplateFinder finder)
+        public SparkEngine FindWith(ITemplateFinder<Template> finder)
         {
             _finder = finder;
             return this;
         }
 
-        public SparkEngine ConfigureFinder(ITemplateFinderConvention convention)
+        public SparkEngine ConfigureFinder(ITemplateFinderConvention<Template> convention)
         {
             _finderConventions.Fill(convention);
             return this;
         }
 
-        public SparkEngine ComposeWith(ITemplateComposer composer)
+        public SparkEngine ComposeWith(ITemplateComposer<ITemplate> composer)
         {
             _composer = composer;
             return this;
         }
 
-        public SparkEngine ConfigureComposer(ITemplateComposerConvention convention)
+        public SparkEngine ConfigureComposer(ITemplateComposerConvention<ITemplate> convention)
         {
             _composerConventions.Fill(convention);
             return this;
@@ -214,50 +221,50 @@ namespace FubuMVC.Spark
 
     public static class SparkExtensions
     {
-        public static IList<ITemplateFinderConvention> Apply(this IList<ITemplateFinderConvention> source, Action<TemplateFinder> configure)
+        public static IList<ITemplateFinderConvention<Template>> Apply(this IList<ITemplateFinderConvention<Template>> source, Action<TemplateFinder<Template>> configure)
         {
-            source.Fill(new LambdaTemplateFinderConvention(configure));
+            source.Fill(new LambdaTemplateFinderConvention<Template>(configure));
             return source;
         }
 
-        public static IList<ITemplateComposerConvention> Apply(this IList<ITemplateComposerConvention> source, Action<TemplateComposer> configure)
+        public static IList<ITemplateComposerConvention<ITemplate>> Apply(this IList<ITemplateComposerConvention<ITemplate>> source, Action<TemplateComposer<ITemplate>> configure)
         {
-            source.Fill(new LambdaTemplateComposerConvention(configure));
+            source.Fill(new LambdaTemplateComposerConvention<ITemplate>(configure));
             return source;
         }
 
         public static SparkEngine ConfigureFinder<TConvention>(this SparkEngine spark)
-            where TConvention : ITemplateFinderConvention, new()
+            where TConvention : ITemplateFinderConvention<Template>, new()
         {
             return spark.ConfigureFinder(new TConvention());
         }
 
-        public static SparkEngine ConfigureFinder(this SparkEngine spark, Action<TemplateFinder> configure)
+        public static SparkEngine ConfigureFinder(this SparkEngine spark, Action<TemplateFinder<Template>> configure)
         {
-            return spark.ConfigureFinder(new LambdaTemplateFinderConvention(configure));
+            return spark.ConfigureFinder(new LambdaTemplateFinderConvention<Template>(configure));
         }
 
         public static SparkEngine FindWith<TFinder>(this SparkEngine spark)
-            where TFinder : ITemplateFinder, new()
+            where TFinder : ITemplateFinder<Template>, new()
         {
             return spark.FindWith(new TFinder());
         }
 
         public static SparkEngine ComposeWith<TComposer>(this SparkEngine spark)
-            where TComposer : ITemplateComposer, new()
+            where TComposer : ITemplateComposer<ITemplate>, new()
         {
             return spark.ComposeWith(new TComposer());
         }
 
         public static SparkEngine ConfigureComposer<TConvention>(this SparkEngine spark)
-            where TConvention : ITemplateComposerConvention, new()
+            where TConvention : ITemplateComposerConvention<ITemplate>, new()
         {
             return spark.ConfigureComposer(new TConvention());
         }
 
-        public static SparkEngine ConfigureComposer(this SparkEngine spark, Action<TemplateComposer> configure)
+        public static SparkEngine ConfigureComposer(this SparkEngine spark, Action<TemplateComposer<ITemplate>> configure)
         {
-            return spark.ConfigureComposer(new LambdaTemplateComposerConvention(configure));
+            return spark.ConfigureComposer(new LambdaTemplateComposerConvention<ITemplate>(configure));
         }
     }
 }
