@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Web;
+using FubuCore;
 
 namespace FubuMVC.Core.Http.AspNet
 {
@@ -40,9 +41,10 @@ namespace FubuMVC.Core.Http.AspNet
             _response.Redirect(url, false);
         }
 
-        public void WriteResponseCode(HttpStatusCode status)
+        public void WriteResponseCode(HttpStatusCode status, string description = null)
         {
             _response.StatusCode = (int) status;
+            if (description.IsNotEmpty()) _response.StatusDescription = description;
         }
 
         public void AppendCookie(HttpCookie cookie)

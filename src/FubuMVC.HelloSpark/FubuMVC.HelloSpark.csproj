@@ -68,6 +68,9 @@
     <Reference Include="System.Web.ApplicationServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\scripts\jquery.form.js" />
+    <Content Include="Content\scripts\jquery.metadata.js" />
+    <Content Include="Content\scripts\jquery.validate.js" />
     <Content Include="Content\styles\styles.css" />
     <Content Include="App.asset.config" />
     <None Include="Controllers\Sleep\PartialSleepAsync.spark" />

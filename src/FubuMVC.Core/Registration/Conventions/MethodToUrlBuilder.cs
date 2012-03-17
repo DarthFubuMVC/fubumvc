@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using FubuCore.Reflection;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
@@ -59,9 +58,10 @@ namespace FubuMVC.Core.Registration.Conventions
 
             }
 
-            route.Append(parts.Join("/"));
-
-            
+            if (parts.Any())
+            {
+                route.Append(parts.Join("/"));
+            }
         }
     }
 }

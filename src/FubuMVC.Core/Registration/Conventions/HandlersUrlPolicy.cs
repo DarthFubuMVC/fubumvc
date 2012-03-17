@@ -67,18 +67,19 @@ namespace FubuMVC.Core.Registration.Conventions
                                  ? new TypeDescriptorCache().GetPropertiesFor(call.InputType()).Keys
                                  : new string[0];
 
-                MethodToUrlBuilder.Alter(routeDefinition, handlerName, properties, text => { });
 
-                if (call.HasInput)
-                {
-                    routeDefinition.ApplyInputType(call.InputType());
-                }
+                MethodToUrlBuilder.Alter(routeDefinition, handlerName, properties, text => { });
             }
             else
             {
                 // Otherwise we're expecting something like "GetHandler"
                 var httpMethod = call.HandlerType.Name.Replace(HANDLER, string.Empty);
                 routeDefinition.ConstrainToHttpMethods(httpMethod.ToUpper());
+            }
+
+            if (call.HasInput)
+            {
+                routeDefinition.ApplyInputType(call.InputType());
             }
 
             return routeDefinition;

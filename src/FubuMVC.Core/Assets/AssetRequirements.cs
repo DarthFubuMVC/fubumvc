@@ -13,6 +13,7 @@ namespace FubuMVC.Core.Assets
         void UseAssetIfExists(params string[] names);
         AssetPlanKey DequeueAssetsToRender(MimeType mimeType);
         IEnumerable<AssetPlanKey> DequeueAssetsToRender();
+        AssetPlanKey DequeueAssets(MimeType mimeType, params string[] assets);
     }
 
     public class AssetRequirements : IAssetRequirements
@@ -79,6 +80,13 @@ namespace FubuMVC.Core.Assets
         {
             var mimeTypes = outstandingAssets().Select(MimeType.MimeTypeByFileName).Distinct().ToList();
             return mimeTypes.Select(DequeueAssetsToRender).ToList();
+        }
+
+        public AssetPlanKey DequeueAssets(MimeType mimeType, params string[] assets)
+        {
+            var toBeRendered = assets.Except(_rendered).ToList();
+            _rendered.Fill(toBeRendered);
+            return new AssetPlanKey(mimeType, toBeRendered);
         }
 
         private IEnumerable<string> outstandingAssets()

@@ -45,12 +45,14 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void should_avoid_duplicates()
         {
-            var graph = new FubuRegistry(registry =>
+            var singleHandlerGraph = new FubuRegistry(registry => registry.ApplyHandlerConventions<Handlers.HandlersMarker>()).BuildGraph();
+            var duplicatedHandlerGraph = new FubuRegistry(registry =>
                                              {
                                                  registry.ApplyHandlerConventions<Handlers.HandlersMarker>();
                                                  registry.ApplyHandlerConventions<Handlers.HandlersMarker>();
                                              }).BuildGraph();
-            graph.Routes.ShouldHaveCount(5);
+
+            duplicatedHandlerGraph.Routes.Count().ShouldEqual(singleHandlerGraph.Routes.Count());
         }
 
         private void verifyRoutes(BehaviorGraph graph)
@@ -59,6 +61,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                              {
                                  "posts/create",
                                  "posts/complex-route",
+                                 "posts/sub/route",
                                  "some-crazy-url/as-a-subfolder",
                                  "posts/{Year}/{Month}/{Title}"
                              };

@@ -13,7 +13,7 @@ namespace FubuMVC.Core.Http
         void WriteContentType(string contentType);
         void Write(string content);
         void Redirect(string url);
-        void WriteResponseCode(HttpStatusCode status);
+        void WriteResponseCode(HttpStatusCode status, string description = null);
         void AppendCookie(HttpCookie cookie);
 
         void Write(Action<Stream> output);
@@ -49,7 +49,7 @@ namespace FubuMVC.Core.Http
             throw new NotImplementedException();
         }
 
-        public void WriteResponseCode(HttpStatusCode status)
+        public void WriteResponseCode(HttpStatusCode status, string description = null)
         {
             throw new NotImplementedException();
         }

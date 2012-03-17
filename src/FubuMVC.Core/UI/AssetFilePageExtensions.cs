@@ -104,6 +104,42 @@ namespace FubuMVC.Core.UI
             return page.Get<IAssetTagWriter>().WriteAllTags();
         }
 
-        
+        /// <summary>
+        /// Write the tags immediately and dequeue them from being rendered again.
+        /// Useful when *always* want jquery at the top
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="mimeType"></param>
+        /// <param name="names"></param>
+        /// <returns></returns>
+        public static TagList WriteAssetTagsImmediately(this IFubuPage page, MimeType mimeType, params string[] names)
+        {
+            return page.Get<IAssetTagWriter>().WriteTags(mimeType, names);
+        }
+
+        /// <summary>
+        /// Write the tags immediately and dequeue them from being rendered again.
+        /// Useful when *always* want jquery at the top
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="names"></param>
+        /// <returns></returns>
+        public static TagList WriteScriptTagsImmediately(this IFubuPage page, params string[] names)
+        {
+            return page.Get<IAssetTagWriter>().WriteTags(MimeType.Javascript, names);
+        }
+        /// <summary>
+        /// Write the tags immediately and dequeue them from being rendered again.
+        /// Useful when *always* want jquery at the top 
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="names"></param>
+        /// <returns></returns>
+        public static TagList WriteCssTagsImmediately(this IFubuPage page, params string[] names)
+        {
+            return page.Get<IAssetTagWriter>().WriteTags(MimeType.Css, names);
+        }
+
+
     }
 }

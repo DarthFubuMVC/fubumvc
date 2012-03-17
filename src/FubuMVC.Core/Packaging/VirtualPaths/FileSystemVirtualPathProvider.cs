@@ -27,15 +27,24 @@ namespace FubuMVC.Core.Packaging.VirtualPaths
 
         private string findPhysicalPath(string virtualPath)
         {
+            var relativePath = getRelativePath(virtualPath);
+            if (containsInvalidPathChars(relativePath)) return null;
             return _directories
-                .Select(x => getPhysicalPathToFile(virtualPath, x))
+                .Select(x => Path.Combine(x, relativePath))
                 .FirstOrDefault(File.Exists);
+        }
+
+        // TODO: Move to FubuCore.StringExtensions
+        private static readonly char[] InvalidPathchars = Path.GetInvalidPathChars();
+        private static bool containsInvalidPathChars(string path)
+        {
+            return path.Any(x => InvalidPathchars.Contains(x));
         }
 
         public override bool FileExists(string virtualPath)
         {
-            var fileExists = _files[virtualPath].IsNotEmpty();
-            return fileExists ? true : Previous.FileExists(virtualPath);
+            return _files[virtualPath].IsNotEmpty() || 
+                   (Previous != null && Previous.FileExists(virtualPath));
         }
 
         public override VirtualFile GetFile(string virtualPath)
@@ -72,9 +81,9 @@ namespace FubuMVC.Core.Packaging.VirtualPaths
             return Previous.GetFileHash(virtualPath, virtualPathDependencies);
         }
 
-        private string getPhysicalPathToFile(string virtualPath, string directory)
+        private string getRelativePath(string virtualPath)
         {
-            var applicationVirtualPath = HostingEnvironment.ApplicationVirtualPath;
+            var applicationVirtualPath = HostingEnvironment.ApplicationVirtualPath ?? "";
             var virtualPathLength = applicationVirtualPath.Length;
 
             var originalPath = virtualPath;
@@ -83,9 +92,7 @@ namespace FubuMVC.Core.Packaging.VirtualPaths
                 originalPath = originalPath.Substring(virtualPathLength);
             }
 
-            var physicalPath = originalPath.Replace("~", "").TrimStart('/');
-
-            return Path.Combine(directory, physicalPath);
+            return originalPath.Replace("~", "").TrimStart('/');
         }
 
         public override CacheDependency GetCacheDependency(string virtualPath, IEnumerable virtualPathDependencies, DateTime utcStart)

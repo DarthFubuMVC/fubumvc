@@ -47,6 +47,14 @@ namespace FubuMVC.Tests.Runtime
         }
 
         [Test]
+        public void write_response_code_and_description_delegates()
+        {
+            const string description = "why u no make good request?";
+            ClassUnderTest.WriteResponseCode(HttpStatusCode.BadRequest, description);
+            theHttpWriter.AssertWasCalled(x => x.WriteResponseCode(HttpStatusCode.BadRequest, description));
+        }
+
+        [Test]
         public void write_by_stream_delegates_to_the_http_writer_in_normal_mode()
         {
             Action<Stream> action = stream => { };
