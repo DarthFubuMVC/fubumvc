@@ -234,7 +234,7 @@ namespace FubuMVC.Razor
         public IFubuRazorView GetView(ViewDescriptor<IRazorTemplate> descriptor, object model)
         {
             var viewId = descriptor.Template.GeneratedViewId.ToString();
-
+            
             if (_inner.HasTemplate(viewId) && _lastModifiedCache[descriptor.Template.FilePath] == _fileSystem.LastModified(descriptor.Template.FilePath))
             {
                 return GetView(x => (IFubuRazorView)x.Resolve(viewId, model));
