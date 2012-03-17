@@ -190,8 +190,10 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
             var cuatroView = _pak1TemplateRegistry.FirstByName("SerieX");
             var master = _pak1TemplateRegistry.FirstByName("Maker");
 
-            getViewSource(cuatroView).ShouldEqual("@{ _Layout = \"Maker\"; } SerieX");           
-            renderTemplate(cuatroView, master).ShouldEqual("Lenovo\r\n SerieX");
+            getViewSource(cuatroView).ShouldEqual("@{ _Layout = \"Maker\"; } SerieX");
+            string template = renderTemplate(cuatroView, master);
+            template.ShouldStartWith("Lenovo");
+            template.ShouldEndWith("SerieX");
         }
 
         private string getViewSource(IRazorTemplate template)

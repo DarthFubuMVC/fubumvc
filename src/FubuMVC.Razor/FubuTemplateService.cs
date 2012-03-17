@@ -28,7 +28,7 @@ namespace FubuMVC.Razor
             _templateRegistry = templateRegistry;
             _inner = inner;
             _fileSystem = fileSystem;
-            _lastModifiedCache = new Cache<string, long>(fileSystem.LastModified);
+            _lastModifiedCache = new Cache<string, long>(name => name.LastModified());
         }
 
         public void Dispose()
@@ -188,7 +188,7 @@ namespace FubuMVC.Razor
 
         public ITemplate Resolve(string name, object model)
         {
-           throw new NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public ITemplate Resolve<T>(string name, T model)
@@ -234,8 +234,8 @@ namespace FubuMVC.Razor
         public IFubuRazorView GetView(ViewDescriptor<IRazorTemplate> descriptor, object model)
         {
             var viewId = descriptor.Template.GeneratedViewId.ToString();
-            
-            if (_inner.HasTemplate(viewId) && _lastModifiedCache[descriptor.Template.FilePath] == _fileSystem.LastModified(descriptor.Template.FilePath))
+
+            if (_inner.HasTemplate(viewId) && _lastModifiedCache[descriptor.Template.FilePath] == descriptor.Template.FilePath.LastModified())
             {
                 return GetView(x => (IFubuRazorView)x.Resolve(viewId, model));
             }
