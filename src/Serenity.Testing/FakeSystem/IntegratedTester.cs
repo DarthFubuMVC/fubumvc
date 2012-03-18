@@ -8,6 +8,7 @@ using FubuMVC.StructureMap;
 using Serenity.Fixtures;
 using StoryTeller.Domain;
 using StoryTeller.Engine;
+using StoryTeller.Execution;
 using StructureMap;
 using FubuCore;
 using Serenity.Testing.Fixtures;
@@ -24,15 +25,17 @@ namespace Serenity.Testing.FakeSystem
         {
             theRunner = TestRunnerBuilder.ForSystem<FakeSerenitySystem>();
         }
-
+		
         [Test]
         public void run_simple_test()
         {
             var test = new Test("Try it");
             test.Add(Section.For<NameScreenFixture>().WithStep("GoTo", "name:Jeremy"));
-
-            var testResult = theRunner.RunTest(test);
-            testResult.Counts.ShouldEqual(0, 0, 0, 0);
+			
+			var testResult = theRunner.RunTest(new TestExecutionRequest(test, new TestStopConditions()));
+			//var testResult = TestRunnerExtensions.RunTest(theRunner, test);
+			TestingExtensions.ShouldEqual(testResult.Counts, 0, 0, 0, 0);
+			//testResult.Counts.ShouldEqual(1, 0, 0, 0); 
         }
 
         [Test]
@@ -43,9 +46,11 @@ namespace Serenity.Testing.FakeSystem
                 .WithStep("GoTo", "name:Jeremy")
                 .WithStep("CheckName", "Name:Jeremy");
             test.Add(section);
-
-            var testResult = theRunner.RunTest(test);
-            testResult.Counts.ShouldEqual(1, 0, 0, 0); 
+			
+			var testResult = theRunner.RunTest(new TestExecutionRequest(test, new TestStopConditions()));
+            //var testResult = theRunner.RunTest(test);
+			TestingExtensions.ShouldEqual(testResult.Counts, 1, 0, 0, 0);
+            //testResult.Counts.ShouldEqual(1, 0, 0, 0); 
         }
 
 
@@ -58,14 +63,17 @@ namespace Serenity.Testing.FakeSystem
                 .WithStep("CheckName", "Name:Max");
             test.Add(section);
 
-            var testResult = theRunner.RunTest(test);
-            testResult.Counts.ShouldEqual(0, 1, 0, 0);
+			var testResult = theRunner.RunTest(new TestExecutionRequest(test, new TestStopConditions()));
+            //var testResult = theRunner.RunTest(test);
+			TestingExtensions.ShouldEqual(testResult.Counts, 0, 1, 0, 0);
+            //testResult.Counts.ShouldEqual(0, 1, 0, 0);
         }
 
         [TestFixtureTearDown]
         public void Teardown()
         {
-            theRunner.SafeDispose();
+			FubuCore.BasicExtensions.SafeDispose(theRunner);
+            //theRunner.SafeDispose();
         }
     }
 
@@ -91,7 +99,7 @@ namespace Serenity.Testing.FakeSystem
         protected override ApplicationSettings findApplicationSettings()
         {
             var settings = ApplicationSettings.For<FakeSerenitySource>();
-            settings.PhysicalPath = ".".ToFullPath();
+            settings.PhysicalPath = FubuCore.StringExtensions.ToFullPath(".");
 
             return settings;
         }
@@ -106,8 +114,9 @@ namespace Serenity.Testing.FakeSystem
     {
         public FubuApplication BuildApplication()
         {
-            return FubuApplication.For<FakeSerenityRegistry>()
-                .StructureMap(new Container());
+			return BootstrappingExtensions.StructureMap(
+            	FubuApplication.For<FakeSerenityRegistry>()
+                , new Container());
         }
     }
 

@@ -23,7 +23,7 @@ namespace Serenity.Fixtures
         {
             get
             {
-                if (!_searchContexts.Any())
+                if (_searchContexts.Count == 0)
                 {
                     _searchContexts.Push(_application.Driver);
                 }
@@ -110,7 +110,7 @@ namespace Serenity.Fixtures
             // TODO -- later on, use the naming convention from fubu instead of pretending
             // that this rule is always true
             var config = GestureForProperty(expression);
-            if (key.IsNotEmpty())
+            if (FubuCore.StringExtensions.IsNotEmpty(key))
             {
                 config.CellName = key;
             }
@@ -127,7 +127,7 @@ namespace Serenity.Fixtures
             var config = getGesture(expression, label, key);
 
             config.Template = "Enter {" + config.CellName + "} for " + config.Label;
-            config.Description = "Enter data for property " + expression.ToAccessor().Name;
+            config.Description = "Enter data for property " + FubuCore.Reflection.ReflectionExtensions.ToAccessor(expression).Name;
 
             return new EnterValueGrammar(config);
         }
@@ -138,7 +138,7 @@ namespace Serenity.Fixtures
             var config = getGesture(expression, label, key);
 
             config.Template = "The text of " + config.Label + " should be {" + config.CellName + "}";
-            config.Description = "Check data for property " + expression.ToAccessor().Name;
+            config.Description = "Check data for property " + FubuCore.Reflection.ReflectionExtensions.ToAccessor(expression).Name;
 
             return new CheckValueGrammar(config);
         }
@@ -151,7 +151,7 @@ namespace Serenity.Fixtures
 
         protected void EditableElement(Expression<Func<T, object>> expression, string label = null)
         {
-            var accessor = expression.ToAccessor();
+            var accessor = FubuCore.Reflection.ReflectionExtensions.ToAccessor(expression);
             var name = accessor.Name;
 
             this["Check" + name] = CheckScreenValue(expression, label);
@@ -160,10 +160,12 @@ namespace Serenity.Fixtures
 
         protected void EditableElementsForAllImmediateProperties()
         {
-            typeof (T)
-                .GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                .Where(x => x.CanRead && x.CanWrite)
-                .Each(prop =>
+			System.Collections.Generic.GenericEnumerableExtensions.Each<PropertyInfo>(
+				System.Linq.Enumerable.Where(
+             typeof (T)
+                .GetProperties(BindingFlags.Public | BindingFlags.Instance),
+                x => x.CanRead && x.CanWrite),
+                prop =>
                 {
                     var accessor = new SingleProperty(prop);
                     var expression = accessor.ToExpression<T>();
