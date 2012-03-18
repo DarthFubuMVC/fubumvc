@@ -35,10 +35,10 @@
       <HintPath>..\packages\Bottles.0.9.1.201\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="Bottles.Deployers.Iis">
-      <HintPath>..\packages\Bottles.Deployers.IIS.0.9.1.172\lib\Bottles.Deployers.Iis.dll</HintPath>
+      <HintPath>..\packages\Bottles.Deployers.IIS.0.9.1.201\lib\Bottles.Deployers.Iis.dll</HintPath>
     </Reference>
     <Reference Include="Bottles.Deployment">
-      <HintPath>..\packages\Bottles.Deployment.0.9.1.172\lib\Bottles.Deployment.dll</HintPath>
+      <HintPath>..\packages\Bottles.Deployment.0.9.1.201\lib\Bottles.Deployment.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
       <HintPath>..\packages\FubuCore.0.9.4.117\lib\FubuCore.dll</HintPath>
