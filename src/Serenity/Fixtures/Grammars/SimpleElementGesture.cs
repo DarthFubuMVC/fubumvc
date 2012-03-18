@@ -49,7 +49,8 @@ namespace Serenity.Fixtures.Grammars
                 var element = _config.Finder();
 
                 var values = new Dictionary<string, object>();
-                GetCells().Each(cell => cell.ReadArgument(context, containerStep, o => values.Add(cell.Key, o)));
+				System.Collections.Generic.GenericEnumerableExtensions.Each(GetCells(),
+                	cell => cell.ReadArgument(context, containerStep, o => values.Add(cell.Key, o)));
 
                 execute(element, values, containerStep, context);
 
