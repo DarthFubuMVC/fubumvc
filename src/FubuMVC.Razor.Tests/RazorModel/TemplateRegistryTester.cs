@@ -11,7 +11,6 @@ namespace FubuMVC.Razor.Tests.RazorModel
     public class TemplateRegistryTester : InteractionContext<TemplateRegistry<IRazorTemplate>>
     {
         private IList<IRazorTemplate> _templates;
-        private IRazorTemplate[] _bindings;
         protected override void beforeEach()
         {
             _templates = new List<IRazorTemplate>

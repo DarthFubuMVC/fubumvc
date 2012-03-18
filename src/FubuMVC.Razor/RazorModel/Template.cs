@@ -6,7 +6,6 @@ namespace FubuMVC.Razor.RazorModel
     public interface IRazorTemplate : ITemplateFile
     {
         Guid GeneratedViewId { get; }
-        ITemplateDescriptor Descriptor { get; set; }
     }
 
     public class Template : IRazorTemplate
