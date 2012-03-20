@@ -196,6 +196,12 @@ namespace FubuMVC.Core.Assets
             return (IFileDependency) ObjectFor(name);
         }
 
+
+        public void ForEachSetName(Action<string> action)
+        {
+            _sets.GetAllKeys().Each(action);
+        }
+
         #region Nested type: AssetFilesKey
 
         public class AssetFilesKey
