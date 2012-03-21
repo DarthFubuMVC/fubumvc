@@ -43,25 +43,7 @@ namespace Serenity
 
             _urls = new Lazy<IUrlRegistry>(() => _runtime.Value.Facility.Get<IUrlRegistry>());
 
-            _browser = new Lazy<IWebDriver>(() =>
-            {
-                var reset = startListener(settings, _runtime.Value);
-                
-                _disposals.Add(() =>
-                {
-                    _listener.Stop();
-                    _listener.SafeDispose();
-
-                    _listeningThread.Join(3000);
-                });
-                    
-                reset.WaitOne();
-
-                var browser = WebDriverSettings.DriverBuilder()();
-                _disposals.Add(browser.Close);
-
-                return browser;
-            });
+            StartWebDriver();
         }
 
         private ManualResetEvent startListener(ApplicationSettings settings, FubuRuntime runtime)
@@ -98,6 +80,11 @@ namespace Serenity
             get { return _browser.Value; }
         }
 
+        public bool IsDriverInUse
+        {
+            get { return _browser != null && _browser.IsValueCreated; }
+        }
+
         public string RootUrl
         {
             get { return _settings.RootUrl; }
@@ -118,6 +105,34 @@ namespace Serenity
             return _runtime.Value.Facility.GetAll<T>();
         }
 
+        public void StartWebDriver()
+        {
+            _browser = new Lazy<IWebDriver>(() =>
+            {
+                var reset = startListener(_settings, _runtime.Value);
+
+                _disposals.Add(() =>
+                {
+                    _listener.Stop();
+                    _listener.SafeDispose();
+
+                    _listeningThread.Join(3000);
+                });
+
+                reset.WaitOne();
+
+                var browser = WebDriverSettings.DriverBuilder()();
+                _disposals.Add(browser.Close);
+
+                return browser;
+            });
+        }
+
+        public void StopWebDriver()
+        {
+            _disposals.Each(x => x());
+        }
+
         public void Ping()
         {
             // NO-OP
@@ -125,7 +140,7 @@ namespace Serenity
 
         public void Teardown()
         {
-            _disposals.Each(x => x());
+            StopWebDriver();
         }
     }
 }
