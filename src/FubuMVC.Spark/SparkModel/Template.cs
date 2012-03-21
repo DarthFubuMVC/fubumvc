@@ -6,12 +6,6 @@ namespace FubuMVC.Spark.SparkModel
 {
     public interface ITemplate : ITemplateFile
     {
-        string FilePath { get; }
-        string RootPath { get; }
-        string Origin { get; }
-		
-        string ViewPath { get; set; }
-        ITemplateDescriptor Descriptor { get; set; }
     }
 
     public class Template : ITemplate
