@@ -15,10 +15,11 @@ namespace Serenity
     {
         private readonly string _name;
         private readonly string _rootUrl;
-        private readonly Lazy<IWebDriver> _driver;
+        private Lazy<IWebDriver> _driver;
         private readonly Lazy<IContainerFacility> _container;
         private readonly Lazy<IUrlRegistry> _urls;
         private readonly Lazy<IServiceLocator> _services;
+        private readonly Func<IWebDriver> _createWebDriver;
 
 
         public ApplicationUnderTest(FubuRuntime runtime, ApplicationSettings settings, Func<IWebDriver> createWebDriver)
@@ -54,7 +55,9 @@ namespace Serenity
             _name = name;
             _rootUrl = rootUrl;
 
-            _driver = new Lazy<IWebDriver>(createWebDriver);
+            _createWebDriver = createWebDriver;
+
+            StartWebDriver();
 
             _container = new Lazy<IContainerFacility>(containerSource);
 
@@ -71,6 +74,11 @@ namespace Serenity
         public string Name
         {
             get { return _name; }
+        }
+
+        public bool IsDriverInUse
+        {
+            get { return _driver != null && _driver.IsValueCreated; }
         }
 
         public string RootUrl
@@ -98,6 +106,19 @@ namespace Serenity
             get { return _urls.Value; }
         }
 
+        public void StartWebDriver()
+        {
+            _driver = new Lazy<IWebDriver>(_createWebDriver);
+        }
+
+        public void StopWebDriver()
+        {
+            if (!IsDriverInUse) return;
+
+            Driver.Close();
+            Driver.SafeDispose();
+        }
+
         public void Ping()
         {
             var client = new WebClient();
@@ -106,10 +127,7 @@ namespace Serenity
 
         public void Teardown()
         {
-            if (!_driver.IsValueCreated) return;
-
-            Driver.Close();
-            Driver.SafeDispose();
+            StopWebDriver();
         }
 
         public IWebDriver Driver
