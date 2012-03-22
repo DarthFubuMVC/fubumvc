@@ -17,6 +17,10 @@ namespace Serenity
         object GetInstance(Type type);
         IEnumerable<T> GetAll<T>();
 
+        void StartWebDriver();
+        void StopWebDriver();
+        bool IsDriverInUse { get; }
+
         void Ping();
 
         void Teardown();
