@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Bottles;
@@ -37,6 +36,8 @@ namespace FubuMVC.Core.Assets
 
             ReadScriptConfig(FubuMvcPackageFacility.GetApplicationPath(), log);
             packages.Each(p => p.ForFolder(BottleFiles.WebContentFolder, folder => ReadScriptConfig(folder, log)));
+
+            _assets.Precompile();
 
             _assets.CompileDependencies(log);
         }

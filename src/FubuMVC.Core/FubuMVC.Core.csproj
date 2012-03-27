@@ -84,6 +84,7 @@
     <Compile Include="Assets\AssetCombinationBuildingActivator.cs" />
     <Compile Include="Assets\AssetFileDataMother.cs" />
     <Compile Include="Assets\AssetGraphScenario.cs" />
+    <Compile Include="Assets\AssetPrecompilerActivator.cs" />
     <Compile Include="Assets\AssetServicesRegistry.cs" />
     <Compile Include="Assets\Caching\AssetContentCache.cs" />
     <Compile Include="Assets\Caching\AssetFileMonitoringSettings.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="Assets\Diagnostics\AssetRegistrationDiagnostics.cs" />
     <Compile Include="Assets\Http\AssetEtagInvocationFilter.cs" />
     <Compile Include="Assets\Http\AssetWriter.cs" />
+    <Compile Include="Assets\IAssetPrecompiler.cs" />
     <Compile Include="Assets\RecordingAssetRegistration.cs" />
     <Compile Include="Behaviors\AsyncContinueWithBehavior.cs" />
     <Compile Include="Behaviors\AsyncInterceptExceptionBehavior.cs" />
