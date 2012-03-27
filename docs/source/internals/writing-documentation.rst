@@ -39,17 +39,18 @@ __ http://python.org/download
 .. warning::
 
     On 64-bit Windows, follow `these instructions to get easy_install intalled
-    <http://pypi.python.org/pypi/setuptools#windows>`_ then run ``easy_install -U
-    Sphinx``
+    <http://pypi.python.org/pypi/setuptools#windows>`_ then run ``easy_install 
+    -U Sphinx``
 
 Once Sphinx is installed, building locally is easy; just ``rake docs:html`` from
 any directory.
 
 .. note::
 
-    You will also notice that under the /docs directory there are two files named
-    ``Makefile`` and ``make.bat``. These are used by ReadTheDocs__ which hosts
-    the generated documentation. You do not need to run either of these files.
+    You will also notice that under the /docs directory there are two files 
+    named ``Makefile`` and ``make.bat``. These are used by ReadTheDocs__ which 
+    hosts the generated documentation. You do not need to run either of these 
+    files.
 
 __ http://readthedocs.org
 
@@ -117,9 +118,9 @@ __ http://djangoproject.org
 intro
 '''''
 
-This folder is for documentation to complete beginners to FubuMVC. This is where
-the initial tutorial for getting started with Fubu and a series of sections on
-FubuMVC basics.
+This folder is for documentation directed at complete beginners to FubuMVC. This
+is where the initial tutorial for getting started with Fubu and a series of 
+sections on FubuMVC basics are located.
 
 topics
 ''''''
@@ -131,7 +132,7 @@ place to discuss topics such as Behavior Chains or Authentication.
 ref
 '''
 
-Reference documentation. This is the in depth details of features of FubuMVC.
+Reference documentation. This is the in-depth details of features of FubuMVC.
 The documentation for :doc:`/ref/fubuexe` is here. This would also be a great
 place to document what is provided by StructureMap to the FubuRegistry.
 
@@ -205,7 +206,7 @@ editors that can handle the reStructuredText file format.
       first, Vim is a great text editor.
 
     * Emacs__ - Another text editor that supports syntax highlighting. More
-      friendly to get started with that Vim and just as powerful when you get to
+      friendly to get started with than Vim and just as powerful when you get to
       know it.
 
 __ http://vim.org
