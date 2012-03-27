@@ -349,13 +349,17 @@ this time, go to the URL for ~/helloworld. You should see this:
 Pretty cool, right? You managed to spit out a string to the browser window.
 Let's try it again, but this time, let's make "Hello world!" render as HTML:
 
-One last time, but this time let's add a title to the page and turn the text
-blue. This is the point where I don't care to use raw strings, so we're going
-to switch to using the HtmlTags library. Add this class to your project and
-compile:
-
 .. literalinclude:: ../../../src/QuickStart/SayHelloController.cs
    :lines: 12-21
+   :linenos:
+
+One last time, but this time let's add a title to the page and turn the text
+blue. This is the point where I don't care to use raw strings like we just did,
+so we're going to switch to using the HtmlTags library. Add this class to your
+project and compile:
+
+.. literalinclude:: ../../../src/QuickStart/SayHelloController.cs
+   :lines: 23-44
    :linenos:
 
 Compile and open your browser to ~/bluehello:
@@ -368,7 +372,7 @@ Say my name!
 Just to be slightly more challenging, let's create an endpoint that can display
 your name with the URL pattern ``~/my/name/is/{Name}.`` Using FubuMVC's
 nomenclature for URL patterns, ``{Name}`` would be a ``RouteInput`` that you
-would have to be supplied as part of the URL.
+have to supply as part of the URL.
 
 To implement this endpoint, enter this code and compile:
 
@@ -444,7 +448,7 @@ some of them in play in our "Hello, world!" exercise:
 
     This guide is concentrating on using conventions to configure the
     application, but it's perfectly possible to use the normal litany of Fluent
-    API's and/or .NET Attributes to override the conventions
+    API's and/or .NET Attributes to override the conventions.
 
 What's next?
 ============
