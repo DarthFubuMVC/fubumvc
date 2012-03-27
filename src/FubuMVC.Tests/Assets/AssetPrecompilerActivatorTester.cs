@@ -9,7 +9,7 @@ using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Assets
 {
-    public class AssetPrecompileActivatorTester : InteractionContext<AssetPrecompilerActivator>
+    public class AssetPrecompilerActivatorTester : InteractionContext<AssetPrecompilerActivator>
     {
         AssetGraph _assetGraph;
         IAssetPrecompiler _precompiler;

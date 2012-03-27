@@ -117,7 +117,7 @@
     <Compile Include="Assets\AssetNamesKeyTester.cs" />
     <Compile Include="Assets\AssetOrderingAndQueryingAcceptanceTests.cs" />
     <Compile Include="Assets\AssetPipelineBuilderActivatorIntegratedTester.cs" />
-    <Compile Include="Assets\AssetPrecompileActivatorTester.cs" />
+    <Compile Include="Assets\AssetPrecompilerActivatorTester.cs" />
     <Compile Include="Assets\AssetServicesRegistrationTester.cs" />
     <Compile Include="Assets\AssetTagPlanCacheTester.cs" />
     <Compile Include="Assets\AssetTagPlannerTester.cs" />
