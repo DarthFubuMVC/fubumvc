@@ -5,7 +5,7 @@ Getting started documenting FubuMVC
 Historically, FubuMVC has always been light on documentation. We aim to fix
 that oversight and make documentation a core part of our community culture. To
 fix that, we need to start seriously focusing on the actual documentation
-process asd getting contributors confortable with quickly adding or updating
+process and getting contributors confortable with quickly adding or updating
 the documentation we have.
 
 Where do I start?
@@ -21,7 +21,7 @@ What has been done so far?
 The first thing to look at, is the documentation :ref:`itself <index>`. So far,
 there isn't very much but there is always room for improvement here. Perhaps
 something is worded strangely, you've found a grammatical error, maybe even
-incorrect spelling? Fixing what we already have is a grea place to start so
+incorrect spelling? Fixing what we already have is a great place to start so
 please, go right ahead and help us fix it!
 
 What is left to be done?
@@ -62,22 +62,22 @@ You've already started if you're reading this document! From this point, there
 are a couple steps you can take to get started on helping improve our
 documentation.
 
-    #. Check the `issue tracker`_ for any issued labled ``documentation``. If there
-       is an issue already logged, comment that you would like to work on this issue
-       so we know you're actively working on it.
+    #. Check the `issue tracker`_ for any issued labled ``documentation``. If
+       there is an issue already logged, comment that you would like to work on
+       this issue so we know you're actively working on it.
 
-    #. If you can't find an issue that matches what you're planning on working on,
-       go ahead and make one! Make sure to prefix the issue title with ``[doc]`` so
-       that we can get it labeled properly.
+    #. If you can't find an issue that matches what you're planning on working 
+       on, go ahead and make one! Make sure to prefix the issue title with 
+       ``[doc]`` so that we can get it labeled properly.
 
     #. Take a look at the tests. This is a great way to see just what is
        available in FubuMVC and help you decide what to work on and where to
        take the documentation for that section of code.
 
     #. Start working on the documentation! If you have any questions or need to
-       discuss with the community, please ask on the `mailing list`! We'll gladly help
-       with any questions or provide any guidance you may need when working on the
-       documentation.
+       discuss with the community, please ask on the `mailing list`! We'll 
+       gladly help with any questions or provide any guidance you may need when
+       working on the documentation.
 
 Do you have any guides on actually writing the documentation?
 -------------------------------------------------------------
