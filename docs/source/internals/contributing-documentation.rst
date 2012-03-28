@@ -5,7 +5,7 @@ Getting started documenting FubuMVC
 Historically, FubuMVC has always been light on documentation. We aim to fix
 that oversight and make documentation a core part of our community culture. To
 fix that, we need to start seriously focusing on the actual documentation
-process and getting contributors confortable with quickly adding or updating
+process and getting contributors comfortable with quickly adding or updating
 the documentation we have.
 
 Where do I start?
