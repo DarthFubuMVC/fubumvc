@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -74,7 +74,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\scripts\jquery-1.4.2.js" />
+    <Content Include="Content\scripts\jquery.form.js" />
+    <Content Include="Content\scripts\jquery.metadata.js" />
     <Content Include="Content\scripts\jquery.tmpl.js" />
+    <Content Include="Content\scripts\jquery.validate.js" />
     <Content Include="Content\scripts\testrunner.js" />
     <Content Include="Content\styles\styles.css" />
     <Content Include="Controllers\LimitMethods\QueryGreeting.aspx" />
