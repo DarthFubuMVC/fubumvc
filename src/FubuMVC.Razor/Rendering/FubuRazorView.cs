@@ -45,9 +45,22 @@ namespace FubuMVC.Razor.Rendering
             get { return Get<IUrlRegistry>(); }
         }
 
-        public Func<string, string> SiteResource { get; set; }
-
         public Func<string, TemplateWriter> RenderPartialWith { get; set; }
+
+        public void UseLayout(IFubuRazorView layout)
+        {
+            Layout = layout;
+            if (_Layout == null)
+            {
+                _Layout = Layout.GetType().FullName;
+            }
+        }
+
+        public void NoLayout()
+        {
+            Layout = null;
+            _Layout = null;
+        }
 
         public IRazorTemplate OriginTemplate { get; set; }
 
@@ -83,17 +96,7 @@ namespace FubuMVC.Razor.Rendering
             return RenderPartialWith(name);
         }
 
-        private ITemplate _layout;
-        public ITemplate Layout
-        {
-            get { return _layout; }
-            set
-            {
-                _layout = value;
-                if (_Layout == null)
-                    _Layout = _layout.GetType().ToString();
-            }
-        }
+        public ITemplate Layout { get; set; }
     }
 
     public abstract class FubuRazorView<TViewModel> : FubuRazorView, IFubuRazorView, IFubuPage<TViewModel> where TViewModel : class
@@ -137,10 +140,11 @@ namespace FubuMVC.Razor.Rendering
     public interface IFubuRazorView : IRenderableView, ITemplate
     {
         void RenderPartial();
-        ITemplate Layout { get; set; }
+        ITemplate Layout { get; }
+        void UseLayout(IFubuRazorView layout);
+        void NoLayout();
         IRazorTemplate OriginTemplate { get; set; }
         Func<string, TemplateWriter> RenderPartialWith { get; set; }
-        Func<string, string> SiteResource { get; set; }
     }
 
     public static class FubuRazorViewExtensions

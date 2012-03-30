@@ -69,13 +69,6 @@ namespace FubuMVC.Razor.Tests.Rendering
         }
 
         [Test]
-        public void site_resource()
-        {
-            ClassUnderTest.SiteResource = x => "App/{0}".ToFormat(x);
-            ClassUnderTest.SiteResource("Views/Home/Home.cshtml").ShouldEqual("App/Views/Home/Home.cshtml");
-        }
-
-        [Test]
         public void urls()
         {
             ClassUnderTest.Urls.ShouldEqual(_urlRegistry);

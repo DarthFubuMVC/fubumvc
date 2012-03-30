@@ -91,6 +91,7 @@
     </Compile>
     <Compile Include="RazorModel\LayoutAttacherTester.cs" />
     <Compile Include="Rendering\AjaxRenderStrategyTester.cs" />
+    <Compile Include="Rendering\FubuPartialRenderingTester.cs" />
     <Compile Include="Rendering\RenderActionTester.cs" />
     <Compile Include="Rendering\DefaultRenderStrategyTester.cs" />
     <Compile Include="Rendering\FubuRazorViewTester.cs" />

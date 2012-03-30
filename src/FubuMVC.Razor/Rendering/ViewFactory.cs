@@ -39,7 +39,7 @@ namespace FubuMVC.Razor.Rendering
                 currentDescriptor = currentDescriptor.Master.Descriptor.As<ViewDescriptor<IRazorTemplate>>();
                 var layoutTemplate = _templateService.GetView(currentDescriptor);
                 layoutTemplate.OriginTemplate = returnTemplate.OriginTemplate;
-                currentTemplate.Layout = layoutTemplate;
+                currentTemplate.UseLayout(layoutTemplate);
                 currentTemplate = layoutTemplate;
             }
             returnTemplate = _service.Modify(returnTemplate);
