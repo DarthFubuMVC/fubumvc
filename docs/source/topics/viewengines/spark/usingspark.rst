@@ -1,6 +1,9 @@
-===========================
-Using the Spark view engine
-===========================
+=====
+Spark
+=====
+
+Getting Started
+===============
 
 What is Spark?
 --------------
@@ -44,7 +47,7 @@ added the Spark reference, there is one line needed in the ``FubuRegistry`` clas
 
 .. code-block:: csharp
 
-    this.UseSpark()
+   Import<SparkEngine>();
 
 And you're up and running with Spark, easy!
 

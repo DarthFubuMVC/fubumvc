@@ -4,7 +4,6 @@ Topics
 .. toctree::
    :maxdepth: 2
 
-   gettingstarted
    assets/index
    auth/index
    behaviors/index
