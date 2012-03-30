@@ -1,3 +1,12 @@
+Building FubuMVC
+----------------
+
+1. `git clone https://github.com/darthfubumvc/fubumvc.git`
+1. `cd fubumvc`
+1. `git submodule update --init`
+1. `gem install albacore --no-rdoc --no-ri`
+1. `rake compile`
+
 Why does `git status` show that all of my files are modified?
 --
 FubuMVC is built by Windows users, so all of the text files have CRLF line endings. These line endings are stored as-is in git (which means we all have autocrlf turned off).
@@ -32,10 +41,11 @@ Setting up Sphinx
 Sphinx is a Python tool we use to create the FubuMVC documentation. It requires Python to be installed
 
 1. Install Python from [python.org](http://python.org/download) (Preferrably 2.7)
+1. Add Python to the PATH (i.e. c:\Python27)
+1. On 32 Bit Windows, skip this step. Follow these [instructions to get easy_install installed](http://pypi.python.org/pypi/setuptools)
+1. Then run `easy_install -U Sphinx`
 1. Add the Python /Scripts directory to the PATH (i.e. c:\Python27\Scripts)
-1. On 32 Bit Windows simply run `easy_install -U Sphinx`
-1. On 64 Bit Windows, follow these [instructions to get easy_install installed](http://pypi.python.org/pypi/setuptools), then run `easy_install -U Sphinx`
-1. Then test that `sphinx_build` is available, and you're done.
+1. Then test that `sphinx-build` is available, and Sphinx is now installed
 
 Building the Documentation
 --------------------------
