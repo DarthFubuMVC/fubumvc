@@ -5,5 +5,4 @@ Introduction to FubuMVC
    :maxdepth: 2
 
    gettingfubumvc
-   gettingstarted
-   features
+   buildingfubumvc

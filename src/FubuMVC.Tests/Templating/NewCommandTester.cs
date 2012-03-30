@@ -59,6 +59,7 @@ namespace FubuMVC.Tests.Templating
         public void should_add_clone_git_repository_step_if_using_git()
         {
             _input.GitFlag = "git://test.git";
+            _input.SolutionFlag = "asdf";
 
             executeCommand();
 

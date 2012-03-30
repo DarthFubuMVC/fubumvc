@@ -10,6 +10,7 @@ FubuMVC Documentation
 .. toctree::
    :maxdepth: 2
 
+   intro/index
    topics/index
    ref/index
    internals/index
