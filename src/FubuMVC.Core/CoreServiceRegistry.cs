@@ -1,6 +1,7 @@
 using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Conversion;
+using FubuCore.Formatting;
 using FubuCore.Reflection;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;

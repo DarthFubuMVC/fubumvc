@@ -1,5 +1,6 @@
 using System;
 using FubuCore;
+using FubuCore.Formatting;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.DSL;

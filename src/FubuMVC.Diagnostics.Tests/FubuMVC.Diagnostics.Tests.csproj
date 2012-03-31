@@ -32,14 +32,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles.0.9.1.201\lib\Bottles.dll</HintPath>
+      <HintPath>..\packages\Bottles.0.9.1.202\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
-<<<<<<< HEAD
       <HintPath>..\packages\FubuCore.0.9.4.117\lib\FubuCore.dll</HintPath>
-=======
-      <HintPath>..\packages\FubuCore.0.9.4.114\lib\FubuCore.dll</HintPath>
->>>>>>> checkpoint:  changes for enabling FubuCore1
     </Reference>
     <Reference Include="FubuTestingSupport">
       <HintPath>..\packages\FubuTestingSupport.0.9.4.117\lib\FubuTestingSupport.dll</HintPath>

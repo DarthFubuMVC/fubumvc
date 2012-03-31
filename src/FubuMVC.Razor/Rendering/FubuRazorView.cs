@@ -1,5 +1,6 @@
 using System;
 using System.Web;
+using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
@@ -7,7 +8,6 @@ using FubuMVC.Core.View;
 using FubuMVC.Core.View.Rendering;
 using FubuMVC.Razor.RazorModel;
 using HtmlTags;
-using Microsoft.Practices.ServiceLocation;
 using RazorEngine.Templating;
 using ITemplate = RazorEngine.Templating.ITemplate;
 

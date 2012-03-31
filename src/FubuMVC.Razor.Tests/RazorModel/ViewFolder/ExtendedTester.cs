@@ -13,7 +13,6 @@ using FubuMVC.Core.View.Rendering;
 using FubuMVC.Razor.RazorModel;
 using FubuMVC.Razor.Rendering;
 using FubuTestingSupport;
-using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
 using RazorEngine.Configuration;
 using RazorEngine.Templating;

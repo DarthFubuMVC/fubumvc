@@ -1,3 +1,4 @@
+using FubuCore;
 using FubuCore.Formatting;
 using FubuCore.Reflection;
 using FubuMVC.Core.Resources.Media;
