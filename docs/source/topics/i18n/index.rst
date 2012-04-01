@@ -1,5 +1,5 @@
 ====================
-Internationalization
+i18N (FubuLocalization)
 ====================
 
 .. toctree::

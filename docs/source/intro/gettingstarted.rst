@@ -1,3 +1,5 @@
+.. _getting-started:
+
 ===============
 Getting Started
 ===============
@@ -10,12 +12,12 @@ Let's do the inevitable "Hello, World!" exercise in FubuMVC.
 Setup a new FubuMVC application
 -------------------------------
 
-.. image:: images/getting_started/SelectNuget.png
+.. image:: ../topics/images/getting_started/SelectNuget.png
    :alt: Installing FubuMVC via NuGet
 
 In Solution Explorer, your project layout should look like this:
 
-.. image:: images/getting_started/ProjectLayout1.png
+.. image:: ../topics/images/getting_started/ProjectLayout1.png
    :alt: Adding the NuGet reference adds a few pieces to your application
 
 Adding the NuGet reference adds a few pieces to your application:
@@ -39,7 +41,7 @@ Now, just for fun, let's fire up the application and see what happens.  Make
 sure your new QuickStart project is the startup project for your solution and
 press ``F5`` to start debugging. Your browser should open to this page:
 
-.. figure:: images/getting_started/GettingStartedPage.png
+.. figure:: ../topics/images/getting_started/GettingStartedPage.png
 
 Don't worry about where that content came from, we'll get to that later - and
 how to get rid of it too. Before we get into the details of just what it is
@@ -59,7 +61,7 @@ endpoint to the system. Add a class to your project like this to your project:
 Compile and restart the web application to bring up the home page again, but
 this time, go to the URL for ~/helloworld. You should see this:
 
-.. image:: images/getting_started/HelloWorld.png
+.. image:: ../topics/images/getting_started/HelloWorld.png
 
 Pretty cool, right? You managed to spit out a string to the browser window.
 Let's try it again, but this time, let's make "Hello world!" render as HTML:
@@ -79,7 +81,7 @@ project and compile:
 
 Compile and open your browser to ~/bluehello:
 
-.. image:: images/getting_started/BlueHello.png
+.. image:: ../topics/images/getting_started/BlueHello.png
 
 Say my name!
 ------------
@@ -98,7 +100,7 @@ To implement this endpoint, enter this code and compile:
 Since **my** name is Jeremy, I'm going to enter the URL "~/my/name/is/Jeremy"
 into the browser to get to this page:
 
-.. image:: images/getting_started/MyNameIs.png
+.. image:: ../topics/images/getting_started/MyNameIs.png
 
 How did that stuff get there?
 -----------------------------
@@ -106,14 +108,14 @@ How did that stuff get there?
 Open your browser to the main diagnostics page at ~/\_fubu (or click the link
 "Diagnostics for your application" from the home page for the application):
 
-.. image:: images/getting_started/Diagnostics.png
+.. image:: ../topics/images/getting_started/Diagnostics.png
 
 Get used to the diagnostics pages (~/\_fubu) because you're going to spend a
 lot of quality time with them as you're learning FubuMVC. From here, click
 onto the link for "Behavior chains" and look carefully at the bottom four rows
 in the table and see what we've got.:
 
-.. image:: images/getting_started/DiagnosticsChains1.png
+.. image:: ../topics/images/getting_started/DiagnosticsChains1.png
 
 At no point in the "Hello, world" exercise did we explicitly:
 

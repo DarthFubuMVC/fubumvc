@@ -1,3 +1,5 @@
+.. _view-engines:
+
 ============
 View Engines
 ============

@@ -1,6 +1,6 @@
-==================
-Working on FubuMVC
-==================
+=======================
+Contributing to FubuMVC
+=======================
 
 FubuMVC lives by the community, and we love helping that community grow larger
 and more active every day. Once you've learned FubuMVC, you can help the community
@@ -44,5 +44,6 @@ help the community.
 .. toctree::
    :maxdepth: 2
 
+   guidelines
    contributing-documentation
    writing-documentation

@@ -1,6 +1,6 @@
-===========================
-Transition from ASP.NET MVC
-===========================
+=======================
+Coming from ASP.NET MVC
+=======================
 
 Controllers
 ===========
@@ -23,50 +23,50 @@ formats like: HTML, JSON, XML, CSV, etc.
    * System.Web.Mvc.HttpUnauthorizedResult
       return from your controller action an HttpStatusCode.Unauthorized
    * System.Web.Mvc.JavaScriptResult
-      you don't need them; see :ref: `Asset Pipeline`
+      you don't need them; see :ref:`asset-pipeline`
    * System.Web.Mvc.JsonResult
-      define a convention to output your ViewModel as JSON. Alternatively see :reg: `Content Negotiation`
+      define a convention to output your ViewModel as JSON. Alternatively see :reg:`conneg`
    * System.Web.Mvc.RedirectResult
       return a FubuContinuation from your controller action
    * System.Web.Mvc.RedirectToRouteResult
       return a FubuContinuation from your controller action
    * System.Web.Mvc.ViewResultBase
-      see the section on :ref: `View Engines`
+      see the section on :ref:`view-engines`
 
 View File Organization
 ======================
 FubuMVC's shared directory for layouts and partials is at the root of the host.
 Aside from that, you can locate your views the same way as ASPMVC however we
-encourage you to try out other means of organizations. See :ref: `View Engines`
+encourage you to try out other means of organizations. See :ref:`view-engines`
 
 Action Filter
 =============
 A common requirement to execute code before and after a Controller action
 executes. In FubuMVC this is accomplished with Behaviors
-:ref: `Behaviors`
+:ref:`behaviors`
 
 Render Action
 =============
 A way to invoke an additional controller action from a View template. Partial
 requests
-:ref: `Partial Requests`
+:ref:`ui-helpers`
 
 Action Link
 ===========
 A way to generate an approptiate hyperlink for a Controller Action.
-:ref: `Hyperlinks`
+:ref:`ui-helpers`
 
 Defining Routes
 ===============
 No need to explicitly define route patterns in FubuMVC. However, to customize
-how routes are generated see :ref: `Customizing Routes`
+how routes are generated see :ref:`customizing-routes`
 
 Route Contraints
 ================
 Although one can define conventions in FubuMVC by using attributes similar to
 ASP MVC we encourage one to define less intrusive conventions which, out of the
 box, can be as simple as prefixing one's Controller Method Name with the verb.
-For more information see :ref: `Constraining Your Routes`
+For more information see :ref:`customizing-routes`
 
 Using Containers
 ================
@@ -84,5 +84,3 @@ TempData
 In your controller's constructor bring in IFlash. In FubuMVC's implementation
 the value is serialized as JSON. This decouples the Writer from the Reader if
 necessary.
-
-

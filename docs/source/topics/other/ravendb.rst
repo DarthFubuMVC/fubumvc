@@ -1,7 +1,7 @@
-.. _how-to-use-fubu-mvc-with-ravendb
+.. _how-to-use-fubu-mvc-with-ravendb:
 
 ===============================
-How To Use FubuMVC with RavenDB.
+How To Use FubuMVC with RavenDB
 ===============================
 
 This section is a brief introduction of how to setup your FubuMVC application
@@ -73,10 +73,7 @@ The setup code for RavenDB itself is quite simple::
                 ConnectionStringName = "MyConnection"
             }.Initialize();
 
-
-            Func<IDocumentSession> getSession = documentStore.OpenSession;
-
-            For<IDocumentSession>().Use(getSession);
+            For<IDocumentSession>().Use(() => documentStore.OpenSession());
             For<IDocumentStore>().Singleton().Use(documentStore);
         }
     }
@@ -85,7 +82,10 @@ We need to initialize the DocumentStore as a singleton with our connection strin
 
 Since we want a new IDocumentSession resolved for each web request we register
 the document stores OpenSession method as our IDocumentSession in the form of a
-Func<IDocumentSession>.
+Func<IDocumentSession>. There's no need to worry about HttpContext.Items for request
+scope. The nested container that StructureMap uses to resolve the current behavior
+chain will be disposed after the chain executes. It also ensures the same instance
+of IDocumentSession will be handed out for the entire chain's dependencies.
 
 
 Example Usage
@@ -93,18 +93,18 @@ _____________
 To query the DocumentDatabase you can simply inject the IDocumentSession into
 your Controller/Handler::
 
-  public class GetHandler
+  public class GetPostsHandler
   {
     private readonly IDocumentSession _session;
 
-    public GetHandler(IDocumentSession session)
+    public GetPostsHandler(IDocumentSession session)
     {
       _session = session;
     }
 
-    public dynamic Execute(InputModel inputModel)
+    public PostsViewModel Execute(InputModel inputModel)
     {
-      //use _session to pull in data
+      return _session.Load<PostsViewModel>(inputModel.Id);
     }
   }
 
@@ -128,15 +128,15 @@ for you::
 
         public void Invoke()
         {
-            using(_session)
-            {
-                InsideBehavior.Invoke();
-                _session.SaveChanges();
-            }
+            //You can wrap this in using, but when the nested
+            //container gets disposed, so will the IDocumentSession
+            InsideBehavior.Invoke();
+            _session.SaveChanges();
         }
 
         public void InvokePartial()
         {
+            //Nothing to do here because we are already inside Invoke()
             InsideBehavior.InvokePartial();
         }
     }
@@ -147,7 +147,7 @@ register it within your FubuRegistry.
 One way to do this is by using Policies.WrapBehaviorChainsWith, example::
 
   public class AFubuRegistry : FubuRegistry {
-    public BlogRegistry()
+    public AFubuRegistry()
     {
       Policies.WrapBehaviorChainsWith<RavenDbBehavior>()
     }

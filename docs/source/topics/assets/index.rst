@@ -1,6 +1,8 @@
-======
-Assets
-======
+.. _asset-pipeline:
+
+=================================
+JavaScript / CSS (Asset Pipeline)
+=================================
 
 .. toctree::
    :maxdepth: 2

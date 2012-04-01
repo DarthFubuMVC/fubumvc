@@ -12,5 +12,4 @@ FubuMVC Documentation
 
    intro/index
    topics/index
-   ref/index
-   internals/index
+   contribute/index
