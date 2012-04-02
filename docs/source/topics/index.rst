@@ -4,20 +4,26 @@ Topics
 .. toctree::
    :maxdepth: 2
 
-   gettingstarted
-   assets/index
    auth/index
+   registry/index
    behaviors/index
-   bottles/index
    commandline/index
    controllers/index
    conventions/index
-   deployment/index
-   i18n/index
+   conneg/index
+   routes/index
    models/index
-   movingtofubu/index
-   persistence/index
+   i18n/index
+   assets/index
+   bottles/index
    redirecting/index
-   registry/index
    viewengines/index
-   usingfubunew
+
+Other
+=====
+
+.. toctree::
+   :maxdepth: 2
+
+   other/ravendb
+   other/aspnetmvc

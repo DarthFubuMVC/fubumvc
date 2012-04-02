@@ -1,6 +1,9 @@
-===========================
-Using the Spark view engine
-===========================
+=====
+Spark
+=====
+
+Getting Started
+===============
 
 What is Spark?
 --------------
@@ -20,10 +23,10 @@ options:
     #. As a Bottle (package)
 
 We're going to focus on the NuGet way first since it is the easiest and fastest
-way to get up and running with Spark. If you've followed the :doc:`Getting
-Started <../gettingstarted>` guide, this should look very familiar.
+way to get up and running with Spark. If you've followed the :doc:`getting-started`
+guide, this should look very familiar.
 
-.. image:: images/spark_nuget.png
+.. image:: ../images/spark_nuget.png
    :alt: Installing FubuMVC.Spark with NuGet.
 
 .. note::
@@ -44,7 +47,7 @@ added the Spark reference, there is one line needed in the ``FubuRegistry`` clas
 
 .. code-block:: csharp
 
-    this.UseSpark()
+   Import<SparkEngine>();
 
 And you're up and running with Spark, easy!
 
@@ -52,12 +55,12 @@ Hello, Spark!
 -------------
 
 So now that we have Spark wired up, what are some of the things we can do with
-it? Well, let's get started on that right now. Lets start with the :doc:`Getting
-Started <../gettingstarted>` guide's basic "Hello, World" and make it use Spark.
+it? Well, let's get started on that right now. Lets start with the 
+:doc:`getting-started` guide's basic "Hello, World" and make it use Spark.
 
 We last left off with our controller action looking like this:
 
-.. literalinclude:: ../../../../src/QuickStart/SayHelloController.cs
+.. literalinclude:: ../../../../../src/QuickStart/SayHelloController.cs
    :lines: 47-66
    :linenos:
 
@@ -65,10 +68,10 @@ Converting from FubuHtml to Spark
 '''''''''''''''''''''''''''''''''
 
 So what do we need to do to switch over from FubuHtml over to Spark after we've
-added ``this.UseSpark()`` in our ``FubuRegistry``? First we need to change the
+added ``Import<SparkEngine>()`` in our ``FubuRegistry``? First we need to change the
 return type of the method to a view model.
 
-.. literalinclude:: ../../../../src/QuickStart/SayHelloSparkController.cs
+.. literalinclude:: ../../../../../src/QuickStart/SayHelloSparkController.cs
    :lines: 5
    :linenos:
 
@@ -80,14 +83,14 @@ return type of the method to a view model.
 Like the NameModel, the SparkHelloViewModel is a simple POCO that the
 get_spark_my_name_is_Name method returns. This class looks like this:
 
-.. literalinclude:: ../../../../src/QuickStart/SayHelloSparkController.cs
+.. literalinclude:: ../../../../../src/QuickStart/SayHelloSparkController.cs
    :lines: 37-40
    :linenos:
 
 Now let's create the Spark view that we want to use with this controller
 action.
 
-.. literalinclude:: ../../../../src/QuickStart/HelloSpark/SayHelloWithoutMaster.spark
+.. literalinclude:: ../../../../../src/QuickStart/HelloSpark/SayHelloWithoutMaster.spark
    :linenos:
    :language: html
 
@@ -99,7 +102,7 @@ action.
 
 Now we can navigate to ``spark/say/my/name/is/Sam`` and we get this view:
 
-.. image:: images/spark_say_hello.png
+.. image:: ../images/spark_say_hello.png
    :alt: Say my name controller using Spark for the view
 
 Wiring views to controller actions
@@ -132,14 +135,14 @@ So how do we go about setting up a master page? First we need to create a folder
 named ``Shared`` in the root of our project, then in that directory create a
 file named ``Application.spark``.
 
-.. image:: images/spark_master_page.png
+.. image:: ../images/spark_master_page.png
    :alt: Application.spark under the Shared\ folder
 
 In this file we can place all our HTML that we'd like each page to have. So we
 can take much of what is in the first Spark view and move it to the
 ``Application.Spark`` which looks like this:
 
-.. literalinclude:: ../../../../src/QuickStart/Shared/Application.spark
+.. literalinclude:: ../../../../../src/QuickStart/Shared/Application.spark
    :linenos:
    :language: html
 
@@ -149,7 +152,7 @@ this tag is located.
 
 When we strip away the extra HTML from our Spark file we get this:
 
-.. literalinclude:: ../../../../src/QuickStart/HelloSpark/SayHello.spark
+.. literalinclude:: ../../../../../src/QuickStart/HelloSpark/SayHello.spark
    :linenos:
    :language: html
 

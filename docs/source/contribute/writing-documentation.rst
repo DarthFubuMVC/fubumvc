@@ -29,18 +29,18 @@ Windows there are a few steps that need to be taken.
 
     #. Add the Python directory to the :envvar:`PATH` (i.e., ``C:\Python27``)
 
-    #. Add the Python /Scripts directory to the :envvar:`PATH` (i.e.,
-       ``C:\Python27\Scripts``)
+    #. **On 32-bit Windows skip this step.** Install ``easy_install`` following
+       `these instructions <http://pypi.python.org/pypi/setuptools#windows>`_
 
     #. From the command prompt type ``C:\> easy_install -U Sphinx``
 
+    #. Add the Python /Scripts directory to the :envvar:`PATH` (i.e.,
+       ``C:\Python27\Scripts``)
+
+    #. Test ``sphinx-build`` is available by typing ``c:\> sphinx-build``
+
+
 __ http://python.org/download
-
-.. warning::
-
-    On 64-bit Windows, follow `these instructions to get easy_install intalled
-    <http://pypi.python.org/pypi/setuptools#windows>`_ then run ``easy_install 
-    -U Sphinx``
 
 Once Sphinx is installed, building locally is easy; just ``rake docs:html`` from
 any directory.

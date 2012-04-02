@@ -1,6 +1,6 @@
-====================================
-Registering your FubuMVC Application
-====================================
+==========================================================
+Bootstrapping and Registering Services in Your Application
+==========================================================
 
 .. toctree::
    :maxdepth: 2
