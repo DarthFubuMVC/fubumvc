@@ -68,7 +68,7 @@ Converting from FubuHtml to Spark
 '''''''''''''''''''''''''''''''''
 
 So what do we need to do to switch over from FubuHtml over to Spark after we've
-added ``this.UseSpark()`` in our ``FubuRegistry``? First we need to change the
+added ``Import<SparkEngine>()`` in our ``FubuRegistry``? First we need to change the
 return type of the method to a view model.
 
 .. literalinclude:: ../../../../../src/QuickStart/SayHelloSparkController.cs
