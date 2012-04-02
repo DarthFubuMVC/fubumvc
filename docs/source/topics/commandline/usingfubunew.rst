@@ -57,6 +57,20 @@ This will unzip the contents of the ``MyTemplate.zip`` to the folder
 ``NewTemplateProject`` and run the template transformation on the contents of
 the zip file.
 
+.. _fubunew-adding_solution:
+
+Adding a Fubu template to an existing solution
+----------------------------------------------
+
+Creating an entirely new solution using :program:`fubu.exe` can be very useful,
+but what about the case where we want to add a Fubu template to a solution that
+already exists? For that case, we can use the ``-s`` flag on :ref:`fubu-new`.
+
+This will explode the Fubu template into the existing solution directory (which
+can be overridden by the ``-o`` flag.) Then we look through the new projects
+just created and add them to the solution that was specified using the ``-s``
+flag.
+
 .. _fubunew-zip:
 
 Creating your own template zip
@@ -83,7 +97,7 @@ Once you've extracted the :file:`fubuTemplate.zip` you will see this structure::
 
 Inside of the files will look much like this:
 
-.. literalinclude:: ../../../fubuTemplate/src/FUBUPROJECTNAME\FUBUPROJECTSHORTNAMERegistry.cs
+.. literalinclude:: ../../../../fubuTemplates/default/src/FUBUPROJECTNAME\FUBUPROJECTSHORTNAMERegistry.cs
    :language: csharp
    :linenos:
 
@@ -91,13 +105,30 @@ From this, we can see that there are a few keywords that get replaced when using
 :ref:`fubu new <fubu-new>`. This is the list of keywords and corresponding
 replacements:
 
-==================================== =========================================
+==================================== ===============================================================================
 Keyword                              Replacement
-==================================== =========================================
+==================================== ===============================================================================
 FUBUPROJECTNAME                      Name put in the fubu new command
 FUBUPROJECTSHORTNAME                 Last part of fubu new name (after last .)
-FACEFACE-FACE-FACE-FACE-FACEFACEFACE Guid.NewGuid()
-==================================== =========================================
+GUIDx (where x is a number)          Guid.NewGuid()
+==================================== ===============================================================================
+
+.. highlights::
+
+    **What does GUIDx mean?**
+
+    The GUIDx replacement convention makes it easy for you to create a template that
+    has multiple projects that need to reference each other.
+
+    **Problem:**
+
+    You want a new GUID for both projects but need a way to correlate them so that
+    your second project can reference the first and provide metadata.
+
+    **Solution:**
+
+    The first project uses "GUID1" as its ID. The second project uses "GUID2" as its
+    ID. The second project then uses "GUID1" when referring to the first project.
 
 Modifying the template can be as simple as adding extra classes to adding
 entirely new Projects.
@@ -126,6 +157,20 @@ use the `-g` flag on :ref:`fubu-new`.
 This will clone the git repository `MyFubuTemplate` to the folder
 ``NewGitBasedproject`` and run the template transformation on the contents of
 the cloned repository.
+
+Can't remember long git urls?
+'''''''''''''''''''''''''''''
+
+Fortunately there is a way to alias a git url into something more easily
+remembered using the ``.fubunew-alias`` file. Simply place the file alongside
+:program:`fubu.exe`. The aliases specified in that file can be used with the
+`-g` flag.
+
+There also are two default aliases proveded with or without the
+``.fubunew-alias`` file. These are:
+
+  * fubusln - git://github.com/DarthFubuMVC/rippletemplate.git
+  * fububottle - git://github.com/DarthFubuMVC/bottle-template.git
 
 .. _fubunew-git:
 

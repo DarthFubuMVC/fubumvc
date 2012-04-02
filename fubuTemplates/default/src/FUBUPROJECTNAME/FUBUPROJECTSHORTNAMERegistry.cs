@@ -18,7 +18,7 @@ namespace FUBUPROJECTNAME
             Routes
                 .IgnoreControllerNamespaceEntirely();
 
-            this.UseSpark();
+            Import<SparkEngine>();
 
             Views
                 .TryToAttachWithDefaultConventions();

@@ -615,8 +615,11 @@ Creates a new FubuMVC solution (see :ref:`usingfubunew`)
 
 ``-g`` - Git repository URL for a FubuMVC template.
 
-
 ``-z`` - The path to a zip file containing a FubuMVC template.
+
+``-s`` - Solution to add the template to.
+
+``-o`` - Override path to where unzipping the template files to (used with ``-s``).
 
 Example usage using a Git repository:
 
