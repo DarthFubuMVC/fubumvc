@@ -6,3 +6,4 @@ Bootstrapping and Registering Services in Your Application
    :maxdepth: 2
 
    containers/index
+   configuring_actions_fuburegistry
