@@ -15,6 +15,7 @@ Topics
    models/index
    i18n/index
    assets/index
+   registry/index
    bottles/index
    redirecting/index
    viewengines/index
