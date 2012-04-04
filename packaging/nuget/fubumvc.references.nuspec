@@ -12,18 +12,17 @@
     <description>Minimal assembly references needed for a FubuMVC application. FubuMVC is a compositional, convention-based framework for complex web applications</description>
     <tags>web framework mvc fubumvc</tags>
     <dependencies>
-      <dependency id="Bottles" />
+      <dependency id="Bottles" version="0.9.1.220" />
       <dependency id="CommonServiceLocator" />
-      <dependency id="FubuCore" />
+      <dependency id="FubuCore" version="0.9.8.127" />
       <dependency id="FubuLocalization" />
       <dependency id="HtmlTags" version="1.0.0" />
       <dependency id="StructureMap" />
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\src\FubuMVC.Core\bin\release\FubuMVC.Core.*" target="lib\net40" />	
+    <file src="..\..\src\FubuMVC.Core\bin\release\FubuMVC.Core.*" target="lib\net40" />
     <file src="..\..\src\FubuMVC.StructureMap\bin\release\FubuMVC.StructureMap.*" target="lib\net40" />
-
     <file src="..\..\src\fubu\bin\release\fubu.exe" target="tools" />
     <file src="..\..\src\fubu\bin\release\FubuKayak.*" target="tools" />
     <file src="..\..\src\fubu\bin\release\FubuMVC.OwinHost.*" target="tools" />
@@ -31,13 +30,11 @@
     <file src="..\..\src\fubu\bin\release\Gate.*" target="tools" />
     <file src="..\..\src\fubu\bin\release\Gate.Kayak.*" target="tools" />
     <file src="..\..\src\fubu\bin\release\Gate.Helpers.*" target="tools" />
-
-
     <file src="..\..\src\fubu\bin\release\FubuCore.*" target="tools" />
     <file src="..\..\src\fubu\bin\release\FubuMVC.Core.*" target="tools" />
-    <file src="..\..\src\fubu\bin\release\StructureMap.dll" target="tools" />	
+    <file src="..\..\src\fubu\bin\release\StructureMap.dll" target="tools" />
     <file src="..\..\src\fubu\bin\release\Bottles*.*" target="tools" />
-    <file src="..\..\src\fubu\bin\release\HtmlTags.dll" target="tools" />    
+    <file src="..\..\src\fubu\bin\release\HtmlTags.dll" target="tools" />
     <file src="..\..\build\fubumvc-deployers.zip" target="tools" />
     <file src="..\..\build\*Template.zip" target="tools" />
   </files>

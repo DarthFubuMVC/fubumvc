@@ -148,7 +148,7 @@ task :bundle_getting_started do
 end
 
 def self.bottles(args)
-  bottles = Platform.runtime(Nuget.tool("Bottles.Tools", "BottleRunner.exe"))
+  bottles = Platform.runtime(Nuget.tool("Bottles", "BottleRunner.exe"))
   sh "#{bottles} #{args}"
 end
 
