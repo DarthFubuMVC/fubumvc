@@ -53,3 +53,4 @@ output/*
 src/packages
 repositories.config
 results
+bottles.cmd
