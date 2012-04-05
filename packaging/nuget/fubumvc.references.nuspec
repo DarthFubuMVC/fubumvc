@@ -12,10 +12,10 @@
     <description>Minimal assembly references needed for a FubuMVC application. FubuMVC is a compositional, convention-based framework for complex web applications</description>
     <tags>web framework mvc fubumvc</tags>
     <dependencies>
-      <dependency id="Bottles" version="0.9.1.220" />
+      <dependency id="Bottles" version="0.9.1.222" />
       <dependency id="CommonServiceLocator" />
-      <dependency id="FubuCore" version="0.9.8.127" />
-      <dependency id="FubuLocalization" />
+      <dependency id="FubuCore" version="0.9.8.128" />
+      <dependency id="FubuLocalization" version="0.9.5.15" />
       <dependency id="HtmlTags" version="1.0.0" />
       <dependency id="StructureMap" />
     </dependencies>
@@ -24,8 +24,8 @@
     <file src="..\..\src\FubuMVC.Core\bin\release\FubuMVC.Core.*" target="lib\net40" />
     <file src="..\..\src\FubuMVC.StructureMap\bin\release\FubuMVC.StructureMap.*" target="lib\net40" />
     <file src="..\..\src\fubu\bin\release\fubu.exe" target="tools" />
-<file src="..\..\src\fubu\bin\release\Milkman.dll" target="tools" />
-<file src="..\..\src\fubu\bin\release\Milkman.Deployers.Iis.dll" target="tools" />
+    <file src="..\..\src\fubu\bin\release\Milkman.dll" target="tools" />
+    <file src="..\..\src\fubu\bin\release\Milkman.Deployers.Iis.dll" target="tools" />
     <file src="..\..\src\fubu\bin\release\FubuKayak.*" target="tools" />
     <file src="..\..\src\fubu\bin\release\FubuMVC.OwinHost.*" target="tools" />
     <file src="..\..\src\fubu\bin\release\Kayak.*" target="tools" />
