@@ -37,6 +37,20 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void a_value_of_stringifier_is_registered()
+        {
+            new FubuRegistry().BuildGraph().Services.DefaultServiceFor(typeof (Stringifier)).Value.ShouldBeOfType
+                <Stringifier>();
+        }
+
+        [Test]
+        public void registers_the_display_conversion_registry_activator()
+        {
+            new FubuRegistry().BuildGraph().Services.ServicesFor(typeof (IActivator))
+                .Any(x => x.Type == typeof (DisplayConversionRegistryActivator));
+        }
+
+        [Test]
         public void standin_current_http_request_is_used_as_the_default()
         {
             registeredTypeIs<ICurrentHttpRequest, StandInCurrentHttpRequest>();

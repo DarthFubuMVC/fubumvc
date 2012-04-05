@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using FubuCore.Formatting;
+using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.UI;
 
 namespace FubuMVC.Core
@@ -34,15 +35,7 @@ namespace FubuMVC.Core
 
         private void addStringConversions(DisplayConversionRegistry conversions)
         {
-            Services(x =>
-            {
-                x.SetServiceIfNone(new Stringifier());
-                
-                throw new NotImplementedException();
-                //var stringifier = x.FindAllValues<Stringifier>().First();
-
-                //conversions.Configure(stringifier);
-            });
+            Services(x => x.AddService(typeof (DisplayConversionRegistry), ObjectDef.ForValue(conversions)));
         }
 
         public void StringConversions(Action<DisplayConversionRegistry> configure)

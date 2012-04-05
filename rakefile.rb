@@ -76,7 +76,7 @@ task :bottle_serenity do
 end
 
 desc "Compiles the app"
-task :compile => [:restore_if_missing, :clean, :version, :bottle_serenity] do
+task :compile => [:restore_if_missing, :clean, :version, :bottle_serenity, 'template:build'] do
   MSBuildRunner.compile :compilemode => COMPILE_TARGET, :solutionfile => 'src/FubuMVC.sln', :clrversion => CLR_TOOLS_VERSION
   #AspNetCompilerRunner.compile :webPhysDir => "src/FubuMVC.HelloWorld", :webVirDir => "localhost/xyzzyplugh"
 

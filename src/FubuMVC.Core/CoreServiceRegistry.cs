@@ -1,3 +1,4 @@
+using Bottles;
 using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Conversion;
@@ -20,6 +21,7 @@ namespace FubuMVC.Core
     {
         public CoreServiceRegistry()
         {
+            SetServiceIfNone(new Stringifier());
             AddService(new TypeDescriptorCache());
 
 
@@ -59,6 +61,10 @@ namespace FubuMVC.Core
             SetServiceIfNone<IObjectConverter, ObjectConverter>();
 
             SetServiceIfNone<ISmartRequest, FubuSmartRequest>();
+
+
+
+            AddService<IActivator>(typeof (DisplayConversionRegistryActivator));
         }
     }
 }
