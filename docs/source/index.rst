@@ -13,3 +13,4 @@ FubuMVC Documentation
    intro/index
    topics/index
    contribute/index
+   glossary
