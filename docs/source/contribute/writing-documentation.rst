@@ -149,7 +149,7 @@ Example
 
 So how does all of this work together? Lets take a look with a quick example:
 
-First, the ``ref/fubuexe.rst`` document could have a layout like this:
+First, the :ref:`fubuexe <fubuexe>` document could have a layout like this:
 
 .. code-block:: rst
 

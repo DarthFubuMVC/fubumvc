@@ -37,6 +37,7 @@ FubuContinuation.RedirectTo<T>(Expression<Action<T>> expression)
   T in this case is the type of Controller you want to go to
   In the expression, you can point at the action you want invoked
   Example: FubuContinuation.RedirectTo<Controller>(x => x.Action())
+
 .. warning::
 
   This expression is a convenience to point at where you want to go, if you
