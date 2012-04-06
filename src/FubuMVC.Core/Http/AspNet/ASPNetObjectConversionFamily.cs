@@ -16,7 +16,7 @@ namespace FubuMVC.Core.Http.AspNet
 
         public override object Convert(IPropertyContext context)
         {
-            return context.RawValueFromRequest;
+            return context.RawValueFromRequest.RawValue;
         }
     }
 }

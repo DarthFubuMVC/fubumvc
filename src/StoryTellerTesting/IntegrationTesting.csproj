@@ -36,7 +36,7 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles.0.9.1.222\lib\Bottles.dll</HintPath>
+      <HintPath>..\packages\Bottles.0.9.1.223\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="Castle.Core, Version=2.5.1.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Core.2.5.2\lib\NET35\Castle.Core.dll</HintPath>
@@ -45,7 +45,7 @@
       <HintPath>..\packages\FubuCore.0.9.4.117\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuTestingSupport">
-      <HintPath>..\packages\FubuTestingSupport.0.9.8.128\lib\FubuTestingSupport.dll</HintPath>
+      <HintPath>..\packages\FubuTestingSupport.0.9.8.129\lib\FubuTestingSupport.dll</HintPath>
     </Reference>
     <Reference Include="HtmlTags">
       <HintPath>..\packages\HtmlTags.1.0.0.56\lib\4.0\HtmlTags.dll</HintPath>

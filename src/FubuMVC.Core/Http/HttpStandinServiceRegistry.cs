@@ -8,7 +8,6 @@ namespace FubuMVC.Core.Http
         {
             SetServiceIfNone<ICurrentHttpRequest, StandInCurrentHttpRequest>();
 
-            AddService<ICurrentHttpRequest, StandInCurrentHttpRequest>();
             SetServiceIfNone<IRequestHeaders, RequestHeaders>();
         }
     }

@@ -21,7 +21,7 @@ namespace FubuMVC.Core.Runtime
 
         public void BindProperties(Type type, object target)
         {
-            _binder.Bind(type, target, _context);
+            _binder.BindProperties(type, target, _context);
         }
     }
 

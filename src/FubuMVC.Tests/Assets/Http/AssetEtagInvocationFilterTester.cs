@@ -38,9 +38,9 @@ namespace FubuMVC.Tests.Assets.Http
     public class AssetEtagInvocationFilterTester
     {
         private ServiceArguments theServiceArguments;
-        private StubHeaders theHeaders;
         private EtagCache theCache;
         private AssetEtagInvocationFilter theFilter;
+        private KeyValues theHeaders;
 
         private void stash<T>() where T : class
         {
@@ -49,16 +49,19 @@ namespace FubuMVC.Tests.Assets.Http
 
         private void setRequestIfNoneMatch(string etag)
         {
-            theHeaders.Data[HttpRequestHeaders.IfNoneMatch] = etag;
+
+            theHeaders[HttpRequestHeaders.IfNoneMatch] = etag;
         }
 
         [SetUp]
         public void SetUp()
         {
-            theServiceArguments = new ServiceArguments();
-            theHeaders = new StubHeaders();
+            theHeaders = new KeyValues();
+            var requestData = new RequestData(new FlatValueSource(theHeaders, RequestDataSource.Header.ToString()));
 
-            theServiceArguments.Set(typeof(IRequestHeaders), theHeaders);
+            theServiceArguments = new ServiceArguments();
+
+            theServiceArguments.Set(typeof(IRequestData), requestData);
 
             stash<IHttpWriter>();
             stash<ICurrentChain>();
@@ -71,7 +74,7 @@ namespace FubuMVC.Tests.Assets.Http
         [Test]
         public void returns_continue_if_there_is_no_if_none_match_header()
         {
-            theHeaders.HasHeader(HttpRequestHeaders.IfNoneMatch).ShouldBeFalse();
+            theHeaders.Has(HttpRequestHeaders.IfNoneMatch).ShouldBeFalse();
 
             theFilter.Filter(theServiceArguments).ShouldEqual(DoNext.Continue);
         }
