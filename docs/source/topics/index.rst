@@ -5,6 +5,7 @@ Topics
    :maxdepth: 2
 
    auth/index
+   authorization/index
    registry/index
    behaviors/index
    commandline/index
