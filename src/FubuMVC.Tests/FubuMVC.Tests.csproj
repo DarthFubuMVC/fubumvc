@@ -179,6 +179,7 @@
     <Compile Include="Bugs\DoubleActionRegistrationWhenDiagnosticsIsOnTester.cs" />
     <Compile Include="Caching\OuputCachingNodeTester.cs" />
     <Compile Include="Caching\OutputCachingBehaviorTester.cs" />
+    <Compile Include="can_find_and_load_bottles_with_the_FubuModule_attribute.cs" />
     <Compile Include="Commands\PackagesCommandTester.cs" />
     <Compile Include="Commands\usage_graph_smoke_tester.cs" />
     <Compile Include="ConnegAttributeTester.cs" />

@@ -248,6 +248,8 @@ namespace FubuMVC.Core
     {
     }
 
+
+
     [AttributeUsage(AttributeTargets.Assembly)]
     public class FubuAppAttribute : Attribute
     {

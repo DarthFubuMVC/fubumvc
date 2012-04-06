@@ -28,6 +28,8 @@ namespace FubuMVC.Core.Packaging
 
                 var standaloneLoader = new StandaloneAssemblyPackageLoader(new StandaloneAssemblyFinder());
                 Loader(standaloneLoader);
+
+                Loader(new FubuModuleAttributePackageLoader());
             }
 
 
