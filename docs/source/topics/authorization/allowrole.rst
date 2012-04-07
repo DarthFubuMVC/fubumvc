@@ -1,6 +1,6 @@
-==================================
-Know your role and shut your mouth
-==================================
+==============
+Know your role
+==============
 
 One way to control access rights is ensure the authenticated user is in the
 correct role.
