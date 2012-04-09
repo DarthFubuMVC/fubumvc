@@ -28,4 +28,5 @@ Other
    :maxdepth: 2
 
    other/ravendb
+   other/nhibernate
    other/aspnetmvc

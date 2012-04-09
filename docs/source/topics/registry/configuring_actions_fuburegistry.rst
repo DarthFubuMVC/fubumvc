@@ -34,7 +34,9 @@ This Guide Assumes...
     * That you're planning on using the ASP.NET WebForms View Engine. This guide
       is not yet adapted for Spark or other view engines, but many of the
       techniques are applicable to all view engines. 
-      
+
+.. _setting-up-your-fuburegistry:
+
 Setting up your FubuRegistry
 ============================
 

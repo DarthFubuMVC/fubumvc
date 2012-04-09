@@ -11,7 +11,7 @@ with RavedDB.
 
 Installation
 ____________
-To get started, you will need a FubuMVC project :doc:`getting-started`, add
+To get started, you will need a FubuMVC project :ref:`getting-started`, add
 RavenDB to your references.  You can download RavenDB from: 
 `RavenDB Download Page`_, or simply install it via the nuget package manager::
     Install-Package RavenDB
@@ -23,8 +23,9 @@ RavenDB to your references.  You can download RavenDB from:
 Bootstraping
 ------------
 In order to get our application working we are going to need to setup our
-bootstrapping code in the Global.asax.cs file :doc:`bootstrap`. For this example
-we will write this code directly in the Application_Start() method::
+bootstrapping code in the Global.asax.cs file
+:ref:`setting-up-your-fuburegistry` . For this example we will write this code
+directly in the Application_Start() method::
   FubuApplication
     .For<YourRegistry>()
     .StructureMap(() => new Container(x =>
@@ -102,7 +103,7 @@ your Controller/Handler::
       _session = session;
     }
 
-    public PostsViewModel Execute(InputModel inputModel)
+    public PostsViewModel Execute(PostsInputModel inputModel)
     {
       return _session.Load<PostsViewModel>(inputModel.Id);
     }
@@ -113,7 +114,7 @@ Unit Of Work
 ____________
 One common practice is to save or update your changes at the end of each
 request.  This can be easily achieved with FubuMVC Behavior Chains
-:doc:`behavior-chains`.  Here is an example of a Behavior that calls SaveChanges
+:ref:`behavior`.  Here is an example of a Behavior that calls SaveChanges
 for you::
 
     public class RavenDbBehavior : IActionBehavior
