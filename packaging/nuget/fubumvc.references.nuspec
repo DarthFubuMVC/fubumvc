@@ -21,6 +21,7 @@
     </dependencies>
   </metadata>
   <files>
+    <file src="ripple.xml" target="tools" />
     <file src="..\..\src\FubuMVC.Core\bin\release\FubuMVC.Core.*" target="lib\net40" />
     <file src="..\..\src\FubuMVC.StructureMap\bin\release\FubuMVC.StructureMap.*" target="lib\net40" />
     <file src="..\..\src\fubu\bin\release\fubu.exe" target="tools" />
