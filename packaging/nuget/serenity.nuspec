@@ -15,7 +15,12 @@
       <dependency id="FubuMVC.References"/>
       <dependency id="FubuKayak" />
       <dependency id="StoryTeller" />
-	<dependency id="WebDriver" />
+
+  <dependency id="Selenium.Support" />
+  <dependency id="Selenium.WebDriver"/>
+  <dependency id="Selenium.WebDriverBackedSelenium"  />
+
+
     </dependencies>
   </metadata>
   <files>
