@@ -48,10 +48,10 @@
       <HintPath>..\..\lib\Microsoft.Web.Administration\Microsoft.Web.Administration.dll</HintPath>
     </Reference>
     <Reference Include="Milkman">
-      <HintPath>..\packages\Milkman.0.9.1.224\lib\Milkman.dll</HintPath>
+      <HintPath>..\packages\Milkman.0.9.1.226\lib\Milkman.dll</HintPath>
     </Reference>
     <Reference Include="Milkman.Deployers.Iis">
-      <HintPath>..\packages\Milkman.Deployers.IIS.0.9.1.51538\lib\Milkman.Deployers.Iis.dll</HintPath>
+      <HintPath>..\packages\Milkman.Deployers.IIS.0.9.1.226\lib\Milkman.Deployers.Iis.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>

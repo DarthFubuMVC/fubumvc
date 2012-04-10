@@ -52,10 +52,10 @@
       <HintPath>..\packages\DotNetZip.1.9.1.8\lib\net20\Ionic.Zip.dll</HintPath>
     </Reference>
     <Reference Include="Milkman">
-      <HintPath>..\packages\Milkman.0.9.1.224\lib\Milkman.dll</HintPath>
+      <HintPath>..\packages\Milkman.0.9.1.226\lib\Milkman.dll</HintPath>
     </Reference>
     <Reference Include="Milkman.Deployers.Iis">
-      <HintPath>..\packages\Milkman.Deployers.IIS.0.9.1.51538\lib\Milkman.Deployers.Iis.dll</HintPath>
+      <HintPath>..\packages\Milkman.Deployers.IIS.0.9.1.226\lib\Milkman.Deployers.Iis.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.framework.dll</HintPath>
