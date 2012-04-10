@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Bottles;
-using Bottles.Assemblies;
+using Bottles.PackageLoaders.Assemblies;
 using FubuCore.Util;
 
 namespace FubuMVC.Tests.Assets

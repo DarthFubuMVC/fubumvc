@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using Bottles;
-using Bottles.Assemblies;
+using Bottles.PackageLoaders.Assemblies;
 using FubuCore;
 using FubuMVC.Core;
 using NUnit.Framework;

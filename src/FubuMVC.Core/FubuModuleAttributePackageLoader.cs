@@ -4,8 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Bottles;
-using Bottles.Assemblies;
 using Bottles.Diagnostics;
+using Bottles.PackageLoaders.Assemblies;
 
 namespace FubuMVC.Core
 {
