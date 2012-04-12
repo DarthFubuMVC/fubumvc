@@ -3,6 +3,6 @@
     public interface IPartialInvoker
     {
         string Invoke<T>() where T : class;
-        string InvokeObject(object model);
+        string InvokeObject(object model, bool withModelBinding = false);
     }
 }

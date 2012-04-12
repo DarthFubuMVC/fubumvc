@@ -10,16 +10,16 @@ namespace FubuMVC.Core.UI
             return InvokePartial<TInputModel>(page, null);
         }
 
-        public static string PartialFor(this IFubuPage page, object input)
+        public static string PartialFor(this IFubuPage page, object input, bool withModelBinding = false)
         {
-            return page.Get<IPartialInvoker>().InvokeObject(input);
+            return page.Get<IPartialInvoker>().InvokeObject(input, withModelBinding);
         }
 
-        public static string Partial<TInputModel>(this IFubuPage page, TInputModel model) where TInputModel : class
+        public static string Partial<TInputModel>(this IFubuPage page, TInputModel model, bool withModelBinding = false) where TInputModel : class
         {
             if (typeof(TInputModel) == typeof(object))
             {
-                return page.Get<IPartialInvoker>().InvokeObject(model);
+                return page.Get<IPartialInvoker>().InvokeObject(model, withModelBinding);
             }
 
             page.Get<IFubuRequest>().Set(model);
