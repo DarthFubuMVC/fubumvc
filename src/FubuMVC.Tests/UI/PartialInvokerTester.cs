@@ -9,13 +9,15 @@ using NUnit.Framework;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.UI
-{
-    [TestFixture]
-    public class when_the_partial_request_is_authorized_by_object : InteractionContext<PartialInvoker>
+{ 
+    public abstract class when_the_partial_request_is_authorized_by_object : InteractionContext<PartialInvoker>
     {
-        private PartialInputModel theInput;
-        private IActionBehavior theAction;
+		protected PartialInputModel theInput;
+        protected IActionBehavior theAction;
 
+    	protected abstract void Invoke();
+    	protected abstract void Configure();
+		
         protected override void beforeEach()
         {
             theInput = new PartialInputModel();
@@ -29,12 +31,10 @@ namespace FubuMVC.Tests.UI
                 .WhenCalled(r => theAction.InvokePartial())
                 .Return(MockFor<IRecordedOutput>());
 
-            MockFor<ISetterBinder>()
-                .Expect(x => x.BindProperties(theInput.GetType(), theInput));
-
             Services.Inject<ITypeResolver>(new TypeResolver());
 
-            ClassUnderTest.InvokeObject(theInput);
+        	Configure();
+        	Invoke();
         }
 
         [Test]
@@ -66,14 +66,68 @@ namespace FubuMVC.Tests.UI
         {
             MockFor<IRecordedOutput>().AssertWasCalled(x => x.GetText());
         }
-
-        [Test]
-        public void should_bind_properties_on_the_input()
-        {
-            MockFor<ISetterBinder>().VerifyAllExpectations();
-        }
     }
 
+	[TestFixture]
+	public class when_the_partial_request_is_authorized_by_object_with_model_binding : when_the_partial_request_is_authorized_by_object
+	{
+		protected override void Configure()
+		{
+			MockFor<ISetterBinder>()
+				.Expect(x => x.BindProperties(theInput.GetType(), theInput));
+		}
+
+		protected override void Invoke()
+		{
+			ClassUnderTest.InvokeObject(theInput, true);
+		}
+
+		[Test]
+		public void should_bind_properties_on_the_input()
+		{
+			MockFor<ISetterBinder>().VerifyAllExpectations();
+		}
+	}
+
+	[TestFixture]
+	public class when_the_partial_request_is_authorized_by_object_without_model_binding : when_the_partial_request_is_authorized_by_object
+	{
+		protected override void Configure()
+		{
+			
+		}
+
+		protected override void Invoke()
+		{
+			ClassUnderTest.InvokeObject(theInput, false);
+		}
+
+		[Test]
+		public void should_not_bind_properties_on_the_input()
+		{
+			MockFor<ISetterBinder>().AssertWasNotCalled(x => x.BindProperties(theInput.GetType(), theInput));
+		}
+	}
+
+	[TestFixture]
+	public class when_the_partial_request_is_authorized_by_object_with_model_binding_unspecified : when_the_partial_request_is_authorized_by_object
+	{
+		protected override void Configure()
+		{
+
+		}
+
+		protected override void Invoke()
+		{
+			ClassUnderTest.InvokeObject(theInput);
+		}
+
+		[Test]
+		public void should_not_bind_properties_on_the_input()
+		{
+			MockFor<ISetterBinder>().AssertWasNotCalled(x => x.BindProperties(theInput.GetType(), theInput));
+		}
+	}
 
     [TestFixture]
     public class when_the_partial_request_is_authorized : InteractionContext<PartialInvoker>

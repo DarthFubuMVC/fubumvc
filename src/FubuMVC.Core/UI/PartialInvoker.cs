@@ -36,14 +36,17 @@ namespace FubuMVC.Core.UI
             return output;
         }
 
-        public string InvokeObject(object model)
+        public string InvokeObject(object model, bool withModelBinding = false)
         {
             var output = string.Empty;
             if (_authorization.IsAuthorized(model))
             {
                 var requestType = _types.ResolveType(model);
-                _setterBinder.BindProperties(requestType, model);
-                _request.Set(requestType, model);
+				if (withModelBinding)
+				{
+					_setterBinder.BindProperties(requestType, model);
+				}
+            	_request.Set(requestType, model);
                 output = invokeWrapped(requestType);
             }
             return output;
