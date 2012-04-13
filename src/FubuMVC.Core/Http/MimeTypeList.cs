@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Http
 {
@@ -21,6 +23,11 @@ namespace FubuMVC.Core.Http
                     _mimeTypes.Add(type);
                 });
             }
+        }
+
+        public MimeTypeList(params MimeType[] mimeTypes)
+        {
+            _mimeTypes.AddRange(mimeTypes.Select(x => x.Value));
         }
 
         public void AddMimeType(string mimeType)

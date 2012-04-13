@@ -34,6 +34,8 @@ namespace FubuMVC.Core.Runtime
         public static readonly MimeType Bmp = New("image/bmp", ".bmp", ".bm").Folder(AssetFolder.images);
         public static readonly MimeType Unknown = New("dunno");
 
+        public static readonly MimeType Xml = New("application/xml", ".xml");
+        public static readonly MimeType Any = New("*/*");
 
         private readonly IList<string> _extensions = new List<string>();
         private readonly string _mimeType;
