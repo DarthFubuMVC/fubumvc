@@ -42,7 +42,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void asymmetric_json_attribute_makes_the_input_take_html_or_json()
         {
-            var theChain = theGraph.BehaviorFor<JsonController>(x => x.Assymmetric(null));
+            var theChain = theGraph.BehaviorFor<JsonController>(x => x.Asymmetric(null));
             var theInput = theChain.ConnegInputNode();
             theInput.AllowHttpFormPosts.ShouldBeTrue();
             theInput.SelectedFormatterTypes.Single().ShouldEqual(typeof(JsonFormatter)); 
@@ -51,7 +51,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void asymmetric_json_attribute_makes_the_output_json_only()
         {
-            var theChain = theGraph.BehaviorFor<JsonController>(x => x.Assymmetric(null));
+            var theChain = theGraph.BehaviorFor<JsonController>(x => x.Asymmetric(null));
             var theOutput = theChain.ConnegOutputNode();
             theOutput.SelectedFormatterTypes.Single().ShouldEqual(typeof(JsonFormatter));
         }
@@ -65,7 +65,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             }
 
             [AsymmetricJson]
-            public Output2 Assymmetric(Input2 input)
+            public Output2 Asymmetric(Input2 input)
             {
                 return null;
             }
