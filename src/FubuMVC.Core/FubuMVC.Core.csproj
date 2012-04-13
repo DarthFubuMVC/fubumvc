@@ -220,6 +220,10 @@
     <Compile Include="Resources\Conneg\New\IMediaWriter.cs" />
     <Compile Include="Resources\Conneg\New\Media.cs" />
     <Compile Include="Resources\Conneg\New\OutputBehavior.cs" />
+    <Compile Include="Resources\Conneg\New\StringWriter.cs" />
+    <Compile Include="Resources\Conneg\New\WriteHtml.cs" />
+    <Compile Include="Resources\Conneg\New\WriterNode.cs" />
+    <Compile Include="Resources\Conneg\New\WriteString.cs" />
     <Compile Include="Resources\ResourcesServiceRegistry.cs" />
     <Compile Include="Runtime\ModelBindingServicesRegistry.cs" />
     <Compile Include="Registration\ActionMethodFilter.cs" />

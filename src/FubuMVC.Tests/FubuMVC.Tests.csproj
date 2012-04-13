@@ -168,6 +168,7 @@
     <Compile Include="Behaviors\AsyncContinueWithBehaviorTests.cs" />
     <Compile Include="Behaviors\AsyncInterceptExceptionBehaviorTester.cs" />
     <Compile Include="Behaviors\BasicBehaviorTester.cs" />
+    <Compile Include="Behaviors\Conditional\AlwaysTester.cs" />
     <Compile Include="Behaviors\Conditional\building_conditional_behaviors_from_object_defs_testing.cs" />
     <Compile Include="Behaviors\Conditional\ConditionalBehaviorInvokerTester.cs" />
     <Compile Include="Behaviors\Conditional\ConditionalObjectDefTester.cs" />
@@ -208,9 +209,15 @@
     <Compile Include="Localization\LocalizationBootstrappingTester.cs" />
     <Compile Include="Localization\RegisterXmlDirectoryLocalizationStorageTester.cs" />
     <Compile Include="Localization\SpinUpLocalizationCachesTester.cs" />
+    <Compile Include="NewConneg\StringWriterTester.cs" />
+    <Compile Include="NewConneg\WriteHtmlTester.cs" />
     <Compile Include="NewConneg\HtmlStringWriterTester.cs" />
     <Compile Include="NewConneg\MediaTester.cs" />
     <Compile Include="NewConneg\OutputBehaviorTester.cs" />
+    <Compile Include="NewConneg\OutputNodeTester.cs" />
+    <Compile Include="NewConneg\WriterNodeTester.cs" />
+    <Compile Include="NewConneg\WriterTester.cs" />
+    <Compile Include="NewConneg\WriteStringTester.cs" />
     <Compile Include="Packaging\ContentOnlyPackageInfoTester.cs" />
     <Compile Include="Packaging\FileSystemVirtualPathProviderTester.cs" />
     <Compile Include="ProcessFactoryTester.cs" />

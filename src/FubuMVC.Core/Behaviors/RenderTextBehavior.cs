@@ -1,3 +1,4 @@
+using FubuCore;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Behaviors
@@ -22,6 +23,7 @@ namespace FubuMVC.Core.Behaviors
         }
     }
 
+    [MarkedForTermination]
     public class RenderHtmlBehavior : RenderTextBehavior<string>
     {
         public RenderHtmlBehavior(IOutputWriter writer, IFubuRequest request) : base(writer, request, MimeType.Html)
@@ -29,6 +31,7 @@ namespace FubuMVC.Core.Behaviors
         }
     }
 
+    [MarkedForTermination]
     public class RenderHtmlBehavior<T> : RenderTextBehavior<T> where T : class
     {
         public RenderHtmlBehavior(IOutputWriter writer, IFubuRequest request)
