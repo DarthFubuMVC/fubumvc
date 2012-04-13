@@ -48,9 +48,9 @@ your asset customizations.  Files using the ``*.asset.config`` or
 
 Alias long asset names or groups of assets::
 
-  jquery-1.7.2.min.js is jquery
-  jquery-ui-1.8.0.min.js is jquery-ui
-  jquery.validate.min.js is jquery-validate
+  jquery is jquery-1.7.2.min.js
+  jquery-ui is jquery-ui-1.8.0.min.js
+  jquery-validate is jquery.validate.min.js
 
 Handle ordering of assets::
 
@@ -83,9 +83,9 @@ How do I configure it in code?
   {
     public ConfigureFubuMVC()
     {
-      Assets.Alias("jquery-1.7.2.min.js").Is("jquery");
-      Assets.Alias("jquery-ui-1.8.0.min.js").Is("jquery-ui");
-      Assets.Alias("jquery.validate.min.js").Is("jquery-validate");
+      Assets.Alias("jquery").Is("jquery-1.7.2.min.js");
+      Assets.Alias("jquery-ui").Is("jquery-ui-1.8.0.min.js");
+      Assets.Alias("jquery-validate").Is("jquery.validate.min.js");
 
       Assets.Asset("jquery-ui").Requires("jquery");
       Assets.Asset("jquery-validate").Requires("jquery");
