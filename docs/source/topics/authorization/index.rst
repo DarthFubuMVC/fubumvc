@@ -13,5 +13,4 @@ authorization rules.
    :maxdepth: 2
 
    allowrole
-
-
+   policies
