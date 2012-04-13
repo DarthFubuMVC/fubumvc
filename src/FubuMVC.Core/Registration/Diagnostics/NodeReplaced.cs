@@ -4,21 +4,21 @@ namespace FubuMVC.Core.Registration.Diagnostics
 {
     public class NodeReplaced : NodeEvent
     {
-        private readonly BehaviorNode _oldNode;
-        private readonly BehaviorNode _newNode;
+        private readonly TracedNode _oldNode;
+        private readonly TracedNode _newNode;
 
-        public NodeReplaced(BehaviorNode oldNode, BehaviorNode newNode)
+        public NodeReplaced(TracedNode oldNode, TracedNode newNode)
         {
             _oldNode = oldNode;
             _newNode = newNode;
         }
 
-        public BehaviorNode OldNode
+        public TracedNode OldNode
         {
             get { return _oldNode; }
         }
 
-        public BehaviorNode NewNode
+        public TracedNode NewNode
         {
             get { return _newNode; }
         }

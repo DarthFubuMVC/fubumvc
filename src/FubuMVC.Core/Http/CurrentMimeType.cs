@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Runtime;
@@ -44,6 +45,12 @@ namespace FubuMVC.Core.Http
         public bool AcceptsAny()
         {
             return AcceptTypes.Contains("*/*");
+        }
+
+        public string SelectFirstMatching(IEnumerable<string> candidates)
+        {
+            var exact = candidates.FirstOrDefault(x => AcceptTypes.Contains(x));
+            return exact ?? (AcceptsAny() ? candidates.FirstOrDefault() : null);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Attachment;
 using FubuTestingSupport;
@@ -69,7 +70,7 @@ namespace FubuMVC.Tests.View
                 get { throw new NotImplementedException(); }
             }
 
-            public Type ViewModelType
+            public Type ViewModel
             {
                 get { throw new NotImplementedException(); }
             }

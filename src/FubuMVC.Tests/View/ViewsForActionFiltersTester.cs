@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.View
                 Name = "AAction",
                 Folder = GetType().Namespace,
                 ViewType =  typeof(AAction),
-                ViewModelType = typeof (ViewModel1)
+                ViewModel = typeof (ViewModel1)
             };
             var views = new List<IViewToken>
             {
@@ -49,7 +49,7 @@ namespace FubuMVC.Tests.View
         public void only_name_and_namespace_match()
         {
             ActionCall action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
-            token.ViewModelType = typeof (ViewModel2);
+            token.ViewModel = typeof (ViewModel2);
 
             filter.Apply(action, bag).Count().ShouldEqual(0);
         }
@@ -84,7 +84,7 @@ namespace FubuMVC.Tests.View
                 Name = "A",
                 Folder = GetType().Namespace,
                 ViewType = typeof(FakeViewToken),
-                ViewModelType = typeof (ViewModel1)
+                ViewModel = typeof (ViewModel1)
             };
             var views = new List<IViewToken>
             {
@@ -111,7 +111,7 @@ namespace FubuMVC.Tests.View
         public void only_name_and_namespace_match()
         {
             ActionCall action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
-            token.ViewModelType = typeof (ViewModel2);
+            token.ViewModel = typeof (ViewModel2);
 
             filter.Apply(action, bag).Count().ShouldEqual(0);
         }
@@ -140,7 +140,7 @@ namespace FubuMVC.Tests.View
     {
         public override BehaviorCategory Category { get { return BehaviorCategory.Output; } }
 
-        public Type ViewModelType { get; set; }
+        public Type ViewModel { get; set; }
 
         public string Folder { get; set; }
 

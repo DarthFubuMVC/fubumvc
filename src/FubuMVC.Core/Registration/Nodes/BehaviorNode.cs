@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Behaviors;
@@ -12,74 +10,13 @@ namespace FubuMVC.Core.Registration.Nodes
     /// <summary>
     ///   BehaviorNode models a single Behavior in the FubuMVC configuration model
     /// </summary>
-    public abstract partial class BehaviorNode : TracedNode, IContainerModel, IEnumerable<BehaviorNode>
+    public abstract partial class BehaviorNode : Node<BehaviorNode, BehaviorChain>, IContainerModel
     {
-        private BehaviorNode _next;
-
-
         public abstract BehaviorCategory Category { get; }
-
-        /// <summary>
-        ///   The next or "inner" BehaviorNode in this BehaviorChain
-        /// </summary>
-        public BehaviorNode Next
-        {
-            get { return _next; }
-            internal set
-            {
-                _next = value;
-                if (value != null) value.Previous = this;
-            }
-        }
-
-        /// <summary>
-        ///   The previous or "outer" BehaviorNode in this BehaviorChain
-        /// </summary>
-        public BehaviorNode Previous { get; internal set; }
-
-        internal BehaviorChain Chain { get; set; }
-
-        /// <summary>
-        ///   From innermost to outermost, iterates through the BehaviorNodes
-        ///   before this BehaviorNode in the BehaviorChain
-        /// </summary>
-        public IEnumerable<BehaviorNode> PreviousNodes
-        {
-            get
-            {
-                if (Previous == null) yield break;
-
-                yield return Previous;
-
-                foreach (var node in Previous.PreviousNodes)
-                {
-                    yield return node;
-                }
-            }
-        }
 
         public virtual string Description
         {
             get { return GetType().GetFullName(); }
-        }
-
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        public IEnumerator<BehaviorNode> GetEnumerator()
-        {
-            if (Next != null)
-            {
-                yield return Next;
-
-                foreach (BehaviorNode node in Next)
-                {
-                    yield return node;
-                }
-            }
         }
 
         /// <summary>
@@ -102,21 +39,6 @@ namespace FubuMVC.Core.Registration.Nodes
 
 
         /// <summary>
-        ///   Retrieves the BehaviorChain that contains this
-        ///   BehaviorNode.  Does a recursive search up the chain
-        /// </summary>
-        /// <returns></returns>
-        public BehaviorChain ParentChain()
-        {
-            if (Chain != null) return Chain;
-
-            if (Previous == null) return null;
-
-            return Previous.ParentChain();
-        }
-
-
-        /// <summary>
         ///   Tests whether or not there are *any* output nodes
         ///   after this BehaviorNode
         /// </summary>
@@ -127,44 +49,8 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
         /// <summary>
-        ///   Inserts the BehaviorNode "node" immediately after this BehaviorNode.
-        ///   Any previously following BehaviorNodes will be attached after "node"
-        /// </summary>
-        /// <param name = "node"></param>
-        public void AddAfter(BehaviorNode node)
-        {
-            var next = Next;
-            Next = node;
-            node.Next = next;
-        }
-
-        /// <summary>
-        ///   Inserts the BehaviorNode "newNode" directly ahead of this BehaviorNode
-        ///   in the BehaviorChain.  All other ordering is preserved
-        /// </summary>
-        /// <param name = "newNode"></param>
-        public void AddBefore(BehaviorNode newNode)
-        {
-            if (PreviousNodes.Contains(newNode)) return;
-
-            newNode.Remove();
-
-            if (Previous != null)
-            {
-                Previous.Next = newNode;
-            }
-
-            if (Previous == null && Chain != null)
-            {
-                Chain.Prepend(newNode);
-            }
-
-            newNode.Next = this;
-        }
-
-        /// <summary>
         ///   Shortcut to put a "wrapping" behavior immediately in front
-        ///   of this BehaviorNode.  Equivalent to AddBefore(Wrapper.For<T>())
+        ///   of this BehaviorNode.  Equivalent to AddBefore(Wrapper.For[T]())
         /// </summary>
         public Wrapper WrapWith<T>() where T : IActionBehavior
         {
@@ -199,6 +85,7 @@ namespace FubuMVC.Core.Registration.Nodes
         ///   Make the behavior *only* execute if the condition is met
         /// </summary>
         /// <param name = "condition"></param>
+        /// <param name="description"></param>
         public void Condition(Func<bool> condition, string description = "Anonymous")
         {
             Trace(new ConditionAdded(description));
@@ -237,74 +124,6 @@ namespace FubuMVC.Core.Registration.Nodes
         {
             Trace(new ConditionAdded(typeof (T)));
             _conditionalDef = ConditionalObjectDef.For<T>();
-        }
-
-
-        /// <summary>
-        ///   Adds a new BehaviorNode to the very end of this BehaviorChain
-        /// </summary>
-        public void AddToEnd(BehaviorNode node)
-        {
-            // Do not append any duplicates
-            if (this.Contains(node)) return;
-
-            var last = this.LastOrDefault() ?? this;
-            last.Next = node;
-        }
-
-        /// <summary>
-        ///   Removes only this BehaviorNode from the BehaviorChain.  Any following nodes
-        ///   would be attached to the previous BehaviorNode
-        /// </summary>
-        public void Remove()
-        {
-            if (ParentChain() != null)
-            {
-                ParentChain().Trace(new NodeRemoved(this));
-            }
-
-            if (Next != null)
-            {
-                Next.Previous = Previous;
-            }
-
-            if (Previous == null && Chain != null && Next != null)
-            {
-                Chain.SetTop(Next);
-            }
-
-            if (Previous != null)
-            {
-                Previous.Next = Next;
-            }
-
-            Previous = null;
-            Next = null;
-        }
-
-        /// <summary>
-        ///   Swaps out this BehaviorNode for the given BehaviorNode
-        /// </summary>
-        public void ReplaceWith(BehaviorNode newNode)
-        {
-            if (ParentChain() != null)
-            {
-                ParentChain().Trace(new NodeReplaced(this, newNode));
-            }
-
-            newNode.Next = Next;
-
-            if (Previous != null)
-            {
-                Previous.Next = newNode;
-            }
-            else if (Chain != null)
-            {
-                Chain.SetTop(newNode);
-            }
-
-            Previous = null;
-            Next = null;
         }
     }
 }

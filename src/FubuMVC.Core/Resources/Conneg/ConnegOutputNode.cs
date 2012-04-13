@@ -8,7 +8,20 @@ using FubuMVC.Core.Resources.Media.Formatters;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
-    public class ConnegOutputNode : ConnegNode
+    public interface IConnegOutputNode
+    {
+        IEnumerable<IMediaWriterNode> Writers { get; }
+        Type InputType { get; }
+        FormatterUsage FormatterUsage { get; }
+        IEnumerable<Type> SelectedFormatterTypes { get; }
+        void AddWriter(IMediaWriterNode node);
+        void JsonOnly();
+        void UseAllFormatters();
+        void UseNoFormatters();
+        void UseFormatter<T>() where T : IFormatter;
+    }
+
+    public class ConnegOutputNode : ConnegNode, IConnegOutputNode
     {
         private readonly IList<IMediaWriterNode> _writers = new List<IMediaWriterNode>();
 

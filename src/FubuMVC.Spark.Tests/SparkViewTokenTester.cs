@@ -47,7 +47,7 @@ namespace FubuMVC.Spark.Tests
         [Test]
         public void view_model_type_is_descriptor_view_model()
         {
-            _token.ViewModelType.ShouldEqual(_descriptor.ViewModel);
+            _token.ViewModel.ShouldEqual(_descriptor.ViewModel);
         }
 
         [Test]

@@ -4,14 +4,14 @@ namespace FubuMVC.Core.Registration.Diagnostics
 {
     public class NodeRemoved : NodeEvent
     {
-        private readonly BehaviorNode _node;
+        private readonly TracedNode _node;
 
-        public NodeRemoved(BehaviorNode node)
+        public NodeRemoved(TracedNode node)
         {
             _node = node;
         }
 
-        public BehaviorNode Node
+        public TracedNode Node
         {
             get { return _node; }
         }

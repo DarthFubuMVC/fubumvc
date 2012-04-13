@@ -212,6 +212,9 @@
     <Compile Include="Http\RouteDataValues.cs" />
     <Compile Include="IFubuRegistry.cs" />
     <Compile Include="Packaging\PackagingServiceRegistry.cs" />
+    <Compile Include="Registration\Nodes\Chain.cs" />
+    <Compile Include="Registration\Nodes\Node.cs" />
+    <Compile Include="Resources\Conneg\New\ConnegClasses.cs" />
     <Compile Include="Resources\ResourcesServiceRegistry.cs" />
     <Compile Include="Runtime\ModelBindingServicesRegistry.cs" />
     <Compile Include="Registration\ActionMethodFilter.cs" />

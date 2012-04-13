@@ -48,5 +48,35 @@ namespace FubuMVC.Tests.Http
         {
             new CurrentMimeType("application/x-www-form-urlencoded; charset=UTF-8", "text/html, */*").AcceptsAny().ShouldBeTrue();
         }
+
+        [Test]
+        public void select_first_matching_no_matches()
+        {
+            new CurrentMimeType("application/x-www-form-urlencoded; charset=UTF-8", "text/html")
+                .SelectFirstMatching(new[]{"application/json"}).ShouldBeNull();
+        }
+
+        [Test]
+        public void select_first_with_a_wild_card()
+        {
+            var currentMimeType = new CurrentMimeType("application/x-www-form-urlencoded; charset=UTF-8", "text/html, */*");
+            currentMimeType
+                .SelectFirstMatching(new[]{"text/json", "application/json"})
+                .ShouldEqual("text/json");
+
+            currentMimeType
+                .SelectFirstMatching(new[] { "application/json", "text/json" })
+                .ShouldEqual("application/json");
+        
+        }
+
+        [Test]
+        public void select_first_when_one_does_match()
+        {
+            var currentMimeType = new CurrentMimeType("application/x-www-form-urlencoded; charset=UTF-8", "text/html, application/json, */*");
+            currentMimeType
+                .SelectFirstMatching(new[] { "text/json", "application/json" })
+                .ShouldEqual("application/json"); 
+        }
     }
 }

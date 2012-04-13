@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using FubuCore;
@@ -15,17 +13,16 @@ using FubuMVC.Core.Security;
 
 namespace FubuMVC.Core.Registration.Nodes
 {
-
     /// <summary>
-    /// BehaviorChain is a configuration model for a single endpoint in a 
-    /// FubuMVC system.  Models route information, the behaviors, and 
-    /// authorization rules
+    ///   BehaviorChain is a configuration model for a single endpoint in a 
+    ///   FubuMVC system.  Models route information, the behaviors, and 
+    ///   authorization rules
     ///   system
     /// </summary>
-    public class BehaviorChain : TracedNode, IRegisterable, IEnumerable<BehaviorNode>, IContainerModel
+    public class BehaviorChain : Chain<BehaviorNode, BehaviorChain>, IRegisterable, IContainerModel
     {
-        private BehaviorNode _top;
-        private IList<IBehaviorInvocationFilter> _filters = new List<IBehaviorInvocationFilter>();
+        private readonly IList<IBehaviorInvocationFilter> _filters = new List<IBehaviorInvocationFilter>();
+        private IRouteDefinition _route;
 
         public BehaviorChain()
         {
@@ -34,9 +31,9 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
         /// <summary>
-        /// Ordered list of IBehaviorInvocationFilter's that can be used
-        /// to apply guard conditions at runtime *before* the behaviors
-        /// are created
+        ///   Ordered list of IBehaviorInvocationFilter's that can be used
+        ///   to apply guard conditions at runtime *before* the behaviors
+        ///   are created
         /// </summary>
         public IList<IBehaviorInvocationFilter> Filters
         {
@@ -49,35 +46,13 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
         /// <summary>
-        /// Does this chain match by either UrlCategory or by Http method?
-        /// </summary>
-        /// <param name="categoryOrHttpMethod"></param>
-        /// <returns></returns>
-        public bool MatchesCategoryOrHttpMethod(string categoryOrHttpMethod)
-        {
-            if (UrlCategory.Category.IsNotEmpty() && UrlCategory.Category.Equals(categoryOrHttpMethod, StringComparison.OrdinalIgnoreCase)) return true;
-
-            if (Route == null) return false;
-
-            return Route.AllowedHttpMethods.Select(x => x.ToUpper()).Contains(categoryOrHttpMethod.ToUpper());
-        }
-
-        /// <summary>
-        /// The outermost BehaviorNode in the chain
-        /// </summary>
-        public BehaviorNode Top
-        {
-            get { return _top; }
-        }
-
-        /// <summary>
-        /// Marks what package or FubuRegistry created this BehaviorChain
-        /// for the sake of diagnostics
+        ///   Marks what package or FubuRegistry created this BehaviorChain
+        ///   for the sake of diagnostics
         /// </summary>
         public string Origin { get; set; }
 
         /// <summary>
-        /// All the ActionCall nodes in this chain
+        ///   All the ActionCall nodes in this chain
         /// </summary>
         public IEnumerable<ActionCall> Calls
         {
@@ -85,7 +60,7 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
         /// <summary>
-        /// All the Output nodes in this chain
+        ///   All the Output nodes in this chain
         /// </summary>
         public IEnumerable<BehaviorNode> Outputs
         {
@@ -93,17 +68,15 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
         /// <summary>
-        /// Marking a BehaviorChain as "PartialOnly" means that no
-        /// Route will be generated and registered for this BehaviorChain.  
-        /// Set this property to true if you only want this BehaviorChain
-        /// to apply to partial requests.
+        ///   Marking a BehaviorChain as "PartialOnly" means that no
+        ///   Route will be generated and registered for this BehaviorChain.  
+        ///   Set this property to true if you only want this BehaviorChain
+        ///   to apply to partial requests.
         /// </summary>
         public bool IsPartialOnly { get; set; }
 
-        private IRouteDefinition _route;
-
         /// <summary>
-        /// Models how the Route for this BehaviorChain will be generated
+        ///   Models how the Route for this BehaviorChain will be generated
         /// </summary>
         public IRouteDefinition Route
         {
@@ -123,53 +96,46 @@ namespace FubuMVC.Core.Registration.Nodes
 
 
         /// <summary>
-        /// Model of the authorization rules for this BehaviorChain
+        ///   Model of the authorization rules for this BehaviorChain
         /// </summary>
         public AuthorizationNode Authorization { get; private set; }
 
         public int Rank
         {
-            get
-            {
-                return IsPartialOnly || Route == null ? 0 : Route.Rank;
-            }
+            get { return IsPartialOnly || Route == null ? 0 : Route.Rank; }
         }
 
-
-        public IEnumerator<BehaviorNode> GetEnumerator()
+        ObjectDef IContainerModel.ToObjectDef(DiagnosticLevel diagnosticLevel)
         {
-            if (Top == null) yield break;
-
-            yield return Top;
-
-            foreach (var node in Top)
-            {
-                yield return node;
-            }
+            return buildObjectDef(diagnosticLevel);
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
+        void IRegisterable.Register(DiagnosticLevel diagnosticLevel, Action<Type, ObjectDef> callback)
         {
-            return GetEnumerator();
+            var objectDef = buildObjectDef(diagnosticLevel);
+
+
+            callback(typeof (IActionBehavior), objectDef);
+            Authorization.As<IAuthorizationRegistration>().Register(Top.UniqueId, callback);
         }
-
-        internal void SetTop(BehaviorNode node)
-        {
-            node.Previous = null;
-
-            if (_top != null)
-            {
-                _top.Chain = null;
-            }
-
-            _top = node;
-            node.Chain = this;
-        }
-
-
 
         /// <summary>
-        /// Tests whether or not this chain has any output nodes
+        ///   Does this chain match by either UrlCategory or by Http method?
+        /// </summary>
+        /// <param name = "categoryOrHttpMethod"></param>
+        /// <returns></returns>
+        public bool MatchesCategoryOrHttpMethod(string categoryOrHttpMethod)
+        {
+            if (UrlCategory.Category.IsNotEmpty() &&
+                UrlCategory.Category.Equals(categoryOrHttpMethod, StringComparison.OrdinalIgnoreCase)) return true;
+
+            if (Route == null) return false;
+
+            return Route.AllowedHttpMethods.Select(x => x.ToUpper()).Contains(categoryOrHttpMethod.ToUpper());
+        }
+
+        /// <summary>
+        ///   Tests whether or not this chain has any output nodes
         /// </summary>
         /// <returns></returns>
         public bool HasOutputBehavior()
@@ -178,9 +144,9 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
         /// <summary>
-        /// Prepends the prefix to the route definition
+        ///   Prepends the prefix to the route definition
         /// </summary>
-        /// <param name="prefix"></param>
+        /// <param name = "prefix"></param>
         public void PrependToUrl(string prefix)
         {
             if (Route != null)
@@ -190,9 +156,9 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
         /// <summary>
-        /// Adds a new BehaviorNode to the very end of this behavior chain
+        ///   Adds a new BehaviorNode to the very end of this behavior chain
         /// </summary>
-        /// <param name="node"></param>
+        /// <param name = "node"></param>
         public void AddToEnd(BehaviorNode node)
         {
             if (Top == null)
@@ -205,10 +171,10 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
         /// <summary>
-        /// Adds a new BehaviorNode of type T to the very end of this
-        /// behavior chain
+        ///   Adds a new BehaviorNode of type T to the very end of this
+        ///   behavior chain
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name = "T"></typeparam>
         /// <returns></returns>
         public T AddToEnd<T>() where T : BehaviorNode, new()
         {
@@ -218,8 +184,8 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
         /// <summary>
-        /// Finds the output model type of the *last*
-        /// ActionCall in this BehaviorChain.  May be null
+        ///   Finds the output model type of the *last*
+        ///   ActionCall in this BehaviorChain.  May be null
         /// </summary>
         /// <returns></returns>
         public Type ActionOutputType()
@@ -229,24 +195,10 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
 
-        void IRegisterable.Register(DiagnosticLevel diagnosticLevel, Action<Type, ObjectDef> callback)
-        {
-            ObjectDef objectDef = buildObjectDef(diagnosticLevel);
-
-
-            callback(typeof (IActionBehavior), objectDef);
-            Authorization.As<IAuthorizationRegistration>().Register(Top.UniqueId, callback);
-        }
-
-        ObjectDef IContainerModel.ToObjectDef(DiagnosticLevel diagnosticLevel)
-        {
-            return buildObjectDef(diagnosticLevel);
-        }
-
         protected ObjectDef buildObjectDef(DiagnosticLevel diagnosticLevel)
         {
             var topDef = Top.As<IContainerModel>().ToObjectDef(diagnosticLevel);
-            
+
             if (diagnosticLevel == DiagnosticLevel.FullRequestTracing && !IsPartialOnly)
             {
                 var objectDef = new ObjectDef(typeof (DiagnosticBehavior)){
@@ -264,31 +216,15 @@ namespace FubuMVC.Core.Registration.Nodes
                     list.Add(def);
                     def = def.FindDependencyDefinitionFor<IActionBehavior>();
                 }
-                                                
+
                 return objectDef;
             }
-                        
+
             return topDef;
         }
 
         /// <summary>
-        /// Sets the specified BehaviorNode as the outermost node
-        /// in this chain
-        /// </summary>
-        /// <param name="node"></param>
-        public void Prepend(BehaviorNode node)
-        {
-            var next = Top;
-            SetTop(node);
-
-            if (next != null)
-            {
-                Top.Next = next;
-            }
-        }
-
-        /// <summary>
-        /// The first ActionCall in this BehaviorChain.  Can be null.
+        ///   The first ActionCall in this BehaviorChain.  Can be null.
         /// </summary>
         /// <returns></returns>
         public ActionCall FirstCall()
@@ -297,8 +233,8 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
         /// <summary>
-        /// Returns the *last* ActionCall in this
-        /// BehaviorChain.  May be null.
+        ///   Returns the *last* ActionCall in this
+        ///   BehaviorChain.  May be null.
         /// </summary>
         /// <returns></returns>
         public ActionCall LastCall()
@@ -307,7 +243,7 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
         /// <summary>
-        /// Returns the InputType of the very first 
+        ///   Returns the InputType of the very first
         /// </summary>
         /// <returns></returns>
         public Type InputType()
@@ -317,10 +253,10 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
         /// <summary>
-        /// Creates a new BehaviorChain for an action method
+        ///   Creates a new BehaviorChain for an action method
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="expression"></param>
+        /// <typeparam name = "T"></typeparam>
+        /// <param name = "expression"></param>
         /// <returns></returns>
         public static BehaviorChain For<T>(Expression<Action<T>> expression)
         {
@@ -332,10 +268,10 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
         /// <summary>
-        /// Checks to see if a Wrapper node of the requested behaviorType anywhere in the chain
-        /// regardless of position
+        ///   Checks to see if a Wrapper node of the requested behaviorType anywhere in the chain
+        ///   regardless of position
         /// </summary>
-        /// <param name="behaviorType"></param>
+        /// <param name = "behaviorType"></param>
         /// <returns></returns>
         public bool IsWrappedBy(Type behaviorType)
         {

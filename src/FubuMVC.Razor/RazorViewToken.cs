@@ -1,5 +1,6 @@
 ﻿using System;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Razor.Registration.Nodes;
@@ -27,7 +28,7 @@ namespace FubuMVC.Razor
             get { return typeof(ITemplate); }
         }
 
-        public Type ViewModelType
+        public Type ViewModel
         {
             get { return _descriptor.ViewModel; }
         }
@@ -41,6 +42,7 @@ namespace FubuMVC.Razor
         {
             get { return string.Empty; }
         }
+
         public override string ToString()
         {
             return _descriptor.RelativePath();

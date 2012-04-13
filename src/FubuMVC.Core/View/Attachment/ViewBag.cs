@@ -18,7 +18,7 @@ namespace FubuMVC.Core.View.Attachment
         public ViewBag(IEnumerable<IViewToken> views)
         {
             _views = views;
-            _viewsByType.OnMissing = type => _views.Where(x => x.ViewModelType == type);
+            _viewsByType.OnMissing = type => _views.Where(x => x.ViewModel == type);
         }
 
         public IEnumerable<IViewToken> ViewsFor(Type viewModelType)

@@ -1,13 +1,14 @@
 using System;
 using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.View;
 
 namespace FubuMVC.WebForms
 {
     public class WebFormViewToken : IViewToken
     {
-        private readonly Type _modelType;
+        private readonly Type _model;
         private readonly Type _viewType;
 
         public WebFormViewToken(Type viewType)
@@ -15,12 +16,12 @@ namespace FubuMVC.WebForms
             _viewType = viewType;
 
             Type closedType = _viewType.FindInterfaceThatCloses(typeof (IFubuPage<>));
-            _modelType = closedType == null ? null : closedType.GetGenericArguments()[0];
+            _model = closedType == null ? null : closedType.GetGenericArguments()[0];
         }
 
         public Type ViewType { get { return _viewType; } }
 
-        public Type ViewModelType { get { return _modelType; } }
+        public Type ViewModel { get { return _model; } }
 
         public IViewToken ToViewToken()
         {

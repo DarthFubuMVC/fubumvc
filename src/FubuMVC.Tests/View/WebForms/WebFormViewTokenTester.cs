@@ -36,7 +36,7 @@ namespace FubuMVC.Tests.View.WebForms
         [Test]
         public void OutputType()
         {
-            token.ViewModelType.ShouldEqual(typeof (ViewModel4));
+            token.ViewModel.ShouldEqual(typeof (ViewModel4));
         }
 
         [Test]

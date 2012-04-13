@@ -1,5 +1,6 @@
 ﻿using System;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.View;
 using FubuMVC.Spark.Registration.Nodes;
 using FubuMVC.Spark.SparkModel;
@@ -26,7 +27,7 @@ namespace FubuMVC.Spark
             get { return typeof(ISparkView); }
         }
 
-        public Type ViewModelType
+        public Type ViewModel
         {
             get { return _descriptor.ViewModel; }
         }
@@ -40,6 +41,7 @@ namespace FubuMVC.Spark
         {
             get { return _descriptor.Namespace; }
         }
+
         public override string ToString()
         {
             return _descriptor.RelativePath();

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View.Model;
@@ -43,9 +43,9 @@ namespace FubuMVC.Spark.Tests
         {
             var views = ClassUnderTest.FindViews(new TypePool(typeof(SparkViewFacilityTester).Assembly), new BehaviorGraph());
             views.ShouldHaveCount(3);
-            views.ShouldContain(x => x.ViewModelType == typeof(ModelA));
-            views.ShouldContain(x => x.ViewModelType == typeof(ModelB));
-            views.ShouldContain(x => x.ViewModelType == typeof(ModelC));
+            views.ShouldContain(x => x.ViewModel == typeof(ModelA));
+            views.ShouldContain(x => x.ViewModel == typeof(ModelB));
+            views.ShouldContain(x => x.ViewModel == typeof(ModelC));
         }
     }
 }

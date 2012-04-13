@@ -208,6 +208,7 @@
     <Compile Include="Localization\LocalizationBootstrappingTester.cs" />
     <Compile Include="Localization\RegisterXmlDirectoryLocalizationStorageTester.cs" />
     <Compile Include="Localization\SpinUpLocalizationCachesTester.cs" />
+    <Compile Include="NewConneg\OutputBehaviorTester.cs" />
     <Compile Include="Packaging\ContentOnlyPackageInfoTester.cs" />
     <Compile Include="Packaging\FileSystemVirtualPathProviderTester.cs" />
     <Compile Include="ProcessFactoryTester.cs" />
