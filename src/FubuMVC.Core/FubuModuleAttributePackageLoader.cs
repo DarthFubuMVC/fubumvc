@@ -13,17 +13,30 @@ namespace FubuMVC.Core
     {
         public IEnumerable<IPackageInfo> Load(IPackageLog log)
         {
-            var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            log.Trace("Looking for assemblies marked with the [FubuModule] attribute in " + baseDirectory);
+            var list = new List<string>{AppDomain.CurrentDomain.BaseDirectory};
 
-            return AssembliesFromPath(baseDirectory,
-                                      assem => assem.GetCustomAttributes(typeof (FubuModuleAttribute), false).Any())
+            string binPath = AppDomain.CurrentDomain.SetupInformation.PrivateBinPath;
+            if (Directory.Exists(binPath))
+            {
+                list.Add(binPath);
+            }
+
+            list.Each(x =>
+            {
+                log.Trace("Looking for assemblies marked with the [FubuModule] attribute in " + x);
+            });
+
+            return list.SelectMany(
+                x =>
+                AssembliesFromPath(x, assem => assem.GetCustomAttributes(typeof (FubuModuleAttribute), false).Any()))
                 .Select(AssemblyPackageInfo.CreateFor);
         }
 
         // TODO -- this is so common here and in FubuMVC, just get something into FubuCore
         public static IEnumerable<Assembly> AssembliesFromPath(string path, Predicate<Assembly> assemblyFilter)
         {
+
+
             var assemblyPaths = Directory.GetFiles(path)
                 .Where(file =>
                        Path.GetExtension(file).Equals(
