@@ -41,5 +41,33 @@ namespace FubuMVC.Core.Resources.Conneg.New
         {
             get { return MimeTypeAttribute.ReadFrom(_formatterType); }
         }
+
+        public bool Equals(WriteWithFormatter other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Equals(other._resourceType, _resourceType) && Equals(other._formatterType, _formatterType);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof (WriteWithFormatter)) return false;
+            return Equals((WriteWithFormatter) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ((_resourceType != null ? _resourceType.GetHashCode() : 0)*397) ^ (_formatterType != null ? _formatterType.GetHashCode() : 0);
+            }
+        }
+
+        public override string ToString()
+        {
+            return string.Format("ResourceType: {0}, FormatterType: {1}", _resourceType, _formatterType);
+        }
     }
 }

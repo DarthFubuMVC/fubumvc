@@ -11,6 +11,35 @@ namespace FubuMVC.Core.Registration.Nodes
         private T _top;
 
 
+        /// <summary>
+        ///   Adds a new Node to the very end of this behavior chain
+        /// </summary>
+        /// <param name = "node"></param>
+        public void AddToEnd(T node)
+        {
+            if (Top == null)
+            {
+                SetTop(node);
+                return;
+            }
+
+            Top.AddToEnd(node);
+        }
+
+        /// <summary>
+        ///   Adds a new Node of type T to the very end of this
+        ///   behavior chain
+        /// </summary>
+        /// <typeparam name = "T"></typeparam>
+        /// <typeparam name="TNode"></typeparam>
+        /// <returns></returns>
+        public TNode AddToEnd<TNode>() where TNode : T, new()
+        {
+            var node = new TNode();
+            AddToEnd(node);
+            return node;
+        }
+
         public IEnumerator<T> GetEnumerator()
         {
             if (Top == null) yield break;

@@ -212,7 +212,7 @@
     <Compile Include="NewConneg\FormatterWriterTester.cs" />
     <Compile Include="NewConneg\FormatterReaderTester.cs" />
     <Compile Include="NewConneg\OutputNodeIntegratedTester.cs" />
-    <Compile Include="NewConneg\WriteWithFormatter.cs" />
+    <Compile Include="NewConneg\WriteWithFormatterTester.cs" />
     <Compile Include="NewConneg\InputBehaviorTester.cs" />
     <Compile Include="NewConneg\mimetype_information_must_be_exposed_on_readers_writers_and_formatters.cs" />
     <Compile Include="NewConneg\ReadWithFormatter.cs" />

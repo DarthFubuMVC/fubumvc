@@ -31,5 +31,15 @@ namespace FubuMVC.Core.Resources.Conneg.New
         {
             return _condition.ShouldExecute();
         }
+
+        public IMediaWriter<T> Writer
+        {
+            get { return _writer; }
+        }
+
+        public IConditional Condition
+        {
+            get { return _condition; }
+        }
     }
 }

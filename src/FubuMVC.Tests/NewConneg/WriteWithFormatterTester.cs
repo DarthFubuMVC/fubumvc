@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace FubuMVC.Tests.NewConneg
 {
     [TestFixture]
-    public class WriteWithFormatter
+    public class WriteWithFormatterTester
     {
         [Test]
         public void finds_mime_types_off_of_the_formatter_type()

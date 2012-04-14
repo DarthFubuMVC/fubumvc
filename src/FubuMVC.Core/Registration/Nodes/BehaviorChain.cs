@@ -155,33 +155,7 @@ namespace FubuMVC.Core.Registration.Nodes
             }
         }
 
-        /// <summary>
-        ///   Adds a new BehaviorNode to the very end of this behavior chain
-        /// </summary>
-        /// <param name = "node"></param>
-        public void AddToEnd(BehaviorNode node)
-        {
-            if (Top == null)
-            {
-                SetTop(node);
-                return;
-            }
 
-            Top.AddToEnd(node);
-        }
-
-        /// <summary>
-        ///   Adds a new BehaviorNode of type T to the very end of this
-        ///   behavior chain
-        /// </summary>
-        /// <typeparam name = "T"></typeparam>
-        /// <returns></returns>
-        public T AddToEnd<T>() where T : BehaviorNode, new()
-        {
-            var node = new T();
-            AddToEnd(node);
-            return node;
-        }
 
         /// <summary>
         ///   Finds the output model type of the *last*
