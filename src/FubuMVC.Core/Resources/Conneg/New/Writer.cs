@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration.ObjectGraph;
@@ -55,6 +56,11 @@ namespace FubuMVC.Core.Resources.Conneg.New
         protected override ObjectDef toWriterDef()
         {
             return new ObjectDef(WriterType);
+        }
+
+        public override IEnumerable<string> Mimetypes
+        {
+            get { return MimeTypeAttribute.ReadFrom(WriterType); }
         }
     }
 }

@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Resources.Conneg.New
 {
@@ -13,6 +15,11 @@ namespace FubuMVC.Core.Resources.Conneg.New
         protected override ObjectDef toWriterDef()
         {
             return ObjectDef.ForType<StringWriter>();
+        }
+
+        public override IEnumerable<string> Mimetypes
+        {
+            get { yield return MimeType.Text.Value; }
         }
     }
 }

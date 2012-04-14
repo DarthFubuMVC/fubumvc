@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors.Conditional;
@@ -126,6 +127,11 @@ namespace FubuMVC.Tests.NewConneg
         protected override ObjectDef toWriterDef()
         {
             return TheWriterDef;
+        }
+
+        public override IEnumerable<string> Mimetypes
+        {
+            get { throw new NotImplementedException(); }
         }
     }
 

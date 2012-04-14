@@ -67,8 +67,16 @@ namespace FubuMVC.Tests.NewConneg
                 new Writer(typeof (OutputTarget));
             });
         }
+
+        [Test]
+        public void reads_mime_types_from_the_attributes_of_the_reader()
+        {
+            var writer = new Writer(typeof (SpecificWriter));
+            writer.Mimetypes.ShouldHaveTheSameElementsAs("text/xml", "text/json");
+        }
     }
 
+    [MimeType("text/xml", "text/json")]
     public class SpecificWriter : IMediaWriter<OutputTarget>
     {
         public void Write(string mimeType, OutputTarget resource)

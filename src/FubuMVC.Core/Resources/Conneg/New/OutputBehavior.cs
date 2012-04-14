@@ -60,5 +60,10 @@ namespace FubuMVC.Core.Resources.Conneg.New
 
             return null;
         }
+
+        public IEnumerable<IMedia<T>> Media
+        {
+            get { return _media; }
+        }
     }
 }

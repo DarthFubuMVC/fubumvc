@@ -2,8 +2,10 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg.New;
+using FubuMVC.Core.Runtime;
 using NUnit.Framework;
 using FubuTestingSupport;
+using System.Linq;
 
 namespace FubuMVC.Tests.NewConneg
 {
@@ -18,6 +20,13 @@ namespace FubuMVC.Tests.NewConneg
                 .FindDependencyDefinitionFor<IMediaWriter<string>>()
                 .Type
                 .ShouldEqual(typeof (StringWriter));
+        }
+
+        [Test]
+        public void mime_type_is_plain_text()
+        {
+            new WriteString().Mimetypes.Single()
+                .ShouldEqual(MimeType.Text.Value);
         }
     }
 }

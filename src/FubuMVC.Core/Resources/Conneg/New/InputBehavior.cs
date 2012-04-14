@@ -1,27 +1,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using FubuCore;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
-using FubuMVC.Core.Resources.Media;
 using FubuMVC.Core.Runtime;
 
-namespace FubuMVC.Core.Resources.Conneg
+namespace FubuMVC.Core.Resources.Conneg.New
 {
-    [MarkedForTermination]
-    public class ConnegInputBehavior<T> : BasicBehavior where T : class
+    public class InputBehavior<T> : BasicBehavior where T : class
     {
-        private readonly IEnumerable<IMediaReader<T>> _readers;
-        private readonly IFubuRequest _request;
         private readonly IOutputWriter _writer;
+        private readonly IFubuRequest _request;
+        private readonly IEnumerable<IReader<T>> _readers;
 
-        public ConnegInputBehavior(IEnumerable<IMediaReader<T>> readers, IOutputWriter writer, IFubuRequest request)
-            : base(PartialBehavior.Executes)
+        public InputBehavior(IOutputWriter writer, IFubuRequest request, IEnumerable<IReader<T>> readers) : base(PartialBehavior.Executes)
         {
-            _readers = readers;
             _writer = writer;
             _request = request;
+            _readers = readers;
         }
 
         protected override DoNext performInvoke()
@@ -46,7 +42,7 @@ namespace FubuMVC.Core.Resources.Conneg
             _writer.WriteResponseCode(HttpStatusCode.UnsupportedMediaType);
         }
 
-        public IMediaReader<T> ChooseReader(CurrentMimeType mimeTypes)
+        public IReader<T> ChooseReader(CurrentMimeType mimeTypes)
         {
             return _readers.FirstOrDefault(x => x.Mimetypes.Contains(mimeTypes.ContentType));
         }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using FubuCore;
 using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Registration.Diagnostics;
@@ -79,5 +80,7 @@ namespace FubuMVC.Core.Resources.Conneg.New
             Trace(new ConditionAdded(typeof(T)));
             _conditionalDef = ConditionalObjectDef.For<T>();
         }
+
+        public abstract IEnumerable<string> Mimetypes { get; }
     }
 }
