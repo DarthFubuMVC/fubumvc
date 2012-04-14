@@ -1,1 +1,1 @@
-src\packages\Bottles.0.9.1.278\tools\BottleRunner.exe %*
+src\packages\Bottles.0.9.1.235\tools\BottleRunner.exe %*

@@ -1,14 +1,14 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using Bottles;
 using Bottles.Diagnostics;
 using Bottles.PackageLoaders;
 using Bottles.PackageLoaders.Assemblies;
+using FubuCore;
 using FubuTestingSupport;
 using NUnit.Framework;
-using FubuCore;
-using System.Linq;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Packaging
@@ -16,10 +16,7 @@ namespace FubuMVC.Tests.Packaging
     [TestFixture]
     public class PackageManifestReaderIntegratedTester
     {
-        private string packageFolder;
-        private PackageManifestReader reader;
-        private string theApplicationDirectory = "../../".ToFullPath();
-        private LinkedFolderPackageLoader linkedFolderReader;
+        #region Setup/Teardown
 
         [SetUp]
         public void SetUp()
@@ -27,7 +24,7 @@ namespace FubuMVC.Tests.Packaging
             packageFolder = FileSystem.Combine("../../../TestPackage1").ToFullPath();
 
             var fileSystem = new FileSystem();
-            var manifest = new PackageManifest(){
+            var manifest = new PackageManifest{
                 Name = "pak1"
             };
 
@@ -45,6 +42,13 @@ namespace FubuMVC.Tests.Packaging
         {
             new FileSystem().DeleteFile(FileSystem.Combine(theApplicationDirectory, PackageManifest.FILE));
         }
+
+        #endregion
+
+        private string packageFolder;
+        private PackageManifestReader reader;
+        private readonly string theApplicationDirectory = "../../".ToFullPath();
+        private LinkedFolderPackageLoader linkedFolderReader;
 
         [Test]
         public void load_a_package_info_from_a_manifest_file_when_given_the_folder()
@@ -69,34 +73,34 @@ namespace FubuMVC.Tests.Packaging
             var directoryContinuation = MockRepository.GenerateMock<Action<string>>();
 
             package.ForFolder(BottleFiles.WebContentFolder, directoryContinuation);
-        
+
             directoryContinuation.AssertWasCalled(x => x.Invoke(packageDirectory));
         }
 
-		[Test]
-		public void load_packages_by_assembly()
-		{
-			var includes = new PackageManifest();
-            
+        [Test]
+        public void load_packages_by_assembly()
+        {
+            var includes = new PackageManifest();
+
             new FileSystem().PersistToFile(includes, theApplicationDirectory, PackageManifest.FILE);
 
-		    var links = new LinkManifest();
+            var links = new LinkManifest();
             links.AddLink("../TestPackage1");
 
             new FileSystem().PersistToFile(links, theApplicationDirectory, LinkManifest.FILE);
 
-			var assemblyLoader = new AssemblyLoader(new PackagingDiagnostics());
+            var assemblyLoader = new AssemblyLoader(new PackagingDiagnostics());
             assemblyLoader.AssemblyFileLoader = file => Assembly.Load(Path.GetFileNameWithoutExtension(file));
-			
-			var package = linkedFolderReader.Load(new PackageLog()).Single();
-			assemblyLoader.LoadAssembliesFromPackage(package);
 
-			assemblyLoader
-				.Assemblies
-				.Single()
-				.GetName()
-				.Name
-				.ShouldEqual("TestPackage1");
-		}
+            var package = linkedFolderReader.Load(new PackageLog()).Single();
+            assemblyLoader.LoadAssembliesFromPackage(package);
+
+            assemblyLoader
+                .Assemblies
+                .Single()
+                .GetName()
+                .Name
+                .ShouldEqual("TestPackage1");
+        }
     }
 }

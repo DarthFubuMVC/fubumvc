@@ -1,14 +1,15 @@
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using AssemblyPackage;
 using Bottles;
 using Bottles.PackageLoaders.Assemblies;
 using FubuCore;
 using FubuMVC.Core;
-using NUnit.Framework;
 using FubuMVC.StructureMap;
-using StructureMap;
 using FubuTestingSupport;
-using System.Linq;
-using System.Collections.Generic;
+using NUnit.Framework;
+using StructureMap;
 
 namespace FubuMVC.Tests
 {
@@ -27,14 +28,15 @@ namespace FubuMVC.Tests
             FubuApplication.For(new FubuRegistry()).StructureMap(new Container())
                 .Bootstrap();
 
-            var assembly = typeof(AssemblyPackage.AssemblyPackageMarker).Assembly;
+            var assembly = typeof (AssemblyPackageMarker).Assembly;
 
             PackageRegistry.PackageAssemblies.ShouldContain(assembly);
 
             PackageRegistry.Packages.Each(x => Debug.WriteLine(x.Name));
 
 
-            PackageRegistry.Packages.OfType<AssemblyPackageInfo>().Any(x => x.Name == AssemblyPackageInfo.CreateFor(assembly).Name)
+            PackageRegistry.Packages.OfType<AssemblyPackageInfo>().Any(
+                x => x.Name == AssemblyPackageInfo.CreateFor(assembly).Name)
                 .ShouldBeTrue();
         }
     }
