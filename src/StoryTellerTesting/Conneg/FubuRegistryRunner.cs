@@ -1,13 +1,16 @@
 using System;
+using System.Net;
 using System.Security.Cryptography;
 using System.Threading;
 using FubuCore;
 using FubuKayak;
 using FubuMVC.Core;
 using FubuMVC.Core.Packaging;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.OwinHost;
 using FubuMVC.StructureMap;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Serenity.Endpoints;
 using StructureMap;
@@ -127,6 +130,32 @@ namespace IntegrationTesting.Conneg
         public void Dispose()
         {
             _application.Stop();
+        }
+    }
+
+    public static class HttpResponseExtensions
+    {
+        public static HttpResponse ContentShouldBe(this HttpResponse response, MimeType mimeType, string content)
+        {
+            response.ContentType.ShouldEqual(mimeType.Value);
+            response.ReadAsText().ShouldEqual(content);
+
+            return response;
+        }
+
+        public static HttpResponse ContentShouldBe(this HttpResponse response, string mimeType, string content)
+        {
+            response.ContentType.ShouldEqual(mimeType);
+            response.ReadAsText().ShouldEqual(content);
+
+            return response;
+        }
+
+        public static HttpResponse StatusCodeShouldBe(this HttpResponse response, HttpStatusCode code)
+        {
+            response.StatusCode.ShouldEqual(code);
+
+            return response;
         }
     }
 }

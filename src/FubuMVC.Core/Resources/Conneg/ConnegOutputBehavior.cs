@@ -43,6 +43,7 @@ namespace FubuMVC.Core.Resources.Conneg
             if (writer == null)
             {
                 _writer.WriteResponseCode(HttpStatusCode.NotAcceptable);
+                _writer.Write(MimeType.Text, "406:  Not Acceptable");
             }
             else
             {

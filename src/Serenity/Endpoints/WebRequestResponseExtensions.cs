@@ -1,6 +1,8 @@
+using System;
 using System.Diagnostics;
 using System.Net;
 using System.Text;
+using System.Threading;
 using FubuCore;
 
 namespace Serenity.Endpoints
@@ -9,7 +11,19 @@ namespace Serenity.Endpoints
     {
         public static HttpResponse ToHttpCall(this WebRequest request)
         {
-            var result = request.BeginGetResponse(r => { }, null);
+            var reset = new ManualResetEvent(false);
+            IAsyncResult result = null;
+
+
+            var thread = new Thread(() =>
+            {
+                result = request.BeginGetResponse(r => { }, null);
+                reset.Set();
+            });
+            thread.Start();
+            thread.Join();
+            reset.WaitOne();
+
             try
             {
                 var response = request.EndGetResponse(result).As<HttpWebResponse>();

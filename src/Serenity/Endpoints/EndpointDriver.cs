@@ -8,12 +8,21 @@ using System.Web;
 using System.Web.Script.Serialization;
 using System.Xml.Serialization;
 using FubuCore;
+using FubuCore.Reflection;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
+using System.Linq;
 
 namespace Serenity.Endpoints
 {
+    public enum ContentFormat
+    {
+        httpForm,
+        json,
+        xml
+    }
+
     public class EndpointDriver
     {
         private readonly IUrlRegistry _urls;
@@ -35,6 +44,27 @@ namespace Serenity.Endpoints
             return request.ToHttpCall();
         } 
 
+        public HttpResponse PostAsForm<T>(T target, string contentType = "application/x-www-form-urlencoded", string accept="*/*")
+        {
+            var dictionary = new Dictionary<string, object>();
+            new TypeDescriptorCache().ForEachProperty(typeof(T), prop =>
+            {
+                var rawValue = prop.GetValue(target, null);
+                var httpValue = rawValue == null ? string.Empty : rawValue.ToString().UrlEncoded();
+
+                dictionary.Add(prop.Name, httpValue);
+            });
+
+            var post = dictionary.Select(x => "{0}={1}".ToFormat(x.Key, x.Value)).Join("&");
+
+            return this.post(target, contentType, accept, stream =>
+            {
+                var bytes = Encoding.Default.GetBytes(post);
+
+                stream.Write(bytes, 0, bytes.Length);
+            });
+        }
+
         public HttpResponse PostJson<T>(T target, string contentType = "text/json", string accept = "*/*")
         {
             return post(target, contentType, accept, stream =>
@@ -53,8 +83,14 @@ namespace Serenity.Endpoints
         {
             return post(target, contentType, accept, stream =>
             {
+                var writer = new StringWriter();
+
                 var serializer = new XmlSerializer(typeof(T));
-                serializer.Serialize(stream, target);
+                serializer.Serialize(writer, target);
+
+                var bytes = Encoding.Default.GetBytes(writer.ToString());
+
+                stream.Write(bytes, 0, bytes.Length);
             });
         }
 

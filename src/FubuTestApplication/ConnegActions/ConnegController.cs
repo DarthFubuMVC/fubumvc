@@ -57,8 +57,6 @@ namespace FubuTestApplication.ConnegActions
         Guid Id { get; set; } 
     }
 
-    
-
     public class SymmetricJson : ConnegMessage
     {
         public Guid Id { get; set;}
