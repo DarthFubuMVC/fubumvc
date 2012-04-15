@@ -5,25 +5,6 @@ using FubuMVC.Core.Registration.ObjectGraph;
 
 namespace FubuMVC.Core.Resources.Conneg.New
 {
-    public abstract class InputNode : BehaviorNode
-    {
-        private readonly ReaderChain _readers = new ReaderChain();
-
-        public override BehaviorCategory Category
-        {
-            get { return BehaviorCategory.Process; }
-        }
-
-        protected override ObjectDef buildObjectDef()
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class ReaderChain : Chain<ReaderNode, ReaderChain>
-    {
-    }
-
     public abstract class ReaderNode : Node<ReaderNode, ReaderChain>, IContainerModel
     {
         public abstract Type InputType { get; }

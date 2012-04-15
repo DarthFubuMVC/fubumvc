@@ -130,7 +130,7 @@ namespace FubuMVC.Core.Registration.Nodes
                 Next.Previous = Previous;
             }
 
-            if (Previous == null && Chain != null && Next != null)
+            if (Previous == null && Chain != null)
             {
                 Chain.SetTop(Next);
             }

@@ -24,6 +24,7 @@ namespace FubuMVC.Core.Resources.Conneg.New
 
             var writerType = typeof (IMediaWriter<>).MakeGenericType(ResourceType);
             
+            // TODO -- validate that it's really an IMediaWriter<T>
             def.Dependency(writerType, toWriterDef());
 
             return def;

@@ -1,4 +1,5 @@
 using System;
+using FubuCore;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.ObjectGraph;
 using HtmlTags;
@@ -10,6 +11,7 @@ namespace FubuMVC.Core.Registration.Nodes
     /// whose responsibility it is to output the end result of a behavior chain (identified by <see cref="BehaviorCategory.Output"/>)
     /// <seealso cref="BehaviorCategory" />
     /// </summary>
+    [MarkedForTermination]
     public class OutputNode : BehaviorNode
     {
         private readonly Type _behaviorType;
@@ -48,6 +50,7 @@ namespace FubuMVC.Core.Registration.Nodes
         }
     }
 
+    [MarkedForTermination]
     public abstract class OutputNode<T> : OutputNode where T : IActionBehavior
     {
         protected OutputNode()
@@ -56,11 +59,13 @@ namespace FubuMVC.Core.Registration.Nodes
         }
     }
 
+    [MarkedForTermination]
     public class RenderHtmlTagNode : OutputNode<RenderHtmlBehavior<HtmlTag>>
     {
         public override string Description { get { return "Write HtmlTag"; } }
     }
 
+    [MarkedForTermination]
     public class RenderHtmlDocumentNode : OutputNode<RenderHtmlBehavior<HtmlDocument>>
     {
         public override string Description { get { return "Write HtmlDocument"; } }

@@ -28,10 +28,7 @@ namespace FubuMVC.Core.Resources.Conneg.New
             get { return _chain; }
         }
 
-        public bool AllowsHttpFormPosts
-        {
-            get { return Writers.Any(x => x is ModelBind); }
-        }
+
 
         protected override ObjectDef buildObjectDef()
         {

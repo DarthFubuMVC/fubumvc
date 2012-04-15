@@ -11,7 +11,7 @@ using FubuCore;
 namespace FubuMVC.Tests.NewConneg
 {
     [TestFixture]
-    public class ReadWithFormatter
+    public class ReadWithFormatterTester
     {
         [Test]
         public void finds_mime_types_off_of_the_formatter_type()

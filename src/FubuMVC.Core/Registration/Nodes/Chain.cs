@@ -60,15 +60,22 @@ namespace FubuMVC.Core.Registration.Nodes
 
         internal void SetTop(T node)
         {
-            node.Previous = null;
-
-            if (_top != null)
+            if (node == null)
             {
-                _top.Chain = null;
+                _top = null;
             }
+            else
+            {
+                node.Previous = null;
 
-            _top = node;
-            node.Chain = this.As<TChain>();
+                if (_top != null)
+                {
+                    _top.Chain = null;
+                }
+
+                _top = node;
+                node.Chain = this.As<TChain>();
+            }
         }
 
         /// <summary>

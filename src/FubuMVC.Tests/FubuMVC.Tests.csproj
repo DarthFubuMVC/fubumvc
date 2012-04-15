@@ -211,11 +211,13 @@
     <Compile Include="Localization\SpinUpLocalizationCachesTester.cs" />
     <Compile Include="NewConneg\FormatterWriterTester.cs" />
     <Compile Include="NewConneg\FormatterReaderTester.cs" />
+    <Compile Include="NewConneg\InputNodeTester.cs" />
     <Compile Include="NewConneg\OutputNodeIntegratedTester.cs" />
+    <Compile Include="NewConneg\ReaderTester.cs" />
     <Compile Include="NewConneg\WriteWithFormatterTester.cs" />
     <Compile Include="NewConneg\InputBehaviorTester.cs" />
     <Compile Include="NewConneg\mimetype_information_must_be_exposed_on_readers_writers_and_formatters.cs" />
-    <Compile Include="NewConneg\ReadWithFormatter.cs" />
+    <Compile Include="NewConneg\ReadWithFormatterTester.cs" />
     <Compile Include="NewConneg\ModelBindingReaderTester.cs" />
     <Compile Include="NewConneg\ModelBindTester.cs" />
     <Compile Include="NewConneg\StringWriterTester.cs" />
