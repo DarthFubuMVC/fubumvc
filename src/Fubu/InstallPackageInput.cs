@@ -13,7 +13,7 @@ namespace Fubu
         [RequiredUsage("install", "uninstall")]
         public string AppFolder { get; set; }
 
-        [FlagAlias("u")]
+        [FlagAlias("uninstall", 'u')]
         [RequiredUsage("uninstall")]
         [ValidUsage("uninstall")]
         [Description("Uninstalls the named package from an application folder")]
