@@ -82,5 +82,10 @@ namespace Serenity.Endpoints
         {
             return new JavaScriptSerializer().Deserialize<T>(_body);
         }
+
+        public string ReadAsText()
+        {
+            return ToString();
+        }
     }
 }

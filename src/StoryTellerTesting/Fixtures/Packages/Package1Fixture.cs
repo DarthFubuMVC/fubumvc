@@ -47,7 +47,7 @@ namespace IntegrationTesting.Fixtures.Packages
         public bool InvokeStringEndpoint()
         {
             var url = "http://localhost/fubu-testing/testpackage1/string/sayhello";
-            return _navigation.GetEndpointDriver().GetHtml(url).Source() == "Hello";
+            return _navigation.GetEndpointDriver().Get(url).Source() == "Hello";
         }
 
         [FormatAs("Open the browser to {url}")]

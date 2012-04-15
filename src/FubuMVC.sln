@@ -72,6 +72,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Razor.Tests", "FubuMVC.Razor.Tests\FubuMVC.Razor.Tests.csproj", "{E046AC32-25C3-4A63-A5DB-FD9F0012F2F2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTesting", "StoryTellerTesting\IntegrationTesting.csproj", "{022C7B24-4417-493F-9F70-E3F4035FBEDA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -550,6 +552,21 @@ Global
 		{E046AC32-25C3-4A63-A5DB-FD9F0012F2F2}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{E046AC32-25C3-4A63-A5DB-FD9F0012F2F2}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
 		{E046AC32-25C3-4A63-A5DB-FD9F0012F2F2}.Retail|x86.ActiveCfg = Release|Any CPU
+		{022C7B24-4417-493F-9F70-E3F4035FBEDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{022C7B24-4417-493F-9F70-E3F4035FBEDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{022C7B24-4417-493F-9F70-E3F4035FBEDA}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{022C7B24-4417-493F-9F70-E3F4035FBEDA}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{022C7B24-4417-493F-9F70-E3F4035FBEDA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{022C7B24-4417-493F-9F70-E3F4035FBEDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{022C7B24-4417-493F-9F70-E3F4035FBEDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{022C7B24-4417-493F-9F70-E3F4035FBEDA}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{022C7B24-4417-493F-9F70-E3F4035FBEDA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{022C7B24-4417-493F-9F70-E3F4035FBEDA}.Release|x86.ActiveCfg = Release|Any CPU
+		{022C7B24-4417-493F-9F70-E3F4035FBEDA}.Retail|Any CPU.ActiveCfg = Release|Any CPU
+		{022C7B24-4417-493F-9F70-E3F4035FBEDA}.Retail|Any CPU.Build.0 = Release|Any CPU
+		{022C7B24-4417-493F-9F70-E3F4035FBEDA}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{022C7B24-4417-493F-9F70-E3F4035FBEDA}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
+		{022C7B24-4417-493F-9F70-E3F4035FBEDA}.Retail|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

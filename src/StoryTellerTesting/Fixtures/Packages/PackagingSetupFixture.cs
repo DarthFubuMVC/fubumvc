@@ -1,5 +1,5 @@
-﻿using StoryTeller.Engine;
-using FubuCore;
+﻿using FubuCore;
+using StoryTeller.Engine;
 
 namespace IntegrationTesting.Fixtures.Packages
 {

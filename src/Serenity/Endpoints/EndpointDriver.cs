@@ -58,7 +58,7 @@ namespace Serenity.Endpoints
             });
         }
 
-        public HttpResponse GetHtml(object subject)
+        public HttpResponse Get(object subject)
         {
             var request = requestForUrlTarget(subject);
             request.Method = "GET";
@@ -68,7 +68,18 @@ namespace Serenity.Endpoints
             return request.ToHttpCall();
         }
 
-        public HttpResponse GetHtml(string url)
+        public HttpResponse Get<T>(Expression<Action<T>> expression, string categoryOrHttpMethod = null)
+        {
+            var url = _urls.UrlFor(expression, categoryOrHttpMethod);
+            return Get(url);
+        }
+
+        /// <summary>
+        /// Executes a GET to the url
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public HttpResponse Get(string url)
         {
             var request = WebRequest.Create(url);
             request.Method = "GET";

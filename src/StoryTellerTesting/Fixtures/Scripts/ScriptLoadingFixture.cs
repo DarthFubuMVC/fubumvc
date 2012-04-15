@@ -40,7 +40,7 @@ namespace IntegrationTesting.Fixtures.Scripts
         [FormatAs("A 'Get' to url {url} contains the text {content}")]
         public bool RequestContainsString(string url, string content)
         {
-            return _navigation.GetEndpointDriver().GetHtml(url).Source().Contains(content);
+            return _navigation.GetEndpointDriver().Get(url).Source().Contains(content);
         }
     }
 }

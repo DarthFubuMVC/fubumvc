@@ -42,7 +42,7 @@
       <HintPath>..\packages\Castle.Core.2.5.2\lib\NET35\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
-      <HintPath>..\packages\FubuCore.0.9.4.117\lib\FubuCore.dll</HintPath>
+      <HintPath>..\packages\FubuCore.0.9.8.130\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuTestingSupport">
       <HintPath>..\packages\FubuTestingSupport.0.9.8.130\lib\FubuTestingSupport.dll</HintPath>
@@ -94,6 +94,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandRunner.cs" />
+    <Compile Include="Conneg\FubuRegistryRunner.cs" />
+    <Compile Include="Conneg\OutputFromAnActionThatReturnsStrings.cs" />
     <Compile Include="debugger.cs" />
     <Compile Include="Fixtures\Aspnet\AspnetCurrentRequestFixture.cs" />
     <Compile Include="Fixtures\Resources\ConnegFixture.cs" />
@@ -119,9 +121,17 @@
     <Compile Include="Template.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FubuKayak\FubuKayak.csproj">
+      <Project>{3C9279B1-DDDF-4E6A-B95A-6276942882EC}</Project>
+      <Name>FubuKayak</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.OwinHost\FubuMVC.OwinHost.csproj">
+      <Project>{EA10DF80-FD95-4172-BC18-DB0DFB279844}</Project>
+      <Name>FubuMVC.OwinHost</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
       <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
