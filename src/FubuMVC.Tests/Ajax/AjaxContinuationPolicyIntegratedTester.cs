@@ -1,21 +1,20 @@
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Resources.Media.Formatters;
-using NUnit.Framework;
-using System.Linq;
+using FubuMVC.Core.Runtime.Formatters;
 using FubuTestingSupport;
-using FubuMVC.Core.Resources.Conneg;
+using NUnit.Framework;
 
 namespace FubuMVC.Tests.Ajax
 {
     [TestFixture]
     public class AjaxContinuationPolicyIntegratedTester
     {
-        private BehaviorGraph theGraph;
+        #region Setup/Teardown
 
         [SetUp]
         public void SetUp()
@@ -26,61 +25,24 @@ namespace FubuMVC.Tests.Ajax
             theGraph = registry.BuildGraph();
         }
 
+        #endregion
+
+        private BehaviorGraph theGraph;
+
         private BehaviorChain chainFor(Expression<Action<Controller1>> method)
         {
             return theGraph.BehaviorFor(method);
         }
 
-        [Test]
-        public void no_behavior_on_actions_that_do_not_return_continuations()
+
+        public class Input
         {
-            chainFor(x => x.NoContinuation(null))
-                .Any(x => x is AjaxContinuationNode)
-                .ShouldBeFalse();
         }
 
-        [Test]
-        public void should_be_a_behavior_on_actions_that_return_the_AjaxContinuation()
+        public class Output
         {
-            chainFor(x => x.BasicContinuation(null))
-                .Any(x => x is AjaxContinuationNode)
-                .ShouldBeTrue();
         }
 
-        [Test]
-        public void should_have_a_conneg_input_node_with_json_or_http_post_input()
-        {
-            var connegInput = chainFor(x => x.BasicContinuation(null)).ConnegInputNode();
-            connegInput.AllowHttpFormPosts.ShouldBeTrue();
-            connegInput.SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof(JsonFormatter));
-        }
-
-        [Test]
-        public void should_be_a_behavior_on_actions_that_return_a_subclass_of_AjaxContinuation()
-        {
-            chainFor(x => x.SpecialContinuation(null))
-                .Any(x => x is AjaxContinuationNode)
-                .ShouldBeTrue();
-        }
-
-        [Test]
-        public void should_only_apply_behavior_once()
-        {
-            var hostRegistry = new FubuRegistry();
-            var packageRegistry = new FubuPackageRegistry();
-            packageRegistry.Actions.IncludeType<Controller1>();
-            hostRegistry.Import(packageRegistry, string.Empty);
-            theGraph = hostRegistry.BuildGraph();
-
-            chainFor(x => x.BasicContinuation(null))
-                .Where(x => x is AjaxContinuationNode)
-                .ShouldHaveCount(1);
-        }
-
-
-
-        public class Input{}
-        public class Output{}
         public class Controller1
         {
             public Output NoContinuation(Input input)
@@ -101,7 +63,52 @@ namespace FubuMVC.Tests.Ajax
 
         public class MySpecialContinuation : AjaxContinuation
         {
-            
+        }
+
+        [Test]
+        public void no_behavior_on_actions_that_do_not_return_continuations()
+        {
+            chainFor(x => x.NoContinuation(null))
+                .Any(x => x is AjaxContinuationNode)
+                .ShouldBeFalse();
+        }
+
+        [Test]
+        public void should_be_a_behavior_on_actions_that_return_a_subclass_of_AjaxContinuation()
+        {
+            chainFor(x => x.SpecialContinuation(null))
+                .Any(x => x is AjaxContinuationNode)
+                .ShouldBeTrue();
+        }
+
+        [Test]
+        public void should_be_a_behavior_on_actions_that_return_the_AjaxContinuation()
+        {
+            chainFor(x => x.BasicContinuation(null))
+                .Any(x => x is AjaxContinuationNode)
+                .ShouldBeTrue();
+        }
+
+        [Test]
+        public void should_have_a_conneg_input_node_with_json_or_http_post_input()
+        {
+            var connegInput = chainFor(x => x.BasicContinuation(null)).Input;
+            connegInput.AllowHttpFormPosts.ShouldBeTrue();
+            connegInput.UsesFormatter<JsonFormatter>().ShouldBeTrue();
+        }
+
+        [Test]
+        public void should_only_apply_behavior_once()
+        {
+            var hostRegistry = new FubuRegistry();
+            var packageRegistry = new FubuPackageRegistry();
+            packageRegistry.Actions.IncludeType<Controller1>();
+            hostRegistry.Import(packageRegistry, string.Empty);
+            theGraph = hostRegistry.BuildGraph();
+
+            chainFor(x => x.BasicContinuation(null))
+                .Where(x => x is AjaxContinuationNode)
+                .ShouldHaveCount(1);
         }
     }
 }

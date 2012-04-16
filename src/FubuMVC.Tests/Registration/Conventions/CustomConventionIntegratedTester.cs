@@ -35,7 +35,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             BehaviorNode behavior =
                 graph.BehaviorFor<JsonOutputAttachmentTesterController>(x => x.StringifyHtml()).Calls.First().Next;
-            behavior.ShouldBeOfType<ConnegOutputNode>();
+            behavior.ShouldBeOfType<OutputNode>();
         }
     }
 
@@ -43,7 +43,7 @@ namespace FubuMVC.Tests.Registration.Conventions
     {
         public void Configure(BehaviorGraph graph)
         {
-            graph.Actions().Each(call => call.AddToEnd(new ConnegOutputNode(typeof (object))));
+            graph.Actions().Each(call => call.AddToEnd(new OutputNode(typeof (object))));
         }
     }
 }

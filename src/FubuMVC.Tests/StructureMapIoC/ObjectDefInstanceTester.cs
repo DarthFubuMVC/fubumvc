@@ -7,7 +7,6 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.AspNet;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Resources.Conneg;
-using FubuMVC.Core.Resources.Media;
 using FubuMVC.Core.Runtime;
 using FubuMVC.StructureMap;
 using FubuMVC.Tests.Behaviors;
@@ -29,9 +28,9 @@ namespace FubuMVC.Tests.StructureMapIoC
 
         #endregion
 
-        public class FakeJsonBehavior : ConnegOutputBehavior<Output>
+        public class FakeJsonBehavior : IActionBehavior
         {
-            public FakeJsonBehavior(IJsonWriter writer, IFubuRequest request, IRequestData data) : base(null, request, null, new IMediaWriter<Output>[0])
+            public FakeJsonBehavior(IJsonWriter writer, IFubuRequest request, IRequestData data) 
             {
                 Writer = writer;
                 Request = request;
@@ -41,6 +40,15 @@ namespace FubuMVC.Tests.StructureMapIoC
             public IJsonWriter Writer { get; set; }
             public IFubuRequest Request { get; set; }
             public IRequestData Data { get; set; }
+            public void Invoke()
+            {
+                throw new NotImplementedException();
+            }
+
+            public void InvokePartial()
+            {
+                throw new NotImplementedException();
+            }
         }
 
         [Test]

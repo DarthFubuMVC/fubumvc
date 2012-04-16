@@ -1,17 +1,16 @@
+using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Resources.Media.Formatters;
-using NUnit.Framework;
-using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Runtime.Formatters;
 using FubuTestingSupport;
-using System.Linq;
+using NUnit.Framework;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
     [TestFixture]
     public class JsonAttributeTesting
     {
-        private BehaviorGraph theGraph;
+        #region Setup/Teardown
 
         [SetUp]
         public void SetUp()
@@ -22,39 +21,9 @@ namespace FubuMVC.Tests.Registration.Conventions
             theGraph = registry.BuildGraph();
         }
 
-        [Test]
-        public void symmetric_json_attribute_makes_the_input_json_only()
-        {
-            var theChain = theGraph.BehaviorFor<JsonController>(x => x.Symmetric(null));
-            var theInput = theChain.ConnegInputNode();
-            theInput.AllowHttpFormPosts.ShouldBeFalse();
-            theInput.SelectedFormatterTypes.Single().ShouldEqual(typeof (JsonFormatter));
-        }
+        #endregion
 
-        [Test]
-        public void symmetric_json_attribute_makes_the_output_json_only()
-        {
-            var theChain = theGraph.BehaviorFor<JsonController>(x => x.Symmetric(null));
-            var theOutput = theChain.ConnegOutputNode();
-            theOutput.SelectedFormatterTypes.Single().ShouldEqual(typeof(JsonFormatter));
-        }
-
-        [Test]
-        public void asymmetric_json_attribute_makes_the_input_take_html_or_json()
-        {
-            var theChain = theGraph.BehaviorFor<JsonController>(x => x.Assymmetric(null));
-            var theInput = theChain.ConnegInputNode();
-            theInput.AllowHttpFormPosts.ShouldBeTrue();
-            theInput.SelectedFormatterTypes.Single().ShouldEqual(typeof(JsonFormatter)); 
-        }
-
-        [Test]
-        public void asymmetric_json_attribute_makes_the_output_json_only()
-        {
-            var theChain = theGraph.BehaviorFor<JsonController>(x => x.Assymmetric(null));
-            var theOutput = theChain.ConnegOutputNode();
-            theOutput.SelectedFormatterTypes.Single().ShouldEqual(typeof(JsonFormatter));
-        }
+        private BehaviorGraph theGraph;
 
         public class JsonController
         {
@@ -93,6 +62,48 @@ namespace FubuMVC.Tests.Registration.Conventions
 
         public class Output3
         {
+        }
+
+        [Test]
+        public void asymmetric_json_attribute_makes_the_input_take_html_or_json()
+        {
+            var theChain = theGraph.BehaviorFor<JsonController>(x => x.Assymmetric(null));
+            var theInput = theChain.Input;
+            theInput.AllowHttpFormPosts.ShouldBeTrue();
+
+            theInput.Readers.Count().ShouldEqual(1);
+            theInput.UsesFormatter<JsonFormatter>().ShouldBeTrue();
+        }
+
+        [Test]
+        public void asymmetric_json_attribute_makes_the_output_json_only()
+        {
+            var theChain = theGraph.BehaviorFor<JsonController>(x => x.Assymmetric(null));
+            var theOutput = theChain.Output;
+
+            theOutput.UsesFormatter<JsonFormatter>().ShouldBeTrue();
+            theOutput.Writers.Count().ShouldEqual(1);
+        }
+
+        [Test]
+        public void symmetric_json_attribute_makes_the_input_json_only()
+        {
+            var theChain = theGraph.BehaviorFor<JsonController>(x => x.Symmetric(null));
+            var theInput = theChain.Input;
+            theInput.AllowHttpFormPosts.ShouldBeFalse();
+
+            theInput.Readers.Count().ShouldEqual(1);
+            theInput.UsesFormatter<JsonFormatter>().ShouldBeTrue();
+        }
+
+        [Test]
+        public void symmetric_json_attribute_makes_the_output_json_only()
+        {
+            var theChain = theGraph.BehaviorFor<JsonController>(x => x.Symmetric(null));
+            var theOutput = theChain.Output;
+
+            theOutput.UsesFormatter<JsonFormatter>().ShouldBeTrue();
+            theOutput.Writers.Count().ShouldEqual(1);
         }
     }
 }

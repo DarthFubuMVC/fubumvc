@@ -6,9 +6,11 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Resources.Conneg.New;
 using FubuMVC.Tests.Behaviors;
 using FubuTestingSupport;
 using NUnit.Framework;
+using OutputNode = FubuMVC.Core.Registration.Nodes.OutputNode;
 
 namespace FubuMVC.Tests.Registration
 {
@@ -48,14 +50,14 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void put_a_dependency_into_the_object_def_for_the_inner_behavior()
         {
-            _wrapper.AddAfter(new ConnegOutputNode(typeof (Output)));
+            _wrapper.AddAfter(new OutputNode(typeof (Output)));
             ObjectDef def = _wrapper.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None);
 
             def.Dependencies.Count().ShouldEqual(1);
 
             var dependency = def.Dependencies.First().ShouldBeOfType<ConfiguredDependency>();
             dependency.DependencyType.ShouldEqual(typeof (IActionBehavior));
-            dependency.Definition.Type.ShouldEqual(typeof (ConnegOutputBehavior<Output>));
+            dependency.Definition.Type.ShouldEqual(typeof (OutputBehavior<Output>));
         }
 
         [Test]

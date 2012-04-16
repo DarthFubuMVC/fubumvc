@@ -4,7 +4,7 @@ using System.Linq;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Resources.Conneg.New;
-using FubuMVC.Core.Resources.Media.Formatters;
+using FubuMVC.Core.Runtime.Formatters;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.NewConneg
@@ -19,13 +19,13 @@ namespace FubuMVC.Tests.NewConneg
                 .ToList()
                 .Where(type => type.IsConcreteTypeOf<IFormatter>() && !type.HasAttribute<MimeTypeAttribute>())
                 .ToList();
-        
+
             if (list.Any())
             {
-                var message = "These formatters do not expose mimetype information" + Environment.NewLine + list.Select(x => x.FullName).Join(Environment.NewLine);
+                var message = "These formatters do not expose mimetype information" + Environment.NewLine +
+                              list.Select(x => x.FullName).Join(Environment.NewLine);
                 Assert.Fail(message);
             }
-        
         }
     }
 }

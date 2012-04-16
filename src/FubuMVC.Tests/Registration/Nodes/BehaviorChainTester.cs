@@ -9,7 +9,7 @@ using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
-using FubuMVC.Core.Resources.Media.Formatters;
+using FubuMVC.Core.Runtime.Formatters;
 using FubuMVC.Core.Security;
 using FubuMVC.FakeControllers;
 using FubuMVC.StructureMap;

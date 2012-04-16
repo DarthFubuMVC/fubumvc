@@ -50,7 +50,6 @@ namespace FubuMVC.Core
         private readonly ViewBagConventionRunner _bagRunner;
         private IConfigurationObserver _observer;
         
-        private readonly ConnegAttachmentPolicy _connegAttachmentPolicy;
         private readonly BehaviorAggregator _behaviorAggregator;
         private readonly List<IActionSource> _actionSources = new List<IActionSource>();
 
@@ -60,7 +59,6 @@ namespace FubuMVC.Core
             _observer = new NulloConfigurationObserver();
             _viewAttacherConvention = new ViewAttacherConvention();
             _bagRunner = new ViewBagConventionRunner(_types);
-            _connegAttachmentPolicy = new ConnegAttachmentPolicy(_types);
 
             setupDefaultConventionsAndPolicies();
         }
@@ -143,7 +141,6 @@ namespace FubuMVC.Core
 
             Services<ModelBindingServicesRegistry>();
             Services<SecurityServicesRegistry>();
-            Services<ResourcesServiceRegistry>();
             Services<HtmlConventionServiceRegistry>();
             Services<PackagingServiceRegistry>();
             Services<HttpStandInServiceRegistry>();

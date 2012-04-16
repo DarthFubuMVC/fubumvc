@@ -82,11 +82,6 @@ namespace FubuMVC.Tests.Registration.Utilities
             return call;
         }
 
-        public JsonOutputSpec Json<C>() where C : class
-        {
-            var json = new JsonOutputSpec(typeof (C));
-            Inner = json;
-            return json;
-        }
+
     }
 }

@@ -5,7 +5,7 @@ namespace FubuMVC.WebForms
 {
     public static class ChainedBehaviorExpressionExtensions
     {
-        public static ChainedBehaviorExpression RenderWebForm<TWebform>(this ChainedBehaviorExpression expression)
+        public static ExplicitRouteConfiguration.ChainedBehaviorExpression RenderWebForm<TWebform>(this ExplicitRouteConfiguration.ChainedBehaviorExpression expression)
         {
             // TODO -- blow up if the web form T is strongly typed to something that 
             // does not match the output type of the output type

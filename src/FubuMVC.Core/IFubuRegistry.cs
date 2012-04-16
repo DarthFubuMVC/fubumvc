@@ -30,7 +30,7 @@ namespace FubuMVC.Core
         void ApplyConvention<TConvention>(TConvention convention)
             where TConvention : IConfigurationAction;
 
-        ChainedBehaviorExpression Route(string pattern);
+        ExplicitRouteConfiguration.ChainedBehaviorExpression Route(string pattern);
         void Import<T>(string prefix) where T : FubuRegistry, new();
         void Import(FubuRegistry registry, string prefix);
         void IncludeDiagnostics(bool shouldInclude);

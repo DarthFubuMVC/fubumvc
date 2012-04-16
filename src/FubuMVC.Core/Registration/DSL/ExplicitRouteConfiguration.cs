@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using FubuCore;
+using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
+using FubuMVC.Core.Resources.Conneg;
 
 namespace FubuMVC.Core.Registration.DSL
 {
@@ -10,6 +13,7 @@ namespace FubuMVC.Core.Registration.DSL
     {
         private readonly IRouteDefinition _route;
         private readonly IList<BehaviorNode> _nodes = new List<BehaviorNode>();
+        private readonly IList<Action<BehaviorChain>> _chainConfigs = new List<Action<BehaviorChain>>();
 
         public ExplicitRouteConfiguration(IRouteDefinition route)
         {
@@ -24,15 +28,51 @@ namespace FubuMVC.Core.Registration.DSL
         void IConfigurationAction.Configure(BehaviorGraph graph)
         {
             var chain = graph.BehaviorFor(_route);
+            _chainConfigs.Each(x => x(chain));
             _nodes.Each(chain.AddToEnd);
-            
-            //graph.Observer.RecordStatus("Adding explicit route {0}".ToFormat(_route));
         }
 
 
         public ChainedBehaviorExpression Chain()
         {
-            return new ChainedBehaviorExpression(node => _nodes.Add(node));
+            return new ChainedBehaviorExpression(this);
+        }
+
+        public class ChainedBehaviorExpression
+        {
+            private readonly ExplicitRouteConfiguration _parent;
+            private Type _outputType;
+
+            public ChainedBehaviorExpression(ExplicitRouteConfiguration parent)
+            {
+                _parent = parent;
+            }
+
+            public ChainedBehaviorExpression Calls<C>(Expression<Action<C>> expression)
+            {
+                var method = ReflectionHelper.GetMethod(expression);
+                var call = new ActionCall(typeof(C), method);
+
+                _outputType = call.OutputType();
+
+                return this;
+            }
+
+            public ChainedBehaviorExpression AlterChain(Action<BehaviorChain> configure)
+            {
+                _parent._chainConfigs.Add(configure);
+                return this;
+            }
+
+            public ChainedBehaviorExpression OutputToJson()
+            {
+                return AlterChain(x => x.MakeAsymmetricJson());
+            }
+
+            public ChainedBehaviorExpression OutputTo(OutputNode node)
+            {
+                return AlterChain(x => x.AddToEnd(node));
+            }
         }
     }
 

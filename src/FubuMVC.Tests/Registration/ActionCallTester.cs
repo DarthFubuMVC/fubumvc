@@ -13,10 +13,12 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Resources.Conneg.New;
 using FubuMVC.Tests.Diagnostics;
 using FubuMVC.Tests.Registration.Conventions;
 using FubuTestingSupport;
 using NUnit.Framework;
+using OutputNode = FubuMVC.Core.Registration.Nodes.OutputNode;
 
 namespace FubuMVC.Tests.Registration
 {
@@ -226,11 +228,11 @@ namespace FubuMVC.Tests.Registration
             var action = ActionCall.For<ControllerTarget>(x => x.BogusMultiInput(null, null));
 
             // first one is ok
-            action.AddToEnd(new ConnegInputNode(typeof(InputModel)));
+            action.AddToEnd(new InputNode(typeof(InputModel)));
             action.Count().ShouldEqual(1);
 
             // try it again, the second should be ignored
-            action.AddToEnd(new ConnegInputNode(typeof(InputModel)));
+            action.AddToEnd(new InputNode(typeof(InputModel)));
             action.Count().ShouldEqual(1);
         }
 
@@ -241,26 +243,26 @@ namespace FubuMVC.Tests.Registration
             var action = ActionCall.For<ControllerTarget>(x => x.BogusMultiInput(null, null));
 
             // first one is ok
-            action.AddToEnd(new ConnegInputNode(typeof(InputModel)));
+            action.AddToEnd(new InputNode(typeof(InputModel)));
             action.Count().ShouldEqual(1);
 
             action.AddToEnd(new Wrapper(typeof(Wrapper1)));
 
             // try it again, the second should be ignored
-            action.AddToEnd(new ConnegInputNode(typeof(InputModel)));
+            action.AddToEnd(new InputNode(typeof(InputModel)));
             action.Count().ShouldEqual(2);
-            action.Count(x => x is ConnegInputNode).ShouldEqual(1);
+            action.Count(x => x is InputNode).ShouldEqual(1);
         }
 
         [Test]
         public void add_before_must_be_idempotent()
         {
             var action = ActionCall.For<ControllerTarget>(x => x.BogusMultiInput(null, null));
-            action.AddBefore(new ConnegInputNode(typeof(Model1)));
+            action.AddBefore(new InputNode(typeof(Model1)));
 
             action.PreviousNodes.Count().ShouldEqual(1);
 
-            action.AddBefore(new ConnegInputNode(typeof(Model1)));
+            action.AddBefore(new InputNode(typeof(Model1)));
 
             action.PreviousNodes.Count().ShouldEqual(1);
         }

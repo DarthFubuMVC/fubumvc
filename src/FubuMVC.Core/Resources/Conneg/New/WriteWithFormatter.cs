@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using FubuCore;
 using FubuMVC.Core.Registration.ObjectGraph;
-using FubuMVC.Core.Resources.Media.Formatters;
+using FubuMVC.Core.Runtime.Formatters;
 
 namespace FubuMVC.Core.Resources.Conneg.New
 {

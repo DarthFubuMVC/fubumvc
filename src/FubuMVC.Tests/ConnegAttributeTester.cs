@@ -3,17 +3,16 @@ using System.Linq.Expressions;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Resources.Media.Formatters;
-using NUnit.Framework;
-using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Runtime.Formatters;
 using FubuTestingSupport;
+using NUnit.Framework;
 
 namespace FubuMVC.Tests
 {
     [TestFixture]
     public class ConnegAttributeTester
     {
-        private BehaviorGraph theGraph;
+        #region Setup/Teardown
 
         [SetUp]
         public void SetUp()
@@ -24,79 +23,13 @@ namespace FubuMVC.Tests
             theGraph = registry.BuildGraph();
         }
 
+        #endregion
+
+        private BehaviorGraph theGraph;
+
         private BehaviorChain chainFor(Expression<Action<Controller1>> action)
         {
             return theGraph.BehaviorFor(action);
-        }
-
-        [Test]
-        public void default_behavior()
-        {
-            var chain = chainFor(x => x.All(null));
-            chain.ConnegInputNode().FormatterUsage.ShouldEqual(FormatterUsage.all);
-            chain.ConnegInputNode().AllowHttpFormPosts.ShouldBeTrue();
-        
-            chain.ConnegOutputNode().FormatterUsage.ShouldEqual(FormatterUsage.all);
-        }
-
-        [Test]
-        public void xml_only()
-        {
-            var chain = chainFor(x => x.XmlOnly(null));
-            chain.ConnegInputNode().FormatterUsage.ShouldEqual(FormatterUsage.selected);
-            chain.ConnegInputNode().AllowHttpFormPosts.ShouldBeFalse();
-            chain.ConnegInputNode().SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof(XmlFormatter));
-
-            chain.ConnegOutputNode().FormatterUsage.ShouldEqual(FormatterUsage.selected);
-            chain.ConnegOutputNode().SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof(XmlFormatter));
-        }
-
-        [Test]
-        public void json_only()
-        {
-            var chain = chainFor(x => x.JsonOnly(null));
-            chain.ConnegInputNode().FormatterUsage.ShouldEqual(FormatterUsage.selected);
-            chain.ConnegInputNode().AllowHttpFormPosts.ShouldBeFalse();
-            chain.ConnegInputNode().SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof(JsonFormatter));
-
-            chain.ConnegOutputNode().FormatterUsage.ShouldEqual(FormatterUsage.selected);
-            chain.ConnegOutputNode().SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof(JsonFormatter));
-        }
-
-        [Test]
-        public void xml_and_json_only()
-        {
-            var chain = chainFor(x => x.XmlAndJson(null));
-            chain.ConnegInputNode().FormatterUsage.ShouldEqual(FormatterUsage.selected);
-            chain.ConnegInputNode().AllowHttpFormPosts.ShouldBeFalse();
-            chain.ConnegInputNode().SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof(JsonFormatter), typeof(XmlFormatter));
-
-            chain.ConnegOutputNode().FormatterUsage.ShouldEqual(FormatterUsage.selected);
-            chain.ConnegOutputNode().SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof(JsonFormatter), typeof(XmlFormatter));
-        }
-
-        [Test]
-        public void xml_and_html()
-        {
-            var chain = chainFor(x => x.XmlAndHtml(null));
-            chain.ConnegInputNode().FormatterUsage.ShouldEqual(FormatterUsage.selected);
-            chain.ConnegInputNode().AllowHttpFormPosts.ShouldBeTrue();
-            chain.ConnegInputNode().SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof(XmlFormatter));
-
-            chain.ConnegOutputNode().FormatterUsage.ShouldEqual(FormatterUsage.selected);
-            chain.ConnegOutputNode().SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof(XmlFormatter));
-        }
-
-        [Test]
-        public void json_and_html()
-        {
-            var chain = chainFor(x => x.JsonAndHtml(null));
-            chain.ConnegInputNode().FormatterUsage.ShouldEqual(FormatterUsage.selected);
-            chain.ConnegInputNode().AllowHttpFormPosts.ShouldBeTrue();
-            chain.ConnegInputNode().SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof(JsonFormatter));
-
-            chain.ConnegOutputNode().FormatterUsage.ShouldEqual(FormatterUsage.selected);
-            chain.ConnegOutputNode().SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof(JsonFormatter));
         }
 
         public class ViewModel1
@@ -157,6 +90,61 @@ namespace FubuMVC.Tests
             {
                 return null;
             }
+        }
+
+        [Test]
+        public void default_behavior()
+        {
+            var chain = chainFor(x => x.All(null));
+            chain.Input.AllowHttpFormPosts.ShouldBeTrue();
+            chain.Input.UsesFormatter<JsonFormatter>().ShouldBeTrue();
+            chain.Input.UsesFormatter<XmlFormatter>().ShouldBeTrue();
+        }
+
+        [Test]
+        public void json_and_html()
+        {
+            var chain = chainFor(x => x.JsonAndHtml(null));
+            chain.Input.AllowHttpFormPosts.ShouldBeTrue();
+            chain.Input.UsesFormatter<JsonFormatter>().ShouldBeTrue();
+            chain.Input.UsesFormatter<XmlFormatter>().ShouldBeFalse();
+        }
+
+        [Test]
+        public void json_only()
+        {
+            var chain = chainFor(x => x.JsonOnly(null));
+            chain.Input.AllowHttpFormPosts.ShouldBeFalse();
+            chain.Input.UsesFormatter<JsonFormatter>().ShouldBeTrue();
+            chain.Input.UsesFormatter<XmlFormatter>().ShouldBeFalse();
+        }
+
+        [Test]
+        public void xml_and_html()
+        {
+            var chain = chainFor(x => x.XmlAndHtml(null));
+            chain.Input.AllowHttpFormPosts.ShouldBeTrue();
+            chain.Input.UsesFormatter<JsonFormatter>().ShouldBeTrue();
+            chain.Input.UsesFormatter<XmlFormatter>().ShouldBeTrue();
+        }
+
+        [Test]
+        public void xml_and_json_only()
+        {
+            var chain = chainFor(x => x.XmlAndJson(null));
+            chain.Input.AllowHttpFormPosts.ShouldBeFalse();
+
+            chain.Input.UsesFormatter<JsonFormatter>().ShouldBeTrue();
+            chain.Input.UsesFormatter<XmlFormatter>().ShouldBeTrue();
+        }
+
+        [Test]
+        public void xml_only()
+        {
+            var chain = chainFor(x => x.XmlOnly(null));
+            chain.Input.AllowHttpFormPosts.ShouldBeFalse();
+            chain.Input.UsesFormatter<JsonFormatter>().ShouldBeFalse();
+            chain.Input.UsesFormatter<XmlFormatter>().ShouldBeTrue();
         }
     }
 }

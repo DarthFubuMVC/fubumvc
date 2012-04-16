@@ -50,7 +50,7 @@ namespace FubuMVC.Diagnostics.Tests.Features.Routes
         [Test]
         public void value_if_actioncall_has_output_node()
         {
-            ClassUnderTest.ValueFor(_graph.BehaviorFor<Test>(x => x.HasOutputNode())).ShouldEqual(new ConnegOutputNode(GetType()).ToString());
+            ClassUnderTest.ValueFor(_graph.BehaviorFor<Test>(x => x.HasOutputNode())).ShouldEqual(new OutputNode(GetType()).ToString());
         }
 
         public class Test
@@ -82,7 +82,7 @@ namespace FubuMVC.Diagnostics.Tests.Features.Routes
             {
                 graph.Actions()
                     .Where(call => call.Method.Name == "HasOutputNode")
-                    .Each(call => call.AddToEnd(new ConnegOutputNode(call.GetType())));
+                    .Each(call => call.ParentChain().ApplyConneg());
             }
         }
     }

@@ -7,13 +7,10 @@ using FubuCore.Conversion;
 using FubuCore.Formatting;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
-using FubuMVC.Core.Resources.Media;
-using FubuMVC.Core.Resources.Media.Projections;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.SessionState;
@@ -233,33 +230,6 @@ namespace FubuMVC.Tests.Registration
             registeredTypeIs<IUrlRegistry, UrlRegistry>();
         }
 
-        [Test]
-        public void value_source_is_registered()
-        {
-            var services = new FubuRegistry().BuildGraph().Services;
-            services.DefaultServiceFor(typeof (IValueSource<>)).Type.ShouldEqual(typeof (ValueSource<>));
-        }
 
-        [Test]
-        public void values_is_registered()
-        {
-            var services = new FubuRegistry().BuildGraph().Services;
-            services.DefaultServiceFor(typeof (IValues<>)).Type.ShouldEqual(typeof (SimpleValues<>));
-        }
-
-
-
-        [Test]
-        public void projection_runner_is_registered()
-        {
-            registeredTypeIs<IProjectionRunner, ProjectionRunner>();
-        }
-
-        [Test]
-        public void generic_projection_runner_is_registered()
-        {
-            var services = new FubuRegistry().BuildGraph().Services;
-            services.DefaultServiceFor(typeof(IProjectionRunner<>)).Type.ShouldEqual(typeof(ProjectionRunner<>));
-        }
     }
 }

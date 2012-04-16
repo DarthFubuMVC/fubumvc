@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
@@ -7,13 +8,10 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Resources.Conneg.New;
-using FubuMVC.Core.Resources.Media.Formatters;
-using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Runtime.Formatters;
 using FubuMVC.Tests.Behaviors;
-using FubuMVC.Tests.View.FakeViews;
 using FubuTestingSupport;
 using NUnit.Framework;
-using System.Collections.Generic;
 using OutputNode = FubuMVC.Core.Resources.Conneg.New.OutputNode;
 
 namespace FubuMVC.Tests.Registration.Conventions
@@ -21,51 +19,19 @@ namespace FubuMVC.Tests.Registration.Conventions
     [TestFixture]
     public class OutputIntegratedAttachmentTester
     {
+        #region Setup/Teardown
+
         [SetUp]
         public void SetUp()
         {
-            graph = new FubuRegistry(x =>
-            {
-                x.Actions.IncludeTypesImplementing<JsonOutputAttachmentTesterController>();
-
-            })
-                .BuildGraph();
+            graph =
+                new FubuRegistry(x => { x.Actions.IncludeTypesImplementing<JsonOutputAttachmentTesterController>(); })
+                    .BuildGraph();
         }
+
+        #endregion
 
         private BehaviorGraph graph;
-
-        [Test]
-        public void automatically_output_methds_that_are_decorated_with_JsonEndpoint_to_json()
-        {
-            BehaviorNode behavior =
-                graph.BehaviorFor<JsonOutputAttachmentTesterController>(x => x.Decorated()).Calls.First().Next;
-            behavior.ShouldBeOfType<ConnegOutputNode>().InputType.ShouldEqual(typeof (ViewModel1));
-        }
-
-        [Test]
-        public void automatically_output_methods_that_return_string_as_text_if_there_is_not_output()
-        {
-            BehaviorNode behavior =
-                graph.BehaviorFor<JsonOutputAttachmentTesterController>(x => x.Stringify()).Calls.First().Next;
-
-            behavior.ShouldBeOfType<OutputNode>().Writers.Single().ShouldBeOfType<WriteString>();
-        }
-
-        [Test]
-        public void
-            only_the_behaviors_with_an_output_model_reflecting_the_json_criteria_specified_in_the_registry_are_output_to_json
-            ()
-        {
-            graph.Behaviors.Count().ShouldBeGreaterThan(20);
-            var methodNames = graph.Behaviors.Where(chain => chain.Top.Any(x => x is ConnegOutputNode)).Select(x => x.Calls.First().Method.Name);
-
-            Debug.WriteLine("Actual");
-            methodNames.Each(x => Debug.WriteLine(x));
-
-            Debug.WriteLine("-------------------------------------------------------");
-            methodNames
-                .ShouldHaveTheSameElementsAs("Decorated", "OutputJson1", "OutputJson2", "OutputJson3");
-        }
 
 
         private BehaviorChain chainFor(Expression<Action<JsonOutputAttachmentTesterController>> expression)
@@ -79,41 +45,80 @@ namespace FubuMVC.Tests.Registration.Conventions
         }
 
         [Test]
-        public void methods_that_take_in_a_json_message_class_should_have_the_json_deserialization_behavior_in_front_of_the_action_call()
+        public void automatically_output_methds_that_are_decorated_with_JsonEndpoint_to_json()
         {
-            chainFor(x => x.JsonInput1(null)).FirstCall().Previous.ShouldBeOfType<ConnegInputNode>().SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof(JsonFormatter));
-            chainFor(x => x.JsonInput2(null)).FirstCall().Previous.ShouldBeOfType<ConnegInputNode>().SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof(JsonFormatter));
-            chainFor(x => x.JsonInput3(null)).FirstCall().Previous.ShouldBeOfType<ConnegInputNode>().SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof(JsonFormatter));
+            var behavior =
+                graph.BehaviorFor<JsonOutputAttachmentTesterController>(x => x.Decorated()).Calls.First().Next;
+            behavior.ShouldBeOfType<OutputNode>().ResourceType.ShouldEqual(typeof (ViewModel1));
         }
 
         [Test]
-        public void methods_that_do_not_take_in_a_json_message_should_not_have_a_json_deserialization_behavior()
+        public void automatically_output_methods_that_return_string_as_text_if_there_is_not_output()
         {
-            chainFor(x => x.NotJson1(null)).Top.Any(x => x is ConnegInputNode).ShouldBeFalse();
-            chainFor(x => x.NotJson2(null)).Top.Any(x => x is ConnegInputNode).ShouldBeFalse();
-            chainFor(x => x.NotJson3(null)).Top.Any(x => x is ConnegInputNode).ShouldBeFalse();
-        }
+            var behavior =
+                graph.BehaviorFor<JsonOutputAttachmentTesterController>(x => x.Stringify()).Calls.First().Next;
 
-        [Test]
-        public void methods_that_return_a_json_message_should_output_json()
-        {
-            BehaviorChain chain = chainFor(x => x.OutputJson1());
-            chain.ConnegOutputNode().SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof(JsonFormatter));
-
-
-            chainFor(x => x.OutputJson2()).Top.Any(x => x.GetType() == typeof(ConnegOutputNode)).ShouldBeTrue();
-            chainFor(x => x.OutputJson3()).Top.Any(x => x.GetType() == typeof(ConnegOutputNode)).ShouldBeTrue();
+            behavior.ShouldBeOfType<OutputNode>().Writers.Single().ShouldBeOfType<WriteString>();
         }
 
         [Test]
         public void methods_that_do_not_return_a_json_message_should_not_output_json()
         {
-            chainFor(x => x.NotOutputJson1()).Top.Any(x => x.GetType() == typeof(ConnegOutputNode)).ShouldBeFalse();
-            chainFor(x => x.NotOutputJson2()).Top.Any(x => x.GetType() == typeof(ConnegOutputNode)).ShouldBeFalse();
-            chainFor(x => x.NotOutputJson3()).Top.Any(x => x.GetType() == typeof(ConnegOutputNode)).ShouldBeFalse();
+            chainFor(x => x.NotOutputJson1()).Top.Any(x => x.GetType() == typeof (OutputNode)).ShouldBeFalse();
+            chainFor(x => x.NotOutputJson2()).Top.Any(x => x.GetType() == typeof (OutputNode)).ShouldBeFalse();
+            chainFor(x => x.NotOutputJson3()).Top.Any(x => x.GetType() == typeof (OutputNode)).ShouldBeFalse();
         }
 
+        [Test]
+        public void methods_that_do_not_take_in_a_json_message_should_not_have_a_json_deserialization_behavior()
+        {
+            chainFor(x => x.NotJson1(null)).Top.Any(x => x is InputNode).ShouldBeFalse();
+            chainFor(x => x.NotJson2(null)).Top.Any(x => x is InputNode).ShouldBeFalse();
+            chainFor(x => x.NotJson3(null)).Top.Any(x => x is InputNode).ShouldBeFalse();
+        }
 
+        [Test]
+        public void methods_that_return_a_json_message_should_output_json()
+        {
+            var chain = chainFor(x => x.OutputJson1());
+            chain.Output.UsesFormatter<JsonFormatter>();
+
+            chainFor(x => x.OutputJson2()).Top.Any(x => x.GetType() == typeof (OutputNode)).ShouldBeTrue();
+            chainFor(x => x.OutputJson3()).Top.Any(x => x.GetType() == typeof (OutputNode)).ShouldBeTrue();
+        }
+
+        [Test]
+        public void
+            methods_that_take_in_a_json_message_class_should_have_the_json_deserialization_behavior_in_front_of_the_action_call
+            ()
+        {
+
+            Assert.Fail("NWO");
+            //chainFor(x => x.JsonInput1(null)).FirstCall().Previous.ShouldBeOfType<InputNode>().
+            //    SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof (JsonFormatter));
+            //chainFor(x => x.JsonInput2(null)).FirstCall().Previous.ShouldBeOfType<InputNode>().
+            //    SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof (JsonFormatter));
+            //chainFor(x => x.JsonInput3(null)).FirstCall().Previous.ShouldBeOfType<InputNode>().
+            //    SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof (JsonFormatter));
+        }
+
+        [Test]
+        public void
+            only_the_behaviors_with_an_output_model_reflecting_the_json_criteria_specified_in_the_registry_are_output_to_json
+            ()
+        {
+            graph.Behaviors.Count().ShouldBeGreaterThan(20);
+            var methodNames =
+                graph.Behaviors.Where(chain => chain.Top.Any(x => x is OutputNode)).Select(
+                    x => x.Calls.First().Method.Name);
+
+            Debug.WriteLine("Actual");
+            methodNames.Each(x => Debug.WriteLine(x));
+
+            Debug.WriteLine("-------------------------------------------------------");
+            methodNames
+                .ShouldHaveTheSameElementsAs("Decorated", "OutputJson1", "OutputJson2", "OutputJson3");
+        }
     }
 
     public class CrudReport
@@ -160,7 +165,10 @@ namespace FubuMVC.Tests.Registration.Conventions
             return null;
         }
 
-        public HtmlTagOutput GetFake(){return null;}
+        public HtmlTagOutput GetFake()
+        {
+            return null;
+        }
 
         [JsonEndpoint]
         public ViewModel1 Decorated()
@@ -168,30 +176,86 @@ namespace FubuMVC.Tests.Registration.Conventions
             return null;
         }
 
-        public void JsonInput1(Json1 json){}
-        public void JsonInput2(Json2 json){}
-        public void JsonInput3(Json3 json){}
+        public void JsonInput1(Json1 json)
+        {
+        }
 
-        public void NotJson1(NotJson1 message){}
-        public void NotJson2(NotJson2 message){}
-        public void NotJson3(NotJson3 message){}
+        public void JsonInput2(Json2 json)
+        {
+        }
 
-        public Json1 OutputJson1(){return new Json1();}
-        public Json2 OutputJson2(){return new Json2();}
-        public Json3 OutputJson3(){return new Json3();}
-    
-        public NotJson1 NotOutputJson1(){return new NotJson1();}
-        public NotJson2 NotOutputJson2(){return new NotJson2();}
-        public NotJson3 NotOutputJson3(){return new NotJson3();}
+        public void JsonInput3(Json3 json)
+        {
+        }
+
+        public void NotJson1(NotJson1 message)
+        {
+        }
+
+        public void NotJson2(NotJson2 message)
+        {
+        }
+
+        public void NotJson3(NotJson3 message)
+        {
+        }
+
+        public Json1 OutputJson1()
+        {
+            return new Json1();
+        }
+
+        public Json2 OutputJson2()
+        {
+            return new Json2();
+        }
+
+        public Json3 OutputJson3()
+        {
+            return new Json3();
+        }
+
+        public NotJson1 NotOutputJson1()
+        {
+            return new NotJson1();
+        }
+
+        public NotJson2 NotOutputJson2()
+        {
+            return new NotJson2();
+        }
+
+        public NotJson3 NotOutputJson3()
+        {
+            return new NotJson3();
+        }
     }
 
-    public class Json1 : JsonMessage{}
-    public class Json2 : JsonMessage{}
-    public class Json3 : JsonMessage{}
+    public class Json1 : JsonMessage
+    {
+    }
 
-    public class NotJson1{}
-    public class NotJson2{}
-    public class NotJson3{}
+    public class Json2 : JsonMessage
+    {
+    }
 
-    public class HtmlTagOutput{}
+    public class Json3 : JsonMessage
+    {
+    }
+
+    public class NotJson1
+    {
+    }
+
+    public class NotJson2
+    {
+    }
+
+    public class NotJson3
+    {
+    }
+
+    public class HtmlTagOutput
+    {
+    }
 }

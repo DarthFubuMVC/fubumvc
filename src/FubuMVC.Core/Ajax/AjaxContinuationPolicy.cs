@@ -21,7 +21,7 @@ namespace FubuMVC.Core.Ajax
 
                               // Apply json formatting and http model binding coming up, but strip out
                               chain.MakeAsymmetricJson();
-                              chain.ConnegOutputNode().Remove(); // get rid of the output node
+                              chain.Output.ClearAll(); // get rid of the output node
 
                               var call = chain.LastCall(); // won't be null after our filter
                               graph.Observer.RecordCallStatus(call, "Adding {0} directly after action call".ToFormat(typeof(AjaxContinuationNode).Name));

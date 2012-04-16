@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using FubuCore;
-using FubuCore.DependencyAnalysis;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
-using FubuMVC.Core.Resources.Media.Formatters;
+using FubuMVC.Core.Runtime.Formatters;
 
 namespace FubuMVC.Core
 {
@@ -253,7 +252,6 @@ namespace FubuMVC.Core
     public class FubuModuleAttribute : Attribute
     {
     }
-
 
 
     [AttributeUsage(AttributeTargets.Assembly)]

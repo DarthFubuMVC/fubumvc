@@ -79,7 +79,7 @@ namespace FubuMVC.Tests.Registration.Expressions
             visitor.Actions += chain =>
                                    {
                                        chain.Top.ShouldBeOfType<ActionCall>();
-                                       chain.Top.Next.ShouldBeOfType<ConnegOutputNode>();
+                                       chain.Top.Next.ShouldBeOfType<OutputNode>();
                                    };
 
             _graph.VisitBehaviors(visitor);

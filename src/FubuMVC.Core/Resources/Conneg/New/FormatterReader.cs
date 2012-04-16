@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using FubuMVC.Core.Resources.Media.Formatters;
+using FubuMVC.Core.Runtime.Formatters;
 
 namespace FubuMVC.Core.Resources.Conneg.New
 {

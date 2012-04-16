@@ -3,7 +3,6 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg.New;
-using FubuMVC.Core.Resources.Media;
 using FubuTestingSupport;
 using NUnit.Framework;
 

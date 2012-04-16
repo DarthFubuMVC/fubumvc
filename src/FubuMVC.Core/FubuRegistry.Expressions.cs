@@ -84,7 +84,8 @@ namespace FubuMVC.Core
         {
             get
             {
-                return new MediaExpression(this, _connegAttachmentPolicy);
+                throw new NotImplementedException("NWO");
+                return new MediaExpression(this);
             }
         }
 
@@ -133,7 +134,7 @@ namespace FubuMVC.Core
         /// <summary>
         /// Expression builder for defining and configuring a <see cref="BehaviorChain"/> for a specific route
         /// </summary>
-        public ChainedBehaviorExpression Route(string pattern)
+        public ExplicitRouteConfiguration.ChainedBehaviorExpression Route(string pattern)
         {
             var expression = new ExplicitRouteConfiguration(pattern);
             _explicits.Add(expression);

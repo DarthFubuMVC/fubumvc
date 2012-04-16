@@ -46,7 +46,7 @@ namespace FubuTestApplication
 
                 var chain = graph.BehaviorFor<ConnegController>(x => x.FormatterOnly(null));
                 chain.ApplyConneg();
-                chain.ConnegInputNode().AllowHttpFormPosts = false;
+                chain.Input.AllowHttpFormPosts = false;
 
                 chain.AddToEnd(Wrapper.For<ConnegMessageOutputter>());
             });

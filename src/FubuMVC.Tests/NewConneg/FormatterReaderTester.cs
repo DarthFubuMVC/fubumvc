@@ -1,5 +1,5 @@
 using FubuMVC.Core.Resources.Conneg.New;
-using FubuMVC.Core.Resources.Media.Formatters;
+using FubuMVC.Core.Runtime.Formatters;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -10,6 +10,15 @@ namespace FubuMVC.Tests.NewConneg
     public class FormatterReaderTester : InteractionContext<FormatterReader<Address, IFormatter>>
     {
         [Test]
+        public void delegates_to_its_formatter_for_mimetypes()
+        {
+            MockFor<IFormatter>().Stub(x => x.MatchingMimetypes)
+                .Return(new[]{"text/json", "application/json"});
+
+            ClassUnderTest.Mimetypes.ShouldHaveTheSameElementsAs("text/json", "application/json");
+        }
+
+        [Test]
         public void delegates_to_its_formatter_when_it_reads()
         {
             var address = new Address();
@@ -18,16 +27,6 @@ namespace FubuMVC.Tests.NewConneg
                 .Return(address);
 
             ClassUnderTest.Read("anything").ShouldBeTheSameAs(address);
-                
-        }
-
-        [Test]
-        public void delegates_to_its_formatter_for_mimetypes()
-        {
-            MockFor<IFormatter>().Stub(x => x.MatchingMimetypes)
-                .Return(new[]{"text/json", "application/json"});
-
-            ClassUnderTest.Mimetypes.ShouldHaveTheSameElementsAs("text/json", "application/json");
         }
     }
 }
