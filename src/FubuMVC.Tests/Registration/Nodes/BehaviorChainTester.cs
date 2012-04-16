@@ -455,6 +455,56 @@ namespace FubuMVC.Tests.Registration.Nodes
         }
 
 
+
+
+
+        [Test]
+        public void has_input_initial()
+        {
+            new BehaviorChain().HasReaders()
+                .ShouldBeFalse();
+        }
+
+        [Test]
+        public void building_input_node_without_an_input_type_blows_up()
+        {
+            Exception<InvalidOperationException>.ShouldBeThrownBy(() =>
+            {
+                new BehaviorChain().Input.ShouldBeNull();
+            });
+        }
+
+        [Test]
+        public void lazy_creation_of_the_input_node_after_having_an_action()
+        {
+            var chain = new BehaviorChain();
+            chain.AddToEnd(ActionCall.For<OneController>(x => x.Query(null)));
+
+            var o1 = chain.Input;
+            var o2 = chain.Input;
+            var o3 = chain.Input;
+
+            o1.ShouldBeTheSameAs(o2);
+            o1.ShouldBeTheSameAs(o3);
+        }
+
+        [Test]
+        public void has_input_depends_on_the_input_node_now()
+        {
+            var chain = new BehaviorChain();
+            chain.AddToEnd(ActionCall.For<OneController>(x => x.Query(null)));
+
+            chain.HasReaders().ShouldBeFalse();
+
+            chain.Input.AddFormatter<JsonFormatter>();
+
+            chain.HasReaders().ShouldBeTrue();
+        }
+
+
+
+
+
     }
 
     [TestFixture]

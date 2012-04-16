@@ -55,6 +55,7 @@ namespace FubuMVC.Core
             ApplyConvention<ModifyChainAttributeConvention>();
 
             _systemPolicies.Add(new AttachOutputPolicy());
+            _systemPolicies.Add(new AttachInputPolicy());
         }
     }
 }

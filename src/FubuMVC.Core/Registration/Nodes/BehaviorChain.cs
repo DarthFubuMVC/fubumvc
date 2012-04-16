@@ -8,6 +8,7 @@ using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
+using FubuMVC.Core.Resources.Conneg.New;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 
@@ -24,6 +25,7 @@ namespace FubuMVC.Core.Registration.Nodes
         private readonly IList<IBehaviorInvocationFilter> _filters = new List<IBehaviorInvocationFilter>();
         private IRouteDefinition _route;
         private readonly Lazy<Resources.Conneg.New.OutputNode> _output;
+        private readonly Lazy<Resources.Conneg.New.InputNode> _input;
 
         public BehaviorChain()
         {
@@ -37,6 +39,14 @@ namespace FubuMVC.Core.Registration.Nodes
 
                 return new Resources.Conneg.New.OutputNode(outputType);
             });
+
+            _input = new Lazy<InputNode>(() =>
+            {
+                var inputType = InputType();
+                if (inputType == null) throw new InvalidOperationException("Cannot use the InputNode if the BehaviorChain does not have at least one behavior that requires an input type");
+
+                return new Resources.Conneg.New.InputNode(inputType);
+            });
         }
 
         public Resources.Conneg.New.OutputNode Output
@@ -44,6 +54,14 @@ namespace FubuMVC.Core.Registration.Nodes
             get
             {
                 return _output.Value;
+            }
+        }
+
+        public Resources.Conneg.New.InputNode Input
+        {
+            get
+            {
+                return _input.Value;
             }
         }
 
@@ -291,6 +309,11 @@ namespace FubuMVC.Core.Registration.Nodes
             }
 
             return this.Select(x => x.Description).Join(" --> ");
+        }
+
+        public bool HasReaders()
+        {
+            return _input.IsValueCreated && _input.Value.Readers.Any();
         }
     }
 }

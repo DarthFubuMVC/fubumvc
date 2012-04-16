@@ -212,6 +212,7 @@
     <Compile Include="Http\RouteDataValues.cs" />
     <Compile Include="IFubuRegistry.cs" />
     <Compile Include="Packaging\PackagingServiceRegistry.cs" />
+    <Compile Include="Registration\Conventions\AttachInputPolicy.cs" />
     <Compile Include="Registration\Conventions\AttachOutputPolicy.cs" />
     <Compile Include="Registration\Conventions\HtmlTagOutputPolicy.cs" />
     <Compile Include="Registration\Nodes\Chain.cs" />
