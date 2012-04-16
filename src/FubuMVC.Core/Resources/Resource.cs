@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Resources.Conneg.New;
 using FubuMVC.Core.Resources.Media;
 using FubuMVC.Core.Resources.Media.Formatters;
 using FubuMVC.Core.Resources.Media.Projections;
@@ -14,15 +16,15 @@ namespace FubuMVC.Core.Resources
     public class Resource<T> : IResourceRegistration
     {
         private readonly Lazy<LinksSource<T>> _links = new Lazy<LinksSource<T>>(() => new LinksSource<T>());
-        private readonly IList<Action<ConnegOutputNode>> _modifications = new List<Action<ConnegOutputNode>>();
+        private readonly IList<Action<OutputNode>> _modifications = new List<Action<OutputNode>>();
         private readonly Lazy<Projection<T>> _projection = new Lazy<Projection<T>>(() => new Projection<T>(DisplayFormatting.RawValues));
 
         public Resource()
         {
-            modify = node => node.UseNoFormatters();
+            modify = node => node.Where(x => x is WriteWithFormatter).ToList().Each(x => x.Remove());
         }
 
-        private Action<ConnegOutputNode> modify
+        private Action<OutputNode> modify
         {
             set { _modifications.Add(value); }
         }
@@ -49,12 +51,12 @@ namespace FubuMVC.Core.Resources
 
         public void SerializeToXml()
         {
-            modify = node => node.UseFormatter<XmlFormatter>();
+            modify = node => node.AddFormatter<XmlFormatter>();
         }
 
         public void SerializeToJson()
         {
-            modify = node => node.UseFormatter<JsonFormatter>();
+            modify = node => node.AddFormatter<JsonFormatter>();
         }
 
         public void WriteToXml(Action<XmlMediaOptions> configure)

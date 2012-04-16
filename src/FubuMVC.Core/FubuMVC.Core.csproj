@@ -331,12 +331,6 @@
     <Compile Include="Registration\Nodes\Process.cs" />
     <Compile Include="Resources\ConnegGraph.cs" />
     <Compile Include="Resources\Conneg\BehaviorChainConnegExtensions.cs" />
-    <Compile Include="Resources\Conneg\ConnegInputBehavior.cs" />
-    <Compile Include="Resources\Conneg\ConnegInputNode.cs" />
-    <Compile Include="Resources\Conneg\ConnegNode.cs" />
-    <Compile Include="Resources\Conneg\ConnegOutputBehavior.cs" />
-    <Compile Include="Resources\Conneg\ConnegOutputNode.cs" />
-    <Compile Include="Resources\Conneg\FormatterUsage.cs" />
     <Compile Include="Resources\Etags\IfNoneMatchNode.cs" />
     <Compile Include="Http\Headers\Header.cs" />
     <Compile Include="Resources\Etags\EtagCache.cs" />

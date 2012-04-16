@@ -11,7 +11,6 @@ namespace FubuMVC.Core.Registration.Nodes
     /// whose responsibility it is to output the end result of a behavior chain (identified by <see cref="BehaviorCategory.Output"/>)
     /// <seealso cref="BehaviorCategory" />
     /// </summary>
-    [MarkedForTermination]
     public class OutputNode : BehaviorNode
     {
         private readonly Type _behaviorType;

@@ -85,7 +85,7 @@ namespace FubuMVC.Core.Resources.Media.Atom
             var enumerableValueType = typeof(IEnumerable<>).MakeGenericType(valueType);
             graph.OutputNodesThatCanBeCastTo(enumerableValueType).Each(outputNode =>
             {
-                outputNode.AddWriter(new FeedWriterNode<T>(this, FeedSourceType.direct, outputNode.InputType));
+                outputNode.AddWriter(new FeedWriterNode<T>(this, FeedSourceType.direct, outputNode.ResourceType));
             });
         }
 
@@ -94,7 +94,7 @@ namespace FubuMVC.Core.Resources.Media.Atom
             var enumerableType = typeof(IEnumerable<>).MakeGenericType(typeof(T));
             graph.OutputNodesThatCanBeCastTo(enumerableType).Each(outputNode =>
             {
-                outputNode.AddWriter(new FeedWriterNode<T>(this, FeedSourceType.enumerable, outputNode.InputType));
+                outputNode.AddWriter(new FeedWriterNode<T>(this, FeedSourceType.enumerable, outputNode.ResourceType));
             });
         }
 

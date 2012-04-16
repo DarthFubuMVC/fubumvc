@@ -17,7 +17,7 @@ namespace FubuMVC.Core.Resources.Conneg.New
         {
             _inputType = inputType;
 
-            AllowsHttpFormPosts = true;
+            AllowHttpFormPosts = true;
         }
 
         public override BehaviorCategory Category
@@ -44,7 +44,7 @@ namespace FubuMVC.Core.Resources.Conneg.New
             get { return _readers; }
         }
 
-        public bool AllowsHttpFormPosts
+        public bool AllowHttpFormPosts
         {
             get { return Readers.Any(x => x is ModelBind); }
             set
@@ -90,6 +90,21 @@ namespace FubuMVC.Core.Resources.Conneg.New
             Readers.AddToEnd(reader);
 
             return reader;
+        }
+
+        public void ClearAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void JsonOnly()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool UsesFormatter<T>()
+        {
+            throw new NotImplementedException();
         }
     }
 }

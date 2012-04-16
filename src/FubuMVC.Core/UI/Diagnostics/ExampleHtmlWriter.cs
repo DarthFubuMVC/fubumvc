@@ -43,10 +43,7 @@ namespace FubuMVC.Core.UI.Diagnostics
         {
             var tags = new List<HtmlTag> { showIntro() };
 
-            IEnumerable<Type> ignoredModels = new[]
-                {
-                    typeof(ConnegOutputNode)
-                };
+            IEnumerable<Type> ignoredModels = new Type[0];  // TODO -- come back to this?
             var table = BehaviorGraphWriter.WriteBehaviorChainTable(_behaviorGraph.Behaviors
                 .Where(b => b.HasOutput() && !b.ActionOutputType().IsSimple())
                 .Where(b => b.Outputs.Select(o => o.GetType()).Except(ignoredModels).Any() )

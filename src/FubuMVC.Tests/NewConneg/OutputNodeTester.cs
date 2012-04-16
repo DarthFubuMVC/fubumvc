@@ -11,6 +11,31 @@ namespace FubuMVC.Tests.NewConneg
     public class OutputNodeTester
     {
         [Test]
+        public void ClearAll()
+        {
+            Assert.Fail("Do.");
+        }
+
+
+        [Test]
+        public void JsonOnly_from_scratch()
+        {
+            Assert.Fail("Do.");
+        }
+
+        [Test]
+        public void JsonOnly_with_existing_stuff()
+        {
+            Assert.Fail("Do.");
+        }
+
+        [Test]
+        public void UsesFormatter()
+        {
+            Assert.Fail("Do.");
+        }
+
+        [Test]
         public void add_formatter()
         {
             var node = new OutputNode(typeof (Address));

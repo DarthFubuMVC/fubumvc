@@ -12,11 +12,36 @@ namespace FubuMVC.Tests.NewConneg
     [TestFixture]
     public class InputNodeTester
     {
+
+        [Test]
+        public void JsonOnly_from_scratch()
+        {
+            Assert.Fail("Do.");
+        }
+
+        [Test]
+        public void JsonOnly_with_existing_stuff()
+        {
+            Assert.Fail("Do.");
+        }
+
+        [Test]
+        public void ClearAll()
+        {
+            Assert.Fail("Do.");
+        }
+
+        [Test]
+        public void uses_formatter()
+        {
+            Assert.Fail("Do.");
+        }
+
         [Test]
         public void should_allow_form_posts_by_default()
         {
             var inputNode = new InputNode(typeof(Address));
-            inputNode.AllowsHttpFormPosts
+            inputNode.AllowHttpFormPosts
                 .ShouldBeTrue();
         }
 
@@ -26,7 +51,7 @@ namespace FubuMVC.Tests.NewConneg
             var inputNode = new InputNode(typeof(Address));
             inputNode.Readers.Any().ShouldBeFalse();
 
-            inputNode.AllowsHttpFormPosts = true;
+            inputNode.AllowHttpFormPosts = true;
 
             inputNode.Readers.Single().ShouldBeOfType<ModelBind>()
                 .InputType.ShouldEqual(typeof (Address));
@@ -36,9 +61,9 @@ namespace FubuMVC.Tests.NewConneg
         public void allow_http_form_post_is_idempotent()
         {
             var inputNode = new InputNode(typeof(Address));
-            inputNode.AllowsHttpFormPosts = true;
-            inputNode.AllowsHttpFormPosts = true;
-            inputNode.AllowsHttpFormPosts = true;
+            inputNode.AllowHttpFormPosts = true;
+            inputNode.AllowHttpFormPosts = true;
+            inputNode.AllowHttpFormPosts = true;
 
             inputNode.Readers.Single().ShouldBeOfType<ModelBind>();
         }
@@ -47,9 +72,9 @@ namespace FubuMVC.Tests.NewConneg
         public void setting_allow_http_form_post_to_false_removes_the_model_binding()
         {
             var inputNode = new InputNode(typeof(Address));
-            inputNode.AllowsHttpFormPosts = true;
+            inputNode.AllowHttpFormPosts = true;
 
-            inputNode.AllowsHttpFormPosts = false;
+            inputNode.AllowHttpFormPosts = false;
 
             inputNode.Readers.Any().ShouldBeFalse();
         }

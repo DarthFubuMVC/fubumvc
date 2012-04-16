@@ -1,47 +1,45 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core.Registration;
-using FubuCore;
-using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Resources.Conneg.New;
 
 namespace FubuMVC.Core.Resources
 {
     public class ConnegGraph
     {
-        private readonly Cache<Type, IList<ConnegInputNode>> _inputNodes =
-            new Cache<Type, IList<ConnegInputNode>>(t => new List<ConnegInputNode>());
+        private readonly Cache<Type, IList<InputNode>> _inputNodes =
+            new Cache<Type, IList<InputNode>>(t => new List<InputNode>());
 
-        private readonly Cache<Type, IList<ConnegOutputNode>> _outputNodes =
-            new Cache<Type, IList<ConnegOutputNode>>(t => new List<ConnegOutputNode>());
+        private readonly Cache<Type, IList<OutputNode>> _outputNodes =
+            new Cache<Type, IList<OutputNode>>(t => new List<OutputNode>());
 
         public ConnegGraph(BehaviorGraph graph)
         {
-            var connegNodes = graph.Behaviors.SelectMany(x => x).Where(x => x is ConnegNode);
-            connegNodes.OfType<ConnegInputNode>().GroupBy(x => x.InputType)
-                .Each(group => _inputNodes[group.Key].AddRange(group));
-
-            connegNodes.OfType<ConnegOutputNode>().GroupBy(x => x.InputType)
-                .Each(group => _outputNodes[group.Key].AddRange(group));
+            _inputNodes.OnMissing =
+                type => graph.Behaviors.Where(x => x.InputType() == type).Select(x => x.Input).ToList();
+            _outputNodes.OnMissing =
+                type => graph.Behaviors.Where(x => x.ActionOutputType() == type).Select(x => x.Output).ToList();
         }
 
-        public IEnumerable<ConnegOutputNode> OutputNodesFor<T>()
+        public IEnumerable<OutputNode> OutputNodesFor<T>()
         {
             return _outputNodes[typeof (T)];
         }
 
-        public IEnumerable<ConnegOutputNode> OutputNodesFor(Type type)
+        public IEnumerable<OutputNode> OutputNodesFor(Type type)
         {
             return _outputNodes[type];
         }
 
-        public IEnumerable<ConnegInputNode> InputNodesFor<T>()
+        public IEnumerable<InputNode> InputNodesFor<T>()
         {
             return _inputNodes[typeof (T)];
         }
 
-        public IEnumerable<ConnegOutputNode> OutputNodesThatCanBeCastTo(Type interfaceType)
+        public IEnumerable<OutputNode> OutputNodesThatCanBeCastTo(Type interfaceType)
         {
             return _outputNodes.GetAllKeys()
                 .Where(x => x.CanBeCastTo(interfaceType))

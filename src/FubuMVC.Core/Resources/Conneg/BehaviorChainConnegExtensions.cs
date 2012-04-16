@@ -2,8 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Resources.Conneg.New;
 using FubuMVC.Core.Resources.Media.Formatters;
+using OutputNode = FubuMVC.Core.Resources.Conneg.New.OutputNode;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
@@ -13,34 +16,34 @@ namespace FubuMVC.Core.Resources.Conneg
         public static void ApplyConneg(this BehaviorChain chain)
         {
             var inputType = chain.InputType();
-            if (chain.ConnegInputNode() == null && inputType != null)
+            if (chain.InputNode() == null && inputType != null)
             {
-                var inputNode = new ConnegInputNode(inputType);
+                var inputNode = new InputNode(inputType);
                 var action = chain.FirstCall();
                 action.AddBefore(inputNode);
             }
 
             var actionOutputType = chain.ActionOutputType();
-            if (chain.ConnegOutputNode() == null && actionOutputType != null && actionOutputType != typeof (void) && actionOutputType != typeof(HttpStatusCode))
+            if (chain.OutputNode() == null && actionOutputType != null && actionOutputType != typeof (void) && actionOutputType != typeof(HttpStatusCode))
             {
-                var outputNode = new ConnegOutputNode(actionOutputType);
+                var outputNode = new OutputNode(actionOutputType);
                 var action = chain.Last(x => x is ActionCall);
                 action.AddAfter(outputNode);
             }
         }
 
-        public static void AlterConnegOutput(this BehaviorChain chain, Action<ConnegOutputNode> configure)
+        public static void AlterConnegOutput(this BehaviorChain chain, Action<OutputNode> configure)
         {
-            var node = chain.ConnegOutputNode();
+            var node = chain.OutputNode();
             if (node != null)
             {
                 configure(node);
             }
         }
 
-        public static void AlterConnegInput(this BehaviorChain chain, Action<ConnegInputNode> configure)
+        public static void AlterConnegInput(this BehaviorChain chain, Action<InputNode> configure)
         {
-            var node = chain.ConnegInputNode();
+            var node = chain.InputNode();
             if (node != null)
             {
                 configure(node);
@@ -49,8 +52,8 @@ namespace FubuMVC.Core.Resources.Conneg
 
         public static void UseFormatter<T>(this BehaviorChain chain) where T : IFormatter
         {
-            chain.AlterConnegInput(node => node.UseFormatter<T>());
-            chain.AlterConnegOutput(node => node.UseFormatter<T>());
+            chain.AlterConnegInput(node => node.AddFormatter<T>());
+            chain.AlterConnegOutput(node => node.AddFormatter<T>());
         }
 
         public static void MakeSymmetricJson(this BehaviorChain chain)
@@ -67,70 +70,65 @@ namespace FubuMVC.Core.Resources.Conneg
             chain.RemoveConneg();
             chain.ApplyConneg();
 
-            chain.AlterConnegInput(x => x.UseFormatter<JsonFormatter>());
+            chain.AlterConnegInput(x => x.AddFormatter<JsonFormatter>());
 
             chain.AlterConnegOutput(x => x.JsonOnly());
         }
 
         public static bool IsAsymmetricJson(this BehaviorChain chain)
         {
-            if (chain.ConnegInputNode() == null && chain.ConnegOutputNode() == null) return false;
+            if (!chain.HasReaders() || !chain.HasOutput()) return false;
 
-            if (chain.ActionOutputType() != null)
-            {
-                var output = chain.ConnegOutputNode();
-                if (output.SelectedFormatterTypes.Count() != 1) return false;
+            if (chain.Output.Writers.Count() != 1) return false;
+            if (!chain.Output.UsesFormatter<JsonFormatter>()) return false;
 
-                if (output.SelectedFormatterTypes.Single() != typeof(JsonFormatter)) return false;
-            }
+            if (chain.Input.Readers.Count() != 2) return false;
+            if (!chain.Input.AllowHttpFormPosts) return false;
 
-            if (chain.InputType() != null)
-            {
-                var input = chain.ConnegInputNode();
-
-                if (!input.AllowHttpFormPosts)
-                {
-                    return false;
-                }
-                
-                if (input.SelectedFormatterTypes.Count() != 1) return false;
-
-                if (input.SelectedFormatterTypes.Single() != typeof(JsonFormatter)) return false;
-            }
-
-            return true;
+            return chain.Input.UsesFormatter<JsonFormatter>();
         }
 
-        public static ConnegInputNode ConnegInputNode(this BehaviorChain chain)
+        [Obsolete, MarkedForTermination]
+        public static InputNode InputNode(this BehaviorChain chain)
         {
-            return chain.FirstOrDefault(x => x is ConnegInputNode) as ConnegInputNode;
+            return chain.FirstOrDefault(x => x is InputNode) as InputNode;
         }
 
-        public static ConnegOutputNode ConnegOutputNode(this BehaviorChain chain)
+        [Obsolete, MarkedForTermination]
+        public static OutputNode OutputNode(this BehaviorChain chain)
         {
-            return chain.FirstOrDefault(x => x is ConnegOutputNode) as ConnegOutputNode;
+            return chain.FirstOrDefault(x => x is OutputNode) as OutputNode;
         }
 
+        [Obsolete, MarkedForTermination]
         public static bool HasConnegOutput(this BehaviorChain chain)
         {
-            return chain.ConnegOutputNode() != null;
+            return chain.OutputNode() != null;
         }
 
         public static void RemoveConneg(this BehaviorChain chain)
         {
-            chain.OfType<ConnegNode>().ToList().Each(x => x.Remove());
+            if (chain.HasReaders())
+            {
+                chain.Input.ClearAll();
+            }
+
+            if (chain.HasOutput())
+            {
+                chain.Output.ClearAll();
+            }
         }
 
         public static void OutputJson(this BehaviorChain chain)
         {
             chain.ApplyConneg();
-            chain.ConnegOutputNode().UseFormatter<JsonFormatter>();
+            chain.OutputNode().AddFormatter<JsonFormatter>();
         }
 
         public static void OutputXml(this BehaviorChain chain)
         {
             chain.ApplyConneg();
-            chain.ConnegOutputNode().UseFormatter<XmlFormatter>();
+            chain.OutputNode().AddFormatter<XmlFormatter>();
         }
 
 

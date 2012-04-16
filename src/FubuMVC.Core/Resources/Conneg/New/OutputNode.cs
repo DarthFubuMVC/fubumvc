@@ -11,11 +11,11 @@ namespace FubuMVC.Core.Resources.Conneg.New
     public class OutputNode : BehaviorNode
     {
         private readonly WriterChain _chain = new WriterChain();
-        private readonly Type _outputType;
+        private readonly Type _resourceType;
 
-        public OutputNode(Type outputType)
+        public OutputNode(Type resourceType)
         {
-            _outputType = outputType;
+            _resourceType = resourceType;
         }
 
         public override BehaviorCategory Category
@@ -28,13 +28,16 @@ namespace FubuMVC.Core.Resources.Conneg.New
             get { return _chain; }
         }
 
-
+        public Type ResourceType
+        {
+            get { return _resourceType; }
+        }
 
         protected override ObjectDef buildObjectDef()
         {
-            var def = new ObjectDef(typeof (OutputBehavior<>), _outputType);
+            var def = new ObjectDef(typeof (OutputBehavior<>), _resourceType);
 
-            var mediaType = typeof (IMedia<>).MakeGenericType(_outputType);
+            var mediaType = typeof (IMedia<>).MakeGenericType(_resourceType);
             var enumerableType = typeof (IEnumerable<>).MakeGenericType(mediaType);
             var dependency = new ListDependency(enumerableType);
             dependency.AddRange(Writers.OfType<IContainerModel>().Select(x => x.ToObjectDef(DiagnosticLevel.None)));
@@ -47,7 +50,7 @@ namespace FubuMVC.Core.Resources.Conneg.New
         public WriteWithFormatter AddFormatter<T>() where T : IFormatter
         {
 
-            var formatter = new WriteWithFormatter(_outputType, typeof (T));
+            var formatter = new WriteWithFormatter(_resourceType, typeof (T));
             var existing = Writers.FirstOrDefault(x => x.Equals(formatter));
             if (existing != null)
             {
@@ -62,7 +65,7 @@ namespace FubuMVC.Core.Resources.Conneg.New
 
         public Writer AddWriter<T>()
         {
-            var writerType = typeof (IMediaWriter<>).MakeGenericType(_outputType);
+            var writerType = typeof (IMediaWriter<>).MakeGenericType(_resourceType);
             if (!typeof(T).CanBeCastTo(writerType))
             {
                 throw new ArgumentOutOfRangeException("{0} can not be case to {1}", typeof(T).FullName, writerType.FullName);
@@ -83,10 +86,25 @@ namespace FubuMVC.Core.Resources.Conneg.New
                 return existing;
             }
 
-            var write = new WriteHtml(_outputType);
+            var write = new WriteHtml(_resourceType);
             Writers.AddToEnd(write);
 
             return write;
+        }
+
+        public void ClearAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void JsonOnly()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool UsesFormatter<T>()
+        {
+            throw new NotImplementedException();
         }
     }
 }
