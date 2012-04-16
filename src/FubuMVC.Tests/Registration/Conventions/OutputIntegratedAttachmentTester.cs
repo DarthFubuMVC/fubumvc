@@ -6,6 +6,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Resources.Conneg.New;
 using FubuMVC.Core.Resources.Media.Formatters;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Tests.Behaviors;
@@ -13,6 +14,7 @@ using FubuMVC.Tests.View.FakeViews;
 using FubuTestingSupport;
 using NUnit.Framework;
 using System.Collections.Generic;
+using OutputNode = FubuMVC.Core.Resources.Conneg.New.OutputNode;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
@@ -26,10 +28,6 @@ namespace FubuMVC.Tests.Registration.Conventions
             {
                 x.Actions.IncludeTypesImplementing<JsonOutputAttachmentTesterController>();
 
-                x.Output.ToHtml.WhenCallMatches(
-                    call => call.OutputType() == typeof (string) && call.Method.Name.ToLower().Contains("html"));
-                x.Output.ToJson.WhenTheOutputModelIs<CrudReport>().WhenTheOutputModelIs<ContinuationClass>();
-                x.Output.To(c => new RenderHtmlTagNode()).WhenTheOutputModelIs<HtmlTagOutput>();
             })
                 .BuildGraph();
         }
@@ -50,7 +48,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             BehaviorNode behavior =
                 graph.BehaviorFor<JsonOutputAttachmentTesterController>(x => x.Stringify()).Calls.First().Next;
 
-            behavior.ShouldBeOfType<RenderTextNode<string>>().MimeType.ShouldEqual(MimeType.Text);
+            behavior.ShouldBeOfType<OutputNode>().Writers.Single().ShouldBeOfType<WriteString>();
         }
 
         [Test]
@@ -66,17 +64,9 @@ namespace FubuMVC.Tests.Registration.Conventions
 
             Debug.WriteLine("-------------------------------------------------------");
             methodNames
-                .ShouldHaveTheSameElementsAs("Report", "Report2", "WhatNext", "Decorated", "OutputJson1", "OutputJson2", "OutputJson3");
+                .ShouldHaveTheSameElementsAs("Decorated", "OutputJson1", "OutputJson2", "OutputJson3");
         }
 
-        [Test]
-        public void use_the_filter_for_html_output()
-        {
-            BehaviorNode behavior =
-                graph.BehaviorFor<JsonOutputAttachmentTesterController>(x => x.StringifyHtml()).Calls.First().Next;
-
-            behavior.ShouldBeOfType<RenderTextNode<string>>().MimeType.ShouldEqual(MimeType.Html);
-        }
 
         private BehaviorChain chainFor(Expression<Action<JsonOutputAttachmentTesterController>> expression)
         {
@@ -123,12 +113,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             chainFor(x => x.NotOutputJson3()).Top.Any(x => x.GetType() == typeof(ConnegOutputNode)).ShouldBeFalse();
         }
 
-        [Test]
-        public void methods_that_return_html_tag_should_output_html_tag()
-        {
-            var chain = chainFor(x=>x.GetFake());
-            chain.Top.Any(x => x.GetType() == typeof(RenderHtmlTagNode)).ShouldBeTrue();
-        }
+
     }
 
     public class CrudReport

@@ -29,6 +29,20 @@ namespace IntegrationTesting.Conneg
             endpoints.Get<StringController>(x => x.SayHelloWithHtml())
                 .ContentShouldBe(MimeType.Html, "<h1>Hello</h1>");
         }
+
+        [Test]
+        public void action_marked_with_html_endpoint_should_be_written_as_html()
+        {
+            endpoints.Get<StringController>(x => x.DifferentKindOfName())
+                .ContentShouldBe(MimeType.Html, "different");
+        }
+
+        [Test]
+        public void action_that_returns_non_string_but_marked_as_html_endpoint()
+        {
+            endpoints.Get<StringController>(x => x.AsHtml())
+                .ContentShouldBe(MimeType.Html, new Something().ToString());
+        }
     }
 
 
@@ -43,6 +57,23 @@ namespace IntegrationTesting.Conneg
         {
             return "<h1>Hello</h1>";
         }
+
+        [HtmlEndpoint]
+        public string DifferentKindOfName()
+        {
+            return "different";
+        }
+
+        [HtmlEndpoint]
+        public Something AsHtml()
+        {
+            return new Something();
+        } 
+    }
+
+    public class Something
+    {
+        
     }
 
 

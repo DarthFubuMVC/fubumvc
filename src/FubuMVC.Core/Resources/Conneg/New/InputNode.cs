@@ -64,6 +64,12 @@ namespace FubuMVC.Core.Resources.Conneg.New
         public ReadWithFormatter AddFormatter<T>() where T : IFormatter
         {
             var formatter = new ReadWithFormatter(_inputType, typeof(T));
+            var existing = Readers.FirstOrDefault(x => x.Equals(formatter)) as ReadWithFormatter;
+            if (existing != null)
+            {
+                return existing;
+            }
+
             Readers.AddToEnd(formatter);
 
             return formatter;

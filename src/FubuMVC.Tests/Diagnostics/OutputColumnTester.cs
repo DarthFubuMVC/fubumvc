@@ -26,23 +26,6 @@ namespace FubuMVC.Tests.Diagnostics
             tag.Text().ShouldEqual(node.Description);
         }
 
-        [Test]
-        public void write_with_multiple_outputs()
-        {
-            var chain = new BehaviorChain();
-            var json = new OutputNode(typeof (RouteParameter));
-            chain.AddToEnd(json);
-
-            var text = new RenderTextNode<RouteParameter>();
-            chain.AddToEnd(text);
-
-            var tag = new HtmlTag("td");
-
-            var column = new OutputColumn();
-            column.WriteBody(chain, null, tag);
-
-            tag.Text().ShouldEqual(json.Description + ", " + text.Description);
-        }
 
         [Test]
         public void write_with_no_outputs()

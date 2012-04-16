@@ -246,7 +246,6 @@
     <Compile Include="Registration\Diagnostics\ConfigLogTester.cs" />
     <Compile Include="Registration\Nodes\ActionCallBaseObjectDefCreationTester.cs" />
     <Compile Include="Registration\Nodes\OutputNodeTester.cs" />
-    <Compile Include="Registration\Nodes\RenderHtmlTagNodeTester.cs" />
     <Compile Include="Registration\Querying\ChainSearchTester.cs" />
     <Compile Include="Registration\ServiceGraphTester.cs" />
     <Compile Include="Resources\Conneg\BehaviorChainConnegExtensionsTester.cs" />
@@ -336,7 +335,6 @@
     <Compile Include="Registration\ListDependencyTester.cs" />
     <Compile Include="Registration\Nodes\BehaviorChain_building_an_object_def.cs" />
     <Compile Include="Registration\Nodes\Behavior_node_ObjectDef_creation_Tester.cs" />
-    <Compile Include="Registration\Nodes\RenderTextNodeTester.cs" />
     <Compile Include="Registration\Nodes\WebFormViewTester.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -422,10 +420,8 @@
     <Compile Include="Behaviors\ActionInvokersTester.cs" />
     <Compile Include="Behaviors\DownloadFileBehaviorTester.cs" />
     <Compile Include="Behaviors\LoadCurrentPrincipalTester.cs" />
-    <Compile Include="Behaviors\RenderHtmlBehaviorTester.cs" />
-    <Compile Include="Behaviors\RenderJsonBehaviorTester.cs" />
+    <Compile Include="Runtime\JsonWriterTester.cs" />
     <Compile Include="Behaviors\BehaviorTestContext.cs" />
-    <Compile Include="Behaviors\RenderTextBehaviorTester.cs" />
     <Compile Include="Continuations\ContinuationHandlerTester.cs" />
     <Compile Include="Continuations\FubuContinuationTester.cs" />
     <Compile Include="Diagnostics\ActionColumnTester.cs" />

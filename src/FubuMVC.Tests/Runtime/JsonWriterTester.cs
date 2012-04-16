@@ -6,7 +6,7 @@ using HtmlTags;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Tests.Behaviors
+namespace FubuMVC.Tests.Runtime
 {
     [TestFixture]
     public class when_rendering_json_from_a_model_object_using_default_json_writer : InteractionContext<JsonWriter>

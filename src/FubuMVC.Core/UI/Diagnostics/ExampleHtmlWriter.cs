@@ -45,12 +45,10 @@ namespace FubuMVC.Core.UI.Diagnostics
 
             IEnumerable<Type> ignoredModels = new[]
                 {
-                    typeof(RenderHtmlDocumentNode),
-                    typeof(RenderHtmlTagNode),
                     typeof(ConnegOutputNode)
                 };
             var table = BehaviorGraphWriter.WriteBehaviorChainTable(_behaviorGraph.Behaviors
-                .Where(b => b.HasOutputBehavior() && !b.ActionOutputType().IsSimple())
+                .Where(b => b.HasOutput() && !b.ActionOutputType().IsSimple())
                 .Where(b => b.Outputs.Select(o => o.GetType()).Except(ignoredModels).Any() )
                 .OrderBy(b => b.GetRoutePattern()),
                 new RouteColumn(_httpRequest),

@@ -1,6 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Resources.Conneg.New;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
@@ -8,8 +9,9 @@ namespace FubuMVC.Core.Registration.Conventions
     {
         public void Configure(BehaviorGraph graph)
         {
-            graph.Behaviors.Where(x => !x.HasOutputBehavior() && x.ActionOutputType() == typeof (string)).Each(
-                x => { x.AddToEnd(new RenderTextNode<string>()); });
+            graph.Behaviors
+                .Where(x => x.ActionOutputType() == typeof (string))
+                .Each(x => x.Output.Writers.AddToEnd(new WriteString()));
         }
     }
 }

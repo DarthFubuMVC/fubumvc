@@ -59,15 +59,5 @@ namespace FubuMVC.Core.Registration.Nodes
         }
     }
 
-    [MarkedForTermination]
-    public class RenderHtmlTagNode : OutputNode<RenderHtmlBehavior<HtmlTag>>
-    {
-        public override string Description { get { return "Write HtmlTag"; } }
-    }
 
-    [MarkedForTermination]
-    public class RenderHtmlDocumentNode : OutputNode<RenderHtmlBehavior<HtmlDocument>>
-    {
-        public override string Description { get { return "Write HtmlDocument"; } }
-    }
 }

@@ -212,6 +212,8 @@
     <Compile Include="Http\RouteDataValues.cs" />
     <Compile Include="IFubuRegistry.cs" />
     <Compile Include="Packaging\PackagingServiceRegistry.cs" />
+    <Compile Include="Registration\Conventions\AttachOutputPolicy.cs" />
+    <Compile Include="Registration\Conventions\HtmlTagOutputPolicy.cs" />
     <Compile Include="Registration\Nodes\Chain.cs" />
     <Compile Include="Registration\Nodes\Node.cs" />
     <Compile Include="Resources\Conneg\New\InputNode.cs" />
@@ -536,7 +538,6 @@
     <Compile Include="Behaviors\NulloBehavior.cs" />
     <Compile Include="Behaviors\OneInOneOutActionInvoker.cs" />
     <Compile Include="Behaviors\OneInZeroOutActionInvoker.cs" />
-    <Compile Include="Behaviors\RenderTextBehavior.cs" />
     <Compile Include="Behaviors\ZeroInOneOutActionInvoker.cs" />
     <Compile Include="Bootstrapping\IContainerFacility.cs" />
     <Compile Include="FubuRegistry.Expressions.cs" />
@@ -555,7 +556,6 @@
     <Compile Include="Registration\Nodes\ContinuationNode.cs" />
     <Compile Include="Registration\Nodes\IMayHaveInputType.cs" />
     <Compile Include="Registration\Nodes\OutputNode.cs" />
-    <Compile Include="Registration\Nodes\RenderTextNode.cs" />
     <Compile Include="Registration\Nodes\UrlCategory.cs" />
     <Compile Include="Registration\ObjectGraph\ListDependency.cs" />
     <Compile Include="Registration\Querying\ChainResolutionCache.cs" />

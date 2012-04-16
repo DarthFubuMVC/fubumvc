@@ -29,20 +29,6 @@ namespace FubuMVC.Core
             }
         }
 
-        /// <summary>
-        /// Start setting up Html output for behavior chains. Output models are rendered as HTML by calling ToString on it.
-        /// Note that fubumvc has a default activated by which a string returned by an action is interpreted and output as HTML
-        /// </summary>
-        public ActionCallFilterExpression ToHtml
-        {
-            get
-            {
-                return output(call => call.AddToEnd(new RenderTextNode<string>
-                    {
-                        MimeType = MimeType.Html
-                    }), "Adding output node to render raw HTML text");
-            }
-        }
 
         /// <summary>
         /// Provide any instance deriving from <see cref="OutputNode"/> for some <see cref="ActionCall"/>

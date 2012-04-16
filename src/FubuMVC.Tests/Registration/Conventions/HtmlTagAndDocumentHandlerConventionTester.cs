@@ -2,9 +2,11 @@ using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Resources.Conneg.New;
 using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
+using OutputNode = FubuMVC.Core.Resources.Conneg.New.OutputNode;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
@@ -26,13 +28,17 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void action_that_returns_HtmlDocument_should_output_to_html()
         {
-            graph.BehaviorFor<TagController>(x => x.BuildDoc()).Outputs.First().ShouldBeOfType<RenderHtmlDocumentNode>();
+            graph.BehaviorFor<TagController>(x => x.BuildDoc()).Outputs.First().ShouldBeOfType<OutputNode>()
+                .Writers.Single().ShouldBeOfType<WriteHtml>()
+                .ResourceType.ShouldEqual(typeof(HtmlDocument));
         }
 
         [Test]
         public void action_that_returns_HtmlTag_should_output_to_html()
         {
-            graph.BehaviorFor<TagController>(x => x.BuildTag()).Outputs.First().ShouldBeOfType<RenderHtmlTagNode>();
+            graph.BehaviorFor<TagController>(x => x.BuildTag()).Outputs.First().ShouldBeOfType<OutputNode>()
+                .Writers.Single().ShouldBeOfType<WriteHtml>()
+                .ResourceType.ShouldEqual(typeof(HtmlTag));
         }
     }
 

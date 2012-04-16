@@ -45,5 +45,28 @@ namespace FubuMVC.Core.Resources.Conneg.New
         {
             get { return _inputType; }
         }
+
+        public bool Equals(ReadWithFormatter other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Equals(other._inputType, _inputType) && Equals(other._formatterType, _formatterType);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof (ReadWithFormatter)) return false;
+            return Equals((ReadWithFormatter) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ((_inputType != null ? _inputType.GetHashCode() : 0)*397) ^ (_formatterType != null ? _formatterType.GetHashCode() : 0);
+            }
+        }
     }
 }

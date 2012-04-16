@@ -23,11 +23,28 @@ namespace FubuMVC.Core.Registration.Nodes
     {
         private readonly IList<IBehaviorInvocationFilter> _filters = new List<IBehaviorInvocationFilter>();
         private IRouteDefinition _route;
+        private readonly Lazy<Resources.Conneg.New.OutputNode> _output;
 
         public BehaviorChain()
         {
             Authorization = new AuthorizationNode();
             UrlCategory = new UrlCategory();
+
+            _output = new Lazy<Resources.Conneg.New.OutputNode>(() =>
+            {
+                var outputType = ActionOutputType();
+                if (outputType == null) throw new InvalidOperationException("Cannot use the OutputNode if the BehaviorChain does not have at least one Action with output");
+
+                return new Resources.Conneg.New.OutputNode(outputType);
+            });
+        }
+
+        public Resources.Conneg.New.OutputNode Output
+        {
+            get
+            {
+                return _output.Value;
+            }
         }
 
         /// <summary>
@@ -62,10 +79,13 @@ namespace FubuMVC.Core.Registration.Nodes
         /// <summary>
         ///   All the Output nodes in this chain
         /// </summary>
+        [MarkedForTermination("Dying with the new Conneg")]
         public IEnumerable<BehaviorNode> Outputs
         {
             get { return this.Where(x => x.Category == BehaviorCategory.Output); }
         }
+
+        
 
         /// <summary>
         ///   Marking a BehaviorChain as "PartialOnly" means that no
@@ -138,9 +158,9 @@ namespace FubuMVC.Core.Registration.Nodes
         ///   Tests whether or not this chain has any output nodes
         /// </summary>
         /// <returns></returns>
-        public bool HasOutputBehavior()
+        public bool HasOutput()
         {
-            return Top == null ? false : Top.HasAnyOutputBehavior();
+            return (Top == null ? false : Top.HasAnyOutputBehavior()) || (_output.IsValueCreated && _output.Value.Writers.Any());
         }
 
         /// <summary>

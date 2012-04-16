@@ -66,6 +66,23 @@ namespace FubuMVC.Tests.NewConneg
         }
 
         [Test]
+        public void add_formatter_is_idempotent()
+        {
+            var node = new InputNode(typeof(Address));
+            node.AddFormatter<JsonFormatter>();
+            node.AddFormatter<JsonFormatter>();
+            node.AddFormatter<JsonFormatter>();
+            node.AddFormatter<JsonFormatter>();
+            node.AddFormatter<JsonFormatter>();
+
+            node.Readers.Single()
+                .ShouldEqual(new ReadWithFormatter(typeof(Address), typeof(JsonFormatter)));
+
+        }
+
+
+
+        [Test]
         public void add_reader_happy_path()
         {
             var node = new InputNode(typeof(Address));

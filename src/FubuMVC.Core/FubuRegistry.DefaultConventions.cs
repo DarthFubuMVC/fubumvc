@@ -1,4 +1,3 @@
-using System;
 using System.Net;
 using FubuCore.Reflection;
 using FubuMVC.Core.Ajax;
@@ -7,9 +6,7 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Resources;
 using FubuMVC.Core.Resources.PathBased;
-using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using HtmlTags;
 
@@ -30,20 +27,11 @@ namespace FubuMVC.Core
             addConvention(graph => _routeResolver.ApplyToAll(graph));
 
 
-
             _systemPolicies.Add(new AttachAuthorizationPolicy());
 
             ApplyConvention<DictionaryOutputConvention>();
 
-            Output.ToHtml.WhenCallMatches(x => x.Method.HasAttribute<HtmlEndpointAttribute>());
-            Output.ToHtml
-                .WhenCallMatches(x => x.Method.Name.ToLower().EndsWith("html") && x.OutputType() == typeof (string));
-            
             Output.ToJson.WhenTheOutputModelIs<JsonMessage>();
-            
-
-            Output.To<RenderHtmlDocumentNode>().WhenTheOutputModelIs<HtmlDocument>();
-            Output.To<RenderHtmlTagNode>().WhenTheOutputModelIs<HtmlTag>();
 
             Output.ToBehavior<RenderStatusCodeBehavior>().WhenTheOutputModelIs<HttpStatusCode>();
 
@@ -54,6 +42,7 @@ namespace FubuMVC.Core
             Policies.Add<ResourcePathRoutePolicy>();
 
             _systemPolicies.Add(new StringOutputPolicy());
+            _systemPolicies.Add(new HtmlTagOutputPolicy());
             _systemPolicies.Add(new MissingRouteInputPolicy());
 
             Models.BindPropertiesWith<CurrentRequestFullUrlPropertyBinder>();
@@ -64,6 +53,8 @@ namespace FubuMVC.Core
             _systemPolicies.Add(_connegAttachmentPolicy);
 
             ApplyConvention<ModifyChainAttributeConvention>();
+
+            _systemPolicies.Add(new AttachOutputPolicy());
         }
     }
 }

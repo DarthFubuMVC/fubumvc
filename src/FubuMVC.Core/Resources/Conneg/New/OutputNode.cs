@@ -46,7 +46,15 @@ namespace FubuMVC.Core.Resources.Conneg.New
 
         public WriteWithFormatter AddFormatter<T>() where T : IFormatter
         {
+
             var formatter = new WriteWithFormatter(_outputType, typeof (T));
+            var existing = Writers.FirstOrDefault(x => x.Equals(formatter));
+            if (existing != null)
+            {
+                return existing as WriteWithFormatter;
+            }
+            
+
             Writers.AddToEnd(formatter);
 
             return formatter;
@@ -65,6 +73,14 @@ namespace FubuMVC.Core.Resources.Conneg.New
             Writers.AddToEnd(writer);
 
             return writer;
+        }
+
+        public WriteHtml AddHtml()
+        {
+            var write = new WriteHtml(_outputType);
+            Writers.AddToEnd(write);
+
+            return write;
         }
     }
 }

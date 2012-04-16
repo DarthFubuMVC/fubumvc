@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using System.Linq;
 using FubuCore;
@@ -8,6 +9,7 @@ using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
+using FubuMVC.Core.Resources.Media.Formatters;
 using FubuMVC.Core.Security;
 using FubuMVC.FakeControllers;
 using FubuMVC.StructureMap;
@@ -359,7 +361,50 @@ namespace FubuMVC.Tests.Registration.Nodes
                 .ShouldNotBeNull().ShouldBeOfType<EndPointAuthorizor>();
         }
 
-        
+        [Test]
+        public void has_output_initial()
+        {
+            new BehaviorChain().HasOutput()
+                .ShouldBeFalse();
+        }
+
+        [Test]
+        public void building_output_node_without_an_output_type_blows_up()
+        {
+            Exception<InvalidOperationException>.ShouldBeThrownBy(() =>
+            {
+                new BehaviorChain().Output.ShouldBeNull();
+            });
+        }
+
+        [Test]
+        public void lazy_creation_of_the_output_node_after_having_an_action()
+        {
+            var chain = new BehaviorChain();
+            chain.AddToEnd(ActionCall.For<OneController>(x => x.Query(null)));
+
+            var o1 = chain.Output;
+            var o2 = chain.Output;
+            var o3 = chain.Output;
+
+            o1.ShouldBeTheSameAs(o2);
+            o1.ShouldBeTheSameAs(o3);
+        }
+
+        [Test]
+        public void has_output_depends_on_the_output_node_now()
+        {
+            var chain = new BehaviorChain();
+            chain.AddToEnd(ActionCall.For<OneController>(x => x.Query(null)));
+
+            chain.HasOutput().ShouldBeFalse();
+
+            chain.Output.AddFormatter<JsonFormatter>();
+
+            chain.HasOutput().ShouldBeTrue();
+        }
+
+
     }
 
     [TestFixture]

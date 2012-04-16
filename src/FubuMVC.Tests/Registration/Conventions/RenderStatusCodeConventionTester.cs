@@ -24,8 +24,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             var outputs = graph.BehaviorFor<RestfulService>(x => x.Action1(null)).Outputs;
 
 
-            outputs.Single()
-                .ShouldBeOfType<OutputNode>().BehaviorType.ShouldEqual(typeof (RenderStatusCodeBehavior));
+            outputs.OfType<OutputNode>().Single().BehaviorType.ShouldEqual(typeof (RenderStatusCodeBehavior));
         }
 
         [Test]

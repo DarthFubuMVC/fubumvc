@@ -48,13 +48,6 @@ namespace FubuMVC.Tests.Diagnostics
             graph.BehaviorFor<BehaviorGraphWriter>(x => x.Index()).Route.Pattern.ShouldEqual(DiagnosticUrlPolicy.DIAGNOSTICS_URL_ROOT);
         }
 
-        [Test]
-        public void index_action_writes_out_to_html_document()
-        {
-            graph.BehaviorFor<BehaviorGraphWriter>(x => x.Index()).Outputs.First().ShouldBeOfType
-                <RenderHtmlDocumentNode>();
-        }
-
 
         [Test]
         public void request_history_cache_is_registered()
@@ -126,13 +119,6 @@ namespace FubuMVC.Tests.Diagnostics
             graph.BehaviorFor<BehaviorGraphWriter>(x => x.Index()).Route.Pattern.ShouldEqual(DiagnosticUrlPolicy.DIAGNOSTICS_URL_ROOT);
         }
 
-        [Test]
-        public void index_action_writes_out_to_html_document()
-        {
-            var chain = graph.BehaviorFor<BehaviorGraphWriter>(x => x.Index());
-            chain.Outputs.First().ShouldBeOfType
-                <RenderHtmlDocumentNode>();
-        }
     }
 
 }

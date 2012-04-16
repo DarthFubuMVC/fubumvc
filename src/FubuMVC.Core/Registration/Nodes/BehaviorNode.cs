@@ -43,6 +43,7 @@ namespace FubuMVC.Core.Registration.Nodes
         ///   after this BehaviorNode
         /// </summary>
         /// <returns></returns>
+        [MarkedForTermination]
         public bool HasAnyOutputBehavior()
         {
             return this.Any(x => x.Category == BehaviorCategory.Output);
