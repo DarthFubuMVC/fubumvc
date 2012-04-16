@@ -16,6 +16,8 @@ namespace FubuMVC.Core.Resources.Conneg.New
         public InputNode(Type inputType)
         {
             _inputType = inputType;
+
+            AllowsHttpFormPosts = true;
         }
 
         public override BehaviorCategory Category

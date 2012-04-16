@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Resources.Media;
@@ -21,6 +22,7 @@ namespace FubuMVC.Core.Resources.Conneg
         void UseFormatter<T>() where T : IFormatter;
     }
 
+    [Obsolete, MarkedForTermination]
     public class ConnegOutputNode : ConnegNode, IConnegOutputNode
     {
         private readonly IList<IMediaWriterNode> _writers = new List<IMediaWriterNode>();

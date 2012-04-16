@@ -13,11 +13,11 @@ namespace FubuMVC.Tests.NewConneg
     public class InputNodeTester
     {
         [Test]
-        public void does_not_allow_form_posts_by_default()
+        public void should_allow_form_posts_by_default()
         {
             var inputNode = new InputNode(typeof(Address));
             inputNode.AllowsHttpFormPosts
-                .ShouldBeFalse();
+                .ShouldBeTrue();
         }
 
         [Test]

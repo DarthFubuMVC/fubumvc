@@ -1,5 +1,5 @@
-using FubuMVC.Core.Registration.Nodes;
-using GenericEnumerableExtensions = System.Collections.Generic.GenericEnumerableExtensions;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
@@ -7,7 +7,7 @@ namespace FubuMVC.Core.Registration.Conventions
     {
         public void Configure(BehaviorGraph graph)
         {
-            GenericEnumerableExtensions.Each<BehaviorChain>(graph.Behaviors.Where(x => x.HasReaders()), x => x.Prepend(x.Input));
+            graph.Behaviors.Where(x => x.HasReaders()).Each(x => x.Prepend(x.Input));
         }
     }
 }
