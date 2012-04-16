@@ -11,7 +11,20 @@ namespace FubuMVC.Core.Registration.Conventions
         {
             graph.Behaviors
                 .Where(x => x.ActionOutputType() == typeof (string))
-                .Each(x => x.Output.Writers.AddToEnd(new WriteString()));
+                .Each(x =>
+                {
+                    var shouldBeHtml = x.LastCall().Method.Name.EndsWith("Html", StringComparison.InvariantCultureIgnoreCase);
+
+                    if (shouldBeHtml)
+                    {
+                        x.Output.AddHtml();
+                    }
+                    else
+                    {
+                        x.Output.Writers.AddToEnd(new WriteString());
+                    }
+                });
+
         }
     }
 }

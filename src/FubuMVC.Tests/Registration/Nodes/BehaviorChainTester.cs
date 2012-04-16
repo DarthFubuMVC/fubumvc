@@ -33,6 +33,56 @@ namespace FubuMVC.Tests.Registration.Nodes
         }
     }
 
+    [TestFixture]
+    public class when_moving_a_node_to_first_in_the_chain
+    {
+        private BehaviorChain theChain;
+        private StubNode node1;
+        private StubNode node2;
+        private StubNode node3;
+
+        [SetUp]
+        public void SetUp()
+        {
+            theChain = new BehaviorChain();
+
+            node1 = new StubNode();
+            node2 = new StubNode();
+            node3 = new StubNode();
+
+            theChain.AddToEnd(node1);
+            theChain.AddToEnd(node2);
+            theChain.AddToEnd(node3);
+
+            theChain.ShouldHaveTheSameElementsAs(node1, node2, node3);
+        }
+
+        [Test]
+        public void move_first_1()
+        {
+            node1.MoveToFront();
+
+            // No change, but I don't want it blowing up either
+            theChain.ShouldHaveTheSameElementsAs(node1, node2, node3);
+        }
+
+        [Test]
+        public void move_first_2()
+        {
+            node2.MoveToFront();
+
+            theChain.ShouldHaveTheSameElementsAs(node2, node1, node3);
+        }
+
+        [Test]
+        public void move_first_3()
+        {
+            node3.MoveToFront();
+
+            theChain.ShouldHaveTheSameElementsAs(node3, node1, node2);
+        }
+    }
+
 
     [TestFixture]
     public class BehaviorChainTester

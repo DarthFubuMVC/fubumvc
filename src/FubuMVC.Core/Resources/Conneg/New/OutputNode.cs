@@ -77,6 +77,12 @@ namespace FubuMVC.Core.Resources.Conneg.New
 
         public WriteHtml AddHtml()
         {
+            var existing = Writers.OfType<WriteHtml>().FirstOrDefault();
+            if (existing != null)
+            {
+                return existing;
+            }
+
             var write = new WriteHtml(_outputType);
             Writers.AddToEnd(write);
 

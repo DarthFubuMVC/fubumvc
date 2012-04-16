@@ -78,6 +78,18 @@ namespace FubuMVC.Core.Registration.Nodes
             }
         }
 
+        public void InsertFirst(T node)
+        {
+            var previousTop = _top;
+
+            SetTop(node);
+
+            if (previousTop != null)
+            {
+                _top.Next = previousTop;
+            }
+        }
+
         /// <summary>
         /// The outermost Node in the chain
         /// </summary>

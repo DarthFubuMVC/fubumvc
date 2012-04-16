@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using FubuCore;
+using FubuCore.DependencyAnalysis;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
@@ -164,8 +165,13 @@ namespace FubuMVC.Core
     }
 
     [AttributeUsage(AttributeTargets.Method)]
-    public class HtmlEndpointAttribute : Attribute
+    public class HtmlEndpointAttribute : ModifyChainAttribute
     {
+        public override void Alter(ActionCall call)
+        {
+            var html = call.ParentChain().Output.AddHtml();
+            html.MoveToFront();
+        }
     }
 
 

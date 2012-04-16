@@ -94,20 +94,21 @@ namespace Serenity.Endpoints
             });
         }
 
-        public HttpResponse Get(object subject)
+        public HttpResponse GetBySubject(object subject, string acceptType = "*/*")
         {
             var request = requestForUrlTarget(subject);
             request.Method = "GET";
             request.ContentType = MimeType.HttpFormMimetype;
 
+            request.As<HttpWebRequest>().Accept = acceptType;
 
             return request.ToHttpCall();
         }
 
-        public HttpResponse Get<T>(Expression<Action<T>> expression, string categoryOrHttpMethod = null)
+        public HttpResponse Get<T>(Expression<Action<T>> expression, string categoryOrHttpMethod = null, string acceptType = "*/*")
         {
             var url = _urls.UrlFor(expression, categoryOrHttpMethod);
-            return Get(url);
+            return Get(url, acceptType);
         }
 
         /// <summary>
@@ -115,12 +116,12 @@ namespace Serenity.Endpoints
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public HttpResponse Get(string url)
+        public HttpResponse Get(string url, string acceptType = "*/*")
         {
             var request = WebRequest.Create(url);
             request.Method = "GET";
             request.ContentType = MimeType.HttpFormMimetype;
-
+            request.As<HttpWebRequest>().Accept = acceptType;
 
             return request.ToHttpCall();
         }

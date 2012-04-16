@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -185,6 +186,21 @@ namespace FubuMVC.Core.Registration.Nodes
                     yield return node;
                 }
             }
+        }
+
+        /// <summary>
+        /// Moves this node to the very beginning of the chain
+        /// </summary>
+        public void MoveToFront()
+        {
+            var chain = ParentChain();
+            if (chain == null)
+            {
+                return;
+            }
+
+            Remove();
+            chain.InsertFirst((T) this);
         }
     }
 }

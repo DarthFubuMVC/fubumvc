@@ -44,6 +44,21 @@ namespace FubuMVC.Tests.NewConneg
         }
 
         [Test]
+        public void add_html_to_the_end_is_idempotent()
+        {
+            var node = new OutputNode(typeof(HtmlTag));
+            var html = node.AddHtml();
+            node.AddHtml();
+            node.AddHtml();
+            node.AddHtml();
+            node.AddHtml();
+
+
+            node.Writers.Single().ShouldBeOfType<WriteHtml>()
+                .ResourceType.ShouldEqual(typeof(HtmlTag));
+        }
+
+        [Test]
         public void adding_a_formatter_is_idempotent()
         {
             var node = new OutputNode(typeof(Address));

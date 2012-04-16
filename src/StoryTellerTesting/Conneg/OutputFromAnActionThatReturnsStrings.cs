@@ -38,6 +38,13 @@ namespace IntegrationTesting.Conneg
         }
 
         [Test]
+        public void action_marked_with_html_endpoint_that_returns_string_still_returns_text_when_text_is_requested()
+        {
+            endpoints.Get<StringController>(x => x.DifferentKindOfName(), acceptType:"text/plain")
+                .ContentShouldBe(MimeType.Text, "different");
+        }
+
+        [Test]
         public void action_that_returns_non_string_but_marked_as_html_endpoint()
         {
             endpoints.Get<StringController>(x => x.AsHtml())
