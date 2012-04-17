@@ -1,5 +1,6 @@
+======
 Topics
-=========
+======
 
 .. toctree::
    :maxdepth: 2
@@ -21,6 +22,7 @@ Topics
    redirecting/index
    viewengines/index
 
+=====
 Other
 =====
 
@@ -30,3 +32,4 @@ Other
    other/ravendb
    other/nhibernate
    other/aspnetmvc
+

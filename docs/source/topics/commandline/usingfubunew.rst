@@ -1,8 +1,8 @@
 .. _usingfubunew:
 
-==================
+==============
 Using fubu new
-==================
+==============
 
 Using :program:`fubu.exe`'s :ref:`fubu-new` command to create template FubuMVC
 projects and to create your own custom templates.
