@@ -1,9 +1,11 @@
+using System.Reflection;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Resources.Conneg.New;
 using FubuMVC.Core.Runtime.Formatters;
 using FubuMVC.Media.Projections;
 using FubuMVC.Media.Testing.Xml;
@@ -25,6 +27,10 @@ namespace FubuMVC.Media.Testing
         {
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<RestController1>();
+
+            // TODO -- this really needs to be done with a Bottle
+            registry.Policies.Add(new ConnegAttachmentPolicy(new TypePool(Assembly.GetExecutingAssembly())));
+            registry.Services<ResourcesServiceRegistry>();
 
             registry.Media.ApplyContentNegotiationToActions(x => x.HandlerType == typeof (RestController1) && !x.Method.Name.StartsWith("Not"));
 
@@ -50,10 +56,10 @@ namespace FubuMVC.Media.Testing
         [Test]
         public void conneg_graph_can_find_all_the_output_nodes_for_a_type()
         {
-            theConnegGraph.OutputNodesFor<Address>().Select(x => x.Previous.As<ActionCall>().Method.Name)
+            theConnegGraph.OutputNodesFor<Address>().Where(x => x.ParentChain() != null).Select(x => x.Previous.As<ActionCall>().Method.Name)
                 .ShouldHaveTheSameElementsAs("Find", "put_city", "Method3");
 
-            theConnegGraph.OutputNodesFor<Output1>().Select(x => x.Previous.As<ActionCall>().Method.Name)
+            theConnegGraph.OutputNodesFor<Output1>().Where(x => x.ParentChain() != null).Select(x => x.Previous.As<ActionCall>().Method.Name)
                 .ShouldHaveTheSameElementsAs("Method4");
         }
 
@@ -61,7 +67,8 @@ namespace FubuMVC.Media.Testing
         [Test]
         public void conneg_graph_can_find_all_input_nodes_for_a_type()
         {
-            theConnegGraph.InputNodesFor<Input1>().Select(x => x.Next.As<ActionCall>().Method.Name)
+            var nodes = theConnegGraph.InputNodesFor<Input1>();
+            nodes.Where(x => x.ParentChain() != null).Select(x => x.Next.As<ActionCall>().Method.Name)
                 .ShouldHaveTheSameElementsAs("Find", "Method4");
         }
 
@@ -148,7 +155,8 @@ namespace FubuMVC.Media.Testing
             var writerNode = connegOutput.Writers.Last().As<MediaWriterNode>();
 
             // Assert the xml media
-            var objectDef = writerNode.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None);
+            var objectDef = writerNode.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None)
+                .FindDependencyDefinitionFor<IMediaWriter<Address>>();
 
 
             var document = objectDef.DependencyFor<IMediaDocument>().ShouldBeOfType<ConfiguredDependency>();
@@ -169,9 +177,16 @@ namespace FubuMVC.Media.Testing
         public void conneg_attachement_policy_finds_and_applies_resource_configuration()
         {
             var registry = new FubuRegistry();
+
+            var typePool = new TypePool(Assembly.GetExecutingAssembly());
+
+            registry.Media.ApplyContentNegotiationToActions(x => true);
+            registry.Policies.Add(new ConnegAttachmentPolicy(typePool));
+            registry.Services<ResourcesServiceRegistry>();
+
             registry.Applies.ToThisAssembly();
             registry.Actions.IncludeType<RestController1>();
-            registry.Media.ApplyContentNegotiationToActions(x => true);
+            
 
             var graph = registry.BuildGraph();
 
@@ -182,7 +197,8 @@ namespace FubuMVC.Media.Testing
             var writerNode = connegOutput.Writers.Single().As<MediaWriterNode>();
 
             // Assert the xml media
-            var objectDef = writerNode.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None);
+            var objectDef = writerNode.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None)
+                .FindDependencyDefinitionFor <IMediaWriter<Address>>();
 
 
             var document = objectDef.DependencyFor<IMediaDocument>().ShouldBeOfType<ConfiguredDependency>();

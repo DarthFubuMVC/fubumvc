@@ -92,7 +92,7 @@ namespace FubuMVC.Media.Testing.Xml
             }
 
             links.Select(x => x.GetAttribute("href"))
-                .ShouldHaveTheSameElementsAs("url for FubuMVC.Tests.UI.Address", "url for Action/change", "url for Action/delete");
+                .ShouldHaveTheSameElementsAs("url for FubuMVC.Media.Testing.Xml.Address", "url for Action/change", "url for Action/delete");
             
         }
     }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.ServiceModel.Syndication;
 using FubuCore;
 using FubuLocalization;
@@ -26,6 +27,7 @@ namespace FubuMVC.Media.Testing.Atom
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<Controller1>();
             registry.Media.ApplyContentNegotiationToActions(call => true);
+            registry.Policies.Add(new ConnegAttachmentPolicy(new TypePool(Assembly.GetExecutingAssembly())));
 
             theGraph = registry.BuildGraph();
         }
@@ -33,42 +35,21 @@ namespace FubuMVC.Media.Testing.Atom
         [Test]
         public void should_apply_a_media_output_node_to_enumerables_of_the_target_type()
         {
-            var outputNode = theGraph.BehaviorFor<Controller1>(x => x.M1())
+            var writers = theGraph.BehaviorFor<Controller1>(x => x.M1())
                 .Output
-                .Writers.Single()
+                .Writers;
+            var outputNode = writers.Last()
                 .ShouldBeOfType<FeedWriterNode<TargetClass>>();
 
             outputNode.Feed.ShouldBeOfType<TargetClassFeed>();
         }
 
-        [Test]
-        public void should_apply_a_media_output_node_to_enumerables_of_values_of_the_target_type()
-        {
-            var outputNode = theGraph.BehaviorFor<Controller1>(x => x.M2())
-                .Output
-                .Writers.Single()
-                .ShouldBeOfType<FeedWriterNode<TargetClass>>();
-
-            outputNode.Feed.ShouldBeOfType<TargetClassFeed>();
-        }
 
         public class TargetClassFeed : Feed<TargetClass>
         {
 
         }
     
-        public class EnumerableOutput : IEnumerable<TargetClass>
-        {
-            IEnumerator<TargetClass> IEnumerable<TargetClass>.GetEnumerator()
-            {
-                throw new NotImplementedException();
-            }
-
-            public IEnumerator GetEnumerator()
-            {
-                throw new NotImplementedException();
-            }
-        }
 
         public class EnumerableValuesOutput : IEnumerable<IValues<TargetClass>>
         {
@@ -87,15 +68,12 @@ namespace FubuMVC.Media.Testing.Atom
 
         public class Controller1
         {
-            public EnumerableOutput M1()
+            public IEnumerable<TargetClass> M1()
             {
-                return new EnumerableOutput();
+                yield return new TargetClass();
             }
 
-            public EnumerableValuesOutput M2()
-            {
-                return null;
-            }
+
 
         }
     }

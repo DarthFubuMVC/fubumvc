@@ -19,7 +19,10 @@ namespace FubuMVC.Media
 
         public Resource()
         {
-            modify = node => node.Where(x => x is WriteWithFormatter).ToList().Each(x => x.Remove());
+            modify = node =>
+            {
+                node.Writers.OfType<WriteWithFormatter>().ToList().Each(x => x.Remove());
+            };
         }
 
         private Action<OutputNode> modify

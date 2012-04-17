@@ -35,7 +35,7 @@
       <HintPath>..\packages\FubuCore.0.9.8.130\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuLocalization">
-      <HintPath>..\packages\FubuLocalization.0.9.5.17\lib\FubuLocalization.dll</HintPath>
+      <HintPath>..\packages\FubuLocalization.0.9.5.14\lib\FubuLocalization.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -66,6 +66,7 @@
     <Compile Include="LinkExpression.cs" />
     <Compile Include="LinkSource.cs" />
     <Compile Include="LinksSource.cs" />
+    <Compile Include="MediaBottleRegistrations.cs" />
     <Compile Include="MediaDependency.cs" />
     <Compile Include="MediaWriter.cs" />
     <Compile Include="MediaWriterNode.cs" />

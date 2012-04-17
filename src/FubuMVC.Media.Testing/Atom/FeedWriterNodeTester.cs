@@ -4,6 +4,7 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Core.Resources.Conneg.New;
 using FubuMVC.Media.Atom;
 using FubuMVC.Media.Projections;
 using FubuMVC.Media.Testing.Xml;
@@ -58,7 +59,8 @@ namespace FubuMVC.Media.Testing.Atom
         {
             var objectDef = new FeedWriterNode<Address>(new Feed<Address>(), typeof (AddressEnumerable))
                 .As<IContainerModel>()
-                .ToObjectDef(DiagnosticLevel.None);
+                .ToObjectDef(DiagnosticLevel.None)
+                .FindDependencyDefinitionFor<IMediaWriter<IEnumerable<Address>>>();
 
 
             objectDef.Type.ShouldEqual(typeof (FeedWriter<Address>));
@@ -70,7 +72,8 @@ namespace FubuMVC.Media.Testing.Atom
             var theFeed = new Feed<Address>();
             var objectDef = new FeedWriterNode<Address>(theFeed,typeof (AddressEnumerable))
                 .As<IContainerModel>()
-                .ToObjectDef(DiagnosticLevel.None);
+                .ToObjectDef(DiagnosticLevel.None)
+                .FindDependencyDefinitionFor<IMediaWriter<IEnumerable<Address>>>();
 
 
             objectDef.DependencyFor<IFeedDefinition<Address>>()

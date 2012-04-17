@@ -92,7 +92,7 @@ namespace FubuMVC.Media.Testing.Atom
             theUrls = new ValidStubUrlRegistry();
             output = new InMemoryOutputWriter();
 
-            var theWriter = new FeedWriter<FeedTarget>(
+            theWriter = new FeedWriter<FeedTarget>(
                 new FeedWithExtension(),
                 new FeedTargetLinks(),
                 theUrls,
@@ -123,11 +123,10 @@ namespace FubuMVC.Media.Testing.Atom
 		[Platform(Exclude="Mono")]
         public void the_resulting_feed_does_manage_to_write_some_xml()
         {
-            var outputWriter = new InMemoryOutputWriter();
-            theWriter.Write("text/plain", new FeedTargetSource());
+            theWriter.Write("application/atom+xml", new FeedTargetSource());
 
-            outputWriter.ContentType.ShouldEqual(new FeedWithExtension().ContentType);
-            outputWriter.ToString().ShouldContain("<Item xmlns=\"\"><City>Dallas</City><Name>The second item</Name></Item>");
+            output.ContentType.ShouldEqual("application/atom+xml");
+            output.ToString().ShouldContain("<Item xmlns=\"\"><City>Dallas</City><Name>The second item</Name></Item>");
         }
     }
 

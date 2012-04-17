@@ -1,9 +1,11 @@
 using System.Xml;
+using FubuMVC.Core;
 using FubuMVC.Media.Projections;
 using FubuMVC.Media.Xml;
 using FubuMVC.StructureMap;
 using NUnit.Framework;
 using FubuTestingSupport;
+using StructureMap;
 
 namespace FubuMVC.Media.Testing.Projections
 {
@@ -24,7 +26,11 @@ namespace FubuMVC.Media.Testing.Projections
                 }
             };
 
-            var container = StructureMapContainerFacility.GetBasicFubuContainer();
+            var container = new Container();
+            var registry = new FubuRegistry();
+            registry.Services<ResourcesServiceRegistry>();
+            FubuApplication.For(registry).StructureMap(container).Bootstrap();
+
             runner = container.GetInstance<IProjectionRunner>();
         }
 

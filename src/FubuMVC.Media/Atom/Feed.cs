@@ -75,25 +75,8 @@ namespace FubuMVC.Media.Atom
 
         void IResourceRegistration.Modify(ConnegGraph graph, BehaviorGraph behaviorGraph)
         {
-            modifyForEnumerableOfTargetType(graph);
-
-            modifyForEnumerableOfValuesOfTargetType(graph);
-        }
-
-        private void modifyForEnumerableOfValuesOfTargetType(ConnegGraph graph)
-        {
-            var valueType = typeof(IValues<>).MakeGenericType(typeof(T));
-            var enumerableValueType = typeof(IEnumerable<>).MakeGenericType(valueType);
-            graph.OutputNodesThatCanBeCastTo(enumerableValueType).Each(outputNode =>
-            {
-                outputNode.Writers.AddToEnd(new FeedWriterNode<T>(this, outputNode.ResourceType));
-            });
-        }
-
-        private void modifyForEnumerableOfTargetType(ConnegGraph graph)
-        {
             var enumerableType = typeof(IEnumerable<>).MakeGenericType(typeof(T));
-            graph.OutputNodesThatCanBeCastTo(enumerableType).Each(outputNode =>
+            graph.OutputNodesFor(enumerableType).Each(outputNode =>
             {
                 outputNode.Writers.AddToEnd(new FeedWriterNode<T>(this, outputNode.ResourceType));
             });
