@@ -83,7 +83,7 @@ namespace FubuMVC.Tests.Registration.Expressions
             visitor.Filters += chain => chain.Calls.Any(call => call.Method.Name != "SomeAction");
             visitor.Filters += chain => chain.Calls.Any(call => call.HandlerType != typeof (AssetWriter));
 
-            visitor.Actions += chain => chain.Top.ShouldBeOfType<ActionCall>();
+            visitor.Actions += chain => chain.Top.Next.ShouldBeOfType<ActionCall>();
 
             _graph.VisitBehaviors(visitor);
         }
@@ -95,7 +95,7 @@ namespace FubuMVC.Tests.Registration.Expressions
             visitor.Filters += chain => chain.Calls.Any(call => call.Method.Name == "SomeAction");
             visitor.Actions += chain =>
             {
-                var wrapper = chain.Top.ShouldBeOfType<Wrapper>();
+                var wrapper = chain.Top.Next.ShouldBeOfType<Wrapper>();
                 wrapper.BehaviorType.ShouldEqual(typeof (FakeUnitOfWorkBehavior));
                 wrapper.Next.ShouldBeOfType<ActionCall>();
             };
@@ -154,10 +154,12 @@ namespace FubuMVC.Tests.Registration.Expressions
             container.Model.InstancesOf<IActionBehavior>().Count().ShouldBeGreaterThan(3);
 
             var behaviors = container.GetAllInstances<IActionBehavior>().ToArray();
-            behaviors[0].ShouldBeOfType<ConditionallyWrapBehaviorChainsWithTester.FakeUnitOfWorkBehavior>().Inner.
+            
+            // The first behavior is an InputBehavior
+            behaviors[0].As<BasicBehavior>().InsideBehavior.ShouldBeOfType<ConditionallyWrapBehaviorChainsWithTester.FakeUnitOfWorkBehavior>().Inner.
                 ShouldNotBeNull();
-            behaviors[1].ShouldNotBeOfType<ConditionallyWrapBehaviorChainsWithTester.FakeUnitOfWorkBehavior>();
-            behaviors[2].ShouldNotBeOfType<ConditionallyWrapBehaviorChainsWithTester.FakeUnitOfWorkBehavior>();
+            behaviors[1].As<BasicBehavior>().InsideBehavior.ShouldNotBeOfType<ConditionallyWrapBehaviorChainsWithTester.FakeUnitOfWorkBehavior>();
+            behaviors[2].As<BasicBehavior>().InsideBehavior.ShouldNotBeOfType<ConditionallyWrapBehaviorChainsWithTester.FakeUnitOfWorkBehavior>();
         }
     }
 }

@@ -27,6 +27,11 @@ namespace FubuMVC.Core.Resources.Conneg.New
             _formatterType = formatterType;
         }
 
+        public Type FormatterType
+        {
+            get { return _formatterType; }
+        }
+
         public override Type ResourceType
         {
             get { return _resourceType; }

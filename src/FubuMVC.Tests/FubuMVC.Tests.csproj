@@ -94,7 +94,6 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AjaxExtensionsTester.cs" />
-    <Compile Include="Ajax\AjaxContinuationNodeTester.cs" />
     <Compile Include="Ajax\AjaxContinuationPolicyIntegratedTester.cs" />
     <Compile Include="Ajax\AjaxContinuationTester.cs" />
     <Compile Include="Ajax\AjaxContinuationWriterTester.cs" />
@@ -260,7 +259,6 @@
     <Compile Include="CustomExceptionsTester.cs" />
     <Compile Include="Deployers\FubuBottleDestinationTester.cs" />
     <Compile Include="Diagnostics\DefaultDiagnosticsConventionsTester.cs" />
-    <Compile Include="Diagnostics\ObserverImporterTester.cs" />
     <Compile Include="Diagnostics\RequestHistoryServiceTester.cs" />
     <Compile Include="Diagnostics\RequestObserverTester.cs" />
     <Compile Include="Diagnostics\Tracing\DiagnosticBehaviorTester.cs" />

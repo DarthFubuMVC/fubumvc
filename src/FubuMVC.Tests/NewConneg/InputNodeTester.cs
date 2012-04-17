@@ -14,28 +14,48 @@ namespace FubuMVC.Tests.NewConneg
         [Test]
         public void ClearAll()
         {
-            Assert.Fail("Do.");
+            var node = new InputNode(typeof (Address));
+            node.AddFormatter<JsonFormatter>();
+            node.AllowHttpFormPosts = true;
+
+            node.ClearAll();
+
+            node.Readers.Any().ShouldBeFalse();
+            node.AllowHttpFormPosts.ShouldBeFalse();
         }
 
         [Test]
         public void JsonOnly_from_scratch()
         {
-            Assert.Fail("Do.");
+            var node = new InputNode(typeof(Address));
+            node.JsonOnly();
+
+            node.Readers.ShouldHaveCount(1);
+            node.UsesFormatter<JsonFormatter>().ShouldBeTrue();
         }
 
         [Test]
         public void JsonOnly_with_existing_stuff()
         {
-            Assert.Fail("Do.");
+            var node = new InputNode(typeof(Address));
+            node.AllowHttpFormPosts = true;
+            node.UsesFormatter<XmlFormatter>();
+
+            node.JsonOnly();
+
+            node.Readers.ShouldHaveCount(1);
+            node.UsesFormatter<JsonFormatter>().ShouldBeTrue();
         }
 
         [Test]
         public void add_formatter()
         {
-            var node = new OutputNode(typeof (Address));
+            var node = new InputNode(typeof (Address));
+            node.AllowHttpFormPosts = false;
+            
             node.AddFormatter<JsonFormatter>();
 
-            node.Writers.Single()
+            node.Readers.Single()
                 .ShouldEqual(new ReadWithFormatter(typeof (Address), typeof (JsonFormatter)));
         }
 
@@ -43,6 +63,8 @@ namespace FubuMVC.Tests.NewConneg
         public void add_formatter_is_idempotent()
         {
             var node = new InputNode(typeof (Address));
+            node.AllowHttpFormPosts = false;
+
             node.AddFormatter<JsonFormatter>();
             node.AddFormatter<JsonFormatter>();
             node.AddFormatter<JsonFormatter>();
@@ -58,6 +80,8 @@ namespace FubuMVC.Tests.NewConneg
         public void add_reader_happy_path()
         {
             var node = new InputNode(typeof (Address));
+            node.AllowHttpFormPosts = false;
+
             var reader = node.AddReader<FakeAddressReader>();
 
             node.Readers.Single().ShouldBeTheSameAs(reader);
@@ -81,6 +105,8 @@ namespace FubuMVC.Tests.NewConneg
         public void allow_http_form_posts_adds_the_model_bind_reader()
         {
             var inputNode = new InputNode(typeof (Address));
+            inputNode.AllowHttpFormPosts = false;
+
             inputNode.Readers.Any().ShouldBeFalse();
 
             inputNode.AllowHttpFormPosts = true;
@@ -111,7 +137,20 @@ namespace FubuMVC.Tests.NewConneg
         [Test]
         public void uses_formatter()
         {
-            Assert.Fail("Do.");
+            var node = new InputNode(typeof(Address));
+        
+            node.UsesFormatter<XmlFormatter>().ShouldBeFalse();
+            node.UsesFormatter<JsonFormatter>().ShouldBeFalse();
+
+            node.AddFormatter<XmlFormatter>();
+
+            node.UsesFormatter<XmlFormatter>().ShouldBeTrue();
+            node.UsesFormatter<JsonFormatter>().ShouldBeFalse();
+
+            node.AddFormatter<JsonFormatter>();
+
+            node.UsesFormatter<XmlFormatter>().ShouldBeTrue();
+            node.UsesFormatter<JsonFormatter>().ShouldBeTrue();
         }
     }
 

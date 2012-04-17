@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Routing;
+using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Resources.Conneg.New;
 using FubuMVC.StructureMap;
 using FubuMVC.Tests.Diagnostics;
 using FubuTestingSupport;
@@ -105,8 +107,20 @@ namespace FubuMVC.Tests.Registration.Expressions
 
             container.Model.InstancesOf<IActionBehavior>().Count().ShouldBeGreaterThan(3);
 
-            container.GetAllInstances<IActionBehavior>().Each(
-                x => { x.ShouldBeOfType<FakeUnitOfWorkBehavior>().Inner.ShouldNotBeNull(); });
+            // The InputBehavior is first
+            container.GetAllInstances<IActionBehavior>().Each(x =>
+            {
+                if (x.GetType().Closes(typeof(InputBehavior<>)))
+                {
+                    x.As<BasicBehavior>().InsideBehavior.ShouldBeOfType<FakeUnitOfWorkBehavior>().Inner.ShouldNotBeNull();
+                }
+                else
+                {
+                    x.ShouldBeOfType<FakeUnitOfWorkBehavior>().Inner.ShouldNotBeNull();
+                }
+
+                
+            });
         }
     }
 }

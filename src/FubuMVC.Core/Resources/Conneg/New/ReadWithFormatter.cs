@@ -32,6 +32,11 @@ namespace FubuMVC.Core.Resources.Conneg.New
             get { return MimeTypeAttribute.ReadFrom(_formatterType); }
         }
 
+        public Type FormatterType
+        {
+            get { return _formatterType; }
+        }
+
         public override Type InputType
         {
             get { return _inputType; }

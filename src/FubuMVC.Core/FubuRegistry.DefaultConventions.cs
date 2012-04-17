@@ -52,9 +52,6 @@ namespace FubuMVC.Core
             Policies.Add<JsonMessageInputConvention>();
 
             ApplyConvention<ModifyChainAttributeConvention>();
-
-            _systemPolicies.Add(new AttachOutputPolicy());
-            _systemPolicies.Add(new AttachInputPolicy());
         }
     }
 }

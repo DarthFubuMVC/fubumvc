@@ -84,7 +84,6 @@ namespace FubuMVC.Core
         {
             get
             {
-                throw new NotImplementedException("NWO");
                 return new MediaExpression(this);
             }
         }

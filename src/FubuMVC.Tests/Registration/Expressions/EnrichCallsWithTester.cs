@@ -6,8 +6,11 @@ using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Resources.Conneg.New;
 using FubuTestingSupport;
 using NUnit.Framework;
+using OutputNode = FubuMVC.Core.Registration.Nodes.OutputNode;
+using System.Collections.Generic;
 
 namespace FubuMVC.Tests.Registration.Expressions
 {
@@ -39,7 +42,7 @@ namespace FubuMVC.Tests.Registration.Expressions
                     .Calls<TestController>(c => c.ThirdAction(null)).OutputToJson();
             });
 
-            _graph = registry.BuildLightGraph();
+            _graph = registry.BuildGraph();
         }
 
         private FubuRegistry registry;
@@ -57,32 +60,27 @@ namespace FubuMVC.Tests.Registration.Expressions
         [Test]
         public void someaction_call_should_be_enriched()
         {
-            var visitor = new BehaviorVisitor(new NulloConfigurationObserver(), "");
-            visitor.Filters += chain => chain.Calls.Any(call => call.Method.Name == "SomeAction");
-            visitor.Actions += chain =>
-            {
-                var wrapper = chain.Top.Next.ShouldBeOfType<Wrapper>();
-                wrapper.BehaviorType.ShouldEqual(typeof(FakeUnitOfWorkBehavior));
-                wrapper.Previous.ShouldBeOfType<ActionCall>();
-            };
+            var chain = _graph.BehaviorFor<TestController>(x => x.SomeAction(null));
 
-            _graph.VisitBehaviors(visitor);
+            // InputNode, then ActionCall, then Wrapper
+            var wrapper = chain.Top.Next.Next.ShouldBeOfType<Wrapper>();
+            wrapper.BehaviorType.ShouldEqual(typeof(FakeUnitOfWorkBehavior));
+            wrapper.Previous.ShouldBeOfType<ActionCall>();
         }
 
         [Test]
         public void other_actions_should_not_be_enriched()
         {
-            var visitor = new BehaviorVisitor(new NulloConfigurationObserver(), "");
-            visitor.Filters += chain => chain.Calls.Any(call => call.Method.Name != "SomeAction");
-            visitor.Filters += chain => chain.Calls.Any(call => call.HandlerType != typeof(ContentWriter));
+            _graph.Behaviors
+                .Where(x => x.FirstCall().HandlerType == typeof (TestController))
+                .Where(x => x.FirstCall().Method.Name != "SomeAction")
+                .Each(chain =>
+                {
+                    chain.Top.ShouldBeOfType<InputNode>();
+                    chain.Top.Next.ShouldBeOfType<ActionCall>();
+                    chain.Top.Next.Next.ShouldBeOfType<Core.Resources.Conneg.New.OutputNode>();
+                });
 
-            visitor.Actions += chain =>
-                                   {
-                                       chain.Top.ShouldBeOfType<ActionCall>();
-                                       chain.Top.Next.ShouldBeOfType<OutputNode>();
-                                   };
-
-            _graph.VisitBehaviors(visitor);
         }
     }
 }

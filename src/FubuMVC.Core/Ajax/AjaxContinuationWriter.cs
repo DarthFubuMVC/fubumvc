@@ -1,26 +1,30 @@
-using System.Linq;
-using FubuMVC.Core.Behaviors;
+using System.Collections.Generic;
+using FubuMVC.Core.Resources.Conneg.New;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Ajax
 {
-    public class AjaxContinuationWriter : BasicBehavior
+    public class AjaxContinuationWriter<T> : IMediaWriter<T> where T : AjaxContinuation
     {
         private readonly IJsonWriter _writer;
-        private readonly IFubuRequest _request;
 
-        public AjaxContinuationWriter(IJsonWriter writer, IFubuRequest request) : base(PartialBehavior.Executes)
+        public AjaxContinuationWriter(IJsonWriter writer)
         {
             _writer = writer;
-            _request = request;
         }
 
-        protected override DoNext performInvoke()
+        public void Write(string mimeType, T resource)
         {
-            var continuation = _request.Find<AjaxContinuation>().Single();
-            _writer.Write(continuation.ToDictionary(), MimeType.Json.ToString());
+            _writer.Write(resource.ToDictionary(), mimeType);
+        }
 
-            return DoNext.Continue;
+        public IEnumerable<string> Mimetypes
+        {
+            get
+            {
+                yield return "application/json";
+                yield return "text/json";
+            }
         }
     }
 }

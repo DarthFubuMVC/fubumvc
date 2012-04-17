@@ -70,8 +70,6 @@ namespace FubuMVC.Tests.Registration.Conventions
             var theChain = theGraph.BehaviorFor<JsonController>(x => x.Assymmetric(null));
             var theInput = theChain.Input;
             theInput.AllowHttpFormPosts.ShouldBeTrue();
-
-            theInput.Readers.Count().ShouldEqual(1);
             theInput.UsesFormatter<JsonFormatter>().ShouldBeTrue();
         }
 

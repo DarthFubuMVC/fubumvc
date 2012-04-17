@@ -11,27 +11,6 @@ namespace FubuMVC.Core.Resources.Conneg
 {
     public static class BehaviorChainConnegExtensions
     {
-        // This should not do anything if there are conneg nodes
-        public static void ApplyConneg(this BehaviorChain chain)
-        {
-            var inputType = chain.InputType();
-            if (chain.InputNode() == null && inputType != null)
-            {
-                var inputNode = new InputNode(inputType);
-                var action = chain.FirstCall();
-                action.AddBefore(inputNode);
-            }
-
-            var actionOutputType = chain.ActionOutputType();
-            if (chain.OutputNode() == null && actionOutputType != null && actionOutputType != typeof (void) &&
-                actionOutputType != typeof (HttpStatusCode))
-            {
-                var outputNode = new OutputNode(actionOutputType);
-                var action = chain.Last(x => x is ActionCall);
-                action.AddAfter(outputNode);
-            }
-        }
-
         public static void AlterConnegOutput(this BehaviorChain chain, Action<OutputNode> configure)
         {
             var node = chain.OutputNode();
@@ -52,40 +31,60 @@ namespace FubuMVC.Core.Resources.Conneg
 
         public static void UseFormatter<T>(this BehaviorChain chain) where T : IFormatter
         {
-            chain.AlterConnegInput(node => node.AddFormatter<T>());
-            chain.AlterConnegOutput(node => node.AddFormatter<T>());
+            chain.Input.AddFormatter<T>();
+            chain.Output.AddFormatter<T>();
         }
 
         public static void MakeSymmetricJson(this BehaviorChain chain)
         {
-            chain.RemoveConneg();
-            chain.ApplyConneg();
+            if (chain.InputType() != null)
+            {
+                chain.Input.ClearAll();
+                chain.Input.AllowHttpFormPosts = false;
+                chain.Input.AddFormatter<JsonFormatter>();
+            }
 
-            chain.AlterConnegInput(x => x.JsonOnly());
-            chain.AlterConnegOutput(x => x.JsonOnly());
+            if (chain.ActionOutputType() != null)
+            {
+                chain.Output.ClearAll();
+                chain.Output.AddFormatter<JsonFormatter>();
+            }
         }
 
         public static void MakeAsymmetricJson(this BehaviorChain chain)
         {
-            chain.RemoveConneg();
-            chain.ApplyConneg();
+            if (chain.InputType() != null)
+            {
+                chain.Input.ClearAll();
+                chain.Input.AllowHttpFormPosts = true;
+                chain.Input.AddFormatter<JsonFormatter>();
+            }
 
-            chain.AlterConnegInput(x => x.AddFormatter<JsonFormatter>());
-
-            chain.AlterConnegOutput(x => x.JsonOnly());
+            if (chain.ActionOutputType() != null)
+            {
+                chain.Output.ClearAll();
+                chain.Output.AddFormatter<JsonFormatter>();
+            }
         }
 
         public static bool IsAsymmetricJson(this BehaviorChain chain)
         {
-            if (!chain.HasReaders() || !chain.HasOutput()) return false;
 
-            if (chain.Output.Writers.Count() != 1) return false;
-            if (!chain.Output.UsesFormatter<JsonFormatter>()) return false;
+            if (chain.ActionOutputType() != null)
+            {
+                if (chain.Output.Writers.Count() != 1) return false;
+                if (!chain.Output.UsesFormatter<JsonFormatter>()) return false;
+            }
 
-            if (chain.Input.Readers.Count() != 2) return false;
-            if (!chain.Input.AllowHttpFormPosts) return false;
+            if (chain.InputType() != null)
+            {
+                if (chain.Input.Readers.Count() != 2) return false;
+                if (!chain.Input.AllowHttpFormPosts) return false;
 
-            return chain.Input.UsesFormatter<JsonFormatter>();
+                return chain.Input.UsesFormatter<JsonFormatter>();
+            }
+
+            return true;
         }
 
         [Obsolete, MarkedForTermination]
@@ -121,14 +120,38 @@ namespace FubuMVC.Core.Resources.Conneg
 
         public static void OutputJson(this BehaviorChain chain)
         {
-            chain.ApplyConneg();
-            chain.OutputNode().AddFormatter<JsonFormatter>();
+            chain.Output.AddFormatter<JsonFormatter>();
         }
 
         public static void OutputXml(this BehaviorChain chain)
         {
-            chain.ApplyConneg();
-            chain.OutputNode().AddFormatter<XmlFormatter>();
+            chain.Output.AddFormatter<XmlFormatter>();
+        }
+
+        /// <summary>
+        /// Sets up very basic content negotiation for an endpoint.
+        /// Accepts http form posts, xml, and json
+        /// Returns xml or json
+        /// </summary>
+        /// <param name="chain"></param>
+        public static void ApplyConneg(this BehaviorChain chain)
+        {
+            chain.RemoveConneg();
+
+            if (chain.InputType() != null)
+            {
+                chain.Input.ClearAll();
+                chain.Input.AllowHttpFormPosts = true;
+                chain.Input.AddFormatter<JsonFormatter>();
+                chain.Input.AddFormatter<XmlFormatter>();
+            }
+
+            if (chain.ActionOutputType() != null)
+            {
+                chain.Output.ClearAll();
+                chain.Output.AddFormatter<JsonFormatter>();
+                chain.Output.AddFormatter<XmlFormatter>();
+            }
         }
     }
 }

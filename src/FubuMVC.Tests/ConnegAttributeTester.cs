@@ -124,7 +124,7 @@ namespace FubuMVC.Tests
         {
             var chain = chainFor(x => x.XmlAndHtml(null));
             chain.Input.AllowHttpFormPosts.ShouldBeTrue();
-            chain.Input.UsesFormatter<JsonFormatter>().ShouldBeTrue();
+            chain.Input.UsesFormatter<JsonFormatter>().ShouldBeFalse();
             chain.Input.UsesFormatter<XmlFormatter>().ShouldBeTrue();
         }
 

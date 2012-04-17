@@ -108,11 +108,13 @@ namespace FubuMVC.Core
         public override void Alter(ActionCall call)
         {
             var chain = call.ParentChain();
-            chain.ApplyConneg();
 
             if (_formatters == FormatterOptions.All)
             {
-                chain.AlterConnegInput(node => node.AllowHttpFormPosts = true);
+                chain.Input.AllowHttpFormPosts = true;
+                chain.UseFormatter<JsonFormatter>();
+                chain.UseFormatter<XmlFormatter>();
+
                 return;
             }
 
@@ -129,11 +131,11 @@ namespace FubuMVC.Core
 
             if ((_formatters & FormatterOptions.Html) != 0)
             {
-                chain.AlterConnegInput(node => node.AllowHttpFormPosts = true);
+                chain.Input.AllowHttpFormPosts = true;
             }
             else
             {
-                chain.AlterConnegInput(node => node.AllowHttpFormPosts = false);
+                chain.Input.AllowHttpFormPosts = false;
             }
         }
     }

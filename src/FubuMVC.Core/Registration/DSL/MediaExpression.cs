@@ -4,6 +4,8 @@ using System.Linq.Expressions;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime.Formatters;
+using System.Collections.Generic;
+using FubuMVC.Core.Resources.Conneg;
 
 namespace FubuMVC.Core.Registration.DSL
 {
@@ -18,17 +20,18 @@ namespace FubuMVC.Core.Registration.DSL
 
         public MediaExpression ApplyContentNegotiationTo(Expression<Func<BehaviorChain, bool>> filter)
         {
-            throw new NotImplementedException("NWO");
-            //_policy.AddFilter("Behavior chain matches " + filter, filter.Compile());
+            var policy = new MediaAttachmentPolicy(filter.Compile());
+            _fubuRegistry.Policies.Add(policy);
+
             return this;
         }
 
         public MediaExpression ApplyContentNegotiationToActions(Expression<Func<ActionCall, bool>> filter)
         {
-            throw new NotImplementedException("NWO");
             var func = filter.Compile();
-            //_policy.AddFilter("Action matches " + filter, chain => chain.Calls.Any(func));
-            
+            var policy = new MediaAttachmentPolicy(chain => chain.Calls.Any(func));
+            _fubuRegistry.Policies.Add(policy);
+
             return this;
         }
 
@@ -36,6 +39,22 @@ namespace FubuMVC.Core.Registration.DSL
         {
             _fubuRegistry.Services(x => x.AddService<IFormatter, T>());
             return this;
+        }
+    }
+
+    // TODO -- let's get some diagnostics on this puppy
+    public class MediaAttachmentPolicy : IConfigurationAction
+    {
+        private readonly Func<BehaviorChain, bool> _filter;
+
+        public MediaAttachmentPolicy(Func<BehaviorChain, bool> filter)
+        {
+            _filter = filter;
+        }
+
+        public void Configure(BehaviorGraph graph)
+        {
+            graph.Behaviors.Where(_filter).Each(x => x.ApplyConneg());
         }
     }
 }

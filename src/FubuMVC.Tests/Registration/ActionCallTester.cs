@@ -228,11 +228,12 @@ namespace FubuMVC.Tests.Registration
             var action = ActionCall.For<ControllerTarget>(x => x.BogusMultiInput(null, null));
 
             // first one is ok
-            action.AddToEnd(new InputNode(typeof(InputModel)));
+            var newNode = new InputNode(typeof(InputModel));
+            action.AddToEnd(newNode);
             action.Count().ShouldEqual(1);
 
             // try it again, the second should be ignored
-            action.AddToEnd(new InputNode(typeof(InputModel)));
+            action.AddToEnd(newNode);
             action.Count().ShouldEqual(1);
         }
 
@@ -243,13 +244,14 @@ namespace FubuMVC.Tests.Registration
             var action = ActionCall.For<ControllerTarget>(x => x.BogusMultiInput(null, null));
 
             // first one is ok
-            action.AddToEnd(new InputNode(typeof(InputModel)));
+            var newNode = new InputNode(typeof(InputModel));
+            action.AddToEnd(newNode);
             action.Count().ShouldEqual(1);
 
             action.AddToEnd(new Wrapper(typeof(Wrapper1)));
 
             // try it again, the second should be ignored
-            action.AddToEnd(new InputNode(typeof(InputModel)));
+            action.AddToEnd(newNode);
             action.Count().ShouldEqual(2);
             action.Count(x => x is InputNode).ShouldEqual(1);
         }
@@ -258,13 +260,46 @@ namespace FubuMVC.Tests.Registration
         public void add_before_must_be_idempotent()
         {
             var action = ActionCall.For<ControllerTarget>(x => x.BogusMultiInput(null, null));
-            action.AddBefore(new InputNode(typeof(Model1)));
+            var newNode = new InputNode(typeof(Model1));
+
+            action.AddBefore(newNode);
 
             action.PreviousNodes.Count().ShouldEqual(1);
 
-            action.AddBefore(new InputNode(typeof(Model1)));
+            action.AddBefore(newNode);
 
             action.PreviousNodes.Count().ShouldEqual(1);
+        }
+    }
+
+    public class FakeNode : BehaviorNode
+    {
+        protected override ObjectDef buildObjectDef()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override BehaviorCategory Category
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public bool Equals(FakeNode other)
+        {
+            return !ReferenceEquals(null, other);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof (FakeNode)) return false;
+            return Equals((FakeNode) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return 0;
         }
     }
 

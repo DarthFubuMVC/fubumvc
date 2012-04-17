@@ -28,8 +28,9 @@ namespace FubuMVC.Core.Registration.DSL
         void IConfigurationAction.Configure(BehaviorGraph graph)
         {
             var chain = graph.BehaviorFor(_route);
-            _chainConfigs.Each(x => x(chain));
             _nodes.Each(chain.AddToEnd);
+            _chainConfigs.Each(x => x(chain));
+            
         }
 
 
@@ -54,6 +55,8 @@ namespace FubuMVC.Core.Registration.DSL
                 var call = new ActionCall(typeof(C), method);
 
                 _outputType = call.OutputType();
+
+                _parent._nodes.Add(call);
 
                 return this;
             }

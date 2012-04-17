@@ -87,38 +87,6 @@ namespace FubuMVC.Tests.Registration.Conventions
             chainFor(x => x.OutputJson3()).Top.Any(x => x.GetType() == typeof (OutputNode)).ShouldBeTrue();
         }
 
-        [Test]
-        public void
-            methods_that_take_in_a_json_message_class_should_have_the_json_deserialization_behavior_in_front_of_the_action_call
-            ()
-        {
-
-            Assert.Fail("NWO");
-            //chainFor(x => x.JsonInput1(null)).FirstCall().Previous.ShouldBeOfType<InputNode>().
-            //    SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof (JsonFormatter));
-            //chainFor(x => x.JsonInput2(null)).FirstCall().Previous.ShouldBeOfType<InputNode>().
-            //    SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof (JsonFormatter));
-            //chainFor(x => x.JsonInput3(null)).FirstCall().Previous.ShouldBeOfType<InputNode>().
-            //    SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof (JsonFormatter));
-        }
-
-        [Test]
-        public void
-            only_the_behaviors_with_an_output_model_reflecting_the_json_criteria_specified_in_the_registry_are_output_to_json
-            ()
-        {
-            graph.Behaviors.Count().ShouldBeGreaterThan(20);
-            var methodNames =
-                graph.Behaviors.Where(chain => chain.Top.Any(x => x is OutputNode)).Select(
-                    x => x.Calls.First().Method.Name);
-
-            Debug.WriteLine("Actual");
-            methodNames.Each(x => Debug.WriteLine(x));
-
-            Debug.WriteLine("-------------------------------------------------------");
-            methodNames
-                .ShouldHaveTheSameElementsAs("Decorated", "OutputJson1", "OutputJson2", "OutputJson3");
-        }
     }
 
     public class CrudReport

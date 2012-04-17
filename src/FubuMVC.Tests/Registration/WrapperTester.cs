@@ -50,14 +50,14 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void put_a_dependency_into_the_object_def_for_the_inner_behavior()
         {
-            _wrapper.AddAfter(new OutputNode(typeof (Output)));
+            _wrapper.AddAfter(Wrapper.For<FakeBehavior>());
             ObjectDef def = _wrapper.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None);
 
             def.Dependencies.Count().ShouldEqual(1);
 
             var dependency = def.Dependencies.First().ShouldBeOfType<ConfiguredDependency>();
             dependency.DependencyType.ShouldEqual(typeof (IActionBehavior));
-            dependency.Definition.Type.ShouldEqual(typeof (OutputBehavior<Output>));
+            dependency.Definition.Type.ShouldEqual(typeof (FakeBehavior));
         }
 
         [Test]
@@ -66,4 +66,6 @@ namespace FubuMVC.Tests.Registration
             _wrapper.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None).Name.ShouldEqual(_wrapper.UniqueId.ToString());
         }
     }
+
+
 }

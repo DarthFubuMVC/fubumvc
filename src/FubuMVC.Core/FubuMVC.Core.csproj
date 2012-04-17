@@ -70,7 +70,6 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AjaxExtensions.cs" />
-    <Compile Include="Ajax\AjaxContinuationNode.cs" />
     <Compile Include="Ajax\AjaxContinuationPolicy.cs" />
     <Compile Include="Ajax\AjaxContinuationWriter.cs" />
     <Compile Include="Ajax\AjaxError.cs" />

@@ -5,6 +5,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Resources.Conneg.New;
 using FubuMVC.Core.Runtime.Formatters;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -69,24 +70,23 @@ namespace FubuMVC.Tests.Ajax
         public void no_behavior_on_actions_that_do_not_return_continuations()
         {
             chainFor(x => x.NoContinuation(null))
-                .Any(x => x is AjaxContinuationNode)
-                .ShouldBeFalse();
+                .Output.OfType<Writer>().Any().ShouldBeFalse();
         }
 
         [Test]
         public void should_be_a_behavior_on_actions_that_return_a_subclass_of_AjaxContinuation()
         {
             chainFor(x => x.SpecialContinuation(null))
-                .Any(x => x is AjaxContinuationNode)
-                .ShouldBeTrue();
+                .Output.Writers.OfType<Writer>()
+                .Single()
+                .WriterType.ShouldEqual(typeof(AjaxContinuationWriter<MySpecialContinuation>));
         }
 
         [Test]
         public void should_be_a_behavior_on_actions_that_return_the_AjaxContinuation()
         {
-            chainFor(x => x.BasicContinuation(null))
-                .Any(x => x is AjaxContinuationNode)
-                .ShouldBeTrue();
+            chainFor(x => x.BasicContinuation(null)).Output.Writers.OfType<Writer>().Single()
+                .WriterType.ShouldEqual(typeof (AjaxContinuationWriter<AjaxContinuation>));
         }
 
         [Test]
@@ -106,9 +106,8 @@ namespace FubuMVC.Tests.Ajax
             hostRegistry.Import(packageRegistry, string.Empty);
             theGraph = hostRegistry.BuildGraph();
 
-            chainFor(x => x.BasicContinuation(null))
-                .Where(x => x is AjaxContinuationNode)
-                .ShouldHaveCount(1);
+            var chain = chainFor(x => x.BasicContinuation(null))
+                .Output.Writers.OfType<Writer>().ShouldHaveCount(1);
         }
     }
 }

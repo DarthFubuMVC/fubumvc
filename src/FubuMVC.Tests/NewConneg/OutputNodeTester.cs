@@ -13,26 +13,55 @@ namespace FubuMVC.Tests.NewConneg
         [Test]
         public void ClearAll()
         {
-            Assert.Fail("Do.");
+            var node = new OutputNode(typeof (Address));
+            node.UsesFormatter<XmlFormatter>();
+            node.UsesFormatter<JsonFormatter>();
+        
+            node.ClearAll();
+
+            node.Writers.Any().ShouldBeFalse();
         }
 
 
         [Test]
         public void JsonOnly_from_scratch()
         {
-            Assert.Fail("Do.");
+            var node = new OutputNode(typeof(Address));
+            node.JsonOnly();
+
+            node.Writers.ShouldHaveCount(1);
+            node.UsesFormatter<JsonFormatter>().ShouldBeTrue();
         }
 
         [Test]
         public void JsonOnly_with_existing_stuff()
         {
-            Assert.Fail("Do.");
+            var node = new OutputNode(typeof(Address));
+            node.UsesFormatter<XmlFormatter>();
+
+            node.JsonOnly();
+
+            node.Writers.ShouldHaveCount(1);
+            node.UsesFormatter<JsonFormatter>().ShouldBeTrue();
         }
 
         [Test]
         public void UsesFormatter()
         {
-            Assert.Fail("Do.");
+            var node = new OutputNode(typeof(Address));
+
+            node.UsesFormatter<XmlFormatter>().ShouldBeFalse();
+            node.UsesFormatter<JsonFormatter>().ShouldBeFalse();
+
+            node.AddFormatter<XmlFormatter>();
+
+            node.UsesFormatter<XmlFormatter>().ShouldBeTrue();
+            node.UsesFormatter<JsonFormatter>().ShouldBeFalse();
+
+            node.AddFormatter<JsonFormatter>();
+
+            node.UsesFormatter<XmlFormatter>().ShouldBeTrue();
+            node.UsesFormatter<JsonFormatter>().ShouldBeTrue();
         }
 
         [Test]

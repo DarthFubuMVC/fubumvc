@@ -147,7 +147,12 @@ namespace FubuMVC.Core
             Services<ViewActivationServiceRegistry>();
             Services<CoreServiceRegistry>();
 
-            return BuildLightGraph();
+            var graph = BuildLightGraph();
+
+            new AttachInputPolicy().Configure(graph);
+            new AttachOutputPolicy().Configure(graph);
+
+            return graph;
         }
 
         private readonly IList<Action<TypePool>> _scanningOperations = new List<Action<TypePool>>();

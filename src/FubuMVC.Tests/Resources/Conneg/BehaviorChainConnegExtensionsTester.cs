@@ -68,44 +68,6 @@ namespace FubuMVC.Tests.Resources.Conneg
             }
         }
 
-        [Test]
-        public void ConnegInputNode_can_find_an_input_node_under_a_chain_if_it_exists()
-        {
-            theChain.Input.ShouldBeNull();
-            theChain.ApplyConneg();
-            theChain.Input.ShouldNotBeNull();
-        }
-
-        [Test]
-        public void ConnegOutputNode_method_can_find_an_output_node_under_a_chain_if_it_exists()
-        {
-            theChain.Output.ShouldBeNull();
-            theChain.ApplyConneg();
-            theChain.Output.ShouldNotBeNull();
-        }
-
-        [Test]
-        public void apply_conneg_is_idempotent()
-        {
-            theChain.ApplyConneg();
-
-            var inputNode = theChain.Input;
-            var outputNode = theChain.Output;
-
-            theChain.ApplyConneg();
-
-            theChain.Input.ShouldBeTheSameAs(inputNode);
-            theChain.Output.ShouldBeTheSameAs(outputNode);
-        }
-
-        [Test]
-        public void do_not_apply_conneg_output_to_method_that_returns_HttpStatusCode()
-        {
-            var chain = BehaviorChain.For<ActionJackson>(x => x.CodeFor(null));
-            chain.ApplyConneg();
-
-            chain.HasConnegOutput().ShouldBeFalse();
-        }
 
 
         [Test]
@@ -143,7 +105,6 @@ namespace FubuMVC.Tests.Resources.Conneg
         [Test]
         public void output_json()
         {
-            theChain.ApplyConneg();
             theChain.OutputJson();
 
             var outputNode = theChain.Output;
@@ -154,7 +115,6 @@ namespace FubuMVC.Tests.Resources.Conneg
         [Test]
         public void output_xml()
         {
-            theChain.ApplyConneg();
             theChain.OutputXml();
 
             var outputNode = theChain.Output;
@@ -165,21 +125,10 @@ namespace FubuMVC.Tests.Resources.Conneg
         [Test]
         public void remove_conneg()
         {
-            theChain.ApplyConneg();
             theChain.RemoveConneg();
 
-            theChain.Input.ShouldBeNull();
-            theChain.Output.ShouldBeNull();
-        }
-
-        [Test]
-        public void zero_in_does_not_apply_a_conneg_node()
-        {
-            var zeroIn = BehaviorChain.For<ActionJackson>(x => x.ZeroInOneOut());
-            zeroIn.ApplyConneg();
-
-            zeroIn.HasReaders().ShouldBeFalse();
-            zeroIn.Output.ShouldNotBeNull();
+            theChain.HasReaders().ShouldBeFalse();
+            theChain.Output.Writers.Any().ShouldBeFalse();
         }
     }
 }

@@ -9,8 +9,10 @@ using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Querying;
+using FubuMVC.Core.Resources.Etags;
 using FubuMVC.Core.Routing;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Runtime.Formatters;
 using FubuMVC.Core.SessionState;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.Urls;
@@ -65,6 +67,11 @@ namespace FubuMVC.Core
 
 
             AddService<IActivator>(typeof (DisplayConversionRegistryActivator));
+
+            AddService<IFormatter>(typeof (JsonFormatter));
+            AddService<IFormatter>(typeof (XmlFormatter));
+
+            SetServiceIfNone<IEtagCache, EtagCache>();
         }
     }
 }

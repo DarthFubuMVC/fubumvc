@@ -94,17 +94,18 @@ namespace FubuMVC.Core.Resources.Conneg.New
 
         public void ClearAll()
         {
-            throw new NotImplementedException();
+            Readers.SetTop(null);
         }
 
         public void JsonOnly()
         {
-            throw new NotImplementedException();
+            ClearAll();
+            AddFormatter<JsonFormatter>();
         }
 
         public bool UsesFormatter<T>()
         {
-            throw new NotImplementedException();
+            return _readers.OfType<ReadWithFormatter>().Any(x => x.FormatterType == typeof (T));
         }
     }
 }
