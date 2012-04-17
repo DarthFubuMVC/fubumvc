@@ -1,26 +1,17 @@
 using System;
-using FubuMVC.Core;
+using System.Collections.Generic;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Resources.Conneg.New;
 
 namespace FubuMVC.Media.Atom
 {
-    public enum FeedSourceType
-    {
-        direct,
-        enumerable
-    }
-
     public class FeedWriterNode<T> : WriterNode
     {
         private readonly IFeedDefinition<T> _feed;
-        // IFeedSource<T>
-        public FeedWriterNode(IFeedDefinition<T> feed, FeedSourceType sourceType, Type modelType)
+
+        public FeedWriterNode(IFeedDefinition<T> feed, Type modelType)
         {
             _feed = feed;
-            FeedSourceType = sourceType == Atom.FeedSourceType.direct
-                                 ? typeof (DirectFeedSource<,>).MakeGenericType(modelType, typeof (T))
-                                 : typeof (EnumerableFeedSource<,>).MakeGenericType(modelType, typeof (T));
 
             InputType = modelType;
         }
@@ -30,23 +21,25 @@ namespace FubuMVC.Media.Atom
             get { return _feed; }
         }
 
-        public Type FeedSourceType
+        public Type InputType { get; set; }
+
+        public override Type ResourceType
         {
-            get; private set;
+            get { return typeof (IEnumerable<T>); }
         }
 
-        public ObjectDef ToObjectDef(DiagnosticLevel level)
+        // TODO -- UT this
+        public override IEnumerable<string> Mimetypes
+        {
+            get { yield return _feed.ContentType; }
+        }
+
+        protected override ObjectDef toWriterDef()
         {
             var objectDef = new ObjectDef(typeof (FeedWriter<T>));
-            objectDef.DependencyByType(typeof (IFeedSource<T>), FeedSourceType);
-            objectDef.DependencyByValue(typeof(IFeedDefinition<T>), _feed);
+            objectDef.DependencyByValue(typeof (IFeedDefinition<T>), _feed);
 
             return objectDef;
-        }
-
-        public Type InputType
-        {
-            get; set;
         }
     }
 }

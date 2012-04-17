@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
 
-namespace FubuMVC.Core.Projections
+namespace FubuMVC.Media.Projections
 {
 
     public class EnumerableProjection<TParent, TChild> : IProjection<TParent>

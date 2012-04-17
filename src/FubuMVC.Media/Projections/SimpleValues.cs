@@ -1,6 +1,6 @@
 using FubuCore.Reflection;
 
-namespace FubuMVC.Core.Projections
+namespace FubuMVC.Media.Projections
 {
     public class SimpleValues<T> : IValues<T>
     {

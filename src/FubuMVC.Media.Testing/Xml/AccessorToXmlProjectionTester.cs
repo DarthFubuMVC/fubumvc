@@ -1,12 +1,14 @@
 using FubuCore;
 using FubuCore.Formatting;
 using FubuCore.Reflection;
-using FubuMVC.Core.Projections;
 using FubuMVC.Core.Urls;
+using FubuMVC.Media.Projections;
+using FubuMVC.Media.Xml;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Tests.Projections
+namespace FubuMVC.Media.Testing.Xml
 {
     [TestFixture]
     public class AccessorProjectionTester

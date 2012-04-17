@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
-using FubuMVC.Core.Projections;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Urls;
+using FubuMVC.Media.Projections;
 
 namespace FubuMVC.Media
 {

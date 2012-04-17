@@ -7,7 +7,7 @@ using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Urls;
 
-namespace FubuMVC.Tests.Resources
+namespace FubuMVC.Media.Testing
 {
     public class ValidStubUrlRegistry : IUrlRegistry
     {

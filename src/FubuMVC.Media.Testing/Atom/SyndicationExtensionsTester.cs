@@ -1,3 +1,7 @@
+using FubuMVC.Media.Atom;
+using FubuTestingSupport;
+using NUnit.Framework;
+
 namespace FubuMVC.Media.Testing.Atom
 {
     [TestFixture]

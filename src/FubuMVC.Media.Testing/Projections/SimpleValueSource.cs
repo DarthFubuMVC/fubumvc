@@ -1,9 +1,9 @@
 using FubuCore.Reflection;
-using FubuMVC.Core.Projections;
+using FubuMVC.Media.Projections;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests.Projections
+namespace FubuMVC.Media.Testing.Projections
 {
     [TestFixture]
     public class SimpleValueSource

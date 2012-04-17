@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace FubuMVC.Core.Projections
+namespace FubuMVC.Media.Projections
 {
     public class DictionaryMediaNodeList : IMediaNodeList
     {

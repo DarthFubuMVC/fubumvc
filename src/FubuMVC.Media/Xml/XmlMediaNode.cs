@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Xml;
-using FubuMVC.Core.Projections;
+using FubuMVC.Media.Projections;
 
 namespace FubuMVC.Media.Xml
 {

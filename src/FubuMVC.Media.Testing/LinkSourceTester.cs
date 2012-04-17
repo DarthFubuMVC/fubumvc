@@ -2,13 +2,12 @@ using System;
 using System.Linq;
 using FubuCore;
 using FubuLocalization;
-using FubuMVC.Core.Projections;
-using FubuMVC.Core.Resources;
 using FubuMVC.Core.Urls;
+using FubuMVC.Media.Projections;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests.Resources
+namespace FubuMVC.Media.Testing
 {
     [TestFixture]
     public class LinkSourceTester

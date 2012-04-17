@@ -1,13 +1,13 @@
 using FubuCore;
 using FubuCore.Formatting;
 using FubuCore.Reflection;
-using FubuMVC.Core.Projections;
 using FubuMVC.Core.Urls;
+using FubuMVC.Media.Projections;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Tests.Projections
+namespace FubuMVC.Media.Testing.Projections
 {
     [TestFixture]
     public class ProjectionContextTester : InteractionContext<ProjectionContext<ProjectionContextTester.ProjectionModel>> 

@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using FubuCore;
-using FubuMVC.Core.Projections;
 using FubuMVC.Core.Resources.Conneg.New;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
+using FubuMVC.Media.Projections;
 
 namespace FubuMVC.Media
 {
@@ -14,14 +14,17 @@ namespace FubuMVC.Media
         private readonly IProjection<T> _projection;
         private readonly IServiceLocator _services;
         private readonly IUrlRegistry _urls;
+        private readonly IOutputWriter _writer;
 
-        public MediaWriter(IMediaDocument document, ILinkSource<T> links, IUrlRegistry urls, IProjection<T> projection, IServiceLocator services)
+        public MediaWriter(IMediaDocument document, ILinkSource<T> links, IUrlRegistry urls, IProjection<T> projection,
+                           IServiceLocator services, IOutputWriter writer)
         {
             _document = document;
             _links = links;
             _urls = urls;
             _projection = projection;
             _services = services;
+            _writer = writer;
         }
 
         protected IMediaDocument document
@@ -29,16 +32,12 @@ namespace FubuMVC.Media
             get { return _document; }
         }
 
-        public void Write(IValues<T> source, IOutputWriter writer)
+        // TODO -- need some end to end testing on this monster
+        public void Write(string mimeType, T resource)
         {
-            writeData(source);
+            writeData(new SimpleValues<T>(resource));
 
-            _document.Write(writer);
-        }
-
-        public void Write(T source, IOutputWriter writer)
-        {
-            Write(new SimpleValues<T>(source), writer);
+            _document.Write(_writer, mimeType);
         }
 
         public IEnumerable<string> Mimetypes

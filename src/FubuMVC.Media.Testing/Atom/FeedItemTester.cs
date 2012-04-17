@@ -1,4 +1,10 @@
 using System;
+using System.ServiceModel.Syndication;
+using FubuCore;
+using FubuMVC.Media.Atom;
+using FubuMVC.Media.Projections;
+using FubuTestingSupport;
+using NUnit.Framework;
 
 namespace FubuMVC.Media.Testing.Atom
 {

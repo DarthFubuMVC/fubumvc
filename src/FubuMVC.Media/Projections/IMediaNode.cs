@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using FubuMVC.Core.Resources;
 
-namespace FubuMVC.Core.Projections
+namespace FubuMVC.Media.Projections
 {
     public interface IMediaNode
     {

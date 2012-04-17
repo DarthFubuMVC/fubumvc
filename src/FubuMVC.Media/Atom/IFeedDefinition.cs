@@ -1,6 +1,6 @@
 using System.ServiceModel.Syndication;
-using FubuMVC.Core.Projections;
 using FubuMVC.Core.Urls;
+using FubuMVC.Media.Projections;
 
 namespace FubuMVC.Media.Atom
 {

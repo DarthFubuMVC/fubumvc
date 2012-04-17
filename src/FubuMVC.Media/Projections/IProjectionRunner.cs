@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using FubuCore;
 
-namespace FubuMVC.Core.Projections
+namespace FubuMVC.Media.Projections
 {
     public interface IProjectionRunner
     {

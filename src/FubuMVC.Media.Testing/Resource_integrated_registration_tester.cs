@@ -1,20 +1,18 @@
 using FubuCore;
 using FubuMVC.Core;
-using FubuMVC.Core.Projections;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
-using FubuMVC.Core.Resources;
 using FubuMVC.Core.Resources.Conneg;
-using FubuMVC.Core.Resources.Media.Formatters;
-using FubuMVC.Core.Resources.Media.Xml;
 using FubuMVC.Core.Runtime.Formatters;
-using FubuMVC.Tests.Resources.Projections;
+using FubuMVC.Media.Projections;
+using FubuMVC.Media.Testing.Xml;
+using FubuMVC.Media.Xml;
 using NUnit.Framework;
 using System.Linq;
 using FubuTestingSupport;
 
-namespace FubuMVC.Tests.Resources
+namespace FubuMVC.Media.Testing
 {
     [TestFixture]
     public class Resource_integrated_registration_tester
@@ -71,10 +69,11 @@ namespace FubuMVC.Tests.Resources
         public void just_having_a_resource_turns_the_formatters_to_none()
         {
             // Default condition first, before the resource is applied
-            theBehaviorGraph.BehaviorFor<RestController1>(x => x.Find(null)).RemoveConneg();
-            theBehaviorGraph.BehaviorFor<RestController1>(x => x.Find(null)).ApplyConneg();
-            theBehaviorGraph.BehaviorFor<RestController1>(x => x.Find(null))
-                .ConnegOutputNode().FormatterUsage.ShouldEqual(FormatterUsage.all);
+            var theChain = theBehaviorGraph.BehaviorFor<RestController1>(x => x.Find(null));
+            theChain.RemoveConneg();
+            theChain.ApplyConneg();
+            theChain.Output.UsesFormatter<JsonFormatter>().ShouldBeTrue();
+            theChain.Output.UsesFormatter<XmlFormatter>().ShouldBeTrue();
 
             theConnegGraph = new ConnegGraph(theBehaviorGraph);
         
@@ -82,8 +81,8 @@ namespace FubuMVC.Tests.Resources
             new Resource<Address>().As<IResourceRegistration>().Modify(theConnegGraph, theBehaviorGraph);
 
             // Default condition first, before the resource is applied
-            theBehaviorGraph.BehaviorFor<RestController1>(x => x.Find(null))
-                .ConnegOutputNode().FormatterUsage.ShouldEqual(FormatterUsage.none);
+            theChain.Output.UsesFormatter<JsonFormatter>().ShouldBeFalse();
+            theChain.Output.UsesFormatter<XmlFormatter>().ShouldBeFalse();
         }
 
         [Test]
@@ -94,15 +93,16 @@ namespace FubuMVC.Tests.Resources
 
             resource.As<IResourceRegistration>().Modify(theConnegGraph, theBehaviorGraph);
 
-            theBehaviorGraph.BehaviorFor<RestController1>(x => x.Find(null))
-                .ConnegOutputNode().SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof(JsonFormatter));
+            var outputNode = theBehaviorGraph.BehaviorFor<RestController1>(x => x.Find(null)).Output;
+            outputNode.UsesFormatter<JsonFormatter>().ShouldBeTrue();
+            outputNode.UsesFormatter<XmlFormatter>().ShouldBeFalse();
 
 
             theBehaviorGraph.BehaviorFor<RestController1>(x => x.put_city(null))
-                .ConnegOutputNode().SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof(JsonFormatter));
+                .Output.UsesFormatter<JsonFormatter>().ShouldBeTrue();
 
             theBehaviorGraph.BehaviorFor<RestController1>(x => x.Method3(null))
-                .ConnegOutputNode().SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof(JsonFormatter));
+                .Output.UsesFormatter<JsonFormatter>().ShouldBeTrue();
         }
 
         [Test]
@@ -114,14 +114,14 @@ namespace FubuMVC.Tests.Resources
             resource.As<IResourceRegistration>().Modify(theConnegGraph, theBehaviorGraph);
 
             theBehaviorGraph.BehaviorFor<RestController1>(x => x.Find(null))
-                .ConnegOutputNode().SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof(XmlFormatter));
+                .Output.UsesFormatter<XmlFormatter>().ShouldBeTrue();
 
 
             theBehaviorGraph.BehaviorFor<RestController1>(x => x.put_city(null))
-                .ConnegOutputNode().SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof(XmlFormatter));
+                .Output.UsesFormatter<XmlFormatter>().ShouldBeTrue();
 
             theBehaviorGraph.BehaviorFor<RestController1>(x => x.Method3(null))
-                .ConnegOutputNode().SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof(XmlFormatter));
+                .Output.UsesFormatter<XmlFormatter>().ShouldBeTrue();
         }
 
         [Test]
@@ -143,7 +143,7 @@ namespace FubuMVC.Tests.Resources
 
             var connegOutput = theBehaviorGraph
                 .BehaviorFor<RestController1>(x => x.Find(null))
-                .ConnegOutputNode();
+                .Output;
 
             var writerNode = connegOutput.Writers.Last().As<MediaWriterNode>();
 
@@ -177,7 +177,7 @@ namespace FubuMVC.Tests.Resources
 
             var connegOutput = graph
                 .BehaviorFor<RestController1>(x => x.Find(null))
-                .ConnegOutputNode();
+                .Output;
 
             var writerNode = connegOutput.Writers.Single().As<MediaWriterNode>();
 

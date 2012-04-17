@@ -1,4 +1,7 @@
 using System;
+using FubuMVC.Core.Registration.ObjectGraph;
+using FubuTestingSupport;
+using NUnit.Framework;
 
 namespace FubuMVC.Media.Testing
 {

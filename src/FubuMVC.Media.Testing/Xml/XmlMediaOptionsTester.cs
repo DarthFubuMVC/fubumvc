@@ -1,3 +1,7 @@
+using FubuMVC.Media.Xml;
+using FubuTestingSupport;
+using NUnit.Framework;
+
 namespace FubuMVC.Media.Testing.Xml
 {
     [TestFixture]

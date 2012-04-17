@@ -1,6 +1,6 @@
 using System;
 
-namespace FubuMVC.Core.Projections
+namespace FubuMVC.Media.Projections
 {
     public class SingleValueProjection<T> : IProjection<T>
     {

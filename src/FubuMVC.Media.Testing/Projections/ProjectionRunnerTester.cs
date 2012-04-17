@@ -1,10 +1,10 @@
 using FubuCore;
-using FubuMVC.Core.Projections;
+using FubuMVC.Media.Projections;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Tests.Projections
+namespace FubuMVC.Media.Testing.Projections
 {
 
 

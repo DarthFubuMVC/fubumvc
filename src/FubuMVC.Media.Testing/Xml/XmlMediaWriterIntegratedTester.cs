@@ -1,6 +1,12 @@
 using System.Diagnostics;
 using System.Xml;
 using System.Linq;
+using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Urls;
+using FubuMVC.Media.Projections;
+using FubuMVC.Media.Xml;
+using FubuTestingSupport;
+using NUnit.Framework;
 
 namespace FubuMVC.Media.Testing.Xml
 {
@@ -34,7 +40,9 @@ namespace FubuMVC.Media.Testing.Xml
             linkSource.To(a => new AddressAction("change")).Rel("change");
             linkSource.To(a => new AddressAction("delete")).Rel("delete");
 
-            var media = new MediaWriter<Address>(theDocument, linkSource, urls, projection, null);
+            theOutput = new InMemoryOutputWriter();
+
+            var media = new MediaWriter<Address>(theDocument, linkSource, urls, projection, null, theOutput);
 
 
             theAddress = new Address(){
@@ -44,8 +52,9 @@ namespace FubuMVC.Media.Testing.Xml
                 StateOrProvince = "Texas"
             };
 
-            theOutput = new InMemoryOutputWriter();
-            media.Write(theAddress, theOutput);
+
+
+            media.Write("text/plain", theAddress);
 
             Debug.WriteLine(theOutput);
         }

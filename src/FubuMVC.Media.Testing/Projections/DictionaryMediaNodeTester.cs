@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using FubuCore;
-using FubuMVC.Core.Projections;
+using FubuMVC.Media.Projections;
 using NUnit.Framework;
 using FubuTestingSupport;
 using System.Linq;
 
-namespace FubuMVC.Tests.Projections
+namespace FubuMVC.Media.Testing.Projections
 {
     [TestFixture]
     public class DictionaryMediaNodeTester

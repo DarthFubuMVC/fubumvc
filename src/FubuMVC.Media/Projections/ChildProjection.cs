@@ -2,7 +2,7 @@ using System;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
 
-namespace FubuMVC.Core.Projections
+namespace FubuMVC.Media.Projections
 {
     public class ChildProjection<TParent, TChild> : Projection<TChild>, IProjection<TParent> where TChild : class
     {

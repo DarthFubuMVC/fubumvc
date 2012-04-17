@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ServiceModel.Syndication;
 using FubuCore.Reflection;
-using FubuMVC.Core.Projections;
+using FubuMVC.Media.Projections;
 
 namespace FubuMVC.Media.Atom
 {

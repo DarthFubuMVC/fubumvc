@@ -1,10 +1,10 @@
 using FubuCore;
-using FubuMVC.Core.Projections;
+using FubuMVC.Media.Projections;
 using NUnit.Framework;
 using Rhino.Mocks;
 using FubuTestingSupport;
 
-namespace FubuMVC.Tests.Projections
+namespace FubuMVC.Media.Testing.Projections
 {
     [TestFixture]
     public class DelegatingProjectionTester

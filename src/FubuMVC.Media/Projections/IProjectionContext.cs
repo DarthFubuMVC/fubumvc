@@ -1,7 +1,7 @@
 using FubuCore.Formatting;
 using FubuMVC.Core.Urls;
 
-namespace FubuMVC.Core.Projections
+namespace FubuMVC.Media.Projections
 {
     public interface IProjectionContext<T> : IValues<T>
     {

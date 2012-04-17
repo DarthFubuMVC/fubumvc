@@ -1,7 +1,7 @@
-using FubuMVC.Core.Projections;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Resources.Etags;
 using FubuMVC.Core.Runtime.Formatters;
+using FubuMVC.Media.Projections;
 
 namespace FubuMVC.Media
 {

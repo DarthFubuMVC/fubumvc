@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using System.Linq;
 using FubuCore;
-using FubuMVC.Core.Resources;
 using FubuMVC.Core.Resources.Conneg;
 
-namespace FubuMVC.Core.Registration.Conventions
+namespace FubuMVC.Media
 {
     public class ConnegAttachmentPolicy : IConfigurationAction
     {

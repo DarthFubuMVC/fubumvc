@@ -1,6 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.ServiceModel.Syndication;
+using FubuCore;
+using FubuLocalization;
+using FubuMVC.Core;
+using FubuMVC.Core.Registration;
+using FubuMVC.Core.Urls;
+using FubuMVC.Media.Atom;
+using FubuMVC.Media.Projections;
+using FubuTestingSupport;
+using NUnit.Framework;
 
 namespace FubuMVC.Media.Testing.Atom
 {
@@ -23,11 +34,10 @@ namespace FubuMVC.Media.Testing.Atom
         public void should_apply_a_media_output_node_to_enumerables_of_the_target_type()
         {
             var outputNode = theGraph.BehaviorFor<Controller1>(x => x.M1())
-                .ConnegOutputNode()
+                .Output
                 .Writers.Single()
                 .ShouldBeOfType<FeedWriterNode<TargetClass>>();
 
-            outputNode.FeedSourceType.ShouldEqual(typeof (EnumerableFeedSource<EnumerableOutput, TargetClass>));
             outputNode.Feed.ShouldBeOfType<TargetClassFeed>();
         }
 
@@ -35,11 +45,10 @@ namespace FubuMVC.Media.Testing.Atom
         public void should_apply_a_media_output_node_to_enumerables_of_values_of_the_target_type()
         {
             var outputNode = theGraph.BehaviorFor<Controller1>(x => x.M2())
-                .ConnegOutputNode()
+                .Output
                 .Writers.Single()
                 .ShouldBeOfType<FeedWriterNode<TargetClass>>();
 
-            outputNode.FeedSourceType.ShouldEqual(typeof(DirectFeedSource<EnumerableValuesOutput, TargetClass>));
             outputNode.Feed.ShouldBeOfType<TargetClassFeed>();
         }
 

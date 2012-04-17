@@ -4,7 +4,7 @@ using FubuCore.Formatting;
 using FubuCore.Reflection;
 using FubuMVC.Core.Urls;
 
-namespace FubuMVC.Core.Projections
+namespace FubuMVC.Media.Projections
 {
     public class ProjectionContext<T> : IProjectionContext<T>
     {

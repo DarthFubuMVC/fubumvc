@@ -1,6 +1,6 @@
 using System;
 
-namespace FubuMVC.Core.Projections
+namespace FubuMVC.Media.Projections
 {
     public interface IProjection<T>
     {

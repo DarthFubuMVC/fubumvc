@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Xml;
 using FubuCore;
-using FubuMVC.Core.Projections;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Media.Projections;
 
 namespace FubuMVC.Media.Xml
 {
@@ -47,7 +47,7 @@ namespace FubuMVC.Media.Xml
             get { return _topNode; }
         }
 
-        public void Write(IOutputWriter writer)
+        public void Write(IOutputWriter writer, string mimeType)
         {
             writer.Write(_options.Mimetype, _document.OuterXml);
         }

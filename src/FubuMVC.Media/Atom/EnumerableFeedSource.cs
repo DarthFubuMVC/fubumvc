@@ -1,22 +1,21 @@
 using System.Collections.Generic;
 using System.Linq;
-using FubuMVC.Core.Projections;
-using FubuMVC.Core.Runtime;
+using FubuMVC.Media.Projections;
 
 namespace FubuMVC.Media.Atom
 {
-    public class EnumerableFeedSource<TModel, T> : IFeedSource<T> where TModel : class, IEnumerable<T>
+    public class EnumerableFeedSource<T> : IFeedSource<T>
     {
-        private readonly IFubuRequest _request;
+        private readonly IEnumerable<T> _enumerable;
 
-        public EnumerableFeedSource(IFubuRequest request)
+        public EnumerableFeedSource(IEnumerable<T> enumerable)
         {
-            _request = request;
+            _enumerable = enumerable;
         }
 
         public IEnumerable<IValues<T>> GetValues()
         {
-            return _request.Get<TModel>().Select(x => new SimpleValues<T>(x));
+            return _enumerable.Select(x => new SimpleValues<T>(x));
         }
     }
 }

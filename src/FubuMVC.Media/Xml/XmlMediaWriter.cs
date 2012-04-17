@@ -1,7 +1,7 @@
 using System.Xml;
 using FubuCore;
-using FubuMVC.Core.Projections;
 using FubuMVC.Core.Urls;
+using FubuMVC.Media.Projections;
 
 namespace FubuMVC.Media.Xml
 {
@@ -9,7 +9,7 @@ namespace FubuMVC.Media.Xml
     {
         public XmlMediaWriter(XmlMediaOptions options, ILinkSource<T> links, IUrlRegistry urls,
                               IProjection<T> projection)
-            : base(new XmlMediaDocument(options), links, urls, projection, null)
+            : base(new XmlMediaDocument(options), links, urls, projection, null, null)
         {
         }
 

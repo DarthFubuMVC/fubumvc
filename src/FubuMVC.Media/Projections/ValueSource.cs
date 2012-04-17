@@ -1,6 +1,6 @@
 using FubuMVC.Core.Runtime;
 
-namespace FubuMVC.Core.Projections
+namespace FubuMVC.Media.Projections
 {
     public class ValueSource<T> : IValueSource<T> where T : class
     {

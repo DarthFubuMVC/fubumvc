@@ -1,5 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using FubuMVC.Core.Runtime;
+using FubuMVC.Media.Atom;
+using FubuMVC.Media.Testing.Xml;
+using FubuTestingSupport;
+using NUnit.Framework;
+using FubuMVC.Media.Projections;
 
 namespace FubuMVC.Media.Testing.Atom
 {
@@ -14,25 +21,13 @@ namespace FubuMVC.Media.Testing.Atom
             var request = new InMemoryFubuRequest();
             request.Set(enumerable);
 
-            var source = new EnumerableFeedSource<AddressEnumerable, Address>(request);
+            var source = new EnumerableFeedSource<Address>(enumerable);
 
             source.GetValues().Select(x => x.ValueFor(o => o.City))
                 .ShouldHaveTheSameElementsAs("Austin", "Dallas", "Houston");
         }
 
-        [Test]
-        public void return_values_for_direct_enumerable()
-        {
-            var enumerable = new AddressValuesEnumerable();
 
-            var request = new InMemoryFubuRequest();
-            request.Set(enumerable);
-
-            var source = new DirectFeedSource<AddressValuesEnumerable, Address>(request);
-
-            source.GetValues().Select(x => x.ValueFor(o => o.City))
-                .ShouldHaveTheSameElementsAs("Austin", "Dallas", "Houston");
-        }
     }
 
     public class AddressEnumerable : IEnumerable<Address>
@@ -50,18 +45,18 @@ namespace FubuMVC.Media.Testing.Atom
         }
     }
 
-    public class AddressValuesEnumerable : IEnumerable<IValues<Address>>
+    public class AddressValuesEnumerable : IEnumerable<Media.Projections.IValues<Address>>
     {
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
 
-        public IEnumerator<IValues<Address>> GetEnumerator()
+        public IEnumerator<Media.Projections.IValues<Address>> GetEnumerator()
         {
             foreach (var address in new AddressEnumerable())
             {
-                yield return new SimpleValues<Address>(address);
+                yield return new Media.Projections.SimpleValues<Address>(address);
             }
         }
     }

@@ -1,6 +1,17 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.ServiceModel.Syndication;
 using System.Text;
 using System.Xml;
+using FubuLocalization;
+using FubuMVC.Core.Runtime;
+using FubuMVC.Media.Atom;
+using FubuMVC.Media.Projections;
+using FubuMVC.Media.Xml;
+using FubuTestingSupport;
+using NUnit.Framework;
 
 namespace FubuMVC.Media.Testing.Atom
 {
@@ -9,18 +20,22 @@ namespace FubuMVC.Media.Testing.Atom
     {
         private ValidStubUrlRegistry theUrls;
         private SyndicationFeed theResultingFeed;
+        private InMemoryOutputWriter theWriter;
 
         [TestFixtureSetUp]
         public void SetUp()
         {
             theUrls = new ValidStubUrlRegistry();
+
+            theWriter = new InMemoryOutputWriter();
+
             var writer = new FeedWriter<FeedTarget>(
-                new FeedTargetSource(),
                 new FeedWithoutExtension(),
                 new FeedTargetLinks(),
-                theUrls);
+                theUrls,
+                theWriter);
 
-            theResultingFeed = writer.BuildFeed();
+            theResultingFeed = writer.BuildFeed(new FeedTargetSource());
         }
 
         [Test]
@@ -69,18 +84,22 @@ namespace FubuMVC.Media.Testing.Atom
         private ValidStubUrlRegistry theUrls;
         private SyndicationFeed theResultingFeed;
         private FeedWriter<FeedTarget> theWriter;
+        private InMemoryOutputWriter output;
 
         [TestFixtureSetUp]
         public void SetUp()
         {
             theUrls = new ValidStubUrlRegistry();
-            theWriter = new FeedWriter<FeedTarget>(
-                new FeedTargetSource(),
+            output = new InMemoryOutputWriter();
+
+            var theWriter = new FeedWriter<FeedTarget>(
                 new FeedWithExtension(),
                 new FeedTargetLinks(),
-                theUrls);
+                theUrls,
+                output);
 
-            theResultingFeed = theWriter.BuildFeed();
+            theResultingFeed = theWriter.BuildFeed(new FeedTargetSource());
+
         }
 
         [Test]
@@ -105,7 +124,7 @@ namespace FubuMVC.Media.Testing.Atom
         public void the_resulting_feed_does_manage_to_write_some_xml()
         {
             var outputWriter = new InMemoryOutputWriter();
-            theWriter.Write(outputWriter);
+            theWriter.Write("text/plain", new FeedTargetSource());
 
             outputWriter.ContentType.ShouldEqual(new FeedWithExtension().ContentType);
             outputWriter.ToString().ShouldContain("<Item xmlns=\"\"><City>Dallas</City><Name>The second item</Name></Item>");
@@ -138,7 +157,7 @@ namespace FubuMVC.Media.Testing.Atom
     }
 
 
-    public class FeedTargetSource : IFeedSource<FeedTarget>
+    public class FeedTargetSource : IFeedSource<FeedTarget>, IEnumerable<FeedTarget>
     {
         public IEnumerable<IValues<FeedTarget>> GetValues()
         {
@@ -164,6 +183,38 @@ namespace FubuMVC.Media.Testing.Atom
                 Name = "The third item",
                 Number = 3
             }.ToValues();
+        }
+
+        public IEnumerator<FeedTarget> GetEnumerator()
+        {
+            yield return new FeedTarget
+            {
+                City = "Austin",
+                Title = "Item 1",
+                Name = "The first item",
+                Number = 1
+            };
+
+            yield return new FeedTarget
+            {
+                City = "Dallas",
+                Title = "Item 2",
+                Name = "The second item",
+                Number = 2
+            };
+
+            yield return new FeedTarget
+            {
+                City = "Houston",
+                Title = "Item 3",
+                Name = "The third item",
+                Number = 3
+            };
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 

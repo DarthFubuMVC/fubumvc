@@ -1,10 +1,11 @@
 using System.Xml;
-using FubuMVC.Core.Projections;
+using FubuMVC.Media.Projections;
+using FubuMVC.Media.Xml;
 using FubuMVC.StructureMap;
 using NUnit.Framework;
 using FubuTestingSupport;
 
-namespace FubuMVC.Tests.Projections
+namespace FubuMVC.Media.Testing.Projections
 {
     [TestFixture]
     public class EnumerableProjectionIntegratedTester

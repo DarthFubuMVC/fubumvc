@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
-using FubuMVC.Core.Projections;
+using FubuLocalization;
 using FubuMVC.Core.Urls;
+using FubuMVC.Media.Projections;
 
 namespace FubuMVC.Media
 {

@@ -1,3 +1,12 @@
+using FubuCore;
+using FubuCore.Formatting;
+using FubuCore.Reflection;
+using FubuMVC.Media.Projections;
+using FubuMVC.Media.Xml;
+using FubuTestingSupport;
+using NUnit.Framework;
+using Rhino.Mocks;
+
 namespace FubuMVC.Media.Testing.Xml
 {
     [TestFixture]
@@ -107,5 +116,9 @@ namespace FubuMVC.Media.Testing.Xml
         public string City { get; set; }
         public string State { get; set; }
         public string ZipCode { get; set; }
+
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
+        public string StateOrProvince { get; set; }
     }
 }

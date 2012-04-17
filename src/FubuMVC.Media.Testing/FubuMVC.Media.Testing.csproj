@@ -34,6 +34,9 @@
     <Reference Include="FubuCore">
       <HintPath>..\packages\FubuCore.0.9.8.130\lib\FubuCore.dll</HintPath>
     </Reference>
+    <Reference Include="FubuLocalization">
+      <HintPath>..\packages\FubuLocalization.0.9.5.17\lib\FubuLocalization.dll</HintPath>
+    </Reference>
     <Reference Include="FubuTestingSupport">
       <HintPath>..\packages\FubuTestingSupport.0.9.8.130\lib\FubuTestingSupport.dll</HintPath>
     </Reference>
@@ -57,6 +60,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -85,6 +89,7 @@
     <Compile Include="Projections\ValueSourceTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource_integrated_registration_tester.cs" />
+    <Compile Include="ValidStubUrlRegistry.cs" />
     <Compile Include="Xml\AccessorToXmlProjectionTester.cs" />
     <Compile Include="Xml\AtomXmlLinkWriterTester.cs" />
     <Compile Include="Xml\ProjectionToXmlTester.cs" />
@@ -96,9 +101,17 @@
     <Compile Include="Xml\XmlProjectionTester.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
+      <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
+      <Name>FubuMVC.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Media\FubuMVC.Media.csproj">
       <Project>{8C256AEE-489A-4E9E-9D34-2CB9B7C11B6E}</Project>
       <Name>FubuMVC.Media</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
+      <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
+      <Name>FubuMVC.StructureMap</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

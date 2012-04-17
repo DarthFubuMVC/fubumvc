@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using FubuMVC.Core.Projections;
+using FubuMVC.Media.Projections;
 using NUnit.Framework;
 using FubuTestingSupport;
 using FubuCore;
 
-namespace FubuMVC.Tests.Projections
+namespace FubuMVC.Media.Testing.Projections
 {
     [TestFixture]
     public class ChildProjectionTester

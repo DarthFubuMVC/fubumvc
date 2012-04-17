@@ -1,10 +1,10 @@
-using FubuMVC.Core.Projections;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Tests.NewConneg;
+using FubuMVC.Media.Projections;
+using FubuMVC.Media.Testing.Xml;
 using NUnit.Framework;
 using FubuTestingSupport;
 
-namespace FubuMVC.Tests.Projections
+namespace FubuMVC.Media.Testing.Projections
 {
     [TestFixture]
     public class ValueSourceTester

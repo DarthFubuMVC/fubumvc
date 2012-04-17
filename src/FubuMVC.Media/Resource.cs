@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using FubuMVC.Core.Projections;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Resources.Conneg.New;
 using FubuMVC.Core.Runtime.Formatters;
+using FubuMVC.Media.Projections;
 using FubuMVC.Media.Xml;
 
 namespace FubuMVC.Media
@@ -69,7 +69,7 @@ namespace FubuMVC.Media
                 if (_links.IsValueCreated) writerNode.Links.UseValue(_links.Value);
                 if (_projection.IsValueCreated) writerNode.Projection.UseValue(_projection.Value);
 
-                node.AddWriter(writerNode);
+                node.Writers.AddToEnd(writerNode);
             };
         }
 

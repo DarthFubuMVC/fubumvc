@@ -34,6 +34,9 @@
     <Reference Include="FubuCore">
       <HintPath>..\packages\FubuCore.0.9.8.130\lib\FubuCore.dll</HintPath>
     </Reference>
+    <Reference Include="FubuLocalization">
+      <HintPath>..\packages\FubuLocalization.0.9.5.17\lib\FubuLocalization.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceModel" />
@@ -44,7 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Atom\DirectFeedSource.cs" />
     <Compile Include="Atom\EnumerableFeedSource.cs" />
     <Compile Include="Atom\Feed.cs" />
     <Compile Include="Atom\FeedItem.cs" />

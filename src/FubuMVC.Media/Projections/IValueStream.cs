@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace FubuMVC.Core.Projections
+namespace FubuMVC.Media.Projections
 {
     public interface IValueStream<T>
     {

@@ -1,10 +1,9 @@
-using FubuMVC.Core.Resources;
 using FubuMVC.Core.Urls;
 using NUnit.Framework;
 using FubuCore;
 using FubuTestingSupport;
 
-namespace FubuMVC.Tests.Resources
+namespace FubuMVC.Media.Testing
 {
     [TestFixture]
     public class LinkExpressionTester

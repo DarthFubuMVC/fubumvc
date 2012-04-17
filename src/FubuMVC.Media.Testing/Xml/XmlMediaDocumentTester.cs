@@ -1,6 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
+using FubuCore;
+using FubuMVC.Core.Runtime;
+using FubuMVC.Media.Xml;
+using FubuTestingSupport;
+using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace FubuMVC.Media.Testing.Xml
 {
@@ -87,7 +94,7 @@ namespace FubuMVC.Media.Testing.Xml
 
             var document = new XmlMediaDocument(options);
 
-            document.Write(writer);
+            document.Write(writer, "text/xml");
 
             writer.AssertWasCalled(x => x.Write(options.Mimetype, document.Root.As<XmlMediaNode>().Element.OuterXml));
         }

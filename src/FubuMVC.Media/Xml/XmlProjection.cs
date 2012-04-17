@@ -1,7 +1,7 @@
 using System;
 using System.Linq.Expressions;
-using FubuMVC.Core.Projections;
 using FubuMVC.Core.Urls;
+using FubuMVC.Media.Projections;
 
 namespace FubuMVC.Media.Xml
 {

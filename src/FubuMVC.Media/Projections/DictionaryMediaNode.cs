@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using FubuMVC.Core.Resources;
 
-namespace FubuMVC.Core.Projections
+namespace FubuMVC.Media.Projections
 {
     public class DictionaryMediaNode : IMediaNode
     {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using FubuMVC.Core.Projections;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Media.Projections;
 
 namespace FubuMVC.Media
 {
@@ -9,6 +9,6 @@ namespace FubuMVC.Media
         IMediaNode Root { get; }
 
         IEnumerable<string> Mimetypes { get; }
-        void Write(IOutputWriter writer);
+        void Write(IOutputWriter writer, string mimeType);
     }
 }

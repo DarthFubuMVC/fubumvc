@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using FubuLocalization;
 using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Media

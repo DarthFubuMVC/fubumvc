@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using FubuCore.Reflection;
 using FubuMVC.Core.Urls;
 
-namespace FubuMVC.Core.Projections
+namespace FubuMVC.Media.Projections
 {
     public class AccessorProjection<T, TValue> : SingleValueProjection<T>
     {

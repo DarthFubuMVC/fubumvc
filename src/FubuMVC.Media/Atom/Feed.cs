@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.ServiceModel.Syndication;
 using FubuCore;
-using FubuMVC.Core.Projections;
+using FubuLocalization;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Urls;
+using FubuMVC.Media.Projections;
 using FubuMVC.Media.Xml;
 
 namespace FubuMVC.Media.Atom
@@ -84,7 +86,7 @@ namespace FubuMVC.Media.Atom
             var enumerableValueType = typeof(IEnumerable<>).MakeGenericType(valueType);
             graph.OutputNodesThatCanBeCastTo(enumerableValueType).Each(outputNode =>
             {
-                outputNode.AddWriter(new FeedWriterNode<T>(this, FeedSourceType.direct, outputNode.ResourceType));
+                outputNode.Writers.AddToEnd(new FeedWriterNode<T>(this, outputNode.ResourceType));
             });
         }
 
@@ -93,7 +95,7 @@ namespace FubuMVC.Media.Atom
             var enumerableType = typeof(IEnumerable<>).MakeGenericType(typeof(T));
             graph.OutputNodesThatCanBeCastTo(enumerableType).Each(outputNode =>
             {
-                outputNode.AddWriter(new FeedWriterNode<T>(this, FeedSourceType.enumerable, outputNode.ResourceType));
+                outputNode.Writers.AddToEnd(new FeedWriterNode<T>(this, outputNode.ResourceType));
             });
         }
 
