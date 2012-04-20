@@ -26,7 +26,7 @@ namespace FubuMVC.Core.Runtime.Formatters
             var serializer = new XmlSerializer(typeof (T));
             _writer.Write(mimeType, stream =>
             {
-                var xmlWriter = new XmlTextWriter(stream, Encoding.Default)
+                var xmlWriter = new XmlTextWriter(stream, Encoding.Unicode)
                 {
                     Formatting = Formatting.None
                 };

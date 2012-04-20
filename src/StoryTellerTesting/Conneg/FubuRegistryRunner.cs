@@ -65,6 +65,8 @@ namespace IntegrationTesting.Conneg
 
     public class Harness : IDisposable
     {
+        private static int _port = 5500;
+
         public static Harness Run(Action<FubuRegistry> configure)
         {
             var registry = new FubuRegistry();
@@ -81,7 +83,7 @@ namespace IntegrationTesting.Conneg
 
 
             var application = new FubuKayakApplication(new SimpleSource(registry));
-            var port = PortFinder.FindPort(5500);
+            var port = PortFinder.FindPort(_port++);
 
             var reset = new ManualResetEvent(false);
             FubuRuntime runtime = null;

@@ -39,6 +39,7 @@ namespace FubuMVC.Core.Resources.Conneg.New
 
         private void failWithInvalidMimeType()
         {
+            _writer.Write(MimeType.Text, "415:  Unsupported Media Type");
             _writer.WriteResponseCode(HttpStatusCode.UnsupportedMediaType);
         }
 

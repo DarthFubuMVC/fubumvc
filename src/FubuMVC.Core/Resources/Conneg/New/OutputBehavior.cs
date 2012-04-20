@@ -35,6 +35,8 @@ namespace FubuMVC.Core.Resources.Conneg.New
 
             if (media == null)
             {
+                // TODO -- better error message?
+                _writer.Write(MimeType.Text, "406:  Not acceptable");
                 _writer.WriteResponseCode(HttpStatusCode.NotAcceptable);
             }
             else

@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Xml;
 using System.Xml.Serialization;
 using FubuMVC.Core;
 using HtmlTags;
@@ -24,7 +25,10 @@ namespace IntegrationTesting.Conneg
             expectedJson = JsonUtil.ToJson(input);
 
             var writer = new StringWriter();
-            new XmlSerializer(typeof (XmlJsonHtmlMessage)).Serialize(writer, input);
+            var xmlWriter = new XmlTextWriter(writer){
+                Formatting = Formatting.None
+            };
+            new XmlSerializer(typeof (XmlJsonHtmlMessage)).Serialize(xmlWriter, input);
             expectedXml = writer.ToString();
         }
 
@@ -52,11 +56,11 @@ namespace IntegrationTesting.Conneg
                 .StatusCodeShouldBe(HttpStatusCode.OK)
                 .ContentShouldBe("application/json", expectedJson);
 
-            endpoints.PostJson(input, contentType: "application/json", accept: "text/xml,application/json")
+            endpoints.PostJson(input, contentType: "application/json", accept: "application/json,text/xml")
                 .StatusCodeShouldBe(HttpStatusCode.OK)
                 .ContentShouldBe("application/json", expectedJson);
 
-            endpoints.PostJson(input, contentType: "text/json", accept: "text/xml,text/json")
+            endpoints.PostJson(input, contentType: "text/json", accept: "text/json,text/xml")
                 .StatusCodeShouldBe(HttpStatusCode.OK)
                 .ContentShouldBe("text/json", expectedJson);
         }
@@ -90,11 +94,11 @@ namespace IntegrationTesting.Conneg
         {
             endpoints.PostJson(input, contentType: "text/json", accept: "*/*")
                 .StatusCodeShouldBe(HttpStatusCode.OK)
-                .ContentShouldBe("text/json", expectedJson);
+                .ContentShouldBe("application/json", expectedJson);
 
-            endpoints.PostJson(input, contentType: "text/json", accept: "text/xml,*/*")
+            endpoints.PostJson(input, contentType: "text/json", accept: "something/weird,*/*")
                 .StatusCodeShouldBe(HttpStatusCode.OK)
-                .ContentShouldBe("text/json", expectedJson);
+                .ContentShouldBe("application/json", expectedJson);
         }
 
         [Test]
@@ -125,8 +129,6 @@ namespace IntegrationTesting.Conneg
         protected override void configure(FubuRegistry registry)
         {
             registry.Actions.IncludeType<ConnegController>();
-            registry.Media // TODO -- I really don't like that you have to do this.
-                .ApplyContentNegotiationToActions(call => true);
         }
 
         [Test]
@@ -160,11 +162,11 @@ namespace IntegrationTesting.Conneg
         {
             endpoints.PostJson(input, contentType: "text/json", accept: "*/*")
                 .StatusCodeShouldBe(HttpStatusCode.OK)
-                .ContentShouldBe("text/json", expectedJson);
+                .ContentShouldBe("application/json", expectedJson);
 
             endpoints.PostJson(input, contentType: "text/json", accept: "text/xml,*/*")
                 .StatusCodeShouldBe(HttpStatusCode.OK)
-                .ContentShouldBe("text/json", expectedJson);
+                .ContentShouldBe("application/json", expectedJson);
         }
 
         [Test]
@@ -200,8 +202,6 @@ namespace IntegrationTesting.Conneg
         protected override void configure(FubuRegistry registry)
         {
             registry.Actions.IncludeType<ConnegController>();
-            registry.Media // TODO -- I really don't like that you have to do this.
-                .ApplyContentNegotiationToActions(call => true);
         }
 
         [Test]
@@ -247,11 +247,11 @@ namespace IntegrationTesting.Conneg
         {
             endpoints.PostJson(input, contentType: "text/json", accept: "*/*")
                 .StatusCodeShouldBe(HttpStatusCode.OK)
-                .ContentShouldBe("text/json", expectedJson);
+                .ContentShouldBe("application/json", expectedJson);
 
             endpoints.PostJson(input, contentType: "text/json", accept: "text/xml,*/*")
                 .StatusCodeShouldBe(HttpStatusCode.OK)
-                .ContentShouldBe("text/json", expectedJson);
+                .ContentShouldBe("application/json", expectedJson);
         }
 
         [Test]
