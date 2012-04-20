@@ -6,12 +6,9 @@ Out-of-the-Box URL Conventions
 
 Routes, like most things in FubuMVC, are applied conventionally. This means you
 can set them explicitly, or configure FubuMVC with rules by which it should
-automatically determine routes for actions.
-
-In FubuMVC, routes are the URL stubs by which a given action can be invoked. For
-example */people/charlie* might map to the ``Load()`` method on the
-``PeopleAction`` type (or ``Index`` method on the ``PeopleController`` if you
-like to use the term "Controller" for action types).
+automatically determine routes for actions. Routes are the URL stubs by which a
+given action can be invoked. For example ``/people/charlie`` might map to the
+``Load()`` method on the ``PeopleAction`` type.
 
 In FubuMVC, there is no need to maintain a messy list of regular expressions in
 a ``Routes.cs`` file, as is the case with ASP.NET MVC.  FubuMVC comes with

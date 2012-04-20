@@ -1,3 +1,5 @@
+.. _getting-fubumvc:
+
 ===============
 Getting FubuMVC
 ===============

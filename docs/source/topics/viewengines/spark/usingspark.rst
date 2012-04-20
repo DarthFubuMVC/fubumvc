@@ -23,7 +23,7 @@ options:
     #. As a Bottle (package)
 
 We're going to focus on the NuGet way first since it is the easiest and fastest
-way to get up and running with Spark. If you've followed the :doc:`getting-started`
+way to get up and running with Spark. If you've followed the :ref:`getting-started`
 guide, this should look very familiar.
 
 .. image:: ../images/spark_nuget.png
@@ -55,8 +55,8 @@ Hello, Spark!
 -------------
 
 So now that we have Spark wired up, what are some of the things we can do with
-it? Well, let's get started on that right now. Lets start with the 
-:doc:`getting-started` guide's basic "Hello, World" and make it use Spark.
+it? Well, let's get started on that right now. Lets start with the
+:ref:`getting-started` guide's basic "Hello, World" and make it use Spark.
 
 We last left off with our controller action looking like this:
 

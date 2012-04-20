@@ -52,13 +52,13 @@ Render Action
 =============
 
 A way to invoke an additional controller action from a View template. Partial
-requests :ref:`ui-helpers`
+requests {ref ui-helpers}
 
 Action Link
 ===========
 
 A way to generate an approptiate hyperlink for a Controller Action.
-:ref:`ui-helpers`
+{ref ui-helpers}
 
 Defining Routes
 ===============

@@ -140,9 +140,9 @@ Example Usage:
 
 .. seealso::
 
-  See :ref:`behavior-chains`
+  See :ref:`Behavior Chains <behavior>`
 
 .. seealso::
 
-  See :ref:`one-in-one-out` to understand how the output model of a controller
+  See {document reference here} to understand how the output model of a controller
   action is set into the fubu request for you.

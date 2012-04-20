@@ -1,3 +1,5 @@
+.. _customizing-routes:
+
 ==================
 Customizing Routes
 ==================

@@ -133,7 +133,7 @@ ref
 '''
 
 Reference documentation. This is the in-depth details of features of FubuMVC.
-The documentation for :doc:`/ref/fubuexe` is here. This would also be a great
+The documentation for :ref:`fubuexe` is here. This would also be a great
 place to document what is provided by StructureMap to the FubuRegistry.
 
 internals
