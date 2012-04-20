@@ -5,8 +5,6 @@ build35
 artifacts
 obj
 bin
-deploy
-deploy/*
 src/CommonAssemblyInfo.cs
 *.csproj.user
 _ReSharper.*
@@ -32,16 +30,13 @@ test.db
 test-results
 fubu-content
 spark.zip
-deployment/bottles/*.zip
 _combined/
 storyteller
-deploymentplan.html
 src/Spark.Web.FubuMVC/
 report.htm
 installation_report.htm
 src/Spark.Web.FubuMVC
 FubuTestAppRoot
-deployment
 lib/bottles/FubuMVC*.*
 lib/**/*.nupkg
 .links
@@ -54,3 +49,9 @@ src/packages
 repositories.config
 results
 bottles.cmd
+deploy
+deploy/*
+deployment/bottles/*.zip
+deploymentplan.html
+deployment
+!docs/source/topics/deployment
