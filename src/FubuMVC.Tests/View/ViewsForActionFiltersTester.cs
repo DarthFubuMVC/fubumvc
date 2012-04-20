@@ -19,8 +19,8 @@ namespace FubuMVC.Tests.View
         {
             token = new FakeViewToken
             {
-                Name = "AAction",
-                Folder = GetType().Namespace,
+                ViewName = "AAction",
+                Namespace = GetType().Namespace,
                 ViewType =  typeof(AAction),
                 ViewModel = typeof (ViewModel1)
             };
@@ -58,7 +58,7 @@ namespace FubuMVC.Tests.View
         public void only_type_and_name_match()
         {
             ActionCall action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
-            token.Folder = Guid.NewGuid().ToString();
+            token.Namespace = Guid.NewGuid().ToString();
 
             filter.Apply(action, bag).Count().ShouldEqual(0);
         }
@@ -67,7 +67,7 @@ namespace FubuMVC.Tests.View
         public void only_type_and_namespace_match()
         {
             ActionCall action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
-            token.Name = "something different";
+            token.ViewName = "something different";
 
             filter.Apply(action, bag).Count().ShouldEqual(0);
         }
@@ -81,8 +81,8 @@ namespace FubuMVC.Tests.View
         {
             token = new FakeViewToken
             {
-                Name = "A",
-                Folder = GetType().Namespace,
+                ViewName = "A",
+                Namespace = GetType().Namespace,
                 ViewType = typeof(FakeViewToken),
                 ViewModel = typeof (ViewModel1)
             };
@@ -120,7 +120,7 @@ namespace FubuMVC.Tests.View
         public void only_type_and_name_match()
         {
             ActionCall action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
-            token.Folder = Guid.NewGuid().ToString();
+            token.Namespace = Guid.NewGuid().ToString();
 
             filter.Apply(action, bag).Count().ShouldEqual(0);
         }
@@ -129,7 +129,7 @@ namespace FubuMVC.Tests.View
         public void only_type_and_namespace_match()
         {
             ActionCall action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
-            token.Name = "something different";
+            token.ViewName = "something different";
 
             filter.Apply(action, bag).First().ShouldBeTheSameAs(token);
         }
@@ -142,9 +142,14 @@ namespace FubuMVC.Tests.View
 
         public Type ViewModel { get; set; }
 
-        public string Folder { get; set; }
+        public string Namespace { get; set; }
 
-        public string Name { get; set; }
+        public string ViewName { get; set; }
+
+        public string Name()
+        {
+            return ViewName;
+        }
 
         public BehaviorNode ToBehavioralNode()
         {
@@ -160,7 +165,7 @@ namespace FubuMVC.Tests.View
 
         public override string ToString()
         {
-            return Name ?? string.Empty;
+            return Name() ?? string.Empty;
         }
     }
 

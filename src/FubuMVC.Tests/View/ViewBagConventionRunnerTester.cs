@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
@@ -75,12 +75,12 @@ namespace FubuMVC.Tests.View
                 get { throw new NotImplementedException(); }
             }
 
-            public string Name
+            public string Name()
             {
-                get { throw new NotImplementedException(); }
+                throw new NotImplementedException();
             }
 
-            public string Folder
+            public string Namespace
             {
                 get { throw new NotImplementedException(); }
             }

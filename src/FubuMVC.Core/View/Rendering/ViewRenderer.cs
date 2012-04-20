@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using FubuCore;
 
 namespace FubuMVC.Core.View.Rendering
 {
+    [MarkedForTermination]
     public class ViewRenderer : IViewRenderer
     {
         private readonly IEnumerable<IRenderStrategy> _strategies;

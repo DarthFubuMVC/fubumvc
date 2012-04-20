@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.View;
@@ -32,12 +32,12 @@ namespace FubuMVC.Spark
             get { return _descriptor.ViewModel; }
         }
 
-        public string Name
+        public string Name()
         {
-            get { return _descriptor.Name(); }
+            return _descriptor.Name();
         }
 
-        public string Folder
+        public string Namespace
         {
             get { return _descriptor.Namespace; }
         }

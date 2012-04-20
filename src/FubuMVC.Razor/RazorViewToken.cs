@@ -33,12 +33,12 @@ namespace FubuMVC.Razor
             get { return _descriptor.ViewModel; }
         }
 
-        public string Name
+        public string Name()
         {
-            get { return _descriptor.Name(); }
+            return _descriptor.Name();
         }
 
-        public string Folder
+        public string Namespace
         {
             get { return string.Empty; }
         }

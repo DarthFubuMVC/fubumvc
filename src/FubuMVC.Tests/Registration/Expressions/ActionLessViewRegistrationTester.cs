@@ -55,7 +55,7 @@ namespace FubuMVC.Tests.Registration.Expressions
             var registry = new FubuRegistry();
             registry.Import<WebFormsEngine>();
 
-            registry.Views.RegisterActionLessViews(token => token.ViewType.Name.StartsWith("FakeView"), (chain, token) => chain.Route = new RouteDefinition(token.Name));
+            registry.Views.RegisterActionLessViews(token => token.ViewType.Name.StartsWith("FakeView"), (chain, token) => chain.Route = new RouteDefinition(token.Name()));
 
             theBehaviorGraph = registry.BuildGraph();
         }

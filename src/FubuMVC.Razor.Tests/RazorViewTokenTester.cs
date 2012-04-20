@@ -35,7 +35,7 @@ namespace FubuMVC.Razor.Tests
         [Test]
         public void name_is_item_name()
         {
-            _token.Name.ShouldEqual(_template.Name());
+            _token.Name().ShouldEqual(_template.Name());
         }
 
         [Test]

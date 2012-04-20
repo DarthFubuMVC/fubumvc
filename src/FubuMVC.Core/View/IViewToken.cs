@@ -1,27 +1,24 @@
 using System;
 using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.ObjectGraph;
 
 namespace FubuMVC.Core.View
 {
     /// <summary>
-    /// A handle to a view (e.g. a Webforms or Spark View)
+    ///   A handle to a view (e.g. a Webforms or Spark View)
     /// </summary>
     public interface IViewToken
     {
-        [MarkedForTermination("Die.")]
-        BehaviorNode ToBehavioralNode();
-
         // Eliminate?
         Type ViewType { get; }
         Type ViewModel { get; }
 
         // Convert to method
-        string Name { get; }
+        string Name();
 
-        // See if can convert to namespace/relativepath
-        string Folder { get; }
+        string Namespace { get; }
+
+        [MarkedForTermination("Die.")]
+        BehaviorNode ToBehavioralNode();
     }
-
 }

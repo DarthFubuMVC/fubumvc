@@ -8,7 +8,7 @@ namespace FubuMVC.Core.View.Attachment
     {
         public IEnumerable<IViewToken> Apply(ActionCall call, ViewBag views)
         {
-            return views.ViewsFor(call.OutputType()).Where(view => view.Folder == call.HandlerType.Namespace);
+            return views.ViewsFor(call.OutputType()).Where(view => view.Namespace == call.HandlerType.Namespace);
         }
     }
 }

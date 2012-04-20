@@ -72,12 +72,12 @@ namespace FubuMVC.Tests.View
         [Test]
         public void should_log_when_a_view_is_attached()
         {
-            _fromFindsOne.Name = "TestToken";
+            _fromFindsOne.ViewName = "TestToken";
 
             _viewAttacherConvention.AddViewsForActionFilter(_firstFilterThatFindsExactlyOne);
             _viewAttacherConvention.AttemptToAttachViewToAction(_views, _action, _observer);
 
-            _observer.LastLogEntry.ShouldContain(_fromFindsOne.Name);
+            _observer.LastLogEntry.ShouldContain(_fromFindsOne.Name());
         }
 
         private static IViewsForActionFilter createFilterThatReturns(params IViewToken[] viewTokens)

@@ -33,12 +33,12 @@ namespace FubuMVC.WebForms
             return new WebFormView(_viewType);
         }
 
-        public string Name
+        public string Name()
         {
-            get { return ViewType.Name; }
+            return ViewType.Name;
         }
 
-        public string Folder
+        public string Namespace
         {
             get { return ViewType.Namespace; } 
         }
