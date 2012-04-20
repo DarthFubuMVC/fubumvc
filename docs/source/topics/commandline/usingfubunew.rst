@@ -97,7 +97,7 @@ Once you've extracted the :file:`fubuTemplate.zip` you will see this structure::
 
 Inside of the files will look much like this:
 
-.. literalinclude:: ../../../../fubuTemplates/default/src/FUBUPROJECTNAME\FUBUPROJECTSHORTNAMERegistry.cs
+.. literalinclude:: ../../../../fubuTemplates/default/src/FUBUPROJECTNAME/FUBUPROJECTSHORTNAMERegistry.cs
    :language: csharp
    :linenos:
 
