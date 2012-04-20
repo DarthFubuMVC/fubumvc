@@ -50,16 +50,22 @@ namespace IntegrationTesting.Conneg
 
     public class SimpleSource : IApplicationSource
     {
-        private readonly FubuRegistry _registry;
+        private readonly Action<FubuRegistry> _configuration;
 
-        public SimpleSource(FubuRegistry registry)
+        public SimpleSource(Action<FubuRegistry> configuration)
         {
-            _registry = registry;
+            _configuration = configuration;
         }
 
         public FubuApplication BuildApplication()
         {
-            return FubuApplication.For(_registry).StructureMap(new Container());
+            return FubuApplication.For(() =>
+            {
+                var registry = new FubuRegistry();
+                _configuration(registry);
+
+                return registry;
+            }).StructureMap(new Container());
         }
     }
 
@@ -69,20 +75,11 @@ namespace IntegrationTesting.Conneg
 
         public static Harness Run(Action<FubuRegistry> configure)
         {
-            var registry = new FubuRegistry();
-            configure(registry);
-
-            return Run(registry);
-        }
-
-        public static Harness Run(FubuRegistry registry)
-        {
-            var applicationDirectory = AppDomain.CurrentDomain.BaseDirectory;
-
+            var applicationDirectory = AppDomain.CurrentDomain.BaseDirectory.ParentDirectory().ParentDirectory();
             FubuMvcPackageFacility.PhysicalRootPath = applicationDirectory;
 
 
-            var application = new FubuKayakApplication(new SimpleSource(registry));
+            var application = new FubuKayakApplication(new SimpleSource(configure));
             var port = PortFinder.FindPort(_port++);
 
             var reset = new ManualResetEvent(false);

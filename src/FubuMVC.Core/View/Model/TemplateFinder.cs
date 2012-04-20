@@ -35,7 +35,7 @@ namespace FubuMVC.Core.View.Model
         {
             get
             {
-                // TODO -- re-evaluate this
+                // TODO -- re-evaluate this.  Really needs to be evaluated at the last moment.
                 return _hostPath ?? FubuMvcPackageFacility.GetApplicationPath();
             } 
             set { _hostPath = value; }
