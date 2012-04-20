@@ -75,7 +75,7 @@ documentation.
        take the documentation for that section of code.
 
     #. Start working on the documentation! If you have any questions or need to
-       discuss with the community, please ask on the `mailing list`! We'll 
+       discuss with the community, please ask on the `mailing list`_! We'll 
        gladly help with any questions or provide any guidance you may need when
        working on the documentation.
 

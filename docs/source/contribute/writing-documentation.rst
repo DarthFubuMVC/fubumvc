@@ -9,7 +9,7 @@ important as our code, and deserves to be improved just as often.
 This section explains some of the basics of crafting documentation changes.
 
 Getting started with Sphinx
----------------------------
+===========================
 
 FubuMVC's documentation, and all other projects under the Fubu banner, use the
 Sphinx__ documentation system. The idea behind Sphinx and other systems such as
@@ -20,7 +20,7 @@ the source documentation is easily stored in version control.
 __ http://sphinx.pocoo.org
 
 Installing Sphinx on Windows
-''''''''''''''''''''''''''''
+----------------------------
 
 The Sphinx documentation system is built in Python, so to get Sphinx running on
 Windows there are a few steps that need to be taken.
@@ -128,71 +128,6 @@ topics
 This folder is for more in depth and focused documentation on sections of
 FubuMVC. For example, View Engines are discussed here, this would also be the
 place to discuss topics such as Behavior Chains or Authentication.
-
-ref
-'''
-
-Reference documentation. This is the in-depth details of features of FubuMVC.
-The documentation for :ref:`fubuexe` is here. This would also be a great
-place to document what is provided by StructureMap to the FubuRegistry.
-
-internals
-'''''''''
-
-This is where documentation on how FubuMVC's internals work. This is targeted at
-developers looking to contribute to FubuMVC itself as well as existing users
-looking to see how FubuMVC works. For example, this is where documentation for
-how to add support for additional view engines or containers would go.
-
-Example
--------
-
-So how does all of this work together? Lets take a look with a quick example:
-
-First, the :ref:`fubuexe <fubuexe>` document could have a layout like this:
-
-.. code-block:: rst
-
-    ========
-    Fubu.exe
-    ========
-
-    ...
-    This is some documentation that does not go past 80 characters wide so that
-    the text is more readable when viewed in a text editor. It also uses spaces
-    instead of tabs to keep things consistent as well.
-    ...
-
-    .. _available-commands:
-
-    Available commands
-    ==================
-
-    .. _deprecated-commands:
-
-    Deprecated commands
-    ===================
-
-    ...
-
-Next, the ``topics/fubuexe.rst`` could contain something like this:
-
-.. code-block:: rst
-
-    You can access a :ref:`listing of all available commands
-    <available-commands>``. For a list of deprecated commands see
-    :ref:`deprecated-commands`.
-
-    You can find both in the :doc:`fubu.exe reference document </ref/fubuexe>`.
-
-This shows the usage of the Sphinx :rst:role:`doc` cross reference element. This
-is when we want to reference another document as a whole as opposed to the
-:rst:role:`ref` element which is for when we want to link to an arbitrary
-location in a document.
-
-For more examples of how to structure the documentation and how to format the
-text, please feel free to look at the source of any of the other guides in the
-documentation.
 
 reStructuredText editors
 ------------------------

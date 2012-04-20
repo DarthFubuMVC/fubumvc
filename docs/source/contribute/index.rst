@@ -29,7 +29,7 @@ help the community.
 * Blog about FubuMVC. Any little bit helps when helping more people find out
   about FubuMVC!
 
-* Report bugs and suggest features on our `issue tracker`
+* Report bugs and suggest features on our `issue tracker`_
 
 * Submit `pull requests`_ for new and/or fixed behavior.
 
