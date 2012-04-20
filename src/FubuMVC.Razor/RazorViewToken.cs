@@ -1,4 +1,5 @@
 ﻿using System;
+using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.View;
@@ -9,6 +10,7 @@ using RazorEngine.Templating;
 
 namespace FubuMVC.Razor
 {
+    [MarkedForTermination("use descriptor as is")]
     public class RazorViewToken : IViewToken
     {
         private readonly ViewDescriptor<IRazorTemplate> _descriptor;
@@ -21,6 +23,14 @@ namespace FubuMVC.Razor
         public BehaviorNode ToBehavioralNode()
         {
             return new RazorViewNode(_descriptor);
+        }
+
+        public ObjectDef ToViewFactoryObjectDef()
+        {
+            var def = ObjectDef.ForType<FubuMVC.Razor.Rendering.ViewFactory>();
+            def.DependencyByValue(_descriptor);
+
+            return def;
         }
 
         public Type ViewType

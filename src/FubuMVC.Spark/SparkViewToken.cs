@@ -1,4 +1,5 @@
 using System;
+using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.View;
@@ -8,6 +9,7 @@ using Spark;
 
 namespace FubuMVC.Spark
 {
+    [MarkedForTermination("use descriptor as is")]
     public class SparkViewToken : IViewToken
     {
         private readonly SparkDescriptor _descriptor;
@@ -20,6 +22,14 @@ namespace FubuMVC.Spark
         public BehaviorNode ToBehavioralNode()
         {
             return new SparkViewNode(_descriptor);
+        }
+
+        public ObjectDef ToViewFactoryObjectDef()
+        {
+            var def = ObjectDef.ForType<FubuMVC.Spark.Rendering.ViewFactory>();
+            def.DependencyByValue(_descriptor);
+
+            return def;
         }
 
         public Type ViewType

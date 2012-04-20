@@ -156,6 +156,11 @@ namespace FubuMVC.Tests.View
             return this;
         }
 
+        public ObjectDef ToViewFactoryObjectDef()
+        {
+            throw new NotImplementedException();
+        }
+
         public Type ViewType { get; set;}
 
         protected override ObjectDef buildObjectDef()

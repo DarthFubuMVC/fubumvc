@@ -33,6 +33,11 @@ namespace FubuMVC.WebForms
             return new WebFormView(_viewType);
         }
 
+        public ObjectDef ToViewFactoryObjectDef()
+        {
+            throw new NotImplementedException();
+        }
+
         public string Name()
         {
             return ViewType.Name;

@@ -700,6 +700,7 @@
     <Compile Include="View\Model\TemplatePolicies.cs" />
     <Compile Include="View\Model\TemplateRegistry.cs" />
     <Compile Include="View\Model\ViewPathPolicy.cs" />
+    <Compile Include="View\New\ViewNode.cs" />
     <Compile Include="View\New\ViewWriter.cs" />
     <Compile Include="View\Registration\GenericParser.cs" />
     <Compile Include="View\Rendering\FubuPageRenderingExtensions.cs" />

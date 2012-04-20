@@ -65,6 +65,11 @@ namespace FubuMVC.Tests.View
                 throw new NotImplementedException();
             }
 
+            public ObjectDef ToViewFactoryObjectDef()
+            {
+                throw new NotImplementedException();
+            }
+
             public Type ViewType
             {
                 get { throw new NotImplementedException(); }

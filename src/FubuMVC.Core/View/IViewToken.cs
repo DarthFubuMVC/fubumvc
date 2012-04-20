@@ -1,6 +1,7 @@
 using System;
 using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.ObjectGraph;
 
 namespace FubuMVC.Core.View
 {
@@ -20,5 +21,7 @@ namespace FubuMVC.Core.View
 
         [MarkedForTermination("Die.")]
         BehaviorNode ToBehavioralNode();
+
+        ObjectDef ToViewFactoryObjectDef();
     }
 }

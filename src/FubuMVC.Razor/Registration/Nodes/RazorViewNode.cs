@@ -1,4 +1,5 @@
 ﻿using System;
+using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.View;
@@ -9,6 +10,7 @@ using FubuMVC.Razor.RazorModel;
 
 namespace FubuMVC.Razor.Registration.Nodes
 {
+    [MarkedForTermination]
     public class RazorViewNode : OutputNode<RenderViewBehavior>, IMayHaveInputType
     {
         private readonly ViewDescriptor<IRazorTemplate> _descriptor;

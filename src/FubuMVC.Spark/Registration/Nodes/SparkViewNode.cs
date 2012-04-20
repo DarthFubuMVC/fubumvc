@@ -1,4 +1,5 @@
 ﻿using System;
+using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.View;
@@ -8,6 +9,7 @@ using FubuMVC.Spark.SparkModel;
 
 namespace FubuMVC.Spark.Registration.Nodes
 {
+    [MarkedForTermination]
     public class SparkViewNode : OutputNode<RenderViewBehavior>, IMayHaveInputType
     {
         private readonly SparkDescriptor _descriptor;
