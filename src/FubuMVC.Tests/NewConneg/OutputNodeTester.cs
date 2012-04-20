@@ -1,9 +1,11 @@
 using System.Linq;
 using FubuMVC.Core.Resources.Conneg.New;
 using FubuMVC.Core.Runtime.Formatters;
+using FubuMVC.Core.View;
 using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace FubuMVC.Tests.NewConneg
 {
@@ -122,6 +124,18 @@ namespace FubuMVC.Tests.NewConneg
 
             node.Writers.Single()
                 .ShouldEqual(new WriteWithFormatter(typeof (Address), typeof (JsonFormatter)));
+        }
+
+        [Test]
+        public void add_view()
+        {
+            var node = new OutputNode(typeof(Address));
+            var viewToken = MockRepository.GenerateMock<IViewToken>();
+
+            var viewNode = node.AddView(viewToken);
+            node.Writers.ShouldContain(viewNode);
+
+            viewNode.View.ShouldBeTheSameAs(viewToken);
         }
     }
 }

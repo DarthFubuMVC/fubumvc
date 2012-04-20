@@ -4,6 +4,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.View;
 using FubuMVC.Spark.Registration.Nodes;
+using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.SparkModel;
 using Spark;
 
@@ -27,7 +28,9 @@ namespace FubuMVC.Spark
         public ObjectDef ToViewFactoryObjectDef()
         {
             var def = ObjectDef.ForType<FubuMVC.Spark.Rendering.ViewFactory>();
-            def.DependencyByValue(_descriptor);
+            def
+                .DependencyByType(typeof(IViewEntrySource), typeof(ViewEntrySource))
+                .DependencyByValue(_descriptor);
 
             return def;
         }

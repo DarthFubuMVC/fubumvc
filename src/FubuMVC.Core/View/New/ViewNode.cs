@@ -30,6 +30,11 @@ namespace FubuMVC.Core.View.New
             return def;
         }
 
+        public IViewToken View
+        {
+            get { return _token; }
+        }
+
         public override IEnumerable<string> Mimetypes
         {
             get { yield return MimeType.Html.Value; }

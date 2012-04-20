@@ -2,9 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
+using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime.Formatters;
+using FubuMVC.Core.View;
+using FubuMVC.Core.View.New;
 
 namespace FubuMVC.Core.Resources.Conneg.New
 {
@@ -90,6 +93,14 @@ namespace FubuMVC.Core.Resources.Conneg.New
             Writers.AddToEnd(write);
 
             return write;
+        }
+
+        public ViewNode AddView(IViewToken view)
+        {
+            var node = new ViewNode(view);
+            Writers.AddToEnd(node);
+
+            return node;
         }
 
         public void ClearAll()

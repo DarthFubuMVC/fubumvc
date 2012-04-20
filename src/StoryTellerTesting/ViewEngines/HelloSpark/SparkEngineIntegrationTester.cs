@@ -1,11 +1,8 @@
-using System;
-using System.Diagnostics;
 using FubuMVC.Core;
-using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Spark;
+using FubuTestingSupport;
 using IntegrationTesting.Conneg;
 using NUnit.Framework;
-using FubuTestingSupport;
 
 namespace IntegrationTesting.ViewEngines.HelloSpark
 {
