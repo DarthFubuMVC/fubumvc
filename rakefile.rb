@@ -182,7 +182,7 @@ namespace :template do
 
   desc 'Cleans, Updates, and Zips Fubu templates'
   task :build => ['template:clean', 'template:update', 'template:slimdown_nuget_pkgs', 'template:zip_all', 'template:build_artifacts_cleanup']
-  nuget = Platform.runtime('buildsupport/nuget.exe')
+  nuget = Platform.runtime('buildsupport/NuGet.exe')
 
 
   desc 'Updates and zips default Fubu templates'
