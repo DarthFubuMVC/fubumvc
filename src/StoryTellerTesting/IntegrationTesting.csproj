@@ -123,6 +123,8 @@
     <Compile Include="Template.cs" />
     <Compile Include="ViewEngines\HelloRazor\HelloRazorController.cs" />
     <Compile Include="ViewEngines\HelloRazor\RazorEngineIntegrationTester.cs" />
+    <Compile Include="ViewEngines\HelloSpark\AirController.cs" />
+    <Compile Include="ViewEngines\HelloSpark\SparkEngineIntegrationTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuKayak\FubuKayak.csproj">
@@ -140,6 +142,10 @@
     <ProjectReference Include="..\FubuMVC.Razor\FubuMVC.Razor.csproj">
       <Project>{A88246A6-2A7A-4964-902E-A5A7FDAAA9D4}</Project>
       <Name>FubuMVC.Razor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Spark\FubuMVC.Spark.csproj">
+      <Project>{9D6BF559-6461-4EAC-BB16-F976FF43E8DA}</Project>
+      <Name>FubuMVC.Spark</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
       <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
@@ -190,6 +196,8 @@
     <None Include="packages.config" />
     <Content Include="ViewEngines\HelloRazor\HelloPartial.cshtml" />
     <Content Include="ViewEngines\HelloRazor\HelloWorld.cshtml" />
+    <None Include="ViewEngines\HelloSpark\Breathe.spark" />
+    <None Include="ViewEngines\HelloSpark\TakeABreath.spark" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\lib\chromedriver.exe">

@@ -1,0 +1,36 @@
+﻿<viewdata model="IntegrationTesting.ViewEngines.HelloSpark.AirViewModel" />
+<content:head>
+    <Asset name="jquery" />
+    <script type="text/javascript">
+      $(document).ready(function () {
+      var renderView = function (data) {
+      $("#viewOutputArea").append(data);
+      }
+
+      var takeABreath = function (breathIn) {
+      $.post("/Air/Breathe", { TakeABreath: breathIn }, renderView);
+      }
+
+      $("#yesButton").click(function () { takeABreath(true); });
+      $("#noButton").click(function () { takeABreath(false); });
+      });
+    </script>
+</content:head>
+<content:title>Do we have lift-off?</content:title>
+<content:header>What do we wanna do?</content:header>
+<div>
+    ${Model.Text}</div>
+<div>
+    <input id="yesButton" type="button" value="Yes" />
+    <input id="noButton" type="button" value="No" />
+</div>
+<div id="viewOutputArea"></div>
+
+#this.WriteExtensions("extension-placeholder");
+
+<content:footer>That's right baby!</content:footer>
+
+!{this.LinkTo<FireInputModel>().Text("Light her up!")}
+!{this.LinkTo<WaterInputModel>().Text("Cool her down!")} 
+!{this.LinkTo<EarthViewModel>().Text("Go to ground!")} 
+!{this.LinkTo<RemInputModel>().Text("Get some sleep!")}

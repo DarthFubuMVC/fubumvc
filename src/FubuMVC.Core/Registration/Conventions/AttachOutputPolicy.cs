@@ -8,7 +8,7 @@ namespace FubuMVC.Core.Registration.Conventions
     {
         public void Configure(BehaviorGraph graph)
         {
-            graph.Behaviors.Where(x => x.HasOutput()).Each(x => x.AddToEnd(x.Output));
+            graph.Behaviors.Where(x => x.ActionOutputType() != null && x.Output.Writers.Any()).Each(x => x.AddToEnd(x.Output));
         }
     }
 }
