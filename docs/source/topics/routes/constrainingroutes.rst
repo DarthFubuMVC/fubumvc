@@ -1,5 +1,0 @@
-.. _constrainingroutes:
-
-===================
-Constraining Routes
-===================

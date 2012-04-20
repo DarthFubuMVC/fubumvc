@@ -6,6 +6,5 @@ Customizing Routes
    :maxdepth: 2
 
    urlconventions
-   customizingurls
-   constrainingroutes
+   customroutepolicies
 

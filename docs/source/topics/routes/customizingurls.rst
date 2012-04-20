@@ -1,5 +1,0 @@
-.. _customizingurls:
-
-================
-Customizing URLs
-================
