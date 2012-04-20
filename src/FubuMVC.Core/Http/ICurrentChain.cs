@@ -23,5 +23,7 @@ namespace FubuMVC.Core.Http
         /// </summary>
         /// <returns></returns>
         string ResourceHash();
+
+        bool IsInPartial();
     }
 }

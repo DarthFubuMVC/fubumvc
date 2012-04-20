@@ -24,5 +24,7 @@ namespace FubuMVC.Core.Http
 
 
         bool HasHeader(string header);
+
+        bool IsAjaxRequest();
     }
 }

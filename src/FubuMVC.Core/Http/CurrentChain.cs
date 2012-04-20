@@ -58,5 +58,10 @@ namespace FubuMVC.Core.Http
         {
             return _resourceHash.Value;
         }
+
+        public bool IsInPartial()
+        {
+            return _chains.Count > 1;
+        }
     }
 }

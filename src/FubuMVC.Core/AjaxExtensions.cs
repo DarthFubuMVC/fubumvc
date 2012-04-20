@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Web;
 using FubuCore.Binding;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core

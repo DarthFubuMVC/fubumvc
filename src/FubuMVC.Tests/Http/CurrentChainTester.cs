@@ -49,6 +49,41 @@ namespace FubuMVC.Tests.Http
         }
 
         [Test]
+        public void is_in_partial_negative()
+        {
+            var currentChain = new CurrentChain(theChain, null);
+            currentChain.IsInPartial().ShouldBeFalse();
+        }
+
+        [Test]
+        public void is_in_partial_positive()
+        {
+            var currentChain = new CurrentChain(theChain, null);
+            currentChain.Push(theSecondChain);
+            currentChain.IsInPartial().ShouldBeTrue();
+
+            currentChain.Push(theThirdChain);
+            currentChain.IsInPartial().ShouldBeTrue();
+
+            currentChain.Pop();
+            currentChain.IsInPartial().ShouldBeTrue();
+
+        }
+
+        [Test]
+        public void is_in_partial_negative_after_popping_the_last_child()
+        {
+            var currentChain = new CurrentChain(theChain, null);
+            currentChain.Push(theSecondChain);
+            currentChain.Push(theThirdChain);
+
+            currentChain.Pop();
+            currentChain.Pop();
+
+            currentChain.IsInPartial().ShouldBeFalse();
+        }
+
+        [Test]
         public void the_initial_state_points_to_the_top_chain()
         {
             new CurrentChain(theChain, theRouteData).Current.ShouldBeTheSameAs(theChain);

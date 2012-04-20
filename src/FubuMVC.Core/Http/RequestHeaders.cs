@@ -43,6 +43,15 @@ namespace FubuMVC.Core.Http
         {
             return _values.Has(header);
         }
+
+        public bool IsAjaxRequest()
+        {
+            bool isAjax = false;
+
+            Value<string>(AjaxExtensions.XRequestedWithHeader, val => isAjax = val == AjaxExtensions.XmlHttpRequestValue);
+
+            return isAjax;
+        }
     }
 
     // TODO -- move this to FubuCore

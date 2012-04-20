@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using FubuCore.Binding;
 using FubuCore.Binding.Values;
+using FubuMVC.Core;
 using FubuMVC.Core.Http;
 using FubuMVC.StructureMap;
 using NUnit.Framework;
@@ -29,6 +30,20 @@ namespace FubuMVC.Tests.Http
             container.Inject<IRequestData>(theRequest);
 
             theHeaders = container.GetInstance<RequestHeaders>();
+        }
+
+        [Test]
+        public void is_ajax_request_positive()
+        {
+            theHeaderValues[AjaxExtensions.XRequestedWithHeader] = AjaxExtensions.XmlHttpRequestValue;
+
+            theHeaders.IsAjaxRequest().ShouldBeTrue();
+        }
+
+        [Test]
+        public void is_ajax_request_negative()
+        {
+            theHeaders.IsAjaxRequest().ShouldBeFalse();
         }
 
         [Test]

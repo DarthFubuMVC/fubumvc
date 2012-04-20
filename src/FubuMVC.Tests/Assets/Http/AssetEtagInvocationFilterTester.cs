@@ -32,6 +32,11 @@ namespace FubuMVC.Tests.Assets.Http
         {
             return Data.Has(header);
         }
+
+        public bool IsAjaxRequest()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     [TestFixture]
