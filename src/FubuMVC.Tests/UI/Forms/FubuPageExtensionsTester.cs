@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ServiceModel.Configuration;
 using FubuCore;
@@ -11,7 +10,6 @@ using FubuMVC.Core.UI.Configuration;
 using FubuMVC.Core.UI.Tags;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
-using FubuMVC.WebForms;
 using FubuTestingSupport;
 
 using NUnit.Framework;
@@ -111,72 +109,6 @@ namespace FubuMVC.Tests.UI.Forms
     }
 
 
-
-    [TestFixture]
-    public class when_calling_partial_for_each
-    {
-        private IFubuPage<InputModel> _page;
-        private InputModel _model;
-        private IPartialRenderer _renderer;
-        private IPartialViewTypeRegistry _viewTypeRegistry;
-        private TagGenerator<InputModel> _tags;
-
-        [SetUp]
-        public void SetUp()
-        {
-            _page = MockRepository.GenerateMock<IFubuPage<InputModel>>();
-            _renderer = MockRepository.GenerateStub<IPartialRenderer>();
-            var serviceLocator = MockRepository.GenerateStub<IServiceLocator>();
-            var namingConvention = MockRepository.GenerateStub<IElementNamingConvention>();
-            _tags = new TagGenerator<InputModel>(new TagProfileLibrary(), namingConvention,
-                serviceLocator);
-            
-            _viewTypeRegistry = MockRepository.GenerateStub<IPartialViewTypeRegistry>();
-            serviceLocator.Stub(s => s.GetInstance<IPartialViewTypeRegistry>()).Return(_viewTypeRegistry);
-
-            var inMemoryFubuRequest = new InMemoryFubuRequest();
-            inMemoryFubuRequest.Set(new InputModel());
-
-            _page.Stub(s => s.Get<IFubuRequest>()).Return(inMemoryFubuRequest);
-            
-            _model = new InputModel{Partials=new List<PartialModel>{new PartialModel()}};
-            _page.Expect(p => p.Get<ITagGenerator<InputModel>>()).Return(_tags);
-            _page.Expect(p => p.Model).Return(_model);
-            _page.Expect(p => p.Get<IPartialRenderer>()).Return(_renderer);
-            _page.Expect(p => p.ServiceLocator).Return(serviceLocator);
-        }
-
-        [Test]
-        public void should_return_expression_without_calling_using()
-        {
-            _viewTypeRegistry.Stub(r => r.HasPartialViewTypeFor<PartialModel>()).Return(false);
-
-            _page.PartialForEach(x=>x.Partials);
-            
-            _page.VerifyAllExpectations();
-            _viewTypeRegistry.AssertWasCalled(r => r.HasPartialViewTypeFor<PartialModel>());
-            _viewTypeRegistry.AssertWasNotCalled(r => r.GetPartialViewTypeFor<PartialModel>());
-            _renderer.AssertWasNotCalled(r => r.CreateControl(typeof(PartialView)));
-        }
-
-        [Test]
-        public void should_return_expression_after_calling_using()
-        {
-            _viewTypeRegistry.Stub(r => r.HasPartialViewTypeFor<PartialModel>()).Return(true);
-            _viewTypeRegistry.Stub(r => r.GetPartialViewTypeFor<PartialModel>()).Return(typeof (PartialView));
-
-            _page.PartialForEach(x => x.Partials);
-
-            _page.VerifyAllExpectations();
-            _viewTypeRegistry.AssertWasCalled(r => r.HasPartialViewTypeFor<PartialModel>());
-            _viewTypeRegistry.AssertWasCalled(r => r.GetPartialViewTypeFor<PartialModel>());
-            _renderer.AssertWasCalled(r => r.CreateControl(typeof(PartialView)));
-        }
-
-        public class PartialModel { }
-        public class InputModel { public IList<PartialModel> Partials { get; set; } }
-    }
-
     [TestFixture]
     public class when_calling_link_variable
     {
@@ -243,5 +175,5 @@ namespace FubuMVC.Tests.UI.Forms
 
     public class ViewModel{}
     public class InputModel{}
-    public class PartialView : FubuPage {}
+    
 }

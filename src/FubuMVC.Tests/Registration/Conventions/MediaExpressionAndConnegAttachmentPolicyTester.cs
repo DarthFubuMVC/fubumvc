@@ -4,7 +4,6 @@ using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
-using FubuMVC.WebForms;
 using NUnit.Framework;
 using FubuTestingSupport;
 

@@ -290,9 +290,6 @@
     <Compile Include="Registration\Conventions\WrapWithAttributeConventionTester.cs" />
     <Compile Include="Registration\DSL\PoliciesExpressionTester.cs" />
     <Compile Include="Registration\DSL\ViewExpressionTester.cs" />
-    <Compile Include="Registration\Expressions\ActionLessViewRegistrationTester.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="Registration\HandlerActionsSetTester.cs" />
     <Compile Include="Registration\integrated_type_resolver_registration.cs" />
     <Compile Include="Registration\ListDependencyTester.cs" />
@@ -421,7 +418,6 @@
     <Compile Include="Registration\Expressions\ModelExpressionTester.cs" />
     <Compile Include="Registration\Expressions\WrapBehaviorChainsWithTester.cs" />
     <Compile Include="Registration\Nodes\BehaviorChainTester.cs" />
-    <Compile Include="Registration\Nodes\WebFormRenderTester.cs" />
     <Compile Include="Registration\RouteVisitorTester.cs" />
     <Compile Include="Registration\ServiceRegistryTester.cs" />
     <Compile Include="Registration\Utilities\ActionCallSpec.cs" />
@@ -452,14 +448,9 @@
     <Compile Include="UI\Forms\FormForExpressionTester.cs" />
     <Compile Include="UI\Forms\FormLineExpressionTester.cs" />
     <Compile Include="UI\Forms\FubuPageExtensionsTagsTester.cs" />
-    <Compile Include="UI\Forms\FubuPageExtensionsTester.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
+    <Compile Include="UI\Forms\FubuPageExtensionsTester.cs" />
     <Compile Include="UI\HtmlConventionsIntegrationTester.cs" />
     <Compile Include="UI\LambdaElementModifierTester.cs" />
-    <Compile Include="UI\PartialViewTypeRegistrationTester.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="UI\TagFactoryTester.cs" />
     <Compile Include="UI\TagGeneratorTester.cs" />
     <Compile Include="Urls\BasicUrlRegistrationScanningIntegrationTester.cs" />
@@ -467,10 +458,6 @@
     <Compile Include="Urls\UrlRegistryIntegrationTester.cs" />
     <Compile Include="UI\LambdaElementSourceTester.cs" />
     <Compile Include="Urls\UrlRegistryTester.cs" />
-    <Compile Include="View\FakeViews\A.aspx.cs">
-      <DependentUpon>A.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="View\FakeViews\Folder1\A.aspx.cs">
       <DependentUpon>A.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -480,30 +467,13 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="View\FakeViews\ModelsAndControllers.cs" />
-    <Compile Include="View\FubuPageTester.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="View\New\ViewNodeTester.cs" />
     <Compile Include="View\New\ViewWriterTester.cs" />
     <Compile Include="View\PageActivatorTester.cs" />
     <Compile Include="View\SetPageModelActivationActionTester.cs" />
-    <Compile Include="View\View4.aspx.cs">
-      <DependentUpon>View4.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="View\ViewAttacherConventionTester.cs" />
     <Compile Include="View\ViewBagConventionRunnerTester.cs" />
     <Compile Include="View\ViewsForActionFiltersTester.cs" />
-    <Compile Include="View\WebForms\PartialRendererTester.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="View\WebForms\RenderPartialExpressionTester.cs" />
-    <Compile Include="View\WebForms\WebFormsEndpointPolicyTester.cs">
-    </Compile>
-    <Compile Include="View\WebForms\WebFormViewFacilityTester.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="View\WebForms\WebFormViewTokenTester.cs" />
     <Compile Include="Web\Security\WebAuthenticationContextTester.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -530,10 +500,6 @@
     <ProjectReference Include="..\FubuMVC.Tests.Widget1\FubuMVC.Tests.Widget1.csproj">
       <Project>{584A2B9D-4A24-4BF8-A5AB-F18C3E104D7B}</Project>
       <Name>FubuMVC.Tests.Widget1</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.WebForms\FubuMVC.WebForms.csproj">
-      <Project>{7A45A53A-10F3-47B4-BAA7-C4F325102F02}</Project>
-      <Name>FubuMVC.WebForms</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuTestApplication\FubuTestApplication.csproj">
       <Project>{8FFDBE50-4E00-4940-BC8F-7AF85278B247}</Project>
@@ -562,16 +528,10 @@
     <Content Include="Templating\sample\myproject.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="View\FakeViews\A.aspx">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
     <Content Include="View\FakeViews\Folder1\A.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <Content Include="View\FakeViews\Folder1\ViewModel3.aspx">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
-    <Content Include="View\View4.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
   </ItemGroup>

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Bottles;
@@ -9,19 +8,12 @@ using FubuMVC.Core.Assets.Caching;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Http;
-using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Urls;
-using FubuMVC.Core.View;
 using FubuMVC.StructureMap;
 using FubuMVC.Tests.Diagnostics;
-using FubuMVC.Tests.Packaging;
-using FubuMVC.Tests.Registration;
-using FubuMVC.WebForms;
 using FubuTestingSupport;
-
 using NUnit.Framework;
 using Rhino.Mocks;
 using StructureMap;
@@ -46,7 +38,7 @@ namespace FubuMVC.Tests.StructureMapIoC
             });
 
             container.Configure(x => x.For<IContainerFacility>().Use<StructureMapContainerFacility>());
-            
+
 
             graph = new FubuRegistry(x =>
             {
@@ -60,12 +52,11 @@ namespace FubuMVC.Tests.StructureMapIoC
                     .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
 
                 x.Models.ConvertUsing<ExampleConverter>().ConvertUsing<ExampleConverter2>();
-            
-            
+
+
                 x.Services(s => s.AddService<IActivator>(new StubActivator()));
                 x.Services(s => s.AddService<IActivator>(new StubActivator()));
                 x.Services(s => s.AddService<IActivator>(new StubActivator()));
-            
             }).BuildGraph();
 
             facility = new StructureMapContainerFacility(container);
@@ -108,9 +99,29 @@ namespace FubuMVC.Tests.StructureMapIoC
         private StructureMapContainerFacility facility;
 
         [Test]
+        public void PropertyBinderCache_should_be_a_singleton()
+        {
+            container.Model.For<IAssetContentCache>().Lifecycle.ShouldEqual("Singleton");
+        }
+
+        [Test]
+        public void behavior_factory_is_available_in_the_container()
+        {
+            container.GetInstance<IBehaviorFactory>().ShouldBeOfType<PartialBehaviorFactory>();
+        }
+
+        [Test]
         public void can_return_all_the_registered_activators_smoke_test()
         {
             facility.GetAllActivators().Count().ShouldBeGreaterThan(9);
+        }
+
+        [Test]
+        public void can_return_the_endpoint_authorizor_for_an_id_smoke_test()
+        {
+            var uniqueId = container.GetInstance<BehaviorGraph>().Behaviors.First().UniqueId;
+
+            container.GetInstance<IBehaviorFactory>().AuthorizorFor(uniqueId).ShouldNotBeNull();
         }
 
         [Test]
@@ -124,12 +135,6 @@ namespace FubuMVC.Tests.StructureMapIoC
                         <NestedStructureMapContainerBehavior>();
                 };
             });
-        }
-
-        [Test]
-        public void PropertyBinderCache_should_be_a_singleton()
-        {
-            container.Model.For<IAssetContentCache>().Lifecycle.ShouldEqual("Singleton");
         }
 
         [Test]
@@ -153,8 +158,7 @@ namespace FubuMVC.Tests.StructureMapIoC
 
             var registry = new TypeResolver();
 
-            myFacility.Register(typeof(ITypeResolver), new ObjectDef
-            {
+            myFacility.Register(typeof (ITypeResolver), new ObjectDef{
                 Value = registry
             });
 
@@ -172,10 +176,10 @@ namespace FubuMVC.Tests.StructureMapIoC
         [Test]
         public void should_be_able_to_inject_multiple_implementations_as_a_dependency()
         {
-            IEnumerable<IConverterFamily> converterFamilies =
+            var converterFamilies =
                 container.GetInstance<BindingRegistry>().AllConverterFamilies();
-            converterFamilies.ShouldContain(f => f.GetType() == typeof(ExampleConverter));
-            converterFamilies.ShouldContain(f => f.GetType() == typeof(ExampleConverter2));
+            converterFamilies.ShouldContain(f => f.GetType() == typeof (ExampleConverter));
+            converterFamilies.ShouldContain(f => f.GetType() == typeof (ExampleConverter2));
         }
 
         [Test]
@@ -202,21 +206,6 @@ namespace FubuMVC.Tests.StructureMapIoC
         public void standard_model_binder_should_not_be_registered_in_the_container()
         {
             container.GetAllInstances<IModelBinder>().Any(x => x is StandardModelBinder).ShouldBeFalse();
-        }
-
-        [Test]
-        public void behavior_factory_is_available_in_the_container()
-        {
-            container.GetInstance<IBehaviorFactory>().ShouldBeOfType<PartialBehaviorFactory>();
-        }
-
-        [Test]
-        public void can_return_the_endpoint_authorizor_for_an_id_smoke_test()
-        {
-            var uniqueId = container.GetInstance<BehaviorGraph>().Behaviors.First().UniqueId;
-
-            container.GetInstance<IBehaviorFactory>().AuthorizorFor(uniqueId).ShouldNotBeNull();
-
         }
     }
 }
