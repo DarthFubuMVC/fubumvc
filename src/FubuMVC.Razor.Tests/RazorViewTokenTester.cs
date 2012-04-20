@@ -3,7 +3,6 @@ using System.IO;
 using FubuCore;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Razor.RazorModel;
-using FubuMVC.Razor.Registration.Nodes;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -44,18 +43,8 @@ namespace FubuMVC.Razor.Tests
             _token.ViewModel.ShouldEqual(_descriptor.ViewModel);
         }
 
-        [Test]
-        public void the_node_is_of_razorviewoutput_type()
-        {
-            _token.ToBehavioralNode().ShouldBeOfType<RazorViewNode>();
-        }
 
-        [Test]
-        public void description_should_contain_view_path()
-        {
-            var view = (RazorViewNode)_token.ToBehavioralNode();
-            view.Description.ShouldContain(_template.RelativePath());
-        }
+
     }
 
     public class ProductModel

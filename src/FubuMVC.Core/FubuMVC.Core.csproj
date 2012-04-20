@@ -437,7 +437,6 @@
     <Compile Include="Packaging\StandaloneAssemblyPackageLoader.cs" />
     <Compile Include="Registration\Routes\RouteInput.cs" />
     <Compile Include="Routing\IRoutePolicy.cs" />
-    <Compile Include="OutputDeterminationExpression.cs" />
     <Compile Include="Packaging\FubuMvcPackageFacility.cs" />
     <Compile Include="Packaging\VirtualPaths\FileSystemVirtualFile.cs" />
     <Compile Include="Packaging\VirtualPaths\FileSystemVirtualPathProvider.cs" />
@@ -482,7 +481,6 @@
     <Compile Include="Registration\IServiceRegistry.cs" />
     <Compile Include="Registration\Nodes\ContinuationNode.cs" />
     <Compile Include="Registration\Nodes\IMayHaveInputType.cs" />
-    <Compile Include="Registration\Nodes\OutputNode.cs" />
     <Compile Include="Registration\Nodes\UrlCategory.cs" />
     <Compile Include="Registration\ObjectGraph\ListDependency.cs" />
     <Compile Include="Registration\Querying\ChainResolutionCache.cs" />

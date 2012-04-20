@@ -60,11 +60,6 @@ namespace FubuMVC.Tests.View
 
         public class TestViewToken : IViewToken
         {
-            public BehaviorNode ToBehavioralNode()
-            {
-                throw new NotImplementedException();
-            }
-
             public ObjectDef ToViewFactoryObjectDef()
             {
                 throw new NotImplementedException();

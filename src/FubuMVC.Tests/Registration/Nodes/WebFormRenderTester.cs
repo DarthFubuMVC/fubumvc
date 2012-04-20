@@ -1,3 +1,4 @@
+using System;
 using System.Web;
 using FubuCore;
 using FubuMVC.Core;
@@ -30,24 +31,25 @@ namespace FubuMVC.Tests.Registration.Nodes
                 ViewName = "something"
             };
 
-            var render = new WebFormView(path.ViewName);
-            var container = new Container(x =>
-            {
-                x.For<IActionBehavior>().Use(new ObjectDefInstance(render.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None)));
-                x.For<IWebFormsControlBuilder>().Use<WebFormsControlBuilder>();
-                x.For<IWebFormRenderer>().Use<WebFormRenderer>();
-                x.For<HttpContextBase>().Use(() => new FakeHttpContext());
-                x.For<IOutputWriter>().Use<OutputWriter>();
-                x.For<IFubuRequest>().Use<InMemoryFubuRequest>();
-                x.For<IPageActivator>().Use<PageActivator>();
-                x.For<IPageActivationRules>().Use<PageActivationRuleCache>();
-                x.For<IServiceLocator>().Use<StructureMapServiceLocator>();
-                x.For<IHttpWriter>().Use(new NulloHttpWriter());
-                x.For<IFileSystem>().Use<FileSystem>();
+            throw new NotImplementedException("NWO");
 
-            });
+            //var container = new Container(x =>
+            //{
+            //    x.For<IActionBehavior>().Use(new ObjectDefInstance(render.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None)));
+            //    x.For<IWebFormsControlBuilder>().Use<WebFormsControlBuilder>();
+            //    x.For<IWebFormRenderer>().Use<WebFormRenderer>();
+            //    x.For<HttpContextBase>().Use(() => new FakeHttpContext());
+            //    x.For<IOutputWriter>().Use<OutputWriter>();
+            //    x.For<IFubuRequest>().Use<InMemoryFubuRequest>();
+            //    x.For<IPageActivator>().Use<PageActivator>();
+            //    x.For<IPageActivationRules>().Use<PageActivationRuleCache>();
+            //    x.For<IServiceLocator>().Use<StructureMapServiceLocator>();
+            //    x.For<IHttpWriter>().Use(new NulloHttpWriter());
+            //    x.For<IFileSystem>().Use<FileSystem>();
 
-            behavior = container.GetInstance<IActionBehavior>();
+            //});
+
+            //behavior = container.GetInstance<IActionBehavior>();
         }
 
         #endregion

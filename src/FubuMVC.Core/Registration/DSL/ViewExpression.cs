@@ -180,9 +180,10 @@ namespace FubuMVC.Core.Registration.DSL
                 .Where(token => _viewTokenFilter(token))
                 .Each(token =>
                           {
+                              throw new NotImplementedException();
                               var chain = graph.AddChain();
-                              var output = token.ToBehavioralNode();
-                              chain.AddToEnd(output);
+                              //var output = token.ToBehavioralNode();
+                              //chain.AddToEnd(output);
 
                               _configureChain(chain, token);
                           });

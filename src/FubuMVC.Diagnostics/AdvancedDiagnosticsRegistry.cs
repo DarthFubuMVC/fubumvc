@@ -48,9 +48,9 @@ namespace FubuMVC.Diagnostics
 
             this.UseSpark();
 
-            Output
-                .ToJson
-                .WhenCallMatches(call => call.OutputType().Name.ToLower().Contains("json"));
+            //Output
+            //    .ToJson
+            //    .WhenCallMatches(call => call.OutputType().Name.ToLower().Contains("json"));
 
             Models.IgnoreProperties(prop => prop.PropertyType == typeof(IEnumerable<JsonGridFilter>));
 

@@ -151,11 +151,6 @@ namespace FubuMVC.Tests.View
             return ViewName;
         }
 
-        public BehaviorNode ToBehavioralNode()
-        {
-            return this;
-        }
-
         public ObjectDef ToViewFactoryObjectDef()
         {
             throw new NotImplementedException();

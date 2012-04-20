@@ -31,9 +31,7 @@ namespace FubuMVC.Core
 
             ApplyConvention<DictionaryOutputConvention>();
 
-            Output.ToJson.WhenTheOutputModelIs<JsonMessage>();
 
-            Output.ToBehavior<RenderStatusCodeBehavior>().WhenTheOutputModelIs<HttpStatusCode>();
 
             Policies.Add<AjaxContinuationPolicy>();
             Policies.Add<ContinuationHandlerConvention>();

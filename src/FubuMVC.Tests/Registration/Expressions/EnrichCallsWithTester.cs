@@ -1,29 +1,25 @@
+using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core;
-using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Behaviors;
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Resources.Conneg.New;
 using FubuTestingSupport;
 using NUnit.Framework;
-using OutputNode = FubuMVC.Core.Registration.Nodes.OutputNode;
-using System.Collections.Generic;
 
 namespace FubuMVC.Tests.Registration.Expressions
 {
     [TestFixture]
     public class EnrichCallsWithTester
     {
+        #region Setup/Teardown
+
         [SetUp]
         public void SetUp()
         {
             registry = new FubuRegistry(x =>
             {
-                
-
                 // Tell FubuMVC to enrich the behavior chain for each
                 // RouteHandler with the "FakeUnitOfWorkBehavior"
                 // Kind of like a global [ActionFilter] in MVC
@@ -45,27 +41,32 @@ namespace FubuMVC.Tests.Registration.Expressions
             _graph = registry.BuildGraph();
         }
 
+        #endregion
+
         private FubuRegistry registry;
         private BehaviorGraph _graph;
 
         public class FakeUnitOfWorkBehavior : IActionBehavior
         {
             private readonly IActionBehavior _inner;
-            public FakeUnitOfWorkBehavior(IActionBehavior inner) { _inner = inner; }
-            public IActionBehavior Inner { get { return _inner; } }
-            public void Invoke() { }
-            public void InvokePartial() { }
-        }
 
-        [Test]
-        public void someaction_call_should_be_enriched()
-        {
-            var chain = _graph.BehaviorFor<TestController>(x => x.SomeAction(null));
+            public FakeUnitOfWorkBehavior(IActionBehavior inner)
+            {
+                _inner = inner;
+            }
 
-            // InputNode, then ActionCall, then Wrapper
-            var wrapper = chain.Top.Next.Next.ShouldBeOfType<Wrapper>();
-            wrapper.BehaviorType.ShouldEqual(typeof(FakeUnitOfWorkBehavior));
-            wrapper.Previous.ShouldBeOfType<ActionCall>();
+            public IActionBehavior Inner
+            {
+                get { return _inner; }
+            }
+
+            public void Invoke()
+            {
+            }
+
+            public void InvokePartial()
+            {
+            }
         }
 
         [Test]
@@ -78,9 +79,19 @@ namespace FubuMVC.Tests.Registration.Expressions
                 {
                     chain.Top.ShouldBeOfType<InputNode>();
                     chain.Top.Next.ShouldBeOfType<ActionCall>();
-                    chain.Top.Next.Next.ShouldBeOfType<Core.Resources.Conneg.New.OutputNode>();
+                    chain.Top.Next.Next.ShouldBeOfType<OutputNode>();
                 });
+        }
 
+        [Test]
+        public void someaction_call_should_be_enriched()
+        {
+            var chain = _graph.BehaviorFor<TestController>(x => x.SomeAction(null));
+
+            // InputNode, then ActionCall, then Wrapper
+            var wrapper = chain.Top.Next.Next.ShouldBeOfType<Wrapper>();
+            wrapper.BehaviorType.ShouldEqual(typeof (FakeUnitOfWorkBehavior));
+            wrapper.Previous.ShouldBeOfType<ActionCall>();
         }
     }
 }

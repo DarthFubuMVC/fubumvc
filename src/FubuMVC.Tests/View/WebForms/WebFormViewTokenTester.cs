@@ -39,19 +39,5 @@ namespace FubuMVC.Tests.View.WebForms
             token.ViewModel.ShouldEqual(typeof (ViewModel4));
         }
 
-        [Test]
-        public void ToBehavioralNode()
-        {
-            token.ToBehavioralNode().ShouldBeOfType<WebFormView>()
-                .ViewName.ShouldEqual("~/View/View4.aspx");
-        }
-
-        [Test]
-        public void description_should_contain_view_name()
-        {
-            WebFormView view = token.ToBehavioralNode() as WebFormView;
-            view.ShouldNotBeNull();
-            view.Description.ShouldEqual("WebForm View '{0}'".ToFormat("~/View/View4.aspx"));
-        }
     }
 }

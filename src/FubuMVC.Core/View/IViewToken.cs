@@ -19,9 +19,6 @@ namespace FubuMVC.Core.View
 
         string Namespace { get; }
 
-        [MarkedForTermination("Die.")]
-        BehaviorNode ToBehavioralNode();
-
         ObjectDef ToViewFactoryObjectDef();
     }
 }

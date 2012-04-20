@@ -17,8 +17,9 @@ namespace FubuMVC.WebForms
         public Type ViewType { get { return _viewType; } }
         public override void Alter(ActionCall call)
         {
-            var token = new WebFormViewToken(ViewType);
-            call.ParentChain().AddToEnd(token.ToBehavioralNode());
+            throw new NotImplementedException();
+            //var token = new WebFormViewToken(ViewType);
+            //call.ParentChain().AddToEnd(token.ToBehavioralNode());
 
             // TODO -- add some tracing back here.
             /*

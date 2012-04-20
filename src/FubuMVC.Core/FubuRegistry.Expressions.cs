@@ -27,14 +27,6 @@ namespace FubuMVC.Core
         }
 
         /// <summary>
-        /// Entry point to configuring the output of behavior chains
-        /// </summary>
-        public OutputDeterminationExpression Output
-        {
-            get { return new OutputDeterminationExpression(this); }
-        }
-
-        /// <summary>
         /// Entry point to configure view attachment, conventions, and engines
         /// </summary>
         public ViewExpression Views

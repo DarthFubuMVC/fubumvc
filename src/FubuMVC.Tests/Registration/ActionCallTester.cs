@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -12,13 +11,11 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
-using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Resources.Conneg.New;
 using FubuMVC.Tests.Diagnostics;
 using FubuMVC.Tests.Registration.Conventions;
 using FubuTestingSupport;
 using NUnit.Framework;
-using OutputNode = FubuMVC.Core.Registration.Nodes.OutputNode;
 
 namespace FubuMVC.Tests.Registration
 {
@@ -36,15 +33,6 @@ namespace FubuMVC.Tests.Registration
         #endregion
 
         private ActionCall action;
-
-        [Test]
-        public void append_json()
-        {
-            action = ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null));
-            action.AddToEnd(new OutputNode(action.OutputType()));
-
-            action.Next.ShouldBeOfType<OutputNode>().BehaviorType.ShouldEqual(action.OutputType());
-        }
 
         [Test]
         public void append_to_descendent_when_next_is_not_null()
@@ -92,28 +80,19 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void fail_to_build_an_action_by_type_for_a_type_with_more_than_one_method()
+        {
+            Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(
+                () => { ActionCall.For(typeof (InvalidActionWithMultipleMethods)); });
+        }
+
+        [Test]
         public void next_is_a_null_by_default()
         {
             action.Next.ShouldBeNull();
 
-            ObjectDef objectDef = action.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None);
+            var objectDef = action.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None);
             objectDef.Dependencies.Select(x => x as ConfiguredDependency).Count().ShouldEqual(1);
-        }
-
-        [Test]
-        public void to_object_def_throws_when_has_no_return_and_no_input()
-        {
-            action = ActionCall.For<ControllerTarget>(x => x.ZeroInZeroOut());
-            Exception<FubuException>.ShouldBeThrownBy(() => action.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None))
-                .ErrorCode.ShouldEqual(1005);
-        }
-
-        [Test]
-        public void to_object_def_throws_when_has_task_with_no_result_and_no_input()
-        {
-            action = ActionCall.For<ControllerTarget>(x => x.ZeroInTaskNoResultOut());
-            Exception<FubuException>.ShouldBeThrownBy(() => action.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None))
-                .ErrorCode.ShouldEqual(1005);
         }
 
         [Test]
@@ -130,7 +109,7 @@ namespace FubuMVC.Tests.Registration
         {
             action.Equals(action).ShouldBeTrue();
             action.Equals(null).ShouldBeFalse();
-            action.Equals((object)null).ShouldBeFalse();
+            action.Equals((object) null).ShouldBeFalse();
             action.Equals("").ShouldBeFalse();
         }
 
@@ -149,12 +128,11 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
-        public void fail_to_build_an_action_by_type_for_a_type_with_more_than_one_method()
+        public void to_definition_with_an_input_type()
         {
-            Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() =>
-            {
-                ActionCall.For(typeof (InvalidActionWithMultipleMethods));
-            });
+            ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null))
+                .ToRouteDefinition()
+                .Input.ShouldBeOfType<RouteInput<Model1>>();
         }
 
         [Test]
@@ -165,23 +143,74 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
-        public void to_definition_with_an_input_type()
+        public void to_object_def_throws_when_has_no_return_and_no_input()
         {
-            ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null))
-                .ToRouteDefinition()
-                .Input.ShouldBeOfType<RouteInput<Model1>>();
+            action = ActionCall.For<ControllerTarget>(x => x.ZeroInZeroOut());
+            Exception<FubuException>.ShouldBeThrownBy(
+                () => action.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None))
+                .ErrorCode.ShouldEqual(1005);
         }
 
+        [Test]
+        public void to_object_def_throws_when_has_task_with_no_result_and_no_input()
+        {
+            action = ActionCall.For<ControllerTarget>(x => x.ZeroInTaskNoResultOut());
+            Exception<FubuException>.ShouldBeThrownBy(
+                () => action.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None))
+                .ErrorCode.ShouldEqual(1005);
+        }
     }
 
     [TestFixture]
     public class ActionCallValidationTester
     {
         [Test]
-        public void should_not_throw_if_call_is_ZMIOMO()
+        public void add_before_must_be_idempotent()
         {
-            var action = ActionCall.For<ControllerTarget>(x => x.ZeroInOneOut());
-            action.Validate();
+            var action = ActionCall.For<ControllerTarget>(x => x.BogusMultiInput(null, null));
+            var newNode = new InputNode(typeof (Model1));
+
+            action.AddBefore(newNode);
+
+            action.PreviousNodes.Count().ShouldEqual(1);
+
+            action.AddBefore(newNode);
+
+            action.PreviousNodes.Count().ShouldEqual(1);
+        }
+
+        [Test]
+        public void do_not_append_a_duplicate_node()
+        {
+            var action = ActionCall.For<ControllerTarget>(x => x.BogusMultiInput(null, null));
+
+            // first one is ok
+            var newNode = new InputNode(typeof (InputModel));
+            action.AddToEnd(newNode);
+            action.Count().ShouldEqual(1);
+
+            // try it again, the second should be ignored
+            action.AddToEnd(newNode);
+            action.Count().ShouldEqual(1);
+        }
+
+
+        [Test]
+        public void do_not_append_a_duplicate_node_2()
+        {
+            var action = ActionCall.For<ControllerTarget>(x => x.BogusMultiInput(null, null));
+
+            // first one is ok
+            var newNode = new InputNode(typeof (InputModel));
+            action.AddToEnd(newNode);
+            action.Count().ShouldEqual(1);
+
+            action.AddToEnd(new Wrapper(typeof (Wrapper1)));
+
+            // try it again, the second should be ignored
+            action.AddToEnd(newNode);
+            action.Count().ShouldEqual(2);
+            action.Count(x => x is InputNode).ShouldEqual(1);
         }
 
         [Test]
@@ -199,89 +228,47 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
-        public void should_throw_if_return_type_is_value_type()
+        public void should_not_throw_if_call_is_ZMIOMO()
         {
-            var action = ActionCall.For<ControllerTarget>(x => x.BogusReturn());
-            var ex = typeof (FubuException).ShouldBeThrownBy(action.Validate).ShouldBeOfType<FubuException>();
-            ex.ErrorCode.ShouldEqual(1004);
-        }
-
-        [Test]
-        public void should_throw_if_more_than_one_input_parameter()
-        {
-            var action = ActionCall.For<ControllerTarget>(x => x.BogusMultiInput(null, null));
-            var ex = typeof(FubuException).ShouldBeThrownBy(action.Validate).ShouldBeOfType<FubuException>();
-            ex.ErrorCode.ShouldEqual(1005);
+            var action = ActionCall.For<ControllerTarget>(x => x.ZeroInOneOut());
+            action.Validate();
         }
 
         [Test]
         public void should_throw_if_input_type_is_value_type()
         {
             var action = ActionCall.For<ControllerTarget>(x => x.BogusOneInput(9));
-            var ex = typeof(FubuException).ShouldBeThrownBy(action.Validate).ShouldBeOfType<FubuException>();
+            var ex = typeof (FubuException).ShouldBeThrownBy(action.Validate).ShouldBeOfType<FubuException>();
             ex.ErrorCode.ShouldEqual(1006);
         }
 
         [Test]
-        public void do_not_append_a_duplicate_node()
+        public void should_throw_if_more_than_one_input_parameter()
         {
             var action = ActionCall.For<ControllerTarget>(x => x.BogusMultiInput(null, null));
-
-            // first one is ok
-            var newNode = new InputNode(typeof(InputModel));
-            action.AddToEnd(newNode);
-            action.Count().ShouldEqual(1);
-
-            // try it again, the second should be ignored
-            action.AddToEnd(newNode);
-            action.Count().ShouldEqual(1);
-        }
-
-
-        [Test]
-        public void do_not_append_a_duplicate_node_2()
-        {
-            var action = ActionCall.For<ControllerTarget>(x => x.BogusMultiInput(null, null));
-
-            // first one is ok
-            var newNode = new InputNode(typeof(InputModel));
-            action.AddToEnd(newNode);
-            action.Count().ShouldEqual(1);
-
-            action.AddToEnd(new Wrapper(typeof(Wrapper1)));
-
-            // try it again, the second should be ignored
-            action.AddToEnd(newNode);
-            action.Count().ShouldEqual(2);
-            action.Count(x => x is InputNode).ShouldEqual(1);
+            var ex = typeof (FubuException).ShouldBeThrownBy(action.Validate).ShouldBeOfType<FubuException>();
+            ex.ErrorCode.ShouldEqual(1005);
         }
 
         [Test]
-        public void add_before_must_be_idempotent()
+        public void should_throw_if_return_type_is_value_type()
         {
-            var action = ActionCall.For<ControllerTarget>(x => x.BogusMultiInput(null, null));
-            var newNode = new InputNode(typeof(Model1));
-
-            action.AddBefore(newNode);
-
-            action.PreviousNodes.Count().ShouldEqual(1);
-
-            action.AddBefore(newNode);
-
-            action.PreviousNodes.Count().ShouldEqual(1);
+            var action = ActionCall.For<ControllerTarget>(x => x.BogusReturn());
+            var ex = typeof (FubuException).ShouldBeThrownBy(action.Validate).ShouldBeOfType<FubuException>();
+            ex.ErrorCode.ShouldEqual(1004);
         }
     }
 
     public class FakeNode : BehaviorNode
     {
-        protected override ObjectDef buildObjectDef()
-        {
-            throw new NotImplementedException();
-        }
-
         public override BehaviorCategory Category
         {
             get { throw new NotImplementedException(); }
+        }
+
+        protected override ObjectDef buildObjectDef()
+        {
+            throw new NotImplementedException();
         }
 
         public bool Equals(FakeNode other)
@@ -354,7 +341,7 @@ namespace FubuMVC.Tests.Registration
         public void should_have_a_dependency_for_the_function()
         {
             theObjectDef.Dependencies.Count().ShouldEqual(1);
-            IDependency dependency = theObjectDef.Dependencies.First();
+            var dependency = theObjectDef.Dependencies.First();
 
             dependency.DependencyType.ShouldEqual(typeof (Func<ControllerTarget, Model1, Model2>));
         }
@@ -366,8 +353,7 @@ namespace FubuMVC.Tests.Registration
                 .Value.ShouldBeOfType<Func<ControllerTarget, Model1, Model2>>();
 
             var target = new ControllerTarget();
-            func(target, new Model1
-            {
+            func(target, new Model1{
                 Name = "Jeremy"
             }).Name.ShouldEqual("Jeremy");
         }
@@ -391,7 +377,7 @@ namespace FubuMVC.Tests.Registration
         public void should_have_a_dependency_for_the_function()
         {
             theObjectDef.Dependencies.Count().ShouldEqual(1);
-            IDependency dependency = theObjectDef.Dependencies.First();
+            var dependency = theObjectDef.Dependencies.First();
 
             dependency.DependencyType.ShouldEqual(typeof (Action<ControllerTarget, Model1>));
         }
@@ -403,8 +389,7 @@ namespace FubuMVC.Tests.Registration
                 .Value.ShouldBeOfType<Action<ControllerTarget, Model1>>();
 
             var target = new ControllerTarget();
-            func(target, new Model1
-            {
+            func(target, new Model1{
                 Name = "Jeremy"
             });
 
@@ -430,7 +415,7 @@ namespace FubuMVC.Tests.Registration
         public void should_have_a_dependency_for_the_function()
         {
             theObjectDef.Dependencies.Count().ShouldEqual(1);
-            IDependency dependency = theObjectDef.Dependencies.First();
+            var dependency = theObjectDef.Dependencies.First();
 
             dependency.DependencyType.ShouldEqual(typeof (Func<ControllerTarget, Model1>));
         }
@@ -464,7 +449,7 @@ namespace FubuMVC.Tests.Registration
         public void should_have_a_dependency_for_the_function()
         {
             theObjectDef.Dependencies.Count().ShouldEqual(1);
-            IDependency dependency = theObjectDef.Dependencies.First();
+            var dependency = theObjectDef.Dependencies.First();
 
             dependency.DependencyType.ShouldEqual(typeof (Func<ControllerTarget, Model1, Task>));
         }
@@ -476,8 +461,7 @@ namespace FubuMVC.Tests.Registration
                 .Value.ShouldBeOfType<Func<ControllerTarget, Model1, Task>>();
 
             var target = new ControllerTarget();
-            var task = func(target, new Model1
-            {
+            var task = func(target, new Model1{
                 Name = "Corey"
             });
             task.RunSynchronously();
@@ -504,7 +488,7 @@ namespace FubuMVC.Tests.Registration
         public void should_have_a_dependency_for_the_function()
         {
             theObjectDef.Dependencies.Count().ShouldEqual(1);
-            IDependency dependency = theObjectDef.Dependencies.First();
+            var dependency = theObjectDef.Dependencies.First();
 
             dependency.DependencyType.ShouldEqual(typeof (Func<ControllerTarget, Task<Model2>>));
         }
@@ -517,7 +501,7 @@ namespace FubuMVC.Tests.Registration
 
             var target = new ControllerTarget();
             var task = func(target);
-            task.RunSynchronously(); 
+            task.RunSynchronously();
             task.Result.Name.ShouldEqual("ZeroInTaskWithOutputOut");
         }
 
@@ -540,9 +524,9 @@ namespace FubuMVC.Tests.Registration
         public void should_have_a_dependency_for_the_function()
         {
             theObjectDef.Dependencies.Count().ShouldEqual(1);
-            IDependency dependency = theObjectDef.Dependencies.First();
+            var dependency = theObjectDef.Dependencies.First();
 
-            dependency.DependencyType.ShouldEqual(typeof(Func<ControllerTarget, Model1, Task<Model2>>));
+            dependency.DependencyType.ShouldEqual(typeof (Func<ControllerTarget, Model1, Task<Model2>>));
         }
 
         [Test]
@@ -552,8 +536,7 @@ namespace FubuMVC.Tests.Registration
                 .Value.ShouldBeOfType<Func<ControllerTarget, Model1, Task<Model2>>>();
 
             var target = new ControllerTarget();
-            var task = func(target, new Model1
-            {
+            var task = func(target, new Model1{
                 Name = "Corey"
             });
             task.RunSynchronously();
@@ -563,19 +546,26 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void the_type_should_be_OMIOMO()
         {
-            theObjectDef.Type.ShouldEqual(typeof(OneInOneOutActionInvoker<ControllerTarget, Model1, Task<Model2>>));
+            theObjectDef.Type.ShouldEqual(typeof (OneInOneOutActionInvoker<ControllerTarget, Model1, Task<Model2>>));
         }
     }
 
     public class ValidActionWithOneMethod
     {
-        public void Go(){}
+        public void Go()
+        {
+        }
     }
 
     public class InvalidActionWithMultipleMethods
     {
-        public void Go() { }
-        public void Go2() { }
+        public void Go()
+        {
+        }
+
+        public void Go2()
+        {
+        }
     }
 
     public class Model1
@@ -592,7 +582,9 @@ namespace FubuMVC.Tests.Registration
     {
         public string LastNameEntered;
 
-        public void ZeroInZeroOut(){}
+        public void ZeroInZeroOut()
+        {
+        }
 
         public Task ZeroInTaskNoResultOut()
         {
@@ -601,12 +593,16 @@ namespace FubuMVC.Tests.Registration
 
         public Task<Model2> OneInTaskWithOutputOut(Model1 input)
         {
-            return new Task<Model2>(() => new Model2{Name = input.Name});
+            return new Task<Model2>(() => new Model2{
+                Name = input.Name
+            });
         }
 
         public Task<Model2> ZeroInTaskWithOutputOut()
         {
-            return new Task<Model2>(() => new Model2{Name = "ZeroInTaskWithOutputOut"});
+            return new Task<Model2>(() => new Model2{
+                Name = "ZeroInTaskWithOutputOut"
+            });
         }
 
         public Task OneInTaskWithNoOutputOut(Model1 input)
@@ -616,16 +612,14 @@ namespace FubuMVC.Tests.Registration
 
         public Model1 ZeroInOneOut()
         {
-            return new Model1
-            {
+            return new Model1{
                 Name = "ZeroInOneOut"
             };
         }
 
         public Model2 OneInOneOut(Model1 input)
         {
-            return new Model2
-            {
+            return new Model2{
                 Name = input.Name
             };
         }
@@ -635,11 +629,18 @@ namespace FubuMVC.Tests.Registration
             LastNameEntered = input.Name;
         }
 
-        public bool BogusReturn(){ return false; }
+        public bool BogusReturn()
+        {
+            return false;
+        }
 
-        public void BogusOneInput(int bogus){}
+        public void BogusOneInput(int bogus)
+        {
+        }
 
-        public void BogusMultiInput(Model1 input1, Model2 input2){}
+        public void BogusMultiInput(Model1 input1, Model2 input2)
+        {
+        }
 
         public void GenericMethod<T>(List<T> list)
         {

@@ -41,14 +41,15 @@ namespace FubuMVC.Tests.View.WebForms
         [Test]
         public void should_append_behavioral_node_to_void_end_point_attributed_calls()
         {
-            var token = new WebFormViewToken(typeof(FakeView));
-            var actions = _graph.Actions().Where(x => !x.HasAnyOutputBehavior()
-                && x.Method.HasAttribute<WebFormsEndpointAttribute>()).ToList();
-            for (int index = 0; index < actions.Count; index++)
-            {
-                var call = actions[index];
-                call.LastOrDefault().ShouldBeTheSameAs(token.ToBehavioralNode());
-            }
+            Assert.Fail("NWO");
+            //var token = new WebFormViewToken(typeof(FakeView));
+            //var actions = _graph.Actions().Where(x => !x.HasAnyOutputBehavior()
+            //    && x.Method.HasAttribute<WebFormsEndpointAttribute>()).ToList();
+            //for (int index = 0; index < actions.Count; index++)
+            //{
+            //    var call = actions[index];
+            //    call.LastOrDefault().ShouldBeTheSameAs(token.ToBehavioralNode());
+            //}
         }
 
         [Test]

@@ -1,9 +1,7 @@
 using System;
 using FubuCore;
-using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.View;
-using FubuMVC.Spark.Registration.Nodes;
 using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.SparkModel;
 using Spark;
@@ -20,16 +18,11 @@ namespace FubuMVC.Spark
             _descriptor = viewDescriptor;
         }
 
-        public BehaviorNode ToBehavioralNode()
-        {
-            return new SparkViewNode(_descriptor);
-        }
-
         public ObjectDef ToViewFactoryObjectDef()
         {
-            var def = ObjectDef.ForType<FubuMVC.Spark.Rendering.ViewFactory>();
+            var def = ObjectDef.ForType<ViewFactory>();
             def
-                .DependencyByType(typeof(IViewEntrySource), typeof(ViewEntrySource))
+                .DependencyByType(typeof (IViewEntrySource), typeof (ViewEntrySource))
                 .DependencyByValue(_descriptor);
 
             return def;
@@ -37,7 +30,7 @@ namespace FubuMVC.Spark
 
         public Type ViewType
         {
-            get { return typeof(ISparkView); }
+            get { return typeof (ISparkView); }
         }
 
         public Type ViewModel

@@ -64,7 +64,6 @@
     <Compile Include="RazorModel\RazorParsings.cs" />
     <Compile Include="Registration\ViewParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Registration\Nodes\RazorViewNode.cs" />
     <Compile Include="Rendering\EncodedString.cs" />
     <Compile Include="Rendering\FubuRazorView.cs" />
     <Compile Include="Rendering\ViewFactory.cs" />

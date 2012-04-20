@@ -5,6 +5,7 @@ using FubuMVC.Core.View.Activation;
 
 namespace FubuMVC.WebForms
 {
+    
     public class RenderFubuWebFormView : BasicBehavior
     {
         private readonly ViewPath _path;

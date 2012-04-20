@@ -19,15 +19,11 @@ namespace FubuMVC.Tests.Resources.Conneg
         public void SetUp()
         {
             theChain = BehaviorChain.For<ActionJackson>(x => x.OneInOneOut(null));
-            theOutputNode = new OutputNode(typeof (OutputBehavior));
-
-            theChain.AddToEnd(theOutputNode);
         }
 
         #endregion
 
         private BehaviorChain theChain;
-        private OutputNode theOutputNode;
 
         public class Input1
         {

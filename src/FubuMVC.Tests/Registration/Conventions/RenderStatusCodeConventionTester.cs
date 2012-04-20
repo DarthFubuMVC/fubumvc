@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using System.Net;
 using FubuMVC.Core;
@@ -5,6 +6,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Resources.Conneg.New;
 using FubuMVC.Tests.Urls;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -18,43 +20,9 @@ namespace FubuMVC.Tests.Registration.Conventions
     public class RenderStatusCodeConventionTester
     {
         [Test]
-        public void render_status_behavior_is_attached_to_chains_that_return_a_status_code()
+        public void just_redo_all_of_this()
         {
-            var graph = new RestfulServicesRegistry().BuildGraph();
-            var outputs = graph.BehaviorFor<RestfulService>(x => x.Action1(null)).Outputs;
-
-
-            outputs.OfType<OutputNode>().Single().BehaviorType.ShouldEqual(typeof (RenderStatusCodeBehavior));
-        }
-
-        [Test]
-        public void look_at_our_application()
-        {
-            var registry = new RestfulServicesRegistry();
-            var writer 
-                = new BehaviorGraphWriter(registry.BuildGraph(), null, null, new StubCurrentHttpRequest());
-
-            Debug.WriteLine(writer.PrintRoutes());
-        }
-    }
-
-
-    public class RestfulServicesRegistry : FubuRegistry
-    {
-        public RestfulServicesRegistry()
-        {
-            // Need to tell FubuMVC which classes are actions
-            Actions.IncludeTypes(x => x.IsInNamespace("RestfulStatusCodeServices"));
-
-            // Tell FubuMVC to toss the RenderStatusCodeBehavior on
-            // the back of any behavior chain where the action returns
-            // an HttpStatusCode
-            Output.ToBehavior<RenderStatusCodeBehavior>()
-                .WhenTheOutputModelIs<HttpStatusCode>();
-
-            Routes
-                .ConstrainToHttpMethod(x => x.OutputType() == typeof(HttpStatusCode), "POST")
-                .IgnoreControllerNamespaceEntirely();
+            throw new NotImplementedException();
         }
     }
 }

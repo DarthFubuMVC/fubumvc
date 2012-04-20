@@ -11,7 +11,6 @@ namespace FubuMVC.Core
     public interface IFubuRegistry
     {
         RouteConventionExpression Routes { get; }
-        OutputDeterminationExpression Output { get; }
         ViewExpression Views { get; }
         PoliciesExpression Policies { get; }
         ModelsExpression Models { get; }

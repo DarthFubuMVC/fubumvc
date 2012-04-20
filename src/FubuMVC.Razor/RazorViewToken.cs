@@ -1,11 +1,10 @@
 ﻿using System;
 using FubuCore;
-using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Model;
-using FubuMVC.Razor.Registration.Nodes;
 using FubuMVC.Razor.RazorModel;
+using FubuMVC.Razor.Rendering;
 using RazorEngine.Templating;
 
 namespace FubuMVC.Razor
@@ -20,14 +19,9 @@ namespace FubuMVC.Razor
             _descriptor = viewDescriptor;
         }
 
-        public BehaviorNode ToBehavioralNode()
-        {
-            return new RazorViewNode(_descriptor);
-        }
-
         public ObjectDef ToViewFactoryObjectDef()
         {
-            var def = ObjectDef.ForType<FubuMVC.Razor.Rendering.ViewFactory>();
+            var def = ObjectDef.ForType<ViewFactory>();
             def.DependencyByValue(_descriptor);
 
             return def;
@@ -35,7 +29,7 @@ namespace FubuMVC.Razor
 
         public Type ViewType
         {
-            get { return typeof(ITemplate); }
+            get { return typeof (ITemplate); }
         }
 
         public Type ViewModel
