@@ -52,13 +52,9 @@ namespace FubuMVC.Core.View.Attachment
                 var token = viewTokens.First();
                 observer.RecordCallStatus(call, "Selected view token: {0}".ToFormat(token));
 
-                call.ParentChain().Output.Writers.AddToEnd(new ViewNode(token));
-
 
                 call.Chain.Output.AddView(token);
-                //call.AddToEnd(token.ToBehavioralNode());
-                
-                
+
                 
                 break;
             }

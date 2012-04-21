@@ -1,3 +1,5 @@
+using System;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Behaviors
@@ -7,6 +9,18 @@ namespace FubuMVC.Core.Behaviors
         public string ContentType { get; set; }
         public string LocalFileName { get; set; }
         public string FileNameToDisplay { get; set; }
+    }
+
+    public class DownloadFileNode : Process
+    {
+        public DownloadFileNode() : base(typeof(DownloadFileBehavior))
+        {
+        }
+
+        public override BehaviorCategory Category
+        {
+            get { return BehaviorCategory.Output; }
+        }
     }
 
     public class DownloadFileBehavior : BasicBehavior

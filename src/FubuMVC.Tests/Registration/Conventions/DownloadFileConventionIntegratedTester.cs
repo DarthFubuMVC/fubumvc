@@ -34,11 +34,9 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void should_apply_download_behavior_convention()
         {
-            Assert.Fail("NWO");
-
-            //BehaviorNode behavior = graph.BehaviorFor<DownloadTestController>(x => x.Download()).Calls.First().Next;
-            //var outputNode = behavior.ShouldBeOfType<OutputNode>();
-            //outputNode.BehaviorType.ShouldEqual(typeof (DownloadFileBehavior));
+            BehaviorNode behavior = graph.BehaviorFor<DownloadTestController>(x => x.Download()).Calls.First().Next;
+            var outputNode = behavior.ShouldBeOfType<DownloadFileNode>();
+            outputNode.BehaviorType.ShouldEqual(typeof(DownloadFileBehavior));
         }
     }
 

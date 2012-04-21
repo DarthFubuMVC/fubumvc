@@ -1,3 +1,4 @@
+using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.View;
@@ -5,7 +6,7 @@ using FubuMVC.Core.View.Activation;
 
 namespace FubuMVC.WebForms
 {
-    
+    [MarkedForTermination]
     public class RenderFubuWebFormView : BasicBehavior
     {
         private readonly ViewPath _path;

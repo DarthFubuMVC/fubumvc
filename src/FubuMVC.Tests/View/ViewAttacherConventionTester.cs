@@ -1,15 +1,20 @@
+using System.Diagnostics;
 using System.Linq;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Attachment;
+using FubuMVC.Core.View.New;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
+using System.Collections.Generic;
 
 namespace FubuMVC.Tests.View
 {
+    // TODO -- START HERE TONIGHT, GOTTA MAKE IT TAKE CHAIN, NOT ACTION
+
     [TestFixture]
     public class ViewAttacherConventionTester
     {
@@ -23,12 +28,16 @@ namespace FubuMVC.Tests.View
         private IViewsForActionFilter _filterThatFindsNone;
         private IViewsForActionFilter _filterThatFindsMultiple;
         private RecordingConfigurationObserver _observer;
+        private BehaviorChain aChain;
 
         [SetUp]
         public void Setup()
         {
             _observer = new RecordingConfigurationObserver();
             _action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
+            aChain = new BehaviorChain();
+            aChain.AddToEnd(_action);
+
             _fromFindsOne = new FakeViewToken();
             _fromSecondFindsOne = new FakeViewToken();
             _views = new ViewBag(new IViewToken[] { _fromFindsOne, _fromSecondFindsOne });
@@ -56,8 +65,14 @@ namespace FubuMVC.Tests.View
             _viewAttacherConvention.AddViewsForActionFilter(_secondFilterThatFindsExactlyOne);
 
             _viewAttacherConvention.AttemptToAttachViewToAction(_views, _action, _observer);
-            var attachedView = _action.OfType<FakeViewToken>().ShouldHaveCount(1).FirstOrDefault();
-            attachedView.ShouldBeTheSameAs(_fromFindsOne);
+
+            var writers = _action.ParentChain().Output.Writers;
+            writers.Each(x => Debug.WriteLine(x));
+
+
+            writers.Single()
+                .ShouldBeOfType<ViewNode>()
+                .View.ShouldBeTheSameAs(_fromFindsOne);
         }
 
         [Test]

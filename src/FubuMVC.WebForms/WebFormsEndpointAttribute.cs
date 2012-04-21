@@ -17,18 +17,8 @@ namespace FubuMVC.WebForms
         public Type ViewType { get { return _viewType; } }
         public override void Alter(ActionCall call)
         {
-            throw new NotImplementedException();
-            //var token = new WebFormViewToken(ViewType);
-            //call.ParentChain().AddToEnd(token.ToBehavioralNode());
-
-            // TODO -- add some tracing back here.
-            /*
-             * 
-                    graph.Observer.RecordCallStatus(x, 
-                      "Action '{0}' has {1} declared, using WebForms view '{2}'".ToFormat(
-                        x.Description, typeof(WebFormsEndpointAttribute).Name, token));
-             * 
-             */
+            var webFormToken = new WebFormViewToken(ViewType);
+            call.ParentChain().Output.AddView(webFormToken);
         }
     }
 }

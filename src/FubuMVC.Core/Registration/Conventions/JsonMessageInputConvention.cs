@@ -9,10 +9,9 @@ namespace FubuMVC.Core.Registration.Conventions
     {
         public void Configure(BehaviorGraph graph)
         {
-            graph.Actions()
-                .Where(x => x.InputType().CanBeCastTo<JsonMessage>())
-                .ToList()
-                .Each(x => x.ParentChain().MakeAsymmetricJson());
+            graph.Behaviors
+                .Where(x => x.ActionOutputType().CanBeCastTo<JsonMessage>() || x.InputType().CanBeCastTo<JsonMessage>())
+                .Each(x => x.MakeAsymmetricJson());
         }
     }
 }

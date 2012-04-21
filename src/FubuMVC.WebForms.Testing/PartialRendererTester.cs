@@ -41,7 +41,7 @@ namespace FubuMVC.WebForms.Testing
         [Test]
         public void should_create_control_from_virtual_path()
         {
-            _builder.Expect(b => b.LoadControlFromVirtualPath("~/View/WebForms/TestControl.ascx", typeof(TestControl))).Return(
+            _builder.Expect(b => b.LoadControlFromVirtualPath("~/TestControl.ascx", typeof(TestControl))).Return(
                 new TestControl());
 
             new PartialRenderer(_builder, null, new InMemoryFubuRequest()).CreateControl(typeof(TestControl));

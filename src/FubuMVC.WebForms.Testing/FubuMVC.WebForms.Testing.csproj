@@ -91,7 +91,6 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ViewModel4.cs" />
-    <Compile Include="WebFormRenderTester.cs" />
     <Compile Include="WebFormsEndpointPolicyTester.cs" />
     <Compile Include="WebForms_service_registration_tester.cs" />
     <Compile Include="WebFormViewFacilityTester.cs">
