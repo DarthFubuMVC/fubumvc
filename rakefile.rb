@@ -153,7 +153,7 @@ zip :package do |zip|
 end
 desc "Bundles up the packaged content in FubuFastPack"
 task :bundle_getting_started do
-  fubu("assembly-pak src/FubuMVC.GettingStarted --projfile FubuMVC.GettingStarted.csproj")
+  fubu("assembly-pak src/FubuMVC.GettingStarted --proj-file FubuMVC.GettingStarted.csproj")
 end
 
 def self.bottles(args)
