@@ -549,4 +549,98 @@ namespace FubuMVC.Tests.Registration.Nodes
             theChain.MatchesCategoryOrHttpMethod("something").ShouldBeTrue();
         }
     }
+
+
+    [TestFixture]
+    public class BehaviorChain_determination_of_the_resource_type
+    {
+        private BehaviorChain theChain;
+        private FakeOutputNode strings;
+        private FakeOutputNode none;
+        private FakeOutputNode ints;
+
+        [SetUp]
+        public void SetUp()
+        {
+            theChain = new BehaviorChain();
+
+            strings = new FakeOutputNode(typeof (string));
+            none = new FakeOutputNode(null);
+            ints = new FakeOutputNode(typeof (int));
+        }
+
+        [Test]
+        public void in_the_abscence_of_any_criteria_resource_type_is_null()
+        {
+            theChain.ResourceType().ShouldBeNull();
+        }
+
+        [Test]
+        public void gets_the_last_resource_type()
+        {
+            theChain.AddToEnd(none);
+            theChain.AddToEnd(strings);
+            theChain.AddToEnd(ints);
+
+            theChain.ResourceType().ShouldEqual(typeof (int));
+
+            theChain.Output.ResourceType.ShouldEqual(typeof (int));
+        }
+
+        [Test]
+        public void gets_the_last_resource_type_2()
+        {
+            
+            theChain.AddToEnd(strings);
+            theChain.AddToEnd(ints);
+            theChain.AddToEnd(none);
+
+            theChain.ResourceType().ShouldEqual(typeof(int));
+
+            theChain.Output.ResourceType.ShouldEqual(typeof (int));
+        }
+
+
+        [Test]
+        public void override_the_resource_type()
+        {
+            theChain.ResourceType(typeof (DateTime));
+
+            theChain.ResourceType().ShouldEqual(typeof (DateTime));
+            theChain.Output.ResourceType.ShouldEqual(typeof (DateTime));
+
+            theChain.AddToEnd(strings);
+            theChain.AddToEnd(ints);
+            theChain.AddToEnd(none);
+
+            theChain.ResourceType().ShouldEqual(typeof(DateTime));
+            theChain.Output.ResourceType.ShouldEqual(typeof(DateTime));
+        }
+    }
+
+    public class FakeOutputNode : BehaviorNode, IMayHaveResourceType
+    {
+        private readonly Type _resourceType;
+
+        public FakeOutputNode(Type resourceType)
+        {
+            _resourceType = resourceType;
+        }
+
+        public override BehaviorCategory Category
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        protected override ObjectDef buildObjectDef()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Type ResourceType()
+        {
+            return _resourceType;
+        }
+    }
+
 }

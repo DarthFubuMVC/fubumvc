@@ -10,7 +10,7 @@ namespace FubuMVC.Core.Registration.Conventions
         public void Configure(BehaviorGraph graph)
         {
             graph.Behaviors
-                .Where(x => x.ActionOutputType() == typeof (string))
+                .Where(x => x.ResourceType() == typeof (string))
                 .Each(x =>
                 {
                     var shouldBeHtml = x.LastCall().Method.Name.EndsWith("Html", StringComparison.InvariantCultureIgnoreCase);

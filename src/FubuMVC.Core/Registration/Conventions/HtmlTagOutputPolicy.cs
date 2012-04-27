@@ -10,7 +10,7 @@ namespace FubuMVC.Core.Registration.Conventions
         public void Configure(BehaviorGraph graph)
         {
             graph.Behaviors
-                .Where(x => x.ActionOutputType() != null && x.ActionOutputType().CanBeCastTo<HtmlTag>() || x.ActionOutputType().CanBeCastTo<HtmlDocument>())
+                .Where(x => x.ResourceType() != null && x.ResourceType().CanBeCastTo<HtmlTag>() || x.ResourceType().CanBeCastTo<HtmlDocument>())
                 .Each(x => x.Output.AddHtml());
         }
     }

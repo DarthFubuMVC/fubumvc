@@ -1,4 +1,6 @@
 using System.Linq;
+using FubuCore.DependencyAnalysis;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg.New;
 using FubuMVC.Core.Runtime.Formatters;
 using FubuMVC.Core.View;
@@ -6,6 +8,7 @@ using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
 using Rhino.Mocks;
+using FubuCore;
 
 namespace FubuMVC.Tests.NewConneg
 {
@@ -24,6 +27,19 @@ namespace FubuMVC.Tests.NewConneg
             node.Writers.Any().ShouldBeFalse();
         }
 
+        [Test]
+        public void implements_the_IMayHaveInputType_interface()
+        {
+            var node = new OutputNode(typeof(Address));
+            node.As<IMayHaveInputType>().InputType().ShouldEqual(node.ResourceType);
+        }
+
+        [Test]
+        public void implements_the_IMayHaveResourceType_interface()
+        {
+            var node = new OutputNode(typeof(Address));
+            node.As<IMayHaveResourceType>().ResourceType().ShouldEqual(node.ResourceType);
+        }
 
         [Test]
         public void JsonOnly_from_scratch()

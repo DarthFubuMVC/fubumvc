@@ -8,7 +8,7 @@ using FubuMVC.Core.Runtime.Formatters;
 
 namespace FubuMVC.Core.Resources.Conneg.New
 {
-    public class InputNode : BehaviorNode
+    public class InputNode : BehaviorNode, IMayHaveInputType
     {
         private readonly Type _inputType;
         private readonly ReaderChain _readers = new ReaderChain();
@@ -106,6 +106,11 @@ namespace FubuMVC.Core.Resources.Conneg.New
         public bool UsesFormatter<T>()
         {
             return _readers.OfType<ReadWithFormatter>().Any(x => x.FormatterType == typeof (T));
+        }
+
+        public Type InputType()
+        {
+            return _inputType;
         }
     }
 }

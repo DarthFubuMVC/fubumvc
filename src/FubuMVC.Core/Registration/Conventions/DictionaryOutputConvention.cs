@@ -12,7 +12,7 @@ namespace FubuMVC.Core.Registration.Conventions
         {
             graph
                 .Behaviors
-                .Where(x => x.ActionOutputType().CanBeCastTo<IDictionary<string, object>>())
+                .Where(x => x.ResourceType().CanBeCastTo<IDictionary<string, object>>())
                 .Each(x => x.MakeAsymmetricJson());
         }
     }

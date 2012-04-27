@@ -1,16 +1,25 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg.New;
 using FubuMVC.Core.Runtime.Formatters;
 using FubuTestingSupport;
 using NUnit.Framework;
+using FubuCore;
 
 namespace FubuMVC.Tests.NewConneg
 {
     [TestFixture]
     public class InputNodeTester
     {
+        [Test]
+        public void IMayHaveInputType_implementation()
+        {
+            var node = new InputNode(typeof(Address));
+            node.As<IMayHaveInputType>().InputType().ShouldEqual(typeof (Address));
+        }
+
         [Test]
         public void ClearAll()
         {

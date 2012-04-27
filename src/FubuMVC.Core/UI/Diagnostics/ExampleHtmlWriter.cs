@@ -45,7 +45,7 @@ namespace FubuMVC.Core.UI.Diagnostics
 
             IEnumerable<Type> ignoredModels = new Type[0];  // TODO -- come back to this?
             var table = BehaviorGraphWriter.WriteBehaviorChainTable(_behaviorGraph.Behaviors
-                .Where(b => b.HasOutput() && !b.ActionOutputType().IsSimple())
+                .Where(b => b.HasOutput() && !b.ResourceType().IsSimple())
                 .Where(b => b.Outputs.Select(o => o.GetType()).Except(ignoredModels).Any() )
                 .OrderBy(b => b.GetRoutePattern()),
                 new RouteColumn(_httpRequest),
@@ -135,7 +135,7 @@ namespace FubuMVC.Core.UI.Diagnostics
             if (type != null) return type;
 
             return _behaviorGraph.Behaviors
-                .Select(x => x.ActionOutputType())
+                .Select(x => x.ResourceType())
                 .FirstOrDefault(x => x != null && x.FullName == typeName);
         }
 
@@ -233,13 +233,13 @@ this.StringConversions(x =>
 
         public void WriteBody(BehaviorChain chain, HtmlTag row, HtmlTag cell)
         {
-            var outputType = chain.ActionOutputType();
+            var outputType = chain.ResourceType();
             cell.Append(new LinkTag(outputType.Name, _examplePageUrl + "?model=" + outputType.FullName));
         }
 
         public string Text(BehaviorChain chain)
         {
-            return chain.ActionOutputType().Name;
+            return chain.ResourceType().Name;
         }
     }
 

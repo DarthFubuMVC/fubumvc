@@ -6,4 +6,9 @@ namespace FubuMVC.Core.Registration.Nodes
     {
         Type InputType();
     }
+
+    public interface IMayHaveResourceType
+    {
+        Type ResourceType();
+    }
 }

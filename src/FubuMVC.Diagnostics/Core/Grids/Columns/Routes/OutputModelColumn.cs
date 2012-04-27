@@ -16,7 +16,7 @@ namespace FubuMVC.Diagnostics.Core.Grids.Columns.Routes
 
 		public override string ValueFor(BehaviorChain chain)
 		{
-			return chain.ActionOutputType() == null ? string.Empty : chain.ActionOutputType().FullName;
+			return chain.ResourceType() == null ? string.Empty : chain.ResourceType().FullName;
 		}
 	}
 }

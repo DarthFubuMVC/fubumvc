@@ -11,7 +11,7 @@ using FubuMVC.Core.View.New;
 
 namespace FubuMVC.Core.Resources.Conneg.New
 {
-    public class OutputNode : BehaviorNode
+    public class OutputNode : BehaviorNode, IMayHaveInputType, IMayHaveResourceType
     {
         private readonly WriterChain _chain = new WriterChain();
         private readonly Type _resourceType;
@@ -123,6 +123,16 @@ namespace FubuMVC.Core.Resources.Conneg.New
         {
             var writer = new Writer(writerType, _resourceType);
             Writers.AddToEnd(writer);
+        }
+
+        public Type InputType()
+        {
+            return ResourceType;
+        }
+
+        Type IMayHaveResourceType.ResourceType()
+        {
+            return ResourceType;
         }
     }
 }

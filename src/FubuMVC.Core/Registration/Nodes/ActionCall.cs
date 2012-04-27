@@ -14,7 +14,7 @@ namespace FubuMVC.Core.Registration.Nodes
     /// If you are unsure whether you method is eligible, you can instantiate an ActionCall and
     /// call <see cref="ActionCallBase.Validate"/>
     /// </summary>
-    public class ActionCall : ActionCallBase, IMayHaveInputType
+    public class ActionCall : ActionCallBase, IMayHaveInputType, IMayHaveResourceType
     {
         
         public ActionCall(Type handlerType, MethodInfo method) : base(handlerType, method)
@@ -135,6 +135,11 @@ namespace FubuMVC.Core.Registration.Nodes
                 return ((HandlerType != null ? HandlerType.GetHashCode() : 0)*397) ^
                        (Method != null ? Method.GetHashCode() : 0);
             }
+        }
+
+        public Type ResourceType()
+        {
+            return OutputType();
         }
 
         public IRouteDefinition BuildRouteForPattern(string pattern)

@@ -19,7 +19,7 @@ namespace FubuMVC.Diagnostics.Features.Html.Preview
             if (type != null) return type; // this is really only going to work for internals
 
             return _graph.Behaviors
-                .Select(x => x.ActionOutputType())
+                .Select(x => x.ResourceType())
                 .FirstOrDefault(x => x != null && x.FullName == typeName);
         }
     }

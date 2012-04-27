@@ -24,7 +24,7 @@ namespace FubuMVC.Core.Registration.Nodes
     {
         private readonly IList<IBehaviorInvocationFilter> _filters = new List<IBehaviorInvocationFilter>();
         private IRouteDefinition _route;
-        private readonly Lazy<Resources.Conneg.New.OutputNode> _output;
+        private Lazy<Resources.Conneg.New.OutputNode> _output;
         private readonly Lazy<Resources.Conneg.New.InputNode> _input;
 
         public BehaviorChain()
@@ -34,7 +34,7 @@ namespace FubuMVC.Core.Registration.Nodes
 
             _output = new Lazy<Resources.Conneg.New.OutputNode>(() =>
             {
-                var outputType = ActionOutputType();
+                var outputType = ResourceType();
                 if (outputType == null) throw new InvalidOperationException("Cannot use the OutputNode if the BehaviorChain does not have at least one Action with output");
 
                 return new Resources.Conneg.New.OutputNode(outputType);
@@ -200,10 +200,25 @@ namespace FubuMVC.Core.Registration.Nodes
         ///   ActionCall in this BehaviorChain.  May be null
         /// </summary>
         /// <returns></returns>
+        [Obsolete("Please use BehaviorChain.ResourceType() instead")]
         public Type ActionOutputType()
         {
-            var call = Calls.LastOrDefault();
-            return call == null ? null : call.OutputType();
+            return ResourceType();
+        }
+
+
+        /// <summary>
+        ///   What type of resource is rendered by this chain
+        /// </summary>
+        /// <returns></returns>
+        public Type ResourceType()
+        {
+            if (_output.IsValueCreated)
+            {
+                return _output.Value.ResourceType;
+            }
+
+            return this.OfType<IMayHaveResourceType>().Reverse().FirstValue(x => x.ResourceType());
         }
 
 
@@ -314,6 +329,30 @@ namespace FubuMVC.Core.Registration.Nodes
         public bool HasReaders()
         {
             return _input.IsValueCreated && _input.Value.Readers.Any();
+        }
+
+        /// <summary>
+        /// Allows you to explicitly force this BehaviorChain to the given
+        /// resource type.  This may be useful when the resource type cannot
+        /// be derived from the existing nodes.  Actionless view endpoints are
+        /// an example in the internals of this usage.
+        /// </summary>
+        /// <param name="type"></param>
+        public void ResourceType(Type type)
+        {
+            if (_output.IsValueCreated && _output.Value.ResourceType != type)
+            {
+                throw new InvalidOperationException("The ResourceType is already set for this chain");
+            }
+
+            if (!_output.IsValueCreated)
+            {
+                _output = new Lazy<OutputNode>(() => new OutputNode(type));
+                if (Output.ResourceType != type)
+                {
+                    throw new ApplicationException("wouldn't really happen but I wanted to force the Lazy to evaluate");
+                }
+            }
         }
     }
 }

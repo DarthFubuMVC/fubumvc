@@ -44,7 +44,7 @@ namespace FubuMVC.Core.Resources.Conneg
                 chain.Input.AddFormatter<JsonFormatter>();
             }
 
-            if (chain.ActionOutputType() != null)
+            if (chain.ResourceType() != null)
             {
                 chain.Output.ClearAll();
                 chain.Output.AddFormatter<JsonFormatter>();
@@ -60,7 +60,7 @@ namespace FubuMVC.Core.Resources.Conneg
                 chain.Input.AddFormatter<JsonFormatter>();
             }
 
-            if (chain.ActionOutputType() != null)
+            if (chain.ResourceType() != null)
             {
                 chain.Output.ClearAll();
                 chain.Output.AddFormatter<JsonFormatter>();
@@ -70,7 +70,7 @@ namespace FubuMVC.Core.Resources.Conneg
         public static bool IsAsymmetricJson(this BehaviorChain chain)
         {
 
-            if (chain.ActionOutputType() != null)
+            if (chain.ResourceType() != null)
             {
                 if (chain.Output.Writers.Count() != 1) return false;
                 if (!chain.Output.UsesFormatter<JsonFormatter>()) return false;
@@ -146,7 +146,7 @@ namespace FubuMVC.Core.Resources.Conneg
                 chain.Input.AddFormatter<XmlFormatter>();
             }
 
-            if (chain.ActionOutputType() != null)
+            if (chain.ResourceType() != null)
             {
                 chain.Output.ClearAll();
                 chain.Output.AddFormatter<JsonFormatter>();
