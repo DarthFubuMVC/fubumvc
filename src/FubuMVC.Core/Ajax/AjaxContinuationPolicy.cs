@@ -30,4 +30,6 @@ namespace FubuMVC.Core.Ajax
             return outputType != null && outputType.CanBeCastTo<AjaxContinuation>();
         }
     }
+
+
 }
