@@ -25,7 +25,10 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void methods_that_return_an_IDictionary_string_object_should_be_asymmetric_json()
         {
             theGraph.BehaviorFor<MyController>(x => x.ReturnsJson(null)).IsAsymmetricJson().ShouldBeTrue();
-            theGraph.BehaviorFor<MyController>(x => x.ReturnOtherJson()).IsAsymmetricJson().ShouldBeTrue();
+            var behaviorChain = theGraph.BehaviorFor<MyController>(x => x.ReturnOtherJson());
+
+            behaviorChain.ResourceType().ShouldEqual(typeof (IDictionary<string, object>));
+            behaviorChain.IsAsymmetricJson().ShouldBeTrue();
         }
 
         [Test]

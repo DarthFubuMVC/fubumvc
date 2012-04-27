@@ -275,8 +275,7 @@ namespace FubuMVC.Core.Registration.Nodes
         /// <returns></returns>
         public Type InputType()
         {
-            var inputTypeHolder = this.OfType<IMayHaveInputType>().FirstOrDefault();
-            return inputTypeHolder == null ? null : inputTypeHolder.InputType();
+            return this.OfType<IMayHaveInputType>().FirstValue(x => x.InputType());
         }
 
         /// <summary>

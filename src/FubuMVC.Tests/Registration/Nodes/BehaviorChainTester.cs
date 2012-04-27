@@ -550,6 +550,25 @@ namespace FubuMVC.Tests.Registration.Nodes
         }
     }
 
+    [TestFixture]
+    public class BehaviorChain_determination_of_the_input_type
+    {
+        [Test]
+        public void uses_the_first_may_have_input_with_non_null()
+        {
+            var chain = new BehaviorChain();
+            chain.AddToEnd(new FakeInputNode(typeof (string)));
+
+            chain.InputType().ShouldEqual(typeof (string));
+
+            chain.Prepend(new FakeInputNode(null));
+            chain.InputType().ShouldEqual(typeof (string));
+
+            chain.Prepend(new FakeInputNode(typeof(int)));
+            chain.InputType().ShouldEqual(typeof(int));
+        }
+    }
+
 
     [TestFixture]
     public class BehaviorChain_determination_of_the_resource_type
@@ -615,6 +634,31 @@ namespace FubuMVC.Tests.Registration.Nodes
 
             theChain.ResourceType().ShouldEqual(typeof(DateTime));
             theChain.Output.ResourceType.ShouldEqual(typeof(DateTime));
+        }
+    }
+
+    public class FakeInputNode : BehaviorNode, IMayHaveInputType
+    {
+        private readonly Type _inputType;
+
+        public FakeInputNode(Type inputType)
+        {
+            _inputType = inputType;
+        }
+
+        public override BehaviorCategory Category
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        protected override ObjectDef buildObjectDef()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Type InputType()
+        {
+            return _inputType;
         }
     }
 

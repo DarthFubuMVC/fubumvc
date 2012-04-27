@@ -27,12 +27,6 @@ namespace FubuMVC.Tests.NewConneg
             node.Writers.Any().ShouldBeFalse();
         }
 
-        [Test]
-        public void implements_the_IMayHaveInputType_interface()
-        {
-            var node = new OutputNode(typeof(Address));
-            node.As<IMayHaveInputType>().InputType().ShouldEqual(node.ResourceType);
-        }
 
         [Test]
         public void implements_the_IMayHaveResourceType_interface()
