@@ -211,6 +211,7 @@
     <Compile Include="NewConneg\FormatterWriterTester.cs" />
     <Compile Include="NewConneg\FormatterReaderTester.cs" />
     <Compile Include="NewConneg\InputNodeTester.cs" />
+    <Compile Include="NewConneg\InputOutputNodePlacementIntegrationTester.cs" />
     <Compile Include="NewConneg\OutputNodeIntegratedTester.cs" />
     <Compile Include="NewConneg\ReaderTester.cs" />
     <Compile Include="NewConneg\WriteWithFormatterTester.cs" />
