@@ -5,6 +5,7 @@ using FubuMVC.Core.View;
 using System.Collections.Generic;
 using FubuMVC.Core.View.Activation;
 using FubuMVC.Core.View.Attachment;
+using FubuMVC.Core.View.New;
 
 namespace FubuMVC.Core.Registration.DSL
 {
@@ -181,10 +182,8 @@ namespace FubuMVC.Core.Registration.DSL
                 .Where(token => _viewTokenFilter(token))
                 .Each(token =>
                           {
-                              throw new NotImplementedException();
-                              var chain = graph.AddChain();
-                              //var output = token.ToBehavioralNode();
-                              //chain.AddToEnd(output);
+                              var chain = BehaviorChain.ForWriter(new ViewNode(token));
+                              graph.AddChain(chain);
 
                               _configureChain(chain, token);
                           });

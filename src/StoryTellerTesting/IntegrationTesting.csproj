@@ -125,6 +125,7 @@
     <Compile Include="ViewEngines\HelloRazor\HelloRazorController.cs" />
     <Compile Include="ViewEngines\HelloRazor\RazorEngineIntegrationTester.cs" />
     <Compile Include="ViewEngines\HelloSpark\AirController.cs" />
+    <Compile Include="ViewEngines\HelloSpark\PartialsWithSparkIntegrationTester.cs" />
     <Compile Include="ViewEngines\HelloSpark\SparkEngineIntegrationTester.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -198,6 +199,9 @@
     <Content Include="ViewEngines\HelloRazor\HelloPartial.cshtml" />
     <Content Include="ViewEngines\HelloRazor\HelloWorld.cshtml" />
     <None Include="ViewEngines\HelloSpark\Breathe.spark" />
+    <None Include="ViewEngines\HelloSpark\Full.spark" />
+    <None Include="ViewEngines\HelloSpark\Partial2.spark" />
+    <None Include="ViewEngines\HelloSpark\Partial1.spark" />
     <None Include="ViewEngines\HelloSpark\TakeABreath.spark" />
   </ItemGroup>
   <ItemGroup>

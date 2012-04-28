@@ -275,7 +275,19 @@ namespace FubuMVC.Core.Registration.Nodes
         /// <returns></returns>
         public Type InputType()
         {
-            return this.OfType<IMayHaveInputType>().FirstValue(x => x.InputType());
+            var calls = this.OfType<IMayHaveInputType>();
+            if (calls.Any())
+            {
+                return calls.FirstValue(x => x.InputType());
+            }
+
+            // This is for chains with an actionless view
+            if (HasOutput())
+            {
+                return ResourceType();
+            }
+
+            return null;
         }
 
         /// <summary>

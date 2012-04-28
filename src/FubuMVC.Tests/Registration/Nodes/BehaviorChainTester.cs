@@ -663,6 +663,12 @@ namespace FubuMVC.Tests.Registration.Nodes
         {
             theChain.Output.Writers.Single().ShouldBeTheSameAs(theWriter);
         }
+
+        [Test]
+        public void the_chain_can_still_decipher_its_input_type()
+        {
+            theChain.InputType().ShouldEqual(typeof (HtmlTag));
+        }
     }
 
     public class FakeInputNode : BehaviorNode, IMayHaveInputType
