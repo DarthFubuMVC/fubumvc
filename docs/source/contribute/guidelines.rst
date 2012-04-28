@@ -12,7 +12,7 @@ anything that gets included. In order to make this nice and simple, we've come
 up with a little process for contributors. If your'e new to Git and GitHub,
 please check out GitHub's `bootcamp documenation`_.
 
-The basiec Fubu workflow goes roughly like so:
+The basic Fubu workflow goes roughly like so:
 
     * `Fork`_ on GitHub
 
@@ -23,15 +23,15 @@ The basiec Fubu workflow goes roughly like so:
 
     * Work on the Feature or Bugfix
 
-    * Rebase your commits on top of the latest code (``$ git checkout master; git
-      fetch upstream; git checkout myFeature; git rebase master myFeature``)
+    * Rebase your commits on top of the latest code (``$ git checkout master; 
+      git fetch upstream; git checkout myFeature; git rebase master myFeature``)
 
     * Push your branch to GitHub (``$ push origin myFeature``)
 
     * Issue Pull Request on GitHub
 
-Along with the Fubu workflow, there are a few Dow's and Don't for contributing
-to Fubu projects.
+Along with the Fubu workflow, there are a few *Dos* and *Don'ts* for
+contributing to Fubu projects.
 
 Don't make changes to your local or remote master branches
 ==========================================================
@@ -41,13 +41,13 @@ the master branch on your fork belongs to the framework team. Here's an example:
 
 You have a fork of ``DarthFubuMVC/fubumvc``. At all times, your master branch
 must be an identical replica of DarthFubuMVC's master. Of course, you may fall
-behind and not push the latest changes to master. This is ok. The point here is
-that you cannot have changes to your master branch that are not in
-DarthFubuMVC's.
+behind and not push the latest changes to master. This is ok. (You can 
+:ref:`synchronize`.) The point here is that you cannot have changes to your
+master branch that are not in DarthFubuMVC's.
 
 Another good rule here is that your local branches should match your GitHub
-repo's (on ``origin``). In other words, don't save changes to your local master that
-aren't on your GitHub master.
+repo's (on ``origin``). In other words, don't save changes to your local master
+that aren't on your GitHub master.
 
 Pull requests should always come from remote branches
 =====================================================
@@ -60,11 +60,13 @@ This makes it much easier to maintain commit history and ensure that the proper
 commits are pulled in without the need (or at least decreasing the need) for
 cherry-picking.
 
-Staying up to date with upstream/master
-=======================================
+.. _synchronize:
+
+Synchronize your origin/master with upstream/master
+===================================================
 
 When working with a locally cloned fork of a GitHub repository, the repository
-will have wone remote repository called ``origin``. This is the GitHub
+will have one remote repository called ``origin``. This is the GitHub
 repository and is the default when one does a ``git push`` or a ``git pull``.
 Since we're working with a Forked repository of a Fubu project, the canonical
 repository should be added as ``upstream``. This is done by using the command:
@@ -72,8 +74,18 @@ repository should be added as ``upstream``. This is done by using the command:
 
 .. code-block:: bash
 
-    $ git remote add upstream "https://github.com/DarthFubuMvc/fubumvc"
+    $ git remote add upstream "https://github.com/DarthFubuMVC/fubumvc"
 
+.. note::
+
+    The value in quotes is case sensitive.  If you incorrectly specify it, then 
+    when you attempt ``git pull upstream master`` you will receive a message 
+    indicating 
+    
+    .../info/refs notfound: did you run git update-server-info on the server
+    
+    To resolve this message, just fix the casing to match the text above.
+    
 Once upstream is added, keeping up to date with changes is a few simple
 commands:
 
@@ -81,6 +93,7 @@ commands:
 
     $ git checkout master
     $ git pull upstream master
+    $ git push origin master
 
 Write tests for your pull request
 =================================
