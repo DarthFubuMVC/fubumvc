@@ -42,7 +42,6 @@ namespace FubuMVC.Diagnostics
 
             Views
                 .TryToAttachWithDefaultConventions()
-                .TryToAttachViewsInPackages()
                 .RegisterActionLessViews(token => token.ViewModel.IsDiagnosticsReport())
                 .RegisterActionLessViews(token => typeof (IPartialModel).IsAssignableFrom(token.ViewModel));
 

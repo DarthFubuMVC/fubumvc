@@ -10,6 +10,8 @@ using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Core.View;
+using FubuMVC.Core.View.Attachment;
 
 namespace FubuMVC.Core
 {
@@ -31,7 +33,7 @@ namespace FubuMVC.Core
         /// </summary>
         public ViewExpression Views
         {
-            get { return new ViewExpression(_bagRunner, this, _viewAttacherConvention); }
+            get { return new ViewExpression(_engineRegistry, this, c => _viewConventions.Fill(c)); }
         }
 
         /// <summary>
@@ -188,15 +190,6 @@ namespace FubuMVC.Core
         }
 
         /// <summary>
-        /// Adds a convention to execute against imported registries, providing access to the <see cref="FubuRegistry"/> being imported
-        /// </summary>
-        /// <param name="configuration"><see cref="FubuRegistry"/> parameter is the registry being imported</param>
-        public void ConfigureImports(Action<FubuRegistry> configuration)
-        {
-            _importsConventions.Add(configuration);
-        }
-
-        /// <summary>
         /// Specifies whether to include diagnostics tracing. This is turned off by default
         /// </summary>
         public void IncludeDiagnostics(bool shouldInclude)
@@ -207,12 +200,6 @@ namespace FubuMVC.Core
                 {
                     config.LimitRecordingTo(50);
                     config.ExcludeRequests(r => r.Path != null && r.Path.ToLower().StartsWith("/{0}".ToFormat(DiagnosticUrlPolicy.DIAGNOSTICS_URL_ROOT)));
-                });
-                ConfigureImports(i =>
-                {
-                    if (i is DiagnosticsRegistry) return;
-                    i._diagnosticsRegistryImported = _diagnosticsRegistryImported;
-                    i.IncludeDiagnostics(shouldInclude);
                 });
             }
             else
@@ -293,7 +280,7 @@ namespace FubuMVC.Core
 
             public void ImportInto(IChainImporter graph)
             {
-                graph.Import(Registry.BuildLightGraph(), b =>
+                graph.Import(Registry.BuildLightGraph(new ViewBag(Enumerable.Empty<IViewToken>())), b =>
                 {
                     b.PrependToUrl(Prefix);
                     b.Origin = Registry.Name;

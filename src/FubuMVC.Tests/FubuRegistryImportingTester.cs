@@ -148,19 +148,6 @@ namespace FubuMVC.Tests
             graph.BehaviorFor<Action2>(x => x.M2()).IsWrappedBy(typeof(Wrapper)).ShouldBeTrue();
         }
 
-        [Test]
-        public void import_conventions_are_applied_to_imported_registry()
-        {
-            var importConfig = new bool[3];
-
-            importConfig.Each((b, i) => parent.ConfigureImports(x => importConfig[i] = import == x));
-
-            parent.Import(import, "import");
-            parent.BuildGraph();
-
-            importConfig.Each(b => b.ShouldBeTrue());
-        }
-
 
         public interface ISomething{}
         public class Something : ISomething{}

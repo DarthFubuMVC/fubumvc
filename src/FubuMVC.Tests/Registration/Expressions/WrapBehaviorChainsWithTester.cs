@@ -10,6 +10,8 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg.New;
+using FubuMVC.Core.View;
+using FubuMVC.Core.View.Attachment;
 using FubuMVC.StructureMap;
 using FubuMVC.Tests.Diagnostics;
 using FubuTestingSupport;
@@ -77,7 +79,7 @@ namespace FubuMVC.Tests.Registration.Expressions
         [Test]
         public void all_behaviors_chains_should_start_with_the_declared_behavior()
         {
-            BehaviorGraph graph = registry.BuildLightGraph();
+            BehaviorGraph graph = registry.BuildLightGraph(new ViewBag(Enumerable.Empty<IViewToken>() ));
 
             graph.Behaviors.Count().ShouldEqual(3);
             var visitor = new BehaviorVisitor(new NulloConfigurationObserver(), "");

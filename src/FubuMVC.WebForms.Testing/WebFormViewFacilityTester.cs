@@ -21,7 +21,7 @@ namespace FubuMVC.WebForms.Testing
             var pool = new TypePool(null);
             pool.AddAssembly(Assembly.GetExecutingAssembly());
 
-            views = new WebFormViewFacility().FindViews(pool, new BehaviorGraph());
+            views = new WebFormViewFacility().FindViews();
         }
 
         private IEnumerable<IViewToken> views;

@@ -23,7 +23,6 @@ namespace IntegrationTesting.ViewEngines.HelloRazor
             registry.UseRazor();
 
             registry.Views
-                .TryToAttachViewsInPackages()
                 .TryToAttachWithDefaultConventions();
         }
 

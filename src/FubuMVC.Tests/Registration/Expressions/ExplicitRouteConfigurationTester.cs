@@ -3,6 +3,8 @@ using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.DSL;
+using FubuMVC.Core.View;
+using FubuMVC.Core.View.Attachment;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -28,7 +30,7 @@ namespace FubuMVC.Tests.Registration.Expressions
                 registry.Route("some/pattern")
                     .Calls<InputController>(c => c.DoSomething(null)).OutputToJson();
             })
-                    .BuildLightGraph();
+                    .BuildLightGraph(new ViewBag(new IViewToken[0]));
 
             _graph.Behaviors.ShouldHaveCount(1);
             _config.Configure(_graph);

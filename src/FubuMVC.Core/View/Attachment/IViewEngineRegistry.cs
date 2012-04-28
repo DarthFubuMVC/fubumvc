@@ -3,10 +3,10 @@ using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.View.Attachment
 {
-    public interface IViewAttacher : IConfigurationAction
+    public interface IViewEngineRegistry
     {
         IEnumerable<IViewFacility> Facilities { get; }
-        TypePool Types { get; }
         void AddFacility(IViewFacility facility);
+        ViewBag BuildViewBag();
     }
 }

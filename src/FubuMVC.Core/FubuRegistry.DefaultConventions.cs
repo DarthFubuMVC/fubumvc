@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using System.Net;
 using FubuCore.Reflection;
 using FubuMVC.Core.Ajax;
@@ -8,16 +10,18 @@ using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.PathBased;
 using FubuMVC.Core.Security;
+using FubuMVC.Core.View.Attachment;
 using HtmlTags;
 
 namespace FubuMVC.Core
 {
     public partial class FubuRegistry
     {
+        private readonly IViewEngineRegistry _engineRegistry = new ViewEngineRegistry();
+        private readonly IList<IViewBagConvention> _viewConventions = new List<IViewBagConvention>();
+
         private void setupDefaultConventionsAndPolicies()
         {
-            _bagRunner.Apply(_viewAttacherConvention);
-
             // Add Behaviors First
             ApplyConvention(_behaviorAggregator);
 
@@ -46,7 +50,9 @@ namespace FubuMVC.Core
             Models.BindPropertiesWith<CurrentRequestFullUrlPropertyBinder>();
             Models.BindPropertiesWith<CurrentRequestRelativeUrlPropertyBinder>();
 
-            _conventions.Add(_bagRunner);
+            
+            
+            
             Policies.Add<JsonMessageInputConvention>();
 
             ApplyConvention<ModifyChainAttributeConvention>();

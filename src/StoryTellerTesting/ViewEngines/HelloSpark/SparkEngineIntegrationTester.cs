@@ -18,7 +18,6 @@ namespace IntegrationTesting.ViewEngines.HelloSpark
             registry.UseSpark();
 
             registry.Views
-                .TryToAttachViewsInPackages()
                 .TryToAttachWithDefaultConventions();
         }
 

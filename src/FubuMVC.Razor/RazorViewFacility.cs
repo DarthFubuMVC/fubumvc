@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
@@ -17,7 +17,7 @@ namespace FubuMVC.Razor
             _templateRegistry = templateRegistry;
         }
 
-        public IEnumerable<IViewToken> FindViews(TypePool types, BehaviorGraph graph)
+        public IEnumerable<IViewToken> FindViews()
         {
             // clean up pending
             return _templateRegistry

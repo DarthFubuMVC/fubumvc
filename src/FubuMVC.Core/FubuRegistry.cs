@@ -14,6 +14,7 @@ using FubuMVC.Core.Resources;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.UI;
+using FubuMVC.Core.View;
 using FubuMVC.Core.View.Activation;
 using FubuMVC.Core.View.Attachment;
 using System.Linq;
@@ -38,16 +39,15 @@ namespace FubuMVC.Core
         private readonly List<IConfigurationAction> _conventions = new List<IConfigurationAction>();
         private readonly List<IConfigurationAction> _explicits = new List<IConfigurationAction>();
         private readonly List<RegistryImport> _imports = new List<RegistryImport>();
-        private readonly IList<Action<FubuRegistry>> _importsConventions = new List<Action<FubuRegistry>>();
         private readonly List<IConfigurationAction> _policies = new List<IConfigurationAction>();
         private readonly RouteDefinitionResolver _routeResolver = new RouteDefinitionResolver();
         private readonly IList<IServiceRegistry> _serviceRegistrations = new List<IServiceRegistry>();
         private readonly List<IConfigurationAction> _systemPolicies = new List<IConfigurationAction>();
+
         private readonly TypePool _types = new TypePool(FindTheCallingAssembly()){
             IgnoreExportTypeFailures = false
-    };
-        private readonly ViewAttacherConvention _viewAttacherConvention;
-        private readonly ViewBagConventionRunner _bagRunner;
+		};
+
         private IConfigurationObserver _observer;
         
         private readonly BehaviorAggregator _behaviorAggregator;
@@ -57,8 +57,6 @@ namespace FubuMVC.Core
         {
             _behaviorAggregator = new BehaviorAggregator(_types, _actionSources);
             _observer = new NulloConfigurationObserver();
-            _viewAttacherConvention = new ViewAttacherConvention();
-            _bagRunner = new ViewBagConventionRunner(_types);
 
             setupDefaultConventionsAndPolicies();
         }
@@ -147,7 +145,8 @@ namespace FubuMVC.Core
             Services<ViewActivationServiceRegistry>();
             Services<CoreServiceRegistry>();
 
-            var graph = BuildLightGraph();
+            var viewBag = _engineRegistry.BuildViewBag();
+            var graph = BuildLightGraph(viewBag);
 
             new AttachInputPolicy().Configure(graph);
             new AttachOutputPolicy().Configure(graph);
@@ -167,7 +166,7 @@ namespace FubuMVC.Core
             _scanningOperations.Add(configuration);
         }
 
-        public BehaviorGraph BuildLightGraph()
+        public BehaviorGraph BuildLightGraph(ViewBag views)
         {
             var graph = new BehaviorGraph(_observer);
 
@@ -176,19 +175,25 @@ namespace FubuMVC.Core
             // Service registrations from imports
             allServiceRegistrations().OfType<IConfigurationAction>().Each(x => x.Configure(graph));
 
+
+            // TODO -- insert ViewBag construction right here after the ViewBag
+            // goes onto BehaviorGraph
+
             _conventions.Configure(graph);
+
 
             // THIS STUFF IS OUR BIGGEST PROBLEM NOW
             // Importing behavior chains from imports
             var observerImporter = new ObserverImporter(graph.Observer);
             _imports.Each(x =>
             {
-                _importsConventions.Each(c => c(x.Registry));
                 x.ImportInto(graph);
                 observerImporter.Import(x.Registry._observer);
             });
 
             _explicits.Configure(graph);
+
+            _viewConventions.Each(x => x.Configure(views, graph));
 
             _policies.Configure(graph);
             _systemPolicies.Configure(graph);

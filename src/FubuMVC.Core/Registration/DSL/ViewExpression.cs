@@ -11,14 +11,14 @@ namespace FubuMVC.Core.Registration.DSL
 {
     public class ViewExpression
     {
-        private readonly ViewBagConventionRunner _viewAttacher;
-        private readonly ViewAttacherConvention _viewAttacherConvention;
+        private readonly IViewEngineRegistry _viewEngineRegistry;
+        private readonly Action<IViewBagConvention> _conventionRegistration;
         private readonly FubuRegistry _registry;
 
-        public ViewExpression(ViewBagConventionRunner viewAttacher, FubuRegistry registry, ViewAttacherConvention viewAttacherConvention)
+        public ViewExpression(IViewEngineRegistry viewEngineRegistry, FubuRegistry registry, Action<IViewBagConvention> conventionRegistration)
         {
-            _viewAttacher = viewAttacher;
-            _viewAttacherConvention = viewAttacherConvention;
+            _viewEngineRegistry = viewEngineRegistry;
+            _conventionRegistration = conventionRegistration;
             _registry = registry;
         }
 
@@ -27,7 +27,7 @@ namespace FubuMVC.Core.Registration.DSL
         /// </summary>
         public ViewExpression Facility(IViewFacility facility)
         {
-            _viewAttacher.AddFacility(facility);
+            _viewEngineRegistry.AddFacility(facility);
             return this;
         }
 
@@ -47,7 +47,7 @@ namespace FubuMVC.Core.Registration.DSL
         /// <returns></returns>
         public ViewExpression RegisterActionLessViews(Func<IViewToken, bool> viewTokenFilter, Action<BehaviorChain> configureChain)
         {
-            _viewAttacher.Apply(new ActionLessViewConvention(viewTokenFilter, configureChain));
+            _conventionRegistration(new ActionLessViewConvention(viewTokenFilter, configureChain));
             return this;          
         }
 
@@ -59,7 +59,7 @@ namespace FubuMVC.Core.Registration.DSL
         /// <returns></returns>
 		public ViewExpression RegisterActionLessViews(Func<IViewToken, bool> viewTokenFilter, Action<BehaviorChain, IViewToken> configureChain)
         {
-            _viewAttacher.Apply(new ActionLessViewConvention(viewTokenFilter, configureChain));
+            _conventionRegistration(new ActionLessViewConvention(viewTokenFilter, configureChain));
             return this;          
         }
 
@@ -68,8 +68,12 @@ namespace FubuMVC.Core.Registration.DSL
         /// </summary>
         public ViewExpression TryToAttach(Action<ViewsForActionFilterExpression> configure)
         {
-            var expression = new ViewsForActionFilterExpression(_viewAttacherConvention);
+            var convention = new ViewAttacherConvention();
+
+            var expression = new ViewsForActionFilterExpression(convention);
             configure(expression);
+
+            _conventionRegistration(convention);
 
             return this;
         }
@@ -91,30 +95,6 @@ namespace FubuMVC.Core.Registration.DSL
             });
         }
 
-        /// <summary>
-        /// Instruct the view attachment mechanism to include views from all packages.
-        /// </summary>
-        public ViewExpression TryToAttachViewsInPackages()
-        {
-            _registry.ConfigureImports(i =>
-            {
-                var importAttacher = i.Views._viewAttacher;
-                var importConvention = i.Views._viewAttacherConvention;
-
-                if(!importAttacher.Facilities.Any())
-                {
-                    _viewAttacherConvention
-                        .Filters
-                        .Each(importConvention.AddViewsForActionFilter);
-                }
-
-                _viewAttacher
-                    .Facilities
-                    .Each(importAttacher.AddFacility);
-            });
-
-            return this;
-        }
 
         /// <summary>
         /// Define a view activation policy for views matching the filter.
@@ -151,7 +131,7 @@ namespace FubuMVC.Core.Registration.DSL
 		public ViewExpression ApplyConvention<TConvention>(TConvention convention)
             where TConvention : IViewBagConvention 
 		{
-			_viewAttacher.Apply(convention);
+            _conventionRegistration(convention);
 
 			return this;
 		}

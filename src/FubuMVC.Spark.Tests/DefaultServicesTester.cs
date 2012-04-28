@@ -3,6 +3,8 @@ using Bottles;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.View;
+using FubuMVC.Core.View.Attachment;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Model.Sharing;
 using FubuMVC.Core.View.Rendering;
@@ -24,7 +26,7 @@ namespace FubuMVC.Spark.Tests
         {
             var registry = new FubuRegistry();
             ClassUnderTest.As<IFubuRegistryExtension>().Configure(registry);
-            _services = registry.BuildLightGraph().Services;
+            _services = registry.BuildLightGraph(new ViewBag(Enumerable.Empty<IViewToken>())).Services;
 
             
         }

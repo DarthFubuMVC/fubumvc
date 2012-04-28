@@ -12,15 +12,15 @@ using NUnit.Framework;
 namespace FubuMVC.Tests.View
 {
     [TestFixture]
-    public class ViewBagConventionRunnerTester
+    public class ViewEngineRegistryTester
     {
-        private ViewBagConventionRunner _runner;
+        private ViewEngineRegistry _runner;
 
         [SetUp]
         public void Setup()
         {
             var types = new TypePool(null);
-            _runner = new ViewBagConventionRunner(types);
+            _runner = new ViewEngineRegistry();
         }
 
         [Test]
@@ -32,21 +32,6 @@ namespace FubuMVC.Tests.View
             _runner.Facilities.ShouldHaveCount(1);
         }
 
-        [Test]
-        public void should_run_inner_bag_convention()
-        {
-            _runner.AddFacility(new TestViewFacility());
-
-            var convention = new TestViewBagConvention();
-            _runner.Apply(convention);
-
-            _runner
-                .Configure(new FubuRegistry().BuildGraph());
-
-            convention
-                .Executed
-                .ShouldBeTrue();
-        }
 
         public class TestViewBagConvention : IViewBagConvention
         {
@@ -103,7 +88,7 @@ namespace FubuMVC.Tests.View
 
         public class TestViewFacility : IViewFacility
         {
-            public IEnumerable<IViewToken> FindViews(TypePool types, BehaviorGraph graph)
+            public IEnumerable<IViewToken> FindViews()
             {
                 yield return new TestViewToken();
             }

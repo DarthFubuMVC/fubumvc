@@ -41,7 +41,7 @@ namespace FubuMVC.Razor.Tests
         [Test]
         public void find_views_returns_view_tokens_from_items_with_a_view_model_only()
         {
-            var views = ClassUnderTest.FindViews(new TypePool(typeof(RazorViewFacilityTester).Assembly), new BehaviorGraph());
+            var views = ClassUnderTest.FindViews();
             views.ShouldHaveCount(3);
             views.ShouldContain(x => x.ViewModel == typeof(ModelA));
             views.ShouldContain(x => x.ViewModel == typeof(ModelB));

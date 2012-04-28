@@ -290,7 +290,6 @@
     <Compile Include="Registration\Conventions\UrlRegistryCategoryConventionTester.cs" />
     <Compile Include="Registration\Conventions\WrapWithAttributeConventionTester.cs" />
     <Compile Include="Registration\DSL\PoliciesExpressionTester.cs" />
-    <Compile Include="Registration\DSL\ViewExpressionTester.cs" />
     <Compile Include="Registration\HandlerActionsSetTester.cs" />
     <Compile Include="Registration\integrated_type_resolver_registration.cs" />
     <Compile Include="Registration\ListDependencyTester.cs" />
@@ -473,7 +472,7 @@
     <Compile Include="View\PageActivatorTester.cs" />
     <Compile Include="View\SetPageModelActivationActionTester.cs" />
     <Compile Include="View\ViewAttacherConventionTester.cs" />
-    <Compile Include="View\ViewBagConventionRunnerTester.cs" />
+    <Compile Include="View\ViewEngineRegistryTester.cs" />
     <Compile Include="View\ViewsForActionFiltersTester.cs" />
     <Compile Include="Web\Security\WebAuthenticationContextTester.cs" />
   </ItemGroup>

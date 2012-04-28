@@ -23,7 +23,6 @@ namespace FubuTestApplication
             this.UseSpark();
 
             Views
-                .TryToAttachViewsInPackages()
                 .TryToAttachWithDefaultConventions();
 
 

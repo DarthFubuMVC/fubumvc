@@ -53,7 +53,6 @@ namespace FubuMVC.HelloWorld
             Import<WebFormsEngine>();
 
             Views
-                .TryToAttachViewsInPackages()
                 .TryToAttachWithDefaultConventions();
 
             HtmlConvention<SampleHtmlConventions>();

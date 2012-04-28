@@ -1,7 +1,10 @@
-﻿using FubuCore;
+using System.Linq;
+using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.View;
+using FubuMVC.Core.View.Attachment;
 using FubuMVC.Diagnostics.Core.Grids.Columns.Routes;
 using FubuMVC.Diagnostics.Core.Grids.Filters.Routes;
 using FubuMVC.Diagnostics.Notifications;
@@ -24,7 +27,7 @@ namespace FubuMVC.Diagnostics.Tests.Notifications
                                                  registry.Actions.IncludeType<Test>();
                                                  registry.Actions.IncludeMethods(method => method.Name == "Index" || method.Name == "Continuation");
                                              })
-                .BuildLightGraph();
+                .BuildLightGraph(new ViewBag(new IViewToken[0]));
             
             graph.AddChain(new BehaviorChain());
 

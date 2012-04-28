@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
@@ -17,7 +17,7 @@ namespace FubuMVC.Spark
             _templateRegistry = templateRegistry;
         }
 
-        public IEnumerable<IViewToken> FindViews(TypePool types, BehaviorGraph graph)
+        public IEnumerable<IViewToken> FindViews()
         {
             // TODO: Make it not filter against view model as the 
             // default view attacher conventions will do this.
