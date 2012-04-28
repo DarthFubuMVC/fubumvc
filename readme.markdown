@@ -1,5 +1,12 @@
+Contributing to FubuMVC
+--
+
+We welcome contributions.  To faciliate a smooth process for you and us, please read 
+[Contributing to FubuMVC Guidelines](http://readthedocs.org/docs/fubumvc/en/latest/contribute/guidelines.html) 
+before you make any changes.
+
 Building FubuMVC
-----------------
+--
 
 1. `git clone https://github.com/darthfubumvc/fubumvc.git`
 1. `cd fubumvc`
