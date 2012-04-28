@@ -1,46 +1,49 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using FubuCore;
+using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Resources;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.UI;
-using FubuMVC.Core.View;
 using FubuMVC.Core.View.Activation;
 using FubuMVC.Core.View.Attachment;
-using System.Linq;
 
 namespace FubuMVC.Core
 {
     /// <summary>
-    /// The <see cref="FubuRegistry"/> class provides methods and grammars for configuring FubuMVC.
-    /// Using a <see cref="FubuRegistry"/> subclass is the recommended way of configuring FubuMVC.
+    ///   The <see cref = "FubuRegistry" /> class provides methods and grammars for configuring FubuMVC.
+    ///   Using a <see cref = "FubuRegistry" /> subclass is the recommended way of configuring FubuMVC.
     /// </summary>
     /// <example>
-    /// public class MyFubuRegistry : FubuRegistry
-    /// {
+    ///   public class MyFubuRegistry : FubuRegistry
+    ///   {
     ///     public MyFubuRegistry()
     ///     {
     ///         Applies.ToThisAssembly();
     ///     }
-    /// }
+    ///   }
     /// </example>
     public partial class FubuRegistry
     {
+        private readonly List<IActionSource> _actionSources = new List<IActionSource>();
+        private readonly BehaviorAggregator _behaviorAggregator;
         private readonly List<IConfigurationAction> _conventions = new List<IConfigurationAction>();
         private readonly List<IConfigurationAction> _explicits = new List<IConfigurationAction>();
         private readonly List<RegistryImport> _imports = new List<RegistryImport>();
         private readonly List<IConfigurationAction> _policies = new List<IConfigurationAction>();
         private readonly RouteDefinitionResolver _routeResolver = new RouteDefinitionResolver();
+        private readonly IList<Action<TypePool>> _scanningOperations = new List<Action<TypePool>>();
         private readonly IList<IServiceRegistry> _serviceRegistrations = new List<IServiceRegistry>();
         private readonly List<IConfigurationAction> _systemPolicies = new List<IConfigurationAction>();
 
@@ -49,9 +52,6 @@ namespace FubuMVC.Core
 		};
 
         private IConfigurationObserver _observer;
-        
-        private readonly BehaviorAggregator _behaviorAggregator;
-        private readonly List<IActionSource> _actionSources = new List<IActionSource>();
 
         public FubuRegistry()
         {
@@ -68,15 +68,55 @@ namespace FubuMVC.Core
         }
 
         /// <summary>
-        /// Gets the name of the <see cref="FubuRegistry"/>. Mostly used for diagnostics.
+        ///   Gets the name of the <see cref = "FubuRegistry" />. Mostly used for diagnostics.
         /// </summary>
         public virtual string Name
         {
             get { return GetType().ToString(); }
         }
 
+        private static IEnumerable<IConfigurationAction> fullGraphPolicies()
+        {
+            yield return new ContinuationHandlerConvention();
+            yield return new AsyncContinueWithHandlerConvention();
+
+            yield return new HeaderWritingPolicy();
+            yield return new JsonMessageInputConvention();
+            yield return new AjaxContinuationPolicy();
+            yield return new DictionaryOutputConvention();
+            yield return new StringOutputPolicy();
+            yield return new HtmlTagOutputPolicy();
+
+            yield return new AttachInputPolicy();
+            yield return new AttachOutputPolicy();
+        }
+
         /// <summary>
-        /// Finds the currently executing assembly.
+        ///   Constructs a <see cref = "BehaviorGraph" /> using the configuration expressions defined in this <see cref = "FubuRegistry" />. This method is mostly for internal usage.
+        /// </summary>
+        /// <returns></returns>
+        public BehaviorGraph BuildGraph()
+        {
+            Import<AssetServicesRegistry>();
+
+            Services<ModelBindingServicesRegistry>();
+            Services<SecurityServicesRegistry>();
+            Services<HtmlConventionServiceRegistry>();
+            Services<PackagingServiceRegistry>();
+            Services<HttpStandInServiceRegistry>();
+            Services<ViewActivationServiceRegistry>();
+            Services<CoreServiceRegistry>();
+
+            var viewBag = _engineRegistry.BuildViewBag();
+            var graph = BuildLightGraph(viewBag);
+
+            fullGraphPolicies().Each(x => x.Configure(graph));
+
+            return graph;
+        }
+
+        /// <summary>
+        ///   Finds the currently executing assembly.
         /// </summary>
         /// <returns></returns>
         public static Assembly FindTheCallingAssembly()
@@ -130,37 +170,10 @@ namespace FubuMVC.Core
         }
 
         /// <summary>
-        /// Constructs a <see cref="BehaviorGraph"/> using the configuration expressions defined in this <see cref="FubuRegistry"/>. This method is mostly for internal usage.
+        ///   Access the TypePool with all the assemblies represented in the AppliesTo expressions
+        ///   to make conventional registrations of any kind
         /// </summary>
-        /// <returns></returns>
-        public BehaviorGraph BuildGraph()
-        {
-            Import<AssetServicesRegistry>();
-
-            Services<ModelBindingServicesRegistry>();
-            Services<SecurityServicesRegistry>();
-            Services<HtmlConventionServiceRegistry>();
-            Services<PackagingServiceRegistry>();
-            Services<HttpStandInServiceRegistry>();
-            Services<ViewActivationServiceRegistry>();
-            Services<CoreServiceRegistry>();
-
-            var viewBag = _engineRegistry.BuildViewBag();
-            var graph = BuildLightGraph(viewBag);
-
-            new AttachInputPolicy().Configure(graph);
-            new AttachOutputPolicy().Configure(graph);
-
-            return graph;
-        }
-
-        private readonly IList<Action<TypePool>> _scanningOperations = new List<Action<TypePool>>();
-
-        /// <summary>
-        /// Access the TypePool with all the assemblies represented in the AppliesTo expressions
-        /// to make conventional registrations of any kind
-        /// </summary>
-        /// <param name="configuration"></param>
+        /// <param name = "configuration"></param>
         public void WithTypes(Action<TypePool> configuration)
         {
             _scanningOperations.Add(configuration);
@@ -184,12 +197,7 @@ namespace FubuMVC.Core
 
             // THIS STUFF IS OUR BIGGEST PROBLEM NOW
             // Importing behavior chains from imports
-            var observerImporter = new ObserverImporter(graph.Observer);
-            _imports.Each(x =>
-            {
-                x.ImportInto(graph);
-                observerImporter.Import(x.Registry._observer);
-            });
+            _imports.Each(x => x.ImportInto(graph));
 
             _explicits.Configure(graph);
 
@@ -198,7 +206,6 @@ namespace FubuMVC.Core
             _policies.Configure(graph);
             _systemPolicies.Configure(graph);
 
-            
 
             return graph;
         }

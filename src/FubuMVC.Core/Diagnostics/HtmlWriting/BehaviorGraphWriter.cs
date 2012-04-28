@@ -16,7 +16,7 @@ using System.Linq;
 
 namespace FubuMVC.Core.Diagnostics.HtmlWriting
 {
-    [WannaKill]
+    [MarkedForTermination]
     [FubuDiagnostics("Authorization")]
     public class AuthorizationDiagnosticWriter
     {

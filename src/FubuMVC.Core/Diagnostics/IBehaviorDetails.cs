@@ -5,7 +5,7 @@ namespace FubuMVC.Core.Diagnostics
     public interface IBehaviorDetails
     {
 		// TODO -- Remove this in favor of partials in advanced diagnostics
-		[WannaKill]
+		[MarkedForTermination]
         void AcceptVisitor(IBehaviorDetailsVisitor visitor);
     }
 }

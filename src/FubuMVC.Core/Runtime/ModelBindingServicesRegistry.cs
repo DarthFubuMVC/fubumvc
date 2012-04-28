@@ -26,6 +26,9 @@ namespace FubuMVC.Core.Runtime
             SetServiceIfNone<IBindingLogger, NulloBindingLogger>();
 
             AddService<IConverterFamily, AspNetPassthroughConverter>();
+
+            AddService<IPropertyBinder, CurrentRequestFullUrlPropertyBinder>();
+            AddService<IPropertyBinder, CurrentRequestRelativeUrlPropertyBinder>();
         }
     }
 }

@@ -175,7 +175,7 @@ namespace FubuMVC.Core
         }
     }
 
-
+    // TODO -- this has to take place before routes
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
     public class FubuPartialAttribute : ModifyChainAttribute
     {

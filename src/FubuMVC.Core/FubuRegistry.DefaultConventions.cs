@@ -30,32 +30,15 @@ namespace FubuMVC.Core
 
             addConvention(graph => _routeResolver.ApplyToAll(graph));
 
-
             _systemPolicies.Add(new AttachAuthorizationPolicy());
 
-            ApplyConvention<DictionaryOutputConvention>();
 
-
-
-            Policies.Add<AjaxContinuationPolicy>();
-            Policies.Add<ContinuationHandlerConvention>();
-            Policies.Add<AsyncContinueWithHandlerConvention>();
-            Policies.Add<HeaderWritingPolicy>();
             Policies.Add<ResourcePathRoutePolicy>();
 
-            _systemPolicies.Add(new StringOutputPolicy());
-            _systemPolicies.Add(new HtmlTagOutputPolicy());
             _systemPolicies.Add(new MissingRouteInputPolicy());
 
-            Models.BindPropertiesWith<CurrentRequestFullUrlPropertyBinder>();
-            Models.BindPropertiesWith<CurrentRequestRelativeUrlPropertyBinder>();
-
-            
-            
-            
-            Policies.Add<JsonMessageInputConvention>();
-
             ApplyConvention<ModifyChainAttributeConvention>();
+            //Policies.Add<ModifyChainAttributeConvention>();
         }
     }
 }

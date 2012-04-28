@@ -342,9 +342,7 @@
     <Compile Include="Diagnostics\Tracing\BehaviorCorrelation.cs" />
     <Compile Include="FubuRegistry.OutOfBoxConventions.cs" />
     <Compile Include="CurrentRequest.cs" />
-    <Compile Include="Diagnostics\IObserverImporter.cs" />
     <Compile Include="Diagnostics\HtmlWriting\AuthorizationWriter.cs" />
-    <Compile Include="Diagnostics\WannaKillAttribute.cs" />
     <Compile Include="Diagnostics\HttpStatusReport.cs" />
     <Compile Include="Diagnostics\HtmlWriting\DiagnosticHtml.cs" />
     <Compile Include="Diagnostics\RequestHistoryCache.cs" />

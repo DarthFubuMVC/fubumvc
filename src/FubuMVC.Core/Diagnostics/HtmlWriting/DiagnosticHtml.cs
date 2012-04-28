@@ -8,7 +8,7 @@ using HtmlTags;
 
 namespace FubuMVC.Core.Diagnostics.HtmlWriting
 {
-    [WannaKill] // Mostly...
+    [MarkedForTermination] // Mostly...
     public static class DiagnosticHtml
     {
         private const string sourceControlUrlBase = "http://github.com/DarthFubuMVC/fubumvc/";

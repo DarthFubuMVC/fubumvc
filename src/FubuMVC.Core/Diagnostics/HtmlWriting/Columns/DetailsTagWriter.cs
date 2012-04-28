@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace FubuMVC.Core.Diagnostics.HtmlWriting.Columns
 {
-    [WannaKill]
+    [MarkedForTermination]
     public class DetailsTagWriter : IBehaviorDetailsVisitor
     {
         private readonly HtmlTag _holderTag;

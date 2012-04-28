@@ -8,7 +8,7 @@ using FubuMVC.Core.Security;
 namespace FubuMVC.Diagnostics.Core.Infrastructure
 {
     // TODO -- what is this?  Why do we need it?
-    [WannaKill("Think we can make this stuff go away w/ the new Description model in FubuCore")]
+    [MarkedForTermination("Think we can make this stuff go away w/ the new Description model in FubuCore")]
     public interface IAuthorizationDescriptor
     {
         IEndPointAuthorizor AuthorizorFor(BehaviorChain chain);

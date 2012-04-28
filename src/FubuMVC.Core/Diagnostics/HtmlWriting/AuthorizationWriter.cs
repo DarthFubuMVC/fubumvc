@@ -9,7 +9,7 @@ using HtmlTags;
 
 namespace FubuMVC.Core.Diagnostics.HtmlWriting
 {
-    [WannaKill]
+    [MarkedForTermination]
     public class AuthorizationWriter
     {
         public static HtmlTag BuildListOfRoles(BehaviorGraph behaviors, Action<BehaviorChain, HtmlTag> buildChainElement)
@@ -28,7 +28,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
         }
     }
 
-    [WannaKill]
+    [MarkedForTermination]
     public class RoleCollector
     {
         private readonly Cache<string, RoleSet> _roles = new Cache<string, RoleSet>(r => new RoleSet(r));
@@ -47,7 +47,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
         }
     }
 
-    [WannaKill]
+    [MarkedForTermination]
     public class RoleSet
     {
         private readonly string _role;
