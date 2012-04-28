@@ -10,7 +10,7 @@ contributions and love to see what we're missing. Of course, these projects run
 in production so we have to try and ensure a little quality by looking over
 anything that gets included. In order to make this nice and simple, we've come
 up with a little process for contributors. If your'e new to Git and GitHub,
-please check out GitHub's `bootcamp documenation`_.
+please check out GitHub's `bootcamp documentation`_.
 
 The basic Fubu workflow goes roughly like so:
 
