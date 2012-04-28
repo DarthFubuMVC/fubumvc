@@ -156,6 +156,7 @@ namespace FubuMVC.Core.Registration.DSL
 		}
     }
 
+    // TODO -- change to IConfigurationActino
     public class ActionLessViewConvention : IViewBagConvention
     {
         private readonly Func<IViewToken, bool> _viewTokenFilter;

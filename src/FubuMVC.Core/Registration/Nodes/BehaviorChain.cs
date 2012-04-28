@@ -353,5 +353,14 @@ namespace FubuMVC.Core.Registration.Nodes
                 }
             }
         }
+
+        public static BehaviorChain ForWriter(WriterNode node)
+        {
+            var chain = new BehaviorChain();
+            chain.ResourceType(node.ResourceType);
+            chain.Output.Writers.AddToEnd(node);
+
+            return chain;
+        }
     }
 }

@@ -9,12 +9,14 @@ using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
+using FubuMVC.Core.Resources.Conneg.New;
 using FubuMVC.Core.Runtime.Formatters;
 using FubuMVC.Core.Security;
 using FubuMVC.FakeControllers;
 using FubuMVC.StructureMap;
 using FubuMVC.Tests.StructureMapIoC;
 using FubuTestingSupport;
+using HtmlTags;
 using NUnit.Framework;
 using StructureMap;
 
@@ -634,6 +636,32 @@ namespace FubuMVC.Tests.Registration.Nodes
 
             theChain.ResourceType().ShouldEqual(typeof(DateTime));
             theChain.Output.ResourceType.ShouldEqual(typeof(DateTime));
+        }
+    }
+
+    [TestFixture]
+    public class BehaviorChain_build_for_a_single_writer_node
+    {
+        private WriteHtml theWriter;
+        private BehaviorChain theChain;
+
+        [SetUp]
+        public void SetUp()
+        {
+            theWriter = new WriteHtml(typeof (HtmlTag));
+            theChain = BehaviorChain.ForWriter(theWriter);
+        }
+
+        [Test]
+        public void should_derive_its_resource_type_from_the_writer()
+        {
+            theChain.ResourceType().ShouldEqual(typeof (HtmlTag));
+        }
+
+        [Test]
+        public void the_writer_should_be_attached_to_the_output_node()
+        {
+            theChain.Output.Writers.Single().ShouldBeTheSameAs(theWriter);
         }
     }
 
