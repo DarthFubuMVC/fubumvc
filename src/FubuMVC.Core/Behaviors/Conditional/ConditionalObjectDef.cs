@@ -1,6 +1,7 @@
 using System;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
+using FubuCore;
 
 namespace FubuMVC.Core.Behaviors.Conditional
 {
@@ -35,6 +36,16 @@ namespace FubuMVC.Core.Behaviors.Conditional
             def.DependencyByValue(filter);
 
             return def;
+        }
+
+        public static ObjectDef For(Type conditionType)
+        {
+            if (conditionType.CanBeCastTo<IConditional>())
+            {
+                return new ObjectDef(conditionType);
+            }
+
+            throw new ArgumentOutOfRangeException("conditionType", "Type {0} is not an IConditional".ToFormat(conditionType.FullName));
         }
     }
 }

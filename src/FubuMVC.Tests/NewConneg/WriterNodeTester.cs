@@ -104,6 +104,37 @@ namespace FubuMVC.Tests.NewConneg
             theResultingObjectDef.FindDependencyDefinitionFor<IConditional>()
                 .Type.ShouldEqual(typeof(LambdaConditional<IFubuRequest>));
         }
+
+        [Test]
+        public void replace_condition_by_type()
+        {
+            theNode.Condition(typeof(FakeConditional));
+
+            theNode.HasCondition().ShouldBeTrue();
+
+            theResultingObjectDef.FindDependencyDefinitionFor<IConditional>()
+                .Type.ShouldEqual(typeof(FakeConditional));
+        }
+
+        [Test]
+        public void condition_type_in_initial_state_is_always()
+        {
+            theNode.ConditionType.ShouldEqual(typeof (Always));
+        }
+
+        [Test]
+        public void condition_type_with_a_condition()
+        {
+            theNode.Condition<FakeConditional>();
+            theNode.ConditionType.ShouldEqual(typeof (FakeConditional));
+        }
+
+        [Test]
+        public void condition_type_with_a_condition_2()
+        {
+            theNode.Condition(typeof(FakeConditional));
+            theNode.ConditionType.ShouldEqual(typeof (FakeConditional));
+        }
     }
 
     public interface ISomeService{}

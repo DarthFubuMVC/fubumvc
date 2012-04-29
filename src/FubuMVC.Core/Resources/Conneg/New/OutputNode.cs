@@ -95,9 +95,14 @@ namespace FubuMVC.Core.Resources.Conneg.New
             return write;
         }
 
-        public ViewNode AddView(IViewToken view)
+        public ViewNode AddView(IViewToken view, Type conditionType = null)
         {
             var node = new ViewNode(view);
+            if (conditionType != null && conditionType != typeof(Always))
+            {
+                node.Condition(conditionType);
+            }
+
             Writers.AddToEnd(node);
 
             return node;
@@ -128,6 +133,11 @@ namespace FubuMVC.Core.Resources.Conneg.New
         Type IMayHaveResourceType.ResourceType()
         {
             return ResourceType;
+        }
+
+        public bool HasView(Type conditionalType)
+        {
+            return Writers.OfType<ViewNode>().Any(x => x.ConditionType == conditionalType);
         }
     }
 }

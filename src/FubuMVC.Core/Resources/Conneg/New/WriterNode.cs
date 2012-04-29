@@ -17,6 +17,16 @@ namespace FubuMVC.Core.Resources.Conneg.New
 
         public abstract Type ResourceType { get; }
 
+        public Type ConditionType
+        {
+            get
+            {
+                return HasCondition()
+                    ? _conditionalDef.Type
+                    : typeof(Always);
+            }
+        }
+
         ObjectDef IContainerModel.ToObjectDef(DiagnosticLevel diagnosticLevel)
         {
             var def = new ObjectDef(typeof (Media<>), ResourceType);
@@ -80,6 +90,12 @@ namespace FubuMVC.Core.Resources.Conneg.New
         {
             Trace(new ConditionAdded(typeof(T)));
             _conditionalDef = ConditionalObjectDef.For<T>();
+        }
+
+        public void Condition(Type type)
+        {
+            Trace(new ConditionAdded(type));
+            _conditionalDef = ConditionalObjectDef.For(type);
         }
 
         public abstract IEnumerable<string> Mimetypes { get; }

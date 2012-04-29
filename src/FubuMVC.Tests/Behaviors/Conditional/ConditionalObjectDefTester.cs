@@ -95,6 +95,22 @@ namespace FubuMVC.Tests.Behaviors.Conditional
             build(def).ShouldExecute().ShouldBeFalse();
         }
 
+        [Test]
+        public void for_conditional_type_positive()
+        {
+            var def = ConditionalObjectDef.For(typeof (AlwaysTrue));
+            def.Type.ShouldEqual(typeof (AlwaysTrue));
+        }
+
+        [Test]
+        public void for_conditional_with_the_wrong_kind_of_type()
+        {
+            Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() =>
+            {
+                ConditionalObjectDef.For(typeof (Model));
+            });
+        }
+
         public class Service
         {
             public bool IsTrue = false;
