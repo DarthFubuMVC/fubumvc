@@ -76,15 +76,11 @@ namespace FubuMVC.Core
         /// <returns></returns>
         public BehaviorGraph BuildGraph()
         {
-            if (!_hasCompiled)
-            {
-                _scanningOperations.Each(x => x(_configuration.Types));
-                _hasCompiled = true;
+            Compile();
 
-                if (_diagnosticLevel == DiagnosticLevel.FullRequestTracing)
-                {
-                    Import(new DiagnosticsRegistry(), string.Empty);
-                }
+            if (_diagnosticLevel == DiagnosticLevel.FullRequestTracing)
+            {
+                Import(new DiagnosticsRegistry(), string.Empty);
             }
 
             // LATER, do this in such a way that it marks the provenance
@@ -94,6 +90,15 @@ namespace FubuMVC.Core
             _configuration.Build(graph);
 
             return graph;
+        }
+
+        internal void Compile()
+        {
+            if (!_hasCompiled)
+            {
+                _scanningOperations.Each(x => x(_configuration.Types));
+                _hasCompiled = true;
+            }
         }
 
         /// <summary>

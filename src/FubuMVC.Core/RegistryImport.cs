@@ -13,6 +13,7 @@ namespace FubuMVC.Core
         public void ImportInto(IChainImporter graph, ViewBag views)
         {
             // TODO -- will want this to suck in the configuration log business somehow
+            Registry.Compile();
             var childGraph = Registry.Configuration.BuildForImport(views);
             graph.Import(childGraph, b =>
             {
