@@ -1,3 +1,4 @@
+using FubuCore.Binding;
 using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.Http
@@ -9,6 +10,7 @@ namespace FubuMVC.Core.Http
             SetServiceIfNone<ICurrentHttpRequest, StandInCurrentHttpRequest>();
 
             SetServiceIfNone<IRequestHeaders, RequestHeaders>();
+            SetServiceIfNone<IRequestData>(new RequestData());
         }
     }
 }

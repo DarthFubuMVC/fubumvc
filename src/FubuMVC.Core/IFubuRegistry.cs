@@ -20,7 +20,6 @@ namespace FubuMVC.Core
         DiagnosticLevel DiagnosticLevel { get; }
         string Name { get; }
 
-        void UsingObserver(IConfigurationObserver observer);
         void Services(Action<IServiceRegistry> configure);
 
         void ApplyConvention<TConvention>()

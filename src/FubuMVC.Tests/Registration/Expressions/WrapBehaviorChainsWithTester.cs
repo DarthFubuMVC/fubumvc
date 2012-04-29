@@ -79,7 +79,7 @@ namespace FubuMVC.Tests.Registration.Expressions
         [Test]
         public void all_behaviors_chains_should_start_with_the_declared_behavior()
         {
-            BehaviorGraph graph = registry.BuildLightGraph(new ViewBag(Enumerable.Empty<IViewToken>() ));
+            BehaviorGraph graph = registry.BuildLightGraph();
 
             graph.Behaviors.Count().ShouldEqual(3);
             var visitor = new BehaviorVisitor(new NulloConfigurationObserver(), "");

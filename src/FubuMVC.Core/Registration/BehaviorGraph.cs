@@ -11,6 +11,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Registration.Routes;
+using FubuMVC.Core.View.Attachment;
 
 namespace FubuMVC.Core.Registration
 {
@@ -39,6 +40,8 @@ namespace FubuMVC.Core.Registration
 
         public BehaviorGraph(IConfigurationObserver observer)
         {
+            Views = ViewBag.Empty();
+
             RouteIterator = new SortByRouteRankIterator(); // can override in a registry
             Observer = observer;
 
@@ -81,6 +84,11 @@ namespace FubuMVC.Core.Registration
         ///   RouteIterator is used to order Routes within the Routing table
         /// </summary>
         public IRouteIterator RouteIterator { get; set; }
+
+        public ViewBag Views
+        {
+            get; set;
+        }
 
         void IChainImporter.Import(BehaviorGraph graph, Action<BehaviorChain> alternation)
         {

@@ -23,14 +23,15 @@ namespace FubuMVC.Tests.Registration.Expressions
             var config = new ExplicitRouteConfiguration("some/pattern");
             config.Chain();
             _config = config;
-            _graph = new FubuRegistry(registry =>
+            var fubuRegistry = new FubuRegistry(registry =>
             {
                 
 
                 registry.Route("some/pattern")
                     .Calls<InputController>(c => c.DoSomething(null)).OutputToJson();
-            })
-                    .BuildLightGraph(new ViewBag(new IViewToken[0]));
+            });
+            _graph = fubuRegistry
+                    .BuildLightGraph();
 
             _graph.Behaviors.ShouldHaveCount(1);
             _config.Configure(_graph);

@@ -15,6 +15,11 @@ namespace FubuMVC.Core.View.Attachment
         private readonly Cache<Type, IEnumerable<IViewToken>> _viewsByType
             = new Cache<Type, IEnumerable<IViewToken>>();
 
+        public static ViewBag Empty()
+        {
+            return new ViewBag(new IViewToken[0]);
+        }
+
         public ViewBag(IEnumerable<IViewToken> views)
         {
             _views = views;

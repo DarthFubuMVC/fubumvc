@@ -10,7 +10,7 @@ using FubuMVC.Core.Registration.Routes;
 namespace FubuMVC.Core.Registration.Conventions
 {
     // TODO -- need a way to ignore routes
-    public class RouteDefinitionResolver
+    public class RouteDefinitionResolver : IConfigurationAction
     {
         private readonly UrlPolicy _defaultUrlPolicy;
         private readonly RouteInputPolicy _inputPolicy = new RouteInputPolicy();
@@ -93,6 +93,11 @@ namespace FubuMVC.Core.Registration.Conventions
         public void RegisterRouteInputPolicy(Func<ActionCall, bool> where, Action<IRouteDefinition, ActionCall> action)
         {
             _inputPolicy.InputBuilders.Register(where, action);
+        }
+
+        public void Configure(BehaviorGraph graph)
+        {
+            ApplyToAll(graph);
         }
     }
 }

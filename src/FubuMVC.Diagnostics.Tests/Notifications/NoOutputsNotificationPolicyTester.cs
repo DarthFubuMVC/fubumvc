@@ -27,7 +27,7 @@ namespace FubuMVC.Diagnostics.Tests.Notifications
                                                  registry.Actions.IncludeType<Test>();
                                                  registry.Actions.IncludeMethods(method => method.Name == "Index" || method.Name == "Continuation");
                                              })
-                .BuildLightGraph(new ViewBag(new IViewToken[0]));
+                .BuildLightGraph();
             
             graph.AddChain(new BehaviorChain());
 

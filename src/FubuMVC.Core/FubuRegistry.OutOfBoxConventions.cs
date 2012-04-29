@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Reflection;
+using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
-using System.Linq;
 
 namespace FubuMVC.Core
 {
@@ -19,7 +17,7 @@ namespace FubuMVC.Core
         public void ApplyHandlerConventions<T>()
             where T : class
         {
-            ApplyHandlerConventions(typeof(T));
+            ApplyHandlerConventions(typeof (T));
         }
 
         public void ApplyHandlerConventions(params Type[] markerTypes)
@@ -32,13 +30,12 @@ namespace FubuMVC.Core
             markerTypes.Each(t => Applies.ToAssembly(t.Assembly));
 
             var source = new HandlerActionSource(markerTypes);
-            if (!_actionSources.Contains(source))
-            {
-                Routes.UrlPolicy(policyBuilder(markerTypes));
+            Routes.UrlPolicy(policyBuilder(markerTypes));
 
-                Actions.FindWith(source);
-            }
+            Actions.FindWith(source);
         }
+
+        #region Nested type: HandlerActionSource
 
         public class HandlerActionSource : ActionSource
         {
@@ -46,10 +43,12 @@ namespace FubuMVC.Core
 
             public HandlerActionSource(IEnumerable<Type> markerTypes) : base(new ActionMethodFilter())
             {
-                markerTypes.Each<Type>(markerType =>
-                {
-                    TypeFilters.Includes += t => t.Namespace.IsNotEmpty() && t.Namespace.StartsWith(markerType.Namespace);
-                });
+                markerTypes.Each<Type>(
+                    markerType =>
+                    {
+                        TypeFilters.Includes +=
+                            t => t.Namespace.IsNotEmpty() && t.Namespace.StartsWith(markerType.Namespace);
+                    });
 
                 MethodFilters.Includes += m => m.Name == HandlersUrlPolicy.METHOD;
 
@@ -60,13 +59,12 @@ namespace FubuMVC.Core
             {
                 if (ReferenceEquals(null, other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                
+
                 if (other._markerTypes.Count() != _markerTypes.Count()) return false;
 
-                for (int i = 0; i < _markerTypes.Count(); i++)
+                for (var i = 0; i < _markerTypes.Count(); i++)
                 {
                     if (other._markerTypes.ElementAt(i) != _markerTypes.ElementAt(i)) return false;
-                    
                 }
 
                 return true;
@@ -85,5 +83,7 @@ namespace FubuMVC.Core
                 return (_markerTypes != null ? _markerTypes.GetHashCode() : 0);
             }
         }
+
+        #endregion
     }
 }

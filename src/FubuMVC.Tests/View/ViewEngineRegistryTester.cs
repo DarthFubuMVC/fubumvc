@@ -33,16 +33,6 @@ namespace FubuMVC.Tests.View
         }
 
 
-        public class TestViewBagConvention : IViewBagConvention
-        {
-            public void Configure(ViewBag bag, BehaviorGraph graph)
-            {
-                Executed = true;
-            }
-
-            public bool Executed { get; set; }
-        }
-
         public class TestViewToken : IViewToken
         {
             public ObjectDef ToViewFactoryObjectDef()

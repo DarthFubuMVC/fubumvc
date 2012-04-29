@@ -216,6 +216,7 @@
     <Compile Include="Registration\Conventions\HtmlTagOutputPolicy.cs" />
     <Compile Include="Registration\Nodes\Chain.cs" />
     <Compile Include="Registration\Nodes\Node.cs" />
+    <Compile Include="RegistryImport.cs" />
     <Compile Include="Resources\Conneg\New\InputNode.cs" />
     <Compile Include="Resources\Conneg\New\IReader.cs" />
     <Compile Include="Resources\Conneg\New\OutputNode.cs" />
@@ -404,7 +405,7 @@
     <Compile Include="FubuEnvironment.cs" />
     <Compile Include="FubuExtensionFinder.cs" />
     <Compile Include="FubuPackageRegistry.cs" />
-    <Compile Include="FubuRegistry.DefaultConventions.cs" />
+    <Compile Include="ConfigurationGraph.cs" />
     <Compile Include="FubuRegistry.UserInterfaceExpressions.cs" />
     <Compile Include="IFubuRegistryExtension.cs" />
     <Compile Include="Packaging\IPackageFiles.cs" />
@@ -464,7 +465,6 @@
     <Compile Include="Behaviors\OneInZeroOutActionInvoker.cs" />
     <Compile Include="Behaviors\ZeroInOneOutActionInvoker.cs" />
     <Compile Include="Bootstrapping\IContainerFacility.cs" />
-    <Compile Include="FubuRegistry.Expressions.cs" />
     <Compile Include="Registration\BehaviorVisitor.cs" />
     <Compile Include="Registration\Conventions\IChainConvention.cs" />
     <Compile Include="Registration\Conventions\IRouteInputPolicy.cs" />
@@ -656,7 +656,6 @@
     <Compile Include="View\Activation\SetTagProfilePageActivationAction.cs" />
     <Compile Include="View\Activation\ViewTypeExtensions.cs" />
     <Compile Include="View\Attachment\IViewEngineRegistry.cs" />
-    <Compile Include="View\Attachment\IViewBagConvention.cs" />
     <Compile Include="View\Attachment\ViewEngineRegistry.cs" />
     <Compile Include="View\Conventions\ITemplateComposerConvention.cs" />
     <Compile Include="View\Conventions\ITemplateFinderConvention.cs" />

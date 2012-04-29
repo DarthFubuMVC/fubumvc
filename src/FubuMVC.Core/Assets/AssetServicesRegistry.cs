@@ -13,7 +13,6 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Resources.Etags;
-using FubuMVC.Core.Resources.PathBased;
 
 namespace FubuMVC.Core.Assets
 {
@@ -24,14 +23,13 @@ namespace FubuMVC.Core.Assets
 
         public void Configure(FubuRegistry registry)
         {
-
             registry.Services(addServices);
             registry.Services(addActivators);
             registry.Services(setupAssetCaching);
 
             registry.Configure(graph =>
             {
-                BehaviorChain chain = createAssetContentChain(graph);
+                var chain = createAssetContentChain(graph);
                 chain.Filters.Add(new AssetEtagInvocationFilter(_assetCache));
 
                 addCaching(chain);
@@ -58,7 +56,7 @@ namespace FubuMVC.Core.Assets
         private BehaviorChain createAssetContentChain(BehaviorGraph graph)
         {
             var chain = graph.AddChain();
-            string pattern = "_content";
+            var pattern = "_content";
             chain.Route = RouteBuilder.Build(typeof (AssetPath), pattern);
             chain.Route.AddHttpMethodConstraint("GET");
             return chain;

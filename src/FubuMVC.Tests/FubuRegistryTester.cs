@@ -9,6 +9,12 @@ namespace FubuMVC.Tests
     public class FubuRegistryTester
     {
         [Test]
+        public void what_is_the_order()
+        {
+            new FubuRegistry();
+        }
+
+        [Test]
         public void policies_are_only_registered_once()
         {
             FakePolicy.Count = 0;
@@ -21,7 +27,7 @@ namespace FubuMVC.Tests
                 x.Policies.Add<FakePolicy>();
                 x.Policies.Add<FakePolicy>();
                 x.Policies.Add<FakePolicy>();
-            });
+            }).BuildGraph();
 
             FakePolicy.Count.ShouldEqual(1);
         }
@@ -37,7 +43,7 @@ namespace FubuMVC.Tests
                 x.Import<FakeIncludeRegistry>(string.Empty);
                 x.Import<FakeIncludeRegistry>(string.Empty);
                 x.Import<FakeIncludeRegistry>(string.Empty);
-            });
+            }).BuildGraph();
 
             FakeIncludeRegistry.Count.ShouldEqual(1);
         }
@@ -49,7 +55,7 @@ namespace FubuMVC.Tests
 
         public FakeIncludeRegistry()
         {
-            Count++;
+            Configure(x => Count++);
         }
     }
 
@@ -57,13 +63,9 @@ namespace FubuMVC.Tests
     {
         public static int Count;
 
-        public FakePolicy()
-        {
-            Count++;
-        }
-
         public void Configure(BehaviorGraph graph)
         {
+            Count++;
         }
     }
 }

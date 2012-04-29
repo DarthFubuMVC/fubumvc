@@ -9,22 +9,21 @@ namespace FubuMVC.Core.Registration.DSL
 {
     public class ActionCallCandidateExpression
     {
-        private readonly IList<IActionSource> _sources;
         private readonly ActionMethodFilter _methodFilter;
+        private readonly ConfigurationGraph _configuration;
         private readonly Lazy<ActionSource> _mainSource;
 
-        public ActionCallCandidateExpression(IList<IActionSource> sources, ActionMethodFilter methodFilter)
+        public ActionCallCandidateExpression(ActionMethodFilter methodFilter, ConfigurationGraph configuration)
         {
             _methodFilter = methodFilter;
+            _configuration = configuration;
             _mainSource = new Lazy<ActionSource>(() =>
             {
                 var source = new ActionSource(_methodFilter);
-                sources.Insert(0, source);
+                configuration.AddActions(source);
 
                 return source;
             });
-
-            _sources = sources;
         }
 
         /// <summary>
@@ -141,7 +140,7 @@ namespace FubuMVC.Core.Registration.DSL
         /// </summary>
         public ActionCallCandidateExpression FindWith(IActionSource actionSource)
         {
-            _sources.Fill(actionSource);
+            _configuration.AddActions(actionSource);
             return this;
         }
     }

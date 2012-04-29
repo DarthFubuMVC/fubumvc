@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.Registration.Nodes
     {
         public override BehaviorCategory Category
         {
-            get { return BehaviorCategory.Chain; }
+            get { return BehaviorCategory.Process; }
         }
 
         protected override ObjectDef buildObjectDef()

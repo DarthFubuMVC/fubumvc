@@ -19,11 +19,9 @@ namespace FubuMVC.WebForms.Testing
         [SetUp]
         public void SetUp()
         {
-            _observer = MockRepository.GenerateStub<IConfigurationObserver>();
             _graph = new FubuRegistry(x =>
                     {
                         x.Actions.IncludeType<FakeController>();
-                        x.UsingObserver(_observer);
                     }).BuildGraph();
         }
 

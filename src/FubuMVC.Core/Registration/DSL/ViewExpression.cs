@@ -11,14 +11,12 @@ namespace FubuMVC.Core.Registration.DSL
 {
     public class ViewExpression
     {
-        private readonly IViewEngineRegistry _viewEngineRegistry;
-        private readonly Action<IViewBagConvention> _conventionRegistration;
+        private readonly ConfigurationGraph _configuration;
         private readonly FubuRegistry _registry;
 
-        public ViewExpression(IViewEngineRegistry viewEngineRegistry, FubuRegistry registry, Action<IViewBagConvention> conventionRegistration)
+        public ViewExpression(ConfigurationGraph configuration, FubuRegistry registry)
         {
-            _viewEngineRegistry = viewEngineRegistry;
-            _conventionRegistration = conventionRegistration;
+            _configuration = configuration;
             _registry = registry;
         }
 
@@ -27,7 +25,7 @@ namespace FubuMVC.Core.Registration.DSL
         /// </summary>
         public ViewExpression Facility(IViewFacility facility)
         {
-            _viewEngineRegistry.AddFacility(facility);
+            _configuration.AddFacility(facility);
             return this;
         }
 
@@ -47,7 +45,7 @@ namespace FubuMVC.Core.Registration.DSL
         /// <returns></returns>
         public ViewExpression RegisterActionLessViews(Func<IViewToken, bool> viewTokenFilter, Action<BehaviorChain> configureChain)
         {
-            _conventionRegistration(new ActionLessViewConvention(viewTokenFilter, configureChain));
+            _configuration.AddConvention(new ActionLessViewConvention(viewTokenFilter, configureChain));
             return this;          
         }
 
@@ -59,7 +57,7 @@ namespace FubuMVC.Core.Registration.DSL
         /// <returns></returns>
 		public ViewExpression RegisterActionLessViews(Func<IViewToken, bool> viewTokenFilter, Action<BehaviorChain, IViewToken> configureChain)
         {
-            _conventionRegistration(new ActionLessViewConvention(viewTokenFilter, configureChain));
+            _configuration.AddConvention(new ActionLessViewConvention(viewTokenFilter, configureChain));
             return this;          
         }
 
@@ -73,7 +71,7 @@ namespace FubuMVC.Core.Registration.DSL
             var expression = new ViewsForActionFilterExpression(convention);
             configure(expression);
 
-            _conventionRegistration(convention);
+            _configuration.AddConvention(convention);
 
             return this;
         }
@@ -121,24 +119,9 @@ namespace FubuMVC.Core.Registration.DSL
 
             return IfTheViewTypeMatches(combined);
         }
-
-		public ViewExpression ApplyConvention<TConvention>()
-            where TConvention : IViewBagConvention, new() 
-		{
-				return ApplyConvention(new TConvention());
-		}
-
-		public ViewExpression ApplyConvention<TConvention>(TConvention convention)
-            where TConvention : IViewBagConvention 
-		{
-            _conventionRegistration(convention);
-
-			return this;
-		}
     }
 
-    // TODO -- change to IConfigurationActino
-    public class ActionLessViewConvention : IViewBagConvention
+    public class ActionLessViewConvention : IConfigurationAction
     {
         private readonly Func<IViewToken, bool> _viewTokenFilter;
         private readonly Action<BehaviorChain, IViewToken> _configureChain;
@@ -155,9 +138,9 @@ namespace FubuMVC.Core.Registration.DSL
             _configureChain = configureChain;
         }
 
-        public void Configure(ViewBag bag, BehaviorGraph graph)
+        public void Configure(BehaviorGraph graph)
         {
-            bag
+            graph.Views
                 .Views
                 .Where(token => _viewTokenFilter(token))
                 .Each(token =>

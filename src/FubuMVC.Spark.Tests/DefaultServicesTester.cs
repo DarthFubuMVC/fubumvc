@@ -26,7 +26,7 @@ namespace FubuMVC.Spark.Tests
         {
             var registry = new FubuRegistry();
             ClassUnderTest.As<IFubuRegistryExtension>().Configure(registry);
-            _services = registry.BuildLightGraph(new ViewBag(Enumerable.Empty<IViewToken>())).Services;
+            _services = registry.BuildGraph().Services;
 
             
         }

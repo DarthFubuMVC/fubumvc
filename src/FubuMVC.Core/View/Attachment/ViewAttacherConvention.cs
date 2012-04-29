@@ -8,7 +8,7 @@ using FubuMVC.Core.View.New;
 
 namespace FubuMVC.Core.View.Attachment
 {
-    public class ViewAttacherConvention : IViewBagConvention
+    public class ViewAttacherConvention : IConfigurationAction
     {
         private readonly List<IViewsForActionFilter> _filters = new List<IViewsForActionFilter>();
 
@@ -22,12 +22,12 @@ namespace FubuMVC.Core.View.Attachment
             _filters.Add(filter);
         }
 
-        public void Configure(ViewBag bag, BehaviorGraph graph)
+        public void Configure(BehaviorGraph graph)
         {
             graph.Behaviors
                 .Select(x => x.FirstCall())
                 .Where(x => x != null)
-                .Each(a => AttemptToAttachViewToAction(bag, a, graph.Observer));
+                .Each(a => AttemptToAttachViewToAction(graph.Views, a, graph.Observer));
         }
 
         public void AttemptToAttachViewToAction(ViewBag bag, ActionCall call, IConfigurationObserver observer)

@@ -28,7 +28,7 @@ namespace FubuMVC.Core.Registration.DSL
         /// </summary>
         public AppliesToExpression ToThisAssembly()
         {
-            return ToAssembly(FubuRegistry.FindTheCallingAssembly());
+            return ToAssembly(ConfigurationGraph.FindTheCallingAssembly());
         }
 
         /// <summary>

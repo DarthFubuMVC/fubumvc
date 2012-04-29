@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reflection;
 using System.Threading;
 using FubuCore.Conversion;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Assets.Http;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 using HtmlTags;
 using KayakTestApplication;
@@ -19,6 +21,13 @@ namespace Serenity.Testing
     [TestFixture, Explicit]
     public class debugging
     {
+
+        [Test]
+        public void does_is_uneque_work()
+        {
+            typeof (SingleTypeActionSource).GetConstructors().Each(
+                x => Debug.WriteLine(x));
+        }
 
         [Test]
         public void start_an_inprocess_system_without_blowing_up()

@@ -29,14 +29,12 @@ namespace FubuMVC.Core.Registration.DSL
 
     public class PoliciesExpression : IOrderPolicyExpression
     {
-        private readonly IList<IConfigurationAction> _actions;
-        private readonly List<IConfigurationAction> _systemPolicies;
+        private readonly ConfigurationGraph _configuration;
         private Func<BehaviorNode, bool> _lastNodeMatch;
 
-        public PoliciesExpression(IList<IConfigurationAction> actions, List<IConfigurationAction> systemPolicies)
+        public PoliciesExpression(ConfigurationGraph configuration)
         {
-            _actions = actions;
-            _systemPolicies = systemPolicies;
+            _configuration = configuration;
         }
 
         public IOrderPolicyExpression WrapBehaviorChainsWith<T>() where T : IActionBehavior
@@ -50,7 +48,7 @@ namespace FubuMVC.Core.Registration.DSL
 
         private IOrderPolicyExpression applyWrapper<T>(VisitBehaviorsAction configAction)
         {
-            _actions.Fill(configAction);
+            _configuration.AddPolicy(configAction);
 
             _lastNodeMatch = ReorderBehaviorsPolicy.FuncForWrapper(typeof(T));
 
@@ -73,7 +71,7 @@ namespace FubuMVC.Core.Registration.DSL
         private void addPolicy(Action<BehaviorGraph> action)
         {
             var policy = new LambdaConfigurationAction(action);
-            _actions.Add(policy);
+            _configuration.AddPolicy(policy);
         }
 
         public IPoliciesExpression EnrichCallsWith<T>(Func<ActionCall, bool> filter) where T : IActionBehavior
@@ -98,32 +96,30 @@ namespace FubuMVC.Core.Registration.DSL
 
         public IPoliciesExpression Add(IConfigurationAction alteration)
         {
-            _actions.Fill(alteration);
+            _configuration.AddPolicy(alteration);
             return this;
         }
 
         public IPoliciesExpression Add<T>() where T : IConfigurationAction, new()
         {
-            if (_actions.Any(x => x is T)) return this;
-
             return Add(new T());
         }
 
         IPoliciesExpression IOrderPolicyExpression.Ordering(Action<BehaviorOrderPolicyExpression> ordering)
         {
-            ordering(new BehaviorOrderPolicyExpression( _systemPolicies, _lastNodeMatch ));
+            ordering(new BehaviorOrderPolicyExpression(_lastNodeMatch, _configuration));
             return this;
         }
 
         public class BehaviorOrderPolicyExpression
         {
-            private readonly List<IConfigurationAction> _systemPolicies;
             private readonly Func<BehaviorNode, bool> _lastNodeMatch;
+            private readonly ConfigurationGraph _configuration;
 
-            public BehaviorOrderPolicyExpression(List<IConfigurationAction> systemPolicies, Func<BehaviorNode, bool> lastNodeMatch)
+            public BehaviorOrderPolicyExpression(Func<BehaviorNode, bool> lastNodeMatch, ConfigurationGraph configuration)
             {
-                _systemPolicies = systemPolicies;
                 _lastNodeMatch = lastNodeMatch;
+                _configuration = configuration;
             }
 
             // Not unit tested and therefore, not real code yet.
@@ -144,7 +140,7 @@ namespace FubuMVC.Core.Registration.DSL
                 };
 
                 policy.ThisNodeMustBeAfter<AuthorizationNode>();
-                _systemPolicies.Add(policy);
+                _configuration.AddPolicy(policy);
             }
         }
     }
