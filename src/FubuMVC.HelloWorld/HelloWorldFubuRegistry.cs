@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core;
+﻿using System.Diagnostics;
+using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.AntiForgery;
 using FubuMVC.Core.UI.Extensibility;
@@ -13,6 +14,14 @@ using FubuMVC.WebForms;
 
 namespace FubuMVC.HelloWorld
 {
+    public class something
+    {
+        public void go()
+        {
+            Debug.WriteLine(new HelloWorldFubuRegistry());
+        }
+    }
+
     public class HelloWorldFubuRegistry : FubuRegistry
     {
         public HelloWorldFubuRegistry()

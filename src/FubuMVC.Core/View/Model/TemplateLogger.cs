@@ -44,6 +44,8 @@ namespace FubuMVC.Core.View.Model
 
         private static IPackageLog getPackageLogger(ITemplateFile template)
         {
+            if (PackageRegistry.Diagnostics == null) return new PackageLog();
+
             return PackageRegistry.Diagnostics.LogFor(template);
         }
 
