@@ -655,8 +655,16 @@
     <Compile Include="View\Activation\SetPageModelActivationSource.cs" />
     <Compile Include="View\Activation\SetTagProfilePageActivationAction.cs" />
     <Compile Include="View\Activation\ViewTypeExtensions.cs" />
+    <Compile Include="View\Attachment\DefaultProfile.cs" />
     <Compile Include="View\Attachment\IViewEngineRegistry.cs" />
+    <Compile Include="View\Attachment\IViewProfile.cs" />
+    <Compile Include="View\Attachment\ProfileViewToken.cs" />
+    <Compile Include="View\Attachment\ViewAttacher.cs" />
+    <Compile Include="View\Attachment\ViewAttachmentLog.cs" />
     <Compile Include="View\Attachment\ViewEngineRegistry.cs" />
+    <Compile Include="View\Attachment\ViewProfile.cs" />
+    <Compile Include="View\Attachment\ViewsForFilterLog.cs" />
+    <Compile Include="View\Attachment\ViewTokenExtensions.cs" />
     <Compile Include="View\Conventions\ITemplateComposerConvention.cs" />
     <Compile Include="View\Conventions\ITemplateFinderConvention.cs" />
     <Compile Include="View\IFubuView.cs" />

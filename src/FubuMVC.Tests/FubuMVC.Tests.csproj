@@ -457,6 +457,10 @@
     <Compile Include="Urls\UrlRegistryIntegrationTester.cs" />
     <Compile Include="UI\LambdaElementSourceTester.cs" />
     <Compile Include="Urls\UrlRegistryTester.cs" />
+    <Compile Include="View\Attachment\DefaultProfileTester.cs" />
+    <Compile Include="View\Attachment\ProfileViewTokenTester.cs" />
+    <Compile Include="View\Attachment\ViewAttacherTester.cs" />
+    <Compile Include="View\Attachment\ViewTokenExtensionsTester.cs" />
     <Compile Include="View\FakeViews\Folder1\A.aspx.cs">
       <DependentUpon>A.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

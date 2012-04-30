@@ -71,7 +71,7 @@ namespace FubuMVC.Core.Registration.DSL
             var expression = new ViewsForActionFilterExpression(convention);
             configure(expression);
 
-            _configuration.AddConvention(convention);
+            _configuration.AddPolicy(convention);
 
             return this;
         }
