@@ -11,6 +11,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Registration.Routes;
+using FubuMVC.Core.UI.Navigation;
 using FubuMVC.Core.View.Attachment;
 
 namespace FubuMVC.Core.Registration
@@ -37,6 +38,7 @@ namespace FubuMVC.Core.Registration
 
         private readonly List<IChainForwarder> _forwarders = new List<IChainForwarder>();
         private readonly ServiceGraph _services = new ServiceGraph();
+        private readonly NavigationGraph _navigation = new NavigationGraph();
 
         public BehaviorGraph(IConfigurationObserver observer)
         {
@@ -56,6 +58,11 @@ namespace FubuMVC.Core.Registration
         public IEnumerable<IChainForwarder> Forwarders
         {
             get { return _forwarders; }
+        }
+
+        public NavigationGraph Navigation
+        {
+            get { return _navigation; }
         }
 
         public TypeResolver TypeResolver { get; private set; }

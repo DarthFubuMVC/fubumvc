@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace FubuMVC.Core.UI.Navigation
 {
@@ -8,12 +9,15 @@ namespace FubuMVC.Core.UI.Navigation
         public MenuItemToken()
         {
             Url = string.Empty;
+            Children = new MenuItemToken[0];
         }
 
         public bool EnabledAndShown()
         {
             return MenuItemState.IsEnabled && MenuItemState.IsShown;
         }
+
+        public MenuItemToken[] Children { get; set; }
 
         public string Key { get; set; }
         public string Text { get; set; }

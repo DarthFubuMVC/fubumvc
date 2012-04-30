@@ -575,8 +575,12 @@
     <Compile Include="UI\Navigation\AuthorizedContextualMenu.cs" />
     <Compile Include="UI\Navigation\IContextualAction.cs" />
     <Compile Include="UI\Navigation\IContextualMenu.cs" />
+    <Compile Include="UI\Navigation\MenuChain.cs" />
     <Compile Include="UI\Navigation\MenuItemState.cs" />
     <Compile Include="UI\Navigation\MenuItemToken.cs" />
+    <Compile Include="UI\Navigation\MenuNode.cs" />
+    <Compile Include="UI\Navigation\MenuNodeType.cs" />
+    <Compile Include="UI\Navigation\NavigationClasses.cs" />
     <Compile Include="UI\PartialExpressionExtensions.cs" />
     <Compile Include="UI\PartialInvoker.cs" />
     <Compile Include="UI\AssetFilePageExtensions.cs" />
