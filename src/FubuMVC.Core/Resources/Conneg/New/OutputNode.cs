@@ -139,5 +139,15 @@ namespace FubuMVC.Core.Resources.Conneg.New
         {
             return Writers.OfType<ViewNode>().Any(x => x.ConditionType == conditionalType);
         }
+
+        public override string ToString()
+        {
+            return Writers.Select(x => x.ToString()).Join(", ");
+        }
+
+        public override string Description
+        {
+            get { return ToString(); }
+        }
     }
 }

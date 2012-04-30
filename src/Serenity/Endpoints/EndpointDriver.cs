@@ -111,6 +111,12 @@ namespace Serenity.Endpoints
             return Get(url, acceptType);
         }
 
+        public HttpResponse GetByInput<T>(T model, string categoryOrHttpMethod = null, string acceptType = "*/*")
+        {
+            var url = _urls.UrlFor(model, categoryOrHttpMethod);
+            return Get(url, acceptType);
+        }
+
         /// <summary>
         /// Executes a GET to the url
         /// </summary>

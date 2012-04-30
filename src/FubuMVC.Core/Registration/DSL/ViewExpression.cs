@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View;
 using System.Collections.Generic;
@@ -114,6 +115,27 @@ namespace FubuMVC.Core.Registration.DSL
             };
 
             return IfTheViewTypeMatches(combined);
+        }
+
+        /// <summary>
+        /// This creates a view profile for the view attachment.  Used for scenarios like
+        /// attaching multiple views to the same chain for different devices.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="prefix"></param>
+        /// <example>
+        /// Profile<IsMobile>("m.") -- where "m" would mean look for views that are named "m.something"
+        /// </example>
+        /// <returns></returns>
+        public ViewExpression Profile<T>(string prefix) where T : IConditional
+        {
+            Func<IViewToken, string> naming = view =>
+            {
+                var name = view.Name();
+                return name.Substring(prefix.Length);
+            };
+            _configuration.Views.AddProfile(typeof (T), x => x.Name().StartsWith(prefix), naming);
+            return this;
         }
     }
 

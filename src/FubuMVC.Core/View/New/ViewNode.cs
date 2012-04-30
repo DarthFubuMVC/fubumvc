@@ -4,6 +4,7 @@ using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Resources.Conneg.New;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View.Rendering;
+using FubuCore;
 
 namespace FubuMVC.Core.View.New
 {
@@ -38,6 +39,11 @@ namespace FubuMVC.Core.View.New
         public override IEnumerable<string> Mimetypes
         {
             get { yield return MimeType.Html.Value; }
+        }
+
+        public override string ToString()
+        {
+            return "View {0}, Condition {1}".ToFormat(_token.Name(), ConditionType.Name);
         }
     }
 }
