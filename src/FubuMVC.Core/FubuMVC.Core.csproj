@@ -717,7 +717,6 @@
     <Compile Include="View\PageHarness.cs" />
     <Compile Include="View\Attachment\ActionInSameFolderAsViewReturnsViewModelType.cs" />
     <Compile Include="View\Attachment\ActionWithSameNameAndFolderAsViewReturnsViewModelType.cs" />
-    <Compile Include="View\Attachment\ViewAttacherConvention.cs" />
     <Compile Include="View\Attachment\ViewBag.cs" />
     <Compile Include="Security\IAuthenticationContext.cs" />
     <Compile Include="Security\ISecurityContext.cs" />

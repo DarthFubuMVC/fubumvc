@@ -5,9 +5,9 @@ namespace FubuMVC.Core.Registration.DSL
 {
     public class ViewsForActionFilterExpression
     {
-        private readonly ViewAttacherConvention _attacher;
+        private readonly ViewAttacher _attacher;
 
-        public ViewsForActionFilterExpression(ViewAttacherConvention attacher)
+        public ViewsForActionFilterExpression(ViewAttacher attacher)
         {
             _attacher = attacher;
         }
@@ -17,7 +17,7 @@ namespace FubuMVC.Core.Registration.DSL
         /// </summary>
         public void by_ViewModel_and_Namespace_and_MethodName()
         {
-            _attacher.AddViewsForActionFilter(new ActionWithSameNameAndFolderAsViewReturnsViewModelType());
+            _attacher.AddFilter(new ActionWithSameNameAndFolderAsViewReturnsViewModelType());
         }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace FubuMVC.Core.Registration.DSL
         /// </summary>
         public void by_ViewModel_and_Namespace()
         {
-            _attacher.AddViewsForActionFilter(new ActionInSameFolderAsViewReturnsViewModelType());
+            _attacher.AddFilter(new ActionInSameFolderAsViewReturnsViewModelType());
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace FubuMVC.Core.Registration.DSL
         /// </summary>
         public void by_ViewModel()
         {
-            _attacher.AddViewsForActionFilter(new ActionReturnsViewModelType());
+            _attacher.AddFilter(new ActionReturnsViewModelType());
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace FubuMVC.Core.Registration.DSL
         /// </summary>
         public void @by<TFilter>() where TFilter : IViewsForActionFilter, new()
         {
-            _attacher.AddViewsForActionFilter(new TFilter());
+            _attacher.AddFilter(new TFilter());
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace FubuMVC.Core.Registration.DSL
         /// </summary>
         public void @by(IViewsForActionFilter strategy)
         {
-            _attacher.AddViewsForActionFilter(strategy);
+            _attacher.AddFilter(strategy);
         }
     }
 }

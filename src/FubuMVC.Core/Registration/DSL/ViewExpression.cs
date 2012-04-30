@@ -66,12 +66,8 @@ namespace FubuMVC.Core.Registration.DSL
         /// </summary>
         public ViewExpression TryToAttach(Action<ViewsForActionFilterExpression> configure)
         {
-            var convention = new ViewAttacherConvention();
-
-            var expression = new ViewsForActionFilterExpression(convention);
+            var expression = new ViewsForActionFilterExpression(_configuration.Views);
             configure(expression);
-
-            _configuration.AddPolicy(convention);
 
             return this;
         }

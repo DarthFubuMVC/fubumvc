@@ -1,4 +1,6 @@
+using System.Diagnostics;
 using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Spark;
 using FubuTestingSupport;
 using IntegrationTesting.Conneg;
@@ -31,13 +33,13 @@ namespace IntegrationTesting.ViewEngines.HelloSpark
             text.ShouldContain("<h2>Exhale!</h2>");
         }
 
-        //[Test]
-        //public void what_is_there()
-        //{
-        //    var text = endpoints.Get<BehaviorGraphWriter>(x => x.PrintRoutes()).ReadAsText();
+        [Test]
+        public void what_is_there()
+        {
+            var text = endpoints.Get<BehaviorGraphWriter>(x => x.PrintRoutes()).ReadAsText();
 
-        //    Debug.WriteLine(text);
-        //}
+            Debug.WriteLine(text);
+        }
     }
 
 

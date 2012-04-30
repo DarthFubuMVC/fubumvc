@@ -474,7 +474,6 @@
     <Compile Include="View\New\ViewWriterTester.cs" />
     <Compile Include="View\PageActivatorTester.cs" />
     <Compile Include="View\SetPageModelActivationActionTester.cs" />
-    <Compile Include="View\ViewAttacherConventionTester.cs" />
     <Compile Include="View\ViewEngineRegistryTester.cs" />
     <Compile Include="View\ViewsForActionFiltersTester.cs" />
     <Compile Include="Web\Security\WebAuthenticationContextTester.cs" />

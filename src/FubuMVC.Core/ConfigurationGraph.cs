@@ -35,6 +35,7 @@ namespace FubuMVC.Core
         private readonly List<RegistryImport> _imports = new List<RegistryImport>();
         private readonly TypePool _types = new TypePool(FindTheCallingAssembly());
         private readonly IViewEngineRegistry _engineRegistry = new ViewEngineRegistry();
+        private readonly ViewAttacher _views = new ViewAttacher();
 
         public void Build(BehaviorGraph graph)
         {
@@ -49,6 +50,7 @@ namespace FubuMVC.Core
                 .Union(_imports)
                 .Union(_explicits)
                 .Union(_policies)
+                .Union(new IConfigurationAction[]{_views})
                 .Union(_reorderRules);
 
             var graph = new BehaviorGraph{
@@ -60,6 +62,10 @@ namespace FubuMVC.Core
             return graph;
         }
 
+        public ViewAttacher Views
+        {
+            get { return _views; }
+        }
 
 
         private IEnumerable<IConfigurationAction> allActions()
@@ -70,6 +76,7 @@ namespace FubuMVC.Core
                 .Union(_imports)
                 .Union(_explicits)
                 .Union(_policies)
+                .Union(new IConfigurationAction[] { _views })
                 .Union(fullGraphPolicies())
                 .Union(_reorderRules);
         }
