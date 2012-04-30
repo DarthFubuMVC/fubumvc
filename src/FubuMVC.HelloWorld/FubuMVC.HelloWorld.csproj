@@ -114,6 +114,7 @@
     <None Include="Controllers\ThreePassRendering\ThreePassSample.spark" />
     <None Include="Controllers\Water\Spray.spark" />
     <Content Include="Shared\Application.cshtml" />
+    <None Include="ModelBindingProblems\model.spark" />
     <None Include="Shared\Application.spark" />
     <None Include="Shared\bindings.xml" />
     <Content Include="Shared\jquery.tmpl.js" />
@@ -186,6 +187,7 @@
     </Compile>
     <Compile Include="HelloWorldFubuRegistry.cs" />
     <Compile Include="Hello\get_Name_handler.cs" />
+    <Compile Include="ModelBindingProblems\Classes.cs" />
     <Compile Include="SampleHtmlConventions.cs" />
     <Compile Include="Services\IHttpSession.cs" />
   </ItemGroup>
