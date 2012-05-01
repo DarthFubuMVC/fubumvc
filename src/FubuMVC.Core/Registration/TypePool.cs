@@ -27,7 +27,10 @@ namespace FubuMVC.Core.Registration
         public TypePool(Assembly defaultAssembly)
         {
             _defaultAssembly = defaultAssembly;
+            IgnoreExportTypeFailures = true;
         }
+
+        public bool IgnoreExportTypeFailures { get; set; }
 
         /// <summary>
         /// Ignore the assembly provided as default assemlbly in the constructor when enumerating assemblies
@@ -59,7 +62,30 @@ namespace FubuMVC.Core.Registration
 
                     // TODO:  Good exception message when an assembly blows up on 
                     // GetExportedTypes()
-                    _types.AddRange(Assemblies.SelectMany(x => x.GetExportedTypes()));
+                    _types.AddRange(Assemblies.SelectMany(x =>
+                    {
+                        try
+                        {
+                            return x.GetExportedTypes();    
+                        }
+                        catch (Exception ex)
+                        {
+                            if (IgnoreExportTypeFailures)
+                            {
+                                return new Type[0];
+                            }
+                            else
+                            {
+                                throw new ApplicationException("Unable to find exported types from assembly " + x.FullName, ex);
+                            }
+
+                            
+                            
+                        }
+
+
+                        
+                    }));
                 }
 
 

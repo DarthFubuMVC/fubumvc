@@ -43,7 +43,9 @@ namespace FubuMVC.Core
         private readonly RouteDefinitionResolver _routeResolver = new RouteDefinitionResolver();
         private readonly IList<IServiceRegistry> _serviceRegistrations = new List<IServiceRegistry>();
         private readonly List<IConfigurationAction> _systemPolicies = new List<IConfigurationAction>();
-        private readonly TypePool _types = new TypePool(FindTheCallingAssembly());
+        private readonly TypePool _types = new TypePool(FindTheCallingAssembly()){
+            IgnoreExportTypeFailures = false
+    };
         private readonly ViewAttacherConvention _viewAttacherConvention;
         private readonly ViewBagConventionRunner _bagRunner;
         private IConfigurationObserver _observer;

@@ -131,7 +131,7 @@ namespace Serenity
             StopWebDriver();
         }
 
-        public NavigationDriver Navigation
+        public virtual NavigationDriver Navigation
         {
             get { return new NavigationDriver(this); }
         }
