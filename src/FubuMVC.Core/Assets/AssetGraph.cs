@@ -42,6 +42,11 @@ namespace FubuMVC.Core.Assets
             _dependencyCache = new Cache<AssetFilesKey, IEnumerable<IFileDependency>>(key => new AssetGatherer(this, key.Names).Gather());
         }
 
+        public IEnumerable<string> CorrectForAliases(IEnumerable<string> names)
+        {
+            return names.Select(x => _objects[x].Name);
+        }
+
         public IList<Type> PolicyTypes
         {
             get { return _policyTypes; }

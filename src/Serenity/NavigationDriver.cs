@@ -9,13 +9,37 @@ using Serenity.Endpoints;
 
 namespace Serenity
 {
+    /// <summary>
+    /// Called immediately after navigating the browser to a new url.
+    /// Useful as a way to deal with login pages in a web application
+    /// </summary>
+    public interface IAfterNavigation
+    {
+        void AfterNavigation(IWebDriver driver, string desiredUrl);
+    }
+
+    public class NulloAfterNavigation : IAfterNavigation
+    {
+        public void AfterNavigation(IWebDriver driver, string desiredUrl)
+        {
+            // Do nothing!
+        }
+    }
+
     public class NavigationDriver
     {
         private readonly IApplicationUnderTest _application;
+        private IAfterNavigation _afterNavigation = new NulloAfterNavigation();
 
         public NavigationDriver(IApplicationUnderTest application)
         {
             _application = application;
+        }
+
+        public IAfterNavigation AfterNavigation
+        {
+            get { return _afterNavigation; }
+            set { _afterNavigation = value; }
         }
 
         public void NavigateTo(object target)
@@ -29,24 +53,14 @@ namespace Serenity
         {
             Debug.WriteLine("Navigating to " + url);
             _application.Driver.Navigate().GoToUrl(url);
+
+            _afterNavigation.AfterNavigation(_application.Driver, url);
         }
 
         public void NavigateTo<T>(Expression<Action<T>> expression)
         {
             var url = _application.Urls.UrlFor(expression, null);
-            _application.Driver.Navigate().GoToUrl(url);
-        }
-
-        // TODO -- rename the screen driver and pull it out
-        public ScreenDriver GetCurrentScreen()
-        {
-            return new ScreenDriver(_application.Driver);
-        }
-
-        // TODO -- get this off Application/Navigation
-        public EndpointDriver GetEndpointDriver()
-        {
-            return new EndpointDriver(_application.Urls);
+            NavigateToUrl(url);
         }
 
         public string AssetUrlFor(string file)
@@ -56,7 +70,7 @@ namespace Serenity
 
         public void NavigateToHome()
         {
-            _application.Driver.Navigate().GoToUrl(_application.RootUrl);
+            NavigateToUrl(_application.RootUrl);
         }
 
         // 

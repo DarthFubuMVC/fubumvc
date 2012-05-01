@@ -18,12 +18,12 @@ namespace FubuMVC.Core.UI.Extensibility
 
         private ExtensionsExpression register(Action<ContentExtensionGraph> configure)
         {
-            _registry.Services(x =>
+            _registry.Services(x => x.SetServiceIfNone(new ContentExtensionGraph()));
+
+            _registry.Configure(graph =>
             {
-                throw new NotImplementedException();
-                //x.SetServiceIfNone<ContentExtensionGraph>(new ContentExtensionGraph());
-                //var graph = x.DefaultServiceFor<ContentExtensionGraph>().Value as ContentExtensionGraph;
-                //configure(graph);
+                var contentGraph = graph.Services.DefaultServiceFor<ContentExtensionGraph>().Value as ContentExtensionGraph;
+                configure(contentGraph);
             });
 
             return this;

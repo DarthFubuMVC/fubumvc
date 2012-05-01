@@ -4,6 +4,7 @@ using FubuMVC.Core.Assets;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View;
 using HtmlTags;
+using System.Linq;
 
 namespace FubuMVC.Core.UI
 {
@@ -114,7 +115,8 @@ namespace FubuMVC.Core.UI
         /// <returns></returns>
         public static TagList WriteAssetTagsImmediately(this IFubuPage page, MimeType mimeType, params string[] names)
         {
-            return page.Get<IAssetTagWriter>().WriteTags(mimeType, names);
+            var correctedNames = page.Get<AssetGraph>().CorrectForAliases(names).ToArray();
+            return page.Get<IAssetTagWriter>().WriteTags(mimeType, correctedNames);
         }
 
         /// <summary>
@@ -126,7 +128,9 @@ namespace FubuMVC.Core.UI
         /// <returns></returns>
         public static TagList WriteScriptTagsImmediately(this IFubuPage page, params string[] names)
         {
-            return page.Get<IAssetTagWriter>().WriteTags(MimeType.Javascript, names);
+            var correctedNames = page.Get<AssetGraph>().CorrectForAliases(names).ToArray();
+
+            return page.Get<IAssetTagWriter>().WriteTags(MimeType.Javascript, correctedNames);
         }
         /// <summary>
         /// Write the tags immediately and dequeue them from being rendered again.
@@ -137,7 +141,8 @@ namespace FubuMVC.Core.UI
         /// <returns></returns>
         public static TagList WriteCssTagsImmediately(this IFubuPage page, params string[] names)
         {
-            return page.Get<IAssetTagWriter>().WriteTags(MimeType.Css, names);
+            var correctedNames = page.Get<AssetGraph>().CorrectForAliases(names).ToArray();
+            return page.Get<IAssetTagWriter>().WriteTags(MimeType.Css, correctedNames);
         }
 
 

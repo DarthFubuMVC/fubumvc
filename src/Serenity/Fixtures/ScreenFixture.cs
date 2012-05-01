@@ -7,6 +7,7 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuLocalization;
 using OpenQA.Selenium;
+using Serenity.Endpoints;
 using Serenity.Fixtures.Grammars;
 using StoryTeller;
 using StoryTeller.Assertions;
@@ -39,7 +40,12 @@ namespace Serenity.Fixtures
 
         protected NavigationDriver Navigation
         {
-            get { return new NavigationDriver(_application); }
+            get { return _application.Navigation; }
+        }
+
+        protected EndpointDriver Endpoints
+        {
+            get { return _application.Endpoints(); }
         }
 
         protected IWebDriver Driver

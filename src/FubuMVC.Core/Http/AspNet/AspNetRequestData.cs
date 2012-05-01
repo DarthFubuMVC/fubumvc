@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Routing;
 using FubuCore.Binding;
 using FubuCore.Binding.Values;
+using FubuCore.Util;
 
 namespace FubuMVC.Core.Http.AspNet
 {
@@ -23,6 +24,7 @@ namespace FubuMVC.Core.Http.AspNet
             AddValues(new RouteDataValues(context.RouteData));
 
             var request = context.HttpContext.Request;
+
             addValues(RequestDataSource.Request, key => request[key], () => keysForRequest(request));
 
             var files = request.Files;
@@ -37,7 +39,10 @@ namespace FubuMVC.Core.Http.AspNet
 
         private void addValues(RequestDataSource source, Func<string, object> finder, Func<IEnumerable<string>> findKeys)
         {
-            var valueSource = new GenericValueSource(source.ToString(), finder, findKeys);
+            var values = new SimpleKeyValues(finder, findKeys);
+            var valueSource = new FlatValueSource(values, source.ToString());
+
+            //var valueSource = new GenericValueSource(source.ToString(), finder, findKeys);
             AddValues(valueSource);
         }
 
@@ -52,6 +57,44 @@ namespace FubuMVC.Core.Http.AspNet
             {
                 yield return key;
             }
+        }
+    }
+
+    public class SimpleKeyValues : IKeyValues
+    {
+        private readonly Func<string, object> _source;
+        private readonly Func<IEnumerable<string>> _allKeys;
+
+        public SimpleKeyValues(Func<string, object> source, Func<IEnumerable<string>> allKeys)
+        {
+            _source = source;
+            _allKeys = allKeys;
+        }
+
+        public bool Has(string key)
+        {
+            return _allKeys().Contains(key);
+        }
+
+        public string Get(string key)
+        {
+            return _source(key) as string;
+        }
+
+        public IEnumerable<string> GetKeys()
+        {
+            return _allKeys();
+        }
+
+        public bool ForValue(string key, Action<string, string> callback)
+        {
+            if (Has(key))
+            {
+                callback(key, Get(key));
+                return true;
+            }
+
+            return false;
         }
     }
 }

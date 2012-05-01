@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using FubuMVC.Core.Urls;
 using OpenQA.Selenium;
+using Serenity.Endpoints;
 
 namespace Serenity
 {
@@ -17,6 +18,8 @@ namespace Serenity
         object GetInstance(Type type);
         IEnumerable<T> GetAll<T>();
 
+        // TODO -- don't care for this at all.  Needs to be 
+        // encapsulated into ApplicationUnderTest itself
         void StartWebDriver();
         void StopWebDriver();
         bool IsDriverInUse { get; }
@@ -24,5 +27,9 @@ namespace Serenity
         void Ping();
 
         void Teardown();
+
+        NavigationDriver Navigation { get;}
+        EndpointDriver Endpoints();
+
     }
 }

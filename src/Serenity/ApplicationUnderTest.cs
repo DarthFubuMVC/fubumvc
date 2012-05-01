@@ -8,6 +8,7 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Urls;
 
 using OpenQA.Selenium;
+using Serenity.Endpoints;
 
 namespace Serenity
 {
@@ -128,6 +129,16 @@ namespace Serenity
         public void Teardown()
         {
             StopWebDriver();
+        }
+
+        public NavigationDriver Navigation
+        {
+            get { return new NavigationDriver(this); }
+        }
+
+        public virtual EndpointDriver Endpoints()
+        {
+            return new EndpointDriver(Urls);
         }
 
         public IWebDriver Driver
