@@ -10,6 +10,7 @@ using FubuMVC.Core.Urls;
 
 using OpenQA.Selenium;
 using FubuCore;
+using Serenity.Endpoints;
 
 namespace Serenity
 {
@@ -141,6 +142,16 @@ namespace Serenity
         public void Teardown()
         {
             StopWebDriver();
+        }
+
+        public NavigationDriver Navigation
+        {
+            get { return new NavigationDriver(this); }
+        }
+
+        public EndpointDriver Endpoints()
+        {
+            return new EndpointDriver(Urls);
         }
     }
 }

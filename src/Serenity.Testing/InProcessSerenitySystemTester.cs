@@ -13,6 +13,7 @@ namespace Serenity.Testing
     {
         private NavigationDriver theDriver;
         private InProcessSerenitySystem<KayakApplication> theSystem;
+        private IApplicationUnderTest theApplication;
 
         [TestFixtureSetUp]
         public void SetUp()
@@ -22,7 +23,8 @@ namespace Serenity.Testing
             theSystem.Setup();
             theSystem.RegisterServices(context);
 
-            theDriver = context.Retrieve<NavigationDriver>();
+            theApplication = theSystem.Get<IApplicationUnderTest>();
+            theDriver = theApplication.Navigation;
         }
 
         [TestFixtureTearDown]
@@ -41,7 +43,7 @@ namespace Serenity.Testing
         [Test]
         public void can_get_with_no_body()
         {
-            theDriver.GetEndpointDriver().ReadTextFrom<SayHelloController>(x => x.Hello())
+            theApplication.Endpoints().ReadTextFrom<SayHelloController>(x => x.Hello())
                 .ShouldStartWith("Hello");
         }
 
@@ -55,7 +57,7 @@ namespace Serenity.Testing
         [Test]
         public void can_post()
         {
-            var driver = theDriver.GetEndpointDriver();
+            var driver = theApplication.Endpoints();
             var response = driver.PostJson(new NameModel{
                 Name = "Jeremy"
             });

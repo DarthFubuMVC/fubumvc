@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using FubuMVC.Core.Urls;
 using OpenQA.Selenium;
+using Serenity.Endpoints;
 
 namespace Serenity
 {
@@ -24,5 +25,9 @@ namespace Serenity
         void Ping();
 
         void Teardown();
+
+        NavigationDriver Navigation { get;}
+        EndpointDriver Endpoints();
+
     }
 }

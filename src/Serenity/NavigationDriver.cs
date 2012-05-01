@@ -37,18 +37,6 @@ namespace Serenity
             _application.Driver.Navigate().GoToUrl(url);
         }
 
-        // TODO -- rename the screen driver and pull it out
-        public ScreenDriver GetCurrentScreen()
-        {
-            return new ScreenDriver(_application.Driver);
-        }
-
-        // TODO -- get this off Application/Navigation
-        public EndpointDriver GetEndpointDriver()
-        {
-            return new EndpointDriver(_application.Urls);
-        }
-
         public string AssetUrlFor(string file)
         {
             return _application.RootUrl + ("/_content/" + file).Replace("//", "/");
