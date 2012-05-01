@@ -136,7 +136,7 @@ namespace Serenity
             get { return new NavigationDriver(this); }
         }
 
-        public EndpointDriver Endpoints()
+        public virtual EndpointDriver Endpoints()
         {
             return new EndpointDriver(Urls);
         }
