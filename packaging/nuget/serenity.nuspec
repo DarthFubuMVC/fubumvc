@@ -15,16 +15,15 @@
       <dependency id="FubuMVC.References"/>
       <dependency id="FubuKayak" />
       <dependency id="StoryTeller" />
-
-
-
+      <dependency id="Selenium.RC" version="2.21.0"/>
+      <dependency id="Selenium.Support" version="2.21.0"/>
+      <dependency id="Selenium.WebDriver" version="2.21.0"/>
+      <dependency id="Selenium.WebDriverBackedSelenium" version="2.21.0"/>
     </dependencies>
   </metadata>
   <files>
 
     <file src="..\..\src\SerenityRunner\bin\release\Serenity.dll" target="lib\net40" />
-<file src="..\..\src\SerenityRunner\bin\release\WebDriver.dll" target="lib\net40" />
-<file src="..\..\src\Serenity\bin\release\Selenium.WebDriverBackedSelenium.dll" target="lib\net40" />
 
     <file src="..\..\src\SerenityRunner\bin\release\*.dll" target="tools" />
     <file src="..\..\src\SerenityRunner\bin\release\SerenityRunner.exe.config" target="tools" />
