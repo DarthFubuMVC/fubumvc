@@ -6,6 +6,8 @@ using FubuCore;
 
 namespace FubuMVC.OwinHost
 {
+    using FubuMVC.Core;
+
     public class FormRequestReader : IOwinRequestReader
     {
         private readonly Action<IDictionary<string, string>> _finish;

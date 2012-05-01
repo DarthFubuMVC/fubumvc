@@ -43,14 +43,8 @@
     <Reference Include="HtmlTags">
       <HintPath>..\packages\HtmlTags.1.0.0.56\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.mocks">
-      <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.mocks.dll</HintPath>
-    </Reference>
-    <Reference Include="pnunit.framework">
-      <HintPath>..\packages\NUnit.2.5.10.11092\lib\pnunit.framework.dll</HintPath>
+     <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.0.12054\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="Rhino.Mocks">
       <HintPath>..\packages\RhinoMocks.3.6\lib\Rhino.Mocks.dll</HintPath>

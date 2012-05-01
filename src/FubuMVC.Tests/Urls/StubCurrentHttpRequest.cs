@@ -1,8 +1,9 @@
+using FubuMVC.Core;
 using FubuMVC.Core.Http;
-using FubuCore;
 
 namespace FubuMVC.Tests.Urls
 {
+
     public class StubCurrentHttpRequest : ICurrentHttpRequest
     {
         public string TheRawUrl;

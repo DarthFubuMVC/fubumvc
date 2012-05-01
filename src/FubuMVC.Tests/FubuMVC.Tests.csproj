@@ -58,13 +58,7 @@
       <HintPath>..\packages\Milkman.Deployers.IIS.0.9.1.226\lib\Milkman.Deployers.Iis.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.mocks">
-      <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.mocks.dll</HintPath>
-    </Reference>
-    <Reference Include="pnunit.framework">
-      <HintPath>..\packages\NUnit.2.5.10.11092\lib\pnunit.framework.dll</HintPath>
+      <HintPath>..\packages\NUnit.2.6.0.12054\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="Rhino.Mocks">
       <HintPath>..\packages\RhinoMocks.3.6\lib\Rhino.Mocks.dll</HintPath>
@@ -183,6 +177,7 @@
     <Compile Include="Commands\PackagesCommandTester.cs" />
     <Compile Include="Commands\usage_graph_smoke_tester.cs" />
     <Compile Include="ConnegAttributeTester.cs" />
+    <Compile Include="Core\UrlContextTester.cs" />
     <Compile Include="FakeHttpContext.cs" />
     <Compile Include="FubuApplicationTester.cs" />
     <Compile Include="FubuModeTester.cs" />
@@ -612,7 +607,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Commands\Packages\" />
-    <Folder Include="Core\" />
     <Folder Include="DSL\" />
     <Folder Include="Results\" />
     <Folder Include="View\FakeViews\Folder1\Folder2\Folder3\" />
