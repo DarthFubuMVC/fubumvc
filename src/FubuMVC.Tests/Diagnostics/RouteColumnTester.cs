@@ -1,5 +1,5 @@
 using System;
-using FubuMVC.Core.Diagnostics;
+
 using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Diagnostics.HtmlWriting.Columns;
 using FubuMVC.Core.Diagnostics.Tracing;
@@ -9,10 +9,11 @@ using FubuMVC.Core.Registration.Routes;
 using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
-using FubuCore;
 
 namespace FubuMVC.Tests.Diagnostics
 {
+    using FubuMVC.Core;
+
     public class StubCurrentHttpRequest : ICurrentHttpRequest
     {
         private readonly string _baseUrl;
