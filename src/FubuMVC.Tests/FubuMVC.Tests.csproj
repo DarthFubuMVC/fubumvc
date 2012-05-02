@@ -217,6 +217,7 @@
     <Compile Include="Registration\Conventions\actions_that_return_IDictionary_are_json.cs" />
     <Compile Include="Registration\Conventions\ApplyingACustomViewBagConvention.cs" />
     <Compile Include="Registration\Conventions\AsyncContinueWithHandlerConventionTester.cs" />
+    <Compile Include="Registration\Conventions\JsonMessageInputConventionTester.cs" />
     <Compile Include="Registration\Conventions\Handlers\Posts\PostHandler.cs" />
     <Compile Include="Registration\Conventions\JsonAttributeTesting.cs" />
     <Compile Include="Registration\Conventions\MediaExpressionAndConnegAttachmentPolicyTester.cs" />
