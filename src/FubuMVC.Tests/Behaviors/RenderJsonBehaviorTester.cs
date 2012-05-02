@@ -1,4 +1,5 @@
 using System.Net.Mime;
+using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
