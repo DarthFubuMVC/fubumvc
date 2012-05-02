@@ -1,9 +1,11 @@
 using System;
 using FubuCore;
+using FubuMVC.Core;
 using FubuMVC.Core.Http;
 
 namespace FubuMVC.OwinHost
 {
+
     public class OwinCurrentHttpRequest : ICurrentHttpRequest
     {
         private readonly Lazy<string> _baseUrl;

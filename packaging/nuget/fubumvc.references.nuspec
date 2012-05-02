@@ -14,7 +14,7 @@
     <dependencies>
       <dependency id="Bottles" version="0.9.1.222" />
       <dependency id="CommonServiceLocator" />
-      <dependency id="FubuCore" version="0.9.9.136" />
+      <dependency id="FubuCore" version="0.9.9.151" />
       <dependency id="FubuLocalization" version="0.9.5.15" />
       <dependency id="HtmlTags" version="1.0.0" />
       <dependency id="StructureMap" />

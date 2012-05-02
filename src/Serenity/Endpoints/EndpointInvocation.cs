@@ -8,6 +8,8 @@ using FubuCore;
 
 namespace Serenity.Endpoints
 {
+    using FubuMVC.Core;
+
     public class EndpointInvocation
     {
         public string Accept = "*/*";

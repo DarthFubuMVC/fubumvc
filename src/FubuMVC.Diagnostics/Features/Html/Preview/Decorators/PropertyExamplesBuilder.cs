@@ -7,6 +7,8 @@ using HtmlTags;
 
 namespace FubuMVC.Diagnostics.Features.Html.Preview.Decorators
 {
+    using FubuMVC.Core;
+
     public class PropertyExamplesBuilder : IPreviewModelDecorator
     {
         private readonly IModelPopulator _populator;
