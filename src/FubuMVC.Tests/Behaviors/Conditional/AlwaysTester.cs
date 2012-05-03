@@ -1,4 +1,5 @@
 using FubuMVC.Core.Behaviors.Conditional;
+using FubuMVC.Core.Runtime.Conditionals;
 using NUnit.Framework;
 using FubuTestingSupport;
 

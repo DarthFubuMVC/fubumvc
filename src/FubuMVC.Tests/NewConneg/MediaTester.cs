@@ -1,6 +1,7 @@
 using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Resources.Conneg.New;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Runtime.Conditionals;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;

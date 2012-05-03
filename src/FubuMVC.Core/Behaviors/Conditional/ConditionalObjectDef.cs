@@ -2,6 +2,7 @@ using System;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
 using FubuCore;
+using FubuMVC.Core.Runtime.Conditionals;
 
 namespace FubuMVC.Core.Behaviors.Conditional
 {

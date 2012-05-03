@@ -1,4 +1,4 @@
-namespace FubuMVC.Core.Behaviors.Conditional
+namespace FubuMVC.Core.Runtime.Conditionals
 {
     public class Never : IConditional
     {

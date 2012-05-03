@@ -4,6 +4,7 @@ using FubuCore;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Registration.Diagnostics;
+using FubuMVC.Core.Runtime.Conditionals;
 
 namespace FubuMVC.Core.Registration.Nodes
 {

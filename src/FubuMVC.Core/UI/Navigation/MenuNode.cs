@@ -6,6 +6,7 @@ using FubuLocalization;
 using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
+using FubuMVC.Core.Runtime.Conditionals;
 
 namespace FubuMVC.Core.UI.Navigation
 {

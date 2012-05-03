@@ -5,6 +5,7 @@ using System.Linq;
 using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Runtime.Conditionals;
 
 namespace FubuMVC.Core.View.Attachment
 {

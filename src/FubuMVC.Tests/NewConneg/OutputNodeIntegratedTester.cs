@@ -6,6 +6,7 @@ using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg.New;
+using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.Runtime.Formatters;
 using FubuMVC.StructureMap;
 using NUnit.Framework;

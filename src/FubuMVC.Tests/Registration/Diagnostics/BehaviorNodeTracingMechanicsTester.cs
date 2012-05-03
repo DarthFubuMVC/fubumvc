@@ -5,6 +5,7 @@ using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.Security;
 using NUnit.Framework;
 using System.Linq;

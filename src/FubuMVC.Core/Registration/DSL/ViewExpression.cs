@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.View;
 using System.Collections.Generic;
 using FubuMVC.Core.View.Activation;

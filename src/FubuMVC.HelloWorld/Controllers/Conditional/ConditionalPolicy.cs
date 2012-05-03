@@ -2,6 +2,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Runtime.Conditionals;
 
 namespace FubuMVC.HelloWorld.Controllers.Conditional
 {

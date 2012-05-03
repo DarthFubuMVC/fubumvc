@@ -2,7 +2,7 @@ using System;
 using FubuCore;
 using FubuCore.Util;
 
-namespace FubuMVC.Core.Behaviors.Conditional
+namespace FubuMVC.Core.Runtime.Conditionals
 {
     public class ConditionalService : IConditionalService
     {

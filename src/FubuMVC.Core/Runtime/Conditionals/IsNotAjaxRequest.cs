@@ -1,6 +1,6 @@
 using FubuCore.Binding;
 
-namespace FubuMVC.Core.Behaviors.Conditional
+namespace FubuMVC.Core.Runtime.Conditionals
 {
     public class IsNotAjaxRequest : LambdaConditional<IRequestData>
     {

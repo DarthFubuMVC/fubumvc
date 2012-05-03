@@ -1,4 +1,4 @@
-namespace FubuMVC.Core.Behaviors.Conditional
+namespace FubuMVC.Core.Runtime.Conditionals
 {
     // TODO -- I think this should be in Runtime
     public class Always : IConditional

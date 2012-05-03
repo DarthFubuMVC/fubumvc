@@ -6,6 +6,7 @@ using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.StructureMap;
 using NUnit.Framework;
 using Rhino.Mocks;

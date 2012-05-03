@@ -2,6 +2,7 @@ using System;
 using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.StructureMap;
 using NUnit.Framework;
 using StructureMap;

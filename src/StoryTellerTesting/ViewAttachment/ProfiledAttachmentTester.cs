@@ -4,6 +4,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Runtime.Conditionals;
 using IntegrationTesting.Conneg;
 using NUnit.Framework;
 using FubuMVC.Spark;
