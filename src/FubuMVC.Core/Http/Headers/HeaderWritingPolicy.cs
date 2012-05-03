@@ -7,6 +7,7 @@ using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Http.Headers
 {
+    // TODO -- just write this into OutputBehavior
     public class HeaderWritingPolicy : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)
