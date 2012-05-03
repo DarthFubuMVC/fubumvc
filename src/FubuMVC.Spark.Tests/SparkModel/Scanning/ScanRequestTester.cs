@@ -23,6 +23,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Scanning
         {
             ClassUnderTest.IncludeSparkViews();
             ClassUnderTest.Filters.ShouldContain("*{0}".ToFormat(Constants.DotSpark));
+            ClassUnderTest.Filters.ShouldContain("*{0}".ToFormat(Constants.DotShade));
         }
 
         [Test]
@@ -34,8 +35,8 @@ namespace FubuMVC.Spark.Tests.SparkModel.Scanning
         [Test]
         public void include_puts_the_filter_into_the_filters_expression()
         {
-            new[] { "*.spark", "*.view", "*.template" }.Each(ClassUnderTest.Include);
-            ClassUnderTest.Filters.ShouldEqual("*.spark;*.view;*.template");
+            new[] { "*.spark", "*.shade", "*.view", "*.template" }.Each(ClassUnderTest.Include);
+            ClassUnderTest.Filters.ShouldEqual("*.spark;*.shade;*.view;*.template");
         }
 
         [Test]
