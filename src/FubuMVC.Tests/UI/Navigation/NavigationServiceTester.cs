@@ -1,10 +1,9 @@
 using System;
 using System.Net;
 using FubuLocalization;
-using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Security;
+using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.UI.Navigation;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -13,100 +12,68 @@ using Rhino.Mocks;
 namespace FubuMVC.Tests.UI.Navigation
 {
     [TestFixture]
-    public class Determining_MenuItemState_from_a_MenuNode : InteractionContext<NavigationService>
+    public class when_building_a_MenuItemToken_for_a_single_node : InteractionContext<NavigationService>
     {
         private MenuNode theNode;
         private BehaviorChain theChain;
+        private MenuItemToken theToken;
 
         protected override void beforeEach()
         {
             theChain = new BehaviorChain();
+            theChain.Route = new RouteDefinition("something"){
+                Input = new RouteInput<FakeInput>("somepattern")
+            };
+            
 
             theNode = new MenuNode(FakeKeys.Key1, r => theChain);
             theNode.Resolve(null);
             theNode.BehaviorChain.ShouldBeTheSameAs(theChain);
             theNode.UrlInput = new object();
-        }
 
-        private void theRightsAre(AuthorizationRight right)
-        {
-            MockFor<IChainAuthorizor>().Stub(x => x.Authorize(theNode.BehaviorChain, theNode.UrlInput))
-                .Return(right);
-        }
+            theNode.Children.AddToEnd(new MenuNode(FakeKeys.Key2));
+            theNode.Children.AddToEnd(new MenuNode(FakeKeys.Key3));
+            theNode.Children.AddToEnd(new MenuNode(FakeKeys.Key4));
 
-        [Test]
-        public void when_the_chain_is_not_authorized_with_the_default_unauthorized_state()
-        {
-            theRightsAre(AuthorizationRight.None);
+            MockFor<IMenuStateService>().Stub(x => x.DetermineStateFor(theNode))
+                .Return(MenuItemState.Available);
 
-            ClassUnderTest.DetermineStateFor(theNode)
-                .ShouldEqual(MenuItemState.Hidden);
+            MockFor<ICurrentHttpRequest>().Stub(x => x.ToFullUrl(theNode.CreateUrl()))
+                .Return("the full url");
+
+            theToken = ClassUnderTest.BuildToken(theNode);
         }
 
         [Test]
-        public void when_the_chain_is_not_authorized_with_the_default_unauthorized_state_2()
+        public void has_state_from_the_state_service()
         {
-            theRightsAre(AuthorizationRight.Deny);
-
-            ClassUnderTest.DetermineStateFor(theNode)
-                .ShouldEqual(MenuItemState.Hidden);
-        }
-
-
-        [Test]
-        public void when_the_chain_is_not_authorized_and_the_unauthorized_state_is_disabled()
-        {
-            theRightsAre(AuthorizationRight.None);
-            theNode.UnauthorizedState = MenuItemState.Disabled;
-
-            ClassUnderTest.DetermineStateFor(theNode)
-                .ShouldEqual(MenuItemState.Disabled);
+            theToken.MenuItemState.ShouldEqual(MenuItemState.Available);
         }
 
         [Test]
-        public void when_the_chain_is_not_authorized_and_the_unauthorized_state_is_disabled_2()
+        public void has_the_key()
         {
-            theRightsAre(AuthorizationRight.Deny);
-            theNode.UnauthorizedState = MenuItemState.Disabled;
-
-            ClassUnderTest.DetermineStateFor(theNode)
-                .ShouldEqual(MenuItemState.Disabled);
+            theToken.Key.ShouldEqual(theNode.Key.Key);
         }
 
         [Test]
-        public void assuming_that_authorization_is_fine_state_should_be_active_if_this_is_the_currently_displayed_chain()
+        public void has_the_text_from_the_StringTOken_on_the_node()
         {
-            theRightsAre(AuthorizationRight.Allow);
-            MockFor<ICurrentChain>().Stub(x => x.OriginatingChain).Return(theNode.BehaviorChain);
-
-            ClassUnderTest.DetermineStateFor(theNode)
-                .ShouldEqual(MenuItemState.Active);
+            theToken.Text.ShouldEqual(theNode.Key.ToString());
         }
 
         [Test]
-        public void authenticated_but_not_the_current_chain_and_enabled_condition_returns_true()
+        public void has_the_url()
         {
-            theRightsAre(AuthorizationRight.Allow);
-            theNode.IsEnabledConditionType = typeof (FakeConditional);
-
-            MockFor<IConditionalService>().Stub(x => x.IsTrue(typeof (FakeConditional)))
-                .Return(true);
-
-            ClassUnderTest.DetermineStateFor(theNode)
-                .ShouldEqual(MenuItemState.Available);
+            theToken.Url.ShouldEqual("the full url");
         }
 
         [Test]
-        public void authenticated_but_not_the_current_chain_and_enabled_condition_returns_false()
+        public void has_children()
         {
-            theRightsAre(AuthorizationRight.Allow);
-            theNode.IsEnabledConditionType = typeof(FakeConditional);
-
-            MockFor<IConditionalService>().Stub(x => x.IsTrue(typeof(FakeConditional)))
-                .Return(false);
-
-            ClassUnderTest.DetermineStateFor(theNode)
-                .ShouldEqual(MenuItemState.Disabled);
+            theToken.Children.ShouldHaveCount(3);
         }
     }
+
+
 }

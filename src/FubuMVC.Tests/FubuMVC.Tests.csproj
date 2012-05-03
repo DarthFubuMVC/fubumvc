@@ -354,6 +354,7 @@
     <Compile Include="UI\HtmlTagExtensionsTester.cs" />
     <Compile Include="UI\ImageExpressionTester.cs" />
     <Compile Include="UI\ImageForExtensionMethodTester.cs" />
+    <Compile Include="UI\Navigation\Determining_MenuItemState_from_a_MenuNode.cs" />
     <Compile Include="UI\Navigation\MenuChainTester.cs" />
     <Compile Include="UI\Navigation\MenuNodeTester.cs" />
     <Compile Include="UI\Navigation\NavigationServiceTester.cs" />

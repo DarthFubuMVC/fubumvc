@@ -19,30 +19,25 @@ namespace FubuMVC.Core.UI.Navigation
         IEnumerable<MenuItemToken> MenuFor(StringToken key);
     }
 
-    public class NavigationService : INavigationService
+    public interface IMenuStateService
     {
-        private readonly ICurrentHttpRequest _request;
+        MenuItemState DetermineStateFor(MenuNode node);
+    }
+
+    public class MenuStateService : IMenuStateService
+    {
         private readonly IChainAuthorizor _authorizor;
         private readonly ICurrentChain _current;
         private readonly IConditionalService _conditionals;
-        private readonly NavigationGraph _navigation;
 
-        public NavigationService(BehaviorGraph graph, ICurrentHttpRequest request, IChainAuthorizor authorizor, ICurrentChain current, IConditionalService conditionals)
+        public MenuStateService(IChainAuthorizor authorizor, ICurrentChain current, IConditionalService conditionals)
         {
-            _request = request;
             _authorizor = authorizor;
             _current = current;
             _conditionals = conditionals;
-            _navigation = graph.Navigation;
         }
 
-        public IEnumerable<MenuItemToken> MenuFor(StringToken key)
-        {
-            var chain = _navigation.MenuFor(key);
-            return chain.Select(BuildToken);
-        }
-
-        public MenuItemState DetermineStateFor(MenuNode node)
+        public virtual MenuItemState DetermineStateFor(MenuNode node)
         {
             var rights = _authorizor.Authorize(node.BehaviorChain, node.UrlInput);
             if (rights != AuthorizationRight.Allow)
@@ -62,16 +57,46 @@ namespace FubuMVC.Core.UI.Navigation
 
             return MenuItemState.Disabled;
         }
+    }
+
+    public class NavigationService : INavigationService
+    {
+        private readonly ICurrentHttpRequest _request;
+        private readonly IMenuStateService _stateService;
+
+        private readonly NavigationGraph _navigation;
+
+        public NavigationService(BehaviorGraph graph, ICurrentHttpRequest request, IMenuStateService stateService)
+        {
+            _request = request;
+            _stateService = stateService;
+            _navigation = graph.Navigation;
+        }
+
+        public IEnumerable<MenuItemToken> MenuFor(StringToken key)
+        {
+            var chain = _navigation.MenuFor(key);
+            return chain.Select(BuildToken);
+        }
+
+
 
         public MenuItemToken BuildToken(MenuNode node)
         {
-            return new MenuItemToken{
+            var token = new MenuItemToken{
                 Children = node.Children.Select(BuildToken).ToArray(),
                 Key = node.Key.Key,
                 Text = node.Key.ToString(),
-                Url = _request.ToFullUrl(node.CreateUrl()),
-                MenuItemState = DetermineStateFor(node)
+                
+                MenuItemState = _stateService.DetermineStateFor(node)
             };
+
+            if (node.Type == MenuNodeType.Leaf)
+            {
+                token.Url = _request.ToFullUrl(node.CreateUrl());
+            }
+
+            return token;
         }
     }
 

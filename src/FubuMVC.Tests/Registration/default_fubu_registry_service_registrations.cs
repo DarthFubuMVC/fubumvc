@@ -42,6 +42,12 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void menu_state_service_is_registered()
+        {
+            registeredTypeIs<IMenuStateService, MenuStateService>();
+        }
+
+        [Test]
         public void navigation_activator_is_registered()
         {
             new FubuRegistry().BuildGraph().Services.ServicesFor<IActivator>()
