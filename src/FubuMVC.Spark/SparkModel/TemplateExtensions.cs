@@ -8,7 +8,7 @@ namespace FubuMVC.Spark.SparkModel
     {
         public static bool IsSparkView(this ITemplate template)
 		{
-            return Path.GetExtension(template.FilePath).EqualsIgnoreCase(Constants.DotSpark);
+            return Path.GetExtension(template.FilePath).EqualsIgnoreCase(Constants.DotSpark) || Path.GetExtension(template.FilePath).EqualsIgnoreCase(Constants.DotShade);
         }
 
         public static bool IsXml(this ITemplate template)

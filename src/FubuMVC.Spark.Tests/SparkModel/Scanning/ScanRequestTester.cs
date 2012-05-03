@@ -22,7 +22,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Scanning
         public void include_spark_views_adds_correct_filter()
         {
             ClassUnderTest.IncludeSparkViews();
-            ClassUnderTest.Filters.ShouldContain("*{0}".ToFormat(Constants.DotSpark));
+            ClassUnderTest.Filters.ShouldContain("*{0}|*{1}".ToFormat(Constants.DotSpark, Constants.DotShade));
         }
 
         [Test]

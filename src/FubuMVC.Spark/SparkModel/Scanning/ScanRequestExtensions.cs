@@ -8,7 +8,7 @@ namespace FubuMVC.Spark.SparkModel.Scanning
 	{
         public static void IncludeSparkViews(this ScanRequest request)
 		{
-			var pattern = "*{0}".ToFormat(Constants.DotSpark);
+			var pattern = "*{0}|*{1}".ToFormat(Constants.DotSpark, Constants.DotShade);
 			request.Include(pattern);
         }
     }
