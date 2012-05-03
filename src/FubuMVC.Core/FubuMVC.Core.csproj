@@ -95,11 +95,14 @@
     <Compile Include="Assets\RecordingAssetRegistration.cs" />
     <Compile Include="Behaviors\AsyncContinueWithBehavior.cs" />
     <Compile Include="Behaviors\AsyncInterceptExceptionBehavior.cs" />
+    <Compile Include="Behaviors\Conditional\Always.cs" />
     <Compile Include="Behaviors\Conditional\ConditionalBehavior.cs" />
     <Compile Include="Behaviors\Conditional\ConditionalBehaviorInvoker.cs" />
     <Compile Include="Behaviors\Conditional\ConditionalObjectDef.cs" />
+    <Compile Include="Behaviors\Conditional\ConditionalService.cs" />
     <Compile Include="Behaviors\Conditional\IConditional.cs" />
     <Compile Include="Behaviors\Conditional\IConditionalBehavior.cs" />
+    <Compile Include="Behaviors\Conditional\IConditionalService.cs" />
     <Compile Include="Behaviors\Conditional\IsAjaxRequest.cs" />
     <Compile Include="Behaviors\Conditional\IsNotAjaxRequest.cs" />
     <Compile Include="Behaviors\Conditional\LambdaConditional.cs" />
@@ -178,6 +181,7 @@
     <Compile Include="Assets\Content\TransformerComparer.cs" />
     <Compile Include="Assets\Content\TransformerPolicy.cs" />
     <Compile Include="Assets\Content\TransformerPolicyLibrary.cs" />
+    <Compile Include="Behaviors\Conditional\Never.cs" />
     <Compile Include="Behaviors\DataContractJsonReader.cs" />
     <Compile Include="Behaviors\DownloadFileBehavior.cs" />
     <Compile Include="Behaviors\IJsonReader.cs" />

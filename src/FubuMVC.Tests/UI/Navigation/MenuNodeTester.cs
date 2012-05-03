@@ -16,6 +16,13 @@ namespace FubuMVC.Tests.UI.Navigation
     public class MenuNodeTester
     {
         [Test]
+        public void un_authorized_state_is_hidden_by_default()
+        {
+            MenuNode.ForCreatorOf<Address>(StringToken.FromKeyString("something"))
+                .UnauthorizedState.ShouldEqual(MenuItemState.Hidden);
+        }
+
+        [Test]
         public void positive_case_of_setting_is_enabled_type()
         {
             var node = MenuNode.ForCreatorOf<Address>(StringToken.FromKeyString("something"));

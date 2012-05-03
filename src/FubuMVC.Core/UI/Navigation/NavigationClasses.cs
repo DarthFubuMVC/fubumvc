@@ -27,7 +27,7 @@ namespace FubuMVC.Core.UI.Navigation
         private readonly IChainAuthorizor _authorizor;
         private NavigationGraph _navigation;
 
-        public NavigationService(BehaviorGraph graph, ICurrentHttpRequest request, IChainAuthorizor authorizor)
+        public NavigationService(BehaviorGraph graph, ICurrentHttpRequest request, IChainAuthorizor authorizor, ICurrentChain current)
         {
             _request = request;
             _authorizor = authorizor;
@@ -39,8 +39,10 @@ namespace FubuMVC.Core.UI.Navigation
             var rights = _authorizor.Authorize(node.BehaviorChain, node.UrlInput);
             if (rights != AuthorizationRight.Allow)
             {
-                return MenuItemState.Hidden;
+                return node.UnauthorizedState;
             }
+
+
 
             throw new NotImplementedException();
         }

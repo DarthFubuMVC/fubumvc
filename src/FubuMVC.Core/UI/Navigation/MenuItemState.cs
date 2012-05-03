@@ -7,6 +7,7 @@ namespace FubuMVC.Core.UI.Navigation
         public static MenuItemState Hidden = new MenuItemState("Hidden", 0, false, false);
         public static MenuItemState Disabled = new MenuItemState("Disabled", 1, true, false);
         public static MenuItemState Available = new MenuItemState("Available", 2, true, true);
+        public static MenuItemState Active = new MenuItemState("Active", 3, true, true);
         private readonly string _name;
         private readonly int _level;
         private readonly bool _isShown;

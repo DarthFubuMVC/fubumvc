@@ -171,6 +171,7 @@
     <Compile Include="Behaviors\Conditional\building_conditional_behaviors_from_object_defs_testing.cs" />
     <Compile Include="Behaviors\Conditional\ConditionalBehaviorInvokerTester.cs" />
     <Compile Include="Behaviors\Conditional\ConditionalObjectDefTester.cs" />
+    <Compile Include="Behaviors\Conditional\ConditionalServiceTester.cs" />
     <Compile Include="Behaviors\Conditional\when_condition_is_false.cs" />
     <Compile Include="Behaviors\Conditional\when_condition_is_true.cs" />
     <Compile Include="Behaviors\InterceptExceptionBehaviorTester.cs" />

@@ -5,6 +5,7 @@ using FubuCore.Conversion;
 using FubuCore.Formatting;
 using FubuCore.Reflection;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
@@ -72,6 +73,8 @@ namespace FubuMVC.Core
             AddService<IFormatter>(typeof (XmlFormatter));
 
             SetServiceIfNone<IEtagCache, EtagCache>();
+
+            SetServiceIfNone<IConditionalService, ConditionalService>();
         }
     }
 }

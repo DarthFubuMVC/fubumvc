@@ -47,5 +47,12 @@ namespace FubuMVC.Tests.UI.Navigation
             MenuItemState.Available.IsEnabled.ShouldBeTrue();
             MenuItemState.Available.IsShown.ShouldBeTrue();
         }
+
+        [Test]
+        public void active_is_enabled_and_shown()
+        {
+            MenuItemState.Active.IsEnabled.ShouldBeTrue();
+            MenuItemState.Active.IsShown.ShouldBeTrue();
+        }
     }
 }

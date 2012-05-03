@@ -7,6 +7,7 @@ using FubuCore.Conversion;
 using FubuCore.Formatting;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
@@ -31,6 +32,12 @@ namespace FubuMVC.Tests.Registration
         {
             new FubuRegistry().BuildGraph().Services.DefaultServiceFor<TService>().Type.ShouldEqual(
                 typeof (TImplementation));
+        }
+
+        [Test]
+        public void the_conditional_service_is_registered()
+        {
+            registeredTypeIs<IConditionalService, ConditionalService>();
         }
 
         [Test]

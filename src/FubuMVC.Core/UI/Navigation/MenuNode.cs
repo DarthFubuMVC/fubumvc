@@ -26,13 +26,22 @@ namespace FubuMVC.Core.UI.Navigation
         }
 
         public MenuNode(StringToken key, Func<IChainResolver, BehaviorChain> finder)
+            : this(key)
         {
             _type = MenuNodeType.Leaf;
-            _key = key;
             _finder = finder;
+        }
 
-            // think it's fine to do this
-            Children = new MenuChain(key);
+        private MenuItemState _unauthorizedState = MenuItemState.Hidden;
+
+        /// <summary>
+        /// Sets what state this menu item would be if the authorization
+        /// fails for the user.
+        /// </summary>
+        public MenuItemState UnauthorizedState
+        {
+            get { return _unauthorizedState ?? MenuItemState.Hidden; }
+            set { _unauthorizedState = value; }
         }
 
         public StringToken Key
