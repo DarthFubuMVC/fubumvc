@@ -19,7 +19,6 @@ namespace FubuMVC.Core.Behaviors
             _action = action;
         }
 
-        // TODO:  Harden against failures?
         protected override DoNext performInvoke()
         {
             var input = _request.Get<TInput>();

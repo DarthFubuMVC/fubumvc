@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Resources.Conneg.New
@@ -30,6 +31,8 @@ namespace FubuMVC.Core.Resources.Conneg.New
         // TODO -- Runtime tracing
         public void Write()
         {
+            WriteHeaders();
+
             var mimeTypes = _request.Get<CurrentMimeType>();
             var media = SelectMedia(mimeTypes);
 
@@ -45,6 +48,13 @@ namespace FubuMVC.Core.Resources.Conneg.New
                 var outputMimetype = mimeTypes.SelectFirstMatching(media.Mimetypes);
                 media.Write(outputMimetype, resource);
             }
+        }
+
+        public void WriteHeaders()
+        {
+            _request.Find<IHaveHeaders>()
+                .SelectMany(x => x.Headers)
+                .Each(x => x.Write(_writer));
         }
 
         public virtual IMedia<T> SelectMedia(CurrentMimeType mimeTypes)

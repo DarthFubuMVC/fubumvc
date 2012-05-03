@@ -79,12 +79,5 @@ namespace FubuMVC.Tests.Assets.Http
 
         }
 
-        [Test]
-        public void should_have_a_header_handler()
-        {
-            theChain.OfType<Process>().Any(x => x.BehaviorType == typeof (WriteHeadersBehavior))
-                .ShouldBeTrue();
-        }
-
     }
 }

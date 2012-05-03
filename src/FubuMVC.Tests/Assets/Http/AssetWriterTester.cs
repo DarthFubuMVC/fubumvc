@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Net;
 using FubuMVC.Core.Assets.Caching;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Resources.Etags;
+using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -18,7 +20,6 @@ namespace FubuMVC.Tests.Assets.Http
         private string theEtag;
         private AssetFile[] theFiles;
         private AssetPath theAssetPath;
-        private HttpHeaderValues theHeaders;
 
         protected override void beforeEach()
         {
@@ -37,7 +38,7 @@ namespace FubuMVC.Tests.Assets.Http
                 .Stub(x => x.Create(theFiles))
                 .Return(theEtag);
 
-            theHeaders = ClassUnderTest.Write(theAssetPath);
+            ClassUnderTest.Write(theAssetPath);
         }
 
         [Test]
@@ -49,7 +50,7 @@ namespace FubuMVC.Tests.Assets.Http
         [Test]
         public void should_apply_the_etag_from_all_the_files_to_the_returned_value()
         {
-            theHeaders[HttpResponseHeaders.ETag].ShouldEqual("12345");
+            MockFor<IOutputWriter>().AssertWasCalled(x => x.AppendHeader(HttpResponseHeader.ETag, "12345"));
         }
 
         [Test]

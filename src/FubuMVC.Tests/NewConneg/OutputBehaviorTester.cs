@@ -1,6 +1,7 @@
 using System;
 using System.Net;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Resources.Conneg.New;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
@@ -11,6 +12,35 @@ using System.Linq;
 
 namespace FubuMVC.Tests.NewConneg
 {
+    [TestFixture]
+    public class when_there_are_outputs_that_would_write_headers : InteractionContext<OutputBehavior<Address>>
+    {
+        protected override void beforeEach()
+        {
+            var headers1 = new HttpHeaderValues();
+            headers1["a"] = "1";
+            headers1["b"] = "2";
+
+            var headers2 = new HttpHeaderValues();
+            headers2["c"] = "3";
+            headers2["d"] = "4";
+
+            MockFor<IFubuRequest>().Stub(x => x.Find<IHaveHeaders>()).Return(new IHaveHeaders[] { headers1, headers2 });
+
+            ClassUnderTest.WriteHeaders();
+        }
+
+
+        [Test]
+        public void should_write_all_possible_headers()
+        {
+            MockFor<IOutputWriter>().AssertWasCalled(x => x.AppendHeader("a", "1"));
+            MockFor<IOutputWriter>().AssertWasCalled(x => x.AppendHeader("b", "2"));
+            MockFor<IOutputWriter>().AssertWasCalled(x => x.AppendHeader("c", "3"));
+            MockFor<IOutputWriter>().AssertWasCalled(x => x.AppendHeader("d", "4"));
+        }
+    }
+
     [TestFixture]
     public class when_selecting_a_media_when_only_some_runtime_matches : OutputBehaviorContext
     {
@@ -193,6 +223,8 @@ namespace FubuMVC.Tests.NewConneg
 
             MockFor<IFubuRequest>().Stub(x => x.Get<OutputTarget>()).Return(theTarget);
             MockFor<IFubuRequest>().Stub(x => x.Get<CurrentMimeType>()).Return(theCurrentMimeType);
+
+            MockFor<IFubuRequest>().Stub(x => x.Find<IHaveHeaders>()).Return(new IHaveHeaders[0]);
 
             theContextIs();
         

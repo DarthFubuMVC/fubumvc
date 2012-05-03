@@ -198,7 +198,6 @@
     <Compile Include="Http\CurrentRequestFullUrlPropertyBinderTester.cs" />
     <Compile Include="Http\CurrentRequestRelativeUrlPropertyBinderTester.cs" />
     <Compile Include="Http\Headers\HeaderTester.cs" />
-    <Compile Include="Http\Headers\HeaderWritingPolicyIntegratedTester.cs" />
     <Compile Include="Http\Headers\HttpHeaderValuesTester.cs" />
     <Compile Include="Http\HttpRequestHeadersTester.cs" />
     <Compile Include="Http\MimeTypeListTester.cs" />
@@ -253,7 +252,6 @@
     <Compile Include="Resources\Etags\ETagHandlerTester.cs" />
     <Compile Include="Resources\Etags\IfNoneMatchNodeTester.cs" />
     <Compile Include="Resources\Etags\ModelBindingETaggedRequestTester.cs" />
-    <Compile Include="Http\Headers\WriteHeadersBehaviorTester.cs" />
     <Compile Include="Runtime\Formatters\XmlFormatterTester.cs" />
     <Compile Include="CurrentRequestTester.cs" />
     <Compile Include="CustomExceptionsTester.cs" />

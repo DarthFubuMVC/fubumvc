@@ -18,6 +18,7 @@ using FubuMVC.Diagnostics.Navigation;
 using FubuMVC.Diagnostics.Notifications;
 using FubuMVC.Diagnostics.Partials;
 using FubuMVC.Spark;
+using System.Linq;
 
 namespace FubuMVC.Diagnostics
 {
@@ -47,9 +48,10 @@ namespace FubuMVC.Diagnostics
 
             this.UseSpark();
 
-            //Output
-            //    .ToJson
-            //    .WhenCallMatches(call => call.OutputType().Name.ToLower().Contains("json"));
+            Configure(graph =>
+            {
+                graph.Behaviors.Where(x => x.ResourceType() != null && x.ResourceType().Name.ToLower().Contains("json"));
+            });
 
             Models.IgnoreProperties(prop => prop.PropertyType == typeof(IEnumerable<JsonGridFilter>));
 

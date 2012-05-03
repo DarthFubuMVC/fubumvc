@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Resources.Conneg.New;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Behaviors
@@ -10,6 +12,8 @@ namespace FubuMVC.Core.Behaviors
         public string LocalFileName { get; set; }
         public string FileNameToDisplay { get; set; }
     }
+
+
 
     public class DownloadFileNode : Process
     {

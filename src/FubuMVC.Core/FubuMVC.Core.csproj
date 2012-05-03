@@ -288,10 +288,8 @@
     <Compile Include="Http\CurrentChain.cs" />
     <Compile Include="Http\CurrentMimeType.cs" />
     <Compile Include="Http\CurrentMimeTypeModelBinder.cs" />
-    <Compile Include="Http\Headers\HeaderWritingPolicy.cs" />
     <Compile Include="Http\Headers\HttpHeaderValues.cs" />
     <Compile Include="Http\Headers\IHaveHeaders.cs" />
-    <Compile Include="Http\Headers\WriteHeadersBehavior.cs" />
     <Compile Include="Http\HttpGeneralHeaders.cs" />
     <Compile Include="Http\HttpHeaderNameExtensions.cs" />
     <Compile Include="Http\HttpOutputWriterExtensions.cs" />
