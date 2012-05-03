@@ -8,7 +8,7 @@ before you make any changes.
 Building FubuMVC
 --
 
-1. `git clone https://github.com/darthfubumvc/fubumvc.git`
+1. `git clone https://github.com/DarthFubuMVC/fubumvc.git`
 1. `cd fubumvc`
 1. `git submodule update --init`
 1. `gem install albacore --no-rdoc --no-ri`
