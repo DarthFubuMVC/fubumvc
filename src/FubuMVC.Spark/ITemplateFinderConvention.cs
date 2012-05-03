@@ -10,6 +10,7 @@ namespace FubuMVC.Spark
         public void Configure(TemplateFinder<Template> finder)
         {
             finder.IncludeFile("*spark");
+            finder.IncludeFile("*shade");
             // TODO: This is not automatically synched with what the attacher looks for.
             finder.IncludeFile("bindings.xml");
 
