@@ -13,6 +13,7 @@ using FubuMVC.Core.Resources.PathBased;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.UI;
+using FubuMVC.Core.UI.Navigation;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Activation;
 using FubuMVC.Core.View.Attachment;
@@ -125,6 +126,7 @@ namespace FubuMVC.Core
             yield return new HttpStandInServiceRegistry();
             yield return new ViewActivationServiceRegistry();
             yield return new CoreServiceRegistry();
+            yield return new NavigationServiceRegistry();
         }
 
         private IEnumerable<IServiceRegistry> serviceRegistrations()

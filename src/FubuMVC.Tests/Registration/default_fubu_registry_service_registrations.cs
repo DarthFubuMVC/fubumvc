@@ -16,6 +16,7 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.SessionState;
 using FubuMVC.Core.UI;
+using FubuMVC.Core.UI.Navigation;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View.Activation;
 using FubuMVC.Core.Web.Security;
@@ -32,6 +33,19 @@ namespace FubuMVC.Tests.Registration
         {
             new FubuRegistry().BuildGraph().Services.DefaultServiceFor<TService>().Type.ShouldEqual(
                 typeof (TImplementation));
+        }
+
+        [Test]
+        public void navigation_service_is_registered()
+        {
+            registeredTypeIs<INavigationService, NavigationService>();
+        }
+
+        [Test]
+        public void navigation_activator_is_registered()
+        {
+            new FubuRegistry().BuildGraph().Services.ServicesFor<IActivator>()
+                .Any(x => x.Type == typeof(NavigationActivator)).ShouldBeTrue();
         }
 
         [Test]

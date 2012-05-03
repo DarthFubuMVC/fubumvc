@@ -14,15 +14,12 @@ using FubuMVC.Core.Security;
 
 namespace FubuMVC.Core.UI.Navigation
 {
-    public class NavigationServices : ServiceRegistry
+    public interface INavigationService
     {
-        public NavigationServices()
-        {
-            AddService<IActivator, NavigationActivator>();
-        }
+        IEnumerable<MenuItemToken> MenuFor(StringToken key);
     }
 
-    public class NavigationService
+    public class NavigationService : INavigationService
     {
         private readonly ICurrentHttpRequest _request;
         private readonly IChainAuthorizor _authorizor;
