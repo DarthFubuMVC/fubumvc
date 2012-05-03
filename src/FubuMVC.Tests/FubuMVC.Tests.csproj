@@ -356,6 +356,7 @@
     <Compile Include="UI\ImageForExtensionMethodTester.cs" />
     <Compile Include="UI\Navigation\MenuChainTester.cs" />
     <Compile Include="UI\Navigation\MenuNodeTester.cs" />
+    <Compile Include="UI\Navigation\NavigationServiceTester.cs" />
     <Compile Include="UI\PartialInvokerTester.cs" />
     <Compile Include="Assets\AssetDslReaderTester.cs" />
     <Compile Include="Assets\AssetGraphTester.cs" />

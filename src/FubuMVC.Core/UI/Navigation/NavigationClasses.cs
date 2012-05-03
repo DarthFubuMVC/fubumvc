@@ -4,6 +4,7 @@ using Bottles;
 using Bottles.Diagnostics;
 using FubuCore.Util;
 using FubuLocalization;
+using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
@@ -25,13 +26,23 @@ namespace FubuMVC.Core.UI.Navigation
     {
         private readonly ICurrentHttpRequest _request;
         private readonly IChainAuthorizor _authorizor;
-        private NavigationGraph _navigation;
+        private readonly ICurrentChain _current;
+        private readonly IConditionalService _conditionals;
+        private readonly NavigationGraph _navigation;
 
-        public NavigationService(BehaviorGraph graph, ICurrentHttpRequest request, IChainAuthorizor authorizor, ICurrentChain current)
+        public NavigationService(BehaviorGraph graph, ICurrentHttpRequest request, IChainAuthorizor authorizor, ICurrentChain current, IConditionalService conditionals)
         {
             _request = request;
             _authorizor = authorizor;
+            _current = current;
+            _conditionals = conditionals;
             _navigation = graph.Navigation;
+        }
+
+        public IEnumerable<MenuItemToken> MenuFor(StringToken key)
+        {
+            var chain = _navigation.MenuFor(key);
+            return chain.Select(BuildToken);
         }
 
         public MenuItemState DetermineStateFor(MenuNode node)
@@ -42,20 +53,27 @@ namespace FubuMVC.Core.UI.Navigation
                 return node.UnauthorizedState;
             }
 
+            if (_current.OriginatingChain == node.BehaviorChain)
+            {
+                return MenuItemState.Active;
+            }
 
+            if (_conditionals.IsTrue(node.IsEnabledConditionType))
+            {
+                return MenuItemState.Available;
+            }
 
-            throw new NotImplementedException();
+            return MenuItemState.Disabled;
         }
 
         public MenuItemToken BuildToken(MenuNode node)
         {
-
             return new MenuItemToken{
                 Children = node.Children.Select(BuildToken).ToArray(),
                 Key = node.Key.Key,
                 Text = node.Key.ToString(),
-                Url = node.CreateUrl(),
-
+                Url = _request.ToFullUrl(node.CreateUrl()),
+                MenuItemState = DetermineStateFor(node)
             };
         }
     }
