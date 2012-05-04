@@ -27,7 +27,7 @@ namespace FubuMVC.Razor.Registration
                     throw new ArgumentException("Invalid extension for Razor engine.");
             }
 
-            using(var fileStream = new FileStream(viewFile, FileMode.Open))
+            using (var fileStream = new FileStream(viewFile, FileMode.Open, FileAccess.Read))
             using (var reader = new StreamReader(fileStream))
             {
                 var engine = new RazorTemplateEngine(new RazorEngine.Compilation.RazorEngineHost(language, () => new HtmlMarkupParser()));
