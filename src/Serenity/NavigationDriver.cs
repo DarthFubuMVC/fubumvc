@@ -81,6 +81,17 @@ namespace Serenity
                 return _application.Driver;
             }
         }
+
+        // TODO -- let's get rid of this
+        public EndpointDriver GetEndpointDriver()
+        {
+            return new EndpointDriver(_application.Urls);
+        }
+
+        public ScreenDriver GetCurrentScreen()
+        {
+            return new ScreenDriver(Driver);
+        }
     }
 
     public class AssetTagsState

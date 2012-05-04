@@ -33,7 +33,7 @@ namespace FubuMVC.Core
         private readonly ActionMethodFilter _methodFilter = new ActionMethodFilter();
         private readonly IList<Action<TypePool>> _scanningOperations = new List<Action<TypePool>>();
 
-        private readonly TypePool _types = new TypePool(FindTheCallingAssembly()){
+        private readonly TypePool _types = new TypePool(ConfigurationGraph.FindTheCallingAssembly()){
             IgnoreExportTypeFailures = false
 		};
 
