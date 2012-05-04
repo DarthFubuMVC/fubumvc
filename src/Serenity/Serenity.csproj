@@ -35,7 +35,7 @@
       <HintPath>..\packages\Bottles.0.9.1.278\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="Castle.Core">
-      <HintPath>..\packages\Castle.Core.2.5.2\lib\NET35\Castle.Core.dll</HintPath>
+      <HintPath>..\packages\Castle.Core.3.0.0.4001\lib\net40-client\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
       <HintPath>..\packages\FubuCore.0.9.9.151\lib\FubuCore.dll</HintPath>

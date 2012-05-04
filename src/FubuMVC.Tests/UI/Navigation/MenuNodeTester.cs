@@ -27,9 +27,9 @@ namespace FubuMVC.Tests.UI.Navigation
         public void positive_case_of_setting_is_enabled_type()
         {
             var node = MenuNode.ForCreatorOf<Address>(StringToken.FromKeyString("something"));
-            node.IsEnabledConditionType = typeof (FakeConditional);
+            node.IsEnabledBy(typeof (FakeConditional));
 
-            node.IsEnabledConditionType.ShouldEqual(typeof (FakeConditional));
+            node.IsEnabledBy().ShouldEqual(typeof (FakeConditional));
         }
 
         [Test]
@@ -38,7 +38,7 @@ namespace FubuMVC.Tests.UI.Navigation
             var node = MenuNode.ForCreatorOf<Address>(StringToken.FromKeyString("something"));
             Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() =>
             {
-                node.IsEnabledConditionType = GetType();
+                node.IsEnabledBy(GetType());
             });
         }
 

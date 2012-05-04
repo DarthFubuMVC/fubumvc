@@ -55,18 +55,26 @@ namespace FubuMVC.Core.UI.Navigation
             get { return _type; }
         }
 
-        public Type IsEnabledConditionType
+        public MenuNode IsEnabledBy<T>() where T : IConditional
         {
-            get { return _isEnabledConditionType; }
-            set
-            {
-                if (!value.CanBeCastTo<IConditional>())
-                {
-                    throw new ArgumentOutOfRangeException("Only types that implement IConditional may be used here");    
-                }
+            return IsEnabledBy(typeof (T));
+        }
 
-                _isEnabledConditionType = value;
+        public MenuNode IsEnabledBy(Type value)
+        {
+            if (!value.CanBeCastTo<IConditional>())
+            {
+                throw new ArgumentOutOfRangeException("Only types that implement IConditional may be used here");
             }
+
+            _isEnabledConditionType = value;
+
+            return this;
+        }
+
+        public Type IsEnabledBy()
+        {
+            return _isEnabledConditionType;
         }
 
         public BehaviorChain BehaviorChain

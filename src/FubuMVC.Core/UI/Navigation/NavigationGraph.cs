@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Util;
 using FubuLocalization;
+using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.UI.Navigation
 {
@@ -24,4 +26,28 @@ namespace FubuMVC.Core.UI.Navigation
             return _chains.SelectMany(x => x.AllNodes());
         }
     }
+
+    public class NavigationRegistry : IConfigurationAction
+    {
+        private readonly IList<Action<NavigationGraph>> _modifications = new List<Action<NavigationGraph>>();
+
+        // Dru can come back later and change this to suit his OCD while
+        // I get stuff done now
+        private Action<NavigationGraph> modification
+        {
+            set
+            {
+                _modifications.Add(value);
+            }
+        }
+
+        public void Configure(BehaviorGraph graph)
+        {
+            _modifications.Each(x => x(graph.Navigation));
+        }
+
+        
+    }
+
+    
 }

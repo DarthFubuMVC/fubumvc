@@ -85,7 +85,7 @@ namespace FubuMVC.Tests.UI.Navigation
         public void authenticated_but_not_the_current_chain_and_enabled_condition_returns_true()
         {
             theRightsAre(AuthorizationRight.Allow);
-            theNode.IsEnabledConditionType = typeof (FakeConditional);
+            theNode.IsEnabledBy(typeof (FakeConditional));
 
             MockFor<IConditionalService>().Stub(x => x.IsTrue(typeof (FakeConditional)))
                 .Return(true);
@@ -98,7 +98,7 @@ namespace FubuMVC.Tests.UI.Navigation
         public void authenticated_but_not_the_current_chain_and_enabled_condition_returns_false()
         {
             theRightsAre(AuthorizationRight.Allow);
-            theNode.IsEnabledConditionType = typeof(FakeConditional);
+            theNode.IsEnabledBy(typeof(FakeConditional));
 
             MockFor<IConditionalService>().Stub(x => x.IsTrue(typeof(FakeConditional)))
                 .Return(false);
