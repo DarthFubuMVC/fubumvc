@@ -1,6 +1,6 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Resources.Conneg.New;
+using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Security;
 using NUnit.Framework;
 using FubuTestingSupport;

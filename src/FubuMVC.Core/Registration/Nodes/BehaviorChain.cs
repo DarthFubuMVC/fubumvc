@@ -8,7 +8,7 @@ using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
-using FubuMVC.Core.Resources.Conneg.New;
+using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 
@@ -24,20 +24,20 @@ namespace FubuMVC.Core.Registration.Nodes
     {
         private readonly IList<IBehaviorInvocationFilter> _filters = new List<IBehaviorInvocationFilter>();
         private IRouteDefinition _route;
-        private Lazy<Resources.Conneg.New.OutputNode> _output;
-        private readonly Lazy<Resources.Conneg.New.InputNode> _input;
+        private Lazy<OutputNode> _output;
+        private readonly Lazy<InputNode> _input;
 
         public BehaviorChain()
         {
             Authorization = new AuthorizationNode();
             UrlCategory = new UrlCategory();
 
-            _output = new Lazy<Resources.Conneg.New.OutputNode>(() =>
+            _output = new Lazy<OutputNode>(() =>
             {
                 var outputType = ResourceType();
                 if (outputType == null) throw new InvalidOperationException("Cannot use the OutputNode if the BehaviorChain does not have at least one Action with output");
 
-                return new Resources.Conneg.New.OutputNode(outputType);
+                return new OutputNode(outputType);
             });
 
             _input = new Lazy<InputNode>(() =>
@@ -45,11 +45,11 @@ namespace FubuMVC.Core.Registration.Nodes
                 var inputType = InputType();
                 if (inputType == null) throw new InvalidOperationException("Cannot use the InputNode if the BehaviorChain does not have at least one behavior that requires an input type");
 
-                return new Resources.Conneg.New.InputNode(inputType);
+                return new InputNode(inputType);
             });
         }
 
-        public Resources.Conneg.New.OutputNode Output
+        public OutputNode Output
         {
             get
             {
@@ -57,7 +57,7 @@ namespace FubuMVC.Core.Registration.Nodes
             }
         }
 
-        public Resources.Conneg.New.InputNode Input
+        public InputNode Input
         {
             get
             {

@@ -6,7 +6,6 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Attachment;
-using FubuMVC.Core.View.New;
 using NUnit.Framework;
 using Rhino.Mocks;
 using System.Linq;

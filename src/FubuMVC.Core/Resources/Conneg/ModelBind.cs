@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
 
-namespace FubuMVC.Core.Resources.Conneg.New
+namespace FubuMVC.Core.Resources.Conneg
 {
     public class ModelBind : ReaderNode
     {

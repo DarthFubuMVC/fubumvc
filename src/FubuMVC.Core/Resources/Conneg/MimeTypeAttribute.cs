@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using FubuCore.Reflection;
 
-namespace FubuMVC.Core.Resources.Conneg.New
+namespace FubuMVC.Core.Resources.Conneg
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class MimeTypeAttribute : Attribute

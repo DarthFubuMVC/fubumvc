@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using FubuMVC.Core.Behaviors;
-using FubuMVC.Core.Resources.Conneg.New;
+using FubuMVC.Core.Resources.Conneg;
 
 namespace FubuMVC.Core.Runtime.Formatters
 {

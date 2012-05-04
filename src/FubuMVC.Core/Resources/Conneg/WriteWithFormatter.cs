@@ -4,7 +4,7 @@ using FubuCore;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime.Formatters;
 
-namespace FubuMVC.Core.Resources.Conneg.New
+namespace FubuMVC.Core.Resources.Conneg
 {
     public class WriteWithFormatter : WriterNode
     {

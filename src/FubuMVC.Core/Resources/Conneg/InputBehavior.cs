@@ -5,7 +5,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 
-namespace FubuMVC.Core.Resources.Conneg.New
+namespace FubuMVC.Core.Resources.Conneg
 {
     public class InputBehavior<T> : BasicBehavior where T : class
     {

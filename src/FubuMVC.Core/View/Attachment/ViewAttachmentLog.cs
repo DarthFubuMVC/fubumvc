@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using FubuCore.Util;
 using FubuMVC.Core.Registration.Diagnostics;
-using FubuMVC.Core.Resources.Conneg.New;
 
 namespace FubuMVC.Core.View.Attachment
 {

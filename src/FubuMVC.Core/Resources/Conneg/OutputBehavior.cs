@@ -6,7 +6,7 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Runtime;
 
-namespace FubuMVC.Core.Resources.Conneg.New
+namespace FubuMVC.Core.Resources.Conneg
 {
     public class OutputBehavior<T> : BasicBehavior where T : class
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration.ObjectGraph;
 
-namespace FubuMVC.Core.Resources.Conneg.New
+namespace FubuMVC.Core.Resources.Conneg
 {
     public class Writer : WriterNode
     {

@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using FubuMVC.Core.Registration.ObjectGraph;
-using FubuMVC.Core.Resources.Conneg.New;
+using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View.Rendering;
 using FubuCore;
 
-namespace FubuMVC.Core.View.New
+namespace FubuMVC.Core.View
 {
     public class ViewNode : WriterNode
     {

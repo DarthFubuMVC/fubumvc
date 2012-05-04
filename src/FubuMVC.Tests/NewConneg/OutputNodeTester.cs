@@ -4,7 +4,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
-using FubuMVC.Core.Resources.Conneg.New;
+using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.Runtime.Formatters;
 using FubuMVC.Core.View;

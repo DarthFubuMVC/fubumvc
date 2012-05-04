@@ -2,7 +2,7 @@ using System;
 using System.Net;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Headers;
-using FubuMVC.Core.Resources.Conneg.New;
+using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;

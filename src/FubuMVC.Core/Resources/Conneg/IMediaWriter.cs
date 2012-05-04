@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace FubuMVC.Core.Resources.Conneg.New
+namespace FubuMVC.Core.Resources.Conneg
 {
     public interface IMediaWriter<T>
     {

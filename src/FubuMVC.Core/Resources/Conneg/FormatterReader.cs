@@ -1,20 +1,20 @@
 using System.Collections.Generic;
 using FubuMVC.Core.Runtime.Formatters;
 
-namespace FubuMVC.Core.Resources.Conneg.New
+namespace FubuMVC.Core.Resources.Conneg
 {
-    public class FormatterWriter<T, TFormatter> : IMediaWriter<T> where TFormatter : IFormatter
+    public class FormatterReader<T, TFormatter> : IReader<T> where TFormatter : IFormatter
     {
         private readonly TFormatter _formatter;
 
-        public FormatterWriter(TFormatter formatter)
+        public FormatterReader(TFormatter formatter)
         {
             _formatter = formatter;
         }
 
-        public void Write(string mimeType, T resource)
+        public T Read(string mimeType)
         {
-            _formatter.Write(resource, mimeType);
+            return _formatter.Read<T>();
         }
 
         public IEnumerable<string> Mimetypes

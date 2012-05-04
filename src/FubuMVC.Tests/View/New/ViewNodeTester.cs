@@ -1,10 +1,9 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
-using FubuMVC.Core.Resources.Conneg.New;
+using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View;
-using FubuMVC.Core.View.New;
 using FubuMVC.Core.View.Rendering;
 using FubuTestingSupport;
 using NUnit.Framework;

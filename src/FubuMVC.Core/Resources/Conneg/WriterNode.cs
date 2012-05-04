@@ -7,7 +7,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime.Conditionals;
 
-namespace FubuMVC.Core.Resources.Conneg.New
+namespace FubuMVC.Core.Resources.Conneg
 {
     public abstract class WriterNode : Node<WriterNode, WriterChain>, IContainerModel
     {

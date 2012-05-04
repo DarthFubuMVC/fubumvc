@@ -2,11 +2,11 @@ using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Resources.Conneg.New;
+using FubuMVC.Core.Resources.Conneg;
 using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
-using OutputNode = FubuMVC.Core.Resources.Conneg.New.OutputNode;
+using OutputNode = FubuMVC.Core.Resources.Conneg.OutputNode;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {

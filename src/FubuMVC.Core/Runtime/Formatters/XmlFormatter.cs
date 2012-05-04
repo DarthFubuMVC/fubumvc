@@ -4,7 +4,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using FubuMVC.Core.Http;
-using FubuMVC.Core.Resources.Conneg.New;
+using FubuMVC.Core.Resources.Conneg;
 
 namespace FubuMVC.Core.Runtime.Formatters
 {

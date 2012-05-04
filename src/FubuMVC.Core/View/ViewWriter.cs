@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using FubuMVC.Core.Http;
-using FubuMVC.Core.Resources.Conneg.New;
+using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View.Rendering;
 
-namespace FubuMVC.Core.View.New
+namespace FubuMVC.Core.View
 {
     public class ViewWriter<T> : IMediaWriter<T>
     {

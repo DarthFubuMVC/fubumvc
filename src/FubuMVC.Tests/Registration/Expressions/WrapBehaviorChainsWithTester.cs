@@ -9,7 +9,7 @@ using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Resources.Conneg.New;
+using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Attachment;
 using FubuMVC.StructureMap;

@@ -3,9 +3,8 @@ using System.Linq;
 using System.Net;
 using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Resources.Conneg.New;
 using FubuMVC.Core.Runtime.Formatters;
-using OutputNode = FubuMVC.Core.Resources.Conneg.New.OutputNode;
+using OutputNode = FubuMVC.Core.Resources.Conneg.OutputNode;
 
 namespace FubuMVC.Core.Resources.Conneg
 {

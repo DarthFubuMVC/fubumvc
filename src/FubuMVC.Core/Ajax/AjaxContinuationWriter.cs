@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using FubuMVC.Core.Resources.Conneg.New;
+using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Ajax

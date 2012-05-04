@@ -1,7 +1,7 @@
 using System;
 using FubuCore.Binding;
 using FubuMVC.Core.Http;
-using FubuMVC.Core.View.New;
+using FubuMVC.Core.View;
 using FubuMVC.Core.View.Rendering;
 using FubuTestingSupport;
 using NUnit.Framework;

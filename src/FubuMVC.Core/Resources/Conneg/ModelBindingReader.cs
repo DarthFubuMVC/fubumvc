@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using FubuMVC.Core.Runtime;
 
-namespace FubuMVC.Core.Resources.Conneg.New
+namespace FubuMVC.Core.Resources.Conneg
 {
     public class ModelBindingReader<T> : IReader<T> where T : class
     {

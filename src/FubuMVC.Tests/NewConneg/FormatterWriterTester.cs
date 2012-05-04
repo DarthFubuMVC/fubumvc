@@ -1,4 +1,4 @@
-using FubuMVC.Core.Resources.Conneg.New;
+using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime.Formatters;
 using FubuTestingSupport;
 using NUnit.Framework;

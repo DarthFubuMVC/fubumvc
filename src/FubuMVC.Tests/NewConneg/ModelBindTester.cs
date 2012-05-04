@@ -1,7 +1,7 @@
 using System;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Resources.Conneg.New;
+using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 
-namespace FubuMVC.Core.Resources.Conneg.New
+namespace FubuMVC.Core.Resources.Conneg
 {
     public abstract class ReaderNode : Node<ReaderNode, ReaderChain>, IContainerModel
     {

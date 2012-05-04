@@ -1,5 +1,5 @@
 using FubuMVC.Core.Behaviors.Conditional;
-using FubuMVC.Core.Resources.Conneg.New;
+using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuTestingSupport;

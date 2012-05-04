@@ -7,12 +7,11 @@ using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
-using FubuMVC.Core.Resources.Conneg.New;
 using FubuMVC.Core.Runtime.Formatters;
 using FubuMVC.Tests.Behaviors;
 using FubuTestingSupport;
 using NUnit.Framework;
-using OutputNode = FubuMVC.Core.Resources.Conneg.New.OutputNode;
+using OutputNode = FubuMVC.Core.Resources.Conneg.OutputNode;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {

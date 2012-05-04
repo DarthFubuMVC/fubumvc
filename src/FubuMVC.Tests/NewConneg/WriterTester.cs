@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Resources.Conneg.New;
+using FubuMVC.Core.Resources.Conneg;
 using NUnit.Framework;
 using FubuTestingSupport;
 using FubuCore;

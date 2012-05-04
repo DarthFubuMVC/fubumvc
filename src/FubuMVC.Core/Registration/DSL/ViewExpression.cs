@@ -7,7 +7,6 @@ using FubuMVC.Core.View;
 using System.Collections.Generic;
 using FubuMVC.Core.View.Activation;
 using FubuMVC.Core.View.Attachment;
-using FubuMVC.Core.View.New;
 
 namespace FubuMVC.Core.Registration.DSL
 {
