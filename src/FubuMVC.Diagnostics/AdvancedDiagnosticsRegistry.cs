@@ -19,6 +19,7 @@ using FubuMVC.Diagnostics.Notifications;
 using FubuMVC.Diagnostics.Partials;
 using FubuMVC.Spark;
 using System.Linq;
+using FubuMVC.Core.Resources.Conneg;
 
 namespace FubuMVC.Diagnostics
 {
@@ -50,7 +51,7 @@ namespace FubuMVC.Diagnostics
 
             Configure(graph =>
             {
-                graph.Behaviors.Where(x => x.ResourceType() != null && x.ResourceType().Name.ToLower().Contains("json"));
+                graph.Behaviors.Where(x => x.ResourceType() != null && x.ResourceType().Name.ToLower().Contains("json")).Each(x => x.MakeAsymmetricJson());
             });
 
             Models.IgnoreProperties(prop => prop.PropertyType == typeof(IEnumerable<JsonGridFilter>));
