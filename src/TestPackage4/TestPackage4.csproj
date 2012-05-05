@@ -38,7 +38,7 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Spark">
-      <HintPath>..\packages\Spark.1.6\lib\NET40\Spark.dll</HintPath>
+      <HintPath>..\packages\Spark.1.7.0.0\lib\NET40\Spark.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.ApplicationServices" />
