@@ -35,7 +35,7 @@
       <HintPath>..\packages\FubuCore.0.9.9.151\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="Spark">
-      <HintPath>..\packages\Spark.1.6\lib\NET40\Spark.dll</HintPath>
+      <HintPath>..\packages\Spark.1.7.0.0\lib\NET40\Spark.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>

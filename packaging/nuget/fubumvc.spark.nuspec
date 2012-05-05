@@ -12,12 +12,12 @@
     <description>Support for using the Spark view engine within a FubuMVC application.</description>
     <tags>fubumvc spark</tags>
     <dependencies>
-      <dependency id="Spark" />
+      <dependency id="Spark" version="1.7.0.0" />
       <dependency id="FubuMVC.References" />
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\src\FubuMVC.Spark\bin\release\FubuMVC.Spark.*" target="lib\net40" />	
-    <file src="..\..\src\FubuMVC.Spark\**\*.cs" target="src" />	
+    <file src="..\..\src\FubuMVC.Spark\bin\release\FubuMVC.Spark.*" target="lib\net40" />
+    <file src="..\..\src\FubuMVC.Spark\**\*.cs" target="src" />
   </files>
 </package>
