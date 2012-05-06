@@ -25,6 +25,11 @@ namespace FubuMVC.Core.Runtime.Conditionals
                 return true;
             }
 
+            if (type == typeof(Never))
+            {
+                return false;
+            }
+
             if (!type.CanBeCastTo<IConditional>())
             {
                 throw new ArgumentOutOfRangeException("Only types that implement IConditional may be used here");

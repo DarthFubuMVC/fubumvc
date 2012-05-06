@@ -95,6 +95,19 @@ namespace FubuMVC.Tests.UI.Navigation
         }
 
         [Test]
+        public void authenticated_but_not_the_current_chain_and_hide_if_condition_returns_true()
+        {
+            theRightsAre(AuthorizationRight.Allow);
+            theNode.HideIf<FakeConditional>();
+
+            MockFor<IConditionalService>().Stub(x => x.IsTrue(typeof(FakeConditional)))
+                .Return(true);
+
+            ClassUnderTest.DetermineStateFor(theNode)
+                .ShouldEqual(MenuItemState.Hidden);
+        }
+
+        [Test]
         public void authenticated_but_not_the_current_chain_and_enabled_condition_returns_false()
         {
             theRightsAre(AuthorizationRight.Allow);

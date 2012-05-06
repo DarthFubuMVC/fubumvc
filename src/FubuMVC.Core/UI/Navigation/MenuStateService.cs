@@ -31,6 +31,11 @@ namespace FubuMVC.Core.UI.Navigation
                 return MenuItemState.Active;
             }
 
+            if (_conditionals.IsTrue(node.HideIfConditional))
+            {
+                return MenuItemState.Hidden;
+            }
+
             if (_conditionals.IsTrue(node.IsEnabledBy()))
             {
                 return MenuItemState.Available;

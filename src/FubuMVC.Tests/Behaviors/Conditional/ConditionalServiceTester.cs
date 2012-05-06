@@ -28,6 +28,13 @@ namespace FubuMVC.Tests.Behaviors.Conditional
         }
 
         [Test]
+        public void never_is_false()
+        {
+            ClassUnderTest.IsTrue(typeof(Never))
+                .ShouldBeFalse();
+        }
+
+        [Test]
         public void is_true_positive()
         {
             MockFor<IServiceLocator>().Stub(x => x.GetInstance(typeof (Always)))
