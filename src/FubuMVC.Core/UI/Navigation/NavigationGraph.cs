@@ -30,6 +30,7 @@ namespace FubuMVC.Core.UI.Navigation
     public class NavigationRegistry : IConfigurationAction
     {
         private readonly IList<Action<NavigationGraph>> _modifications = new List<Action<NavigationGraph>>();
+        private StringToken _lastKey;
 
         // Dru can come back later and change this to suit his OCD while
         // I get stuff done now
@@ -46,7 +47,16 @@ namespace FubuMVC.Core.UI.Navigation
             _modifications.Each(x => x(graph.Navigation));
         }
 
-        
+        public void Menu(StringToken key)
+        {
+            _lastKey = key;
+        }
+
+
+        public class InsertExpression
+        {
+            
+        }
     }
 
     

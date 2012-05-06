@@ -42,6 +42,32 @@ namespace FubuMVC.Tests.UI.Navigation
             });
         }
 
+        [Test]
+        public void positive_case_of_setting_hide_if_type()
+        {
+            var node = MenuNode.ForCreatorOf<Address>(StringToken.FromKeyString("something"));
+            node.HideIf(typeof(FakeConditional));
+
+            node.HideIfConditional.ShouldEqual(typeof(FakeConditional));
+        }
+
+        [Test]
+        public void negative_case_of_setting_hide_if_type()
+        {
+            var node = MenuNode.ForCreatorOf<Address>(StringToken.FromKeyString("something"));
+            Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() =>
+            {
+                node.HideIf(GetType());
+            });
+        }
+
+        [Test]
+        public void hide_if_is_never_by_default()
+        {
+            var node = MenuNode.ForCreatorOf<Address>(StringToken.FromKeyString("something"));
+            node.HideIfConditional.ShouldEqual(typeof (Never));
+        }
+
         private void resolve(MenuNode node, Action<BehaviorGraph> configure)
         {
             var graph = new BehaviorGraph();

@@ -60,6 +60,7 @@ namespace FubuMVC.Core.UI.Navigation
             return IsEnabledBy(typeof (T));
         }
 
+
         public MenuNode IsEnabledBy(Type value)
         {
             if (!value.CanBeCastTo<IConditional>())
@@ -71,6 +72,30 @@ namespace FubuMVC.Core.UI.Navigation
 
             return this;
         }
+
+        private Type _hideConditionalType = typeof (Never);
+        public MenuNode HideIf<T>() where T : IConditional
+        {
+            return HideIf(typeof (T));
+        }
+
+        public MenuNode HideIf(Type conditionalType)
+        {
+            if (!conditionalType.CanBeCastTo<IConditional>())
+            {
+                throw new ArgumentOutOfRangeException("Only types that implement IConditional may be used here");
+            }
+
+            _hideConditionalType = conditionalType;
+
+            return this;
+        }
+
+        public Type HideIfConditional
+        {
+            get { return _hideConditionalType; }
+        }
+
 
         public Type IsEnabledBy()
         {
@@ -139,6 +164,11 @@ namespace FubuMVC.Core.UI.Navigation
         public static MenuNode ForCreatorOf(StringToken key, Type type)
         {
             return new MenuNode(key, r => r.FindCreatorOf(type));
+        }
+
+        public static MenuNode Node(StringToken key)
+        {
+            return new MenuNode(key);
         }
 
         public string CreateUrl()
