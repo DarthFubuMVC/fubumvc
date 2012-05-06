@@ -27,7 +27,7 @@ namespace FubuMVC.Core.UI.Navigation
         }
 
 
-
+        // TODO -- this could really use some more end to end testing
         public MenuItemToken BuildToken(MenuNode node)
         {
             var token = new MenuItemToken{

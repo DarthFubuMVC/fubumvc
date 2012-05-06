@@ -585,6 +585,7 @@
     <Compile Include="UI\Navigation\MenuStateService.cs" />
     <Compile Include="UI\Navigation\NavigationActivator.cs" />
     <Compile Include="UI\Navigation\NavigationGraph.cs" />
+    <Compile Include="UI\Navigation\NavigationRegistry.cs" />
     <Compile Include="UI\Navigation\NavigationService.cs" />
     <Compile Include="UI\Navigation\NavigationServiceRegistry.cs" />
     <Compile Include="UI\PartialExpressionExtensions.cs" />
