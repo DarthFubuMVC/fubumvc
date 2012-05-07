@@ -3,6 +3,8 @@ using System.Linq;
 using FubuLocalization;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Urls;
+using FubuCore;
 
 namespace FubuMVC.Core.UI.Navigation
 {
@@ -10,13 +12,15 @@ namespace FubuMVC.Core.UI.Navigation
     {
         private readonly ICurrentHttpRequest _request;
         private readonly IMenuStateService _stateService;
+        private readonly IUrlRegistry _urls;
 
         private readonly NavigationGraph _navigation;
 
-        public NavigationService(BehaviorGraph graph, ICurrentHttpRequest request, IMenuStateService stateService)
+        public NavigationService(BehaviorGraph graph, ICurrentHttpRequest request, IMenuStateService stateService, IUrlRegistry urls)
         {
             _request = request;
             _stateService = stateService;
+            _urls = urls;
             _navigation = graph.Navigation;
         }
 
@@ -37,6 +41,11 @@ namespace FubuMVC.Core.UI.Navigation
                 
                 MenuItemState = _stateService.DetermineStateFor(node)
             };
+
+            if (node.Icon().IsNotEmpty())
+            {
+                token.IconUrl = _urls.UrlForAsset(null, node.Icon());
+            }
 
             if (node.Type == MenuNodeType.Leaf)
             {

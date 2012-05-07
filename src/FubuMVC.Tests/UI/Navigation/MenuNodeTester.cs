@@ -8,6 +8,7 @@ using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.UI.Navigation;
+using FubuMVC.Core.Urls;
 using NUnit.Framework;
 using FubuTestingSupport;
 

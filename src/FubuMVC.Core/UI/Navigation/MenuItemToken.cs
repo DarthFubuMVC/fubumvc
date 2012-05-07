@@ -24,6 +24,8 @@ namespace FubuMVC.Core.UI.Navigation
         public string Url { get; set; }
         public MenuItemState MenuItemState { get; set; }
 
+        public string IconUrl { get; set; }
+
         public bool Equals(MenuItemToken other)
         {
             if (ReferenceEquals(null, other)) return false;

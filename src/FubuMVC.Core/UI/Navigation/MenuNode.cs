@@ -7,6 +7,7 @@ using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime.Conditionals;
+using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.UI.Navigation
 {
@@ -112,6 +113,8 @@ namespace FubuMVC.Core.UI.Navigation
             if (_finder == null) return;
 
             _chain = _finder(resolver);
+
+
 
             if (_chain == null)
             {
