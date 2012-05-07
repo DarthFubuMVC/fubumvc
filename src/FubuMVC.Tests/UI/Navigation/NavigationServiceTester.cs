@@ -55,7 +55,7 @@ namespace FubuMVC.Tests.UI.Navigation
         [Test]
         public void will_resolve_the_asset_url_for_the_icon_if_it_exists()
         {
-            theToken.IconUrl.ShouldEqual(theUrls.UrlForAsset(null, theNode.Icon()));
+            theToken.IconUrl.ShouldEqual(theUrls.UrlForAsset(AssetFolder.images, theNode.Icon()));
         }
 
         [Test]

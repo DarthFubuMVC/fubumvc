@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FubuLocalization;
+using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Urls;
@@ -44,7 +45,7 @@ namespace FubuMVC.Core.UI.Navigation
 
             if (node.Icon().IsNotEmpty())
             {
-                token.IconUrl = _urls.UrlForAsset(null, node.Icon());
+                token.IconUrl = _urls.UrlForAsset(AssetFolder.images, node.Icon());
             }
 
             if (node.Type == MenuNodeType.Leaf)
