@@ -56,7 +56,7 @@ namespace FubuMVC.Core.Registration.Routes
         {
             var url = _parent.Pattern;
 
-            if (_routeParameters.Any(x => !x.CanSubstitue(input)))
+            if (_routeParameters.Any(x => !x.CanSubstitute(input)))
             {
                 throw new FubuException(
                     2107,
@@ -67,7 +67,12 @@ namespace FubuMVC.Core.Registration.Routes
             }
 
             url = fillRouteValues(url, input);
-            url = fillQueryInputs(url, x => x.ToQueryString(input));
+
+            var queryParameters = _queryParameters.Where(x => x.HasValue(input));
+            if (queryParameters.Any())
+            {
+                url = url + "?" + queryParameters.Select(x => x.ToQueryString(input)).Join("&");
+            }
 
             return url;
         }

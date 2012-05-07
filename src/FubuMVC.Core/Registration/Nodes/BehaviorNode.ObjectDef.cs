@@ -26,6 +26,15 @@ namespace FubuMVC.Core.Registration.Nodes
             return objectDef;
         }
 
+        public Type BehaviorType
+        {
+            get
+            {
+                var objectDef = buildObjectDef();
+                return objectDef.Type ?? objectDef.Value.GetType();
+            }
+        }
+
         protected ObjectDef toObjectDef(DiagnosticLevel diagnosticLevel)
         {
             var objectDef = buildObjectDef();

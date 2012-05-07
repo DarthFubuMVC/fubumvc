@@ -27,7 +27,7 @@ namespace FubuMVC.Core.Registration.Routes
 
         public object DefaultValue { get; set; }
 
-        public bool CanSubstitue(object inputModel)
+        public bool CanSubstitute(object inputModel)
         {
             return GetRawValue(inputModel) != null;
         }
@@ -103,6 +103,12 @@ namespace FubuMVC.Core.Registration.Routes
         public bool IsSatisfied(RouteParameters routeParameters)
         {
             return routeParameters.Has(_accessor.Name) || DefaultValue != null;
+        }
+
+        public bool HasValue(object input)
+        {
+            var raw = _accessor.GetValue(input);
+            return raw != null;
         }
     }
 }

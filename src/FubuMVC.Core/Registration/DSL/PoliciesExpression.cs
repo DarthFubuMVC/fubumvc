@@ -25,6 +25,7 @@ namespace FubuMVC.Core.Registration.DSL
         IPoliciesExpression Ordering(Action<PoliciesExpression.BehaviorOrderPolicyExpression> ordering);
     }
 
+    
 
 
     public class PoliciesExpression : IOrderPolicyExpression
@@ -122,15 +123,16 @@ namespace FubuMVC.Core.Registration.DSL
                 _configuration = configuration;
             }
 
-            // Not unit tested and therefore, not real code yet.
+            // New.
             //public void MustBeBeforeBehavior<T>() where T : IActionBehavior
             //{
-            //    var policy = new ReorderBehaviorsPolicy(){
+            //    var policy = new ReorderBehaviorsPolicy()
+            //    {
             //        WhatMustBeBefore = _lastNodeMatch
             //    };
 
             //    policy.ThisWrapperMustBeAfter<T>();
-            //    _systemPolicies.Add(policy);
+            //    _configuration.AddPolicy(policy);
             //}
 
             public void MustBeBeforeAuthorization()
@@ -143,5 +145,7 @@ namespace FubuMVC.Core.Registration.DSL
                 _configuration.AddPolicy(policy);
             }
         }
+
+        
     }
 }

@@ -26,6 +26,16 @@ namespace FubuMVC.Tests.Registration
         private Wrapper _wrapper;
 
         [Test]
+        public void can_get_the_concrete_behavior_type()
+        {
+            _wrapper.BehaviorType.ShouldEqual(typeof (NulloBehavior));
+
+            _wrapper.Condition(() => true);
+
+            _wrapper.BehaviorType.ShouldEqual(typeof(NulloBehavior));
+        }
+
+        [Test]
         public void build_an_object_def_for_the_type()
         {
             var def = _wrapper.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None);

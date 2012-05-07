@@ -180,5 +180,18 @@ namespace FubuMVC.Core.UI.Navigation
         {
             return string.Format("MenuNode: {0}", _key);
         }
+
+        private string _icon;
+
+        public string Icon()
+        {
+            return _icon;
+        }
+
+        public MenuNode Icon(string icon)
+        {
+            _icon = icon;
+            return this;
+        }
     }
 }

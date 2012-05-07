@@ -17,6 +17,15 @@ namespace FubuMVC.Tests.Registration
     [TestFixture]
     public class RouteDefinitionTester
     {
+        public class QueryStringTarget
+        {
+            [QueryString]
+            public string Name { get; set; }
+
+            [QueryString]
+            public string Age { get; set; }
+        }
+
         public class SampleViewModel
         {
             public string InPath { get; set; }
@@ -47,6 +56,15 @@ namespace FubuMVC.Tests.Registration
             {
                 return basePattern + "/" + _part;
             }
+        }
+
+        [Test]
+        public void get_route_pattern_with_querystring_parameters_when_there_are_no_values()
+        {
+            var route = RouteBuilder.Build(typeof (QueryStringTarget), "route");
+
+            route.CreateUrlFromInput(new QueryStringTarget())
+                .ShouldEqual("route");
         }
 
         [Test]

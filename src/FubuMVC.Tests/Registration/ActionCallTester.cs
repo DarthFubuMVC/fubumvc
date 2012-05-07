@@ -128,6 +128,13 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void can_get_the_behavior_type()
+        {
+            ActionCall.For<ControllerTarget>(c => c.OneInOneOut(null))
+                .BehaviorType.ShouldEqual(typeof(OneInOneOutActionInvoker<ControllerTarget, Model1, Model2>));
+        }
+
+        [Test]
         public void to_definition_with_an_input_type()
         {
             ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null))

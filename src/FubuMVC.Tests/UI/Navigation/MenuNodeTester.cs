@@ -17,6 +17,15 @@ namespace FubuMVC.Tests.UI.Navigation
     public class MenuNodeTester
     {
         [Test]
+        public void set_the_icon()
+        {
+            var node = new MenuNode(FakeKeys.Key9);
+            node.Icon("something.png").ShouldBeTheSameAs(node);
+
+            node.Icon().ShouldEqual("something.png");
+        }
+
+        [Test]
         public void un_authorized_state_is_hidden_by_default()
         {
             MenuNode.ForCreatorOf<Address>(StringToken.FromKeyString("something"))

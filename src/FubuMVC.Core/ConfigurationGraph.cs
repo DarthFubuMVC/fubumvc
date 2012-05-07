@@ -9,6 +9,7 @@ using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.PathBased;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
@@ -100,6 +101,12 @@ namespace FubuMVC.Core
             yield return new AttachAuthorizationPolicy();
             yield return new AttachInputPolicy();
             yield return new AttachOutputPolicy();
+
+
+            yield return new ReorderBehaviorsPolicy{
+                WhatMustBeBefore = node => node.Category == BehaviorCategory.Authentication,
+                WhatMustBeAfter = node => node.Category == BehaviorCategory.Authorization
+            };
 
 
         }
