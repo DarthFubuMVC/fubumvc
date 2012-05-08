@@ -4,6 +4,7 @@ namespace FubuMVC.Core.Assets.Files
     {
         images,
         scripts,
-        styles
+        styles,
+        documents
     }
 }
