@@ -105,8 +105,9 @@ namespace FubuMVC.Core.Assets
 
         private static void addActivators(IServiceRegistry registry)
         {
-            registry.FillType(typeof (IActivator), typeof (AssetGraphConfigurationActivator));
             registry.FillType(typeof (IActivator), typeof (AssetPipelineBuilderActivator));
+            registry.FillType(typeof (IActivator), typeof (AssetPrecompilerActivator));
+            registry.FillType(typeof (IActivator), typeof (AssetGraphConfigurationActivator));
             registry.FillType(typeof (IActivator), typeof (AssetDeclarationVerificationActivator));
             registry.FillType(typeof (IActivator), typeof (MimetypeRegistrationActivator));
             registry.FillType(typeof (IActivator), typeof (AssetCombinationBuildingActivator));

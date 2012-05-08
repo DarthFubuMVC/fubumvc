@@ -58,13 +58,14 @@ namespace FubuMVC.Tests.Assets
 
             activators.RemoveAll(x => !x.Type.Namespace.Contains(typeof(AssetGraph).Namespace));
 
-            activators[0].Type.ShouldEqual(typeof(AssetGraphConfigurationActivator));
-            activators[1].Type.ShouldEqual(typeof(AssetPipelineBuilderActivator));
-            activators[2].Type.ShouldEqual(typeof(AssetDeclarationVerificationActivator));
-            activators[3].Type.ShouldEqual(typeof(MimetypeRegistrationActivator));
-            activators[4].Type.ShouldEqual(typeof(AssetCombinationBuildingActivator));
-            activators[5].Type.ShouldEqual(typeof(AssetPolicyActivator));
-            activators[6].Type.ShouldEqual(typeof(AssetFileWatchingActivator));
+            activators[0].Type.ShouldEqual(typeof(AssetPipelineBuilderActivator));
+            activators[1].Type.ShouldEqual(typeof(AssetPrecompilerActivator));
+            activators[2].Type.ShouldEqual(typeof(AssetGraphConfigurationActivator));
+            activators[3].Type.ShouldEqual(typeof(AssetDeclarationVerificationActivator));
+            activators[4].Type.ShouldEqual(typeof(MimetypeRegistrationActivator));
+            activators[5].Type.ShouldEqual(typeof(AssetCombinationBuildingActivator));
+            activators[6].Type.ShouldEqual(typeof(AssetPolicyActivator));
+            activators[7].Type.ShouldEqual(typeof(AssetFileWatchingActivator));
 
         }
 
