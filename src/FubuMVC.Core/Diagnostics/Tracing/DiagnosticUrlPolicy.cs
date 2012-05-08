@@ -27,6 +27,16 @@ namespace FubuMVC.Core.Diagnostics.Tracing
             {
                 definition.Input.AddRouteInput(new RouteParameter(ReflectionHelper.GetAccessor<ChainRequest>(x => x.Id)), true);
             }
+            if(call.HasInput)
+            {
+                var inputPolicy = new RouteInputPolicy();
+                inputPolicy.PropertyFilters.Includes +=
+             prop => prop.InputProperty.HasAttribute<QueryStringAttribute>();
+
+                inputPolicy.PropertyAlterations.Register(prop => prop.HasAttribute<QueryStringAttribute>(),
+                                                          (route, prop) => route.Input.AddQueryInput(prop));
+                inputPolicy.AlterRoute(definition,call);
+            }
             return definition;
         }
 

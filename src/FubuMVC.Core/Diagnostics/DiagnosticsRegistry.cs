@@ -23,7 +23,6 @@ namespace FubuMVC.Core.Diagnostics
             Actions
                 .IncludeTypes(x => x.HasAttribute<FubuDiagnosticsAttribute>())
                 .IncludeType<GraphQuery>()
-                .IncludeType<BasicAssetDiagnostics>()
                 .IncludeType<ScriptWriter>();
 
             Routes
