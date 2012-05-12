@@ -77,6 +77,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="content\images\aaa\ico-close.gif" />
+    <Content Include="content\images\icon-add-alt.png" />
     <Content Include="content\scripts\Pak1-A.js" />
     <Content Include="content\scripts\Script1.js" />
     <Content Include="data\a.txt" />

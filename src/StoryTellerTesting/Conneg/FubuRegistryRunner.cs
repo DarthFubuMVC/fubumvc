@@ -1,10 +1,14 @@
 using System;
+using System.Diagnostics;
+using System.IO;
 using System.Net;
 using System.Security.Cryptography;
 using System.Threading;
 using FubuCore;
 using FubuKayak;
 using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics.HtmlWriting;
+using FubuMVC.Core.Diagnostics.Querying;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
@@ -14,6 +18,7 @@ using FubuTestingSupport;
 using NUnit.Framework;
 using Serenity.Endpoints;
 using StructureMap;
+using StoryTeller.Engine.TeamCity;
 
 namespace IntegrationTesting.Conneg
 {
@@ -23,9 +28,14 @@ namespace IntegrationTesting.Conneg
     {
         private Harness theHarness;
 
+
+
         [TestFixtureSetUp]
         public void SetUp()
         {
+            runBottles("alias harness " + Harness.GetApplicationDirectory().FileEscape());
+
+            initializeBottles();
             theHarness = Harness.Run(configure);
         }
 
@@ -33,6 +43,20 @@ namespace IntegrationTesting.Conneg
         public void TearDown()
         {
             theHarness.Dispose();
+        }
+
+        protected void restart()
+        {
+            TearDown();
+            theHarness = Harness.Run(configure);
+        }
+
+        public RemoteBehaviorGraph remote
+        {
+            get
+            {
+                return theHarness.Remote;
+            }
         }
 
         protected EndpointDriver endpoints
@@ -43,7 +67,55 @@ namespace IntegrationTesting.Conneg
             }
         }
 
-        protected abstract void configure(FubuRegistry registry);
+        protected virtual void configure(FubuRegistry registry)
+        {
+            
+        }
+
+        protected virtual void initializeBottles()
+        {
+            
+        }
+
+        protected void runFubu(string commands)
+        {
+            var runner = new CommandRunner();
+            commands.ReadLines(x =>
+            {
+                if (x.Trim().IsNotEmpty())
+                {
+                    runner.RunFubu(x);
+                }
+            });
+        }
+
+        protected void runBottles(string commands)
+        {
+            var runner = new CommandRunner();
+            commands.ReadLines(x =>
+            {
+                if (x.Trim().IsNotEmpty())
+                {
+                    runner.RunBottles(x);
+                }
+            });
+        }
+
+        protected void DebugRemoteBehaviorGraph()
+        {
+            var output = endpoints.Get<BehaviorGraphWriter>(x => x.PrintRoutes());
+            Debug.WriteLine(output);
+        }
+
+        protected void DebugPackageLoading()
+        {
+            var output = endpoints.Get<PackageLoadingWriter>(x => x.FullLog());
+            var filename = Path.GetTempFileName() + ".htm";
+            
+            new FileSystem().WriteStringToFile(filename, output.ToString());
+
+            Process.Start(filename);
+        }
     }
 
 
@@ -62,6 +134,7 @@ namespace IntegrationTesting.Conneg
             return FubuApplication.For(() =>
             {
                 var registry = new FubuRegistry();
+                registry.IncludeDiagnostics(true);
                 _configuration(registry);
 
                 return registry;
@@ -75,7 +148,7 @@ namespace IntegrationTesting.Conneg
 
         public static Harness Run(Action<FubuRegistry> configure)
         {
-            var applicationDirectory = AppDomain.CurrentDomain.BaseDirectory.ParentDirectory().ParentDirectory();
+            string applicationDirectory = GetApplicationDirectory();
             FubuMvcPackageFacility.PhysicalRootPath = applicationDirectory;
 
 
@@ -105,6 +178,11 @@ namespace IntegrationTesting.Conneg
             // Need to get the runtime
         }
 
+        public static string GetApplicationDirectory()
+        {
+            return AppDomain.CurrentDomain.BaseDirectory.ParentDirectory().ParentDirectory();
+        }
+
         private readonly FubuRuntime _runtime;
         private readonly FubuKayakApplication _application;
         private readonly EndpointDriver _endpoints;
@@ -117,6 +195,13 @@ namespace IntegrationTesting.Conneg
             var urls = _runtime.Facility.Get<IUrlRegistry>();
             urls.As<UrlRegistry>().RootAt(root);
 
+            UrlContext.Stub(root);
+
+            _remote = new Lazy<RemoteBehaviorGraph>(() =>
+            {
+                return new RemoteBehaviorGraph(root);
+            });
+
             _endpoints = new EndpointDriver(urls);
         }
 
@@ -125,6 +210,14 @@ namespace IntegrationTesting.Conneg
             get { return _endpoints; }
         }
 
+        private readonly Lazy<RemoteBehaviorGraph> _remote;
+        public RemoteBehaviorGraph Remote
+        {
+            get
+            {
+                return _remote.Value;
+            }
+        }
 
         public void Dispose()
         {
@@ -142,6 +235,20 @@ namespace IntegrationTesting.Conneg
             return response;
         }
 
+        public static HttpResponse ContentTypeShouldBe(this HttpResponse response, MimeType mimeType)
+        {
+            response.ContentType.ShouldEqual(mimeType.Value);
+
+            return response;
+        }
+
+        public static HttpResponse LengthShouldBe(this HttpResponse response, int length)
+        {
+            response.ContentLength().ShouldEqual(length);
+
+            return response;
+        }
+
         public static HttpResponse ContentShouldBe(this HttpResponse response, string mimeType, string content)
         {
             response.ContentType.ShouldEqual(mimeType);
@@ -150,11 +257,18 @@ namespace IntegrationTesting.Conneg
             return response;
         }
 
+        
+
         public static HttpResponse StatusCodeShouldBe(this HttpResponse response, HttpStatusCode code)
         {
             response.StatusCode.ShouldEqual(code);
 
             return response;
+        }
+
+        public static string FileEscape(this string file)
+        {
+            return "\"{0}\"".ToFormat(file);
         }
     }
 }

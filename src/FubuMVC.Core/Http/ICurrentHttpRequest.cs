@@ -56,7 +56,7 @@ namespace FubuMVC.Core.Http
 
         public string ToFullUrl(string url)
         {
-            return url;
+            return url.ToAbsoluteUrl();
         }
 
         public string HttpMethod()

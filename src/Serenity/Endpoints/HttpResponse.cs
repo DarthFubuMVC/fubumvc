@@ -45,6 +45,11 @@ namespace Serenity.Endpoints
             return _response.GetResponseStream();
         }
 
+        public long ContentLength()
+        {
+            return _response.ContentLength;
+        }
+
         public string ContentType
         {
             get
@@ -88,6 +93,11 @@ namespace Serenity.Endpoints
         public string ReadAsText()
         {
             return ToString();
+        }
+
+        public string Etag()
+        {
+            return _response.Headers[HttpResponseHeader.ETag];
         }
     }
 }

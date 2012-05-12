@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection;
 using FubuCore;
 using StoryTeller.Assertions;
 
@@ -18,8 +17,7 @@ namespace IntegrationTesting
             var fileSystem = new FileSystem();
 
 
-
-            bool isFound = fileSystem.FileExists(path, @"src\fubu\bin\debug", "fubu.exe");
+            var isFound = fileSystem.FileExists(path, @"src\fubu\bin\debug", "fubu.exe");
             while (!isFound)
             {
                 path = Path.Combine(path, "..");
@@ -28,13 +26,12 @@ namespace IntegrationTesting
 
             _solutionDirectory = Path.GetFullPath(path);
         }
+
         public void RunBottles(string commandLine)
         {
-
-            var fileName = Path.Combine(_solutionDirectory, @"bottlesrunner.exe");
+            var fileName = Path.Combine(_solutionDirectory, @"bottles.cmd");
             Debug.WriteLine("Execute: {0} {1}".ToFormat(fileName, commandLine));
-            var startup = new ProcessStartInfo(fileName, commandLine)
-            {
+            var startup = new ProcessStartInfo(fileName, commandLine){
                 CreateNoWindow = true,
                 RedirectStandardError = true,
                 RedirectStandardInput = true,
@@ -45,7 +42,6 @@ namespace IntegrationTesting
 
             try
             {
-
                 var process = Process.Start(startup);
                 var processOutput = process.StandardOutput.ReadToEnd();
                 process.WaitForExit();
@@ -64,13 +60,12 @@ namespace IntegrationTesting
                 throw new ApplicationException("Trying to run " + fileName, e);
             }
         }
+
         public void RunFubu(string commandLine)
         {
-
             var fileName = Path.Combine(_solutionDirectory, @"src\fubu\bin\debug\fubu.exe");
             Debug.WriteLine("Execute: {0} {1}".ToFormat(fileName, commandLine));
-            var startup = new ProcessStartInfo(fileName, commandLine)
-            {
+            var startup = new ProcessStartInfo(fileName, commandLine){
                 CreateNoWindow = true,
                 RedirectStandardError = true,
                 RedirectStandardInput = true,
@@ -81,7 +76,6 @@ namespace IntegrationTesting
 
             try
             {
-               
                 var process = Process.Start(startup);
                 var processOutput = process.StandardOutput.ReadToEnd();
                 process.WaitForExit();

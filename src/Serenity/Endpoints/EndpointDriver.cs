@@ -10,6 +10,7 @@ using System.Xml.Serialization;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core;
+using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
@@ -44,6 +45,12 @@ namespace Serenity.Endpoints
 
             return request.ToHttpCall();
         } 
+
+        public HttpResponse GetAsset(AssetFolder? folder, string name, string etag = null)
+        {
+            var url = _urls.UrlForAsset(folder, name);
+            return Get(url, etag: etag);
+        }
 
         public HttpResponse PostAsForm<T>(T target, string contentType = "application/x-www-form-urlencoded", string accept="*/*")
         {
@@ -122,13 +129,19 @@ namespace Serenity.Endpoints
         /// Executes a GET to the url
         /// </summary>
         /// <param name="url"></param>
+        /// <param name="etag"></param>
         /// <returns></returns>
-        public HttpResponse Get(string url, string acceptType = "*/*")
+        public HttpResponse Get(string url, string acceptType = "*/*", string etag = null)
         {
             var request = WebRequest.Create(url);
             request.Method = "GET";
             request.ContentType = MimeType.HttpFormMimetype;
             request.As<HttpWebRequest>().Accept = acceptType;
+
+            if (etag.IsNotEmpty())
+            {
+                request.Headers[HttpRequestHeader.IfNoneMatch] = etag;
+            }
 
             return request.ToHttpCall();
         }
@@ -169,6 +182,6 @@ namespace Serenity.Endpoints
             return WebRequest.Create(url);
         }
 
-
+        
     }
 }
