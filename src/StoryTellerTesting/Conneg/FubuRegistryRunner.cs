@@ -20,7 +20,6 @@ using FubuTestingSupport;
 using NUnit.Framework;
 using Serenity.Endpoints;
 using StructureMap;
-using StoryTeller.Engine.TeamCity;
 
 namespace IntegrationTesting.Conneg
 {

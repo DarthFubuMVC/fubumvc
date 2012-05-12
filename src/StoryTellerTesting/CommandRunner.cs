@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using FubuCore;
-using StoryTeller.Assertions;
+using FubuCore.CommandLine;
 
 namespace IntegrationTesting
 {
@@ -48,12 +48,8 @@ namespace IntegrationTesting
 
                 if (process.ExitCode != 0)
                 {
-                    StoryTellerAssert.Fail("Command failed! -- " + commandLine + "\n" + processOutput);
+                    throw new CommandFailureException("Command failed! -- " + commandLine + "\n" + processOutput);
                 }
-            }
-            catch (StorytellerAssertionException)
-            {
-                throw;
             }
             catch (Exception e)
             {
@@ -84,12 +80,8 @@ namespace IntegrationTesting
 
                 if (process.ExitCode != 0)
                 {
-                    StoryTellerAssert.Fail("Command failed! -- " + commandLine + "\n" + processOutput);
+                    throw new CommandFailureException("Command failed! -- " + commandLine + "\n" + processOutput);
                 }
-            }
-            catch (StorytellerAssertionException)
-            {
-                throw;
             }
             catch (Exception e)
             {
