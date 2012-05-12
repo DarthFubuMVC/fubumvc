@@ -1,1 +1,1 @@
-﻿
+﻿var x = 'script1.js';
