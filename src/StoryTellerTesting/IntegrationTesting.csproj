@@ -93,6 +93,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\writing_asset_tags_with_and_without_bottles.cs" />
     <Compile Include="CommandRunner.cs" />
     <Compile Include="Conneg\Conneg_Can_Choose_Output_Media_Based_on_Mimetypes.cs" />
     <Compile Include="Conneg\FubuRegistryRunner.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="Packaging\attaching_a_bottle_via_zip_file.cs" />
     <Compile Include="Packaging\unlinking_a_bottle_from_the_command_line.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScriptsHandler.cs" />
     <Compile Include="StoryTellerDebug.cs" />
     <Compile Include="Template.cs" />
     <Compile Include="ViewAttachment\ProfiledAttachmentTester.cs" />
@@ -296,6 +298,7 @@
     <Content Include="Tests\Packaging\Environment\Logging installer failures.xml" />
     <Content Include="ViewEngines\HelloRazor\HelloPartial.cshtml" />
     <Content Include="ViewEngines\HelloRazor\HelloWorld.cshtml" />
+    <Content Include="sets.script.config" />
     <None Include="ViewAttachment\m.view.spark" />
     <None Include="ViewAttachment\view.spark" />
     <None Include="ViewEngines\HelloSpark\Breathe.spark" />

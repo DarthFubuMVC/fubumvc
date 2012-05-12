@@ -1,12 +1,15 @@
+using System;
 using System.Linq;
 using System.Net;
+using System.Xml;
+using FubuMVC.Core;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Runtime;
+
 using FubuTestingSupport;
 using IntegrationTesting.Conneg;
 using NUnit.Framework;
 using TestPackage1;
-using StringController = IntegrationTesting.Conneg.StringController;
 
 namespace IntegrationTesting.Packaging
 {
@@ -24,7 +27,13 @@ create pak1 -o pak1.zip
 ");
 
             runFubu("install-pak pak1.zip harness");
+
+
         }
+
+
+
+
 
         [Test]
         public void read_image_from_a_package()

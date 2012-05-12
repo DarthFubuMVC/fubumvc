@@ -2,7 +2,7 @@ using System.Linq;
 using FubuTestingSupport;
 using IntegrationTesting.Conneg;
 using NUnit.Framework;
-using SpecificationExtensions = FubuTestingSupport.SpecificationExtensions;
+
 
 namespace IntegrationTesting.Packaging
 {

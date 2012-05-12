@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<Test name="Smoke Test" lifecycle="Acceptance">
-  <HelloWorld>
-    <RouteExists isStep="True" route="home/post" />
-    <RouteExists isStep="True" route="login/login" />
-    <RouteExists isStep="True" route="login/logoff" />
-    <RouteExists isStep="True" route="secret/showprofile" />
-  </HelloWorld>
-</Test>

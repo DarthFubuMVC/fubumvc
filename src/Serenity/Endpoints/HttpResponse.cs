@@ -99,5 +99,13 @@ namespace Serenity.Endpoints
         {
             return _response.Headers[HttpResponseHeader.ETag];
         }
+
+        public XmlDocument ReadAsXml()
+        {
+            var document = new XmlDocument();
+            document.LoadXml(ToString());
+
+            return document;
+        }
     }
 }

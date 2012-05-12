@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Security.Cryptography;
 using System.Threading;
+using System.Xml;
 using FubuCore;
 using FubuKayak;
 using FubuMVC.Core;
@@ -269,6 +271,18 @@ namespace IntegrationTesting.Conneg
         public static string FileEscape(this string file)
         {
             return "\"{0}\"".ToFormat(file);
+        }
+
+        public static IEnumerable<string> ScriptNames(this HttpResponse response)
+        {
+            var document = response.ReadAsXml();
+            var tags = document.DocumentElement.SelectNodes("//script");
+
+            foreach (XmlElement tag in tags)
+            {
+                var name = tag.GetAttribute("src");
+                yield return name.Substring(name.IndexOf('_'));
+            }
         }
     }
 }
