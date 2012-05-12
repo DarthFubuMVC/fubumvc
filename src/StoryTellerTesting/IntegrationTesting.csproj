@@ -148,14 +148,6 @@
       <Project>{90DBE31C-948D-47AF-8C17-0056511A7313}</Project>
       <Name>Fubu</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Serenity.Testing\Serenity.Testing.csproj">
-      <Project>{5E69E72A-B92F-47BE-B7F7-6E6A926EC90F}</Project>
-      <Name>Serenity.Testing</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Serenity\Serenity.csproj">
-      <Project>{900A0419-3579-4DAE-85BE-71A3E4B34239}</Project>
-      <Name>Serenity</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TestPackage1\TestPackage1.csproj">
       <Project>{1F18D6EB-4D9C-407A-BD70-C5D525E377B6}</Project>
       <Name>TestPackage1</Name>

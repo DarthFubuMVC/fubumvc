@@ -11,6 +11,7 @@ using FubuKayak;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Diagnostics.Querying;
+using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
@@ -18,7 +19,6 @@ using FubuMVC.OwinHost;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
-using Serenity.Endpoints;
 using StructureMap;
 
 namespace IntegrationTesting.Conneg

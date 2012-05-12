@@ -79,13 +79,8 @@ def waitfor(&block)
   raise 'waitfor timeout expired' if checks > 10
 end
 
-desc "Packages the Serenity bottle files"
-task :bottle_serenity do
-  bottles("assembly-pak src/Serenity")
-end
-
 desc "Compiles the app"
-task :compile => [:restore_if_missing, :clean, :version, :bottle_serenity] do
+task :compile => [:restore_if_missing, :clean, :version] do
   MSBuildRunner.compile :compilemode => COMPILE_TARGET, :solutionfile => 'src/FubuMVC.sln', :clrversion => CLR_TOOLS_VERSION
   #AspNetCompilerRunner.compile :webPhysDir => "src/FubuMVC.HelloWorld", :webVirDir => "localhost/xyzzyplugh"
 
@@ -127,17 +122,6 @@ task :unit_test => :compile do
   runner.executeTests ['FubuMVC.Tests', 'FubuMVC.Spark.Tests', 'FubuMVC.Razor.Tests']
 end
 
-desc "Runs the unit tests for Serenity"
-task :serenity_test => :compile do
-  runner = NUnitRunner.new :compilemode => COMPILE_TARGET, :source => 'src', :platform => 'x86'
-  runner.executeTests ['Serenity.Testing']
-end
-
-
-desc "Runs the StoryTeller suite of end to end tests.  IIS must be running first"
-task :storyteller => [:compile] do
-  storyteller("Storyteller.xml output/st-results.htm")
-end
 
 desc "Set up the virtual directories for the HelloWorld applications"
 task :virtual_dir => [:compile] do
@@ -161,16 +145,6 @@ def self.bottles(args)
   sh "#{bottles} #{args}"
 end
 
-def self.storyteller(args)
-st = Platform.runtime(Nuget.tool("Storyteller", "StorytellerRunner.exe")) 
-sh "#{st} #{args}"
-end
-
-desc "Runs the StoryTeller UI"
-task :run_st do
-  st = Platform.runtime(Nuget.tool("Storyteller", "StorytellerUI.exe"))
-  sh st 
-end
 
 def self.fubu(args)
   fubu = Platform.runtime("src/fubu/bin/#{COMPILE_TARGET}/fubu.exe")

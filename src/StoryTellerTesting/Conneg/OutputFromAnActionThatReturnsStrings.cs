@@ -4,7 +4,6 @@ using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
-using Serenity.Endpoints;
 
 namespace IntegrationTesting.Conneg
 {

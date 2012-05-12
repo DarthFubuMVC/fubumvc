@@ -1,3 +1,0 @@
-﻿include:Jasmine/TestPackage1
-include:Jasmine/TestPackage2
-include:Jasmine/TestPackage3

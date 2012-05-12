@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using FubuMVC.Core;
+using FubuMVC.Core.Endpoints;
 using IntegrationTesting.Conneg;
 using NUnit.Framework;
-using Serenity.Endpoints;
 using FubuTestingSupport;
 
 namespace IntegrationTesting.Assets
