@@ -515,10 +515,6 @@
       <Project>{90DBE31C-948D-47AF-8C17-0056511A7313}</Project>
       <Name>Fubu</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KayakTestApplication\KayakTestApplication.csproj">
-      <Project>{68CC89AB-EE8B-4B2D-9BA0-8B0FBF460446}</Project>
-      <Name>KayakTestApplication</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TestPackage1\TestPackage1.csproj">
       <Project>{1F18D6EB-4D9C-407A-BD70-C5D525E377B6}</Project>
       <Name>TestPackage1</Name>

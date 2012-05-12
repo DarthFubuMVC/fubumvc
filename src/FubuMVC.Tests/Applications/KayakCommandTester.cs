@@ -1,7 +1,6 @@
 using Fubu.Applications;
 using FubuCore;
 using FubuMVC.Core;
-using KayakTestApplication;
 using NUnit.Framework;
 using FubuTestingSupport;
 using System.Collections.Generic;

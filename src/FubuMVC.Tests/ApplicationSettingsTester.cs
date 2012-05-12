@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using FubuCore;
 using FubuMVC.Core;
-using KayakTestApplication;
+using FubuMVC.StructureMap;
 using NUnit.Framework;
 using FubuTestingSupport;
+using StructureMap;
 
 namespace FubuMVC.Tests
 {
@@ -93,5 +95,52 @@ namespace FubuMVC.Tests
         }
 
 
+    }
+
+    public class KayakApplication : IApplicationSource
+    {
+        public FubuApplication BuildApplication()
+        {
+            return FubuApplication
+                .For<KayakRegistry>()
+                .StructureMap(new Container());
+        }
+    }
+
+    public class KayakRegistry : FubuRegistry
+    {
+        public KayakRegistry()
+        {
+            Routes.HomeIs<SayHelloController>(x => x.Hello());
+
+            Actions.IncludeClassesSuffixedWithController();
+
+            IncludeDiagnostics(true);
+
+            Views.TryToAttachWithDefaultConventions();
+        }
+    }
+
+    public class NameModel
+    {
+        public string Name { get; set; }
+    }
+
+    public class SayHelloController
+    {
+        public string Hello()
+        {
+            return "Hello, it's " + DateTime.Now;
+        }
+
+        public NameModel get_say_Name(NameModel model)
+        {
+            return model;
+        }
+
+        public IDictionary<string, object> post_name(NameModel model)
+        {
+            return new Dictionary<string, object> { { "name", model.Name } };
+        }
     }
 }
