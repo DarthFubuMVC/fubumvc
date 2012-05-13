@@ -47,6 +47,7 @@ namespace FubuMVC.Core.Assets
             var files = _fileSystem.FindFiles(folder, new FileSet
                                                       {
                                                           Include = "*.script.config;*.asset.config",
+                                                          Exclude = FubuMvcPackageFacility.FubuContentFolder,
                                                           DeepSearch = true
                                                       });
 

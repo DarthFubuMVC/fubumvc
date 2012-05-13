@@ -18,7 +18,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\src\SerenityRunner\bin\release\FubuKayak.*" target="lib\net40" />
-    <file src="..\..\src\SerenityRunner\bin\release\FubuMVC.OwinHost.*" target="lib\net40" />
+    <file src="..\..\src\FubuKayak\bin\release\FubuKayak.*" target="lib\net40" />
+    <file src="..\..\src\FubuKayak\bin\release\FubuMVC.OwinHost.*" target="lib\net40" />
   </files>
 </package>

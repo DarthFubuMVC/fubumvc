@@ -34,7 +34,6 @@ namespace FubuMVC.Core.Assets
             {
                 // Guard clause to allow automated tests with faked up data work
                 if (AssetDeclarationVerificationActivator.Latched) return;
-                var assetLog = _assetLogs.FindByName(name);
                 _log.MarkFailure(GetErrorMessage(name, _assetLogs));
             }
         }
