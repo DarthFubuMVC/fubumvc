@@ -6,6 +6,7 @@ using Bottles.Diagnostics;
 using FubuCore;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Diagnostics;
+using FubuMVC.Core.Packaging;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -41,6 +42,12 @@ namespace FubuMVC.Tests.Assets
                                                @"
 jquery is jquery.1.4.2.js
 a includes b,c,d
+");
+
+            // This should be ignored
+            new FileSystem().WriteStringToFile(FubuMvcPackageFacility.FubuContentFolder.AppendPath("wrong.script.config"),
+                                               @"
+a includes e,f,g
 ");
 
             new FileSystem().WriteStringToFile("else.script.config", @"

@@ -47,7 +47,6 @@ namespace FubuMVC.Core.Assets
             var files = _fileSystem.FindFiles(folder, new FileSet
                                                       {
                                                           Include = "*.script.config;*.asset.config",
-                                                          Exclude = FubuMvcPackageFacility.FubuContentFolder,
                                                           DeepSearch = true
                                                       });
 
@@ -57,7 +56,7 @@ namespace FubuMVC.Core.Assets
                 return;
             }
 
-            files.Each(file => ReadFile(file, log));
+            files.Where(x => !x.PathRelativeTo(folder).Contains(FubuMvcPackageFacility.FubuContentFolder)).Each(file => ReadFile(file, log));
         }
 
         public void ReadFile(string file, IPackageLog log)
