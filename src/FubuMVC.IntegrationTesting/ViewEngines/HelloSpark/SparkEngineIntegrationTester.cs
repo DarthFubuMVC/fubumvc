@@ -1,12 +1,12 @@
 using System.Diagnostics;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.HtmlWriting;
+using FubuMVC.IntegrationTesting.Conneg;
 using FubuMVC.Spark;
 using FubuTestingSupport;
-using IntegrationTesting.Conneg;
 using NUnit.Framework;
 
-namespace IntegrationTesting.ViewEngines.HelloSpark
+namespace FubuMVC.IntegrationTesting.ViewEngines.HelloSpark
 {
     [TestFixture]
     public class SparkEngineIntegrationTester : FubuRegistryHarness

@@ -1,10 +1,9 @@
 using System.Linq;
+using FubuMVC.IntegrationTesting.Conneg;
 using FubuTestingSupport;
-using IntegrationTesting.Conneg;
 using NUnit.Framework;
 
-
-namespace IntegrationTesting.Packaging
+namespace FubuMVC.IntegrationTesting.Packaging
 {
     [TestFixture]
     public class unlinking_a_bottle_from_the_command_line : FubuRegistryHarness

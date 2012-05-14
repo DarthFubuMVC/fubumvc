@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.IO;
 using FubuCore;
 using FubuCore.CommandLine;
 
-namespace IntegrationTesting
+namespace FubuMVC.IntegrationTesting
 {
     public class CommandRunner
     {

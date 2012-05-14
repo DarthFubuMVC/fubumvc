@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<aliases xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<aliases xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Aliases>
     <alias name="fubu-testing" folder="C:\code\fubumvc\src\FubuTestApplication" />
     <alias name="pak1" folder="src/TestPackage1" />
@@ -9,6 +9,6 @@
     <alias name="spark" folder="src/FubuMVC.Spark" />
     <alias name="helloworld" folder="d:\home\oss\fubumvc\src\FubuMVC.HelloWorld" />
     <alias name="hellofubuspark" folder="d:\home\oss\fubumvc\src\FubuMVC.HelloFubuSpark" />
-    <alias name="harness" folder="C:\code\fubumvc\src\StoryTellerTesting" />
+    <alias name="harness" folder="C:\code\fubumvc\src\FubuMVC.IntegrationTesting" />
   </Aliases>
 </aliases>

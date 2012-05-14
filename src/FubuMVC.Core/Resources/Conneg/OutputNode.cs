@@ -17,6 +17,11 @@ namespace FubuMVC.Core.Resources.Conneg
 
         public OutputNode(Type resourceType)
         {
+            if (resourceType == typeof(void))
+            {
+                throw new ArgumentOutOfRangeException("Void is not a valid resource type");
+            }
+
             _resourceType = resourceType;
         }
 

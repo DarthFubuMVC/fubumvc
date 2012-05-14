@@ -609,6 +609,22 @@ namespace FubuMVC.Tests.Registration.Nodes
         }
 
         [Test]
+        public void has_resource_type()
+        {
+            theChain.HasResourceType().ShouldBeFalse();
+
+            // Void does not count
+            theChain.AddToEnd(ActionCall.For<FakeActions>(x => x.Go(null)));
+            theChain.HasResourceType().ShouldBeFalse();
+
+            theChain.AddToEnd(none);
+            theChain.HasResourceType().ShouldBeFalse();
+
+            theChain.AddToEnd(ints);
+            theChain.HasResourceType().ShouldBeTrue();
+        }
+
+        [Test]
         public void gets_the_last_resource_type_2()
         {
             
@@ -636,6 +652,14 @@ namespace FubuMVC.Tests.Registration.Nodes
 
             theChain.ResourceType().ShouldEqual(typeof(DateTime));
             theChain.Output.ResourceType.ShouldEqual(typeof(DateTime));
+        }
+    }
+
+    public class FakeActions
+    {
+        public void Go(InputModel model)
+        {
+            
         }
     }
 

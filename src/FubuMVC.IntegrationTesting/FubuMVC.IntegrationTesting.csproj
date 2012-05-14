@@ -8,8 +8,8 @@
     <ProjectGuid>{022C7B24-4417-493F-9F70-E3F4035FBEDA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>IntegrationTesting</RootNamespace>
-    <AssemblyName>IntegrationTesting</AssemblyName>
+    <RootNamespace>FubuMVC.IntegrationTesting</RootNamespace>
+    <AssemblyName>FubuMVC.IntegrationTesting</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -159,7 +159,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="FubuTestApplication.application.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

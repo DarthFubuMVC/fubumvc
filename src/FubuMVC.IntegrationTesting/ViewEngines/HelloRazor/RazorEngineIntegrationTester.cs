@@ -1,14 +1,10 @@
-using System;
-using System.Diagnostics;
 using FubuMVC.Core;
-using FubuMVC.Core.Diagnostics.HtmlWriting;
+using FubuMVC.IntegrationTesting.Conneg;
 using FubuMVC.Razor;
-using FubuMVC.WebForms;
-using IntegrationTesting.Conneg;
 using NUnit.Framework;
 using FubuTestingSupport;
 
-namespace IntegrationTesting.ViewEngines.HelloRazor
+namespace FubuMVC.IntegrationTesting.ViewEngines.HelloRazor
 {
     [TestFixture]
     public class RazorEngineIntegrationTester : FubuRegistryHarness

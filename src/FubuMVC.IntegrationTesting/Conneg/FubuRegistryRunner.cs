@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
-using System.Security.Cryptography;
 using System.Threading;
 using System.Xml;
 using FubuCore;
@@ -21,7 +20,7 @@ using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
 
-namespace IntegrationTesting.Conneg
+namespace FubuMVC.IntegrationTesting.Conneg
 {
 
 
@@ -35,6 +34,9 @@ namespace IntegrationTesting.Conneg
         public void SetUp()
         {
             runBottles("alias harness " + Harness.GetApplicationDirectory().FileEscape());
+
+            runBottles("link harness --clean-all");
+            runFubu("packages harness --clean-all --remove-all");
 
             initializeBottles();
             theHarness = Harness.Run(configure);

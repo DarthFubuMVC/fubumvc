@@ -1,11 +1,8 @@
-using System;
-using System.Diagnostics;
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
-using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace IntegrationTesting.Conneg
+namespace FubuMVC.IntegrationTesting.Conneg
 {
     [TestFixture]
     public class OutputFromAnActionThatReturnsStrings : FubuRegistryHarness

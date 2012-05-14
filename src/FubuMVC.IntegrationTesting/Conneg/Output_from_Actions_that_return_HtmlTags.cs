@@ -1,10 +1,9 @@
-using System;
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
 using HtmlTags;
 using NUnit.Framework;
 
-namespace IntegrationTesting.Conneg
+namespace FubuMVC.IntegrationTesting.Conneg
 {
     [TestFixture]
     public class Output_from_Actions_that_return_HtmlTags : FubuRegistryHarness

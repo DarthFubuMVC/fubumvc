@@ -145,7 +145,7 @@ namespace FubuMVC.Core.Resources.Conneg
                 chain.Input.AddFormatter<XmlFormatter>();
             }
 
-            if (chain.ResourceType() != null)
+            if (chain.HasResourceType())
             {
                 chain.Output.ClearAll();
                 chain.Output.AddFormatter<JsonFormatter>();

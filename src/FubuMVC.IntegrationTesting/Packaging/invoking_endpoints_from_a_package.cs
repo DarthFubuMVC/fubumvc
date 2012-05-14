@@ -1,11 +1,10 @@
-using System;
-using IntegrationTesting.Conneg;
+using FubuMVC.IntegrationTesting.Conneg;
 using NUnit.Framework;
 using TestPackage1;
 using FubuTestingSupport;
 using StringController = TestPackage1.StringController;
 
-namespace IntegrationTesting.Packaging
+namespace FubuMVC.IntegrationTesting.Packaging
 {
     [TestFixture]
     public class invoking_endpoints_from_a_package : FubuRegistryHarness

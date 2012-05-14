@@ -1,17 +1,13 @@
-using System;
 using System.Linq;
 using System.Net;
-using System.Xml;
-using FubuMVC.Core;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Runtime;
-
+using FubuMVC.IntegrationTesting.Conneg;
 using FubuTestingSupport;
-using IntegrationTesting.Conneg;
 using NUnit.Framework;
 using TestPackage1;
 
-namespace IntegrationTesting.Packaging
+namespace FubuMVC.IntegrationTesting.Packaging
 {
     [TestFixture]
     public class attaching_a_bottle_via_zip_file : FubuRegistryHarness

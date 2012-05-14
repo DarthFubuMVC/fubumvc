@@ -1,11 +1,10 @@
-using System;
 using System.Linq;
 using FubuMVC.Core;
-using IntegrationTesting.Conneg;
+using FubuMVC.IntegrationTesting.Conneg;
 using NUnit.Framework;
 using FubuTestingSupport;
 
-namespace IntegrationTesting.Packaging
+namespace FubuMVC.IntegrationTesting.Packaging
 {
     [TestFixture]
     public class loading_content_and_actions_from_a_linked_package : FubuRegistryHarness

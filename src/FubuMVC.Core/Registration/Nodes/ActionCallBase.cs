@@ -156,6 +156,8 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public Type OutputType()
         {
+            if (Method.ReturnType == typeof(void)) return null;
+
             return Method.ReturnType.CanBeCastTo<Task>()
                        ? getOutputTypeOrVoidTaskResult()
                        : Method.ReturnType;

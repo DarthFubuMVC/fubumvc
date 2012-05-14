@@ -1,12 +1,11 @@
-using System;
 using System.Collections.Generic;
 using FubuMVC.Core;
 using FubuMVC.Core.Endpoints;
-using IntegrationTesting.Conneg;
+using FubuMVC.IntegrationTesting.Conneg;
 using NUnit.Framework;
 using FubuTestingSupport;
 
-namespace IntegrationTesting.Assets
+namespace FubuMVC.IntegrationTesting.Assets
 {
     [TestFixture]
     public class writing_asset_tags_with_and_without_bottles : FubuRegistryHarness

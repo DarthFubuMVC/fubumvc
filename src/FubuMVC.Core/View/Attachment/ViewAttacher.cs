@@ -17,7 +17,7 @@ namespace FubuMVC.Core.View.Attachment
 
         public void Configure(BehaviorGraph graph)
         {
-            FindLastActions(graph).Each(action =>
+            FindLastActions(graph).Where(x => x.OutputType() != null).Each(action =>
             {
                 Profiles(graph).Each(x =>
                 {

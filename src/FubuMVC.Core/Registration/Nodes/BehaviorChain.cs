@@ -35,7 +35,7 @@ namespace FubuMVC.Core.Registration.Nodes
             _output = new Lazy<OutputNode>(() =>
             {
                 var outputType = ResourceType();
-                if (outputType == null) throw new InvalidOperationException("Cannot use the OutputNode if the BehaviorChain does not have at least one Action with output");
+                if (outputType == null || outputType == typeof(void)) throw new InvalidOperationException("Cannot use the OutputNode if the BehaviorChain does not have at least one Action with output");
 
                 return new OutputNode(outputType);
             });
@@ -373,6 +373,12 @@ namespace FubuMVC.Core.Registration.Nodes
             chain.Output.Writers.AddToEnd(node);
 
             return chain;
+        }
+
+        public bool HasResourceType()
+        {
+            var resourceType = ResourceType();
+            return resourceType != null && resourceType != typeof (void);
         }
     }
 }

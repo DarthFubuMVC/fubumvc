@@ -1,11 +1,11 @@
 using System.Net;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Runtime;
-using IntegrationTesting.Conneg;
+using FubuMVC.IntegrationTesting.Conneg;
 using NUnit.Framework;
 using FubuTestingSupport;
 
-namespace IntegrationTesting.Assets
+namespace FubuMVC.IntegrationTesting.Assets
 {
     [TestFixture]
     public class reading_images : FubuRegistryHarness

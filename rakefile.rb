@@ -122,6 +122,12 @@ task :unit_test => :compile do
   runner.executeTests ['FubuMVC.Tests', 'FubuMVC.Spark.Tests', 'FubuMVC.Razor.Tests']
 end
 
+desc "Runs the integration tests"
+task :integration_test => :compile do
+  runner = NUnitRunner.new :compilemode => COMPILE_TARGET, :source => 'src', :platform => 'x86'
+  runner.executeTests ['FubuMVC.IntegrationTesting']
+end
+
 
 desc "Set up the virtual directories for the HelloWorld applications"
 task :virtual_dir => [:compile] do

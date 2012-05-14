@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Reflection;
 using NUnit.Framework;
 
-namespace IntegrationTesting
+namespace FubuMVC.IntegrationTesting
 {
     [TestFixture, Explicit]
     public class debugger

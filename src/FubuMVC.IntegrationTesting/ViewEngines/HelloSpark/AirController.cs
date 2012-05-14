@@ -1,6 +1,6 @@
-﻿using FubuCore;
+using FubuCore;
 
-namespace IntegrationTesting.ViewEngines.HelloSpark
+namespace FubuMVC.IntegrationTesting.ViewEngines.HelloSpark
 {
     public class AirController
     {

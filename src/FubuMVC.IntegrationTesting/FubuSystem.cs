@@ -4,7 +4,7 @@ using FubuTestApplication;
 using StructureMap;
 using TestPackage1;
 
-namespace IntegrationTesting
+namespace FubuMVC.IntegrationTesting
 {
     public class FubuTestApplication : IApplicationSource
     {

@@ -1,10 +1,9 @@
-using System;
 using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Runtime;
 using NUnit.Framework;
 
-namespace IntegrationTesting.Conneg
+namespace FubuMVC.IntegrationTesting.Conneg
 {
     [TestFixture]
     public class Output_from_actions_that_return_ajax_continuations : FubuRegistryHarness

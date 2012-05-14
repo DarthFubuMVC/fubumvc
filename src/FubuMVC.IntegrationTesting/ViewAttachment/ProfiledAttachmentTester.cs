@@ -1,16 +1,14 @@
-using System;
 using System.Diagnostics;
 using FubuMVC.Core;
-using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
-using IntegrationTesting.Conneg;
+using FubuMVC.IntegrationTesting.Conneg;
 using NUnit.Framework;
 using FubuMVC.Spark;
 using FubuTestingSupport;
 
-namespace IntegrationTesting.ViewAttachment
+namespace FubuMVC.IntegrationTesting.ViewAttachment
 {
     [TestFixture]
     public class ProfiledAttachmentTester : FubuRegistryHarness

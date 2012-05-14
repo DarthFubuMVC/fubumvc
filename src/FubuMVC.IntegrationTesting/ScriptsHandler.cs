@@ -8,7 +8,7 @@ using FubuMVC.Core.UI;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace IntegrationTesting
+namespace FubuMVC.IntegrationTesting
 {
     public class ScriptRequest
     {

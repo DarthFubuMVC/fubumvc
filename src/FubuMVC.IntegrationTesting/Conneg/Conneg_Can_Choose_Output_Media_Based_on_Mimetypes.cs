@@ -7,7 +7,7 @@ using FubuMVC.Core;
 using HtmlTags;
 using NUnit.Framework;
 
-namespace IntegrationTesting.Conneg
+namespace FubuMVC.IntegrationTesting.Conneg
 {
     [TestFixture]
     public class conneg_with_endpoint_that_accepts_all_formatters_and_form_posts : FubuRegistryHarness
