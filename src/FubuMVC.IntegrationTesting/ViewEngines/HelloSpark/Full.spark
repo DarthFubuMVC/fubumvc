@@ -1,4 +1,4 @@
-﻿<viewdata model="IntegrationTesting.ViewEngines.HelloSpark.FullViewModel" />
+﻿<viewdata model="FubuMVC.IntegrationTesting.ViewEngines.HelloSpark.FullViewModel" />
 <p>The partial is below</p>
 
 !{this.Partial(Model.PartialModel)}

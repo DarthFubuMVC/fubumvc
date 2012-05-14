@@ -1,2 +1,2 @@
-﻿<viewdata model="IntegrationTesting.ViewEngines.HelloSpark.MoreInput" />
+﻿<viewdata model="FubuMVC.IntegrationTesting.ViewEngines.HelloSpark.MoreInput" />
 <p>!{Model.Description}</p>

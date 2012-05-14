@@ -1,4 +1,4 @@
-﻿<viewdata model="IntegrationTesting.ViewEngines.HelloSpark.AirViewModel" />
+﻿<viewdata model="FubuMVC.IntegrationTesting.ViewEngines.HelloSpark.AirViewModel" />
 <content:head>
     <Asset name="jquery" />
     <script type="text/javascript">
