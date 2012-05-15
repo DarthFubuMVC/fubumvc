@@ -1,6 +1,7 @@
 using FubuCore;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
+using FubuMVC.Razor.Rendering;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -108,6 +109,20 @@ namespace FubuMVC.Razor.Tests.Rendering
         }
 
         [Test]
+        public void set_model_using_request_and_model_propogates_to_shared_layout()
+        {
+            var request = MockFor<IFubuRequest>();
+            var model = new PersonViewModel {Name = "Mr. FubuRazor"};
+            request.Expect(x => x.Get<PersonViewModel>()).Return(model);
+            var sharedLayout = new SharedView();
+            ClassUnderTest.Layout = sharedLayout;
+            ClassUnderTest.SetModel(request);
+            ClassUnderTest.Model.ShouldEqual(model);
+            sharedLayout.Model.ShouldEqual(model);
+            request.VerifyAllExpectations();
+        }
+
+        [Test]
         public void set_model_using_object_instance()
         {
             object model = new PersonViewModel { Name = "Mr. FubuRazor" };
@@ -133,7 +148,11 @@ namespace FubuMVC.Razor.Tests.Rendering
 
     }
 
-    public class PersonViewModel
+    public class SharedViewModel
+    {
+    }
+
+    public class PersonViewModel : SharedViewModel
     {
         public string Name { get; set; }
     }
@@ -141,5 +160,9 @@ namespace FubuMVC.Razor.Tests.Rendering
     public class ViewObject 
     {
         public string Tag { get; set; }
+    }
+
+    public class SharedView : FubuRazorView<SharedViewModel>
+    {
     }
 }
