@@ -1,4 +1,5 @@
 ﻿using FubuCore;
+using System.IO;
 
 namespace FubuMVC.Core.View.Model
 {
@@ -26,7 +27,8 @@ namespace FubuMVC.Core.View.Model
                 && descriptor.Master == null
                 && (descriptor.HasViewModel() || parsing.Master.IsNotEmpty())
                 && !request.Template.IsPartial()
-                && parsing.Master != string.Empty;
+                && parsing.Master != string.Empty
+                && !Path.GetFileNameWithoutExtension(request.Template.FilePath).EqualsIgnoreCase(MasterName);
         }
 
         public void Attach(IAttachRequest<T> request)

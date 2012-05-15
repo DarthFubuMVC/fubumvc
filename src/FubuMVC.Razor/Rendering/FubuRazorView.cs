@@ -103,7 +103,7 @@ namespace FubuMVC.Razor.Rendering
     {
         public void SetModel(IFubuRequest request)
         {
-            Model = request.Get<TViewModel>();
+            SetModel(request.Get<TViewModel>());
         }
 
         public void SetModel(object model)
@@ -114,6 +114,20 @@ namespace FubuMVC.Razor.Rendering
         public void SetModel(TViewModel model)
         {
             Model = model;
+
+           object layout = Layout;
+           while (layout != null)
+           {
+               var layoutModelMethod = layout.GetType().GetProperty("Model");
+               if (layoutModelMethod != null)
+                   layoutModelMethod.SetValue(layout, model, null);
+
+               object parentLayout = null;
+               var parentLayoutMethod = layout.GetType().GetProperty("Layout");
+               if (parentLayoutMethod != null)
+                   parentLayout = parentLayoutMethod.GetValue(layout, null);
+               layout = parentLayout;
+           }
         }
 
         void IRenderableView.Render()
