@@ -28,7 +28,8 @@ namespace FubuMVC.Core.View.Model
                 && (descriptor.HasViewModel() || parsing.Master.IsNotEmpty())
                 && !request.Template.IsPartial()
                 && parsing.Master != string.Empty
-                && !descriptor.Name().EqualsIgnoreCase(MasterName);
+                && (!descriptor.Name().EqualsIgnoreCase(MasterName) 
+                    || (descriptor.Name().EqualsIgnoreCase(MasterName) && parsing.Master != null && !parsing.Master.EqualsIgnoreCase(MasterName)));
         }
 
         public void Attach(IAttachRequest<T> request)

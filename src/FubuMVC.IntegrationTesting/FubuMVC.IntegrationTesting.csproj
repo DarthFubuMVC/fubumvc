@@ -101,11 +101,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScriptsHandler.cs" />
     <Compile Include="ViewAttachment\ProfiledAttachmentTester.cs" />
-    <Compile Include="ViewEngines\HelloRazor\HelloRazorController.cs" />
-    <Compile Include="ViewEngines\HelloRazor\RazorEngineIntegrationTester.cs" />
-    <Compile Include="ViewEngines\HelloSpark\AirController.cs" />
-    <Compile Include="ViewEngines\HelloSpark\PartialsWithSparkIntegrationTester.cs" />
-    <Compile Include="ViewEngines\HelloSpark\SparkEngineIntegrationTester.cs" />
+    <Compile Include="ViewEngines\Razor\HelloRazor\HelloRazorController.cs" />
+    <Compile Include="ViewEngines\Razor\HelloRazor\RazorEngineIntegrationTester.cs" />
+    <Compile Include="ViewEngines\Razor\MultipleLayouts\Features\One\UsesClosest\ClosestController.cs" />
+    <Compile Include="ViewEngines\Razor\MultipleLayouts\Features\Two\UsesDefault\UsesDefaultController.cs" />
+    <Compile Include="ViewEngines\Razor\MultipleLayouts\RazorEngineMultipleLayoutsIntegrationTester.cs" />
+    <Compile Include="ViewEngines\Spark\HelloSpark\AirController.cs" />
+    <Compile Include="ViewEngines\Spark\HelloSpark\PartialsWithSparkIntegrationTester.cs" />
+    <Compile Include="ViewEngines\Spark\HelloSpark\SparkEngineIntegrationTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuKayak\FubuKayak.csproj">
@@ -256,16 +259,21 @@
     <Content Include="Tests\Packaging\Environment\Environment Runner captures errors from the Environment setup.xml" />
     <Content Include="Tests\Packaging\Environment\Execute Environment Happy Path.xml" />
     <Content Include="Tests\Packaging\Environment\Logging installer failures.xml" />
-    <Content Include="ViewEngines\HelloRazor\HelloPartial.cshtml" />
-    <Content Include="ViewEngines\HelloRazor\HelloWorld.cshtml" />
+    <Content Include="ViewEngines\Razor\HelloRazor\HelloPartial.cshtml" />
+    <Content Include="ViewEngines\Razor\HelloRazor\HelloWorld.cshtml" />
     <Content Include="sets.script.config" />
     <None Include="ViewAttachment\m.view.spark" />
     <None Include="ViewAttachment\view.spark" />
-    <None Include="ViewEngines\HelloSpark\Breathe.spark" />
-    <None Include="ViewEngines\HelloSpark\Full.spark" />
-    <None Include="ViewEngines\HelloSpark\Partial2.spark" />
-    <None Include="ViewEngines\HelloSpark\Partial1.spark" />
-    <None Include="ViewEngines\HelloSpark\TakeABreath.spark" />
+    <Content Include="ViewEngines\Razor\MultipleLayouts\Shared\Application.cshtml" />
+    <Content Include="ViewEngines\Razor\MultipleLayouts\Features\One\Shared\Application.cshtml" />
+    <Content Include="ViewEngines\Razor\MultipleLayouts\Features\One\UsesClosest\Closest.cshtml" />
+    <Content Include="ViewEngines\Razor\MultipleLayouts\Shared\Html.cshtml" />
+    <Content Include="ViewEngines\Razor\MultipleLayouts\Features\Two\UsesDefault\UsesDefault.cshtml" />
+    <None Include="ViewEngines\Spark\HelloSpark\Breathe.spark" />
+    <None Include="ViewEngines\Spark\HelloSpark\Full.spark" />
+    <None Include="ViewEngines\Spark\HelloSpark\Partial2.spark" />
+    <None Include="ViewEngines\Spark\HelloSpark\Partial1.spark" />
+    <None Include="ViewEngines\Spark\HelloSpark\TakeABreath.spark" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\lib\chromedriver.exe">

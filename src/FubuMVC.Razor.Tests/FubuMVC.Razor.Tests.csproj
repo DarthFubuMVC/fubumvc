@@ -150,6 +150,9 @@
     <None Include="Templates\Home\file.foo">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Templates\One\Shared\application.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Templates\Package2\Handlers\Shared\_fail.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

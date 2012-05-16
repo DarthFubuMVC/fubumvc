@@ -1,0 +1,4 @@
+﻿@using FubuMVC.IntegrationTesting.ViewEngines.Razor.HelloRazor
+@model FubuMVC.IntegrationTesting.ViewEngines.Razor.HelloRazor.HelloWorldRazorViewModel
+<h1>@Model.Message</h1>
+@this.Raw(this.Partial(new HelloRazorPartialInputModel()))

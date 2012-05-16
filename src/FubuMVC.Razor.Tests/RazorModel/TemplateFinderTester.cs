@@ -48,7 +48,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
         [Test]
         public void finder_locates_all_relevant_razor_templates()
         {
-            ClassUnderTest.FindInHost().ShouldHaveCount(49);
+            ClassUnderTest.FindInHost().ShouldHaveCount(50);
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
             ClassUnderTest.ExcludeHostDirectory("App");
             ClassUnderTest.ExcludeHostDirectory("Package2", "Handlers", "Shared");
             ClassUnderTest.ExcludeHostDirectory("Pak1", "Alpha", "Bravo");
-            ClassUnderTest.FindInHost().ShouldHaveCount(22);
+            ClassUnderTest.FindInHost().ShouldHaveCount(23);
         }
 
         [Test]
@@ -71,7 +71,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
             items.ShouldContain(x => x.Name() == "file");
             items.ShouldContain(x => x.Name() == "baz");
             items.ShouldContain(x => x.Name() == "dog");
-            items.ShouldHaveCount(53);
+            items.ShouldHaveCount(54);
         }
 
         [Test]

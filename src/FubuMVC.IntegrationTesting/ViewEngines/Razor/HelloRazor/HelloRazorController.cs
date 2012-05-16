@@ -1,4 +1,4 @@
-namespace FubuMVC.IntegrationTesting.ViewEngines.HelloRazor
+namespace FubuMVC.IntegrationTesting.ViewEngines.Razor.HelloRazor
 {
     //Currently the extra mvc references are needed for tooling only
     //This requirement will be removed at some point

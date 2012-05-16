@@ -131,9 +131,9 @@ namespace FubuMVC.Razor.Tests.RazorModel
         }
 
         [Test]
-        public void if_template_is_default_master_then_attacher_is_not_applied()
+        public void if_template_is_default_master_and_layout_is_itself_then_attacher_is_not_applied()
         {
-            ((ITemplateFile)_template).FilePath = "Shared/" + _parsing.Master + ".cshtml";
+            ((ITemplateFile)_template).FilePath = "One/Shared/" + _parsing.Master + ".cshtml";
             ClassUnderTest.CanAttach(_request).ShouldBeFalse();
         }
 
