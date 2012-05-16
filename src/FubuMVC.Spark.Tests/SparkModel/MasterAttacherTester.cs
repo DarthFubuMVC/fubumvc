@@ -16,12 +16,10 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
         protected override void beforeEach()
         {
-            _template = new Template("b/a.spark", "b", "c")
+            _template = new Template("b/a.spark", "b", "c");
+            _template.Descriptor = _viewDescriptor = new SparkDescriptor(_template)
             {
-                Descriptor = _viewDescriptor = new SparkDescriptor(_template)
-                {
-                    ViewModel = typeof(ProductModel)
-                }
+                ViewModel = typeof (ProductModel)
             };
             
             _parsing = new Parsing

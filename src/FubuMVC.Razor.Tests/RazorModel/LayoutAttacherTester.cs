@@ -16,12 +16,10 @@ namespace FubuMVC.Razor.Tests.RazorModel
 
         protected override void beforeEach()
         {
-            _template = new Template("b/a.cshtml", "b", "c")
+            _template = new Template("b/a.cshtml", "b", "c");
+            _template.Descriptor = _viewDescriptor = new ViewDescriptor<IRazorTemplate>(_template)
             {
-                Descriptor = _viewDescriptor = new ViewDescriptor<IRazorTemplate>(_template)
-                {
-                    ViewModel = typeof(ProductModel)
-                }
+                ViewModel = typeof (ProductModel)
             };
             
             _parsing = new Parsing
@@ -135,7 +133,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
         [Test]
         public void if_template_is_default_master_then_attacher_is_not_applied()
         {
-            ((ITemplateFile)_template).FilePath = "b/" + _parsing.Master + ".cshtml";
+            ((ITemplateFile)_template).FilePath = "Shared/" + _parsing.Master + ".cshtml";
             ClassUnderTest.CanAttach(_request).ShouldBeFalse();
         }
 
