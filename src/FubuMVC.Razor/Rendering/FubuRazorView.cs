@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Web;
 using FubuCore;
 using FubuCore.Util;
@@ -103,7 +104,16 @@ namespace FubuMVC.Razor.Rendering
     {
         public void SetModel(IFubuRequest request)
         {
-            SetModel(request.Get<TViewModel>());
+            TViewModel model;
+            if (request.Has<TViewModel>())
+            {
+                model = request.Get<TViewModel>();
+            }
+            else
+            {
+                model = request.Find<TViewModel>().FirstOrDefault();
+            }
+            SetModel(model);
         }
 
         public void SetModel(object model)
@@ -114,25 +124,10 @@ namespace FubuMVC.Razor.Rendering
         public void SetModel(TViewModel model)
         {
             Model = model;
-
-           object layout = Layout;
-           while (layout != null)
-           {
-               var layoutModelMethod = layout.GetType().GetProperty("Model");
-               if (layoutModelMethod != null)
-                   layoutModelMethod.SetValue(layout, model, null);
-
-               object parentLayout = null;
-               var parentLayoutMethod = layout.GetType().GetProperty("Layout");
-               if (parentLayoutMethod != null)
-                   parentLayout = parentLayoutMethod.GetValue(layout, null);
-               layout = parentLayout;
-           }
         }
 
         void IRenderableView.Render()
         {
-            SetModel(ServiceLocator.GetInstance<IFubuRequest>());
             var result = ((ITemplate) this).Run(new ExecuteContext());
             Get<IOutputWriter>().WriteHtml(result);
         }
@@ -143,7 +138,20 @@ namespace FubuMVC.Razor.Rendering
             ((IFubuRazorView)this).Render();
         }
 
-        public TViewModel Model { get; set; }
+        //TODO: Temporary hack, this won't be needed after ripping out the base class from RazorEngine
+        private TViewModel _model;
+        public TViewModel Model
+        {
+            get
+            {
+                if (_model == null)
+                {
+                    SetModel(ServiceLocator.GetInstance<IFubuRequest>());
+                }
+                return _model;
+            }
+            set { _model = value; }
+        }
 
         public object GetModel()
         {

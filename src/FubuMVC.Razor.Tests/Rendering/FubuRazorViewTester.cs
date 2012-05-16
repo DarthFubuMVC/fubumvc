@@ -1,3 +1,5 @@
+using System.ComponentModel;
+using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
@@ -102,6 +104,7 @@ namespace FubuMVC.Razor.Tests.Rendering
         {
             var request = MockFor<IFubuRequest>();
             var model = new PersonViewModel {Name = "Mr. FubuRazor"};
+            request.Expect(x => x.Has<PersonViewModel>()).Return(true);
             request.Expect(x => x.Get<PersonViewModel>()).Return(model);
             ClassUnderTest.SetModel(request);
             ClassUnderTest.Model.ShouldEqual(model);
@@ -109,15 +112,14 @@ namespace FubuMVC.Razor.Tests.Rendering
         }
 
         [Test]
-        public void set_model_using_request_and_model_propogates_to_shared_layout()
+        public void views_should_find_if_fubu_request_doesnt_have_the_model_type()
         {
             var request = MockFor<IFubuRequest>();
             var model = new PersonViewModel {Name = "Mr. FubuRazor"};
-            request.Expect(x => x.Get<PersonViewModel>()).Return(model);
+            request.Expect(x => x.Has<SharedViewModel>()).Return(false);
+            request.Expect(x => x.Find<SharedViewModel>()).Return(new SharedViewModel[] {model});
             var sharedLayout = new SharedView();
-            ClassUnderTest.Layout = sharedLayout;
-            ClassUnderTest.SetModel(request);
-            ClassUnderTest.Model.ShouldEqual(model);
+            sharedLayout.SetModel(request);
             sharedLayout.Model.ShouldEqual(model);
             request.VerifyAllExpectations();
         }
