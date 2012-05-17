@@ -37,6 +37,7 @@ namespace FubuMVC.Core.Runtime
 
         public static readonly MimeType Xml = New("application/xml", ".xml");
         public static readonly MimeType Any = New("*/*");
+        public static readonly MimeType TrueTypeFont = New("application/octet-stream", ".ttf").Folder(AssetFolder.images);
 
         private readonly IList<string> _extensions = new List<string>();
         private readonly string _mimeType;
