@@ -30,6 +30,12 @@ namespace FubuMVC.Tests.Runtime
         }
 
         [Test]
+        public void truetype_fonts_recorded_as_images_to_force_binary()
+        {
+            MimeType.TrueTypeFont.Folder().ShouldEqual(AssetFolder.images);
+        }
+
+        [Test]
         public void find_default_extension_for_javascript()
         {
             MimeType.Javascript.DefaultExtension().ShouldEqual(".js");
@@ -39,6 +45,12 @@ namespace FubuMVC.Tests.Runtime
         public void find_default_extension_for_css()
         {
             MimeType.Css.DefaultExtension().ShouldEqual(".css");
+        }
+
+        [Test]
+        public void find_default_extension_for_truetype_font()
+        {
+            MimeType.TrueTypeFont.DefaultExtension().ShouldEqual(".ttf");
         }
 
         [Test]
@@ -53,6 +65,13 @@ namespace FubuMVC.Tests.Runtime
         {
             MimeType.MimeTypeByFileName("style.css")
                 .ShouldEqual(MimeType.Css);
+        }
+
+        [Test]
+        public void determine_mime_type_from_name_for_truetype_font()
+        {
+            MimeType.MimeTypeByFileName("somefont.ttf")
+                .ShouldEqual(MimeType.TrueTypeFont);
         }
 
         [Test]
