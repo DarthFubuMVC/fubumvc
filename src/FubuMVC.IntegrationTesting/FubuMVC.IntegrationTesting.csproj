@@ -92,7 +92,6 @@
     <Compile Include="Conneg\Output_from_actions_that_return_ajax_continuations.cs" />
     <Compile Include="Conneg\Output_from_Actions_that_return_HtmlTags.cs" />
     <Compile Include="debugger.cs" />
-    <Compile Include="FubuSystem.cs" />
     <Compile Include="Assets\reading_images.cs" />
     <Compile Include="Packaging\invoking_endpoints_from_a_package.cs" />
     <Compile Include="Packaging\linking_and_unlinking_packages.cs" />
@@ -142,10 +141,6 @@
     <ProjectReference Include="..\FubuMVC.WebForms\FubuMVC.WebForms.csproj">
       <Project>{7A45A53A-10F3-47B4-BAA7-C4F325102F02}</Project>
       <Name>FubuMVC.WebForms</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuTestApplication\FubuTestApplication.csproj">
-      <Project>{8FFDBE50-4E00-4940-BC8F-7AF85278B247}</Project>
-      <Name>FubuTestApplication</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fubu\Fubu.csproj">
       <Project>{90DBE31C-948D-47AF-8C17-0056511A7313}</Project>
@@ -246,16 +241,6 @@
     <Content Include="content\styles\redmond\jquery.ui.tabs.css" />
     <Content Include="content\styles\redmond\jquery.ui.theme.css" />
     <Content Include="content\styles\ui.multiselect.css" />
-    <Content Include="Tests\Assets\Combinations\Combination of script files should combine text.xml" />
-    <Content Include="Tests\Assets\Combinations\Combine all scripts policy.xml" />
-    <Content Include="Tests\Assets\Combinations\Combine all styles policy.xml" />
-    <Content Include="Tests\Assets\Combinations\Mixed script and style combinations.xml" />
-    <Content Include="Tests\Assets\Combinations\Should choose the biggest combinations.xml" />
-    <Content Include="Tests\Assets\Combinations\Simple explicit combination.xml" />
-    <Content Include="Tests\Assets\Loading Scripts\Load a script from a package.xml" />
-    <Content Include="Tests\Assets\Loading Scripts\Load configuration from a package.xml" />
-    <Content Include="Tests\Assets\Loading Scripts\Write script tags.xml" />
-    <Content Include="Tests\HelloWorld\Smoke Test.xml" />
     <Content Include="Tests\Packaging\Environment\Environment Runner captures errors from the Environment setup.xml" />
     <Content Include="Tests\Packaging\Environment\Execute Environment Happy Path.xml" />
     <Content Include="Tests\Packaging\Environment\Logging installer failures.xml" />
