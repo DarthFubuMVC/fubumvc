@@ -255,7 +255,6 @@
     <Compile Include="Runtime\Formatters\XmlFormatterTester.cs" />
     <Compile Include="CurrentRequestTester.cs" />
     <Compile Include="CustomExceptionsTester.cs" />
-    <Compile Include="Deployers\FubuBottleDestinationTester.cs" />
     <Compile Include="Diagnostics\DefaultDiagnosticsConventionsTester.cs" />
     <Compile Include="Diagnostics\RequestHistoryServiceTester.cs" />
     <Compile Include="Diagnostics\RequestObserverTester.cs" />
@@ -486,10 +485,6 @@
     <ProjectReference Include="..\AssemblyPackage\AssemblyPackage.csproj">
       <Project>{99DBA82A-E811-4DA0-983C-12E8317F8642}</Project>
       <Name>AssemblyPackage</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.Deployers\FubuMVC.Deployers.csproj">
-      <Project>{15052F0B-098A-4115-BD7B-E66657FCE73A}</Project>
-      <Name>FubuMVC.Deployers</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
       <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
