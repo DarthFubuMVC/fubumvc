@@ -98,6 +98,8 @@ namespace FubuMVC.Core
             yield return new StringOutputPolicy();
             yield return new HtmlTagOutputPolicy();
 
+            yield return new DefaultOutputPolicy();
+
             yield return new AttachAuthorizationPolicy();
             yield return new AttachInputPolicy();
             yield return new AttachOutputPolicy();

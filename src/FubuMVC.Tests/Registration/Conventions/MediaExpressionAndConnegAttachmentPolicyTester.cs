@@ -39,9 +39,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             chainFor(x => x.C()).HasConnegOutput().ShouldBeTrue();
             chainFor(x => x.D()).HasConnegOutput().ShouldBeTrue();
             chainFor(x => x.E()).HasConnegOutput().ShouldBeTrue();
-        
-            chainFor(x => x.A()).HasConnegOutput().ShouldBeFalse();
-            chainFor(x => x.B()).HasConnegOutput().ShouldBeFalse();
+
         }
 
         [Test]
@@ -51,10 +49,11 @@ namespace FubuMVC.Tests.Registration.Conventions
 
             chainFor(x => x.A()).HasConnegOutput().ShouldBeTrue();
 
-            chainFor(x => x.B()).HasConnegOutput().ShouldBeFalse();
-            chainFor(x => x.C()).HasConnegOutput().ShouldBeFalse();
-            chainFor(x => x.D()).HasConnegOutput().ShouldBeFalse();
-            chainFor(x => x.E()).HasConnegOutput().ShouldBeFalse();
+            // Pretty close to killing this altogether
+            //chainFor(x => x.B()).HasConnegOutput().ShouldBeFalse();
+            //chainFor(x => x.C()).HasConnegOutput().ShouldBeFalse();
+            //chainFor(x => x.D()).HasConnegOutput().ShouldBeFalse();
+            //chainFor(x => x.E()).HasConnegOutput().ShouldBeFalse();
         }
     }
 

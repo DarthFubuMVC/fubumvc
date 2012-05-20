@@ -61,14 +61,6 @@ namespace FubuMVC.Tests.Registration.Conventions
         }
 
         [Test]
-        public void methods_that_do_not_return_a_json_message_should_not_output_json()
-        {
-            chainFor(x => x.NotOutputJson1()).Top.Any(x => x.GetType() == typeof (OutputNode)).ShouldBeFalse();
-            chainFor(x => x.NotOutputJson2()).Top.Any(x => x.GetType() == typeof (OutputNode)).ShouldBeFalse();
-            chainFor(x => x.NotOutputJson3()).Top.Any(x => x.GetType() == typeof (OutputNode)).ShouldBeFalse();
-        }
-
-        [Test]
         public void methods_that_do_not_take_in_a_json_message_should_not_have_a_json_deserialization_behavior()
         {
             chainFor(x => x.NotJson1(null)).Top.Any(x => x is InputNode).ShouldBeFalse();
