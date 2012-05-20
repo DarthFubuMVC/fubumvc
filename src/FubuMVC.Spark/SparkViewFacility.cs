@@ -17,7 +17,7 @@ namespace FubuMVC.Spark
             _templateRegistry = templateRegistry;
         }
 
-        public IEnumerable<IViewToken> FindViews()
+        public IEnumerable<IViewToken> FindViews(TypePool types)
         {
             // TODO: Make it not filter against view model as the 
             // default view attacher conventions will do this.

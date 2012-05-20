@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.View.Attachment
@@ -7,6 +7,6 @@ namespace FubuMVC.Core.View.Attachment
     {
         IEnumerable<IViewFacility> Facilities { get; }
         void AddFacility(IViewFacility facility);
-        ViewBag BuildViewBag();
+        ViewBag BuildViewBag(TypePool types);
     }
 }

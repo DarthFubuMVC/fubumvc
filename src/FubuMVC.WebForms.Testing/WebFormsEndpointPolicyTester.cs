@@ -28,10 +28,14 @@ namespace FubuMVC.WebForms.Testing
         public class FakeController
         {
             [WebFormsEndpoint(typeof(FakeView))]
-            public void DoNothing(FakeInput input){}
+            public FakeOutput DoNothing(FakeInput input)
+            {
+                return null;
+            }
         }
         public class FakeInput { }
-        public class FakeView : FubuPage {}
+        public class FakeOutput { }
+        public class FakeView : FubuPage<FakeOutput> {}
 
 
         [Test]

@@ -41,7 +41,7 @@ namespace FubuMVC.Core
 
         public void Build(BehaviorGraph graph)
         {
-            graph.Views = _engineRegistry.BuildViewBag();
+            graph.Views = _engineRegistry.BuildViewBag(_types);
 
             allActions().Each(x => x.Configure(graph));
         }

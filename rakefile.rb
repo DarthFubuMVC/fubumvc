@@ -82,17 +82,6 @@ end
 desc "Compiles the app"
 task :compile => [:restore_if_missing, :clean, :version] do
   MSBuildRunner.compile :compilemode => COMPILE_TARGET, :solutionfile => 'src/FubuMVC.sln', :clrversion => CLR_TOOLS_VERSION
-  #AspNetCompilerRunner.compile :webPhysDir => "src/FubuMVC.HelloWorld", :webVirDir => "localhost/xyzzyplugh"
-
-  
-  
-  #copyOutputFiles "src/FubuMVC.StructureMap/bin/#{COMPILE_TARGET}", "*.{dll,pdb}", props[:stage]
-  #copyOutputFiles "src/FubuMVC.GettingStarted/bin/#{COMPILE_TARGET}", "*.{dll,pdb}", props[:stage]
-
-  #copyOutputFiles "src/FubuLocalization/bin/#{COMPILE_TARGET}", "FubuLocalization.{dll,pdb}", props[:stage]
-  #copyOutputFiles "src/FubuMVC.WebForms/bin/#{COMPILE_TARGET}", "FubuMVC.WebForms.{dll,pdb}", props[:stage]
-  #copyOutputFiles "src/FubuMVC.Spark/bin/#{COMPILE_TARGET}", "*Spark*.{dll,pdb}", props[:stage]
-  #copyOutputFiles "src/FubuMVC.Deployers/bin/#{COMPILE_TARGET}", "*Deployers*.{dll,pdb}", props[:stage]
 
   copyOutputFiles "src/fubu/bin/#{COMPILE_TARGET}", "fubu.exe", props[:stage]
   copyOutputFiles "src/fubu/bin/#{COMPILE_TARGET}", "Bottles*.{dll,pdb,exe}", props[:stage]
@@ -119,7 +108,7 @@ task :test => [:unit_test]
 desc "Runs unit tests"
 task :unit_test => :compile do
   runner = NUnitRunner.new :compilemode => COMPILE_TARGET, :source => 'src', :platform => 'x86'
-  runner.executeTests ['FubuMVC.Tests', 'FubuMVC.Spark.Tests', 'FubuMVC.Razor.Tests']
+  runner.executeTests ['FubuMVC.Tests', 'FubuMVC.Spark.Tests', 'FubuMVC.Razor.Tests', 'FubuMVC.WebForms.Testing']
 end
 
 desc "Runs the integration tests"

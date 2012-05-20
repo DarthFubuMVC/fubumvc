@@ -17,7 +17,7 @@ namespace FubuMVC.Razor
             _templateRegistry = templateRegistry;
         }
 
-        public IEnumerable<IViewToken> FindViews()
+        public IEnumerable<IViewToken> FindViews(TypePool types)
         {
             // clean up pending
             return _templateRegistry
