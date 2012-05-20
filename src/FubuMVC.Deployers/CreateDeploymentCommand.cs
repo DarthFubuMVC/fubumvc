@@ -6,9 +6,8 @@ using Bottles.Deployment.Writing;
 using FubuCore.CommandLine;
 using FubuCore;
 using FubuCore.Reflection;
-using FubuMVC.Deployers;
 
-namespace Fubu
+namespace FubuMVC.Deployers
 {
     public class CreateDeploymentInput
     {
