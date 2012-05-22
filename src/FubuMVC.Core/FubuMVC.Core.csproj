@@ -97,6 +97,8 @@
     <Compile Include="Endpoints\EndpointInvocation.cs" />
     <Compile Include="Endpoints\HttpResponse.cs" />
     <Compile Include="Endpoints\WebRequestResponseExtensions.cs" />
+    <Compile Include="Http\AspNet\AspNetClientConnectivity.cs" />
+    <Compile Include="Http\IClientConnectivity.cs" />
     <Compile Include="Registration\Conventions\DefaultOutputPolicy.cs" />
     <Compile Include="Runtime\Conditionals\Always.cs" />
     <Compile Include="Behaviors\Conditional\ConditionalBehavior.cs" />

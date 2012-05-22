@@ -30,6 +30,12 @@ namespace FubuMVC.Tests.Http.AspNet
         }
 
         [Test]
+        public void should_have_the_client_connectivity()
+        {
+            theArguments.Get<IClientConnectivity>().ShouldBeOfType<AspNetClientConnectivity>();
+        }
+
+        [Test]
         public void should_add_the_request_data()
         {
             theArguments.Get<IRequestData>().ShouldBeOfType<AspNetRequestData>();

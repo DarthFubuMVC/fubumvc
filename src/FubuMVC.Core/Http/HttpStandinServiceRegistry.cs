@@ -11,6 +11,7 @@ namespace FubuMVC.Core.Http
 
             SetServiceIfNone<IRequestHeaders, RequestHeaders>();
             SetServiceIfNone<IRequestData>(new RequestData());
+            SetServiceIfNone<IClientConnectivity, StandInClientConnectivity>();
         }
     }
 }

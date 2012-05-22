@@ -81,6 +81,13 @@ namespace FubuMVC.Tests.Registration
             registeredTypeIs<ICurrentHttpRequest, StandInCurrentHttpRequest>();
         }
 
+
+        [Test]
+        public void standin_ClientConnectivity_is_used_as_the_default()
+        {
+            registeredTypeIs<IClientConnectivity, StandInClientConnectivity>();
+        }
+
         [Test]
         public void BindingContext_is_registered()
         {
