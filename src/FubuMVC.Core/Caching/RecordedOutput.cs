@@ -55,6 +55,11 @@ namespace FubuMVC.Core.Caching
             output = WriteFileRecord.Create(_fileSystem, localFilePath, contentType, displayName);
         }
 
+        public void Flush()
+        {
+            // no-op;
+        }
+
         public void Replay(IHttpWriter writer)
         {
             _outputs.Each(x => x.Replay(writer));

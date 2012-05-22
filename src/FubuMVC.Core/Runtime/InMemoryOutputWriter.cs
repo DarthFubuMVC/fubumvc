@@ -44,6 +44,10 @@ namespace FubuMVC.Core.Runtime
             throw new NotImplementedException();
         }
 
+        public void Flush()
+        {
+        }
+
         public void RedirectToUrl(string url)
         {
         }

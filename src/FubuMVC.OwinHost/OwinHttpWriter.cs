@@ -74,6 +74,11 @@ namespace FubuMVC.OwinHost
 
             output(stream);
         }
+
+        public void Flush()
+        {
+            // TODO -- honestly have no idea what to do here
+        }
     }
 
     public class OutputStream : Stream

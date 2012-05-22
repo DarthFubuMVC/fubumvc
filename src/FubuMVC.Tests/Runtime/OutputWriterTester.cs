@@ -22,6 +22,13 @@ namespace FubuMVC.Tests.Runtime
         }
 
         [Test]
+        public void flush_delegates()
+        {
+            ClassUnderTest.Flush();
+            theHttpWriter.AssertWasCalled(x => x.Flush());
+        }
+
+        [Test]
         public void redirect_to_a_url_delegates()
         {
             ClassUnderTest.RedirectToUrl("http://somewhere.com");

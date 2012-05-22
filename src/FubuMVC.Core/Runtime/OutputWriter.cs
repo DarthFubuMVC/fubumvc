@@ -69,6 +69,11 @@ namespace FubuMVC.Core.Runtime
             output.Replay(Writer);
         }
 
+        public void Flush()
+        {
+            CurrentState.Flush();
+        }
+
         public virtual void Write(string contentType, string renderedOutput)
         {
             CurrentState.Write(contentType, renderedOutput);

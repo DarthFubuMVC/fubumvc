@@ -39,5 +39,10 @@ namespace FubuMVC.Core.Runtime
             var record = WriteFileRecord.Create(_fileSystem, localFilePath, contentType, displayName);
             record.Replay(_writer);
         }
+
+        public void Flush()
+        {
+            _writer.Flush();
+        }
     }
 }

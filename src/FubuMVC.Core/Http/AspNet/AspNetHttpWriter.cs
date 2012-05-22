@@ -56,5 +56,10 @@ namespace FubuMVC.Core.Http.AspNet
         {
             output(_response.OutputStream);
         }
+
+        public void Flush()
+        {
+            _response.Flush();
+        }
     }
 }

@@ -17,6 +17,7 @@ namespace FubuMVC.Core.Http
         void AppendCookie(HttpCookie cookie);
 
         void Write(Action<Stream> output);
+        void Flush();
     }
 
     // TODO -- flesh this out
@@ -66,6 +67,11 @@ namespace FubuMVC.Core.Http
 
             stream.Position = 0;
             _writer.WriteLine(stream.ReadAllText());
+        }
+
+        public void Flush()
+        {
+            // definitely don't do anything here
         }
 
         public string AllText()

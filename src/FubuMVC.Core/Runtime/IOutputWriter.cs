@@ -20,6 +20,12 @@ namespace FubuMVC.Core.Runtime
         void WriteResponseCode(HttpStatusCode status, string description = null);
         IRecordedOutput Record(Action action);
         void Replay(IRecordedOutput output);
+
+
+        /// <summary>
+        /// Flushes all output to the Http response
+        /// </summary>
+        void Flush();
     }
 
    

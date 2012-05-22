@@ -39,5 +39,9 @@ namespace FubuMVC.Core.Http
         public void Write(Action<Stream> output)
         {
         }
+
+        public void Flush()
+        {
+        }
     }
 }
