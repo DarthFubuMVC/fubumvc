@@ -495,14 +495,6 @@
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.FakeControllers\FubuMVC.FakeControllers.csproj">
-      <Project>{E8128BAA-BAF7-4164-9786-B9B23E555B96}</Project>
-      <Name>FubuMVC.FakeControllers</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.Tests.Widget1\FubuMVC.Tests.Widget1.csproj">
-      <Project>{584A2B9D-4A24-4BF8-A5AB-F18C3E104D7B}</Project>
-      <Name>FubuMVC.Tests.Widget1</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fubu\Fubu.csproj">
       <Project>{90DBE31C-948D-47AF-8C17-0056511A7313}</Project>
       <Name>Fubu</Name>

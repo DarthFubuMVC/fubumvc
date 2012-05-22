@@ -1,4 +1,4 @@
-namespace FubuMVC.Tests.Widget1
+namespace TestPackage1
 {
     public interface IMultiInstance
     {

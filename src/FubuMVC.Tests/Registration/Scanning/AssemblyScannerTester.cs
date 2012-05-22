@@ -1,7 +1,7 @@
 using FubuMVC.Core.Registration;
-using FubuMVC.Tests.Widget1;
 using FubuTestingSupport;
 using NUnit.Framework;
+using TestPackage1;
 
 namespace FubuMVC.Tests.Registration.Scanning
 {

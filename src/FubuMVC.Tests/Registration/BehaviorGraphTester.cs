@@ -11,11 +11,11 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Runtime;
-using FubuMVC.FakeControllers;
 using FubuMVC.Tests.Diagnostics;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
+using TestPackage1.FakeControllers;
 
 namespace FubuMVC.Tests.Registration
 {

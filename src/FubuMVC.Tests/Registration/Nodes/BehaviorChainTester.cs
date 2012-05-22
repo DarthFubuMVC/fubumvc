@@ -12,13 +12,13 @@ using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime.Formatters;
 using FubuMVC.Core.Security;
-using FubuMVC.FakeControllers;
 using FubuMVC.StructureMap;
 using FubuMVC.Tests.StructureMapIoC;
 using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
 using StructureMap;
+using TestPackage1.FakeControllers;
 
 namespace FubuMVC.Tests.Registration.Nodes
 {

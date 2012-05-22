@@ -9,10 +9,10 @@ using FubuCore.Util;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.DSL;
-using FubuMVC.FakeControllers;
 using FubuMVC.Tests.Behaviors;
 using FubuTestingSupport;
 using NUnit.Framework;
+using TestPackage1.FakeControllers;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {

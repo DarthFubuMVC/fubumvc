@@ -1,4 +1,4 @@
-namespace FubuMVC.FakeControllers
+namespace TestPackage1.FakeControllers
 {
     public class ClassInAnotherAssembly
     {
