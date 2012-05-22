@@ -11,5 +11,6 @@ namespace FubuMVC.Core.Runtime
         void AppendHeader(string header, string value);
         void WriteFile(string contentType, string localFilePath, string displayName);
         void Flush();
+        void Write(string renderedOutput);
     }
 }

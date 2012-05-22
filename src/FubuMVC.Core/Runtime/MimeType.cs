@@ -33,6 +33,7 @@ namespace FubuMVC.Core.Runtime
         public static readonly MimeType Jpg = New("image/jpeg", ".jpg", ".jpeg").Folder(AssetFolder.images);
         public static readonly MimeType Bmp = New("image/bmp", ".bmp", ".bm").Folder(AssetFolder.images);
         public static readonly MimeType Unknown = New("dunno");
+        public static readonly MimeType EventStream = New("text/event-stream");
 
         public static readonly MimeType Xml = New("application/xml", ".xml");
         public static readonly MimeType Any = New("*/*");

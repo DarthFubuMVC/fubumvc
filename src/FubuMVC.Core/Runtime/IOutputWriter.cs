@@ -10,6 +10,10 @@ namespace FubuMVC.Core.Runtime
     {
         void WriteFile(string contentType, string localFilePath, string displayName);
         void Write(string contentType, string renderedOutput);
+
+        void Write(string renderedOutput);
+
+
         void RedirectToUrl(string url);
         void AppendCookie(HttpCookie cookie);
 

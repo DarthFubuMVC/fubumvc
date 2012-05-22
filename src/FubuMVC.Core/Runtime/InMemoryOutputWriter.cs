@@ -30,6 +30,11 @@ namespace FubuMVC.Core.Runtime
             _writer.WriteLine(renderedOutput);
         }
 
+        public void Write(string renderedOutput)
+        {
+            _writer.WriteLine(renderedOutput);
+        }
+
         public string ContentType { get; set; }
 
         public IRecordedOutput Record(Action action)

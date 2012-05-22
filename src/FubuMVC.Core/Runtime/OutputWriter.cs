@@ -79,6 +79,11 @@ namespace FubuMVC.Core.Runtime
             CurrentState.Write(contentType, renderedOutput);
         }
 
+        public void Write(string renderedOutput)
+        {
+            CurrentState.Write(renderedOutput);
+        }
+
         public virtual void RedirectToUrl(string url)
         {
             Writer.Redirect(url);

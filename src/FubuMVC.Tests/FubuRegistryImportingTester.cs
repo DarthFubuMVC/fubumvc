@@ -165,6 +165,11 @@ namespace FubuMVC.Tests
                 throw new NotImplementedException();
             }
 
+            public void Write(string renderedOutput)
+            {
+                throw new NotImplementedException();
+            }
+
             public void RedirectToUrl(string url)
             {
                 throw new NotImplementedException();

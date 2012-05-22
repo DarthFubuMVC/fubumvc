@@ -35,6 +35,11 @@ namespace FubuMVC.Core.Caching
             output = new WriteTextOutput(renderedOutput);
         }
 
+        public void Write(string renderedOutput)
+        {
+            output = new WriteTextOutput(renderedOutput);
+        }
+
         public void Write(string contentType, Action<Stream> action)
         {
             output = new SetContentType(contentType);
@@ -59,6 +64,8 @@ namespace FubuMVC.Core.Caching
         {
             // no-op;
         }
+
+
 
         public void Replay(IHttpWriter writer)
         {

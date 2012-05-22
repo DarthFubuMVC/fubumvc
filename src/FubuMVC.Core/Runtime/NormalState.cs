@@ -44,5 +44,10 @@ namespace FubuMVC.Core.Runtime
         {
             _writer.Flush();
         }
+
+        public void Write(string renderedOutput)
+        {
+            _writer.Write(renderedOutput);
+        }
     }
 }

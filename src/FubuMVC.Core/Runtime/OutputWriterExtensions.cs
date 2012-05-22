@@ -29,5 +29,10 @@ namespace FubuMVC.Core.Runtime
         {
             writer.AppendHeader(HttpResponseHeaders.HeaderNameFor(header), value);
         }
+
+        public static void ContentType(this IOutputWriter writer, MimeType mimeType)
+        {
+            writer.AppendHeader(HttpResponseHeader.ContentType, mimeType.Value);
+        }
     }
 }

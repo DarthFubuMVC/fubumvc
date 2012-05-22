@@ -145,6 +145,17 @@ namespace FubuMVC.Tests.Caching
                 );
         }
 
+
+        [Test]
+        public void write_only_textual_content_adds_the_correct_recordings()
+        {
+            theRecordedOutput.Write("{}");
+
+            theRecordedOutput.Outputs.ShouldHaveTheSameElementsAs(
+                new WriteTextOutput("{}")
+                );
+        }
+
         [Test]
         public void SetContentType_replay_writes_the_content_type_to_the_HttpWriter()
         {
