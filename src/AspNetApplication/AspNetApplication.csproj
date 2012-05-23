@@ -73,6 +73,7 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <Content Include="WebForms\SimpleView.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AspNetApplicationFubuRegistry.cs" />
@@ -88,6 +89,14 @@
     <Compile Include="ServerSideEvents\SimpleFlowController.cs" />
     <Compile Include="ServerSideEvents\SimpleInput.cs" />
     <Compile Include="ServerSideEvents\SSEClientController.cs" />
+    <Compile Include="WebForms\SimpleView.aspx.cs">
+      <DependentUpon>SimpleView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForms\SimpleView.aspx.designer.cs">
+      <DependentUpon>SimpleView.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForms\ViewController.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
@@ -97,6 +106,10 @@
     <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
       <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
       <Name>FubuMVC.StructureMap</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.WebForms\FubuMVC.WebForms.csproj">
+      <Project>{7A45A53A-10F3-47B4-BAA7-C4F325102F02}</Project>
+      <Name>FubuMVC.WebForms</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
@@ -30,7 +31,7 @@ namespace FubuMVC.WebForms
 
         public ObjectDef ToViewFactoryObjectDef()
         {
-            throw new NotImplementedException();
+            return new ObjectDef(typeof(WebFormsViewFactory<>), _viewType);
         }
 
         public string Name()

@@ -82,6 +82,8 @@
     <Compile Include="WebFormRenderer.cs" />
     <Compile Include="WebFormsEndpointAttribute.cs" />
     <Compile Include="WebFormsEngine.cs" />
+    <Compile Include="WebFormsRenderableView.cs" />
+    <Compile Include="WebFormsViewFactory.cs" />
     <Compile Include="WebFormViewFacility.cs" />
     <Compile Include="WebFormViewToken.cs" />
   </ItemGroup>

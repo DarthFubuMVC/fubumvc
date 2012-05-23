@@ -1,4 +1,5 @@
-﻿using FubuCore;
+﻿using System;
+using FubuCore;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
@@ -7,19 +8,49 @@ using Rhino.Mocks;
 
 namespace FubuMVC.Spark.Tests.SparkModel.Policies
 {
+    public class StubTemplate : ITemplate
+    {
+        public string Origin
+        {
+            get; set;
+        }
+
+        public string FilePath
+        {
+            get;
+            set;
+        }
+
+        public string RootPath
+        {
+            get;
+            set;
+        }
+
+        public string ViewPath
+        {
+            get;
+            set;
+        }
+
+        public ITemplateDescriptor Descriptor
+        {
+            get;
+            set;
+        }
+    }
+
     [TestFixture]
     public class ViewPathPolicyTester : InteractionContext<ViewPathPolicy<ITemplate>>
     {
-        private ITemplate _template;
-        private string _origin;
+        private StubTemplate _template;
         protected override void beforeEach()
         {
-            _origin = TemplateConstants.HostOrigin;
-            _template = MockFor<ITemplate>();
-            _template.Stub(x => x.Origin).Return(null).WhenCalled(x => x.ReturnValue = _origin);
-            _template.Stub(x => x.RootPath).Return("root");
-            _template.Stub(x => x.FilePath).Return(FileSystem.Combine("root", "view.spark"));
-            _template.Stub(x => x.ViewPath).PropertyBehavior();
+            _template = new StubTemplate{
+                Origin = TemplateConstants.HostOrigin,
+                RootPath = "root",
+                FilePath = FileSystem.Combine("root", "view.spark")
+            };
         }
 
         [Test]
@@ -32,9 +63,9 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
         [Test]
         public void when_origin_is_not_host_view_path_is_prefixed()
         {
-            _origin = "Foo";
+            _template.Origin = "Foo";
             ClassUnderTest.Apply(_template);
-            _template.ViewPath.ShouldEqual(FileSystem.Combine("_" + _origin, "view.spark"));
+            _template.ViewPath.ShouldEqual(FileSystem.Combine("_" + _template.Origin, "view.spark"));
         }
 
 		[Test]

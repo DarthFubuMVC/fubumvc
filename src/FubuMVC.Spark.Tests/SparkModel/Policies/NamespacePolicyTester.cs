@@ -12,36 +12,33 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
     public class NamespacePolicyTester : InteractionContext<NamespacePolicy>
     {
         private const string Root = "web";
-        private string _path;
-        private ITemplate _template;
-        private ITemplateDescriptor _viewDescriptor;
+        private StubTemplate _template;
         protected override void beforeEach()
         {
-            _path = Path.Combine(Root, "home.spark");
-            _template = MockFor<ITemplate>();
-            _viewDescriptor = new SparkDescriptor(_template)
+            _template = new StubTemplate{
+                Descriptor = new SparkDescriptor(_template)
             {
                 ViewModel = typeof(FooViewModel)
+            },
+                RootPath = Root,
+                FilePath = Path.Combine(Root, "home.spark")
             };
-            _template.Stub(x => x.Descriptor).Return(null).WhenCalled(x => x.ReturnValue = _viewDescriptor);
-            _template.Stub(x => x.RootPath).Return(Root);
-            _template.Stub(x => x.FilePath).Return(null).WhenCalled(x => x.ReturnValue = _path);
         }
 
 
         [Test]
         public void namespace_of_files_that_are_located_in_nested_directory_is_set_correctly()
         {
-            _path = Path.Combine(Root, "a", "b", "c", "home.spark");
+            _template.FilePath = Path.Combine(Root, "a", "b", "c", "home.spark");
             ClassUnderTest.Apply(_template);
-            _viewDescriptor.As<SparkDescriptor>().Namespace.ShouldEqual("FubuMVC.Spark.Tests.a.b.c");
+            _template.Descriptor.As<SparkDescriptor>().Namespace.ShouldEqual("FubuMVC.Spark.Tests.a.b.c");
         }
 
         [Test]
         public void namespace_of_files_in_root_is_set_correctly()
         {
             ClassUnderTest.Apply(_template);
-            _viewDescriptor.As<SparkDescriptor>().Namespace.ShouldEqual("FubuMVC.Spark.Tests");
+            _template.Descriptor.As<SparkDescriptor>().Namespace.ShouldEqual("FubuMVC.Spark.Tests");
         }
 
         [Test]
@@ -53,21 +50,21 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
 		[Test]
         public void it_matches_if_item_has_viewmodel_and_namespace_is_empty_negative_1()
 		{
-		    _viewDescriptor = null;
+            _template.Descriptor = null;
 			ClassUnderTest.Matches(_template).ShouldBeFalse();
         }		
 		
 		[Test]
         public void it_matches_if_item_has_viewmodel_and_namespace_is_empty_negative_2()
 		{
-		    _viewDescriptor.As<SparkDescriptor>().Namespace = "Someone.Else.Did.This";
+            _template.Descriptor.As<SparkDescriptor>().Namespace = "Someone.Else.Did.This";
             ClassUnderTest.Matches(_template).ShouldBeFalse();
         }	
 
         [Test]
         public void it_does_not_match_nullodescriptor()
         {
-            _viewDescriptor = new NulloDescriptor();
+            _template.Descriptor = new NulloDescriptor();
             ClassUnderTest.Matches(_template).ShouldBeFalse();            
         }
     }

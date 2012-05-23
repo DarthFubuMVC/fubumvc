@@ -1,6 +1,5 @@
 using AspNetApplication.ServerSideEvents;
 using FubuMVC.Core;
-using FubuMVC.Core.Diagnostics.HtmlWriting;
 
 namespace AspNetApplication
 {
@@ -11,6 +10,7 @@ namespace AspNetApplication
             Actions.IncludeClassesSuffixedWithController();
             IncludeDiagnostics(true);
 
+            Views.TryToAttachWithDefaultConventions();
             Routes.HomeIs<SSEClientController>(x => x.get_events());
         }
     }

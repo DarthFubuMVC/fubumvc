@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{99A53042-2455-464F-A68E-00C401B177C0}</ProjectGuid>
+    <ProjectGuid>{37231105-CDFD-4A1C-8A68-DD31E59C9AE1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FubuMVC.Diagnostics.Tests</RootNamespace>
-    <AssemblyName>FubuMVC.Diagnostics.Tests</AssemblyName>
+    <RootNamespace>FubuMVC.AspNetTesting</RootNamespace>
+    <AssemblyName>FubuMVC.AspNetTesting</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -43,9 +43,6 @@
     <Reference Include="HtmlTags">
       <HintPath>..\packages\HtmlTags.1.1.0.72\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
-    <Reference Include="Ionic.Zip">
-      <HintPath>..\packages\DotNetZip.1.9.1.8\lib\net20\Ionic.Zip.dll</HintPath>
-    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -66,7 +63,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -74,63 +70,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\ActionCallExtensionsTester.cs" />
-    <Compile Include="DiagnosticsCallWithAttribute.cs" />
-    <Compile Include="Configuration\Policies\DiagnosticsEndpointUrlPolicyTester.cs" />
-    <Compile Include="Configuration\Policies\DiagnosticsUrlAttributePolicyTester.cs" />
-    <Compile Include="Configuration\Policies\DiagnosticsUrlsTester.cs" />
-    <Compile Include="DiagnosticsExtensionTester.cs" />
-    <Compile Include="Features\Chains\when_building_a_chain_visualizer.cs" />
-    <Compile Include="Features\Chains\when_viewing_a_chain.cs" />
-    <Compile Include="Features\Dashboard\DashboardHandlerTester.cs" />
-    <Compile Include="Features\Html\Decorators\DisplayPathBuilderTester.cs" />
-    <Compile Include="Features\Html\Decorators\PropertyExamplesBuilderTester.cs" />
-    <Compile Include="Features\Html\Decorators\PropertyLinksBuilderTester.cs" />
-    <Compile Include="Features\Html\HtmlConventionsPreviewContextFactoryTester.cs" />
-    <Compile Include="Features\Html\HtmlConventionsPreviewContextTester.cs" />
-    <Compile Include="Features\Html\PreviewModelActivatorTester.cs" />
-    <Compile Include="Features\Html\PreviewModelTypeResolverTester.cs" />
-    <Compile Include="Features\Html\SampleContextModel.cs" />
-    <Compile Include="Features\Html\when_previewing_html_conventions.cs" />
-    <Compile Include="Features\Requests\RequestGatheringTester.cs" />
-    <Compile Include="Features\Requests\when_filtering_requests.cs" />
-    <Compile Include="Features\Routes\GetHandlerTester.cs" />
-    <Compile Include="Features\Routes\get_Column_Value_handler_Tester.cs" />
-    <Compile Include="Features\Routes\RoutesModelBuilderTester.cs" />
-    <Compile Include="Features\Routes\when_filtering_routes.cs" />
-    <Compile Include="Features\Routes\when_getting_value_for_view_column.cs" />
-    <Compile Include="Infrastructure\AuthorizationDescriptorTester.cs" />
-    <Compile Include="Infrastructure\GridServiceTester.cs" />
-    <Compile Include="Infrastructure\JsonServiceTester.cs" />
-    <Compile Include="Infrastructure\RowComparerTester.cs" />
-    <Compile Include="Models\SampleGridModel.cs" />
-    <Compile Include="Notifications\NoOutputsNotificationPolicyTester.cs" />
-    <Compile Include="ObjectMother.cs" />
-    <Compile Include="Partials\when_executing_a_partial_action.cs" />
+    <Compile Include="TestApplication.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebForms\can_render_a_simplistic_WebForms_view.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AspNetApplication\AspNetApplication.csproj">
+      <Project>{DC1BCE7A-CA17-423C-81F2-836292C3AF2C}</Project>
+      <Name>AspNetApplication</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.Diagnostics\FubuMVC.Diagnostics.csproj">
-      <Project>{A1DEB080-5A9A-44B4-A10B-84DA9BD07AF5}</Project>
-      <Name>FubuMVC.Diagnostics</Name>
+    <ProjectReference Include="..\FubuMVC.IntegrationTesting\FubuMVC.IntegrationTesting.csproj">
+      <Project>{022C7B24-4417-493F-9F70-E3F4035FBEDA}</Project>
+      <Name>FubuMVC.IntegrationTesting</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
       <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
       <Name>FubuMVC.StructureMap</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.Tests\FubuMVC.Tests.csproj">
-      <Project>{FEB91F9F-ECE2-480C-B39C-A44BBF1F7B01}</Project>
-      <Name>FubuMVC.Tests</Name>
-    </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
