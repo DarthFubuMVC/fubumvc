@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics.Tracing;
@@ -378,7 +379,7 @@ namespace FubuMVC.Core.Registration.Nodes
         public bool HasResourceType()
         {
             var resourceType = ResourceType();
-            return resourceType != null && resourceType != typeof (void);
+            return resourceType != null && !resourceType.CanBeCastTo<Task>() && resourceType != typeof (void);
         }
     }
 }

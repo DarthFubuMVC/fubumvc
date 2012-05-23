@@ -1,3 +1,4 @@
+using AspNetApplication.ServerSideEvents;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.HtmlWriting;
 
@@ -10,7 +11,7 @@ namespace AspNetApplication
             Actions.IncludeClassesSuffixedWithController();
             IncludeDiagnostics(true);
 
-            Routes.HomeIs<BehaviorGraphWriter>(x => x.Index());
+            Routes.HomeIs<SSEClientController>(x => x.get_events());
         }
     }
 }
