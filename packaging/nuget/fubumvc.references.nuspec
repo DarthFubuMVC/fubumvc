@@ -36,7 +36,6 @@
     <file src="..\..\src\fubu\bin\release\StructureMap.dll" target="tools" />
     <file src="..\..\src\fubu\bin\release\Bottles*.*" target="tools" />
     <file src="..\..\src\fubu\bin\release\HtmlTags.dll" target="tools" />
-    <file src="..\..\build\fubumvc-deployers.zip" target="tools" />
     <file src="..\..\build\*Template.zip" target="tools" />
   </files>
 </package>
