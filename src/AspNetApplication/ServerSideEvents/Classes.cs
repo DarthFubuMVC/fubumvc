@@ -38,6 +38,13 @@ namespace AspNetApplication.ServerSideEvents
             return source.Task;
         }
 
+        public void ClearAll()
+        {
+            _lock.Write(() => _outstandingRequests.Clear());
+        }
+
+
+
         public void QueueEvents(Events events)
         {
             modifyEvents(list => list.AddRange(events));

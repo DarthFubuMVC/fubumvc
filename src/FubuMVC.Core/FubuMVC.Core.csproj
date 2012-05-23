@@ -252,6 +252,7 @@
     <Compile Include="Resources\Conneg\WriterNode.cs" />
     <Compile Include="Resources\Conneg\WriteString.cs" />
     <Compile Include="Resources\Conneg\WriteWithFormatter.cs" />
+    <Compile Include="Runtime\HeaderValueAttribute.cs" />
     <Compile Include="Runtime\ModelBindingServicesRegistry.cs" />
     <Compile Include="Registration\ActionMethodFilter.cs" />
     <Compile Include="Registration\ActionSource.cs" />

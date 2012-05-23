@@ -3,7 +3,7 @@ using System.Reflection;
 using FubuCore.Binding;
 using FubuMVC.Core.Http;
 
-namespace AspNetApplication.ServerSideEvents
+namespace FubuMVC.Core.Runtime
 {
     public class HeaderValueAttribute : BindingAttribute
     {

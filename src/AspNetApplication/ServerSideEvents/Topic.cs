@@ -1,3 +1,5 @@
+using FubuMVC.Core.Runtime;
+
 namespace AspNetApplication.ServerSideEvents
 {
     public class Topic

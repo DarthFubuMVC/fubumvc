@@ -115,6 +115,7 @@
     <Compile Include="RazorViewFacilityTester.cs" />
     <Compile Include="RazorViewTokenTester.cs" />
     <Compile Include="RazorModel\Scanning\RazorRequestExtensionsTester.cs" />
+    <Compile Include="StubRequestHeaders.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">

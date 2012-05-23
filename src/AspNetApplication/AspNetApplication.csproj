@@ -82,7 +82,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerSideEvents\Classes.cs" />
-    <Compile Include="ServerSideEvents\HeaderValueAttribute.cs" />
     <Compile Include="ServerSideEvents\ServerEvent.cs" />
     <Compile Include="ServerSideEvents\ServerEventWriter.cs" />
     <Compile Include="ServerSideEvents\Topic.cs" />
