@@ -192,7 +192,6 @@
     <Compile Include="Http\AspNet\AspNetCurrentHttpRequestTester.cs" />
     <Compile Include="Http\AspNet\AspNetModelBindingTester.cs" />
     <Compile Include="Http\AspNet\AspNetServiceArgumentsTester.cs" />
-    <Compile Include="Http\CookieTester.cs" />
     <Compile Include="Http\CurrentChainTester.cs" />
     <Compile Include="Http\CurrentMimeTypeModelBinderTester.cs" />
     <Compile Include="Http\CurrentMimeTypeTester.cs" />

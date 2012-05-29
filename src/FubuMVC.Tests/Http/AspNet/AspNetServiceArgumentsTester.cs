@@ -16,6 +16,7 @@ namespace FubuMVC.Tests.Http.AspNet
         private RequestContext theRequestContext;
         private AspNetServiceArguments theArguments;
         private HttpRequestBase theHttpRequest;
+        private HttpResponseBase theHttpResponse;
 
         [SetUp]
         public void SetUp()
@@ -26,7 +27,16 @@ namespace FubuMVC.Tests.Http.AspNet
             theHttpRequest = MockRepository.GenerateMock<HttpRequestBase>();
             theHttpContext.Stub(x => x.Request).Return(theHttpRequest);
 
+            theHttpResponse = MockRepository.GenerateMock<HttpResponseBase>();
+            theHttpContext.Stub(x => x.Response).Return(theHttpResponse);
+
             theArguments = new AspNetServiceArguments(theRequestContext);
+        }
+
+        [Test]
+        public void should_register_the_aspnet_cookies_service()
+        {
+            theArguments.Get<ICookies>().ShouldBeOfType<AspNetCookies>();
         }
 
         [Test]

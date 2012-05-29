@@ -18,6 +18,8 @@ namespace FubuMVC.Core.Http.AspNet
             With<IHttpWriter>(new AspNetHttpWriter(requestContext.HttpContext.Response));
 
             With<IClientConnectivity>(new AspNetClientConnectivity(requestContext.HttpContext.Response));
+
+            With<ICookies>(new AspNetCookies(requestContext.HttpContext));
         }
     }
 }
