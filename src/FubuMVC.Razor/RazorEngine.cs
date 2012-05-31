@@ -135,10 +135,10 @@ namespace FubuMVC.Razor
         {
             var configuration = new TemplateServiceConfiguration();
             configuration.BaseTemplateType = typeof(FubuRazorView);
-            services.SetServiceIfNone<ITemplateRegistry<IRazorTemplate>>(_templateRegistry);
-            services.AddService<IFubuTemplateService>(new FubuTemplateService(_templateRegistry, new TemplateService(configuration), new FileSystem()));
-            services.SetServiceIfNone<ITemplateServiceConfiguration>(configuration);
-            services.SetServiceIfNone<IParsingRegistrations<IRazorTemplate>>(_parsings);
+            services.ReplaceService<ITemplateRegistry<IRazorTemplate>>(_templateRegistry);
+            services.ReplaceService<IFubuTemplateService>(new FubuTemplateService(_templateRegistry, new TemplateService(configuration), new FileSystem()));
+            services.ReplaceService<ITemplateServiceConfiguration>(configuration);
+            services.ReplaceService<IParsingRegistrations<IRazorTemplate>>(_parsings);
             services.SetServiceIfNone<ITemplateDirectoryProvider<IRazorTemplate>, TemplateDirectoryProvider<IRazorTemplate>>();
             services.SetServiceIfNone<ISharedPathBuilder>(new SharedPathBuilder());
 

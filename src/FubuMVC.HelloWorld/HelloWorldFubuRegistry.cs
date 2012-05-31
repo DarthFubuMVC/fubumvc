@@ -47,8 +47,6 @@ namespace FubuMVC.HelloWorld
             Policies
                 .Add<AntiForgeryPolicy>();
 
-            this.UseRazor();
-
             Import<WebFormsEngine>();
 
             Views

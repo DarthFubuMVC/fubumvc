@@ -137,9 +137,9 @@ namespace FubuMVC.Spark
 
         private static void configureServices(IServiceRegistry services)
         {
-            services.SetServiceIfNone<ISparkTemplateRegistry>(_templateRegistry);
-            services.SetServiceIfNone<ITemplateRegistry<ITemplate>>(_templateRegistry);
-            services.SetServiceIfNone<IParsingRegistrations<ITemplate>>(_parsings);
+            services.ReplaceService<ISparkTemplateRegistry>(_templateRegistry);
+            services.ReplaceService<ITemplateRegistry<ITemplate>>(_templateRegistry);
+            services.ReplaceService<IParsingRegistrations<ITemplate>>(_parsings);
             
             var graph = new SharingGraph();
             services.SetServiceIfNone(graph);

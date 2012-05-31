@@ -15,8 +15,6 @@ namespace FubuMVC.IntegrationTesting.ViewEngines.Razor.HelloRazor
 
             registry.IncludeDiagnostics(true);
 
-            registry.Import<RazorEngineRegistry>();
-
             registry.Views
                 .TryToAttachWithDefaultConventions();
         }

@@ -18,8 +18,6 @@ namespace FubuMVC.IntegrationTesting.ViewEngines.Razor.MultipleLayouts
 
             registry.IncludeDiagnostics(true);
 
-            registry.Import<RazorEngineRegistry>();
-
             registry.Views
                 .TryToAttachWithDefaultConventions();
         }
