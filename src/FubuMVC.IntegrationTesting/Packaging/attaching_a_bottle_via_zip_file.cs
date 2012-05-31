@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using FubuMVC.Core.Assets.Files;
@@ -6,6 +8,7 @@ using FubuMVC.IntegrationTesting.Conneg;
 using FubuTestingSupport;
 using NUnit.Framework;
 using TestPackage1;
+using FubuCore;
 
 namespace FubuMVC.IntegrationTesting.Packaging
 {
@@ -51,8 +54,24 @@ create pak1 -o pak1.zip
         [Test]
         public void load_actions_from_a_bottle()
         {
-            remote.All().EndpointsForAssembly("TestPackage1").Select(x => x.FirstActionDescription)
-                .ShouldHaveTheSameElementsAs("StringController.SayHello()", "JsonController.SendMessage()", "ViewController.ShowView()");
+            IEnumerable<string> names = remote.All().EndpointsForAssembly("TestPackage1").Select(x => x.FirstActionDescription);
+
+            var expectation =
+                @"
+StringController.SayHello()
+JsonController.SendMessage()
+ViewController.ShowView()
+OneController.Report()
+OneController.Query()
+TwoController.Report()
+TwoController.Query()
+ThreeController.Report()
+ThreeController.Query()
+"
+                    .ReadLines().Where(x => x.IsNotEmpty()).OrderBy(x => x);
+
+            names.OrderBy(x => x)
+                .ShouldHaveTheSameElementsAs(expectation);
         }
 
         [Test]

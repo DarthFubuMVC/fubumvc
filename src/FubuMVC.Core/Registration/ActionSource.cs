@@ -10,6 +10,21 @@ namespace FubuMVC.Core.Registration
 {
     public class ActionSource : IActionSource
     {
+        public static bool IsCandidate(MethodInfo method)
+        {
+            int parameterCount = method.GetParameters() == null ? 0 : method.GetParameters().Length;
+            if (parameterCount > 1) return false;
+
+
+            
+            bool hasOutput = method.ReturnType != typeof (void);
+            if (hasOutput && !method.ReturnType.IsClass) return false;
+
+            if (hasOutput) return true;
+
+            return parameterCount == 1;
+        }
+
         private readonly ActionMethodFilter _methodFilters;
         private readonly CompositeFilter<Type> _typeFilters = new CompositeFilter<Type>();
         private readonly CompositeFilter<ActionCall> _callFilters = new CompositeFilter<ActionCall>();

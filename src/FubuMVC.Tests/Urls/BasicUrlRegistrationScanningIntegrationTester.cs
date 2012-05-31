@@ -68,8 +68,9 @@ namespace FubuMVC.Tests.Urls
 
             }
 
-            public void NoArgMethod()
+            public string NoArgMethod()
             {
+                return "something";
             }
 
             public void Index()

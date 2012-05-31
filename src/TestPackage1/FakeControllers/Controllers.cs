@@ -14,9 +14,6 @@ namespace TestPackage1.FakeControllers
 
     public class OneController
     {
-        public void Go()
-        {
-        }
 
         public SimpleOutputModel Report()
         {
@@ -31,9 +28,6 @@ namespace TestPackage1.FakeControllers
 
     public class TwoController
     {
-        public void Go()
-        {
-        }
 
         public SimpleOutputModel Report()
         {
@@ -48,9 +42,6 @@ namespace TestPackage1.FakeControllers
 
     public class ThreeController
     {
-        public void Go()
-        {
-        }
 
         public SimpleOutputModel Report()
         {

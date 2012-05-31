@@ -1,4 +1,5 @@
 using System.Linq;
+using FubuCore;
 using FubuMVC.IntegrationTesting.Conneg;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -24,7 +25,22 @@ create pak1 -o pak1.zip
         [Test]
         public void load_actions_from_a_bottle_before_and_after()
         {
-            remote.All().EndpointsForAssembly("TestPackage1").Select(x => x.FirstActionDescription).ShouldHaveTheSameElementsAs("StringController.SayHello()", "JsonController.SendMessage()", "ViewController.ShowView()");
+
+            var expectation =
+                @"
+StringController.SayHello()
+JsonController.SendMessage()
+ViewController.ShowView()
+OneController.Report()
+OneController.Query()
+TwoController.Report()
+TwoController.Query()
+ThreeController.Report()
+ThreeController.Query()
+"
+                    .ReadLines().Where(x => x.IsNotEmpty()).OrderBy(x => x);
+
+            remote.All().EndpointsForAssembly("TestPackage1").Select(x => x.FirstActionDescription).OrderBy(x => x).ShouldHaveTheSameElementsAs(expectation);
 
 
             runFubu("install-pak pak1.zip harness -u");

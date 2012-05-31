@@ -1,6 +1,8 @@
 using System;
 using FubuMVC.Core;
+using FubuMVC.Core.Registration;
 using FubuMVC.WebForms;
+using TestPackage1.FakeControllers;
 
 namespace TestPackage1
 {

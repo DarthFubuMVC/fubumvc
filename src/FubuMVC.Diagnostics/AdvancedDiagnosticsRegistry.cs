@@ -47,8 +47,6 @@ namespace FubuMVC.Diagnostics
                 .RegisterActionLessViews(token => token.ViewModel.IsDiagnosticsReport())
                 .RegisterActionLessViews(token => typeof (IPartialModel).IsAssignableFrom(token.ViewModel));
 
-            this.UseSpark();
-
             Configure(graph =>
             {
                 graph.Behaviors.Where(x => x.ResourceType() != null && x.ResourceType().Name.ToLower().Contains("json")).Each(x => x.MakeAsymmetricJson());

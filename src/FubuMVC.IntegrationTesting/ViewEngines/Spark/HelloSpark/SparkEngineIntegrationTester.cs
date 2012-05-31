@@ -17,8 +17,6 @@ namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.HelloSpark
 
             registry.IncludeDiagnostics(true);
 
-            registry.UseSpark();
-
             registry.Views
                 .TryToAttachWithDefaultConventions();
         }

@@ -5,7 +5,6 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.IntegrationTesting.Conneg;
 using NUnit.Framework;
-using FubuMVC.Spark;
 using FubuTestingSupport;
 
 namespace FubuMVC.IntegrationTesting.ViewAttachment
@@ -15,7 +14,6 @@ namespace FubuMVC.IntegrationTesting.ViewAttachment
     {
         protected override void configure(FubuRegistry registry)
         {
-            registry.UseSpark();
             registry.Actions.IncludeType<ProfileController>();
             registry.Views.TryToAttachWithDefaultConventions();
             registry.Views.Profile<Mobile>("m.");

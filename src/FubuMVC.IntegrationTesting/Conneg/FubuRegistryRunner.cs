@@ -12,6 +12,7 @@ using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Diagnostics.Querying;
 using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Packaging;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.OwinHost;
