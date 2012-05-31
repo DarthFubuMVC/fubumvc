@@ -1,4 +1,5 @@
 using FubuMVC.Core;
+using FubuMVC.Spark;
 
 namespace FubuMVC.NewDiagnostics
 {
@@ -6,7 +7,6 @@ namespace FubuMVC.NewDiagnostics
     {
         public DiagnosticRegistry() : base("_fubu2")
         {
-            Actions.IncludeTypesNamed(x => x.EndsWith("Endpoint"));
             Views.TryToAttachWithDefaultConventions();
         }
     }

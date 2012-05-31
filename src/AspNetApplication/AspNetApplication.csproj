@@ -103,6 +103,10 @@
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Spark\FubuMVC.Spark.csproj">
+      <Project>{9D6BF559-6461-4EAC-BB16-F976FF43E8DA}</Project>
+      <Name>FubuMVC.Spark</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
       <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
       <Name>FubuMVC.StructureMap</Name>
