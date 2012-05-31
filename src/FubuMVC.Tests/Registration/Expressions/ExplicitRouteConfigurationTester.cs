@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.Registration.Expressions
             _config = config;
             var fubuRegistry = new FubuRegistry(registry =>
             {
-                
+                registry.Actions.IncludeTypes(x => false);
 
                 registry.Route("some/pattern")
                     .Calls<InputController>(c => c.DoSomething(null)).OutputToJson();

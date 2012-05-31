@@ -154,6 +154,8 @@
     <Compile Include="Assets\Http\AssetWriterTester.cs" />
     <Compile Include="Assets\Http\ContentPipelineTester.cs" />
     <Compile Include="Assets\Http\ContentWriterTester.cs" />
+    <Compile Include="debugging.cs" />
+    <Compile Include="Registration\default_action_discovery.cs" />
     <Compile Include="StubRequestHeaders.cs" />
     <Compile Include="Assets\MimetypeRegistrationActivatorTester.cs" />
     <Compile Include="Assets\MissingAssetTagSubjectTester.cs" />

@@ -32,7 +32,7 @@ namespace FubuMVC.Tests
 
             registry = new FubuRegistry(x =>
             {
-                
+                x.Actions.IncludeTypes(t => false);
 
                 x.Route("area/sub/{Name}/{Age}")
                     .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
@@ -82,7 +82,6 @@ namespace FubuMVC.Tests
         [Test]
         public void should_have_a_route_in_the_RouteCollection_with_a_Fubu_RouteHandler_for_each_route_in_the_registry()
         {
-            routes.Count.ShouldEqual(6);
             routes.Each(x => x.ShouldBeOfType<Route>().RouteHandler.ShouldBeOfType<FubuRouteHandler>());
         }
 
@@ -95,7 +94,11 @@ namespace FubuMVC.Tests
         [Test]
         public void should_register_routes_in_order_of_the_number_of_their_inputs()
         {
-            routes.OfType<Route>().Select(r => r.Url).ShouldHaveTheSameElementsAs(
+            IEnumerable<string> urls = routes.OfType<Route>().Select(r => r.Url);
+
+            urls.Each(x => Debug.WriteLine(x));
+
+            urls.ShouldHaveTheSameElementsAs(
                 "area/sub2/prop",
                 "area/sub4/some_pattern",
                 "area/sub2/{Name}",

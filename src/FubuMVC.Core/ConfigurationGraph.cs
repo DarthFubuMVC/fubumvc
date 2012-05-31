@@ -115,7 +115,15 @@ namespace FubuMVC.Core
 
         private IEnumerable<IConfigurationAction> allConventions()
         {
-            yield return new BehaviorAggregator(_types, _actionSources);
+            if (_actionSources.Any())
+            {
+                yield return new BehaviorAggregator(_types, _actionSources);
+            }
+            else
+            {
+                yield return new BehaviorAggregator(_types, new IActionSource[]{new EndpointActionSource()});
+            }
+
             yield return new PartialOnlyConvention();
             yield return _routeResolver;
 

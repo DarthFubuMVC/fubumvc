@@ -143,5 +143,15 @@ namespace FubuMVC.Core.Registration.DSL
             _configuration.AddActions(actionSource);
             return this;
         }
+
+        /// <summary>
+        /// Finds actions in concrete classes that are suffixed with either "Endpoint" or
+        /// "Endpoints"
+        /// </summary>
+        /// <returns></returns>
+        public ActionCallCandidateExpression IncludeClassesSuffixedWithEndpoint()
+        {
+            return FindWith(new EndpointActionSource());
+        }
     }
 }

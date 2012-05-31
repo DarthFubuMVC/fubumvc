@@ -8,7 +8,6 @@ using System.Linq;
 
 namespace FubuMVC.Core.Registration
 {
-
     public class ActionSource : IActionSource
     {
         private readonly ActionMethodFilter _methodFilters;

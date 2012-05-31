@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.Registration.Expressions
         {
             registry = new FubuRegistry(x =>
             {
-                
+                x.Actions.IncludeTypes(t => false);
 
                 // Tell FubuMVC to wrap the behavior chain for each
                 // RouteHandler with the "FakeUnitOfWorkBehavior"

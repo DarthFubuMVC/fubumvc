@@ -101,6 +101,7 @@
     <Compile Include="Http\AspNet\AspNetCookies.cs" />
     <Compile Include="Http\IClientConnectivity.cs" />
     <Compile Include="Registration\Conventions\DefaultOutputPolicy.cs" />
+    <Compile Include="Registration\EndpointActionSource.cs" />
     <Compile Include="Runtime\Conditionals\Always.cs" />
     <Compile Include="Behaviors\Conditional\ConditionalBehavior.cs" />
     <Compile Include="Behaviors\Conditional\ConditionalBehaviorInvoker.cs" />

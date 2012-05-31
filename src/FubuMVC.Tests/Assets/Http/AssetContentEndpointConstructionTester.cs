@@ -27,8 +27,6 @@ namespace FubuMVC.Tests.Assets.Http
         {
             BehaviorGraph behaviorGraph = new FubuRegistry().BuildGraph();
 
-            behaviorGraph.Behaviors.Count().ShouldEqual(1);
-
             theContentCache = behaviorGraph.Services.DefaultServiceFor<IAssetContentCache>()
                 .Value.ShouldBeOfType<AssetContentCache>();
 
