@@ -1,0 +1,9 @@
+﻿<viewdata model="FubuMVC.NewDiagnostics.RouteExplorerModel" />
+<html>
+<head>
+	<title>Hi there, I'm the routes!</title>
+</head>
+<body>
+	<h1>I'm here</h1>
+</body>
+</html>

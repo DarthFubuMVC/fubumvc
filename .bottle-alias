@@ -11,5 +11,7 @@
     <alias name="hellofubuspark" folder="d:\home\oss\fubumvc\src\FubuMVC.HelloFubuSpark" />
     <alias name="harness" folder="C:\code\fubumvc\src\FubuMVC.IntegrationTesting" />
     <alias name="fubumvc_aspnet_testing" folder="C:\code\fubumvc\src\AspNetApplication" />
+    <alias name="diagnostics" folder="src/FubuMVC.NewDiagnostics" />
+    <alias name="fubumvc.diagnostics" folder="src/FubuMVC.NewDiagnostics" />
   </Aliases>
 </aliases>
