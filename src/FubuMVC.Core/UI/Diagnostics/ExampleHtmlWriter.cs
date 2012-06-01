@@ -27,6 +27,7 @@ namespace FubuMVC.Core.UI.Diagnostics
         private readonly BehaviorGraph _behaviorGraph;
         private readonly ICurrentHttpRequest _httpRequest;
         private readonly string _examplePageUrl;
+        private const string UrlPattern = "_fubu/html/example";
 
         public ExampleHtmlWriter(IServiceLocator serviceLocator, IUrlRegistry urlRegistry, BehaviorGraph behaviorGraph, ICurrentHttpRequest httpRequest)
         {
@@ -35,7 +36,7 @@ namespace FubuMVC.Core.UI.Diagnostics
             _behaviorGraph = behaviorGraph;
             _httpRequest = httpRequest;
 
-            _examplePageUrl = httpRequest.ToFullUrl("_fubu/html/example");
+            _examplePageUrl = httpRequest.ToFullUrl(UrlPattern);
         }
 
         [UrlPattern("_fubu/html"), Description("Demonstrates effects of current HTML conventions")]
@@ -49,7 +50,7 @@ namespace FubuMVC.Core.UI.Diagnostics
                 .Where(b => b.Outputs.Select(o => o.GetType()).Except(ignoredModels).Any() )
                 .OrderBy(b => b.GetRoutePattern()),
                 new RouteColumn(_httpRequest),
-                new OutputModelColumn(_examplePageUrl),
+                new OutputModelColumn(_urlRegistry),
                 new OutputColumn());
             tags.Add(table);
             var doc = DiagnosticHtml.BuildDocument(_urlRegistry, "FubuMVC.UI Examples", tags.ToArray());
@@ -57,7 +58,7 @@ namespace FubuMVC.Core.UI.Diagnostics
             return doc;
         }
 
-        [UrlPattern("_fubu/html/example")]
+        [UrlPattern(UrlPattern)]
         public HtmlDocument Example(ExampleHtmlRequest exampleHtmlRequest)
         {
             var modelPath = exampleHtmlRequest.Model ?? typeof(ExampleViewModel).FullName + "-Person";
@@ -97,7 +98,8 @@ namespace FubuMVC.Core.UI.Diagnostics
             var linkList = new HtmlTag("ul").AddClass("subproperties");
             foreach (var propertyInfo in propertiesToLink)
             {
-                var linkTag = new LinkTag("", _examplePageUrl + "?model=" + modelPath + "-" + propertyInfo.Name);
+                var url = _urlRegistry.UrlFor(new ExampleHtmlRequest {Model = modelPath + "-" + propertyInfo.Name});
+                var linkTag = new LinkTag("", url);
                 linkTag.Append(new HtmlTag("code").Text(getPropertySourceCode(propertyInfo)));
                 var listItem = new HtmlTag("li").Append(linkTag);
                 linkList.Append(listItem);
@@ -219,11 +221,11 @@ this.StringConversions(x =>
 
     internal class OutputModelColumn : IColumn
     {
-        private readonly string _examplePageUrl;
+        private readonly IUrlRegistry _urlRegistry;
 
-        public OutputModelColumn(string examplePageUrl)
+        public OutputModelColumn(IUrlRegistry urlRegistry)
         {
-            _examplePageUrl = examplePageUrl;
+            _urlRegistry = urlRegistry;
         }
 
         public string Header()
@@ -234,7 +236,8 @@ this.StringConversions(x =>
         public void WriteBody(BehaviorChain chain, HtmlTag row, HtmlTag cell)
         {
             var outputType = chain.ResourceType();
-            cell.Append(new LinkTag(outputType.Name, _examplePageUrl + "?model=" + outputType.FullName));
+            var url = _urlRegistry.UrlFor(new ExampleHtmlRequest {Model = outputType.FullName});
+            cell.Append(new LinkTag(outputType.Name, url));
         }
 
         public string Text(BehaviorChain chain)
@@ -245,6 +248,7 @@ this.StringConversions(x =>
 
     public class ExampleHtmlRequest
     {
+        [QueryString]
         public string Model { get; set; }
     }
 
