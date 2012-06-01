@@ -35,7 +35,7 @@ namespace FubuMVC.Core.UI.Navigation
         // TODO -- this could really use some more end to end testing
         public MenuItemToken BuildToken(MenuNode node)
         {
-            var token = new MenuItemToken{
+            var token = new MenuItemToken {
                 Children = node.Children.Select(BuildToken).ToArray(),
                 Key = node.Key.Key,
                 Text = node.Key.ToString(),

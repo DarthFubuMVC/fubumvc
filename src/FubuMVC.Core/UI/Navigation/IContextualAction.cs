@@ -6,6 +6,7 @@
         string Category { get; }
         MenuItemState UnauthorizedState { get; }
         string Text();
+		string Description();
         MenuItemState IsAvailable(T target);
         Endpoint FindEndpoint(IEndpointService endpoints, T target);
     }

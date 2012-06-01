@@ -1,10 +1,8 @@
-using System;
 using FubuMVC.Core;
 using FubuMVC.Core.UI.Navigation;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
-using FubuCore;
 
 namespace FubuMVC.Tests.UI.Navigation
 {
@@ -12,11 +10,12 @@ namespace FubuMVC.Tests.UI.Navigation
     public class AuthorizedContextualMenuTester : InteractionContext<AuthorizedContextualMenu<ContextualObject>>
     {
         private IContextualAction<ContextualObject> definition;
-        private string theCategory = "the category";
-        private string theTextOfTheMenuItem = "menu text";
-        private string theUrl = "the url";
-        private string theKey = "the key";
-        private ContextualObject theTarget;
+    	private const string theCategory = "the category";
+    	private const string theTextOfTheMenuItem = "menu text";
+		private const string theDescriptionOfTheMenuItem = "menu item description";
+    	private const string theUrl = "the url";
+    	private const string theKey = "the key";
+    	private ContextualObject theTarget;
 
         protected override void beforeEach()
         {
@@ -27,7 +26,8 @@ namespace FubuMVC.Tests.UI.Navigation
 
             definition.Stub(x => x.Category).Return(theCategory);
             definition.Stub(x => x.Text()).Return(theTextOfTheMenuItem);
-            definition.Stub(x => x.Key).Return(theKey);
+			definition.Stub(x => x.Description()).Return(theDescriptionOfTheMenuItem);
+			definition.Stub(x => x.Key).Return(theKey);
         }
 
         private bool WouldBeAuthorized
@@ -89,6 +89,15 @@ namespace FubuMVC.Tests.UI.Navigation
 
             theResultingMenuItemToken.Text.ShouldEqual(theTextOfTheMenuItem);
         }
+
+		[Test]
+		public void should_get_the_description_from_the_inner_definition()
+		{
+			WouldBeAuthorized = true;
+			AvailabilityAsDeterminedByTheStrategyIs = MenuItemState.Available;
+
+			theResultingMenuItemToken.Description.ShouldEqual(theDescriptionOfTheMenuItem);
+		}
 
         [Test]
         public void should_get_the_url_from_the_inner_definition()
@@ -152,42 +161,5 @@ namespace FubuMVC.Tests.UI.Navigation
     public class ContextualObject
     {
         public string Name { get; set; }
-    }
-
-    public class StubContextualMenu : IContextualAction<ContextualObject>
-    {
-        public string Key
-        {
-            get; set;
-        }
-
-        public string Category
-        {
-            get;
-            set;
-        }
-
-        public MenuItemState UnauthorizedState
-        {
-            get { return MenuItemState.Hidden; }
-        }
-
-        public string Text()
-        {
-            return "{0}/{1}".ToFormat(Category, Key);
-        }
-
-        public MenuItemState IsAvailable(ContextualObject target)
-        {
-            return MenuItemState.Available;
-        }
-
-        public Endpoint FindEndpoint(IEndpointService endpoints, ContextualObject target)
-        {
-            return new Endpoint(){
-                IsAuthorized = true,
-                Url = Text()
-            };
-        }
     }
 }
