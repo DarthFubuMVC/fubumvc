@@ -2,8 +2,23 @@
 <html>
 <head>
 	<title>Hi there, I'm the routes!</title>
+  !{this.WriteAssetTags("diagnostics_styles")}
+  <style type="text/css" rel="stylesheet">.slickgrid_167387 .slick-header-column { left: 1000px; } .slickgrid_167387 .slick-top-panel { height:25px; } .slickgrid_167387 .slick-headerrow-columns { height:25px; } .slickgrid_167387 .slick-cell { height:20px; } .slickgrid_167387 .slick-row { height:25px; } .slickgrid_167387 .l0 { } .slickgrid_167387 .r0 { } .slickgrid_167387 .l1 { } .slickgrid_167387 .r1 { } .slickgrid_167387 .l2 { } .slickgrid_167387 .r2 { } .slickgrid_167387 .l3 { } .slickgrid_167387 .r3 { } .slickgrid_167387 .l4 { } .slickgrid_167387 .r4 { } .slickgrid_167387 .l5 { } .slickgrid_167387 .r5 { }</style>
+
 </head>
 <body>
-	<h1>I'm here</h1>
+
+  
+  
+	<h1>I'm here, with more stuff</h1>
+
+  <div id="myGrid" style="width:600px;height:500px;"></div>
 </body>
+
+  <foot>
+    !{this.WriteAssetTags("diagnostics")}
+
+
+    
+  </foot>
 </html>
