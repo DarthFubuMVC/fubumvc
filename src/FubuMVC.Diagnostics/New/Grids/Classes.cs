@@ -11,14 +11,63 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.UI;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using HtmlTags;
-using HtmlTags.Extended.Attributes;
-using FubuMVC.Core.UI;
 
-namespace FubuMVC.NewDiagnostics.Grids
+namespace FubuMVC.Diagnostics.New.Grids
 {
+    public interface IGridDataSource<T>
+    {
+        IEnumerable<T> GetData();
+    }
+
+    public interface IGridDataSource<T, TQuery>
+    {
+        IEnumerable<T> GetData(TQuery query);
+    }
+
+    public class GridRunner<T, TGrid, TDataSource>
+        where TGrid : IGridDefinition<T>
+        where TDataSource : IGridDataSource<T>
+    {
+        private readonly TGrid _grid;
+        private readonly TDataSource _source;
+
+        public GridRunner(TGrid grid, TDataSource source)
+        {
+            _grid = grid;
+            _source = source;
+        }
+
+        public IEnumerable<IDictionary<string, object>> Run()
+        {
+            var data = _source.GetData();
+            return _grid.FormatData(data);
+        }
+    }
+
+    public class GridRunner<T, TGrid, TDataSource, TQuery>
+        where TGrid : IGridDefinition<T>
+        where TDataSource : IGridDataSource<T, TQuery>
+    {
+        private readonly TGrid _grid;
+        private readonly TDataSource _source;
+
+        public GridRunner(TGrid grid, TDataSource source)
+        {
+            _grid = grid;
+            _source = source;
+        }
+
+        public IEnumerable<IDictionary<string, object>> Run(TQuery query)
+        {
+            var data = _source.GetData(query);
+            return _grid.FormatData(data);
+        }
+    }
+
     public static class GridFubuPageExtensions
     {
         public static HtmlTag RenderGrid<T>(this IFubuPage page, string id) where T : IGridDefinition, new()
@@ -38,7 +87,7 @@ namespace FubuMVC.NewDiagnostics.Grids
             }
 
             return div;
-        } 
+        }
     }
 
     public class Try
@@ -117,7 +166,7 @@ namespace FubuMVC.NewDiagnostics.Grids
         /// <typeparam name="TSource"></typeparam>
         public void SourceIs<TSource>()
         {
-            var sourceType = typeof (TSource);
+            var sourceType = typeof(TSource);
             var templateType = sourceType.FindInterfaceThatCloses(typeof(IGridDataSource<>));
             if (templateType != null)
             {
@@ -232,8 +281,8 @@ namespace FubuMVC.NewDiagnostics.Grids
         private Type createRunnerType()
         {
             return _queryType == null
-                       ? typeof (GridRunner<,,>).MakeGenericType(typeof (T), GetType(), _sourceType)
-                       : typeof (GridRunner<,,,>).MakeGenericType(typeof (T), GetType(), _sourceType, _queryType);
+                       ? typeof(GridRunner<,,>).MakeGenericType(typeof(T), GetType(), _sourceType)
+                       : typeof(GridRunner<,,,>).MakeGenericType(typeof(T), GetType(), _sourceType, _queryType);
         }
     }
 

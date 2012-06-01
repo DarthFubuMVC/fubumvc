@@ -3,6 +3,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Diagnostics.Chrome;
 using FubuMVC.Diagnostics.Core.Configuration;
 using FubuMVC.Diagnostics.Core.Configuration.Policies;
 using FubuMVC.Diagnostics.Core.Grids;
@@ -37,7 +38,8 @@ namespace FubuMVC.Diagnostics
             ApplyHandlerConventions(markers => new DiagnosticsHandlerUrlPolicy(markers), typeof(DiagnosticsFeatures));
 
             Actions
-                .FindWith<PartialActionSource>();
+                .FindWith<PartialActionSource>()
+                .IncludeTypesNamed(x => x.EndsWith("Endpoint"));
 
             Routes
                 .UrlPolicy<DiagnosticsAttributeUrlPolicy>();
@@ -45,7 +47,8 @@ namespace FubuMVC.Diagnostics
             Views
                 .TryToAttachWithDefaultConventions()
                 .RegisterActionLessViews(token => token.ViewModel.IsDiagnosticsReport())
-                .RegisterActionLessViews(token => typeof (IPartialModel).IsAssignableFrom(token.ViewModel));
+                .RegisterActionLessViews(token => typeof (IPartialModel).IsAssignableFrom(token.ViewModel))
+                .RegisterActionLessViews(token => token.ViewModel == typeof(ChromeContent));
 
             Configure(graph =>
             {
