@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace FubuMVC.Core.UI.Navigation
 {
@@ -22,6 +21,7 @@ namespace FubuMVC.Core.UI.Navigation
         public string Key { get; set; }
         public string Text { get; set; }
         public string Url { get; set; }
+		public string Description { get; set; }
         public MenuItemState MenuItemState { get; set; }
 
         public string IconUrl { get; set; }
@@ -55,7 +55,7 @@ namespace FubuMVC.Core.UI.Navigation
 
         public override string ToString()
         {
-            return string.Format("Key: {0}, Text: {1}, Url: {2}, MenuItemState: {3}", Key, Text, Url, MenuItemState);
+            return string.Format("Key: {0}, Text: {1}, Url: {2}, MenuItemState: {3} Description: {4}", Key, Text, Url, MenuItemState, Description);
         }
     }
 }
