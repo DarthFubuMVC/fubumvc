@@ -1,4 +1,6 @@
 ﻿<viewdata model="FubuMVC.NewDiagnostics.RouteExplorerModel" />
+<use namespace="FubuMVC.NewDiagnostics.Grids" />
+<use namespace="System.Linq" />
 <html>
 <head>
 	<title>Hi there, I'm the routes!</title>
@@ -12,7 +14,8 @@
   
 	<h1>I'm here, with more stuff</h1>
 
-  <div id="myGrid" style="width:600px;height:500px;"></div>
+  !{this.RenderGrid<BehaviorChainGrid>("chainGrid").Attr("style", "width:1200px;height:500px;")}
+
 </body>
 
   <foot>

@@ -11,9 +11,36 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Urls;
+using FubuMVC.Core.View;
+using HtmlTags;
+using HtmlTags.Extended.Attributes;
+using FubuMVC.Core.UI;
 
 namespace FubuMVC.NewDiagnostics.Grids
 {
+    public static class GridFubuPageExtensions
+    {
+        public static HtmlTag RenderGrid<T>(this IFubuPage page, string id) where T : IGridDefinition, new()
+        {
+            var grid = new T();
+
+            var div = new HtmlTag("div").Id(id).AddClass("slick-grid");
+            div.Data("columns", grid.ToColumnJson());
+
+            page.Asset("diagnostics/SlickGridActivator.js");
+
+
+            var url = grid.SelectDataSourceUrl(page.Urls);
+            if (url.IsNotEmpty())
+            {
+                div.Data("url", url);
+            }
+
+            return div;
+        } 
+    }
+
     public class Try
     {
         public void Do()
@@ -61,11 +88,14 @@ namespace FubuMVC.NewDiagnostics.Grids
             ReflectionHelper.GetMethod<IGridDataSource<BehaviorChain>>(x => x.GetData()).Name;
     }
 
-
-
-    public interface IGridDefinition<T>
+    public interface IGridDefinition
     {
         string ToColumnJson();
+        string SelectDataSourceUrl(IUrlRegistry urls);
+    }
+
+    public interface IGridDefinition<T> : IGridDefinition
+    {
         IEnumerable<IDictionary<string, object>> FormatData(IEnumerable<T> data);
     }
 
@@ -119,7 +149,7 @@ namespace FubuMVC.NewDiagnostics.Grids
             throw new ArgumentOutOfRangeException("TSource must be either IGridDataSource<T> or IGridDataSource<TQuery>");
         }
 
-        string IGridDefinition<T>.ToColumnJson()
+        string IGridDefinition.ToColumnJson()
         {
             var builder = new StringBuilder();
             builder.Append("[");
@@ -136,6 +166,25 @@ namespace FubuMVC.NewDiagnostics.Grids
             builder.Append("]");
 
             return builder.ToString();
+        }
+
+        string IGridDefinition.SelectDataSourceUrl(IUrlRegistry urls)
+        {
+            if (_sourceType == null) return null;
+
+            if (_queryType != null)
+            {
+                return urls.UrlFor(_queryType);
+            }
+
+            var runnerType = createRunnerType();
+
+            return urls.UrlFor(runnerType);
+        }
+
+        public Type SourceType
+        {
+            get { return _sourceType; }
         }
 
         IEnumerable<IDictionary<string, object>> IGridDefinition<T>.FormatData(IEnumerable<T> data)
@@ -161,9 +210,7 @@ namespace FubuMVC.NewDiagnostics.Grids
         {
             registry.Configure(graph =>
             {
-                var runnerType = _queryType == null
-                                     ? typeof (GridRunner<,,>).MakeGenericType(typeof (T), GetType(), _sourceType)
-                                     : typeof (GridRunner<,,,>).MakeGenericType(typeof (T), GetType(), _sourceType, _queryType);
+                Type runnerType = createRunnerType();
 
 
                 var method = runnerType.GetMethod("Run");
@@ -180,6 +227,13 @@ namespace FubuMVC.NewDiagnostics.Grids
                 graph.AddChain(chain);
 
             });
+        }
+
+        private Type createRunnerType()
+        {
+            return _queryType == null
+                       ? typeof (GridRunner<,,>).MakeGenericType(typeof (T), GetType(), _sourceType)
+                       : typeof (GridRunner<,,,>).MakeGenericType(typeof (T), GetType(), _sourceType, _queryType);
         }
     }
 
@@ -215,6 +269,10 @@ namespace FubuMVC.NewDiagnostics.Grids
                     builder.Append("\"");
                     builder.Append(value as string);
                     builder.Append("\"");
+                }
+                else if (value is bool)
+                {
+                    builder.Append(value.ToString().ToLower());
                 }
                 else
                 {

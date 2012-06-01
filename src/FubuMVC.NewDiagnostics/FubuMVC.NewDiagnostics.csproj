@@ -63,10 +63,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="content\scripts\diagnostics\jquery-1.7.min.js" />
+    <Content Include="content\scripts\diagnostics\jquery-ui-1.8.20.custom.min.js" />
     <Content Include="content\scripts\diagnostics\jquery.event.drag-2.0.min.js" />
     <Content Include="content\scripts\diagnostics\jquery.event.drop-2.0.min.js" />
+    <Content Include="content\scripts\diagnostics\json2.js" />
     <Content Include="content\scripts\diagnostics\slick.core.js" />
     <Content Include="content\scripts\diagnostics\slick.formatters.js" />
+    <Content Include="content\scripts\diagnostics\SlickGridActivator.js" />
     <Content Include="content\styles\diagnostics\examples.css" />
     <Content Include="content\styles\diagnostics\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="content\styles\diagnostics\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -81,13 +84,27 @@
     <Content Include="content\styles\diagnostics\images\ui-icons_454545_256x240.png" />
     <Content Include="content\styles\diagnostics\images\ui-icons_888888_256x240.png" />
     <Content Include="content\styles\diagnostics\images\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="content\styles\diagnostics\jquery-ui-1.8.16.custom.css" />
     <Content Include="content\styles\diagnostics\slick-default-theme.css" />
     <Content Include="content\styles\diagnostics\slick.grid.css" />
     <Content Include="content\scripts\diagnostics\slick.grid.js" />
     <Content Include="content\scripts\diagnostics\underscore-min.js" />
     <Content Include="content\styles\diagnostics\bootstrap.min.css" />
     <Content Include="content\styles\diagnostics\spike.js" />
+    <Content Include="content\styles\diagnostics\ui-lightness\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="content\styles\diagnostics\ui-lightness\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <Content Include="content\styles\diagnostics\ui-lightness\images\ui-bg_flat_10_000000_40x100.png" />
+    <Content Include="content\styles\diagnostics\ui-lightness\images\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="content\styles\diagnostics\ui-lightness\images\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="content\styles\diagnostics\ui-lightness\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="content\styles\diagnostics\ui-lightness\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="content\styles\diagnostics\ui-lightness\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="content\styles\diagnostics\ui-lightness\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="content\styles\diagnostics\ui-lightness\images\ui-icons_222222_256x240.png" />
+    <Content Include="content\styles\diagnostics\ui-lightness\images\ui-icons_228ef1_256x240.png" />
+    <Content Include="content\styles\diagnostics\ui-lightness\images\ui-icons_ef8c08_256x240.png" />
+    <Content Include="content\styles\diagnostics\ui-lightness\images\ui-icons_ffd27a_256x240.png" />
+    <Content Include="content\styles\diagnostics\ui-lightness\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="content\styles\diagnostics\ui-lightness\jquery-ui-1.8.20.custom.css" />
     <Content Include="content\styles\img\glyphicons-halflings-white.png" />
     <Content Include="content\styles\img\glyphicons-halflings.png" />
     <Content Include="Web.config" />
