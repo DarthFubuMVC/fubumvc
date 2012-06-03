@@ -16,22 +16,18 @@ namespace FubuMVC.Core.UI.Forms
     {
         private readonly ITagGenerator<T> _tags;
         private readonly ILabelAndFieldLayout _layout;
+        private bool _isVisible = true;
+        private readonly ElementRequest _request;
+        private AccessRight _editable = AccessRight.ReadOnly;
+        private AccessRight _rights = AccessRight.All;
 
         private readonly HashSet<string> _groupByCssClasses =
             new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
-
-        public HashSet<string> GroupByCssClasses
-        {
-            get { return _groupByCssClasses; }
-        }
-
-        private bool _isVisible = true;
-        private readonly ElementRequest _request;
         private readonly IList<Action<ILabelAndFieldLayout, ElementRequest>> _alterations 
             = new List<Action<ILabelAndFieldLayout, ElementRequest>>();
 
-        private AccessRight _editable = AccessRight.ReadOnly;
-        private AccessRight _rights = AccessRight.All;
+
+
 
         public FormLineExpression(ITagGenerator<T> tags, ILabelAndFieldLayout layout,
                                   Expression<Func<T, object>> expression)
@@ -40,8 +36,9 @@ namespace FubuMVC.Core.UI.Forms
 
         }
 
-        public FormLineExpression(ITagGenerator<T> tags, ILabelAndFieldLayout layout,
-                                  ElementRequest request)
+        public FormLineExpression(ITagGenerator<T> tags,
+            ILabelAndFieldLayout layout,
+            ElementRequest request)
         {
             _tags = tags;
             _layout = layout;
@@ -54,6 +51,13 @@ namespace FubuMVC.Core.UI.Forms
                 x.LabelTag.AddClass(c);
                 x.BodyTag.AddClass(c);
             }));
+        }
+
+
+
+        public HashSet<string> GroupByCssClasses
+        {
+            get { return _groupByCssClasses; }
         }
 
         public FormLineExpression<T> AlterLabel(Action<HtmlTag> alter)
@@ -143,7 +147,14 @@ namespace FubuMVC.Core.UI.Forms
 
         private void createBodyTag()
         {
-            _layout.BodyTag = isEditable() ? _tags.InputFor(_request) : _tags.DisplayFor(_request);
+            if(isEditable())
+            {
+                _layout.BodyTag = _tags.InputFor(_request);
+            }
+            else
+            {
+                _layout.BodyTag = _tags.DisplayFor(_request);
+            }
             _alterations.Each(a => a(_layout, _request));
         }
 
@@ -158,7 +169,7 @@ namespace FubuMVC.Core.UI.Forms
 
             createBodyTag();
 
-            return _layout.ToString();
+            return _layout.Render();
         }
 
         public string ToHtmlString()
@@ -209,8 +220,5 @@ namespace FubuMVC.Core.UI.Forms
 
             return _layout.AllTags();
         }
-
-
-
     }
 }

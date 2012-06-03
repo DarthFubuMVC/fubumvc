@@ -35,9 +35,10 @@ namespace FubuMVC.Core.UI.Forms
             yield return _bodyHolder;
         }
 
-        public override string ToString()
+        public string Render()
         {
             return string.Format("{0}\n{1}", _dt, _bodyHolder);
+            
         }
     }
 }

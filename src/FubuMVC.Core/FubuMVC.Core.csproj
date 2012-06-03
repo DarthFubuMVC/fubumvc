@@ -286,6 +286,8 @@
     <Compile Include="Runtime\IFubuRouteHandler.cs" />
     <Compile Include="Security\SecurityServicesRegistry.cs" />
     <Compile Include="UI\DisplayConversionRegistryActivator.cs" />
+    <Compile Include="UI\Forms\DefinitionListForm.cs" />
+    <Compile Include="UI\Forms\SimpleForm.cs" />
     <Compile Include="UI\HtmlConventionsActivator.cs" />
     <Compile Include="Http\AspNet\AspNetHttpWriter.cs" />
     <Compile Include="Http\AspNet\AspNetCurrentHttpRequest.cs" />

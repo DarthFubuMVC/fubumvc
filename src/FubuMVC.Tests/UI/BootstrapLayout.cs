@@ -42,7 +42,7 @@ namespace FubuMVC.Tests.UI
             set { _inputContainer.ReplaceChildren(value); }
         }
 
-        public override string ToString()
+        public string Render()
         {
             return _containingDiv.ToString();
         }

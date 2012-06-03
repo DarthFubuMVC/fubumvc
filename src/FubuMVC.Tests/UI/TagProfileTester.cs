@@ -54,5 +54,10 @@ namespace FubuMVC.Tests.UI
             get { throw new NotImplementedException(); }
             set { throw new NotImplementedException(); }
         }
+
+        public string Render()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
