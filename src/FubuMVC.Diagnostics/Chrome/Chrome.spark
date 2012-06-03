@@ -1,5 +1,6 @@
 ﻿<viewdata model="FubuMVC.Diagnostics.Chrome.ChromeContent" />
 <use master="" />
+<use namespace="FubuMVC.Diagnostics" />
 <use namespace="FubuMVC.Diagnostics.Features.Dashboard" />
 <use namespace="FubuMVC.Diagnostics.Core.Extensions" />
 <use namespace="FubuMVC.Diagnostics.Navigation" />
@@ -22,8 +23,8 @@
 				<a class="brand" href="${this.Urls.UrlFor(new DashboardRequestModel())}">
 					<Image src="fubumvc.png" />
 				</a>
-				!{this.Partial<NavigationMenu>()}
-			</div>
+        !{this.DiagnosticsMenu()}
+      </div>
 		</div>
 	</div>
 	<div id="Content">

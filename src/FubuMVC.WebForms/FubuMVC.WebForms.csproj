@@ -32,13 +32,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FubuCore">
-      <HintPath>..\packages\FubuCore.0.9.9.152\lib\FubuCore.dll</HintPath>
+      <HintPath>..\packages\FubuCore.0.9.9.153\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuLocalization">
-      <HintPath>..\packages\FubuLocalization.0.9.5.44\lib\FubuLocalization.dll</HintPath>
+      <HintPath>..\packages\FubuLocalization.0.9.5.45\lib\FubuLocalization.dll</HintPath>
     </Reference>
     <Reference Include="HtmlTags">
-      <HintPath>..\packages\HtmlTags.1.1.0.72\lib\4.0\HtmlTags.dll</HintPath>
+      <HintPath>..\packages\HtmlTags.1.1.0.73\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

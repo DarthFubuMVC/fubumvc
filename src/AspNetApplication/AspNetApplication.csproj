@@ -32,15 +32,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Bottles, Version=0.9.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Bottles.0.9.1.280\lib\Bottles.dll</HintPath>
+    <Reference Include="Bottles">
+      <HintPath>..\packages\Bottles.0.9.1.283\lib\Bottles.dll</HintPath>
     </Reference>
-    <Reference Include="FubuCore, Version=0.9.9.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FubuCore.0.9.9.152\lib\FubuCore.dll</HintPath>
+    <Reference Include="FubuCore">
+      <HintPath>..\packages\FubuCore.0.9.9.153\lib\FubuCore.dll</HintPath>
     </Reference>
-    <Reference Include="HtmlTags, Version=1.1.0.72, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\HtmlTags.1.1.0.72\lib\4.0\HtmlTags.dll</HintPath>
+    <Reference Include="HtmlTags">
+      <HintPath>..\packages\HtmlTags.1.1.0.73\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="StructureMap, Version=2.6.3.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">

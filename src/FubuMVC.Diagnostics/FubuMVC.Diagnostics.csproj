@@ -34,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles.0.9.1.280\lib\Bottles.dll</HintPath>
+      <HintPath>..\packages\Bottles.0.9.1.283\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore, Version=0.9.9.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FubuCore.0.9.9.153\lib\FubuCore.dll</HintPath>
@@ -43,7 +43,7 @@
       <HintPath>..\packages\FubuLocalization.0.9.5.45\lib\FubuLocalization.dll</HintPath>
     </Reference>
     <Reference Include="HtmlTags">
-      <HintPath>..\packages\HtmlTags.1.1.0.72\lib\4.0\HtmlTags.dll</HintPath>
+      <HintPath>..\packages\HtmlTags.1.1.0.73\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json">
@@ -254,7 +254,6 @@
     <Compile Include="Chrome\FakeEndpoint.cs" />
     <Compile Include="Core\AdvancedDiagnosticsFubuExtension.cs" />
     <Compile Include="Core\Configuration\ActionCallExtensions.cs" />
-    <Compile Include="Core\Configuration\PartialActionSource.cs" />
     <Compile Include="Core\Configuration\Policies\DiagnosticsAttributeUrlPolicy.cs" />
     <Compile Include="Core\Configuration\Policies\DiagnosticsHandlerUrlPolicy.cs" />
     <Compile Include="Core\Configuration\Policies\DiagnosticsUrls.cs" />
@@ -383,19 +382,8 @@
     <Compile Include="Models\Grids\JsonGridFilter.cs" />
     <Compile Include="Models\Grids\JsonGridQuery.cs" />
     <Compile Include="Models\Grids\RouteQuery.cs" />
-    <Compile Include="Navigation\DashboardAction.cs" />
-    <Compile Include="Navigation\HtmlConventionsAction.cs" />
-    <Compile Include="Navigation\INavigationItemAction.cs" />
     <Compile Include="Models\Grids\JsonGridModel.cs" />
     <Compile Include="Models\Grids\JsonGridRow.cs" />
-    <Compile Include="Navigation\INavigationMenuBuilder.cs" />
-    <Compile Include="Navigation\NavigationItemBase.cs" />
-    <Compile Include="Navigation\NavigationMenu.cs" />
-    <Compile Include="Navigation\NavigationMenuBuilder.cs" />
-    <Compile Include="Navigation\NavigationMenuItem.cs" />
-    <Compile Include="Navigation\PackageDiagnosticsAction.cs" />
-    <Compile Include="Navigation\RequestExplorerAction.cs" />
-    <Compile Include="Navigation\RouteExplorerAction.cs" />
     <Compile Include="New\Grids\Classes.cs" />
     <Compile Include="New\RouteExplorerEndpoint.cs" />
     <Compile Include="Notifications\FilterLink.cs" />
@@ -405,7 +393,6 @@
     <Compile Include="Notifications\NoOutputsNotificationPolicy.cs" />
     <Compile Include="Notifications\NotificationAction.cs" />
     <Compile Include="Partials\IPartialDecorator.cs" />
-    <Compile Include="Partials\NavigationMenuDecorator.cs" />
     <Compile Include="Partials\PartialAction.cs" />
   </ItemGroup>
   <ItemGroup />
