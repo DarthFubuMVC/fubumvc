@@ -65,7 +65,6 @@ namespace FubuMVC.Diagnostics
             Services(x =>
             {
                 // Typically you'd do this in your container but we're keeping this IoC-agnostic
-                x.SetServiceIfNone<IHttpRequest, HttpRequest>();
                 x.SetServiceIfNone<IHttpConstraintResolver, HttpConstraintResolver>();
                 x.SetServiceIfNone<IRequestCacheModelBuilder, RequestCacheModelBuilder>();
                 x.SetServiceIfNone<IAuthorizationDescriptor, AuthorizationDescriptor>();

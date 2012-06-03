@@ -304,10 +304,8 @@
     <Compile Include="Core\Grids\RowComparer.cs" />
     <Compile Include="Core\Infrastructure\DiagnosticsDebugCallHandler.cs" />
     <Compile Include="Core\Infrastructure\HttpConstraintResolver.cs" />
-    <Compile Include="Core\Infrastructure\HttpRequest.cs" />
     <Compile Include="Core\Infrastructure\IAuthorizationDescriptor.cs" />
     <Compile Include="Core\Infrastructure\IHttpConstraintResolver.cs" />
-    <Compile Include="Core\Infrastructure\IHttpRequest.cs" />
     <Compile Include="Core\Infrastructure\JsonService.cs" />
     <Compile Include="DiagnosticsExtensions.cs" />
     <Compile Include="DiagnosticsMenu.cs" />
