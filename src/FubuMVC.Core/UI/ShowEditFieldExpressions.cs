@@ -6,8 +6,6 @@ using FubuMVC.Core.View;
 
 namespace FubuMVC.Core.UI
 {
-
-
     public static class ShowEditFieldExpressions
     {
         public static FormLineExpression<T> Show<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression) where T : class

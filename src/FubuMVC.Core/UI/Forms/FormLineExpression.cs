@@ -158,7 +158,7 @@ namespace FubuMVC.Core.UI.Forms
 
             createBodyTag();
 
-            return _layout.ToString();
+            return _layout.Render();
         }
 
         public string ToHtmlString()
