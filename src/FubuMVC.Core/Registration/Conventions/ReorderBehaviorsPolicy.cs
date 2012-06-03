@@ -7,6 +7,7 @@ using System.Linq;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
+    [ConfigurationType(ConfigurationType.Reordering)]
     public class ReorderBehaviorsPolicy : IConfigurationAction
     {
         public Func<BehaviorNode, bool> WhatMustBeBefore { get; set; }

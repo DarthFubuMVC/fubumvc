@@ -5,6 +5,7 @@ using FubuCore;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
+    [Policy]
     public class HtmlTagOutputPolicy : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)

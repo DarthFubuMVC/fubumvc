@@ -5,6 +5,7 @@ using FubuMVC.Core.Resources.Conneg;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
+    [Policy]
     public class DefaultOutputPolicy : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)

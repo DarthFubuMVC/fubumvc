@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using FubuCore;
+using FubuCore.Util;
 using FubuMVC.Core.Ajax;
+using FubuMVC.Core.Assets;
+using FubuMVC.Core.Assets.Caching;
 using FubuMVC.Core.Http;
-using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
@@ -18,27 +21,95 @@ using FubuMVC.Core.UI.Navigation;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Activation;
 using FubuMVC.Core.View.Attachment;
-using System.Linq;
+using FubuCore.Reflection;
 
 namespace FubuMVC.Core
 {
+    [AttributeUsage(AttributeTargets.Class)]
+    public class ConfigurationTypeAttribute : Attribute
+    {
+        private readonly ConfigurationType _configurationType;
+
+        public ConfigurationTypeAttribute(ConfigurationType configurationType)
+        {
+            _configurationType = configurationType;
+        }
+
+        public ConfigurationType ConfigurationType
+        {
+            get { return _configurationType; }
+        }
+    }
+
+    public class PolicyAttribute : ConfigurationTypeAttribute
+    {
+        public PolicyAttribute()
+            : base(ConfigurationType.Policy)
+        {
+        }
+    }
+
+    public class DiscoveryAttribute : ConfigurationTypeAttribute
+    {
+        public DiscoveryAttribute()
+            : base(ConfigurationType.Discovery)
+        {
+        }
+    }
+
+    public enum ConfigurationType
+    {
+        Discovery,
+        Explicit,
+        Policy,
+        Reordering,
+        Navigation,
+        Instrumentation,
+        Services
+    }
+
+
+
     /// <summary>
     ///   Orders and governs the construction of a BehaviorGraph
     /// </summary>
     public class ConfigurationGraph
     {
-        private readonly RouteDefinitionResolver _routeResolver = new RouteDefinitionResolver();
+        private readonly Cache<ConfigurationType, IList<IConfigurationAction>> _configurations 
+            = new Cache<ConfigurationType, IList<IConfigurationAction>>(x=> new List<IConfigurationAction>());
+
         private readonly List<IActionSource> _actionSources = new List<IActionSource>();
-        private readonly IList<IConfigurationAction> _conventions = new List<IConfigurationAction>();
-        private readonly IList<IConfigurationAction> _explicits = new List<IConfigurationAction>();
-        private readonly IList<IConfigurationAction> _policies = new List<IConfigurationAction>();
-        private readonly IList<IServiceRegistry> _serviceRegistrations = new List<IServiceRegistry>();
-        private readonly IList<ReorderBehaviorsPolicy> _reorderRules = new List<ReorderBehaviorsPolicy>();
-        private readonly List<RegistryImport> _imports = new List<RegistryImport>();
-        private readonly TypePool _types = new TypePool(FindTheCallingAssembly());
         private readonly IViewEngineRegistry _engineRegistry = new ViewEngineRegistry();
+        private readonly List<RegistryImport> _imports = new List<RegistryImport>();
+        private readonly RouteDefinitionResolver _routeResolver = new RouteDefinitionResolver();
+        private readonly TypePool _types = new TypePool(FindTheCallingAssembly());
         private readonly ViewAttacher _views = new ViewAttacher();
-        private readonly IList<NavigationRegistry> _navigationRegistries = new List<NavigationRegistry>();
+
+        public ViewAttacher Views
+        {
+            get { return _views; }
+        }
+
+        public TypePool Types
+        {
+            get { return _types; }
+        }
+
+        public RouteDefinitionResolver RouteResolver
+        {
+            get { return _routeResolver; }
+        }
+
+        public void AddConfiguration(IConfigurationAction action, ConfigurationType? defaultType = null)
+        {
+            var type = DetermineConfigurationType(action) ?? defaultType;
+            if (type == null)
+            {
+                throw new ArgumentOutOfRangeException("No ConfigurationType specified and unable to determine what the configuration type for " + action.GetType());
+            }
+
+            _configurations[type.Value].FillAction(action);
+        }
 
         public void Build(BehaviorGraph graph)
         {
@@ -51,10 +122,10 @@ namespace FubuMVC.Core
         {
             var lightweightActions = allConventions()
                 .Union(_imports)
-                .Union(_explicits)
-                .Union(_policies)
+                .Union(_configurations[ConfigurationType.Explicit])
+                .Union(_configurations[ConfigurationType.Policy])
                 .Union(new IConfigurationAction[]{_views})
-                .Union(_reorderRules);
+                .Union(_configurations[ConfigurationType.Reordering]);
 
             var graph = new BehaviorGraph{
                 Views = views
@@ -65,28 +136,28 @@ namespace FubuMVC.Core
             return graph;
         }
 
-        public ViewAttacher Views
-        {
-            get { return _views; }
-        }
-
 
         private IEnumerable<IConfigurationAction> allActions()
         {
             return serviceRegistrations().OfType<IConfigurationAction>()
-                .Union(navigationRegistrations().OfType<IConfigurationAction>())
+                
                 .Union(systemServices())
+                .Union(serviceRegistrations())
                 .Union(allConventions())
                 .Union(_imports)
-                .Union(_explicits)
-                .Union(_policies)
-                .Union(new IConfigurationAction[] { _views })
+                .Union(_configurations[ConfigurationType.Explicit])
+                .Union(_configurations[ConfigurationType.Policy])
+                .Union(new IConfigurationAction[]{_views})
                 .Union(fullGraphPolicies())
-                .Union(_reorderRules);
+                .Union(navigationRegistrations().OfType<IConfigurationAction>())
+                .Union(_configurations[ConfigurationType.Reordering])
+                .Union(_configurations[ConfigurationType.Instrumentation]);
         }
 
         private static IEnumerable<IConfigurationAction> fullGraphPolicies()
         {
+            yield return new AssetContentEndpoint();
+
             yield return new ModifyChainAttributeConvention();
             yield return new ResourcePathRoutePolicy();
             yield return new MissingRouteInputPolicy();
@@ -111,8 +182,6 @@ namespace FubuMVC.Core
                 WhatMustBeBefore = node => node.Category == BehaviorCategory.Authentication,
                 WhatMustBeAfter = node => node.Category == BehaviorCategory.Authorization
             };
-
-
         }
 
         private IEnumerable<IConfigurationAction> allConventions()
@@ -129,7 +198,7 @@ namespace FubuMVC.Core
             yield return new PartialOnlyConvention();
             yield return _routeResolver;
 
-            foreach (var action in _conventions)
+            foreach (var action in _configurations[ConfigurationType.Discovery])
             {
                 yield return action;
             }
@@ -137,6 +206,7 @@ namespace FubuMVC.Core
 
         private static IEnumerable<IConfigurationAction> systemServices()
         {
+            yield return new AssetServicesRegistry();
             yield return new ModelBindingServicesRegistry();
             yield return new SecurityServicesRegistry();
             yield return new HtmlConventionServiceRegistry();
@@ -147,7 +217,7 @@ namespace FubuMVC.Core
             yield return new NavigationServiceRegistry();
         }
 
-        private IEnumerable<IServiceRegistry> serviceRegistrations()
+        private IEnumerable<IConfigurationAction> serviceRegistrations()
         {
             foreach (var import in _imports)
             {
@@ -157,15 +227,15 @@ namespace FubuMVC.Core
                 }
             }
 
-            foreach (var action in _serviceRegistrations)
+            foreach (var action in _configurations[ConfigurationType.Services])
             {
                 yield return action;
             }
         }
 
-        private IEnumerable<NavigationRegistry> navigationRegistrations()
+        private IEnumerable<IConfigurationAction> navigationRegistrations()
         {
-            foreach (var action in _navigationRegistries)
+            foreach (var action in _configurations[ConfigurationType.Navigation])
             {
                 yield return action;
             }
@@ -177,25 +247,13 @@ namespace FubuMVC.Core
                     yield return action;
                 }
             }
-
-
-        }
-
-        public TypePool Types
-        {
-            get { return _types; }
-        }
-
-        public RouteDefinitionResolver RouteResolver
-        {
-            get { return _routeResolver; }
         }
 
         public void AddFacility(IViewFacility facility)
         {
             _engineRegistry.AddFacility(facility);
         }
-        
+
         public void AddImport(RegistryImport import)
         {
             if (HasImported(import.Registry)) return;
@@ -219,48 +277,9 @@ namespace FubuMVC.Core
             return false;
         }
 
-        public void AddServices(IServiceRegistry registry)
-        {
-            _serviceRegistrations.Add(registry);
-        }
-
         public void AddActions(IActionSource source)
         {
             _actionSources.FillAction(source);
-        }
-
-        public void AddConvention(IConfigurationAction convention)
-        {
-            if (convention is NavigationRegistry)
-            {
-                _navigationRegistries.Add((NavigationRegistry) convention);
-            }
-            else
-            {
-                _conventions.FillAction(convention);
-            }
-        }
-
-
-        public void AddPolicy(IConfigurationAction policy)
-        {
-            if (policy is ReorderBehaviorsPolicy)
-            {
-                _reorderRules.Add((ReorderBehaviorsPolicy) policy);
-            }
-            else if (policy is NavigationRegistry)
-            {
-                _navigationRegistries.Add((NavigationRegistry) policy);                
-            }
-            else
-            {
-                _policies.FillAction(policy);
-            }
-        }
-
-        public void AddExplicit(IConfigurationAction explicitAction)
-        {
-            _explicits.Add(explicitAction);
         }
 
         /// <summary>
@@ -288,10 +307,25 @@ namespace FubuMVC.Core
             return callingAssembly;
         }
 
-        public void AddNavigation(NavigationRegistry navigation)
+        public static ConfigurationType? DetermineConfigurationType(IConfigurationAction action)
         {
-            _navigationRegistries.Add(navigation);
+            if (action is ReorderBehaviorsPolicy) return ConfigurationType.Reordering;
+            if (action is NavigationRegistry) return ConfigurationType.Navigation;
+            if (action is ServiceRegistry) return ConfigurationType.Services;
+
+            if (action.GetType().HasAttribute<ConfigurationTypeAttribute>())
+            {
+                return action.GetType().GetAttribute<ConfigurationTypeAttribute>().ConfigurationType;
+            }
+
+            return null;
         }
+    }
+
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+    public class CanBeMultiplesAttribute : Attribute
+    {
+        
     }
 
     public static class ConfigurationActionListExtensions
@@ -299,6 +333,8 @@ namespace FubuMVC.Core
         public static void FillAction<T>(this IList<T> actions, T action)
         {
             var actionType = action.GetType();
+            
+
             if (TypeIsUnique(actionType) && actions.Any(x => x.GetType() == actionType))
             {
                 return;
@@ -309,6 +345,8 @@ namespace FubuMVC.Core
 
         public static bool TypeIsUnique(Type type)
         {
+            if (type.HasAttribute<CanBeMultiplesAttribute>()) return false;
+
             // If it does not have any non-default constructors
             if (type.GetConstructors().Any(x => x.GetParameters().Any()))
             {
@@ -322,8 +360,5 @@ namespace FubuMVC.Core
 
             return true;
         }
-
     }
-
-
 }

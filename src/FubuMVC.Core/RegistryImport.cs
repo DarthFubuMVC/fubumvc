@@ -5,6 +5,7 @@ using FubuMVC.Core.View.Attachment;
 
 namespace FubuMVC.Core
 {
+    [CanBeMultiples]
     public class RegistryImport : IConfigurationAction
     {
         public string Prefix { get; set; }

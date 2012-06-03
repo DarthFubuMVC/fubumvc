@@ -1,29 +1,23 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime.Conditionals;
 
 namespace FubuMVC.Core.View.Attachment
 {
+    [Policy]
     public class ViewAttacher : IConfigurationAction
     {
-        private readonly IList<IViewsForActionFilter> _filters = new List<IViewsForActionFilter>();
         private readonly IList<Func<IViewToken, bool>> _defaultExcludes = new List<Func<IViewToken, bool>>();
+        private readonly IList<IViewsForActionFilter> _filters = new List<IViewsForActionFilter>();
         private readonly IList<IViewProfile> _profiles = new List<IViewProfile>();
 
         public void Configure(BehaviorGraph graph)
         {
-            FindLastActions(graph).Where(x => x.OutputType() != null).Each(action =>
-            {
-                Profiles(graph).Each(x =>
-                {
-                    Attach(x.Profile, x.Views, action);
-                });
-            });
+            FindLastActions(graph).Where(x => x.OutputType() != null).Each(
+                action => { Profiles(graph).Each(x => { Attach(x.Profile, x.Views, action); }); });
         }
 
         public virtual void Attach(IViewProfile viewProfile, ViewBag bag, ActionCall action)
@@ -76,8 +70,8 @@ namespace FubuMVC.Core.View.Attachment
                 }
 
                 Func<IViewToken, bool> defaultFilter = x => !_defaultExcludes.Any(test => test(x));
-                var defaultProfile = new ViewProfile(typeof(Always), defaultFilter, x => x.Name());
-            
+                var defaultProfile = new ViewProfile(typeof (Always), defaultFilter, x => x.Name());
+
                 yield return new ProfileViewBag(defaultProfile, graph);
             }
             else
@@ -85,6 +79,23 @@ namespace FubuMVC.Core.View.Attachment
                 yield return new ProfileViewBag(new DefaultProfile(), graph);
             }
         }
+
+        public IViewProfile AddProfile(Type conditionType, Func<IViewToken, bool> filter,
+                                       Func<IViewToken, string> nameCorrection)
+        {
+            _defaultExcludes.Add(filter);
+            var profile = new ViewProfile(conditionType, filter, nameCorrection);
+            _profiles.Add(profile);
+
+            return profile;
+        }
+
+        public void AddFilter(IViewsForActionFilter filter)
+        {
+            _filters.Add(filter);
+        }
+
+        #region Nested type: ProfileViewBag
 
         public class ProfileViewBag
         {
@@ -98,18 +109,6 @@ namespace FubuMVC.Core.View.Attachment
             public IViewProfile Profile { get; private set; }
         }
 
-        public IViewProfile AddProfile(Type conditionType, Func<IViewToken, bool> filter, Func<IViewToken, string> nameCorrection)
-        {
-            _defaultExcludes.Add(filter);
-            var profile = new ViewProfile(conditionType, filter, nameCorrection);
-            _profiles.Add(profile);
-
-            return profile;
-        }
-
-        public void AddFilter(IViewsForActionFilter filter)
-        {
-            _filters.Add(filter);
-        }
+        #endregion
     }
 }

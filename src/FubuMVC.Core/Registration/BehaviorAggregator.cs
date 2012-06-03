@@ -4,6 +4,7 @@ using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Registration
 {
+    [ConfigurationType(ConfigurationType.Discovery)]
     public class BehaviorAggregator : IConfigurationAction
     {
         private readonly TypePool _types;

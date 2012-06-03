@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
+    [Policy]
     public class AttachOutputPolicy : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)

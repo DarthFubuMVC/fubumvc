@@ -9,6 +9,7 @@ using FubuMVC.Core.Resources.Conneg;
 
 namespace FubuMVC.Core.Registration.DSL
 {
+    [ConfigurationType(ConfigurationType.Explicit)]
     public class ExplicitRouteConfiguration : IConfigurationAction
     {
         private readonly IRouteDefinition _route;

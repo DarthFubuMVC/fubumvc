@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
+    [Policy]
     public class MissingRouteInputPolicy : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)

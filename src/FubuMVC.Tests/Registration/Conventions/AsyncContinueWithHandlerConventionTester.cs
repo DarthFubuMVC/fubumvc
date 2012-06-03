@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using FubuMVC.Core;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -21,6 +22,14 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             graph = new FubuRegistry(x => { x.Actions.IncludeType<TestControllerForAsync>(); }).BuildGraph();
             graph.Behaviors.SelectMany(x => x.Top).Each(x => Debug.WriteLine(x));
+        }
+
+        [Test]
+        public void should_be_a_policy()
+        {
+            ConfigurationGraph.DetermineConfigurationType(new AsyncContinueWithHandlerConvention())
+                .ShouldEqual(ConfigurationType.Policy);
+
         }
 
         [Test]

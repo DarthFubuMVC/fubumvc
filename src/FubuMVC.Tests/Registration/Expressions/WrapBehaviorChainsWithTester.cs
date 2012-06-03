@@ -5,6 +5,7 @@ using System.Web.Routing;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Caching;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
@@ -112,6 +113,9 @@ namespace FubuMVC.Tests.Registration.Expressions
             // The InputBehavior is first
             container.GetAllInstances<IActionBehavior>().Each(x =>
             {
+                // Don't mess with the asset content chain
+                if (x is OutputCachingBehavior) return;
+
                 if (x.GetType().Closes(typeof(InputBehavior<>)))
                 {
                     x.As<BasicBehavior>().InsideBehavior.ShouldBeOfType<FakeUnitOfWorkBehavior>().Inner.ShouldNotBeNull();

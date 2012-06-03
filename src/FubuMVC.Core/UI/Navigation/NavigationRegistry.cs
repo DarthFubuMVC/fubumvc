@@ -5,6 +5,7 @@ using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.UI.Navigation
 {
+    [CanBeMultiples]
     public class NavigationRegistry : IConfigurationAction
     {
         private readonly IList<Action<NavigationGraph>> _modifications = new List<Action<NavigationGraph>>();

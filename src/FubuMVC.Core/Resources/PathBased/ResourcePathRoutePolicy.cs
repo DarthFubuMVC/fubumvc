@@ -5,6 +5,7 @@ using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.Resources.PathBased
 {
+    [Policy]
     public class ResourcePathRoutePolicy : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)

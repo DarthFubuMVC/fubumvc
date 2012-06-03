@@ -43,6 +43,7 @@ namespace FubuMVC.Core.Registration.DSL
     }
 
     // TODO -- let's get some diagnostics on this puppy
+    [Policy]
     public class MediaAttachmentPolicy : IConfigurationAction
     {
         private readonly Func<BehaviorChain, bool> _filter;

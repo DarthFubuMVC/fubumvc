@@ -84,9 +84,6 @@ namespace FubuMVC.Core
                 Import(new DiagnosticsRegistry(), string.Empty);
             }
 
-            // LATER, do this in such a way that it marks the provenance
-            Import<AssetServicesRegistry>();
-
             var graph = new BehaviorGraph();
             _configuration.Build(graph);
 
@@ -168,7 +165,7 @@ namespace FubuMVC.Core
         {
             var registry = new ServiceRegistry();
             configure(registry);
-            _configuration.AddServices(registry);
+            _configuration.AddConfiguration(registry);
         }
 
         /// <summary>
@@ -186,7 +183,7 @@ namespace FubuMVC.Core
         public void ApplyConvention<TConvention>(TConvention convention)
             where TConvention : IConfigurationAction
         {
-            _configuration.AddConvention(convention);
+            _configuration.AddConfiguration(convention, ConfigurationType.Discovery);
         }
 
         /// <summary>
@@ -195,7 +192,7 @@ namespace FubuMVC.Core
         public ExplicitRouteConfiguration.ChainedBehaviorExpression Route(string pattern)
         {
             var expression = new ExplicitRouteConfiguration(pattern);
-            _configuration.AddExplicit(expression);
+            _configuration.AddConfiguration(expression, ConfigurationType.Explicit);
 
             return expression.Chain();
         }
@@ -293,7 +290,7 @@ namespace FubuMVC.Core
         private void addExplicit(Action<BehaviorGraph> action)
         {
             var explicitAction = new LambdaConfigurationAction(action);
-            _configuration.AddExplicit(explicitAction);
+            _configuration.AddConfiguration(explicitAction, ConfigurationType.Explicit);
         }
 
 
@@ -320,7 +317,7 @@ namespace FubuMVC.Core
 
         public void Services<T>() where T : IServiceRegistry, new()
         {
-            _configuration.AddServices(new T());
+            _configuration.AddConfiguration((IConfigurationAction) new T(), ConfigurationType.Services);
         }
 
         /// <summary>
@@ -354,7 +351,7 @@ namespace FubuMVC.Core
 
         public void Navigation<T>() where T : NavigationRegistry, new()
         {
-            _configuration.AddNavigation(new T());
+            _configuration.AddConfiguration(new T());
         }
 
         public void Navigation(Action<NavigationRegistry> configuration)
@@ -362,7 +359,7 @@ namespace FubuMVC.Core
             var registry = new NavigationRegistry();
             configuration(registry);
 
-            _configuration.AddNavigation(registry);
+            _configuration.AddConfiguration(registry);
         }
     }
 }

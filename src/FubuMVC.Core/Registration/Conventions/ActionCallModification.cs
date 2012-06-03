@@ -7,6 +7,7 @@ using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
+    [Policy]
     public class ActionCallModification : IConfigurationAction
     {
         private readonly CompositeFilter<ActionCall> _filters = new CompositeFilter<ActionCall>();

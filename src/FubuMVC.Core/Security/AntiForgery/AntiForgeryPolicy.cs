@@ -2,6 +2,7 @@ using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.Security.AntiForgery
 {
+    [Policy]
     public class AntiForgeryPolicy : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)

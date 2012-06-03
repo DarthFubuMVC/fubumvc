@@ -10,6 +10,7 @@ using FubuMVC.Core.Registration.Routes;
 namespace FubuMVC.Core.Registration.Conventions
 {
     // TODO -- need a way to ignore routes
+    [Policy]
     public class RouteDefinitionResolver : IConfigurationAction
     {
         private readonly UrlPolicy _defaultUrlPolicy;

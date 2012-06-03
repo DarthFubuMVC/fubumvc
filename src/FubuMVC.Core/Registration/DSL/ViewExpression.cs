@@ -46,7 +46,7 @@ namespace FubuMVC.Core.Registration.DSL
         /// <returns></returns>
         public ViewExpression RegisterActionLessViews(Func<IViewToken, bool> viewTokenFilter, Action<BehaviorChain> configureChain)
         {
-            _configuration.AddConvention(new ActionLessViewConvention(viewTokenFilter, configureChain));
+            _configuration.AddConfiguration(new ActionLessViewConvention(viewTokenFilter, configureChain), ConfigurationType.Discovery);
             return this;          
         }
 
@@ -58,7 +58,7 @@ namespace FubuMVC.Core.Registration.DSL
         /// <returns></returns>
 		public ViewExpression RegisterActionLessViews(Func<IViewToken, bool> viewTokenFilter, Action<BehaviorChain, IViewToken> configureChain)
         {
-            _configuration.AddConvention(new ActionLessViewConvention(viewTokenFilter, configureChain));
+            _configuration.AddConfiguration(new ActionLessViewConvention(viewTokenFilter, configureChain), ConfigurationType.Discovery);
             return this;          
         }
 
@@ -139,6 +139,7 @@ namespace FubuMVC.Core.Registration.DSL
         }
     }
 
+    [Policy]
     public class ActionLessViewConvention : IConfigurationAction
     {
         private readonly Func<IViewToken, bool> _viewTokenFilter;

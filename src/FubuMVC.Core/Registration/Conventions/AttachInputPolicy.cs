@@ -3,6 +3,7 @@ using System.Linq;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
+    [Policy]
     public class AttachInputPolicy : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)

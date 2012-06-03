@@ -5,6 +5,7 @@ using FubuMVC.Core.Registration.Routes;
 
 namespace FubuMVC.Core.Registration
 {
+    [Policy]
     public class RouteVisitor : IRouteVisitor, IConfigurationAction
     {
         private readonly CompositeAction<IRouteDefinition, BehaviorChain> _actions =

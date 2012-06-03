@@ -7,6 +7,7 @@ using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
+    [CanBeMultiples]
     public class BehaviorChainPolicy : IConfigurationAction, DescribesItself
     {
         private readonly IList<IChainFilter> _conditions = new List<IChainFilter>();

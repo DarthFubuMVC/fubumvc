@@ -72,6 +72,7 @@
     <Compile Include="Ajax\AjaxError.cs" />
     <Compile Include="ApplicationSettings.cs" />
     <Compile Include="Assets\AssetCombinationBuildingActivator.cs" />
+    <Compile Include="Assets\AssetContentEndpoint.cs" />
     <Compile Include="Assets\AssetFileDataMother.cs" />
     <Compile Include="Assets\AssetGraphScenario.cs" />
     <Compile Include="Assets\AssetServicesRegistry.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Http\AspNet\AspNetCookies.cs" />
     <Compile Include="Http\IClientConnectivity.cs" />
     <Compile Include="Registration\Conventions\DefaultOutputPolicy.cs" />
+    <Compile Include="Registration\Conventions\WrapAction.cs" />
     <Compile Include="Registration\EndpointActionSource.cs" />
     <Compile Include="Runtime\Conditionals\Always.cs" />
     <Compile Include="Behaviors\Conditional\ConditionalBehavior.cs" />

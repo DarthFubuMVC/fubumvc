@@ -5,6 +5,7 @@ using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
+    [Policy]
     public class PartialOnlyConvention : IConfigurationAction
     {
         public const string Partial = "Partial";

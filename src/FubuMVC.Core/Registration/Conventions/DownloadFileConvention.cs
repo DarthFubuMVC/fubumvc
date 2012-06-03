@@ -3,6 +3,7 @@ using FubuMVC.Core.Behaviors;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
+    [Policy]
     public class DownloadFileConvention : ActionCallModification
     {
         public DownloadFileConvention()

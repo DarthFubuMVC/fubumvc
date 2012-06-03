@@ -5,6 +5,7 @@ using FubuMVC.Core.Registration.ObjectGraph;
 
 namespace FubuMVC.Core.Registration
 {
+    [CanBeMultiples]
     public class ServiceRegistry : IServiceRegistry, IConfigurationAction
     {
         private readonly IList<Action<ServiceGraph>> _alterations = new List<Action<ServiceGraph>>();

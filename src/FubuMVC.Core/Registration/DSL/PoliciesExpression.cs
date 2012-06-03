@@ -40,16 +40,21 @@ namespace FubuMVC.Core.Registration.DSL
 
         public IOrderPolicyExpression WrapBehaviorChainsWith<T>() where T : IActionBehavior
         {
-            var configAction = new VisitBehaviorsAction(v =>
-                v.Actions += chain => chain.Prepend(new Wrapper(typeof (T))),
-                "wrap with the {0} behavior".ToFormat(typeof(T).Name));
+            return applyWrapper<T>(chain => true);
+        }
 
-            return applyWrapper<T>(configAction);
+        private IOrderPolicyExpression applyWrapper<T>(Func<BehaviorChain, bool> filter) where T : IActionBehavior
+        {
+            _configuration.AddConfiguration(new WrapAction<T>(filter));
+
+            _lastNodeMatch = ReorderBehaviorsPolicy.FuncForWrapper(typeof(T));
+
+            return this;
         }
 
         private IOrderPolicyExpression applyWrapper<T>(VisitBehaviorsAction configAction)
         {
-            _configuration.AddPolicy(configAction);
+            _configuration.AddConfiguration(configAction, ConfigurationType.Policy);
 
             _lastNodeMatch = ReorderBehaviorsPolicy.FuncForWrapper(typeof(T));
 
@@ -58,21 +63,15 @@ namespace FubuMVC.Core.Registration.DSL
 
         public IOrderPolicyExpression ConditionallyWrapBehaviorChainsWith<T>(Expression<Func<ActionCall, bool>> filter) where T : IActionBehavior
         {
-            var reason = "wrap with the {0} behavior if [{1}]".ToFormat(typeof(T).Name, filter.Body.ToString());
-            var chainFilter = filter.Compile();
-            var configAction = new VisitBehaviorsAction(v => 
-                {
-                    v.Filters += chain => chain.FirstCall() != null && chainFilter(chain.FirstCall());
-                    v.Actions += chain => chain.Prepend(new Wrapper(typeof(T)));
-                }, reason);
-
-            return applyWrapper<T>(configAction);
+            //var reason = "wrap with the {0} behavior if [{1}]".ToFormat(typeof(T).Name, filter.Body.ToString());
+            var actionFilter = filter.Compile();
+            return applyWrapper<T>(chain => chain.Calls.Any(actionFilter));
         }
 
         private void addPolicy(Action<BehaviorGraph> action)
         {
             var policy = new LambdaConfigurationAction(action);
-            _configuration.AddPolicy(policy);
+            _configuration.AddConfiguration(policy, ConfigurationType.Policy);
         }
 
         public IPoliciesExpression EnrichCallsWith<T>(Func<ActionCall, bool> filter) where T : IActionBehavior
@@ -97,7 +96,7 @@ namespace FubuMVC.Core.Registration.DSL
 
         public IPoliciesExpression Add(IConfigurationAction alteration)
         {
-            _configuration.AddPolicy(alteration);
+            _configuration.AddConfiguration(alteration, ConfigurationType.Policy);
             return this;
         }
 
@@ -123,18 +122,6 @@ namespace FubuMVC.Core.Registration.DSL
                 _configuration = configuration;
             }
 
-            // New.
-            //public void MustBeBeforeBehavior<T>() where T : IActionBehavior
-            //{
-            //    var policy = new ReorderBehaviorsPolicy()
-            //    {
-            //        WhatMustBeBefore = _lastNodeMatch
-            //    };
-
-            //    policy.ThisWrapperMustBeAfter<T>();
-            //    _configuration.AddPolicy(policy);
-            //}
-
             public void MustBeBeforeAuthorization()
             {
                 var policy = new ReorderBehaviorsPolicy(){
@@ -142,7 +129,7 @@ namespace FubuMVC.Core.Registration.DSL
                 };
 
                 policy.ThisNodeMustBeAfter<AuthorizationNode>();
-                _configuration.AddPolicy(policy);
+                _configuration.AddConfiguration(policy);
             }
         }
 

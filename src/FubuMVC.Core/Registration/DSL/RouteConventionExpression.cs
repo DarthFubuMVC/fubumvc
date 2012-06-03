@@ -119,7 +119,7 @@ namespace FubuMVC.Core.Registration.DSL
         {
             var alteration = new RouteMethodAlteration<T>(filter);
 
-            _configuration.AddPolicy(alteration);
+            _configuration.AddConfiguration(alteration, ConfigurationType.Policy);
 
             return alteration;
         }
@@ -157,6 +157,7 @@ namespace FubuMVC.Core.Registration.DSL
 
         #region Nested type: RouteMethodAlteration
 
+        [ConfigurationType(ConfigurationType.Explicit)]
         public class RouteMethodAlteration<T> : IConfigurationAction
         {
             private readonly Func<ActionCall, bool> _filter;
