@@ -32,11 +32,6 @@ namespace FubuMVC.Core
         private readonly IList<Type> _importedTypes = new List<Type>();
         private readonly ActionMethodFilter _methodFilter = new ActionMethodFilter();
         private readonly IList<Action<TypePool>> _scanningOperations = new List<Action<TypePool>>();
-
-        private readonly TypePool _types = new TypePool(ConfigurationGraph.FindTheCallingAssembly()){
-            IgnoreExportTypeFailures = false
-		};
-
         private DiagnosticLevel _diagnosticLevel = DiagnosticLevel.None;
         private bool _hasCompiled;
 
