@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Linq;
+using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Diagnostics.Navigation
 {
+    [MarkedForTermination]
     public abstract class NavigationItemBase : INavigationItemAction
     {
         private readonly BehaviorGraph _graph;

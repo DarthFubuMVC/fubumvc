@@ -9,6 +9,7 @@ using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Core.UI.Navigation;
 using FubuMVC.Core.View.Attachment;
 
 namespace FubuMVC.Core
@@ -349,6 +350,19 @@ namespace FubuMVC.Core
             extension.Configure(this);
 
             _importedTypes.Add(typeof (T));
+        }
+
+        public void Navigation<T>() where T : NavigationRegistry, new()
+        {
+            _configuration.AddNavigation(new T());
+        }
+
+        public void Navigation(Action<NavigationRegistry> configuration)
+        {
+            var registry = new NavigationRegistry();
+            configuration(registry);
+
+            _configuration.AddNavigation(registry);
         }
     }
 }

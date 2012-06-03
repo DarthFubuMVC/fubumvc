@@ -38,6 +38,7 @@ namespace FubuMVC.Core
         private readonly TypePool _types = new TypePool(FindTheCallingAssembly());
         private readonly IViewEngineRegistry _engineRegistry = new ViewEngineRegistry();
         private readonly ViewAttacher _views = new ViewAttacher();
+        private readonly IList<NavigationRegistry> _navigationRegistries = new List<NavigationRegistry>();
 
         public void Build(BehaviorGraph graph)
         {
@@ -73,6 +74,7 @@ namespace FubuMVC.Core
         private IEnumerable<IConfigurationAction> allActions()
         {
             return serviceRegistrations().OfType<IConfigurationAction>()
+                .Union(navigationRegistrations().OfType<IConfigurationAction>())
                 .Union(systemServices())
                 .Union(allConventions())
                 .Union(_imports)
@@ -161,6 +163,22 @@ namespace FubuMVC.Core
             }
         }
 
+        private IEnumerable<NavigationRegistry> navigationRegistrations()
+        {
+            foreach (var import in _imports)
+            {
+                foreach (var action in import.Registry.Configuration.navigationRegistrations())
+                {
+                    yield return action;
+                }
+            }
+
+            foreach (var action in _navigationRegistries)
+            {
+                yield return action;
+            }
+        }
+
         public TypePool Types
         {
             get { return _types; }
@@ -211,7 +229,14 @@ namespace FubuMVC.Core
 
         public void AddConvention(IConfigurationAction convention)
         {
-            _conventions.FillAction(convention);
+            if (convention is NavigationRegistry)
+            {
+                _navigationRegistries.Add((NavigationRegistry) convention);
+            }
+            else
+            {
+                _conventions.FillAction(convention);
+            }
         }
 
 
@@ -220,6 +245,10 @@ namespace FubuMVC.Core
             if (policy is ReorderBehaviorsPolicy)
             {
                 _reorderRules.Add((ReorderBehaviorsPolicy) policy);
+            }
+            else if (policy is NavigationRegistry)
+            {
+                _navigationRegistries.Add((NavigationRegistry) policy);                
             }
             else
             {
@@ -255,6 +284,11 @@ namespace FubuMVC.Core
                 }
             }
             return callingAssembly;
+        }
+
+        public void AddNavigation(NavigationRegistry navigation)
+        {
+            _navigationRegistries.Add(navigation);
         }
     }
 

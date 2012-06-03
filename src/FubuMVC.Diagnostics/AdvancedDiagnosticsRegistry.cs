@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
@@ -49,6 +50,8 @@ namespace FubuMVC.Diagnostics
                 .RegisterActionLessViews(token => token.ViewModel.IsDiagnosticsReport())
                 .RegisterActionLessViews(token => typeof (IPartialModel).IsAssignableFrom(token.ViewModel))
                 .RegisterActionLessViews(token => token.ViewModel == typeof(ChromeContent));
+
+            Navigation<DiagnosticsMenu>();
 
             Configure(graph =>
             {

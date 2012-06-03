@@ -1,9 +1,11 @@
-﻿using FubuMVC.Core;
+﻿using FubuCore;
+using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Diagnostics.Features.Packaging;
 
 namespace FubuMVC.Diagnostics.Navigation
 {
+    [MarkedForTermination]
     public class PackageDiagnosticsAction : NavigationItemBase
     {
         public PackageDiagnosticsAction(BehaviorGraph graph, IEndpointService endpointService)

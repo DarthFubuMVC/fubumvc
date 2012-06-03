@@ -1,8 +1,10 @@
 ﻿using System.Linq;
+using FubuCore;
 using FubuMVC.Diagnostics.Navigation;
 
 namespace FubuMVC.Diagnostics.Partials
 {
+    [MarkedForTermination]
     public class NavigationMenuDecorator : IPartialDecorator<NavigationMenu>
     {
         private readonly INavigationMenuBuilder _builder;

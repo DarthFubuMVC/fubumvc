@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿<use namespace="FubuMVC.Diagnostics" />
+
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -17,7 +19,7 @@
 				<a class="brand" href="${this.Urls.UrlFor(new DashboardRequestModel())}">
 					<Image src="fubumvc.png" />
 				</a>
-				!{this.Partial<FubuMVC.Diagnostics.Navigation.NavigationMenu>()}
+				!{this.DiagnosticsMenu()}
 			</div>
 		</div>
 	</div>

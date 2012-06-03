@@ -104,6 +104,8 @@ namespace FubuMVC.Core.Registration
                 AddChain(b);
                 alternation(b);
             });
+
+
         }
 
         void IRegisterable.Register(DiagnosticLevel level, Action<Type, ObjectDef> action)

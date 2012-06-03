@@ -1,5 +1,8 @@
+using FubuCore;
+
 namespace FubuMVC.Diagnostics.Navigation
 {
+    [MarkedForTermination]
     public class NavigationMenuItem
     {
         public string Text { get; set; }

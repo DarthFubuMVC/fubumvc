@@ -1,9 +1,11 @@
-﻿using FubuMVC.Core;
+﻿using FubuCore;
+using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Diagnostics.Features.Routes;
 
 namespace FubuMVC.Diagnostics.Navigation
 {
+    [MarkedForTermination]
     public class RouteExplorerAction : NavigationItemBase
     {
         public RouteExplorerAction(BehaviorGraph graph, IEndpointService endpointService)
