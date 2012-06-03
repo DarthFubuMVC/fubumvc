@@ -359,6 +359,7 @@
     <Compile Include="UI\Navigation\MenuChainTester.cs" />
     <Compile Include="UI\Navigation\MenuNodeTester.cs" />
     <Compile Include="UI\Navigation\NavigationGraphTester.cs" />
+    <Compile Include="UI\Navigation\NavigationRegistry_with_FubuRegistry_integration_testing.cs" />
     <Compile Include="UI\Navigation\NavigationServiceTester.cs" />
     <Compile Include="UI\PartialInvokerTester.cs" />
     <Compile Include="Assets\AssetDslReaderTester.cs" />

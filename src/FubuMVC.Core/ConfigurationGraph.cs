@@ -165,6 +165,11 @@ namespace FubuMVC.Core
 
         private IEnumerable<NavigationRegistry> navigationRegistrations()
         {
+            foreach (var action in _navigationRegistries)
+            {
+                yield return action;
+            }
+
             foreach (var import in _imports)
             {
                 foreach (var action in import.Registry.Configuration.navigationRegistrations())
@@ -173,10 +178,7 @@ namespace FubuMVC.Core
                 }
             }
 
-            foreach (var action in _navigationRegistries)
-            {
-                yield return action;
-            }
+
         }
 
         public TypePool Types
