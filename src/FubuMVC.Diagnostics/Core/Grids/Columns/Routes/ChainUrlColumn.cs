@@ -1,3 +1,4 @@
+using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Urls;
 using FubuMVC.Diagnostics.Features.Chains;
@@ -5,6 +6,7 @@ using FubuMVC.Diagnostics.Models;
 
 namespace FubuMVC.Diagnostics.Core.Grids.Columns.Routes
 {
+    [MarkedForTermination]
 	public class ChainUrlColumn : GridColumnBase<BehaviorChain>
 	{
 		private readonly IUrlRegistry _urls;

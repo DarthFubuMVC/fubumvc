@@ -1,8 +1,10 @@
+using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Diagnostics.Core.Infrastructure;
 
 namespace FubuMVC.Diagnostics.Core.Grids.Columns.Routes
 {
+    [MarkedForTermination]
 	public class ConstraintsColumn : GridColumnBase<BehaviorChain>
 	{
 		private readonly IHttpConstraintResolver _resolver;

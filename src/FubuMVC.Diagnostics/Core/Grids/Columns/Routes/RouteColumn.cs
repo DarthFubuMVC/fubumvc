@@ -1,7 +1,9 @@
+using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Diagnostics.Core.Grids.Columns.Routes
 {
+    [MarkedForTermination]
 	public class RouteColumn : GridColumnBase<BehaviorChain>
 	{
 		public RouteColumn()

@@ -154,7 +154,7 @@
     <None Include="Features\Routes\Routes.spark">
       <SubType>Designer</SubType>
     </None>
-    <None Include="New\Routes.spark" />
+    <None Include="New\Routes\Routes.spark" />
     <None Include="Notifications\NoOutputs.spark">
       <SubType>Designer</SubType>
     </None>
@@ -419,7 +419,7 @@
     <Compile Include="Models\Grids\RouteQuery.cs" />
     <Compile Include="Models\Grids\JsonGridModel.cs" />
     <Compile Include="Models\Grids\JsonGridRow.cs" />
-    <Compile Include="New\RouteExplorerEndpoint.cs" />
+    <Compile Include="New\Routes\RouteExplorerEndpoint.cs" />
     <Compile Include="Notifications\FilterLink.cs" />
     <Compile Include="Notifications\INotificationModel.cs" />
     <Compile Include="Notifications\INotificationPolicy.cs" />

@@ -21,6 +21,7 @@ using FubuMVC.Diagnostics.Features.Requests;
 using FubuMVC.Diagnostics.Models;
 using FubuMVC.Diagnostics.Models.Grids;
 using FubuMVC.Diagnostics.New;
+using FubuMVC.Diagnostics.New.Routes;
 using FubuMVC.Diagnostics.Notifications;
 using FubuMVC.Diagnostics.Partials;
 using FubuMVC.Diagnostics.Runtime;

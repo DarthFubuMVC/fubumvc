@@ -11,6 +11,7 @@ namespace FubuMVC.Diagnostics.SlickGrid
     public class SlickGridFormatter
     {
         public static readonly SlickGridFormatter TypeFormatter = new SlickGridFormatter("Slick.Formatters.DotNetType");
+        public static readonly SlickGridFormatter ActionFormatter = new SlickGridFormatter("Slick.Formatters.ActionCall");
 
         private readonly string _name;
 

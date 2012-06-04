@@ -1,5 +1,5 @@
-﻿<viewdata model="FubuMVC.NewDiagnostics.RouteExplorerModel" />
-<use namespace="FubuMVC.NewDiagnostics.Grids" />
+﻿<viewdata model="FubuMVC.Diagnostics.New.Routes.RouteExplorerModel" />
+<use namespace="FubuMVC.Diagnostics.SlickGrid" />
 <use namespace="System.Linq" />
 <html>
 <head>

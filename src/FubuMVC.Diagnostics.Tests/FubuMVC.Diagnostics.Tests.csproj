@@ -80,6 +80,7 @@
     <Compile Include="Configuration\Policies\DiagnosticsUrlAttributePolicyTester.cs" />
     <Compile Include="Configuration\Policies\DiagnosticsUrlsTester.cs" />
     <Compile Include="DiagnosticsExtensionTester.cs" />
+    <Compile Include="New\Routes\RouteReportTester.cs" />
     <Compile Include="Runtime\ApplyTracingIntegrationTesting.cs" />
     <Compile Include="Runtime\BehaviorTracerNodeTester.cs" />
     <Compile Include="Runtime\BehaviorTracerTester.cs" />

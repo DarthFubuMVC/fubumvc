@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
+using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Diagnostics.Core.Grids.Columns.Routes
 {
+    [MarkedForTermination]
 	public class ActionColumn : GridColumnBase<BehaviorChain>
 	{
 		public ActionColumn()
