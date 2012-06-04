@@ -93,7 +93,9 @@
     <Compile Include="Assets\RecordingAssetRegistration.cs" />
     <Compile Include="Behaviors\AsyncContinueWithBehavior.cs" />
     <Compile Include="Behaviors\AsyncInterceptExceptionBehavior.cs" />
-    <Compile Include="Diagnostics\TracingClasses.cs" />
+    <Compile Include="Diagnostics\ApplyTracing.cs" />
+    <Compile Include="Diagnostics\BehaviorTracerNode.cs" />
+    <Compile Include="Diagnostics\DiagnosticNode.cs" />
     <Compile Include="Endpoints\EndpointDriver.cs" />
     <Compile Include="Endpoints\EndpointFormatting.cs" />
     <Compile Include="Endpoints\EndpointInvocation.cs" />
