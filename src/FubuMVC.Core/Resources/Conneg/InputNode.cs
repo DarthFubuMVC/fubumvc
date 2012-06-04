@@ -32,7 +32,7 @@ namespace FubuMVC.Core.Resources.Conneg
             var readerType = typeof(IReader<>).MakeGenericType(_inputType);
             var enumerableType = typeof(IEnumerable<>).MakeGenericType(readerType);
             var dependency = new ListDependency(enumerableType);
-            dependency.AddRange(Readers.OfType<IContainerModel>().Select(x => x.ToObjectDef(DiagnosticLevel.None)));
+            dependency.AddRange(Readers.OfType<IContainerModel>().Select(x => x.ToObjectDef()));
 
             def.Dependency(dependency);
 

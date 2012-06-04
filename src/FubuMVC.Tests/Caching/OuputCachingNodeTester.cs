@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.Caching
 
         private ObjectDef toObjectDef()
         {
-            return theNode.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None);
+            return theNode.As<IContainerModel>().ToObjectDef();
         }
 
         [Test]

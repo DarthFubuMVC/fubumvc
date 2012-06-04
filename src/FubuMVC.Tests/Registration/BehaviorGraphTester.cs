@@ -41,7 +41,7 @@ namespace FubuMVC.Tests.Registration
             graph.Services.AddService<IRequestData, InMemoryRequestData>();
 
             var implementations = new List<Type>();
-            graph.As<IRegisterable>().Register(DiagnosticLevel.None, (t, def) => { if (t == typeof (IRequestData)) implementations.Add(def.Type); });
+            graph.As<IRegisterable>().Register((t, def) => { if (t == typeof (IRequestData)) implementations.Add(def.Type); });
 
             implementations.ShouldContain(typeof (RequestData));
             implementations.ShouldContain(typeof (InMemoryRequestData));

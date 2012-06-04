@@ -60,7 +60,7 @@ namespace FubuMVC.Tests.StructureMapIoC
             }).BuildGraph();
 
             facility = new StructureMapContainerFacility(container);
-            graph.As<IRegisterable>().Register(DiagnosticLevel.None, facility.Register);
+            graph.As<IRegisterable>().Register(facility.Register);
 
             factory = facility.BuildFactory();
         }

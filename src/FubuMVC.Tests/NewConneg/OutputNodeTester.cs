@@ -165,7 +165,7 @@ namespace FubuMVC.Tests.NewConneg
 
             var viewNode = node.AddView(viewToken, typeof(FakeConditional));
 
-            viewNode.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None)
+            viewNode.As<IContainerModel>().ToObjectDef()
                 .FindDependencyDefinitionFor<IConditional>()
                 .Type
                 .ShouldEqual(typeof (FakeConditional));

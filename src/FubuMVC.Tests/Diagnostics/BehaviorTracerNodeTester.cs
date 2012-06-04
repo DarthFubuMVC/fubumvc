@@ -43,7 +43,7 @@ namespace FubuMVC.Tests.Diagnostics
         [Test]
         public void build_the_object_def()
         {
-            var objectDef = theNode.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None);
+            var objectDef = theNode.As<IContainerModel>().ToObjectDef();
             objectDef.Type.ShouldEqual(typeof (BehaviorTracer));
             var correlation = objectDef.FindDependencyValueFor<BehaviorCorrelation>();
 

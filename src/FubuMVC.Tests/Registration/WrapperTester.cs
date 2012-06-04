@@ -38,7 +38,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void build_an_object_def_for_the_type()
         {
-            var def = _wrapper.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None);
+            var def = _wrapper.As<IContainerModel>().ToObjectDef();
             def.Dependencies.Count().ShouldEqual(0);
 
             def.Type.ShouldEqual(typeof (NulloBehavior));
@@ -54,7 +54,7 @@ namespace FubuMVC.Tests.Registration
         public void put_a_dependency_into_the_object_def_for_the_inner_behavior()
         {
             _wrapper.AddAfter(Wrapper.For<FakeBehavior>());
-            var def = _wrapper.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None);
+            var def = _wrapper.As<IContainerModel>().ToObjectDef();
 
             def.Dependencies.Count().ShouldEqual(1);
 
@@ -66,7 +66,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void the_object_def_name_is_copied_from_the_unique_id_of_the_wrapper()
         {
-            _wrapper.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None).Name.ShouldEqual(
+            _wrapper.As<IContainerModel>().ToObjectDef().Name.ShouldEqual(
                 _wrapper.UniqueId.ToString());
         }
     }

@@ -41,7 +41,7 @@ namespace FubuMVC.Tests.Security
         private AuthorizationBehavior toBehavior(AuthorizationNode node)
         {
             var container = StructureMapContainerFacility.GetBasicFubuContainer();
-            return container.GetInstance<AuthorizationBehavior>(new ObjectDefInstance(node.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None)));
+            return container.GetInstance<AuthorizationBehavior>(new ObjectDefInstance(node.As<IContainerModel>().ToObjectDef()));
         }
 
         [Test]
@@ -148,7 +148,7 @@ namespace FubuMVC.Tests.Security
         [Test]
         public void the_name_should_be_the_behavior_id_from_the_parent_chain()
         {
-            endpointObjectDef.Name.ShouldEqual(chain.Top.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None).Name);
+            endpointObjectDef.Name.ShouldEqual(chain.Top.As<IContainerModel>().ToObjectDef().Name);
         }
 
         [Test]

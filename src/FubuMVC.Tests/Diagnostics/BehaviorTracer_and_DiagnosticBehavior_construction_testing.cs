@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.Diagnostics
 
         private ObjectDef toObjectDef(DiagnosticLevel level)
         {
-            return theChain.As<IContainerModel>().ToObjectDef(level);
+            return theChain.As<IContainerModel>().ToObjectDef();
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace FubuMVC.Tests.Diagnostics
             
             
 
-            var objectDef = chain.As<IContainerModel>().ToObjectDef(DiagnosticLevel.FullRequestTracing).FindDependencyDefinitionFor<IActionBehavior>();
+            var objectDef = chain.As<IContainerModel>().ToObjectDef().FindDependencyDefinitionFor<IActionBehavior>();
 
             objectDef.Type.ShouldEqual(typeof(BehaviorTracer));
             var child1 = objectDef.FindDependencyDefinitionFor<IActionBehavior>();
@@ -84,7 +84,7 @@ namespace FubuMVC.Tests.Diagnostics
         public void creating_an_object_def_for_full_tracing_should_wrap_with_a_behavior_tracer()
         {
             var node = new Wrapper(typeof(SimpleBehavior));
-            var objectDef = new BehaviorTracerNode(node).As<IContainerModel>().ToObjectDef(DiagnosticLevel.FullRequestTracing);
+            var objectDef = new BehaviorTracerNode(node).As<IContainerModel>().ToObjectDef();
 
             objectDef.Type.ShouldEqual(typeof(BehaviorTracer));
             objectDef.DependencyFor<IActionBehavior>().As<ConfiguredDependency>()

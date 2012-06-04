@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.NewConneg
         public void build_object_def()
         {
             var node = new ReadWithFormatter(typeof (Address), typeof (SomeFormatter));
-            node.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None)
+            node.As<IContainerModel>().ToObjectDef()
                 .Type.ShouldEqual(typeof (FormatterReader<Address, SomeFormatter>));
         }
 

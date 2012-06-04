@@ -40,7 +40,7 @@ namespace FubuMVC.Tests.View.New
                 .Return(viewFactoryDef);
 
              ClassUnderTest.As<IContainerModel>()
-                .ToObjectDef(DiagnosticLevel.None)
+                .ToObjectDef()
                 .FindDependencyDefinitionFor<IMediaWriter<SomeResource>>()
                 .FindDependencyDefinitionFor<IViewFactory>()
                 .ShouldBeTheSameAs(viewFactoryDef);

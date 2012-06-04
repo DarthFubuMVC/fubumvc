@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.Registration.Nodes
         [Test]
         public void with_no_explicit_action_dependencies()
         {
-            var def = theCall.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None);
+            var def = theCall.As<IContainerModel>().ToObjectDef();
         
         
             def.FindDependencyDefinitionFor(typeof(Handler)).ShouldBeNull();
@@ -33,7 +33,7 @@ namespace FubuMVC.Tests.Registration.Nodes
         {
             theCall.HandlerDef.DependencyByType<IService, Service2>();
 
-            var def = theCall.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None);
+            var def = theCall.As<IContainerModel>().ToObjectDef();
             def.FindDependencyDefinitionFor(typeof (Handler))
                 .FindDependencyDefinitionFor(typeof (IService)).Type.ShouldEqual(typeof (Service2));
         }
@@ -44,7 +44,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             var theData = new Data();
             theCall.HandlerDef.DependencyByValue(theData);
 
-            var def = theCall.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None);
+            var def = theCall.As<IContainerModel>().ToObjectDef();
             def.FindDependencyDefinitionFor(typeof (Handler))
                 .Dependencies.Single(x => x.DependencyType == typeof (Data))
                 .ShouldBeOfType<ValueDependency>()

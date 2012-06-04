@@ -17,7 +17,7 @@ namespace FubuMVC.Tests.NewConneg
         public void build_the_object_def()
         {
             var node = new WriteHtml(typeof (HtmlTag));
-            node.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None)
+            node.As<IContainerModel>().ToObjectDef()
                 .FindDependencyDefinitionFor<IMediaWriter<HtmlTag>>()
                 .Type.ShouldEqual(typeof (HtmlStringWriter<HtmlTag>));
         }

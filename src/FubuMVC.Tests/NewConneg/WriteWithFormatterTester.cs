@@ -30,7 +30,7 @@ namespace FubuMVC.Tests.NewConneg
         public void build_object_def()
         {
             var node = new WriteWithFormatter(typeof (Address), typeof (SomeFormatter));
-            var objectDef = node.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None);
+            var objectDef = node.As<IContainerModel>().ToObjectDef();
             objectDef.FindDependencyDefinitionFor<IMediaWriter<Address>>()
                 .Type.ShouldEqual(typeof (FormatterWriter<Address, SomeFormatter>));
         }

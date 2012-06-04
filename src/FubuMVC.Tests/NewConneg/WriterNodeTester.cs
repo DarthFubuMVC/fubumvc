@@ -24,7 +24,7 @@ namespace FubuMVC.Tests.NewConneg
         public void SetUp()
         {
             theNode = new FakeWriterNode();
-            _def = new Lazy<ObjectDef>(() => theNode.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None));
+            _def = new Lazy<ObjectDef>(() => theNode.As<IContainerModel>().ToObjectDef());
         }
 
         private ObjectDef theResultingObjectDef

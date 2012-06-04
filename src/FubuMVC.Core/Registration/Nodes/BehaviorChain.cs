@@ -144,14 +144,14 @@ namespace FubuMVC.Core.Registration.Nodes
             get { return IsPartialOnly || Route == null ? 0 : Route.Rank; }
         }
 
-        ObjectDef IContainerModel.ToObjectDef(DiagnosticLevel diagnosticLevel)
+        ObjectDef IContainerModel.ToObjectDef()
         {
-            return buildObjectDef(diagnosticLevel);
+            return buildObjectDef();
         }
 
-        void IRegisterable.Register(DiagnosticLevel diagnosticLevel, Action<Type, ObjectDef> callback)
+        void IRegisterable.Register(Action<Type, ObjectDef> callback)
         {
-            var objectDef = buildObjectDef(diagnosticLevel);
+            var objectDef = buildObjectDef();
 
 
             callback(typeof (IActionBehavior), objectDef);
@@ -223,9 +223,9 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
 
-        protected ObjectDef buildObjectDef(DiagnosticLevel diagnosticLevel)
+        protected ObjectDef buildObjectDef()
         {
-            return Top.As<IContainerModel>().ToObjectDef(diagnosticLevel);
+            return Top.As<IContainerModel>().ToObjectDef();
         }
 
         /// <summary>

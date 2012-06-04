@@ -47,7 +47,7 @@ namespace FubuMVC.Core.Resources.Conneg
             var mediaType = typeof (IMedia<>).MakeGenericType(_resourceType);
             var enumerableType = typeof (IEnumerable<>).MakeGenericType(mediaType);
             var dependency = new ListDependency(enumerableType);
-            dependency.AddRange(Writers.OfType<IContainerModel>().Select(x => x.ToObjectDef(DiagnosticLevel.None)));
+            dependency.AddRange(Writers.OfType<IContainerModel>().Select(x => x.ToObjectDef()));
 
             def.Dependency(dependency);
 

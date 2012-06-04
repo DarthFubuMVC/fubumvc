@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.NewConneg
         public void create_object_def()
         {
             var writer = new Writer(typeof(SpecificWriter));
-            writer.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None)
+            writer.As<IContainerModel>().ToObjectDef()
                 .FindDependencyDefinitionFor<IMediaWriter<OutputTarget>>()
                 .Type.ShouldEqual(typeof (SpecificWriter));
         }
@@ -54,7 +54,7 @@ namespace FubuMVC.Tests.NewConneg
         {
             var writer = new Writer(typeof(GenericWriter<>), typeof(OutputTarget));
 
-            writer.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None)
+            writer.As<IContainerModel>().ToObjectDef()
                 .FindDependencyDefinitionFor<IMediaWriter<OutputTarget>>()
                 .Type.ShouldEqual(typeof(GenericWriter<OutputTarget>));
         }

@@ -28,7 +28,7 @@ namespace FubuMVC.Core.Resources.Conneg
             }
         }
 
-        ObjectDef IContainerModel.ToObjectDef(DiagnosticLevel diagnosticLevel)
+        ObjectDef IContainerModel.ToObjectDef()
         {
             var def = new ObjectDef(typeof (Media<>), ResourceType);
             def.DependencyByType<IConditional>(_conditionalDef);

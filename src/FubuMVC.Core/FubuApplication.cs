@@ -177,7 +177,7 @@ namespace FubuMVC.Core
 
         private void bakeBehaviorGraphIntoContainer(BehaviorGraph graph, IContainerFacility containerFacility)
         {
-            graph.As<IRegisterable>().Register(_registry.Value.DiagnosticLevel, containerFacility.Register);
+            graph.As<IRegisterable>().Register(containerFacility.Register);
 
             // Important to register itself
             containerFacility.Register(typeof (IContainerFacility), ObjectDef.ForValue(containerFacility));

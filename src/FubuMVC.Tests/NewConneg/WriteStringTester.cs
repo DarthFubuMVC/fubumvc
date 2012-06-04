@@ -16,7 +16,7 @@ namespace FubuMVC.Tests.NewConneg
         public void to_object_def_builds_a_string_writer()
         {
             new WriteString().As<IContainerModel>()
-                .ToObjectDef(DiagnosticLevel.None)
+                .ToObjectDef()
                 .FindDependencyDefinitionFor<IMediaWriter<string>>()
                 .Type
                 .ShouldEqual(typeof (StringWriter));

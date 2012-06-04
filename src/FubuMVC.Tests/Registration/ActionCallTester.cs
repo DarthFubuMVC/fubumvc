@@ -91,7 +91,7 @@ namespace FubuMVC.Tests.Registration
         {
             action.Next.ShouldBeNull();
 
-            var objectDef = action.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None);
+            var objectDef = action.As<IContainerModel>().ToObjectDef();
             objectDef.Dependencies.Select(x => x as ConfiguredDependency).Count().ShouldEqual(1);
         }
 
@@ -154,7 +154,7 @@ namespace FubuMVC.Tests.Registration
         {
             action = ActionCall.For<ControllerTarget>(x => x.ZeroInZeroOut());
             Exception<FubuException>.ShouldBeThrownBy(
-                () => action.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None))
+                () => action.As<IContainerModel>().ToObjectDef())
                 .ErrorCode.ShouldEqual(1005);
         }
 
@@ -163,7 +163,7 @@ namespace FubuMVC.Tests.Registration
         {
             action = ActionCall.For<ControllerTarget>(x => x.ZeroInTaskNoResultOut());
             Exception<FubuException>.ShouldBeThrownBy(
-                () => action.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None))
+                () => action.As<IContainerModel>().ToObjectDef())
                 .ErrorCode.ShouldEqual(1005);
         }
     }
@@ -332,7 +332,7 @@ namespace FubuMVC.Tests.Registration
         {
             definition = new ActionCall(typeof (ControllerTarget), method);
 
-            theObjectDef = definition.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None);
+            theObjectDef = definition.As<IContainerModel>().ToObjectDef();
         }
     }
 

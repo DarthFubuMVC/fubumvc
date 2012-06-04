@@ -10,7 +10,7 @@ namespace FubuMVC.Core.Resources.Conneg
         public abstract Type InputType { get; }
         public abstract IEnumerable<string> Mimetypes { get; }
 
-        ObjectDef IContainerModel.ToObjectDef(DiagnosticLevel diagnosticLevel)
+        ObjectDef IContainerModel.ToObjectDef()
         {
             var objectDef = toReaderDef();
 

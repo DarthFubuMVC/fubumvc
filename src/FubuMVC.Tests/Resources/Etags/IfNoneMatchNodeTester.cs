@@ -17,7 +17,7 @@ namespace FubuMVC.Tests.Resources.Etags
         public void can_build_the_object_def()
         {
             var node = new IfNoneMatchNode(typeof (AssetPath));
-            var objectDef = node.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None);
+            var objectDef = node.As<IContainerModel>().ToObjectDef();
 
             objectDef.Type.ShouldEqual(
                 typeof (OneInOneOutActionInvoker<ETagHandler<AssetPath>, ETaggedRequest, FubuContinuation>));

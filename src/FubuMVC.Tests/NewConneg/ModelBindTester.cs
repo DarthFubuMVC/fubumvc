@@ -32,7 +32,7 @@ namespace FubuMVC.Tests.NewConneg
         public void build_object_def()
         {
             new ModelBind(typeof (Address))
-                .As<IContainerModel>().ToObjectDef(DiagnosticLevel.None)
+                .As<IContainerModel>().ToObjectDef()
                 .Type
                 .ShouldEqual(typeof (ModelBindingReader<Address>));
         }

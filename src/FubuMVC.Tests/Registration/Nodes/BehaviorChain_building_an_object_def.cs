@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.Registration.Nodes
 
         private ObjectDef toObjectDef(DiagnosticLevel level)
         {
-            return theChain.As<IContainerModel>().ToObjectDef(level); 
+            return theChain.As<IContainerModel>().ToObjectDef(); 
         }
 
         [Test]

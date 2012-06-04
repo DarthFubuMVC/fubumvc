@@ -27,16 +27,15 @@ namespace FubuMVC.Core.Registration.Nodes
             }
         }
 
-        ObjectDef IContainerModel.ToObjectDef(DiagnosticLevel diagnosticLevel)
+        ObjectDef IContainerModel.ToObjectDef()
         {
-            var objectDef = toObjectDef(diagnosticLevel);
+            var objectDef = toObjectDef();
             objectDef.Name = UniqueId.ToString();
 
             return objectDef;
         }
 
-        [MarkedForTermination("Get rid of diagnostic level")]
-        protected ObjectDef toObjectDef(DiagnosticLevel diagnosticLevel)
+        protected ObjectDef toObjectDef()
         {
             var objectDef = buildObjectDef();
 
@@ -47,15 +46,15 @@ namespace FubuMVC.Core.Registration.Nodes
 
             if (Next != null)
             {
-                attachNextBehavior(objectDef, diagnosticLevel);
+                attachNextBehavior(objectDef);
             }
 
             return objectDef;
         }
 
-        private void attachNextBehavior(ObjectDef objectDef, DiagnosticLevel diagnosticLevel)
+        private void attachNextBehavior(ObjectDef objectDef)
         {
-            var nextObjectDef = Next.As<IContainerModel>().ToObjectDef(diagnosticLevel);
+            var nextObjectDef = Next.As<IContainerModel>().ToObjectDef();
             objectDef.DependencyByType<IActionBehavior>(nextObjectDef);
         }
 

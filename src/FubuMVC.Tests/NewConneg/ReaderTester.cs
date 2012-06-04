@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.NewConneg
         public void create_object_def()
         {
             var reader = new Reader(typeof(SpecificReader));
-            reader.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None)
+            reader.As<IContainerModel>().ToObjectDef()
                           .Type.ShouldEqual(typeof(SpecificReader));
         }
 
@@ -52,7 +52,7 @@ namespace FubuMVC.Tests.NewConneg
         {
             var reader = new Reader(typeof(GenericReader<>), typeof(InputTarget));
 
-            reader.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None)
+            reader.As<IContainerModel>().ToObjectDef()
                           .Type
                           .ShouldEqual(typeof(GenericReader<InputTarget>));
         }

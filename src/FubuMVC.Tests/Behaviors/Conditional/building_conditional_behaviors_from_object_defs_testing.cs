@@ -48,7 +48,7 @@ namespace FubuMVC.Tests.Behaviors.Conditional
 
         private IActionBehavior behavior(DiagnosticLevel level)
         {
-            var objectDef = theNode.As<IContainerModel>().ToObjectDef(level);
+            var objectDef = theNode.As<IContainerModel>().ToObjectDef();
             var instance = new ObjectDefInstance(objectDef);
 
             return theContainer.GetInstance<IActionBehavior>(instance);

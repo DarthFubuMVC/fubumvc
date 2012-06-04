@@ -383,7 +383,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             var container = new Container();
             var facility = new StructureMapContainerFacility(container);
 
-            chain.As<IRegisterable>().Register(DiagnosticLevel.None, facility.Register);
+            chain.As<IRegisterable>().Register(facility.Register);
 
             facility.BuildFactory();
 
@@ -405,7 +405,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             var container = new Container();
             var facility = new StructureMapContainerFacility(container);
 
-            chain.As<IRegisterable>().Register(DiagnosticLevel.None, facility.Register);
+            chain.As<IRegisterable>().Register(facility.Register);
 
             facility.BuildFactory();
 

@@ -41,7 +41,7 @@ namespace FubuMVC.Tests.NewConneg
                 x.For<IStreamingData>().Use(MockRepository.GenerateMock<IStreamingData>());
             });
 
-            var objectDef = node.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None);
+            var objectDef = node.As<IContainerModel>().ToObjectDef();
             var instance = new ObjectDefInstance(objectDef);
 
             theInputBehavior = container.GetInstance<OutputBehavior<Address>>(instance);
