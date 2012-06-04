@@ -81,7 +81,8 @@ namespace FubuMVC.Core
 
             if (_diagnosticLevel == DiagnosticLevel.FullRequestTracing)
             {
-                Import(new DiagnosticsRegistry(), string.Empty);
+                Import<DiagnosticsSubSystem>();
+                Policies.Add<ApplyTracing>();
             }
 
             var graph = new BehaviorGraph();
@@ -249,8 +250,6 @@ namespace FubuMVC.Core
         /// <param name = "configure"></param>
         public void IncludeDiagnostics(Action<IDiagnosticsConfigurationExpression> configure)
         {
-            Policies.Add<ApplyTracing>();
-
             _diagnosticLevel = DiagnosticLevel.FullRequestTracing;
 
             var filters = new List<IRequestHistoryCacheFilter>();

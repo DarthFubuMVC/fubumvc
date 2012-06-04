@@ -13,12 +13,12 @@ using FubuMVC.Core.UI.Security;
 
 namespace FubuMVC.Core.Diagnostics
 {
-    public class DiagnosticsRegistry : FubuRegistry
+    public class DiagnosticsSubSystem : FubuPackageRegistry
     {
-        public DiagnosticsRegistry()
+        public DiagnosticsSubSystem()
         {
             Applies
-                .ToAssemblyContainingType<DiagnosticsRegistry>();
+                .ToAssemblyContainingType<DiagnosticsSubSystem>();
 
             Actions
                 .IncludeTypes(x => x.HasAttribute<FubuDiagnosticsAttribute>())

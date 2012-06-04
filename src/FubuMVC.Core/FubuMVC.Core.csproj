@@ -378,7 +378,7 @@
     <Compile Include="Diagnostics\DebugDetector.cs" />
     <Compile Include="Diagnostics\DebugReport.cs" />
     <Compile Include="Diagnostics\Tracing\DiagnosticBehavior.cs" />
-    <Compile Include="Diagnostics\DiagnosticsRegistry.cs" />
+    <Compile Include="Diagnostics\DiagnosticsSubSystem.cs" />
     <Compile Include="Diagnostics\Tracing\DiagnosticUrlPolicy.cs" />
     <Compile Include="Diagnostics\ExceptionReport.cs" />
     <Compile Include="Diagnostics\FileOutputReport.cs" />

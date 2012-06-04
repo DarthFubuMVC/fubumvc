@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.Diagnostics
         [SetUp]
         public void SetUp()
         {
-            graph = new DiagnosticsRegistry().BuildGraph();
+            graph = new DiagnosticsSubSystem().BuildGraph();
             urls = MockRepository.GenerateMock<IUrlRegistry>();
 
             graph.Behaviors.Any().ShouldBeTrue();
