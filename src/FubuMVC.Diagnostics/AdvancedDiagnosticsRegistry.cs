@@ -20,6 +20,7 @@ using FubuMVC.Diagnostics.Features.Html.Preview.Decorators;
 using FubuMVC.Diagnostics.Features.Requests;
 using FubuMVC.Diagnostics.Models;
 using FubuMVC.Diagnostics.Models.Grids;
+using FubuMVC.Diagnostics.New;
 using FubuMVC.Diagnostics.Notifications;
 using FubuMVC.Diagnostics.Partials;
 using FubuMVC.Diagnostics.Runtime;
@@ -43,6 +44,7 @@ namespace FubuMVC.Diagnostics
 
             Actions
                 .IncludeTypesNamed(x => x.EndsWith("Endpoint"))
+                .IncludeType<RouteExplorerEndpoint>()
                 .IncludeType<BasicAssetDiagnostics>();
 
 

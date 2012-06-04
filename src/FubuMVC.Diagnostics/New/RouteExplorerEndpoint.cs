@@ -1,4 +1,4 @@
-namespace FubuMVC.NewDiagnostics
+namespace FubuMVC.Diagnostics.New
 {
     public class RouteExplorerModel
     {
@@ -7,7 +7,7 @@ namespace FubuMVC.NewDiagnostics
 
     public class RouteExplorerEndpoint
     {
-        public RouteExplorerModel get_routes()
+        public RouteExplorerModel get_routes_new()
         {
             return new RouteExplorerModel();
         } 

@@ -124,6 +124,11 @@
     <Compile Include="ObjectMother.cs" />
     <Compile Include="Partials\when_executing_a_partial_action.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SlickGrid\ColumnDefinitionTester.cs" />
+    <Compile Include="SlickGrid\GridDefinitionTester.cs" />
+    <Compile Include="SlickGrid\JsonValueWriterTester.cs" />
+    <Compile Include="SlickGrid\GridRunnerTester.cs" />
+    <Compile Include="SlickGrid\StringBuilderJsonExtensionsTester.cs" />
     <Compile Include="when_applying_diagnostics_from_FubuApplication.cs" />
   </ItemGroup>
   <ItemGroup>

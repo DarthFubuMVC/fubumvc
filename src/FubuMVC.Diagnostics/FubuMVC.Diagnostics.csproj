@@ -419,7 +419,6 @@
     <Compile Include="Models\Grids\RouteQuery.cs" />
     <Compile Include="Models\Grids\JsonGridModel.cs" />
     <Compile Include="Models\Grids\JsonGridRow.cs" />
-    <Compile Include="New\Grids\Classes.cs" />
     <Compile Include="New\RouteExplorerEndpoint.cs" />
     <Compile Include="Notifications\FilterLink.cs" />
     <Compile Include="Notifications\INotificationModel.cs" />
@@ -429,6 +428,16 @@
     <Compile Include="Notifications\NotificationAction.cs" />
     <Compile Include="Partials\IPartialDecorator.cs" />
     <Compile Include="Partials\PartialAction.cs" />
+    <Compile Include="SlickGrid\ColumnDefinition.cs" />
+    <Compile Include="SlickGrid\DiagnosticConstants.cs" />
+    <Compile Include="SlickGrid\GridDefinition.cs" />
+    <Compile Include="SlickGrid\GridFubuPageExtensions.cs" />
+    <Compile Include="SlickGrid\GridRunner.cs" />
+    <Compile Include="SlickGrid\IGridColumn.cs" />
+    <Compile Include="SlickGrid\IGridDataSource.cs" />
+    <Compile Include="SlickGrid\IGridDefinition.cs" />
+    <Compile Include="SlickGrid\JsonValueWriter.cs" />
+    <Compile Include="SlickGrid\StringBuilderExtensions.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

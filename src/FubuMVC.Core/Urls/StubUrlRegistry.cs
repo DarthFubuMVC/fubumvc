@@ -78,6 +78,11 @@ namespace FubuMVC.Core.Urls
                 return "url for {0}.{1}()/{2}".ToFormat(handlerType.FullName, method.Name, categoryOrHttpMethodOrHttpMethod);
             }
 
+            if (method == null)
+            {
+                return "url for " + handlerType.Name;
+            }
+
             return "url for {0}.{1}()".ToFormat(handlerType.FullName, method.Name);
         }
 
