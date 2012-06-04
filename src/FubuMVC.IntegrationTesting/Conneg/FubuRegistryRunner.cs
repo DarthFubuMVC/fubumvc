@@ -6,11 +6,11 @@ using System.Xml;
 using FubuCore;
 using FubuKayak;
 using FubuMVC.Core;
-using FubuMVC.Core.Diagnostics.Querying;
 using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
+using FubuMVC.IntegrationTesting.Querying;
 using FubuMVC.OwinHost;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
@@ -125,6 +125,8 @@ namespace FubuMVC.IntegrationTesting.Conneg
             {
                 var registry = new FubuRegistry();
                 registry.IncludeDiagnostics(true);
+                registry.Actions.IncludeType<GraphQuery>();
+
                 _configuration(registry);
 
                 return registry;

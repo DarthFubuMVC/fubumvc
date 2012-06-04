@@ -1,6 +1,6 @@
-﻿using System.Reflection;
+using System.Reflection;
 
-namespace FubuMVC.Core.Diagnostics.Querying
+namespace FubuMVC.IntegrationTesting.Querying
 {
     public class AssemblyToken
     {

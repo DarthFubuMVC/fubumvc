@@ -1,11 +1,10 @@
-using System;
 using System.Diagnostics;
 using System.Net;
 using System.Text;
+using FubuMVC.Core;
 using HtmlTags;
-using FubuCore;
 
-namespace FubuMVC.Core.Diagnostics.Querying
+namespace FubuMVC.IntegrationTesting.Querying
 {
     public class RemoteBehaviorGraph
     {

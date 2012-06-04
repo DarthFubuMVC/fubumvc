@@ -98,6 +98,13 @@
     <Compile Include="Packaging\attaching_a_bottle_via_zip_file.cs" />
     <Compile Include="Packaging\unlinking_a_bottle_from_the_command_line.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Querying\ActionToken.cs" />
+    <Compile Include="Querying\AssemblyToken.cs" />
+    <Compile Include="Querying\EndpointModel.cs" />
+    <Compile Include="Querying\EndpointToken.cs" />
+    <Compile Include="Querying\GraphQuery.cs" />
+    <Compile Include="Querying\RemoteBehaviorGraph.cs" />
+    <Compile Include="Querying\TypeToken.cs" />
     <Compile Include="ScriptsHandler.cs" />
     <Compile Include="ViewAttachment\ProfiledAttachmentTester.cs" />
     <Compile Include="ViewEngines\Razor\HelloRazor\HelloRazorController.cs" />

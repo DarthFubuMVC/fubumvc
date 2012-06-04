@@ -1,8 +1,8 @@
-﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FubuMVC.Core;
 
-namespace FubuMVC.Core.Diagnostics.Querying
+namespace FubuMVC.IntegrationTesting.Querying
 {
     public class EndpointModel : JsonMessage
     {

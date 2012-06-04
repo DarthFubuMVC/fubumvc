@@ -1,11 +1,10 @@
 using System.Linq;
-using FubuMVC.Core.Assets;
+using FubuMVC.Core;
 using FubuMVC.Core.Assets.Files;
-using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Urls;
 
-namespace FubuMVC.Core.Diagnostics.Querying
+namespace FubuMVC.IntegrationTesting.Querying
 {
     public class GraphQuery
     {

@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace FubuMVC.Core.Diagnostics.Querying
+namespace FubuMVC.IntegrationTesting.Querying
 {
     public class TypeToken
     {
