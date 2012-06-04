@@ -34,11 +34,6 @@ namespace FubuMVC.Core
         private readonly ActionMethodFilter _methodFilter = new ActionMethodFilter();
         private readonly IList<Action<TypePool>> _scanningOperations = new List<Action<TypePool>>();
 
-        private readonly TypePool _types = new TypePool(ConfigurationGraph.FindTheCallingAssembly()){
-            IgnoreExportTypeFailures = false
-		};
-
-        private DiagnosticLevel _diagnosticLevel = DiagnosticLevel.None;
         private bool _hasCompiled;
 
         public FubuRegistry()
@@ -78,12 +73,6 @@ namespace FubuMVC.Core
         public BehaviorGraph BuildGraph()
         {
             Compile();
-
-            if (_diagnosticLevel == DiagnosticLevel.FullRequestTracing)
-            {
-                Import<DiagnosticsSubSystem>();
-                Policies.Add<ApplyTracing>();
-            }
 
             var graph = new BehaviorGraph();
             _configuration.Build(graph);
@@ -228,15 +217,11 @@ namespace FubuMVC.Core
         // TODO -- mark [Obsolete]
         public void IncludeDiagnostics(bool shouldInclude)
         {
-            _diagnosticLevel = shouldInclude ? Core.DiagnosticLevel.FullRequestTracing : Core.DiagnosticLevel.None;
-        }
-
-        /// <summary>
-        ///   Gets the level of diagnostics specified for this <see cref = "FubuRegistry" />
-        /// </summary>
-        public DiagnosticLevel DiagnosticLevel
-        {
-            get { return _diagnosticLevel; }
+            if (shouldInclude)
+            {
+                Import<DiagnosticsSubSystem>();
+                Policies.Add<ApplyTracing>();
+            }
         }
 
         /// <summary>

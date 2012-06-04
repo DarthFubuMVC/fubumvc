@@ -27,7 +27,7 @@ namespace FubuMVC.Tests.Diagnostics
             theOriginalGuid = action.UniqueId;
         }
 
-        private ObjectDef toObjectDef(DiagnosticLevel level)
+        private ObjectDef toObjectDef()
         {
             return theChain.As<IContainerModel>().ToObjectDef();
         }
@@ -38,7 +38,7 @@ namespace FubuMVC.Tests.Diagnostics
             new BehaviorTracerNode(theChain.Top);
             new DiagnosticNode(theChain);
 
-            var objectDef = toObjectDef(DiagnosticLevel.FullRequestTracing);
+            var objectDef = toObjectDef();
             objectDef.Type.ShouldEqual(typeof(DiagnosticBehavior));
 
 

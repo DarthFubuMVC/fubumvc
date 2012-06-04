@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             theOriginalGuid = action.UniqueId;
         }
 
-        private ObjectDef toObjectDef(DiagnosticLevel level)
+        private ObjectDef toObjectDef()
         {
             return theChain.As<IContainerModel>().ToObjectDef(); 
         }
@@ -34,13 +34,13 @@ namespace FubuMVC.Tests.Registration.Nodes
         [Test]
         public void no_diagnostic_behavior_for_no_diagnostics()
         {
-            toObjectDef(DiagnosticLevel.None).Type.ShouldNotEqual(typeof (DiagnosticBehavior));
+            toObjectDef().Type.ShouldNotEqual(typeof (DiagnosticBehavior));
         }
 
         [Test]
         public void the_unique_id_matches_the_top_id_in_no_diagnostic_mode()
         {
-            toObjectDef(DiagnosticLevel.None).Name.ShouldEqual(theOriginalGuid);
+            toObjectDef().Name.ShouldEqual(theOriginalGuid);
         }
 
 

@@ -15,7 +15,6 @@ namespace FubuMVC.Core
         AppliesToExpression Applies { get; }
         ActionCallCandidateExpression Actions { get; }
         MediaExpression Media { get; }
-        DiagnosticLevel DiagnosticLevel { get; }
         string Name { get; }
 
         void Services(Action<IServiceRegistry> configure);

@@ -46,7 +46,7 @@ namespace FubuMVC.Tests.Behaviors.Conditional
             theNode.AddAfter(Wrapper.For<FollowingBehavior>());
         }
 
-        private IActionBehavior behavior(DiagnosticLevel level)
+        private IActionBehavior behavior()
         {
             var objectDef = theNode.As<IContainerModel>().ToObjectDef();
             var instance = new ObjectDefInstance(objectDef);
@@ -89,7 +89,7 @@ namespace FubuMVC.Tests.Behaviors.Conditional
         [Test]
         public void create_the_behavior_without_any_condition_or_diagnostics()
         {
-            var actionBehavior = behavior(DiagnosticLevel.None);
+            var actionBehavior = behavior();
             actionBehavior.ShouldBeOfType<MyBehavior>().InnerBehavior.ShouldBeOfType<FollowingBehavior>();
 
             actionBehavior.Invoke();
@@ -102,7 +102,7 @@ namespace FubuMVC.Tests.Behaviors.Conditional
         public void create_the_behavior_with_custom_conditional_and_no_diagnostics()
         {
             theNode.Condition<CustomConditional>();
-            var behavior = this.behavior(DiagnosticLevel.None);
+            var behavior = this.behavior();
 
             var invoker= behavior.ShouldBeOfType<ConditionalBehaviorInvoker>();
             var conditionalBehavior = invoker.ConditionalBehavior.ShouldBeOfType<ConditionalBehavior>();
@@ -118,7 +118,7 @@ namespace FubuMVC.Tests.Behaviors.Conditional
         {
             CustomConditional.IsTrue = true;
             theNode.Condition<CustomConditional>();
-            var behavior = this.behavior(DiagnosticLevel.None);
+            var behavior = this.behavior();
 
             behavior.Invoke();
 
@@ -132,7 +132,7 @@ namespace FubuMVC.Tests.Behaviors.Conditional
         {
             CustomConditional.IsTrue = false;
             theNode.Condition<CustomConditional>();
-            var behavior = this.behavior(DiagnosticLevel.None);
+            var behavior = this.behavior();
 
             behavior.Invoke();
 
@@ -146,7 +146,7 @@ namespace FubuMVC.Tests.Behaviors.Conditional
         {
             theNode.Condition(() => true);
 
-            var behavior = this.behavior(DiagnosticLevel.None);
+            var behavior = this.behavior();
 
             behavior.Invoke();
 
@@ -160,7 +160,7 @@ namespace FubuMVC.Tests.Behaviors.Conditional
         {
             theNode.Condition(() => false);
 
-            var behavior = this.behavior(DiagnosticLevel.None);
+            var behavior = this.behavior();
 
             behavior.Invoke();
 
@@ -178,7 +178,7 @@ namespace FubuMVC.Tests.Behaviors.Conditional
 
             theNode.ConditionByModel<Model>(x => x.IsTrue);
 
-            behavior(DiagnosticLevel.None).Invoke();
+            behavior().Invoke();
 
             WrappedBehaviorWasInvoked.ShouldBeTrue();
             NextBehaviorWasInvoked.ShouldBeTrue();
@@ -195,7 +195,7 @@ namespace FubuMVC.Tests.Behaviors.Conditional
 
             theNode.ConditionByModel<Model>(x => x.IsTrue);
 
-            behavior(DiagnosticLevel.None).Invoke();
+            behavior().Invoke();
 
             WrappedBehaviorWasInvoked.ShouldBeFalse();
             NextBehaviorWasInvoked.ShouldBeTrue();
@@ -208,7 +208,7 @@ namespace FubuMVC.Tests.Behaviors.Conditional
 
             theNode.ConditionByService<Service>(x => x.IsTrue);
 
-            behavior(DiagnosticLevel.None).Invoke();
+            behavior().Invoke();
 
             WrappedBehaviorWasInvoked.ShouldBeTrue();
             NextBehaviorWasInvoked.ShouldBeTrue();
@@ -222,7 +222,7 @@ namespace FubuMVC.Tests.Behaviors.Conditional
 
             theNode.ConditionByService<Service>(x => x.IsTrue);
 
-            behavior(DiagnosticLevel.None).Invoke();
+            behavior().Invoke();
 
             WrappedBehaviorWasInvoked.ShouldBeFalse();
             NextBehaviorWasInvoked.ShouldBeTrue();
