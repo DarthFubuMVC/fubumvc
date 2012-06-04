@@ -36,18 +36,6 @@ namespace FubuMVC.Tests.Diagnostics
         private BehaviorGraph graph;
         private IUrlRegistry urls;
 
-        [Test]
-        public void actions_url()
-        {
-            graph.BehaviorFor<BehaviorGraphWriter>(x => x.Actions()).Route.Pattern.ShouldEqual(DiagnosticUrlPolicy.DIAGNOSTICS_URL_ROOT + "/actions");
-        }
-
-        [Test]
-        public void index_action_url()
-        {
-            graph.BehaviorFor<BehaviorGraphWriter>(x => x.Index()).Route.Pattern.ShouldEqual(DiagnosticUrlPolicy.DIAGNOSTICS_URL_ROOT);
-        }
-
 
         [Test]
         public void request_history_cache_is_registered()
@@ -57,13 +45,6 @@ namespace FubuMVC.Tests.Diagnostics
 
             ServiceRegistry.ShouldBeSingleton(typeof(RequestHistoryCache))
                 .ShouldBeTrue();
-        }
-
-
-        [Test]
-        public void smoke_test()
-        {
-            Debug.WriteLine(new BehaviorGraphWriter(graph, urls, null, new StubCurrentHttpRequest("http://server")).PrintRoutes());
         }
     }
 
@@ -87,38 +68,5 @@ namespace FubuMVC.Tests.Diagnostics
         }
     }
 
-    [TestFixture]
-    public class include_diagnostics_integration_tester
-    {
-        #region Setup/Teardown
-
-        [SetUp]
-        public void SetUp()
-        {
-            graph = new FubuRegistry(x =>
-            {
-                x.IncludeDiagnostics(true);
-                x.Actions.IncludeTypes(o => o.Name.Contains("Controller"));
-            }).BuildGraph();
-        }
-
-        #endregion
-
-        private BehaviorGraph graph;
-
-
-        [Test]
-        public void actions_url()
-        {
-            graph.BehaviorFor<BehaviorGraphWriter>(x => x.Actions()).Route.Pattern.ShouldEqual(DiagnosticUrlPolicy.DIAGNOSTICS_URL_ROOT + "/actions");
-        }
-
-        [Test]
-        public void index_action_url()
-        {
-            graph.BehaviorFor<BehaviorGraphWriter>(x => x.Index()).Route.Pattern.ShouldEqual(DiagnosticUrlPolicy.DIAGNOSTICS_URL_ROOT);
-        }
-
-    }
 
 }

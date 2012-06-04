@@ -20,6 +20,7 @@ namespace FubuMVC.Core.Diagnostics.Assets
     public class ContentPlanRequest : AssetDiagnosticRequest{}
     public class AssetSourcesRequest : AssetDiagnosticRequest{}
 
+    [MoveToDiagnostics]
     public class BasicAssetDiagnostics
     {
         private readonly IAssetCombinationCache _cache;

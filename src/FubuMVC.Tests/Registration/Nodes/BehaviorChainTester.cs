@@ -219,19 +219,6 @@ namespace FubuMVC.Tests.Registration.Nodes
             node3.ParentChain().ShouldBeTheSameAs(chain);
         }
 
-        [Test]
-        public void first_call_description_return_empty_if_first_call_is_null()
-        {
-            var chain = new BehaviorChain();
-            chain.FirstCallDescription().ShouldEqual("");
-        }
-
-        [Test]
-        public void input_type_name_return_empty_if_first_call_is_null()
-        {
-            var chain = new BehaviorChain();
-            chain.GetInputTypeName().ShouldEqual("");
-        }
 
 
         [Test]
@@ -354,24 +341,6 @@ namespace FubuMVC.Tests.Registration.Nodes
             newNode.Next.ShouldBeTheSameAs(node2);
         }
 
-
-        [Test]
-        public void return_description_if_first_call_is_not_null()
-        {
-            var chain = new BehaviorChain();
-            var type = typeof (ControllerTarget);
-            chain.AddToEnd(new ActionCall(type, type.GetMethod("OneInZeroOut")));
-            chain.FirstCallDescription().ShouldEqual("ControllerTarget.OneInZeroOut(Model1 input) : void");
-        }
-
-        [Test]
-        public void returns_input_type_name_if_first_call_is_not_null()
-        {
-            var chain = new BehaviorChain();
-            var type = typeof (ControllerTarget);
-            chain.AddToEnd(new ActionCall(type, type.GetMethod("OneInOneOut")));
-            chain.GetInputTypeName().ShouldEqual("Model1");
-        }
 
         [Test]
         public void should_not_register_an_endpoint_authorizor_if_there_are_no_authorization_roles()

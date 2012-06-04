@@ -2,6 +2,7 @@
 
 namespace FubuMVC.Core.Diagnostics
 {
+    [MoveToDiagnostics]
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
     public class FubuDiagnosticsAttribute : Attribute
     {

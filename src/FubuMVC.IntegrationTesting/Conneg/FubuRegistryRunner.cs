@@ -107,18 +107,20 @@ namespace FubuMVC.IntegrationTesting.Conneg
 
         protected void DebugRemoteBehaviorGraph()
         {
-            var output = endpoints.Get<BehaviorGraphWriter>(x => x.PrintRoutes());
-            Debug.WriteLine(output);
+            throw new NotImplementedException("Redo this");
+            //var output = endpoints.Get<BehaviorGraphWriter>(x => x.PrintRoutes());
+            //Debug.WriteLine(output);
         }
 
         protected void DebugPackageLoading()
         {
-            var output = endpoints.Get<PackageLoadingWriter>(x => x.FullLog());
-            var filename = Path.GetTempFileName() + ".htm";
+            throw new NotImplementedException("Redo this");
+            //var output = endpoints.Get<PackageLoadingWriter>(x => x.FullLog());
+            //var filename = Path.GetTempFileName() + ".htm";
             
-            new FileSystem().WriteStringToFile(filename, output.ToString());
+            //new FileSystem().WriteStringToFile(filename, output.ToString());
 
-            Process.Start(filename);
+            //Process.Start(filename);
         }
     }
 

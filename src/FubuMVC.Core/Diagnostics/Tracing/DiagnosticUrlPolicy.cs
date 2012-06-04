@@ -23,10 +23,7 @@ namespace FubuMVC.Core.Diagnostics.Tracing
             MethodInfo method = call.Method;
             var definition = call.ToRouteDefinition();
             definition.Append(DIAGNOSTICS_URL_ROOT + "/" + UrlFor(method));
-            if (call.InputType().CanBeCastTo<ChainRequest>())
-            {
-                definition.Input.AddRouteInput(new RouteParameter(ReflectionHelper.GetAccessor<ChainRequest>(x => x.Id)), true);
-            }
+
             return definition;
         }
 

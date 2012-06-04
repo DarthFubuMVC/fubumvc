@@ -1,8 +1,9 @@
 using FubuCore.Util;
 using HtmlTags;
 
-namespace FubuMVC.Core.Diagnostics.HtmlWriting.Columns
+namespace FubuMVC.Core.Diagnostics.HtmlWriting
 {
+    [MoveToDiagnostics]
     public class DebugReportTagWriter
     {
         private readonly Cache<BehaviorReport, HtmlTag> _behaviorTags = new Cache<BehaviorReport, HtmlTag>();

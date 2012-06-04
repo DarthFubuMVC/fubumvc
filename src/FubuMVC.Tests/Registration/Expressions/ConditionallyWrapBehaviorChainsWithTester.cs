@@ -10,6 +10,7 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.StructureMap;
 using FubuMVC.Tests.Diagnostics;
+using FubuMVC.Tests.Urls;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -150,7 +151,7 @@ namespace FubuMVC.Tests.Registration.Expressions
                 x.For<IStreamingData>().Use(MockRepository.GenerateMock<IStreamingData>());
                 x.For<IHttpWriter>().Use(new NulloHttpWriter());
                 x.For<ICurrentChain>().Use(new CurrentChain(null, null));
-                x.For<ICurrentHttpRequest>().Use(new StubCurrentHttpRequest("http://server"));
+                x.For<ICurrentHttpRequest>().Use(new StubCurrentHttpRequest { TheApplicationRoot = "http://server" });
             });
 
             FubuApplication.For(() => registry).StructureMap(container).Bootstrap();

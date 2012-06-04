@@ -62,18 +62,20 @@ namespace FubuMVC.AspNetTesting
 
         public static void DebugRemoteBehaviorGraph()
         {
-            var output = Endpoints.Get<BehaviorGraphWriter>(x => x.PrintRoutes());
-            Debug.WriteLine(output);
+            throw new NotImplementedException("Redo.");
+            //var output = Endpoints.Get<BehaviorGraphWriter>(x => x.PrintRoutes());
+            //Debug.WriteLine(output);
         }
 
         public static void DebugPackageLoading()
         {
-            var output = Endpoints.Get<PackageLoadingWriter>(x => x.FullLog());
-            var filename = Path.GetTempFileName() + ".htm";
+            throw new NotImplementedException("Redo.");
+            //var output = Endpoints.Get<PackageLoadingWriter>(x => x.FullLog());
+            //var filename = Path.GetTempFileName() + ".htm";
 
-            new FileSystem().WriteStringToFile(filename, output.ToString());
+            //new FileSystem().WriteStringToFile(filename, output.ToString());
 
-            Process.Start(filename);
+            //Process.Start(filename);
         }
     }
 }

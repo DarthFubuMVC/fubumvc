@@ -21,14 +21,6 @@ namespace FubuMVC.IntegrationTesting.ViewAttachment
         }
 
         [Test]
-        public void what_is_there()
-        {
-            var text = endpoints.Get<BehaviorGraphWriter>(x => x.PrintRoutes()).ReadAsText();
-
-            Debug.WriteLine(text);
-        }
-
-        [Test]
         public void fetching_the_resource_when_it_does_not_match_the_special_profile()
         {
             endpoints.GetByInput(new ProfileInput { Name = "wrong" }).ReadAsText().ShouldContain("<p>I am the regular view</p>");

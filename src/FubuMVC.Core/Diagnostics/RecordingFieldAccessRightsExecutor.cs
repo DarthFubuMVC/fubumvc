@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.UI.Configuration;
 using FubuMVC.Core.UI.Security;
 
-namespace FubuMVC.Core.UI.Diagnostics
+namespace FubuMVC.Core.Diagnostics
 {
     public class RecordingFieldAccessRightsExecutor : FieldAccessRightsExecutor
     {

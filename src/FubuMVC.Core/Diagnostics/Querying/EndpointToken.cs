@@ -1,6 +1,4 @@
-using System;
 using System.Linq;
-using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Diagnostics.Querying
@@ -13,12 +11,17 @@ namespace FubuMVC.Core.Diagnostics.Querying
 
         public EndpointToken(BehaviorChain chain)
         {
-            RoutePattern = chain.GetRoutePattern();
+            RoutePattern = chain.Route == null ? string.Empty : chain.Route.Pattern;
             Actions = chain.Calls.Select(x => new ActionToken(x)).ToArray();
         }
 
         public string RoutePattern { get; set; }
         public ActionToken[] Actions { get; set; }
+
+        public string FirstActionDescription
+        {
+            get { return HasActions() ? Actions.First().Description : "None"; }
+        }
 
         public bool HasActions()
         {
@@ -30,14 +33,6 @@ namespace FubuMVC.Core.Diagnostics.Querying
             if (!Actions.Any()) return false;
 
             return Actions.First().HandlerType.Assembly.Name == assemblyName;
-        }
-
-        public string FirstActionDescription
-        {
-            get
-            {
-                return HasActions() ? Actions.First().Description : "None";
-            }
         }
     }
 }

@@ -66,6 +66,13 @@ namespace FubuMVC.Core.Registration.Nodes
             }
         }
 
+        public string GetRoutePattern()
+        {
+            if (Route == null) return null;
+
+            return Route.Pattern;
+        }
+
         /// <summary>
         ///   Ordered list of IBehaviorInvocationFilter's that can be used
         ///   to apply guard conditions at runtime *before* the behaviors

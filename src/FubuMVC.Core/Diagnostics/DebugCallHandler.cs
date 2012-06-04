@@ -1,10 +1,11 @@
 using System;
-using FubuMVC.Core.Diagnostics.HtmlWriting.Columns;
+using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Diagnostics
 {
+    [MoveToDiagnostics]
     public class DebugCallHandler : IDebugCallHandler
     {
         private readonly IDebugReport _report;
@@ -20,8 +21,7 @@ namespace FubuMVC.Core.Diagnostics
 
         public void Handle()
         {
-            var debugWriter = new DebugWriter(_report, _urls);
-            _writer.Write(MimeType.Html.ToString(), debugWriter.Write().ToString());
+            _writer.Write(MimeType.Html.ToString(), "The debug output has been broken.  Bad Jeremy.  Will be replaced soon.");
         }
     }
 }

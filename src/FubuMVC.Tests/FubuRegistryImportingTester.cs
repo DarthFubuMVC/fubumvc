@@ -87,8 +87,6 @@ namespace FubuMVC.Tests
 
             var graph = parent.BuildGraph();
 
-            graph.Behaviors.Each(b => Debug.WriteLine(b.FirstCallDescription()));
-
             graph.BehaviorFor<Action1>(x => x.M1()).GetRoutePattern().ShouldEqual("import/a/m1");
             graph.BehaviorFor<Action1>(x => x.M2()).GetRoutePattern().ShouldEqual("import/a/m2");
         }
@@ -230,4 +228,5 @@ namespace FubuMVC.Tests
             }
         }
     }
+
 }

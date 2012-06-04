@@ -104,6 +104,7 @@
     <Compile Include="Http\AspNet\AspNetClientConnectivity.cs" />
     <Compile Include="Http\AspNet\AspNetCookies.cs" />
     <Compile Include="Http\IClientConnectivity.cs" />
+    <Compile Include="MoveToDiagnosticsAttribute.cs" />
     <Compile Include="Registration\Conventions\DefaultOutputPolicy.cs" />
     <Compile Include="Registration\Conventions\WrapAction.cs" />
     <Compile Include="Registration\EndpointActionSource.cs" />
@@ -215,7 +216,6 @@
     <Compile Include="CoreServiceRegistry.cs" />
     <Compile Include="DiagnosticsSettings.cs" />
     <Compile Include="Diagnostics\Assets\BasicAssetDiagnostics.cs" />
-    <Compile Include="Diagnostics\HtmlWriting\ModelBindingExplorerWriter.cs" />
     <Compile Include="FubuMode.cs" />
     <Compile Include="FubuModuleAttributePackageLoader.cs" />
     <Compile Include="Http\CurrentRequestFullUrlPropertyBinder.cs" />
@@ -359,19 +359,11 @@
     <Compile Include="Diagnostics\Tracing\BehaviorCorrelation.cs" />
     <Compile Include="FubuRegistry.OutOfBoxConventions.cs" />
     <Compile Include="CurrentRequest.cs" />
-    <Compile Include="Diagnostics\HtmlWriting\AuthorizationWriter.cs" />
     <Compile Include="Diagnostics\HttpStatusReport.cs" />
-    <Compile Include="Diagnostics\HtmlWriting\DiagnosticHtml.cs" />
     <Compile Include="Diagnostics\RequestHistoryCache.cs" />
     <Compile Include="Diagnostics\FubuDiagnosticsAttribute.cs" />
-    <Compile Include="Diagnostics\HtmlWriting\Columns\AuthorizationRulesColumn.cs" />
-    <Compile Include="Diagnostics\HtmlWriting\Columns\ChainColumn.cs" />
-    <Compile Include="Diagnostics\HtmlWriting\Columns\ConstraintColumn.cs" />
-    <Compile Include="Diagnostics\HtmlWriting\Columns\DebugReportTagWriter.cs" />
-    <Compile Include="Diagnostics\HtmlWriting\Columns\DebugWriter.cs" />
-    <Compile Include="Diagnostics\HtmlWriting\Columns\DetailsTagWriter.cs" />
-    <Compile Include="Diagnostics\HtmlWriting\Columns\ActionColumn.cs" />
-    <Compile Include="Diagnostics\HtmlWriting\BehaviorGraphWriter.cs" />
+    <Compile Include="Diagnostics\HtmlWriting\DebugReportTagWriter.cs" />
+    <Compile Include="Diagnostics\HtmlWriting\DetailsTagWriter.cs" />
     <Compile Include="Diagnostics\BehaviorReport.cs" />
     <Compile Include="Diagnostics\Tracing\BehaviorTracer.cs" />
     <Compile Include="Diagnostics\DebugDetector.cs" />
@@ -383,17 +375,13 @@
     <Compile Include="Diagnostics\FileOutputReport.cs" />
     <Compile Include="Diagnostics\IBehaviorDetails.cs" />
     <Compile Include="Diagnostics\IBehaviorDetailsVisitor.cs" />
-    <Compile Include="Diagnostics\HtmlWriting\Columns\IColumn.cs" />
     <Compile Include="Diagnostics\IConfigurationObserver.cs" />
     <Compile Include="Diagnostics\IDebugDetector.cs" />
     <Compile Include="Diagnostics\IDebugReport.cs" />
-    <Compile Include="Diagnostics\HtmlWriting\Columns\InputModelColumn.cs" />
     <Compile Include="Diagnostics\IRequestHistoryCache.cs" />
     <Compile Include="Diagnostics\ModelBindingKey.cs" />
     <Compile Include="Diagnostics\ModelBindingReport.cs" />
-    <Compile Include="Diagnostics\HtmlWriting\Columns\OutputColumn.cs" />
     <Compile Include="Diagnostics\OutputReport.cs" />
-    <Compile Include="Diagnostics\HtmlWriting\PackageLoadingWriter.cs" />
     <Compile Include="Diagnostics\Querying\ActionToken.cs" />
     <Compile Include="Diagnostics\Querying\AssemblyToken.cs" />
     <Compile Include="Diagnostics\Querying\EndpointModel.cs" />
@@ -405,8 +393,6 @@
     <Compile Include="Diagnostics\Tracing\RecordingFubuRequest.cs" />
     <Compile Include="Diagnostics\Tracing\RecordingOutputWriter.cs" />
     <Compile Include="Diagnostics\RedirectReport.cs" />
-    <Compile Include="Diagnostics\HtmlWriting\Columns\RouteColumn.cs" />
-    <Compile Include="Diagnostics\HtmlWriting\ScriptWriter.cs" />
     <Compile Include="Diagnostics\SetValueReport.cs" />
     <Compile Include="Diagnostics\TextWriting\CharacterWidth.cs" />
     <Compile Include="Diagnostics\TextWriting\DividerLine.cs" />
@@ -568,8 +554,7 @@
     <Compile Include="UI\Configuration\LambdaElementModifier.cs" />
     <Compile Include="UI\Configuration\OptionalElementModifier.cs" />
     <Compile Include="UI\Configuration\PartialLambdaElementBuilder.cs" />
-    <Compile Include="UI\Diagnostics\ExampleHtmlWriter.cs" />
-    <Compile Include="UI\Diagnostics\RecordingFieldAccessRightsExecutor.cs" />
+    <Compile Include="Diagnostics\RecordingFieldAccessRightsExecutor.cs" />
     <Compile Include="UI\Extensibility\ContentExtensionGraph.cs" />
     <Compile Include="UI\Extensibility\ContentExtensions.cs" />
     <Compile Include="UI\Extensibility\ExtensionsExpression.cs" />
@@ -759,9 +744,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Diagnostics\HtmlWriting\diagnostics.css" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="UI\Diagnostics\examples.css" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

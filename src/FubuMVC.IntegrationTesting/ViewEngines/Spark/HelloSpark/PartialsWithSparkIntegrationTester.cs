@@ -24,8 +24,6 @@ namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.HelloSpark
         [Test]
         public void pair_of_nested_partials()
         {
-            Debug.WriteLine(endpoints.Get<BehaviorGraphWriter>(x => x.PrintRoutes()));
-
             var text = endpoints.Get<PartialController>(x => x.get_partials()).ReadAsText();
 
             text.ShouldContain("<h1>My name is Shiner</h1>");

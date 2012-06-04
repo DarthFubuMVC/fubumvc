@@ -31,13 +31,6 @@ namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.HelloSpark
             text.ShouldContain("<h2>Exhale!</h2>");
         }
 
-        [Test]
-        public void what_is_there()
-        {
-            var text = endpoints.Get<BehaviorGraphWriter>(x => x.PrintRoutes()).ReadAsText();
-
-            Debug.WriteLine(text);
-        }
     }
 
 
