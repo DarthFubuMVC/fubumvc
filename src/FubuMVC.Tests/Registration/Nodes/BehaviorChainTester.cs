@@ -2,8 +2,6 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using FubuCore;
-using FubuMVC.Core;
-using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
@@ -38,10 +36,7 @@ namespace FubuMVC.Tests.Registration.Nodes
     [TestFixture]
     public class when_moving_a_node_to_first_in_the_chain
     {
-        private BehaviorChain theChain;
-        private StubNode node1;
-        private StubNode node2;
-        private StubNode node3;
+        #region Setup/Teardown
 
         [SetUp]
         public void SetUp()
@@ -58,6 +53,13 @@ namespace FubuMVC.Tests.Registration.Nodes
 
             theChain.ShouldHaveTheSameElementsAs(node1, node2, node3);
         }
+
+        #endregion
+
+        private BehaviorChain theChain;
+        private StubNode node1;
+        private StubNode node2;
+        private StubNode node3;
 
         [Test]
         public void move_first_1()
@@ -98,6 +100,16 @@ namespace FubuMVC.Tests.Registration.Nodes
 
         #endregion
 
+        [Test]
+        public void adding_a_node_to_the_end_sets_the_chain_on_the_node()
+        {
+            var chain = new BehaviorChain();
+            var wrapper = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
+
+            chain.AddToEnd(wrapper);
+
+            wrapper.ParentChain().ShouldBeTheSameAs(chain);
+        }
 
         [Test]
         public void adding_a_route_adds_a_RouteDefined_event()
@@ -109,7 +121,6 @@ namespace FubuMVC.Tests.Registration.Nodes
 
             chain.As<ITracedModel>().StagedEvents.Last().ShouldEqual(new RouteDefined(route));
         }
-
 
 
         [Test]
@@ -141,17 +152,6 @@ namespace FubuMVC.Tests.Registration.Nodes
             wrapper.Previous.ShouldBeNull();
         }
 
-        [Test]
-        public void adding_a_node_to_the_end_sets_the_chain_on_the_node()
-        {
-            var chain = new BehaviorChain();
-            var wrapper = new Wrapper(typeof(ObjectDefInstanceTester.FakeJsonBehavior));
-
-            chain.AddToEnd(wrapper);
-
-            wrapper.ParentChain().ShouldBeTheSameAs(chain);
-        }
-
 
         [Test]
         public void appending_a_node_also_sets_the_previous_2()
@@ -171,6 +171,18 @@ namespace FubuMVC.Tests.Registration.Nodes
             wrapper2.Previous.ShouldBeTheSameAs(wrapper);
             wrapper.Previous.ShouldBeNull();
             wrapper.ParentChain().ShouldBeTheSameAs(chain);
+        }
+
+        [Test]
+        public void building_input_node_without_an_input_type_blows_up()
+        {
+            Exception<InvalidOperationException>.ShouldBeThrownBy(() => { new BehaviorChain().Input.ShouldBeNull(); });
+        }
+
+        [Test]
+        public void building_output_node_without_an_output_type_blows_up()
+        {
+            Exception<InvalidOperationException>.ShouldBeThrownBy(() => { new BehaviorChain().Output.ShouldBeNull(); });
         }
 
         [Test]
@@ -219,6 +231,45 @@ namespace FubuMVC.Tests.Registration.Nodes
             node3.ParentChain().ShouldBeTheSameAs(chain);
         }
 
+        [Test]
+        public void has_input_depends_on_the_input_node_now()
+        {
+            var chain = new BehaviorChain();
+            chain.AddToEnd(ActionCall.For<OneController>(x => x.Query(null)));
+
+            chain.HasReaders().ShouldBeFalse();
+
+            chain.Input.AddFormatter<JsonFormatter>();
+
+            chain.HasReaders().ShouldBeTrue();
+        }
+
+        [Test]
+        public void has_input_initial()
+        {
+            new BehaviorChain().HasReaders()
+                .ShouldBeFalse();
+        }
+
+        [Test]
+        public void has_output_depends_on_the_output_node_now()
+        {
+            var chain = new BehaviorChain();
+            chain.AddToEnd(ActionCall.For<OneController>(x => x.Query(null)));
+
+            chain.HasOutput().ShouldBeFalse();
+
+            chain.Output.AddFormatter<JsonFormatter>();
+
+            chain.HasOutput().ShouldBeTrue();
+        }
+
+        [Test]
+        public void has_output_initial()
+        {
+            new BehaviorChain().HasOutput()
+                .ShouldBeFalse();
+        }
 
 
         [Test]
@@ -238,6 +289,34 @@ namespace FubuMVC.Tests.Registration.Nodes
 
             wrapper2.Previous.ShouldBeNull();
             wrapper.Previous.ShouldBeTheSameAs(wrapper2);
+        }
+
+        [Test]
+        public void lazy_creation_of_the_input_node_after_having_an_action()
+        {
+            var chain = new BehaviorChain();
+            chain.AddToEnd(ActionCall.For<OneController>(x => x.Query(null)));
+
+            var o1 = chain.Input;
+            var o2 = chain.Input;
+            var o3 = chain.Input;
+
+            o1.ShouldBeTheSameAs(o2);
+            o1.ShouldBeTheSameAs(o3);
+        }
+
+        [Test]
+        public void lazy_creation_of_the_output_node_after_having_an_action()
+        {
+            var chain = new BehaviorChain();
+            chain.AddToEnd(ActionCall.For<OneController>(x => x.Query(null)));
+
+            var o1 = chain.Output;
+            var o2 = chain.Output;
+            var o3 = chain.Output;
+
+            o1.ShouldBeTheSameAs(o2);
+            o1.ShouldBeTheSameAs(o3);
         }
 
         [Test]
@@ -381,112 +460,29 @@ namespace FubuMVC.Tests.Registration.Nodes
             container.GetInstance<IEndPointAuthorizor>(chain.UniqueId.ToString())
                 .ShouldNotBeNull().ShouldBeOfType<EndPointAuthorizor>();
         }
-
-        [Test]
-        public void has_output_initial()
-        {
-            new BehaviorChain().HasOutput()
-                .ShouldBeFalse();
-        }
-
-        [Test]
-        public void building_output_node_without_an_output_type_blows_up()
-        {
-            Exception<InvalidOperationException>.ShouldBeThrownBy(() =>
-            {
-                new BehaviorChain().Output.ShouldBeNull();
-            });
-        }
-
-        [Test]
-        public void lazy_creation_of_the_output_node_after_having_an_action()
-        {
-            var chain = new BehaviorChain();
-            chain.AddToEnd(ActionCall.For<OneController>(x => x.Query(null)));
-
-            var o1 = chain.Output;
-            var o2 = chain.Output;
-            var o3 = chain.Output;
-
-            o1.ShouldBeTheSameAs(o2);
-            o1.ShouldBeTheSameAs(o3);
-        }
-
-        [Test]
-        public void has_output_depends_on_the_output_node_now()
-        {
-            var chain = new BehaviorChain();
-            chain.AddToEnd(ActionCall.For<OneController>(x => x.Query(null)));
-
-            chain.HasOutput().ShouldBeFalse();
-
-            chain.Output.AddFormatter<JsonFormatter>();
-
-            chain.HasOutput().ShouldBeTrue();
-        }
-
-
-
-
-
-        [Test]
-        public void has_input_initial()
-        {
-            new BehaviorChain().HasReaders()
-                .ShouldBeFalse();
-        }
-
-        [Test]
-        public void building_input_node_without_an_input_type_blows_up()
-        {
-            Exception<InvalidOperationException>.ShouldBeThrownBy(() =>
-            {
-                new BehaviorChain().Input.ShouldBeNull();
-            });
-        }
-
-        [Test]
-        public void lazy_creation_of_the_input_node_after_having_an_action()
-        {
-            var chain = new BehaviorChain();
-            chain.AddToEnd(ActionCall.For<OneController>(x => x.Query(null)));
-
-            var o1 = chain.Input;
-            var o2 = chain.Input;
-            var o3 = chain.Input;
-
-            o1.ShouldBeTheSameAs(o2);
-            o1.ShouldBeTheSameAs(o3);
-        }
-
-        [Test]
-        public void has_input_depends_on_the_input_node_now()
-        {
-            var chain = new BehaviorChain();
-            chain.AddToEnd(ActionCall.For<OneController>(x => x.Query(null)));
-
-            chain.HasReaders().ShouldBeFalse();
-
-            chain.Input.AddFormatter<JsonFormatter>();
-
-            chain.HasReaders().ShouldBeTrue();
-        }
-
-
-
-
-
     }
 
     [TestFixture]
     public class BehaviorChainMatchesCategoryOrHttpMethodTester
     {
-        private BehaviorChain theChain;
+        #region Setup/Teardown
 
         [SetUp]
         public void SetUp()
         {
             theChain = new BehaviorChain();
+        }
+
+        #endregion
+
+        private BehaviorChain theChain;
+
+        [Test]
+        public void negative_on_category()
+        {
+            theChain.UrlCategory.Category = "else";
+
+            theChain.MatchesCategoryOrHttpMethod("something").ShouldBeFalse();
         }
 
         [Test]
@@ -495,14 +491,6 @@ namespace FubuMVC.Tests.Registration.Nodes
             theChain.UrlCategory.Category = "something";
 
             theChain.MatchesCategoryOrHttpMethod("something").ShouldBeTrue();
-        }
-
-        [Test]
-        public void negative_on_category()
-        {
-            theChain.UrlCategory.Category = "else";
-
-            theChain.MatchesCategoryOrHttpMethod("something").ShouldBeFalse();
         }
 
         [Test]
@@ -535,8 +523,8 @@ namespace FubuMVC.Tests.Registration.Nodes
             chain.Prepend(new FakeInputNode(null));
             chain.InputType().ShouldEqual(typeof (string));
 
-            chain.Prepend(new FakeInputNode(typeof(int)));
-            chain.InputType().ShouldEqual(typeof(int));
+            chain.Prepend(new FakeInputNode(typeof (int)));
+            chain.InputType().ShouldEqual(typeof (int));
         }
     }
 
@@ -544,10 +532,7 @@ namespace FubuMVC.Tests.Registration.Nodes
     [TestFixture]
     public class BehaviorChain_determination_of_the_resource_type
     {
-        private BehaviorChain theChain;
-        private FakeOutputNode strings;
-        private FakeOutputNode none;
-        private FakeOutputNode ints;
+        #region Setup/Teardown
 
         [SetUp]
         public void SetUp()
@@ -559,11 +544,12 @@ namespace FubuMVC.Tests.Registration.Nodes
             ints = new FakeOutputNode(typeof (int));
         }
 
-        [Test]
-        public void in_the_abscence_of_any_criteria_resource_type_is_null()
-        {
-            theChain.ResourceType().ShouldBeNull();
-        }
+        #endregion
+
+        private BehaviorChain theChain;
+        private FakeOutputNode strings;
+        private FakeOutputNode none;
+        private FakeOutputNode ints;
 
         [Test]
         public void gets_the_last_resource_type()
@@ -571,6 +557,18 @@ namespace FubuMVC.Tests.Registration.Nodes
             theChain.AddToEnd(none);
             theChain.AddToEnd(strings);
             theChain.AddToEnd(ints);
+
+            theChain.ResourceType().ShouldEqual(typeof (int));
+
+            theChain.Output.ResourceType.ShouldEqual(typeof (int));
+        }
+
+        [Test]
+        public void gets_the_last_resource_type_2()
+        {
+            theChain.AddToEnd(strings);
+            theChain.AddToEnd(ints);
+            theChain.AddToEnd(none);
 
             theChain.ResourceType().ShouldEqual(typeof (int));
 
@@ -594,16 +592,9 @@ namespace FubuMVC.Tests.Registration.Nodes
         }
 
         [Test]
-        public void gets_the_last_resource_type_2()
+        public void in_the_abscence_of_any_criteria_resource_type_is_null()
         {
-            
-            theChain.AddToEnd(strings);
-            theChain.AddToEnd(ints);
-            theChain.AddToEnd(none);
-
-            theChain.ResourceType().ShouldEqual(typeof(int));
-
-            theChain.Output.ResourceType.ShouldEqual(typeof (int));
+            theChain.ResourceType().ShouldBeNull();
         }
 
 
@@ -619,8 +610,8 @@ namespace FubuMVC.Tests.Registration.Nodes
             theChain.AddToEnd(ints);
             theChain.AddToEnd(none);
 
-            theChain.ResourceType().ShouldEqual(typeof(DateTime));
-            theChain.Output.ResourceType.ShouldEqual(typeof(DateTime));
+            theChain.ResourceType().ShouldEqual(typeof (DateTime));
+            theChain.Output.ResourceType.ShouldEqual(typeof (DateTime));
         }
     }
 
@@ -628,15 +619,13 @@ namespace FubuMVC.Tests.Registration.Nodes
     {
         public void Go(InputModel model)
         {
-            
         }
     }
 
     [TestFixture]
     public class BehaviorChain_build_for_a_single_writer_node
     {
-        private WriteHtml theWriter;
-        private BehaviorChain theChain;
+        #region Setup/Teardown
 
         [SetUp]
         public void SetUp()
@@ -645,6 +634,11 @@ namespace FubuMVC.Tests.Registration.Nodes
             theChain = BehaviorChain.ForWriter(theWriter);
         }
 
+        #endregion
+
+        private WriteHtml theWriter;
+        private BehaviorChain theChain;
+
         [Test]
         public void should_derive_its_resource_type_from_the_writer()
         {
@@ -652,15 +646,15 @@ namespace FubuMVC.Tests.Registration.Nodes
         }
 
         [Test]
-        public void the_writer_should_be_attached_to_the_output_node()
-        {
-            theChain.Output.Writers.Single().ShouldBeTheSameAs(theWriter);
-        }
-
-        [Test]
         public void the_chain_can_still_decipher_its_input_type()
         {
             theChain.InputType().ShouldEqual(typeof (HtmlTag));
+        }
+
+        [Test]
+        public void the_writer_should_be_attached_to_the_output_node()
+        {
+            theChain.Output.Writers.Single().ShouldBeTheSameAs(theWriter);
         }
     }
 
@@ -678,14 +672,14 @@ namespace FubuMVC.Tests.Registration.Nodes
             get { throw new NotImplementedException(); }
         }
 
-        protected override ObjectDef buildObjectDef()
-        {
-            throw new NotImplementedException();
-        }
-
         public Type InputType()
         {
             return _inputType;
+        }
+
+        protected override ObjectDef buildObjectDef()
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -703,15 +697,14 @@ namespace FubuMVC.Tests.Registration.Nodes
             get { throw new NotImplementedException(); }
         }
 
-        protected override ObjectDef buildObjectDef()
-        {
-            throw new NotImplementedException();
-        }
-
         public Type ResourceType()
         {
             return _resourceType;
         }
-    }
 
+        protected override ObjectDef buildObjectDef()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

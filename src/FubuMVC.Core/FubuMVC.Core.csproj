@@ -362,8 +362,6 @@
     <Compile Include="Diagnostics\HttpStatusReport.cs" />
     <Compile Include="Diagnostics\RequestHistoryCache.cs" />
     <Compile Include="Diagnostics\FubuDiagnosticsAttribute.cs" />
-    <Compile Include="Diagnostics\HtmlWriting\DebugReportTagWriter.cs" />
-    <Compile Include="Diagnostics\HtmlWriting\DetailsTagWriter.cs" />
     <Compile Include="Diagnostics\BehaviorReport.cs" />
     <Compile Include="Diagnostics\Tracing\BehaviorTracer.cs" />
     <Compile Include="Diagnostics\DebugDetector.cs" />
@@ -394,12 +392,6 @@
     <Compile Include="Diagnostics\Tracing\RecordingOutputWriter.cs" />
     <Compile Include="Diagnostics\RedirectReport.cs" />
     <Compile Include="Diagnostics\SetValueReport.cs" />
-    <Compile Include="Diagnostics\TextWriting\CharacterWidth.cs" />
-    <Compile Include="Diagnostics\TextWriting\DividerLine.cs" />
-    <Compile Include="Diagnostics\TextWriting\Line.cs" />
-    <Compile Include="Diagnostics\TextWriting\PlainLine.cs" />
-    <Compile Include="Diagnostics\TextWriting\TextLine.cs" />
-    <Compile Include="Diagnostics\TextWriting\TextReportWriter.cs" />
     <Compile Include="Diagnostics\TimedReport.cs" />
     <Compile Include="EndpointService.cs" />
     <Compile Include="FubuApplication.cs" />
@@ -741,9 +733,6 @@
     <Compile Include="View\RenderViewBehavior.cs" />
     <Compile Include="Web\Security\WebAuthenticationContext.cs" />
     <Compile Include="Web\Security\WebSecurityContext.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Diagnostics\HtmlWriting\diagnostics.css" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

@@ -1,8 +1,4 @@
-using System;
 using System.Reflection;
-using FubuCore;
-using FubuCore.Reflection;
-using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
@@ -20,7 +16,7 @@ namespace FubuMVC.Core.Diagnostics.Tracing
 
         public IRouteDefinition Build(ActionCall call)
         {
-            MethodInfo method = call.Method;
+            var method = call.Method;
             var definition = call.ToRouteDefinition();
             definition.Append(DIAGNOSTICS_URL_ROOT + "/" + UrlFor(method));
 
@@ -31,8 +27,5 @@ namespace FubuMVC.Core.Diagnostics.Tracing
         {
             return method.Name.ToLower();
         }
-
-
-
     }
 }

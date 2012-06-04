@@ -1,8 +1,5 @@
-using System.Diagnostics;
 using FubuMVC.Core;
-using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.IntegrationTesting.Conneg;
-using FubuMVC.Spark;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -30,10 +27,5 @@ namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.HelloSpark
 
             text.ShouldContain("<h2>Exhale!</h2>");
         }
-
     }
-
-
-
-
 }

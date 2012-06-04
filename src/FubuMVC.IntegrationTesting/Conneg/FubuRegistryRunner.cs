@@ -1,18 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Net;
 using System.Threading;
 using System.Xml;
 using FubuCore;
 using FubuKayak;
 using FubuMVC.Core;
-using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Diagnostics.Querying;
 using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Packaging;
-using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.OwinHost;
@@ -23,12 +19,19 @@ using StructureMap;
 
 namespace FubuMVC.IntegrationTesting.Conneg
 {
-
-
     public abstract class FubuRegistryHarness
     {
         private Harness theHarness;
 
+        public RemoteBehaviorGraph remote
+        {
+            get { return theHarness.Remote; }
+        }
+
+        protected EndpointDriver endpoints
+        {
+            get { return theHarness.Endpoints; }
+        }
 
 
         [TestFixtureSetUp]
@@ -55,30 +58,12 @@ namespace FubuMVC.IntegrationTesting.Conneg
             theHarness = Harness.Run(configure);
         }
 
-        public RemoteBehaviorGraph remote
-        {
-            get
-            {
-                return theHarness.Remote;
-            }
-        }
-
-        protected EndpointDriver endpoints
-        {
-            get
-            {
-                return theHarness.Endpoints;
-            }
-        }
-
         protected virtual void configure(FubuRegistry registry)
         {
-            
         }
 
         protected virtual void initializeBottles()
         {
-            
         }
 
         protected void runFubu(string commands)
@@ -117,13 +102,12 @@ namespace FubuMVC.IntegrationTesting.Conneg
             throw new NotImplementedException("Redo this");
             //var output = endpoints.Get<PackageLoadingWriter>(x => x.FullLog());
             //var filename = Path.GetTempFileName() + ".htm";
-            
+
             //new FileSystem().WriteStringToFile(filename, output.ToString());
 
             //Process.Start(filename);
         }
     }
-
 
 
     public class SimpleSource : IApplicationSource
@@ -152,9 +136,44 @@ namespace FubuMVC.IntegrationTesting.Conneg
     {
         private static int _port = 5500;
 
+        private readonly FubuKayakApplication _application;
+        private readonly EndpointDriver _endpoints;
+        private readonly Lazy<RemoteBehaviorGraph> _remote;
+        private readonly FubuRuntime _runtime;
+
+        public Harness(FubuRuntime runtime, FubuKayakApplication application, string root)
+        {
+            _runtime = runtime;
+            _application = application;
+
+            var urls = _runtime.Facility.Get<IUrlRegistry>();
+            urls.As<UrlRegistry>().RootAt(root);
+
+            UrlContext.Stub(root);
+
+            _remote = new Lazy<RemoteBehaviorGraph>(() => { return new RemoteBehaviorGraph(root); });
+
+            _endpoints = new EndpointDriver(urls);
+        }
+
+        public EndpointDriver Endpoints
+        {
+            get { return _endpoints; }
+        }
+
+        public RemoteBehaviorGraph Remote
+        {
+            get { return _remote.Value; }
+        }
+
+        public void Dispose()
+        {
+            _application.Stop();
+        }
+
         public static Harness Run(Action<FubuRegistry> configure)
         {
-            string applicationDirectory = GetApplicationDirectory();
+            var applicationDirectory = GetApplicationDirectory();
             FubuMvcPackageFacility.PhysicalRootPath = applicationDirectory;
 
 
@@ -187,47 +206,6 @@ namespace FubuMVC.IntegrationTesting.Conneg
         public static string GetApplicationDirectory()
         {
             return AppDomain.CurrentDomain.BaseDirectory.ParentDirectory().ParentDirectory();
-        }
-
-        private readonly FubuRuntime _runtime;
-        private readonly FubuKayakApplication _application;
-        private readonly EndpointDriver _endpoints;
-
-        public Harness(FubuRuntime runtime, FubuKayakApplication application, string root)
-        {
-            _runtime = runtime;
-            _application = application;
-
-            var urls = _runtime.Facility.Get<IUrlRegistry>();
-            urls.As<UrlRegistry>().RootAt(root);
-
-            UrlContext.Stub(root);
-
-            _remote = new Lazy<RemoteBehaviorGraph>(() =>
-            {
-                return new RemoteBehaviorGraph(root);
-            });
-
-            _endpoints = new EndpointDriver(urls);
-        }
-
-        public EndpointDriver Endpoints
-        {
-            get { return _endpoints; }
-        }
-
-        private readonly Lazy<RemoteBehaviorGraph> _remote;
-        public RemoteBehaviorGraph Remote
-        {
-            get
-            {
-                return _remote.Value;
-            }
-        }
-
-        public void Dispose()
-        {
-            _application.Stop();
         }
     }
 
@@ -263,7 +241,6 @@ namespace FubuMVC.IntegrationTesting.Conneg
             return response;
         }
 
-        
 
         public static HttpResponse StatusCodeShouldBe(this HttpResponse response, HttpStatusCode code)
         {

@@ -1,11 +1,9 @@
-using System.Diagnostics;
 using FubuMVC.Core;
-using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.IntegrationTesting.Conneg;
-using NUnit.Framework;
 using FubuTestingSupport;
+using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.ViewAttachment
 {
@@ -21,15 +19,19 @@ namespace FubuMVC.IntegrationTesting.ViewAttachment
         }
 
         [Test]
-        public void fetching_the_resource_when_it_does_not_match_the_special_profile()
+        public void fetching_the_resource_in_a_way_that_trips_off_the_special_profile_should_give_you_the_mobile_view()
         {
-            endpoints.GetByInput(new ProfileInput { Name = "wrong" }).ReadAsText().ShouldContain("<p>I am the regular view</p>");
+            endpoints.GetByInput(new ProfileInput{
+                Name = "mobile"
+            }).ReadAsText().ShouldContain("<p>I am the mobile view</p>");
         }
 
         [Test]
-        public void fetching_the_resource_in_a_way_that_trips_off_the_special_profile_should_give_you_the_mobile_view()
+        public void fetching_the_resource_when_it_does_not_match_the_special_profile()
         {
-            endpoints.GetByInput(new ProfileInput { Name = "mobile" }).ReadAsText().ShouldContain("<p>I am the mobile view</p>");
+            endpoints.GetByInput(new ProfileInput{
+                Name = "wrong"
+            }).ReadAsText().ShouldContain("<p>I am the regular view</p>");
         }
     }
 
@@ -40,7 +42,6 @@ namespace FubuMVC.IntegrationTesting.ViewAttachment
 
     public class ProfileOutput
     {
-        
     }
 
     public class Mobile : IConditional

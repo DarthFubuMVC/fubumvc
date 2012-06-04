@@ -1,7 +1,6 @@
 using FubuCore.Binding.InMemory;
 using FubuCore.Reflection;
 using FubuMVC.Core.Diagnostics.Assets;
-using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Diagnostics.Querying;
 using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Runtime;

@@ -1,20 +1,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using FubuCore;
-using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;
-using FubuMVC.Core.Diagnostics.HtmlWriting;
-using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
-using FubuMVC.Tests.Urls;
 using FubuTestingSupport;
-using HtmlTags;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -23,6 +15,8 @@ namespace FubuMVC.Tests.Diagnostics
     [TestFixture]
     public class DiagnosticsRegistryTester
     {
+        #region Setup/Teardown
+
         [SetUp]
         public void SetUp()
         {
@@ -32,6 +26,8 @@ namespace FubuMVC.Tests.Diagnostics
             graph.Behaviors.Any().ShouldBeTrue();
             graph.Actions().Each(x => Debug.WriteLine(x.Description));
         }
+
+        #endregion
 
         private BehaviorGraph graph;
         private IUrlRegistry urls;
@@ -43,7 +39,7 @@ namespace FubuMVC.Tests.Diagnostics
             graph.Services.DefaultServiceFor<IRequestHistoryCache>()
                 .Type.ShouldEqual(typeof (RequestHistoryCache));
 
-            ServiceRegistry.ShouldBeSingleton(typeof(RequestHistoryCache))
+            ServiceRegistry.ShouldBeSingleton(typeof (RequestHistoryCache))
                 .ShouldBeTrue();
         }
     }
@@ -67,6 +63,4 @@ namespace FubuMVC.Tests.Diagnostics
         {
         }
     }
-
-
 }
