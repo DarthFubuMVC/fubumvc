@@ -1,17 +1,13 @@
 using System.Linq;
 using FubuMVC.Core;
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.DSL;
-using FubuMVC.Core.View;
-using FubuMVC.Core.View.Attachment;
+using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Registration.Expressions
 {
-
-
     [TestFixture]
     public class when_explicitly_configuring_a_route
     {
@@ -31,7 +27,7 @@ namespace FubuMVC.Tests.Registration.Expressions
                     .Calls<InputController>(c => c.DoSomething(null)).OutputToJson();
             });
             _graph = fubuRegistry
-                    .BuildLightGraph();
+                .BuildLightGraph();
 
             _graph.Behaviors.ShouldHaveCount(1);
             _config.Configure(_graph);

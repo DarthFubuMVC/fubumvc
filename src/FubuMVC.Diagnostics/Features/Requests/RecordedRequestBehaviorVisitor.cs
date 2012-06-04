@@ -1,8 +1,8 @@
 using System.Data;
 using System.Net;
 using System.Text;
-using FubuMVC.Core.Diagnostics;
-using FubuMVC.Core.Diagnostics.Tracing;
+using FubuMVC.Diagnostics.Runtime;
+using FubuMVC.Diagnostics.Runtime.Tracing;
 
 namespace FubuMVC.Diagnostics.Features.Requests
 {

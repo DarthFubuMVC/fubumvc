@@ -12,8 +12,6 @@ namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.HelloSpark
         {
             registry.Actions.IncludeType<AirController>();
 
-            registry.IncludeDiagnostics(true);
-
             registry.Views
                 .TryToAttachWithDefaultConventions();
         }

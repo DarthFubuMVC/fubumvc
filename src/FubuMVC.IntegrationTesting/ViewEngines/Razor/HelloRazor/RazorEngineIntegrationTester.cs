@@ -13,8 +13,6 @@ namespace FubuMVC.IntegrationTesting.ViewEngines.Razor.HelloRazor
         {
             registry.Actions.IncludeType<HelloRazorController>();
 
-            registry.IncludeDiagnostics(true);
-
             registry.Views
                 .TryToAttachWithDefaultConventions();
         }

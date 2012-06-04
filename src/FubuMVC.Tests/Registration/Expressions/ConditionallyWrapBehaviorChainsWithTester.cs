@@ -1,15 +1,13 @@
 using System.Linq;
-using System.Web.Routing;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Behaviors;
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Runtime;
 using FubuMVC.StructureMap;
-using FubuMVC.Tests.Diagnostics;
 using FubuMVC.Tests.Urls;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -151,7 +149,9 @@ namespace FubuMVC.Tests.Registration.Expressions
                 x.For<IStreamingData>().Use(MockRepository.GenerateMock<IStreamingData>());
                 x.For<IHttpWriter>().Use(new NulloHttpWriter());
                 x.For<ICurrentChain>().Use(new CurrentChain(null, null));
-                x.For<ICurrentHttpRequest>().Use(new StubCurrentHttpRequest { TheApplicationRoot = "http://server" });
+                x.For<ICurrentHttpRequest>().Use(new StubCurrentHttpRequest{
+                    TheApplicationRoot = "http://server"
+                });
             });
 
             FubuApplication.For(() => registry).StructureMap(container).Bootstrap();
@@ -159,12 +159,15 @@ namespace FubuMVC.Tests.Registration.Expressions
             container.Model.InstancesOf<IActionBehavior>().Count().ShouldBeGreaterThan(3);
 
             var behaviors = container.GetAllInstances<IActionBehavior>().ToArray();
-            
+
             // The first behavior is an InputBehavior
-            behaviors[0].As<BasicBehavior>().InsideBehavior.ShouldBeOfType<ConditionallyWrapBehaviorChainsWithTester.FakeUnitOfWorkBehavior>().Inner.
+            behaviors[0].As<BasicBehavior>().InsideBehavior.ShouldBeOfType
+                <ConditionallyWrapBehaviorChainsWithTester.FakeUnitOfWorkBehavior>().Inner.
                 ShouldNotBeNull();
-            behaviors[1].As<BasicBehavior>().InsideBehavior.ShouldNotBeOfType<ConditionallyWrapBehaviorChainsWithTester.FakeUnitOfWorkBehavior>();
-            behaviors[2].As<BasicBehavior>().InsideBehavior.ShouldNotBeOfType<ConditionallyWrapBehaviorChainsWithTester.FakeUnitOfWorkBehavior>();
+            behaviors[1].As<BasicBehavior>().InsideBehavior.ShouldNotBeOfType
+                <ConditionallyWrapBehaviorChainsWithTester.FakeUnitOfWorkBehavior>();
+            behaviors[2].As<BasicBehavior>().InsideBehavior.ShouldNotBeOfType
+                <ConditionallyWrapBehaviorChainsWithTester.FakeUnitOfWorkBehavior>();
         }
     }
 }

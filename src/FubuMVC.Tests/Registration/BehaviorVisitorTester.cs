@@ -1,6 +1,6 @@
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -10,6 +10,8 @@ namespace FubuMVC.Tests.Registration
     [TestFixture]
     public class BehaviorVisitorTester
     {
+        #region Setup/Teardown
+
         [SetUp]
         public void SetUp()
         {
@@ -25,11 +27,18 @@ namespace FubuMVC.Tests.Registration
             visitor.Actions += x => processor.Got(x);
         }
 
+        #endregion
+
         private BehaviorVisitor visitor;
         private BehaviorChain chain;
         private BehaviorProcessor processor;
         private RecordingConfigurationObserver observer;
         private ActionCall call;
+
+        private bool getTrue()
+        {
+            return true;
+        }
 
         [Test]
         public void should_call_the_inner_processor_if_the_filters_match()
@@ -47,14 +56,6 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
-        public void should_not_call_the_inner_processor_if_the_filters_do_not_match()
-        {
-            visitor.Filters += x => false;
-            visitor.VisitBehavior(chain);
-            processor.AssertWasNotCalled(x => x.Got(chain));
-        }
-
-        [Test]
         public void should_log_each_matched_filter()
         {
             visitor.Filters += x => getTrue();
@@ -62,11 +63,15 @@ namespace FubuMVC.Tests.Registration
             observer.LastLogEntry.ShouldContain("getTrue()");
         }
 
-        // Yes, this is a stupid method, it's used merely for making testing logging easier (see should_log_each_matched_filter())
-        private bool getTrue()
+        [Test]
+        public void should_not_call_the_inner_processor_if_the_filters_do_not_match()
         {
-            return true;
+            visitor.Filters += x => false;
+            visitor.VisitBehavior(chain);
+            processor.AssertWasNotCalled(x => x.Got(chain));
         }
+
+        // Yes, this is a stupid method, it's used merely for making testing logging easier (see should_log_each_matched_filter())
     }
 
     public interface BehaviorProcessor

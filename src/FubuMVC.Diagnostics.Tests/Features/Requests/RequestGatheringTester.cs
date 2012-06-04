@@ -1,7 +1,7 @@
 using FubuMVC.Core.Behaviors;
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Diagnostics.Features.Requests;
 using FubuMVC.Diagnostics.Features.Requests.View;
+using FubuMVC.Diagnostics.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
 

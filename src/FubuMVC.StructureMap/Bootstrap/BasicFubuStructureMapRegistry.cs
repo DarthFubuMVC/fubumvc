@@ -6,8 +6,6 @@ namespace FubuMVC.StructureMap.Bootstrap
     {
         public BasicFubuStructureMapRegistry(bool enableDiagnostics, string controllerAssemblyName)
         {
-            IncludeDiagnostics(enableDiagnostics);
-
             Applies.ToAssembly(controllerAssemblyName);
 
             Actions

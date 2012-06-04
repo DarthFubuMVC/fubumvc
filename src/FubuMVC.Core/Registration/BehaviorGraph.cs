@@ -4,11 +4,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using FubuCore;
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Registration.Routes;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.UI.Navigation;
 using FubuMVC.Core.View.Attachment;
 

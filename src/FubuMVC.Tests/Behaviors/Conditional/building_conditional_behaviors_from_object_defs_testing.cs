@@ -1,30 +1,21 @@
-using System;
-using FubuMVC.Core;
+using FubuCore;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Behaviors.Conditional;
-using FubuMVC.Core.Diagnostics;
-using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.StructureMap;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 using StructureMap;
-using FubuCore;
-using FubuTestingSupport;
 
 namespace FubuMVC.Tests.Behaviors.Conditional
 {
     [TestFixture]
     public class building_conditional_behaviors_from_object_defs_testing
     {
-        private Container theContainer;
-        private InMemoryFubuRequest theRequest;
-        private Service theService;
-        private static bool WrappedBehaviorWasInvoked;
-        private static bool NextBehaviorWasInvoked;
-        private Wrapper theNode;
+        #region Setup/Teardown
 
         [SetUp]
         public void SetUp()
@@ -33,8 +24,6 @@ namespace FubuMVC.Tests.Behaviors.Conditional
             NextBehaviorWasInvoked = false;
 
             theContainer = new Container();
-            theContainer.Inject<IDebugReport>(new DebugReport(null, null));
-            theContainer.Inject(MockRepository.GenerateMock<IDebugDetector>());
 
             theRequest = new InMemoryFubuRequest();
             theContainer.Inject<IFubuRequest>(theRequest);
@@ -45,6 +34,15 @@ namespace FubuMVC.Tests.Behaviors.Conditional
             theNode = Wrapper.For<MyBehavior>();
             theNode.AddAfter(Wrapper.For<FollowingBehavior>());
         }
+
+        #endregion
+
+        private Container theContainer;
+        private InMemoryFubuRequest theRequest;
+        private Service theService;
+        private static bool WrappedBehaviorWasInvoked;
+        private static bool NextBehaviorWasInvoked;
+        private Wrapper theNode;
 
         private IActionBehavior behavior()
         {
@@ -60,13 +58,13 @@ namespace FubuMVC.Tests.Behaviors.Conditional
 
             public void Invoke()
             {
-                building_conditional_behaviors_from_object_defs_testing.WrappedBehaviorWasInvoked = true;
+                WrappedBehaviorWasInvoked = true;
                 if (InnerBehavior != null) InnerBehavior.Invoke();
             }
 
             public void InvokePartial()
             {
-                building_conditional_behaviors_from_object_defs_testing.WrappedBehaviorWasInvoked = true;
+                WrappedBehaviorWasInvoked = true;
                 if (InnerBehavior != null) InnerBehavior.InvokePartial();
             }
         }
@@ -77,25 +75,33 @@ namespace FubuMVC.Tests.Behaviors.Conditional
 
             public void Invoke()
             {
-                building_conditional_behaviors_from_object_defs_testing.NextBehaviorWasInvoked = true;
+                NextBehaviorWasInvoked = true;
             }
 
             public void InvokePartial()
             {
-                building_conditional_behaviors_from_object_defs_testing.NextBehaviorWasInvoked = true;
+                NextBehaviorWasInvoked = true;
             }
         }
 
-        [Test]
-        public void create_the_behavior_without_any_condition_or_diagnostics()
+        public class CustomConditional : IConditional
         {
-            var actionBehavior = behavior();
-            actionBehavior.ShouldBeOfType<MyBehavior>().InnerBehavior.ShouldBeOfType<FollowingBehavior>();
+            public static bool IsTrue;
 
-            actionBehavior.Invoke();
+            public bool ShouldExecute()
+            {
+                return IsTrue;
+            }
+        }
 
-            WrappedBehaviorWasInvoked.ShouldBeTrue();
-            NextBehaviorWasInvoked.ShouldBeTrue();
+        public class Service
+        {
+            public bool IsTrue;
+        }
+
+        public class Model
+        {
+            public bool IsTrue;
         }
 
         [Test]
@@ -104,7 +110,7 @@ namespace FubuMVC.Tests.Behaviors.Conditional
             theNode.Condition<CustomConditional>();
             var behavior = this.behavior();
 
-            var invoker= behavior.ShouldBeOfType<ConditionalBehaviorInvoker>();
+            var invoker = behavior.ShouldBeOfType<ConditionalBehaviorInvoker>();
             var conditionalBehavior = invoker.ConditionalBehavior.ShouldBeOfType<ConditionalBehavior>();
 
             conditionalBehavior.InnerBehavior.ShouldBeOfType<MyBehavior>();
@@ -114,14 +120,12 @@ namespace FubuMVC.Tests.Behaviors.Conditional
         }
 
         [Test]
-        public void execute_behavior_with_custom_conditional_positive_condition()
+        public void create_the_behavior_without_any_condition_or_diagnostics()
         {
-            CustomConditional.IsTrue = true;
-            theNode.Condition<CustomConditional>();
-            var behavior = this.behavior();
+            var actionBehavior = behavior();
+            actionBehavior.ShouldBeOfType<MyBehavior>().InnerBehavior.ShouldBeOfType<FollowingBehavior>();
 
-            behavior.Invoke();
-
+            actionBehavior.Invoke();
 
             WrappedBehaviorWasInvoked.ShouldBeTrue();
             NextBehaviorWasInvoked.ShouldBeTrue();
@@ -142,43 +146,14 @@ namespace FubuMVC.Tests.Behaviors.Conditional
         }
 
         [Test]
-        public void execute_behavior_with_straight_func_positive()
+        public void execute_behavior_with_custom_conditional_positive_condition()
         {
-            theNode.Condition(() => true);
-
+            CustomConditional.IsTrue = true;
+            theNode.Condition<CustomConditional>();
             var behavior = this.behavior();
 
             behavior.Invoke();
 
-
-            WrappedBehaviorWasInvoked.ShouldBeTrue();
-            NextBehaviorWasInvoked.ShouldBeTrue();
-        }
-
-        [Test]
-        public void execute_behavior_with_straight_func_negative()
-        {
-            theNode.Condition(() => false);
-
-            var behavior = this.behavior();
-
-            behavior.Invoke();
-
-
-            WrappedBehaviorWasInvoked.ShouldBeFalse();
-            NextBehaviorWasInvoked.ShouldBeTrue();
-        }
-
-        [Test]
-        public void execute_behavior_with_func_against_model_positive()
-        {
-            theRequest.Set(new Model(){
-                IsTrue = true
-            });
-
-            theNode.ConditionByModel<Model>(x => x.IsTrue);
-
-            behavior().Invoke();
 
             WrappedBehaviorWasInvoked.ShouldBeTrue();
             NextBehaviorWasInvoked.ShouldBeTrue();
@@ -188,8 +163,7 @@ namespace FubuMVC.Tests.Behaviors.Conditional
         [Test]
         public void execute_behavior_with_func_against_model_negative()
         {
-            theRequest.Set(new Model()
-            {
+            theRequest.Set(new Model{
                 IsTrue = false
             });
 
@@ -202,11 +176,13 @@ namespace FubuMVC.Tests.Behaviors.Conditional
         }
 
         [Test]
-        public void execute_behavior_with_func_against_service_positive()
+        public void execute_behavior_with_func_against_model_positive()
         {
-            theService.IsTrue = true;
+            theRequest.Set(new Model{
+                IsTrue = true
+            });
 
-            theNode.ConditionByService<Service>(x => x.IsTrue);
+            theNode.ConditionByModel<Model>(x => x.IsTrue);
 
             behavior().Invoke();
 
@@ -228,26 +204,45 @@ namespace FubuMVC.Tests.Behaviors.Conditional
             NextBehaviorWasInvoked.ShouldBeTrue();
         }
 
-
-
-        public class CustomConditional : IConditional
+        [Test]
+        public void execute_behavior_with_func_against_service_positive()
         {
-            public static bool IsTrue;
+            theService.IsTrue = true;
 
-            public bool ShouldExecute()
-            {
-                return IsTrue;
-            }
+            theNode.ConditionByService<Service>(x => x.IsTrue);
+
+            behavior().Invoke();
+
+            WrappedBehaviorWasInvoked.ShouldBeTrue();
+            NextBehaviorWasInvoked.ShouldBeTrue();
         }
 
-        public class Service
+        [Test]
+        public void execute_behavior_with_straight_func_negative()
         {
-            public bool IsTrue;
+            theNode.Condition(() => false);
+
+            var behavior = this.behavior();
+
+            behavior.Invoke();
+
+
+            WrappedBehaviorWasInvoked.ShouldBeFalse();
+            NextBehaviorWasInvoked.ShouldBeTrue();
         }
 
-        public class Model
+        [Test]
+        public void execute_behavior_with_straight_func_positive()
         {
-            public bool IsTrue;
+            theNode.Condition(() => true);
+
+            var behavior = this.behavior();
+
+            behavior.Invoke();
+
+
+            WrappedBehaviorWasInvoked.ShouldBeTrue();
+            NextBehaviorWasInvoked.ShouldBeTrue();
         }
     }
 }

@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
+using FubuCore.Binding.InMemory;
 using FubuMVC.Core;
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Security;
+using FubuMVC.Core.UI.Security;
 using FubuMVC.Diagnostics.Chrome;
 using FubuMVC.Diagnostics.Core.Configuration.Policies;
 using FubuMVC.Diagnostics.Core.Grids;
@@ -19,10 +22,13 @@ using FubuMVC.Diagnostics.Models;
 using FubuMVC.Diagnostics.Models.Grids;
 using FubuMVC.Diagnostics.Notifications;
 using FubuMVC.Diagnostics.Partials;
+using FubuMVC.Diagnostics.Runtime;
+using FubuMVC.Diagnostics.Runtime.Assets;
+using FubuMVC.Diagnostics.Runtime.Tracing;
 
 namespace FubuMVC.Diagnostics
 {
-    public class AdvancedDiagnosticsRegistry : FubuPackageRegistry
+    public class AdvancedDiagnosticsRegistry : FubuRegistry
     {
         public AdvancedDiagnosticsRegistry()
         {
@@ -36,7 +42,9 @@ namespace FubuMVC.Diagnostics
             ApplyHandlerConventions(markers => new DiagnosticsHandlerUrlPolicy(markers), typeof (DiagnosticsFeatures));
 
             Actions
-                .IncludeTypesNamed(x => x.EndsWith("Endpoint"));
+                .IncludeTypesNamed(x => x.EndsWith("Endpoint"))
+                .IncludeType<BasicAssetDiagnostics>();
+
 
             Routes
                 .UrlPolicy<DiagnosticsAttributeUrlPolicy>();
@@ -64,6 +72,25 @@ namespace FubuMVC.Diagnostics
         {
             Services(x =>
             {
+
+                x.SetServiceIfNone<IBindingLogger, RecordingBindingLogger>();
+                x.SetServiceIfNone<IDebugDetector, DebugDetector>();
+                x.SetServiceIfNone<IDebugCallHandler, DebugCallHandler>();
+                x.ReplaceService<IDebugReport, DebugReport>();
+                x.ReplaceService<IRequestObserver, RequestObserver>();
+                x.ReplaceService<IFubuRequest, RecordingFubuRequest>();
+                x.ReplaceService<IDebugDetector, DebugDetector>();
+                x.ReplaceService<IAuthorizationPolicyExecutor, RecordingAuthorizationPolicyExecutor>();
+                x.ReplaceService<IOutputWriter, RecordingOutputWriter>();
+                x.ReplaceService<IBindingHistory, BindingHistory>();
+                x.SetServiceIfNone<IRequestHistoryCache, RequestHistoryCache>();
+
+                // TODO -- UT this
+                x.AddService<IRequestHistoryCacheFilter, DiagnosticRequestHistoryCacheFilter>();
+
+                // TODO -- need to test this
+                x.ReplaceService<IFieldAccessRightsExecutor, RecordingFieldAccessRightsExecutor>();
+
                 // Typically you'd do this in your container but we're keeping this IoC-agnostic
                 x.SetServiceIfNone<IHttpConstraintResolver, HttpConstraintResolver>();
                 x.SetServiceIfNone<IRequestCacheModelBuilder, RequestCacheModelBuilder>();

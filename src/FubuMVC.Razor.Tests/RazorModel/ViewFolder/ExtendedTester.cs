@@ -4,8 +4,6 @@ using System.IO;
 using System.Linq;
 using Bottles;
 using FubuCore;
-using FubuMVC.Core.Diagnostics.Tracing;
-using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Model.Scanning;
 using FubuMVC.Core.View.Model.Sharing;
@@ -32,8 +30,8 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
 
         private readonly IFubuTemplateService _templateService;
 
-        private IServiceLocator _serviceLocator;
-        private ISharedTemplateLocator<IRazorTemplate> _sharedTemplateLocator; 
+        private readonly IServiceLocator _serviceLocator;
+        private readonly ISharedTemplateLocator<IRazorTemplate> _sharedTemplateLocator;
 
         public ExtendedTester()
         {
@@ -51,9 +49,11 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
             packages.Add(pack1);
             packages.Add(pack2);
 
-            var scanner = new TemplateFinder<Template>(new FileScanner(), packages) {HostPath = pathApp};
+            var scanner = new TemplateFinder<Template>(new FileScanner(), packages){
+                HostPath = pathApp
+            };
             new DefaultRazorTemplateFinderConventions().Configure(scanner);
-            
+
             var allTemplates = new TemplateRegistry<IRazorTemplate>();
             allTemplates.AddRange(scanner.FindInPackages());
             allTemplates.AddRange(scanner.FindInHost());
@@ -61,7 +61,9 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
             var viewPathPolicy = new ViewPathPolicy<IRazorTemplate>();
             allTemplates.Each(viewPathPolicy.Apply);
 
-            var config = new TemplateServiceConfiguration {BaseTemplateType = typeof (FubuRazorView)};
+            var config = new TemplateServiceConfiguration{
+                BaseTemplateType = typeof (FubuRazorView)
+            };
             _templateService = new FubuTemplateService(allTemplates, new TemplateService(config), new FileSystem());
 
             _pak1TemplateRegistry = new TemplateRegistry<IRazorTemplate>(allTemplates.ByOrigin(Package1));
@@ -73,18 +75,51 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
             var sharingGraph = new SharingGraph();
             sharingGraph.Dependency("Package1", "Host");
             sharingGraph.Dependency("Package2", "Host");
-            var templateDirectory = new TemplateDirectoryProvider<IRazorTemplate>(new SharedPathBuilder(), allTemplates, sharingGraph);
-            _sharedTemplateLocator = new SharedTemplateLocator<IRazorTemplate>(templateDirectory, allTemplates, new RazorTemplateSelector());
+            var templateDirectory = new TemplateDirectoryProvider<IRazorTemplate>(new SharedPathBuilder(), allTemplates,
+                                                                                  sharingGraph);
+            _sharedTemplateLocator = new SharedTemplateLocator<IRazorTemplate>(templateDirectory, allTemplates,
+                                                                               new RazorTemplateSelector());
         }
 
-        [Test]
-        public void host_views_are_located_correctly()
+        private string getViewSource(IRazorTemplate template)
         {
-            var one = _appTemplateRegistry.FirstByName("MacBook");
-            var footer = _appTemplateRegistry.FirstByName("_footer");
+            using (var stream = new FileStream(template.FilePath, FileMode.Open))
+            {
+                using (var reader = new StreamReader(stream))
+                {
+                    return reader.ReadToEnd();
+                }
+            }
+        }
 
-            getViewSource(one).ShouldEqual("MacBook");
-            getViewSource(footer).ShouldEqual("This is the footer");
+        private string renderTemplate(IRazorTemplate template, params IRazorTemplate[] templates)
+        {
+            var descriptor = new ViewDescriptor<IRazorTemplate>(template);
+            var current = descriptor;
+            for (var i = 0; i < templates.Length; ++i)
+            {
+                var layoutTemplate = templates[i];
+                var layout = new ViewDescriptor<IRazorTemplate>(layoutTemplate);
+                layoutTemplate.Descriptor = layout;
+                current.Master = templates[i];
+                current = layout;
+            }
+
+            var modifier = new ViewModifierService<IFubuRazorView>(Enumerable.Empty<IViewModifier<IFubuRazorView>>());
+            var viewFactory = new ViewFactory(descriptor, _templateService, modifier);
+            var view = (IFubuRazorView) viewFactory.GetView();
+            view.ServiceLocator = _serviceLocator;
+            view.RenderPartialWith = name =>
+            {
+                var partialTemplate = _sharedTemplateLocator.LocatePartial(name, view.OriginTemplate);
+                partialTemplate.Descriptor = new ViewDescriptor<IRazorTemplate>(partialTemplate);
+                var partialView =
+                    _templateService.GetView(partialTemplate.Descriptor.As<ViewDescriptor<IRazorTemplate>>());
+
+                var partialRendered = partialView.Run(new ExecuteContext());
+                return new TemplateWriter(x => x.Write(partialRendered));
+            };
+            return view.Run(new ExecuteContext());
         }
 
         [Test]
@@ -108,36 +143,29 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
         }
 
         [Test]
+        public void host_views_are_isolated_from_packages()
+        {
+            var noLuck = _appTemplateRegistry.FirstByName("NoLuck");
+            getViewSource(noLuck).ShouldEqual("Will @Include(\"fail\")");
+            Exception<NullReferenceException>.ShouldBeThrownBy(() => renderTemplate(noLuck));
+        }
+
+        [Test]
+        public void host_views_are_located_correctly()
+        {
+            var one = _appTemplateRegistry.FirstByName("MacBook");
+            var footer = _appTemplateRegistry.FirstByName("_footer");
+
+            getViewSource(one).ShouldEqual("MacBook");
+            getViewSource(footer).ShouldEqual("This is the footer");
+        }
+
+        [Test]
         public void the_correct_number_of_templates_are_resolved()
         {
             _appTemplateRegistry.ShouldHaveCount(10);
             _pak1TemplateRegistry.ShouldHaveCount(10);
             _pak2TemplateRegistry.ShouldHaveCount(8);
-        }
-
-        [Test]
-        public void views_with_same_path_are_resolved_correctly()
-        {
-            var hostView = _appTemplateRegistry.FirstByName("_samePath");
-            var pak1View = _pak1TemplateRegistry.FirstByName("_samePath");
-            var pak2View = _pak2TemplateRegistry.FirstByName("_samePath");
-
-            getViewSource(hostView).ShouldEqual("Host _samePath.cshtml");
-            getViewSource(pak1View).ShouldEqual("Package1 _samePath.cshtml");
-            getViewSource(pak2View).ShouldEqual("Package2 _samePath.cshtml");
-        }
-
-        [Test]
-        public void views_from_packages_can_refer_to_other_views_from_the_same_package()
-        {
-            var tresView = _pak1TemplateRegistry.FirstByName("SerieW");
-            var treView = _pak2TemplateRegistry.FirstByName("Xps");
-
-            getViewSource(tresView).ShouldEqual("@Include(\"header\") SerieW");
-            renderTemplate(tresView).ShouldEqual("Lenovo Header SerieW");
-            
-            getViewSource(treView).ShouldEqual("Xps @Include(\"footer\")");
-            renderTemplate(treView).ShouldEqual("Xps Dell footer");
         }
 
         [Test]
@@ -150,14 +178,6 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
         }
 
         [Test]
-        public void host_views_are_isolated_from_packages()
-        {
-            var noLuck = _appTemplateRegistry.FirstByName("NoLuck");
-            getViewSource(noLuck).ShouldEqual("Will @Include(\"fail\")");
-            Exception<NullReferenceException>.ShouldBeThrownBy(() => renderTemplate(noLuck));
-        }
-
-        [Test]
         public void views_from_packages_are_isolated_among_packages()
         {
             var dosView = _pak1TemplateRegistry.FirstByName("SerieT");
@@ -165,9 +185,22 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
 
             getViewSource(dosView).ShouldEqual("SerieT @Include(\"dell\")");
             Exception<NullReferenceException>.ShouldBeThrownBy(() => renderTemplate(dosView));
-            
+
             getViewSource(dueView).ShouldEqual("Inspiron @Include(\"lenovo\")");
             Exception<NullReferenceException>.ShouldBeThrownBy(() => renderTemplate(dueView));
+        }
+
+        [Test]
+        public void views_from_packages_can_refer_to_other_views_from_the_same_package()
+        {
+            var tresView = _pak1TemplateRegistry.FirstByName("SerieW");
+            var treView = _pak2TemplateRegistry.FirstByName("Xps");
+
+            getViewSource(tresView).ShouldEqual("@Include(\"header\") SerieW");
+            renderTemplate(tresView).ShouldEqual("Lenovo Header SerieW");
+
+            getViewSource(treView).ShouldEqual("Xps @Include(\"footer\")");
+            renderTemplate(treView).ShouldEqual("Xps Dell footer");
         }
 
         [Test]
@@ -190,49 +223,21 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
             var master = _pak1TemplateRegistry.FirstByName("Maker");
 
             getViewSource(cuatroView).ShouldEqual("@{ _Layout = \"Maker\"; } SerieX");
-            string template = renderTemplate(cuatroView, master);
+            var template = renderTemplate(cuatroView, master);
             template.ShouldStartWith("Lenovo");
             template.ShouldEndWith("SerieX");
         }
 
-        private string getViewSource(IRazorTemplate template)
+        [Test]
+        public void views_with_same_path_are_resolved_correctly()
         {
-            using (var stream = new FileStream(template.FilePath, FileMode.Open))
-            {
-                using (var reader = new StreamReader(stream))
-                {
-                    return reader.ReadToEnd();
-                }
-            }
-        }
+            var hostView = _appTemplateRegistry.FirstByName("_samePath");
+            var pak1View = _pak1TemplateRegistry.FirstByName("_samePath");
+            var pak2View = _pak2TemplateRegistry.FirstByName("_samePath");
 
-        private string renderTemplate(IRazorTemplate template, params IRazorTemplate[] templates)
-        {
-            var descriptor = new ViewDescriptor<IRazorTemplate>(template);
-            var current = descriptor;
-            for(int i = 0; i < templates.Length; ++i)
-            {
-                var layoutTemplate = templates[i];
-                var layout = new ViewDescriptor<IRazorTemplate>(layoutTemplate);
-                layoutTemplate.Descriptor = layout;
-                current.Master = templates[i];
-                current = layout;
-            }
-
-            var modifier = new ViewModifierService<IFubuRazorView>(Enumerable.Empty<IViewModifier<IFubuRazorView>>());
-            var viewFactory = new ViewFactory(descriptor, _templateService, modifier);
-            var view = (IFubuRazorView) viewFactory.GetView();
-            view.ServiceLocator = _serviceLocator;
-            view.RenderPartialWith = name =>
-            {
-                var partialTemplate = _sharedTemplateLocator.LocatePartial(name, view.OriginTemplate);
-                partialTemplate.Descriptor = new ViewDescriptor<IRazorTemplate>(partialTemplate);
-                var partialView = _templateService.GetView(partialTemplate.Descriptor.As<ViewDescriptor<IRazorTemplate>>());
-
-                var partialRendered = partialView.Run(new ExecuteContext());
-                return new TemplateWriter(x => x.Write(partialRendered));
-            };
-            return view.Run(new ExecuteContext());
+            getViewSource(hostView).ShouldEqual("Host _samePath.cshtml");
+            getViewSource(pak1View).ShouldEqual("Package1 _samePath.cshtml");
+            getViewSource(pak2View).ShouldEqual("Package2 _samePath.cshtml");
         }
     }
 }

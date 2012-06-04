@@ -115,8 +115,6 @@ namespace FubuMVC.Tests
 
             Actions.IncludeClassesSuffixedWithController();
 
-            IncludeDiagnostics(true);
-
             Views.TryToAttachWithDefaultConventions();
         }
     }

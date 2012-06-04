@@ -1,32 +1,31 @@
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using FubuMVC.Core;
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
-using NUnit.Framework;
 using FubuTestingSupport;
-using System.Linq;
+using NUnit.Framework;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
     [TestFixture]
     public class MethodToUrlBuilderIntegratedTester
     {
-        private BehaviorChain theChain;
+        #region Setup/Teardown
 
         [SetUp]
         public void SetUp()
         {
-            var graph = new FubuRegistry(x =>
-            {
-                x.Actions.IncludeType<MethodAction>();
-
-            }).BuildGraph();
+            var graph = new FubuRegistry(x => { x.Actions.IncludeType<MethodAction>(); }).BuildGraph();
 
             theChain = graph.BehaviorFor<MethodAction>(x => x.Get_cases_from_Start_to_End(null));
         }
+
+        #endregion
+
+        private BehaviorChain theChain;
 
         [Test]
         public void the_chain_has_the_http_method_constraint()
@@ -51,9 +50,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             parameters["End"] = "5";
 
             input.CreateUrlFromParameters(parameters).ShouldEqual("cases/from/2/to/5");
-            
         }
-
     }
 
     public class MethodAction
@@ -66,17 +63,15 @@ namespace FubuMVC.Tests.Registration.Conventions
 
     public class MethodInput
     {
-        public int Start { get; set;}
-        public int End { get; set;}
+        public int Start { get; set; }
+        public int End { get; set; }
     }
 
 
     [TestFixture]
     public class MethodToUrlBuilderTester
     {
-        private List<string> theProperties;
-        private RouteDefinition theRoute;
-        private string baseRoute;
+        #region Setup/Teardown
 
         [SetUp]
         public void SetUp()
@@ -85,16 +80,19 @@ namespace FubuMVC.Tests.Registration.Conventions
             theRoute = new RouteDefinition("");
         }
 
-        [Test]
-        public void matches_negative()
-        {
-            MethodToUrlBuilder.Matches("somethingelse").ShouldBeFalse();
-        }
+        #endregion
+
+        private List<string> theProperties;
+        private RouteDefinition theRoute;
+        private string baseRoute;
 
         [Test]
-        public void matches_positive()
+        public void allow_get_as_a_prefix()
         {
-            MethodToUrlBuilder.Matches("get_this").ShouldBeTrue();
+            MethodToUrlBuilder.Alter(theRoute, "GetPath", theProperties, x => Debug.WriteLine(x));
+
+            theRoute.Pattern.ShouldEqual("getpath");
+            theRoute.AllowedHttpMethods.Any().ShouldBeFalse();
         }
 
         [Test]
@@ -104,15 +102,6 @@ namespace FubuMVC.Tests.Registration.Conventions
 
             theRoute.Pattern.ShouldEqual("path");
             theRoute.AllowedHttpMethods.ShouldHaveTheSameElementsAs("GET");
-        }
-
-        [Test]
-        public void allow_get_as_a_prefix()
-        {
-            MethodToUrlBuilder.Alter(theRoute, "GetPath", theProperties, x => Debug.WriteLine(x));
-
-            theRoute.Pattern.ShouldEqual("getpath");
-            theRoute.AllowedHttpMethods.Any().ShouldBeFalse();
         }
 
         [Test]
@@ -134,34 +123,29 @@ namespace FubuMVC.Tests.Registration.Conventions
         }
 
         [Test]
-        public void use_separators_for_underscores_if_not_a_route_input()
-        {
-            MethodToUrlBuilder.Alter(theRoute, "path_folder1_folder2", theProperties, x => Debug.WriteLine(x));
-
-            theRoute.Pattern.ShouldEqual("path/folder1/folder2");
-        }
-
-        [Test]
-        public void use_separator_and_substitution_for_matching_property()
-        {
-            theProperties.Add("Input1");
-            MethodToUrlBuilder.Alter(theRoute, "path_Input1_folder", theProperties, x => Debug.WriteLine(x));
-
-            theRoute.Pattern.ShouldEqual("path/{Input1}/folder");
-        }
-
-        [Test]
         public void http_verb_only_should_not_modify_route()
         {
             const string originalRoute = "base/route";
             theRoute.Append(originalRoute);
-       
+
             MethodToUrlBuilder.Alter(theRoute, "get", theProperties, x => Debug.WriteLine(x));
 
             theRoute.Pattern.ShouldEqual(originalRoute);
             theRoute.AllowedHttpMethods.ShouldContain("GET");
         }
-        
+
+        [Test]
+        public void matches_negative()
+        {
+            MethodToUrlBuilder.Matches("somethingelse").ShouldBeFalse();
+        }
+
+        [Test]
+        public void matches_positive()
+        {
+            MethodToUrlBuilder.Matches("get_this").ShouldBeTrue();
+        }
+
         [Test]
         public void multiple_substitutions()
         {
@@ -185,6 +169,21 @@ namespace FubuMVC.Tests.Registration.Conventions
             theRoute.AllowedHttpMethods.ShouldContain("GET");
         }
 
-    }
+        [Test]
+        public void use_separator_and_substitution_for_matching_property()
+        {
+            theProperties.Add("Input1");
+            MethodToUrlBuilder.Alter(theRoute, "path_Input1_folder", theProperties, x => Debug.WriteLine(x));
 
+            theRoute.Pattern.ShouldEqual("path/{Input1}/folder");
+        }
+
+        [Test]
+        public void use_separators_for_underscores_if_not_a_route_input()
+        {
+            MethodToUrlBuilder.Alter(theRoute, "path_folder1_folder2", theProperties, x => Debug.WriteLine(x));
+
+            theRoute.Pattern.ShouldEqual("path/folder1/folder2");
+        }
+    }
 }

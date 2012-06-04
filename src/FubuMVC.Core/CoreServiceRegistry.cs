@@ -5,10 +5,7 @@ using FubuCore.Conversion;
 using FubuCore.Formatting;
 using FubuCore.Reflection;
 using FubuMVC.Core.Behaviors;
-using FubuMVC.Core.Behaviors.Conditional;
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Resources.Etags;
 using FubuMVC.Core.Routing;
@@ -28,7 +25,7 @@ namespace FubuMVC.Core
             SetServiceIfNone(new Stringifier());
             AddService(new TypeDescriptorCache());
 
-
+            SetServiceIfNone<IRequestObserver, NulloRequestObserver>();
             SetServiceIfNone<IOutputWriter, OutputWriter>();
 
             SetServiceIfNone<IUrlRegistry, UrlRegistry>();
@@ -65,7 +62,6 @@ namespace FubuMVC.Core
             SetServiceIfNone<IObjectConverter, ObjectConverter>();
 
             SetServiceIfNone<ISmartRequest, FubuSmartRequest>();
-
 
 
             AddService<IActivator>(typeof (DisplayConversionRegistryActivator));

@@ -1,5 +1,5 @@
 using System;
-using FubuMVC.Core.Diagnostics;
+using FubuMVC.Diagnostics.Runtime;
 
 namespace FubuMVC.Diagnostics
 {

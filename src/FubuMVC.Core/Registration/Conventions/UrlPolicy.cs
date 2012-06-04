@@ -5,9 +5,9 @@ using System.Reflection;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuCore.Util;
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
@@ -80,7 +80,7 @@ namespace FubuMVC.Core.Registration.Conventions
         public void AddMethodName(IRouteDefinition route, ActionCall call)
         {
             if (_ignoredMethodNames.Contains(call.Method.Name.ToLower())) return;
-            
+
             var urlPart = _methodNameBuilder.Build(call.Method);
             if (urlPart.IsNotEmpty())
             {

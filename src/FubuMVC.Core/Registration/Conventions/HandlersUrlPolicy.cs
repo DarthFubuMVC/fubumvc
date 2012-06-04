@@ -4,9 +4,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using FubuCore;
 using FubuCore.Reflection;
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
@@ -38,9 +38,9 @@ namespace FubuMVC.Core.Registration.Conventions
         {
             var routeDefinition = call.ToRouteDefinition();
             var strippedNamespace = stripNamespace(call);
-            
+
             visit(routeDefinition);
-            
+
             if (strippedNamespace != call.HandlerType.Namespace)
             {
                 if (!strippedNamespace.Contains("."))
@@ -49,7 +49,7 @@ namespace FubuMVC.Core.Registration.Conventions
                 }
                 else
                 {
-                    var patternParts = strippedNamespace.Split(new[] { "." }, StringSplitOptions.None);
+                    var patternParts = strippedNamespace.Split(new[]{"."}, StringSplitOptions.None);
                     foreach (var patternPart in patternParts)
                     {
                         routeDefinition.Append(breakUpCamelCaseWithHypen(patternPart.Trim()));
@@ -64,8 +64,8 @@ namespace FubuMVC.Core.Registration.Conventions
                 // We're forcing handlers to end with "_handler" in this case
                 handlerName = handlerName.Substring(0, match.Index);
                 var properties = call.HasInput
-                                 ? new TypeDescriptorCache().GetPropertiesFor(call.InputType()).Keys
-                                 : new string[0];
+                                     ? new TypeDescriptorCache().GetPropertiesFor(call.InputType()).Keys
+                                     : new string[0];
 
 
                 MethodToUrlBuilder.Alter(routeDefinition, handlerName, properties, text => { });
@@ -96,12 +96,12 @@ namespace FubuMVC.Core.Registration.Conventions
 
             _markerTypes
                 .Each(marker =>
-                          {
-                              strippedNamespace = call
-                                  .HandlerType
-                                  .Namespace
-                                  .Replace(marker.Namespace + ".", string.Empty);
-                          });
+                {
+                    strippedNamespace = call
+                        .HandlerType
+                        .Namespace
+                        .Replace(marker.Namespace + ".", string.Empty);
+                });
 
             return strippedNamespace;
         }
@@ -109,7 +109,7 @@ namespace FubuMVC.Core.Registration.Conventions
         private static string breakUpCamelCaseWithHypen(string input)
         {
             var routeBuilder = new StringBuilder();
-            for (int i = 0; i < input.Length; ++i)
+            for (var i = 0; i < input.Length; ++i)
             {
                 if (i != 0 && char.IsUpper(input[i]))
                 {
@@ -126,7 +126,8 @@ namespace FubuMVC.Core.Registration.Conventions
 
         public static bool IsHandlerCall(ActionCall call)
         {
-            var isHandler = call.HandlerType.Name.ToLower().EndsWith(HANDLER.ToLower()) || HandlerExpression.IsMatch(call.HandlerType.Name);
+            var isHandler = call.HandlerType.Name.ToLower().EndsWith(HANDLER.ToLower()) ||
+                            HandlerExpression.IsMatch(call.HandlerType.Name);
             return isHandler && !call.Method.HasAttribute<UrlPatternAttribute>();
         }
     }

@@ -1,20 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Routing;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Caching;
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
-using FubuMVC.Core.View;
-using FubuMVC.Core.View.Attachment;
+using FubuMVC.Core.Runtime;
 using FubuMVC.StructureMap;
-using FubuMVC.Tests.Diagnostics;
 using FubuMVC.Tests.Urls;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -66,7 +62,10 @@ namespace FubuMVC.Tests.Registration.Expressions
                 _inner = inner;
             }
 
-            public IActionBehavior Inner { get { return _inner; } }
+            public IActionBehavior Inner
+            {
+                get { return _inner; }
+            }
 
             public void Invoke()
             {
@@ -81,19 +80,18 @@ namespace FubuMVC.Tests.Registration.Expressions
         [Test]
         public void all_behaviors_chains_should_start_with_the_declared_behavior()
         {
-            BehaviorGraph graph = registry.BuildLightGraph();
+            var graph = registry.BuildLightGraph();
 
             graph.Behaviors.Count().ShouldEqual(3);
             var visitor = new BehaviorVisitor(new NulloConfigurationObserver(), "");
             visitor.Actions += chain =>
             {
                 var wrapper = chain.Top.ShouldBeOfType<Wrapper>();
-                wrapper.BehaviorType.ShouldEqual(typeof(FakeUnitOfWorkBehavior));
+                wrapper.BehaviorType.ShouldEqual(typeof (FakeUnitOfWorkBehavior));
                 wrapper.Next.ShouldBeOfType<ActionCall>();
             };
 
             graph.VisitBehaviors(visitor);
-
         }
 
         [Test]
@@ -104,7 +102,9 @@ namespace FubuMVC.Tests.Registration.Expressions
                 x.For<IStreamingData>().Use(MockRepository.GenerateMock<IStreamingData>());
                 x.For<IHttpWriter>().Use(new NulloHttpWriter());
                 x.For<ICurrentChain>().Use(new CurrentChain(null, null));
-                x.For<ICurrentHttpRequest>().Use(new StubCurrentHttpRequest { TheApplicationRoot = "http://server" });
+                x.For<ICurrentHttpRequest>().Use(new StubCurrentHttpRequest{
+                    TheApplicationRoot = "http://server"
+                });
             });
 
             FubuApplication.For(() => registry).StructureMap(container).Bootstrap();
@@ -117,7 +117,7 @@ namespace FubuMVC.Tests.Registration.Expressions
                 // Don't mess with the asset content chain
                 if (x is OutputCachingBehavior) return;
 
-                if (x.GetType().Closes(typeof(InputBehavior<>)))
+                if (x.GetType().Closes(typeof (InputBehavior<>)))
                 {
                     x.As<BasicBehavior>().InsideBehavior.ShouldBeOfType<FakeUnitOfWorkBehavior>().Inner.ShouldNotBeNull();
                 }
@@ -125,8 +125,6 @@ namespace FubuMVC.Tests.Registration.Expressions
                 {
                     x.ShouldBeOfType<FakeUnitOfWorkBehavior>().Inner.ShouldNotBeNull();
                 }
-
-                
             });
         }
     }

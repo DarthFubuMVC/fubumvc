@@ -40,8 +40,6 @@ namespace FubuMVC.Tests.Bugs
         public CustomFubuRegistry() : this(false) { }
         public CustomFubuRegistry(bool diagnostics)
         {
-            IncludeDiagnostics(diagnostics);
-
             Applies.ToThisAssembly();
 
             Actions

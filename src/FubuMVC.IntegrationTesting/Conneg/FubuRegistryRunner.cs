@@ -124,7 +124,6 @@ namespace FubuMVC.IntegrationTesting.Conneg
             return FubuApplication.For(() =>
             {
                 var registry = new FubuRegistry();
-                registry.IncludeDiagnostics(true);
                 registry.Actions.IncludeType<GraphQuery>();
 
                 _configuration(registry);

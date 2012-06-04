@@ -14,7 +14,7 @@ namespace FubuMVC.Diagnostics.Tests
                                                 {
                                                     x.Applies.ToThisAssembly();
                                                     x.Actions.IncludeType<ControllerWithoutANamespace>();
-                                                    x.Import<AdvancedDiagnosticsRegistry>();
+                                                    x.Import<DiagnosticsRegistration>();
                                                 });
             // basically just make sure nothing blows up
             registry

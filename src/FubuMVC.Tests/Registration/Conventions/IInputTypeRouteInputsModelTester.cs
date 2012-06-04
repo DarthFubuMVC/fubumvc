@@ -2,11 +2,11 @@ using System;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core;
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
+using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                     .IgnoreNamespaceForUrlFrom<SpecialMessage>()
                     .ForInputTypesOf<SpecialMessage>(o => o.RouteInputFor(y => y.Id))
                     .IgnoreSpecificInputForInputTypeAndMethod<SpecialRouteInputTestingMessage>(
-                    c => c.Method.Name == "NoId", o => o.Id);
+                        c => c.Method.Name == "NoId", o => o.Id);
             }).BuildGraph();
         }
 
@@ -93,20 +93,25 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void
             each_route_with_the_input_type_matching_the_policy_should_have_the_route_inputs_specified_in_the_convention()
         {
-            graph.BehaviorFor<SpecialController>(x => x.Go1(null)).Route.Input.As<RouteInput<InputModel>>().RouteParameters.Count.
+            graph.BehaviorFor<SpecialController>(x => x.Go1(null)).Route.Input.As<RouteInput<InputModel>>().
+                RouteParameters.Count.
                 ShouldEqual(0);
-            graph.BehaviorFor<SpecialController>(x => x.Go2(null)).Route.Input.As<RouteInput<SpecialMessage1>>().RouteParameters.
+            graph.BehaviorFor<SpecialController>(x => x.Go2(null)).Route.Input.As<RouteInput<SpecialMessage1>>().
+                RouteParameters.
                 Select(x => x.Name).ShouldHaveTheSameElementsAs("Id");
-            graph.BehaviorFor<SpecialController>(x => x.Go3(null)).Route.Input.As<RouteInput<SpecialMessage2>>().RouteParameters.
+            graph.BehaviorFor<SpecialController>(x => x.Go3(null)).Route.Input.As<RouteInput<SpecialMessage2>>().
+                RouteParameters.
                 Select(x => x.Name).ShouldHaveTheSameElementsAs("Id");
-            graph.BehaviorFor<SpecialController>(x => x.Go4(null)).Route.Input.As<RouteInput<SpecialMessage3>>().RouteParameters.
+            graph.BehaviorFor<SpecialController>(x => x.Go4(null)).Route.Input.As<RouteInput<SpecialMessage3>>().
+                RouteParameters.
                 Select(x => x.Name).ShouldHaveTheSameElementsAs("Id");
         }
 
         [Test]
         public void the_url_pattern_should_include_ExtraParam_for_NeedsId_action()
         {
-            graph.BehaviorFor<SpecialController>(x => x.NeedsId(null)).Route.Pattern.ShouldEqual("special/needsid/{Id}/{ExtraParam}");
+            graph.BehaviorFor<SpecialController>(x => x.NeedsId(null)).Route.Pattern.ShouldEqual(
+                "special/needsid/{Id}/{ExtraParam}");
         }
 
         [Test]
@@ -119,7 +124,8 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void the_url_pattern_should_include_id_for_NeedsId_action()
         {
-            graph.BehaviorFor<SpecialController>(x => x.NeedsId(null)).Route.Pattern.ShouldEqual("special/needsid/{Id}/{ExtraParam}");
+            graph.BehaviorFor<SpecialController>(x => x.NeedsId(null)).Route.Pattern.ShouldEqual(
+                "special/needsid/{Id}/{ExtraParam}");
         }
 
         [Test]
@@ -142,6 +148,37 @@ namespace FubuMVC.Tests.Registration.Conventions
     [TestFixture]
     public class when_registering_home
     {
+        #region Setup/Teardown
+
+        [SetUp]
+        public void SetUp()
+        {
+            graphWithMethodHome = new FubuRegistry(x =>
+            {
+                x.Actions.IncludeClassesSuffixedWithController();
+                x.Routes.HomeIs<OneController>(c => c.Home());
+            }).BuildGraph();
+
+            graphWithModelHome = new FubuRegistry(x =>
+            {
+                x.Actions.IncludeClassesSuffixedWithController();
+                x.Routes.HomeIs<SimpleInputModel>();
+            }).BuildGraph();
+
+            graphWithoutHome = new FubuRegistry(x => x.Actions.IncludeClassesSuffixedWithController()).BuildGraph();
+
+            graphWithHomeAndUrlPolicy = new FubuRegistry(x =>
+            {
+                x.Actions.IncludeClassesSuffixedWithController();
+
+                x.Routes
+                    .UrlPolicy<AllEncompassingUrlPolicy>()
+                    .HomeIs<SimpleInputModel>();
+            }).BuildGraph();
+        }
+
+        #endregion
+
         private BehaviorGraph graphWithMethodHome;
         private BehaviorGraph graphWithModelHome;
         private BehaviorGraph graphWithoutHome;
@@ -149,22 +186,26 @@ namespace FubuMVC.Tests.Registration.Conventions
 
         public class OneController
         {
-            public void Home() { }
+            public void Home()
+            {
+            }
 
             public SimpleOutputModel HomeWithInputOutput(SimpleInputModel model)
             {
                 return new SimpleOutputModel();
             }
         }
-        public class SimpleOutputModel {}
-        public class SimpleInputModel {}
+
+        public class SimpleOutputModel
+        {
+        }
+
+        public class SimpleInputModel
+        {
+        }
+
         public class AllEncompassingUrlPolicy : IUrlPolicy
         {
-            public bool Matches(ActionCall call, IConfigurationObserver log)
-            {
-                return call.HandlerType.Name.EndsWith("Controller");
-            }
-
             public IRouteDefinition Build(ActionCall call)
             {
                 var route = call.ToRouteDefinition();
@@ -172,40 +213,19 @@ namespace FubuMVC.Tests.Registration.Conventions
                 route.Append(call.Method.Name);
                 return route;
             }
-        }
 
-        [SetUp]
-        public void SetUp()
-        {
-            graphWithMethodHome = new FubuRegistry(x =>
-                {
-                    x.Actions.IncludeClassesSuffixedWithController();
-                    x.Routes.HomeIs<OneController>(c => c.Home());
-                }).BuildGraph();
-
-            graphWithModelHome = new FubuRegistry(x =>
-                {
-                    x.Actions.IncludeClassesSuffixedWithController();
-                    x.Routes.HomeIs<SimpleInputModel>();
-                }).BuildGraph();
-
-            graphWithoutHome = new FubuRegistry(x => x.Actions.IncludeClassesSuffixedWithController()).BuildGraph();
-
-            graphWithHomeAndUrlPolicy = new FubuRegistry(x =>
-                {
-                    x.Actions.IncludeClassesSuffixedWithController();
-
-                    x.Routes
-                        .UrlPolicy<AllEncompassingUrlPolicy>()
-                        .HomeIs<SimpleInputModel>();
-                }).BuildGraph();
+            public bool Matches(ActionCall call, IConfigurationObserver log)
+            {
+                return call.HandlerType.Name.EndsWith("Controller");
+            }
         }
 
         [Test]
         public void home_route_definition_pattern_should_be_empty()
         {
             var homeDefinition1 = graphWithMethodHome.BehaviorFor<OneController>(c => c.Home());
-            var homeDefinition2 = graphWithModelHome.BehaviorFor<OneController>(c => c.HomeWithInputOutput(new SimpleInputModel()));
+            var homeDefinition2 =
+                graphWithModelHome.BehaviorFor<OneController>(c => c.HomeWithInputOutput(new SimpleInputModel()));
             var notHomeDefinition = graphWithoutHome.BehaviorFor<OneController>(c => c.Home());
             homeDefinition1.Route.Pattern.ShouldEqual("");
             homeDefinition2.Route.Pattern.ShouldEqual("");
@@ -215,7 +235,8 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void home_url_policy_registration_should_be_higher_priority()
         {
-            var homeDefinition = graphWithHomeAndUrlPolicy.BehaviorFor<OneController>(c => c.HomeWithInputOutput(new SimpleInputModel()));
+            var homeDefinition =
+                graphWithHomeAndUrlPolicy.BehaviorFor<OneController>(c => c.HomeWithInputOutput(new SimpleInputModel()));
             homeDefinition.Route.Pattern.ShouldEqual("");
         }
     }

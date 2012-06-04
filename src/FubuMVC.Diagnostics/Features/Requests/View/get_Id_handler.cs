@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuCore.Util;
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Diagnostics.Features.Chains.View;
+using FubuMVC.Diagnostics.Runtime;
 
 namespace FubuMVC.Diagnostics.Features.Requests.View
 {

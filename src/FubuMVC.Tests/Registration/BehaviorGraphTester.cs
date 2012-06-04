@@ -6,12 +6,9 @@ using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
-using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
-using FubuMVC.Core.Runtime;
-using FubuMVC.Tests.Diagnostics;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -33,6 +30,23 @@ namespace FubuMVC.Tests.Registration
         {
         }
 
+        public class MyHomeController
+        {
+            public string ThisIsHome()
+            {
+                return string.Empty;
+            }
+
+            public string ThisIsAnotherAction(MyRequestModel request)
+            {
+                return string.Empty;
+            }
+        }
+
+        public class MyRequestModel
+        {
+        }
+
         [Test]
         public void RegisterService_can_be_called_multiple_times_to_store_multiple_implementations()
         {
@@ -41,7 +55,8 @@ namespace FubuMVC.Tests.Registration
             graph.Services.AddService<IRequestData, InMemoryRequestData>();
 
             var implementations = new List<Type>();
-            graph.As<IRegisterable>().Register((t, def) => { if (t == typeof (IRequestData)) implementations.Add(def.Type); });
+            graph.As<IRegisterable>().Register(
+                (t, def) => { if (t == typeof (IRequestData)) implementations.Add(def.Type); });
 
             implementations.ShouldContain(typeof (RequestData));
             implementations.ShouldContain(typeof (InMemoryRequestData));
@@ -66,18 +81,6 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
-        public void find_home_is_not_set()
-        {
-            var graph = new FubuRegistry(x =>
-            {
-                x.Applies.ToThisAssembly();
-                x.Actions.IncludeClassesSuffixedWithController();
-            }).BuildGraph();
-
-            graph.FindHomeChain().ShouldBeNull();
-        }
-
-        [Test]
         public void find_home_is_not_null()
         {
             var graph = new FubuRegistry(x =>
@@ -91,42 +94,29 @@ namespace FubuMVC.Tests.Registration
             graph.FindHomeChain().FirstCall().Method.Name.ShouldEqual("ThisIsHome");
         }
 
-        public class MyHomeController
-        {
-            public string ThisIsHome()
-            {
-                return string.Empty;
-            }
-
-            public string ThisIsAnotherAction(MyRequestModel request)
-            {
-                return string.Empty;
-            }
-        }
-
-        public class MyRequestModel {}
-
-
-
         [Test]
-        public void the_first_call_to_RegisterService_for_a_type_registers_the_default()
+        public void find_home_is_not_set()
         {
-            var graph = new BehaviorGraph(null);
-            graph.Services.AddService<IRequestData, RequestData>();
-            graph.Services.DefaultServiceFor<IRequestData>().Type.ShouldEqual(typeof (RequestData));
+            var graph = new FubuRegistry(x =>
+            {
+                x.Applies.ToThisAssembly();
+                x.Actions.IncludeClassesSuffixedWithController();
+            }).BuildGraph();
+
+            graph.FindHomeChain().ShouldBeNull();
         }
 
         [Test]
         public void should_remove_chain()
         {
             var graph = new FubuRegistry(x =>
-                                             {
-                                                 x.Applies.ToThisAssembly();
-                                                 x.Actions.IncludeClassesSuffixedWithController();
+            {
+                x.Applies.ToThisAssembly();
+                x.Actions.IncludeClassesSuffixedWithController();
 
-                                                 x.Routes.HomeIs<MyHomeController>(c => c.ThisIsHome());
-                                             }).BuildGraph();
-            
+                x.Routes.HomeIs<MyHomeController>(c => c.ThisIsHome());
+            }).BuildGraph();
+
             var chain = graph.FindHomeChain();
             graph.RemoveChain(chain);
 
@@ -135,8 +125,40 @@ namespace FubuMVC.Tests.Registration
                 .ShouldNotContain(chain);
         }
 
+        [Test]
+        public void the_first_call_to_RegisterService_for_a_type_registers_the_default()
+        {
+            var graph = new BehaviorGraph(null);
+            graph.Services.AddService<IRequestData, RequestData>();
+            graph.Services.DefaultServiceFor<IRequestData>().Type.ShouldEqual(typeof (RequestData));
+        }
     }
 
+    public class WrappingBehavior : IActionBehavior
+    {
+        public void Invoke()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InvokePartial()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class WrappingBehavior2 : IActionBehavior
+    {
+        public void Invoke()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InvokePartial()
+        {
+            throw new NotImplementedException();
+        }
+    }
 
     [TestFixture]
     public class when_finding_the_id_for_a_call

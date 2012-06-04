@@ -1,8 +1,8 @@
 using FubuCore;
 using FubuCore.Reflection;
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
@@ -12,11 +12,11 @@ namespace FubuMVC.Core.Registration.Conventions
         {
             var result = call.Method.HasAttribute<UrlPatternAttribute>();
 
-            if( result && log.IsRecording )
+            if (result && log.IsRecording)
             {
-                log.RecordCallStatus(call, 
-                    "Action '{0}' has the [{1}] defined. Using explicitly defined URL pattern."
-                    .ToFormat(call.Method.Name, typeof(UrlPatternAttribute).Name));
+                log.RecordCallStatus(call,
+                                     "Action '{0}' has the [{1}] defined. Using explicitly defined URL pattern."
+                                         .ToFormat(call.Method.Name, typeof (UrlPatternAttribute).Name));
             }
 
             return result;
@@ -26,8 +26,6 @@ namespace FubuMVC.Core.Registration.Conventions
         {
             var pattern = call.Method.GetAttribute<UrlPatternAttribute>().Pattern;
             return call.BuildRouteForPattern(pattern);
-   
-
         }
     }
 }

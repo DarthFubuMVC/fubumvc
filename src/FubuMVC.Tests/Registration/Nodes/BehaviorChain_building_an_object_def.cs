@@ -1,20 +1,16 @@
 using System;
-using FubuMVC.Core;
-using FubuMVC.Core.Behaviors;
-using FubuMVC.Core.Diagnostics.Tracing;
+using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
-using NUnit.Framework;
-using FubuCore;
 using FubuTestingSupport;
+using NUnit.Framework;
 
 namespace FubuMVC.Tests.Registration.Nodes
 {
     [TestFixture]
     public class BehaviorChain_building_an_object_def
     {
-        private BehaviorChain theChain;
-        private Guid theOriginalGuid;
+        #region Setup/Teardown
 
         [SetUp]
         public void SetUp()
@@ -26,15 +22,29 @@ namespace FubuMVC.Tests.Registration.Nodes
             theOriginalGuid = action.UniqueId;
         }
 
+        #endregion
+
+        private BehaviorChain theChain;
+        private Guid theOriginalGuid;
+
         private ObjectDef toObjectDef()
         {
-            return theChain.As<IContainerModel>().ToObjectDef(); 
+            return theChain.As<IContainerModel>().ToObjectDef();
         }
 
-        [Test]
-        public void no_diagnostic_behavior_for_no_diagnostics()
+        public class Controller1
         {
-            toObjectDef().Type.ShouldNotEqual(typeof (DiagnosticBehavior));
+            public void Go(Input1 input)
+            {
+            }
+
+            #region Nested type: Input1
+
+            public class Input1
+            {
+            }
+
+            #endregion
         }
 
         [Test]
@@ -42,15 +52,5 @@ namespace FubuMVC.Tests.Registration.Nodes
         {
             toObjectDef().Name.ShouldEqual(theOriginalGuid);
         }
-
-
-        public class Controller1
-        {
-            public void Go(Input1 input){}
-
-            public class Input1{}
-        }
     }
-
-    
 }

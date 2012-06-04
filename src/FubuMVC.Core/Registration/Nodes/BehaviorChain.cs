@@ -5,7 +5,6 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core.Behaviors;
-using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
@@ -24,9 +23,9 @@ namespace FubuMVC.Core.Registration.Nodes
     public class BehaviorChain : Chain<BehaviorNode, BehaviorChain>, IRegisterable, IContainerModel
     {
         private readonly IList<IBehaviorInvocationFilter> _filters = new List<IBehaviorInvocationFilter>();
-        private IRouteDefinition _route;
-        private Lazy<OutputNode> _output;
         private readonly Lazy<InputNode> _input;
+        private Lazy<OutputNode> _output;
+        private IRouteDefinition _route;
 
         public BehaviorChain()
         {
@@ -36,7 +35,9 @@ namespace FubuMVC.Core.Registration.Nodes
             _output = new Lazy<OutputNode>(() =>
             {
                 var outputType = ResourceType();
-                if (outputType == null || outputType == typeof(void)) throw new InvalidOperationException("Cannot use the OutputNode if the BehaviorChain does not have at least one Action with output");
+                if (outputType == null || outputType == typeof (void))
+                    throw new InvalidOperationException(
+                        "Cannot use the OutputNode if the BehaviorChain does not have at least one Action with output");
 
                 return new OutputNode(outputType);
             });
@@ -44,7 +45,9 @@ namespace FubuMVC.Core.Registration.Nodes
             _input = new Lazy<InputNode>(() =>
             {
                 var inputType = InputType();
-                if (inputType == null) throw new InvalidOperationException("Cannot use the InputNode if the BehaviorChain does not have at least one behavior that requires an input type");
+                if (inputType == null)
+                    throw new InvalidOperationException(
+                        "Cannot use the InputNode if the BehaviorChain does not have at least one behavior that requires an input type");
 
                 return new InputNode(inputType);
             });
@@ -52,25 +55,12 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public OutputNode Output
         {
-            get
-            {
-                return _output.Value;
-            }
+            get { return _output.Value; }
         }
 
         public InputNode Input
         {
-            get
-            {
-                return _input.Value;
-            }
-        }
-
-        public string GetRoutePattern()
-        {
-            if (Route == null) return null;
-
-            return Route.Pattern;
+            get { return _input.Value; }
         }
 
         /// <summary>
@@ -111,7 +101,6 @@ namespace FubuMVC.Core.Registration.Nodes
             get { return this.Where(x => x.Category == BehaviorCategory.Output); }
         }
 
-        
 
         /// <summary>
         ///   Marking a BehaviorChain as "PartialOnly" means that no
@@ -165,6 +154,13 @@ namespace FubuMVC.Core.Registration.Nodes
             Authorization.As<IAuthorizationRegistration>().Register(Top.UniqueId, callback);
         }
 
+        public string GetRoutePattern()
+        {
+            if (Route == null) return null;
+
+            return Route.Pattern;
+        }
+
         /// <summary>
         ///   Does this chain match by either UrlCategory or by Http method?
         /// </summary>
@@ -186,7 +182,8 @@ namespace FubuMVC.Core.Registration.Nodes
         /// <returns></returns>
         public bool HasOutput()
         {
-            return (Top == null ? false : Top.HasAnyOutputBehavior()) || (_output.IsValueCreated && _output.Value.Writers.Any());
+            return (Top == null ? false : Top.HasAnyOutputBehavior()) ||
+                   (_output.IsValueCreated && _output.Value.Writers.Any());
         }
 
         /// <summary>
@@ -200,7 +197,6 @@ namespace FubuMVC.Core.Registration.Nodes
                 Route.Prepend(prefix);
             }
         }
-
 
 
         /// <summary>
@@ -328,12 +324,12 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
         /// <summary>
-        /// Allows you to explicitly force this BehaviorChain to the given
-        /// resource type.  This may be useful when the resource type cannot
-        /// be derived from the existing nodes.  Actionless view endpoints are
-        /// an example in the internals of this usage.
+        ///   Allows you to explicitly force this BehaviorChain to the given
+        ///   resource type.  This may be useful when the resource type cannot
+        ///   be derived from the existing nodes.  Actionless view endpoints are
+        ///   an example in the internals of this usage.
         /// </summary>
-        /// <param name="type"></param>
+        /// <param name = "type"></param>
         public void ResourceType(Type type)
         {
             if (_output.IsValueCreated && _output.Value.ResourceType != type)

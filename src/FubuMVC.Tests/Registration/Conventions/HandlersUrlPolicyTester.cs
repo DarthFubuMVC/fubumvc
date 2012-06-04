@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Routes;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Tests.Registration.Conventions.Handlers;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -11,60 +11,32 @@ namespace FubuMVC.Tests.Registration.Conventions
     [TestFixture]
     public class HandlersUrlPolicyTester
     {
-        private HandlersUrlPolicy _policy;
+        #region Setup/Teardown
 
         [SetUp]
         public void before_each()
         {
-            _policy = new HandlersUrlPolicy(typeof(Handlers.HandlersMarker));
+            _policy = new HandlersUrlPolicy(typeof (HandlersMarker));
         }
 
-        [Test]
-        public void should_only_match_calls_with_handler_type_ending_with_handler()
-        {
-            var log = new NulloConfigurationObserver();
-            _policy
-                .Matches(HandlersObjectMother.HandlerCall(), log)
-                .ShouldBeTrue();
-            _policy
-                .Matches(HandlersObjectMother.NonHandlerCall(), log)
-                .ShouldBeFalse();
-        }
+        #endregion
+
+        private HandlersUrlPolicy _policy;
 
         [Test]
-        public void should_not_match_calls_with_url_pattern_attribute()
-        {
-            var log = new NulloConfigurationObserver();
-            _policy
-                .Matches(HandlersObjectMother.HandlerWithAttributeCall(), log)
-                .ShouldBeFalse();
-        }
-
-        [Test]
-        public void should_strip_root_namespace_and_treat_child_namespaces_as_folders()
+        public void should_add_querystrings_to_route_for_handler_convention()
         {
             _policy
                 .Build(HandlersObjectMother.HandlerCall())
-                .Pattern
-                .ShouldEqual("posts/create");
+                .Input.QueryParameters.First().Name.ShouldEqual("Input");
         }
 
         [Test]
-        public void should_constrain_routes_by_class_name_without_handler()
+        public void should_apply_input_types_for_verb_handler_convention()
         {
-            _policy
-                .Build(HandlersObjectMother.HandlerCall())
-                .AllowedHttpMethods
-                .ShouldContain("GET");
-        }
+            var input = _policy.Build(HandlersObjectMother.VerbHandler()).Input;
 
-        [Test]
-        public void should_use_hyphen_to_break_up_camel_casing()
-        {
-            _policy
-                .Build(HandlersObjectMother.ComplexHandlerCall())
-                .Pattern
-                .ShouldEqual("posts/complex-route");
+            input.QueryParameters.First().Name.ShouldEqual("Optional");
         }
 
         [Test]
@@ -82,19 +54,51 @@ namespace FubuMVC.Tests.Registration.Conventions
         }
 
         [Test]
-        public void should_add_querystrings_to_route_for_handler_convention()
+        public void should_constrain_routes_by_class_name_without_handler()
         {
             _policy
                 .Build(HandlersObjectMother.HandlerCall())
-                .Input.QueryParameters.First().Name.ShouldEqual("Input");
+                .AllowedHttpMethods
+                .ShouldContain("GET");
         }
 
         [Test]
-        public void should_apply_input_types_for_verb_handler_convention()
+        public void should_not_match_calls_with_url_pattern_attribute()
         {
-            var input = _policy.Build(HandlersObjectMother.VerbHandler()).Input;
-            
-            input.QueryParameters.First().Name.ShouldEqual("Optional");
+            var log = new NulloConfigurationObserver();
+            _policy
+                .Matches(HandlersObjectMother.HandlerWithAttributeCall(), log)
+                .ShouldBeFalse();
+        }
+
+        [Test]
+        public void should_only_match_calls_with_handler_type_ending_with_handler()
+        {
+            var log = new NulloConfigurationObserver();
+            _policy
+                .Matches(HandlersObjectMother.HandlerCall(), log)
+                .ShouldBeTrue();
+            _policy
+                .Matches(HandlersObjectMother.NonHandlerCall(), log)
+                .ShouldBeFalse();
+        }
+
+        [Test]
+        public void should_strip_root_namespace_and_treat_child_namespaces_as_folders()
+        {
+            _policy
+                .Build(HandlersObjectMother.HandlerCall())
+                .Pattern
+                .ShouldEqual("posts/create");
+        }
+
+        [Test]
+        public void should_use_hyphen_to_break_up_camel_casing()
+        {
+            _policy
+                .Build(HandlersObjectMother.ComplexHandlerCall())
+                .Pattern
+                .ShouldEqual("posts/complex-route");
         }
     }
 }

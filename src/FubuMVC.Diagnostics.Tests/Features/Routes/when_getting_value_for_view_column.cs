@@ -42,15 +42,10 @@ namespace FubuMVC.Diagnostics.Tests.Features.Routes
         }
 
         [Test]
-        public void none_if_behavior_chain_has_no_output()
-        {
-            ClassUnderTest.ValueFor(_graph.BehaviorFor<Test>(x => x.Index())).ShouldEqual(ViewColumn.None);
-        }
-
-        [Test]
         public void value_if_actioncall_has_output_node()
         {
-            ClassUnderTest.ValueFor(_graph.BehaviorFor<Test>(x => x.HasOutputNode())).ShouldEqual(new OutputNode(GetType()).ToString());
+            BehaviorChain chain = _graph.BehaviorFor<Test>(x => x.HasOutputNode());
+            ClassUnderTest.ValueFor(chain).ShouldEqual(chain.Output.ToString());
         }
 
         public class Test

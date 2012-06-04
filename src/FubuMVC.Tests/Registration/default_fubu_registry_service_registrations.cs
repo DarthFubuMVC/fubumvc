@@ -37,6 +37,12 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void nullo_request_observer_is_registered()
+        {
+            registeredTypeIs<IRequestObserver, NulloRequestObserver>();
+        }
+
+        [Test]
         public void navigation_service_is_registered()
         {
             registeredTypeIs<INavigationService, NavigationService>();

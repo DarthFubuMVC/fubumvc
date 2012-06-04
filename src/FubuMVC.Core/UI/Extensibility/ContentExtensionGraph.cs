@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FubuCore.Util;
-using FubuMVC.Core.Diagnostics;
-using FubuMVC.Core.Runtime;
-using FubuMVC.Core.View;
 using FubuCore;
+using FubuCore.Util;
+using FubuMVC.Core.View;
 
 namespace FubuMVC.Core.UI.Extensibility
 {
@@ -47,12 +45,14 @@ namespace FubuMVC.Core.UI.Extensibility
             _lastShelf.FilterLast(filter);
         }
 
-        private static void apply<T>(IEnumerable<IContentExtension<T>> extensions, IFubuPage<T> page, string tag) where T : class
+        private static void apply<T>(IEnumerable<IContentExtension<T>> extensions, IFubuPage<T> page, string tag)
+            where T : class
         {
             var extensionOutput = extensions.SelectMany(ex => ex.GetExtensions(page)).Where(o => o != null).ToArray();
             if (extensionOutput.Length == 0 && FubuMode.InDevelopment())
             {
-                page.Write("<!-- Content extensions '{1}' for {0} would be rendered here -->".ToFormat(typeof(T).Name, tag));
+                page.Write("<!-- Content extensions '{1}' for {0} would be rendered here -->".ToFormat(typeof (T).Name,
+                                                                                                       tag));
             }
             extensionOutput.Each(o => page.Write(o));
         }

@@ -1,6 +1,5 @@
 using System.Web;
-using FubuMVC.Core.Diagnostics;
-using FubuMVC.Core.View;
+using FubuMVC.Core.Runtime;
 using FubuMVC.WebForms;
 
 namespace FubuMVC.HelloWorld.Controllers.Home
@@ -17,8 +16,7 @@ namespace FubuMVC.HelloWorld.Controllers.Home
         public HomeViewModel Home(HomeInputModel model)
         {
             _log.RecordLog("Loading home...");
-            return new HomeViewModel
-            {
+            return new HomeViewModel{
                 Text = "Hello, world.",
                 CurrentUrl = model.Url
             };
@@ -26,8 +24,7 @@ namespace FubuMVC.HelloWorld.Controllers.Home
 
         public HomeViewModel Post(HomeFilesModel model)
         {
-            return new HomeViewModel
-            {
+            return new HomeViewModel{
                 Text = "Hello, world.",
                 CurrentUrl = model.Url,
                 NumberOfFiles = model.Files == null ? 0 : model.Files.Count
@@ -52,7 +49,7 @@ namespace FubuMVC.HelloWorld.Controllers.Home
     {
         public string Url { get; set; }
     }
-    
+
     public class Home : FubuPage<HomeViewModel>
     {
     }

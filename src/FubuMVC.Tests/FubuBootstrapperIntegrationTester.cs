@@ -3,15 +3,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Web.Routing;
 using FubuCore;
-using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 using FubuMVC.StructureMap;
-using FubuMVC.Tests.Diagnostics;
-using FubuMVC.Tests.Registration;
 using FubuMVC.Tests.Urls;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -58,8 +55,9 @@ namespace FubuMVC.Tests
             {
                 x.For<IStreamingData>().Use(MockRepository.GenerateMock<IStreamingData>());
                 x.For<ICurrentChain>().Use(new CurrentChain(null, null));
-                x.For<ICurrentHttpRequest>().Use(new StubCurrentHttpRequest { TheApplicationRoot = "http://server" });
-                
+                x.For<ICurrentHttpRequest>().Use(new StubCurrentHttpRequest{
+                    TheApplicationRoot = "http://server"
+                });
             });
 
             routes = FubuApplication.For(registry)
@@ -95,7 +93,7 @@ namespace FubuMVC.Tests
         [Test]
         public void should_register_routes_in_order_of_the_number_of_their_inputs()
         {
-            IEnumerable<string> urls = routes.OfType<Route>().Select(r => r.Url);
+            var urls = routes.OfType<Route>().Select(r => r.Url);
 
             urls.Each(x => Debug.WriteLine(x));
 

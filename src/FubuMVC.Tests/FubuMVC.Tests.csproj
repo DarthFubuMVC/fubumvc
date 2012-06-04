@@ -156,11 +156,6 @@
     <Compile Include="Assets\Http\ContentWriterTester.cs" />
     <Compile Include="ConfigurationGraph_DetermineConfigurationType_Tester.cs" />
     <Compile Include="debugging.cs" />
-    <Compile Include="Diagnostics\ApplyTracingIntegrationTesting.cs" />
-    <Compile Include="Diagnostics\BehaviorTracerNodeTester.cs" />
-    <Compile Include="Diagnostics\BehaviorTracer_and_DiagnosticBehavior_construction_testing.cs" />
-    <Compile Include="Diagnostics\DiagnosticNodeTester.cs" />
-    <Compile Include="Diagnostics\DiagnosticsSettingsTester.cs" />
     <Compile Include="Registration\default_action_discovery.cs" />
     <Compile Include="StubRequestHeaders.cs" />
     <Compile Include="Assets\MimetypeRegistrationActivatorTester.cs" />
@@ -264,10 +259,6 @@
     <Compile Include="Runtime\Formatters\XmlFormatterTester.cs" />
     <Compile Include="CurrentRequestTester.cs" />
     <Compile Include="CustomExceptionsTester.cs" />
-    <Compile Include="Diagnostics\DefaultDiagnosticsConventionsTester.cs" />
-    <Compile Include="Diagnostics\RequestHistoryServiceTester.cs" />
-    <Compile Include="Diagnostics\RequestObserverTester.cs" />
-    <Compile Include="Diagnostics\Tracing\DiagnosticBehaviorTester.cs" />
     <Compile Include="FubuRegistryImportingTester.cs" />
     <Compile Include="Packaging\PackageFilesIntegrationTester.cs" />
     <Compile Include="Packaging\PackageManifestReaderIntegratedTester.cs" />
@@ -338,7 +329,6 @@
     <Compile Include="Security\PrincipalRolesTester.cs" />
     <Compile Include="Security\AuthorizationPolicyExecutorTester.cs" />
     <Compile Include="StructureMapIoC\StubActivator.cs" />
-    <Compile Include="StructureMapIoC\when_applying_diagnostics_from_FubuApplication.cs" />
     <Compile Include="Templating\CloneGitRepositoryTester.cs" />
     <Compile Include="Templating\CsProjGathererTester.cs" />
     <Compile Include="Templating\GitAliasRegistryTester.cs" />
@@ -392,14 +382,6 @@
     <Compile Include="Behaviors\BehaviorTestContext.cs" />
     <Compile Include="Continuations\ContinuationHandlerTester.cs" />
     <Compile Include="Continuations\FubuContinuationTester.cs" />
-    <Compile Include="Diagnostics\BehaviorTracerTester.cs" />
-    <Compile Include="Diagnostics\DebugDetectorTester.cs" />
-    <Compile Include="Diagnostics\DebugReportTester.cs" />
-    <Compile Include="Diagnostics\DiagnosticsPackageTester.cs" />
-    <Compile Include="Diagnostics\DiagnosticsRegistryTester.cs" />
-    <Compile Include="Diagnostics\RecordingFubuRequestTester.cs" />
-    <Compile Include="Diagnostics\RecordingOutputWriterTester.cs" />
-    <Compile Include="Diagnostics\TimedReportTester.cs" />
     <Compile Include="FubuBootstrapperIntegrationTester.cs" />
     <Compile Include="FubuRegistryTester.cs" />
     <Compile Include="HtmlGenerationTestExtensions.cs" />

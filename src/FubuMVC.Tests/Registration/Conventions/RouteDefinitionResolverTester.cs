@@ -1,14 +1,13 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 using FubuCore.Reflection;
 using FubuMVC.Core;
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
+using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -17,6 +16,8 @@ namespace FubuMVC.Tests.Registration.Conventions
     [TestFixture]
     public class RouteDefinitionResolverTester
     {
+        #region Setup/Teardown
+
         [SetUp]
         public void SetUp()
         {
@@ -28,21 +29,24 @@ namespace FubuMVC.Tests.Registration.Conventions
             resolver = new RouteDefinitionResolver();
         }
 
+        #endregion
+
         private BehaviorGraph graph;
         private BehaviorChain chain;
         private RouteDefinitionResolver resolver;
         private RecordingConfigurationObserver observer;
         private ActionCall lastCall;
 
-        private IRouteDefinition buildRoute(Expression<Action<RouteResolverController>> expression, Action<BehaviorChain> modifyChain)
+        private IRouteDefinition buildRoute(Expression<Action<RouteResolverController>> expression,
+                                            Action<BehaviorChain> modifyChain)
         {
             return buildRoute<RouteResolverController>(expression, modifyChain);
         }
 
         private IRouteDefinition buildRoute<T>(Expression<Action<T>> expression, Action<BehaviorChain> modifyChain)
         {
-            MethodInfo method = ReflectionHelper.GetMethod(expression);
-            lastCall = new ActionCall(typeof(T), method);
+            var method = ReflectionHelper.GetMethod(expression);
+            lastCall = new ActionCall(typeof (T), method);
 
             chain.AddToEnd(lastCall);
             modifyChain(chain);
@@ -98,7 +102,6 @@ namespace FubuMVC.Tests.Registration.Conventions
         }
 
 
-
         public class ModelWithQueryStrings
         {
             [QueryString]
@@ -143,16 +146,6 @@ namespace FubuMVC.Tests.Registration.Conventions
         }
 
         [Test]
-        public void build_route_when_ignoring_the_controller_namespace()
-        {
-            resolver.DefaultUrlPolicy.IgnoreControllerFolderName = true;
-            var route = buildRoute(x => x.SomeMethod(null), c => { });
-
-            route.Input.ShouldBeOfType<RouteInput<RouteInputModel>>();
-            route.Pattern.ShouldEqual("fubumvc/tests/registration/routeresolver/somemethod/{Name}/{Age}");
-        }
-
-        [Test]
         public void build_route_when_ignoring_controller_names_entirely()
         {
             resolver.DefaultUrlPolicy.IgnoreControllerNamesEntirely = true;
@@ -160,6 +153,26 @@ namespace FubuMVC.Tests.Registration.Conventions
             route.Input.ShouldBeOfType<RouteInput<RouteInputModel>>();
 
             route.Pattern.ShouldEqual("fubumvc/tests/registration/conventions/somemethod/{Name}/{Age}");
+        }
+
+        [Test]
+        public void build_route_when_ignoring_suffix_of_controller_name()
+        {
+            resolver.DefaultUrlPolicy.IgnoreClassSuffix("Tester");
+            var route = buildRoute(x => x.SomeMethod(null), c => { });
+            route.Input.ShouldBeOfType<RouteInput<RouteInputModel>>();
+
+            route.Pattern.ShouldEqual("fubumvc/tests/registration/conventions/routeresolver/somemethod/{Name}/{Age}");
+        }
+
+        [Test]
+        public void build_route_when_ignoring_the_controller_namespace()
+        {
+            resolver.DefaultUrlPolicy.IgnoreControllerFolderName = true;
+            var route = buildRoute(x => x.SomeMethod(null), c => { });
+
+            route.Input.ShouldBeOfType<RouteInput<RouteInputModel>>();
+            route.Pattern.ShouldEqual("fubumvc/tests/registration/routeresolver/somemethod/{Name}/{Age}");
         }
 
         [Test]
@@ -171,18 +184,6 @@ namespace FubuMVC.Tests.Registration.Conventions
             route.Input.ShouldBeOfType<RouteInput<RouteInputModel>>();
 
             route.Pattern.ShouldEqual("routeresolver/somemethod/{Name}/{Age}");
-        }
-
-        [Test]
-        public void build_route_with_a_registered_modification()
-        {
-            resolver.DefaultUrlPolicy.IgnoreControllerFolderName = true;
-            resolver.DefaultUrlPolicy.RegisterRouteModification(x => true, r => r.Prepend("prepend-something"));
-            var route = buildRoute(x => x.SomeMethod(null), c => { });
-
-            route.Input.ShouldBeOfType<RouteInput<RouteInputModel>>();
-
-            route.Pattern.ShouldEqual("prepend-something/fubumvc/tests/registration/routeresolver/somemethod/{Name}/{Age}");
         }
 
         [Test]
@@ -200,14 +201,16 @@ namespace FubuMVC.Tests.Registration.Conventions
         }
 
         [Test]
-        public void build_route_with_an_appended_class_suffix()
+        public void build_route_with_a_registered_modification()
         {
-            resolver.DefaultUrlPolicy.AppendClassesWith(x=>true,".aspx");
+            resolver.DefaultUrlPolicy.IgnoreControllerFolderName = true;
+            resolver.DefaultUrlPolicy.RegisterRouteModification(x => true, r => r.Prepend("prepend-something"));
             var route = buildRoute(x => x.SomeMethod(null), c => { });
-            route.Pattern.ShouldEqual("fubumvc/tests/registration/conventions/routeresolver.aspx/somemethod/{Name}/{Age}");
 
-            route.Input.RouteParameters.Count.ShouldEqual(2);
-            route.Input.RouteParameters.Select(x => x.Name).ShouldHaveTheSameElementsAs("Name", "Age");
+            route.Input.ShouldBeOfType<RouteInput<RouteInputModel>>();
+
+            route.Pattern.ShouldEqual(
+                "prepend-something/fubumvc/tests/registration/routeresolver/somemethod/{Name}/{Age}");
         }
 
         [Test]
@@ -222,6 +225,18 @@ namespace FubuMVC.Tests.Registration.Conventions
         }
 
         [Test]
+        public void build_route_with_an_appended_class_suffix()
+        {
+            resolver.DefaultUrlPolicy.AppendClassesWith(x => true, ".aspx");
+            var route = buildRoute(x => x.SomeMethod(null), c => { });
+            route.Pattern.ShouldEqual(
+                "fubumvc/tests/registration/conventions/routeresolver.aspx/somemethod/{Name}/{Age}");
+
+            route.Input.RouteParameters.Count.ShouldEqual(2);
+            route.Input.RouteParameters.Select(x => x.Name).ShouldHaveTheSameElementsAs("Name", "Age");
+        }
+
+        [Test]
         public void build_route_with_no_inputs_and_default_conventions()
         {
             var route = buildRoute(x => x.NoArgMethod(), c => { }).ShouldBeOfType<RouteDefinition>();
@@ -230,10 +245,20 @@ namespace FubuMVC.Tests.Registration.Conventions
         }
 
         [Test]
+        public void pick_up_UrlFolder_attribute_for_class_name()
+        {
+            var route =
+                buildRoute<OverridenResolverController>(x => x.NoArgMethod(), c => { }).ShouldBeOfType<RouteDefinition>();
+
+            route.Pattern.ShouldEqual("FubuMVC/Tests/Registration/Conventions/contracts/NoArgMethod".ToLower());
+        }
+
+        [Test]
         public void pick_up_default_value_on_the_RouteInputAttribute()
         {
             resolver.DefaultUrlPolicy.IgnoreNamespace(GetType().Namespace);
-            var route = buildRoute(x => x.SomeMethod(null), c => { }).Input.ShouldBeOfType<RouteInput<RouteInputModel>>();
+            var route =
+                buildRoute(x => x.SomeMethod(null), c => { }).Input.ShouldBeOfType<RouteInput<RouteInputModel>>();
 
             route.RouteInputFor("Name").DefaultValue.ShouldEqual("Jeremy");
         }
@@ -247,11 +272,31 @@ namespace FubuMVC.Tests.Registration.Conventions
         }
 
         [Test]
-        public void pick_up_UrlFolder_attribute_for_class_name()
+        public void should_log_policy_decision_if_url_policy_is_loggable()
         {
-            var route = buildRoute<OverridenResolverController>(x => x.NoArgMethod(), c => { }).ShouldBeOfType<RouteDefinition>();
+            buildRoute(x => x.SomeMethod(null), c => { });
+            var log = observer.GetLog(lastCall);
+        }
 
-            route.Pattern.ShouldEqual("FubuMVC/Tests/Registration/Conventions/contracts/NoArgMethod".ToLower());
+        [Test]
+        public void should_log_the_defined_route_pattern()
+        {
+            buildRoute(x => x.SomeMethod(null), c => { });
+
+            var log = observer.GetLog(lastCall);
+
+            log.Where(s => s.Contains("ubumvc/tests/registration/conventions/routeresolver/somemethod/{Name}/{Age}")).
+                Any().ShouldBeTrue();
+        }
+
+        [Test]
+        public void should_log_the_first_url_policy_that_matches()
+        {
+            buildRoute(x => x.SomeMethod(null), c => { });
+
+            var log = observer.GetLog(lastCall);
+
+            log.Where(s => s.Contains(": UrlPolicy")).Any().ShouldBeTrue();
         }
 
         [Test]
@@ -269,43 +314,6 @@ namespace FubuMVC.Tests.Registration.Conventions
             var route = buildRoute(x => x.OverrideWithNoArgs(), c => { }).ShouldBeOfType<IRouteDefinition>();
 
             route.Pattern.ShouldEqual("override/noargs");
-        }
-
-        [Test]
-        public void should_log_the_first_url_policy_that_matches()
-        {
-            buildRoute(x => x.SomeMethod(null), c => { });
-
-            var log = observer.GetLog(lastCall);
-
-            log.Where(s => s.Contains(": UrlPolicy")).Any().ShouldBeTrue();
-        }
-
-        [Test]
-        public void should_log_the_defined_route_pattern()
-        {
-            buildRoute(x => x.SomeMethod(null), c => { });
-
-            var log = observer.GetLog(lastCall);
-
-            log.Where(s => s.Contains("ubumvc/tests/registration/conventions/routeresolver/somemethod/{Name}/{Age}")).Any().ShouldBeTrue();
-        }
-
-        [Test]
-        public void should_log_policy_decision_if_url_policy_is_loggable()
-        {
-            buildRoute(x => x.SomeMethod(null), c => { });
-            var log = observer.GetLog(lastCall);
-        }
-
-        [Test]
-        public void build_route_when_ignoring_suffix_of_controller_name()
-        {
-            resolver.DefaultUrlPolicy.IgnoreClassSuffix("Tester");
-            var route = buildRoute(x => x.SomeMethod(null), c => { });
-            route.Input.ShouldBeOfType<RouteInput<RouteInputModel>>();
-
-            route.Pattern.ShouldEqual("fubumvc/tests/registration/conventions/routeresolver/somemethod/{Name}/{Age}");
         }
     }
 }

@@ -8,7 +8,6 @@ namespace AspNetApplication
         public AspNetApplicationFubuRegistry()
         {
             Actions.IncludeClassesSuffixedWithController();
-            IncludeDiagnostics(true);
 
             Views.TryToAttachWithDefaultConventions();
             Routes.HomeIs<SSEClientController>(x => x.get_events());

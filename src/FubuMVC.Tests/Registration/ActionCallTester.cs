@@ -6,13 +6,11 @@ using System.Reflection;
 using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Reflection;
-using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Resources.Conneg;
-using FubuMVC.Tests.Diagnostics;
 using FubuMVC.Tests.Registration.Conventions;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -63,6 +61,13 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void can_get_the_behavior_type()
+        {
+            ActionCall.For<ControllerTarget>(c => c.OneInOneOut(null))
+                .BehaviorType.ShouldEqual(typeof (OneInOneOutActionInvoker<ControllerTarget, Model1, Model2>));
+        }
+
+        [Test]
         public void enrich_puts_the_new_chain_node_directly_behind_the_call()
         {
             action = ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null));
@@ -72,11 +77,24 @@ namespace FubuMVC.Tests.Registration
             action.AddToEnd(next);
 
 
-            var enricher = new Wrapper(typeof (DebugReportTester.StubBehavior));
+            var enricher = new Wrapper(typeof (StubBehavior));
             action.AddAfter(enricher);
 
             action.Next.ShouldBeTheSameAs(enricher);
             enricher.Next.ShouldBeTheSameAs(next);
+        }
+
+        public class StubBehavior : IActionBehavior
+        {
+            public void Invoke()
+            {
+                throw new NotImplementedException();
+            }
+
+            public void InvokePartial()
+            {
+                throw new NotImplementedException();
+            }
         }
 
         [Test]
@@ -125,13 +143,6 @@ namespace FubuMVC.Tests.Registration
             var action = ActionCall.For(typeof (ValidActionWithOneMethod));
             action.HandlerType.ShouldEqual(typeof (ValidActionWithOneMethod));
             action.Method.ShouldEqual(typeof (ValidActionWithOneMethod).GetMethod("Go"));
-        }
-
-        [Test]
-        public void can_get_the_behavior_type()
-        {
-            ActionCall.For<ControllerTarget>(c => c.OneInOneOut(null))
-                .BehaviorType.ShouldEqual(typeof(OneInOneOutActionInvoker<ControllerTarget, Model1, Model2>));
         }
 
         [Test]

@@ -15,7 +15,6 @@ namespace FubuMVC.IntegrationTesting.ViewAttachment
             registry.Actions.IncludeType<ProfileController>();
             registry.Views.TryToAttachWithDefaultConventions();
             registry.Views.Profile<Mobile>("m.");
-            registry.IncludeDiagnostics(true);
         }
 
         [Test]

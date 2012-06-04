@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using FubuCore.Reflection;
-using FubuMVC.Core.Diagnostics;
-using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.Routes;
 using System.Linq;
 using FubuCore;
+using FubuCore.Reflection;
+using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.Routes;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
@@ -30,7 +30,8 @@ namespace FubuMVC.Core.Registration.Conventions
             }
         }
 
-        public static void Alter(IRouteDefinition route, string methodName, IEnumerable<string> properties, Action<string> log)
+        public static void Alter(IRouteDefinition route, string methodName, IEnumerable<string> properties,
+                                 Action<string> log)
         {
             log("Method name interpreted by the MethodToUrlBuilder");
             var parts = methodName.Split('_').ToList();
@@ -43,7 +44,7 @@ namespace FubuMVC.Core.Registration.Conventions
                 parts.RemoveAt(0);
             }
 
-            for (int i = 0; i < parts.Count; i++)
+            for (var i = 0; i < parts.Count; i++)
             {
                 var part = parts[i];
                 if (properties.Contains(part))
@@ -55,7 +56,6 @@ namespace FubuMVC.Core.Registration.Conventions
                 {
                     parts[i] = part.ToLower();
                 }
-
             }
 
             if (parts.Any())

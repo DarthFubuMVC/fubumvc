@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using FubuMVC.Core.Diagnostics;
+using FubuMVC.Diagnostics.Runtime;
 
 namespace FubuMVC.Diagnostics.Features.Requests
 {

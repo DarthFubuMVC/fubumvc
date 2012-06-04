@@ -1,6 +1,6 @@
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Diagnostics.Features.Requests;
+using FubuMVC.Diagnostics.Runtime;
 
 namespace FubuMVC.Diagnostics.Core.Infrastructure
 {

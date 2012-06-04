@@ -1,14 +1,9 @@
 using System;
 using System.Collections.Generic;
-using FubuCore;
-using FubuMVC.Core.Assets;
-using FubuMVC.Core.Diagnostics;
-using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.UI.Navigation;
 using FubuMVC.Core.View.Attachment;
 
@@ -78,15 +73,6 @@ namespace FubuMVC.Core
             _configuration.Build(graph);
 
             return graph;
-        }
-
-        internal void Compile()
-        {
-            if (!_hasCompiled)
-            {
-                _scanningOperations.Each(x => x(_configuration.Types));
-                _hasCompiled = true;
-            }
         }
 
         /// <summary>
@@ -214,14 +200,10 @@ namespace FubuMVC.Core
         /// <summary>
         ///   Specifies whether to include diagnostics tracing. This is turned off by default
         /// </summary>
-        // TODO -- mark [Obsolete]
+        [Obsolete("As of FubuMVC 0.9.7, you just need to deploy the FubuMVC.Diagnostics assembly to the bin path of the application to include the diagnostics")]
         public void IncludeDiagnostics(bool shouldInclude)
         {
-            if (shouldInclude)
-            {
-                Import<DiagnosticsSubSystem>();
-                Policies.Add<ApplyTracing>();
-            }
+            throw new NotSupportedException("FubuRegistry.IncludeDiagnostics() is not longer supported.  Use the FubuMVC.Diagnostics nuget/Bottle instead");
         }
 
         /// <summary>
@@ -232,6 +214,15 @@ namespace FubuMVC.Core
         public void Configure(Action<BehaviorGraph> alteration)
         {
             addExplicit(alteration);
+        }
+
+        internal void Compile()
+        {
+            if (!_hasCompiled)
+            {
+                _scanningOperations.Each(x => x(_configuration.Types));
+                _hasCompiled = true;
+            }
         }
 
         private void addExplicit(Action<BehaviorGraph> action)

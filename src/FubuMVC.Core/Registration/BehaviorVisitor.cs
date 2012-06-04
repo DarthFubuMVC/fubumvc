@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using FubuCore;
 using FubuCore.Util;
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Registration
 {
@@ -28,13 +28,10 @@ namespace FubuMVC.Core.Registration
 
     public class BehaviorVisitor : IBehaviorVisitor
     {
-        private readonly IConfigurationObserver _observer;
-        private readonly string _reasonToVisit;
         private readonly CompositeAction<BehaviorChain> _actions = new CompositeAction<BehaviorChain>();
         private readonly CompositePredicate<BehaviorChain> _filters = new CompositePredicate<BehaviorChain>();
-
-        public CompositeAction<BehaviorChain> Actions { get { return _actions; } set { } }
-        public CompositePredicate<BehaviorChain> Filters { get { return _filters; } set { } }
+        private readonly IConfigurationObserver _observer;
+        private readonly string _reasonToVisit;
 
         public BehaviorVisitor(IConfigurationObserver observer, string reasonToVisit)
         {
@@ -42,19 +39,31 @@ namespace FubuMVC.Core.Registration
             _reasonToVisit = reasonToVisit;
         }
 
+        public CompositeAction<BehaviorChain> Actions
+        {
+            get { return _actions; }
+            set { }
+        }
+
+        public CompositePredicate<BehaviorChain> Filters
+        {
+            get { return _filters; }
+            set { }
+        }
+
         public void VisitBehavior(BehaviorChain chain)
         {
             if (!_filters.MatchesAll(chain)) return;
 
             var matchesDescriptions = _filters.GetDescriptionOfMatches(chain).Join(", ");
-            if( matchesDescriptions == string.Empty)
+            if (matchesDescriptions == string.Empty)
             {
                 matchesDescriptions = "(no filters defined)";
             }
 
             chain.Calls.Each(call => _observer.RecordCallStatus(call,
-                "Visiting: {0}. Matched on filters [{1}]".ToFormat
-                    (_reasonToVisit, matchesDescriptions)));
+                                                                "Visiting: {0}. Matched on filters [{1}]".ToFormat
+                                                                    (_reasonToVisit, matchesDescriptions)));
 
             _actions.Do(chain);
         }
