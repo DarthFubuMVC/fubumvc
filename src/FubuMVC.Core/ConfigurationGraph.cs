@@ -4,10 +4,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using FubuCore;
+using FubuCore.Reflection;
 using FubuCore.Util;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Assets;
-using FubuMVC.Core.Assets.Caching;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
@@ -21,7 +21,6 @@ using FubuMVC.Core.UI.Navigation;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Activation;
 using FubuMVC.Core.View.Attachment;
-using FubuCore.Reflection;
 
 namespace FubuMVC.Core
 {
@@ -69,16 +68,16 @@ namespace FubuMVC.Core
     }
 
 
-
     /// <summary>
     ///   Orders and governs the construction of a BehaviorGraph
     /// </summary>
     public class ConfigurationGraph
     {
-        private readonly Cache<ConfigurationType, IList<IConfigurationAction>> _configurations 
-            = new Cache<ConfigurationType, IList<IConfigurationAction>>(x=> new List<IConfigurationAction>());
-
         private readonly List<IActionSource> _actionSources = new List<IActionSource>();
+
+        private readonly Cache<ConfigurationType, IList<IConfigurationAction>> _configurations
+            = new Cache<ConfigurationType, IList<IConfigurationAction>>(x => new List<IConfigurationAction>());
+
         private readonly IViewEngineRegistry _engineRegistry = new ViewEngineRegistry();
         private readonly List<RegistryImport> _imports = new List<RegistryImport>();
         private readonly RouteDefinitionResolver _routeResolver = new RouteDefinitionResolver();
@@ -105,7 +104,9 @@ namespace FubuMVC.Core
             var type = DetermineConfigurationType(action) ?? defaultType;
             if (type == null)
             {
-                throw new ArgumentOutOfRangeException("No ConfigurationType specified and unable to determine what the configuration type for " + action.GetType());
+                throw new ArgumentOutOfRangeException(
+                    "No ConfigurationType specified and unable to determine what the configuration type for " +
+                    action.GetType());
             }
 
             _configurations[type.Value].FillAction(action);
@@ -140,7 +141,6 @@ namespace FubuMVC.Core
         private IEnumerable<IConfigurationAction> allActions()
         {
             return serviceRegistrations().OfType<IConfigurationAction>()
-                
                 .Union(systemServices())
                 .Union(serviceRegistrations())
                 .Union(allConventions())
@@ -325,7 +325,6 @@ namespace FubuMVC.Core
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
     public class CanBeMultiplesAttribute : Attribute
     {
-        
     }
 
     public static class ConfigurationActionListExtensions
@@ -333,7 +332,7 @@ namespace FubuMVC.Core
         public static void FillAction<T>(this IList<T> actions, T action)
         {
             var actionType = action.GetType();
-            
+
 
             if (TypeIsUnique(actionType) && actions.Any(x => x.GetType() == actionType))
             {

@@ -225,30 +225,7 @@ namespace FubuMVC.Core.Registration.Nodes
 
         protected ObjectDef buildObjectDef(DiagnosticLevel diagnosticLevel)
         {
-            var topDef = Top.As<IContainerModel>().ToObjectDef(diagnosticLevel);
-
-            if (diagnosticLevel == DiagnosticLevel.FullRequestTracing && !IsPartialOnly)
-            {
-                var objectDef = new ObjectDef(typeof (DiagnosticBehavior)){
-                    Name = UniqueId.ToString()
-                };
-
-                objectDef.DependencyByType<IActionBehavior>(topDef);
-
-                topDef.Name = Guid.NewGuid().ToString();
-
-                var list = new List<ObjectDef>();
-                var def = topDef;
-                while (def != null)
-                {
-                    list.Add(def);
-                    def = def.FindDependencyDefinitionFor<IActionBehavior>();
-                }
-
-                return objectDef;
-            }
-
-            return topDef;
+            return Top.As<IContainerModel>().ToObjectDef(diagnosticLevel);
         }
 
         /// <summary>

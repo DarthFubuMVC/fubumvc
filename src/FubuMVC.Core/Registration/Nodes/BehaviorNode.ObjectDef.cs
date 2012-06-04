@@ -2,7 +2,6 @@ using System;
 using FubuCore;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Behaviors.Conditional;
-using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime.Conditionals;
 
@@ -11,20 +10,13 @@ namespace FubuMVC.Core.Registration.Nodes
     public abstract partial class BehaviorNode
     {
         private ObjectDef _conditionalDef;
-        private readonly Guid _uniqueId = Guid.NewGuid();
 
-        public virtual Guid UniqueId
+        protected BehaviorNode()
         {
-            get { return _uniqueId; }
+            UniqueId = Guid.NewGuid();
         }
 
-        ObjectDef IContainerModel.ToObjectDef(DiagnosticLevel diagnosticLevel)
-        {
-            var objectDef = toObjectDef(diagnosticLevel);
-            objectDef.Name = UniqueId.ToString();
-
-            return objectDef;
-        }
+        public virtual Guid UniqueId { get; protected set; }
 
         public Type BehaviorType
         {
@@ -35,6 +27,15 @@ namespace FubuMVC.Core.Registration.Nodes
             }
         }
 
+        ObjectDef IContainerModel.ToObjectDef(DiagnosticLevel diagnosticLevel)
+        {
+            var objectDef = toObjectDef(diagnosticLevel);
+            objectDef.Name = UniqueId.ToString();
+
+            return objectDef;
+        }
+
+        [MarkedForTermination("Get rid of diagnostic level")]
         protected ObjectDef toObjectDef(DiagnosticLevel diagnosticLevel)
         {
             var objectDef = buildObjectDef();
@@ -49,9 +50,7 @@ namespace FubuMVC.Core.Registration.Nodes
                 attachNextBehavior(objectDef, diagnosticLevel);
             }
 
-            return diagnosticLevel == DiagnosticLevel.FullRequestTracing 
-                ? createTracerDef(objectDef) 
-                : objectDef;
+            return objectDef;
         }
 
         private void attachNextBehavior(ObjectDef objectDef, DiagnosticLevel diagnosticLevel)
@@ -71,22 +70,6 @@ namespace FubuMVC.Core.Registration.Nodes
             return invokerDef;
         }
 
-        private ObjectDef createTracerDef(ObjectDef objectDef)
-        {
-            var tracerDef = new ObjectDef(typeof(BehaviorTracer));
-            tracerDef.DependencyByType<IActionBehavior>(objectDef);
-
-            var chain = ParentChain();
-            tracerDef.DependencyByValue(new BehaviorCorrelation
-            {
-                ChainId = chain == null ? Guid.Empty : chain.UniqueId,
-                BehaviorId = UniqueId
-            });
-
-            return tracerDef;
-        }
-
         protected abstract ObjectDef buildObjectDef();
-
     }
 }

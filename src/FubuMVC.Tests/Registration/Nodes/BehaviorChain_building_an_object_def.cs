@@ -43,24 +43,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             toObjectDef(DiagnosticLevel.None).Name.ShouldEqual(theOriginalGuid);
         }
 
-        [Test]
-        public void when_in_diagnostic_mode_use_a_diagnostic_behavior_wrapping_the_whole_with_the_same_name()
-        {
-            var objectDef = toObjectDef(DiagnosticLevel.FullRequestTracing);
-            objectDef.Type.ShouldEqual(typeof (DiagnosticBehavior));
 
-
-            objectDef.FindDependencyDefinitionFor<IActionBehavior>()
-                .Type.ShouldEqual(typeof (BehaviorTracer));
-
-            objectDef
-                .FindDependencyDefinitionFor<IActionBehavior>()
-                .FindDependencyDefinitionFor<IActionBehavior>()
-                .Type.ShouldEqual(typeof (OneInZeroOutActionInvoker<Controller1, Controller1.Input1>));
-
-            objectDef.Name.ShouldEqual(theOriginalGuid);
-        }
-    
         public class Controller1
         {
             public void Go(Input1 input){}

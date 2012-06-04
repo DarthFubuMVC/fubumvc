@@ -249,6 +249,8 @@ namespace FubuMVC.Core
         /// <param name = "configure"></param>
         public void IncludeDiagnostics(Action<IDiagnosticsConfigurationExpression> configure)
         {
+            Policies.Add<ApplyTracing>();
+
             _diagnosticLevel = DiagnosticLevel.FullRequestTracing;
 
             var filters = new List<IRequestHistoryCacheFilter>();

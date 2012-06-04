@@ -6,6 +6,7 @@ using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
@@ -60,6 +61,15 @@ namespace FubuMVC.Tests.StructureMapIoC
         {
             Debug.WriteLine(theContainer.WhatDoIHave());
             theContainer.GetAllInstances<IActionBehavior>().All(x => x is DiagnosticBehavior).ShouldBeTrue();
+        }
+
+        [Test]
+        public void build_out_the_behavior_should_have_a_BehaviorTracer_around_everything_real()
+        {
+            var behavior = theContainer.GetAllInstances<IActionBehavior>().FirstOrDefault();
+            behavior.ShouldBeOfType<DiagnosticBehavior>()
+                .Inner.ShouldBeOfType<BehaviorTracer>()
+                .Inner.ShouldNotBeOfType<BehaviorTracer>();
         }
     }
 

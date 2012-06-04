@@ -114,23 +114,6 @@ namespace FubuMVC.Tests.Behaviors.Conditional
         }
 
         [Test]
-        public void create_the_behavior_with_custom_conditional_and_diagnostics()
-        {
-            theNode.Condition<CustomConditional>();
-            var behavior = this.behavior(DiagnosticLevel.FullRequestTracing).ShouldBeOfType<BehaviorTracer>()
-                .Inner;
-
-            var invoker = behavior.ShouldBeOfType<ConditionalBehaviorInvoker>();
-            var conditionalBehavior = invoker.ConditionalBehavior.ShouldBeOfType<ConditionalBehavior>();
-
-            conditionalBehavior.InnerBehavior.ShouldBeOfType<MyBehavior>();
-            conditionalBehavior.Condition.ShouldBeOfType<CustomConditional>();
-
-            invoker.InnerBehavior.ShouldBeOfType<BehaviorTracer>()
-                .Inner.ShouldBeOfType<FollowingBehavior>();
-        }
-
-        [Test]
         public void execute_behavior_with_custom_conditional_positive_condition()
         {
             CustomConditional.IsTrue = true;

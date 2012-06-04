@@ -16,6 +16,7 @@ using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core
 {
+    [MarkedForTermination("This needs to go away")]
     public enum DiagnosticLevel
     {
         None,
