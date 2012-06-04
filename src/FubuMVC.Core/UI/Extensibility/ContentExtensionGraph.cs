@@ -50,7 +50,7 @@ namespace FubuMVC.Core.UI.Extensibility
         private static void apply<T>(IEnumerable<IContentExtension<T>> extensions, IFubuPage<T> page, string tag) where T : class
         {
             var extensionOutput = extensions.SelectMany(ex => ex.GetExtensions(page)).Where(o => o != null).ToArray();
-            if (extensionOutput.Length == 0 && page.Get<DiagnosticsIndicator>().IsDiagnosticsEnabled)
+            if (extensionOutput.Length == 0 && FubuMode.InDevelopment())
             {
                 page.Write("<!-- Content extensions '{1}' for {0} would be rendered here -->".ToFormat(typeof(T).Name, tag));
             }

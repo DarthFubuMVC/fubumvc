@@ -1,7 +1,5 @@
 using System;
-using FubuCore;
 using FubuCore.Formatting;
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.UI;
@@ -32,7 +30,6 @@ namespace FubuMVC.Core
         void Import<T>(string prefix) where T : FubuRegistry, new();
         void Import(FubuRegistry registry, string prefix);
         void IncludeDiagnostics(bool shouldInclude);
-        void IncludeDiagnostics(Action<IDiagnosticsConfigurationExpression> configure);
 
 
         /// <summary>

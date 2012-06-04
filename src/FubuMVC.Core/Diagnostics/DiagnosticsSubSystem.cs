@@ -45,6 +45,9 @@ namespace FubuMVC.Core.Diagnostics
                 x.ReplaceService<IBindingHistory, BindingHistory>();
                 x.SetServiceIfNone<IRequestHistoryCache, RequestHistoryCache>();
 
+                // TODO -- UT this
+                x.AddService<IRequestHistoryCacheFilter, DiagnosticRequestHistoryCacheFilter>();
+
                 // TODO -- need to test this
                 x.ReplaceService<IFieldAccessRightsExecutor, RecordingFieldAccessRightsExecutor>();
             });

@@ -160,6 +160,7 @@
     <Compile Include="Diagnostics\BehaviorTracerNodeTester.cs" />
     <Compile Include="Diagnostics\BehaviorTracer_and_DiagnosticBehavior_construction_testing.cs" />
     <Compile Include="Diagnostics\DiagnosticNodeTester.cs" />
+    <Compile Include="Diagnostics\DiagnosticsSettingsTester.cs" />
     <Compile Include="Registration\default_action_discovery.cs" />
     <Compile Include="StubRequestHeaders.cs" />
     <Compile Include="Assets\MimetypeRegistrationActivatorTester.cs" />

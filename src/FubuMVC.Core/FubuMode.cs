@@ -2,18 +2,6 @@ using System;
 
 namespace FubuMVC.Core
 {
-    public static class Fake
-    {
-        public static void DoSomething()
-        {
-            FubuMode.ForMode("Development").Do(() =>
-            {
-                // do stuff
-            });
-
-        }
-    }
-
     public static class FubuMode
     {
         public static readonly string Development = "Development";

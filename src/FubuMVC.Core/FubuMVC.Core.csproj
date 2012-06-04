@@ -213,7 +213,7 @@
     <Compile Include="Caching\WriteTextOutput.cs" />
     <Compile Include="Continuations\IRedirectable.cs" />
     <Compile Include="CoreServiceRegistry.cs" />
-    <Compile Include="DiagnosticsConfiguration.cs" />
+    <Compile Include="DiagnosticsSettings.cs" />
     <Compile Include="Diagnostics\Assets\BasicAssetDiagnostics.cs" />
     <Compile Include="Diagnostics\HtmlWriting\ModelBindingExplorerWriter.cs" />
     <Compile Include="FubuMode.cs" />
@@ -363,7 +363,6 @@
     <Compile Include="Diagnostics\HttpStatusReport.cs" />
     <Compile Include="Diagnostics\HtmlWriting\DiagnosticHtml.cs" />
     <Compile Include="Diagnostics\RequestHistoryCache.cs" />
-    <Compile Include="Diagnostics\DiagnosticsIndicator.cs" />
     <Compile Include="Diagnostics\FubuDiagnosticsAttribute.cs" />
     <Compile Include="Diagnostics\HtmlWriting\Columns\AuthorizationRulesColumn.cs" />
     <Compile Include="Diagnostics\HtmlWriting\Columns\ChainColumn.cs" />

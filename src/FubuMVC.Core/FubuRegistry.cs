@@ -225,49 +225,10 @@ namespace FubuMVC.Core
         /// <summary>
         ///   Specifies whether to include diagnostics tracing. This is turned off by default
         /// </summary>
+        // TODO -- mark [Obsolete]
         public void IncludeDiagnostics(bool shouldInclude)
         {
-            if (shouldInclude)
-            {
-                IncludeDiagnostics(config =>
-                {
-                    config.LimitRecordingTo(50);
-                    config.ExcludeRequests(
-                        r =>
-                        r.Path != null &&
-                        r.Path.ToLower().StartsWith("/{0}".ToFormat(DiagnosticUrlPolicy.DIAGNOSTICS_URL_ROOT)));
-                });
-            }
-            else
-            {
-                _diagnosticLevel = DiagnosticLevel.None;
-            }
-        }
-
-        /// <summary>
-        ///   Configures the internal diagnostics for the <see cref = "BehaviorGraph" /> produced by this <see cref = "FubuRegistry" />.
-        /// </summary>
-        /// <param name = "configure"></param>
-        public void IncludeDiagnostics(Action<IDiagnosticsConfigurationExpression> configure)
-        {
-            _diagnosticLevel = DiagnosticLevel.FullRequestTracing;
-
-            var filters = new List<IRequestHistoryCacheFilter>();
-            var config = new DiagnosticsConfigurationExpression(filters);
-            configure(config);
-
-            Services(graph =>
-            {
-                graph.SetServiceIfNone(new DiagnosticsIndicator().SetEnabled());
-                graph.SetServiceIfNone(new DiagnosticsConfiguration{
-                    MaxRequests = config.MaxRequests
-                });
-                filters
-                    .Each(filter => graph.AddService(typeof (IRequestHistoryCacheFilter), new ObjectDef{
-                        Type = filter.GetType(),
-                        Value = filter
-                    }));
-            });
+            _diagnosticLevel = shouldInclude ? Core.DiagnosticLevel.FullRequestTracing : Core.DiagnosticLevel.None;
         }
 
         /// <summary>

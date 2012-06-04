@@ -1,6 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FubuMVC.Core.Diagnostics.Tracing;
+using FubuMVC.Core.Http;
+using FubuMVC.Core.Registration;
+using FubuCore;
 
 namespace FubuMVC.Core.Diagnostics
 {
@@ -8,12 +12,12 @@ namespace FubuMVC.Core.Diagnostics
     {
         private readonly Queue<IDebugReport> _reports = new Queue<IDebugReport>();
         private readonly IEnumerable<IRequestHistoryCacheFilter> _filters;
-        private readonly DiagnosticsConfiguration _configuration;
+        private readonly DiagnosticsSettings _settings;
 
-        public RequestHistoryCache(IEnumerable<IRequestHistoryCacheFilter> filters, DiagnosticsConfiguration configuration)
+        public RequestHistoryCache(IEnumerable<IRequestHistoryCacheFilter> filters, DiagnosticsSettings settings)
         {
             _filters = filters;
-            _configuration = configuration;
+            _settings = settings;
         }
 
         // TODO -- let's thin this down from CurrentRequest
@@ -25,7 +29,7 @@ namespace FubuMVC.Core.Diagnostics
             }
 
             _reports.Enqueue(report);
-            while (_reports.Count > _configuration.MaxRequests)
+            while (_reports.Count > _settings.MaxRequests)
             {
                 _reports.Dequeue();
             }
@@ -40,6 +44,14 @@ namespace FubuMVC.Core.Diagnostics
     public interface IRequestHistoryCacheFilter
     {
         bool Exclude(CurrentRequest request);
+    }
+
+    public class DiagnosticRequestHistoryCacheFilter : IRequestHistoryCacheFilter
+    {
+        public bool Exclude(CurrentRequest request)
+        {
+            return (request.Path.IsNotEmpty() && request.Path.StartsWith("/" + DiagnosticUrlPolicy.DIAGNOSTICS_URL_ROOT));
+        }
     }
 
     public class LambdaRequestHistoryCacheFilter : IRequestHistoryCacheFilter
