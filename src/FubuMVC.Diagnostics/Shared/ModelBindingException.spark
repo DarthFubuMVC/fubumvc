@@ -1,7 +1,7 @@
 ﻿<use master="" />
-<use namespace="FubuMVC.Core.Diagnostics" />
+<use namespace="FubuMVC.Diagnostics.Runtime" />
 <use namespace="System.Linq" />
-<viewdata model="FubuMVC.Core.Diagnostics.ModelBindingException" />
+<viewdata model="FubuMVC.Diagnostics.Runtime.ModelBindingException" />
 <p class="statement">Handling exception</p>
 <div class="ui-widget">
   <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">

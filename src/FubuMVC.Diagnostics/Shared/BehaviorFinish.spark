@@ -1,5 +1,5 @@
 ﻿<use master="" />
-<viewdata model="FubuMVC.Core.Diagnostics.BehaviorFinish" />
+<viewdata model="FubuMVC.Diagnostics.Runtime.BehaviorFinish" />
 <div class="console">
   ${this.ImageFor('console-line.png').AddClass('indicator')}
   <span class="message">

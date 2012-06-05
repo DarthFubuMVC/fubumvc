@@ -1,7 +1,7 @@
 ﻿<use master="" />
-<use namespace="FubuMVC.Core.Diagnostics" />
+<use namespace="FubuMVC.Diagnostics.Runtime" />
 <use namespace="System.Linq" />
-<viewdata model="FubuMVC.Core.Diagnostics.ModelBindingKey" />
+<viewdata model="FubuMVC.Diagnostics.Runtime.ModelBindingKey" />
 <p class="statement">Binding value</p>
 <table class="grid">
   <thead>

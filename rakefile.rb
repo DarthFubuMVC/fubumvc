@@ -80,7 +80,7 @@ def waitfor(&block)
 end
 
 desc "Compiles the app"
-task :compile => [:restore_if_missing, :clean, :version] do
+task :compile => [:restore_if_missing, :clean, :version, :bottle_diagnostics] do
   MSBuildRunner.compile :compilemode => COMPILE_TARGET, :solutionfile => 'src/FubuMVC.sln', :clrversion => CLR_TOOLS_VERSION
 
   copyOutputFiles "src/fubu/bin/#{COMPILE_TARGET}", "fubu.exe", props[:stage]
@@ -137,7 +137,7 @@ end
 
 desc "Packages the FubuMVC.Diagnostics bottle files"
 task :bottle_diagnostics do
-  bottles("assembly-pak src/Serenity")
+  bottles("assembly-pak src/FubuMVC.Diagnostics --proj-file FubuMVC.Diagnostics.csproj")
 end
 
 def self.bottles(args)

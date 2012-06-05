@@ -12,8 +12,9 @@
     <description>Advanced Diagnostics for FubuMVC.</description>
     <tags>fubumvc</tags>
     <dependencies>
-      <dependency id="FubuMVC.References" version="0.9.1.513" />
+      <dependency id="FubuMVC.References" version="0.9.8" />
 	  <dependency id="FubuMVC.Spark" />
+	<dependency id="Newtonsoft.Json" version="[4.0.8" />
     </dependencies>
   </metadata>
   <files>

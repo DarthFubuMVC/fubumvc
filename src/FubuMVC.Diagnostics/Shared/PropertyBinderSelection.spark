@@ -1,6 +1,6 @@
 ﻿<use master="" />
-<use namespace="FubuMVC.Core.Diagnostics" />
+<use namespace="FubuMVC.Diagnostics.Runtime" />
 <use namespace="System.Linq" />
-<viewdata model="FubuMVC.Core.Diagnostics.PropertyBinderSelection" />
+<viewdata model="FubuMVC.Diagnostics.Runtime.PropertyBinderSelection" />
 <p class="statement">Selecting Property Binder for ${Model.PropertyName}</p>
 <p class="msg-info">${Model.BinderType.FullName}</p>

@@ -33,7 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles.0.9.1.283\lib\Bottles.dll</HintPath>
+      <HintPath>..\packages\Bottles.0.9.1.284\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
       <HintPath>..\packages\FubuCore.0.9.9.153\lib\FubuCore.dll</HintPath>
@@ -101,6 +101,10 @@
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Diagnostics\FubuMVC.Diagnostics.csproj">
+      <Project>{A1DEB080-5A9A-44B4-A10B-84DA9BD07AF5}</Project>
+      <Name>FubuMVC.Diagnostics</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Spark\FubuMVC.Spark.csproj">
       <Project>{9D6BF559-6461-4EAC-BB16-F976FF43E8DA}</Project>

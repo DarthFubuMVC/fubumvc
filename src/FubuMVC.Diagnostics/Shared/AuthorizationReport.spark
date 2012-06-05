@@ -1,7 +1,7 @@
 ﻿<use master="" />
-<use namespace="FubuMVC.Core.Diagnostics.Tracing" />
+<use namespace="FubuMVC.Diagnostics.Runtime.Tracing" />
 <use namespace="System.Linq" />
-<viewdata model="FubuMVC.Core.Diagnostics.Tracing.AuthorizationReport" />
+<viewdata model="FubuMVC.Diagnostics.Runtime.Tracing.AuthorizationReport" />
 <div class="console">
   ${this.ImageFor('console-line.png').AddClass('indicator')}
   <span class="message">

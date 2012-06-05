@@ -3,13 +3,7 @@
   <Role>module</Role>
   <Name>FubuMVC.Diagnostics</Name>
   <assembly>FubuMVC.Diagnostics</assembly>
-  <assembly>FubuMVC.Spark</assembly>
-  <assembly>Spark</assembly>
-  <assembly>Newtonsoft.Json</assembly>
-  <DataFileSet Include="*.*">
-    <DeepSearch>true</DeepSearch>
-  </DataFileSet>
-  <ContentFileSet Include="Shared/*.spark;Shared/*.xml;Content/*.*;*.config;Features/*.spark;Notifications/*.spark;">
+  <ContentFileSet Include="*.spark;Shared/*.spark;Shared/*.xml;Content/*.*;*.config;Features/*.spark;Notifications/*.spark;">
     <DeepSearch>true</DeepSearch>
   </ContentFileSet>
 </package>

@@ -34,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles.0.9.1.283\lib\Bottles.dll</HintPath>
+      <HintPath>..\packages\Bottles.0.9.1.284\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore, Version=0.9.9.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FubuCore.0.9.9.153\lib\FubuCore.dll</HintPath>
@@ -46,8 +46,9 @@
       <HintPath>..\packages\HtmlTags.1.1.0.73\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.4.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -141,7 +142,9 @@
     <Content Include="Content\Styles\requests\view.css" />
     <Content Include="diagnostics.script.config" />
     <None Include=".package-manifest" />
-    <Content Include="diagnostic.asset.config" />
+    <Content Include="diagnostic.asset.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Chrome\Chrome.spark" />
     <None Include="Features\Chains\View\View.spark" />
     <None Include="Features\Html\Html.spark" />
@@ -221,7 +224,9 @@
     <None Include="Shared\FieldAccessReport.spark" />
     <None Include="Shared\HttpStatusReport.spark" />
     <None Include="Shared\RedirectReport.spark" />
-    <None Include="Shared\ValueConverterSelection.spark" />
+    <None Include="Shared\ValueConverterSelection.spark">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Shared\PropertyBinderSelection.spark" />
     <None Include="Shared\ModelBinderSelection.spark" />
     <None Include="Shared\ModelBindingException.spark" />
@@ -478,4 +483,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <EmbeddedResource Include="pak-WebContent.zip" />
+  </ItemGroup>
 </Project>
