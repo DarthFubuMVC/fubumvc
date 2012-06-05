@@ -14,10 +14,10 @@
     <dependencies>
       <dependency id="FubuMVC.References" version="0.9.8" />
 	  <dependency id="FubuMVC.Spark" />
-	<dependency id="Newtonsoft.Json" version="[4.0.8" />
+	<dependency id="Newtonsoft.Json" version="4.0.8" />
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\build\fubumvc-diagnostics.zip" target="lib\net40" />		
+    <file src="..\..\src\FubuMVC.Diagnostics\bin\FubuMVC.Diagnostics.*" target="lib\net40" />		
   </files>
 </package>
