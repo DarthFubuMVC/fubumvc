@@ -135,6 +135,11 @@ task :bundle_getting_started do
   fubu("assembly-pak src/FubuMVC.GettingStarted --proj-file FubuMVC.GettingStarted.csproj")
 end
 
+desc "Packages the FubuMVC.Diagnostics bottle files"
+task :bottle_diagnostics do
+  bottles("assembly-pak src/Serenity")
+end
+
 def self.bottles(args)
   bottles = Platform.runtime(Nuget.tool("Bottles", "BottleRunner.exe"))
   sh "#{bottles} #{args}"

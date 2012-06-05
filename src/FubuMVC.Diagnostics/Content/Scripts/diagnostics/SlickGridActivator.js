@@ -19,8 +19,6 @@ function makeSlickGrid(div){
         enableColumnReorder: true
     };
 
-    var data = [{ UniqueId: '1', FirstCallDescription: 'a.b()' }, { UniqueId: '2', FirstCallDescription: 'c.d()' }, { UniqueId: '1', FirstCallDescription: 'e.f()' } ]
-
     var grid = new Slick.Grid("#" + div.id, data, columns, options);
 
     div.update = function (query) {
