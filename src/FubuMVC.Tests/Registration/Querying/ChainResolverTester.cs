@@ -53,6 +53,12 @@ namespace FubuMVC.Tests.Registration.Querying
         }
 
         [Test]
+        public void find_by_type_with_method_null_can_find_by_input_type()
+        {
+            _resolutionCache.Find(typeof (UniqueInput), null).FirstCall().Method.Name.ShouldEqual("M9");
+        }
+
+        [Test]
         public void find_by_input_model_and_category_fails_when_there_are_multiple_matching_chains()
         {
             graph.BehaviorFor<ChainResolverController>(x => x.M2(null))

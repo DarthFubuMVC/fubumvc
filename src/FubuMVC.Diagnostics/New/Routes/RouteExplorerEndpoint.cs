@@ -2,21 +2,64 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using FubuCore;
+using FubuCore.Descriptions;
+using FubuMVC.Core;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Security;
 using FubuMVC.Core.Urls;
+using FubuCore.Reflection;
+using FubuMVC.Diagnostics.Chrome;
+using FubuMVC.Diagnostics.Features.Chains;
+using FubuMVC.Diagnostics.SlickGrid;
 
 namespace FubuMVC.Diagnostics.New.Routes
 {
+    public class RouteQuery
+    {
+        
+    }
 
+    public class RouteSource : IGridDataSource<RouteReport, RouteQuery>
+    {
+        private readonly BehaviorGraph _graph;
+        private readonly IUrlRegistry _urls;
+
+        public RouteSource(BehaviorGraph graph, IUrlRegistry urls)
+        {
+            _graph = graph;
+            _urls = urls;
+        }
+
+        public IEnumerable<RouteReport> GetData(RouteQuery query)
+        {
+            return _graph.Behaviors.Select(x => new RouteReport(x, _urls));
+        }
+    }
+
+    public class RoutesGrid : GridDefinition<RouteReport>
+    {
+        public RoutesGrid()
+        {
+            SourceIs<RouteSource>();
+
+            Column(x => x.Route).Width(width:300);
+            Column(x => x.Constraints).Width(width: 100);
+        }
+    }
 
     public class RouteReport
     {
         private readonly BehaviorChain _chain;
+        private readonly string _chainUrl;
         public const string NoConstraints = "N/A";
 
         public RouteReport(BehaviorChain chain, IUrlRegistry urls)
         {
             _chain = chain;
+            _chainUrl = urls.UrlFor(new ChainRequest { Id = chain.UniqueId });
         }
 
         public Type ResourceType
@@ -36,7 +79,6 @@ namespace FubuMVC.Diagnostics.New.Routes
             }
         }
 
-        // 3
         public IEnumerable<string> Action
         {
             get
@@ -45,7 +87,6 @@ namespace FubuMVC.Diagnostics.New.Routes
             }
         }
 
-        // 4:  Look at HttpConstraintResolver for tests
         public string Constraints
         {
             get
@@ -58,7 +99,6 @@ namespace FubuMVC.Diagnostics.New.Routes
             }
         }
 
-        // 5:  Look at RouteColumn for the tests
         public string Route
         {
             get
@@ -89,21 +129,20 @@ namespace FubuMVC.Diagnostics.New.Routes
         {
             get
             {
-                throw new NotImplementedException();
-
-                /*
-                 * 1.) if none, say "None"
-                 * 2.) if not OutputNode, do a short description
-                 * 3.) if OutputNode, return one for each output.  Use (for condition)
-                 * 
-                 * 
-                 * 
-                 * 
-                 * 
-                 * 
-                 * 
-                 * 
-                 */
+                foreach (BehaviorNode node in _chain.Where(x => x.Category == BehaviorCategory.Output))
+                {
+                    if (node is OutputNode)
+                    {
+                        foreach (var writer in node.As<OutputNode>().Writers)
+                        {
+                            yield return writer.ToString();
+                        }
+                    }
+                    else
+                    {
+                        yield return Description.For(node).Title;
+                    }
+                }
             }
         }
 
@@ -111,8 +150,12 @@ namespace FubuMVC.Diagnostics.New.Routes
         {
             get
             {
-                throw new NotImplementedException();
-                // return array of mimetypes from InputNode, or "N/A"
+                // TODO -- what about other types of nodes that can write?
+                // IHaveContentTypes ?????
+                var outputNode = _chain.OfType<OutputNode>().FirstOrDefault();
+                if (outputNode == null) return Enumerable.Empty<string>();
+
+                return outputNode.Writers.SelectMany(x => x.Mimetypes).Distinct();
             }
         }
 
@@ -120,21 +163,41 @@ namespace FubuMVC.Diagnostics.New.Routes
         {
             get
             {
-                throw new NotImplementedException();
-                // return array of mimetypes from OutputNode
+                // TODO -- what about other types of nodes that can write?
+                // IHaveContentTypes ?????
+                var inputNode = _chain.OfType<InputNode>().FirstOrDefault();
+                if (inputNode == null) return Enumerable.Empty<string>();
+
+                return inputNode.Readers.SelectMany(x => x.Mimetypes).Distinct();
             }
         }
 
-        public string Authorization
+        public IEnumerable<string> Authorization
         {
             get
             {
-                throw new NotImplementedException();
+                var authorization = _chain.OfType<AuthorizationNode>().FirstOrDefault();
+                if (authorization == null || !authorization.AllRules.Any()) yield break;
 
-                // None
-                // Loop thru the Authorization policies. 
-                // If Type, type.Name
-                // If value, value.ToString()
+                foreach (var objectDef in authorization.AllRules)
+                {
+                    if (objectDef.Value != null)
+                    {
+                        yield return Description.For(objectDef.Value).Title;
+                    }
+                    else
+                    {
+                        // PUt on description
+                        if (objectDef.Type.HasAttribute<TitleAttribute>())
+                        {
+                            yield return objectDef.Type.GetAttribute<TitleAttribute>().Title;
+                        }
+                        else
+                        {
+                            yield return objectDef.Type.Name;
+                        }
+                    }
+                }
             }
         }
 
@@ -142,7 +205,7 @@ namespace FubuMVC.Diagnostics.New.Routes
         {
             get
             {
-                throw new NotImplementedException();
+                return _chainUrl;
             }
         }
 
@@ -172,6 +235,7 @@ namespace FubuMVC.Diagnostics.New.Routes
 
     public class RouteExplorerEndpoint
     {
+        [WrapWith(typeof(ChromeBehavior))]
         public RouteExplorerModel get_routes_new()
         {
             return new RouteExplorerModel();

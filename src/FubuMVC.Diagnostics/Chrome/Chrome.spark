@@ -3,7 +3,6 @@
 <use namespace="FubuMVC.Diagnostics" />
 <use namespace="FubuMVC.Diagnostics.Features.Dashboard" />
 <use namespace="FubuMVC.Diagnostics.Core.Extensions" />
-<use namespace="FubuMVC.Diagnostics.Navigation" />
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,8 +27,7 @@
 		</div>
 	</div>
 	<div id="Content">
-    some stuff here
-		${Model.InnerContent}
+		!{Model.InnerContent}
 	</div>
 	<footer>
 		<div class="container">

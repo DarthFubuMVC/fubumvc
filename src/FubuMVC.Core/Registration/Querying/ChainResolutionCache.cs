@@ -83,12 +83,19 @@ namespace FubuMVC.Core.Registration.Querying
 
         public BehaviorChain Find(Type handlerType, MethodInfo method, string category = null)
         {
-            return Find(new ChainSearch{
+            var search = new ChainSearch{
                 Type = handlerType,
                 TypeMode = TypeSearchMode.HandlerOnly,
                 MethodName = method == null ? null : method.Name,
                 CategoryOrHttpMethod = category
-            });
+            };
+
+            if (method == null)
+            {
+                search.TypeMode = TypeSearchMode.Any;
+            }
+
+            return Find(search);
         }
 
         public BehaviorChain FindUnique(object model, string category = null)

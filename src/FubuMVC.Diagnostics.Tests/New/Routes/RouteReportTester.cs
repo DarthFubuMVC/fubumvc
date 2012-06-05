@@ -2,6 +2,7 @@ using System;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Urls;
+using FubuMVC.Diagnostics.Features.Chains;
 using FubuMVC.Diagnostics.New.Routes;
 using NUnit.Framework;
 using FubuTestingSupport;
@@ -151,6 +152,24 @@ namespace FubuMVC.Diagnostics.Tests.New.Routes
 
             theReport.Route.ShouldEqual("something");
         }
+
+        [Test]
+        public void picks_up_the_chain_url()
+        {
+            theChain.Route = new RouteDefinition("something");
+
+            theReport.ChainUrl.ShouldEqual(theUrls.UrlFor(new ChainRequest{Id = theChain.UniqueId}));
+        }
+
+        [Test]
+        public void url_category()
+        {
+            theChain.UrlCategory.Category = "weird";
+
+            theReport.UrlCategory.ShouldEqual("weird");
+        }
+
+
 
 
         public class Input{}

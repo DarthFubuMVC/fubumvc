@@ -1,27 +1,11 @@
 ﻿<viewdata model="FubuMVC.Diagnostics.New.Routes.RouteExplorerModel" />
+<use master="" />
 <use namespace="FubuMVC.Diagnostics.SlickGrid" />
+<use namespace="FubuMVC.Diagnostics.New.Routes" />
 <use namespace="System.Linq" />
-<html>
-<head>
-	<title>Hi there, I'm the routes!</title>
-  !{this.WriteAssetTags("diagnostics_styles")}
-  <style type="text/css" rel="stylesheet">.slickgrid_167387 .slick-header-column { left: 1000px; } .slickgrid_167387 .slick-top-panel { height:25px; } .slickgrid_167387 .slick-headerrow-columns { height:25px; } .slickgrid_167387 .slick-cell { height:20px; } .slickgrid_167387 .slick-row { height:25px; } .slickgrid_167387 .l0 { } .slickgrid_167387 .r0 { } .slickgrid_167387 .l1 { } .slickgrid_167387 .r1 { } .slickgrid_167387 .l2 { } .slickgrid_167387 .r2 { } .slickgrid_167387 .l3 { } .slickgrid_167387 .r3 { } .slickgrid_167387 .l4 { } .slickgrid_167387 .r4 { } .slickgrid_167387 .l5 { } .slickgrid_167387 .r5 { }</style>
 
-</head>
-<body>
-
+<div style="padding:30px">
+  <h1>Route Explorer (New)</h1>
   
-  
-	<h1>I'm here, with more stuff</h1>
-
-  !{this.RenderGrid<BehaviorChainGrid>("chainGrid").Attr("style", "width:1200px;height:500px;")}
-
-</body>
-
-  <foot>
-    !{this.WriteAssetTags("diagnostics")}
-
-
-    
-  </foot>
-</html>
+  !{this.RenderGrid<RoutesGrid>("chainGrid").Attr("style", "width:100%;height:500px;")}
+</div>
