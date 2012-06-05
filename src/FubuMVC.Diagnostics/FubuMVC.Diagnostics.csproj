@@ -78,6 +78,7 @@
     <Content Include="Content\Scripts\diagnostics\jquery-ui-1.8.20.custom.min.js" />
     <Content Include="Content\Scripts\diagnostics\jquery.event.drag-2.0.min.js" />
     <Content Include="Content\Scripts\diagnostics\jquery.event.drop-2.0.min.js" />
+    <Content Include="Content\Scripts\diagnostics\jquery.qtip.js" />
     <Content Include="Content\Scripts\diagnostics\json2.js" />
     <Content Include="Content\Scripts\diagnostics\slick.core.js" />
     <Content Include="Content\Scripts\diagnostics\slick.formatters.js" />
@@ -87,7 +88,6 @@
     <Content Include="Content\Scripts\html\selector.js" />
     <Content Include="Content\Scripts\bootstrap-alerts.js" />
     <Content Include="Content\Scripts\bootstrap-tabs.js" />
-    <Content Include="Content\Scripts\jquery\jquery.min.js" />
     <Content Include="Content\Scripts\jquery\jquery.treeview.js" />
     <Content Include="Content\Scripts\prettyprint.js" />
     <Content Include="Content\Scripts\requests.js" />
@@ -116,6 +116,7 @@
     <Content Include="Content\Styles\diagnostics\images\ui-icons_454545_256x240.png" />
     <Content Include="Content\Styles\diagnostics\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\Styles\diagnostics\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\Styles\diagnostics\jquery.qtip.css" />
     <Content Include="Content\Styles\diagnostics\slick-default-theme.css" />
     <Content Include="Content\Styles\diagnostics\slick.grid.css" />
     <Content Include="Content\Styles\diagnostics\spike.js" />
@@ -140,7 +141,9 @@
     <Content Include="Content\Styles\img\glyphicons-halflings.png" />
     <Content Include="Content\Styles\jquery\ui.jqgrid.overrides.css" />
     <Content Include="Content\Styles\requests\view.css" />
-    <Content Include="diagnostics.script.config" />
+    <Content Include="diagnostics.script.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include=".package-manifest" />
     <Content Include="diagnostic.asset.config">
       <SubType>Designer</SubType>
@@ -162,7 +165,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Features\Requests\View\View.spark" />
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Shared\Application.spark" />
     <Content Include="Content\Images\block.png" />
     <Content Include="Content\Images\logo.png" />

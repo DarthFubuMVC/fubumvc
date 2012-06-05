@@ -11,7 +11,7 @@ namespace FubuMVC.Diagnostics.SlickGrid
     public class SlickGridFormatter
     {
         public static readonly SlickGridFormatter TypeFormatter = new SlickGridFormatter("Slick.Formatters.DotNetType");
-        public static readonly SlickGridFormatter ActionFormatter = new SlickGridFormatter("Slick.Formatters.ActionCall");
+        public static readonly SlickGridFormatter StringArray = new SlickGridFormatter("Slick.Formatters.StringArray");
 
         private readonly string _name;
 
@@ -149,6 +149,18 @@ namespace FubuMVC.Diagnostics.SlickGrid
         public ColumnDefinition<T, TProp> Property(string property, object value)
         {
             _cache[property] = value;
+            return this;
+        }
+
+        public ColumnDefinition<T, TProp> Formatter(string formatter)
+        {
+            _cache["formatter"] = new SlickGridFormatter(formatter);
+            return this;
+        }
+
+        public ColumnDefinition<T, TProp> Formatter(SlickGridFormatter formatter)
+        {
+            _cache["formatter"] = formatter;
             return this;
         }
     }

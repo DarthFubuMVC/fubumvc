@@ -47,6 +47,7 @@ namespace FubuMVC.Diagnostics.New.Routes
 
             Column(x => x.Route).Width(width:300);
             Column(x => x.Constraints).Width(width: 100);
+            Column(x => x.Action).Formatter(SlickGridFormatter.StringArray);
         }
     }
 
@@ -198,6 +199,15 @@ namespace FubuMVC.Diagnostics.New.Routes
                         }
                     }
                 }
+            }
+        }
+
+        public IEnumerable<string> Wrappers
+        {
+            get
+            {
+                // TODO -- might be a pretty type opportunity
+                return _chain.OfType<Wrapper>().Select(x => x.BehaviorType.Name);
             }
         }
 

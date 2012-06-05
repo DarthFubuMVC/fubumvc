@@ -95,6 +95,17 @@ h4.subheader
     padding: 10px;
 }
 
+.qtip-text
+{
+	display:none;
+}
+
+span.drilldown
+{
+	display:inline-block;
+	cursor:pointer;
+}
+
 /*pre
 {
     font-size: 12px;

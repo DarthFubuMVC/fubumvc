@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using FubuMVC.Diagnostics.SlickGrid;
+using HtmlTags;
 using NUnit.Framework;
 using FubuTestingSupport;
 
@@ -12,6 +14,15 @@ namespace FubuMVC.Diagnostics.Tests.SlickGrid
         public void write_string()
         {
             JsonValueWriter.ConvertToJson("name").ShouldEqual("name");
+        }
+
+        [Test]
+        public void try_it()
+        {
+            var dict = new Dictionary<string, object>();
+            dict.Add("names", new string[]{"one", "two", "three"});
+
+            Debug.WriteLine(JsonUtil.ToJson(dict));
         }
 
         [Test]

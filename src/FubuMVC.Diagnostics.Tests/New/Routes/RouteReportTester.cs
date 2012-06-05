@@ -1,4 +1,5 @@
 using System;
+using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Urls;
@@ -169,8 +170,47 @@ namespace FubuMVC.Diagnostics.Tests.New.Routes
             theReport.UrlCategory.ShouldEqual("weird");
         }
 
+        [Test]
+        public void wrappers_with_no_wrappers()
+        {
+            theReport.Wrappers.Any().ShouldBeFalse();
+        }
 
+        [Test]
+        public void multiple_wrappers()
+        {
+            theChain.AddToEnd(ActionCall.For<FakeEndpoint>(x => x.get_something(null)));
+            theChain.FirstCall().WrapWith(typeof (SimpleWrapper));
+            theChain.FirstCall().WrapWith(typeof (AnotherWrapper));
 
+            theReport.Wrappers.ShouldHaveTheSameElementsAs("SimpleWrapper", "AnotherWrapper");
+        }
+
+        public class SimpleWrapper : IActionBehavior
+        {
+            public void Invoke()
+            {
+                throw new NotImplementedException();
+            }
+
+            public void InvokePartial()
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public class AnotherWrapper : IActionBehavior
+        {
+            public void Invoke()
+            {
+                throw new NotImplementedException();
+            }
+
+            public void InvokePartial()
+            {
+                throw new NotImplementedException();
+            }
+        }
 
         public class Input{}
         public class Output{}
