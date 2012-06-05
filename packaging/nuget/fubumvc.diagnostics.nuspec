@@ -18,7 +18,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\build\fubumvc-diagnostics.zip" target="lib" />	
-	<file src="..\..\build\fubumvc-diagnostics.zip" target="content\fubu-content" />	
+    <file src="..\..\build\fubumvc-diagnostics.zip" target="lib\net40" />		
   </files>
 </package>
