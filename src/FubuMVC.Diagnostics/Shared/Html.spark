@@ -2,8 +2,8 @@
 <use namespace="FubuMVC.Core.Registration" />
 <use namespace="FubuMVC.Diagnostics.Features.Html" />
 <content:head>
-  <Stylesheet href="html/selector.css" />
-  <Script src="html/selector.js" />
+  <Stylesheet href="diagnostics/html/selector.css" />
+  <Script src="diagnostics/html/selector.js" />
 </content:head>
 <content:leftColumn>
   <form action="${this.Urls.UrlFor(new FubuMVC.Diagnostics.Features.Html.HtmlConventionsPreviewInputModel())}" method="post" class="form-stacked">

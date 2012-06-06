@@ -2,8 +2,8 @@
 <viewdata model="FubuMVC.Diagnostics.Features.Chains.ChainModel" />
 <content:title>Chain ${Model.Chain.UniqueId.ToString()}</content:title>
 <content:head>
-  <Stylesheet href="chains/view.css" />
-  <Script src="chains/view.js" />
+  <Stylesheet href="diagnostics/chains/view.css" />
+  <Script src="diagnostics/chains/view.js" />
 </content:head>
 <content:pageContent>
   <h2 class="route">

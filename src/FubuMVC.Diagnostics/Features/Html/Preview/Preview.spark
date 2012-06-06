@@ -3,7 +3,7 @@
 <viewdata model="FubuMVC.Diagnostics.Features.Html.HtmlConventionsPreviewViewModel" />
 <content:title>${Model.Type} | HTML Conventions</content:title>
 <content:head>
-  <Stylesheet href="html/preview.css" />
+  <Stylesheet href="diagnostics/html/preview.css" />
 </content:head>
 <content:pageContent>
   <h2 id="explorer-heading">${Model.Type}</h2>

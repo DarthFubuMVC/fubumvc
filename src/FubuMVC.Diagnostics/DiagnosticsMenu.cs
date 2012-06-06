@@ -38,7 +38,7 @@ namespace FubuMVC.Diagnostics
 
         public override int GetHashCode()
         {
-            return Key.GetHashCode();
+            return ("DiagnosticKeys:" + Key).GetHashCode();
         }
     }
 

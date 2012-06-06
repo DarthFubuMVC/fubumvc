@@ -5,7 +5,7 @@
 <viewdata model="FubuMVC.Diagnostics.Features.Requests.RequestExplorerModel" />
 <content:title>Request Explorer</content:title>
 <content:head>
-  <Script src="requests.js" />
+  <Script src="diagnostics/requests.js" />
 </content:head>
 <content:mainContent>
   <h2 id="explorer-heading">Request Explorer</h2>

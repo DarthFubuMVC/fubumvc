@@ -11,8 +11,8 @@
 	<meta name="description" content="FubuMVC Advanced Diagnostics" />
     <meta name="author" content="FubuMVC" />
 	<title>FubuMVC Diagnostics</title>
-	<Stylesheet href="default.css" />
-	<Script src="diagnostics" />
+	<Stylesheet href="diagnostics/default.css" />
+	<Script src="diagnostics/diagnostics" />
 	<Styles />
 </head>
 <body>

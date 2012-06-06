@@ -5,7 +5,7 @@
 <viewdata model="FubuMVC.Diagnostics.Features.Routes.RoutesModel" />
 <content:title>Route Explorer</content:title>
 <content:head>
-  <Script src="routes.js" />
+  <Script src="diagnostics/routes.js" />
 </content:head>
 <content:mainContent>
 	<h2 id="route-heading">Route Explorer</h2>

@@ -3,8 +3,8 @@
 <viewdata model="FubuMVC.Diagnostics.Features.Requests.RequestDetailsModel" />
 <content:title>Request ${Model.Report.Id.ToString()}</content:title>
 <content:head>
-  <Stylesheet href="requests/view.css" />
-  <Script src="requests/view.js" />
+  <Stylesheet href="diagnostics/requests/view.css" />
+  <Script src="diagnostics/requests/view.js" />
 </content:head>
 <content:leftColumn>
   <h5>Behavior Chain</h5>
