@@ -27,14 +27,16 @@ namespace FubuMVC.HelloWorld.Controllers.Home
             return new HomeViewModel{
                 Text = "Hello, world.",
                 CurrentUrl = model.Url,
-                NumberOfFiles = model.Files == null ? 0 : model.Files.Count
+                HomeFile1Present = model.HomeFile1 != null,
+                NumberOfFiles = model.Files.Count
             };
         }
     }
 
     public class HomeFilesModel
     {
-        public HttpFileCollectionWrapper Files { get; set; }
+        public HttpPostedFileBase HomeFile1 { get; set; }
+        public HttpFileCollectionBase Files { get; set; }
         public string Url { get; set; }
     }
 
@@ -42,6 +44,7 @@ namespace FubuMVC.HelloWorld.Controllers.Home
     {
         public string Text { get; set; }
         public string CurrentUrl { get; set; }
+        public bool HomeFile1Present { get; set; }
         public int NumberOfFiles { get; set; }
     }
 

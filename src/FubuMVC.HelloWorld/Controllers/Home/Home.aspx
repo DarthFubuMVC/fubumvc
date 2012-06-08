@@ -13,17 +13,19 @@
     <br />
      View url template example: <%=this.LinkTo(new UrlTemplateRequest()).Text("url template") %>
      <br />
+     HomeFile1 uploaded? <%: Model.HomeFile1Present %>
+     <br />
     Number of files attached: <%: Model.NumberOfFiles %>
     <br />
     <form method="post" enctype="multipart/form-data" action="<%= Urls.UrlFor<HomeFilesModel>(null) %>">
     <br />
-    File 1:  <input type="file" name="homefiles" />
+    File 1:  <input type="file" name="HomeFile1" />
     <br />
-    File 2:  <input type="file" name="homefiles" />
+    File 2:  <input type="file" name="HomeFiles" />
     <br />
-    File 3:  <input type="file" name="homefiles" />
+    File 3:  <input type="file" name="HomeFiles" />
     <br />
-    File 4:  <input type="file" name="homefiles" />
+    File 4:  <input type="file" name="HomeFiles" />
     <input type="submit" />
     </form>
 
