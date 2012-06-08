@@ -40,7 +40,7 @@ namespace FubuMVC.Core.Http.AspNet
         private void addValues(RequestDataSource source, Func<string, object> finder, Func<IEnumerable<string>> findKeys)
         {
             var values = new SimpleKeyValues(finder, findKeys);
-            var valueSource = new FlatValueSource(values, source.ToString());
+            var valueSource = new FlatValueSource<object>(values, source.ToString());
 
             //var valueSource = new GenericValueSource(source.ToString(), finder, findKeys);
             AddValues(valueSource);
@@ -60,7 +60,7 @@ namespace FubuMVC.Core.Http.AspNet
         }
     }
 
-    public class SimpleKeyValues : IKeyValues
+    public class SimpleKeyValues : IKeyValues<object>
     {
         private readonly Func<string, object> _source;
         private readonly Func<IEnumerable<string>> _allKeys;
@@ -76,9 +76,9 @@ namespace FubuMVC.Core.Http.AspNet
             return _allKeys().Contains(key);
         }
 
-        public string Get(string key)
+        public object Get(string key)
         {
-            return _source(key) as string;
+            return _source(key);
         }
 
         public IEnumerable<string> GetKeys()
@@ -86,7 +86,7 @@ namespace FubuMVC.Core.Http.AspNet
             return _allKeys();
         }
 
-        public bool ForValue(string key, Action<string, string> callback)
+        public bool ForValue(string key, Action<string, object> callback)
         {
             if (Has(key))
             {
