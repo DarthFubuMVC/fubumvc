@@ -88,7 +88,6 @@ task :compile => [:restore_if_missing, :clean, :version, :bottle_diagnostics] do
   copyOutputFiles "src/fubu/bin/#{COMPILE_TARGET}", "fubu", props[:stage]
 
   target = COMPILE_TARGET.downcase
-  bottles("create src/FubuMVC.Deployers -o build/fubumvc-deployers.zip --target #{target}")
 end
 
 def copyOutputFiles(fromDir, filePattern, outDir)
