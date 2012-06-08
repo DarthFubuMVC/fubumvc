@@ -29,7 +29,7 @@ namespace FubuMVC.Core
             return list.SelectMany(
                 x =>
                 AssembliesFromPath(x, assem => assem.GetCustomAttributes(typeof (FubuModuleAttribute), false).Any()))
-                .Select(AssemblyPackageInfo.CreateFor);
+                .Select(AssemblyPackageInfoFactory.CreateFor);
         }
 
         // TODO -- this is so common here and in FubuMVC, just get something into FubuCore

@@ -29,8 +29,8 @@ namespace FubuMVC.Razor.Tests.RazorModel
         {
             Services.Inject<IFileScanner>(new FileScanner());
 
-            _pak1 = new PackageInfo("Pak1");
-            _pak2 = new PackageInfo("Pak2");
+            _pak1 = new PackageInfo(new PackageManifest(){Name = "Pak1"});
+            _pak2 = new PackageInfo(new PackageManifest(){Name="Pak2"});
 
             _pak1Path = Path.Combine("Templates", "Pak1");
             _pak2Path = Path.Combine("Templates", "Package2");

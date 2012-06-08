@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.IO;
-using Bottles.Commands;
+using Bottles;
 using FubuCore.CommandLine;
 
 namespace Fubu
@@ -17,7 +17,7 @@ namespace Fubu
     {
         public override bool Execute(FolderInput input)
         {
-            var folder = AliasCommand.AliasFolder(input.AppFolder);
+            var folder = new AliasService().GetFolderForAlias(input.AppFolder);
 
             Restart(folder);
             return true;

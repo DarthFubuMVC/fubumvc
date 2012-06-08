@@ -24,7 +24,7 @@ namespace FubuMVC.Tests.Packaging
         [Test]
         public void no_dependencies()
         {
-            thePackage.GetDependencies().Any().ShouldBeFalse();
+            thePackage.Dependencies.Any().ShouldBeFalse();
         }
 
         [Test]

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using Bottles;
 using Bottles.PackageLoaders.Assemblies;
@@ -36,10 +35,24 @@ namespace FubuMVC.Core.Packaging
             // Do nothing
         }
 
-        public IEnumerable<Dependency> GetDependencies()
+        public void ForFiles(string directory, string searchPattern, Action<string, Stream> fileCallback)
         {
-            // No dependencies
-            yield break;
+            //do nothing
+        }
+
+        public Dependency[] Dependencies
+        {
+            get { return new Dependency[0]; }
+        }
+
+        public PackageManifest Manifest
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public Bottles.IPackageFiles Files
+        {
+            get { throw new NotImplementedException(); }
         }
 
         public string Name

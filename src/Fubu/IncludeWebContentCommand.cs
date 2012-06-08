@@ -41,7 +41,7 @@ namespace Fubu
     {
         public override bool Execute(IncludeWebContentInput input)
         {
-            var folder = AliasCommand.AliasFolder(input.Folder);
+            var folder = new AliasService().GetFolderForAlias(input.Folder);
 
             var manifest = new FileSystem().LoadPackageManifestFrom(folder);
 

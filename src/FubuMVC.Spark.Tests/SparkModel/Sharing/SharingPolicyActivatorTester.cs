@@ -75,8 +75,8 @@ namespace FubuMVC.Spark.Tests.SparkModel.Sharing
         {
             var packages = new List<IPackageInfo>
             {
-                new PackageInfo("a"), 
-                new PackageInfo("b")
+                new PackageInfo(new PackageManifest(){Name="a"}), 
+                new PackageInfo(new PackageManifest(){Name="b"})
             };
 
             _activator.CompileDependencies(packages, _packageLog);
@@ -89,8 +89,8 @@ namespace FubuMVC.Spark.Tests.SparkModel.Sharing
         {
             var packages = new List<IPackageInfo>
             {
-                new PackageInfo("a"), 
-                new PackageInfo("b")
+                new PackageInfo(new PackageManifest(){Name="a"}), 
+                new PackageInfo(new PackageManifest(){Name="b"})
             };
 
             _graph.Global("x");

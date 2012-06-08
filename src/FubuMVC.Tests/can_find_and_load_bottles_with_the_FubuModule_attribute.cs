@@ -36,7 +36,7 @@ namespace FubuMVC.Tests
 
 
             PackageRegistry.Packages.OfType<AssemblyPackageInfo>().Any(
-                x => x.Name == AssemblyPackageInfo.CreateFor(assembly).Name)
+                x => x.Name == AssemblyPackageInfoFactory.CreateFor(assembly).Name)
                 .ShouldBeTrue();
         }
     }

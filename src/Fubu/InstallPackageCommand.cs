@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Bottles;
 using Bottles.Commands;
 using FubuCore;
 using FubuCore.CommandLine;
@@ -14,7 +15,7 @@ namespace Fubu
     {
         public override bool Execute(InstallPackageInput input)
         {
-            var applicationFolder = AliasCommand.AliasFolder(input.AppFolder);
+            var applicationFolder = new AliasService().GetFolderForAlias(input.AppFolder);
 
             var packageFolder = FileSystem.Combine(applicationFolder, "bin", FubuMvcPackageFacility.FubuPackagesFolder);
 

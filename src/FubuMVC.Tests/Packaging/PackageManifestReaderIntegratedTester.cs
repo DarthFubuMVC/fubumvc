@@ -6,6 +6,7 @@ using Bottles;
 using Bottles.Diagnostics;
 using Bottles.PackageLoaders;
 using Bottles.PackageLoaders.Assemblies;
+using Bottles.PackageLoaders.LinkedFolders;
 using FubuCore;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -56,7 +57,7 @@ namespace FubuMVC.Tests.Packaging
             // the reader is rooted at the folder location of the main app
             var package = reader.LoadFromFolder("../../../TestPackage1".ToFullPath());
 
-            var assemblyLoader = new AssemblyLoader(new PackagingDiagnostics());
+            var assemblyLoader = new AssemblyLoader(new PackagingDiagnostics(new LoggingSession()));
             assemblyLoader.AssemblyFileLoader = file => Assembly.Load(Path.GetFileNameWithoutExtension(file));
             assemblyLoader.LoadAssembliesFromPackage(package);
 
@@ -89,7 +90,7 @@ namespace FubuMVC.Tests.Packaging
 
             new FileSystem().PersistToFile(links, theApplicationDirectory, LinkManifest.FILE);
 
-            var assemblyLoader = new AssemblyLoader(new PackagingDiagnostics());
+            var assemblyLoader = new AssemblyLoader(new PackagingDiagnostics(new LoggingSession()));
             assemblyLoader.AssemblyFileLoader = file => Assembly.Load(Path.GetFileNameWithoutExtension(file));
 
             var package = linkedFolderReader.Load(new PackageLog()).Single();

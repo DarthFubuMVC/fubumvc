@@ -19,9 +19,9 @@ namespace FubuMVC.Tests.Assets
 
         public Action<IAssemblyRegistration> LoadingAssemblies { get; set; }
 
-        public IEnumerable<Dependency> GetDependencies()
+        public Dependency[] Dependencies
         {
-            yield break;
+            get { return new Dependency[0]; }
         }
 
         public string Name
@@ -41,9 +41,19 @@ namespace FubuMVC.Tests.Assets
             _folderNames.WithValue(folderName, onFound);
         }
 
-        public void ForData(string searchPattern, Action<string, Stream> dataCallback)
+        public void ForFiles(string directory, string searchPattern, Action<string, Stream> fileCallback)
         {
             throw new NotImplementedException();
+        }
+
+        public PackageManifest Manifest
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public IPackageFiles Files
+        {
+            get { throw new NotImplementedException(); }
         }
 
         public void RegisterFolder(string folderAlias, string folderName)

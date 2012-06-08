@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web.Hosting;
 using Bottles;
-using Bottles.PackageLoaders;
+using Bottles.PackageLoaders.LinkedFolders;
 using FubuCore;
 using FubuMVC.Core.Packaging.VirtualPaths;
 

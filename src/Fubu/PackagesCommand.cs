@@ -1,7 +1,5 @@
 ﻿using System;
-using System.ComponentModel;
 using Bottles;
-using Bottles.Commands;
 using Bottles.Diagnostics;
 using Bottles.Exploding;
 using FubuCore;
@@ -17,7 +15,7 @@ namespace Fubu
 
         public override bool Execute(PackagesInput input)
         {
-            input.AppFolder = AliasCommand.AliasFolder(input.AppFolder).ToFullPath();
+            input.AppFolder = new AliasService().GetFolderForAlias(input.AppFolder).ToFullPath();
 
             Execute(input, _system);
             return true;
