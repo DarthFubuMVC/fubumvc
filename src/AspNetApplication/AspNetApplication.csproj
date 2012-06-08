@@ -13,6 +13,7 @@
     <RootNamespace>AspNetApplication</RootNamespace>
     <AssemblyName>AspNetApplication</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -72,6 +73,7 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <Content Include="FileUpload\FileUploadView.aspx" />
     <Content Include="WebForms\SimpleView.aspx" />
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +90,9 @@
     <Compile Include="ServerSideEvents\SimpleFlowController.cs" />
     <Compile Include="ServerSideEvents\SimpleInput.cs" />
     <Compile Include="ServerSideEvents\SSEClientController.cs" />
+    <Compile Include="FileUpload\FileUploadController.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="WebForms\SimpleView.aspx.cs">
       <DependentUpon>SimpleView.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
