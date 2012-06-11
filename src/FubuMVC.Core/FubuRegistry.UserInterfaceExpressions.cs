@@ -27,24 +27,16 @@ namespace FubuMVC.Core
             Import(configure);
         }
 
+        [Obsolete("Change to using FubuRegistry.Policies.StringConversions<T>()")]
         public void StringConversions<T>() where T : DisplayConversionRegistry, new()
         {
-            var conversions = new T();
-
-            addStringConversions(conversions);
+            Policies.StringConversions<T>();
         }
 
-        private void addStringConversions(DisplayConversionRegistry conversions)
-        {
-            Services(x => x.AddService(typeof (DisplayConversionRegistry), ObjectDef.ForValue(conversions)));
-        }
-
+        [Obsolete("Change to using FubuRegistry.Policies.StringConversions(Action<DisplayConversionRegistry>)")]
         public void StringConversions(Action<DisplayConversionRegistry> configure)
         {
-            var conversions = new DisplayConversionRegistry();
-            configure(conversions);
-
-            addStringConversions(conversions);
+            Policies.StringConversions(configure);
         }
     }
 }

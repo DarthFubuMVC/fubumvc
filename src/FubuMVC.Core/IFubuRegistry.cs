@@ -38,11 +38,6 @@ namespace FubuMVC.Core
         /// <param name = "alteration"></param>
         void Configure(Action<BehaviorGraph> alteration);
 
-        void HtmlConvention<T>() where T : HtmlConventionRegistry, new();
-        void HtmlConvention(HtmlConventionRegistry conventions);
-        void HtmlConvention(Action<HtmlConventionRegistry> configure);
-        void StringConversions<T>() where T : DisplayConversionRegistry, new();
-        void StringConversions(Action<DisplayConversionRegistry> configure);
         BehaviorGraph BuildGraph();
     }
 }

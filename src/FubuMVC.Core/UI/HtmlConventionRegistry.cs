@@ -22,7 +22,7 @@ namespace FubuMVC.Core.UI
             get { return _profiles.GetAll(); }
         }
 
-        public void Configure(FubuRegistry registry)
+        void IFubuRegistryExtension.Configure(FubuRegistry registry)
         {
             registry.Services(x => x.AddService(this));
         }

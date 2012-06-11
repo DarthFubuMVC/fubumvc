@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using FubuCore;
+using FubuCore.Formatting;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Security;
 
 namespace FubuMVC.Core.Registration.DSL
@@ -133,6 +135,27 @@ namespace FubuMVC.Core.Registration.DSL
             }
         }
 
-        
+        public void StringConversions<T>() where T : DisplayConversionRegistry, new()
+        {
+            var conversions = new T();
+
+            addStringConversions(conversions);
+        }
+
+
+        private void addStringConversions(DisplayConversionRegistry conversions)
+        {
+            var registry = new ServiceRegistry();
+            registry.AddService(typeof (DisplayConversionRegistry), ObjectDef.ForValue(conversions));
+            _configuration.AddConfiguration(registry, ConfigurationType.Services);
+        }
+
+        public void StringConversions(Action<DisplayConversionRegistry> configure)
+        {
+            var conversions = new DisplayConversionRegistry();
+            configure(conversions);
+
+            addStringConversions(conversions);
+        }
     }
 }
