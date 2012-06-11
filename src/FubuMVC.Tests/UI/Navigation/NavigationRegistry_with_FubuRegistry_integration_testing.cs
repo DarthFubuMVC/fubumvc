@@ -1,4 +1,5 @@
 using FubuMVC.Core;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.UI.Navigation;
 using NUnit.Framework;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace FubuMVC.Tests.UI.Navigation
                 x.Add += MenuNode.Node(FakeKeys.Key3);
             });
 
-            var graph = registry.BuildGraph().Navigation;
+            var graph = BehaviorGraph.BuildFrom(registry).Navigation;
 
             graph.MenuFor(FakeKeys.Key1).Select(x => x.Key)
                 .ShouldHaveTheSameElementsAs(FakeKeys.Key2, FakeKeys.Key3);
@@ -39,7 +40,7 @@ namespace FubuMVC.Tests.UI.Navigation
 
             registry.Import<ChildRegistry>();
 
-            var graph = registry.BuildGraph().Navigation;
+            var graph = BehaviorGraph.BuildFrom(registry).Navigation;
 
             graph.MenuFor(FakeKeys.Key1).Select(x => x.Key)
                 .ShouldHaveTheSameElementsAs(FakeKeys.Key2, FakeKeys.Key3, FakeKeys.Key4, FakeKeys.Key5);

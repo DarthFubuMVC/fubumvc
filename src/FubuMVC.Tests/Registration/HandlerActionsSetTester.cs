@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.Registration
                 x.Actions.IncludeClassesSuffixedWithController();
             });
 
-            theGraph = registry.BuildGraph();
+            theGraph = BehaviorGraph.BuildFrom(registry);
         }
 
         [Test]

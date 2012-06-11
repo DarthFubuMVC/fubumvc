@@ -1,4 +1,5 @@
 using FubuMVC.Core;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
 using NUnit.Framework;
 using FubuCore;
@@ -25,7 +26,7 @@ namespace FubuMVC.Tests
                 });
             });
 
-            registry.BuildGraph().Services.ServicesFor<MyInterface>()
+            BehaviorGraph.BuildFrom(registry).Services.ServicesFor<MyInterface>()
                 .Single().Type.ShouldEqual(typeof (MyConcreteClass));
         }
 

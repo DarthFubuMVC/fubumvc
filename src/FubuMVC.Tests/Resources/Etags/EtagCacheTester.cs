@@ -53,8 +53,7 @@ namespace FubuMVC.Tests.Resources.Etags
             ServiceRegistry.ShouldBeSingleton(typeof(EtagCache))
                 .ShouldBeTrue();
 
-            new FubuRegistry()
-                .BuildGraph()
+            BehaviorGraph.BuildEmptyGraph()
                 .Services
                 .DefaultServiceFor<IEtagCache>()
                 .Type.ShouldEqual(typeof (EtagCache));

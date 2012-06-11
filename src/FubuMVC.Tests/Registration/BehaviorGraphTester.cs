@@ -65,12 +65,12 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void description_writes_each_behavior_first_call_and_route_pattern()
         {
-            var graph = new FubuRegistry(x =>
+            var graph = BehaviorGraph.BuildFrom(x =>
             {
                 x.Applies.ToAssemblyContainingType<OneController>();
                 x.Policies.WrapBehaviorChainsWith<WrappingBehavior2>();
                 x.Policies.WrapBehaviorChainsWith<WrappingBehavior>();
-            }).BuildGraph();
+            });
 
             var listener = MockRepository.GenerateStub<TraceListener>();
             Trace.Listeners.Add(listener);
@@ -83,13 +83,13 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void find_home_is_not_null()
         {
-            var graph = new FubuRegistry(x =>
+            var graph = BehaviorGraph.BuildFrom(x =>
             {
                 x.Applies.ToThisAssembly();
                 x.Actions.IncludeClassesSuffixedWithController();
 
                 x.Routes.HomeIs<MyHomeController>(c => c.ThisIsHome());
-            }).BuildGraph();
+            });
 
             graph.FindHomeChain().FirstCall().Method.Name.ShouldEqual("ThisIsHome");
         }
@@ -97,11 +97,11 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void find_home_is_not_set()
         {
-            var graph = new FubuRegistry(x =>
+            var graph = BehaviorGraph.BuildFrom(x =>
             {
                 x.Applies.ToThisAssembly();
                 x.Actions.IncludeClassesSuffixedWithController();
-            }).BuildGraph();
+            });
 
             graph.FindHomeChain().ShouldBeNull();
         }
@@ -109,13 +109,13 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void should_remove_chain()
         {
-            var graph = new FubuRegistry(x =>
+            var graph = BehaviorGraph.BuildFrom(x =>
             {
                 x.Applies.ToThisAssembly();
                 x.Actions.IncludeClassesSuffixedWithController();
 
                 x.Routes.HomeIs<MyHomeController>(c => c.ThisIsHome());
-            }).BuildGraph();
+            });
 
             var chain = graph.FindHomeChain();
             graph.RemoveChain(chain);
@@ -241,7 +241,7 @@ namespace FubuMVC.Tests.Registration
         [SetUp]
         public void SetUp()
         {
-            graph1 = new FubuRegistry(x =>
+            graph1 = BehaviorGraph.BuildFrom(x =>
             {
                 x.Route("method1/{Name}/{Age}")
                     .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
@@ -251,16 +251,16 @@ namespace FubuMVC.Tests.Registration
 
                 x.Route("method3/{Name}/{Age}")
                     .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
-            }).BuildGraph();
+            });
 
             chain = new BehaviorChain();
             graph1.AddChain(chain);
 
-            graph2 = new FubuRegistry(x =>
+            graph2 = BehaviorGraph.BuildFrom(x =>
             {
                 x.Route("/root/{Name}/{Age}")
                     .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
-            }).BuildGraph();
+            });
 
             graph2.As<IChainImporter>().Import(graph1, b => b.PrependToUrl("area1"));
         }

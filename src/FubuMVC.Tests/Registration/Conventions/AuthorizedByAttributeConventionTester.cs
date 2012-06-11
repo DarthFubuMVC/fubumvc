@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<AuthorizedByAttributeConventionController>();
 
-            graph = registry.BuildGraph();
+            graph = BehaviorGraph.BuildFrom(registry);
         }
 
         private BehaviorChain chainFor(Expression<Action<AuthorizedByAttributeConventionController>> action)
@@ -107,7 +107,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<AuthorizedController2>();
 
-            graph = registry.BuildGraph();
+            graph = BehaviorGraph.BuildFrom(registry);
         }
 
         private BehaviorChain chainFor(Expression<Action<AuthorizedController2>> action)

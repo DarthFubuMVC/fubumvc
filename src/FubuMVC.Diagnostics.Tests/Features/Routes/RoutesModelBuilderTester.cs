@@ -26,7 +26,7 @@ namespace FubuMVC.Diagnostics.Tests.Features.Routes
                                new JsonGridColumn { Name = "Test" }
                            };
 
-            _graph = new FubuRegistry().BuildGraph();
+            _graph = BehaviorGraph.BuildEmptyGraph();
             Container.Inject(_graph);
 
             _firstChain = _graph.Behaviors.First();

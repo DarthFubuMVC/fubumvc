@@ -31,10 +31,14 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void limit_behaviors_by_policy_on_interface_methods()
         {
-            BehaviorGraph graph = new FubuRegistry(x =>
+            var graph = BehaviorGraph.BuildFrom(x =>
             {
-                x.Actions.ExcludeNonConcreteTypes().ForTypesOf<IRouter>(o => { o.Include(c => c.Go()); });
-            }).BuildGraph();
+                x.Actions.ExcludeNonConcreteTypes().ForTypesOf<IRouter>(o =>
+                {
+                    o.Include(c => c.Go());
+                });
+            });
+
 
             IEnumerable<string> calls = graph.Behaviors
                 .Where(x => x.FirstCall().HandlerType.Assembly != typeof(BehaviorGraph).Assembly)
@@ -47,12 +51,11 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void pick_up_behaviors_from_another_assembly()
         {
-            BehaviorGraph graph = new FubuRegistry(x =>
+            var graph = BehaviorGraph.BuildFrom(x =>
             {
-                
                 x.Applies.ToAssemblyContainingType<ClassInAnotherAssembly>();
                 x.Actions.IncludeTypesNamed(name => name.EndsWith("Controller"));
-            }).BuildGraph();
+            });
 
             graph.Behaviors.Count().ShouldBeGreaterThan(0);
 
@@ -71,10 +74,10 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void pick_up_behaviors_from_this_assembly()
         {
-            BehaviorGraph graph = new FubuRegistry(x =>
+            var graph = BehaviorGraph.BuildFrom(x =>
             {
                 x.Actions.IncludeTypesNamed(name => name.EndsWith("Controller"));
-            }).BuildGraph();
+            });
 
             graph.Behaviors.Count().ShouldBeGreaterThan(0);
             graph.Behaviors.Each(x => x.Calls.First().HandlerType.Name.EndsWith("Controller"));

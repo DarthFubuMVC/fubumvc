@@ -15,10 +15,10 @@ namespace FubuMVC.Tests.Registration.Conventions
         [SetUp]
         public void SetUp()
         {
-            var registry = new FubuRegistry();
-            registry.Actions.IncludeType<MyController>();
-
-            theGraph = registry.BuildGraph();
+            theGraph = BehaviorGraph.BuildFrom(x =>
+            {
+                x.Actions.IncludeType<MyController>();
+            });
         }
 
         [Test]

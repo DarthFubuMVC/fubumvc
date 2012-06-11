@@ -20,10 +20,10 @@ namespace FubuMVC.Tests.Ajax
         [SetUp]
         public void SetUp()
         {
-            var registry = new FubuRegistry();
-            registry.Actions.IncludeType<Controller1>();
-
-            theGraph = registry.BuildGraph();
+            theGraph = BehaviorGraph.BuildFrom(x =>
+            {
+                x.Actions.IncludeType<Controller1>();
+            });
         }
 
         #endregion
@@ -104,7 +104,7 @@ namespace FubuMVC.Tests.Ajax
             var packageRegistry = new FubuPackageRegistry();
             packageRegistry.Actions.IncludeType<Controller1>();
             hostRegistry.Import(packageRegistry, string.Empty);
-            theGraph = hostRegistry.BuildGraph();
+            theGraph = BehaviorGraph.BuildFrom(hostRegistry);
 
             var chain = chainFor(x => x.BasicContinuation(null))
                 .Output.Writers.OfType<Writer>().ShouldHaveCount(1);

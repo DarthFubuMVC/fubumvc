@@ -40,7 +40,7 @@ namespace FubuMVC.Core
             configure(this);
         }
 
-        public ConfigurationGraph Configuration
+        internal ConfigurationGraph Configuration
         {
             get { return _configuration; }
         }
@@ -65,7 +65,7 @@ namespace FubuMVC.Core
         ///   Constructs a <see cref = "BehaviorGraph" /> using the configuration expressions defined in this <see cref = "FubuRegistry" />. This method is mostly for internal usage.
         /// </summary>
         /// <returns></returns>
-        public BehaviorGraph BuildGraph()
+        internal BehaviorGraph BuildGraph()
         {
             Compile();
 
@@ -248,7 +248,7 @@ namespace FubuMVC.Core
         ///   the built in policies and services.
         /// </summary>
         /// <returns></returns>
-        public BehaviorGraph BuildLightGraph()
+        internal BehaviorGraph BuildLightGraph()
         {
             return _configuration.BuildForImport(ViewBag.Empty());
         }

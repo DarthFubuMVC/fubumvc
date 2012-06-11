@@ -18,7 +18,10 @@ namespace FubuMVC.Tests.Registration.Querying
         [SetUp]
         public void SetUp()
         {
-            graph = new FubuRegistry(x => { x.Actions.IncludeType<ChainResolverController>(); }).BuildGraph();
+            graph = BehaviorGraph.BuildFrom(x =>
+            {
+                x.Actions.IncludeType<ChainResolverController>();
+            });
 
             typeResolver = new TypeResolver();
             typeResolver.AddStrategy<ProxyDetector>();

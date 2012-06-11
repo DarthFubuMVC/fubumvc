@@ -32,7 +32,7 @@ namespace FubuMVC.Tests.Registration
     {
         private void registeredTypeIs<TService, TImplementation>()
         {
-            new FubuRegistry().BuildGraph().Services.DefaultServiceFor<TService>().Type.ShouldEqual(
+            BehaviorGraph.BuildEmptyGraph().Services.DefaultServiceFor<TService>().Type.ShouldEqual(
                 typeof (TImplementation));
         }
 
@@ -57,7 +57,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void navigation_activator_is_registered()
         {
-            new FubuRegistry().BuildGraph().Services.ServicesFor<IActivator>()
+            BehaviorGraph.BuildEmptyGraph().Services.ServicesFor<IActivator>()
                 .Any(x => x.Type == typeof(NavigationActivator)).ShouldBeTrue();
         }
 
@@ -70,14 +70,14 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void a_value_of_stringifier_is_registered()
         {
-            new FubuRegistry().BuildGraph().Services.DefaultServiceFor(typeof (Stringifier)).Value.ShouldBeOfType
+            BehaviorGraph.BuildEmptyGraph().Services.DefaultServiceFor(typeof (Stringifier)).Value.ShouldBeOfType
                 <Stringifier>();
         }
 
         [Test]
         public void registers_the_display_conversion_registry_activator()
         {
-            new FubuRegistry().BuildGraph().Services.ServicesFor(typeof (IActivator))
+            BehaviorGraph.BuildEmptyGraph().Services.ServicesFor(typeof (IActivator))
                 .Any(x => x.Type == typeof (DisplayConversionRegistryActivator));
         }
 
@@ -151,14 +151,14 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void an_activator_for_PackageFileActivator_is_registered()
         {
-            new FubuRegistry().BuildGraph().Services.ServicesFor<IActivator>()
+            BehaviorGraph.BuildEmptyGraph().Services.ServicesFor<IActivator>()
                 .Any(x => x.Type == typeof (PackageFileActivator)).ShouldBeTrue();
         }
 
         [Test]
         public void an_activator_for_HtmlConventionActivator_is_registered()
         {
-            new FubuRegistry().BuildGraph().Services.ServicesFor<IActivator>()
+            BehaviorGraph.BuildEmptyGraph().Services.ServicesFor<IActivator>()
                 .Any(x => x.Type == typeof(HtmlConventionsActivator)).ShouldBeTrue();
         }
 

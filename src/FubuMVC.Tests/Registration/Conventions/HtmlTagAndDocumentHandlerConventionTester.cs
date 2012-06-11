@@ -18,7 +18,10 @@ namespace FubuMVC.Tests.Registration.Conventions
         [SetUp]
         public void SetUp()
         {
-            graph = new FubuRegistry(x => { x.Actions.IncludeType<TagController>(); }).BuildGraph();
+            graph = BehaviorGraph.BuildFrom(x =>
+            {
+                x.Actions.IncludeType<TagController>();
+            });
         }
 
         #endregion

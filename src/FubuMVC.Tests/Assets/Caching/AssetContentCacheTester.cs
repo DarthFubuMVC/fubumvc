@@ -55,7 +55,7 @@ namespace FubuMVC.Tests.Assets.Caching
 
             theCache = new AssetContentCache();
 
-            theGraph = new FubuRegistry().BuildGraph();
+            theGraph = BehaviorGraph.BuildFrom(new FubuRegistry());
         }
 
         [Test]

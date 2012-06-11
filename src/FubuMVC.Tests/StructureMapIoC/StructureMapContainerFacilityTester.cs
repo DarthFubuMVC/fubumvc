@@ -42,7 +42,7 @@ namespace FubuMVC.Tests.StructureMapIoC
             container.Configure(x => x.For<IContainerFacility>().Use<StructureMapContainerFacility>());
 
 
-            graph = new FubuRegistry(x =>
+            graph = BehaviorGraph.BuildFrom(x =>
             {
                 x.Route("/area/sub/{Name}/{Age}")
                     .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
@@ -59,7 +59,7 @@ namespace FubuMVC.Tests.StructureMapIoC
                 x.Services(s => s.AddService<IActivator>(new StubActivator()));
                 x.Services(s => s.AddService<IActivator>(new StubActivator()));
                 x.Services(s => s.AddService<IActivator>(new StubActivator()));
-            }).BuildGraph();
+            });
 
             facility = new StructureMapContainerFacility(container);
             graph.As<IRegisterable>().Register(facility.Register);

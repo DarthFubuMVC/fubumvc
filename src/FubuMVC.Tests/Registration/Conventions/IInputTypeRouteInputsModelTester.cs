@@ -20,7 +20,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [SetUp]
         public void SetUp()
         {
-            graph = new FubuRegistry(x =>
+            graph = BehaviorGraph.BuildFrom(x =>
             {
                 x.Actions.IncludeTypesNamed(o => o.StartsWith("Special"));
 
@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                     .ForInputTypesOf<SpecialMessage>(o => o.RouteInputFor(y => y.Id))
                     .IgnoreSpecificInputForInputTypeAndMethod<SpecialRouteInputTestingMessage>(
                         c => c.Method.Name == "NoId", o => o.Id);
-            }).BuildGraph();
+            });
         }
 
         #endregion
@@ -153,28 +153,34 @@ namespace FubuMVC.Tests.Registration.Conventions
         [SetUp]
         public void SetUp()
         {
-            graphWithMethodHome = new FubuRegistry(x =>
+            graphWithMethodHome = BehaviorGraph.BuildFrom(x =>
             {
                 x.Actions.IncludeClassesSuffixedWithController();
                 x.Routes.HomeIs<OneController>(c => c.Home());
-            }).BuildGraph();
+            });
 
-            graphWithModelHome = new FubuRegistry(x =>
+            graphWithModelHome = BehaviorGraph.BuildFrom(x =>
             {
                 x.Actions.IncludeClassesSuffixedWithController();
                 x.Routes.HomeIs<SimpleInputModel>();
-            }).BuildGraph();
+            });
 
-            graphWithoutHome = new FubuRegistry(x => x.Actions.IncludeClassesSuffixedWithController()).BuildGraph();
 
-            graphWithHomeAndUrlPolicy = new FubuRegistry(x =>
+            graphWithoutHome = BehaviorGraph.BuildFrom(x =>
+            {
+                x.Actions.IncludeClassesSuffixedWithController();
+            });
+                
+
+            graphWithHomeAndUrlPolicy = BehaviorGraph.BuildFrom(x =>
             {
                 x.Actions.IncludeClassesSuffixedWithController();
 
                 x.Routes
                     .UrlPolicy<AllEncompassingUrlPolicy>()
                     .HomeIs<SimpleInputModel>();
-            }).BuildGraph();
+            });
+                
         }
 
         #endregion

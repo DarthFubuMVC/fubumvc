@@ -38,7 +38,7 @@ namespace FubuMVC.Tests.Registration.Expressions
                     .Calls<TestController>(c => c.ThirdAction(null)).OutputToJson();
             });
 
-            _graph = registry.BuildGraph();
+            _graph = BehaviorGraph.BuildFrom(registry);
         }
 
         #endregion

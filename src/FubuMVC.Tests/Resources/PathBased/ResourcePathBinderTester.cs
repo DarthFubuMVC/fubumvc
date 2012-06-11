@@ -7,6 +7,7 @@ using FubuCore.Reflection;
 using FubuCore.Util;
 using FubuMVC.Core;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Resources.PathBased;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -57,7 +58,7 @@ namespace FubuMVC.Tests.Resources.PathBased
         [Test]
         public void resource_binder_is_registered_by_default()
         {
-            new FubuRegistry().BuildGraph().Services
+            BehaviorGraph.BuildEmptyGraph().Services
                 .ServicesFor<IModelBinder>()
                 .Any(x => x.Type == typeof(ResourcePathBinder)).ShouldBeTrue();
         }

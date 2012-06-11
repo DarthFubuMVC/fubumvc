@@ -1,4 +1,5 @@
 ﻿using FubuMVC.Core;
+using FubuMVC.Core.Registration;
 using HtmlTags;
 using NUnit.Framework;
 
@@ -17,8 +18,7 @@ namespace FubuMVC.Diagnostics.Tests
                                                     x.Import<DiagnosticsRegistration>();
                                                 });
             // basically just make sure nothing blows up
-            registry
-                .BuildGraph();
+            BehaviorGraph.BuildFrom(registry);
         }
     }
 }

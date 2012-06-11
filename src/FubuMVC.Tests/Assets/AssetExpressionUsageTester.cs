@@ -134,7 +134,7 @@ namespace FubuMVC.Tests.Assets
             var registry = new FubuRegistry();
             registry.Assets.Asset("a.js").Requires("b.js");
 
-            var graph = registry.BuildGraph();
+            var graph = BehaviorGraph.BuildFrom(registry);
 
             var registration = graph.Services.ServicesFor<IAssetPolicy>()
                 .Single().Value.ShouldBeOfType<RecordingAssetRegistration>();
@@ -171,7 +171,7 @@ crud includes a.js, b.js, c.js
         [Test]
         public void should_use_the_trace_only_missing_handler_option_if_nothing_else_is_configured()
         {
-            new FubuRegistry().BuildGraph().Services.DefaultServiceFor<IMissingAssetHandler>()
+            BehaviorGraph.BuildEmptyGraph().Services.DefaultServiceFor<IMissingAssetHandler>()
                 .Type.ShouldEqual(typeof (TraceOnlyMissingAssetHandler));
         }
 
@@ -181,7 +181,7 @@ crud includes a.js, b.js, c.js
             var registry = new FubuRegistry();
             registry.Assets.YSOD_on_missing_assets(false);
 
-            registry.BuildGraph().Services.DefaultServiceFor<IMissingAssetHandler>()
+            BehaviorGraph.BuildFrom(registry).Services.DefaultServiceFor<IMissingAssetHandler>()
                 .Type.ShouldEqual(typeof (TraceOnlyMissingAssetHandler));
         }
 
@@ -191,7 +191,7 @@ crud includes a.js, b.js, c.js
             var registry = new FubuRegistry();
             registry.Assets.YSOD_on_missing_assets(true);
 
-            registry.BuildGraph().Services.DefaultServiceFor<IMissingAssetHandler>()
+            BehaviorGraph.BuildFrom(registry).Services.DefaultServiceFor<IMissingAssetHandler>()
                 .Type.ShouldEqual(typeof(YellowScreenMissingAssetHandler));
         }
 
@@ -201,7 +201,7 @@ crud includes a.js, b.js, c.js
             var registry = new FubuRegistry();
             registry.Assets.HandleMissingAssetsWith<MyDifferentMissingAssetHandler>();
 
-            registry.BuildGraph().Services.DefaultServiceFor<IMissingAssetHandler>()
+            BehaviorGraph.BuildFrom(registry).Services.DefaultServiceFor<IMissingAssetHandler>()
                 .Type.ShouldEqual(typeof(MyDifferentMissingAssetHandler));
         }
 
@@ -211,7 +211,7 @@ crud includes a.js, b.js, c.js
             var registry = new FubuRegistry();
             registry.Assets.CombineAllUniqueAssetRequests();
 
-            registry.BuildGraph().Services.DefaultServiceFor<ICombinationDeterminationService>()
+            BehaviorGraph.BuildFrom(registry).Services.DefaultServiceFor<ICombinationDeterminationService>()
                 .Type.ShouldEqual(typeof(CombineAllUniqueSetsCombinationDeterminationService)); 
 
 
@@ -225,7 +225,7 @@ crud includes a.js, b.js, c.js
                 .CombineWith<CombineAllScriptFiles>()
                 .CombineWith<CombineAllStylesheets>();
 
-            registry.BuildGraph().Services.ServicesFor(typeof(ICombinationPolicy))
+            BehaviorGraph.BuildFrom(registry).Services.ServicesFor(typeof(ICombinationPolicy))
                 .Select(x => x.Type).ShouldHaveTheSameElementsAs(typeof(CombineAllScriptFiles), typeof(CombineAllStylesheets));
         }
 

@@ -80,13 +80,17 @@ namespace FubuMVC.Tests.Registration.Expressions
         [Test]
         public void all_behaviors_chains_should_start_with_the_declared_behavior()
         {
-            var graph = registry.BuildLightGraph();
+            var graph = BehaviorGraph.BuildFrom(registry);
 
-            graph.Behaviors.Count().ShouldEqual(3);
+            graph.Behaviors.Count().ShouldBeGreaterThan(3);
             var visitor = new BehaviorVisitor(new NulloConfigurationObserver(), "");
             visitor.Actions += chain =>
             {
-                var wrapper = chain.Top.ShouldBeOfType<Wrapper>();
+                // Don't bother with the asset node
+                if (chain.Any(x => x is OutputCachingNode)) return;
+
+                // Input node is first
+                var wrapper = chain.Top.Next.ShouldBeOfType<Wrapper>();
                 wrapper.BehaviorType.ShouldEqual(typeof (FakeUnitOfWorkBehavior));
                 wrapper.Next.ShouldBeOfType<ActionCall>();
             };

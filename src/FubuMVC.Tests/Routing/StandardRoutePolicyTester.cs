@@ -60,7 +60,7 @@ namespace FubuMVC.Tests.Routing
             registry.Route("b/m1").Calls<Action2>(b => b.M1());
             registry.Route("b/m2").Calls<Action2>(b => b.M2());
             registry.Route("c/m1async").Calls<Action3>(b => b.M1Async());
-            return registry.BuildGraph();
+            return BehaviorGraph.BuildFrom(registry);
         }
 
         public class BehaviorFactory : IBehaviorFactory

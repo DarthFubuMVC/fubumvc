@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.Localization
             var registry = new FubuRegistry();
             registry.Import<BasicLocalizationSupport>();
 
-            graphWithBasicLocalizationAsIs = registry.BuildGraph();
+            graphWithBasicLocalizationAsIs = BehaviorGraph.BuildFrom(registry);
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace FubuMVC.Tests.Localization
             var registry = new FubuRegistry();
             registry.Import<BasicLocalizationSupport>(x => x.DefaultCulture = new CultureInfo("en-CA"));
 
-            registry.BuildGraph().Services.DefaultServiceFor(typeof (CultureInfo))
+            BehaviorGraph.BuildFrom(registry).Services.DefaultServiceFor(typeof (CultureInfo))
                 .Value.ShouldEqual(new CultureInfo("en-CA"));
         }
 
@@ -83,7 +83,7 @@ namespace FubuMVC.Tests.Localization
             {
                 x.LoadLocalizationWith<StubLocalizationActivator>();
             });
-            var graph = registry.BuildGraph();
+            var graph = BehaviorGraph.BuildFrom(registry);
 
 
             var list = graph.Services.ServicesFor<IActivator>().Select(x => x.Type).ToList();
@@ -103,7 +103,7 @@ namespace FubuMVC.Tests.Localization
             {
                 x.LocalizationStorageIs<InMemoryLocalizationStorage>();
             });
-            var graph = registry.BuildGraph();
+            var graph = BehaviorGraph.BuildFrom(registry);
 
 
             var list = graph.Services.ServicesFor<IActivator>().Select(x => x.Type).ToList();

@@ -5,6 +5,7 @@ using System.Web;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Caching;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -135,7 +136,7 @@ namespace FubuMVC.Tests
             import.Route("a/m2").Calls<Action1>(x => x.M2());
             parent.Import(import, "import");
 
-            var graph = parent.BuildGraph();
+            var graph = BehaviorGraph.BuildFrom(parent);
 
             graph.BehaviorFor<Action1>(x => x.M1()).GetRoutePattern().ShouldEqual("import/a/m1");
             graph.BehaviorFor<Action1>(x => x.M2()).GetRoutePattern().ShouldEqual("import/a/m2");
@@ -148,7 +149,7 @@ namespace FubuMVC.Tests
             import.Route("a/m2").Calls<Action1>(x => x.M2());
             parent.Import(import, string.Empty);
 
-            var graph = parent.BuildGraph();
+            var graph = BehaviorGraph.BuildFrom(parent);
 
             graph.BehaviorFor<Action1>(x => x.M1()).GetRoutePattern().ShouldEqual("a/m1");
             graph.BehaviorFor<Action1>(x => x.M2()).GetRoutePattern().ShouldEqual("a/m2");
@@ -167,7 +168,7 @@ namespace FubuMVC.Tests
             parent.Route("b/m1").Calls<Action2>(x => x.M1());
             parent.Route("b/m2").Calls<Action2>(x => x.M2());
 
-            var graph = parent.BuildGraph();
+            var graph = BehaviorGraph.BuildFrom(parent);
 
             // Chains from the import should have the wrapper
             var chain = graph.BehaviorFor<Action1>(x => x.M1());
@@ -196,7 +197,7 @@ namespace FubuMVC.Tests
 
             parent.Policies.WrapBehaviorChainsWith<Wrapper>();
 
-            var graph = parent.BuildGraph();
+            var graph = BehaviorGraph.BuildFrom(parent);
 
             // Chains from the import should have the wrapper
             graph.BehaviorFor<Action1>(x => x.M1()).IsWrappedBy(typeof (Wrapper)).ShouldBeTrue();
@@ -214,7 +215,7 @@ namespace FubuMVC.Tests
             import.Services(s => s.ReplaceService<IOutputWriter>(new DifferentOutputWriter()));
             parent.Import(import, string.Empty);
 
-            var graph = parent.BuildGraph();
+            var graph = BehaviorGraph.BuildFrom(parent);
 
             graph.Services.DefaultServiceFor<IOutputWriter>().Value.ShouldBeOfType<DifferentOutputWriter>();
         }
@@ -227,7 +228,7 @@ namespace FubuMVC.Tests
 
             parent.Services(x => x.ReplaceService<ISomething>(new DifferentSomething()));
 
-            var graph = parent.BuildGraph();
+            var graph = BehaviorGraph.BuildFrom(parent);
 
             graph.Services.DefaultServiceFor<ISomething>().Value.ShouldBeOfType<DifferentSomething>();
         }
@@ -238,7 +239,7 @@ namespace FubuMVC.Tests
             import.Services(s => s.AddService<ISomething>(new Something()));
             parent.Import(import, string.Empty);
 
-            var graph = parent.BuildGraph();
+            var graph = BehaviorGraph.BuildFrom(parent);
 
             graph.Services.DefaultServiceFor<ISomething>().Value.ShouldBeOfType<Something>();
         }

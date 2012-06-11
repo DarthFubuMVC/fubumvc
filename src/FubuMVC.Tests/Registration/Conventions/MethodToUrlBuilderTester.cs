@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using FubuMVC.Core;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
@@ -18,7 +19,10 @@ namespace FubuMVC.Tests.Registration.Conventions
         [SetUp]
         public void SetUp()
         {
-            var graph = new FubuRegistry(x => { x.Actions.IncludeType<MethodAction>(); }).BuildGraph();
+            var graph = BehaviorGraph.BuildFrom(x =>
+            {
+                x.Actions.IncludeType<MethodAction>();
+            });
 
             theChain = graph.BehaviorFor<MethodAction>(x => x.Get_cases_from_Start_to_End(null));
         }

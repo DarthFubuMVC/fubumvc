@@ -1,4 +1,5 @@
 using FubuMVC.Core;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Resources.PathBased;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -39,7 +40,7 @@ namespace FubuMVC.Tests.Resources.PathBased
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<Controller1>();
 
-            registry.BuildGraph().BehaviorFor<Controller1>(x => x.get_resource(null)).Route.CreateUrlFromInput(
+            BehaviorGraph.BuildFrom(registry).BehaviorFor<Controller1>(x => x.get_resource(null)).Route.CreateUrlFromInput(
                 new ResourcePath("something/else"))
                 .ShouldEqual("resource/something/else");
         }
@@ -50,7 +51,7 @@ namespace FubuMVC.Tests.Resources.PathBased
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<Controller1>();
 
-            var graph = registry.BuildGraph();
+            var graph = BehaviorGraph.BuildFrom(registry);
 
             graph.BehaviorFor<Controller1>(x => x.get_resource(null))
                 .Route.Pattern.ShouldEqual(

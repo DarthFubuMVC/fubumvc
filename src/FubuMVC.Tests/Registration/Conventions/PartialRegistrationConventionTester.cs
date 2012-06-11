@@ -13,11 +13,11 @@ namespace FubuMVC.Tests.Registration.Conventions
         [SetUp]
         public void SetUp()
         {
-            theGraph = new FubuRegistry(x =>
+            theGraph = BehaviorGraph.BuildFrom(x =>
             {
                 x.Actions.IncludeType<PartialsController>()
                     .IncludeType<SomePartialsController>();
-            }).BuildGraph();
+            });
         }
 
         [Test]

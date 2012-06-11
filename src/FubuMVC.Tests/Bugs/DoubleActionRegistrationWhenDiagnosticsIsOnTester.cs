@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -29,7 +30,9 @@ namespace FubuMVC.Tests.Bugs
 
             private static IEnumerable<ActionCall> build(bool enableDiagnostics)
             {
-                return new CustomFubuRegistry(enableDiagnostics).BuildGraph().Actions()
+                var graph = BehaviorGraph.BuildFrom(new CustomFubuRegistry(enableDiagnostics));
+
+                return graph.Actions()
                     .Where(a => a.HandlerType.Assembly == typeof(CustomFubuRegistry).Assembly);
             }
         }

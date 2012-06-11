@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.NewConneg
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<PlacementController>();
 
-            theGraph = registry.BuildGraph();
+            theGraph = BehaviorGraph.BuildFrom(registry);
         }
 
         [Test]

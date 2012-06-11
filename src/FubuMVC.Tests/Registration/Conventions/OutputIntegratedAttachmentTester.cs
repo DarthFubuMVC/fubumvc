@@ -23,9 +23,10 @@ namespace FubuMVC.Tests.Registration.Conventions
         [SetUp]
         public void SetUp()
         {
-            graph =
-                new FubuRegistry(x => { x.Actions.IncludeTypesImplementing<JsonOutputAttachmentTesterController>(); })
-                    .BuildGraph();
+            graph = BehaviorGraph.BuildFrom(x =>
+            {
+                x.Actions.IncludeTypesImplementing<JsonOutputAttachmentTesterController>();
+            });
         }
 
         #endregion

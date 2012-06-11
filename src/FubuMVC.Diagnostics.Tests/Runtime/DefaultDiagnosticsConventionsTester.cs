@@ -1,6 +1,7 @@
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.Registration;
 using FubuMVC.Diagnostics.Runtime;
 using FubuMVC.Diagnostics.Runtime.Tracing;
 using FubuTestingSupport;
@@ -22,7 +23,7 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
         [Test]
         public void should_exclude_diagnostics_requests()
         {
-            _registry.BuildGraph().Services.ServicesFor(typeof (IRequestHistoryCacheFilter))
+            BehaviorGraph.BuildFrom(_registry).Services.ServicesFor(typeof (IRequestHistoryCacheFilter))
                 .Any(x => x.Type == typeof (DiagnosticRequestHistoryCacheFilter));
         }
 

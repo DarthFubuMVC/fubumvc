@@ -92,7 +92,7 @@ namespace FubuMVC.Tests.Registration
         {
             IConfigurationAction configActionVisitor = new RouteVisitor();
             typeof (NotImplementedException).ShouldBeThrownBy(
-                () => configActionVisitor.Configure(new FubuRegistry().BuildGraph()));
+                () => configActionVisitor.Configure(BehaviorGraph.BuildEmptyGraph()));
         }
     }
 

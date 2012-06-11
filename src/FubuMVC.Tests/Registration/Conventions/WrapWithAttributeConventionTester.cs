@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<WrapWithAttributeController>();
 
-            graph = registry.BuildGraph();
+            graph = BehaviorGraph.BuildFrom(registry);
 
             graph.Behaviors.Count().ShouldBeGreaterThan(0);
 

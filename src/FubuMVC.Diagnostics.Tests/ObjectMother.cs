@@ -17,8 +17,8 @@ namespace FubuMVC.Diagnostics.Tests
         public static BehaviorGraph DiagnosticsGraph()
         {
             PackageRegistry.LoadPackages(f => { });
-            return DiagnosticsRegistry()
-                    .BuildGraph();
+
+            return BehaviorGraph.BuildFrom(DiagnosticsRegistry());
         }
 
         public static HtmlConventionsPreviewContext BasicPreviewContext()

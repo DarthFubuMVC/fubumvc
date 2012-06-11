@@ -18,12 +18,12 @@ namespace FubuMVC.Tests.Registration.Conventions
         [SetUp]
         public void SetUp()
         {
-            var registry = new FubuRegistry();
-            registry.Actions
+            graph = BehaviorGraph.BuildFrom(x =>
+            {
+                x.Actions
                 .IncludeType<AllowRoleController>()
                 .IncludeType<AllowRoleController2>();
-
-            graph = registry.BuildGraph();
+            });
         }
 
         private IEnumerable<string> rolesFor<T>(Expression<Action<T>> method)

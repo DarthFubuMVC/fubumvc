@@ -20,8 +20,7 @@ namespace FubuMVC.Tests.Assets.Caching
         [Test]
         public void asset_file_watcher_should_be_registered_as_a_singleton()
         {
-            new FubuRegistry()
-                .BuildGraph()
+            BehaviorGraph.BuildEmptyGraph()
                 .Services
                 .DefaultServiceFor<IAssetFileWatcher>()
                 .Type.ShouldEqual(typeof(AssetFileWatcher));

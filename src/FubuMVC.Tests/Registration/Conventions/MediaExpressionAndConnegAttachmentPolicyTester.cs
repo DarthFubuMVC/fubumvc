@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             theFubuRegistry.Applies.ToThisAssembly();
             theFubuRegistry.Actions.IncludeType<Controller1>();
 
-            theGraph = new Lazy<BehaviorGraph>(() => theFubuRegistry.BuildGraph());
+            theGraph = new Lazy<BehaviorGraph>(() => BehaviorGraph.BuildFrom(theFubuRegistry));
         } 
 
         private BehaviorChain chainFor(Expression<Func<Controller1, object>> expression)

@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.Registration.DSL
                 x.MustBeBeforeAuthorization();
             });
 
-            graph = registry.BuildGraph();
+            graph = BehaviorGraph.BuildFrom(registry);
         }
 
         

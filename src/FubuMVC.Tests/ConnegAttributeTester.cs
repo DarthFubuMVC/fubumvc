@@ -20,7 +20,7 @@ namespace FubuMVC.Tests
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<Controller1>();
 
-            theGraph = registry.BuildGraph();
+            theGraph = BehaviorGraph.BuildFrom(registry);
         }
 
         #endregion

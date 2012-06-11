@@ -15,7 +15,7 @@ namespace FubuMVC.Tests.Resources.Conneg
         [SetUp]
         public void SetUp()
         {
-            theServices = new FubuRegistry().BuildGraph().Services;
+            theServices = BehaviorGraph.BuildEmptyGraph().Services;
         }
 
         #endregion

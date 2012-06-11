@@ -19,14 +19,13 @@ namespace FubuMVC.Diagnostics.Tests.Features.Routes
 		
 		protected override void beforeEach()
 		{
-            _graph = new FubuRegistry(registry =>
-             {
-                 registry.Applies.ToThisAssembly();
-                 registry.Actions.IncludeType<Test>();
-                 registry.Actions.IncludeMethods(method => (new[] { "Index", "Continuation", "ZeroModelOut", "HasOutputNode" }).Contains(method.Name));
-                 registry.ApplyConvention<OutputNodeConvention>();
-				
-             }).BuildGraph();
+		    _graph = BehaviorGraph.BuildFrom(registry =>
+		    {
+                registry.Applies.ToThisAssembly();
+                registry.Actions.IncludeType<Test>();
+                registry.Actions.IncludeMethods(method => (new[] { "Index", "Continuation", "ZeroModelOut", "HasOutputNode" }).Contains(method.Name));
+                registry.ApplyConvention<OutputNodeConvention>();
+		    });
         }
 
         [Test]

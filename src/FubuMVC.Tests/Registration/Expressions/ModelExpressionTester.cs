@@ -17,14 +17,13 @@ namespace FubuMVC.Tests.Registration.Expressions
         [SetUp]
         public void Setup()
         {
-            _graph = new FubuRegistry(x =>
+            _graph = BehaviorGraph.BuildFrom(x =>
             {
                 x.Models
                     .BindModelsWith<ExampleModelBinder>()
                     .BindPropertiesWith<ExamplePropertyBinder>()
                     .ConvertUsing<ExampleConverter>();
-
-            }).BuildGraph();
+            });
         }
 
         #endregion

@@ -16,7 +16,7 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
         [SetUp]
         public void SetUp()
         {
-            graph = new FubuRegistry(x => x.Import<DiagnosticsRegistration>()).BuildGraph();
+            graph = BehaviorGraph.BuildFrom(x => x.Import<DiagnosticsRegistration>());
         }
 
         #endregion

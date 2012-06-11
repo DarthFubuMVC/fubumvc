@@ -18,7 +18,10 @@ namespace FubuMVC.WebForms.Testing
         [SetUp]
         public void SetUp()
         {
-            _graph = new FubuRegistry(x => { x.Actions.IncludeType<FakeController>(); }).BuildGraph();
+            _graph = BehaviorGraph.BuildFrom(x =>
+            {
+                x.Actions.IncludeType<FakeController>();
+            });
         }
 
         #endregion

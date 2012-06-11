@@ -51,7 +51,7 @@ namespace FubuMVC.Tests.Urls
             
             registry.Routes.HomeIs<DefaultModel>();
 
-            graph = registry.BuildGraph();
+            graph = BehaviorGraph.BuildFrom(registry);
 
             var resolver = graph.Services.DefaultServiceFor<ITypeResolver>().Value;
 

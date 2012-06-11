@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<JsonController>();
 
-            theGraph = registry.BuildGraph();
+            theGraph = BehaviorGraph.BuildFrom(registry);
         }
 
         #endregion

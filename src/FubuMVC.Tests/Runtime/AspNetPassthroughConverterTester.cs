@@ -47,7 +47,7 @@ namespace FubuMVC.Tests.Runtime
         [Test]
         public void is_registered()
         {
-            var services = new FubuRegistry().BuildGraph().Services;
+            var services = BehaviorGraph.BuildFrom(new FubuRegistry()).Services;
             services.ServicesFor(typeof(IConverterFamily)).Select(x => x.Type)
                 .ShouldContain(typeof(AspNetPassthroughConverter));
         }

@@ -155,7 +155,6 @@
     <Compile Include="Assets\Http\ContentPipelineTester.cs" />
     <Compile Include="Assets\Http\ContentWriterTester.cs" />
     <Compile Include="ConfigurationGraph_DetermineConfigurationType_Tester.cs" />
-    <Compile Include="debugging.cs" />
     <Compile Include="Registration\default_action_discovery.cs" />
     <Compile Include="StubRequestHeaders.cs" />
     <Compile Include="Assets\MimetypeRegistrationActivatorTester.cs" />

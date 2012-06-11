@@ -14,7 +14,7 @@ namespace FubuMVC.WebForms.Testing
         [SetUp]
         public void SetUp()
         {
-            _graph = new FubuRegistry(registry =>
+            _graph = BehaviorGraph.BuildFrom(registry =>
             {
                 registry.RegisterPartials(x => x.For<PartialModel>().Use<PartialView>());
                 registry.RegisterPartials(x =>
@@ -22,7 +22,7 @@ namespace FubuMVC.WebForms.Testing
                     x.For<PartialModel1>().Use<PartialView1>();
                     x.For<PartialModel2>().Use<PartialView2>();
                 });
-            }).BuildGraph();
+            });
 
             _partialViewTypeRegistries = _graph.Services.FindAllValues<IPartialViewTypeRegistry>();
             _partialViewTypeRegistries.ShouldHaveCount(1);

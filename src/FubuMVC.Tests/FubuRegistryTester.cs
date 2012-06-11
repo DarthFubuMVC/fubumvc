@@ -19,7 +19,7 @@ namespace FubuMVC.Tests
         {
             FakePolicy.Count = 0;
 
-            new FubuRegistry(x =>
+            BehaviorGraph.BuildFrom(x =>
             {
                 x.Policies.Add<FakePolicy>();
                 x.Policies.Add<FakePolicy>();
@@ -27,7 +27,7 @@ namespace FubuMVC.Tests
                 x.Policies.Add<FakePolicy>();
                 x.Policies.Add<FakePolicy>();
                 x.Policies.Add<FakePolicy>();
-            }).BuildGraph();
+            });
 
             FakePolicy.Count.ShouldEqual(1);
         }
@@ -37,13 +37,13 @@ namespace FubuMVC.Tests
         {
             FakeIncludeRegistry.Count = 0;
 
-            new FubuRegistry(x =>
+            BehaviorGraph.BuildFrom(x =>
             {
                 x.Import<FakeIncludeRegistry>(string.Empty);
                 x.Import<FakeIncludeRegistry>(string.Empty);
                 x.Import<FakeIncludeRegistry>(string.Empty);
                 x.Import<FakeIncludeRegistry>(string.Empty);
-            }).BuildGraph();
+            });
 
             FakeIncludeRegistry.Count.ShouldEqual(1);
         }

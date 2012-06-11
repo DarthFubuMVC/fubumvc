@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using FubuMVC.Core;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -17,13 +15,12 @@ namespace FubuMVC.Tests.Registration.Conventions
         [SetUp]
         public void SetUp()
         {
-            graph = new FubuRegistry(x =>
+            graph = BehaviorGraph.BuildFrom(x =>
             {
                 x.Actions.IncludeTypesImplementing<JsonOutputAttachmentTesterController>();
 
                 x.ApplyConvention<TestCustomConvention>();
-            })
-                .BuildGraph();
+            });
         }
 
         #endregion
@@ -33,7 +30,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void should_apply_custom_conventions()
         {
-            BehaviorNode behavior =
+            var behavior =
                 graph.BehaviorFor<JsonOutputAttachmentTesterController>(x => x.StringifyHtml()).Calls.First().Next;
             behavior.ShouldBeOfType<OutputNode>();
         }

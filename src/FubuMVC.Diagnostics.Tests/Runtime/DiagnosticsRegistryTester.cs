@@ -23,7 +23,7 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
             var registry = new FubuRegistry();
             registry.Import<DiagnosticsRegistration>();
 
-            graph = registry.BuildGraph();
+            graph = BehaviorGraph.BuildFrom(registry);
             urls = MockRepository.GenerateMock<IUrlRegistry>();
 
             graph.Behaviors.Any().ShouldBeTrue();

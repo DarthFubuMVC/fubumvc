@@ -15,10 +15,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void with_no_other_explicit_action_discovery()
         {
-            var graph = new FubuRegistry(x =>
-            {
-
-            }).BuildGraph();
+            var graph = BehaviorGraph.BuildEmptyGraph();
 
 
             graph.BehaviorFor<MyEndpoint>(x => x.Go()).ShouldNotBeNull();
@@ -29,10 +26,10 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void does_not_find_endpoints_with_an_explicit_action_discovery()
         {
-            var graph = new FubuRegistry(x =>
+            var graph = BehaviorGraph.BuildFrom(x =>
             {
                 x.Actions.IncludeClassesSuffixedWithController();
-            }).BuildGraph();
+            });
 
             graph.BehaviorFor<MyEndpoint>(x => x.Go()).ShouldBeNull();
             graph.BehaviorFor<MyEndpoints>(x => x.Go()).ShouldBeNull();
@@ -42,10 +39,10 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void does_not_find_endpoints_with_an_explicit_action_discovery_policy()
         {
-            var graph = new FubuRegistry(x =>
+            var graph = BehaviorGraph.BuildFrom(x =>
             {
                 x.Actions.FindWith(new FakeActionSource());
-            }).BuildGraph();
+            });
 
             graph.BehaviorFor<MyEndpoint>(x => x.Go()).ShouldBeNull();
             graph.BehaviorFor<MyEndpoints>(x => x.Go()).ShouldBeNull();
@@ -55,11 +52,11 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void will_find_endpoints_if_endpoint_is_explictly_specified_too()
         {
-            var graph = new FubuRegistry(x =>
+            var graph = BehaviorGraph.BuildFrom(x =>
             {
                 x.Actions.FindWith(new FakeActionSource());
                 x.Actions.IncludeClassesSuffixedWithEndpoint();
-            }).BuildGraph();
+            });
 
             graph.BehaviorFor<MyEndpoint>(x => x.Go()).ShouldNotBeNull();
             graph.BehaviorFor<MyEndpoints>(x => x.Go()).ShouldNotBeNull();

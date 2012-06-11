@@ -1,6 +1,7 @@
 using System;
 using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.Registration;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -18,7 +19,7 @@ namespace FubuMVC.Tests.Registration
                x.TypeResolver.AddStrategy<ProxyDetector>(); 
             });
 
-            var graph = registry.BuildGraph();
+            var graph = BehaviorGraph.BuildFrom(registry);
 
 
             var resolver = graph.Services.DefaultServiceFor<ITypeResolver>().Value.ShouldBeOfType<TypeResolver>();

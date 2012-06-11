@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.Assets
     {
         private void registeredTypeIs<TService, TImplementation>()
         {
-            new FubuRegistry().BuildGraph().Services.DefaultServiceFor<TService>().Type.ShouldEqual(
+            BehaviorGraph.BuildEmptyGraph().Services.DefaultServiceFor<TService>().Type.ShouldEqual(
                 typeof(TImplementation));
         }
 
@@ -49,7 +49,7 @@ namespace FubuMVC.Tests.Assets
         [Test]
         public void asset_graph_and_pipeline_activators_are_registered_in_the_correct_order()
         {
-            var activators = new FubuRegistry().BuildGraph().Services.ServicesFor<IActivator>().ToList();
+            var activators = BehaviorGraph.BuildEmptyGraph().Services.ServicesFor<IActivator>().ToList();
 
             activators.Any(x => x.Type == typeof(AssetGraphConfigurationActivator)).ShouldBeTrue();
             activators.Any(x => x.Type == typeof(AssetPipelineBuilderActivator)).ShouldBeTrue();
@@ -71,7 +71,7 @@ namespace FubuMVC.Tests.Assets
         [Test]
         public void asset_pipeline_is_registered_as_both_IAssetPipeline_and_IAssetFileRegistration_as_the_same_instance()
         {
-            var services = new FubuRegistry().BuildGraph().Services;
+            var services = BehaviorGraph.BuildEmptyGraph().Services;
             var pipeline1 = services.DefaultServiceFor<IAssetPipeline>().Value.ShouldBeOfType<AssetPipeline>();
             var pipeline2 = services.DefaultServiceFor<IAssetFileRegistration>().Value.ShouldBeOfType<AssetPipeline>();
 
@@ -146,13 +146,13 @@ namespace FubuMVC.Tests.Assets
         [Test]
         public void script_graph_is_registered()
         {
-            new FubuRegistry().BuildGraph().Services.DefaultServiceFor<AssetGraph>().Value.ShouldNotBeNull();
+            BehaviorGraph.BuildEmptyGraph().Services.DefaultServiceFor<AssetGraph>().Value.ShouldNotBeNull();
         }
 
         [Test]
         public void should_be_a_script_configuration_activator_registered_as_a_service()
         {
-            new FubuRegistry().BuildGraph().Services.ServicesFor<IActivator>()
+            BehaviorGraph.BuildEmptyGraph().Services.ServicesFor<IActivator>()
                 .Any(x => x.Type == typeof(AssetGraphConfigurationActivator)).ShouldBeTrue();
         }
 
@@ -177,7 +177,7 @@ namespace FubuMVC.Tests.Assets
         [Test]
         public void asset_content_cache_is_registered()
         {
-            new FubuRegistry().BuildGraph().Services.DefaultServiceFor<IAssetContentCache>()
+            BehaviorGraph.BuildEmptyGraph().Services.DefaultServiceFor<IAssetContentCache>()
                 .Value.ShouldBeOfType<AssetContentCache>();
         }
     }

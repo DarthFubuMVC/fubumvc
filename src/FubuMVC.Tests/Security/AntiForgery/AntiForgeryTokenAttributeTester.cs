@@ -1,4 +1,5 @@
 using FubuMVC.Core;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Security.AntiForgery;
 using NUnit.Framework;
@@ -18,7 +19,7 @@ namespace FubuMVC.Tests.Security.AntiForgery
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<Controller1>();
 
-            registry.BuildGraph().BehaviorFor<Controller1>(x => x.MethodWithAF(null))
+            BehaviorGraph.BuildFrom(registry).BehaviorFor<Controller1>(x => x.MethodWithAF(null))
                 .FirstCall()
                 .Previous.ShouldBeOfType<AntiForgeryNode>()
                 .Salt.ShouldEqual("abc");

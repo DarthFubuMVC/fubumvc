@@ -20,7 +20,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [SetUp]
         public void SetUp()
         {
-            graph = new FubuRegistry(x => { x.Actions.IncludeType<TestControllerForAsync>(); }).BuildGraph();
+            graph = BehaviorGraph.BuildFrom(x => x.Actions.IncludeType<TestControllerForAsync>());
             graph.Behaviors.SelectMany(x => x.Top).Each(x => Debug.WriteLine(x));
         }
 

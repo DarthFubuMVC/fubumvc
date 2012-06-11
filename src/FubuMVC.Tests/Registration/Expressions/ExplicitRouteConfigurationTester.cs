@@ -1,5 +1,6 @@
 using System.Linq;
 using FubuMVC.Core;
+using FubuMVC.Core.Caching;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Runtime;
@@ -26,10 +27,9 @@ namespace FubuMVC.Tests.Registration.Expressions
                 registry.Route("some/pattern")
                     .Calls<InputController>(c => c.DoSomething(null)).OutputToJson();
             });
-            _graph = fubuRegistry
-                .BuildLightGraph();
+            _graph = BehaviorGraph.BuildFrom(fubuRegistry);
 
-            _graph.Behaviors.ShouldHaveCount(1);
+            _graph.Behaviors.Count().ShouldBeGreaterThan(1);
             _config.Configure(_graph);
         }
 
@@ -60,10 +60,11 @@ namespace FubuMVC.Tests.Registration.Expressions
         [Test]
         public void should_add_new_behavior_node_to_graph()
         {
-            _graph.Behaviors.ShouldHaveCount(2);
+            _graph.Behaviors.Count().ShouldBeGreaterThan(2);
 
             var visitor = new BehaviorVisitor(new NulloConfigurationObserver(), "");
             visitor.Filters += chain => !chain.Calls.Any(call => call.InputType() == typeof (InputModel));
+            visitor.Filters += chain => !chain.Any(x => x is OutputCachingNode);
             visitor.Actions += chain => chain.Top.ShouldBeNull();
 
             _graph.VisitBehaviors(visitor);

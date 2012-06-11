@@ -413,7 +413,7 @@ namespace FubuMVC.Tests.Registration.Querying
         [SetUp]
         public void SetUp()
         {
-            theGraph = new FakeRegistry().BuildGraph();
+            theGraph = BehaviorGraph.BuildFrom<FakeRegistry>();
         }
 
         [Test]

@@ -36,6 +36,24 @@ namespace FubuMVC.Core.Registration
         private readonly NavigationGraph _navigation = new NavigationGraph();
         private readonly ServiceGraph _services = new ServiceGraph();
 
+        public static BehaviorGraph BuildFrom(FubuRegistry registry)
+        {
+            return registry.BuildGraph();
+        }
+
+        public static BehaviorGraph BuildFrom<T>() where T : FubuRegistry, new()
+        {
+            return new T().BuildGraph();
+        }
+
+        public static BehaviorGraph BuildFrom(Action<FubuRegistry> configure)
+        {
+            var registry = new FubuRegistry();
+            configure(registry);
+
+            return registry.BuildGraph();
+        }
+
         public BehaviorGraph(IConfigurationObserver observer)
         {
             Views = ViewBag.Empty();
@@ -404,6 +422,11 @@ namespace FubuMVC.Core.Registration
         public BehaviorChain FindHomeChain()
         {
             return Behaviors.FirstOrDefault(x => x.Route != null && x.Route.Pattern == string.Empty);
+        }
+
+        public static BehaviorGraph BuildEmptyGraph()
+        {
+            return BuildFrom(new FubuRegistry());
         }
     }
 

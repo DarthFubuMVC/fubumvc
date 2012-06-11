@@ -17,13 +17,12 @@ namespace FubuMVC.Tests.Registration.Conventions
         [SetUp]
         public void SetUp()
         {
-            graph = new FubuRegistry(x =>
+            graph = BehaviorGraph.BuildFrom(x =>
             {
                 x.Actions.IncludeTypesImplementing<DownloadTestController>();
 
                 x.ApplyConvention<DownloadFileConvention>();
-            })
-                .BuildGraph();
+            });
         }
 
         #endregion

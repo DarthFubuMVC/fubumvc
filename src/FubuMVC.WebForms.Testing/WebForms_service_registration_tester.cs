@@ -1,4 +1,5 @@
 using FubuMVC.Core;
+using FubuMVC.Core.Registration;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -12,7 +13,7 @@ namespace FubuMVC.WebForms.Testing
             var fubuRegistry = new FubuRegistry();
             fubuRegistry.Import<WebFormsEngine>();
 
-            fubuRegistry.BuildGraph().Services.DefaultServiceFor<TService>().Type.ShouldEqual(
+            BehaviorGraph.BuildFrom(fubuRegistry).Services.DefaultServiceFor<TService>().Type.ShouldEqual(
                 typeof(TImplementation));
         }
 

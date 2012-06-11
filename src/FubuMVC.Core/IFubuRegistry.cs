@@ -28,7 +28,6 @@ namespace FubuMVC.Core
         ExplicitRouteConfiguration.ChainedBehaviorExpression Route(string pattern);
         void Import<T>(string prefix) where T : FubuRegistry, new();
         void Import(FubuRegistry registry, string prefix);
-        void IncludeDiagnostics(bool shouldInclude);
 
 
         /// <summary>
@@ -37,7 +36,5 @@ namespace FubuMVC.Core
         /// </summary>
         /// <param name = "alteration"></param>
         void Configure(Action<BehaviorGraph> alteration);
-
-        BehaviorGraph BuildGraph();
     }
 }

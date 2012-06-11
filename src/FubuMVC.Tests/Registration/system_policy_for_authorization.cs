@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.Registration
                 });
             });
 
-            graph = registry.BuildGraph();
+            graph = BehaviorGraph.BuildFrom(registry);
 
             goChain = graph.BehaviorFor<AuthorizedController>(x => x.Go());
             moveChain = graph.BehaviorFor<AuthorizedController>(x => x.Move());
