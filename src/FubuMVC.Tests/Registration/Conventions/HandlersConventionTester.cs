@@ -2,6 +2,8 @@
 using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Conventions;
+using FubuMVC.Tests.Registration.Conventions.Handlers;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -13,14 +15,14 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void should_include_handlers()
         {
-            var graph = new FubuRegistry(x => x.ApplyHandlerConventions(typeof(Handlers.HandlersMarker))).BuildGraph();
+            var graph = new FubuRegistry(r => r.Import<HandlerConvention>(x => x.MarkerType<HandlersMarker>())).BuildGraph();
             verifyRoutes(graph);
         }
 
         [Test]
         public void generic_marker_should_include_handlers()
         {
-            var graph = new FubuRegistry(x => x.ApplyHandlerConventions<Handlers.HandlersMarker>()).BuildGraph();
+            var graph = new FubuRegistry(r => r.Import<HandlerConvention>(x => x.MarkerType<HandlersMarker>())).BuildGraph();
             verifyRoutes(graph);
         }
 
@@ -29,7 +31,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             var graph = new FubuRegistry(registry =>
                                              {
-                                                 registry.ApplyHandlerConventions<Handlers.HandlersMarker>();
+                                                 registry.Import<HandlerConvention>(x => x.MarkerType<HandlersMarker>());
                                                  registry
                                                      .Actions
                                                      .IncludeType<TestController>();
@@ -45,11 +47,11 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void should_avoid_duplicates()
         {
-            var singleHandlerGraph = new FubuRegistry(registry => registry.ApplyHandlerConventions<Handlers.HandlersMarker>()).BuildGraph();
+            var singleHandlerGraph = new FubuRegistry(registry => registry.Import<HandlerConvention>(x => x.MarkerType<HandlersMarker>())).BuildGraph();
             var duplicatedHandlerGraph = new FubuRegistry(registry =>
                                              {
-                                                 registry.ApplyHandlerConventions<Handlers.HandlersMarker>();
-                                                 registry.ApplyHandlerConventions<Handlers.HandlersMarker>();
+                                                 registry.Import<HandlerConvention>(x => x.MarkerType<HandlersMarker>());
+                                                 registry.Import<HandlerConvention>(x => x.MarkerType<HandlersMarker>());
                                              }).BuildGraph();
 
             duplicatedHandlerGraph.Routes.Count().ShouldEqual(singleHandlerGraph.Routes.Count());
