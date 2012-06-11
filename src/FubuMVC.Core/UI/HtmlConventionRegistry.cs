@@ -5,7 +5,7 @@ using FubuMVC.Core.UI.Tags;
 
 namespace FubuMVC.Core.UI
 {
-    public class HtmlConventionRegistry : TagProfileExpression
+    public class HtmlConventionRegistry : TagProfileExpression, IFubuRegistryExtension
     {
         private readonly Cache<string, TagProfile> _profiles =
             new Cache<string, TagProfile>(name => new TagProfile(name));
@@ -17,7 +17,15 @@ namespace FubuMVC.Core.UI
             _profiles[TagProfile.DEFAULT] = profile;
         }
 
-        public IEnumerable<TagProfile> Profiles { get { return _profiles.GetAll(); } }
+        public IEnumerable<TagProfile> Profiles
+        {
+            get { return _profiles.GetAll(); }
+        }
+
+        public void Configure(FubuRegistry registry)
+        {
+            registry.Services(x => x.AddService(this));
+        }
 
         public void Profile(string profileName, Action<TagProfileExpression> configure)
         {

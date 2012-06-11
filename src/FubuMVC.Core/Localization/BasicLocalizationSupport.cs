@@ -4,6 +4,7 @@ using FubuCore;
 using FubuLocalization;
 using FubuLocalization.Basic;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Core.UI;
 
 namespace FubuMVC.Core.Localization
 {
@@ -23,7 +24,7 @@ namespace FubuMVC.Core.Localization
                 x.SetServiceIfNone<ILocalizationProviderFactory, LocalizationProviderFactory>();
             });
 
-            _internalRegistry.HtmlConvention(x => x.Labels.Builder<LabelBuilder>());
+            _internalRegistry.Import<HtmlConventionRegistry>(x => x.Labels.Builder<LabelBuilder>());
             
         }
 

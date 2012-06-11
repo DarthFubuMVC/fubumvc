@@ -88,7 +88,7 @@ namespace FubuMVC.Tests.UI.Security
         public void SetUp()
         {
             var registry = new FubuRegistry();
-            registry.HtmlConvention(x =>
+            registry.Import<HtmlConventionRegistry>(x =>
             {
                 x.Displays.Always.BuildBy(req => new HtmlTag("span").Text(req.StringValue()));
                 x.Editors.Always.BuildBy(req => new TextboxTag());

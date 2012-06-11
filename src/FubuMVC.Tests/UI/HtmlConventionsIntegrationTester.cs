@@ -49,7 +49,7 @@ namespace FubuMVC.Tests.UI
             var registry = new FubuRegistry(x =>
             {
                 
-                x.HtmlConvention<TestHtmlConventions>();
+                x.Import<TestHtmlConventions>();
             });
             container = new Container(x => x.For<IFubuRequest>().Singleton());
 

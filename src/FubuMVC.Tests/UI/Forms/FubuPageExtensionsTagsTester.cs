@@ -139,7 +139,7 @@ namespace FubuMVC.Tests.UI.Forms
         [SetUp]
         public void SetUp()
         {
-            var registry = new FubuRegistry(x => x.HtmlConvention<TestHtmlConventions>());
+            var registry = new FubuRegistry(x => x.Import<TestHtmlConventions>());
             var container = new Container(x => x.For<IFubuRequest>().Singleton());
 
 
@@ -185,7 +185,7 @@ namespace FubuMVC.Tests.UI.Forms
             var registry = new FubuRegistry(x =>
             {
                 
-                x.HtmlConvention<TestHtmlConventions>();
+                x.Import<TestHtmlConventions>();
             });
             var container = new Container(x => x.For<IFubuRequest>().Singleton());
 
@@ -236,7 +236,7 @@ namespace FubuMVC.Tests.UI.Forms
         [SetUp]
         public void SetUp()
         {
-            var registry = new FubuRegistry(x => x.HtmlConvention<TestHtmlConventions>());
+            var registry = new FubuRegistry(x => x.Import<TestHtmlConventions>());
             var container = new Container(x => x.For<IFubuRequest>().Singleton());
 
 

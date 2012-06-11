@@ -69,7 +69,7 @@ namespace FubuMVC.Tests.UI
         {
             var registry = new FubuRegistry(x =>
             {
-                x.HtmlConvention<OverrideFieldLayout>();
+                x.Import<OverrideFieldLayout>();
             });
             container = new Container(x => x.For<IFubuRequest>().Singleton());
 

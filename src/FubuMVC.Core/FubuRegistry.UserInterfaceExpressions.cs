@@ -3,27 +3,28 @@ using System.Linq;
 using FubuCore.Formatting;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.UI;
+using FubuCore;
 
 namespace FubuMVC.Core
 {
     public partial class FubuRegistry : IFubuRegistry
     {
+        [Obsolete("Change to using FubuRegistry.Import<T>().  This method will be removed by FubuMVC 1.0")]
         public void HtmlConvention<T>() where T : HtmlConventionRegistry, new()
         {
-            HtmlConvention(new T());
+            Import<T>();
         }
 
+        [Obsolete("Change to using FubuRegistry.Import(conventions).  This method will be removed by FubuMVC 1.0")]
         public void HtmlConvention(HtmlConventionRegistry conventions)
         {
-            Services(x => x.AddService(conventions));
+            conventions.As<IFubuRegistryExtension>().Configure(this);
         }
 
+        [Obsolete("Change to using FubuRegistry.Import<HtmlConventionRegistry>(Action<HtmlConventionRegistry>).  This method will be removed by FubuMVC 1.0")]
         public void HtmlConvention(Action<HtmlConventionRegistry> configure)
         {
-            var conventions = new HtmlConventionRegistry();
-            configure(conventions);
-
-            HtmlConvention(conventions);
+            Import(configure);
         }
 
         public void StringConversions<T>() where T : DisplayConversionRegistry, new()

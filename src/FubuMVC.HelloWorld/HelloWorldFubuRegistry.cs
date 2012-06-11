@@ -48,7 +48,7 @@ namespace FubuMVC.HelloWorld
             Views
                 .TryToAttachWithDefaultConventions();
 
-            HtmlConvention<SampleHtmlConventions>();
+            Import<SampleHtmlConventions>();
 
             this.RegisterPartials(x => x.For<Product>().Use<ProductPartial>());
             this.RegisterPartials(x => x.For<ProductPart>().Use<PartPartial>());
