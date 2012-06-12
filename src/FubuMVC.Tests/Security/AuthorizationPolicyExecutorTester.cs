@@ -14,18 +14,17 @@ namespace FubuMVC.Tests.Security
 
         protected override void beforeEach()
         {
-
             var request = MockFor<IFubuRequest>();
 
             policies = Services.CreateMockArrayFor<IAuthorizationPolicy>(3);
-            policies[0].Stub(x => x.RightsFor(request)).Return(AuthorizationRight.Allow);
-            policies[1].Stub(x => x.RightsFor(request)).Return(AuthorizationRight.None);
-            policies[2].Stub(x => x.RightsFor(request)).Return(AuthorizationRight.None);
+            policies[0].Expect(x => x.RightsFor(request)).Return(AuthorizationRight.Allow).Repeat.Once();
+            policies[1].Expect(x => x.RightsFor(request)).Return(AuthorizationRight.None).Repeat.Once();
+            policies[2].Expect(x => x.RightsFor(request)).Return(AuthorizationRight.None).Repeat.Once();
             _answer = ClassUnderTest.IsAuthorized(request, policies);
         }
 
         [Test]
-        public void should_query_all_authorization_policies()
+        public void should_query_all_authorization_policies_once()
         {
             policies[0].VerifyAllExpectations();
             policies[1].VerifyAllExpectations();
@@ -38,4 +37,7 @@ namespace FubuMVC.Tests.Security
             _answer.ShouldEqual(AuthorizationRight.Allow);
         }
     }
+
+
+
 }

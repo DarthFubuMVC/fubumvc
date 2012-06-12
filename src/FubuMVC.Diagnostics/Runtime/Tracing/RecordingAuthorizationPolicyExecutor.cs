@@ -16,18 +16,18 @@ namespace FubuMVC.Diagnostics.Runtime.Tracing
 
         public override AuthorizationRight IsAuthorized(IFubuRequest request, IEnumerable<IAuthorizationPolicy> policies)
         {
-            var decision = base.IsAuthorized(request, policies);
-            if (policies.Any())
+            var authorizationReport = new AuthorizationReport();
+
+            var decision = IsAuthorized(request, policies, (policy, right) =>
             {
-                var authorizationReport = new AuthorizationReport();
-                policies.Each(p =>
-                {
-                    var rights = p.RightsFor(request);
-                    authorizationReport.AddVote(p.ToString(), rights.Name);
-                });
+                authorizationReport.AddVote(policy.ToString(), right.Name);
+            });
+            if (authorizationReport.Details.Any())
+            {
                 authorizationReport.Decision = decision.Name;
                 _report.AddDetails(authorizationReport);
             }
+
             return decision;
         }
     }
@@ -62,5 +62,4 @@ namespace FubuMVC.Diagnostics.Runtime.Tracing
             Vote = vote;
         }
     }
-
 }
