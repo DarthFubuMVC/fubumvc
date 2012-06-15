@@ -43,7 +43,7 @@ namespace FubuMVC.Tests.Commands
 
             Services.PartialMockTheClassUnderTest();
 
-            ClassUnderTest.Stub(x => x.BuildExploder()).Return(MockFor<IPackageExploder>());
+            ClassUnderTest.Stub(x => x.BuildExploder()).Return(MockFor<IBottleExploder>());
         }
 
         private void execute()
@@ -58,7 +58,7 @@ namespace FubuMVC.Tests.Commands
 
             execute();
 
-            MockFor<IPackageExploder>().AssertWasCalled(x => x.ExplodeAllZipsAndReturnPackageDirectories(theInput.AppFolder, new FakePackageLog()));
+            MockFor<IBottleExploder>().AssertWasCalled(x => x.ExplodeAllZipsAndReturnPackageDirectories(theInput.AppFolder, new FakePackageLog()));
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace FubuMVC.Tests.Commands
 
             execute();
 
-            MockFor<IPackageExploder>().AssertWasNotCalled(x => x.ExplodeAllZipsAndReturnPackageDirectories(theInput.AppFolder, new FakePackageLog()));
+            MockFor<IBottleExploder>().AssertWasNotCalled(x => x.ExplodeAllZipsAndReturnPackageDirectories(theInput.AppFolder, new FakePackageLog()));
         }
 
         [Test]
@@ -78,7 +78,7 @@ namespace FubuMVC.Tests.Commands
 
             execute();
 
-            MockFor<IPackageExploder>().AssertWasCalled(x => x.CleanAll(theInput.AppFolder));
+            MockFor<IBottleExploder>().AssertWasCalled(x => x.CleanAll(theInput.AppFolder));
         }
 
 
@@ -89,7 +89,7 @@ namespace FubuMVC.Tests.Commands
 
             execute();
 
-            MockFor<IPackageExploder>().AssertWasNotCalled(x => x.CleanAll(theInput.AppFolder));
+            MockFor<IBottleExploder>().AssertWasNotCalled(x => x.CleanAll(theInput.AppFolder));
         }
     }
 }
