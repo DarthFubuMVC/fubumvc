@@ -11,14 +11,14 @@ namespace FubuMVC.Core.Packaging
     {
         public IEnumerable<IPackageInfo> Load(IPackageLog log)
         {
-            var exploder = PackageExploder.GetPackageExploder(log);
+            var exploder = BottleExploder.GetPackageExploder(log);
             var reader = new PackageManifestReader(new FileSystem(), GetContentFolderForPackage);
 
             return FubuMvcPackageFacility.GetPackageDirectories().SelectMany(dir =>
             {
                 return exploder.ExplodeDirectory(new ExplodeDirectory(){
                     DestinationDirectory = FubuMvcPackageFacility.GetExplodedPackagesDirectory(),
-                    PackageDirectory = dir,
+                    BottleDirectory = dir,
                     Log = log
                 });
             }).Select(dir => reader.LoadFromFolder(dir));

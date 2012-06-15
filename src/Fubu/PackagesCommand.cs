@@ -57,9 +57,9 @@ namespace Fubu
 
 
         //REVIEW: should this be here?
-        public virtual IPackageExploder BuildExploder()
+        public virtual IBottleExploder BuildExploder()
         {
-            return PackageExploder.GetPackageExploder(new FileSystem());
+            return BottleExploder.GetPackageExploder(new FileSystem());
         }
     }
 }
