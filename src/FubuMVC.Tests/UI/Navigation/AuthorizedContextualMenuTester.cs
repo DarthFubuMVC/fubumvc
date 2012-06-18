@@ -99,6 +99,15 @@ namespace FubuMVC.Tests.UI.Navigation
 			theResultingMenuItemToken.Description.ShouldEqual(theDescriptionOfTheMenuItem);
 		}
 
+		[Test]
+		public void should_get_the_category_from_the_inner_definition()
+		{
+			WouldBeAuthorized = true;
+			AvailabilityAsDeterminedByTheStrategyIs = MenuItemState.Available;
+
+			theResultingMenuItemToken.Category.ShouldEqual(theCategory);
+		}
+
         [Test]
         public void should_get_the_url_from_the_inner_definition()
         {

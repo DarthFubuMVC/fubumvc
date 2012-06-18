@@ -24,6 +24,7 @@ namespace FubuMVC.Core.UI.Navigation
                 Key = definition.Key,
                 MenuItemState = menuItemState,
                 Text = definition.Text(),
+				Category = definition.Category,
 				Description = definition.Description(),
                 Url = endpoint.Url
             };
