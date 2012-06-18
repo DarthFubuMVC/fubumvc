@@ -22,6 +22,7 @@ namespace FubuMVC.Core.UI.Navigation
         public string Text { get; set; }
         public string Url { get; set; }
 		public string Description { get; set; }
+		public string Category { get; set; }
         public MenuItemState MenuItemState { get; set; }
 
         public string IconUrl { get; set; }
