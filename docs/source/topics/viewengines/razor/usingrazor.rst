@@ -139,8 +139,14 @@ Press F5 and you should see
 
 Now add your first layout (assumption is made you know how to write layout
 files for razor). FubuMVC defaults to looking for Application.cshtml
-in the Shared folder at the root of our host application. Your solution should
-look like the following.
+in the Shared folder at the root of our host application. The Application.cshtml
+can be as simple as a one-liner like so:
+
+.. code-block:: html
+
+  <div>Host Application: @RenderBody()</div>
+
+Your solution should look like the following.
 
 .. image:: ../images/organization_razor.png
    :alt: organized razor files.
@@ -165,7 +171,8 @@ The FubuMVC implementation doesn't depend on those assemblies, but unfortunately
 the tooling does for now.
 
 Your web.config must be similar to the below sample. Important sections are the 
-compilation section under system.web and the system.web.webPages.razor section.
+sectionGroup section under configSections, the compilation section under system.web 
+and the system.web.webPages.razor section.
 
 Lastly, you may need to close and reopen Visual Studio.
 
