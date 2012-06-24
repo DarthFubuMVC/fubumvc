@@ -49,6 +49,25 @@ namespace FubuMVC.Tests.UI.Navigation
                 .ShouldHaveTheSameElementsAs(FakeKeys.Key7, FakeKeys.Key8);
         }
 
+        [Test]
+        public void import_with_strings_instead_of_StringToken()
+        {
+            var registry = new FubuRegistry();
+            registry.Navigation(x =>
+            {
+                x.ForMenu("Key1");
+                x.Add += MenuNode.Node("Key2");
+                x.Add += MenuNode.Node("Key3");
+            });
+
+            registry.Import<ChildRegistry>();
+
+            var graph = BehaviorGraph.BuildFrom(registry).Navigation;
+
+            graph.MenuFor("Key1").Select(x => x.Key)
+                .ShouldHaveTheSameElementsAs(new NavigationKey("Key2"), new NavigationKey("Key3"));
+        }
+
         public class ChildRegistry : FubuPackageRegistry
         {
             public ChildRegistry()

@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using FubuCore;
 using FubuLocalization;
-using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime.Conditionals;
-using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.UI.Navigation
 {
@@ -15,9 +13,12 @@ namespace FubuMVC.Core.UI.Navigation
     {
         private readonly Func<IChainResolver, BehaviorChain> _finder;
         private readonly StringToken _key;
-        private BehaviorChain _chain;
         private readonly MenuNodeType _type;
-        private Type _isEnabledConditionType = typeof(Always);
+        private BehaviorChain _chain;
+        private Type _hideConditionalType = typeof (Never);
+        private string _icon;
+        private Type _isEnabledConditionType = typeof (Always);
+        private MenuItemState _unauthorizedState = MenuItemState.Hidden;
 
         public MenuNode(StringToken key)
         {
@@ -34,11 +35,9 @@ namespace FubuMVC.Core.UI.Navigation
             _finder = finder;
         }
 
-        private MenuItemState _unauthorizedState = MenuItemState.Hidden;
-
         /// <summary>
-        /// Sets what state this menu item would be if the authorization
-        /// fails for the user.
+        ///   Sets what state this menu item would be if the authorization
+        ///   fails for the user.
         /// </summary>
         public MenuItemState UnauthorizedState
         {
@@ -55,6 +54,20 @@ namespace FubuMVC.Core.UI.Navigation
         {
             get { return _type; }
         }
+
+        public Type HideIfConditional
+        {
+            get { return _hideConditionalType; }
+        }
+
+        public BehaviorChain BehaviorChain
+        {
+            get { return _chain; }
+        }
+
+        public object UrlInput { get; set; }
+
+        public MenuChain Children { get; private set; }
 
         public MenuNode IsEnabledBy<T>() where T : IConditional
         {
@@ -74,7 +87,6 @@ namespace FubuMVC.Core.UI.Navigation
             return this;
         }
 
-        private Type _hideConditionalType = typeof (Never);
         public MenuNode HideIf<T>() where T : IConditional
         {
             return HideIf(typeof (T));
@@ -92,20 +104,10 @@ namespace FubuMVC.Core.UI.Navigation
             return this;
         }
 
-        public Type HideIfConditional
-        {
-            get { return _hideConditionalType; }
-        }
-
 
         public Type IsEnabledBy()
         {
             return _isEnabledConditionType;
-        }
-
-        public BehaviorChain BehaviorChain
-        {
-            get { return _chain; }
         }
 
         public void Resolve(IChainResolver resolver)
@@ -115,16 +117,11 @@ namespace FubuMVC.Core.UI.Navigation
             _chain = _finder(resolver);
 
 
-
             if (_chain == null)
             {
                 throw new InvalidOperationException("Unable to find the requested behavior chain for menu " + Key);
             }
         }
-
-        public object UrlInput { get; set; }
-
-        public MenuChain Children { get; private set; }
 
         public IEnumerable<MenuNode> FindAllChildren()
         {
@@ -139,6 +136,11 @@ namespace FubuMVC.Core.UI.Navigation
             }
         }
 
+        public static MenuNode ForChain(string key, BehaviorChain chain)
+        {
+            return ForChain(new NavigationKey(key), chain);
+        }
+
         public static MenuNode ForChain(StringToken key, BehaviorChain chain)
         {
             return new MenuNode(key, r => chain){
@@ -148,19 +150,29 @@ namespace FubuMVC.Core.UI.Navigation
 
         public static MenuNode ForInput<T>(StringToken key, T input = null) where T : class
         {
-            return new MenuNode(key, r => r.FindUniqueByType(typeof(T), category:"GET")){
+            return new MenuNode(key, r => r.FindUniqueByType(typeof (T), category: "GET")){
                 UrlInput = input
             };
         }
 
+        public static MenuNode ForInput<T>(string title, T input = null) where T : class
+        {
+            return ForInput<T>(new NavigationKey(title), input: input);
+        }
+
         public static MenuNode ForAction<T>(StringToken key, Expression<Action<T>> method)
         {
-            return new MenuNode(key, r => r.Find(method, category:"GET"));
+            return new MenuNode(key, r => r.Find(method, category: "GET"));
+        }
+
+        public static MenuNode ForAction<T>(string title, Expression<Action<T>> method)
+        {
+            return ForAction(new NavigationKey(title), method);
         }
 
         public static MenuNode ForCreatorOf<T>(StringToken key)
         {
-            var type = typeof(T);
+            var type = typeof (T);
             return ForCreatorOf(key, type);
         }
 
@@ -169,9 +181,24 @@ namespace FubuMVC.Core.UI.Navigation
             return new MenuNode(key, r => r.FindCreatorOf(type));
         }
 
+        public static MenuNode ForCreatorOf<T>(string key)
+        {
+            return ForCreatorOf<T>(new NavigationKey(key));
+        }
+
+        public static MenuNode ForCreatorOf(string key, Type type)
+        {
+            return ForCreatorOf(new NavigationKey(key), type);
+        }
+
         public static MenuNode Node(StringToken key)
         {
             return new MenuNode(key);
+        }
+
+        public static MenuNode Node(string key)
+        {
+            return Node(new NavigationKey(key));
         }
 
         public string CreateUrl()
@@ -184,8 +211,6 @@ namespace FubuMVC.Core.UI.Navigation
             return string.Format("MenuNode: {0}", _key);
         }
 
-        private string _icon;
-
         public string Icon()
         {
             return _icon;
@@ -196,5 +221,7 @@ namespace FubuMVC.Core.UI.Navigation
             _icon = icon;
             return this;
         }
+
+
     }
 }

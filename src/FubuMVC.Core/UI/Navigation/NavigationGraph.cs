@@ -54,5 +54,10 @@ namespace FubuMVC.Core.UI.Navigation
         {
             return _chains;
         }
+
+        public MenuChain MenuFor(string key)
+        {
+            return MenuFor(new NavigationKey(key));
+        }
     }
 }

@@ -32,6 +32,11 @@ namespace FubuMVC.Core.UI.Navigation
             _modifications.Each(x => x(graph));
         }
 
+        public AddExpression ForMenu(string title)
+        {
+            return ForMenu(new NavigationKey(title));
+        }
+
         public AddExpression ForMenu(StringToken key)
         {
             _lastKey = key;
