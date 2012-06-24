@@ -8,18 +8,8 @@ namespace FubuMVC.Core.UI.Navigation
     [CanBeMultiples]
     public class NavigationRegistry : IConfigurationAction
     {
-        private readonly IList<Action<NavigationGraph>> _modifications = new List<Action<NavigationGraph>>();
+        private readonly IList<IMenuRegistration> _registrations = new List<IMenuRegistration>();
         private StringToken _lastKey;
-
-        // Dru can come back later and change this to suit his OCD while
-        // I get stuff done now;-)
-        private Action<NavigationGraph> modification
-        {
-            set
-            {
-                _modifications.Add(value);
-            }
-        }
 
         public void Configure(BehaviorGraph graph)
         {
@@ -29,7 +19,7 @@ namespace FubuMVC.Core.UI.Navigation
 
         internal void Configure(NavigationGraph graph)
         {
-            _modifications.Each(x => x(graph));
+            graph.AddRegistrations(_registrations);
         }
 
         public AddExpression ForMenu(string title)
@@ -76,10 +66,7 @@ namespace FubuMVC.Core.UI.Navigation
         private void addToLastKey(MenuNode node)
         {
             var key = _lastKey;
-            modification = graph =>
-            {
-                graph.AddNode(key, node);
-            };
+            _registrations.Add(new MenuRegistration(new AddChild(), new Literal(key), node));
         }
     }
 }

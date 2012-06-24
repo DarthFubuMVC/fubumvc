@@ -3,7 +3,7 @@ using FubuLocalization;
 
 namespace FubuMVC.Core.UI.Navigation
 {
-    public class AddToMenu : IMenuPlacementStrategy
+    public class AddChild : IMenuPlacementStrategy
     {
         public string FormatDescription(string parent, StringToken key)
         {
@@ -12,7 +12,7 @@ namespace FubuMVC.Core.UI.Navigation
 
         public void Apply(IMenuNode dependency, MenuNode node)
         {
-            dependency.AddAfter(node);
+            dependency.AddChild(node);
         }
     }
 }

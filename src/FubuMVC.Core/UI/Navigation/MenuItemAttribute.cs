@@ -43,7 +43,7 @@ namespace FubuMVC.Core.UI.Navigation
         {
             if (AddToMenu.IsNotEmpty())
             {
-                yield return new MenuRegistration(new AddToMenu() ,new ByName(AddToMenu), MenuNode.ForChain(Title, chain));
+                yield return new MenuRegistration(new AddChild() ,new ByName(AddToMenu), MenuNode.ForChain(Title, chain));
             }
 
             if (AddAfter.IsNotEmpty())

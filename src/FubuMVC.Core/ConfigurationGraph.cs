@@ -247,6 +247,8 @@ namespace FubuMVC.Core
                     yield return action;
                 }
             }
+
+            yield return new CompileNavigationStep();
         }
 
         public void AddFacility(IViewFacility facility)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuLocalization;
@@ -21,6 +22,11 @@ namespace FubuMVC.Core.UI.Navigation
         public StringToken Key
         {
             get { return _key; }
+        }
+
+        void IMenuNode.AddChild(MenuNode node)
+        {
+            AddToEnd(node);
         }
 
         /// <summary>

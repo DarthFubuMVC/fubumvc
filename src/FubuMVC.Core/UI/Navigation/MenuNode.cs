@@ -12,6 +12,7 @@ namespace FubuMVC.Core.UI.Navigation
     public interface IMenuNode : INode<MenuNode>
     {
         StringToken Key { get; }
+        void AddChild(MenuNode node);
     }
 
     public class MenuNode : Node<MenuNode, MenuChain>, IMenuNode
@@ -53,6 +54,11 @@ namespace FubuMVC.Core.UI.Navigation
         public StringToken Key
         {
             get { return _key; }
+        }
+
+        public void AddChild(MenuNode node)
+        {
+            Children.AddToEnd(node);
         }
 
         public MenuNodeType Type

@@ -1,7 +1,9 @@
+using System.Diagnostics;
 using System.Linq;
 using FubuMVC.Core.UI.Navigation;
 using NUnit.Framework;
 using FubuTestingSupport;
+using System.Collections.Generic;
 
 namespace FubuMVC.Tests.UI.Navigation
 {
@@ -15,7 +17,9 @@ namespace FubuMVC.Tests.UI.Navigation
 
             var node = MenuNode.Node(FakeKeys.Key1);
 
-            graph.AddNode(FakeKeys.Key2, node);
+            graph.AddChildNode(FakeKeys.Key2, node);
+
+            graph.Compile();
 
             graph.MenuFor(FakeKeys.Key2).Top
                 .ShouldBeTheSameAs(node);
@@ -26,12 +30,14 @@ namespace FubuMVC.Tests.UI.Navigation
         {
             var graph = new NavigationGraph();
             var parentNode = MenuNode.Node(FakeKeys.Key1);
-            graph.AddNode(FakeKeys.Key2, parentNode);
+            graph.AddChildNode(FakeKeys.Key2, parentNode);
 
 
             var childNode = MenuNode.Node(FakeKeys.Key3);
 
-            graph.AddNode(FakeKeys.Key1, childNode);
+            graph.AddChildNode(FakeKeys.Key1, childNode);
+
+            graph.Compile();
 
             parentNode.Children.Top
                 .ShouldBeTheSameAs(childNode);
@@ -67,6 +73,8 @@ namespace FubuMVC.Tests.UI.Navigation
                 x.ForMenu(FakeKeys.Key9);
                 x.Add += MenuNode.Node(FakeKeys.Key10);
             });
+
+            graph.Compile();
         }
 
         [Test]
@@ -80,8 +88,12 @@ namespace FubuMVC.Tests.UI.Navigation
         [Test]
         public void has_all_the_nodes()
         {
-            graph.AllNodes().OfType<MenuNode>().Select(x => x.Key)
-                .ShouldHaveTheSameElementsAs(FakeKeys.Key2, FakeKeys.Key8, FakeKeys.Key9, FakeKeys.Key10, FakeKeys.Key3, FakeKeys.Key4, FakeKeys.Key6, FakeKeys.Key7);
+            graph.MenuFor(FakeKeys.Key1).Select(x => x.Key).ShouldHaveTheSameElementsAs(FakeKeys.Key2, FakeKeys.Key3, FakeKeys.Key4);
+
+            var tokens = graph.AllNodes().Select(x => x.Key);
+
+            tokens
+                .ShouldHaveTheSameElementsAs(FakeKeys.Key1, FakeKeys.Key2, FakeKeys.Key8, FakeKeys.Key9, FakeKeys.Key10, FakeKeys.Key3, FakeKeys.Key4, FakeKeys.Key5, FakeKeys.Key6, FakeKeys.Key7);
         }
 
         [Test]

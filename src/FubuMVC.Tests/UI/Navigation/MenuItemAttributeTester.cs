@@ -73,7 +73,7 @@ namespace FubuMVC.Tests.UI.Navigation
                 AddToMenu = "else"
             }.ToMenuRegistration(theChain).Single().ShouldBeOfType<MenuRegistration>();
 
-            registration.Strategy.ShouldBeOfType<AddToMenu>();
+            registration.Strategy.ShouldBeOfType<AddChild>();
             registration.Node.Resolve(null);
             registration.Node.BehaviorChain.ShouldBeTheSameAs(theChain);
 

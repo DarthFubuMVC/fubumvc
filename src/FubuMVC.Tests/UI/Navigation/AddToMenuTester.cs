@@ -13,7 +13,7 @@ namespace FubuMVC.Tests.UI.Navigation
         public void format_description()
         {
             var key = new NavigationKey("something");
-            new AddToMenu().FormatDescription("parent", key)
+            new AddChild().FormatDescription("parent", key)
                 .ShouldEqual("Add '{0}' to menu 'parent'".ToFormat(key.ToLocalizationKey()));
         }
 
@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.UI.Navigation
             var dependency = new MenuChain("something");
             var node = MenuNode.Node("else");
 
-            new AddToMenu().Apply(dependency, node);
+            new AddChild().Apply(dependency, node);
 
             dependency.Top.ShouldBeTheSameAs(node);
         }
