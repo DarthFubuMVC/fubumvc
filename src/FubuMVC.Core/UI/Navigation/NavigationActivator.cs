@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Bottles;
 using Bottles.Diagnostics;
 using FubuMVC.Core.Registration;
@@ -21,7 +22,7 @@ namespace FubuMVC.Core.UI.Navigation
         public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
         {
             log.Trace("Trying to resolve chains to the navigation graph");
-            _graph.Navigation.AllNodes().Each(x =>
+            _graph.Navigation.AllNodes().OfType<MenuNode>().Each(x =>
             {
                 try
                 {

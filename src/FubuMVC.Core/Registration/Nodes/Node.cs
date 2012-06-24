@@ -7,7 +7,7 @@ using FubuMVC.Core.Registration.Diagnostics;
 
 namespace FubuMVC.Core.Registration.Nodes
 {
-    public abstract class Node<T, TChain> : TracedNode, IEnumerable<T> 
+    public abstract class Node<T, TChain> : TracedNode, INode<T>, IEnumerable<T> 
         where T : Node<T, TChain> 
         where TChain : Chain<T, TChain>
     {

@@ -1,10 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using FubuCore;
 
 namespace FubuMVC.Core.Registration.Nodes
 {
-    public abstract class Chain<T, TChain> : TracedNode, IEnumerable<T> 
+    public interface INode<T>
+    {
+        void AddAfter(T node);
+        void AddBefore(T node);
+
+    }
+
+    public abstract class Chain<T, TChain> : TracedNode, INode<T>, IEnumerable<T> 
         where T : Node<T, TChain> 
         where TChain : Chain<T, TChain>
     {
@@ -115,5 +123,14 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
 
+        void INode<T>.AddAfter(T node)
+        {
+            AddToEnd(node);
+        }
+
+        void INode<T>.AddBefore(T node)
+        {
+            throw new NotSupportedException();
+        }
     }
 }

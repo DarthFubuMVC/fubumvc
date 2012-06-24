@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Util;
 using FubuLocalization;
+using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.UI.Navigation
 {
@@ -32,9 +33,17 @@ namespace FubuMVC.Core.UI.Navigation
             return _chains[key];
         }
 
-        public IEnumerable<MenuNode> AllNodes()
+        public IEnumerable<IMenuNode> AllNodes()
         {
-            return _chains.SelectMany(x => x.AllNodes());
+            foreach (var chain in _chains)
+            {
+                yield return chain;
+
+                foreach (var node in chain.AllNodes())
+                {
+                    yield return node;
+                }
+            }
         }
 
         public void AddNode(StringToken parentKey, MenuNode node)

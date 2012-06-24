@@ -7,5 +7,10 @@ namespace FubuMVC.Core.UI.Navigation
         public NavigationKey(string text) : base(text, text, namespaceByType:true)
         {
         }
+
+        public NavigationKey(string key, string defaultText) : base(key, defaultText, namespaceByType:true)
+        {
+            
+        }
     }
 }

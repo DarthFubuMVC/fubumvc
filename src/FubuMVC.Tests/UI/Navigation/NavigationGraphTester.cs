@@ -80,7 +80,7 @@ namespace FubuMVC.Tests.UI.Navigation
         [Test]
         public void has_all_the_nodes()
         {
-            graph.AllNodes().Select(x => x.Key)
+            graph.AllNodes().OfType<MenuNode>().Select(x => x.Key)
                 .ShouldHaveTheSameElementsAs(FakeKeys.Key2, FakeKeys.Key8, FakeKeys.Key9, FakeKeys.Key10, FakeKeys.Key3, FakeKeys.Key4, FakeKeys.Key6, FakeKeys.Key7);
         }
 

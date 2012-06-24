@@ -9,7 +9,12 @@ using FubuMVC.Core.Runtime.Conditionals;
 
 namespace FubuMVC.Core.UI.Navigation
 {
-    public class MenuNode : Node<MenuNode, MenuChain>
+    public interface IMenuNode : INode<MenuNode>
+    {
+        StringToken Key { get; }
+    }
+
+    public class MenuNode : Node<MenuNode, MenuChain>, IMenuNode
     {
         private readonly Func<IChainResolver, BehaviorChain> _finder;
         private readonly StringToken _key;

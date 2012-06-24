@@ -350,8 +350,15 @@
     <Compile Include="UI\HtmlTagExtensionsTester.cs" />
     <Compile Include="UI\ImageExpressionTester.cs" />
     <Compile Include="UI\ImageForExtensionMethodTester.cs" />
+    <Compile Include="UI\Navigation\AddAfterTester.cs" />
+    <Compile Include="UI\Navigation\AddBeforeTester.cs" />
+    <Compile Include="UI\Navigation\AddToMenuTester.cs" />
+    <Compile Include="UI\Navigation\MenuRegistrationTester.cs" />
+    <Compile Include="UI\Navigation\ByNameTester.cs" />
     <Compile Include="UI\Navigation\Determining_MenuItemState_from_a_MenuNode.cs" />
+    <Compile Include="UI\Navigation\LiteralTester.cs" />
     <Compile Include="UI\Navigation\MenuChainTester.cs" />
+    <Compile Include="UI\Navigation\MenuItemAttributeTester.cs" />
     <Compile Include="UI\Navigation\MenuNodeTester.cs" />
     <Compile Include="UI\Navigation\NavigationGraphTester.cs" />
     <Compile Include="UI\Navigation\NavigationKeyTester.cs" />

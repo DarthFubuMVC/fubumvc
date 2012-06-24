@@ -5,9 +5,13 @@ using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.UI.Navigation
 {
-    public class MenuChain : Chain<MenuNode, MenuChain>
+    public class MenuChain : Chain<MenuNode, MenuChain>, IMenuNode
     {
         private readonly StringToken _key;
+
+        public MenuChain(string title) : this(new NavigationKey(title))
+        {
+        }
 
         public MenuChain(StringToken key)
         {
