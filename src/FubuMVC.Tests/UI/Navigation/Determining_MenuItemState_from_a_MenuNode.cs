@@ -119,5 +119,14 @@ namespace FubuMVC.Tests.UI.Navigation
             ClassUnderTest.DetermineStateFor(theNode)
                 .ShouldEqual(MenuItemState.Disabled);
         }
+
+        [Test]
+        public void when_the_menu_node_is_only_a_node_with_no_behavior_chain()
+        {
+            theNode = MenuNode.Node("Something");
+
+            ClassUnderTest.DetermineStateFor(theNode)
+                .ShouldEqual(MenuItemState.Available);
+        }
     }
 }

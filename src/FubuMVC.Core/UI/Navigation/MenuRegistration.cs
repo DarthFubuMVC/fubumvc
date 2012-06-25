@@ -38,7 +38,15 @@ namespace FubuMVC.Core.UI.Navigation
 
         public void Configure(NavigationGraph graph)
         {
-            var dependency = graph.AllNodes().FirstOrDefault(node => _matcher.Matches(node.Key)) ?? graph.MenuFor(_matcher.DefaultKey());
+            var dependency = graph.AllNodes().FirstOrDefault(node => _matcher.Matches(node.Key));
+            
+            // code was like this for debugging
+            if (dependency == null)
+            {
+                dependency = graph.MenuFor(_matcher.DefaultKey());
+            }
+
+            
 
             _strategy.Apply(dependency, _node);
         }

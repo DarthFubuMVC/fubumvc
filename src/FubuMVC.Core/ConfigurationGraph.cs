@@ -150,6 +150,7 @@ namespace FubuMVC.Core
                 .Union(new IConfigurationAction[]{_views})
                 .Union(fullGraphPolicies())
                 .Union(navigationRegistrations().OfType<IConfigurationAction>())
+                .Union(new IConfigurationAction[]{new MenuItemAttributeConfigurator(), new CompileNavigationStep()})
                 .Union(_configurations[ConfigurationType.Reordering])
                 .Union(_configurations[ConfigurationType.Instrumentation]);
         }
@@ -246,11 +247,7 @@ namespace FubuMVC.Core
                 {
                     yield return action;
                 }
-            }
-
-            yield return new MenuItemAttributeConfigurator();
-            yield return new CompileNavigationStep();
-            
+            }   
         }
 
         public void AddFacility(IViewFacility facility)

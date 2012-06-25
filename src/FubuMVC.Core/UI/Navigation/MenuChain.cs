@@ -51,5 +51,10 @@ namespace FubuMVC.Core.UI.Navigation
                 }
             }
         }
+
+        public override string ToString()
+        {
+            return "MenuChain:  " + _key.ToLocalizationKey();
+        }
     }
 }

@@ -20,6 +20,11 @@ namespace FubuMVC.Core.UI.Navigation
 
         public virtual MenuItemState DetermineStateFor(MenuNode node)
         {
+            if (node.BehaviorChain == null)
+            {
+                return MenuItemState.Available;
+            }
+
             var rights = _authorizor.Authorize(node.BehaviorChain, node.UrlInput);
             if (rights != AuthorizationRight.Allow)
             {

@@ -1,4 +1,5 @@
 using FubuLocalization;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.UI.Navigation;
 using FubuMVC.Core.View;
 using FubuMVC.Diagnostics.Features.Dashboard;
@@ -10,6 +11,7 @@ using HtmlTags;
 using System.Collections.Generic;
 using FubuCore;
 using System.Linq;
+using FubuMVC.Core.UI;
 
 namespace FubuMVC.Diagnostics
 {
@@ -65,11 +67,7 @@ namespace FubuMVC.Diagnostics
             var service = page.Get<INavigationService>();
             var tokens = service.MenuFor(DiagnosticKeys.Main);
 
-            var tag = new HtmlTag("ul").AddClass("nav");
-            tokens.Each(token => tag.Append(new BootstrapMenuItemTag(token)));
-
-
-            return tag;
+            return new BootstrapMenuTag(tokens);
         }
     }
 
@@ -97,7 +95,7 @@ namespace FubuMVC.Diagnostics
             {
                 link.Attr("href", "#");
                 link.AddClass("dropdown-toggle");
-                link.AddClass("data-toggle");
+                link.Attr("data-toggle", "dropdown");
 
                 link.Add("b").AddClass("caret");
 
@@ -112,7 +110,7 @@ namespace FubuMVC.Diagnostics
 
             if (item.MenuItemState == MenuItemState.Active)
             {
-                link.AddClass("active");
+                AddClass("active");
             }
         }
     }

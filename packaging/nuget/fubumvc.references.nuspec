@@ -3,7 +3,7 @@
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <id>FubuMVC.References</id>
     <version>0.0.0</version>
-    <authors>Chad Myers, Jeremy D. Miller, Joshua Flanagan</authors>
+    <authors>Jeremy D. Miller, Joshua Arnold, Corey Kaylor</authors>
     <owners>Joshua Flanagan</owners>
     <licenseUrl>https://github.com/DarthFubuMVC/fubumvc/raw/master/license.txt</licenseUrl>
     <projectUrl>http://mvc.fubu-project.org/</projectUrl>
@@ -36,6 +36,5 @@
     <file src="..\..\src\fubu\bin\release\StructureMap.dll" target="tools" />
     <file src="..\..\src\fubu\bin\release\Bottles*.*" target="tools" />
     <file src="..\..\src\fubu\bin\release\HtmlTags.dll" target="tools" />
-    <file src="..\..\build\*Template.zip" target="tools" />
   </files>
 </package>
