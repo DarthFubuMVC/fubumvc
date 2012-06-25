@@ -8,6 +8,8 @@ using FubuMVC.Diagnostics.Features.Requests;
 using FubuMVC.Diagnostics.Features.Routes;
 using HtmlTags;
 using System.Collections.Generic;
+using FubuCore;
+using System.Linq;
 
 namespace FubuMVC.Diagnostics
 {
@@ -64,19 +66,50 @@ namespace FubuMVC.Diagnostics
             var tokens = service.MenuFor(DiagnosticKeys.Main);
 
             var tag = new HtmlTag("ul").AddClass("nav");
-            tokens.Each(token => tag.Append(new DiagnosticMenuItemTag(token)));
+            tokens.Each(token => tag.Append(new BootstrapMenuItemTag(token)));
 
 
             return tag;
         }
     }
 
-    // TODO -- add tests
-    public class DiagnosticMenuItemTag : HtmlTag
+    public class BootstrapMenuTag : HtmlTag
     {
-        public DiagnosticMenuItemTag(MenuItemToken item) : base("li")
+        public BootstrapMenuTag(IEnumerable<MenuItemToken> tokens) : base("ul")
         {
-            var link = Add("a").Attr("href", item.Url).Text(item.Text);
+            AddClass("nav");
+            tokens.Each(token => Append(new BootstrapMenuItemTag(token)));
+        }
+    }
+
+    // TODO -- add tests
+    public class BootstrapMenuItemTag : HtmlTag
+    {
+        public BootstrapMenuItemTag(MenuItemToken item) : base("li")
+        {
+            var link = Add("a").Append(new LiteralTag(item.Text));
+            if (item.Url.IsNotEmpty())
+            {
+                link.Attr("href", item.Url);
+            }
+
+            if (item.Children.Any())
+            {
+                link.Attr("href", "#");
+                link.AddClass("dropdown-toggle");
+                link.AddClass("data-toggle");
+
+                link.Add("b").AddClass("caret");
+
+                var ul = Add("ul").AddClass("dropdown-menu");
+                item.Children.Each(child =>
+                {
+                    var childTag = new BootstrapMenuItemTag(child);
+                    ul.Append(childTag);
+                });
+            
+            }
+
             if (item.MenuItemState == MenuItemState.Active)
             {
                 link.AddClass("active");
