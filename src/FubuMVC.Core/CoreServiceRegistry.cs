@@ -12,6 +12,7 @@ using FubuMVC.Core.Routing;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.Runtime.Formatters;
+using FubuMVC.Core.Runtime.Logging;
 using FubuMVC.Core.SessionState;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.Urls;
@@ -72,6 +73,8 @@ namespace FubuMVC.Core
             SetServiceIfNone<IEtagCache, EtagCache>();
 
             SetServiceIfNone<IConditionalService, ConditionalService>();
+
+            SetServiceIfNone<ILogger, Logger>();
         }
     }
 }
