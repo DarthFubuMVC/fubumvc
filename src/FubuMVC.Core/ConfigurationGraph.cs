@@ -248,7 +248,9 @@ namespace FubuMVC.Core
                 }
             }
 
+            yield return new MenuItemAttributeConfigurator();
             yield return new CompileNavigationStep();
+            
         }
 
         public void AddFacility(IViewFacility facility)

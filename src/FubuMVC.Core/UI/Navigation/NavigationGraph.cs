@@ -41,14 +41,17 @@ namespace FubuMVC.Core.UI.Navigation
             var graph = new DependencyGraph<IMenuRegistration>(r => r.Description, dependencyFinder);
             _registrations.Each(graph.RegisterItem);
             
-            graph.Ordered().Each(x => x.Configure(this));
+            graph.Ordered().Each(x =>
+            {
+                x.Configure(this);
+            });
 
             _registrations.Clear();
         }
 
-        public MenuNode FindNode(StringToken key)
+        public IMenuNode FindNode(StringToken key)
         {
-            return _chains.FirstValue(x => x.FindByKey(key));
+            return AllNodes().FirstOrDefault(x => x.Key.Equals(key));
         }
 
         public MenuChain MenuFor(StringToken key)

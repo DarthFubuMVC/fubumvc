@@ -52,5 +52,10 @@ namespace FubuMVC.Core.UI.Navigation
         {
             get { return _node; }
         }
+
+        public override string ToString()
+        {
+            return Description;
+        }
     }
 }

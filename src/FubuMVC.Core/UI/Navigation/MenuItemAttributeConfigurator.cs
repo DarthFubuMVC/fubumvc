@@ -1,0 +1,23 @@
+using System.Collections.Generic;
+using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Nodes;
+
+namespace FubuMVC.Core.UI.Navigation
+{
+    [ConfigurationType(ConfigurationType.Navigation)]
+    public class MenuItemAttributeConfigurator : IConfigurationAction
+    {
+        public void Configure(BehaviorGraph graph)
+        {
+            var navigationGraph = graph.Navigation;
+            graph.Actions().Each(
+                action => action.ForAttributes<MenuItemAttribute>(att => Configure(action, att, navigationGraph)));
+        }
+
+        public void Configure(ActionCall action, MenuItemAttribute att, NavigationGraph graph)
+        {
+            var registrations = att.ToMenuRegistrations(action.ParentChain());
+            graph.AddRegistrations(registrations);
+        }
+    }
+}

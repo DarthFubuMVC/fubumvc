@@ -36,7 +36,7 @@ namespace FubuMVC.Tests.UI.Navigation
         {
             var registration = new MenuItemAttribute("something"){
                 AddBefore = "else"
-            }.ToMenuRegistration(theChain).Single().ShouldBeOfType<MenuRegistration>();
+            }.ToMenuRegistrations(theChain).Single().ShouldBeOfType<MenuRegistration>();
             
             
             registration.Strategy.ShouldBeOfType<AddBefore>();
@@ -55,7 +55,7 @@ namespace FubuMVC.Tests.UI.Navigation
             var registration = new MenuItemAttribute("something")
             {
                 AddAfter = "else"
-            }.ToMenuRegistration(theChain).Single().ShouldBeOfType<MenuRegistration>();
+            }.ToMenuRegistrations(theChain).Single().ShouldBeOfType<MenuRegistration>();
 
             registration.Strategy.ShouldBeOfType<AddAfter>();
             registration.Node.Resolve(null);
@@ -70,8 +70,8 @@ namespace FubuMVC.Tests.UI.Navigation
         {
             var registration = new MenuItemAttribute("something")
             {
-                AddToMenu = "else"
-            }.ToMenuRegistration(theChain).Single().ShouldBeOfType<MenuRegistration>();
+                AddChildTo = "else"
+            }.ToMenuRegistrations(theChain).Single().ShouldBeOfType<MenuRegistration>();
 
             registration.Strategy.ShouldBeOfType<AddChild>();
             registration.Node.Resolve(null);

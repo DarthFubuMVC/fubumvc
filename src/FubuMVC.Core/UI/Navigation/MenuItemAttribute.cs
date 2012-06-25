@@ -25,7 +25,7 @@ namespace FubuMVC.Core.UI.Navigation
         /// Add this menu item to another menu item or node
         /// </summary>
         /// <example>"Log Out" or "MyNavigationKey:LogOut" if you need to refer to a StringToken</example>
-        public string AddToMenu { get; set; }
+        public string AddChildTo { get; set; }
 
         /// <summary>
         /// Add this menu item after another menu item or node
@@ -39,11 +39,11 @@ namespace FubuMVC.Core.UI.Navigation
         /// <example>"Log Out" or "MyNavigationKey:LogOut" if you need to refer to a StringToken</example>
         public string AddBefore { get; set; }
 
-        public IEnumerable<IMenuRegistration> ToMenuRegistration(BehaviorChain chain)
+        public IEnumerable<IMenuRegistration> ToMenuRegistrations(BehaviorChain chain)
         {
-            if (AddToMenu.IsNotEmpty())
+            if (AddChildTo.IsNotEmpty())
             {
-                yield return new MenuRegistration(new AddChild() ,new ByName(AddToMenu), MenuNode.ForChain(Title, chain));
+                yield return new MenuRegistration(new AddChild() ,new ByName(AddChildTo), MenuNode.ForChain(Title, chain));
             }
 
             if (AddAfter.IsNotEmpty())
