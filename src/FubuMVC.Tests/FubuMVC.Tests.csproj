@@ -353,6 +353,7 @@
     <Compile Include="UI\Navigation\AddAfterTester.cs" />
     <Compile Include="UI\Navigation\AddBeforeTester.cs" />
     <Compile Include="UI\Navigation\AddToMenuTester.cs" />
+    <Compile Include="UI\Navigation\AdvancedNavigationRegistryInsertingTester.cs" />
     <Compile Include="UI\Navigation\MenuItemAttributes_integrated_Tester.cs" />
     <Compile Include="UI\Navigation\MenuRegistrationTester.cs" />
     <Compile Include="UI\Navigation\ByNameTester.cs" />

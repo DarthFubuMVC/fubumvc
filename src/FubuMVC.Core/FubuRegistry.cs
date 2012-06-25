@@ -299,5 +299,10 @@ namespace FubuMVC.Core
 
             _configuration.AddConfiguration(registry);
         }
+
+        public void Navigation(NavigationRegistry registry)
+        {
+            _configuration.AddConfiguration(registry);
+        }
     }
 }
