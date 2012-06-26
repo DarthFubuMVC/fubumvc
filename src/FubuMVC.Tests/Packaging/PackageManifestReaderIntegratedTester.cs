@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Bottles;
 using Bottles.Diagnostics;
+using Bottles.Manifest;
 using Bottles.PackageLoaders;
 using Bottles.PackageLoaders.Assemblies;
 using Bottles.PackageLoaders.LinkedFolders;
@@ -35,7 +36,7 @@ namespace FubuMVC.Tests.Packaging
 
             linkedFolderReader = new LinkedFolderPackageLoader(theApplicationDirectory, f => f);
 
-            reader = new PackageManifestReader(fileSystem, folder => folder);
+            reader = new BottleManifestReader(fileSystem, folder => folder);
         }
 
         [TearDown]
@@ -47,7 +48,7 @@ namespace FubuMVC.Tests.Packaging
         #endregion
 
         private string packageFolder;
-        private PackageManifestReader reader;
+        private BottleManifestReader reader;
         private readonly string theApplicationDirectory = "../../".ToFullPath();
         private LinkedFolderPackageLoader linkedFolderReader;
 
@@ -57,7 +58,7 @@ namespace FubuMVC.Tests.Packaging
             // the reader is rooted at the folder location of the main app
             var package = reader.LoadFromFolder("../../../TestPackage1".ToFullPath());
 
-            var assemblyLoader = new AssemblyLoader(new PackagingDiagnostics(new LoggingSession()));
+            var assemblyLoader = new AssemblyLoader(new BottlingDiagnostics(new LoggingSession()));
             assemblyLoader.AssemblyFileLoader = file => Assembly.Load(Path.GetFileNameWithoutExtension(file));
             assemblyLoader.LoadAssembliesFromPackage(package);
 
@@ -90,7 +91,7 @@ namespace FubuMVC.Tests.Packaging
 
             new FileSystem().PersistToFile(links, theApplicationDirectory, LinkManifest.FILE);
 
-            var assemblyLoader = new AssemblyLoader(new PackagingDiagnostics(new LoggingSession()));
+            var assemblyLoader = new AssemblyLoader(new BottlingDiagnostics(new LoggingSession()));
             assemblyLoader.AssemblyFileLoader = file => Assembly.Load(Path.GetFileNameWithoutExtension(file));
 
             var package = linkedFolderReader.Load(new PackageLog()).Single();

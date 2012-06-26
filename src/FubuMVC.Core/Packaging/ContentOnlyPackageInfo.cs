@@ -22,6 +22,11 @@ namespace FubuMVC.Core.Packaging
             // Do nothing
         }
 
+        public string Description
+        {
+            get { return "CONTENT ONLY"; }
+        }
+
         public void ForFolder(string folderName, Action<string> onFound)
         {
             if (folderName == BottleFiles.WebContentFolder)

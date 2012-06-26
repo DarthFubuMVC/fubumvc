@@ -24,6 +24,11 @@ namespace FubuMVC.Tests.Assets
             get { return new Dependency[0]; }
         }
 
+        public string Description
+        {
+            get { return "STUB"; }
+        }
+
         public string Name
         {
             get { return _name; }

@@ -3,6 +3,7 @@ using System.Linq;
 using Bottles;
 using Bottles.Diagnostics;
 using Bottles.Exploding;
+using Bottles.Manifest;
 using FubuCore;
 
 namespace FubuMVC.Core.Packaging
@@ -12,7 +13,7 @@ namespace FubuMVC.Core.Packaging
         public IEnumerable<IPackageInfo> Load(IPackageLog log)
         {
             var exploder = BottleExploder.GetPackageExploder(log);
-            var reader = new PackageManifestReader(new FileSystem(), GetContentFolderForPackage);
+            var reader = new BottleManifestReader(new FileSystem(), GetContentFolderForPackage);
 
             return FubuMvcPackageFacility.GetPackageDirectories().SelectMany(dir =>
             {
