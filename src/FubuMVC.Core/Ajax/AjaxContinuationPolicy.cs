@@ -3,7 +3,7 @@ using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Runtime.Formatters;
 
 namespace FubuMVC.Core.Ajax
 {
@@ -17,9 +17,13 @@ namespace FubuMVC.Core.Ajax
                 .Each(chain =>
                 {
                     // Apply json formatting and http model binding coming up, but strip out
-                    chain.MakeAsymmetricJson();
-                    chain.Output.ClearAll();
+					if (chain.InputType() != null)
+					{
+						chain.Input.AllowHttpFormPosts = false;
+						chain.Input.AddFormatter<JsonFormatter>();
+					}
 
+					chain.Output.ClearAll();
                     chain.Output.AddWriter(typeof (AjaxContinuationWriter<>));
                 });
         }
