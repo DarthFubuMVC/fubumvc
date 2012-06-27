@@ -19,7 +19,7 @@ namespace FubuMVC.Core.Ajax
                     // Apply json formatting and http model binding coming up, but strip out
 					if (chain.InputType() != null)
 					{
-						chain.Input.AllowHttpFormPosts = false;
+						chain.Input.AllowHttpFormPosts = true;
 						chain.Input.AddFormatter<JsonFormatter>();
 					}
 
