@@ -98,7 +98,12 @@
     <Compile Include="Endpoints\EndpointInvocation.cs" />
     <Compile Include="Endpoints\HttpResponse.cs" />
     <Compile Include="Endpoints\WebRequestResponseExtensions.cs" />
-    <Compile Include="Runtime\Dates\DateClasses.cs" />
+    <Compile Include="Runtime\Dates\DateFormattingRule.cs" />
+    <Compile Include="Runtime\Dates\DateTimeFormatter.cs" />
+    <Compile Include="Runtime\Dates\DateTimeFormattingRules.cs" />
+    <Compile Include="Runtime\Dates\DateTimePolicies.cs" />
+    <Compile Include="Runtime\Dates\DateTimeToUtcConverterFamily.cs" />
+    <Compile Include="Runtime\Dates\UtcDateHandling.cs" />
     <Compile Include="Runtime\Logging\Logger.cs" />
     <Compile Include="Runtime\Logging\ILogger.cs" />
     <Compile Include="Runtime\Logging\ILogListener.cs" />

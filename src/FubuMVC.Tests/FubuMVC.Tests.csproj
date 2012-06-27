@@ -156,6 +156,7 @@
     <Compile Include="Assets\Http\ContentWriterTester.cs" />
     <Compile Include="ConfigurationGraph_DetermineConfigurationType_Tester.cs" />
     <Compile Include="Registration\default_action_discovery.cs" />
+    <Compile Include="Runtime\Dates\DateTimeFormatting_import_integration_testing.cs" />
     <Compile Include="Runtime\Dates\DateTimeToUtcConverterFamilyTester.cs" />
     <Compile Include="Runtime\Dates\Date_services_registration.cs" />
     <Compile Include="Runtime\Logging\LoggerTester.cs" />
