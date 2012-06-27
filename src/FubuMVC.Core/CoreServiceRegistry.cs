@@ -2,6 +2,7 @@ using Bottles;
 using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Conversion;
+using FubuCore.Dates;
 using FubuCore.Formatting;
 using FubuCore.Reflection;
 using FubuMVC.Core.Behaviors;
@@ -75,6 +76,10 @@ namespace FubuMVC.Core
             SetServiceIfNone<IConditionalService, ConditionalService>();
 
             SetServiceIfNone<ILogger, Logger>();
+
+            SetServiceIfNone<IClock, Clock>(x => x.IsSingleton = true);
+            SetServiceIfNone<ITimeZoneContext, MachineTimeZoneContext>();
+            SetServiceIfNone<ISystemTime, SystemTime>();
         }
     }
 }

@@ -9,6 +9,7 @@ namespace FubuMVC.Core.Registration
     public class ServiceRegistry : IServiceRegistry, IConfigurationAction
     {
         private readonly IList<Action<ServiceGraph>> _alterations = new List<Action<ServiceGraph>>();
+        private readonly IList<Type> _singletonTypes = new List<Type>();
 
         // Yes, I know this makes Dru go haywire, but he can come back in and
         // make the code uglier just to satisfy his own tastes
@@ -26,6 +27,14 @@ namespace FubuMVC.Core.Registration
         public void SetServiceIfNone<TService, TImplementation>() where TImplementation : TService
         {
             fill(typeof (TService), new ObjectDef(typeof (TImplementation)));
+        }
+
+        public void SetServiceIfNone<TService, TImplementation>(Action<ObjectDef> configure) where TImplementation : TService
+        {
+            var def = new ObjectDef(typeof (TImplementation));
+            configure(def);
+
+            fill(typeof(TService), def);
         }
 
         public void SetServiceIfNone<TService>(TService value)

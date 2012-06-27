@@ -44,7 +44,7 @@ namespace FubuMVC.StructureMap
                     });
                 }
 
-                if (ServiceRegistry.ShouldBeSingleton(serviceType))
+                if (ServiceRegistry.ShouldBeSingleton(serviceType) || def.IsSingleton)
                 {
                     _registry.For(serviceType).Singleton();
                 }

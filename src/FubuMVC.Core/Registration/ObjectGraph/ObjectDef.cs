@@ -105,6 +105,11 @@ namespace FubuMVC.Core.Registration.ObjectGraph
             get { return _dependencies; }
         }
 
+        public bool IsSingleton
+        {
+            get; set;
+        }
+
         /// <summary>
         /// Creates a new ObjectDef for type T
         /// </summary>
