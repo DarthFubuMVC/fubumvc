@@ -50,12 +50,13 @@ namespace FubuMVC.Diagnostics
     {
         public DiagnosticsMenu()
         {
-            // TODO -- Don't like forcing you to use the StringToken
             ForMenu(DiagnosticKeys.Main);
             Add += MenuNode.ForInput<DashboardRequestModel>(DiagnosticKeys.Dashboard);
             Add += MenuNode.ForInput<HtmlConventionsRequestModel>(DiagnosticKeys.HtmlConventions);
             Add += MenuNode.ForInput<PackageDiagnosticsRequestModel>(DiagnosticKeys.ApplicationStartup);
-            Add += MenuNode.ForInput<RequestExplorerRequestModel>(DiagnosticKeys.Requests);
+            
+            // TODO -- add it back in!
+            //Add += MenuNode.ForInput<RequestExplorerRequestModel>(DiagnosticKeys.Requests);
             Add += MenuNode.ForInput<DefaultRouteRequestModel>(DiagnosticKeys.Routes);
         }
     }

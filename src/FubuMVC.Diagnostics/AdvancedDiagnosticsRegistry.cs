@@ -99,6 +99,8 @@ namespace FubuMVC.Diagnostics
                 x.SetServiceIfNone<IChainVisualizerBuilder,
                     ChainVisualizerBuilder>();
 
+                x.SetServiceIfNone<IHtmlConventionsPreviewContextFactory, HtmlConventionsPreviewContextFactory>();
+
                 x.ReplaceService<IDebugCallHandler, DiagnosticsDebugCallHandler>();
 
                 x.Scan(scan =>

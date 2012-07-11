@@ -86,7 +86,7 @@
     <Compile Include="Runtime\BehaviorTracerTester.cs" />
     <Compile Include="Runtime\BehaviorTracer_and_DiagnosticBehavior_construction_testing.cs" />
     <Compile Include="Runtime\DebugDetectorTester.cs" />
-    <Compile Include="Runtime\DefaultDiagnosticsConventionsTester.cs" />
+    <Compile Include="Runtime\Diagnostic_tracing_attachment_filtering_Tester.cs" />
     <Compile Include="Runtime\DiagnosticNodeTester.cs" />
     <Compile Include="Runtime\DiagnosticsPackageTester.cs" />
     <Compile Include="Runtime\DiagnosticsRegistryTester.cs" />
@@ -125,7 +125,6 @@
     <Compile Include="SlickGrid\GridRunnerTester.cs" />
     <Compile Include="SlickGrid\StringBuilderJsonExtensionsTester.cs" />
     <Compile Include="TODOS.cs" />
-    <Compile Include="when_applying_diagnostics_from_FubuApplication.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">

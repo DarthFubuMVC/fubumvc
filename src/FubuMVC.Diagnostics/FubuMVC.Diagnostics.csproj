@@ -319,6 +319,7 @@
     <Compile Include="Core\Infrastructure\IHttpConstraintResolver.cs" />
     <Compile Include="Core\Infrastructure\JsonService.cs" />
     <Compile Include="DiagnosticsMenu.cs" />
+    <Compile Include="NoDiagnosticsAttribute.cs" />
     <Compile Include="Runtime\ApplyTracing.cs" />
     <Compile Include="Runtime\Assets\BasicAssetDiagnostics.cs" />
     <Compile Include="Runtime\BehaviorFinish.cs" />
@@ -378,8 +379,6 @@
     <Compile Include="Features\Packaging\PackageDiagnosticsModel.cs" />
     <Compile Include="Features\Packaging\PackageDiagnosticsRequestModel.cs" />
     <Compile Include="Features\Requests\RecordedRequestRequestModel.cs" />
-    <Compile Include="Features\Requests\RequestExplorerModel.cs" />
-    <Compile Include="Features\Requests\RequestExplorerRequestModel.cs" />
     <Compile Include="Features\Routes\Autocomplete\PostHandler.cs" />
     <Compile Include="Features\Routes\Filter\PostHandler.cs" />
     <Compile Include="Features\Routes\GetHandler.cs" />

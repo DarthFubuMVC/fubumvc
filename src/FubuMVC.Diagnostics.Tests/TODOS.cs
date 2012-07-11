@@ -36,13 +36,13 @@ namespace FubuMVC.Diagnostics.Tests
         }
 
         [Test]
-        public void diagnostic_behavior_needs_to_do_the_request_filtering_to_ignore_stuff()
+        public void in_diagnostic_mode_use_a_different_IHttpWriter_that_could_be_used_to_nullo_the_writing()
         {
-            Assert.Fail("Do.");
+            Assert.Fail("NWO");
         }
 
         [Test]
-        public void in_diagnostic_mode_use_a_different_IHttpWriter_that_could_be_used_to_nullo_the_writing()
+        public void reevaluate_DiagnosticsDebugCallHandler()
         {
             Assert.Fail("NWO");
         }

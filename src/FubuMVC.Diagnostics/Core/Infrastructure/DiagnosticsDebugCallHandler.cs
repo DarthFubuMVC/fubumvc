@@ -19,6 +19,7 @@ namespace FubuMVC.Diagnostics.Core.Infrastructure
 
         public void Handle()
         {
+            // TODO -- Reevaluate this.  Hokey.  Maybe just do a FubuContinuation(?)
             var requestModel = new RecordedRequestRequestModel {Id = _report.Id};
             _request.Set(requestModel);
             _partialFactory
