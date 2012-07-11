@@ -36,23 +36,24 @@ namespace FubuMVC.Diagnostics.Runtime.Tracing
 
         private void invoke(Action action)
         {
-            var report = _report.StartBehavior(Inner);
-            report.BehaviorId = _behaviorId;
+            throw new NotImplementedException();
+            //var report = _report.StartBehavior(Inner);
+            //report.BehaviorId = _behaviorId;
 
-            try
-            {
-                action();
-            }
-            catch (Exception ex)
-            {
-                _report.MarkException(ex);
-                if (!_debugDetector.IsOutputWritingLatched())
-                {
-                    throw;
-                }
-            }
+            //try
+            //{
+            //    action();
+            //}
+            //catch (Exception ex)
+            //{
+            //    _report.MarkException(ex);
+            //    if (!_debugDetector.IsOutputWritingLatched())
+            //    {
+            //        throw;
+            //    }
+            //}
 
-            _report.EndBehavior();
+            //_report.EndBehavior();
         }
     }
 }

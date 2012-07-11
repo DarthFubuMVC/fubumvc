@@ -2,15 +2,10 @@ using System;
 
 namespace FubuMVC.Diagnostics.Runtime
 {
-    public class SetValueReport : IBehaviorDetails
+    public class SetValueReport
     {
         public Type Type { get; set; }
         public object Value { get; set; }
-
-        public void AcceptVisitor(IBehaviorDetailsVisitor visitor)
-        {
-            visitor.SetValue(this);
-        }
 
         public bool Equals(SetValueReport other)
         {

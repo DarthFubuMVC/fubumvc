@@ -29,7 +29,8 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
         [Test]
         public void should_add_debug_report_details()
         {
-            MockFor<IDebugReport>().AssertWasCalled(a => a.AddDetails(null), x => x.IgnoreArguments());
+            Assert.Fail("Move into regular AuthorizationPolicyExecutor");
+            //MockFor<IDebugReport>().AssertWasCalled(a => a.AddDetails(null), x => x.IgnoreArguments());
         }
 
         [Test]
@@ -64,7 +65,8 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
         [Test]
         public void should_add_debug_report_details()
         {
-            MockFor<IDebugReport>().AssertWasNotCalled(a => a.AddDetails(null), x => x.IgnoreArguments());
+            Assert.Fail("NWO");
+            //MockFor<IDebugReport>().AssertWasNotCalled(a => a.AddDetails(null), x => x.IgnoreArguments());
         }
 
         [Test]

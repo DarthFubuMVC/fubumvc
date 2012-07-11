@@ -86,7 +86,6 @@
     <Compile Include="Runtime\BehaviorTracerTester.cs" />
     <Compile Include="Runtime\BehaviorTracer_and_DiagnosticBehavior_construction_testing.cs" />
     <Compile Include="Runtime\DebugDetectorTester.cs" />
-    <Compile Include="Runtime\DebugReportTester.cs" />
     <Compile Include="Runtime\DefaultDiagnosticsConventionsTester.cs" />
     <Compile Include="Runtime\DiagnosticNodeTester.cs" />
     <Compile Include="Runtime\DiagnosticsPackageTester.cs" />
@@ -94,8 +93,6 @@
     <Compile Include="Runtime\DiagnosticsSettingsTester.cs" />
     <Compile Include="Runtime\RecordingFubuRequestTester.cs" />
     <Compile Include="Runtime\RecordingOutputWriterTester.cs" />
-    <Compile Include="Runtime\RequestHistoryServiceTester.cs" />
-    <Compile Include="Runtime\RequestObserverTester.cs" />
     <Compile Include="Runtime\TimedReportTester.cs" />
     <Compile Include="Runtime\Tracing\DiagnosticBehaviorTester.cs" />
     <Compile Include="Features\Chains\when_building_a_chain_visualizer.cs" />
@@ -110,8 +107,6 @@
     <Compile Include="Features\Html\PreviewModelTypeResolverTester.cs" />
     <Compile Include="Features\Html\SampleContextModel.cs" />
     <Compile Include="Features\Html\when_previewing_html_conventions.cs" />
-    <Compile Include="Features\Requests\RequestGatheringTester.cs" />
-    <Compile Include="Features\Requests\when_filtering_requests.cs" />
     <Compile Include="Features\Routes\GetHandlerTester.cs" />
     <Compile Include="Features\Routes\get_Column_Value_handler_Tester.cs" />
     <Compile Include="Features\Routes\RoutesModelBuilderTester.cs" />
@@ -131,6 +126,7 @@
     <Compile Include="SlickGrid\JsonValueWriterTester.cs" />
     <Compile Include="SlickGrid\GridRunnerTester.cs" />
     <Compile Include="SlickGrid\StringBuilderJsonExtensionsTester.cs" />
+    <Compile Include="TODOS.cs" />
     <Compile Include="when_applying_diagnostics_from_FubuApplication.cs" />
   </ItemGroup>
   <ItemGroup>

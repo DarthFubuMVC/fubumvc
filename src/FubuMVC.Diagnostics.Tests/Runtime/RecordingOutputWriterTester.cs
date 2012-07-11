@@ -50,11 +50,11 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
             ClassUnderTest.RedirectToUrl(url);
 
             
-
-        	MockFor<IDebugReport>().AddDetails(new RedirectReport
-        	                                   	{
-        	                                   		Url = url
-        	                                   	});
+            Assert.Fail("NWO");
+            //MockFor<IDebugReport>().AddDetails(new RedirectReport
+            //                                    {
+            //                                        Url = url
+            //                                    });
 			MockFor<IHttpWriter>()
 				.AssertWasCalled(w => w.Redirect(url));
         }
@@ -63,12 +63,14 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
         public void write_content()
         {
             ClassUnderTest.Write(MimeType.Json.ToString(), "some output");
-        	MockFor<IDebugReport>()
-        		.AssertWasCalled(x => x.AddDetails(new OutputReport
-        		                                   	{
-        		                                   		Contents = "some output",
-        		                                   		ContentType = MimeType.Json.ToString()
-        		                                   	}));
+
+            Assert.Fail("NWO");
+            //MockFor<IDebugReport>()
+            //    .AssertWasCalled(x => x.AddDetails(new OutputReport
+            //                                        {
+            //                                            Contents = "some output",
+            //                                            ContentType = MimeType.Json.ToString()
+            //                                        }));
 			MockFor<IHttpWriter>()
 				.AssertWasCalled(w => w.Write("some output"));
 
@@ -80,13 +82,16 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
         public void write_file()
         {
             ClassUnderTest.WriteFile(MimeType.Html.ToString(), "local file path", "display name");
-        	MockFor<IDebugReport>()
-        		.AssertWasCalled(x => x.AddDetails(new FileOutputReport
-        		                                   	{
-        		                                   		ContentType = MimeType.Html.ToString(),
-        		                                   		DisplayName = "display name",
-        		                                   		LocalFilePath = "local file path"
-        		                                   	}));
+
+            Assert.Fail("NWO");
+
+            //MockFor<IDebugReport>()
+            //    .AssertWasCalled(x => x.AddDetails(new FileOutputReport
+            //                                        {
+            //                                            ContentType = MimeType.Html.ToString(),
+            //                                            DisplayName = "display name",
+            //                                            LocalFilePath = "local file path"
+            //                                        }));
         	MockFor<IHttpWriter>()
         		.AssertWasCalled(w => w.WriteFile("local file path"));
         }
@@ -95,8 +100,10 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
 		public void write_response_code()
 		{
 			ClassUnderTest.WriteResponseCode(HttpStatusCode.Unauthorized);
-			MockFor<IDebugReport>()
-				.AssertWasCalled(x => x.AddDetails(new HttpStatusReport { Status = HttpStatusCode.Unauthorized }));
+
+            Assert.Fail("NWO");
+            //MockFor<IDebugReport>()
+            //    .AssertWasCalled(x => x.AddDetails(new HttpStatusReport { Status = HttpStatusCode.Unauthorized }));
 			
             MockFor<IHttpWriter>()
 				.AssertWasCalled(w => w.WriteResponseCode(HttpStatusCode.Unauthorized));
@@ -107,8 +114,10 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
         {
             const string description = "why u no make good request?";
             ClassUnderTest.WriteResponseCode(HttpStatusCode.BadRequest, description);
-            MockFor<IDebugReport>()
-                .AssertWasCalled(x => x.AddDetails(new HttpStatusReport { Status = HttpStatusCode.BadRequest, Description = description }));
+
+            Assert.Fail("NWO");
+            //MockFor<IDebugReport>()
+            //    .AssertWasCalled(x => x.AddDetails(new HttpStatusReport { Status = HttpStatusCode.BadRequest, Description = description }));
 
             MockFor<IHttpWriter>()
                 .AssertWasCalled(w => w.WriteResponseCode(HttpStatusCode.BadRequest, description));

@@ -20,8 +20,6 @@ using FubuMVC.Diagnostics.Features.Html.Preview.Decorators;
 using FubuMVC.Diagnostics.Features.Requests;
 using FubuMVC.Diagnostics.Models;
 using FubuMVC.Diagnostics.Models.Grids;
-using FubuMVC.Diagnostics.New;
-using FubuMVC.Diagnostics.New.Routes;
 using FubuMVC.Diagnostics.Notifications;
 using FubuMVC.Diagnostics.Partials;
 using FubuMVC.Diagnostics.Runtime;
@@ -44,8 +42,6 @@ namespace FubuMVC.Diagnostics
             ApplyHandlerConventions(markers => new DiagnosticsHandlerUrlPolicy(markers), typeof (DiagnosticsFeatures));
 
             Actions
-                .IncludeTypesNamed(x => x.EndsWith("Endpoint"))
-                .IncludeType<RouteExplorerEndpoint>()
                 .IncludeType<BasicAssetDiagnostics>();
 
 
@@ -54,7 +50,6 @@ namespace FubuMVC.Diagnostics
 
             Views
                 .TryToAttachWithDefaultConventions()
-                .RegisterActionLessViews(token => token.ViewModel.IsDiagnosticsReport())
                 .RegisterActionLessViews(token => typeof (IPartialModel).IsAssignableFrom(token.ViewModel))
                 .RegisterActionLessViews(token => token.ViewModel == typeof (ChromeContent));
 
@@ -75,12 +70,10 @@ namespace FubuMVC.Diagnostics
         {
             Services(x =>
             {
-
                 x.SetServiceIfNone<IBindingLogger, RecordingBindingLogger>();
                 x.SetServiceIfNone<IDebugDetector, DebugDetector>();
                 x.SetServiceIfNone<IDebugCallHandler, DebugCallHandler>();
                 x.ReplaceService<IDebugReport, DebugReport>();
-                x.ReplaceService<IRequestObserver, RequestObserver>();
                 x.ReplaceService<IFubuRequest, RecordingFubuRequest>();
                 x.ReplaceService<IDebugDetector, DebugDetector>();
                 x.ReplaceService<IAuthorizationPolicyExecutor, RecordingAuthorizationPolicyExecutor>();
@@ -88,24 +81,17 @@ namespace FubuMVC.Diagnostics
                 x.ReplaceService<IBindingHistory, BindingHistory>();
                 x.SetServiceIfNone<IRequestHistoryCache, RequestHistoryCache>();
 
-                // TODO -- UT this
-                x.AddService<IRequestHistoryCacheFilter, DiagnosticRequestHistoryCacheFilter>();
-
                 // TODO -- need to test this
                 x.ReplaceService<IFieldAccessRightsExecutor, RecordingFieldAccessRightsExecutor>();
 
                 // Typically you'd do this in your container but we're keeping this IoC-agnostic
                 x.SetServiceIfNone<IHttpConstraintResolver, HttpConstraintResolver>();
-                x.SetServiceIfNone<IRequestCacheModelBuilder, RequestCacheModelBuilder>();
                 x.SetServiceIfNone<IAuthorizationDescriptor, AuthorizationDescriptor>();
                 x.SetServiceIfNone(typeof (IGridService<,>), typeof (GridService<,>));
                 x.SetServiceIfNone(typeof (IGridRowBuilder<,>), typeof (GridRowBuilder<,>));
                 x.SetServiceIfNone(typeof (IGridColumnBuilder<>), typeof (GridColumnBuilder<>));
                 x.SetServiceIfNone
                     <IGridRowProvider<BehaviorGraph, BehaviorChain>, BehaviorGraphRowProvider>();
-                x.SetServiceIfNone
-                    <IGridRowProvider<RequestCacheModel, RecordedRequestModel>, RequestCacheRowProvider>();
-                x.SetServiceIfNone<IHtmlConventionsPreviewContextFactory, HtmlConventionsPreviewContextFactory>();
                 x.SetServiceIfNone<IPreviewModelActivator, PreviewModelActivator>();
                 x.SetServiceIfNone<IPreviewModelTypeResolver, PreviewModelTypeResolver>();
                 x.SetServiceIfNone<IPropertySourceGenerator, PropertySourceGenerator>();

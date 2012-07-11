@@ -35,6 +35,58 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void navigation_service_is_registered()
+        {
+            registeredTypeIs<INavigationService, NavigationService>();
+        }
+
+        [Test]
+        public void menu_state_service_is_registered()
+        {
+            registeredTypeIs<IMenuStateService, MenuStateService>();
+        }
+
+        [Test]
+        public void navigation_activator_is_registered()
+        {
+            BehaviorGraph.BuildEmptyGraph().Services.ServicesFor<IActivator>()
+                .Any(x => x.Type == typeof(NavigationActivator)).ShouldBeTrue();
+        }
+
+        [Test]
+        public void the_conditional_service_is_registered()
+        {
+            registeredTypeIs<IConditionalService, ConditionalService>();
+        }
+
+        [Test]
+        public void a_value_of_stringifier_is_registered()
+        {
+            BehaviorGraph.BuildEmptyGraph().Services.DefaultServiceFor(typeof (Stringifier)).Value.ShouldBeOfType
+                <Stringifier>();
+        }
+
+        [Test]
+        public void registers_the_display_conversion_registry_activator()
+        {
+            BehaviorGraph.BuildEmptyGraph().Services.ServicesFor(typeof (IActivator))
+                .Any(x => x.Type == typeof (DisplayConversionRegistryActivator));
+        }
+
+        [Test]
+        public void standin_current_http_request_is_used_as_the_default()
+        {
+            registeredTypeIs<ICurrentHttpRequest, StandInCurrentHttpRequest>();
+        }
+
+
+        [Test]
+        public void standin_ClientConnectivity_is_used_as_the_default()
+        {
+            registeredTypeIs<IClientConnectivity, StandInClientConnectivity>();
+        }
+
+        [Test]
         public void BindingContext_is_registered()
         {
             registeredTypeIs<IBindingContext, BindingContext>();

@@ -1,15 +1,8 @@
-using System;
-
 namespace FubuMVC.Diagnostics.Runtime
 {
-    public class RedirectReport : IBehaviorDetails
+    public class RedirectReport
     {
         public string Url;
-
-        public void AcceptVisitor(IBehaviorDetailsVisitor visitor)
-        {
-            visitor.Redirect(this);
-        }
 
         public bool Equals(RedirectReport other)
         {
@@ -34,44 +27,6 @@ namespace FubuMVC.Diagnostics.Runtime
         public override string ToString()
         {
             return string.Format("Url: {0}", Url);
-        }
-    }
-
-    public abstract class BehaviorIndicator : IBehaviorDetails
-    {
-        public Type BehaviorType { get; set; }
-
-        public abstract void AcceptVisitor(IBehaviorDetailsVisitor visitor);
-
-        public bool Equals(BehaviorStart other)
-        {
-            return true;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-
-            return typeof(BehaviorIndicator).IsAssignableFrom(obj.GetType());
-        }
-
-        public override int GetHashCode()
-        {
-            return 0;
-        }
-    }
-
-    public class BehaviorStart : BehaviorIndicator
-    {
-        public override void AcceptVisitor(IBehaviorDetailsVisitor visitor)
-        {
-        }
-    }
-
-    public class BehaviorFinish : BehaviorIndicator
-    {
-        public override void AcceptVisitor(IBehaviorDetailsVisitor visitor)
-        {
         }
     }
 }

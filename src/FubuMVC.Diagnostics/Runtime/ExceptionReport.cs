@@ -1,12 +1,8 @@
 namespace FubuMVC.Diagnostics.Runtime
 {
-    public class ExceptionReport : IBehaviorDetails
+    public class ExceptionReport
     {
         public string Text { get; set; }
-
-        public void AcceptVisitor(IBehaviorDetailsVisitor visitor)
-        {
-            visitor.Exception(this);
-        }
+        public object CorrelationId { get; set; }
     }
 }

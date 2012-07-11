@@ -2,15 +2,10 @@ using System.Net;
 
 namespace FubuMVC.Diagnostics.Runtime
 {
-	public class HttpStatusReport : IBehaviorDetails
+	public class HttpStatusReport
 	{
 		public HttpStatusCode Status { get; set; }
         public string Description { get; set; }
-
-		public void AcceptVisitor(IBehaviorDetailsVisitor visitor)
-		{
-			visitor.HttpStatus(this);
-		}
 
 		public override bool Equals(object obj)
 		{

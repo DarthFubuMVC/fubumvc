@@ -26,7 +26,6 @@ namespace FubuMVC.Diagnostics.Runtime.Tracing
         public void Invoke()
         {
             _initialize();
-            _report.RecordFormData();
 
             Inner.Invoke();
 

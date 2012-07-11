@@ -36,30 +36,33 @@ namespace FubuMVC.Diagnostics.Runtime.Tracing
 
         public override void WriteFile(string contentType, string localFilePath, string displayName)
         {
-            _report.AddDetails(new FileOutputReport{
-                ContentType = contentType,
-                DisplayName = displayName,
-                LocalFilePath = localFilePath
-            });
+            throw new NotImplementedException();
+            //_report.AddDetails(new FileOutputReport{
+            //    ContentType = contentType,
+            //    DisplayName = displayName,
+            //    LocalFilePath = localFilePath
+            //});
 
             base.WriteFile(contentType, localFilePath, displayName);
         }
 
         public override void Write(string contentType, string renderedOutput)
         {
-            _report.AddDetails(new OutputReport{
-                Contents = renderedOutput,
-                ContentType = contentType
-            });
+            throw new NotImplementedException();
+            //_report.AddDetails(new OutputReport{
+            //    Contents = renderedOutput,
+            //    ContentType = contentType
+            //});
 
             base.Write(contentType, renderedOutput);
         }
 
         public override void RedirectToUrl(string url)
         {
-            _report.AddDetails(new RedirectReport{
-                Url = url
-            });
+            throw new NotImplementedException();
+            //_report.AddDetails(new RedirectReport{
+            //    Url = url
+            //});
 
             base.RedirectToUrl(url);
         }
@@ -67,10 +70,11 @@ namespace FubuMVC.Diagnostics.Runtime.Tracing
 
         public override void WriteResponseCode(HttpStatusCode status, string description = null)
         {
-            _report.AddDetails(new HttpStatusReport{
-                Status = status,
-                Description = description
-            });
+            throw new NotImplementedException();
+            //_report.AddDetails(new HttpStatusReport{
+            //    Status = status,
+            //    Description = description
+            //});
             base.WriteResponseCode(status, description);
         }
 

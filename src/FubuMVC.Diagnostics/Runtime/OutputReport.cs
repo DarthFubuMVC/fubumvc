@@ -1,14 +1,9 @@
 namespace FubuMVC.Diagnostics.Runtime
 {
-    public class OutputReport : IBehaviorDetails
+    public class OutputReport
     {
         public string ContentType;
         public string Contents;
-
-        public void AcceptVisitor(IBehaviorDetailsVisitor visitor)
-        {
-            visitor.WriteOutput(this);
-        }
 
         public bool Equals(OutputReport other)
         {

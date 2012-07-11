@@ -1,21 +1,22 @@
 using System.Web;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Runtime.Logging;
 using FubuMVC.WebForms;
 
 namespace FubuMVC.HelloWorld.Controllers.Home
 {
     public class HomeController
     {
-        private readonly IRequestObserver _log;
+        private readonly ILogger _log;
 
-        public HomeController(IRequestObserver log)
+        public HomeController(ILogger log)
         {
             _log = log;
         }
 
         public HomeViewModel Home(HomeInputModel model)
         {
-            _log.RecordLog("Loading home...");
+            _log.Debug("Loading home...");
             return new HomeViewModel{
                 Text = "Hello, world.",
                 CurrentUrl = model.Url

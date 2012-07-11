@@ -1,14 +1,10 @@
 namespace FubuMVC.Diagnostics.Runtime
 {
-    public class FileOutputReport : IBehaviorDetails
+    public class FileOutputReport
     {
         public string ContentType;
         public string LocalFilePath;
         public string DisplayName;
-        public void AcceptVisitor(IBehaviorDetailsVisitor visitor)
-        {
-            visitor.FileOutput(this);
-        }
 
         public bool Equals(FileOutputReport other)
         {

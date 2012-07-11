@@ -17,7 +17,9 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
         {
             inner = MockFor<IActionBehavior>();
             ClassUnderTest.Inner = inner;
-            MockFor<IDebugReport>().Stub(x => x.StartBehavior(inner)).Return(new BehaviorReport(inner));
+            
+            Assert.Fail("NWO");
+            //MockFor<IDebugReport>().Stub(x => x.StartBehavior(inner)).Return(new BehaviorReport(inner));
 
             ClassUnderTest.Invoke();
         }
@@ -31,13 +33,15 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
         [Test]
         public void should_mark_the_inner_behavior_as_complete_with_the_debug_report()
         {
-            MockFor<IDebugReport>().AssertWasCalled(x => x.EndBehavior());
+            Assert.Fail("NWO");
+            //MockFor<IDebugReport>().AssertWasCalled(x => x.EndBehavior());
         }
 
         [Test]
         public void should_register_a_new_behavior_running()
         {
-            MockFor<IDebugReport>().AssertWasCalled(x => x.StartBehavior(inner));
+            Assert.Fail("NWO");
+            //MockFor<IDebugReport>().AssertWasCalled(x => x.StartBehavior(inner));
         }
     }
 
@@ -54,7 +58,8 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
             inner = MockFor<IActionBehavior>();
             inner.Expect(x => x.Invoke()).Throw(exception);
             MockFor<IDebugDetector>().Stub(x => x.IsOutputWritingLatched()).Return(true);
-            MockFor<IDebugReport>().Stub(x => x.StartBehavior(inner)).Return(new BehaviorReport(inner));
+            Assert.Fail("NWO");
+            //MockFor<IDebugReport>().Stub(x => x.StartBehavior(inner)).Return(new BehaviorReport(inner));
 
             ClassUnderTest.Inner = inner;
             ClassUnderTest.Invoke();
@@ -69,19 +74,22 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
         [Test]
         public void should_mark_the_debug_report_with_the_exception()
         {
-            MockFor<IDebugReport>().AssertWasCalled(x => x.MarkException(exception));
+            Assert.Fail("NWO");
+            //MockFor<IDebugReport>().AssertWasCalled(x => x.MarkException(exception));
         }
 
         [Test]
         public void should_mark_the_inner_behavior_as_complete_with_the_debug_report()
         {
-            MockFor<IDebugReport>().AssertWasCalled(x => x.EndBehavior());
+            Assert.Fail("NWO");
+            //MockFor<IDebugReport>().AssertWasCalled(x => x.EndBehavior());
         }
 
         [Test]
         public void should_register_a_new_behavior_running()
         {
-            MockFor<IDebugReport>().AssertWasCalled(x => x.StartBehavior(inner));
+            Assert.Fail("NWO");
+            //MockFor<IDebugReport>().AssertWasCalled(x => x.StartBehavior(inner));
         }
     }
 
@@ -98,7 +106,8 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
             inner = MockFor<IActionBehavior>();
             inner.Expect(x => x.Invoke()).Throw(exception);
             MockFor<IDebugDetector>().Stub(x => x.IsOutputWritingLatched()).Return(false);
-            MockFor<IDebugReport>().Stub(x => x.StartBehavior(inner)).Return(new BehaviorReport(inner));
+            Assert.Fail("NWO");
+            //MockFor<IDebugReport>().Stub(x => x.StartBehavior(inner)).Return(new BehaviorReport(inner));
 
             ClassUnderTest.Inner = inner;
         }
@@ -124,7 +133,8 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
             inner = MockFor<IActionBehavior>();
             inner.Expect(x => x.InvokePartial()).Throw(exception);
             MockFor<IDebugDetector>().Stub(x => x.IsOutputWritingLatched()).Return(true);
-            MockFor<IDebugReport>().Stub(x => x.StartBehavior(inner)).Return(new BehaviorReport(inner));
+            Assert.Fail("NWO");
+            //MockFor<IDebugReport>().Stub(x => x.StartBehavior(inner)).Return(new BehaviorReport(inner));
 
             ClassUnderTest.Inner = inner;
             ClassUnderTest.InvokePartial();
@@ -139,19 +149,22 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
         [Test]
         public void should_mark_the_debug_report_with_the_exception()
         {
-            MockFor<IDebugReport>().AssertWasCalled(x => x.MarkException(exception));
+            Assert.Fail("NWO");
+            //MockFor<IDebugReport>().AssertWasCalled(x => x.MarkException(exception));
         }
 
         [Test]
         public void should_mark_the_inner_behavior_as_complete_with_the_debug_report()
         {
-            MockFor<IDebugReport>().AssertWasCalled(x => x.EndBehavior());
+            Assert.Fail("NWO");
+            //MockFor<IDebugReport>().AssertWasCalled(x => x.EndBehavior());
         }
 
         [Test]
         public void should_register_a_new_behavior_running()
         {
-            MockFor<IDebugReport>().AssertWasCalled(x => x.StartBehavior(inner));
+            Assert.Fail("NWO");
+            //MockFor<IDebugReport>().AssertWasCalled(x => x.StartBehavior(inner));
         }
     }
 
@@ -168,7 +181,8 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
             inner = MockFor<IActionBehavior>();
             inner.Expect(x => x.InvokePartial()).Throw(exception);
             MockFor<IDebugDetector>().Stub(x => x.IsOutputWritingLatched()).Return(false);
-            MockFor<IDebugReport>().Stub(x => x.StartBehavior(inner)).Return(new BehaviorReport(inner));
+            Assert.Fail("NWO");
+            //MockFor<IDebugReport>().Stub(x => x.StartBehavior(inner)).Return(new BehaviorReport(inner));
 
             ClassUnderTest.Inner = inner;
         }
@@ -188,7 +202,8 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
         protected override void beforeEach()
         {
             inner = MockFor<IActionBehavior>();
-            MockFor<IDebugReport>().Stub(x => x.StartBehavior(inner)).Return(new BehaviorReport(inner));
+            Assert.Fail("NWO");
+            //MockFor<IDebugReport>().Stub(x => x.StartBehavior(inner)).Return(new BehaviorReport(inner));
 
             ClassUnderTest.Inner = inner;
             ClassUnderTest.InvokePartial();
@@ -203,13 +218,15 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
         [Test]
         public void should_mark_the_inner_behavior_as_complete_with_the_debug_report()
         {
-            MockFor<IDebugReport>().AssertWasCalled(x => x.EndBehavior());
+            Assert.Fail("NWO");
+            //MockFor<IDebugReport>().AssertWasCalled(x => x.EndBehavior());
         }
 
         [Test]
         public void should_register_a_new_behavior_running()
         {
-            MockFor<IDebugReport>().AssertWasCalled(x => x.StartBehavior(inner));
+            Assert.Fail("NWO");
+            //MockFor<IDebugReport>().AssertWasCalled(x => x.StartBehavior(inner));
         }
     }
 }

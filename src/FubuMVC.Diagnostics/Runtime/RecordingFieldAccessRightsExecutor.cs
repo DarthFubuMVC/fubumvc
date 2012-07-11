@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using FubuMVC.Core.UI.Configuration;
@@ -15,10 +16,14 @@ namespace FubuMVC.Diagnostics.Runtime
             _debugReport = debugReport;
         }
 
+        // TODO -- move this into the normal FieldAccessRightsExecutor
         public override AccessRight RightsFor(ElementRequest request, IEnumerable<IFieldAccessRule> securityRules, IEnumerable<IFieldAccessRule> logicRules)
         {
+
+            throw new NotImplementedException("NWO");
+
             var report = new FieldAccessReport(request.Accessor.Name);
-            _debugReport.AddDetails(report);
+            //_debugReport.AddDetails(report);
             var securityRulesList = securityRules.ToArray();
             var logicRulesList = logicRules.ToArray();
             securityRulesList.Each(rule => report.AddVote("Authorization", rule.ToString(), rule.RightsFor(request).Name));
@@ -38,9 +43,9 @@ namespace FubuMVC.Diagnostics.Runtime
             return decision;
         }
     }
-    public class FieldAccessReport : IBehaviorDetails
+    public class FieldAccessReport
     {
-        private DataTable _data;
+        private readonly DataTable _data;
 
         public FieldAccessReport(string fieldName)
         {
@@ -53,11 +58,6 @@ namespace FubuMVC.Diagnostics.Runtime
         public void AddVote(string category, string policyDescription, string vote)
         {
             _data.Rows.Add(category, policyDescription, vote);
-        }
-
-        public void AcceptVisitor(IBehaviorDetailsVisitor visitor)
-        {
-            visitor.CustomTable(_data);
         }
     }
 

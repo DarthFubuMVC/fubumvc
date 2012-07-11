@@ -16,11 +16,12 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
             var target = new BinderTarget();
             ClassUnderTest.SetObject(target);
 
-            MockFor<IDebugReport>().AssertWasCalled(x => x.AddDetails(new SetValueReport
-            {
-                Type = typeof (BinderTarget),
-                Value = target
-            }));
+            Assert.Fail("NWO");
+            //MockFor<IDebugReport>().AssertWasCalled(x => x.AddDetails(new SetValueReport
+            //{
+            //    Type = typeof (BinderTarget),
+            //    Value = target
+            //}));
 
             ClassUnderTest.Get<BinderTarget>().ShouldBeTheSameAs(target);
         }
@@ -31,11 +32,12 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
             var target = new BinderTarget();
             ClassUnderTest.Set(target);
 
-            MockFor<IDebugReport>().AssertWasCalled(x => x.AddDetails(new SetValueReport
-            {
-                Type = typeof (BinderTarget),
-                Value = target
-            }));
+            Assert.Fail("NWO");
+            //MockFor<IDebugReport>().AssertWasCalled(x => x.AddDetails(new SetValueReport
+            //{
+            //    Type = typeof (BinderTarget),
+            //    Value = target
+            //}));
 
             ClassUnderTest.Get<BinderTarget>().ShouldBeTheSameAs(target);
         }

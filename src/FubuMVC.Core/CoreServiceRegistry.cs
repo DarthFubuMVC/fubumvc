@@ -27,7 +27,6 @@ namespace FubuMVC.Core
             SetServiceIfNone(new Stringifier());
             AddService(new TypeDescriptorCache());
 
-            SetServiceIfNone<IRequestObserver, NulloRequestObserver>();
             SetServiceIfNone<IOutputWriter, OutputWriter>();
 
             SetServiceIfNone<IUrlRegistry, UrlRegistry>();

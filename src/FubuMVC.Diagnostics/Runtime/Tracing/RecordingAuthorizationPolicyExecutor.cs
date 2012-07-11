@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
@@ -5,6 +6,7 @@ using System.Linq;
 
 namespace FubuMVC.Diagnostics.Runtime.Tracing
 {
+    // TODO -- just do the logging in AuthorizationPolicyExecutor
     public class RecordingAuthorizationPolicyExecutor : AuthorizationPolicyExecutor
     {
         private readonly IDebugReport _report;
@@ -25,14 +27,17 @@ namespace FubuMVC.Diagnostics.Runtime.Tracing
             if (authorizationReport.Details.Any())
             {
                 authorizationReport.Decision = decision.Name;
-                _report.AddDetails(authorizationReport);
+                
+                throw new NotImplementedException();
+                
+                //_report.AddDetails(authorizationReport);
             }
 
             return decision;
         }
     }
 
-    public class AuthorizationReport : IBehaviorDetails
+    public class AuthorizationReport
     {
         private readonly List<AuthorizationReportDetail> _details = new List<AuthorizationReportDetail>();
 
@@ -44,11 +49,6 @@ namespace FubuMVC.Diagnostics.Runtime.Tracing
         public string Decision { get; set; }
 
         public IEnumerable<AuthorizationReportDetail> Details { get { return _details; } }
-
-        public void AcceptVisitor(IBehaviorDetailsVisitor visitor)
-        {
-            visitor.Authorization(this);
-        }
     }
 
     public class AuthorizationReportDetail

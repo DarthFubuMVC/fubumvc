@@ -1,9 +1,11 @@
 using System;
+using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Diagnostics.Runtime.Tracing
 {
+    [MarkedForTermination]
     public class RecordingFubuRequest : FubuRequest
     {
         private readonly IDebugReport _report;
@@ -16,7 +18,7 @@ namespace FubuMVC.Diagnostics.Runtime.Tracing
 
         public override void Set<T>(T target)
         {
-            _report.AddDetails(new SetValueReport
+            _report.AddLog(new SetValueReport
             {
                 Type = typeof (T),
                 Value = target
@@ -29,7 +31,7 @@ namespace FubuMVC.Diagnostics.Runtime.Tracing
         {
             if (input == null) throw new ArgumentNullException("input");
 
-            _report.AddDetails(new SetValueReport
+            _report.AddLog(new SetValueReport
             {
                 Type = input.GetType(),
                 Value = input
