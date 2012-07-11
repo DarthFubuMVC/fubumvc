@@ -74,7 +74,6 @@ namespace FubuMVC.Diagnostics
                 x.SetServiceIfNone<IDebugDetector, DebugDetector>();
                 x.SetServiceIfNone<IDebugCallHandler, DebugCallHandler>();
                 x.ReplaceService<IDebugReport, DebugReport>();
-                x.ReplaceService<IFubuRequest, RecordingFubuRequest>();
                 x.ReplaceService<IDebugDetector, DebugDetector>();
                 x.ReplaceService<IAuthorizationPolicyExecutor, RecordingAuthorizationPolicyExecutor>();
                 x.ReplaceService<IOutputWriter, RecordingOutputWriter>();

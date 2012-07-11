@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Binding;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Runtime.Logging;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -136,9 +137,12 @@ namespace FubuMVC.Tests.Runtime
     {
         private BinderTarget registered;
         private FubuRequest request;
+        private RecordingLogger logs;
 
         protected override void beforeEach()
         {
+            logs = Services.RecordLogging();
+
             registered = new BinderTarget();
             request = ClassUnderTest;
         }
@@ -157,6 +161,15 @@ namespace FubuMVC.Tests.Runtime
         }
 
         [Test]
+        public void setting_the_object_records_a_SetValue_log()
+        {
+            request.SetObject(registered);
+
+            logs.DebugMessages.Single().ShouldEqual(new SetValueReport(registered));
+
+        }
+
+        [Test]
         public void the_object_registered_is_always_returned_from_get()
         {
             request.Set(registered);
@@ -166,6 +179,14 @@ namespace FubuMVC.Tests.Runtime
             request.Get<BinderTarget>().ShouldBeTheSameAs(registered);
 
             request.ProblemsFor<BinderTarget>().Count().ShouldEqual(0);
+        }
+
+        [Test]
+        public void trace_the_set_object_from_generic_set()
+        {
+            request.Set<BinderTargetBase>(registered);
+
+            logs.DebugMessages.Single().ShouldEqual(SetValueReport.For<BinderTargetBase>(registered));
         }
     }
 

@@ -35,11 +35,6 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
             graph.Services.DefaultServiceFor<IDebugReport>().Type.ShouldEqual(typeof (DebugReport));
         }
 
-        [Test]
-        public void fubu_request_is_overriden()
-        {
-            graph.Services.DefaultServiceFor<IFubuRequest>().Type.ShouldEqual(typeof (RecordingFubuRequest));
-        }
 
     }
 }

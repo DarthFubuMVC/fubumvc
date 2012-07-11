@@ -340,14 +340,12 @@
     <Compile Include="Runtime\OutputReport.cs" />
     <Compile Include="Runtime\RecordingFieldAccessRightsExecutor.cs" />
     <Compile Include="Runtime\RedirectReport.cs" />
-    <Compile Include="Runtime\SetValueReport.cs" />
     <Compile Include="Runtime\TimedReport.cs" />
     <Compile Include="Runtime\Tracing\BehaviorCorrelation.cs" />
     <Compile Include="Runtime\Tracing\BehaviorTracer.cs" />
     <Compile Include="Runtime\Tracing\DiagnosticBehavior.cs" />
     <Compile Include="Runtime\Tracing\DiagnosticUrlPolicy.cs" />
     <Compile Include="Runtime\Tracing\RecordingAuthorizationPolicyExecutor.cs" />
-    <Compile Include="Runtime\Tracing\RecordingFubuRequest.cs" />
     <Compile Include="Runtime\Tracing\RecordingOutputWriter.cs" />
     <Compile Include="Features\Chains\BehaviorModel.cs" />
     <Compile Include="Features\Chains\ChainModel.cs" />

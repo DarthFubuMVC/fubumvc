@@ -6,6 +6,12 @@ namespace FubuMVC.Diagnostics.Tests
     public class TODOS
     {
         [Test]
+        public void have_Logger_put_the_date_time_stamp_on_LogRecords()
+        {
+            Assert.Fail("NWO");
+        }
+
+        [Test]
         public void move_RecordingFieldAccessRightsExecutor_into_normal_FieldAccessRightsExecutor()
         {
             Assert.Fail("Do.");
@@ -25,12 +31,6 @@ namespace FubuMVC.Diagnostics.Tests
 
         [Test]
         public void just_flat_out_redo_the_FubuRequest_ObjectResolver_tracing()
-        {
-            Assert.Fail("Do.");
-        }
-
-        [Test]
-        public void merge_RecordingFubuRequest_into_FubuRequest()
         {
             Assert.Fail("Do.");
         }
