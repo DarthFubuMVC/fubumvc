@@ -34,25 +34,25 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles.0.9.1.316\lib\Bottles.dll</HintPath>
+      <HintPath>..\packages\Bottles.0.9.1.299\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
-      <HintPath>..\packages\FubuCore.0.9.9.166\lib\FubuCore.dll</HintPath>
+      <HintPath>..\packages\FubuCore.0.9.9.158\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuLocalization">
-      <HintPath>..\packages\FubuLocalization.0.9.5.61\lib\FubuLocalization.dll</HintPath>
+      <HintPath>..\packages\FubuLocalization.0.9.5.53\lib\FubuLocalization.dll</HintPath>
     </Reference>
     <Reference Include="FubuTestingSupport">
-      <HintPath>..\packages\FubuTestingSupport.0.9.9.166\lib\FubuTestingSupport.dll</HintPath>
+      <HintPath>..\packages\FubuTestingSupport.0.9.9.158\lib\FubuTestingSupport.dll</HintPath>
     </Reference>
     <Reference Include="HtmlTags">
-      <HintPath>..\packages\HtmlTags.1.1.0.86\lib\4.0\HtmlTags.dll</HintPath>
+      <HintPath>..\packages\HtmlTags.1.1.0.78\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Ionic.Zip">
       <HintPath>..\packages\DotNetZip.1.9.1.8\lib\net20\Ionic.Zip.dll</HintPath>
     </Reference>
     <Reference Include="Milkman">
-      <HintPath>..\packages\Milkman.0.9.1.316\lib\Milkman.dll</HintPath>
+      <HintPath>..\packages\Milkman.0.9.1.299\lib\Milkman.dll</HintPath>
     </Reference>
     <Reference Include="Milkman.Deployers.Iis">
       <HintPath>..\packages\Milkman.Deployers.IIS.0.9.1.51538\lib\Milkman.Deployers.Iis.dll</HintPath>
@@ -106,14 +106,12 @@
     <Compile Include="Assets\AssetDeclarationCheckerTester.cs" />
     <Compile Include="Assets\AssetDependencyFinderCacheTester.cs" />
     <Compile Include="Assets\AssetExpressionUsageTester.cs" />
-    <Compile Include="Assets\AssetGraphConfigurationActivatorBehaviorTester.cs" />
     <Compile Include="Assets\AssetGraphConfigurationActivatorIntegrationTester.cs" />
     <Compile Include="Assets\AssetGraphScenarioTester.cs" />
     <Compile Include="Assets\AssetGrouperTester.cs" />
     <Compile Include="Assets\AssetNamesKeyTester.cs" />
     <Compile Include="Assets\AssetOrderingAndQueryingAcceptanceTests.cs" />
     <Compile Include="Assets\AssetPipelineBuilderActivatorIntegratedTester.cs" />
-    <Compile Include="Assets\AssetPrecompilerActivatorTester.cs" />
     <Compile Include="Assets\AssetServicesRegistrationTester.cs" />
     <Compile Include="Assets\AssetTagPlanCacheTester.cs" />
     <Compile Include="Assets\AssetTagPlannerTester.cs" />
@@ -156,13 +154,10 @@
     <Compile Include="Assets\Http\AssetWriterTester.cs" />
     <Compile Include="Assets\Http\ContentPipelineTester.cs" />
     <Compile Include="Assets\Http\ContentWriterTester.cs" />
-    <Compile Include="Assets\WarmUpSetsForCombinationPolicyTester.cs" />
     <Compile Include="Behaviors\Chrome\ChromeAttributeTester.cs" />
     <Compile Include="Behaviors\Chrome\ChromeNodeTester.cs" />
     <Compile Include="ConfigurationGraph_DetermineConfigurationType_Tester.cs" />
-    <Compile Include="Http\AspNet\SimpleKeyValueTester.cs" />
-    <Compile Include="Registration\Conventions\JsonMessageInputConventionTester.cs" />
-    <Compile Include="Registration\Conventions\DefaultRouteConventionBasedUrlPolicyTester.cs" />
+    <Compile Include="InteractionContextExtensions.cs" />
     <Compile Include="Registration\default_action_discovery.cs" />
     <Compile Include="Runtime\Dates\DateTimeFormatting_import_integration_testing.cs" />
     <Compile Include="Runtime\Dates\DateTimeToUtcConverterFamilyTester.cs" />
@@ -170,7 +165,8 @@
     <Compile Include="Runtime\Files\ContentFolderTester.cs" />
     <Compile Include="Runtime\Files\FubuApplicationFilesSmokeTester.cs" />
     <Compile Include="Runtime\Files\FubuFileTester.cs" />
-    <Compile Include="Runtime\Logger_should_be_registered.cs" />
+    <Compile Include="Runtime\Logging\LoggerTester.cs" />
+    <Compile Include="Runtime\Logging\Logger_should_be_registered.cs" />
     <Compile Include="Runtime\PartialChainSwitcherTester.cs" />
     <Compile Include="StructureMapIoC\UsesTheIsSingletonPropertyTester.cs" />
     <Compile Include="StubRequestHeaders.cs" />
@@ -196,7 +192,6 @@
     <Compile Include="Behaviors\Conditional\when_condition_is_true.cs" />
     <Compile Include="Behaviors\InterceptExceptionBehaviorTester.cs" />
     <Compile Include="Behaviors\ITargetController.cs" />
-    <Compile Include="Behaviors\RenderJsonpBehaviorTester.cs" />
     <Compile Include="Behaviors\RenderStatusCodeBehaviorTester.cs" />
     <Compile Include="Bugs\DoubleActionRegistrationWhenDiagnosticsIsOnTester.cs" />
     <Compile Include="Caching\OuputCachingNodeTester.cs" />
