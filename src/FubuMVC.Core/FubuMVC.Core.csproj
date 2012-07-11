@@ -98,6 +98,7 @@
     <Compile Include="Behaviors\Chrome\ChromeContent.cs" />
     <Compile Include="Behaviors\Chrome\ChromeNode.cs" />
     <Compile Include="CanBeMultiplesAttribute.cs" />
+    <Compile Include="Behaviors\WrappingBehavior.cs" />
     <Compile Include="Endpoints\EndpointDriver.cs" />
     <Compile Include="Endpoints\EndpointFormatting.cs" />
     <Compile Include="Endpoints\EndpointInvocation.cs" />

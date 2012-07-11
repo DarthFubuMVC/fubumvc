@@ -1,59 +1,41 @@
 using System;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Runtime.Logging;
 
 namespace FubuMVC.Diagnostics.Runtime.Tracing
 {
-    public class BehaviorTracer : IActionBehavior
+    public class BehaviorTracer : WrappingBehavior
     {
-        private readonly IDebugReport _report;
+        private readonly BehaviorCorrelation _correlation;
         private readonly IDebugDetector _debugDetector;
-        private readonly Guid _behaviorId;
+        private readonly ILogger _logger;
 
-        public BehaviorTracer(BehaviorCorrelation correlation, IDebugReport report, IDebugDetector debugDetector)
+        public BehaviorTracer(BehaviorCorrelation correlation, IDebugDetector debugDetector, ILogger logger)
         {
-            _report = report;
+            _correlation = correlation;
             _debugDetector = debugDetector;
+            _logger = logger;
+        }
 
-            if (_report.BehaviorId == Guid.Empty)
+        protected override void invoke(Action action)
+        {
+            _logger.DebugMessage(() => new BehaviorStart(_correlation));
+
+            try
             {
-                _report.BehaviorId = correlation.ChainId;
+                action();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Behavior Failure", ex);
+
+                if (!_debugDetector.IsOutputWritingLatched())
+                {
+                    throw;
+                }
             }
 
-            _behaviorId = correlation.BehaviorId;
-        }
-
-        public IActionBehavior Inner { get; set; }
-
-        public void Invoke()
-        {
-            invoke(() => Inner.Invoke());
-        }
-
-        public void InvokePartial()
-        {
-            invoke(() => Inner.InvokePartial());
-        }
-
-        private void invoke(Action action)
-        {
-            throw new NotImplementedException();
-            //var report = _report.StartBehavior(Inner);
-            //report.BehaviorId = _behaviorId;
-
-            //try
-            //{
-            //    action();
-            //}
-            //catch (Exception ex)
-            //{
-            //    _report.MarkException(ex);
-            //    if (!_debugDetector.IsOutputWritingLatched())
-            //    {
-            //        throw;
-            //    }
-            //}
-
-            //_report.EndBehavior();
+            _logger.DebugMessage(() => new BehaviorFinish(_correlation));
         }
     }
 }
