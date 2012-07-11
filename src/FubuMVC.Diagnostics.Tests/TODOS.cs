@@ -6,7 +6,13 @@ namespace FubuMVC.Diagnostics.Tests
     public class TODOS
     {
         [Test]
-        public void move_RecordingFieldAccessRightsExecutor_into_normal_FieldAccessRightsExecutor()
+        public void redo_how_the_diagnostics_urls_are_built()
+        {
+            Assert.Fail("I say do it by looking at the navigation graph");
+        }
+
+        [Test]
+        public void need_an_implementation_of_binding_logger_for_diagnostics()
         {
             Assert.Fail("Do.");
         }
@@ -25,12 +31,6 @@ namespace FubuMVC.Diagnostics.Tests
 
         [Test]
         public void just_flat_out_redo_the_FubuRequest_ObjectResolver_tracing()
-        {
-            Assert.Fail("Do.");
-        }
-
-        [Test]
-        public void redo_RequestHistoryCache()
         {
             Assert.Fail("Do.");
         }

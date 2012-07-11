@@ -74,9 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\ActionCallExtensionsTester.cs" />
     <Compile Include="DiagnosticsCallWithAttribute.cs" />
-    <Compile Include="Configuration\Policies\DiagnosticsEndpointUrlPolicyTester.cs" />
     <Compile Include="Configuration\Policies\DiagnosticsUrlAttributePolicyTester.cs" />
     <Compile Include="Configuration\Policies\DiagnosticsUrlsTester.cs" />
     <Compile Include="DiagnosticsExtensionTester.cs" />
@@ -96,7 +94,6 @@
     <Compile Include="Runtime\Tracing\DiagnosticBehaviorTester.cs" />
     <Compile Include="Features\Chains\when_building_a_chain_visualizer.cs" />
     <Compile Include="Features\Chains\when_viewing_a_chain.cs" />
-    <Compile Include="Features\Dashboard\DashboardHandlerTester.cs" />
     <Compile Include="Features\Html\Decorators\DisplayPathBuilderTester.cs" />
     <Compile Include="Features\Html\Decorators\PropertyExamplesBuilderTester.cs" />
     <Compile Include="Features\Html\Decorators\PropertyLinksBuilderTester.cs" />
@@ -106,16 +103,7 @@
     <Compile Include="Features\Html\PreviewModelTypeResolverTester.cs" />
     <Compile Include="Features\Html\SampleContextModel.cs" />
     <Compile Include="Features\Html\when_previewing_html_conventions.cs" />
-    <Compile Include="Features\Routes\GetHandlerTester.cs" />
-    <Compile Include="Features\Routes\get_Column_Value_handler_Tester.cs" />
-    <Compile Include="Features\Routes\RoutesModelBuilderTester.cs" />
-    <Compile Include="Features\Routes\when_filtering_routes.cs" />
-    <Compile Include="Features\Routes\when_getting_value_for_view_column.cs" />
-    <Compile Include="Infrastructure\GridServiceTester.cs" />
-    <Compile Include="Infrastructure\JsonServiceTester.cs" />
-    <Compile Include="Infrastructure\RowComparerTester.cs" />
     <Compile Include="Models\SampleGridModel.cs" />
-    <Compile Include="Notifications\NoOutputsNotificationPolicyTester.cs" />
     <Compile Include="ObjectMother.cs" />
     <Compile Include="Partials\when_executing_a_partial_action.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

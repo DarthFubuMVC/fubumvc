@@ -2,28 +2,17 @@ using System.Reflection;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core;
-using FubuMVC.Core.Assets.Files;
-using FubuMVC.Core.UI;
 using FubuMVC.Core.View;
-using FubuMVC.Diagnostics.Notifications;
 using HtmlTags;
 
 namespace FubuMVC.Diagnostics.Core.Extensions
 {
-    public static class PageExtensions
-    {
-        public static string Notification<T>(this IFubuPage page, T notification)
-            where T : class, INotificationModel
-        {
-            return page.Get<PartialInvoker>().InvokeObject(notification);
-        }
-    }
-
     public static class TagExtensions
     {
         private const string sourceControlUrlBase = "http://github.com/DarthFubuMVC/fubumvc/";
         private const string sourceControlUrlFormat = sourceControlUrlBase + "commit/{0}";
 
+        // TODO -- there has to be a cleaner way to do this.
         public static HtmlTag FubuVersion(this IFubuPage page)
         {
             var fubuAssembly = typeof (FubuRegistry).Assembly;

@@ -34,16 +34,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles.0.9.1.316\lib\Bottles.dll</HintPath>
+      <HintPath>..\packages\Bottles.0.9.1.299\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
-      <HintPath>..\packages\FubuCore.0.9.9.166\lib\FubuCore.dll</HintPath>
+      <HintPath>..\packages\FubuCore.0.9.9.158\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuLocalization">
-      <HintPath>..\packages\FubuLocalization.0.9.5.61\lib\FubuLocalization.dll</HintPath>
+      <HintPath>..\packages\FubuLocalization.0.9.5.53\lib\FubuLocalization.dll</HintPath>
     </Reference>
     <Reference Include="HtmlTags">
-      <HintPath>..\packages\HtmlTags.1.1.0.86\lib\4.0\HtmlTags.dll</HintPath>
+      <HintPath>..\packages\HtmlTags.1.1.0.78\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -164,15 +164,7 @@
     <None Include="Features\Requests\Requests.spark">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Features\Routes\Routes.spark">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="New\Routes\Routes.spark">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Notifications\NoOutputs.spark">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="New\Routes\Routes.spark" />
     <None Include="Features\Requests\View\View.spark" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
@@ -271,48 +263,11 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Chrome\ChromeBehavior.cs" />
     <Compile Include="Chrome\FakeEndpoint.cs" />
-    <Compile Include="Core\AdvancedDiagnosticsFubuExtension.cs" />
-    <Compile Include="Core\Configuration\ActionCallExtensions.cs" />
     <Compile Include="Core\Configuration\Policies\DiagnosticsAttributeUrlPolicy.cs" />
-    <Compile Include="Core\Configuration\Policies\DiagnosticsHandlerUrlPolicy.cs" />
     <Compile Include="Core\Configuration\Policies\DiagnosticsUrls.cs" />
-    <Compile Include="Core\Configuration\RemoveBasicDiagnostics.cs" />
     <Compile Include="Core\CoreExtensions.cs" />
     <Compile Include="Core\Extensions\JsonExtensions.cs" />
     <Compile Include="Core\Extensions\TagExtensions.cs" />
-    <Compile Include="Core\Grids\BehaviorGraphRowProvider.cs" />
-    <Compile Include="Core\Grids\Columns\GridColumnBase.cs" />
-    <Compile Include="Core\Grids\Columns\IGridColumn.cs" />
-    <Compile Include="Core\Grids\Columns\Routes\ActionColumn.cs" />
-    <Compile Include="Core\Grids\Columns\Routes\AuthorizationColumn.cs" />
-    <Compile Include="Core\Grids\Columns\Routes\ChainUrlColumn.cs" />
-    <Compile Include="Core\Grids\Columns\Routes\ConstraintsColumn.cs" />
-    <Compile Include="Core\Grids\Columns\Routes\InputModelColumn.cs" />
-    <Compile Include="Core\Grids\Columns\Routes\OriginColumn.cs" />
-    <Compile Include="Core\Grids\Columns\Routes\OutputModelColumn.cs" />
-    <Compile Include="Core\Grids\Columns\Routes\RouteColumn.cs" />
-    <Compile Include="Core\Grids\Columns\Routes\UrlCategoryColumn.cs" />
-    <Compile Include="Core\Grids\Columns\Routes\ViewColumn.cs" />
-    <Compile Include="Core\Grids\Filters\GridFilterBase.cs" />
-    <Compile Include="Core\Grids\Filters\Routes\ActionFilter.cs" />
-    <Compile Include="Core\Grids\Filters\Routes\AuthorizationFilter.cs" />
-    <Compile Include="Core\Grids\Filters\Routes\ConstraintsFilter.cs" />
-    <Compile Include="Core\Grids\Filters\Routes\InputModelFilter.cs" />
-    <Compile Include="Core\Grids\Filters\Routes\OriginFilter.cs" />
-    <Compile Include="Core\Grids\Filters\Routes\OutputModelFilter.cs" />
-    <Compile Include="Core\Grids\Filters\Routes\RouteFilter.cs" />
-    <Compile Include="Core\Grids\Filters\Routes\UrlCategoryFilter.cs" />
-    <Compile Include="Core\Grids\Filters\Routes\ViewFilter.cs" />
-    <Compile Include="Core\Grids\GridColumnBuilder.cs" />
-    <Compile Include="Core\Grids\GridExtensions.cs" />
-    <Compile Include="Core\Grids\GridRowBuilder.cs" />
-    <Compile Include="Core\Grids\GridService.cs" />
-    <Compile Include="Core\Grids\IGridColumnBuilder.cs" />
-    <Compile Include="Core\Grids\IGridFilter.cs" />
-    <Compile Include="Core\Grids\IGridRowBuilder.cs" />
-    <Compile Include="Core\Grids\IGridRowProvider.cs" />
-    <Compile Include="Core\Grids\IGridService.cs" />
-    <Compile Include="Core\Grids\RowComparer.cs" />
     <Compile Include="Core\Infrastructure\DiagnosticsDebugCallHandler.cs" />
     <Compile Include="Core\Infrastructure\HttpConstraintResolver.cs" />
     <Compile Include="Core\Infrastructure\IAuthorizationDescriptor.cs" />
@@ -336,7 +291,6 @@
     <Compile Include="Runtime\IDebugDetector.cs" />
     <Compile Include="Runtime\IDebugReport.cs" />
     <Compile Include="Runtime\IRequestHistoryCache.cs" />
-    <Compile Include="Runtime\RecordingFieldAccessRightsExecutor.cs" />
     <Compile Include="Runtime\RequestHistoryCache.cs" />
     <Compile Include="Runtime\TimedReport.cs" />
     <Compile Include="Runtime\Tracing\BehaviorCorrelation.cs" />
@@ -380,38 +334,12 @@
     <Compile Include="Features\Packaging\PackageDiagnosticsModel.cs" />
     <Compile Include="Features\Packaging\PackageDiagnosticsRequestModel.cs" />
     <Compile Include="Features\Requests\RecordedRequestRequestModel.cs" />
-    <Compile Include="Features\Routes\Autocomplete\PostHandler.cs" />
-    <Compile Include="Features\Routes\Filter\PostHandler.cs" />
-    <Compile Include="Features\Routes\GetHandler.cs" />
-    <Compile Include="Features\Routes\get_Column_Value_handler.cs" />
-    <Compile Include="Features\Routes\RouteRequestModel.cs" />
-    <Compile Include="Features\Routes\RoutesModel.cs" />
-    <Compile Include="Features\Routes\RoutesModelBuilder.cs" />
     <Compile Include="Features\Chains\View\get_Id_handler.cs" />
     <Compile Include="AdvancedDiagnosticsRegistry.cs" />
     <Compile Include="FubuDiagnosticsUrlAttribute.cs" />
     <Compile Include="DiagnosticsException.cs" />
     <Compile Include="IPartialModel.cs" />
-    <Compile Include="Models\AutocompleteRequestModel.cs" />
-    <Compile Include="Models\Grids\IGridModel.cs" />
-    <Compile Include="Models\IModelBuilder.cs" />
-    <Compile Include="Models\JqGridColumn.cs" />
-    <Compile Include="Models\JqGridColumnModel.cs" />
-    <Compile Include="Models\JqGridColumnModelRequest.cs" />
-    <Compile Include="Models\JsonAutocompleteResultModel.cs" />
-    <Compile Include="Models\Grids\JsonGridColumn.cs" />
-    <Compile Include="Models\Grids\JsonGridFilter.cs" />
-    <Compile Include="Models\Grids\JsonGridQuery.cs" />
-    <Compile Include="Models\Grids\RouteQuery.cs" />
-    <Compile Include="Models\Grids\JsonGridModel.cs" />
-    <Compile Include="Models\Grids\JsonGridRow.cs" />
     <Compile Include="New\Routes\RouteExplorerEndpoint.cs" />
-    <Compile Include="Notifications\FilterLink.cs" />
-    <Compile Include="Notifications\INotificationModel.cs" />
-    <Compile Include="Notifications\INotificationPolicy.cs" />
-    <Compile Include="Notifications\NoOutputsNotification.cs" />
-    <Compile Include="Notifications\NoOutputsNotificationPolicy.cs" />
-    <Compile Include="Notifications\NotificationAction.cs" />
     <Compile Include="Partials\IPartialDecorator.cs" />
     <Compile Include="Partials\PartialAction.cs" />
     <Compile Include="SlickGrid\ColumnDefinition.cs" />

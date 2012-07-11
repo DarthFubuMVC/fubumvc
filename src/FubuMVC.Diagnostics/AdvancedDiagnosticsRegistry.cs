@@ -3,24 +3,15 @@ using System.Linq;
 using FubuCore.Binding.InMemory;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
-using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
-using FubuMVC.Core.UI.Security;
 using FubuMVC.Diagnostics.Chrome;
 using FubuMVC.Diagnostics.Core.Configuration.Policies;
-using FubuMVC.Diagnostics.Core.Grids;
-using FubuMVC.Diagnostics.Core.Grids.Columns;
 using FubuMVC.Diagnostics.Core.Infrastructure;
 using FubuMVC.Diagnostics.Features;
 using FubuMVC.Diagnostics.Features.Chains.View;
 using FubuMVC.Diagnostics.Features.Html.Preview;
 using FubuMVC.Diagnostics.Features.Html.Preview.Decorators;
-using FubuMVC.Diagnostics.Features.Requests;
-using FubuMVC.Diagnostics.Models;
-using FubuMVC.Diagnostics.Models.Grids;
-using FubuMVC.Diagnostics.Notifications;
 using FubuMVC.Diagnostics.Partials;
 using FubuMVC.Diagnostics.Runtime;
 using FubuMVC.Diagnostics.Runtime.Assets;
@@ -38,8 +29,6 @@ namespace FubuMVC.Diagnostics
                 .ToAssemblyContainingType<AdvancedDiagnosticsRegistry>()
                 .ToAssemblyContainingType<BehaviorStart>()
                 .ToAllPackageAssemblies();
-
-            ApplyHandlerConventions(markers => new DiagnosticsHandlerUrlPolicy(markers), typeof (DiagnosticsFeatures));
 
             Actions
                 .IncludeType<BasicAssetDiagnostics>();
@@ -63,7 +52,6 @@ namespace FubuMVC.Diagnostics
                             x => x.MakeAsymmetricJson());
                 });
 
-            Models.IgnoreProperties(prop => prop.PropertyType == typeof (IEnumerable<JsonGridFilter>));
         }
 
         private void setupDiagnosticServices()
@@ -79,17 +67,10 @@ namespace FubuMVC.Diagnostics
                 x.ReplaceService<IBindingHistory, BindingHistory>();
                 x.SetServiceIfNone<IRequestHistoryCache, RequestHistoryCache>();
 
-                // TODO -- need to test this
-                x.ReplaceService<IFieldAccessRightsExecutor, RecordingFieldAccessRightsExecutor>();
-
                 // Typically you'd do this in your container but we're keeping this IoC-agnostic
                 x.SetServiceIfNone<IHttpConstraintResolver, HttpConstraintResolver>();
                 x.SetServiceIfNone<IAuthorizationDescriptor, AuthorizationDescriptor>();
-                x.SetServiceIfNone(typeof (IGridService<,>), typeof (GridService<,>));
-                x.SetServiceIfNone(typeof (IGridRowBuilder<,>), typeof (GridRowBuilder<,>));
-                x.SetServiceIfNone(typeof (IGridColumnBuilder<>), typeof (GridColumnBuilder<>));
-                x.SetServiceIfNone
-                    <IGridRowProvider<BehaviorGraph, BehaviorChain>, BehaviorGraphRowProvider>();
+
                 x.SetServiceIfNone<IPreviewModelActivator, PreviewModelActivator>();
                 x.SetServiceIfNone<IPreviewModelTypeResolver, PreviewModelTypeResolver>();
                 x.SetServiceIfNone<IPropertySourceGenerator, PropertySourceGenerator>();
@@ -111,15 +92,10 @@ namespace FubuMVC.Diagnostics
                         .ToAllPackageAssemblies();
 
                     scan
-                        .AddAllTypesOf<INotificationPolicy>()
                         .AddAllTypesOf<IPreviewModelDecorator>();
 
                     scan
-                        .ConnectImplementationsToTypesClosing(typeof (IPartialDecorator<>))
-                        .ConnectImplementationsToTypesClosing(typeof (IGridColumnBuilder<>))
-                        .ConnectImplementationsToTypesClosing(typeof (IGridColumn<>))
-                        .ConnectImplementationsToTypesClosing(typeof (IGridFilter<>))
-                        .ConnectImplementationsToTypesClosing(typeof (IModelBuilder<>));
+                        .ConnectImplementationsToTypesClosing(typeof (IPartialDecorator<>));
                 });
             });
         }

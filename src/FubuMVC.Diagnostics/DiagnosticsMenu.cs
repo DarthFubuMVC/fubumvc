@@ -1,17 +1,13 @@
+using System.Collections.Generic;
+using System.Linq;
+using FubuCore;
 using FubuLocalization;
-using FubuMVC.Core.Assets;
 using FubuMVC.Core.UI.Navigation;
 using FubuMVC.Core.View;
 using FubuMVC.Diagnostics.Features.Dashboard;
 using FubuMVC.Diagnostics.Features.Html;
 using FubuMVC.Diagnostics.Features.Packaging;
-using FubuMVC.Diagnostics.Features.Requests;
-using FubuMVC.Diagnostics.Features.Routes;
 using HtmlTags;
-using System.Collections.Generic;
-using FubuCore;
-using System.Linq;
-using FubuMVC.Core.UI;
 
 namespace FubuMVC.Diagnostics
 {
@@ -54,10 +50,10 @@ namespace FubuMVC.Diagnostics
             Add += MenuNode.ForInput<DashboardRequestModel>(DiagnosticKeys.Dashboard);
             Add += MenuNode.ForInput<HtmlConventionsRequestModel>(DiagnosticKeys.HtmlConventions);
             Add += MenuNode.ForInput<PackageDiagnosticsRequestModel>(DiagnosticKeys.ApplicationStartup);
-            
+
             // TODO -- add it back in!
             //Add += MenuNode.ForInput<RequestExplorerRequestModel>(DiagnosticKeys.Requests);
-            Add += MenuNode.ForInput<DefaultRouteRequestModel>(DiagnosticKeys.Routes);
+            //Add += MenuNode.ForInput<DefaultRouteRequestModel>(DiagnosticKeys.Routes);
         }
     }
 
@@ -106,7 +102,6 @@ namespace FubuMVC.Diagnostics
                     var childTag = new BootstrapMenuItemTag(child);
                     ul.Append(childTag);
                 });
-            
             }
 
             if (item.MenuItemState == MenuItemState.Active)

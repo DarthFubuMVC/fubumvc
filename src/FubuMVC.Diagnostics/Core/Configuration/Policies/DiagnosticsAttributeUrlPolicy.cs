@@ -4,7 +4,6 @@ using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Diagnostics.Runtime;
 
 namespace FubuMVC.Diagnostics.Core.Configuration.Policies
 {
@@ -12,7 +11,7 @@ namespace FubuMVC.Diagnostics.Core.Configuration.Policies
     {
         public bool Matches(ActionCall call, IConfigurationObserver log)
         {
-            if(!call.Method.HasAttribute<FubuDiagnosticsUrlAttribute>())
+            if (!call.Method.HasAttribute<FubuDiagnosticsUrlAttribute>())
             {
                 return false;
             }
