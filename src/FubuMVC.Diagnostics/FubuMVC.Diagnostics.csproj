@@ -337,6 +337,7 @@
     <Compile Include="Runtime\IDebugReport.cs" />
     <Compile Include="Runtime\IRequestHistoryCache.cs" />
     <Compile Include="Runtime\RecordingFieldAccessRightsExecutor.cs" />
+    <Compile Include="Runtime\RequestHistoryCache.cs" />
     <Compile Include="Runtime\TimedReport.cs" />
     <Compile Include="Runtime\Tracing\BehaviorCorrelation.cs" />
     <Compile Include="Runtime\Tracing\BehaviorTracer.cs" />

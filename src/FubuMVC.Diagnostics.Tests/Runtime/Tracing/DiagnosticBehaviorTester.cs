@@ -30,7 +30,7 @@ namespace FubuMVC.Diagnostics.Tests.Runtime.Tracing
             ClassUnderTest.Invoke();
 
             var debugReport = MockFor<IDebugReport>();
-            MockFor<IRequestHistoryCache>().AssertWasCalled(x => x.AddReport(debugReport, theCurrentRequest));
+            MockFor<IRequestHistoryCache>().AssertWasCalled(x => x.AddReport(debugReport));
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace FubuMVC.Diagnostics.Tests.Runtime.Tracing
             ClassUnderTest.InvokePartial();
 
             var debugReport = MockFor<IDebugReport>();
-            MockFor<IRequestHistoryCache>().AssertWasNotCalled(x => x.AddReport(debugReport, theCurrentRequest));
+            MockFor<IRequestHistoryCache>().AssertWasNotCalled(x => x.AddReport(debugReport));
         }
 
         [Test]

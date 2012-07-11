@@ -91,6 +91,7 @@
     <Compile Include="Runtime\DiagnosticsPackageTester.cs" />
     <Compile Include="Runtime\DiagnosticsRegistryTester.cs" />
     <Compile Include="Runtime\DiagnosticsSettingsTester.cs" />
+    <Compile Include="Runtime\RequestHistoryCacheTester.cs" />
     <Compile Include="Runtime\TimedReportTester.cs" />
     <Compile Include="Runtime\Tracing\DiagnosticBehaviorTester.cs" />
     <Compile Include="Features\Chains\when_building_a_chain_visualizer.cs" />

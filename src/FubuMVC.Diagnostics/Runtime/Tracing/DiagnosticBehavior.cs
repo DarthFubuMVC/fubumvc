@@ -18,7 +18,7 @@ namespace FubuMVC.Diagnostics.Runtime.Tracing
             _debugCallHandler = debugCallHandler;
             _detector = detector;
 
-            _initialize = () => history.AddReport(report, request.Get<CurrentRequest>());
+            _initialize = () => history.AddReport(report);
         }
 
         public IActionBehavior Inner { get; set; }
