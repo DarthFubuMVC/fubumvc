@@ -6,12 +6,6 @@ namespace FubuMVC.Diagnostics.Tests
     public class TODOS
     {
         [Test]
-        public void have_Logger_put_the_date_time_stamp_on_LogRecords()
-        {
-            Assert.Fail("NWO");
-        }
-
-        [Test]
         public void move_RecordingFieldAccessRightsExecutor_into_normal_FieldAccessRightsExecutor()
         {
             Assert.Fail("Do.");
