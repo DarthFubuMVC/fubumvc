@@ -85,7 +85,6 @@
     <Content Include="Content\Scripts\diagnostics\bootstrap-tooltip.js" />
     <Content Include="Content\Scripts\diagnostics\bootstrap-transition.js" />
     <Content Include="Content\Scripts\diagnostics\bootstrap-typeahead.js" />
-    <Content Include="Content\Scripts\diagnostics\chains\view.js" />
     <Content Include="Content\Scripts\diagnostics\jquery-1.7.min.js" />
     <Content Include="Content\Scripts\diagnostics\jquery-ui-1.8.20.custom.min.js" />
     <Content Include="Content\Scripts\diagnostics\jquery.event.drag-2.0.min.js" />
@@ -156,7 +155,6 @@
     </Content>
     <None Include=".package-manifest" />
     <None Include="Chrome\Chrome.spark" />
-    <None Include="Features\Chains\View\View.spark" />
     <None Include="Features\Html\Html.spark" />
     <None Include="Features\Html\Preview\Preview.spark" />
     <None Include="Features\Dashboard\Dashboard.spark" />
@@ -266,13 +264,8 @@
     <Compile Include="Core\Configuration\Policies\DiagnosticsAttributeUrlPolicy.cs" />
     <Compile Include="Core\Configuration\Policies\DiagnosticsUrls.cs" />
     <Compile Include="Core\CoreExtensions.cs" />
-    <Compile Include="Core\Extensions\JsonExtensions.cs" />
     <Compile Include="Core\Extensions\TagExtensions.cs" />
     <Compile Include="Core\Infrastructure\DiagnosticsDebugCallHandler.cs" />
-    <Compile Include="Core\Infrastructure\HttpConstraintResolver.cs" />
-    <Compile Include="Core\Infrastructure\IAuthorizationDescriptor.cs" />
-    <Compile Include="Core\Infrastructure\IHttpConstraintResolver.cs" />
-    <Compile Include="Core\Infrastructure\JsonService.cs" />
     <Compile Include="DiagnosticsMenu.cs" />
     <Compile Include="NoDiagnosticsAttribute.cs" />
     <Compile Include="Runtime\ApplyTracing.cs" />
@@ -298,10 +291,7 @@
     <Compile Include="Runtime\Tracing\DiagnosticBehavior.cs" />
     <Compile Include="Runtime\Tracing\DiagnosticUrlPolicy.cs" />
     <Compile Include="Runtime\Tracing\RecordingAuthorizationPolicyExecutor.cs" />
-    <Compile Include="Features\Chains\BehaviorModel.cs" />
-    <Compile Include="Features\Chains\ChainModel.cs" />
     <Compile Include="Features\Chains\ChainRequest.cs" />
-    <Compile Include="Features\Chains\View\IChainVisualizerBuilder.cs" />
     <Compile Include="Features\Html\HtmlConventionsPreviewRequestModel.cs" />
     <Compile Include="Features\Html\HtmlConventionsPreviewViewModel.cs" />
     <Compile Include="Features\Html\HtmlConventionsRequestModel.cs" />
@@ -334,14 +324,10 @@
     <Compile Include="Features\Packaging\PackageDiagnosticsModel.cs" />
     <Compile Include="Features\Packaging\PackageDiagnosticsRequestModel.cs" />
     <Compile Include="Features\Requests\RecordedRequestRequestModel.cs" />
-    <Compile Include="Features\Chains\View\get_Id_handler.cs" />
     <Compile Include="AdvancedDiagnosticsRegistry.cs" />
     <Compile Include="FubuDiagnosticsUrlAttribute.cs" />
     <Compile Include="DiagnosticsException.cs" />
-    <Compile Include="IPartialModel.cs" />
     <Compile Include="New\Routes\RouteExplorerEndpoint.cs" />
-    <Compile Include="Partials\IPartialDecorator.cs" />
-    <Compile Include="Partials\PartialAction.cs" />
     <Compile Include="SlickGrid\ColumnDefinition.cs" />
     <Compile Include="SlickGrid\DiagnosticConstants.cs" />
     <Compile Include="SlickGrid\GridDefinition.cs" />

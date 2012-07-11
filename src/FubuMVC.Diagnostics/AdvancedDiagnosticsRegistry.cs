@@ -8,11 +8,8 @@ using FubuMVC.Core.Security;
 using FubuMVC.Diagnostics.Chrome;
 using FubuMVC.Diagnostics.Core.Configuration.Policies;
 using FubuMVC.Diagnostics.Core.Infrastructure;
-using FubuMVC.Diagnostics.Features;
-using FubuMVC.Diagnostics.Features.Chains.View;
 using FubuMVC.Diagnostics.Features.Html.Preview;
 using FubuMVC.Diagnostics.Features.Html.Preview.Decorators;
-using FubuMVC.Diagnostics.Partials;
 using FubuMVC.Diagnostics.Runtime;
 using FubuMVC.Diagnostics.Runtime.Assets;
 using FubuMVC.Diagnostics.Runtime.Tracing;
@@ -39,7 +36,6 @@ namespace FubuMVC.Diagnostics
 
             Views
                 .TryToAttachWithDefaultConventions()
-                .RegisterActionLessViews(token => typeof (IPartialModel).IsAssignableFrom(token.ViewModel))
                 .RegisterActionLessViews(token => token.ViewModel == typeof (ChromeContent));
 
             Navigation<DiagnosticsMenu>();
@@ -67,18 +63,11 @@ namespace FubuMVC.Diagnostics
                 x.ReplaceService<IBindingHistory, BindingHistory>();
                 x.SetServiceIfNone<IRequestHistoryCache, RequestHistoryCache>();
 
-                // Typically you'd do this in your container but we're keeping this IoC-agnostic
-                x.SetServiceIfNone<IHttpConstraintResolver, HttpConstraintResolver>();
-                x.SetServiceIfNone<IAuthorizationDescriptor, AuthorizationDescriptor>();
-
                 x.SetServiceIfNone<IPreviewModelActivator, PreviewModelActivator>();
                 x.SetServiceIfNone<IPreviewModelTypeResolver, PreviewModelTypeResolver>();
                 x.SetServiceIfNone<IPropertySourceGenerator, PropertySourceGenerator>();
                 x.SetServiceIfNone<IModelPopulator, ModelPopulator>();
                 x.SetServiceIfNone<ITagGeneratorFactory, TagGeneratorFactory>();
-                x.SetServiceIfNone<IJsonProvider, JsonProvider>();
-                x.SetServiceIfNone<IChainVisualizerBuilder,
-                    ChainVisualizerBuilder>();
 
                 x.SetServiceIfNone<IHtmlConventionsPreviewContextFactory, HtmlConventionsPreviewContextFactory>();
 
@@ -93,9 +82,6 @@ namespace FubuMVC.Diagnostics
 
                     scan
                         .AddAllTypesOf<IPreviewModelDecorator>();
-
-                    scan
-                        .ConnectImplementationsToTypesClosing(typeof (IPartialDecorator<>));
                 });
             });
         }

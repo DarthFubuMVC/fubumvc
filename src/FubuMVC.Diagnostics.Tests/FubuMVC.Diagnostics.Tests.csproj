@@ -92,8 +92,6 @@
     <Compile Include="Runtime\RequestHistoryCacheTester.cs" />
     <Compile Include="Runtime\TimedReportTester.cs" />
     <Compile Include="Runtime\Tracing\DiagnosticBehaviorTester.cs" />
-    <Compile Include="Features\Chains\when_building_a_chain_visualizer.cs" />
-    <Compile Include="Features\Chains\when_viewing_a_chain.cs" />
     <Compile Include="Features\Html\Decorators\DisplayPathBuilderTester.cs" />
     <Compile Include="Features\Html\Decorators\PropertyExamplesBuilderTester.cs" />
     <Compile Include="Features\Html\Decorators\PropertyLinksBuilderTester.cs" />
@@ -105,9 +103,7 @@
     <Compile Include="Features\Html\when_previewing_html_conventions.cs" />
     <Compile Include="Models\SampleGridModel.cs" />
     <Compile Include="ObjectMother.cs" />
-    <Compile Include="Partials\when_executing_a_partial_action.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Runtime\when_executing_recording_authorization_policies.cs" />
     <Compile Include="SlickGrid\ColumnDefinitionTester.cs" />
     <Compile Include="SlickGrid\GridDefinitionTester.cs" />
     <Compile Include="SlickGrid\JsonValueWriterTester.cs" />
