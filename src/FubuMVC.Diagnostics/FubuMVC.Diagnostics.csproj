@@ -330,7 +330,6 @@
     <Compile Include="Runtime\DebugReport.cs" />
     <Compile Include="Runtime\DiagnosticNode.cs" />
     <Compile Include="DiagnosticsRegistration.cs" />
-    <Compile Include="Runtime\ExceptionReport.cs" />
     <Compile Include="Runtime\FileOutputReport.cs" />
     <Compile Include="Runtime\FubuDiagnosticsAttribute.cs" />
     <Compile Include="Runtime\HttpStatusReport.cs" />
@@ -341,7 +340,6 @@
     <Compile Include="Runtime\OutputReport.cs" />
     <Compile Include="Runtime\RecordingFieldAccessRightsExecutor.cs" />
     <Compile Include="Runtime\RedirectReport.cs" />
-    <Compile Include="Runtime\StringMessage.cs" />
     <Compile Include="Runtime\SetValueReport.cs" />
     <Compile Include="Runtime\TimedReport.cs" />
     <Compile Include="Runtime\Tracing\BehaviorCorrelation.cs" />

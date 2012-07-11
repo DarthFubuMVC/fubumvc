@@ -1,8 +1,15 @@
-namespace FubuMVC.Diagnostics.Runtime
+using FubuCore;
+
+namespace FubuMVC.Core.Runtime.Logging
 {
-    public class StringMessage
+    public class StringMessage : LogRecord
     {
-        public string Message { get; set; }
+        public StringMessage(string message, params object[] parameters)
+        {
+            Message = message.ToFormat(parameters);
+        }
+
+        public string Message { get; private set; }
 
         public override bool Equals(object obj)
         {
