@@ -6,6 +6,7 @@ using System.Web;
 using FubuCore;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Runtime.Logging;
 
 namespace FubuMVC.Core.Runtime
 {
@@ -13,12 +14,14 @@ namespace FubuMVC.Core.Runtime
     {
         private readonly IHttpWriter _writer;
         private readonly IFileSystem _fileSystem;
+        private readonly ILogger _logger;
         private readonly Stack<IOutputState> _outputStates = new Stack<IOutputState>(); 
 
-        public OutputWriter(IHttpWriter writer, IFileSystem fileSystem)
+        public OutputWriter(IHttpWriter writer, IFileSystem fileSystem, ILogger logger)
         {
             _writer = writer;
             _fileSystem = fileSystem;
+            _logger = logger;
 
             normalWriting();
         }
@@ -39,13 +42,21 @@ namespace FubuMVC.Core.Runtime
             _outputStates.Push(state);
         }
 
-        public virtual void WriteFile(string contentType, string localFilePath, string displayName)
+        public void WriteFile(string contentType, string localFilePath, string displayName)
         {
+            _logger.DebugMessage(() => new FileOutputReport{
+                ContentType = contentType,
+                DisplayName = displayName,
+                LocalFilePath = localFilePath
+            });
+
             CurrentState.WriteFile(contentType, localFilePath, displayName);
         }
 
         public virtual IRecordedOutput Record(Action action)
         {
+            _logger.DebugMessage(() => new StartedRecordingOutput());
+
             var output = new RecordedOutput(_fileSystem);
             _outputStates.Push(output);
 
@@ -56,6 +67,8 @@ namespace FubuMVC.Core.Runtime
             finally
             {
                 _outputStates.Pop();
+            
+                _logger.DebugMessage(() => new FinishedRecordingOutput());
             }
 
             return output;
@@ -63,6 +76,8 @@ namespace FubuMVC.Core.Runtime
 
         public void Replay(IRecordedOutput output)
         {
+            _logger.DebugMessage(() => new ReplayRecordedOutput(output));
+
             // We're routing the replay thru IOutputWriter to 
             // make unit testing easier, I think it gives a cleaner
             // dependency graph, and it makes request tracing work.
@@ -71,42 +86,64 @@ namespace FubuMVC.Core.Runtime
 
         public void Flush()
         {
+            _logger.Debug(() => "Flushed content to the Http output");
+
             CurrentState.Flush();
         }
 
         public virtual void Write(string contentType, string renderedOutput)
         {
+            _logger.DebugMessage(() => new OutputReport(contentType, renderedOutput));
+
             CurrentState.Write(contentType, renderedOutput);
         }
 
         public void Write(string renderedOutput)
         {
+            _logger.DebugMessage(() => new OutputReport(renderedOutput));
+
             CurrentState.Write(renderedOutput);
         }
 
         public virtual void RedirectToUrl(string url)
         {
+            _logger.DebugMessage(() => new RedirectReport(url));
+
             Writer.Redirect(url);
         }
 
+
         public virtual void AppendCookie(HttpCookie cookie)
         {
+            _logger.DebugMessage(() => new WriteCookieReport(cookie));
+
             Writer.AppendCookie(cookie);
         }
 
         public void AppendHeader(string key, string value)
         {
+            _logger.DebugMessage(() => new SetHeaderValue(key, value));
+
             CurrentState.AppendHeader(key, value);
         }
 
-        public virtual void Write(string contentType, Action<Stream> output)
+        public void Write(string contentType, Action<Stream> output)
         {
+            _logger.DebugMessage(() => new WriteToStreamReport(contentType));
+            
             CurrentState.Write(contentType, output);
         }
 
-        public virtual void WriteResponseCode(HttpStatusCode status, string description = null)
+        public void WriteResponseCode(HttpStatusCode status, string description = null)
         {
+            _logger.DebugMessage(() => new HttpStatusReport{
+                Description = description,
+                Status = status
+            });
+
             Writer.WriteResponseCode(status, description);
         }
     }
+
+
 }

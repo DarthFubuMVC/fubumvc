@@ -1,6 +1,6 @@
-namespace FubuMVC.Diagnostics.Runtime
+namespace FubuMVC.Core.Runtime.Logging
 {
-    public class FileOutputReport
+    public class FileOutputReport : LogRecord
     {
         public string ContentType;
         public string LocalFilePath;
@@ -17,8 +17,8 @@ namespace FubuMVC.Diagnostics.Runtime
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof (FileOutputReport)) return false;
-            return Equals((FileOutputReport) obj);
+            if (obj.GetType() != typeof(FileOutputReport)) return false;
+            return Equals((FileOutputReport)obj);
         }
 
         public override int GetHashCode()
@@ -26,8 +26,8 @@ namespace FubuMVC.Diagnostics.Runtime
             unchecked
             {
                 int result = (ContentType != null ? ContentType.GetHashCode() : 0);
-                result = (result*397) ^ (LocalFilePath != null ? LocalFilePath.GetHashCode() : 0);
-                result = (result*397) ^ (DisplayName != null ? DisplayName.GetHashCode() : 0);
+                result = (result * 397) ^ (LocalFilePath != null ? LocalFilePath.GetHashCode() : 0);
+                result = (result * 397) ^ (DisplayName != null ? DisplayName.GetHashCode() : 0);
                 return result;
             }
         }

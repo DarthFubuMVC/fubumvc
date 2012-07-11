@@ -1,13 +1,16 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Web;
 using FubuCore;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Runtime.Logging;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
+using System.Linq;
 
 namespace FubuMVC.Tests.Runtime
 {
@@ -15,10 +18,13 @@ namespace FubuMVC.Tests.Runtime
     public class OutputWriterTester : InteractionContext<OutputWriter>
     {
         private IHttpWriter theHttpWriter;
+        private RecordingLogger logs;
 
         protected override void beforeEach()
         {
             theHttpWriter = MockFor<IHttpWriter>();
+
+            logs = Services.RecordLogging();
         }
 
         [Test]
@@ -37,12 +43,36 @@ namespace FubuMVC.Tests.Runtime
         }
 
         [Test]
+        public void redirect_to_url_logs_the_redirection()
+        {
+            ClassUnderTest.RedirectToUrl("http://somewhere.com");
+
+            logs.DebugMessages.Single().ShouldEqual(new RedirectReport("http://somewhere.com"));
+        }
+
+        [Test]
         public void write_in_normal_mode_delegates_to_http_writer()
         {
             ClassUnderTest.Write("text/json", "{}");
 
             theHttpWriter.AssertWasCalled(x => x.Write("{}"));
             theHttpWriter.AssertWasCalled(x => x.WriteContentType("text/json"));
+        }
+
+        [Test]
+        public void write_in_normal_mode_records_content_type_and_text()
+        {
+            ClassUnderTest.Write("text/json", "{}");
+
+            logs.DebugMessages.Single().ShouldEqual(new OutputReport("text/json", "{}"));
+        }
+
+        [Test]
+        public void write_records_content_type_and_text()
+        {
+            ClassUnderTest.Write("Some text");
+
+            logs.DebugMessages.Single().ShouldEqual(new OutputReport("Some text"));
         }
 
         [Test]
@@ -78,6 +108,89 @@ namespace FubuMVC.Tests.Runtime
 
             theHttpWriter.AssertWasCalled(x => x.AppendHeader("e-tag", "12345"));
 
+        }
+
+        [Test]
+        public void replay_logs()
+        {
+            var recording = MockRepository.GenerateMock<IRecordedOutput>();
+
+            ClassUnderTest.Replay(recording);
+
+            logs.DebugMessages.Single().ShouldEqual(new ReplayRecordedOutput(recording));
+        }
+
+        [Test]
+        public void flushing_the_output_records_a_debug_message()
+        {
+            ClassUnderTest.Flush();
+
+            logs.DebugMessages.Single().ShouldBeOfType<StringMessage>()
+                .Message.ShouldEqual("Flushed content to the Http output");
+        }
+
+        [Test]
+        public void write_file_logs()
+        {
+            ClassUnderTest.WriteFile(MimeType.Jpg, "file path", "some display");
+
+            logs.DebugMessages.Single().ShouldEqual(new FileOutputReport{
+                ContentType = MimeType.Jpg.Value,
+                DisplayName = "some display",
+                LocalFilePath = "file path"
+            });
+        }
+
+        [Test]
+        public void writing_a_response_code_will_log()
+        {
+            const string description = "why u no make good request?";
+            ClassUnderTest.WriteResponseCode(HttpStatusCode.BadRequest, description);
+
+            logs.DebugMessages.Single().ShouldEqual(new HttpStatusReport{
+                Description = description,
+                Status = HttpStatusCode.BadRequest
+            });
+        }
+
+        [Test]
+        public void write_cookie()
+        {
+            var cookie = new HttpCookie("something");
+
+            ClassUnderTest.AppendCookie(cookie);
+
+            logs.DebugMessages.Single().ShouldEqual(new WriteCookieReport(cookie));
+        }
+
+        [Test]
+        public void recording_writes_a_report()
+        {
+            ClassUnderTest.Record(() =>
+            {
+                ClassUnderTest.Write("some stuff");
+            });
+
+            logs.DebugMessages.Count().ShouldEqual(3);
+            logs.DebugMessages.First().ShouldBeOfType<StartedRecordingOutput>();
+            logs.DebugMessages.ElementAt(1).ShouldBeOfType<OutputReport>().Contents.ShouldEqual("some stuff");
+            logs.DebugMessages.Last().ShouldBeOfType<FinishedRecordingOutput>();
+        }
+
+        [Test]
+        public void AppendHeader_records_any_values()
+        {
+            ClassUnderTest.AppendHeader("something", "a value");
+
+            logs.DebugMessages.Single().ShouldEqual(new SetHeaderValue("something", "a value"));
+        }
+
+        [Test]
+        public void write_stream_logs()
+        {
+            ClassUnderTest.Write("text/xml", stream => { });
+
+            logs.DebugMessages.Single().ShouldEqual(new WriteToStreamReport("text/xml"));
         }
     }
 

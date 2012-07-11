@@ -76,7 +76,6 @@ namespace FubuMVC.Diagnostics
                 x.ReplaceService<IDebugReport, DebugReport>();
                 x.ReplaceService<IDebugDetector, DebugDetector>();
                 x.ReplaceService<IAuthorizationPolicyExecutor, RecordingAuthorizationPolicyExecutor>();
-                x.ReplaceService<IOutputWriter, RecordingOutputWriter>();
                 x.ReplaceService<IBindingHistory, BindingHistory>();
                 x.SetServiceIfNone<IRequestHistoryCache, RequestHistoryCache>();
 

@@ -5,6 +5,7 @@ using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Resources.Etags;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Runtime.Logging;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -108,7 +109,7 @@ namespace FubuMVC.Tests.Caching
 
     public class StubOutputWriter : OutputWriter
     {
-        public StubOutputWriter() : base(new NulloHttpWriter(), null)
+        public StubOutputWriter() : base(new NulloHttpWriter(), null, new RecordingLogger())
         {
             Output = new RecordedOutput(null);
 

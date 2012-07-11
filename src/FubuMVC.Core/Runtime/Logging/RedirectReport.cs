@@ -1,8 +1,13 @@
-namespace FubuMVC.Diagnostics.Runtime
+namespace FubuMVC.Core.Runtime.Logging
 {
-    public class RedirectReport
+    public class RedirectReport : LogRecord
     {
-        public string Url;
+        public string Url { get; private set; }
+
+        public RedirectReport(string url)
+        {
+            Url = url;
+        }
 
         public bool Equals(RedirectReport other)
         {
@@ -15,8 +20,8 @@ namespace FubuMVC.Diagnostics.Runtime
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof (RedirectReport)) return false;
-            return Equals((RedirectReport) obj);
+            if (obj.GetType() != typeof(RedirectReport)) return false;
+            return Equals((RedirectReport)obj);
         }
 
         public override int GetHashCode()

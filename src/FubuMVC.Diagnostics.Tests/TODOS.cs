@@ -54,9 +54,15 @@ namespace FubuMVC.Diagnostics.Tests
         }
 
         [Test]
-        public void move_all_RecordingOutputWriter_stuff_to_OutputWriter()
+        public void in_diagnostic_mode_use_a_different_IHttpWriter_that_could_be_used_to_nullo_the_writing()
         {
-            Assert.Fail("Do.");
+            Assert.Fail("NWO");
+        }
+
+        [Test]
+        public void Logger_will_NEVER_EVER_throw_exceptions()
+        {
+            Assert.Fail("NWO");
         }
     }
 }
