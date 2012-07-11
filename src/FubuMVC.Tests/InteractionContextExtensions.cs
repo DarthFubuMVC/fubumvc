@@ -1,7 +1,6 @@
-using FubuMVC.Core.Runtime.Logging;
-using FubuTestingSupport;
-using StructureMap.AutoMocking;
 using FubuCore;
+using FubuMVC.Core.Runtime.Logging;
+using StructureMap.AutoMocking;
 
 namespace FubuMVC.Tests
 {
