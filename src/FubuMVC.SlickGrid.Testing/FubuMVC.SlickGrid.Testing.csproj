@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{99A53042-2455-464F-A68E-00C401B177C0}</ProjectGuid>
+    <ProjectGuid>{D5B3BCA9-0BEC-4B5D-AA46-6B2BCF13A21C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FubuMVC.Diagnostics.Tests</RootNamespace>
-    <AssemblyName>FubuMVC.Diagnostics.Tests</AssemblyName>
+    <RootNamespace>FubuMVC.SlickGrid.Testing</RootNamespace>
+    <AssemblyName>FubuMVC.SlickGrid.Testing</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,20 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles.0.9.1.316\lib\Bottles.dll</HintPath>
-    </Reference>
     <Reference Include="FubuCore">
-      <HintPath>..\packages\FubuCore.0.9.9.166\lib\FubuCore.dll</HintPath>
+      <HintPath>..\packages\FubuCore.0.9.9.159\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuTestingSupport">
-      <HintPath>..\packages\FubuTestingSupport.0.9.9.166\lib\FubuTestingSupport.dll</HintPath>
+      <HintPath>..\packages\FubuTestingSupport.0.9.9.158\lib\FubuTestingSupport.dll</HintPath>
     </Reference>
     <Reference Include="HtmlTags">
-      <HintPath>..\packages\HtmlTags.1.1.0.86\lib\4.0\HtmlTags.dll</HintPath>
-    </Reference>
-    <Reference Include="Ionic.Zip">
-      <HintPath>..\packages\DotNetZip.1.9.1.8\lib\net20\Ionic.Zip.dll</HintPath>
+      <HintPath>..\packages\HtmlTags.1.1.0.80\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.framework.dll</HintPath>
@@ -66,7 +60,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -74,60 +67,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DiagnosticsCallWithAttribute.cs" />
-    <Compile Include="Configuration\Policies\DiagnosticsUrlAttributePolicyTester.cs" />
-    <Compile Include="Configuration\Policies\DiagnosticsUrlsTester.cs" />
-    <Compile Include="DiagnosticsExtensionTester.cs" />
-    <Compile Include="New\Routes\RouteReportTester.cs" />
-    <Compile Include="Runtime\ApplyTracingIntegrationTesting.cs" />
-    <Compile Include="Runtime\BehaviorTracerNodeTester.cs" />
-    <Compile Include="Runtime\BehaviorTracerTester.cs" />
-    <Compile Include="Runtime\BehaviorTracer_and_DiagnosticBehavior_construction_testing.cs" />
-    <Compile Include="Runtime\DebugDetectorTester.cs" />
-    <Compile Include="Runtime\Diagnostic_tracing_attachment_filtering_Tester.cs" />
-    <Compile Include="Runtime\DiagnosticNodeTester.cs" />
-    <Compile Include="Runtime\DiagnosticsPackageTester.cs" />
-    <Compile Include="Runtime\DiagnosticsRegistryTester.cs" />
-    <Compile Include="Runtime\DiagnosticsSettingsTester.cs" />
-    <Compile Include="Runtime\RequestHistoryCacheTester.cs" />
-    <Compile Include="Runtime\TimedReportTester.cs" />
-    <Compile Include="Runtime\Tracing\DiagnosticBehaviorTester.cs" />
-    <Compile Include="Features\Html\Decorators\DisplayPathBuilderTester.cs" />
-    <Compile Include="Features\Html\Decorators\PropertyExamplesBuilderTester.cs" />
-    <Compile Include="Features\Html\Decorators\PropertyLinksBuilderTester.cs" />
-    <Compile Include="Features\Html\HtmlConventionsPreviewContextFactoryTester.cs" />
-    <Compile Include="Features\Html\HtmlConventionsPreviewContextTester.cs" />
-    <Compile Include="Features\Html\PreviewModelActivatorTester.cs" />
-    <Compile Include="Features\Html\PreviewModelTypeResolverTester.cs" />
-    <Compile Include="Features\Html\SampleContextModel.cs" />
-    <Compile Include="Features\Html\when_previewing_html_conventions.cs" />
-    <Compile Include="Models\SampleGridModel.cs" />
-    <Compile Include="ObjectMother.cs" />
+    <Compile Include="ColumnDefinitionTester.cs" />
+    <Compile Include="GridDefinitionTester.cs" />
+    <Compile Include="GridRunnerTester.cs" />
+    <Compile Include="JsonValueWriterTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TODOS.cs" />
+    <Compile Include="StringBuilderJsonExtensionsTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.Diagnostics\FubuMVC.Diagnostics.csproj">
-      <Project>{A1DEB080-5A9A-44B4-A10B-84DA9BD07AF5}</Project>
-      <Name>FubuMVC.Diagnostics</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
-      <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
-      <Name>FubuMVC.StructureMap</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.Tests\FubuMVC.Tests.csproj">
-      <Project>{FEB91F9F-ECE2-480C-B39C-A44BBF1F7B01}</Project>
-      <Name>FubuMVC.Tests</Name>
+    <ProjectReference Include="..\FubuMVC.SlickGrid\FubuMVC.SlickGrid.csproj">
+      <Project>{A67A0CE1-E4C2-45FC-9019-829D434B2CC4}</Project>
+      <Name>FubuMVC.SlickGrid</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

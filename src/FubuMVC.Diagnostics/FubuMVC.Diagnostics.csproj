@@ -262,7 +262,9 @@
     <Compile Include="Core\CoreExtensions.cs" />
     <Compile Include="Core\Extensions\TagExtensions.cs" />
     <Compile Include="Core\Infrastructure\DiagnosticsDebugCallHandler.cs" />
-    <Compile Include="DiagnosticsMenu.cs" />
+    <Compile Include="Navigation\DiagnosticKeys.cs" />
+    <Compile Include="Navigation\DiagnosticNavigationPageExtensions.cs" />
+    <Compile Include="Navigation\DiagnosticsMenu.cs" />
     <Compile Include="NoDiagnosticsAttribute.cs" />
     <Compile Include="Runtime\ApplyTracing.cs" />
     <Compile Include="Runtime\Assets\BasicAssetDiagnostics.cs" />
@@ -324,16 +326,6 @@
     <Compile Include="FubuDiagnosticsUrlAttribute.cs" />
     <Compile Include="DiagnosticsException.cs" />
     <Compile Include="New\Routes\RouteExplorerEndpoint.cs" />
-    <Compile Include="SlickGrid\ColumnDefinition.cs" />
-    <Compile Include="SlickGrid\DiagnosticConstants.cs" />
-    <Compile Include="SlickGrid\GridDefinition.cs" />
-    <Compile Include="SlickGrid\GridFubuPageExtensions.cs" />
-    <Compile Include="SlickGrid\GridRunner.cs" />
-    <Compile Include="SlickGrid\IGridColumn.cs" />
-    <Compile Include="SlickGrid\IGridDataSource.cs" />
-    <Compile Include="SlickGrid\IGridDefinition.cs" />
-    <Compile Include="SlickGrid\JsonValueWriter.cs" />
-    <Compile Include="SlickGrid\StringBuilderExtensions.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -341,9 +333,17 @@
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.SlickGrid\FubuMVC.SlickGrid.csproj">
+      <Project>{A67A0CE1-E4C2-45FC-9019-829D434B2CC4}</Project>
+      <Name>FubuMVC.SlickGrid</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Spark\FubuMVC.Spark.csproj">
       <Project>{9D6BF559-6461-4EAC-BB16-F976FF43E8DA}</Project>
       <Name>FubuMVC.Spark</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.TwitterBootstrap\FubuMVC.TwitterBootstrap.csproj">
+      <Project>{F3A79B8C-C764-4B53-A75E-D18D29D14490}</Project>
+      <Name>FubuMVC.TwitterBootstrap</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

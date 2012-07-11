@@ -10,6 +10,7 @@ using FubuMVC.Diagnostics.Core.Configuration.Policies;
 using FubuMVC.Diagnostics.Core.Infrastructure;
 using FubuMVC.Diagnostics.Features.Html.Preview;
 using FubuMVC.Diagnostics.Features.Html.Preview.Decorators;
+using FubuMVC.Diagnostics.Navigation;
 using FubuMVC.Diagnostics.Runtime;
 using FubuMVC.Diagnostics.Runtime.Assets;
 using FubuMVC.Diagnostics.Runtime.Tracing;

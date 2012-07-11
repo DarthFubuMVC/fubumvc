@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F80AF1A2-F6A8-4A7D-A225-6F8FF0E6B451}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FubuMVC.JQueryUI</RootNamespace>
+    <AssemblyName>FubuMVC.JQueryUI</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="content\images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="content\scripts\jquery-ui-1.8.21.custom.min.js" />
+    <Content Include="content\styles\smoothness\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="content\styles\smoothness\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="content\styles\smoothness\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="content\styles\smoothness\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="content\styles\smoothness\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="content\styles\smoothness\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="content\styles\smoothness\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="content\styles\smoothness\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="content\styles\smoothness\images\ui-icons_222222_256x240.png" />
+    <Content Include="content\styles\smoothness\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="content\styles\smoothness\images\ui-icons_454545_256x240.png" />
+    <Content Include="content\styles\smoothness\images\ui-icons_888888_256x240.png" />
+    <Content Include="content\styles\smoothness\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="content\styles\smoothness\jquery-ui-1.8.21.custom.css" />
+    <Content Include="content\styles\themes\redmond\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="content\styles\themes\redmond\images\ui-bg_flat_55_fbec88_40x100.png" />
+    <Content Include="content\styles\themes\redmond\images\ui-bg_glass_75_d0e5f5_1x400.png" />
+    <Content Include="content\styles\themes\redmond\images\ui-bg_glass_85_dfeffc_1x400.png" />
+    <Content Include="content\styles\themes\redmond\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="content\styles\themes\redmond\images\ui-bg_gloss-wave_55_5c9ccc_500x100.png" />
+    <Content Include="content\styles\themes\redmond\images\ui-bg_inset-hard_100_f5f8f9_1x100.png" />
+    <Content Include="content\styles\themes\redmond\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="content\styles\themes\redmond\images\ui-icons_217bc0_256x240.png" />
+    <Content Include="content\styles\themes\redmond\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="content\styles\themes\redmond\images\ui-icons_469bdd_256x240.png" />
+    <Content Include="content\styles\themes\redmond\images\ui-icons_6da8d5_256x240.png" />
+    <Content Include="content\styles\themes\redmond\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="content\styles\themes\redmond\images\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="content\styles\themes\redmond\images\ui-icons_f9bd01_256x240.png" />
+    <Content Include="content\styles\themes\redmond\jquery-ui-1.8.21.custom.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="jquery.ui.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

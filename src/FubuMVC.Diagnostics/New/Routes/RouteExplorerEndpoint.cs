@@ -13,7 +13,7 @@ using FubuMVC.Core.Urls;
 using FubuCore.Reflection;
 using FubuMVC.Diagnostics.Chrome;
 using FubuMVC.Diagnostics.Features.Chains;
-using FubuMVC.Diagnostics.SlickGrid;
+using FubuMVC.SlickGrid;
 
 namespace FubuMVC.Diagnostics.New.Routes
 {
