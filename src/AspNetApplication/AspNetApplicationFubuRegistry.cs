@@ -1,4 +1,3 @@
-using AspNetApplication.ServerSideEvents;
 using FubuMVC.Core;
 
 namespace AspNetApplication
@@ -10,7 +9,6 @@ namespace AspNetApplication
             Actions.IncludeClassesSuffixedWithController();
 
             Views.TryToAttachWithDefaultConventions();
-            Routes.HomeIs<SSEClientController>(x => x.get_events());
         }
     }
 }

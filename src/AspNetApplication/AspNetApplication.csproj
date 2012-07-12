@@ -83,13 +83,6 @@
     </Compile>
     <Compile Include="GoHereController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServerSideEvents\Classes.cs" />
-    <Compile Include="ServerSideEvents\ServerEvent.cs" />
-    <Compile Include="ServerSideEvents\ServerEventWriter.cs" />
-    <Compile Include="ServerSideEvents\Topic.cs" />
-    <Compile Include="ServerSideEvents\SimpleFlowController.cs" />
-    <Compile Include="ServerSideEvents\SimpleInput.cs" />
-    <Compile Include="ServerSideEvents\SSEClientController.cs" />
     <Compile Include="FileUpload\FileUploadController.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -127,7 +120,9 @@
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="WidgetSpikes\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="app.asset.config" />
   </ItemGroup>
