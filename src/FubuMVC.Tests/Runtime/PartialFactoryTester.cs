@@ -40,6 +40,7 @@ namespace FubuMVC.Tests.Runtime
                 .Return(behavior);
 
             ClassUnderTest.BuildPartial(ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null)))
+                .ShouldBeOfType<PartialCurrentChainSwitcher>().Inner
                 .ShouldBeTheSameAs(behavior);
         }
 
@@ -55,6 +56,7 @@ namespace FubuMVC.Tests.Runtime
                 .Return(behavior);
 
             ClassUnderTest.BuildPartial(typeof (Model1))
+                .ShouldBeOfType<PartialCurrentChainSwitcher>().Inner
                 .ShouldBeTheSameAs(behavior);
         }
     }
