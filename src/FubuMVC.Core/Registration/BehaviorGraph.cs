@@ -363,6 +363,16 @@ namespace FubuMVC.Core.Registration
         }
 
         /// <summary>
+        /// Finds the BehaviorChain for an ActionCall
+        /// </summary>
+        /// <param name="call"></param>
+        /// <returns></returns>
+        public BehaviorChain BehaviorFor(ActionCall call)
+        {
+            return BehaviorForActionCall(call);
+        }
+
+        /// <summary>
         ///   Finds the Id of the single BehaviorChain
         ///   that matches the inputType
         /// </summary>
@@ -379,14 +389,18 @@ namespace FubuMVC.Core.Registration
         /// </summary>
         public Guid IdForCall(ActionCall call)
         {
+            return BehaviorForActionCall(call).UniqueId;
+        }
+
+        private BehaviorChain BehaviorForActionCall(ActionCall call)
+        {
             var chain = Behaviors.FirstOrDefault(x => x.FirstCall().Equals(call));
 
             if (chain == null)
             {
                 throw new FubuException(2152, "Could not find a behavior for action {0}", call.Description);
             }
-
-            return chain.UniqueId;
+            return chain;
         }
 
         /// <summary>
