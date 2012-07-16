@@ -13,3 +13,4 @@ up and running with a view engine.
 
    spark/usingspark
    razor/usingrazor
+   forms
