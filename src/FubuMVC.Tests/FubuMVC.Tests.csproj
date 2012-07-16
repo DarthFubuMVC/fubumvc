@@ -161,6 +161,7 @@
     <Compile Include="Runtime\Dates\Date_services_registration.cs" />
     <Compile Include="Runtime\Logging\LoggerTester.cs" />
     <Compile Include="Runtime\Logging\Logger_should_be_registered.cs" />
+    <Compile Include="Runtime\PartialChainSwitcherTester.cs" />
     <Compile Include="StructureMapIoC\UsesTheIsSingletonPropertyTester.cs" />
     <Compile Include="StubRequestHeaders.cs" />
     <Compile Include="Assets\MimetypeRegistrationActivatorTester.cs" />

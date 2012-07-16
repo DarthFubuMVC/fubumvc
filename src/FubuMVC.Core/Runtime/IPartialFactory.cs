@@ -43,18 +43,18 @@ namespace FubuMVC.Core.Runtime
         private IActionBehavior BuildPartial(BehaviorChain chain)
         {
             var behavior = _factory.BuildBehavior(_arguments, chain.UniqueId);
-            return new PartialCurrentChainSwitcher(behavior, _currentChain, chain);
+            return new PartialChainSwitcher(behavior, _currentChain, chain);
         }
     }
 
-    public class PartialCurrentChainSwitcher : IActionBehavior
+    public class PartialChainSwitcher : IActionBehavior
     {
         private readonly ICurrentChain _chainStack;
         private readonly BehaviorChain _targetChain;
 
         public IActionBehavior Inner { get; private set; }
 
-        public PartialCurrentChainSwitcher(IActionBehavior inner, ICurrentChain chainStack, BehaviorChain targetChain)
+        public PartialChainSwitcher(IActionBehavior inner, ICurrentChain chainStack, BehaviorChain targetChain)
         {
             Inner = inner;
             _chainStack = chainStack;
