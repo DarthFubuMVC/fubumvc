@@ -1,0 +1,3 @@
+﻿<use master="PartialLayout" />
+<viewdata model="FubuMVC.IntegrationTesting.ViewEngines.Spark.PartialNoLayout.Features.HelloPartial.HelloPartialViewModel" />
+<p>In a partial</p>
