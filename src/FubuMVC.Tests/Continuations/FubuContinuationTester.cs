@@ -259,7 +259,7 @@ namespace FubuMVC.Tests.Continuations
 
             var partialFactory = MockRepository.GenerateStub<IPartialFactory>();
             var partialBehavior = MockRepository.GenerateStub<IActionBehavior>();
-            partialFactory.Stub(f => f.BuildPartial(typeof(object))).Return(partialBehavior);
+            partialFactory.Stub(f => f.BuildBehavior(typeof(object))).Return(partialBehavior);
             var handler = new ContinuationHandler(urlRegistry, outputWriter, fubuRequest, partialFactory);
             var insideBehavior = MockRepository.GenerateStub<IActionBehavior>();
             handler.InsideBehavior = insideBehavior;
@@ -268,7 +268,7 @@ namespace FubuMVC.Tests.Continuations
             handler.Invoke();
 
             //Assert TransferTo was called by _request.Get<FubuContinuation>().Process(this);
-            partialFactory.AssertWasCalled(f=>f.BuildPartial(typeof(object)));
+            partialFactory.AssertWasCalled(f=>f.BuildBehavior(typeof(object)));
             partialBehavior.AssertWasCalled(p=>p.InvokePartial());
             //Assert performInvoke() returned Stop
             insideBehavior.AssertWasNotCalled(b=>b.Invoke());

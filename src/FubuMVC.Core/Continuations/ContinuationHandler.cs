@@ -55,13 +55,13 @@ namespace FubuMVC.Core.Continuations
 
             _request.SetObject(input);
 
-            IActionBehavior partial = _factory.BuildPartial(input.GetType());
+            IActionBehavior partial = _factory.BuildBehavior(input.GetType());
             partial.InvokePartial();
         }
 
         public void TransferToCall(ActionCall call)
         {
-            IActionBehavior partial = _factory.BuildPartial(call);
+            IActionBehavior partial = _factory.BuildBehavior(call);
             partial.InvokePartial();
         }
 
