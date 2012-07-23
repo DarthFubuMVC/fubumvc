@@ -11,6 +11,8 @@ namespace FubuMVC.Core.Runtime
     {
         IActionBehavior BuildPartial(Type inputType);
         IActionBehavior BuildPartial(ActionCall call);
+        IActionBehavior BuildBehavior(Type type);
+        IActionBehavior BuildBehavior(ActionCall call);
     }
 
     public class PartialFactory : IPartialFactory
@@ -40,10 +42,56 @@ namespace FubuMVC.Core.Runtime
             return BuildPartial(chain);
         }
 
+        public IActionBehavior BuildBehavior(Type type)
+        {
+            var chain = _graph.BehaviorFor(type);
+            return BuildBehavior(chain);
+        }
+
+        public IActionBehavior BuildBehavior(ActionCall call)
+        {
+            var chain = _graph.BehaviorFor(call);
+            return BuildBehavior(chain);
+        }
+
+        private IActionBehavior BuildBehavior(BehaviorChain chain)
+        {
+            var behavior = _factory.BuildBehavior(_arguments, chain.UniqueId);
+            return new FullChainSwitcher(behavior, _currentChain, chain);
+        }
+
         private IActionBehavior BuildPartial(BehaviorChain chain)
         {
             var behavior = _factory.BuildBehavior(_arguments, chain.UniqueId);
             return new PartialChainSwitcher(behavior, _currentChain, chain);
+        }
+    }
+
+    public class FullChainSwitcher : IActionBehavior
+    {
+        public IActionBehavior Inner { get; private set; }
+        private readonly ICurrentChain _chainStack;
+        private readonly BehaviorChain _targetChain;
+
+        public FullChainSwitcher(IActionBehavior inner, 
+            ICurrentChain chainStack, 
+            BehaviorChain targetChain)
+        {
+            Inner = inner;
+            _chainStack = chainStack;
+            _targetChain = targetChain;
+        }
+
+        public void Invoke()
+        {
+            throw new InvalidOperationException("Not valid unless being used with partial invocation.");
+        }
+
+        public void InvokePartial()
+        {
+            _chainStack.Pop();
+            _chainStack.Push(_targetChain);
+            Inner.InvokePartial();
         }
     }
 
