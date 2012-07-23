@@ -3,6 +3,7 @@ using FubuMVC.IntegrationTesting.Conneg;
 using FubuMVC.IntegrationTesting.ViewEngines.Spark.HelloSpark;
 using FubuMVC.IntegrationTesting.ViewEngines.Spark.PartialNoLayout.Features.HelloPartial;
 using FubuMVC.IntegrationTesting.ViewEngines.Spark.PartialNoLayout.Features.UsesPartial;
+using FubuMVC.IntegrationTesting.ViewEngines.Spark.PartialNoLayout.Features.UsesTransferTo;
 using FubuMVC.Spark;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -17,6 +18,7 @@ namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.PartialNoLayout
             registry.Import<SparkEngine>();
             registry.Actions.IncludeType<UsesPartialController>();
             registry.Actions.IncludeType<HelloPartialController>();
+            registry.Actions.IncludeType<TransferToController>();
             registry.Views.TryToAttachWithDefaultConventions();
         }
 
@@ -29,6 +31,14 @@ namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.PartialNoLayout
             text.ShouldContain("<h1>Default layout</h1>");
             text.ShouldContain("<p>In a partial</p>");
             text.ShouldNotContain("<h1>This layout means FAIL!</h1>");
+        }
+
+        [Test]
+        public void should_apply_layout_when_transfered_to()
+        {
+            var text = endpoints.Get<TransferToController>(x => x.Tranfer()).ReadAsText();
+            text.ShouldContain("<p>In a partial</p>");
+            text.ShouldContain("<h1>This layout means FAIL!</h1>");
         }
     }
 }
