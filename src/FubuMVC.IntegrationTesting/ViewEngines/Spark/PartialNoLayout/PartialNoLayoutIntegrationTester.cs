@@ -53,5 +53,13 @@ namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.PartialNoLayout
             text.ShouldContain("<p>In a partial</p>");
             text.ShouldNotContain("<h1>This layout means FAIL!</h1>");
         }
+
+
+        [Test]
+        public void partials_should_still_have_access_to_master_layout_content_areas()
+        {
+            endpoints.Get<UsesPartialController>(x => x.Execute()).ScriptNames()
+                .ShouldContain("_/herp/derp.js");
+        }
     }
 }
