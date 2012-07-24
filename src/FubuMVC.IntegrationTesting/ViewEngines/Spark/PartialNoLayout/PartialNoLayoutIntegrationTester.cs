@@ -3,6 +3,7 @@ using FubuMVC.Core;
 using FubuMVC.IntegrationTesting.Conneg;
 using FubuMVC.IntegrationTesting.ViewEngines.Spark.HelloSpark;
 using FubuMVC.IntegrationTesting.ViewEngines.Spark.PartialNoLayout.Features.HelloPartial;
+using FubuMVC.IntegrationTesting.ViewEngines.Spark.PartialNoLayout.Features.UsesNativePartials;
 using FubuMVC.IntegrationTesting.ViewEngines.Spark.PartialNoLayout.Features.UsesPartial;
 using FubuMVC.IntegrationTesting.ViewEngines.Spark.PartialNoLayout.Features.UsesTransferTo;
 using FubuMVC.Spark;
@@ -21,6 +22,7 @@ namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.PartialNoLayout
             registry.Actions.IncludeType<HelloPartialController>();
             registry.Actions.IncludeType<TransferToController>();
             registry.Actions.IncludeType<RedirectToController>();
+            registry.Actions.IncludeType<UsesNativeController>();
             registry.Views.TryToAttachWithDefaultConventions();
         }
 
@@ -60,6 +62,13 @@ namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.PartialNoLayout
         {
             endpoints.Get<UsesPartialController>(x => x.Execute()).ScriptNames()
                 .ShouldContain("_/herp/derp.js");
+        }
+        [Test]
+        public void native_partials_happy_path()
+        {
+            var text = endpoints.Get<UsesNativeController>(x => x.Render()).ReadAsText();
+            
+            text.ShouldContain("<div>Hello Native</div>");
         }
     }
 }

@@ -117,6 +117,7 @@
     <Compile Include="ViewEngines\Spark\HelloSpark\PartialsWithSparkIntegrationTester.cs" />
     <Compile Include="ViewEngines\Spark\HelloSpark\SparkEngineIntegrationTester.cs" />
     <Compile Include="ViewEngines\Spark\PartialNoLayout\Features\HelloPartial\HelloPartialController.cs" />
+    <Compile Include="ViewEngines\Spark\PartialNoLayout\Features\UsesNativePartials\UsesNativeController.cs" />
     <Compile Include="ViewEngines\Spark\PartialNoLayout\Features\UsesPartial\UsesPartialController.cs" />
     <Compile Include="ViewEngines\Spark\PartialNoLayout\Features\UsesTransferTo\TransferToController.cs" />
     <Compile Include="ViewEngines\Spark\PartialNoLayout\PartialNoLayoutIntegrationTester.cs" />
@@ -272,6 +273,8 @@
     <None Include="ViewEngines\Spark\HelloSpark\Partial1.spark" />
     <None Include="ViewEngines\Spark\HelloSpark\TakeABreath.spark" />
     <None Include="ViewEngines\Spark\PartialNoLayout\Features\HelloPartial\SayHelloPartial.spark" />
+    <None Include="ViewEngines\Spark\PartialNoLayout\Features\UsesNativePartials\UserNative.spark" />
+    <None Include="ViewEngines\Spark\PartialNoLayout\Features\UsesNativePartials\_NativePartial.spark" />
     <None Include="ViewEngines\Spark\PartialNoLayout\Features\UsesPartial\UsesPartial.spark" />
     <None Include="ViewEngines\Spark\PartialNoLayout\Shared\Application.spark" />
     <None Include="ViewEngines\Spark\PartialNoLayout\Shared\PartialLayout.spark" />
