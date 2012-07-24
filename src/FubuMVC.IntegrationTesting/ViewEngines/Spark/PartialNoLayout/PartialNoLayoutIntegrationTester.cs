@@ -1,4 +1,5 @@
 ﻿using System;
+using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.IntegrationTesting.Conneg;
 using FubuMVC.IntegrationTesting.ViewEngines.Spark.HelloSpark;
@@ -35,6 +36,14 @@ namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.PartialNoLayout
             text.ShouldContain("<h1>Default layout</h1>");
             text.ShouldContain("<p>In a partial</p>");
             text.ShouldNotContain("<h1>This layout means FAIL!</h1>");
+        }
+
+        [Test]
+        public void invoking_action_normally_should_render_the_correct_layout()
+        {
+            var text = endpoints.Get<HelloPartialController>(x => x.Render()).ReadAsText();
+            text.ShouldContain("<p>In a partial</p>");
+            text.ShouldContain("<h1>This layout means FAIL!</h1>");
         }
 
         [Test]
