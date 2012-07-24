@@ -6,6 +6,10 @@
          {
              return new HelloPartialViewModel();
          }
+         public HelloPartialViewModel Render()
+         {
+             return new HelloPartialViewModel();
+         }
     }
 
     public class HelloPartialInputModel
