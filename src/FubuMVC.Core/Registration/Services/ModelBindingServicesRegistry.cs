@@ -2,10 +2,10 @@ using FubuCore.Binding;
 using FubuCore.Binding.InMemory;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.AspNet;
-using FubuMVC.Core.Registration;
 using FubuMVC.Core.Resources.PathBased;
+using FubuMVC.Core.Runtime;
 
-namespace FubuMVC.Core.Runtime
+namespace FubuMVC.Core.Registration.Services
 {
     public class ModelBindingServicesRegistry : ServiceRegistry
     {

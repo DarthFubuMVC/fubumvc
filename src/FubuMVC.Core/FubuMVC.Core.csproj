@@ -270,7 +270,7 @@
     <Compile Include="Runtime\HeaderValueAttribute.cs" />
     <Compile Include="Runtime\IConfigurationObserver.cs" />
     <Compile Include="Runtime\IRequestObserver.cs" />
-    <Compile Include="Runtime\ModelBindingServicesRegistry.cs" />
+    <Compile Include="Registration\Services\ModelBindingServicesRegistry.cs" />
     <Compile Include="Registration\ActionMethodFilter.cs" />
     <Compile Include="Registration\ActionSource.cs" />
     <Compile Include="Registration\Conventions\DictionaryOutputConvention.cs" />
