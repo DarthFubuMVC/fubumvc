@@ -13,6 +13,7 @@ using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.Services;
 using FubuMVC.Core.Resources.PathBased;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
