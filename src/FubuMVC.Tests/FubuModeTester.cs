@@ -42,5 +42,11 @@ namespace FubuMVC.Tests
             FubuMode.Reset();
             FubuMode.InDevelopment().ShouldBeFalse();
         }
+
+        [Test]
+        public void fubu_mode_should_default_to_false_if_environment_doesnt_exist()
+        {
+            FubuMode.InDevelopment().ShouldBeFalse();
+        }
     }
 }
