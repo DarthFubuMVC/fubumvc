@@ -24,7 +24,7 @@ namespace FubuMVC.Core
 
         public static void Reset()
         {
-            _determineMode = new Lazy<string>(() => Environment.GetEnvironmentVariable("FubuMode"));
+            _determineMode = new Lazy<string>(() => Environment.GetEnvironmentVariable("FubuMode") ?? "");
         }
 
         public static void Mode(string mode)
@@ -40,8 +40,7 @@ namespace FubuMVC.Core
 
          
         /// <summary>
-        /// Use any possible logic you'd like.  Do it by testing for the existence of a 
-        /// file, a *gulp* App.config flag, whatever
+        /// Provides a lambda to allow Mode to be set through complex logic using delayed execution 
         /// </summary>
         /// <param name="devTest"></param>
         public static void Mode(Func<string> devTest)
