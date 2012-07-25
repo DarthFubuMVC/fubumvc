@@ -104,6 +104,7 @@
     <Compile Include="Runtime\Dates\DateTimePolicies.cs" />
     <Compile Include="Runtime\Dates\DateTimeToUtcConverterFamily.cs" />
     <Compile Include="Runtime\Dates\UtcDateHandling.cs" />
+    <Compile Include="Runtime\Files\FileClasses.cs" />
     <Compile Include="Runtime\Logging\Logger.cs" />
     <Compile Include="Runtime\Logging\ILogger.cs" />
     <Compile Include="Runtime\Logging\ILogListener.cs" />

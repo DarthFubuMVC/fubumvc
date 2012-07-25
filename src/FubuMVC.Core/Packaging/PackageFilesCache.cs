@@ -7,7 +7,7 @@ using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.Packaging
 {
-    [Singleton]
+    [Singleton, MarkedForTermination("Could eliminate this soon")]
     public class PackageFilesCache : IPackageFiles
     {
         private readonly IList<string> _directories = new List<string>();

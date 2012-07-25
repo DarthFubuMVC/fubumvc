@@ -4,6 +4,7 @@ using FubuCore;
 
 namespace FubuMVC.Core.Packaging
 {
+    [MarkedForTermination]
     public interface IPackageFiles
     {
         void AddDirectory(string directory);
