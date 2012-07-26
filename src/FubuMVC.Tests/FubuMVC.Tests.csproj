@@ -269,7 +269,6 @@
     <Compile Include="CurrentRequestTester.cs" />
     <Compile Include="CustomExceptionsTester.cs" />
     <Compile Include="FubuRegistryImportingTester.cs" />
-    <Compile Include="Packaging\PackageFilesIntegrationTester.cs" />
     <Compile Include="Packaging\PackageManifestReaderIntegratedTester.cs" />
     <Compile Include="Packaging\ZipFilePackageLoaderTester.cs" />
     <Compile Include="Runtime\Formatters\JsonFormatterTester.cs" />
