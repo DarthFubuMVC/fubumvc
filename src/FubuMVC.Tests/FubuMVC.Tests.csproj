@@ -159,6 +159,9 @@
     <Compile Include="Runtime\Dates\DateTimeFormatting_import_integration_testing.cs" />
     <Compile Include="Runtime\Dates\DateTimeToUtcConverterFamilyTester.cs" />
     <Compile Include="Runtime\Dates\Date_services_registration.cs" />
+    <Compile Include="Runtime\Files\ContentFolderTester.cs" />
+    <Compile Include="Runtime\Files\FubuApplicationFilesSmokeTester.cs" />
+    <Compile Include="Runtime\Files\FubuFileTester.cs" />
     <Compile Include="Runtime\Logging\LoggerTester.cs" />
     <Compile Include="Runtime\Logging\Logger_should_be_registered.cs" />
     <Compile Include="Runtime\PartialChainSwitcherTester.cs" />
@@ -508,6 +511,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Runtime\Files\Data\a.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Runtime\Files\Data\b.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Runtime\Files\Data\c.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Runtime\Files\Data\d.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Templating\data\example1\example1.csproj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

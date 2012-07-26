@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
 using Bottles;
 using Bottles.Diagnostics;
+using FubuCore;
 
 namespace FubuMVC.Core.Packaging
 {
+    [Obsolete, MarkedForTermination("Unnecessary with IFubuApplicationFiles")]
     public class PackageFileActivator : IActivator
     {
         private readonly IPackageFiles _files;

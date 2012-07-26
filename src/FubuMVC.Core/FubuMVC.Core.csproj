@@ -93,6 +93,7 @@
     <Compile Include="Assets\RecordingAssetRegistration.cs" />
     <Compile Include="Behaviors\AsyncContinueWithBehavior.cs" />
     <Compile Include="Behaviors\AsyncInterceptExceptionBehavior.cs" />
+    <Compile Include="CanBeMultiplesAttribute.cs" />
     <Compile Include="Endpoints\EndpointDriver.cs" />
     <Compile Include="Endpoints\EndpointFormatting.cs" />
     <Compile Include="Endpoints\EndpointInvocation.cs" />
@@ -104,7 +105,11 @@
     <Compile Include="Runtime\Dates\DateTimePolicies.cs" />
     <Compile Include="Runtime\Dates\DateTimeToUtcConverterFamily.cs" />
     <Compile Include="Runtime\Dates\UtcDateHandling.cs" />
-    <Compile Include="Runtime\Files\FileClasses.cs" />
+    <Compile Include="Runtime\Files\ContentFolder.cs" />
+    <Compile Include="Runtime\Files\FubuApplicationFiles.cs" />
+    <Compile Include="Runtime\Files\FubuFile.cs" />
+    <Compile Include="Runtime\Files\IFubuApplicationFiles.cs" />
+    <Compile Include="Runtime\Files\IFubuFile.cs" />
     <Compile Include="Runtime\Logging\Logger.cs" />
     <Compile Include="Runtime\Logging\ILogger.cs" />
     <Compile Include="Runtime\Logging\ILogListener.cs" />

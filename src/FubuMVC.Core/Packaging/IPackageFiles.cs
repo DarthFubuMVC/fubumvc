@@ -4,7 +4,7 @@ using FubuCore;
 
 namespace FubuMVC.Core.Packaging
 {
-    [MarkedForTermination]
+    [Obsolete("Use IFubuApplicationFiles instead")]
     public interface IPackageFiles
     {
         void AddDirectory(string directory);
