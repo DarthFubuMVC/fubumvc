@@ -154,6 +154,8 @@
     <Compile Include="Assets\Http\AssetWriterTester.cs" />
     <Compile Include="Assets\Http\ContentPipelineTester.cs" />
     <Compile Include="Assets\Http\ContentWriterTester.cs" />
+    <Compile Include="Behaviors\Chrome\ChromeAttributeTester.cs" />
+    <Compile Include="Behaviors\Chrome\ChromeNodeTester.cs" />
     <Compile Include="ConfigurationGraph_DetermineConfigurationType_Tester.cs" />
     <Compile Include="Registration\default_action_discovery.cs" />
     <Compile Include="Runtime\Dates\DateTimeFormatting_import_integration_testing.cs" />

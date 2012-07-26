@@ -1,18 +1,10 @@
-using System;
-using FubuCore;
-using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.UI;
 
-namespace FubuMVC.Diagnostics.Chrome
+namespace FubuMVC.Core.Behaviors.Chrome
 {
-    public class ChromeContent
-    {
-        public string InnerContent { get; set; }
-    }
-
-    [MarkedForTermination("Going into FubuMVC.Core itself")]
-    public class ChromeBehavior : IActionBehavior
+    // Look in integration testing for this one.
+    public class ChromeBehavior<T> : IActionBehavior where T : ChromeContent, new()
     {
         private readonly IPartialInvoker _partials;
         private readonly IActionBehavior _inner;
@@ -29,7 +21,7 @@ namespace FubuMVC.Diagnostics.Chrome
         {
             var output = _writer.Record(() => _inner.Invoke());
 
-            var subject = new ChromeContent{
+            var subject = new T{
                 InnerContent = output.GetText()
             };
 

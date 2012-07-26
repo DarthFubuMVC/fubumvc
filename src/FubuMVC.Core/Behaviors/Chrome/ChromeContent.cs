@@ -1,6 +1,5 @@
-namespace FubuMVC.Diagnostics.Chrome
+namespace FubuMVC.Core.Behaviors.Chrome
 {
-    // TODO -- make this be an actionless view?
     public class ChromeContent
     {
         public string InnerContent { get; set; }
