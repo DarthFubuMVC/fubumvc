@@ -7,9 +7,7 @@ using FubuCore.Conversion;
 using FubuCore.Formatting;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
-using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Http;
-using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
@@ -24,7 +22,6 @@ using FubuMVC.Core.View.Activation;
 using FubuMVC.Core.Web.Security;
 using FubuTestingSupport;
 using NUnit.Framework;
-using IPackageFiles = FubuMVC.Core.Packaging.IPackageFiles;
 
 namespace FubuMVC.Tests.Registration
 {
@@ -35,72 +32,6 @@ namespace FubuMVC.Tests.Registration
         {
             BehaviorGraph.BuildEmptyGraph().Services.DefaultServiceFor<TService>().Type.ShouldEqual(
                 typeof (TImplementation));
-        }
-
-        [Test]
-        public void should_register_the_files_service_from_the_behavior_graph_into_the_container()
-        {
-            var graph = BehaviorGraph.BuildEmptyGraph();
-            graph.Services.DefaultServiceFor<IFubuApplicationFiles>().Value
-                .ShouldBeTheSameAs(graph.Files);
-        }
-
-        [Test]
-        public void nullo_request_observer_is_registered()
-        {
-            registeredTypeIs<IRequestObserver, NulloRequestObserver>();
-        }
-
-        [Test]
-        public void navigation_service_is_registered()
-        {
-            registeredTypeIs<INavigationService, NavigationService>();
-        }
-
-        [Test]
-        public void menu_state_service_is_registered()
-        {
-            registeredTypeIs<IMenuStateService, MenuStateService>();
-        }
-
-        [Test]
-        public void navigation_activator_is_registered()
-        {
-            BehaviorGraph.BuildEmptyGraph().Services.ServicesFor<IActivator>()
-                .Any(x => x.Type == typeof(NavigationActivator)).ShouldBeTrue();
-        }
-
-        [Test]
-        public void the_conditional_service_is_registered()
-        {
-            registeredTypeIs<IConditionalService, ConditionalService>();
-        }
-
-        [Test]
-        public void a_value_of_stringifier_is_registered()
-        {
-            BehaviorGraph.BuildEmptyGraph().Services.DefaultServiceFor(typeof (Stringifier)).Value.ShouldBeOfType
-                <Stringifier>();
-        }
-
-        [Test]
-        public void registers_the_display_conversion_registry_activator()
-        {
-            BehaviorGraph.BuildEmptyGraph().Services.ServicesFor(typeof (IActivator))
-                .Any(x => x.Type == typeof (DisplayConversionRegistryActivator));
-        }
-
-        [Test]
-        public void standin_current_http_request_is_used_as_the_default()
-        {
-            registeredTypeIs<ICurrentHttpRequest, StandInCurrentHttpRequest>();
-        }
-
-
-        [Test]
-        public void standin_ClientConnectivity_is_used_as_the_default()
-        {
-            registeredTypeIs<IClientConnectivity, StandInClientConnectivity>();
         }
 
         [Test]
@@ -158,18 +89,19 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
-        public void an_activator_for_PackageFileActivator_is_registered()
+        public void a_value_of_stringifier_is_registered()
         {
-            BehaviorGraph.BuildEmptyGraph().Services.ServicesFor<IActivator>()
-                .Any(x => x.Type == typeof (PackageFileActivator)).ShouldBeTrue();
+            BehaviorGraph.BuildEmptyGraph().Services.DefaultServiceFor(typeof (Stringifier)).Value.ShouldBeOfType
+                <Stringifier>();
         }
 
         [Test]
         public void an_activator_for_HtmlConventionActivator_is_registered()
         {
             BehaviorGraph.BuildEmptyGraph().Services.ServicesFor<IActivator>()
-                .Any(x => x.Type == typeof(HtmlConventionsActivator)).ShouldBeTrue();
+                .Any(x => x.Type == typeof (HtmlConventionsActivator)).ShouldBeTrue();
         }
+
 
 
         [Test]
@@ -200,7 +132,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void default_chain_resolver_is_registered()
         {
-            ServiceRegistry.ShouldBeSingleton(typeof(ChainResolutionCache)).ShouldBeTrue();
+            ServiceRegistry.ShouldBeSingleton(typeof (ChainResolutionCache)).ShouldBeTrue();
             registeredTypeIs<IChainResolver, ChainResolutionCache>();
         }
 
@@ -228,19 +160,36 @@ namespace FubuMVC.Tests.Registration
             registeredTypeIs<IFileSystem, FileSystem>();
         }
 
-        
+        [Test]
+        public void menu_state_service_is_registered()
+        {
+            registeredTypeIs<IMenuStateService, MenuStateService>();
+        }
+
+        [Test]
+        public void navigation_activator_is_registered()
+        {
+            BehaviorGraph.BuildEmptyGraph().Services.ServicesFor<IActivator>()
+                .Any(x => x.Type == typeof (NavigationActivator)).ShouldBeTrue();
+        }
+
+        [Test]
+        public void navigation_service_is_registered()
+        {
+            registeredTypeIs<INavigationService, NavigationService>();
+        }
+
+        [Test]
+        public void nullo_request_observer_is_registered()
+        {
+            registeredTypeIs<IRequestObserver, NulloRequestObserver>();
+        }
+
+
         [Test]
         public void object_converter_is_registered()
         {
             registeredTypeIs<IObjectConverter, ObjectConverter>();
-        }
-
-        [Test]
-        public void package_files_are_registered()
-        {
-            registeredTypeIs<IPackageFiles, PackageFilesCache>();
-
-            ServiceRegistry.ShouldBeSingleton(typeof (PackageFilesCache));
         }
 
         [Test]
@@ -261,11 +210,26 @@ namespace FubuMVC.Tests.Registration
             registeredTypeIs<IPartialInvoker, PartialInvoker>();
         }
 
+        [Test]
+        public void registers_the_display_conversion_registry_activator()
+        {
+            BehaviorGraph.BuildEmptyGraph().Services.ServicesFor(typeof (IActivator))
+                .Any(x => x.Type == typeof (DisplayConversionRegistryActivator));
+        }
+
 
         [Test]
         public void setter_binder_is_registered()
         {
             registeredTypeIs<ISetterBinder, SetterBinder>();
+        }
+
+        [Test]
+        public void should_register_the_files_service_from_the_behavior_graph_into_the_container()
+        {
+            var graph = BehaviorGraph.BuildEmptyGraph();
+            graph.Services.DefaultServiceFor<IFubuApplicationFiles>().Value
+                .ShouldBeTheSameAs(graph.Files);
         }
 
         [Test]
@@ -275,11 +239,27 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void standin_ClientConnectivity_is_used_as_the_default()
+        {
+            registeredTypeIs<IClientConnectivity, StandInClientConnectivity>();
+        }
+
+        [Test]
+        public void standin_current_http_request_is_used_as_the_default()
+        {
+            registeredTypeIs<ICurrentHttpRequest, StandInCurrentHttpRequest>();
+        }
+
+        [Test]
+        public void the_conditional_service_is_registered()
+        {
+            registeredTypeIs<IConditionalService, ConditionalService>();
+        }
+
+        [Test]
         public void url_registry_is_registered()
         {
             registeredTypeIs<IUrlRegistry, UrlRegistry>();
         }
-
-
     }
 }

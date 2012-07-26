@@ -240,7 +240,6 @@
     <Compile Include="Http\RequestDataExtensions.cs" />
     <Compile Include="Http\RouteDataValues.cs" />
     <Compile Include="IFubuRegistry.cs" />
-    <Compile Include="Packaging\PackagingServiceRegistry.cs" />
     <Compile Include="Registration\Conventions\BehaviorChainPolicy.cs" />
     <Compile Include="Registration\Conventions\AttachInputPolicy.cs" />
     <Compile Include="Registration\Conventions\AttachOutputPolicy.cs" />
@@ -379,9 +378,6 @@
     <Compile Include="ConfigurationGraph.cs" />
     <Compile Include="FubuRegistry.UserInterfaceExpressions.cs" />
     <Compile Include="IFubuRegistryExtension.cs" />
-    <Compile Include="Packaging\IPackageFiles.cs" />
-    <Compile Include="Packaging\PackageFileActivator.cs" />
-    <Compile Include="Packaging\PackageFilesCache.cs" />
     <Compile Include="Packaging\PackageSettingsSource.cs" />
     <Compile Include="Packaging\VirtualPaths\VirtualPathProviderActivator.cs" />
     <Compile Include="Packaging\ZipFilePackageLoader.cs" />
