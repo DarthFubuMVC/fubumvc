@@ -3,7 +3,7 @@
   <Role>module</Role>
   <Name>FubuMVC.Diagnostics</Name>
   <assembly>FubuMVC.Diagnostics</assembly>
-  <ContentFileSet Include="*.spark;Shared/*.spark;Shared/*.xml;Content/*.*;*.config;Features/*.spark;Notifications/*.spark;">
+  <ContentFileSet Include="*.spark;Shared/*.xml;Content/*.*;*.config">
     <DeepSearch>true</DeepSearch>
   </ContentFileSet>
 </package>

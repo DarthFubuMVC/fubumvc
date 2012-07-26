@@ -35,16 +35,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles.0.9.1.299\lib\Bottles.dll</HintPath>
+      <HintPath>..\packages\Bottles.0.9.1.316\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
-      <HintPath>..\packages\FubuCore.0.9.9.158\lib\FubuCore.dll</HintPath>
+      <HintPath>..\packages\FubuCore.0.9.9.165\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuLocalization">
-      <HintPath>..\packages\FubuLocalization.0.9.5.53\lib\FubuLocalization.dll</HintPath>
+      <HintPath>..\packages\FubuLocalization.0.9.5.61\lib\FubuLocalization.dll</HintPath>
     </Reference>
     <Reference Include="HtmlTags">
-      <HintPath>..\packages\HtmlTags.1.1.0.78\lib\4.0\HtmlTags.dll</HintPath>
+      <HintPath>..\packages\HtmlTags.1.1.0.86\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Ionic.Zip">
       <HintPath>..\packages\DotNetZip.1.9.1.8\lib\net20\Ionic.Zip.dll</HintPath>
@@ -118,7 +118,6 @@
     <Compile Include="Runtime\Logging\ExceptionReport.cs" />
     <Compile Include="Runtime\Logging\LogRecord.cs" />
     <Compile Include="Runtime\Logging\FileOutputReport.cs" />
-    <Compile Include="Runtime\Logging\ExceptionReport.cs" />
     <Compile Include="Runtime\Logging\FinishedRecordingOutput.cs" />
     <Compile Include="Runtime\Logging\HttpStatusReport.cs" />
     <Compile Include="Runtime\Logging\Logger.cs" />
@@ -294,7 +293,6 @@
     <Compile Include="Resources\Conneg\WriteWithFormatter.cs" />
     <Compile Include="Runtime\HeaderValueAttribute.cs" />
     <Compile Include="Runtime\IConfigurationObserver.cs" />
-    <Compile Include="Runtime\IRequestObserver.cs" />
     <Compile Include="Registration\Services\ModelBindingServicesRegistry.cs" />
     <Compile Include="Registration\ActionMethodFilter.cs" />
     <Compile Include="Registration\ActionSource.cs" />

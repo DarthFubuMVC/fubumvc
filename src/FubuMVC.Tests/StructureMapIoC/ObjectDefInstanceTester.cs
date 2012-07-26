@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using FubuCore;
 using FubuCore.Binding;
+using FubuCore.Dates;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.AspNet;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Runtime.Logging;
 using FubuMVC.StructureMap;
 using FubuMVC.Tests.Behaviors;
 using FubuTestingSupport;
@@ -70,6 +72,8 @@ namespace FubuMVC.Tests.StructureMapIoC
                     x.For<IFileSystem>().Use<FileSystem>();
                     x.For<IHttpWriter>().Use<NulloHttpWriter>();
                     x.For<IActionBehavior>().Use(new ObjectDefInstance(def));
+                    x.For<ILogger>().Use<Logger>();
+                    x.For<ISystemTime>().Use(SystemTime.Default);
                 });
 
             var jsonBehavior = container.GetInstance<IActionBehavior>().ShouldBeOfType<FakeJsonBehavior>();
