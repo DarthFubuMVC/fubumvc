@@ -14,6 +14,7 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
+using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.SessionState;
 using FubuMVC.Core.UI;
@@ -34,6 +35,14 @@ namespace FubuMVC.Tests.Registration
         {
             BehaviorGraph.BuildEmptyGraph().Services.DefaultServiceFor<TService>().Type.ShouldEqual(
                 typeof (TImplementation));
+        }
+
+        [Test]
+        public void should_register_the_files_service_from_the_behavior_graph_into_the_container()
+        {
+            var graph = BehaviorGraph.BuildEmptyGraph();
+            graph.Services.DefaultServiceFor<IFubuApplicationFiles>().Value
+                .ShouldBeTheSameAs(graph.Files);
         }
 
         [Test]

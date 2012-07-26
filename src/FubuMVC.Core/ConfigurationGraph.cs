@@ -16,6 +16,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Services;
 using FubuMVC.Core.Resources.PathBased;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.UI.Navigation;
@@ -233,6 +234,8 @@ namespace FubuMVC.Core
             {
                 yield return action;
             }
+
+            yield return new FileRegistration();
         }
 
         private IEnumerable<IConfigurationAction> navigationRegistrations()
@@ -322,11 +325,15 @@ namespace FubuMVC.Core
 
             return null;
         }
-    }
 
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
-    public class CanBeMultiplesAttribute : Attribute
-    {
+        internal class FileRegistration : IConfigurationAction
+        {
+            public void Configure(BehaviorGraph graph)
+            {
+                graph.Services.Clear(typeof(IFubuApplicationFiles));
+                graph.Services.AddService(graph.Files);
+            }
+        } 
     }
 
     public static class ConfigurationActionListExtensions

@@ -9,6 +9,7 @@ using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.UI.Navigation;
 using FubuMVC.Core.View.Attachment;
 
@@ -35,6 +36,7 @@ namespace FubuMVC.Core.Registration
         private readonly List<IChainForwarder> _forwarders = new List<IChainForwarder>();
         private readonly NavigationGraph _navigation = new NavigationGraph();
         private readonly ServiceGraph _services = new ServiceGraph();
+        private readonly Lazy<IFubuApplicationFiles> _files = new Lazy<IFubuApplicationFiles>(() => new FubuApplicationFiles());
 
         public static BehaviorGraph BuildFrom(FubuRegistry registry)
         {
@@ -67,6 +69,11 @@ namespace FubuMVC.Core.Registration
 
         public BehaviorGraph() : this(new NulloConfigurationObserver())
         {
+        }
+
+        public IFubuApplicationFiles Files
+        {
+            get { return _files.Value; }
         }
 
         public IEnumerable<IChainForwarder> Forwarders
