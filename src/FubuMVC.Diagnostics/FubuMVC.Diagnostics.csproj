@@ -268,7 +268,6 @@
     </Compile>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Chrome\ChromeBehavior.cs" />
-    <Compile Include="Chrome\ChromeContent.cs" />
     <Compile Include="Chrome\FakeEndpoint.cs" />
     <Compile Include="Core\AdvancedDiagnosticsFubuExtension.cs" />
     <Compile Include="Core\Configuration\ActionCallExtensions.cs" />
