@@ -25,7 +25,7 @@ namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.NestedPartials
         public void partials_nest_deeply_2()
         {
             endpoints.Get<FamilyController>(x => x.Jack(null)).ReadAsText().RemoveNewlines()
-                .ShouldContain("Jack-><div>Marcus-><div>Silvia</div></div></div>");
+                .ShouldContain("<div>Jack-><div>Marcus-><div>Silvia</div></div></div>");
         }
 
         [Test]
