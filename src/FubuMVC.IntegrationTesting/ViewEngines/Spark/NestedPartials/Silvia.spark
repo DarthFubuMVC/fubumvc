@@ -1,0 +1,3 @@
+﻿<viewdata model="FubuMVC.IntegrationTesting.ViewEngines.Spark.NestedPartials.SilviaViewModel" />
+<use namespace="FubuMVC.IntegrationTesting.ViewEngines.Spark.NestedPartials"/>
+<div>Silvia</div>
