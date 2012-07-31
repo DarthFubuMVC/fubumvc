@@ -1,6 +1,3 @@
-using System;
-using FubuCore;
-
 namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.NestedPartials
 {
     public class FamilyController
@@ -28,12 +25,4 @@ namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.NestedPartials
     public class MarcusViewModel {}
     public class GeorgeViewModel {}
     public class SilviaViewModel {}
-
-    public static class StringExtensions
-    {
-        public static string RemoveNewlines(this string value)
-        {
-            return value.IsEmpty() ? value : value.Replace(Environment.NewLine, "");
-        }
-    }
 }
