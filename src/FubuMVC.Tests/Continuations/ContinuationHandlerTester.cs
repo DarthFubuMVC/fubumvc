@@ -217,7 +217,7 @@ namespace FubuMVC.Tests.Continuations
             partial = MockRepository.GenerateMock<IActionBehavior>();
             input = new InputModel();
 
-            MockFor<IPartialFactory>().Expect(x => x.BuildPartial(typeof (InputModel))).Return(partial);
+            MockFor<IPartialFactory>().Expect(x => x.BuildBehavior(typeof (InputModel))).Return(partial);
 
             ProcessContinuation(FubuContinuation.TransferTo(input));
         }
@@ -258,7 +258,7 @@ namespace FubuMVC.Tests.Continuations
             call = ActionCall.For<ControllerTarget>(x => x.ZeroInOneOut());
             partial = MockRepository.GenerateMock<IActionBehavior>();
 
-            MockFor<IPartialFactory>().Expect(x => x.BuildPartial(call)).Return(partial);
+            MockFor<IPartialFactory>().Expect(x => x.BuildBehavior(call)).Return(partial);
 
             ProcessContinuation(FubuContinuation.TransferTo<ControllerTarget>(x => x.ZeroInOneOut()));
         }
