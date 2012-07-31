@@ -109,6 +109,19 @@ namespace FubuMVC.Core.Endpoints
             return wr.ToHttpCall();
         }
 
+        public HttpResponse PostJson<T>(T target, object input, string contentType = "text/json", string accept = "*/*")
+        {
+            return post(target, contentType, accept, stream =>
+            {
+                var serializer = new JavaScriptSerializer();
+                
+
+                var json = serializer.Serialize(input);
+                var bytes = Encoding.Default.GetBytes(json);
+                
+                stream.Write(bytes, 0, bytes.Length);
+            });
+        }
         public HttpResponse PostJson<T>(T target, string contentType = "text/json", string accept = "*/*")
         {
             return post(target, contentType, accept, stream =>
