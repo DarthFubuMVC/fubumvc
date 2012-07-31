@@ -73,7 +73,8 @@ namespace FubuMVC.Core.Http.AspNet
 
         public bool Has(string key)
         {
-            return _allKeys().Contains(key);
+            var comparer = StringComparer.InvariantCultureIgnoreCase;
+            return _allKeys().Contains(key, comparer);
         }
 
         public object Get(string key)
