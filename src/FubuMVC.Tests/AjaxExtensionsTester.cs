@@ -1,6 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Web;
+using FubuCore.Binding;
+using FubuCore.Binding.Values;
+using FubuMVC.Core.Http.AspNet;
 using FubuTestingSupport;
 using NUnit.Framework;
 using FubuMVC.Core;
@@ -19,6 +23,19 @@ namespace FubuMVC.Tests
         {
             _ajaxRequestInput.IsAjaxRequest().ShouldBeTrue();
             _nonAjaxRequestInput.IsAjaxRequest().ShouldBeFalse();
+        }
+
+        [Test]
+        public void x()
+        {
+            var collection = new NameValueCollection();
+            collection.Add("x-requested-with","XMLHttpRequest");
+            collection["X-Requested-With"].ShouldEqual("XMLHttpRequest");
+
+
+            var requestData = new RequestData();
+            requestData.AddValues(new FlatValueSource<object>(new SimpleKeyValues(key => collection[key],() => collection.AllKeys)));
+            requestData.IsAjaxRequest().ShouldBeTrue();
         }
     }
 }
