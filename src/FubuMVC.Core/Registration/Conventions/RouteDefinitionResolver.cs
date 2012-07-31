@@ -53,6 +53,11 @@ namespace FubuMVC.Core.Registration.Conventions
 
         public void Configure(BehaviorGraph graph)
         {
+            //if no default route is specified, this one comes for free
+            if (!defaultRouteSpecified())
+            {
+                RegisterUrlPolicy(new DefaultRouteConventionBasedUrlPolicy(), true);
+            }
             ApplyToAll(graph);
         }
 
@@ -112,6 +117,11 @@ namespace FubuMVC.Core.Registration.Conventions
         public void RegisterRouteInputPolicy(Func<ActionCall, bool> where, Action<IRouteDefinition, ActionCall> action)
         {
             _inputPolicy.InputBuilders.Register(where, action);
+        }
+
+        private bool defaultRouteSpecified()
+        {
+            return _policies.Any(x => x is DefaultRouteMethodBasedUrlPolicy || x is DefaultRouteInputTypeBasedUrlPolicy);
         }
     }
 }
