@@ -1,8 +1,11 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using FubuMVC.Core.Runtime.Conditionals;
+using System.Linq;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
+    [DebuggerDisplay("{debuggerDisplay()}")]
     public class Media<T> : IMedia<T>
     {
         // TODO -- make this lazy some day
@@ -40,6 +43,11 @@ namespace FubuMVC.Core.Resources.Conneg
         public IConditional Condition
         {
             get { return _condition; }
+        }
+
+        string debuggerDisplay()
+        {
+            return Writer.Mimetypes.Join(",");
         }
     }
 }

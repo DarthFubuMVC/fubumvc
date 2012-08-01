@@ -1,11 +1,12 @@
-using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Http
 {
+    [DebuggerDisplay("{debuggerDisplay()}")]
     public class CurrentMimeType
     {
         public CurrentMimeType()
@@ -51,6 +52,12 @@ namespace FubuMVC.Core.Http
         {
             var exact = candidates.FirstOrDefault(x => AcceptTypes.Contains(x));
             return exact ?? (AcceptsAny() ? candidates.FirstOrDefault() : null);
+        }
+
+        string debuggerDisplay()
+        {
+            return ContentType + (Charset == null ?
+                "" : ";charset=" + Charset);
         }
     }
 }
