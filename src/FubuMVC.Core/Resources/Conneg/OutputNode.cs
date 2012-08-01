@@ -75,7 +75,7 @@ namespace FubuMVC.Core.Resources.Conneg
             var writerType = typeof (IMediaWriter<>).MakeGenericType(_resourceType);
             if (!typeof(T).CanBeCastTo(writerType))
             {
-                throw new ArgumentOutOfRangeException("{0} can not be case to {1}", typeof(T).FullName, writerType.FullName);
+                throw new ArgumentOutOfRangeException("{0} cannot be cast to {1}", typeof(T).FullName, writerType.FullName);
             }
 
             var writer = new Writer(typeof (T));
