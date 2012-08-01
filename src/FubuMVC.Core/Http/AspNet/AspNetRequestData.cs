@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Routing;
+using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Binding.Values;
 using FubuCore.Util;
@@ -30,19 +31,19 @@ namespace FubuMVC.Core.Http.AspNet
             var files = request.Files;
             addValues(RequestDataSource.File, key => files[key], () => files.AllKeys);
 
-            addValues(RequestDataSource.Header, key => request.Headers[key], () => request.Headers.AllKeys);
+            addValues(RequestDataSource.Header, key => request.Headers[key], () => request.Headers.AllKeys,(key,keys) => keys.Contains(key, StringComparer.InvariantCultureIgnoreCase));
 
             AddValues(new RequestPropertyValueSource(context.HttpContext.Request));
-
-
         }
 
-        private void addValues(RequestDataSource source, Func<string, object> finder, Func<IEnumerable<string>> findKeys)
+
+        private void addValues(RequestDataSource source, Func<string, object> finder, Func<IEnumerable<string>> findKeys, Func<string,IEnumerable<string>,bool> keyFinder = null)
         {
-            var values = new SimpleKeyValues(finder, findKeys);
+            Func<string, IEnumerable<string>, bool> defaultKeyFinder = (key, keys) => keys.Contains(key);
+
+            var values = new SimpleKeyValues(finder, findKeys, keyFinder ?? defaultKeyFinder);
             var valueSource = new FlatValueSource<object>(values, source.ToString());
 
-            //var valueSource = new GenericValueSource(source.ToString(), finder, findKeys);
             AddValues(valueSource);
         }
 
@@ -63,18 +64,23 @@ namespace FubuMVC.Core.Http.AspNet
     public class SimpleKeyValues : IKeyValues<object>
     {
         private readonly Func<string, object> _source;
+        private readonly Func<string,IEnumerable<string>, bool> _keyFinder;
         private readonly Func<IEnumerable<string>> _allKeys;
 
-        public SimpleKeyValues(Func<string, object> source, Func<IEnumerable<string>> allKeys)
+        public SimpleKeyValues(Func<string, object> source, Func<IEnumerable<string>> allKeys, Func<string,IEnumerable<string>, bool> keyFinder)
         {
             _source = source;
+            _keyFinder = keyFinder;
             _allKeys = allKeys;
+        }
+
+        public SimpleKeyValues(Func<string,object> source,Func<IEnumerable<string>> allKeys) : this(source,allKeys, (key,keys) => keys.Contains(key))
+        {
         }
 
         public bool Has(string key)
         {
-            var comparer = StringComparer.InvariantCultureIgnoreCase;
-            return _allKeys().Contains(key, comparer);
+            return _keyFinder(key,_allKeys());
         }
 
         public object Get(string key)
