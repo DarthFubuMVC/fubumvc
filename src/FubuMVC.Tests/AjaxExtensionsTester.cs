@@ -25,17 +25,5 @@ namespace FubuMVC.Tests
             _nonAjaxRequestInput.IsAjaxRequest().ShouldBeFalse();
         }
 
-        [Test]
-        public void x()
-        {
-            var collection = new NameValueCollection();
-            collection.Add("x-requested-with","XMLHttpRequest");
-            collection["X-Requested-With"].ShouldEqual("XMLHttpRequest");
-
-
-            var requestData = new RequestData();
-            requestData.AddValues(new FlatValueSource<object>(new SimpleKeyValues(key => collection[key],() => collection.AllKeys)));
-            requestData.IsAjaxRequest().ShouldBeTrue();
-        }
     }
 }
