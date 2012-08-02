@@ -1,5 +1,5 @@
+using FubuCore.Logging;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Runtime.Logging;
 using NUnit.Framework;
 using FubuTestingSupport;
 
