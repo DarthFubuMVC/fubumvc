@@ -158,6 +158,7 @@
     <Compile Include="Behaviors\Chrome\ChromeNodeTester.cs" />
     <Compile Include="ConfigurationGraph_DetermineConfigurationType_Tester.cs" />
     <Compile Include="Http\AspNet\SimpleKeyValueTester.cs" />
+    <Compile Include="Registration\Conventions\JsonMessageInputConventionTester.cs" />
     <Compile Include="Registration\default_action_discovery.cs" />
     <Compile Include="Runtime\Dates\DateTimeFormatting_import_integration_testing.cs" />
     <Compile Include="Runtime\Dates\DateTimeToUtcConverterFamilyTester.cs" />

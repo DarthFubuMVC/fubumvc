@@ -11,6 +11,7 @@ namespace FubuMVC.Core.Registration.Conventions
         public void Configure(BehaviorGraph graph)
         {
             graph.Behaviors
+                .Where(x => !x.IsPartialOnly)
                 .Where(x => x.HasResourceType() && !x.HasOutput())
                 .Each(x => x.ApplyConneg());
         }
