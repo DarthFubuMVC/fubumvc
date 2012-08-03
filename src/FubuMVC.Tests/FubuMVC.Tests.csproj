@@ -191,6 +191,7 @@
     <Compile Include="Behaviors\Conditional\when_condition_is_true.cs" />
     <Compile Include="Behaviors\InterceptExceptionBehaviorTester.cs" />
     <Compile Include="Behaviors\ITargetController.cs" />
+    <Compile Include="Behaviors\RenderJsonpBehaviorTester.cs" />
     <Compile Include="Behaviors\RenderStatusCodeBehaviorTester.cs" />
     <Compile Include="Bugs\DoubleActionRegistrationWhenDiagnosticsIsOnTester.cs" />
     <Compile Include="Caching\OuputCachingNodeTester.cs" />
