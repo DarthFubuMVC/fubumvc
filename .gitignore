@@ -55,3 +55,4 @@ deployment/bottles/*.zip
 deploymentplan.html
 deployment
 !docs/source/topics/deployment
+*ncrunch*

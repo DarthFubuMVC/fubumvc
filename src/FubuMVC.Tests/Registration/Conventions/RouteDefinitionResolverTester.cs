@@ -46,7 +46,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         private IRouteDefinition buildRoute<T>(Expression<Action<T>> expression, Action<BehaviorChain> modifyChain)
         {
             var method = ReflectionHelper.GetMethod(expression);
-            lastCall = new ActionCall(typeof (T), method);
+            lastCall = new ActionCall(typeof(T), method);
 
             chain.AddToEnd(lastCall);
             modifyChain(chain);
@@ -314,6 +314,32 @@ namespace FubuMVC.Tests.Registration.Conventions
             var route = buildRoute(x => x.OverrideWithNoArgs(), c => { }).ShouldBeOfType<IRouteDefinition>();
 
             route.Pattern.ShouldEqual("override/noargs");
+        }
+
+        [Test]
+        public void adds_convention_based_home_policy_if_not_specified()
+        {
+            resolver.Configure(graph);
+            var route = buildRoute<HomeEndpoint>(x => x.Index(), c => { });
+            route.Pattern.ShouldEqual("");
+        }
+
+        [Test]
+        public void leaves_home_policy_alone_if_already_specified()
+        {
+            resolver.DefaultUrlPolicy.IgnoreClassSuffix("endpoint");
+            resolver.DefaultUrlPolicy.IgnoreControllerNamespaceEntirely = true;
+            resolver.RegisterUrlPolicy(new DefaultRouteMethodBasedUrlPolicy(ReflectionHelper.GetMethod<RouteResolverController>(x => x.Index())));
+
+            resolver.Configure(graph);
+
+            var route = buildRoute<HomeEndpoint>(x => x.Index(), c => { });
+            route.Pattern.ShouldEqual("home/index");
+        }
+
+        private class HomeEndpoint
+        {
+            public void Index() { }
         }
     }
 }
