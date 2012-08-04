@@ -21,6 +21,7 @@ namespace FubuMVC.Core.Assets
         private readonly List<PreceedingAsset> _preceedings = new List<PreceedingAsset>();
         private readonly List<DependencyRule> _rules = new List<DependencyRule>();
         private readonly Cache<string, AssetSet> _sets = new Cache<string, AssetSet>();
+        private readonly IList<Action<IAssetRegistration>> _precompileActions = new List<Action<IAssetRegistration>>();
 
         public AssetGraph()
         {
@@ -204,6 +205,16 @@ namespace FubuMVC.Core.Assets
         public IFileDependency FileDependencyFor(string name)
         {
             return (IFileDependency) ObjectFor(name);
+        }
+
+        public void OnPrecompile(Action<IAssetRegistration> action)
+        {
+            _precompileActions.Add(action);
+        }
+
+        public void Precompile()
+        {
+            _precompileActions.Each(x => x(this));
         }
 
         #region Nested type: AssetFilesKey

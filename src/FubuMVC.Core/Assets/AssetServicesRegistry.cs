@@ -53,6 +53,7 @@ namespace FubuMVC.Core.Assets
             SetServiceIfNone<IAssetContentCache>(assetCache);
             SetServiceIfNone<IAssetFileWatcher, AssetFileWatcher>();
 
+            FillType(typeof (IActivator), typeof (AssetPrecompilerActivator));
             FillType(typeof(IActivator), typeof(AssetGraphConfigurationActivator));
             FillType(typeof(IActivator), typeof(AssetPipelineBuilderActivator));
             FillType(typeof(IActivator), typeof(AssetDeclarationVerificationActivator));
@@ -60,6 +61,7 @@ namespace FubuMVC.Core.Assets
             FillType(typeof(IActivator), typeof(AssetCombinationBuildingActivator));
             FillType(typeof(IActivator), typeof(AssetPolicyActivator));
             FillType(typeof(IActivator), typeof(AssetFileWatchingActivator));
+
         }
     }
 }
