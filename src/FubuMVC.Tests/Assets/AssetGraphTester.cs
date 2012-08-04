@@ -245,6 +245,20 @@ namespace FubuMVC.Tests.Assets
             ScriptNamesFor("b", "before-b").ShouldHaveTheSameElementsAs("before-b", "b");
             ScriptNamesFor("before-b").ShouldHaveTheSameElementsAs("before-b");
         }
+
+        [Test]
+        public void sets_names()
+        {
+            theGraph.AddToSet("setA", "a-1.js");
+            theGraph.AddToSet("setA", "a-2.js");
+            theGraph.AddToSet("setB", "b-1.js");
+            theGraph.AddToSet("setB", "b-2.js");
+
+            var sets = new List<string>();
+            theGraph.ForEachSetName(sets.Add);
+
+            sets.ShouldEqual(new[] { "setA", "setB" });
+        }
     }
 
     [TestFixture]
