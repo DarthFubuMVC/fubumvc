@@ -181,6 +181,7 @@
     <Compile Include="Assets\Content\TransformationPolicyComparerTester.cs" />
     <Compile Include="Assets\Content\TransformerPolicyLibraryTester.cs" />
     <Compile Include="Assets\Content\TransformerPolicyTester.cs" />
+    <Compile Include="Assets\WarmUpSetsForCombinationPolicyTester.cs" />
     <Compile Include="Behaviors\AsyncContinueWithBehaviorTests.cs" />
     <Compile Include="Behaviors\AsyncInterceptExceptionBehaviorTester.cs" />
     <Compile Include="Behaviors\BasicBehaviorTester.cs" />

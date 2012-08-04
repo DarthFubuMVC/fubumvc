@@ -91,6 +91,7 @@
     <Compile Include="Assets\Http\AssetEtagInvocationFilter.cs" />
     <Compile Include="Assets\Http\AssetWriter.cs" />
     <Compile Include="Assets\RecordingAssetRegistration.cs" />
+    <Compile Include="Assets\WarmUpSetsForCombinationPolicy.cs" />
     <Compile Include="Behaviors\AsyncContinueWithBehavior.cs" />
     <Compile Include="Behaviors\AsyncInterceptExceptionBehavior.cs" />
     <Compile Include="Behaviors\Chrome\ChromeAttribute.cs" />

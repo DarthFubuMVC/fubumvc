@@ -218,6 +218,15 @@ crud includes a.js, b.js, c.js
         }
 
         [Test]
+        public void adds_a_warm_up_policy_for_asset_combinations()
+        {
+            var registry = new FubuRegistry();
+            registry.Assets.CombineAllUniqueAssetRequests();
+
+            registry.BuildGraph().Services.ServicesFor<IAssetPolicy>()
+                .ShouldContain(x => x.Type == typeof(WarmUpSetsForCombinationPolicy));
+        }
+        [Test]
         public void register_a_combination_policy_with_CombineWith()
         {
             var registry = new FubuRegistry();

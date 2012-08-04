@@ -93,6 +93,7 @@ namespace FubuMVC.Core.Registration.DSL
         public AssetsExpression CombineAllUniqueAssetRequests()
         {
             setService<ICombinationDeterminationService, CombineAllUniqueSetsCombinationDeterminationService>();
+            addService<IAssetPolicy, WarmUpSetsForCombinationPolicy>();
             return this;
         }
 
