@@ -1,7 +1,0 @@
-﻿<use master="" />
-<use namespace="FubuCore" />
-<use namespace="FubuMVC.Diagnostics.Runtime" />
-<viewdata model="FubuMVC.Diagnostics.Runtime.FileOutputReport" />
-<div class="file-output">
-  <span>${Model.ToString()}</span>
-</div>
