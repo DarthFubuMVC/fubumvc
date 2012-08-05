@@ -5,6 +5,7 @@ using FubuCore.Binding;
 using FubuCore.Binding.InMemory;
 using FubuCore.Conversion;
 using FubuCore.Formatting;
+using FubuCore.Logging;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
@@ -255,6 +256,13 @@ namespace FubuMVC.Tests.Registration
         public void url_registry_is_registered()
         {
             registeredTypeIs<IUrlRegistry, UrlRegistry>();
+        }
+
+        [Test]
+        public void log_record_modifier_is_registered()
+        {
+            BehaviorGraph.BuildEmptyGraph().Services.ServicesFor<ILogModifier>()
+                .Any(x => x.Type == typeof(LogRecordModifier)).ShouldBeTrue();
         }
     }
 }

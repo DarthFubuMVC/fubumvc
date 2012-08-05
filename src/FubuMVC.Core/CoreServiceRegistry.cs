@@ -75,6 +75,7 @@ namespace FubuMVC.Core
             SetServiceIfNone<IConditionalService, ConditionalService>();
 
             SetServiceIfNone<ILogger, Logger>();
+            AddService<ILogModifier, LogRecordModifier>();
 
             SetServiceIfNone<IClock, Clock>(x => x.IsSingleton = true);
             SetServiceIfNone<ITimeZoneContext, MachineTimeZoneContext>();

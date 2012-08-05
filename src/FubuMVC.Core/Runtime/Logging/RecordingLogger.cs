@@ -4,18 +4,19 @@ using FubuCore.Logging;
 
 namespace FubuMVC.Core.Runtime.Logging
 {
+    // TODO -- get this back into FubuCore
     public class RecordingLogger : ILogger
     {
-        private readonly IList<LogRecord> _debug = new List<LogRecord>();
-        private readonly IList<LogRecord> _info = new List<LogRecord>();
+        private readonly IList<object> _debug = new List<object>();
+        private readonly IList<object> _info = new List<object>();
         private readonly IList<ExceptionReport> _errors = new List<ExceptionReport>();
 
-        public IEnumerable<LogRecord> DebugMessages
+        public IEnumerable<object> DebugMessages
         {
             get { return _debug; }
         }
 
-        public IEnumerable<LogRecord> InfoMessages
+        public IEnumerable<object> InfoMessages
         {
             get { return _info; }
         }
@@ -59,6 +60,26 @@ namespace FubuMVC.Core.Runtime.Logging
             Info(message());
         }
 
+        public void DebugMessage(LogTopic message)
+        {
+            _debug.Add(message);
+        }
+
+        public void InfoMessage(LogTopic message)
+        {
+            _info.Add(message);
+        }
+
+        public void DebugMessage<T>(Func<T> message) where T : class, LogTopic
+        {
+            _debug.Add(message());
+        }
+
+        public void InfoMessage<T>(Func<T> message) where T : class, LogTopic
+        {
+            _info.Add(message());
+        }
+
         public void DebugMessage(LogRecord message)
         {
             _debug.Add(message);
@@ -69,14 +90,5 @@ namespace FubuMVC.Core.Runtime.Logging
             _info.Add(message);
         }
 
-        public void DebugMessage<T>(Func<T> message) where T : LogRecord
-        {
-            _debug.Add(message());
-        }
-
-        public void InfoMessage<T>(Func<T> message) where T : LogRecord
-        {
-            _info.Add(message());
-        }
     }
 }
