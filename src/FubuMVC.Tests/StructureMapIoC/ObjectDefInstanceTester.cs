@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Dates;
+using FubuCore.Logging;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.AspNet;

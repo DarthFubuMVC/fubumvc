@@ -1,4 +1,5 @@
 using System;
+using FubuCore.Logging;
 
 namespace FubuMVC.Core.Runtime.Logging
 {

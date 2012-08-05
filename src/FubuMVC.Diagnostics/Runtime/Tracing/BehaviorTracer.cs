@@ -1,6 +1,6 @@
 using System;
+using FubuCore.Logging;
 using FubuMVC.Core.Behaviors;
-using FubuMVC.Core.Runtime.Logging;
 
 namespace FubuMVC.Diagnostics.Runtime.Tracing
 {

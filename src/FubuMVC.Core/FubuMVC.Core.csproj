@@ -35,16 +35,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles.0.9.1.316\lib\Bottles.dll</HintPath>
+      <HintPath>..\packages\Bottles.0.9.1.321\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
-      <HintPath>..\packages\FubuCore.0.9.9.165\lib\FubuCore.dll</HintPath>
+      <HintPath>..\packages\FubuCore.0.9.9.169\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuLocalization">
-      <HintPath>..\packages\FubuLocalization.0.9.5.61\lib\FubuLocalization.dll</HintPath>
+      <HintPath>..\packages\FubuLocalization.0.9.5.65\lib\FubuLocalization.dll</HintPath>
     </Reference>
     <Reference Include="HtmlTags">
-      <HintPath>..\packages\HtmlTags.1.1.0.86\lib\4.0\HtmlTags.dll</HintPath>
+      <HintPath>..\packages\HtmlTags.1.1.0.90\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Ionic.Zip">
       <HintPath>..\packages\DotNetZip.1.9.1.8\lib\net20\Ionic.Zip.dll</HintPath>
@@ -75,6 +75,7 @@
     <Compile Include="Assets\AssetContentEndpoint.cs" />
     <Compile Include="Assets\AssetFileDataMother.cs" />
     <Compile Include="Assets\AssetGraphScenario.cs" />
+    <Compile Include="Assets\AssetPrecompilerActivator.cs" />
     <Compile Include="Assets\AssetServicesRegistry.cs" />
     <Compile Include="Assets\Caching\AssetContentCache.cs" />
     <Compile Include="Assets\Caching\AssetFileMonitoringSettings.cs" />
@@ -90,7 +91,9 @@
     <Compile Include="Assets\Diagnostics\AssetRegistrationDiagnostics.cs" />
     <Compile Include="Assets\Http\AssetEtagInvocationFilter.cs" />
     <Compile Include="Assets\Http\AssetWriter.cs" />
+    <Compile Include="Assets\IAssetPrecompiler.cs" />
     <Compile Include="Assets\RecordingAssetRegistration.cs" />
+    <Compile Include="Assets\WarmUpSetsForCombinationPolicy.cs" />
     <Compile Include="Behaviors\AsyncContinueWithBehavior.cs" />
     <Compile Include="Behaviors\AsyncInterceptExceptionBehavior.cs" />
     <Compile Include="Behaviors\Chrome\ChromeAttribute.cs" />
@@ -104,6 +107,7 @@
     <Compile Include="Endpoints\EndpointInvocation.cs" />
     <Compile Include="Endpoints\HttpResponse.cs" />
     <Compile Include="Endpoints\WebRequestResponseExtensions.cs" />
+    <Compile Include="Registration\Conventions\DefaultRouteConventionBasedUrlPolicy.cs" />
     <Compile Include="Runtime\Dates\DateFormattingRule.cs" />
     <Compile Include="Runtime\Dates\DateTimeFormatter.cs" />
     <Compile Include="Runtime\Dates\DateTimeFormattingRules.cs" />
@@ -116,21 +120,15 @@
     <Compile Include="Runtime\Files\IFubuApplicationFiles.cs" />
     <Compile Include="Runtime\Files\IFubuFile.cs" />
     <Compile Include="Runtime\Logging\ExceptionReport.cs" />
-    <Compile Include="Runtime\Logging\LogRecord.cs" />
     <Compile Include="Runtime\Logging\FileOutputReport.cs" />
     <Compile Include="Runtime\Logging\FinishedRecordingOutput.cs" />
     <Compile Include="Runtime\Logging\HttpStatusReport.cs" />
-    <Compile Include="Runtime\Logging\Logger.cs" />
-    <Compile Include="Runtime\Logging\ILogger.cs" />
-    <Compile Include="Runtime\Logging\ILogListener.cs" />
-    <Compile Include="Runtime\Logging\ListenerCollection.cs" />
     <Compile Include="Runtime\Logging\OutputReport.cs" />
     <Compile Include="Runtime\Logging\RecordingLogger.cs" />
     <Compile Include="Runtime\Logging\RedirectReport.cs" />
     <Compile Include="Runtime\Logging\ReplayRecordedOutput.cs" />
     <Compile Include="Runtime\Logging\SetHeaderValue.cs" />
     <Compile Include="Runtime\Logging\StartedRecordingOutput.cs" />
-    <Compile Include="Runtime\Logging\StringMessage.cs" />
     <Compile Include="Runtime\Logging\WriteCookieReport.cs" />
     <Compile Include="Runtime\Logging\WriteToStreamReport.cs" />
     <Compile Include="UI\Navigation\CompileNavigationStep.cs" />

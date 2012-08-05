@@ -1,4 +1,4 @@
-using FubuMVC.Core.Runtime.Logging;
+using FubuCore.Logging;
 using FubuMVC.Diagnostics.Runtime.Tracing;
 
 namespace FubuMVC.Diagnostics.Runtime

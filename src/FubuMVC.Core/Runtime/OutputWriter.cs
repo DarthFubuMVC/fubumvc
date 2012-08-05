@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Web;
 using FubuCore;
+using FubuCore.Logging;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime.Logging;

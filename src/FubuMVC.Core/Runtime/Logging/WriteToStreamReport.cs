@@ -1,3 +1,5 @@
+using FubuCore.Logging;
+
 namespace FubuMVC.Core.Runtime.Logging
 {
     // TODO -- write out the stream contents?

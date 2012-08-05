@@ -1,4 +1,5 @@
 using FubuCore;
+using FubuCore.Logging;
 using FubuMVC.Core.Runtime.Logging;
 using StructureMap.AutoMocking;
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using FubuCore.Logging;
 
 namespace FubuMVC.Core.Runtime.Logging
 {

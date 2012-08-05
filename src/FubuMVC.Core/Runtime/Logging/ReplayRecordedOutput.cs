@@ -1,3 +1,4 @@
+using FubuCore.Logging;
 using FubuMVC.Core.Caching;
 
 namespace FubuMVC.Core.Runtime.Logging

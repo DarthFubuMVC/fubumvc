@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Binding;
+using FubuCore.Logging;
 using FubuCore.Util;
-using FubuMVC.Core.Runtime.Logging;
 
 namespace FubuMVC.Core.Runtime
 {
@@ -23,14 +23,14 @@ namespace FubuMVC.Core.Runtime
             return _values[typeof (T)].Value as T;
         }
 
-    	public object Get(Type type)
-    	{
-    		return _values[type].Value;
-    	}
-
-    	public virtual void Set<T>(T target) where T : class
+        public object Get(Type type)
         {
-            Set(typeof(T), target);
+            return _values[type].Value;
+        }
+
+        public virtual void Set<T>(T target) where T : class
+        {
+            Set(typeof (T), target);
         }
 
         public void Set(Type type, object target)
@@ -39,9 +39,8 @@ namespace FubuMVC.Core.Runtime
                 Type = type,
                 Value = target
             });
-            
-            _values[type] = new BindResult()
-            {
+
+            _values[type] = new BindResult{
                 Value = target,
                 Problems = new List<ConvertProblem>()
             };
@@ -85,14 +84,6 @@ namespace FubuMVC.Core.Runtime
 
     public class SetValueReport : LogRecord
     {
-        public static SetValueReport For<T>(T value)
-        {
-            return new SetValueReport{
-                Type = typeof(T),
-                Value = value
-            };    
-        }
-
         public SetValueReport(object value)
         {
             Type = value.GetType();
@@ -106,6 +97,14 @@ namespace FubuMVC.Core.Runtime
         public Type Type { get; set; }
         public object Value { get; set; }
 
+        public static SetValueReport For<T>(T value)
+        {
+            return new SetValueReport{
+                Type = typeof (T),
+                Value = value
+            };
+        }
+
         public bool Equals(SetValueReport other)
         {
             if (ReferenceEquals(null, other)) return false;
@@ -117,15 +116,15 @@ namespace FubuMVC.Core.Runtime
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof(SetValueReport)) return false;
-            return Equals((SetValueReport)obj);
+            if (obj.GetType() != typeof (SetValueReport)) return false;
+            return Equals((SetValueReport) obj);
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                return ((Type != null ? Type.GetHashCode() : 0) * 397) ^ (Value != null ? Value.GetHashCode() : 0);
+                return ((Type != null ? Type.GetHashCode() : 0)*397) ^ (Value != null ? Value.GetHashCode() : 0);
             }
         }
 

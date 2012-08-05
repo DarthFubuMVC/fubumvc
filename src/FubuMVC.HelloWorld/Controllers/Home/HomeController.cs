@@ -1,6 +1,5 @@
 using System.Web;
-using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Runtime.Logging;
+using FubuCore.Logging;
 using FubuMVC.WebForms;
 
 namespace FubuMVC.HelloWorld.Controllers.Home
