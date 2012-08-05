@@ -160,6 +160,7 @@
     <Compile Include="Behaviors\Chrome\ChromeAttributeTester.cs" />
     <Compile Include="Behaviors\Chrome\ChromeNodeTester.cs" />
     <Compile Include="ConfigurationGraph_DetermineConfigurationType_Tester.cs" />
+    <Compile Include="Default_ViewAttachment_Filters_Convention_Tester.cs" />
     <Compile Include="InteractionContextExtensions.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteConventionBasedUrlPolicyTester.cs" />
     <Compile Include="Registration\Conventions\JsonMessageInputConventionTester.cs" />

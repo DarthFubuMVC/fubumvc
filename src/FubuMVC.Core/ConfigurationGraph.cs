@@ -119,7 +119,12 @@ namespace FubuMVC.Core
         {
             graph.Views = _engineRegistry.BuildViewBag(_types);
 
-            allActions().Each(x => x.Configure(graph));
+            AllConfigurationActions().Each(x => x.Configure(graph));
+        }
+
+        private IEnumerable<IConfigurationAction> viewAttachers()
+        {
+            yield return _views;
         }
 
         public BehaviorGraph BuildForImport(ViewBag views)
@@ -128,7 +133,7 @@ namespace FubuMVC.Core
                 .Union(_imports)
                 .Union(_configurations[ConfigurationType.Explicit])
                 .Union(_configurations[ConfigurationType.Policy])
-                .Union(new IConfigurationAction[]{_views})
+                .Union(viewAttachers())
                 .Union(_configurations[ConfigurationType.Reordering]);
 
             var graph = new BehaviorGraph{
@@ -141,7 +146,7 @@ namespace FubuMVC.Core
         }
 
 
-        private IEnumerable<IConfigurationAction> allActions()
+        public IEnumerable<IConfigurationAction> AllConfigurationActions()
         {
             return serviceRegistrations().OfType<IConfigurationAction>()
                 .Union(systemServices())
@@ -150,7 +155,7 @@ namespace FubuMVC.Core
                 .Union(_imports)
                 .Union(_configurations[ConfigurationType.Explicit])
                 .Union(_configurations[ConfigurationType.Policy])
-                .Union(new IConfigurationAction[]{_views})
+                .Union(viewAttachers())
                 .Union(fullGraphPolicies())
                 .Union(navigationRegistrations().OfType<IConfigurationAction>())
                 .Union(new IConfigurationAction[]{new MenuItemAttributeConfigurator(), new CompileNavigationStep()})

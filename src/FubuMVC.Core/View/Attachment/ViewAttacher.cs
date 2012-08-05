@@ -20,6 +20,18 @@ namespace FubuMVC.Core.View.Attachment
                 action => { Profiles(graph).Each(x => { Attach(x.Profile, x.Views, action); }); });
         }
 
+        private IEnumerable<IViewsForActionFilter> filters()
+        {
+            return _filters.Any() ? _filters : defaultFilters().ToArray();
+        }
+
+        private static IEnumerable<IViewsForActionFilter> defaultFilters()
+        {
+            yield return new ActionWithSameNameAndFolderAsViewReturnsViewModelType();
+            yield return new ActionInSameFolderAsViewReturnsViewModelType();
+            yield return new ActionReturnsViewModelType();
+        }
+
         public virtual void Attach(IViewProfile viewProfile, ViewBag bag, ActionCall action)
         {
             // No duplicate views!
@@ -29,7 +41,7 @@ namespace FubuMVC.Core.View.Attachment
             var log = new ViewAttachmentLog(viewProfile);
             action.Trace(log);
 
-            foreach (var filter in _filters)
+            foreach (var filter in filters())
             {
                 var viewTokens = filter.Apply(action, bag);
                 var count = viewTokens.Count();
@@ -45,6 +57,14 @@ namespace FubuMVC.Core.View.Attachment
                 outputNode.AddView(token, viewProfile.ConditionType);
 
                 break;
+            }
+        }
+
+        public IEnumerable<IViewsForActionFilter> ActiveFilters
+        {
+            get
+            {
+                return filters();
             }
         }
 

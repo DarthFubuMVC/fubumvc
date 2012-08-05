@@ -34,6 +34,39 @@ namespace FubuMVC.IntegrationTesting.ViewAttachment
         }
     }
 
+
+    [TestFixture]
+    public class ProfiledAttachment_with_inferred_view_attachment_filters_Tester : FubuRegistryHarness
+    {
+        protected override void configure(FubuRegistry registry)
+        {
+            registry.Actions.IncludeType<ProfileController>();
+            
+            // I want the default to work here.
+            //registry.Views.TryToAttachWithDefaultConventions();
+            registry.Views.Profile<Mobile>("m.");
+        }
+
+        [Test]
+        public void fetching_the_resource_in_a_way_that_trips_off_the_special_profile_should_give_you_the_mobile_view()
+        {
+            endpoints.GetByInput(new ProfileInput
+            {
+                Name = "mobile"
+            }).ReadAsText().ShouldContain("<p>I am the mobile view</p>");
+        }
+
+        [Test]
+        public void fetching_the_resource_when_it_does_not_match_the_special_profile()
+        {
+            endpoints.GetByInput(new ProfileInput
+            {
+                Name = "wrong"
+            }).ReadAsText().ShouldContain("<p>I am the regular view</p>");
+        }
+    }
+
+
     public class ProfileInput
     {
         public string Name { get; set; }
