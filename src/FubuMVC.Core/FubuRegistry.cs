@@ -147,10 +147,16 @@ namespace FubuMVC.Core
         /// <summary>
         ///   Adds a configuration convention to be applied to the <see cref = "BehaviorGraph" /> produced by this <see cref = "FubuRegistry" />
         /// </summary>
-        public void ApplyConvention<TConvention>()
+        public void ApplyConvention<TConvention>(Action<TConvention> configuration = null)
             where TConvention : IConfigurationAction, new()
         {
-            ApplyConvention(new TConvention());
+            var convention = new TConvention();
+            if (configuration != null)
+            {
+                configuration(convention);
+            }
+
+            ApplyConvention(convention);
         }
 
         /// <summary>

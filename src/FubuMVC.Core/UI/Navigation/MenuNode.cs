@@ -13,6 +13,8 @@ namespace FubuMVC.Core.UI.Navigation
     {
         StringToken Key { get; }
         void AddChild(MenuNode node);
+
+        IEnumerable<BehaviorChain> AllChains();
     }
 
     public class MenuNode : Node<MenuNode, MenuChain>, IMenuNode
@@ -59,6 +61,22 @@ namespace FubuMVC.Core.UI.Navigation
         public void AddChild(MenuNode node)
         {
             Children.AddToEnd(node);
+        }
+
+        public IEnumerable<BehaviorChain> AllChains()
+        {
+            if (_chain != null)
+            {
+                yield return _chain;
+            }
+
+            foreach (var child in Children)
+            {
+                if (child.BehaviorChain != null)
+                {
+                    yield return child.BehaviorChain;
+                }
+            }
         }
 
         public MenuNodeType Type

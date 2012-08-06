@@ -29,6 +29,17 @@ namespace FubuMVC.Core.UI.Navigation
             AddToEnd(node);
         }
 
+        public IEnumerable<BehaviorChain> AllChains()
+        {
+            foreach (var node in AllNodes())
+            {
+                if (node.BehaviorChain != null)
+                {
+                    yield return node.BehaviorChain;
+                }
+            }
+        }
+
         /// <summary>
         /// Find 
         /// </summary>

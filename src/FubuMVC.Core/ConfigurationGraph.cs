@@ -26,7 +26,7 @@ using FubuMVC.Core.View.Attachment;
 
 namespace FubuMVC.Core
 {
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Class, Inherited = true)]
     public class ConfigurationTypeAttribute : Attribute
     {
         private readonly ConfigurationType _configurationType;

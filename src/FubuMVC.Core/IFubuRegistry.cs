@@ -19,7 +19,7 @@ namespace FubuMVC.Core
 
         void Services(Action<IServiceRegistry> configure);
 
-        void ApplyConvention<TConvention>()
+        void ApplyConvention<TConvention>(Action<TConvention> configuration = null)
             where TConvention : IConfigurationAction, new();
 
         void ApplyConvention<TConvention>(TConvention convention)

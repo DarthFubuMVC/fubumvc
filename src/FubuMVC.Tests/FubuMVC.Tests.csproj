@@ -164,6 +164,7 @@
     <Compile Include="InteractionContextExtensions.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteConventionBasedUrlPolicyTester.cs" />
     <Compile Include="Registration\Conventions\JsonMessageInputConventionTester.cs" />
+    <Compile Include="Registration\Conventions\NavigationRootPolicyTester.cs" />
     <Compile Include="Registration\default_action_discovery.cs" />
     <Compile Include="Runtime\Dates\DateTimeFormatting_import_integration_testing.cs" />
     <Compile Include="Runtime\Dates\DateTimeToUtcConverterFamilyTester.cs" />

@@ -108,6 +108,7 @@
     <Compile Include="Endpoints\HttpResponse.cs" />
     <Compile Include="Endpoints\WebRequestResponseExtensions.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteConventionBasedUrlPolicy.cs" />
+    <Compile Include="Registration\Conventions\NavigationRootPolicy.cs" />
     <Compile Include="Runtime\Dates\DateFormattingRule.cs" />
     <Compile Include="Runtime\Dates\DateTimeFormatter.cs" />
     <Compile Include="Runtime\Dates\DateTimeFormattingRules.cs" />
