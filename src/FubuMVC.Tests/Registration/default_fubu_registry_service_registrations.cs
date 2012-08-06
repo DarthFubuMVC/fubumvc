@@ -170,13 +170,6 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
-        public void navigation_activator_is_registered()
-        {
-            BehaviorGraph.BuildEmptyGraph().Services.ServicesFor<IActivator>()
-                .Any(x => x.Type == typeof (NavigationActivator)).ShouldBeTrue();
-        }
-
-        [Test]
         public void navigation_service_is_registered()
         {
             registeredTypeIs<INavigationService, NavigationService>();

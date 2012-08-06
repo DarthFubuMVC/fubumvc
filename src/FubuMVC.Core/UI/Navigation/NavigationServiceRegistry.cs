@@ -7,7 +7,6 @@ namespace FubuMVC.Core.UI.Navigation
     {
         public NavigationServiceRegistry()
         {
-            AddService<IActivator, NavigationActivator>();
             SetServiceIfNone<INavigationService, NavigationService>();
             SetServiceIfNone<IMenuStateService, MenuStateService>();
         }

@@ -575,7 +575,6 @@
     <Compile Include="UI\Navigation\MenuNodeType.cs" />
     <Compile Include="UI\Navigation\MenuRegistration.cs" />
     <Compile Include="UI\Navigation\MenuStateService.cs" />
-    <Compile Include="UI\Navigation\NavigationActivator.cs" />
     <Compile Include="UI\Navigation\NavigationGraph.cs" />
     <Compile Include="UI\Navigation\NavigationKey.cs" />
     <Compile Include="UI\Navigation\NavigationRegistry.cs" />

@@ -67,7 +67,7 @@ namespace FubuMVC.Core
         Navigation,
         Instrumentation,
         Services,
-        Chrome
+        ByNavigation
     }
 
 
@@ -159,7 +159,7 @@ namespace FubuMVC.Core
                 .Union(fullGraphPolicies())
                 .Union(navigationRegistrations().OfType<IConfigurationAction>())
                 .Union(new IConfigurationAction[]{new MenuItemAttributeConfigurator(), new CompileNavigationStep()})
-                .Union(_configurations[ConfigurationType.Chrome])
+                .Union(_configurations[ConfigurationType.ByNavigation])
                 .Union(_configurations[ConfigurationType.Reordering])
                 .Union(_configurations[ConfigurationType.Instrumentation]);
         }
