@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using FubuCore.Reflection;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
@@ -21,6 +22,17 @@ namespace FubuMVC.Tests.Registration.Conventions
             _method = ReflectionHelper.GetMethod<TestController>(c => c.SomeAction(null));
             _policy = new DefaultRouteConventionBasedUrlPolicy();
             _log = new NulloConfigurationObserver();
+        }
+
+        [Test]
+        public void integrated_test()
+        {
+            var graph = BehaviorGraph.BuildFrom(r =>
+            {
+                r.Actions.IncludeType<HomeEndpoint>();
+            });
+
+            graph.BehaviorFor<HomeEndpoint>(x => x.Index()).Route.Pattern.ShouldEqual("");
         }
 
         [Test]

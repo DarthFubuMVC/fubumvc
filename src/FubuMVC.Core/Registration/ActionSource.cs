@@ -12,6 +12,8 @@ namespace FubuMVC.Core.Registration
     {
         public static bool IsCandidate(MethodInfo method)
         {
+            if (method.DeclaringType.Equals(typeof(object))) return false;
+
             int parameterCount = method.GetParameters() == null ? 0 : method.GetParameters().Length;
             if (parameterCount > 1) return false;
 

@@ -163,6 +163,7 @@
     <Compile Include="Default_ViewAttachment_Filters_Convention_Tester.cs" />
     <Compile Include="InteractionContextExtensions.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteConventionBasedUrlPolicyTester.cs" />
+    <Compile Include="Registration\Conventions\EndpointActionSourceTester.cs" />
     <Compile Include="Registration\Conventions\JsonMessageInputConventionTester.cs" />
     <Compile Include="Registration\Conventions\NavigationRootPolicyTester.cs" />
     <Compile Include="Registration\default_action_discovery.cs" />
