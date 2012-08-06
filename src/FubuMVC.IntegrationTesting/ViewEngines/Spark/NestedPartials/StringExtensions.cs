@@ -7,7 +7,7 @@ namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.NestedPartials
     {
         public static string RemoveNewlines(this string value)
         {
-            return value.IsEmpty() ? value : value.Replace(Environment.NewLine, "");
+            return value.IsEmpty() ? value : value.Replace("\r", "").Replace("\n","");
         }
     }
 }
