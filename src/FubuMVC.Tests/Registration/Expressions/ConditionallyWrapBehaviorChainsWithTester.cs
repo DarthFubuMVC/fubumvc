@@ -161,12 +161,12 @@ namespace FubuMVC.Tests.Registration.Expressions
             var behaviors = container.GetAllInstances<IActionBehavior>().ToArray();
 
             // The first behavior is an InputBehavior
-            behaviors[0].As<BasicBehavior>().InsideBehavior.ShouldBeOfType
+            behaviors[1].As<BasicBehavior>().InsideBehavior.ShouldBeOfType
                 <ConditionallyWrapBehaviorChainsWithTester.FakeUnitOfWorkBehavior>().Inner.
                 ShouldNotBeNull();
-            behaviors[1].As<BasicBehavior>().InsideBehavior.ShouldNotBeOfType
-                <ConditionallyWrapBehaviorChainsWithTester.FakeUnitOfWorkBehavior>();
             behaviors[2].As<BasicBehavior>().InsideBehavior.ShouldNotBeOfType
+                <ConditionallyWrapBehaviorChainsWithTester.FakeUnitOfWorkBehavior>();
+            behaviors[3].As<BasicBehavior>().InsideBehavior.ShouldNotBeOfType
                 <ConditionallyWrapBehaviorChainsWithTester.FakeUnitOfWorkBehavior>();
         }
     }

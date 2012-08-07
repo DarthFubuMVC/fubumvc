@@ -9,5 +9,6 @@
     <alias name="fubumvc_aspnet_testing" folder="C:\code\fubumvc\src\AspNetApplication" />
     <alias name="diagnostics" folder="src/FubuMVC.Diagnostics" />
     <alias name="pak2" folder="src/TestPackage2" />
+    <alias name="assemblypackage" folder="src/AssemblyPackage" />
   </Aliases>
 </aliases>

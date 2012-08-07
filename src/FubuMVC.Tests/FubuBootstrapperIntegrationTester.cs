@@ -93,7 +93,7 @@ namespace FubuMVC.Tests
         [Test]
         public void should_register_routes_in_order_of_the_number_of_their_inputs()
         {
-            var urls = routes.OfType<Route>().Select(r => r.Url);
+            var urls = routes.OfType<Route>().Select(r => r.Url).Where(x => !x.Contains("hello"));
 
             urls.Each(x => Debug.WriteLine(x));
 

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Role>module</Role>
+  <Name>AssemblyPackage</Name>
+  <assembly>AssemblyPackage</assembly>
+  <DataFileSet Include="*.*">
+    <DeepSearch>true</DeepSearch>
+  </DataFileSet>
+  <ContentFileSet Include="*.as*x;*.master;Content\*.*;*.config" Exclude="data/*">
+    <DeepSearch>true</DeepSearch>
+  </ContentFileSet>
+</package>
