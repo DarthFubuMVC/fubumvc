@@ -35,7 +35,7 @@
       <HintPath>..\packages\FubuCore.0.9.9.172\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuLocalization">
-      <HintPath>..\packages\FubuLocalization.0.9.5.66\lib\FubuLocalization.dll</HintPath>
+      <HintPath>..\packages\FubuLocalization.0.9.5.70\lib\FubuLocalization.dll</HintPath>
     </Reference>
     <Reference Include="FubuTestingSupport">
       <HintPath>..\packages\FubuTestingSupport.0.9.9.172\lib\FubuTestingSupport.dll</HintPath>
