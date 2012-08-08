@@ -227,6 +227,12 @@ namespace FubuMVC.IntegrationTesting.Conneg
             return response;
         }
 
+        public static HttpResponse ShouldHaveHeader(this HttpResponse response, HttpResponseHeader header)
+        {
+            response.ResponseHeaderFor(header).ShouldNotBeEmpty();
+            return response;
+        }
+
         public static HttpResponse LengthShouldBe(this HttpResponse response, int length)
         {
             response.ContentLength().ShouldEqual(length);

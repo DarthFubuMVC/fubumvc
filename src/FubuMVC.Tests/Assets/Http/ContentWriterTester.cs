@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using FubuMVC.Core.Assets.Content;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Assets.Http;
@@ -75,6 +76,8 @@ namespace FubuMVC.Tests.Assets.Http
                 .Return(theContent);
 
             MockFor<IContentSource>().Stub(x => x.Files).Return(theFiles);
+            MockFor<IAssetPipeline>().Stub(x => x.Find(new AssetPath(""))).IgnoreArguments()
+                .Return(new AssetFile(Path.GetTempFileName()){FullPath = Path.GetRandomFileName()});
 
 
             theReturnedFiles = ClassUnderTest.Write(assetPath);

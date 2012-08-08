@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using FubuCore;
 using FubuMVC.Core.Assets.Content;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Runtime;
@@ -30,6 +33,17 @@ namespace FubuMVC.Core.Assets.Http
 
         public IEnumerable<AssetFile> Write(AssetPath asset)
         {
+            if(!FubuMode.InDevelopment())
+            {
+                var file = _pipeline.Find(asset);
+                var lastMod = File.GetLastWriteTimeUtc(file.FullPath);
+                _writer.AppendHeader(HttpResponseHeader.LastModified, lastMod.ToString("R"));
+                //setting max-age to 8 hours
+                _writer.AppendHeader(HttpResponseHeader.CacheControl, "{0}={1}".ToFormat("max-age",8 * 60 * 60));
+                //setting expires to one year from last modified. That's what facebook does
+                _writer.AppendHeader(HttpResponseHeader.Expires, lastMod.AddYears(1).ToString("R"));
+            }
+
             if (asset.IsImage())
             {
                 return writeBinary(asset);
