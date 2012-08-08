@@ -46,7 +46,7 @@ link harness pak2
                 .ReadAsText().ReadLines();
 
             folders.Select(x => x.Split('|').First())
-                .ShouldHaveTheSameElementsAs("Application", "Assembly:  AssemblyPackage, Version=1.1.1.1, Culture=neutral, PublicKeyToken=null", "pak1", "pak2");
+                .ShouldHaveTheSameElementsAs("Application", "AssemblyPackage", "pak1", "pak2");
         }
 
 

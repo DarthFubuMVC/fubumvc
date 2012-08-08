@@ -12,7 +12,7 @@
     <description>Minimal assembly references needed for a FubuMVC application. FubuMVC is a compositional, convention-based framework for complex web applications</description>
     <tags>web framework mvc fubumvc</tags>
     <dependencies>
-      <dependency id="Bottles" version="0.9.1.328" />
+      <dependency id="Bottles" version="0.9.1.330" />
       <dependency id="FubuCore" version="0.9.9.172" />
       <dependency id="FubuLocalization" version="0.9.5.48" />
       <dependency id="HtmlTags" version="1.0.0" />
