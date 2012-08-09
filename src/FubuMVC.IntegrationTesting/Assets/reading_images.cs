@@ -54,7 +54,6 @@ link harness pak1
         {
            endpoints.GetAsset(AssetFolder.images, "aaa/ico-close.gif")
                 .ShouldHaveHeader(HttpResponseHeader.LastModified)
-                .ShouldHaveHeader(HttpResponseHeader.Expires)
                 .ShouldHaveHeader(HttpResponseHeader.CacheControl);
         }
         [Test]

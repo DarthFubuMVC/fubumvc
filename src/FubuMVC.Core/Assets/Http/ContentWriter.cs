@@ -1,9 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
-using FubuCore;
 using FubuMVC.Core.Assets.Content;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Runtime;
@@ -20,29 +16,23 @@ namespace FubuMVC.Core.Assets.Http
         private readonly IAssetPipeline _pipeline;
         private readonly IContentPlanCache _cache;
         private readonly IContentPipeline _contentPipeline;
+        private readonly IAssetCacheWriter _cacheWriter;
         private readonly IOutputWriter _writer;
 
         public ContentWriter(IAssetPipeline pipeline, IContentPlanCache cache, IContentPipeline contentPipeline,
+                             IAssetCacheWriter cacheWriter,
                              IOutputWriter writer)
         {
             _pipeline = pipeline;
             _cache = cache;
             _contentPipeline = contentPipeline;
+            _cacheWriter = cacheWriter;
             _writer = writer;
         }
 
         public IEnumerable<AssetFile> Write(AssetPath asset)
         {
-            if(!FubuMode.InDevelopment())
-            {
-                var file = _pipeline.Find(asset);
-                var lastMod = File.GetLastWriteTimeUtc(file.FullPath);
-                _writer.AppendHeader(HttpResponseHeader.LastModified, lastMod.ToString("R"));
-                //setting max-age to 8 hours
-                _writer.AppendHeader(HttpResponseHeader.CacheControl, "{0}={1}".ToFormat("max-age",8 * 60 * 60));
-                //setting expires to one year from last modified. That's what facebook does
-                _writer.AppendHeader(HttpResponseHeader.Expires, lastMod.AddYears(1).ToString("R"));
-            }
+            _cacheWriter.Write(_pipeline.Find(asset));
 
             if (asset.IsImage())
             {

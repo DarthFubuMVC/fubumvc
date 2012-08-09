@@ -37,7 +37,6 @@ namespace FubuMVC.IntegrationTesting.Assets
         {
             endpoints.GetAsset(AssetFolder.scripts, "Script1.js")
                 .ShouldHaveHeader(HttpResponseHeader.LastModified)
-                .ShouldHaveHeader(HttpResponseHeader.Expires)
                 .ShouldHaveHeader(HttpResponseHeader.CacheControl);
         }
 
