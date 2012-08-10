@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Net;
 using FubuMVC.Core;
+using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Endpoints;
 using FubuMVC.IntegrationTesting.Conneg;
 using NUnit.Framework;
@@ -28,6 +30,14 @@ namespace FubuMVC.IntegrationTesting.Assets
                 Mandatories = scriptNames.Join(",")
             };
             return endpoints.GetByInput(request);
+        }
+
+        [Test]
+        public void asset_tags_should_have_cache_headers_set()
+        {
+            endpoints.GetAsset(AssetFolder.scripts, "Script1.js")
+                .ShouldHaveHeader(HttpResponseHeader.LastModified)
+                .ShouldHaveHeader(HttpResponseHeader.CacheControl);
         }
 
         [Test]

@@ -151,6 +151,7 @@
     <Compile Include="Assets\Files\AssetPipelineBuilderTester.cs" />
     <Compile Include="Assets\Files\AssetPipelineTester.cs" />
     <Compile Include="Assets\Files\PackageAssetsTester.cs" />
+    <Compile Include="Assets\Http\AssetCacheTester.cs" />
     <Compile Include="Assets\Http\AssetContentEndpointConstructionTester.cs" />
     <Compile Include="Assets\Http\AssetEtagInvocationFilterTester.cs" />
     <Compile Include="Assets\Http\AssetWriterTester.cs" />

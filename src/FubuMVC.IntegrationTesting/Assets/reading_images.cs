@@ -1,3 +1,4 @@
+using System;
 using System.Net;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Runtime;
@@ -48,6 +49,13 @@ link harness pak1
                 .ContentLength().ShouldBeLessThan(200);
         }
 
+        [Test]
+        public void image_tags_should_have_cache_headers_set()
+        {
+           endpoints.GetAsset(AssetFolder.images, "aaa/ico-close.gif")
+                .ShouldHaveHeader(HttpResponseHeader.LastModified)
+                .ShouldHaveHeader(HttpResponseHeader.CacheControl);
+        }
         [Test]
         public void fetch_with_the_wrong_etag_gets_the_entire_asset()
         {

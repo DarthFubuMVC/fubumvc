@@ -37,6 +37,7 @@ namespace FubuMVC.Core.Assets
             SetServiceIfNone<IMissingAssetHandler, TraceOnlyMissingAssetHandler>();
 
             SetServiceIfNone<IAssetTagPlanCache, AssetTagPlanCache>();
+            SetServiceIfNone<IAssetCacheWriter, AssetCacheWriter>();
 
             SetServiceIfNone<ITransformerPolicyLibrary, TransformerPolicyLibrary>();
 

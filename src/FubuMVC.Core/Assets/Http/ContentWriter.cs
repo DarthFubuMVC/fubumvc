@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.Assets.Content;
@@ -17,19 +16,24 @@ namespace FubuMVC.Core.Assets.Http
         private readonly IAssetPipeline _pipeline;
         private readonly IContentPlanCache _cache;
         private readonly IContentPipeline _contentPipeline;
+        private readonly IAssetCacheWriter _cacheWriter;
         private readonly IOutputWriter _writer;
 
         public ContentWriter(IAssetPipeline pipeline, IContentPlanCache cache, IContentPipeline contentPipeline,
+                             IAssetCacheWriter cacheWriter,
                              IOutputWriter writer)
         {
             _pipeline = pipeline;
             _cache = cache;
             _contentPipeline = contentPipeline;
+            _cacheWriter = cacheWriter;
             _writer = writer;
         }
 
         public IEnumerable<AssetFile> Write(AssetPath asset)
         {
+            _cacheWriter.Write(_pipeline.Find(asset));
+
             if (asset.IsImage())
             {
                 return writeBinary(asset);
