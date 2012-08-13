@@ -53,10 +53,6 @@
     <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetZip.1.9.1.8\lib\net20\Ionic.Zip.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.4.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -87,9 +83,7 @@
   <ItemGroup>
     <Compile Include="Assets\writing_asset_tags_with_and_without_bottles.cs" />
     <Compile Include="Chrome\ChromeBehaviorIntegrationTester.cs" />
-    <Compile Include="CommandRunner.cs" />
     <Compile Include="Conneg\Conneg_Can_Choose_Output_Media_Based_on_Mimetypes.cs" />
-    <Compile Include="Conneg\FubuRegistryRunner.cs" />
     <Compile Include="Conneg\OutputFromAnActionThatReturnsStrings.cs" />
     <Compile Include="Conneg\Output_from_actions_that_return_ajax_continuations.cs" />
     <Compile Include="Conneg\Output_from_Actions_that_return_HtmlTags.cs" />
@@ -103,13 +97,6 @@
     <Compile Include="Packaging\reading_files_and_contents.cs" />
     <Compile Include="Packaging\unlinking_a_bottle_from_the_command_line.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Querying\ActionToken.cs" />
-    <Compile Include="Querying\AssemblyToken.cs" />
-    <Compile Include="Querying\EndpointModel.cs" />
-    <Compile Include="Querying\EndpointToken.cs" />
-    <Compile Include="Querying\GraphQuery.cs" />
-    <Compile Include="Querying\RemoteBehaviorGraph.cs" />
-    <Compile Include="Querying\TypeToken.cs" />
     <Compile Include="ScriptsHandler.cs" />
     <Compile Include="ViewAttachment\ProfiledAttachmentTester.cs" />
     <Compile Include="ViewEngines\Razor\HelloRazor\HelloRazorController.cs" />
@@ -153,6 +140,10 @@
     <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
       <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
       <Name>FubuMVC.StructureMap</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.TestingHarness\FubuMVC.TestingHarness.csproj">
+      <Project>{C9C9A405-1164-44AB-9CB4-3639F0979BE9}</Project>
+      <Name>FubuMVC.TestingHarness</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Tests\FubuMVC.Tests.csproj">
       <Project>{FEB91F9F-ECE2-480C-B39C-A44BBF1F7B01}</Project>

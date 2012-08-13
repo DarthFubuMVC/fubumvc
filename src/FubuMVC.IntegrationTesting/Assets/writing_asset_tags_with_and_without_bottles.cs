@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using FubuMVC.Core;
 using FubuMVC.Core.Endpoints;
 using FubuMVC.IntegrationTesting.Conneg;
+using FubuMVC.TestingHarness;
 using NUnit.Framework;
 using FubuTestingSupport;
 

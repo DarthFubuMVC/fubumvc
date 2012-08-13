@@ -1,5 +1,6 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
+using FubuMVC.TestingHarness;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Conneg

@@ -4,7 +4,7 @@ using System.Text;
 using FubuMVC.Core;
 using HtmlTags;
 
-namespace FubuMVC.IntegrationTesting.Querying
+namespace FubuMVC.TestingHarness.Querying
 {
     public class RemoteBehaviorGraph
     {

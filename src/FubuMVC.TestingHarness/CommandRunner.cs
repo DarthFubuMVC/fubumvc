@@ -4,7 +4,7 @@ using System.IO;
 using FubuCore;
 using FubuCore.CommandLine;
 
-namespace FubuMVC.IntegrationTesting
+namespace FubuMVC.TestingHarness
 {
     public class CommandRunner
     {

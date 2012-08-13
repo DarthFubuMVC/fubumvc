@@ -5,6 +5,7 @@ using System.Net;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Runtime;
 using FubuMVC.IntegrationTesting.Conneg;
+using FubuMVC.TestingHarness;
 using FubuTestingSupport;
 using NUnit.Framework;
 using TestPackage1;

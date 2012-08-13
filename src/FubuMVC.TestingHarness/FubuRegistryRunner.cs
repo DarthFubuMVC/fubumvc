@@ -10,14 +10,14 @@ using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
-using FubuMVC.IntegrationTesting.Querying;
 using FubuMVC.OwinHost;
 using FubuMVC.StructureMap;
+using FubuMVC.TestingHarness.Querying;
 using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
 
-namespace FubuMVC.IntegrationTesting.Conneg
+namespace FubuMVC.TestingHarness
 {
     public abstract class FubuRegistryHarness
     {

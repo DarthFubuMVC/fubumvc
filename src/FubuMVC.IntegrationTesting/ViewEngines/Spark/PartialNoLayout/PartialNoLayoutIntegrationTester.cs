@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.IntegrationTesting.Conneg;
@@ -8,6 +8,7 @@ using FubuMVC.IntegrationTesting.ViewEngines.Spark.PartialNoLayout.Features.Uses
 using FubuMVC.IntegrationTesting.ViewEngines.Spark.PartialNoLayout.Features.UsesPartial;
 using FubuMVC.IntegrationTesting.ViewEngines.Spark.PartialNoLayout.Features.UsesTransferTo;
 using FubuMVC.Spark;
+using FubuMVC.TestingHarness;
 using FubuTestingSupport;
 using NUnit.Framework;
 

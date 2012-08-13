@@ -6,6 +6,7 @@ using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Urls;
 using FubuMVC.IntegrationTesting;
 using FubuMVC.StructureMap;
+using FubuMVC.TestingHarness;
 using StructureMap;
 
 namespace FubuMVC.AspNetTesting

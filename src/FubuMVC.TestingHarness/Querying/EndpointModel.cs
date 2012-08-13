@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core;
 
-namespace FubuMVC.IntegrationTesting.Querying
+namespace FubuMVC.TestingHarness.Querying
 {
     public class EndpointModel : JsonMessage
     {

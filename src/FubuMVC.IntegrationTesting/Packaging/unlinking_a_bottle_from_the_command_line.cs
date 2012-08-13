@@ -1,6 +1,7 @@
 using System.Linq;
 using FubuCore;
 using FubuMVC.IntegrationTesting.Conneg;
+using FubuMVC.TestingHarness;
 using FubuTestingSupport;
 using NUnit.Framework;
 

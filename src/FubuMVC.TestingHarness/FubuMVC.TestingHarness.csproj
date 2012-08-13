@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{37231105-CDFD-4A1C-8A68-DD31E59C9AE1}</ProjectGuid>
+    <ProjectGuid>{C9C9A405-1164-44AB-9CB4-3639F0979BE9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FubuMVC.AspNetTesting</RootNamespace>
-    <AssemblyName>FubuMVC.AspNetTesting</AssemblyName>
+    <RootNamespace>FubuMVC.TestingHarness</RootNamespace>
+    <AssemblyName>FubuMVC.TestingHarness</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -70,34 +70,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="can_upload_a_file.cs" />
-    <Compile Include="TestApplication.cs" />
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="CommandRunner.cs" />
+    <Compile Include="FubuRegistryRunner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebForms\can_render_a_simplistic_WebForms_view.cs" />
+    <Compile Include="Querying\ActionToken.cs" />
+    <Compile Include="Querying\AssemblyToken.cs" />
+    <Compile Include="Querying\EndpointModel.cs" />
+    <Compile Include="Querying\EndpointToken.cs" />
+    <Compile Include="Querying\GraphQuery.cs" />
+    <Compile Include="Querying\RemoteBehaviorGraph.cs" />
+    <Compile Include="Querying\TypeToken.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AspNetApplication\AspNetApplication.csproj">
-      <Project>{DC1BCE7A-CA17-423C-81F2-836292C3AF2C}</Project>
-      <Name>AspNetApplication</Name>
+    <ProjectReference Include="..\FubuKayak\FubuKayak.csproj">
+      <Project>{3C9279B1-DDDF-4E6A-B95A-6276942882EC}</Project>
+      <Name>FubuKayak</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.IntegrationTesting\FubuMVC.IntegrationTesting.csproj">
-      <Project>{022C7B24-4417-493F-9F70-E3F4035FBEDA}</Project>
-      <Name>FubuMVC.IntegrationTesting</Name>
+    <ProjectReference Include="..\FubuMVC.OwinHost\FubuMVC.OwinHost.csproj">
+      <Project>{EA10DF80-FD95-4172-BC18-DB0DFB279844}</Project>
+      <Name>FubuMVC.OwinHost</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
       <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
       <Name>FubuMVC.StructureMap</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.TestingHarness\FubuMVC.TestingHarness.csproj">
-      <Project>{C9C9A405-1164-44AB-9CB4-3639F0979BE9}</Project>
-      <Name>FubuMVC.TestingHarness</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

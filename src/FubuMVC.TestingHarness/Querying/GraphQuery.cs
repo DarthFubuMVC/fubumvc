@@ -4,7 +4,7 @@ using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Urls;
 
-namespace FubuMVC.IntegrationTesting.Querying
+namespace FubuMVC.TestingHarness.Querying
 {
     public class GraphQuery
     {

@@ -3,6 +3,7 @@ using FubuMVC.IntegrationTesting.Conneg;
 using FubuMVC.IntegrationTesting.ViewEngines.Razor.MultipleLayouts.Features.One.UsesClosest;
 using FubuMVC.IntegrationTesting.ViewEngines.Razor.MultipleLayouts.Features.Two.UsesDefault;
 using FubuMVC.Razor;
+using FubuMVC.TestingHarness;
 using NUnit.Framework;
 using FubuTestingSupport;
 

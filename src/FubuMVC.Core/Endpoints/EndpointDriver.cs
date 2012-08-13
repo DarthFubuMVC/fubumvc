@@ -168,7 +168,7 @@ namespace FubuMVC.Core.Endpoints
             return Get(url, acceptType);
         }
 
-        public HttpResponse GetByInput<T>(T model, string categoryOrHttpMethod = null, string acceptType = "*/*")
+        public HttpResponse GetByInput<T>(T model, string categoryOrHttpMethod = "GET", string acceptType = "*/*")
         {
             var url = _urls.UrlFor(model, categoryOrHttpMethod);
             return Get(url, acceptType);

@@ -8,6 +8,7 @@ using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Resources.PathBased;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.IntegrationTesting.Conneg;
+using FubuMVC.TestingHarness;
 using NUnit.Framework;
 using System.Collections.Generic;
 using StringWriter = System.IO.StringWriter;

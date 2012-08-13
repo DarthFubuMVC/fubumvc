@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace FubuMVC.IntegrationTesting.Querying
+namespace FubuMVC.TestingHarness.Querying
 {
     public class AssemblyToken
     {

@@ -2,6 +2,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.IntegrationTesting.Conneg;
+using FubuMVC.TestingHarness;
 using FubuTestingSupport;
 using NUnit.Framework;
 

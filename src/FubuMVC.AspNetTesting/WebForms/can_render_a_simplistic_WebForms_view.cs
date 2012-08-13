@@ -1,6 +1,7 @@
 using AspNetApplication.FileUpload;
 using AspNetApplication.WebForms;
 using FubuMVC.Core.Runtime;
+using FubuMVC.TestingHarness;
 using NUnit.Framework;
 using FubuMVC.IntegrationTesting.Conneg;
 using FubuTestingSupport;

@@ -2,6 +2,7 @@ using System;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors.Chrome;
 using FubuMVC.IntegrationTesting.Conneg;
+using FubuMVC.TestingHarness;
 using FubuTestingSupport;
 using NUnit.Framework;
 
