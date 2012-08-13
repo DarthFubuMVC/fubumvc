@@ -14,17 +14,9 @@ namespace FubuMVC.TestingHarness
         {
             var path = AppDomain.CurrentDomain.BaseDirectory;
 
-            var fileSystem = new FileSystem();
-
-
-            var isFound = fileSystem.FileExists(path, @"src\fubu\bin\debug", "fubu.exe");
-            while (!isFound)
-            {
-                path = Path.Combine(path, "..");
-                isFound = fileSystem.FileExists(path, @"src\fubu\bin\debug", "fubu.exe");
-            }
-
-            _solutionDirectory = Path.GetFullPath(path);
+            // Assuming that the assembly will be running in Fubu centric
+            // [solution]/src/[library]/bin/debug
+            _solutionDirectory = path.ParentDirectory().ParentDirectory().ParentDirectory().ParentDirectory();
         }
 
         public void RunBottles(string commandLine)
@@ -57,9 +49,29 @@ namespace FubuMVC.TestingHarness
             }
         }
 
+        private string findFubuFilename()
+        {
+            var fileSystem = new FileSystem();
+            var fileName = Path.Combine(_solutionDirectory, @"src\fubu\bin\debug\fubu.exe");
+
+            if (fileSystem.FileExists(fileName))
+            {
+                return fileName;
+            }
+
+            fileName = Path.Combine(_solutionDirectory, @"src\fubu\bin\release\fubu.exe");
+            if (fileSystem.FileExists(fileName))
+            {
+                return fileName;
+            }
+
+            return _solutionDirectory.AppendPath("fubu.cmd");
+        }
+
         public void RunFubu(string commandLine)
         {
-            var fileName = Path.Combine(_solutionDirectory, @"src\fubu\bin\debug\fubu.exe");
+            var fileName = findFubuFilename();
+
             Debug.WriteLine("Execute: {0} {1}".ToFormat(fileName, commandLine));
             var startup = new ProcessStartInfo(fileName, commandLine){
                 CreateNoWindow = true,
