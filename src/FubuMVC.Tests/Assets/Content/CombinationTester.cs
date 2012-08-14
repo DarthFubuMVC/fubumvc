@@ -60,10 +60,10 @@ namespace FubuMVC.Tests.Assets.Content
         }
 
         [Test]
-        public void the_content_should_include_all_the_content_in_order_of_the_inners()
+        public void the_content_should_include_all_the_content_in_order_of_the_inners_and_javascript_delimiters()
         {
-            var separator = Core.Assets.Content.Combination.Separator;
-            ClassUnderTest.GetContent(thePipeline).ShouldEqual(theInnerContent.Join(separator));
+            var separator = Core.Assets.Content.Combination.Separator + ";;" + Environment.NewLine + Environment.NewLine;
+            ClassUnderTest.GetContent(thePipeline).ShouldEqual(theInnerContent.Join(separator) + Environment.NewLine + Environment.NewLine + ";;");
         }
 
         [Test]

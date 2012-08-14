@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using FubuMVC.Core.Assets.Files;
 using System.Linq;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Assets.Content
 {
@@ -18,11 +19,20 @@ namespace FubuMVC.Core.Assets.Content
 
         public string GetContent(IContentPipeline pipeline)
         {
+            bool isJavascript = _innerSources.SelectMany(x => x.Files).Any(x => x.MimeType == MimeType.Javascript);
+
             var builder = new StringBuilder();
             _innerSources.Select(x => x.GetContent(pipeline)).Each(content =>
             {
                 builder.AppendLine(content);
                 builder.AppendLine();
+
+                
+                if (isJavascript)
+                {
+                    builder.AppendLine(";;");
+                    builder.AppendLine();
+                }
             });
 
             return builder.ToString().TrimEnd();
