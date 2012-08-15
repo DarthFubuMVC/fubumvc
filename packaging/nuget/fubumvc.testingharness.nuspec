@@ -23,7 +23,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="ripple.xml" target="tools" />
     <file src="..\..\src\FubuMVC.TestingHarness\bin\release\FubuMVC.TestingHarness.*" target="lib\net40" />
   </files>
 </package>
