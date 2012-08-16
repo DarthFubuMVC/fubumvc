@@ -103,6 +103,7 @@
     <Compile Include="Caching\IVaryBy.cs" />
     <Compile Include="Caching\ResourceHash.cs" />
     <Compile Include="Caching\SimpleVaryBy.cs" />
+    <Compile Include="Caching\VaryByResource.cs" />
     <Compile Include="CanBeMultiplesAttribute.cs" />
     <Compile Include="Behaviors\WrappingBehavior.cs" />
     <Compile Include="Endpoints\EndpointDriver.cs" />

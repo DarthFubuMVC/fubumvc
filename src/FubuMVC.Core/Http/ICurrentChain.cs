@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Http
@@ -11,6 +12,7 @@ namespace FubuMVC.Core.Http
         BehaviorChain Current { get; }
 
         BehaviorChain OriginatingChain { get; }
+        IDictionary<string, object> RouteData { get; }
 
         // This is necessary if we wanna get handle partials too
         void Push(BehaviorChain chain);

@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 
@@ -11,13 +9,16 @@ namespace FubuMVC.Core.Http
     public class CurrentChain : ICurrentChain
     {
         private readonly Stack<BehaviorChain> _chains = new Stack<BehaviorChain>();
-        private readonly Lazy<string> _resourceHash;
         private readonly BehaviorChain _originalChain;
+        private readonly Lazy<string> _resourceHash;
+        private readonly IDictionary<string, object> _routeData;
 
         public CurrentChain(BehaviorChain top, IDictionary<string, object> data)
         {
             _chains.Push(top);
             _originalChain = top;
+
+            _routeData = data;
 
             _resourceHash = new Lazy<string>(() =>
             {
@@ -25,13 +26,16 @@ namespace FubuMVC.Core.Http
                     {"Pattern", top.Route.Pattern}
                 };
 
-                data.OrderBy(x => x.Key).Each(pair =>
-                {
-                    dict.Add(pair.Key, pair.Value == null ? string.Empty : pair.Value.ToString());
-                });
+                data.OrderBy(x => x.Key).Each(
+                    pair => { dict.Add(pair.Key, pair.Value == null ? string.Empty : pair.Value.ToString()); });
 
                 return dict.Select(x => "{0}={1}".ToFormat(x.Key, x.Value)).Join(";").ToHash();
             });
+        }
+
+        public IDictionary<string, object> RouteData
+        {
+            get { return _routeData; }
         }
 
         public BehaviorChain Current

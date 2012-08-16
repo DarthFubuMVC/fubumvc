@@ -4,7 +4,12 @@ using FubuCore;
 
 namespace FubuMVC.Core.Caching
 {
-    public class ResourceHash
+    public interface IResourceHash
+    {
+        string CreateHash();
+    }
+
+    public class ResourceHash : IResourceHash
     {
         private readonly IEnumerable<IVaryBy> _varyBys;
 

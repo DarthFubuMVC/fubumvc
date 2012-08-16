@@ -49,6 +49,13 @@ namespace FubuMVC.Tests.Http
         }
 
         [Test]
+        public void keeps_the_route_data()
+        {
+            var currentChain = new CurrentChain(theChain, theRouteData);
+            currentChain.RouteData.ShouldBeTheSameAs(theRouteData);
+        }
+
+        [Test]
         public void is_in_partial_negative()
         {
             var currentChain = new CurrentChain(theChain, null);

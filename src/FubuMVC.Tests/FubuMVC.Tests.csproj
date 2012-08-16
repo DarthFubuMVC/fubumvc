@@ -161,6 +161,7 @@
     <Compile Include="Behaviors\Chrome\ChromeNodeTester.cs" />
     <Compile Include="Caching\Caching_services_are_registered.cs" />
     <Compile Include="Caching\ResourceHashTester.cs" />
+    <Compile Include="Caching\VaryByResourceTester.cs" />
     <Compile Include="ConfigurationGraph_DetermineConfigurationType_Tester.cs" />
     <Compile Include="Default_ViewAttachment_Filters_Convention_Tester.cs" />
     <Compile Include="InteractionContextExtensions.cs" />
