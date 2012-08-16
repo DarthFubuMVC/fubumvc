@@ -100,6 +100,9 @@
     <Compile Include="Behaviors\Chrome\ChromeBehavior.cs" />
     <Compile Include="Behaviors\Chrome\ChromeContent.cs" />
     <Compile Include="Behaviors\Chrome\ChromeNode.cs" />
+    <Compile Include="Caching\IVaryBy.cs" />
+    <Compile Include="Caching\ResourceHash.cs" />
+    <Compile Include="Caching\SimpleVaryBy.cs" />
     <Compile Include="CanBeMultiplesAttribute.cs" />
     <Compile Include="Behaviors\WrappingBehavior.cs" />
     <Compile Include="Endpoints\EndpointDriver.cs" />
