@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading;
 using FubuCore.Util;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Resources.Etags;
 
 namespace FubuMVC.Core.Assets.Caching
@@ -19,6 +21,7 @@ namespace FubuMVC.Core.Assets.Caching
     {
         private readonly Cache<AssetFile, IList<string>> _fileToResourceLinks = new Cache<AssetFile, IList<string>>(file => new List<string>());
         private readonly Cache<string, IRecordedOutput> _outputs = new Cache<string, IRecordedOutput>();
+        private readonly Cache<string,IEnumerable<Header>> _headersByEtag = new Cache<string, IEnumerable<Header>>(x => new[]{new Header(HttpResponseHeader.ETag, x) });
         private readonly ReaderWriterLock _lock = new ReaderWriterLock();
 
         public void LinkFilesToResource(string resourceHash, IEnumerable<AssetFile> files)
@@ -88,9 +91,14 @@ namespace FubuMVC.Core.Assets.Caching
             });
         }
 
-        public void Register(string resourceHash, string etag)
+        public IEnumerable<Header> HeadersForEtag(string etag)
         {
-            
+            return _headersByEtag[etag];
+        }
+
+        public void Register(string resourceHash, string etag, IEnumerable<Header> headers)
+        {
+            _headersByEtag[etag] = headers;
         }
 
         public void Eject(string resourceHash)

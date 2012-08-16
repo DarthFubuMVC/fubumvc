@@ -1,8 +1,12 @@
 using System;
+using System.Collections.Generic;
+using System.Net;
 using FubuCore;
+using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Resources.Etags;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Logging;
@@ -12,6 +16,46 @@ using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Caching
 {
+    [TestFixture]
+    public class when_registering_caching_with_an_etag : InteractionContext<OutputCachingBehavior>
+    {
+        private StubOutputWriter theWriter;
+        private readonly string theResource = Guid.NewGuid().ToString();
+
+        protected override void beforeEach()
+        {
+
+            theWriter = new StubOutputWriter();
+            Services.Inject<IOutputWriter>(theWriter);
+
+            theWriter.Output.AppendHeader(HttpResponseHeaders.ETag, "12345");
+
+            MockFor<IAssetCacheHeaders>()
+                .Stub(x => x.Headers()).Return(new List<Header>(new []{new Header("herp","derp") }));
+
+            FubuMode.Reset();
+        }
+
+        [Test]
+        public void when_not_in_development_mode()
+        {
+            ClassUnderTest.CreateOuput(theResource, x => x.Invoke());
+            
+            theWriter.HeadersWritten.ShouldBeTrue();
+        }
+
+        [Test]
+        public void when_in_development_mode()
+        {
+            FubuMode.Mode(FubuMode.Development);
+
+            ClassUnderTest.CreateOuput(theResource, x => x.Invoke());
+            
+            theWriter.HeadersWritten.ShouldBeFalse();
+        }
+    }
+
+
     [TestFixture]
     public class when_creating_output_with_an_etag : InteractionContext<OutputCachingBehavior>
     {
@@ -26,14 +70,18 @@ namespace FubuMVC.Tests.Caching
 
             theWriter.Output.AppendHeader(HttpResponseHeaders.ETag, "12345");
 
+            MockFor<IAssetCacheHeaders>()
+                .Stub(x => x.Headers()).Return(new List<Header>(new []{new Header("herp","derp") }));
+
             theResultingOutput = ClassUnderTest.CreateOuput(theResource, x => x.Invoke());
         }
 
         [Test]
         public void should_have_registered_the_new_etag()
         {
-            MockFor<IEtagCache>().AssertWasCalled(x => x.Register(theResource, "12345"));
+            MockFor<IEtagCache>().AssertWasCalled(x => x.Register(theResource, "12345",new[]{new Header(HttpResponseHeader.ETag, "12345") }), ctx => ctx.IgnoreArguments());
         }
+
 
         [Test]
         public void the_recorded_output_was_returned()
@@ -122,6 +170,13 @@ namespace FubuMVC.Tests.Caching
             action();
             return Output;
         }
+
+        public override void AppendHeader(string key, string value)
+        {
+            HeadersWritten = true;
+        }
+
+        public bool HeadersWritten { get; set; }
     }
 
     public class StubOutputCache : IOutputCache

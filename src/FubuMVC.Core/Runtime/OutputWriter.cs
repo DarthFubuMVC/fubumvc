@@ -121,7 +121,7 @@ namespace FubuMVC.Core.Runtime
             Writer.AppendCookie(cookie);
         }
 
-        public void AppendHeader(string key, string value)
+        public virtual void AppendHeader(string key, string value)
         {
             _logger.DebugMessage(() => new SetHeaderValue(key, value));
 

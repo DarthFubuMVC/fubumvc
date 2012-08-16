@@ -47,13 +47,17 @@ link harness pak1
             endpoints.GetAsset(AssetFolder.images, "aaa/ico-close.gif", etag: etag)
                 .StatusCodeShouldBe(HttpStatusCode.NotModified)
                 .ContentLength().ShouldBeLessThan(200);
+
+            endpoints.GetAsset(AssetFolder.images, "aaa/ico-close.gif", etag: etag)
+                .StatusCodeShouldBe(HttpStatusCode.NotModified)
+                .ShouldHaveHeader(HttpResponseHeader.CacheControl)
+                .ShouldHaveHeader(HttpResponseHeader.ETag);
         }
 
         [Test]
         public void image_tags_should_have_cache_headers_set()
         {
            endpoints.GetAsset(AssetFolder.images, "aaa/ico-close.gif")
-                .ShouldHaveHeader(HttpResponseHeader.LastModified)
                 .ShouldHaveHeader(HttpResponseHeader.CacheControl);
         }
         [Test]

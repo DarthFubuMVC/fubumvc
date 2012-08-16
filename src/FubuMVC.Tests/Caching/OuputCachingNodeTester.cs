@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Caching;
+using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Resources.Etags;
@@ -81,6 +83,16 @@ namespace FubuMVC.Tests.Caching
     public class FakeEtagCache : IEtagCache
     {
         public string Current(string resourceHash)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Header> HeadersForEtag(string etag)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Register(string resourceHash, string etag, IEnumerable<Header> cacheHeaders)
         {
             throw new NotImplementedException();
         }

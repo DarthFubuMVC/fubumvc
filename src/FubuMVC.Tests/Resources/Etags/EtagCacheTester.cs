@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using FubuMVC.Core;
+using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Resources.Etags;
 using NUnit.Framework;
@@ -26,22 +28,22 @@ namespace FubuMVC.Tests.Resources.Etags
         [Test]
         public void current_returns_the_current_after_a_register()
         {
-            theCache.Register("something", "12345");
+            theCache.Register("something", "12345", new List<Header>());
 
             theCache.Current("something").ShouldEqual("12345");
 
-            theCache.Register("something", "23456");
+            theCache.Register("something", "23456", new List<Header>());
 
             theCache.Current("something").ShouldEqual("23456");
 
-            theCache.Register("else", "567");
+            theCache.Register("else", "567", new List<Header>());
             theCache.Current("else").ShouldEqual("567");
         }
 
         [Test]
         public void ejecting_an_etag_resets_the_current_to_null()
         {
-            theCache.Register("something", "12345");
+            theCache.Register("something", "12345", new List<Header>());
             theCache.Eject("something");
 
             theCache.Current("something").ShouldBeNull();

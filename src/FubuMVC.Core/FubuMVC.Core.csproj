@@ -89,10 +89,8 @@
     <Compile Include="Assets\Diagnostics\AssetLogEntry.cs" />
     <Compile Include="Assets\Diagnostics\AssetLogsCache.cs" />
     <Compile Include="Assets\Diagnostics\AssetRegistrationDiagnostics.cs" />
-    <Compile Include="Assets\Http\AssetCacheWriter.cs" />
     <Compile Include="Assets\Http\AssetEtagInvocationFilter.cs" />
     <Compile Include="Assets\Http\AssetWriter.cs" />
-    <Compile Include="Assets\Http\IAssetCacheWriter.cs" />
     <Compile Include="Assets\IAssetPrecompiler.cs" />
     <Compile Include="Assets\RecordingAssetRegistration.cs" />
     <Compile Include="Assets\WarmUpSetsForCombinationPolicy.cs" />
@@ -102,6 +100,8 @@
     <Compile Include="Behaviors\Chrome\ChromeBehavior.cs" />
     <Compile Include="Behaviors\Chrome\ChromeContent.cs" />
     <Compile Include="Behaviors\Chrome\ChromeNode.cs" />
+    <Compile Include="Caching\AssetCacheHeaders.cs" />
+    <Compile Include="Caching\IAssetCacheHeaders.cs" />
     <Compile Include="CanBeMultiplesAttribute.cs" />
     <Compile Include="Behaviors\WrappingBehavior.cs" />
     <Compile Include="Endpoints\EndpointDriver.cs" />

@@ -8,6 +8,7 @@ using FubuMVC.Core.Assets.Diagnostics;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Assets.Tags;
+using FubuMVC.Core.Caching;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Resources.Etags;
 
@@ -37,7 +38,7 @@ namespace FubuMVC.Core.Assets
             SetServiceIfNone<IMissingAssetHandler, TraceOnlyMissingAssetHandler>();
 
             SetServiceIfNone<IAssetTagPlanCache, AssetTagPlanCache>();
-            SetServiceIfNone<IAssetCacheWriter, AssetCacheWriter>();
+            SetServiceIfNone<IAssetCacheHeaders, AssetCacheHeaders>();
 
             SetServiceIfNone<ITransformerPolicyLibrary, TransformerPolicyLibrary>();
 

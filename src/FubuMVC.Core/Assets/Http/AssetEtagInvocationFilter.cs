@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using System.Net;
 using FubuCore.Binding;
 using FubuCore.Conversion;
+using FubuMVC.Core.Assets.Caching;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Resources.Etags;
 using FubuMVC.Core.Runtime;
@@ -30,8 +32,12 @@ namespace FubuMVC.Core.Assets.Http
 
             if (etag != currentEtag) return DoNext.Continue;
 
+            var httpWriter = arguments.Get<IHttpWriter>();
+            
+            httpWriter.WriteResponseCode(HttpStatusCode.NotModified);
+            
+            _cache.HeadersForEtag(etag).Each(x => httpWriter.AppendHeader(x.Name, x.Value));
 
-            arguments.Get<IHttpWriter>().WriteResponseCode(HttpStatusCode.NotModified);
             return DoNext.Stop;
         }
     }

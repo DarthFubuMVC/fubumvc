@@ -6,6 +6,7 @@ using FubuCore.Binding.Values;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Resources.Etags;
 using NUnit.Framework;
 using FubuTestingSupport;
@@ -67,7 +68,7 @@ namespace FubuMVC.Tests.Assets.Http
 
             setRequestIfNoneMatch("12345");
 
-            theCache.Register(theResourceHash, "12345");
+            theCache.Register(theResourceHash, "12345", new List<Header>());
 
             theFilter.Filter(theServiceArguments).ShouldEqual(DoNext.Stop);
 
@@ -84,7 +85,7 @@ namespace FubuMVC.Tests.Assets.Http
 
             setRequestIfNoneMatch("12345");
 
-            theCache.Register(theResourceHash, "12345-6");
+            theCache.Register(theResourceHash, "12345-6",new List<Header>());
 
             theFilter.Filter(theServiceArguments).ShouldEqual(DoNext.Continue);
 

@@ -36,7 +36,7 @@ namespace FubuMVC.IntegrationTesting.Assets
         public void asset_tags_should_have_cache_headers_set()
         {
             endpoints.GetAsset(AssetFolder.scripts, "Script1.js")
-                .ShouldHaveHeader(HttpResponseHeader.LastModified)
+                .ShouldHaveHeader(HttpResponseHeader.ETag)
                 .ShouldHaveHeader(HttpResponseHeader.CacheControl);
         }
 
