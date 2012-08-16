@@ -77,6 +77,26 @@ namespace FubuMVC.Tests.Assets.Http
         }
 
         [Test]
+        public void should_write_registered_caching_headers_when_writing_the_304_response()
+        {
+            var theResourceHash = Guid.NewGuid().ToString();
+            theServiceArguments.Get<ICurrentChain>().Stub(x => x.ResourceHash())
+                .Return(theResourceHash);
+
+            setRequestIfNoneMatch("12345");
+
+            theCache.Register(theResourceHash, "12345", new[]{new Header(HttpResponseHeader.ETag, "12345") });
+
+            theFilter.Filter(theServiceArguments).ShouldEqual(DoNext.Stop);
+
+            theServiceArguments.Get<IHttpWriter>()
+                .AssertWasCalled(x => x.WriteResponseCode(HttpStatusCode.NotModified));
+
+            theServiceArguments.Get<IHttpWriter>()
+                .AssertWasCalled(x => x.AppendHeader(HttpResponseHeaders.ETag,"12345"));
+        }
+
+        [Test]
         public void should_return_continue_if_the_etag_does_not_match_the_current_version()
         {
             var theResourceHash = Guid.NewGuid().ToString();
