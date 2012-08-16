@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets.Caching;
 using FubuMVC.Core.Assets.Files;
@@ -99,6 +100,12 @@ namespace FubuMVC.Tests.Assets.Caching
             string etag = "12345";
             theCache.Register("ABCDEF",etag,new[]{new Header("herp","derp") });
             theCache.HeadersForEtag(etag).ShouldHaveTheSameElementsAs(new Header("herp","derp"));
+        }
+
+        [Test]
+        public void the_headers_for_an_etag_should_default_to_the_etag_header()
+        {
+            theCache.HeadersForEtag("12345").ShouldHaveTheSameElementsAs(new Header(HttpResponseHeader.ETag,"12345"));
         }
 
         [Test]
