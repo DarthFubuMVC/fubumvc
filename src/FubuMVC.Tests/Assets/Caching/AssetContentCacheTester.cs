@@ -4,6 +4,7 @@ using FubuMVC.Core.Assets.Caching;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Registration;
 using NUnit.Framework;
 using FubuTestingSupport;
@@ -90,6 +91,14 @@ namespace FubuMVC.Tests.Assets.Caching
             theCache.Retrieve(resource1, () => output1);
 
             theCache.Current(resource1).ShouldEqual(etag);
+        }
+
+        [Test]
+        public void the_cache_should_return_cached_headers()
+        {
+            string etag = "12345";
+            theCache.Register("ABCDEF",etag,new[]{new Header("herp","derp") });
+            theCache.HeadersForEtag(etag).ShouldHaveTheSameElementsAs(new Header("herp","derp"));
         }
 
         [Test]
