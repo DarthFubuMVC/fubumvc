@@ -14,8 +14,9 @@ namespace FubuMVC.Core.Caching
 
         public IDictionary<string, string> Values()
         {
-            var dict = new Dictionary<string, string>();
-            dict.Add("chain", _currentChain.Current.UniqueId.ToString());
+            var dict = new Dictionary<string, string>{
+                {"chain", _currentChain.Current.UniqueId.ToString()}
+            };
 
             if (!_currentChain.Current.IsPartialOnly && _currentChain.Current.Route != null)
             {
