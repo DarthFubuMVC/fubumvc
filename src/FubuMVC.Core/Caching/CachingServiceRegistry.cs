@@ -8,6 +8,7 @@ namespace FubuMVC.Core.Caching
         public CachingServiceRegistry()
         {
             SetServiceIfNone<IHeadersCache>(new HeadersCache());
+            SetServiceIfNone<IOutputCache, OutputCache>();
         }
     }
 }

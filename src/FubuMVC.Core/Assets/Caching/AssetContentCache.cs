@@ -57,18 +57,19 @@ namespace FubuMVC.Core.Assets.Caching
         {
             write = () =>
             {
-                _fileToResourceLinks.SelectMany(x => x).Distinct().Each(x => _headers.Eject(x));
+                _fileToResourceLinks.SelectMany(x => x).Distinct().Each(eject);
             };
         }
 
         public void Changed(AssetFile file)
         {
-            write = () => _fileToResourceLinks[file].Each(hash =>
-            {
-                _headers.Eject(hash);
-                _outputCache.Eject(hash);
-            });
+            write = () => _fileToResourceLinks[file].Each(eject);
         }
 
+        private void eject(string hash)
+        {
+            _headers.Eject(hash);
+            _outputCache.Eject(hash);
+        }
     }
 }

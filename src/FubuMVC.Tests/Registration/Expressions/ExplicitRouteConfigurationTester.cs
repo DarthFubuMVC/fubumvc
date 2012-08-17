@@ -1,5 +1,6 @@
 using System.Linq;
 using FubuMVC.Core;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.DSL;
@@ -17,6 +18,8 @@ namespace FubuMVC.Tests.Registration.Expressions
         [SetUp]
         public void SetUp()
         {
+            AssetContentEndpoint.Latched = true;
+
             var config = new ExplicitRouteConfiguration("some/pattern");
             config.Chain();
             _config = config;
@@ -29,11 +32,17 @@ namespace FubuMVC.Tests.Registration.Expressions
             });
             _graph = BehaviorGraph.BuildFrom(fubuRegistry);
 
-            _graph.Behaviors.Count().ShouldBeGreaterThan(1);
+            _graph.Behaviors.Count().ShouldEqual(1);
             _config.Configure(_graph);
         }
 
         #endregion
+
+        [TearDown]
+        public void TearDown()
+        {
+            AssetContentEndpoint.Latched = false;
+        }
 
         private IConfigurationAction _config;
         private BehaviorGraph _graph;
@@ -60,7 +69,7 @@ namespace FubuMVC.Tests.Registration.Expressions
         [Test]
         public void should_add_new_behavior_node_to_graph()
         {
-            _graph.Behaviors.Count().ShouldBeGreaterThan(2);
+            _graph.Behaviors.Count().ShouldEqual(2);
 
             var visitor = new BehaviorVisitor(new NulloConfigurationObserver(), "");
             visitor.Filters += chain => !chain.Calls.Any(call => call.InputType() == typeof (InputModel));

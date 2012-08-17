@@ -1,11 +1,9 @@
 using FubuCore;
-using FubuMVC.Core.Assets.Caching;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Resources.Etags;
 
@@ -14,6 +12,8 @@ namespace FubuMVC.Core.Assets
     [Policy]
     public class AssetContentEndpoint : IConfigurationAction
     {
+        public const string Pattern = "_content";
+
         public static bool Latched;
 
         public void Configure(BehaviorGraph graph)
@@ -25,8 +25,8 @@ namespace FubuMVC.Core.Assets
             var chain = createAssetContentChain(graph);
             chain.Filters.Add(new EtagInvocationFilter(headerCache));
 
-            
-            //addCaching(chain, assetCache);
+
+            addCaching(chain);
             addWritingAction(chain);
         }
 
@@ -36,11 +36,9 @@ namespace FubuMVC.Core.Assets
             chain.AddToEnd(call);
         }
 
-        private static void addCaching(BehaviorChain chain, AssetContentCache assetCache)
+        private static void addCaching(BehaviorChain chain)
         {
-            var cacheNode = new OutputCachingNode{
-                OutputCache = ObjectDef.ForValue(assetCache)
-            };
+            var cacheNode = new OutputCachingNode();
 
             chain.AddToEnd(cacheNode);
         }
@@ -48,8 +46,8 @@ namespace FubuMVC.Core.Assets
         private static BehaviorChain createAssetContentChain(BehaviorGraph graph)
         {
             var chain = graph.AddChain();
-            var pattern = "_content";
-            chain.Route = RouteBuilder.Build(typeof (AssetPath), pattern);
+
+            chain.Route = RouteBuilder.Build(typeof (AssetPath), Pattern);
             chain.Route.AddHttpMethodConstraint("GET");
             return chain;
         }

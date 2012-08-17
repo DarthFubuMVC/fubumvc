@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.Assets.Caching
         private AssetContentCache theCache;
         private BehaviorGraph theGraph;
         private IHeadersCache headersCache;
-        private OutputCache theOutputCache;
+        private IOutputCache theOutputCache;
 
         private IRecordedOutput getOutputWithEtag(string etag)
         {
@@ -57,7 +57,7 @@ namespace FubuMVC.Tests.Assets.Caching
             file5 = new AssetFile("5");
             file6 = new AssetFile("6");
 
-            theOutputCache = new OutputCache();
+            theOutputCache = MockRepository.GenerateMock<IOutputCache>();
             headersCache = MockRepository.GenerateMock<IHeadersCache>();
 
             theCache = new AssetContentCache(headersCache, theOutputCache);
@@ -83,6 +83,10 @@ namespace FubuMVC.Tests.Assets.Caching
             headersCache.AssertWasCalled(x => x.Eject(hash1));
             headersCache.AssertWasCalled(x => x.Eject(hash2));
             headersCache.AssertWasCalled(x => x.Eject(hash3));
+
+            theOutputCache.AssertWasCalled(x => x.Eject(hash1));
+            theOutputCache.AssertWasCalled(x => x.Eject(hash2));
+            theOutputCache.AssertWasCalled(x => x.Eject(hash3));
         }
 
         [Test]
@@ -96,6 +100,7 @@ namespace FubuMVC.Tests.Assets.Caching
             theCache.Changed(file1);
 
             headersCache.AssertWasCalled(x => x.Eject(hash1));
+            theOutputCache.AssertWasCalled(x => x.Eject(hash1));
 
             theCache.Changed(file2);
         }
@@ -116,46 +121,11 @@ namespace FubuMVC.Tests.Assets.Caching
 
             headersCache.AssertWasCalled(x => x.Eject(hash1));
             headersCache.AssertWasCalled(x => x.Eject(hash2));
+            theOutputCache.AssertWasCalled(x => x.Eject(hash1));
+            theOutputCache.AssertWasCalled(x => x.Eject(hash2));
         }
 
 
-        [Test]
-        public void link_files_the_clear_cache()
-        {
-            theCache.LinkFilesToResource(resource1, new AssetFile[]{file1, file2});
-            theCache.LinkFilesToResource(resource2, new AssetFile[]{file1, file2, file3});
-            theCache.LinkFilesToResource(resource3, new AssetFile[]{file2, file3, file4});
-
-            var output1A = storeAgainstResource(resource1);
-            var output2A = storeAgainstResource(resource2);
-            var output3A = storeAgainstResource(resource3);
-
-            Func<IRecordedOutput> shouldNotBeCalled = () =>
-            {
-                Assert.Fail("Do not call me");
-                return null;
-            };
-
-            // 2nd pass
-            theOutputCache.Retrieve(resource1, shouldNotBeCalled).ShouldBeTheSameAs(output1A);
-            theOutputCache.Retrieve(resource2, shouldNotBeCalled).ShouldBeTheSameAs(output2A);
-            theOutputCache.Retrieve(resource3, shouldNotBeCalled).ShouldBeTheSameAs(output3A);
-
-            theCache.Changed(file1);
-
-            var output1B = getOutputWithEtag("2345");
-            var output2B = getOutputWithEtag("23456");
-            var output3B = getOutputWithEtag("23457");
-
-            theOutputCache.Retrieve(resource1, () => output1B).ShouldBeTheSameAs(output1B);
-            theOutputCache.Retrieve(resource1, shouldNotBeCalled).ShouldBeTheSameAs(output1B);
-            theOutputCache.Retrieve(resource1, shouldNotBeCalled).ShouldBeTheSameAs(output1B);
-
-            theOutputCache.Retrieve(resource2, () => output2B).ShouldBeTheSameAs(output2B);
-
-            // Was not cleared because it does not depend on file1
-            theOutputCache.Retrieve(resource3, shouldNotBeCalled).ShouldBeTheSameAs(output3A);
-        }
 
     }
 }

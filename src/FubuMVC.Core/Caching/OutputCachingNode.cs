@@ -1,8 +1,7 @@
 using System;
+using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
-using FubuMVC.Core.Resources.Etags;
-using FubuCore;
 
 namespace FubuMVC.Core.Caching
 {
@@ -56,7 +55,7 @@ namespace FubuMVC.Core.Caching
                 throw new InvalidOperationException("Output caching requires a ResourceHash/VaryBy policy");
             }
 
-            def.Dependency(typeof(IResourceHash), ResourceHash);
+            def.Dependency(typeof (IResourceHash), ResourceHash);
 
             return def;
         }
