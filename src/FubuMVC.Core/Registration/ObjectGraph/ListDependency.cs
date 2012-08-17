@@ -80,5 +80,10 @@ namespace FubuMVC.Core.Registration.ObjectGraph
         {
             items.Each(Add);
         }
+
+        public void Clear()
+        {
+            _items.Clear();
+        }
     }
 }

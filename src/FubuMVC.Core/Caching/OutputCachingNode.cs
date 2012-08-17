@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
@@ -42,6 +43,22 @@ namespace FubuMVC.Core.Caching
             return objectDef;
         }
 
+        public IEnumerable<Type> VaryByPolicies()
+        {
+            foreach (var objectDef in ResourceHash.EnumerableDependenciesOf<IVaryBy>().Items)
+            {
+                if (objectDef.Type != null)
+                {
+                    yield return objectDef.Type;
+                }
+
+                if (objectDef.Value != null )
+                {
+                    yield return objectDef.Value.GetType();
+                }
+            }
+        }
+
         protected override ObjectDef buildObjectDef()
         {
             var def = ObjectDef.ForType<OutputCachingBehavior>();
@@ -58,6 +75,13 @@ namespace FubuMVC.Core.Caching
             def.Dependency(typeof (IResourceHash), ResourceHash);
 
             return def;
+        }
+
+        public void ReplaceVaryByRules(Type[] varyBy)
+        {
+            ResourceHash.EnumerableDependenciesOf<IVaryBy>().Clear();
+
+            varyBy.Each(t => Apply(t));
         }
     }
 }

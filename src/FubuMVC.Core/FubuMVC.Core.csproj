@@ -101,6 +101,7 @@
     <Compile Include="Behaviors\Chrome\ChromeBehavior.cs" />
     <Compile Include="Behaviors\Chrome\ChromeContent.cs" />
     <Compile Include="Behaviors\Chrome\ChromeNode.cs" />
+    <Compile Include="Caching\CacheAttribute.cs" />
     <Compile Include="Caching\CachingServiceRegistry.cs" />
     <Compile Include="Caching\EtagInvocationFilter.cs" />
     <Compile Include="Caching\IVaryBy.cs" />
