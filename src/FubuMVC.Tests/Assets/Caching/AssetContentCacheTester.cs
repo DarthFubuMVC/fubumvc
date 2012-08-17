@@ -29,6 +29,7 @@ namespace FubuMVC.Tests.Assets.Caching
         private AssetContentCache theCache;
         private BehaviorGraph theGraph;
         private IHeadersCache headersCache;
+        private OutputCache theOutputCache;
 
         private IRecordedOutput getOutputWithEtag(string etag)
         {
@@ -41,7 +42,7 @@ namespace FubuMVC.Tests.Assets.Caching
         private IRecordedOutput storeAgainstResource(string resourceHash)
         {
             var output = getOutputWithEtag(Guid.NewGuid().ToString());
-            theCache.Retrieve(resourceHash, () => output);
+            theOutputCache.Retrieve(resourceHash, () => output);
 
             return output;
         }
@@ -56,20 +57,15 @@ namespace FubuMVC.Tests.Assets.Caching
             file5 = new AssetFile("5");
             file6 = new AssetFile("6");
 
+            theOutputCache = new OutputCache();
             headersCache = MockRepository.GenerateMock<IHeadersCache>();
 
-            theCache = new AssetContentCache(headersCache);
+            theCache = new AssetContentCache(headersCache, theOutputCache);
 
             theGraph = BehaviorGraph.BuildFrom(new FubuRegistry());
         }
 
-        [Test]
-        public void retrieve_with_an_empty_cache_calls_to_the_cache_miss_on_the_first_pass()
-        {
-            var output1 = getOutputWithEtag("12345");
 
-            theCache.Retrieve(resource1, () => output1).ShouldBeTheSameAs(output1);
-        }
 
         [Test]
         public void flush_all_removes_the_content_and_ejects_all_of_the_header_cache()
@@ -122,15 +118,6 @@ namespace FubuMVC.Tests.Assets.Caching
             headersCache.AssertWasCalled(x => x.Eject(hash2));
         }
 
-        [Test]
-        public void retrieve_on_a_cache_hit()
-        {
-            var output1 = getOutputWithEtag("12345");
-            var output2 = getOutputWithEtag("12346");
-
-            theCache.Retrieve(resource1, () => output1).ShouldBeTheSameAs(output1);
-            theCache.Retrieve(resource1, () => output2).ShouldBeTheSameAs(output1);
-        }
 
         [Test]
         public void link_files_the_clear_cache()
@@ -150,9 +137,9 @@ namespace FubuMVC.Tests.Assets.Caching
             };
 
             // 2nd pass
-            theCache.Retrieve(resource1, shouldNotBeCalled).ShouldBeTheSameAs(output1A);
-            theCache.Retrieve(resource2, shouldNotBeCalled).ShouldBeTheSameAs(output2A);
-            theCache.Retrieve(resource3, shouldNotBeCalled).ShouldBeTheSameAs(output3A);
+            theOutputCache.Retrieve(resource1, shouldNotBeCalled).ShouldBeTheSameAs(output1A);
+            theOutputCache.Retrieve(resource2, shouldNotBeCalled).ShouldBeTheSameAs(output2A);
+            theOutputCache.Retrieve(resource3, shouldNotBeCalled).ShouldBeTheSameAs(output3A);
 
             theCache.Changed(file1);
 
@@ -160,14 +147,14 @@ namespace FubuMVC.Tests.Assets.Caching
             var output2B = getOutputWithEtag("23456");
             var output3B = getOutputWithEtag("23457");
 
-            theCache.Retrieve(resource1, () => output1B).ShouldBeTheSameAs(output1B);
-            theCache.Retrieve(resource1, shouldNotBeCalled).ShouldBeTheSameAs(output1B);
-            theCache.Retrieve(resource1, shouldNotBeCalled).ShouldBeTheSameAs(output1B);
+            theOutputCache.Retrieve(resource1, () => output1B).ShouldBeTheSameAs(output1B);
+            theOutputCache.Retrieve(resource1, shouldNotBeCalled).ShouldBeTheSameAs(output1B);
+            theOutputCache.Retrieve(resource1, shouldNotBeCalled).ShouldBeTheSameAs(output1B);
 
-            theCache.Retrieve(resource2, () => output2B).ShouldBeTheSameAs(output2B);
+            theOutputCache.Retrieve(resource2, () => output2B).ShouldBeTheSameAs(output2B);
 
             // Was not cleared because it does not depend on file1
-            theCache.Retrieve(resource3, shouldNotBeCalled).ShouldBeTheSameAs(output3A);
+            theOutputCache.Retrieve(resource3, shouldNotBeCalled).ShouldBeTheSameAs(output3A);
         }
 
     }

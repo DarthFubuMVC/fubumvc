@@ -16,19 +16,20 @@ namespace FubuMVC.Core.Assets.Caching
         void Changed(AssetFile file);
     }
 
-    public class AssetContentCache : IOutputCache, IAssetContentCache
+    public class AssetContentCache : IAssetContentCache
     {
         private readonly Cache<AssetFile, IList<string>> _fileToResourceLinks =
             new Cache<AssetFile, IList<string>>(file => new List<string>());
 
         private readonly IHeadersCache _headers;
+        private readonly IOutputCache _outputCache;
 
         private readonly ReaderWriterLock _lock = new ReaderWriterLock();
-        private readonly Cache<string, IRecordedOutput> _outputs = new Cache<string, IRecordedOutput>();
 
-        public AssetContentCache(IHeadersCache headers)
+        public AssetContentCache(IHeadersCache headers, IOutputCache outputCache)
         {
             _headers = headers;
+            _outputCache = outputCache;
         }
 
         private Action write
@@ -57,7 +58,6 @@ namespace FubuMVC.Core.Assets.Caching
             write = () =>
             {
                 _fileToResourceLinks.SelectMany(x => x).Distinct().Each(x => _headers.Eject(x));
-                _outputs.ClearAll();
             };
         }
 
@@ -66,30 +66,9 @@ namespace FubuMVC.Core.Assets.Caching
             write = () => _fileToResourceLinks[file].Each(hash =>
             {
                 _headers.Eject(hash);
-                _outputs.Remove(hash);
+                _outputCache.Eject(hash);
             });
         }
 
-        public IRecordedOutput Retrieve(string resourceHash, Func<IRecordedOutput> cacheMiss)
-        {
-            return read(() =>
-            {
-                _outputs.Fill(resourceHash, hash => cacheMiss());
-                return _outputs[resourceHash];
-            });
-        }
-
-        private T read<T>(Func<T> findValue)
-        {
-            try
-            {
-                _lock.AcquireReaderLock(2000);
-                return findValue();
-            }
-            finally
-            {
-                _lock.ReleaseReaderLock();
-            }
-        }
     }
 }

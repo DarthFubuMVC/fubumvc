@@ -97,5 +97,15 @@ namespace FubuMVC.Tests.Caching
         {
             throw new NotImplementedException();
         }
+
+        public void Eject(string resourceHash)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void FlushAll()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

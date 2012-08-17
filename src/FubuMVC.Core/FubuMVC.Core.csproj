@@ -104,6 +104,7 @@
     <Compile Include="Caching\CachingServiceRegistry.cs" />
     <Compile Include="Caching\EtagInvocationFilter.cs" />
     <Compile Include="Caching\IVaryBy.cs" />
+    <Compile Include="Caching\OutputCache.cs" />
     <Compile Include="Caching\ResourceHash.cs" />
     <Compile Include="Caching\SimpleVaryBy.cs" />
     <Compile Include="Caching\VaryByResource.cs" />

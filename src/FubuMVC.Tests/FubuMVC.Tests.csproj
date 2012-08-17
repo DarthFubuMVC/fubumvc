@@ -163,6 +163,7 @@
     <Compile Include="Caching\Caching_services_are_registered.cs" />
     <Compile Include="Caching\EtagInvocationFilterTester.cs" />
     <Compile Include="Caching\HeadersCacheTester.cs" />
+    <Compile Include="Caching\OutputCacheTester.cs" />
     <Compile Include="Caching\ResourceHashTester.cs" />
     <Compile Include="Caching\VaryByResourceTester.cs" />
     <Compile Include="Caching\VaryByThreadCultureTester.cs" />

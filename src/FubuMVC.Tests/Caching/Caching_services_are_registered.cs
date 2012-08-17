@@ -1,3 +1,4 @@
+using FubuMVC.Core.Caching;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Resources.Etags;
 using FubuTestingSupport;
@@ -21,6 +22,14 @@ namespace FubuMVC.Tests.Caching
                 <HeadersCache>().ShouldNotBeNull();
 
             ServiceRegistry.ShouldBeSingleton(typeof(HeadersCache)).ShouldBeTrue();
+        }
+
+        [Test]
+        public void default_output_cache_is_registered()
+        {
+            registeredTypeIs<IOutputCache, OutputCache>();
+
+            ServiceRegistry.ShouldBeSingleton(typeof (OutputCache));
         }
     }
 }
