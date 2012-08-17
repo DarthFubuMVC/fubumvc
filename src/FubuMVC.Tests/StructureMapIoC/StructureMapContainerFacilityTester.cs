@@ -7,6 +7,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Assets.Caching;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Bootstrapping;
+using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
@@ -37,6 +38,8 @@ namespace FubuMVC.Tests.StructureMapIoC
                 x.For<ICurrentHttpRequest>().Use(new StubCurrentHttpRequest{
                     TheApplicationRoot = "http://server"
                 });
+
+                x.For<IResourceHash>().Use(MockRepository.GenerateMock<IResourceHash>());
             });
 
             container.Configure(x => x.For<IContainerFacility>().Use<StructureMapContainerFacility>());

@@ -25,6 +25,7 @@ namespace FubuMVC.Tests
         [SetUp]
         public void SetUp()
         {
+            AssetContentEndpoint.Latched = true;
             AssetDeclarationVerificationActivator.Latched = true;
 
 
@@ -77,6 +78,12 @@ namespace FubuMVC.Tests
         private Container container;
         private IList<RouteBase> routes;
 
+        [TearDown]
+        public void TearDown()
+        {
+            AssetContentEndpoint.Latched = false;
+            AssetDeclarationVerificationActivator.Latched = false;
+        }
 
         [Test]
         public void should_have_a_route_in_the_RouteCollection_with_a_Fubu_RouteHandler_for_each_route_in_the_registry()

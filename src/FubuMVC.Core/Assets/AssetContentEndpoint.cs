@@ -13,8 +13,12 @@ namespace FubuMVC.Core.Assets
     [Policy]
     public class AssetContentEndpoint : IConfigurationAction
     {
+        public static bool Latched = false;
+
         public void Configure(BehaviorGraph graph)
         {
+            if (Latched) return;
+
             // TODO -- Hokum.  Needs to be pluggable.
             var assetCache = graph.Services.DefaultServiceFor<IAssetContentCache>().Value.As<AssetContentCache>();
 

@@ -109,6 +109,8 @@ namespace FubuMVC.Tests.Registration.Expressions
                 x.For<ICurrentHttpRequest>().Use(new StubCurrentHttpRequest{
                     TheApplicationRoot = "http://server"
                 });
+
+                x.For<IResourceHash>().Use(MockRepository.GenerateMock<IResourceHash>());
             });
 
             FubuApplication.For(() => registry).StructureMap(container).Bootstrap();

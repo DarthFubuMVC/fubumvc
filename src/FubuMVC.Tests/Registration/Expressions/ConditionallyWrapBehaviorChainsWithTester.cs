@@ -1,8 +1,10 @@
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
@@ -113,6 +115,8 @@ namespace FubuMVC.Tests.Registration.Expressions
         [SetUp]
         public void SetUp()
         {
+            AssetContentEndpoint.Latched = false;
+
             registry = new FubuRegistry(x =>
             {
                 x.Actions.IncludeTypes(t => false);
@@ -141,9 +145,18 @@ namespace FubuMVC.Tests.Registration.Expressions
 
         private FubuRegistry registry;
 
+        [TearDown]
+        public void TearDown()
+        {
+            AssetContentEndpoint.Latched = false;
+            AssetDeclarationVerificationActivator.Latched = false;
+        }
+
         [Test]
         public void hydrate_through_container_facility_smoke_test()
         {
+            AssetContentEndpoint.Latched = false;
+
             var container = new Container(x =>
             {
                 x.For<IStreamingData>().Use(MockRepository.GenerateMock<IStreamingData>());
@@ -152,6 +165,8 @@ namespace FubuMVC.Tests.Registration.Expressions
                 x.For<ICurrentHttpRequest>().Use(new StubCurrentHttpRequest{
                     TheApplicationRoot = "http://server"
                 });
+
+                x.For<IResourceHash>().Use(MockRepository.GenerateMock<IResourceHash>());
             });
 
             FubuApplication.For(() => registry).StructureMap(container).Bootstrap();

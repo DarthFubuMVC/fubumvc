@@ -62,7 +62,7 @@ namespace FubuMVC.Tests.Caching
             };
             Services.Inject<IOutputCache>(theCache);
 
-            MockFor<ICurrentChain>().Stub(x => x.ResourceHash())
+            MockFor<IResourceHash>().Stub(x => x.CreateHash())
                 .Return(theResource);
 
             ClassUnderTest.Invoke();
@@ -90,7 +90,7 @@ namespace FubuMVC.Tests.Caching
             };
             Services.Inject<IOutputCache>(theCache);
 
-            MockFor<ICurrentChain>().Stub(x => x.ResourceHash())
+            MockFor<IResourceHash>().Stub(x => x.CreateHash())
                 .Return(theResource);
 
             Services.PartialMockTheClassUnderTest();

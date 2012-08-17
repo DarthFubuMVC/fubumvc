@@ -9,22 +9,22 @@ namespace FubuMVC.Core.Caching
     public class OutputCachingBehavior : WrappingBehavior
     {
         private readonly IOutputCache _cache;
-        private readonly ICurrentChain _currentChain;
         private readonly IEtagCache _etagCache;
         private readonly IOutputWriter _writer;
+        private readonly IResourceHash _hash;
 
         public OutputCachingBehavior(IActionBehavior inner, IOutputCache cache, IOutputWriter writer,
-                                     ICurrentChain currentChain, IEtagCache etagCache) : base(inner)
+                                     IResourceHash hash, IEtagCache etagCache) : base(inner)
         {
             _cache = cache;
             _writer = writer;
-            _currentChain = currentChain;
+            _hash = hash;
             _etagCache = etagCache;
         }
 
         protected override void invoke(Action action)
         {
-            var resourceHash = _currentChain.ResourceHash();
+            var resourceHash = _hash.CreateHash();
 
             var output = _cache.Retrieve(resourceHash, () => CreateOutput(resourceHash, action));
 
