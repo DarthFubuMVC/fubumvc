@@ -20,7 +20,6 @@ namespace FubuMVC.Core.Caching
         }
 
         public ObjectDef OutputCache { get; set; }
-        public ObjectDef ETagCache { get; set; }
         public ObjectDef ResourceHash { get; set; }
 
         public ObjectDef Apply<T>() where T : IVaryBy
@@ -50,11 +49,6 @@ namespace FubuMVC.Core.Caching
             if (OutputCache != null)
             {
                 def.Dependency(typeof (IOutputCache), OutputCache);
-            }
-
-            if (ETagCache != null)
-            {
-                def.Dependency(typeof (IEtagCache), ETagCache);
             }
 
             if (ResourceHash == null)

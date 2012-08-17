@@ -70,8 +70,6 @@ namespace FubuMVC.Core
             AddService<IFormatter>(typeof (JsonFormatter));
             AddService<IFormatter>(typeof (XmlFormatter));
 
-            SetServiceIfNone<IEtagCache, EtagCache>();
-
             SetServiceIfNone<IConditionalService, ConditionalService>();
 
             SetServiceIfNone<ILogger, Logger>();

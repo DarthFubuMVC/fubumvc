@@ -72,28 +72,18 @@ namespace FubuMVC.Core.Caching
             _outputs.Each(x => x.Replay(writer));
         }
 
-        public void ForHeader(string headerName, Action<string> action)
-        {
-            var header = _outputs.OfType<Header>().Where(x => x.Matches(headerName)).FirstOrDefault();
-            if (header != null)
-            {
-                action(header.Value);
-            }
-        }
 
-        public string GetHeaderValue(string headerName)
-        {
-            string returnValue = null;
-            ForHeader(headerName, val => returnValue = val);
-
-            return returnValue;
-        }
 
         public string GetText()
         {
             var writer = new StringWriter();
             _outputs.OfType<IRecordedTextOutput>().Each(o => o.WriteText(writer));
             return writer.ToString();
+        }
+
+        public IEnumerable<Header> Headers()
+        {
+            return _outputs.OfType<Header>();
         }
 
         public void AddOutput(IRecordedHttpOutput output)

@@ -28,36 +28,17 @@ namespace FubuMVC.Tests.Caching
         }
 
         [Test]
-        public void get_header_value()
+        public void get_headers()
         {
-            theRecordedOutput.GetHeaderValue(HttpResponseHeaders.ETag).ShouldBeNull();
+            theRecordedOutput.AppendHeader("a", "1");
+            theRecordedOutput.AppendHeader("b", "2");
+            theRecordedOutput.AppendHeader("c", "3");
 
-            theRecordedOutput.AppendHeader(HttpResponseHeaders.ETag, "12345");
+            theRecordedOutput.Write("stuff");
+            theRecordedOutput.Write("more stuff");
+            theRecordedOutput.Write("other stuff");
 
-            theRecordedOutput.GetHeaderValue(HttpResponseHeaders.ETag).ShouldEqual("12345");
-        }
-
-        [Test]
-        public void for_header_and_the_header_does_not_exist()
-        {
-            Action<string> action = s =>
-            {
-                Assert.Fail("I should not have been called.");
-            };
-
-            theRecordedOutput.ForHeader("Vary", action);
-            
-        }
-
-        [Test]
-        public void for_header_positive_calls_the_continuation_with_the_header_value()
-        {
-            theRecordedOutput.AppendHeader("Vary", "something");
-            var action = MockRepository.GenerateMock<Action<string>>();
-
-            theRecordedOutput.ForHeader("Vary", action);
-
-            action.AssertWasCalled(x => x.Invoke("something"));
+            theRecordedOutput.Headers().ShouldHaveTheSameElementsAs(new Header("a", "1"),new Header("b", "2"),new Header("c", "3"));
         }
 
         [Test]

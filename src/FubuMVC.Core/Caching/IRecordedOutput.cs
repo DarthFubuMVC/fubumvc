@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Headers;
 
 namespace FubuMVC.Core.Caching
 {
@@ -9,10 +11,6 @@ namespace FubuMVC.Core.Caching
 
         string GetText();
 
-
-
-
-        void ForHeader(string headerName, Action<string> action);
-        string GetHeaderValue(string headerName);
+        IEnumerable<Header> Headers();
     }
 }

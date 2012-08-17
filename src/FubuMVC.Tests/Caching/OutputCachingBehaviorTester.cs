@@ -3,6 +3,7 @@ using FubuCore;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Resources.Etags;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Logging;
@@ -19,6 +20,7 @@ namespace FubuMVC.Tests.Caching
         private StubOutputWriter theWriter;
         private readonly string theResource = Guid.NewGuid().ToString();
         private IRecordedOutput theResultingOutput;
+        private HeadersCache theHeaders;
 
         protected override void beforeEach()
         {
@@ -26,14 +28,18 @@ namespace FubuMVC.Tests.Caching
             Services.Inject<IOutputWriter>(theWriter);
 
             theWriter.Output.AppendHeader(HttpResponseHeaders.ETag, "12345");
+            theWriter.Output.AppendHeader("a", "1");
+
+            theHeaders = new HeadersCache();
+            Services.Inject<IHeadersCache>(theHeaders);
 
             theResultingOutput = ClassUnderTest.CreateOutput(theResource, () => MockFor<IActionBehavior>().Invoke());
         }
 
         [Test]
-        public void should_have_registered_the_new_etag()
+        public void registered_all_the_headers()
         {
-            MockFor<IEtagCache>().AssertWasCalled(x => x.Register(theResource, "12345"));
+            theHeaders.Current(theResource).ShouldHaveTheSameElementsAs(new Header(HttpResponseHeaders.ETag, "12345"), new Header("a", "1"));
         }
 
         [Test]

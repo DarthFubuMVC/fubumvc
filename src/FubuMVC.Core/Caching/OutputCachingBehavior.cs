@@ -1,6 +1,5 @@
 using System;
 using FubuMVC.Core.Behaviors;
-using FubuMVC.Core.Http;
 using FubuMVC.Core.Resources.Etags;
 using FubuMVC.Core.Runtime;
 
@@ -9,17 +8,17 @@ namespace FubuMVC.Core.Caching
     public class OutputCachingBehavior : WrappingBehavior
     {
         private readonly IOutputCache _cache;
-        private readonly IEtagCache _etagCache;
-        private readonly IOutputWriter _writer;
         private readonly IResourceHash _hash;
+        private readonly IHeadersCache _headersCache;
+        private readonly IOutputWriter _writer;
 
         public OutputCachingBehavior(IActionBehavior inner, IOutputCache cache, IOutputWriter writer,
-                                     IResourceHash hash, IEtagCache etagCache) : base(inner)
+                                     IResourceHash hash, IHeadersCache headersCache) : base(inner)
         {
             _cache = cache;
             _writer = writer;
             _hash = hash;
-            _etagCache = etagCache;
+            _headersCache = headersCache;
         }
 
         protected override void invoke(Action action)
@@ -34,7 +33,8 @@ namespace FubuMVC.Core.Caching
         public virtual IRecordedOutput CreateOutput(string resourceHash, Action invocation)
         {
             var newOutput = _writer.Record(invocation);
-            newOutput.ForHeader(HttpResponseHeaders.ETag, etag => _etagCache.Register(resourceHash, etag));
+
+            _headersCache.Register(resourceHash, newOutput.Headers());
 
             return newOutput;
         }

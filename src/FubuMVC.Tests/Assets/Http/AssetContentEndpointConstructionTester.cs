@@ -48,22 +48,6 @@ namespace FubuMVC.Tests.Assets.Http
         }
 
         [Test]
-        public void same_asset_content_cache_should_be_used_everywhere()
-        {
-            var cachingNode = theChain.FirstCall().Previous.ShouldBeOfType<OutputCachingNode>();
-            cachingNode.ETagCache.Value.ShouldBeTheSameAs(theContentCache);
-            cachingNode.OutputCache.Value.ShouldBeTheSameAs(theContentCache);
-        }
-
-        [Test]
-        public void should_apply_a_caching_node_before_the_action_that_uses_the_asset_content_cache()
-        {
-            var cachingNode = theChain.FirstCall().Previous.ShouldBeOfType<OutputCachingNode>();
-            cachingNode.ETagCache.Value.ShouldBeOfType<AssetContentCache>();
-            cachingNode.OutputCache.Value.ShouldBeOfType<AssetContentCache>();
-        }
-
-        [Test]
         public void the_chain_exists()
         {
             theChain.ShouldNotBeNull();
