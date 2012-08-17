@@ -8,6 +8,7 @@ using FubuCore.Reflection;
 using FubuCore.Util;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Assets;
+using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
@@ -224,6 +225,7 @@ namespace FubuMVC.Core
             yield return new ViewActivationServiceRegistry();
             yield return new CoreServiceRegistry();
             yield return new NavigationServiceRegistry();
+            yield return new CachingServiceRegistry();
         }
 
         private IEnumerable<IConfigurationAction> serviceRegistrations()

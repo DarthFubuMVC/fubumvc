@@ -26,6 +26,12 @@ namespace FubuMVC.Tests.Assets
         }
 
         [Test]
+        public void asset_cache_headers_is_registered()
+        {
+            registeredTypeIs<IAssetCacheHeaders, AssetCacheHeaders>();
+        }
+
+        [Test]
         public void ContentPipeline_is_registered()
         {
             registeredTypeIs<IContentPipeline, ContentPipeline>();

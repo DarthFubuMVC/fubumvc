@@ -7,6 +7,7 @@ using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Resources.Etags;
 using NUnit.Framework;
 using FubuTestingSupport;
+using System.Linq;
 
 namespace FubuMVC.Tests.Caching
 {
@@ -19,6 +20,50 @@ namespace FubuMVC.Tests.Caching
         public void SetUp()
         {
             theNode = new OutputCachingNode();
+        }
+
+        [Test]
+        public void by_default_uses_ResourceHash_with_vary_by_chain()
+        {
+            var def = toObjectDef();
+
+            var resourceDef = def.DependencyFor<IResourceHash>().As<ConfiguredDependency>().Definition;
+
+            resourceDef.ShouldBeTheSameAs(theNode.ResourceHash);
+
+            resourceDef.Type.ShouldEqual(typeof (ResourceHash));
+
+            resourceDef.EnumerableDependenciesOf<IVaryBy>().Items.Single().Type
+                .ShouldEqual(typeof (VaryByResource));
+
+        }
+
+        [Test]
+        public void apply_with_a_bad_type()
+        {
+            Exception<ArgumentException>.ShouldBeThrownBy(() =>
+            {
+                theNode.Apply(GetType());
+            });
+        }
+
+        [Test]
+        public void apply_adds_extra_vary_by()
+        {
+            theNode.Apply<VaryByThreadCulture>();
+
+            theNode.ResourceHash.EnumerableDependenciesOf<IVaryBy>()
+                .Items.Last().Type.ShouldEqual(typeof (VaryByThreadCulture));
+        }
+
+
+        [Test]
+        public void apply_adds_extra_vary_by_2()
+        {
+            theNode.Apply(typeof(VaryByThreadCulture));
+
+            theNode.ResourceHash.EnumerableDependenciesOf<IVaryBy>()
+                .Items.Last().Type.ShouldEqual(typeof(VaryByThreadCulture));
         }
 
         private ObjectDef toObjectDef()

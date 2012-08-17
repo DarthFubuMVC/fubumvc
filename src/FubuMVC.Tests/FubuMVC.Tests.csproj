@@ -102,6 +102,7 @@
     <Compile Include="Applications\ApplicationSourceFinderTester.cs" />
     <Compile Include="Applications\FubuMvcApplicationFileWatcherTester.cs" />
     <Compile Include="Applications\KayakCommandTester.cs" />
+    <Compile Include="Assets\AssetCacheHeadersTester.cs" />
     <Compile Include="Assets\AssetCombinationBuildingActivatorTester.cs" />
     <Compile Include="Assets\AssetDeclarationCheckerTester.cs" />
     <Compile Include="Assets\AssetDependencyFinderCacheTester.cs" />
@@ -160,6 +161,7 @@
     <Compile Include="Behaviors\Chrome\ChromeAttributeTester.cs" />
     <Compile Include="Behaviors\Chrome\ChromeNodeTester.cs" />
     <Compile Include="Caching\Caching_services_are_registered.cs" />
+    <Compile Include="Caching\HeadersCacheTester.cs" />
     <Compile Include="Caching\ResourceHashTester.cs" />
     <Compile Include="Caching\VaryByResourceTester.cs" />
     <Compile Include="Caching\VaryByThreadCultureTester.cs" />

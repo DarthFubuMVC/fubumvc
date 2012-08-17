@@ -24,6 +24,8 @@ namespace FubuMVC.Core.Assets
             SetServiceIfNone(new AssetGraph());
             SetServiceIfNone(new AssetLogsCache());
 
+            SetServiceIfNone<IAssetCacheHeaders, AssetCacheHeaders>();
+
             SetServiceIfNone<IAssetTagWriter, AssetTagWriter>();
 
             SetServiceIfNone<ICombinationDeterminationService, CombinationDeterminationService>();

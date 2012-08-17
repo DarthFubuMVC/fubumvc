@@ -83,6 +83,7 @@
     <Compile Include="Assets\Caching\AssetFileWatchingActivator.cs" />
     <Compile Include="Assets\Caching\IAssetFileChangeListener.cs" />
     <Compile Include="Assets\Caching\IAssetFileWatcher.cs" />
+    <Compile Include="Assets\Classses.cs" />
     <Compile Include="Assets\Content\ITransformerPolicyLibrary.cs" />
     <Compile Include="Assets\Content\IContentPlanCache.cs" />
     <Compile Include="Assets\Diagnostics\AssetLog.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Behaviors\Chrome\ChromeBehavior.cs" />
     <Compile Include="Behaviors\Chrome\ChromeContent.cs" />
     <Compile Include="Behaviors\Chrome\ChromeNode.cs" />
+    <Compile Include="Caching\CachingServiceRegistry.cs" />
     <Compile Include="Caching\IVaryBy.cs" />
     <Compile Include="Caching\ResourceHash.cs" />
     <Compile Include="Caching\SimpleVaryBy.cs" />
@@ -114,6 +116,7 @@
     <Compile Include="Endpoints\WebRequestResponseExtensions.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteConventionBasedUrlPolicy.cs" />
     <Compile Include="Registration\Conventions\NavigationRootPolicy.cs" />
+    <Compile Include="Resources\Etags\IHeadersCache.cs" />
     <Compile Include="Runtime\Dates\DateFormattingRule.cs" />
     <Compile Include="Runtime\Dates\DateTimeFormatter.cs" />
     <Compile Include="Runtime\Dates\DateTimeFormattingRules.cs" />

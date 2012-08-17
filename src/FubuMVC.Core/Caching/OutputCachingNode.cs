@@ -1,11 +1,19 @@
+using System;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Resources.Etags;
+using FubuCore;
 
 namespace FubuMVC.Core.Caching
 {
     public class OutputCachingNode : BehaviorNode
     {
+        public OutputCachingNode()
+        {
+            ResourceHash = ObjectDef.ForType<ResourceHash>();
+            Apply<VaryByResource>();
+        }
+
         public override BehaviorCategory Category
         {
             get { return BehaviorCategory.Cache; }
@@ -13,6 +21,28 @@ namespace FubuMVC.Core.Caching
 
         public ObjectDef OutputCache { get; set; }
         public ObjectDef ETagCache { get; set; }
+        public ObjectDef ResourceHash { get; set; }
+
+        public ObjectDef Apply<T>() where T : IVaryBy
+        {
+            var objectDef = ObjectDef.ForType<T>();
+            ResourceHash.EnumerableDependenciesOf<IVaryBy>().Add(objectDef);
+
+            return objectDef;
+        }
+
+        public ObjectDef Apply(Type varyByType)
+        {
+            if (!varyByType.CanBeCastTo<IVaryBy>())
+            {
+                throw new ArgumentException("varyByType", "varyByType must implement IVaryBy");
+            }
+
+            var objectDef = new ObjectDef(varyByType);
+            ResourceHash.EnumerableDependenciesOf<IVaryBy>().Add(objectDef);
+
+            return objectDef;
+        }
 
         protected override ObjectDef buildObjectDef()
         {
@@ -26,6 +56,13 @@ namespace FubuMVC.Core.Caching
             {
                 def.Dependency(typeof (IEtagCache), ETagCache);
             }
+
+            if (ResourceHash == null)
+            {
+                throw new InvalidOperationException("Output caching requires a ResourceHash/VaryBy policy");
+            }
+
+            def.Dependency(typeof(IResourceHash), ResourceHash);
 
             return def;
         }
