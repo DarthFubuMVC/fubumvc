@@ -1,6 +1,9 @@
 using System.Collections.Generic;
+using System.Net;
 using FubuMVC.Core;
+using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Endpoints;
+using FubuMVC.Core.Runtime;
 using FubuMVC.IntegrationTesting.Conneg;
 using FubuMVC.TestingHarness;
 using NUnit.Framework;
@@ -29,6 +32,45 @@ namespace FubuMVC.IntegrationTesting.Assets
                 Mandatories = scriptNames.Join(",")
             };
             return endpoints.GetByInput(request);
+        }
+
+        [Test]
+        public void asset_tags_should_have_cache_headers_set()
+        {
+            endpoints.GetAsset(AssetFolder.scripts, "Script1.js")
+                .ShouldHaveHeader(HttpResponseHeader.ETag)
+                .ShouldHaveHeader(HttpResponseHeader.CacheControl);
+        }
+
+        [Test]
+        public void can_read_an_asset_from_the_main_application_on_the_first_read()
+        {
+            endpoints.GetAsset(AssetFolder.scripts, "Script1.js")
+                .StatusCodeShouldBe(HttpStatusCode.OK)
+                .ContentTypeShouldBe(MimeType.Javascript)
+                .ReadAsText().ShouldContain("var x = 3;");
+        }
+
+        [Test]
+        public void read_asset_with_etag_should_return_NotModified_and_no_content()
+        {
+            // First request without an etag gets the whole thing
+            var etag = endpoints.GetAsset(AssetFolder.scripts, "Script1.js")
+                .ContentTypeShouldBe(MimeType.Javascript)
+                .StatusCodeShouldBe(HttpStatusCode.OK).Etag();
+
+            // Subsequent requests with etag
+            endpoints.GetAsset(AssetFolder.scripts, "Script1.js", etag: etag)
+                .StatusCodeShouldBe(HttpStatusCode.NotModified);
+
+            endpoints.GetAsset(AssetFolder.scripts, "Script1.js", etag: etag)
+                .StatusCodeShouldBe(HttpStatusCode.NotModified)
+                .ContentLength().ShouldBeLessThan(200);
+
+            endpoints.GetAsset(AssetFolder.scripts, "Script1.js", etag: etag)
+                .StatusCodeShouldBe(HttpStatusCode.NotModified)
+                .ShouldHaveHeader(HttpResponseHeader.CacheControl)
+                .ShouldHaveHeader(HttpResponseHeader.ETag);
         }
 
         [Test]

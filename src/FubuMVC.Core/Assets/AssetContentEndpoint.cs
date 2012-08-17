@@ -2,6 +2,7 @@ using FubuCore;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Caching;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
@@ -23,7 +24,11 @@ namespace FubuMVC.Core.Assets
             // TODO -- Hokum.  Needs to be pluggable.
             var headerCache = graph.Services.DefaultServiceFor<IHeadersCache>().Value.As<IHeadersCache>();
             var chain = createAssetContentChain(graph);
-            chain.Filters.Add(new EtagInvocationFilter(headerCache));
+            chain.Filters.Add(new EtagInvocationFilter(headerCache, args =>
+            {
+                var currentChain = args.Get<ICurrentChain>();
+                return ResourceHash.For(new VaryByResource(currentChain));
+            }));
 
 
             addCaching(chain);

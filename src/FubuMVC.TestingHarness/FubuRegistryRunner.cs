@@ -212,6 +212,12 @@ namespace FubuMVC.TestingHarness
 
     public static class HttpResponseExtensions
     {
+        public static HttpResponse ShouldHaveHeader(this HttpResponse response, HttpResponseHeader header)
+        {
+            response.ResponseHeaderFor(header).ShouldNotBeEmpty();
+            return response;
+        }
+
         public static HttpResponse ContentShouldBe(this HttpResponse response, MimeType mimeType, string content)
         {
             response.ContentType.ShouldEqual(mimeType.Value);
