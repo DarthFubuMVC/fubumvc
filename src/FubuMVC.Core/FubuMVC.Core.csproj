@@ -91,6 +91,7 @@
     <Compile Include="Assets\Diagnostics\AssetLogsCache.cs" />
     <Compile Include="Assets\Diagnostics\AssetRegistrationDiagnostics.cs" />
     <Compile Include="Assets\Http\AssetEtagInvocationFilter.cs" />
+    <Compile Include="Assets\Http\AssetFileEtagGenerator.cs" />
     <Compile Include="Assets\Http\AssetWriter.cs" />
     <Compile Include="Assets\IAssetPrecompiler.cs" />
     <Compile Include="Assets\RecordingAssetRegistration.cs" />

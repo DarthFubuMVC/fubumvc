@@ -8,14 +8,14 @@ namespace FubuMVC.Core.Assets
 {
     public interface IAssetCacheHeaders
     {
-        IEnumerable<Header> Headers(IEnumerable<AssetFile> files);
+        IEnumerable<Header> HeadersFor(IEnumerable<AssetFile> files);
     }
 
     public class AssetCacheHeaders : IAssetCacheHeaders
     {
         public int MaxAgeInSeconds = 24*60*60;
 
-        public IEnumerable<Header> Headers(IEnumerable<AssetFile> files)
+        public IEnumerable<Header> HeadersFor(IEnumerable<AssetFile> files)
         {
             // max-age to 24 hours
             yield return new Header(HttpResponseHeader.CacheControl, "private, max-age={0}".ToFormat(MaxAgeInSeconds));

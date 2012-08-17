@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using FubuMVC.Core;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Caching;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Assets.Http;
-using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Resources.Etags;
 using FubuMVC.Core.Runtime;
@@ -15,21 +16,30 @@ using Rhino.Mocks;
 namespace FubuMVC.Tests.Assets.Http
 {
     [TestFixture]
-    public class AssetWriterTester : InteractionContext<AssetWriter>
+    public class when_writing_the_asset_in_production_mode : InteractionContext<AssetWriter>
     {
         private string theEtag;
         private AssetFile[] theFiles;
         private AssetPath theAssetPath;
+        private Header[] theHeaders;
 
         protected override void beforeEach()
         {
             theEtag = "12345";
 
-            theFiles = new AssetFile[]{new AssetFile("a"), new AssetFile("b")};
+            theFiles = new[]{new AssetFile("a"), new AssetFile("b")};
 
             theAssetPath = new AssetPath("scripts/something"){
                 ResourceHash = Guid.NewGuid().ToString()
             };
+
+            theHeaders = new Header[]{
+                new Header("a", "1"), 
+                new Header("b", "2"), 
+                new Header("c", "3"), 
+            };
+
+            MockFor<IAssetCacheHeaders>().Stub(x => x.HeadersFor(theFiles)).Return(theHeaders);
 
             MockFor<IContentWriter>().Expect(x => x.Write(theAssetPath))
                 .Return(theFiles);
@@ -38,13 +48,20 @@ namespace FubuMVC.Tests.Assets.Http
                 .Stub(x => x.Create(theFiles))
                 .Return(theEtag);
 
+            FubuMode.Reset();
+            FubuMode.InDevelopment().ShouldBeFalse();
+
             ClassUnderTest.Write(theAssetPath);
         }
 
         [Test]
-        public void should_write_all_the_content()
+        public void when_not_in_dev_mode_write_the_headers_for_asset_content_caching()
         {
-            VerifyCallsFor<IContentWriter>();
+            var output = MockFor<IOutputWriter>();
+            output.AssertWasCalled(x => x.AppendHeader("a", "1"));
+            output.AssertWasCalled(x => x.AppendHeader("b", "2"));
+            output.AssertWasCalled(x => x.AppendHeader("c", "3"));
+
         }
 
         [Test]
@@ -56,7 +73,85 @@ namespace FubuMVC.Tests.Assets.Http
         [Test]
         public void should_have_linked_all_the_files_to_a_resource_hash()
         {
-            MockFor<IAssetContentCache>().AssertWasCalled(x => x.LinkFilesToResource(theAssetPath.ResourceHash, theFiles));
+            MockFor<IAssetContentCache>().AssertWasCalled(
+                x => x.LinkFilesToResource(theAssetPath.ResourceHash, theFiles));
+        }
+
+        [Test]
+        public void should_write_all_the_content()
+        {
+            VerifyCallsFor<IContentWriter>();
+        }
+    }
+
+
+
+    public class when_writing_the_asset_in_DEVELOPMENT_mode : InteractionContext<AssetWriter>
+    {
+        private string theEtag;
+        private AssetFile[] theFiles;
+        private AssetPath theAssetPath;
+        private Header[] theHeaders;
+
+        protected override void beforeEach()
+        {
+            theEtag = "12345";
+
+            theFiles = new[] { new AssetFile("a"), new AssetFile("b") };
+
+            theAssetPath = new AssetPath("scripts/something")
+            {
+                ResourceHash = Guid.NewGuid().ToString()
+            };
+
+            theHeaders = new Header[]{
+                new Header("a", "1"), 
+                new Header("b", "2"), 
+                new Header("c", "3"), 
+            };
+
+            MockFor<IAssetCacheHeaders>().Stub(x => x.HeadersFor(theFiles)).Return(theHeaders);
+
+            MockFor<IContentWriter>().Expect(x => x.Write(theAssetPath))
+                .Return(theFiles);
+
+            MockFor<IETagGenerator<IEnumerable<AssetFile>>>()
+                .Stub(x => x.Create(theFiles))
+                .Return(theEtag);
+
+            FubuMode.Mode(FubuMode.Development);
+            FubuMode.InDevelopment().ShouldBeTrue();
+
+            ClassUnderTest.Write(theAssetPath);
+        }
+
+        [Test]
+        public void when_in_dev_mode_should_NOT_write_the_headers_for_asset_content_caching()
+        {
+            var output = MockFor<IOutputWriter>();
+            output.AssertWasNotCalled(x => x.AppendHeader("a", "1"));
+            output.AssertWasNotCalled(x => x.AppendHeader("b", "2"));
+            output.AssertWasNotCalled(x => x.AppendHeader("c", "3"));
+
+        }
+
+        [Test]
+        public void should_apply_the_etag_from_all_the_files_to_the_returned_value()
+        {
+            MockFor<IOutputWriter>().AssertWasCalled(x => x.AppendHeader(HttpResponseHeader.ETag, "12345"));
+        }
+
+        [Test]
+        public void should_have_linked_all_the_files_to_a_resource_hash()
+        {
+            MockFor<IAssetContentCache>().AssertWasCalled(
+                x => x.LinkFilesToResource(theAssetPath.ResourceHash, theFiles));
+        }
+
+        [Test]
+        public void should_write_all_the_content()
+        {
+            VerifyCallsFor<IContentWriter>();
         }
     }
 }

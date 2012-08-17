@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using FubuCore;
 using FubuMVC.Core.Assets.Caching;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Http.Headers;
@@ -15,14 +13,16 @@ namespace FubuMVC.Core.Assets.Http
         private readonly IAssetContentCache _cache;
         private readonly IETagGenerator<IEnumerable<AssetFile>> _eTagGenerator;
         private readonly IOutputWriter _output;
+        private readonly IAssetCacheHeaders _cachingHeaders;
         private readonly IContentWriter _writer;
 
-        public AssetWriter(IAssetContentCache cache, IContentWriter writer, IETagGenerator<IEnumerable<AssetFile>> eTagGenerator, IOutputWriter output)
+        public AssetWriter(IAssetContentCache cache, IContentWriter writer, IETagGenerator<IEnumerable<AssetFile>> eTagGenerator, IOutputWriter output, IAssetCacheHeaders cachingHeaders)
         {
             _cache = cache;
             _writer = writer;
             _eTagGenerator = eTagGenerator;
             _output = output;
+            _cachingHeaders = cachingHeaders;
         }
 
         [UrlPattern("get__content")]
@@ -34,14 +34,11 @@ namespace FubuMVC.Core.Assets.Http
             _cache.LinkFilesToResource(path.ResourceHash, files);
 
             _output.AppendHeader(HttpResponseHeader.ETag, etag);
-        }
-    }
 
-    public class AssetFileEtagGenerator : IETagGenerator<IEnumerable<AssetFile>>
-    {
-        public string Create(IEnumerable<AssetFile> target)
-        {
-            return target.Select(x => x.FullPath).HashByModifiedDate();
+            if (!FubuMode.InDevelopment())
+            {
+                _cachingHeaders.HeadersFor(files).Each(x => x.Write(_output));
+            }
         }
     }
 }

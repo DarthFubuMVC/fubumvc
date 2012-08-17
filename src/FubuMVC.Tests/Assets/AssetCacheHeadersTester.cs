@@ -12,7 +12,7 @@ namespace FubuMVC.Tests.Assets
         [Test]
         public void sets_cache_control_to_24_hours_by_default()
         {
-            var header = new AssetCacheHeaders().Headers(null).Single();
+            var header = new AssetCacheHeaders().HeadersFor(null).Single();
 
             header.Name.ShouldEqual("Cache-Control");
             header.Value.ShouldEqual("private, max-age=86400");
@@ -24,7 +24,7 @@ namespace FubuMVC.Tests.Assets
             var headers = new AssetCacheHeaders{
                 MaxAgeInSeconds = 11111
             };
-            var header = headers.Headers(null).Single();
+            var header = headers.HeadersFor(null).Single();
 
             header.Value.ShouldEqual("private, max-age=11111");
         }
