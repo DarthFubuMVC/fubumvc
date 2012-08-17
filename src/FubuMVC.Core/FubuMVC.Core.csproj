@@ -90,7 +90,6 @@
     <Compile Include="Assets\Diagnostics\AssetLogEntry.cs" />
     <Compile Include="Assets\Diagnostics\AssetLogsCache.cs" />
     <Compile Include="Assets\Diagnostics\AssetRegistrationDiagnostics.cs" />
-    <Compile Include="Assets\Http\AssetEtagInvocationFilter.cs" />
     <Compile Include="Assets\Http\AssetFileEtagGenerator.cs" />
     <Compile Include="Assets\Http\AssetWriter.cs" />
     <Compile Include="Assets\IAssetPrecompiler.cs" />
@@ -103,6 +102,7 @@
     <Compile Include="Behaviors\Chrome\ChromeContent.cs" />
     <Compile Include="Behaviors\Chrome\ChromeNode.cs" />
     <Compile Include="Caching\CachingServiceRegistry.cs" />
+    <Compile Include="Caching\EtagInvocationFilter.cs" />
     <Compile Include="Caching\IVaryBy.cs" />
     <Compile Include="Caching\ResourceHash.cs" />
     <Compile Include="Caching\SimpleVaryBy.cs" />

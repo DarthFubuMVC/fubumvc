@@ -4,8 +4,8 @@ using System.Threading;
 using FubuCore.Util;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Caching;
-using FubuMVC.Core.Http;
 using FubuMVC.Core.Resources.Etags;
+using System.Linq;
 
 namespace FubuMVC.Core.Assets.Caching
 {
@@ -13,13 +13,39 @@ namespace FubuMVC.Core.Assets.Caching
     {
         void LinkFilesToResource(string resourceHash, IEnumerable<AssetFile> files);
         void FlushAll();
+        void Changed(AssetFile file);
     }
 
-    public class AssetContentCache : IEtagCache, IOutputCache, IAssetFileChangeListener, IAssetContentCache
+    public class AssetContentCache : IOutputCache, IAssetContentCache
     {
-        private readonly Cache<AssetFile, IList<string>> _fileToResourceLinks = new Cache<AssetFile, IList<string>>(file => new List<string>());
-        private readonly Cache<string, IRecordedOutput> _outputs = new Cache<string, IRecordedOutput>();
+        private readonly Cache<AssetFile, IList<string>> _fileToResourceLinks =
+            new Cache<AssetFile, IList<string>>(file => new List<string>());
+
+        private readonly IHeadersCache _headers;
+
         private readonly ReaderWriterLock _lock = new ReaderWriterLock();
+        private readonly Cache<string, IRecordedOutput> _outputs = new Cache<string, IRecordedOutput>();
+
+        public AssetContentCache(IHeadersCache headers)
+        {
+            _headers = headers;
+        }
+
+        private Action write
+        {
+            set
+            {
+                try
+                {
+                    _lock.AcquireWriterLock(2000);
+                    value();
+                }
+                finally
+                {
+                    _lock.ReleaseWriterLock();
+                }
+            }
+        }
 
         public void LinkFilesToResource(string resourceHash, IEnumerable<AssetFile> files)
         {
@@ -28,7 +54,20 @@ namespace FubuMVC.Core.Assets.Caching
 
         public void FlushAll()
         {
-            write = () => _outputs.ClearAll();
+            write = () =>
+            {
+                _fileToResourceLinks.SelectMany(x => x).Distinct().Each(x => _headers.Eject(x));
+                _outputs.ClearAll();
+            };
+        }
+
+        public void Changed(AssetFile file)
+        {
+            write = () => _fileToResourceLinks[file].Each(hash =>
+            {
+                _headers.Eject(hash);
+                _outputs.Remove(hash);
+            });
         }
 
         public IRecordedOutput Retrieve(string resourceHash, Func<IRecordedOutput> cacheMiss)
@@ -51,51 +90,6 @@ namespace FubuMVC.Core.Assets.Caching
             {
                 _lock.ReleaseReaderLock();
             }
-        }
-
-        private Action write
-        {
-            set
-            {
-                try
-                {
-                    _lock.AcquireWriterLock(2000);
-                    value();
-                }
-                finally
-                {
-                    _lock.ReleaseWriterLock();
-                }
-            }
-        }
-
-        public void Changed(AssetFile file)
-        {
-            write = () => _fileToResourceLinks[file].Each(_outputs.Remove);
-        }
-
-        public string Current(string resourceHash)
-        {
-            return read(() =>
-            {
-                if (!_outputs.Has(resourceHash))
-                {
-                    return null;
-                }
-
-                // Can be null;
-                return _outputs[resourceHash].GetHeaderValue(HttpResponseHeaders.ETag);
-            });
-        }
-
-        public void Register(string resourceHash, string etag)
-        {
-            
-        }
-
-        public void Eject(string resourceHash)
-        {
-            throw new NotSupportedException();
         }
     }
 }

@@ -107,6 +107,7 @@
     <Compile Include="Assets\AssetDeclarationCheckerTester.cs" />
     <Compile Include="Assets\AssetDependencyFinderCacheTester.cs" />
     <Compile Include="Assets\AssetExpressionUsageTester.cs" />
+    <Compile Include="Assets\AssetFileChangeListenerTester.cs" />
     <Compile Include="Assets\AssetGraphConfigurationActivatorBehaviorTester.cs" />
     <Compile Include="Assets\AssetGraphConfigurationActivatorIntegrationTester.cs" />
     <Compile Include="Assets\AssetGraphScenarioTester.cs" />
@@ -153,7 +154,6 @@
     <Compile Include="Assets\Files\AssetPipelineTester.cs" />
     <Compile Include="Assets\Files\PackageAssetsTester.cs" />
     <Compile Include="Assets\Http\AssetContentEndpointConstructionTester.cs" />
-    <Compile Include="Assets\Http\AssetEtagInvocationFilterTester.cs" />
     <Compile Include="Assets\Http\AssetWriterTester.cs" />
     <Compile Include="Assets\Http\ContentPipelineTester.cs" />
     <Compile Include="Assets\Http\ContentWriterTester.cs" />
@@ -161,6 +161,7 @@
     <Compile Include="Behaviors\Chrome\ChromeAttributeTester.cs" />
     <Compile Include="Behaviors\Chrome\ChromeNodeTester.cs" />
     <Compile Include="Caching\Caching_services_are_registered.cs" />
+    <Compile Include="Caching\EtagInvocationFilterTester.cs" />
     <Compile Include="Caching\HeadersCacheTester.cs" />
     <Compile Include="Caching\ResourceHashTester.cs" />
     <Compile Include="Caching\VaryByResourceTester.cs" />

@@ -1,3 +1,4 @@
+using System;
 using FubuCore;
 using FubuMVC.Core.Assets.Caching;
 using FubuMVC.Core.Assets.Files;
@@ -7,6 +8,7 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
+using FubuMVC.Core.Resources.Etags;
 
 namespace FubuMVC.Core.Assets
 {
@@ -20,12 +22,11 @@ namespace FubuMVC.Core.Assets
             if (Latched) return;
 
             // TODO -- Hokum.  Needs to be pluggable.
-            var assetCache = graph.Services.DefaultServiceFor<IAssetContentCache>().Value.As<AssetContentCache>();
-
+            var headerCache = graph.Services.DefaultServiceFor<IHeadersCache>().Value.As<IHeadersCache>();
             var chain = createAssetContentChain(graph);
-            chain.Filters.Add(new AssetEtagInvocationFilter(assetCache));
+            chain.Filters.Add(new EtagInvocationFilter(headerCache));
 
-            addCaching(chain, assetCache);
+            //addCaching(chain, assetCache);
             addWritingAction(chain);
         }
 

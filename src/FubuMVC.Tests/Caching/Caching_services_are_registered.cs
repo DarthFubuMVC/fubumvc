@@ -17,7 +17,8 @@ namespace FubuMVC.Tests.Caching
         [Test]
         public void headers_cache_is_registered_as_a_singleton()
         {
-            registeredTypeIs<IHeadersCache, HeadersCache>();
+            BehaviorGraph.BuildEmptyGraph().Services.DefaultServiceFor<IHeadersCache>().Value.ShouldBeOfType
+                <HeadersCache>().ShouldNotBeNull();
 
             ServiceRegistry.ShouldBeSingleton(typeof(HeadersCache)).ShouldBeTrue();
         }

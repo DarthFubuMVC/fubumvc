@@ -5,8 +5,10 @@ using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Resources.Etags;
 using NUnit.Framework;
 using FubuTestingSupport;
+using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Assets.Caching
 {
@@ -26,6 +28,7 @@ namespace FubuMVC.Tests.Assets.Caching
         private AssetFile file6;
         private AssetContentCache theCache;
         private BehaviorGraph theGraph;
+        private IHeadersCache headersCache;
 
         private IRecordedOutput getOutputWithEtag(string etag)
         {
@@ -53,7 +56,9 @@ namespace FubuMVC.Tests.Assets.Caching
             file5 = new AssetFile("5");
             file6 = new AssetFile("6");
 
-            theCache = new AssetContentCache();
+            headersCache = MockRepository.GenerateMock<IHeadersCache>();
+
+            theCache = new AssetContentCache(headersCache);
 
             theGraph = BehaviorGraph.BuildFrom(new FubuRegistry());
         }
@@ -67,6 +72,57 @@ namespace FubuMVC.Tests.Assets.Caching
         }
 
         [Test]
+        public void flush_all_removes_the_content_and_ejects_all_of_the_header_cache()
+        {
+            var hash1 = "12345";
+            var hash2 = "23456";
+            var hash3 = "34567";
+
+            theCache.LinkFilesToResource(hash1, new AssetFile[] { file1, file2, file3 });
+            theCache.LinkFilesToResource(hash2, new AssetFile[] { file2, file3, file4 });
+            theCache.LinkFilesToResource(hash3, new AssetFile[] { file5 });
+        
+            theCache.FlushAll();
+
+            headersCache.AssertWasCalled(x => x.Eject(hash1));
+            headersCache.AssertWasCalled(x => x.Eject(hash2));
+            headersCache.AssertWasCalled(x => x.Eject(hash3));
+        }
+
+        [Test]
+        public void Changed_will_also_eject_the_header_values_out_of_the_header_cache()
+        {
+            var hash1 = "12345";
+            var hash2 = "23456";
+
+            theCache.LinkFilesToResource(hash1, new AssetFile[]{file1, file2, file3});
+            theCache.LinkFilesToResource(hash2, new AssetFile[] { file2, file3, file4 });
+            theCache.Changed(file1);
+
+            headersCache.AssertWasCalled(x => x.Eject(hash1));
+
+            theCache.Changed(file2);
+        }
+
+        [Test]
+        public void Changed_will_also_eject_the_header_values_out_of_the_header_cache_for_every_linked_hash()
+        {
+            var hash1 = "12345";
+            var hash2 = "23456";
+
+            theCache.LinkFilesToResource(hash1, new AssetFile[] { file1, file2, file3 });
+            theCache.LinkFilesToResource(hash2, new AssetFile[] { file2, file3, file4 });
+            theCache.Changed(file1);
+
+            
+
+            theCache.Changed(file2);
+
+            headersCache.AssertWasCalled(x => x.Eject(hash1));
+            headersCache.AssertWasCalled(x => x.Eject(hash2));
+        }
+
+        [Test]
         public void retrieve_on_a_cache_hit()
         {
             var output1 = getOutputWithEtag("12345");
@@ -74,22 +130,6 @@ namespace FubuMVC.Tests.Assets.Caching
 
             theCache.Retrieve(resource1, () => output1).ShouldBeTheSameAs(output1);
             theCache.Retrieve(resource1, () => output2).ShouldBeTheSameAs(output1);
-        }
-
-        [Test]
-        public void current_etag_on_initial_request_is_null()
-        {
-            theCache.Current(resource1).ShouldBeNull();
-        }
-
-        [Test]
-        public void current_etag_after_capturing_a_cache_hit()
-        {
-            string etag = "12345";
-            var output1 = getOutputWithEtag(etag);
-            theCache.Retrieve(resource1, () => output1);
-
-            theCache.Current(resource1).ShouldEqual(etag);
         }
 
         [Test]
@@ -125,19 +165,10 @@ namespace FubuMVC.Tests.Assets.Caching
             theCache.Retrieve(resource1, shouldNotBeCalled).ShouldBeTheSameAs(output1B);
 
             theCache.Retrieve(resource2, () => output2B).ShouldBeTheSameAs(output2B);
-            theCache.Current(resource2).ShouldEqual("23456");
 
             // Was not cleared because it does not depend on file1
             theCache.Retrieve(resource3, shouldNotBeCalled).ShouldBeTheSameAs(output3A);
         }
-
-        [Test]
-        public void is_registered_as_the_asset_file_watcher()
-        {
-            theGraph.Services.DefaultServiceFor<IAssetFileChangeListener>()
-                .Value.ShouldBeOfType<AssetContentCache>();
-        }
-
 
     }
 }

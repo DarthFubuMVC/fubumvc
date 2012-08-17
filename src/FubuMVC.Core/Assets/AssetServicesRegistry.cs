@@ -50,9 +50,8 @@ namespace FubuMVC.Core.Assets
 
             SetServiceIfNone<IETagGenerator<IEnumerable<AssetFile>>, AssetFileEtagGenerator>();
 
-            var assetCache = new AssetContentCache();
-            SetServiceIfNone<IAssetFileChangeListener>(assetCache);
-            SetServiceIfNone<IAssetContentCache>(assetCache);
+            SetServiceIfNone<IAssetContentCache, AssetContentCache>();
+            SetServiceIfNone<IAssetFileChangeListener, AssetFileChangeListener>();
             SetServiceIfNone<IAssetFileWatcher, AssetFileWatcher>();
 
             FillType(typeof (IActivator), typeof (AssetPrecompilerActivator));

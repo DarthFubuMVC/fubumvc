@@ -26,6 +26,12 @@ namespace FubuMVC.Tests.Assets
         }
 
         [Test]
+        public void asset_file_change_listener_is_registered()
+        {
+            registeredTypeIs<IAssetFileChangeListener, AssetFileChangeListener>();
+        }
+
+        [Test]
         public void asset_cache_headers_is_registered()
         {
             registeredTypeIs<IAssetCacheHeaders, AssetCacheHeaders>();
@@ -184,8 +190,9 @@ namespace FubuMVC.Tests.Assets
         [Test]
         public void asset_content_cache_is_registered()
         {
-            BehaviorGraph.BuildEmptyGraph().Services.DefaultServiceFor<IAssetContentCache>()
-                .Value.ShouldBeOfType<AssetContentCache>();
+            registeredTypeIs<IAssetContentCache, AssetContentCache>();
+
+            ServiceRegistry.ShouldBeSingleton(typeof (AssetContentCache));
         }
     }
 }

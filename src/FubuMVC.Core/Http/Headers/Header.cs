@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Net;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Runtime;
+using System.Linq;
 
 namespace FubuMVC.Core.Http.Headers
 {
@@ -65,5 +67,26 @@ namespace FubuMVC.Core.Http.Headers
         {
             return string.Equals(Name, headerName, StringComparison.InvariantCultureIgnoreCase);
         }
+    }
+
+    public static class HeadersExtension
+    {
+        public static string ValueFor(this IEnumerable<Header> headers,  HttpRequestHeader header)
+        {
+            return headers.ValueFor(HttpRequestHeaders.HeaderNameFor(header));
+        }
+
+        public static string ValueFor(this IEnumerable<Header> headers, HttpResponseHeader header)
+        {
+            return headers.ValueFor(HttpResponseHeaders.HeaderNameFor(header));
+        }
+
+        public static string ValueFor(this IEnumerable<Header> headers, string headerName)
+        {
+            var header = headers.FirstOrDefault(x => x.Matches(headerName));
+            return header == null ? null : header.Value;
+        }
+
+
     }
 }

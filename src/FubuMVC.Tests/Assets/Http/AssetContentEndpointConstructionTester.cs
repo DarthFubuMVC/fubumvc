@@ -21,9 +21,6 @@ namespace FubuMVC.Tests.Assets.Http
         {
             var behaviorGraph = BehaviorGraph.BuildEmptyGraph();
 
-            theContentCache = behaviorGraph.Services.DefaultServiceFor<IAssetContentCache>()
-                .Value.ShouldBeOfType<AssetContentCache>();
-
             theChain = behaviorGraph.BehaviorFor<AssetWriter>(x => x.Write(null));
         }
 
@@ -73,9 +70,9 @@ namespace FubuMVC.Tests.Assets.Http
         }
 
         [Test]
-        public void the_chain_should_have_an_asset_etag_invocation_filter()
+        public void the_chain_should_have_an_etag_invocation_filter()
         {
-            theChain.Filters.Single().ShouldBeOfType<AssetEtagInvocationFilter>();
+            theChain.Filters.Single().ShouldBeOfType<EtagInvocationFilter>();
         }
     }
 }
