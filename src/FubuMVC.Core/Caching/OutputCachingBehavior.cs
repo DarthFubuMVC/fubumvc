@@ -6,55 +6,37 @@ using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Caching
 {
-    public class OutputCachingBehavior : IActionBehavior
+    public class OutputCachingBehavior : WrappingBehavior
     {
         private readonly IOutputCache _cache;
         private readonly ICurrentChain _currentChain;
         private readonly IEtagCache _etagCache;
-        private readonly IActionBehavior _inner;
         private readonly IOutputWriter _writer;
 
         public OutputCachingBehavior(IActionBehavior inner, IOutputCache cache, IOutputWriter writer,
-                                     ICurrentChain currentChain, IEtagCache etagCache)
+                                     ICurrentChain currentChain, IEtagCache etagCache) : base(inner)
         {
-            _inner = inner;
             _cache = cache;
             _writer = writer;
             _currentChain = currentChain;
             _etagCache = etagCache;
-
-            Invoker = x => x.Invoke();
-            PartialInvoker = x => x.InvokePartial();
         }
 
-        public Action<IActionBehavior> Invoker { get; private set; }
-        public Action<IActionBehavior> PartialInvoker { get; private set; }
-
-        public void Invoke()
-        {
-            generateOutput(Invoker);
-        }
-
-        public void InvokePartial()
-        {
-            generateOutput(PartialInvoker);
-        }
-
-        public virtual IRecordedOutput CreateOuput(string resourceHash, Action<IActionBehavior> innerInvocation)
-        {
-            var newOutput = _writer.Record(() => innerInvocation(_inner));
-            newOutput.ForHeader(HttpResponseHeaders.ETag, etag => _etagCache.Register(resourceHash, etag));
-
-            return newOutput;
-        }
-
-        private void generateOutput(Action<IActionBehavior> innerInvocation)
+        protected override void invoke(Action action)
         {
             var resourceHash = _currentChain.ResourceHash();
 
-            var output = _cache.Retrieve(resourceHash, () => CreateOuput(resourceHash, innerInvocation));
+            var output = _cache.Retrieve(resourceHash, () => CreateOutput(resourceHash, action));
 
             _writer.Replay(output);
+        }
+
+        public virtual IRecordedOutput CreateOutput(string resourceHash, Action invocation)
+        {
+            var newOutput = _writer.Record(invocation);
+            newOutput.ForHeader(HttpResponseHeaders.ETag, etag => _etagCache.Register(resourceHash, etag));
+
+            return newOutput;
         }
     }
 }

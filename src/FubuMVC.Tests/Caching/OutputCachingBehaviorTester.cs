@@ -9,6 +9,7 @@ using FubuMVC.Core.Runtime.Logging;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
+using Is = Rhino.Mocks.Constraints.Is;
 
 namespace FubuMVC.Tests.Caching
 {
@@ -26,7 +27,7 @@ namespace FubuMVC.Tests.Caching
 
             theWriter.Output.AppendHeader(HttpResponseHeaders.ETag, "12345");
 
-            theResultingOutput = ClassUnderTest.CreateOuput(theResource, x => x.Invoke());
+            theResultingOutput = ClassUnderTest.CreateOutput(theResource, () => MockFor<IActionBehavior>().Invoke());
         }
 
         [Test]
@@ -94,7 +95,9 @@ namespace FubuMVC.Tests.Caching
 
             Services.PartialMockTheClassUnderTest();
             theGeneratedOutput = new RecordedOutput(null);
-            ClassUnderTest.Expect(x => x.CreateOuput(theResource, ClassUnderTest.Invoker))
+
+
+            ClassUnderTest.Expect(x => x.CreateOutput(theResource, null)).Constraints(Is.Same(theResource), Is.Anything())
                 .Return(theGeneratedOutput);
 
             ClassUnderTest.Invoke();
