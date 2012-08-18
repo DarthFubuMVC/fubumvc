@@ -5,6 +5,7 @@ using Bottles.Diagnostics;
 using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core.Assets.Combination;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Assets
 {
@@ -94,7 +95,25 @@ namespace FubuMVC.Core.Assets
 
         public void AddToCombination(string comboName, string names)
         {
-            _combos[comboName].Fill(names.ToDelimitedArray());
+            var unaliasedNames = CorrectForAliases(names.ToDelimitedArray()).ToList();
+            verifySingleMimeTypeForCombination(comboName, unaliasedNames);
+            _combos[comboName].Fill(unaliasedNames);
+        }
+
+        private void verifySingleMimeTypeForCombination(string comboName, IEnumerable<string> fileNames)
+        {
+            var mimeTypes = new HashSet<MimeType>(fileNames.Select(MimeType.MimeTypeByFileName));
+
+            var combo = _combos[comboName];
+            if (combo.Any())
+            {
+                mimeTypes.Add(MimeType.MimeTypeByFileName(combo[0]));
+            }
+
+            if (mimeTypes.Count > 1)
+            {
+                throw new InvalidOperationException("All members of a combination must be of the same type (script or stylesheet)");
+            }
         }
 
         public void ApplyPolicy(string typeName)

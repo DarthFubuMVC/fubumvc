@@ -158,12 +158,6 @@ namespace FubuMVC.Core.Assets
 
             var comboName = tokens.Dequeue();
 
-            var hasMultipleMimetypes = assets.Select(x => MimeType.MimeTypeByFileName(x)).Distinct().Count() > 1;
-            if (hasMultipleMimetypes)
-            {
-                throw new InvalidSyntaxException("All members of a combination must be of the same type (script or stylesheet)");
-            }
-
             assets.Each(x => _registration.AddToCombination(comboName, x));
         }
 
