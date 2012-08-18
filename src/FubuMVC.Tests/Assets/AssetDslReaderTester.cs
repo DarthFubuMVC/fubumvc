@@ -223,14 +223,5 @@ namespace FubuMVC.Tests.Assets
                 ClassUnderTest.ReadLine("combine a.js,b.js,c.js as");
             });
         }
-
-        [Test]
-        public void combine_without_combo_with_mixed_mimetypes_throws()
-        {
-            Exception<InvalidSyntaxException>.ShouldBeThrownBy(() =>
-            {
-                ClassUnderTest.ReadLine("combine a.js,b.css,c.js as combo1");
-            }).Message.ShouldContain("All members of a combination must be of the same type (script or stylesheet)");
-        }
     }
 }

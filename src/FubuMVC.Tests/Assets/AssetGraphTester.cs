@@ -54,7 +54,35 @@ namespace FubuMVC.Tests.Assets
 
             theGraph.AddToCombination("c3", "b.js,c.js,d.js");
             theGraph.NamesForCombination("c3").ShouldHaveTheSameElementsAs("b.js", "c.js", "d.js");
+        }
 
+        [Test]
+        public void add_to_combination_should_unalias_names()
+        {
+            theGraph.Alias("a.js", "a");
+            theGraph.Alias("b.js", "b");
+
+            theGraph.AddToCombination("c1", "a,b,c.js");
+
+            theGraph.NamesForCombination("c1").ShouldHaveTheSameElementsAs("a.js", "b.js", "c.js");
+        }
+
+        [Test]
+        public void add_to_combination_should_throw_when_combination_does_not_already_exist_and_names_for_more_than_one_mime_type()
+        {
+            theGraph.Alias("b.css", "b");
+
+            Exception<InvalidOperationException>.ShouldBeThrownBy(() => theGraph.AddToCombination("c1", "a.js,b"));
+        }
+
+        [Test]
+        public void add_to_combination_should_throw_when_combination_already_exists_and_names_for_do_not_all_match_mime_type()
+        {
+            theGraph.AddToCombination("c1", "a.js");
+            
+            theGraph.Alias("b.css", "b");
+
+            Exception<InvalidOperationException>.ShouldBeThrownBy(() => theGraph.AddToCombination("c1", "b,c.js"));
         }
 
         [Test]
