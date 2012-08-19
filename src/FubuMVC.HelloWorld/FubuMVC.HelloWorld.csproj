@@ -77,10 +77,6 @@
     <Content Include="Content\scripts\jquery.validate.js" />
     <Content Include="Content\scripts\testrunner.js" />
     <Content Include="Content\styles\styles.css" />
-    <Content Include="Controllers\LimitMethods\QueryGreeting.aspx" />
-    <Content Include="Controllers\LimitMethods\GreetingCommand.aspx" />
-    <Content Include="Controllers\Home\Home.aspx" />
-    <Content Include="Controllers\Conditional\Conditional.aspx" />
     <Content Include="Controllers\OutputModels\Index.aspx" />
     <Content Include="Controllers\Products\ProductDisplayPartial.ascx" />
     <Content Include="Controllers\Products\ProductsDisplayView.aspx" />
@@ -136,47 +132,20 @@
     <Compile Include="Controllers\FifthElement\FubuJourneyViewModel.cs" />
     <Compile Include="Controllers\Fire\FireController.cs" />
     <Compile Include="Controllers\HelloRazor\HelloRazorController.cs" />
-    <Compile Include="Controllers\LimitMethods\LimitMethodsController.cs" />
-    <Compile Include="Controllers\LimitMethods\QueryGreeting.aspx.cs">
-      <DependentUpon>QueryGreeting.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Controllers\LimitMethods\GreetingCommand.aspx.cs">
-      <DependentUpon>GreetingCommand.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Controllers\Home\HomeController.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
+    <Compile Include="Controllers\Home\HomeController.cs" />
     <Compile Include="Controllers\Location\LocationController.cs" />
     <Compile Include="Controllers\Login\LoggedInStatus.aspx.cs">
       <DependentUpon>LoggedInStatus.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controllers\Login\LoggedInStatusController.cs" />
     <Compile Include="Controllers\Login\LoginController.cs" />
-    <Compile Include="Controllers\Conditional\Conditional.aspx.cs">
-      <DependentUpon>Conditional.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Controllers\Conditional\Conditional.aspx.designer.cs">
-      <DependentUpon>Conditional.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\Conditional\ConditionalPolicy.cs" />
-    <Compile Include="Controllers\Conditional\ConditionalController.cs" />
-    <Compile Include="Controllers\OutputModels\OutputModelController.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
+    <Compile Include="Controllers\OutputModels\OutputModelController.cs" />
     <Compile Include="Controllers\OutputModels\OutputModelSettingBehavior.cs" />
-    <Compile Include="Controllers\Products\ProductsController.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
+    <Compile Include="Controllers\Products\ProductsController.cs" />
     <Compile Include="Controllers\Security\SecretController.cs" />
     <Compile Include="Controllers\Sleep\SleepController.cs" />
     <Compile Include="Controllers\ThreePassRendering\ThreePassController.cs" />
-    <Compile Include="Controllers\UrlTemplate\UrlTemplateController.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
+    <Compile Include="Controllers\UrlTemplate\UrlTemplateController.cs" />
     <Compile Include="Controllers\Water\WaterController.cs" />
     <Compile Include="Conventions\AfterEachOfPartialBuilder.cs" />
     <Compile Include="Conventions\BeforeEachOfPartialBuilder.cs" />
@@ -205,10 +174,6 @@
     <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
       <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
       <Name>FubuMVC.StructureMap</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.WebForms\FubuMVC.WebForms.csproj">
-      <Project>{7A45A53A-10F3-47B4-BAA7-C4F325102F02}</Project>
-      <Name>FubuMVC.WebForms</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

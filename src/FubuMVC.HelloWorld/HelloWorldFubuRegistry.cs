@@ -8,9 +8,6 @@ using FubuMVC.HelloWorld.Controllers.Air;
 using FubuMVC.HelloWorld.Controllers.Home;
 using FubuMVC.HelloWorld.Controllers.OutputModels;
 using FubuMVC.HelloWorld.Controllers.Products;
-using FubuMVC.Razor;
-using FubuMVC.Spark;
-using FubuMVC.WebForms;
 
 namespace FubuMVC.HelloWorld
 {
@@ -43,15 +40,10 @@ namespace FubuMVC.HelloWorld
             Policies
                 .Add<AntiForgeryPolicy>();
 
-            Import<WebFormsEngine>();
-
             Views
                 .TryToAttachWithDefaultConventions();
 
             Import<SampleHtmlConventions>();
-
-            this.RegisterPartials(x => x.For<Product>().Use<ProductPartial>());
-            this.RegisterPartials(x => x.For<ProductPart>().Use<PartPartial>());
 
 
             Services(s => s.ReplaceService<IUrlTemplatePattern, JQueryUrlTemplate>());

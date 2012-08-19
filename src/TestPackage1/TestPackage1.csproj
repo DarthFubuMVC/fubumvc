@@ -39,6 +39,9 @@
     <Reference Include="FubuLocalization">
       <HintPath>..\packages\FubuLocalization.0.9.5.72\lib\FubuLocalization.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlTags, Version=1.1.0.96, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlTags.1.1.0.96\lib\4.0\HtmlTags.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -61,22 +64,11 @@
     <Compile Include="IOpenType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringController.cs" />
-    <Compile Include="View.aspx.cs">
-      <DependentUpon>View.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="View.aspx.designer.cs">
-      <DependentUpon>View.aspx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.WebForms\FubuMVC.WebForms.csproj">
-      <Project>{7A45A53A-10F3-47B4-BAA7-C4F325102F02}</Project>
-      <Name>FubuMVC.WebForms</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -88,7 +80,6 @@
     <Content Include="data\b.txt" />
     <Content Include="data\c.txt" />
     <Content Include="TestPage.htm" />
-    <Content Include="View.aspx" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -1,8 +1,5 @@
-using System;
 using FubuMVC.Core;
-using FubuMVC.Core.Registration;
-using FubuMVC.WebForms;
-using TestPackage1.FakeControllers;
+using HtmlTags;
 
 namespace TestPackage1
 {
@@ -10,13 +7,10 @@ namespace TestPackage1
     {
         public TestPackage1Registry()
         {
-            Views.Facility(new WebFormViewFacility());
-
             Actions.IncludeClassesSuffixedWithController();
 
             Views.TryToAttachWithDefaultConventions();
         }
-
     }
 
     public class StringController
@@ -48,9 +42,18 @@ namespace TestPackage1
 
     public class ViewController
     {
-        public ViewInput ShowView(ViewInput input)
+        public HtmlDocument ShowView(ViewInput input)
         {
-            return input;
+            var document = new HtmlDocument();
+
+            document.Title = input.Name;
+
+            document.Push("p");
+            document.Add("span").Text("The input was '");
+            document.Add("span").Id("name").Text(input.Name);
+            document.Add("span").Text("'");
+
+            return document;
         }
     }
 }

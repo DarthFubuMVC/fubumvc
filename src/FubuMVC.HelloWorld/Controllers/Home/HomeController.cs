@@ -1,6 +1,5 @@
 using System.Web;
 using FubuCore.Logging;
-using FubuMVC.WebForms;
 
 namespace FubuMVC.HelloWorld.Controllers.Home
 {
@@ -53,7 +52,4 @@ namespace FubuMVC.HelloWorld.Controllers.Home
         public string Url { get; set; }
     }
 
-    public class Home : FubuPage<HomeViewModel>
-    {
-    }
 }

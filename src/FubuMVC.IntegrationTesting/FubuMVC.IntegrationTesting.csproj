@@ -150,10 +150,6 @@
       <Project>{FEB91F9F-ECE2-480C-B39C-A44BBF1F7B01}</Project>
       <Name>FubuMVC.Tests</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.WebForms\FubuMVC.WebForms.csproj">
-      <Project>{7A45A53A-10F3-47B4-BAA7-C4F325102F02}</Project>
-      <Name>FubuMVC.WebForms</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fubu\Fubu.csproj">
       <Project>{90DBE31C-948D-47AF-8C17-0056511A7313}</Project>
       <Name>Fubu</Name>
