@@ -83,7 +83,7 @@
     <Compile Include="Assets\Caching\AssetFileWatchingActivator.cs" />
     <Compile Include="Assets\Caching\IAssetFileChangeListener.cs" />
     <Compile Include="Assets\Caching\IAssetFileWatcher.cs" />
-    <Compile Include="Assets\Classses.cs" />
+    <Compile Include="Assets\AssetCacheHeaders.cs" />
     <Compile Include="Assets\Content\ITransformerPolicyLibrary.cs" />
     <Compile Include="Assets\Content\IContentPlanCache.cs" />
     <Compile Include="Assets\Diagnostics\AssetLog.cs" />
@@ -92,6 +92,7 @@
     <Compile Include="Assets\Diagnostics\AssetRegistrationDiagnostics.cs" />
     <Compile Include="Assets\Http\AssetFileEtagGenerator.cs" />
     <Compile Include="Assets\Http\AssetWriter.cs" />
+    <Compile Include="Assets\IAssetCacheHeaders.cs" />
     <Compile Include="Assets\IAssetPrecompiler.cs" />
     <Compile Include="Assets\RecordingAssetRegistration.cs" />
     <Compile Include="Assets\WarmUpSetsForCombinationPolicy.cs" />
