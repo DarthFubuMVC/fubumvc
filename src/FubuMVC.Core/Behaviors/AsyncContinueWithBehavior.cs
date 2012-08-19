@@ -6,51 +6,37 @@ namespace FubuMVC.Core.Behaviors
 {
     public class AsyncContinueWithBehavior<T> : AsyncContinueWithBehavior where T : class
     {
-        public AsyncContinueWithBehavior(IFubuRequest fubuRequest) : base(fubuRequest)
+        public AsyncContinueWithBehavior(IFubuRequest fubuRequest, IActionBehavior inner)
+            : base(fubuRequest, inner)
         {
         }
 
-        protected override void InnerInvoke(Action<IActionBehavior> behaviorAction)
+        protected override void invoke(Action action)
         {
             var task = FubuRequest.Get<Task<T>>();
             task.ContinueWith(x =>
             {
                 FubuRequest.Set(task.Result);
-                behaviorAction(InsideBehavior);
+                action();
             }, TaskContinuationOptions.NotOnFaulted | TaskContinuationOptions.AttachedToParent);
         }
     }
 
-    public class AsyncContinueWithBehavior : IActionBehavior
+    public class AsyncContinueWithBehavior : WrappingBehavior
     {
         private readonly IFubuRequest _fubuRequest;
 
-        public AsyncContinueWithBehavior(IFubuRequest fubuRequest)
+        public AsyncContinueWithBehavior(IFubuRequest fubuRequest, IActionBehavior inner) : base(inner)
         {
             _fubuRequest = fubuRequest;
         }
 
         public IFubuRequest FubuRequest { get { return _fubuRequest; } }
-        public IActionBehavior InsideBehavior { get; set; }
 
-        public void Invoke()
-        {
-            InnerInvoke(x => x.Invoke());
-        }
-
-        public void InvokePartial()
-        {
-            InnerInvoke(x => x.InvokePartial());
-        }
-
-        protected virtual void InnerInvoke(Action<IActionBehavior> behaviorAction)
+        protected override void invoke(Action action)
         {
             var task = FubuRequest.Get<Task>();
-            task.ContinueWith(x =>
-            {
-                if (InsideBehavior != null)
-                    behaviorAction(InsideBehavior);
-            }, TaskContinuationOptions.AttachedToParent | TaskContinuationOptions.NotOnFaulted);
+            task.ContinueWith(x => action(), TaskContinuationOptions.AttachedToParent | TaskContinuationOptions.NotOnFaulted);
         }
     }
 }

@@ -728,7 +728,6 @@
     <Compile Include="View\Rendering\IViewFactory.cs" />
     <Compile Include="View\Rendering\IViewRenderer.cs" />
     <Compile Include="View\IViewToken.cs" />
-    <Compile Include="View\PageHarness.cs" />
     <Compile Include="View\Attachment\ActionInSameFolderAsViewReturnsViewModelType.cs" />
     <Compile Include="View\Attachment\ActionWithSameNameAndFolderAsViewReturnsViewModelType.cs" />
     <Compile Include="View\Attachment\ViewBag.cs" />
@@ -739,7 +738,6 @@
     <Compile Include="View\Rendering\RenderStrategies.cs" />
     <Compile Include="View\Rendering\ViewModifiers.cs" />
     <Compile Include="View\Rendering\ViewRenderer.cs" />
-    <Compile Include="View\RenderViewBehavior.cs" />
     <Compile Include="Web\Security\WebAuthenticationContext.cs" />
     <Compile Include="Web\Security\WebSecurityContext.cs" />
   </ItemGroup>

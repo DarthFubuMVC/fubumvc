@@ -1,8 +1,10 @@
+using System;
 using System.Security.Principal;
 using FubuMVC.Core.Security;
 
 namespace FubuMVC.Core.Behaviors
 {
+    [Obsolete("Not sure if anyone uses this.  Will be eliminated by Doorman anyway")]
     public class load_the_current_principal : BasicBehavior
     {
         private readonly ISecurityContext _context;

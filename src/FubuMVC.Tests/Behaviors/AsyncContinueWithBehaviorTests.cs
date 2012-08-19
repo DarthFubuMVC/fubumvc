@@ -22,8 +22,6 @@ namespace FubuMVC.Tests.Behaviors
                 task.RunSynchronously();
 
                 MockFor<IFubuRequest>().Expect(x => x.Get<Task<Output>>()).Return(task);
-                var innerBehavior = MockFor<IActionBehavior>();
-                ClassUnderTest.InsideBehavior = innerBehavior;
 
                 ClassUnderTest.Invoke();
             });
@@ -61,8 +59,6 @@ namespace FubuMVC.Tests.Behaviors
                 });
 
                 MockFor<IFubuRequest>().Expect(x => x.Get<Task<Output>>()).Return(task);
-                var innerBehavior = MockFor<IActionBehavior>();
-                ClassUnderTest.InsideBehavior = innerBehavior;
 
                 typeof (AggregateException).ShouldBeThrownBy(task.Wait);
                 ClassUnderTest.Invoke();
@@ -120,8 +116,6 @@ namespace FubuMVC.Tests.Behaviors
                 var task = Task.Factory.StartNew(() => { });
 
                 MockFor<IFubuRequest>().Expect(x => x.Get<Task>()).Return(task);
-                var innerBehavior = MockFor<IActionBehavior>();
-                ClassUnderTest.InsideBehavior = innerBehavior;
 
                 task.Wait();
                 ClassUnderTest.Invoke();

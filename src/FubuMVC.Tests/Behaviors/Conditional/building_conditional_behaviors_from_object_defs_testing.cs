@@ -113,7 +113,7 @@ namespace FubuMVC.Tests.Behaviors.Conditional
             var invoker = behavior.ShouldBeOfType<ConditionalBehaviorInvoker>();
             var conditionalBehavior = invoker.ConditionalBehavior.ShouldBeOfType<ConditionalBehavior>();
 
-            conditionalBehavior.InnerBehavior.ShouldBeOfType<MyBehavior>();
+            conditionalBehavior.Inner.ShouldBeOfType<MyBehavior>();
             conditionalBehavior.Condition.ShouldBeOfType<CustomConditional>();
 
             invoker.InnerBehavior.ShouldBeOfType<FollowingBehavior>();

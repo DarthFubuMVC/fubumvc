@@ -3,36 +3,26 @@ using System.Diagnostics;
 
 namespace FubuMVC.Core.Behaviors
 {
-    public class StopwatchBehavior : IActionBehavior
+    /// <summary>
+    /// Honestly, this is in here as a demonstration more than anything
+    /// useful
+    /// </summary>
+    public class StopwatchBehavior : WrappingBehavior
     {
         private readonly Action<double> _record;
 
-        public StopwatchBehavior(Action<double> record)
+        public StopwatchBehavior(Action<double> record, IActionBehavior inner) : base(inner)
         {
             _record = record;
         }
 
-        // The underlying IoC container would inject the "inner"
-        // behavior via this property
-        public IActionBehavior InnerBehavior { get; set; }
-
-        public void Invoke()
-        {
-            performAction(x => x.Invoke());
-        }
-
-        public void InvokePartial()
-        {
-            performAction(x => x.InvokePartial());
-        }
-
-        private void performAction(Action<IActionBehavior> action)
+        protected override void invoke(Action action)
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
             try
             {
-                action(InnerBehavior);
+                action();
             }
             finally
             {

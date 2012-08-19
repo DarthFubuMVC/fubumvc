@@ -3,41 +3,27 @@ using FubuMVC.Core.Runtime.Conditionals;
 
 namespace FubuMVC.Core.Behaviors.Conditional
 {
-    public class ConditionalBehavior : IConditionalBehavior
+    public class ConditionalBehavior : WrappingBehavior, IConditionalBehavior
     {
-        private readonly IActionBehavior _innerBehavior;
         private readonly IConditional _condition;
 
-        public ConditionalBehavior(IActionBehavior innerBehavior, IConditional condition)
+        public ConditionalBehavior(IActionBehavior innerBehavior, IConditional condition) : base(innerBehavior)
         {
-            _innerBehavior = innerBehavior;
             _condition = condition;
         }
 
-        public IActionBehavior InnerBehavior
+
+        protected override void invoke(Action action)
         {
-            get { return _innerBehavior; }
+            if (_condition.ShouldExecute())
+            {
+                action();
+            }
         }
 
         public IConditional Condition
         {
             get { return _condition; }
-        }
-
-        public void Invoke()
-        {
-            if (_condition.ShouldExecute())
-            {
-                _innerBehavior.Invoke();
-            }
-        }
-
-        public void InvokePartial()
-        {
-            if (_condition.ShouldExecute())
-            {
-                _innerBehavior.InvokePartial();
-            }
         }
     }
 }

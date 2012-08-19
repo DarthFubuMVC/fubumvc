@@ -69,7 +69,6 @@
     <Compile Include="SingletonSpinupActivator.cs" />
     <Compile Include="StructureMapContainerFacility.cs" />
     <Compile Include="StructureMapFubuRegistry.cs" />
-    <Compile Include="StructureMapPageHarness.cs" />
     <Compile Include="StructureMapServiceLocator.cs" />
   </ItemGroup>
   <ItemGroup>
