@@ -14,6 +14,36 @@ using FubuCore;
 
 namespace FubuMVC.Tests.Runtime
 {
+    [TestFixture]
+    public class when_trying_to_set_an_object_in_fubu_request : InteractionContext<FubuRequest>
+    {
+        private BindResult theResult;
+
+        protected override void beforeEach()
+        {
+            theResult = new BindResult{
+                Problems = new List<ConvertProblem>{
+                    new ConvertProblem(),
+                    new ConvertProblem()
+                },
+                Value = new BinderTarget()
+            };
+
+            MockFor<IObjectResolver>().Stub(x => x.BindModel(typeof (BinderTarget), MockFor<IRequestData>()))
+                .Return(theResult);
+
+            ClassUnderTest.Get<BinderTarget>().ShouldBeTheSameAs(theResult.Value);
+        }
+
+        [Test]
+        public void try_to_set_the_same_value_does_nothing()
+        {
+            ClassUnderTest.Set(theResult.Value.As<BinderTarget>());
+
+            ClassUnderTest.ProblemsFor<BinderTarget>().ShouldHaveTheSameElementsAs(theResult.Problems);
+        }
+    }
+
 
     [TestFixture]
     public class fetching_an_object_for_the_second_time_gets_the_same_object : InteractionContext<FubuRequest>

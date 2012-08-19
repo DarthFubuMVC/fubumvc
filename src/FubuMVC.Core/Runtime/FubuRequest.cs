@@ -40,6 +40,11 @@ namespace FubuMVC.Core.Runtime
                 Value = target
             });
 
+            if (_values.Has(type) && ReferenceEquals(_values[type].Value, target))
+            {
+                return;
+            }
+
             _values[type] = new BindResult{
                 Value = target,
                 Problems = new List<ConvertProblem>()
