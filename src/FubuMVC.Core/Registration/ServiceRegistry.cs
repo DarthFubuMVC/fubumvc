@@ -9,7 +9,6 @@ namespace FubuMVC.Core.Registration
     public class ServiceRegistry : IServiceRegistry, IConfigurationAction
     {
         private readonly IList<Action<ServiceGraph>> _alterations = new List<Action<ServiceGraph>>();
-        private readonly IList<Type> _singletonTypes = new List<Type>();
 
         // Yes, I know this makes Dru go haywire, but he can come back in and
         // make the code uglier just to satisfy his own tastes

@@ -170,12 +170,14 @@
     <Compile Include="Caching\VaryByThreadCultureTester.cs" />
     <Compile Include="ConfigurationGraph_DetermineConfigurationType_Tester.cs" />
     <Compile Include="Default_ViewAttachment_Filters_Convention_Tester.cs" />
+    <Compile Include="Http\HttpStandInServiceRegistry_specification.cs" />
     <Compile Include="InteractionContextExtensions.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteConventionBasedUrlPolicyTester.cs" />
     <Compile Include="Registration\Conventions\EndpointActionSourceTester.cs" />
     <Compile Include="Registration\Conventions\JsonMessageInputConventionTester.cs" />
     <Compile Include="Registration\Conventions\NavigationRootPolicyTester.cs" />
     <Compile Include="Registration\default_action_discovery.cs" />
+    <Compile Include="Registration\Registration\ModelBindingServiceRegistry_specification.cs" />
     <Compile Include="Runtime\Dates\DateTimeFormatting_import_integration_testing.cs" />
     <Compile Include="Runtime\Dates\DateTimeToUtcConverterFamilyTester.cs" />
     <Compile Include="Runtime\Dates\Date_services_registration.cs" />
@@ -184,6 +186,7 @@
     <Compile Include="Runtime\Files\FubuFileTester.cs" />
     <Compile Include="Runtime\Logger_should_be_registered.cs" />
     <Compile Include="Runtime\PartialChainSwitcherTester.cs" />
+    <Compile Include="Security\SecurityServicesRegistry_specification.cs" />
     <Compile Include="StructureMapIoC\UsesTheIsSingletonPropertyTester.cs" />
     <Compile Include="StubRequestHeaders.cs" />
     <Compile Include="Assets\MimetypeRegistrationActivatorTester.cs" />
@@ -372,6 +375,7 @@
     <Compile Include="UI\Extensibility\ExtensionShelfTester.cs" />
     <Compile Include="UI\Extensibility\FilteredContentExtensionTester.cs" />
     <Compile Include="UI\FormLineExpressionBuilderTester.cs" />
+    <Compile Include="UI\HtmlConventionServiceRegistry_registration_spec.cs" />
     <Compile Include="UI\HtmlTagExtensionsTester.cs" />
     <Compile Include="UI\ImageExpressionTester.cs" />
     <Compile Include="UI\ImageForExtensionMethodTester.cs" />
@@ -390,6 +394,7 @@
     <Compile Include="UI\Navigation\NavigationGraphTester.cs" />
     <Compile Include="UI\Navigation\NavigationKeyTester.cs" />
     <Compile Include="UI\Navigation\NavigationRegistry_with_FubuRegistry_integration_testing.cs" />
+    <Compile Include="UI\Navigation\NavigationServiceRegistry_specification.cs" />
     <Compile Include="UI\Navigation\NavigationServiceTester.cs" />
     <Compile Include="UI\PartialInvokerTester.cs" />
     <Compile Include="Assets\AssetDslReaderTester.cs" />
@@ -434,7 +439,7 @@
     <Compile Include="Registration\Conventions\RouteConstraintPolicyTester.cs" />
     <Compile Include="Registration\Conventions\RouteDefinitionResolverTester.cs" />
     <Compile Include="Registration\Conventions\TypeScanningIntegratedTester.cs" />
-    <Compile Include="Registration\default_fubu_registry_service_registrations.cs" />
+    <Compile Include="Registration\CoreServiceRegistry_specification.cs" />
     <Compile Include="Registration\Expressions\ActionCallFilterExpressionTester.cs" />
     <Compile Include="Registration\Expressions\ConditionallyWrapBehaviorChainsWithTester.cs" />
     <Compile Include="Registration\Expressions\EnrichCallsWithTester.cs" />
@@ -482,6 +487,7 @@
     <Compile Include="Urls\UrlRegistryIntegrationTester.cs" />
     <Compile Include="UI\LambdaElementSourceTester.cs" />
     <Compile Include="Urls\UrlRegistryTester.cs" />
+    <Compile Include="View\Activation\ViewActivationServiceRegistry_specification.cs" />
     <Compile Include="View\Attachment\DefaultProfileTester.cs" />
     <Compile Include="View\Attachment\ProfileViewTokenTester.cs" />
     <Compile Include="View\Attachment\ViewAttacherTester.cs" />

@@ -1,4 +1,3 @@
-using Bottles;
 using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Conversion;
@@ -9,7 +8,6 @@ using FubuCore.Reflection;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
-using FubuMVC.Core.Resources.Etags;
 using FubuMVC.Core.Routing;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
@@ -64,8 +62,6 @@ namespace FubuMVC.Core
 
             SetServiceIfNone<ISmartRequest, FubuSmartRequest>();
 
-
-            AddService<IActivator>(typeof (DisplayConversionRegistryActivator));
 
             AddService<IFormatter>(typeof (JsonFormatter));
             AddService<IFormatter>(typeof (XmlFormatter));
