@@ -375,7 +375,7 @@
     <Compile Include="UI\Extensibility\ExtensionShelfTester.cs" />
     <Compile Include="UI\Extensibility\FilteredContentExtensionTester.cs" />
     <Compile Include="UI\FormLineExpressionBuilderTester.cs" />
-    <Compile Include="UI\HtmlConventionServiceRegistry_registration_spec.cs" />
+    <Compile Include="UI\UIServiceRegistry_registration_spec.cs" />
     <Compile Include="UI\HtmlTagExtensionsTester.cs" />
     <Compile Include="UI\ImageExpressionTester.cs" />
     <Compile Include="UI\ImageForExtensionMethodTester.cs" />

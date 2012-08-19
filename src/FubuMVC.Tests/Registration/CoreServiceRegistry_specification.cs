@@ -11,7 +11,6 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.SessionState;
-using FubuMVC.Core.UI;
 using FubuMVC.Core.Urls;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -102,11 +101,7 @@ namespace FubuMVC.Tests.Registration
             registeredTypeIs<IObjectConverter, ObjectConverter>();
         }
 
-        [Test]
-        public void partial_invoker_is_registered()
-        {
-            registeredTypeIs<IPartialInvoker, PartialInvoker>();
-        }
+
 
         [Test]
         public void setter_binder_is_registered()

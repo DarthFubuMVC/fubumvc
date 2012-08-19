@@ -5,9 +5,9 @@ using FubuMVC.Core.UI.Tags;
 
 namespace FubuMVC.Core.UI
 {
-    public class HtmlConventionServiceRegistry : ServiceRegistry
+    public class UIServiceRegistry : ServiceRegistry
     {
-        public HtmlConventionServiceRegistry()
+        public UIServiceRegistry()
         {
             SetServiceIfNone(typeof(ITagGenerator<>), typeof(TagGenerator<>));
             SetServiceIfNone<IElementNamingConvention, DefaultElementNamingConvention>();
@@ -15,6 +15,8 @@ namespace FubuMVC.Core.UI
             AddService<IActivator, HtmlConventionsActivator>();
 
             AddService<IActivator>(typeof(DisplayConversionRegistryActivator));
+
+            SetServiceIfNone<IPartialInvoker, PartialInvoker>();
         }
     }
 }

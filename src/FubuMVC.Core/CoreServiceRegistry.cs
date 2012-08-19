@@ -51,7 +51,7 @@ namespace FubuMVC.Core
 
             SetServiceIfNone<ISessionState, SimpleSessionState>();
 
-            SetServiceIfNone<IPartialInvoker, PartialInvoker>();
+            
 
 
             SetServiceIfNone<IFileSystem, FileSystem>();
