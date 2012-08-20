@@ -12,7 +12,6 @@ namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.NestedPartials
         protected override void configure(FubuRegistry registry)
         {
             registry.Actions.IncludeType<FamilyController>();
-            registry.Views.TryToAttachWithDefaultConventions();
         }
 
         [Test]

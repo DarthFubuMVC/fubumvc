@@ -81,6 +81,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionlessViews\unattached_views_are_always_actionless_views.cs" />
     <Compile Include="Ajax\AjaxContinuationProcessingTester.cs" />
     <Compile Include="Assets\return_404_when_asset_cannot_be_found.cs" />
     <Compile Include="Assets\writing_asset_tags_with_and_without_bottles.cs" />
@@ -168,6 +169,8 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <None Include="ActionlessViews\Attached.spark" />
+    <None Include="ActionlessViews\Unattached.spark" />
     <None Include="FubuTestApplication.application.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

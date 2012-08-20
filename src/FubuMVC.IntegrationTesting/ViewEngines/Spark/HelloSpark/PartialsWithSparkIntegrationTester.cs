@@ -12,11 +12,7 @@ namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.HelloSpark
     {
         protected override void configure(FubuRegistry registry)
         {
-            registry.Import<SparkEngine>();
             registry.Actions.IncludeType<PartialController>();
-            registry.Views.RegisterActionLessViews(v => v.ViewModel == typeof (PartialInput));
-            registry.Views.RegisterActionLessViews(v => v.ViewModel == typeof (MoreInput));
-            registry.Views.TryToAttachWithDefaultConventions();
         }
 
         [Test]

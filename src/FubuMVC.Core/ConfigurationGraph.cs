@@ -179,6 +179,7 @@ namespace FubuMVC.Core
                 .Union(_configurations[ConfigurationType.Explicit])
                 .Union(_configurations[ConfigurationType.Policy])
                 .Union(viewAttachers())
+                .Union(new IConfigurationAction[] { new ActionlessViewConvention() })
                 .Union(fullGraphPolicies())
                 .Union(navigationRegistrations().OfType<IConfigurationAction>())
                 .Union(new IConfigurationAction[]{new MenuItemAttributeConfigurator(), new CompileNavigationStep()})
