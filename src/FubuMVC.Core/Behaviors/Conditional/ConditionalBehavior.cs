@@ -7,7 +7,7 @@ namespace FubuMVC.Core.Behaviors.Conditional
     {
         private readonly IConditional _condition;
 
-        public ConditionalBehavior(IActionBehavior innerBehavior, IConditional condition) : base(innerBehavior)
+        public ConditionalBehavior(IConditional condition)
         {
             _condition = condition;
         }

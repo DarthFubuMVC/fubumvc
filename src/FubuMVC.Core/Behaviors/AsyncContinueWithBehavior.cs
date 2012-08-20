@@ -6,8 +6,8 @@ namespace FubuMVC.Core.Behaviors
 {
     public class AsyncContinueWithBehavior<T> : AsyncContinueWithBehavior where T : class
     {
-        public AsyncContinueWithBehavior(IFubuRequest fubuRequest, IActionBehavior inner)
-            : base(fubuRequest, inner)
+        public AsyncContinueWithBehavior(IFubuRequest fubuRequest)
+            : base(fubuRequest)
         {
         }
 
@@ -26,7 +26,7 @@ namespace FubuMVC.Core.Behaviors
     {
         private readonly IFubuRequest _fubuRequest;
 
-        public AsyncContinueWithBehavior(IFubuRequest fubuRequest, IActionBehavior inner) : base(inner)
+        public AsyncContinueWithBehavior(IFubuRequest fubuRequest)
         {
             _fubuRequest = fubuRequest;
         }

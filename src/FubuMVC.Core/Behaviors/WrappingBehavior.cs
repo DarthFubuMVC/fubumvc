@@ -4,12 +4,7 @@ namespace FubuMVC.Core.Behaviors
 {
     public abstract class WrappingBehavior : IActionBehavior
     {
-        protected WrappingBehavior(IActionBehavior inner)
-        {
-            Inner = inner;
-        }
-
-        public IActionBehavior Inner { get; private set; }
+        public IActionBehavior Inner { get; set; }
 
         public void Invoke()
         {

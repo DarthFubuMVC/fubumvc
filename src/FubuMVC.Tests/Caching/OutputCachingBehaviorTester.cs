@@ -71,6 +71,7 @@ namespace FubuMVC.Tests.Caching
             MockFor<IResourceHash>().Stub(x => x.CreateHash())
                 .Return(theResource);
 
+            ClassUnderTest.Inner = MockFor<IActionBehavior>();
             ClassUnderTest.Invoke();
         }
 
@@ -106,6 +107,7 @@ namespace FubuMVC.Tests.Caching
             ClassUnderTest.Expect(x => x.CreateOutput(theResource, null)).Constraints(Is.Same(theResource), Is.Anything())
                 .Return(theGeneratedOutput);
 
+            ClassUnderTest.Inner = MockFor<IActionBehavior>();
             ClassUnderTest.Invoke();
         }
 

@@ -11,7 +11,7 @@ namespace FubuMVC.Core.Behaviors
     {
         private readonly Action<double> _record;
 
-        public StopwatchBehavior(Action<double> record, IActionBehavior inner) : base(inner)
+        public StopwatchBehavior(Action<double> record)
         {
             _record = record;
         }

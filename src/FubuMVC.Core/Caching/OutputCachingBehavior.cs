@@ -12,8 +12,8 @@ namespace FubuMVC.Core.Caching
         private readonly IHeadersCache _headersCache;
         private readonly IOutputWriter _writer;
 
-        public OutputCachingBehavior(IActionBehavior inner, IOutputCache cache, IOutputWriter writer,
-                                     IResourceHash hash, IHeadersCache headersCache) : base(inner)
+        public OutputCachingBehavior(IOutputCache cache, IOutputWriter writer,
+                                     IResourceHash hash, IHeadersCache headersCache)
         {
             _cache = cache;
             _writer = writer;

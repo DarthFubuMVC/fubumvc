@@ -15,6 +15,8 @@ namespace FubuMVC.Tests.Behaviors
 
         protected override void beforeEach()
         {
+            ClassUnderTest.Inner = MockFor<IActionBehavior>();
+
             expectedOutput = new Output();
             var testTask = new Task(() =>
             {
@@ -111,6 +113,8 @@ namespace FubuMVC.Tests.Behaviors
     {
         protected override void beforeEach()
         {
+            ClassUnderTest.Inner = MockFor<IActionBehavior>();
+
             var testTask = new Task(() =>
             {
                 var task = Task.Factory.StartNew(() => { });

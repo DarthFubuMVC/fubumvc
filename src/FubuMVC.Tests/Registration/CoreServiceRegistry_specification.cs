@@ -27,6 +27,12 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void exception_handling_observer_is_registered()
+        {
+            registeredTypeIs<IExceptionHandlingObserver, ExceptionHandlingObserver>();
+        }
+
+        [Test]
         public void IFlash_is_registered()
         {
             registeredTypeIs<IFlash, FlashProvider>();

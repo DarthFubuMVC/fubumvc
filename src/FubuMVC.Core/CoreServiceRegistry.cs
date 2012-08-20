@@ -74,6 +74,8 @@ namespace FubuMVC.Core
             SetServiceIfNone<IClock, Clock>(x => x.IsSingleton = true);
             SetServiceIfNone<ITimeZoneContext, MachineTimeZoneContext>();
             SetServiceIfNone<ISystemTime, SystemTime>();
+
+            SetServiceIfNone<IExceptionHandlingObserver, ExceptionHandlingObserver>();
         }
     }
 }

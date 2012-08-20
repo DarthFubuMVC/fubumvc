@@ -13,6 +13,7 @@ namespace FubuMVC.Tests.Behaviors.Conditional
         protected override void beforeEach()
         {
             Services.Inject<IConditional>(new LambdaConditional(() => true));
+            ClassUnderTest.Inner = MockFor<IActionBehavior>();
         }
 
         [Test]

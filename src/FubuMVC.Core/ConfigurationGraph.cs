@@ -15,6 +15,7 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Services;
+using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Resources.PathBased;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Files;
@@ -220,6 +221,11 @@ namespace FubuMVC.Core
             yield return new ReorderBehaviorsPolicy{
                 WhatMustBeBefore = node => node.Category == BehaviorCategory.Authentication,
                 WhatMustBeAfter = node => node.Category == BehaviorCategory.Authorization
+            };
+
+            yield return new ReorderBehaviorsPolicy{
+                WhatMustBeBefore = node => node is OutputCachingNode,
+                WhatMustBeAfter = node => node is OutputNode
             };
         }
 
