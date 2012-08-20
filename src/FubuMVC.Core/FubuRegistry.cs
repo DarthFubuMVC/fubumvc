@@ -6,6 +6,7 @@ using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.UI.Navigation;
 using FubuMVC.Core.View.Attachment;
+using FubuCore;
 
 namespace FubuMVC.Core
 {
@@ -187,7 +188,8 @@ namespace FubuMVC.Core
         {
             _configuration.AddImport(new RegistryImport{
                 Prefix = prefix,
-                Registry = new T()
+                Registry = new T(),
+                Type = typeof(T)
             });
         }
 
@@ -274,9 +276,22 @@ namespace FubuMVC.Core
         {
             if (_importedTypes.Contains(typeof (T))) return;
 
-            new T().Configure(this);
+            if (typeof(T).CanBeCastTo<FubuPackageRegistry>())
+            {
+                _configuration.AddImport(new RegistryImport
+                {
+                    Prefix = null,
+                    Registry = new T().As<FubuRegistry>(),
+                    Type = typeof(T)
+                });             
+            }
+            else
+            {
+                new T().Configure(this);
+                _importedTypes.Add(typeof(T));
+            }
 
-            _importedTypes.Add(typeof (T));
+
         }
 
         /// <summary>

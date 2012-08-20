@@ -146,6 +146,28 @@ namespace FubuMVC.Core
             return graph;
         }
 
+        private IEnumerable<IConfigurationAction> allChildrenImports()
+        {
+            foreach (var import in _imports)
+            {
+                foreach (var action in import.Registry.Configuration._imports)
+                {
+                    yield return action;
+
+                    foreach (var descendentAction in _imports.SelectMany(x => x.Registry.Configuration.allChildrenImports()))
+                    {
+                        yield return descendentAction;
+                    }
+                }
+            }
+        }
+
+        private IEnumerable<IConfigurationAction> uniqueImports()
+        {
+            var children = allChildrenImports().ToList();
+
+            return _imports.Where(x => !children.Contains(x));
+        }
 
         public IEnumerable<IConfigurationAction> AllConfigurationActions()
         {
@@ -153,7 +175,7 @@ namespace FubuMVC.Core
                 .Union(systemServices())
                 .Union(serviceRegistrations())
                 .Union(allConventions())
-                .Union(_imports)
+                .Union(uniqueImports())
                 .Union(_configurations[ConfigurationType.Explicit])
                 .Union(_configurations[ConfigurationType.Policy])
                 .Union(viewAttachers())
