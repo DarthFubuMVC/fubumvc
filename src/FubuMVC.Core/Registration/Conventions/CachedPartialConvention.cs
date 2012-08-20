@@ -1,4 +1,3 @@
-using System;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Registration.Nodes;
 using System.Linq;

@@ -121,6 +121,7 @@
     <Compile Include="Registration\Conventions\CachedPartialConvention.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteConventionBasedUrlPolicy.cs" />
     <Compile Include="Registration\Conventions\NavigationRootPolicy.cs" />
+    <Compile Include="Registration\Conventions\VaryByPolicy.cs" />
     <Compile Include="Resources\Etags\IHeadersCache.cs" />
     <Compile Include="Runtime\Dates\DateFormattingRule.cs" />
     <Compile Include="Runtime\Dates\DateTimeFormatter.cs" />
