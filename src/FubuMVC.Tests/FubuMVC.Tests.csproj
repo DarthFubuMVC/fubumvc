@@ -172,6 +172,12 @@
     <Compile Include="ConfigurationGraph_DetermineConfigurationType_Tester.cs" />
     <Compile Include="Default_ViewAttachment_Filters_Convention_Tester.cs" />
     <Compile Include="Http\HttpStandInServiceRegistry_specification.cs" />
+    <Compile Include="Http\ContentEncodingTester.cs" />
+    <Compile Include="Http\HttpContentEncodersTester.cs" />
+    <Compile Include="Http\GZipHttpContentEncoding.cs" />
+    <Compile Include="Http\GZipEncodingTester.cs" />
+    <Compile Include="Http\HttpContentEncodingFilterTester.cs" />
+    <Compile Include="Http\StreamExtensions.cs" />
     <Compile Include="InteractionContextExtensions.cs" />
     <Compile Include="Registration\Conventions\CacheAttributePolicyTester.cs" />
     <Compile Include="Registration\Conventions\CachedPartialConventionTester.cs" />

@@ -36,6 +36,10 @@ namespace FubuMVC.Core.Http
         {
         }
 
+        public void UseEncoding(IHttpContentEncoding encoding)
+        {
+        }
+
         public void Write(Action<Stream> output)
         {
         }

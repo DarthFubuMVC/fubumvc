@@ -63,6 +63,11 @@ namespace FubuMVC.OwinHost
             throw new NotImplementedException();
         }
 
+        public void UseEncoding(IHttpContentEncoding encoding)
+        {
+            // TODO -- Come back to this one
+        }
+
         public void Write(Action<Stream> output)
         {
             Action complete = () => { };
