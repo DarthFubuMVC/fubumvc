@@ -6,7 +6,7 @@ using FubuMVC.Core.Caching;
 
 namespace FubuMVC.Core.Runtime
 {
-    public interface IOutputWriter
+    public interface IOutputWriter : IDisposable
     {
         void WriteFile(string contentType, string localFilePath, string displayName);
         void Write(string contentType, string renderedOutput);

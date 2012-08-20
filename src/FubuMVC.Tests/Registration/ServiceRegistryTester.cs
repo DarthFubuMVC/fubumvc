@@ -213,6 +213,11 @@ namespace FubuMVC.Tests.Registration
         {
             throw new NotImplementedException();
         }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public static class ServiceRegistryExtensions

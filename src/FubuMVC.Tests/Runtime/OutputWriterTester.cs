@@ -193,6 +193,14 @@ namespace FubuMVC.Tests.Runtime
 
             logs.DebugMessages.Single().ShouldEqual(new WriteToStreamReport("text/xml"));
         }
+
+        [Test]
+        public void dispose_flushes()
+        {
+            Services.PartialMockTheClassUnderTest();
+            ClassUnderTest.Dispose();
+            ClassUnderTest.AssertWasCalled(x => x.Flush());
+        }
     }
 
     [TestFixture]

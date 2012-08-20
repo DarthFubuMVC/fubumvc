@@ -86,6 +86,10 @@ namespace FubuMVC.Core.Runtime
             return _builder.ToString();
         }
 
+        public void Dispose()
+        {
+        }
+
         public Stream OutputStream()
         {
             _output.Position = 0;

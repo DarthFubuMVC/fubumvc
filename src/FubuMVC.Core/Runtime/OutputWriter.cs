@@ -85,7 +85,8 @@ namespace FubuMVC.Core.Runtime
             output.Replay(Writer);
         }
 
-        public void Flush()
+        // Keep this virtual for testing
+        public virtual void Flush()
         {
             _logger.Debug(() => "Flushed content to the Http output");
 
@@ -144,7 +145,10 @@ namespace FubuMVC.Core.Runtime
 
             Writer.WriteResponseCode(status, description);
         }
+
+        public void Dispose()
+        {
+            Flush();
+        }
     }
-
-
 }

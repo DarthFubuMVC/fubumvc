@@ -52,6 +52,11 @@ namespace FubuMVC.Core.Http.AspNet
             _response.AppendCookie(cookie);
         }
 
+        public void UseEncoding(IHttpContentEncoding encoding)
+        {
+            _response.Filter = encoding.Encode(_response.Filter);
+        }
+
         public void Write(Action<Stream> output)
         {
             output(_response.OutputStream);
