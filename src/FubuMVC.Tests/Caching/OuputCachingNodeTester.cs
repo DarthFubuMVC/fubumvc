@@ -38,6 +38,34 @@ namespace FubuMVC.Tests.Caching
                 .Items.Last().Type.ShouldEqual(typeof (VaryByThreadCulture));
         }
 
+        [Test]
+        public void apply_is_idempotent()
+        {
+            theNode.Apply<VaryByThreadCulture>();
+            theNode.Apply<VaryByThreadCulture>();
+            theNode.Apply<VaryByThreadCulture>();
+            theNode.Apply<VaryByThreadCulture>();
+            theNode.Apply<VaryByThreadCulture>();
+
+            theNode.ResourceHash.EnumerableDependenciesOf<IVaryBy>()
+                .Items.Where(x => x.Type == typeof (VaryByThreadCulture)).ShouldHaveCount(1);
+        }
+
+        [Test]
+        public void apply_is_idempotent_2()
+        {
+            theNode.Apply(typeof (VaryByThreadCulture));
+
+            theNode.Apply<VaryByThreadCulture>();
+            theNode.Apply<VaryByThreadCulture>();
+            theNode.Apply<VaryByThreadCulture>();
+            theNode.Apply<VaryByThreadCulture>();
+            theNode.Apply<VaryByThreadCulture>();
+
+            theNode.ResourceHash.EnumerableDependenciesOf<IVaryBy>()
+                .Items.Where(x => x.Type == typeof(VaryByThreadCulture)).ShouldHaveCount(1);
+        }
+
 
         [Test]
         public void apply_adds_extra_vary_by_2()

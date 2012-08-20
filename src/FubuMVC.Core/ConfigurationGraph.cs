@@ -209,6 +209,8 @@ namespace FubuMVC.Core
 
             yield return new DefaultOutputPolicy();
 
+            yield return new CacheAttributePolicy();
+
             yield return new AttachAuthorizationPolicy();
             yield return new AttachInputPolicy();
             yield return new AttachOutputPolicy();

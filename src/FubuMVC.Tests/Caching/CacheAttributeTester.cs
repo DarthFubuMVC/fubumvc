@@ -36,6 +36,24 @@ namespace FubuMVC.Tests.Caching
         }
 
         [Test]
+        public void alter_chain_is_idempotent()
+        {
+            var att = new CacheAttribute();
+            var chain = new BehaviorChain();
+            var call = ActionCall.For<CacheAttributeTester>(x => x.alter_chain());
+            chain.AddToEnd(call);
+
+            att.Alter(call);
+            att.Alter(call);
+            att.Alter(call);
+            att.Alter(call);
+            att.Alter(call);
+
+            chain.OfType<OutputCachingNode>().Single()
+                .VaryByPolicies().Single().ShouldEqual(typeof(VaryByResource));
+        }
+
+        [Test]
         public void alter_chain_with_more_overridden_vary_by()
         {
             var att = new CacheAttribute();

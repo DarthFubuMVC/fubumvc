@@ -26,13 +26,24 @@ namespace FubuMVC.Core.Caching
 
         public override void Alter(ActionCall call)
         {
-            var node = new OutputCachingNode();
+            var chain = call.ParentChain();
+
+            Alter(chain);
+        }
+
+        public void Alter(BehaviorChain chain)
+        {
+            var node = chain.OfType<OutputCachingNode>().FirstOrDefault();
+            if (node == null)
+            {
+                node = new OutputCachingNode();
+                chain.AddToEnd(node);
+            }
+
             if (_varyBy != null)
             {
                 node.ReplaceVaryByRules(_varyBy);
             }
-
-            call.AddToEnd(node);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
+using System.Linq;
 
 namespace FubuMVC.Core.Caching
 {
@@ -24,14 +25,13 @@ namespace FubuMVC.Core.Caching
 
         public ObjectDef Apply<T>() where T : IVaryBy
         {
-            var objectDef = ObjectDef.ForType<T>();
-            ResourceHash.EnumerableDependenciesOf<IVaryBy>().Add(objectDef);
-
-            return objectDef;
+            return Apply(typeof (T));
         }
 
         public ObjectDef Apply(Type varyByType)
         {
+            if (VaryByPolicies().Contains(varyByType)) return null;
+
             if (!varyByType.CanBeCastTo<IVaryBy>())
             {
                 throw new ArgumentException("varyByType", "varyByType must implement IVaryBy");
