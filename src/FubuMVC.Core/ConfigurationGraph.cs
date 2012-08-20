@@ -176,6 +176,8 @@ namespace FubuMVC.Core
             yield return new ContinuationHandlerConvention();
             yield return new AsyncContinueWithHandlerConvention();
 
+            yield return new CachedPartialConvention();
+
             yield return new JsonMessageInputConvention();
             yield return new AjaxContinuationPolicy();
             yield return new DictionaryOutputConvention();
