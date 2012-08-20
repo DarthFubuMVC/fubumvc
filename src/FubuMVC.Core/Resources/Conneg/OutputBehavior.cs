@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -21,11 +22,9 @@ namespace FubuMVC.Core.Resources.Conneg
             _media = media;
         }
 
-        protected override DoNext performInvoke()
+        protected override void afterInsideBehavior()
         {
             Write();
-
-            return DoNext.Continue;
         }
 
         // TODO -- Runtime tracing

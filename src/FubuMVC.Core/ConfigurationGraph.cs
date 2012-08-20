@@ -190,6 +190,7 @@ namespace FubuMVC.Core
             yield return new AttachInputPolicy();
             yield return new AttachOutputPolicy();
 
+            yield return new OutputBeforeAjaxContinuationPolicy();
 
             yield return new ReorderBehaviorsPolicy{
                 WhatMustBeBefore = node => node.Category == BehaviorCategory.Authentication,

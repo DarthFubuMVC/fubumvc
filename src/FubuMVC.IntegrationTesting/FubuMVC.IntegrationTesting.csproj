@@ -81,6 +81,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ajax\AjaxContinuationProcessingTester.cs" />
     <Compile Include="Assets\writing_asset_tags_with_and_without_bottles.cs" />
     <Compile Include="Caching\caching_tester.cs" />
     <Compile Include="Chrome\ChromeBehaviorIntegrationTester.cs" />
