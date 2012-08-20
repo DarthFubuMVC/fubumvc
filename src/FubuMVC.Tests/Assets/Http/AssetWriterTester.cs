@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets;
@@ -15,6 +16,50 @@ using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Assets.Http
 {
+    [TestFixture]
+    public class when_writing_an_asset_that_cannot_be_found : InteractionContext<AssetWriter>
+    {
+        private string theEtag;
+        private IEnumerable<AssetFile> theFiles;
+        private AssetPath theAssetPath;
+        private Header[] theHeaders;
+
+        protected override void beforeEach()
+        {
+            theEtag = "12345";
+
+            theFiles = Enumerable.Empty<AssetFile>();
+
+            theAssetPath = new AssetPath("scripts/something")
+            {
+                ResourceHash = Guid.NewGuid().ToString()
+            };
+
+            MockFor<IContentWriter>().Expect(x => x.Write(theAssetPath))
+                .Return(theFiles);
+
+
+            FubuMode.Reset();
+            FubuMode.InDevelopment().ShouldBeFalse();
+
+            ClassUnderTest.Write(theAssetPath);
+        }
+
+        [Test]
+        public void should_write_the_404_status_code()
+        {
+            MockFor<IOutputWriter>().AssertWasCalled(x => x.WriteResponseCode(HttpStatusCode.NotFound));
+        }
+
+        [Test]
+        public void writes_a_brief_message_so_that_Kayak_does_not_go_pear_shaped_from_an_empty_body()
+        {
+            MockFor<IOutputWriter>().AssertWasCalled(x => x.Write("anything"), x => x.IgnoreArguments());
+        }
+    }
+
+
+
     [TestFixture]
     public class when_writing_the_asset_in_production_mode : InteractionContext<AssetWriter>
     {

@@ -15,15 +15,12 @@ namespace FubuMVC.Tests.Assets.Content
         private AssetFile[] theFiles;
 
         [Test]
-        public void throw_argument_out_of_range_exception_when_findfiles_cannot_find_anything()
+        public void should_cleanly_return_an_empty_enumerable_for_happy_404_when_findfiles_cannot_find_anything()
         {
             MockFor<IAssetCombinationCache>().Stub(x => x.FindCombination("script1")).Return(null);
             MockFor<IAssetPipeline>().Stub(x => x.Find("script1")).Return(null);
 
-            Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() =>
-            {
-                ClassUnderTest.FindFiles("script1");
-            });
+            ClassUnderTest.FindFiles("script1").Any().ShouldBeFalse();
         }
 
         [Test]

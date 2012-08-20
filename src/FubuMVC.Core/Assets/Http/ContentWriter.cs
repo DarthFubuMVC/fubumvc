@@ -43,9 +43,12 @@ namespace FubuMVC.Core.Assets.Http
         private IEnumerable<AssetFile> writeTextualAsset(AssetPath asset)
         {
             var source = _cache.SourceFor(asset);
-            var contents = source.GetContent(_contentPipeline);
+            if (source.Files.Any())
+            {
+                var contents = source.GetContent(_contentPipeline);
+                _writer.Write(source.Files.First().MimeType, contents);
+            }
 
-            _writer.Write(source.Files.First().MimeType, contents);
 
             return source.Files;
         }
@@ -53,6 +56,12 @@ namespace FubuMVC.Core.Assets.Http
         private IEnumerable<AssetFile> writeBinary(AssetPath asset)
         {
             var file = _pipeline.Find(asset);
+
+            if (file == null)
+            {
+                return Enumerable.Empty<AssetFile>();
+            }
+
             _writer.WriteFile(file.MimeType, file.FullPath, null);
 
             return new AssetFile[]{file};

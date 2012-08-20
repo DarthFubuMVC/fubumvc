@@ -23,6 +23,12 @@ namespace FubuMVC.Core.Assets.Content
         public ContentPlan BuildPlanFor(string name)
         {
             var files = FindFiles(name);
+
+            if (!files.Any())
+            {
+                return new ContentPlan(name, files);
+            }
+
             var requirements = new TransformerRequirements(_library);
 
             var plan = new ContentPlan(name, files);
@@ -125,7 +131,7 @@ namespace FubuMVC.Core.Assets.Content
 
             if (assetFile == null)
             {
-                throw new ArgumentOutOfRangeException("No combination or asset file exists with the name " + name);
+                return Enumerable.Empty<AssetFile>();
             }
 
 

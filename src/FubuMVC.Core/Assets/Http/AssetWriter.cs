@@ -5,6 +5,7 @@ using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Resources.Etags;
 using FubuMVC.Core.Runtime;
+using System.Linq;
 
 namespace FubuMVC.Core.Assets.Http
 {
@@ -29,6 +30,21 @@ namespace FubuMVC.Core.Assets.Http
         public void Write(AssetPath path)
         {
             var files = _writer.Write(path);
+            if (files.Any())
+            {
+                processAssetFiles(path, files);
+            }
+            else
+            {
+                _output.WriteResponseCode(HttpStatusCode.NotFound);
+                _output.Write("Cannot find asset " + path.ToFullName());
+            }
+
+            
+        }
+
+        private void processAssetFiles(AssetPath path, IEnumerable<AssetFile> files)
+        {
             var etag = _eTagGenerator.Create(files);
 
             _cache.LinkFilesToResource(path.ResourceHash, files);

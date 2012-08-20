@@ -18,13 +18,18 @@ namespace FubuMVC.Core.Assets.Content
             _name = name;
             _sources.AddRange(files.Select(InitialSourceForAssetFile));
 
-            var mimeTypes = files.Select(x => x.MimeType).Distinct();
-            if (mimeTypes.Count() > 1)
+            if (files.Any())
             {
-                throw new ArgumentOutOfRangeException("The list of files is a mix of MimeTypes");
+                var mimeTypes = files.Select(x => x.MimeType).Distinct();
+                if (mimeTypes.Count() > 1)
+                {
+                    throw new ArgumentOutOfRangeException("The list of files is a mix of MimeTypes");
+                }
+
+                _mimeType = mimeTypes.Single();
             }
 
-            _mimeType = mimeTypes.Single();
+
         }
 
         public MimeType MimeType
@@ -125,7 +130,12 @@ namespace FubuMVC.Core.Assets.Content
 
         IEnumerable<AssetFile> IContentSource.Files
         {
-            get { return Top().Files; }
+            get
+            {
+                if (!_sources.Any()) return Enumerable.Empty<AssetFile>();
+
+                return Top().Files;
+            }
         }
 
         IEnumerable<IContentSource> IContentSource.InnerSources
