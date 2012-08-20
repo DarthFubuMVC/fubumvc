@@ -110,5 +110,25 @@ namespace FubuMVC.Core.Registration.Routes
             var raw = _accessor.GetValue(input);
             return raw != null;
         }
+
+        public bool Equals(RouteParameter other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Equals(other._accessor, _accessor);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof (RouteParameter)) return false;
+            return Equals((RouteParameter) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return (_accessor != null ? _accessor.GetHashCode() : 0);
+        }
     }
 }

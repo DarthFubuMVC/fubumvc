@@ -91,6 +91,7 @@
     <Compile Include="Conneg\Output_from_Actions_that_return_HtmlTags.cs" />
     <Compile Include="debugger.cs" />
     <Compile Include="Assets\reading_images.cs" />
+    <Compile Include="Issues\Issue313.cs" />
     <Compile Include="Packaging\assembly_marked_as_FubuModule_is_added_as_a_package.cs" />
     <Compile Include="Packaging\invoking_endpoints_from_a_package.cs" />
     <Compile Include="Packaging\linking_and_unlinking_packages.cs" />

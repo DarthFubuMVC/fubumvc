@@ -81,6 +81,9 @@ namespace FubuMVC.Core.Registration.Nodes
             {
                 Type defType = typeof (RouteInput<>).MakeGenericType(InputType());
                 var input = (IRouteInput)Activator.CreateInstance(defType, string.Empty);
+
+                RouteBuilder.PopulateQuerystringParameters(InputType(), input);
+
                 return input.Parent;
             }
             catch (Exception e)

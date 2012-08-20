@@ -176,7 +176,7 @@ namespace FubuMVC.Core.Registration.Routes
             Accessor accessor = new SingleProperty(property);
             var input = new RouteParameter(accessor);
 
-            _queryParameters.Add(input);
+            _queryParameters.Fill(input);
         }
 
         public void AddRouteInput(RouteParameter parameter, bool appendToUrl)
