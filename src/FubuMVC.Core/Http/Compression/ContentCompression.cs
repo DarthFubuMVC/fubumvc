@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Util;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Http.Compression
@@ -34,16 +35,37 @@ namespace FubuMVC.Core.Http.Compression
         {
             registry.Services(services =>
             {
-                var encodings = new[] { new GZipHttpContentEncoding() };
+                // This isn't something that changes very often at all
+                var encodings = new IHttpContentEncoding[] { new GZipHttpContentEncoding(), new DeflateHttpContentEncoding() };
                 var encoders = new HttpContentEncoders(encodings);
                 services.SetServiceIfNone<IHttpContentEncoders>(encoders);
             });
 
-            registry.Configure(graph => graph.Behaviors.Where(_filters.Matches).Each(x =>
+            registry.ApplyConvention(new ContentCompressionConvention(_filters.Matches));
+        }
+
+        // Instrumentation lets us go after the asset stuff
+        [ConfigurationType(ConfigurationType.Instrumentation)]
+        public class ContentCompressionConvention : IConfigurationAction
+        {
+            private readonly Func<BehaviorChain, bool> _predicate;
+
+            public ContentCompressionConvention(Func<BehaviorChain, bool> predicate)
             {
-                var encoders = graph.Services.DefaultServiceFor<IHttpContentEncoders>().Value.As<IHttpContentEncoders>();
-                x.Filters.Add(new HttpContentEncodingFilter(encoders));
-            }));
+                _predicate = predicate;
+            }
+
+            public void Configure(BehaviorGraph graph)
+            {
+                graph
+                    .Behaviors
+                    .Where(_predicate)
+                    .Each(chain =>
+                    {
+                        var encoders = graph.Services.DefaultServiceFor<IHttpContentEncoders>().Value.As<IHttpContentEncoders>();
+                        chain.Filters.Add(new HttpContentEncodingFilter(encoders));
+                    });
+            }
         }
     }
 }

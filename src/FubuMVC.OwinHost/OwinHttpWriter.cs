@@ -66,7 +66,7 @@ namespace FubuMVC.OwinHost
 
         public void UseEncoding(IHttpContentEncoding encoding)
         {
-            // TODO -- Come back to this one
+            // TODO -- Come back to this one. The integration tests can't be done until we do
         }
 
         public void Write(Action<Stream> output)

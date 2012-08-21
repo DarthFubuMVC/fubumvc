@@ -1,6 +1,4 @@
-﻿using System.IO.Compression;
-using System.Net;
-using FubuCore;
+﻿using System.Net;
 using FubuMVC.Core;
 using FubuMVC.Core.Http.Compression;
 using FubuMVC.TestingHarness;
@@ -10,7 +8,7 @@ using NUnit.Framework;
 namespace FubuMVC.IntegrationTesting.Http
 {
     [TestFixture]
-    public class GZipCompressionTester : FubuRegistryHarness
+    public class compression_testing : FubuRegistryHarness
     {
         protected override void configure(FubuRegistry registry)
         {
@@ -19,7 +17,7 @@ namespace FubuMVC.IntegrationTesting.Http
         }
 
         [Test]
-        public void retrieves_the_compressed_content()
+        public void retrieves_the_gzip_compressed_content()
         {
             var response = endpoints.GetByInput(new CompressedInput(), configure: request =>
             {
@@ -27,13 +25,17 @@ namespace FubuMVC.IntegrationTesting.Http
             });
 
             response.ResponseHeaderFor(HttpResponseHeader.ContentEncoding).ShouldEqual("gzip");
+        }
 
-            var output = response.Output();
-            using(var stream = new GZipStream(output, CompressionMode.Decompress))
+        [Test]
+        public void retrieves_the_deflate_compressed_content()
+        {
+            var response = endpoints.GetByInput(new CompressedInput(), configure: request =>
             {
-                var text = stream.ReadAllText();
-                text.ShouldNotBeEmpty();
-            }
+                request.Headers.Add(HttpRequestHeader.AcceptEncoding, "deflate");
+            });
+
+            response.ResponseHeaderFor(HttpResponseHeader.ContentEncoding).ShouldEqual("deflate");
         }
     }
 
