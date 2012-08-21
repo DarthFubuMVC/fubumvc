@@ -6,6 +6,7 @@ using System.Web;
 using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Compression;
 
 namespace FubuMVC.OwinHost
 {

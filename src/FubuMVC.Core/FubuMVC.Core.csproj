@@ -121,10 +121,12 @@
     <Compile Include="Registration\Conventions\ActionlessViewConvention.cs" />
     <Compile Include="Registration\Conventions\CacheAttributePolicy.cs" />
     <Compile Include="Registration\Conventions\CachedPartialConvention.cs" />
-    <Compile Include="Http\ContentEncoding.cs" />
-    <Compile Include="Http\HttpContentEncodingFilter.cs" />
-    <Compile Include="Http\IHttpContentEncoding.cs" />
-    <Compile Include="Http\IHttpContentEncoders.cs" />
+    <Compile Include="Http\Compression\ContentCompression.cs" />
+    <Compile Include="Http\Compression\ContentEncoding.cs" />
+    <Compile Include="Http\Compression\GZipHttpContentEncoding.cs" />
+    <Compile Include="Http\Compression\HttpContentEncodingFilter.cs" />
+    <Compile Include="Http\Compression\IHttpContentEncoders.cs" />
+    <Compile Include="Http\Compression\IHttpContentEncoding.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteConventionBasedUrlPolicy.cs" />
     <Compile Include="Registration\Conventions\NavigationRootPolicy.cs" />
     <Compile Include="Registration\Conventions\OutputBeforeAjaxContinuationPolicy.cs" />

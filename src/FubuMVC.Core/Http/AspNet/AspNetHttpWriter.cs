@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Web;
 using FubuCore;
+using FubuMVC.Core.Http.Compression;
 
 namespace FubuMVC.Core.Http.AspNet
 {

@@ -168,10 +168,10 @@ namespace FubuMVC.Core.Endpoints
             return Get(url, acceptType);
         }
 
-        public HttpResponse GetByInput<T>(T model, string categoryOrHttpMethod = "GET", string acceptType = "*/*")
+        public HttpResponse GetByInput<T>(T model, string categoryOrHttpMethod = "GET", string acceptType = "*/*", Action<HttpWebRequest> configure = null)
         {
             var url = _urls.UrlFor(model, categoryOrHttpMethod);
-            return Get(url, acceptType);
+            return Get(url, acceptType, configure:configure);
         }
 
         /// <summary>
@@ -179,8 +179,9 @@ namespace FubuMVC.Core.Endpoints
         /// </summary>
         /// <param name="url"></param>
         /// <param name="etag"></param>
+        /// <param name="configure"> </param>
         /// <returns></returns>
-        public HttpResponse Get(string url, string acceptType = "*/*", string etag = null)
+        public HttpResponse Get(string url, string acceptType = "*/*", string etag = null, Action<HttpWebRequest> configure = null)
         {
             Debug.WriteLine("EndpointDriver getting url {0}".ToFormat(url));
 
@@ -189,6 +190,11 @@ namespace FubuMVC.Core.Endpoints
             request.ContentType = MimeType.HttpFormMimetype;
             request.UserAgent = "EndpointDriver User Agent 1.0";
             request.As<HttpWebRequest>().Accept = acceptType;
+
+            if(configure != null)
+            {
+                configure(request);
+            }
 
             if (etag.IsNotEmpty())
             {

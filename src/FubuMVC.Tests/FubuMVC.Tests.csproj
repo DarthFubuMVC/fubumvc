@@ -172,11 +172,10 @@
     <Compile Include="ConfigurationGraph_DetermineConfigurationType_Tester.cs" />
     <Compile Include="Default_ViewAttachment_Filters_Convention_Tester.cs" />
     <Compile Include="Http\HttpStandInServiceRegistry_specification.cs" />
-    <Compile Include="Http\ContentEncodingTester.cs" />
-    <Compile Include="Http\HttpContentEncodersTester.cs" />
-    <Compile Include="Http\GZipHttpContentEncoding.cs" />
-    <Compile Include="Http\GZipEncodingTester.cs" />
-    <Compile Include="Http\HttpContentEncodingFilterTester.cs" />
+    <Compile Include="Http\Compression\ContentEncodingTester.cs" />
+    <Compile Include="Http\Compression\GZipEncodingTester.cs" />
+    <Compile Include="Http\Compression\HttpContentEncodersTester.cs" />
+    <Compile Include="Http\Compression\HttpContentEncodingFilterTester.cs" />
     <Compile Include="Http\StreamExtensions.cs" />
     <Compile Include="InteractionContextExtensions.cs" />
     <Compile Include="Registration\Conventions\CacheAttributePolicyTester.cs" />
@@ -584,7 +583,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Commands\Packages\" />
-    <Folder Include="DSL\" />
     <Folder Include="Results\" />
     <Folder Include="View\FakeViews\Folder1\Folder2\Folder3\" />
   </ItemGroup>

@@ -1,6 +1,6 @@
 using System;
 
-namespace FubuMVC.Core.Http
+namespace FubuMVC.Core.Http.Compression
 {
     public class ContentEncoding
     {

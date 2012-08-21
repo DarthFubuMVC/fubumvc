@@ -1,9 +1,9 @@
-﻿using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Compression;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Tests.Http
+namespace FubuMVC.Tests.Http.Compression
 {
     [TestFixture]
     public class HttpContentEncodersTester

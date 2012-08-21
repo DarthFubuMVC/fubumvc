@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Web;
+using FubuMVC.Core.Http.Compression;
 
 namespace FubuMVC.Core.Http
 {

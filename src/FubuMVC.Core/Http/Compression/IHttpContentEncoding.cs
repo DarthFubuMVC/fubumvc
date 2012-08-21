@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace FubuMVC.Core.Http
+namespace FubuMVC.Core.Http.Compression
 {
     public interface IHttpContentEncoding
     {
