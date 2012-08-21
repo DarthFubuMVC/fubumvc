@@ -1,6 +1,7 @@
 using System.Reflection;
 using FubuCore;
 using FubuCore.Binding;
+using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
 
 namespace FubuMVC.Core.Resources.Etags
@@ -9,7 +10,9 @@ namespace FubuMVC.Core.Resources.Etags
     {
         public override void Bind(PropertyInfo property, IBindingContext context)
         {
-            var resource = context.Service<ICurrentChain>().ResourceHash();
+            var chain = context.Service<ICurrentChain>();
+            var resource = ResourceHash.For(new VaryByResource(chain));
+            
             property.SetValue(context.Object, resource, null);
         }
     }

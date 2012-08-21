@@ -27,7 +27,7 @@ namespace FubuMVC.Core.Assets
             chain.Filters.Add(new EtagInvocationFilter(headerCache, args =>
             {
                 var currentChain = args.Get<ICurrentChain>();
-                return ResourceHash.For(new VaryByResource(currentChain));
+                return ResourceHash.For(currentChain);
             }));
 
 

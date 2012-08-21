@@ -12,5 +12,7 @@ namespace FubuMVC.Core.Caching
         string GetText();
 
         IEnumerable<Header> Headers();
+
+        bool IsEmpty();
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using FubuCore.Logging;
 using FubuCore.Util;
 using FubuCore;
 
@@ -34,6 +35,7 @@ namespace FubuMVC.Core.Caching
         {
             return _lock.Read(() => _outputs.GetAllKeys());
         }
-
     }
+
+
 }

@@ -86,6 +86,11 @@ namespace FubuMVC.Core.Caching
             return _outputs.OfType<Header>();
         }
 
+        public bool IsEmpty()
+        {
+            return !_outputs.Any();
+        }
+
         public void AddOutput(IRecordedHttpOutput output)
         {
             _outputs.Add(output);

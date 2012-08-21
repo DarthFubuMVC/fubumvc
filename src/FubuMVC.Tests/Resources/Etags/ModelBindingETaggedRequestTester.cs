@@ -1,8 +1,11 @@
+using System.Collections.Generic;
 using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Binding.InMemory;
 using FubuMVC.Core;
+using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Etags;
 using FubuMVC.StructureMap;
 using NUnit.Framework;
@@ -16,12 +19,13 @@ namespace FubuMVC.Tests.Resources.Etags
     public class ModelBindingETaggedRequestTester
     {
         private ETaggedRequest theEtagRequest;
+        private string theExpectedHash;
 
         [SetUp]
         public void SetUp()
         {
-            var theHttpRequest = MockRepository.GenerateMock<ICurrentChain>();
-            theHttpRequest.Stub(x => x.ResourceHash()).Return("something/else");
+            var theHttpRequest = new CurrentChain(new BehaviorChain(), new Dictionary<string, object>());
+            theExpectedHash = ResourceHash.For(theHttpRequest);
 
             FubuApplication.SetupNamingStrategyForHttpHeaders();
 
@@ -36,7 +40,7 @@ namespace FubuMVC.Tests.Resources.Etags
         [Test]
         public void bind_the_resource_path()
         {
-            theEtagRequest.ResourceHash.ShouldEqual("something/else");
+            theEtagRequest.ResourceHash.ShouldEqual(theExpectedHash);
         }
 
         [Test]

@@ -37,6 +37,8 @@ namespace FubuMVC.TestingHarness
         [TestFixtureSetUp]
         public void SetUp()
         {
+            beforeRunning();
+
             runBottles("alias harness " + Harness.GetApplicationDirectory().FileEscape());
 
             runBottles("link harness --clean-all");
@@ -46,10 +48,20 @@ namespace FubuMVC.TestingHarness
             theHarness = Harness.Run(configure);
         }
 
+        protected virtual void beforeRunning()
+        {
+            
+        }
+
         [TestFixtureTearDown]
         public void TearDown()
         {
+            afterRunning();
             theHarness.Dispose();
+        }
+
+        protected virtual void afterRunning()
+        {
         }
 
         protected void restart()

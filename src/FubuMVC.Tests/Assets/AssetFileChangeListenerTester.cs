@@ -95,7 +95,7 @@ namespace FubuMVC.Tests.Assets
 
         public void DebugMessage<T>(Func<T> message) where T : class, LogTopic
         {
-            throw new NotImplementedException();
+            _inner.DebugMessage(message());
         }
 
         public void InfoMessage<T>(Func<T> message) where T : class, LogTopic

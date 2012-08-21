@@ -1,5 +1,6 @@
 using System;
 using FubuCore;
+using FubuCore.Logging;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
@@ -7,6 +8,7 @@ using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Resources.Etags;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Logging;
+using FubuMVC.Tests.Assets;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -60,6 +62,8 @@ namespace FubuMVC.Tests.Caching
     {
         private StubOutputCache theCache;
         private readonly string theResource = Guid.NewGuid().ToString();
+        private ILogger theLogger;
+        private string theDescription;
 
         protected override void beforeEach()
         {
@@ -71,8 +75,22 @@ namespace FubuMVC.Tests.Caching
             MockFor<IResourceHash>().Stub(x => x.CreateHash())
                 .Return(theResource);
 
+            theDescription = Guid.NewGuid().ToString();
+            MockFor<IResourceHash>().Stub(x => x.Describe()).Return(theDescription);
+
+
+            theLogger = MockFor<ILogger>();
+            Services.Inject<ILogger>(new InteractionContextLogger(theLogger));
+
             ClassUnderTest.Inner = MockFor<IActionBehavior>();
+
             ClassUnderTest.Invoke();
+        }
+
+        [Test]
+        public void should_debug_log_the_cache_hit()
+        {
+            theLogger.AssertWasCalled(x => x.DebugMessage(new CacheHit()), x => x.Constraints(Is.Matching<CacheHit>(h => h.Description == theDescription)));
         }
 
         [Test]
@@ -88,6 +106,8 @@ namespace FubuMVC.Tests.Caching
         private StubOutputCache theCache;
         private readonly string theResource = Guid.NewGuid().ToString();
         private IRecordedOutput theGeneratedOutput;
+        private ILogger theLogger;
+        private string theDescription;
 
         protected override void beforeEach()
         {
@@ -97,15 +117,25 @@ namespace FubuMVC.Tests.Caching
             };
             Services.Inject<IOutputCache>(theCache);
 
+
+            theDescription = Guid.NewGuid().ToString();
+            MockFor<IResourceHash>().Stub(x => x.Describe()).Return(theDescription);
             MockFor<IResourceHash>().Stub(x => x.CreateHash())
                 .Return(theResource);
+
+
+            theLogger = MockFor<ILogger>();
+            Services.Inject<ILogger>(new InteractionContextLogger(theLogger));
 
             Services.PartialMockTheClassUnderTest();
             theGeneratedOutput = new RecordedOutput(null);
 
 
+
             ClassUnderTest.Expect(x => x.CreateOutput(theResource, null)).Constraints(Is.Same(theResource), Is.Anything())
                 .Return(theGeneratedOutput);
+
+
 
             ClassUnderTest.Inner = MockFor<IActionBehavior>();
             ClassUnderTest.Invoke();
@@ -115,6 +145,13 @@ namespace FubuMVC.Tests.Caching
         public void should_have_written_out_the_recorded_output_generated_from_the_inner_behavior()
         {
             MockFor<IOutputWriter>().AssertWasCalled(x => x.Replay(theGeneratedOutput));
+        }
+
+
+        [Test]
+        public void should_debug_log_the_cache_miss()
+        {
+            theLogger.AssertWasCalled(x => x.DebugMessage(new CacheMiss()), x => x.Constraints(Is.Matching<CacheMiss>(h => h.Description == theDescription)));
         }
     }
 
