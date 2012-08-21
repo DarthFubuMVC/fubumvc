@@ -1,8 +1,7 @@
 using System.IO;
 using System.IO.Compression;
-using FubuMVC.Core.Http;
 
-namespace FubuMVC.Tests.Http
+namespace FubuMVC.Core.Http.Compression
 {
     public class GZipHttpContentEncoding : IHttpContentEncoding
     {

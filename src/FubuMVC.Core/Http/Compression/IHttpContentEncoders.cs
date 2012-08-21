@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace FubuMVC.Core.Http
+namespace FubuMVC.Core.Http.Compression
 {
     public interface IHttpContentEncoders
     {

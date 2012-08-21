@@ -1,11 +1,11 @@
 using System.IO;
 using System.IO.Compression;
 using FubuCore;
-using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Compression;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests.Http
+namespace FubuMVC.Tests.Http.Compression
 {
     [TestFixture]
     public class GZipEncodingTester
