@@ -1,4 +1,5 @@
 using FubuMVC.Core;
+using FubuMVC.Core.Http.Compression;
 
 namespace AspNetApplication
 {
@@ -9,6 +10,8 @@ namespace AspNetApplication
             Actions.IncludeClassesSuffixedWithController();
 
             Views.TryToAttachWithDefaultConventions();
+
+            Import<ContentCompression>(x => x.Exclude(chain => chain.FirstCall().HandlerType != typeof(CompressedContentController)));
         }
     }
 }

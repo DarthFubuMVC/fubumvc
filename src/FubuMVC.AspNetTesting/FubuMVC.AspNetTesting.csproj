@@ -70,6 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="can_get_gzip_compressed_content.cs" />
     <Compile Include="can_upload_a_file.cs" />
     <Compile Include="TestApplication.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
