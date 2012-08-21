@@ -17,6 +17,7 @@ namespace FubuMVC.Core.Http.Compression
         {
             _filters = new CompositeFilter<BehaviorChain>();
             Include(x => true);
+            Exclude(x => x.FirstCall() != null && x.FirstCall().HasAttribute<DoNotCompressAttribute>());
         }
  
         public ContentCompression Include(Expression<Func<BehaviorChain, bool>> predicate)
