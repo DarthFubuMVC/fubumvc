@@ -23,7 +23,7 @@ namespace FubuMVC.Core.Registration.Conventions
                 .Each(chain => _modifications.Each(x => x.Modify(chain)));
         }
 
-        public void Describe(Description description)
+        void DescribesItself.Describe(Description description)
         {
             if (Title != null) description.Title = Title;
             if (Description != null) description.ShortDescription = Description;
@@ -159,7 +159,7 @@ namespace FubuMVC.Core.Registration.Conventions
         public string Description { get; set; }
         public string Title { get; set;}
 
-        public void Describe(Description description)
+        void DescribesItself.Describe(Description description)
         {
             if (Title != null) description.Title = Title;
             if (Description != null) description.ShortDescription = Description;
@@ -209,7 +209,7 @@ namespace FubuMVC.Core.Registration.Conventions
         public string Description { get; set; }
         public string Title { get; set; }
 
-        public void Describe(Description description)
+        void DescribesItself.Describe(Description description)
         {
             if (Title != null) description.Title = Title;
             if (Description != null) description.ShortDescription = Description;

@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
+    [Description("Writes out a string value to the Http response as text/plain")]
     public class WriteString : WriterNode
     {
         public override Type ResourceType

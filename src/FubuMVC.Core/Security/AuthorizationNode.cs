@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
@@ -14,6 +15,7 @@ namespace FubuMVC.Core.Security
     }
 
     // TODO -- add ability to specify the authorization failure handling
+    [Description("Authorization checks for this endpoint")]
     public class AuthorizationNode : BehaviorNode, IAuthorizationRegistration
     {
         private readonly IList<ObjectDef> _policies = new List<ObjectDef>();

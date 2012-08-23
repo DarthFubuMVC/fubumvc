@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
@@ -7,6 +8,7 @@ using System.Linq;
 
 namespace FubuMVC.Core.Caching
 {
+    [Description("Caches the output of the following nodes in the chain")]
     public class OutputCachingNode : BehaviorNode
     {
         public OutputCachingNode()

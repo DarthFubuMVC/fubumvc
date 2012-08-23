@@ -346,7 +346,7 @@
     <Compile Include="Runtime\FubuSmartRequestTester.cs" />
     <Compile Include="Runtime\FubuTupleBindingIntegrationTester.cs" />
     <Compile Include="Runtime\HeaderValueAttributeTester.cs" />
-    <Compile Include="Runtime\must_be_descriptions_on_all_model_binding_extensions.cs" />
+    <Compile Include="Runtime\must_be_descriptions_on_important_things.cs" />
     <Compile Include="Runtime\OutputWriterTester.cs" />
     <Compile Include="Runtime\MimeTypeTester.cs" />
     <Compile Include="Caching\RecordedOutputTester.cs" />

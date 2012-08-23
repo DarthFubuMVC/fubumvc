@@ -3,6 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Routes;
 
@@ -14,7 +15,7 @@ namespace FubuMVC.Core.Registration.Nodes
     /// If you are unsure whether you method is eligible, you can instantiate an ActionCall and
     /// call <see cref="ActionCallBase.Validate"/>
     /// </summary>
-    public class ActionCall : ActionCallBase, IMayHaveInputType, IMayHaveResourceType
+    public class ActionCall : ActionCallBase, IMayHaveInputType, IMayHaveResourceType, DescribesItself
     {
         
         public ActionCall(Type handlerType, MethodInfo method) : base(handlerType, method)
@@ -138,6 +139,14 @@ namespace FubuMVC.Core.Registration.Nodes
                 return ((HandlerType != null ? HandlerType.GetHashCode() : 0)*397) ^
                        (Method != null ? Method.GetHashCode() : 0);
             }
+        }
+
+        void DescribesItself.Describe(Description description)
+        {
+            var shortTitle = "{0}.{1}()".ToFormat(HandlerType.Name, Method.Name);
+
+            description.Title = shortTitle;
+            description.ShortDescription = Description;
         }
 
         public Type ResourceType()

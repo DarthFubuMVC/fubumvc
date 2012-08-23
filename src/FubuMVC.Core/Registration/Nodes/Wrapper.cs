@@ -1,11 +1,12 @@
 using System;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuCore;
 
 namespace FubuMVC.Core.Registration.Nodes
 {
-    public class Wrapper : BehaviorNode
+    public class Wrapper : BehaviorNode, DescribesItself
     {
         private readonly ObjectDef _objectDef;
 
@@ -39,6 +40,12 @@ namespace FubuMVC.Core.Registration.Nodes
         public override string ToString()
         {
             return "Wrapped by " + _objectDef.Type.FullName;
+        }
+
+        void DescribesItself.Describe(Description description)
+        {
+            description.Title = BehaviorType.Name;
+            description.ShortDescription = BehaviorType.FullName;
         }
     }
 }

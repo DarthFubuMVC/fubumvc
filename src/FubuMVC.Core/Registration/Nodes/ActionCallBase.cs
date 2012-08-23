@@ -51,7 +51,13 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public bool IsAsync { get { return Method.ReturnType.CanBeCastTo<Task>(); } }
 
-        public override string Description { get { return "{0}.{1}({2}) : {3}".ToFormat(HandlerType.Name, Method.Name, getInputParameters(), HasOutput ? Method.ReturnType.Name : "void"); } }
+        public override string Description
+        {
+            get
+            {
+                return "{0}.{1}({2}) : {3}".ToFormat(HandlerType.Name, Method.Name, getInputParameters(), HasOutput ? Method.ReturnType.Name : "void");
+            }
+        }
 
         private string getInputParameters()
         {

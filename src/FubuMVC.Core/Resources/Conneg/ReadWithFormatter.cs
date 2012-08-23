@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime.Formatters;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
-    public class ReadWithFormatter : ReaderNode
+    public class ReadWithFormatter : ReaderNode, DescribesItself
     {
         private readonly Type _formatterType;
         private readonly Type _inputType;
@@ -69,6 +70,13 @@ namespace FubuMVC.Core.Resources.Conneg
                 return ((_inputType != null ? _inputType.GetHashCode() : 0)*397) ^
                        (_formatterType != null ? _formatterType.GetHashCode() : 0);
             }
+        }
+
+        void DescribesItself.Describe(Description description)
+        {
+            description.Title = _formatterType.Name;
+            description.ShortDescription = "Read the input by deserializing the request body with " +
+                                           _formatterType.Name;
         }
     }
 }

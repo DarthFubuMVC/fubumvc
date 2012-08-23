@@ -1,10 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
+    [Title("Model Binding")]
+    [Description("Reads the input model by applying model binding against the request data")]
     public class ModelBind : ReaderNode
     {
         private readonly Type _inputType;

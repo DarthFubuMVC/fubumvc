@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime.Conditionals;
@@ -10,7 +12,7 @@ using FubuMVC.Core.View;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
-    public class OutputNode : BehaviorNode, IMayHaveResourceType
+    public class OutputNode : BehaviorNode, IMayHaveResourceType, DescribesItself
     {
         private readonly WriterChain _chain = new WriterChain();
         private readonly Type _resourceType;
@@ -147,6 +149,12 @@ namespace FubuMVC.Core.Resources.Conneg
         public override string ToString()
         {
             return Writers.Select(x => x.ToString()).Join(", ");
+        }
+
+        void DescribesItself.Describe(Description description)
+        {
+            description.Title = "OutputNode";
+            description.ShortDescription = "Render the output for resource " + ResourceType.Name;
         }
 
         public override string Description

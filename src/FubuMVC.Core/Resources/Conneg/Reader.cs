@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Registration.ObjectGraph;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
-    public class Reader : ReaderNode
+    public class Reader : ReaderNode, DescribesItself
     {
         private readonly Type _inputType;
         private readonly Type _readerType;
@@ -61,6 +62,13 @@ namespace FubuMVC.Core.Resources.Conneg
         public override IEnumerable<string> Mimetypes
         {
             get { return MimeTypeAttribute.ReadFrom(ReaderType); }
+        }
+
+        void DescribesItself.Describe(Description description)
+        {
+            description.Title = _readerType.Name;
+            description.ShortDescription = "Resolves the input model {0} with {1}".ToFormat(_inputType.FullName,
+                                                                                            _readerType.FullName);
         }
     }
 }

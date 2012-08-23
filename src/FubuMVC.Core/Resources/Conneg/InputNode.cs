@@ -1,14 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime.Formatters;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
-    public class InputNode : BehaviorNode, IMayHaveInputType
+    public class InputNode : BehaviorNode, IMayHaveInputType, DescribesItself
     {
         private readonly Type _inputType;
         private readonly ReaderChain _readers = new ReaderChain();
@@ -111,6 +113,12 @@ namespace FubuMVC.Core.Resources.Conneg
         public Type InputType()
         {
             return _inputType;
+        }
+
+        void DescribesItself.Describe(Description description)
+        {
+            description.ShortDescription =
+                "Performs content negotiation and model resolution from the request for the type " + InputType().Name;
         }
     }
 }

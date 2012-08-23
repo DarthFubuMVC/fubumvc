@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Registration.ObjectGraph;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
-    public class Writer : WriterNode
+    public class Writer : WriterNode, DescribesItself
     {
         private readonly Type _resourceType;
         private readonly Type _writerType;
@@ -61,6 +62,13 @@ namespace FubuMVC.Core.Resources.Conneg
         public override IEnumerable<string> Mimetypes
         {
             get { return MimeTypeAttribute.ReadFrom(WriterType); }
+        }
+
+        void DescribesItself.Describe(Description description)
+        {
+            description.Title = _writerType.Name;
+            description.ShortDescription = "Writes the resource model {0} with {1}".ToFormat(_resourceType.FullName,
+                                                                                            _writerType.FullName);
         }
     }
 }

@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime.Formatters;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
-    public class WriteWithFormatter : WriterNode
+    public class WriteWithFormatter : WriterNode, DescribesItself
     {
         private readonly Type _resourceType;
         private readonly Type _formatterType;
@@ -68,6 +69,13 @@ namespace FubuMVC.Core.Resources.Conneg
             {
                 return ((_resourceType != null ? _resourceType.GetHashCode() : 0)*397) ^ (_formatterType != null ? _formatterType.GetHashCode() : 0);
             }
+        }
+
+        void DescribesItself.Describe(Description description)
+        {
+            description.Title = _formatterType.Name;
+            description.ShortDescription = "Writes to the output stream by serializing the request body with " +
+                                           _formatterType.Name;
         }
 
         public override string ToString()
