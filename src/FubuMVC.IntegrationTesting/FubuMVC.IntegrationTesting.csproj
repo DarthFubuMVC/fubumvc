@@ -94,6 +94,7 @@
     <Compile Include="Conneg\Output_from_Actions_that_return_HtmlTags.cs" />
     <Compile Include="debugger.cs" />
     <Compile Include="Assets\reading_images.cs" />
+    <Compile Include="Http\reading_and_writing_http_headers_and_responses_with_OWIN.cs" />
     <Compile Include="Issues\Issue313.cs" />
     <Compile Include="Http\compression_testing.cs" />
     <Compile Include="Packaging\assembly_marked_as_FubuModule_is_added_as_a_package.cs" />

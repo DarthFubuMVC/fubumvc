@@ -33,5 +33,11 @@ namespace FubuMVC.Tests.Http
             registeredTypeIs<ICurrentHttpRequest, StandInCurrentHttpRequest>();
         }
 
+        [Test]
+        public void IResponse_is_nullo()
+        {
+            registeredTypeIs<IResponse, HttpStandInServiceRegistry.NulloResponse>();
+        }
+
     }
 }

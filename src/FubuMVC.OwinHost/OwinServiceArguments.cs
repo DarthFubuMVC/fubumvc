@@ -13,6 +13,8 @@ namespace FubuMVC.OwinHost
             With<ICurrentHttpRequest>(new OwinCurrentHttpRequest(body));
             With<IStreamingData>(new OwinStreamingData(body));
             With<IHttpWriter>(new OwinHttpWriter(response));
+
+            With<IResponse>(new OwinResponse(response));
         }
     }
 }
