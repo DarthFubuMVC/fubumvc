@@ -3,6 +3,7 @@ using FubuMVC.Core.Behaviors.Chrome;
 using FubuMVC.Core.Registration;
 using FubuTestingSupport;
 using NUnit.Framework;
+using System.Linq;
 
 namespace FubuMVC.Tests.Behaviors.Chrome
 {
@@ -28,13 +29,26 @@ namespace FubuMVC.Tests.Behaviors.Chrome
 
             var chain = graph.BehaviorFor<ChromedEnpoint>(x => x.get_stuff());
         
-            chain.IsWrappedBy(typeof(ChromeBehavior<DifferentChrome>)).ShouldBeTrue();
+            chain.OfType<ChromeNode>().Any().ShouldBeTrue();
+        }
+
+        [Test]
+        public void applies_the_Title_to_the_chrome_node()
+        {
+            var graph = BehaviorGraph.BuildFrom(x =>
+            {
+                x.Actions.IncludeType<ChromedEnpoint>();
+            });
+
+            var chain = graph.BehaviorFor<ChromedEnpoint>(x => x.get_stuff());
+
+            chain.OfType<ChromeNode>().Single().Title().ShouldEqual("Some Title");
         }
     }
 
     public class ChromedEnpoint
     {
-        [Chrome(typeof(DifferentChrome))]
+        [Chrome(typeof(DifferentChrome), Title = "Some Title")]
         public string get_stuff()
         {
             return "";

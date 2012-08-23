@@ -20,9 +20,13 @@ namespace FubuMVC.Core.Behaviors.Chrome
             _contentType = contentType;
         }
 
+        public string Title { get; set; }
+
         public override void Alter(ActionCall call)
         {
-            call.AddBefore(new ChromeNode(_contentType));
+            call.AddBefore(new ChromeNode(_contentType){
+                Title = () => Title
+            });
         }
     }
 }

@@ -27,10 +27,10 @@ namespace FubuMVC.Core.Registration.Conventions
 
         public void RequireRole(string role)
         {
-            Alter(chain => chain.Authorization.AddRole(role));
+            Alter(chain => chain.BehaviorChain.Authorization.AddRole(role));
         }
 
-        public void Alter(Action<BehaviorChain> alteration)
+        public void Alter(Action<MenuNode> alteration)
         {
             _modifications.Last().Alter(alteration);
         }
@@ -42,12 +42,15 @@ namespace FubuMVC.Core.Registration.Conventions
 
         public void WrapWithChrome<TChrome>() where TChrome : ChromeContent
         {
-            Alter(chain =>
+            Alter(node =>
             {
-                var outputNode = chain.OfType<OutputNode>().SingleOrDefault();
+                var outputNode = node.BehaviorChain.OfType<OutputNode>().SingleOrDefault();
                 if (outputNode != null)
                 {
-                    outputNode.AddBefore(new ChromeNode(typeof(TChrome)));
+                    var chromeNode = new ChromeNode(typeof(TChrome));
+                    chromeNode.Title = () => node.Key.ToString();
+
+                    outputNode.AddBefore(chromeNode);
                 }
             });
         }
@@ -56,14 +59,14 @@ namespace FubuMVC.Core.Registration.Conventions
     public class NavigationRootModification
     {
         private readonly Func<NavigationGraph, IMenuNode> _finder;
-        private readonly IList<Action<BehaviorChain>> _alterations = new List<Action<BehaviorChain>>();
+        private readonly IList<Action<MenuNode>> _alterations = new List<Action<MenuNode>>();
 
         public NavigationRootModification(Func<NavigationGraph, IMenuNode> finder)
         {
             _finder = finder;
         }
 
-        public void Alter(Action<BehaviorChain> alterations)
+        public void Alter(Action<MenuNode> alterations)
         {
             _alterations.Add(alterations);
         }
@@ -71,7 +74,7 @@ namespace FubuMVC.Core.Registration.Conventions
         public void Apply(NavigationGraph graph)
         {
             var node = _finder(graph);
-            node.AllChains().Each(chain => _alterations.Each(x => x(chain)));
+            node.AllNodes().Each(n => _alterations.Each(x => x(n)));
         }
     }
 }

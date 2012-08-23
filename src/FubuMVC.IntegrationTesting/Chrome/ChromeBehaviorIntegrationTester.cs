@@ -5,6 +5,7 @@ using FubuMVC.IntegrationTesting.Conneg;
 using FubuMVC.TestingHarness;
 using FubuTestingSupport;
 using NUnit.Framework;
+using FubuCore;
 
 namespace FubuMVC.IntegrationTesting.Chrome
 {
@@ -19,11 +20,15 @@ namespace FubuMVC.IntegrationTesting.Chrome
         [Test]
         public void can_fetch_endpoints_that_are_chromed()
         {
-            endpoints.Get<ChromedEndpoints>(x => x.get_text1())
-                .ReadAsText().ShouldEqual("**text1**");
+            //endpoints.Get<ChromedEndpoints>(x => x.get_text1())
+            //    .ReadAsText().ShouldEqual("**text1**");
 
-            endpoints.Get<ChromedEndpoints>(x => x.get_text2())
-                .ReadAsText().ShouldEqual("~~text2~~");
+            var html2 = endpoints.Get<ChromedEndpoints>(x => x.get_text2())
+                .ReadAsText();
+            html2.ShouldContain("~~text2~~");
+
+            // Title
+            html2.ShouldContain("<title>Some Title</title>");
         }
     }
 
@@ -31,12 +36,12 @@ namespace FubuMVC.IntegrationTesting.Chrome
     {
         public string First(FirstChrome content)
         {
-            return "**" + content.InnerContent + "**";
+            return "**" + content.InnerContent + "**" ;
         }
 
         public string Second(SecondChrome content)
         {
-            return "~~" + content.InnerContent + "~~";
+            return "~~" + content.InnerContent + "~~" + "<title>{0}</title>".ToFormat(content.Title);
         }
 
         [Chrome(typeof(FirstChrome))]
@@ -45,7 +50,7 @@ namespace FubuMVC.IntegrationTesting.Chrome
             return "text1";
         }
 
-        [Chrome(typeof(SecondChrome))]
+        [Chrome(typeof(SecondChrome), Title = "Some Title")]
         public string get_text2()
         {
             return "text2";

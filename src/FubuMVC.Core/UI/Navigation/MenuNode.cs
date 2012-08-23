@@ -15,6 +15,7 @@ namespace FubuMVC.Core.UI.Navigation
         void AddChild(MenuNode node);
 
         IEnumerable<BehaviorChain> AllChains();
+        IEnumerable<MenuNode> AllNodes();
     }
 
     public class MenuNode : Node<MenuNode, MenuChain>, IMenuNode
@@ -76,6 +77,16 @@ namespace FubuMVC.Core.UI.Navigation
                 {
                     yield return child.BehaviorChain;
                 }
+            }
+        }
+
+        public IEnumerable<MenuNode> AllNodes()
+        {
+            yield return this;
+
+            foreach (var child in Children)
+            {
+                yield return child;
             }
         }
 
