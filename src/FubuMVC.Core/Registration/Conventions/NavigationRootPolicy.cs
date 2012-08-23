@@ -74,7 +74,7 @@ namespace FubuMVC.Core.Registration.Conventions
         public void Apply(NavigationGraph graph)
         {
             var node = _finder(graph);
-            node.AllNodes().Each(n => _alterations.Each(x => x(n)));
+            node.AllNodes().Where(x => x.BehaviorChain != null).Each(n => _alterations.Each(x => x(n)));
         }
     }
 }
