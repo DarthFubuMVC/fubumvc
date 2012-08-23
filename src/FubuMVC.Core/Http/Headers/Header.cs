@@ -23,6 +23,11 @@ namespace FubuMVC.Core.Http.Headers
             
         }
 
+        // for serialization
+        public Header()
+        {
+        }
+
         public void Write(IOutputWriter writer)
         {
             writer.AppendHeader(Name, Value);
