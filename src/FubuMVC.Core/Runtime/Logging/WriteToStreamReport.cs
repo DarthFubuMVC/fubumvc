@@ -3,7 +3,7 @@ using FubuCore.Logging;
 namespace FubuMVC.Core.Runtime.Logging
 {
     // TODO -- write out the stream contents?
-    public class WriteToStreamReport : LogRecord
+    public class WriteToStreamReport : LogRecord, IHaveContentType
     {
         private readonly string _contentType;
 

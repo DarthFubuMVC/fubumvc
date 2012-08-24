@@ -1,9 +1,10 @@
+using System;
 using FubuCore.Logging;
 using FubuMVC.Core.Caching;
 
 namespace FubuMVC.Core.Runtime.Logging
 {
-    public class ReplayRecordedOutput : LogRecord
+    public class ReplayRecordedOutput : LogRecord, IHaveContentType
     {
         private readonly IRecordedOutput _output;
 
@@ -30,6 +31,11 @@ namespace FubuMVC.Core.Runtime.Logging
         public override int GetHashCode()
         {
             return (_output != null ? _output.GetHashCode() : 0);
+        }
+
+        public string ContentType
+        {
+            get { return _output.ContentType; }
         }
     }
 }

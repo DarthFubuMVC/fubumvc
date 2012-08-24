@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace FubuMVC.Core.Caching
 {
-    public class RecordedOutput : IOutputState, IRecordedOutput
+    public class RecordedOutput : IOutputState, IRecordedOutput, IHaveContentType
     {
         private readonly IFileSystem _fileSystem;
         private readonly IList<IRecordedHttpOutput> _outputs = new List<IRecordedHttpOutput>();
@@ -94,6 +94,16 @@ namespace FubuMVC.Core.Caching
         public void AddOutput(IRecordedHttpOutput output)
         {
             _outputs.Add(output);
+        }
+
+        public string ContentType
+        {
+            get
+            {
+                var o = _outputs.OfType<IHaveContentType>().Where(x => x.ContentType.IsNotEmpty()).LastOrDefault();
+                return o == null ? null : o.ContentType;
+            
+            }
         }
     }
 }

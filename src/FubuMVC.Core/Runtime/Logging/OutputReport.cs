@@ -2,7 +2,7 @@ using FubuCore.Logging;
 
 namespace FubuMVC.Core.Runtime.Logging
 {
-    public class OutputReport : LogRecord
+    public class OutputReport : LogRecord, IHaveContentType
     {
         public string ContentType { get; private set; }
         public string Contents { get; private set; }

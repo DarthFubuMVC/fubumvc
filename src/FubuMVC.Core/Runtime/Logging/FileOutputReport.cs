@@ -2,9 +2,9 @@ using FubuCore.Logging;
 
 namespace FubuMVC.Core.Runtime.Logging
 {
-    public class FileOutputReport : LogRecord
+    public class FileOutputReport : LogRecord, IHaveContentType
     {
-        public string ContentType;
+        public string ContentType { get; set;}
         public string LocalFilePath;
         public string DisplayName;
 

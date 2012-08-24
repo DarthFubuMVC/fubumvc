@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Headers;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Caching
 {
-    public interface IRecordedOutput
+    public interface IRecordedOutput : IHaveContentType
     {
         void Replay(IHttpWriter writer);
 

@@ -11,6 +11,11 @@ using FubuMVC.Core.Runtime.Logging;
 
 namespace FubuMVC.Core.Runtime
 {
+    public interface IHaveContentType
+    {
+        string ContentType { get; }
+    }
+
     public class OutputWriter : IOutputWriter
     {
         private readonly IHttpWriter _writer;
@@ -69,7 +74,7 @@ namespace FubuMVC.Core.Runtime
             {
                 _outputStates.Pop();
             
-                _logger.DebugMessage(() => new FinishedRecordingOutput());
+                _logger.DebugMessage(() => new FinishedRecordingOutput(output));
             }
 
             return output;
