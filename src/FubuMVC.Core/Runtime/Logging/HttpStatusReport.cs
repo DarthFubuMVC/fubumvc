@@ -1,9 +1,12 @@
+using System;
 using System.Net;
+using FubuCore.Descriptions;
 using FubuCore.Logging;
+using FubuCore;
 
 namespace FubuMVC.Core.Runtime.Logging
 {
-    public class HttpStatusReport : LogRecord
+    public class HttpStatusReport : LogRecord, DescribesItself
     {
         public HttpStatusCode Status { get; set; }
         public string Description { get; set; }
@@ -26,6 +29,11 @@ namespace FubuMVC.Core.Runtime.Logging
         public override int GetHashCode()
         {
             return Status.GetHashCode();
+        }
+
+        public void Describe(Description description)
+        {
+            description.Title = "Wrote Http Status Code as {0} {1}".ToFormat(Status.As<int>(), Description);
         }
     }
 }

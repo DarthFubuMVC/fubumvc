@@ -1,8 +1,11 @@
+using System;
+using FubuCore.Descriptions;
 using FubuCore.Logging;
+using FubuCore;
 
 namespace FubuMVC.Core.Runtime.Logging
 {
-    public class SetHeaderValue : LogRecord
+    public class SetHeaderValue : LogRecord, DescribesItself
     {
         public string Key { get; set; }
         public string Value { get; set; }
@@ -34,6 +37,11 @@ namespace FubuMVC.Core.Runtime.Logging
             {
                 return ((Key != null ? Key.GetHashCode() : 0)*397) ^ (Value != null ? Value.GetHashCode() : 0);
             }
+        }
+
+        public void Describe(Description description)
+        {
+            description.Title = "Set header {0} = {1}".ToFormat(Key, Value);
         }
 
         public override string ToString()

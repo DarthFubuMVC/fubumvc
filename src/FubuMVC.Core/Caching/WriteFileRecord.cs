@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Http;
 
 namespace FubuMVC.Core.Caching
 {
-    public class WriteFileRecord : IRecordedHttpOutput
+    public class WriteFileRecord : IRecordedHttpOutput, DescribesItself
     {
         private IList<Action<IHttpWriter>> _writes = new List<Action<IHttpWriter>>();
 
@@ -42,6 +43,11 @@ namespace FubuMVC.Core.Caching
         public void Replay(IHttpWriter writer)
         {
             _writes.Each(x => x(writer));
+        }
+
+        public void Describe(Description description)
+        {
+            description.Title = "Write file";
         }
     }
 }

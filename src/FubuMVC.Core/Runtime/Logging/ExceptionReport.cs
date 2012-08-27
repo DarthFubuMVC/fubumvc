@@ -1,9 +1,10 @@
 using System;
+using FubuCore.Descriptions;
 using FubuCore.Logging;
 
 namespace FubuMVC.Core.Runtime.Logging
 {
-    public class ExceptionReport : LogRecord
+    public class ExceptionReport : LogRecord, DescribesItself
     {
         public ExceptionReport(string message, Exception exception)
         {
@@ -51,6 +52,13 @@ namespace FubuMVC.Core.Runtime.Logging
                 result = (result*397) ^ (CorrelationId != null ? CorrelationId.GetHashCode() : 0);
                 return result;
             }
+        }
+
+        public void Describe(Description description)
+        {
+            description.Title = ExceptionType;
+            description.ShortDescription = Message;
+            description.LongDescription = ExceptionText;
         }
 
         public override string ToString()

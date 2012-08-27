@@ -1,9 +1,11 @@
+using System;
 using System.IO;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Http;
 
 namespace FubuMVC.Core.Caching
 {
-    public class WriteTextOutput : IRecordedHttpOutput, IRecordedTextOutput
+    public class WriteTextOutput : IRecordedHttpOutput, IRecordedTextOutput, DescribesItself
     {
         private readonly string _text;
 
@@ -40,6 +42,12 @@ namespace FubuMVC.Core.Caching
         public override int GetHashCode()
         {
             return (_text != null ? _text.GetHashCode() : 0);
+        }
+
+        public void Describe(Description description)
+        {
+            description.Title = "Write Text";
+            description.LongDescription = _text;
         }
 
         public override string ToString()

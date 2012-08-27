@@ -1,9 +1,11 @@
 using System;
+using FubuCore;
+using FubuCore.Descriptions;
 using FubuCore.Logging;
 
 namespace FubuMVC.Core.Runtime
 {
-    public class SetValueReport : LogRecord
+    public class SetValueReport : LogRecord, DescribesItself
     {
         public SetValueReport(object value)
         {
@@ -47,6 +49,12 @@ namespace FubuMVC.Core.Runtime
             {
                 return ((Type != null ? Type.GetHashCode() : 0)*397) ^ (Value != null ? Value.GetHashCode() : 0);
             }
+        }
+
+        public void Describe(Description description)
+        {
+            description.Title = "Setting value of {0} in IFubuRequest".ToFormat(Type.Name);
+            description.Properties["Value"] = Value.ToString();
         }
 
         public override string ToString()

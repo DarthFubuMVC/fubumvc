@@ -1,8 +1,10 @@
+using System;
+using FubuCore.Descriptions;
 using FubuCore.Logging;
 
 namespace FubuMVC.Core.Runtime.Logging
 {
-    public class RedirectReport : LogRecord
+    public class RedirectReport : LogRecord, DescribesItself
     {
         public string Url { get; private set; }
 
@@ -29,6 +31,11 @@ namespace FubuMVC.Core.Runtime.Logging
         public override int GetHashCode()
         {
             return (Url != null ? Url.GetHashCode() : 0);
+        }
+
+        public void Describe(Description description)
+        {
+            description.Title = "Redirected the browser to " + Url;
         }
 
         public override string ToString()

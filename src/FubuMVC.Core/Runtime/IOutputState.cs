@@ -3,7 +3,7 @@ using System.IO;
 
 namespace FubuMVC.Core.Runtime
 {
-    interface IOutputState
+    internal interface IOutputState
     {
         void Write(string contentType, string renderedOutput);
         void Write(string contentType, Action<Stream> action);

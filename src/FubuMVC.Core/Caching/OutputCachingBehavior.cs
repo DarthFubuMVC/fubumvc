@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using FubuCore.Descriptions;
 using FubuCore.Logging;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Resources.Etags;
@@ -66,23 +68,37 @@ namespace FubuMVC.Core.Caching
         }
     }
 
-    public class CacheHit : LogRecord
+    public class CacheHit : LogRecord, DescribesItself
     {
-        public string Description { get; set; }
+        public IDictionary<string, string> Description { get; set; }
 
         public override string ToString()
         {
             return string.Format("CacheHit: {0}", Description);
         }
+
+        public void Describe(Description description)
+        {
+            description.Title = "Cache Hit";
+
+            Description.Each(pair => description.Properties[pair.Key] = pair.Value);
+        }
     }
 
-    public class CacheMiss : LogRecord
+    public class CacheMiss : LogRecord, DescribesItself
     {
-        public string Description { get; set; }
+        public IDictionary<string, string> Description { get; set; }
 
         public override string ToString()
         {
             return string.Format("CacheMiss: {0}", Description);
+        }
+
+        public void Describe(Description description)
+        {
+            description.Title = "Cache Miss";
+
+            Description.Each(pair => description.Properties[pair.Key] = pair.Value);
         }
     }
 

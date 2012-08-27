@@ -1,9 +1,11 @@
+using System;
+using FubuCore.Descriptions;
 using FubuCore.Logging;
 
 namespace FubuMVC.Core.Runtime.Logging
 {
-    // TODO -- write out the stream contents?
-    public class WriteToStreamReport : LogRecord, IHaveContentType
+    // TODO -- write out the stream contents?  GH-178
+    public class WriteToStreamReport : LogRecord, IHaveContentType, DescribesItself
     {
         private readonly string _contentType;
 
@@ -35,6 +37,11 @@ namespace FubuMVC.Core.Runtime.Logging
         public override int GetHashCode()
         {
             return (_contentType != null ? _contentType.GetHashCode() : 0);
+        }
+
+        public void Describe(Description description)
+        {
+            description.Title = "Wrote content as " + _contentType;
         }
 
         public override string ToString()

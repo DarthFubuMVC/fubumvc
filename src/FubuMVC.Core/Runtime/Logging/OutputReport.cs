@@ -1,8 +1,10 @@
+using System;
+using FubuCore.Descriptions;
 using FubuCore.Logging;
 
 namespace FubuMVC.Core.Runtime.Logging
 {
-    public class OutputReport : LogRecord, IHaveContentType
+    public class OutputReport : LogRecord, IHaveContentType, DescribesItself
     {
         public string ContentType { get; private set; }
         public string Contents { get; private set; }
@@ -39,6 +41,12 @@ namespace FubuMVC.Core.Runtime.Logging
             {
                 return ((ContentType != null ? ContentType.GetHashCode() : 0) * 397) ^ (Contents != null ? Contents.GetHashCode() : 0);
             }
+        }
+
+        public void Describe(Description description)
+        {
+            description.Title = "Output as " + ContentType;
+            description.LongDescription = Contents;
         }
 
         public override string ToString()
