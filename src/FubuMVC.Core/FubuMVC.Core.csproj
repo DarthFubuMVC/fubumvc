@@ -159,6 +159,7 @@
     <Compile Include="Runtime\Logging\StartedRecordingOutput.cs" />
     <Compile Include="Runtime\Logging\WriteCookieReport.cs" />
     <Compile Include="Runtime\Logging\WriteToStreamReport.cs" />
+    <Compile Include="Runtime\SetValueReport.cs" />
     <Compile Include="UI\Navigation\CompileNavigationStep.cs" />
     <Compile Include="Registration\Conventions\HandlerConvention.cs" />
     <Compile Include="Http\AspNet\AspNetClientConnectivity.cs" />
