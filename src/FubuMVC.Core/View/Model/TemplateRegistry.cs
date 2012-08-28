@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using FubuCore;
 
 namespace FubuMVC.Core.View.Model
 {
+    // TODO: Reconsider this
     public class TemplateRegistry<T> : List<T>, ITemplateRegistry<T> where T : ITemplateFile
     {
         public TemplateRegistry() {}
@@ -16,7 +18,7 @@ namespace FubuMVC.Core.View.Model
 
         public T FirstByName(string name)
         {
-            return this.Where(x => x.Name() == name).FirstOrDefault();
+            return this.FirstOrDefault(x => x.Name() == name);
         }
 
         public IEnumerable<T> ByOrigin(string origin)
@@ -27,6 +29,14 @@ namespace FubuMVC.Core.View.Model
         public IEnumerable<T> AllTemplates()
         {
             return this;
+        }
+
+        // TODO: UT
+        public IEnumerable<TDescriptor> DescriptorsWithViewModels<TDescriptor>() where TDescriptor : ViewDescriptor<T>
+        {
+            return AllTemplates().Where(t => t.Descriptor is TDescriptor)
+                .Select(x => x.Descriptor.As<TDescriptor>())
+                .Where(x => x.HasViewModel());
         }
 
         public IEnumerable<T> FromHost()

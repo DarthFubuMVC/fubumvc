@@ -721,8 +721,6 @@
     <Compile Include="View\Attachment\ViewProfile.cs" />
     <Compile Include="View\Attachment\ViewsForFilterLog.cs" />
     <Compile Include="View\Attachment\ViewTokenExtensions.cs" />
-    <Compile Include="View\Conventions\ITemplateComposerConvention.cs" />
-    <Compile Include="View\Conventions\ITemplateFinderConvention.cs" />
     <Compile Include="View\IFubuView.cs" />
     <Compile Include="View\Activation\IPageActivator.cs" />
     <Compile Include="View\Attachment\IViewsForActionFilter.cs" />
@@ -733,10 +731,6 @@
     <Compile Include="View\Model\ITemplateFile.cs" />
     <Compile Include="View\Model\MasterAttacher.cs" />
     <Compile Include="View\Model\Parsing.cs" />
-    <Compile Include="View\Model\Scanning\FileFound.cs" />
-    <Compile Include="View\Model\Scanning\FileScanner.cs" />
-    <Compile Include="View\Model\Scanning\ScanRequest.cs" />
-    <Compile Include="View\Model\Scanning\ScanRequestExtensions.cs" />
     <Compile Include="View\Model\SharedPathBuilder.cs" />
     <Compile Include="View\Model\SharedTemplateLocator.cs" />
     <Compile Include="View\Model\SharingAttacherActivator.cs" />
@@ -751,8 +745,6 @@
     <Compile Include="View\Model\Sharing\SharingRegistrationDiagnostics.cs" />
     <Compile Include="View\Model\Sharing\SharingDslReader.cs" />
     <Compile Include="View\Model\TemplateDirectoryProvider.cs" />
-    <Compile Include="View\Model\TemplateFinder.cs" />
-    <Compile Include="View\Model\TemplateRoot.cs" />
     <Compile Include="View\Model\TemplateBinders.cs" />
     <Compile Include="View\Model\TemplateComposer.cs" />
     <Compile Include="View\Model\TemplateExtensions.cs" />
@@ -760,6 +752,7 @@
     <Compile Include="View\Model\TemplatePolicies.cs" />
     <Compile Include="View\Model\TemplateRegistry.cs" />
     <Compile Include="View\Model\ViewPathPolicy.cs" />
+    <Compile Include="View\Model\ViewTypePool.cs" />
     <Compile Include="View\ViewNode.cs" />
     <Compile Include="View\ViewWriter.cs" />
     <Compile Include="View\Registration\GenericParser.cs" />

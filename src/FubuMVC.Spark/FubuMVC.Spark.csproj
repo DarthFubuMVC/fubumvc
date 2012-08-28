@@ -58,13 +58,13 @@
     </Compile>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="FubuRegistryExtensions.cs" />
-    <Compile Include="ITemplateFinderConvention.cs" />
     <Compile Include="Rendering\IHtmlEncoder.cs" />
     <Compile Include="Rendering\ViewDefinitionPolicy.cs" />
     <Compile Include="Registration\ViewDescriptorHelper.cs" />
     <Compile Include="Rendering\ViewDefinition.cs" />
     <Compile Include="Rendering\ViewDefinitionResolver.cs" />
     <Compile Include="Rendering\ViewEntryProviderCache.cs" />
+    <Compile Include="SparkEngineSettings.cs" />
     <Compile Include="SparkModel\SharingAttachers.cs" />
     <Compile Include="SparkModel\FubuBindingProvider.cs" />
     <Compile Include="Rendering\ViewModifiers.cs" />
@@ -86,7 +86,6 @@
     <Compile Include="SparkViewFacility.cs" />
     <Compile Include="SparkViewToken.cs" />
     <Compile Include="Rendering\FubuSparkView.cs" />
-    <Compile Include="SparkModel\Scanning\ScanRequestExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Todo.txt" />

@@ -7,6 +7,6 @@ namespace FubuMVC.Core.View.Attachment
     {
         IEnumerable<IViewFacility> Facilities { get; }
         void AddFacility(IViewFacility facility);
-        ViewBag BuildViewBag(TypePool types);
+        ViewBag BuildViewBag(BehaviorGraph graph);
     }
 }

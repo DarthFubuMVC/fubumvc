@@ -18,6 +18,7 @@ namespace FubuMVC.Core.View.Model
         private readonly TypePool _types; 
         private readonly IParsingRegistrations<T> _parsings;
 
+        public TemplateComposer(IParsingRegistrations<T> parsings) : this(ViewTypePool.Default(), parsings) {}
         public TemplateComposer(TypePool types, IParsingRegistrations<T> parsings)
         {
             _types = types;
@@ -74,5 +75,5 @@ namespace FubuMVC.Core.View.Model
                 policies.Each(policy => policy.Apply(t));
             });
         }
-    }    
+    }
 }

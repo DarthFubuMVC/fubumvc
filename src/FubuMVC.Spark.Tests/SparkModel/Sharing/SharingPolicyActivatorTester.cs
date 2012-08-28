@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Bottles;
 using Bottles.Diagnostics;
+using FubuCore;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Model.Sharing;
 using FubuMVC.Spark.SparkModel;
@@ -81,7 +82,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Sharing
 
             _activator.CompileDependencies(packages, _packageLog);
 
-            _packageLog.AssertWasCalled(x => x.Trace("Compiling dependencies for [{0}]", "a, b, Host"));
+            _packageLog.AssertWasCalled(x => x.Trace("Compiling dependencies for [{0}]", "a, b, {0}".ToFormat(TemplateConstants.HostOrigin)));
         }
 
         [Test]

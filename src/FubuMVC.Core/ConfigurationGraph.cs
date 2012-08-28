@@ -80,8 +80,6 @@ namespace FubuMVC.Core
         {
             var graph = new BehaviorGraph();
             
-            graph.Settings.Replace(_engineRegistry.BuildViewBag(_types));
-
             AllServiceRegistrations().Each(services =>
             {
                 graph.Log.RunAction(_registry, services);
@@ -90,7 +88,6 @@ namespace FubuMVC.Core
                 graph.Log.EventsOfType<ServiceEvent>().Where(x => x.RegistrationSource == null).Each(
                     x => x.RegistrationSource = services.GetType().Name);
             });
-
 
             AllConfigurationActions().Each(x =>
             {
@@ -166,7 +163,8 @@ namespace FubuMVC.Core
 
         public IEnumerable<IConfigurationAction> SystemPolicies()
         {
-            return viewAttachers()
+            return new[] { new LambdaConfigurationAction(x => x.Settings.Replace(_engineRegistry.BuildViewBag(x)))}
+                .Union(viewAttachers())
                 .Union(new IConfigurationAction[]{new ActionlessViewConvention()})
                 .Union(fullGraphPolicies())
                 .Union(navigationRegistrations().OfType<IConfigurationAction>())

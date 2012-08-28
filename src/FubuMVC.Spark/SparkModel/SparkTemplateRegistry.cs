@@ -12,13 +12,8 @@ namespace FubuMVC.Spark.SparkModel
 
     public class SparkTemplateRegistry : TemplateRegistry<ITemplate>, ISparkTemplateRegistry
     {
-        public SparkTemplateRegistry()
-        {
-        }
-
-        public SparkTemplateRegistry(IEnumerable<ITemplate> templates) : base(templates)
-        {
-        }
+        public SparkTemplateRegistry() {}
+        public SparkTemplateRegistry(IEnumerable<ITemplate> templates) : base(templates) {}
 
         public IEnumerable<ITemplate> BindingsForView(string viewPath)
         {

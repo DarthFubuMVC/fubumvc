@@ -4,16 +4,7 @@ using FubuMVC.Core.View.Model;
 
 namespace FubuMVC.Spark.SparkModel
 {
-    public interface ITemplate : ITemplateFile
-    {
-        string FilePath { get; }
-        string RootPath { get; }
-        string Origin { get; }
-		
-        string ViewPath { get; set; }
-        ITemplateDescriptor Descriptor { get; set; }
-    }
-
+    public interface ITemplate : ITemplateFile {}
     public class Template : ITemplate
     {
         public Template(string filePath, string rootPath, string origin) : this()

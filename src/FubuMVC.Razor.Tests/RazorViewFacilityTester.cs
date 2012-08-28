@@ -1,6 +1,6 @@
 using System;
 using System.IO;
-using FubuMVC.Core.Registration;
+using System.Linq;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Razor.RazorModel;
 using FubuTestingSupport;
@@ -8,6 +8,8 @@ using NUnit.Framework;
 
 namespace FubuMVC.Razor.Tests
 {
+    // TODO: Add more coverage
+
     [TestFixture]
     public class RazorViewFacilityTester : InteractionContext<RazorViewFacility>
     {
@@ -26,12 +28,12 @@ namespace FubuMVC.Razor.Tests
                 new Template(Path.Combine(_root, "Views", "Home", "ModelCView.cshtml"), _root, TemplateConstants.HostOrigin),
                 new Template(Path.Combine(_root, "Views", "Home", "_partial3.cshtml"), _root, TemplateConstants.HostOrigin)
             };
-            
+
             _templateRegistry[0].Descriptor = new ViewDescriptor<IRazorTemplate>(_templateRegistry[0]) { ViewModel = typeof(ModelA) };
             _templateRegistry[2].Descriptor = new ViewDescriptor<IRazorTemplate>(_templateRegistry[2]) { ViewModel = typeof(ModelB) };
             _templateRegistry[4].Descriptor = new ViewDescriptor<IRazorTemplate>(_templateRegistry[4]) { ViewModel = typeof(ModelC) };
 
-            Services.Inject<ITemplateRegistry<IRazorTemplate>>(_templateRegistry);
+            Services.Inject(_templateRegistry);
         }
 
         public class ModelA { }
@@ -41,7 +43,8 @@ namespace FubuMVC.Razor.Tests
         [Test]
         public void find_views_returns_view_tokens_from_items_with_a_view_model_only()
         {
-            var views = ClassUnderTest.FindViews(null);
+            var views = ClassUnderTest.FindTokens().ToList();
+
             views.ShouldHaveCount(3);
             views.ShouldContain(x => x.ViewModel == typeof(ModelA));
             views.ShouldContain(x => x.ViewModel == typeof(ModelB));

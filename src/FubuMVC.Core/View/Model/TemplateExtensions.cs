@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using FubuCore;
+using FubuMVC.Core.Runtime.Files;
 
 namespace FubuMVC.Core.View.Model
 {
@@ -39,6 +40,6 @@ namespace FubuMVC.Core.View.Model
     public static class TemplateConstants
     {
         public const string Shared = "Shared";
-        public const string HostOrigin = "Host";
+        public static readonly string HostOrigin = ContentFolder.Application;
     }
 }

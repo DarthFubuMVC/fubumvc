@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using FubuCore;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.SparkModel;
@@ -10,26 +10,42 @@ namespace FubuMVC.Spark
 {
     public class SparkViewFacility : IViewFacility
     {
-        private readonly ITemplateRegistry<ITemplate> _templateRegistry;
+        private readonly SparkTemplateRegistry _templateRegistry;
+        private readonly Parsings _parsings;
 
-        public SparkViewFacility(ITemplateRegistry<ITemplate> templateRegistry)
+        public SparkViewFacility(SparkTemplateRegistry templateRegistry, Parsings parsings)
         {
             _templateRegistry = templateRegistry;
+            _parsings = parsings;
         }
 
-        public IEnumerable<IViewToken> FindViews(TypePool types)
+        public IEnumerable<IViewToken> FindViews(BehaviorGraph graph)
         {
-            // TODO: Make it not filter against view model as the 
-            // default view attacher conventions will do this.
-            // Opens up for returning view with no model in edge cases
-            // and add custom view attacher convention.
+            var sparkSettings = graph.Settings.Get<SparkEngineSettings>();
+            RegisterTemplates(graph.Files, sparkSettings);
+            ComposeTemplates(sparkSettings);
 
-            return _templateRegistry
-                .AllTemplates()
-                .Where(x => x.Descriptor is SparkDescriptor)
-                .Select(x => x.Descriptor.As<SparkDescriptor>())
-                .Where(x => x.HasViewModel())
+            return FindTokens();
+        }
+
+        public IEnumerable<IViewToken> FindTokens()
+        {            
+            return _templateRegistry.DescriptorsWithViewModels<SparkDescriptor>()
                 .Select(x => new SparkViewToken(x));
+        }
+
+        public void RegisterTemplates(IFubuApplicationFiles fubuFiles, SparkEngineSettings settings)
+        {
+            fubuFiles.FindFiles(settings.Search).Each(file => 
+                _templateRegistry.Add(new Template(file.Path, file.ProvenancePath, file.Provenance)));            
+        }
+
+        public void ComposeTemplates(SparkEngineSettings settings)
+        {
+            _templateRegistry.Each(_parsings.Process);         
+            var composer = new TemplateComposer<ITemplate>(_parsings);            
+            settings.ComposerConfiguration(composer);
+            composer.Compose(_templateRegistry);
         }
     }
 }

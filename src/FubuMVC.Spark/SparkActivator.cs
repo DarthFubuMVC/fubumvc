@@ -31,7 +31,6 @@ namespace FubuMVC.Spark
             setEngineDependencies(log);
 		}
 
-        // We need to get these settings from DSL and defaults
 		private void configureSparkSettings (IPackageLog log)
 		{
 			var settings = (SparkSettings)_engine.Settings;

@@ -125,18 +125,16 @@
     <Compile Include="SparkModel\TemplateComposerTester.cs" />
     <Compile Include="SparkModel\SharedTemplateLocatorTester.cs" />
     <Compile Include="SparkModel\TemplateRegistryTester.cs" />
-    <Compile Include="SparkModel\ViewFolder\ExtendedTester.cs" />
+    <Compile Include="SparkModel\ExtendedTester.cs" />
     <Compile Include="SparkModel\ViewFolder\BasicTester.cs" />
     <Compile Include="SparkModel\Policies\NamespacePolicyTester.cs" />
-    <Compile Include="SparkModel\Scanning\FileScannerTester.cs" />
-    <Compile Include="SparkModel\TemplateFinderTester.cs" />
     <Compile Include="SparkModel\TemplateExtensionsTester.cs" />
     <Compile Include="SparkModel\ChunkLoaderTester.cs" />
     <Compile Include="SparkModel\MasterAttacherTester.cs" />
     <Compile Include="SparkModel\Binding\ViewModelBinderTester.cs" />
     <Compile Include="SparkViewFacilityTester.cs" />
     <Compile Include="SparkViewTokenTester.cs" />
-    <Compile Include="SparkModel\Scanning\ScanRequestTester.cs" />
+    <Compile Include="SparkEngineSettingsTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">

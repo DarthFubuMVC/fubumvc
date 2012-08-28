@@ -8,13 +8,13 @@ namespace FubuMVC.Core.View.Attachment
     {
         private readonly List<IViewFacility> _facilities = new List<IViewFacility>();
 
-        public ViewBag BuildViewBag(TypePool types)
+        public ViewBag BuildViewBag(BehaviorGraph graph)
         {
             var views = new List<IViewToken>();
 
             foreach (var facility in _facilities)
             {
-                views.AddRange(facility.FindViews(types));
+                views.AddRange(facility.FindViews(graph));
             }
 
             return new ViewBag(views);

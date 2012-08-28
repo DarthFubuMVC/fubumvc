@@ -78,7 +78,7 @@ namespace FubuMVC.Tests.View
 
         public class TestViewFacility : IViewFacility
         {
-            public IEnumerable<IViewToken> FindViews(TypePool types)
+            public IEnumerable<IViewToken> FindViews(BehaviorGraph graph)
             {
                 yield return new TestViewToken();
             }
