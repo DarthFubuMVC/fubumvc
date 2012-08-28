@@ -32,6 +32,8 @@ namespace FubuMVC.Core.Registration.Routes
         void AddHttpMethodConstraint(string method);
         bool RespondsToGet();
         void RegisterRouteCustomization(Action<Route> action);
+
+        SessionStateRequirement SessionStateRequirement { get; set; }
     }
 
     public static class RouteDefinitionExtensions

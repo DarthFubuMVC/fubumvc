@@ -59,6 +59,12 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void session_state_requirement_is_null_by_default_signifying_that_it_should_use_the_default()
+        {
+            new RouteDefinition("something").SessionStateRequirement.ShouldBeNull(); // this actually matters
+        }
+
+        [Test]
         public void get_route_pattern_with_querystring_parameters_when_there_are_no_values()
         {
             var route = RouteBuilder.Build(typeof (QueryStringTarget), "route");

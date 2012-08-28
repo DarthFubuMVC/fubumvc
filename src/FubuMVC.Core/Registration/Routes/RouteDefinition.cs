@@ -50,6 +50,8 @@ namespace FubuMVC.Core.Registration.Routes
             _alterations.Add(action);
         }
 
+        public SessionStateRequirement SessionStateRequirement { get; set; }
+
         public virtual string CreateTemplate(object input, Func<object, object>[] hash)
         {
             return Input == null ? _pattern : Input.CreateTemplate(input, hash);
