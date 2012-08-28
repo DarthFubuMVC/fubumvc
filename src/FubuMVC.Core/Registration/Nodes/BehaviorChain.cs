@@ -53,6 +53,11 @@ namespace FubuMVC.Core.Registration.Nodes
             });
         }
 
+        public bool IsAsynchronous()
+        {
+            return Calls.Any(x => x.IsAsync);
+        }
+
         public OutputNode Output
         {
             get { return _output.Value; }

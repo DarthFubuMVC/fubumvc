@@ -150,6 +150,15 @@
     <Compile Include="Runtime\Files\FubuFile.cs" />
     <Compile Include="Runtime\Files\IFubuApplicationFiles.cs" />
     <Compile Include="Runtime\Files\IFubuFile.cs" />
+    <Compile Include="Runtime\Handlers\AsynchronousHttpHandler.cs" />
+    <Compile Include="Runtime\Handlers\AsynchronousHttpHandlerSource.cs" />
+    <Compile Include="Runtime\Handlers\IHttpHandlerSource.cs" />
+    <Compile Include="Runtime\Handlers\SessionlessAsynchronousHttpHandler.cs" />
+    <Compile Include="Runtime\Handlers\SessionlessAsynchronousHttpHandlerSource.cs" />
+    <Compile Include="Runtime\Handlers\SessionLessFubuHttpHandler.cs" />
+    <Compile Include="Runtime\Handlers\SessionlessSynchronousHttpHandlerSource.cs" />
+    <Compile Include="Runtime\Handlers\SynchronousFubuHttpHandler.cs" />
+    <Compile Include="Runtime\Handlers\SynchronousHttpHandlerSource.cs" />
     <Compile Include="Runtime\Logging\ExceptionReport.cs" />
     <Compile Include="Runtime\Logging\FileOutputReport.cs" />
     <Compile Include="Runtime\Logging\FinishedRecordingOutput.cs" />
@@ -349,7 +358,6 @@
     <Compile Include="Runtime\AsyncBehaviorInvoker.cs" />
     <Compile Include="Runtime\AsyncExtensions.cs" />
     <Compile Include="Runtime\ExceptionHandlingObserver.cs" />
-    <Compile Include="Runtime\FubuAsyncRouteHandler.cs" />
     <Compile Include="Runtime\IExceptionHandler.cs" />
     <Compile Include="Runtime\IFubuRouteHandler.cs" />
     <Compile Include="Security\SecurityServicesRegistry.cs" />
@@ -666,7 +674,7 @@
     <Compile Include="Runtime\IBehaviorFactory.cs" />
     <Compile Include="Runtime\IFubuRequest.cs" />
     <Compile Include="Runtime\MimeType.cs" />
-    <Compile Include="Runtime\FubuRouteHandler.cs" />
+    <Compile Include="Runtime\Handlers\FubuRouteHandler.cs" />
     <Compile Include="Runtime\IOutputWriter.cs" />
     <Compile Include="Security\IPrincipalFactory.cs" />
     <Compile Include="SessionState\IFlash.cs" />

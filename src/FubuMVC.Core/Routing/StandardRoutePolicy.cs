@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Routing;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Runtime.Handlers;
 
 namespace FubuMVC.Core.Routing
 {
@@ -10,21 +14,40 @@ namespace FubuMVC.Core.Routing
     {
         public IList<RouteBase> BuildRoutes(BehaviorGraph graph, IBehaviorFactory factory)
         {
-            var routes = new List<RouteBase>();
-            graph.VisitRoutes(x =>
+            var defaultSessionRequirement = graph.Settings.Get<SessionStateRequirement>();
+            return graph.Behaviors.Where(x => x.Route != null).OrderBy(x => x.Route.Rank).Select(x => BuildRoute(factory, defaultSessionRequirement, x)).ToList();
+        }
+
+        public RouteBase BuildRoute(IBehaviorFactory factory, SessionStateRequirement defaultSessionRequirement, BehaviorChain chain)
+        {
+            var requiresSession = chain.Route.SessionStateRequirement ?? defaultSessionRequirement;
+
+            var route = chain.Route.ToRoute();
+            var handlerSource = DetermineHandlerSource(requiresSession, chain);
+            var invoker = DetermineInvoker(factory, chain);
+
+            route.RouteHandler = new FubuRouteHandler(invoker, handlerSource);
+
+            return route;
+        }
+
+        public static IBehaviorInvoker DetermineInvoker(IBehaviorFactory factory, BehaviorChain chain)
+        {
+            return chain.IsAsynchronous() ? new AsyncBehaviorInvoker(factory, chain) : new BehaviorInvoker(factory, chain);
+        }
+
+        public static IHttpHandlerSource DetermineHandlerSource(SessionStateRequirement sessionStateRequirement, BehaviorChain chain)
+        {
+            if (chain.IsAsynchronous())
             {
-                x.BehaviorFilters += chain => !chain.IsPartialOnly;
-                x.Actions += (routeDef, chain) =>
-                {
-                    var route = routeDef.ToRoute();
-                    if(chain.Calls.Any(c => c.IsAsync))
-                        route.RouteHandler = new FubuAsyncRouteHandler(new AsyncBehaviorInvoker(factory, chain));
-                    else
-                        route.RouteHandler = new FubuRouteHandler(new BehaviorInvoker(factory, chain));
-                    routes.Add(route);
-                };
-            });
-            return routes;
+                return sessionStateRequirement == SessionStateRequirement.RequiresSessionState
+                           ? (IHttpHandlerSource) new AsynchronousHttpHandlerSource()
+                           : new SessionlessAsynchronousHttpHandlerSource();
+            }
+
+            return sessionStateRequirement == SessionStateRequirement.RequiresSessionState
+                       ? (IHttpHandlerSource)new SynchronousHttpHandlerSource()
+                       : new SessionlessSynchronousHttpHandlerSource();
         }
     }
 }

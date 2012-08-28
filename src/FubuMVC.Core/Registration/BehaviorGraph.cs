@@ -308,6 +308,7 @@ namespace FubuMVC.Core.Registration
         ///   Applies the giving IRouteVisitor to each IRouteDefinition
         /// </summary>
         /// <param name = "configure"></param>
+        [Obsolete("The usage is awkward and really doesn't provide much value over a custom IConfigurationAction")]
         public void VisitRoutes(Action<RouteVisitor> configure)
         {
             var visitor = new RouteVisitor();

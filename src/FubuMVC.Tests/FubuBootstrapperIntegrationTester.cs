@@ -8,6 +8,7 @@ using FubuMVC.Core.Assets;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Runtime.Handlers;
 using FubuMVC.StructureMap;
 using FubuMVC.Tests.Urls;
 using FubuTestingSupport;

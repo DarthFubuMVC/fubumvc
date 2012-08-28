@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Routing;
 using FubuCore;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Runtime.Handlers;
 using Gate;
 using Environment = Gate.Environment;
 

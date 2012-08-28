@@ -8,8 +8,10 @@ using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Routing;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Runtime.Handlers;
 using FubuMVC.Core.Security;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -33,6 +35,64 @@ namespace FubuMVC.Tests.Routing
             _actionIds = graph.Actions().Select(x => x.ParentChain().UniqueId);
             _routes = new StandardRoutePolicy().BuildRoutes(graph, theFactory).Cast<Route>();
         }
+
+        [Test]
+        public void DetermineInvoker_for_asynchronous_actions()
+        {
+            var chain = BehaviorChain.For<Action3>(x => x.M1Async());
+            chain.IsAsynchronous().ShouldBeTrue();
+
+            StandardRoutePolicy.DetermineInvoker(theFactory, chain).ShouldBeOfType<AsyncBehaviorInvoker>();
+        }
+
+        [Test]
+        public void DetermineInvoker_for_synchronous_actions()
+        {
+            var chain = BehaviorChain.For<Action2>(x => x.M1());
+            chain.IsAsynchronous().ShouldBeFalse();
+
+            StandardRoutePolicy.DetermineInvoker(theFactory, chain).ShouldBeOfType<BehaviorInvoker>();
+        }
+
+        [Test]
+        public void DetermineHandlerSource_for_synchronous_and_no_session()
+        {
+            var chain = BehaviorChain.For<Action2>(x => x.M1());
+            chain.IsAsynchronous().ShouldBeFalse();
+
+            StandardRoutePolicy.DetermineHandlerSource(SessionStateRequirement.DoesNotUseSessionState, chain)
+                .ShouldBeOfType<SessionlessSynchronousHttpHandlerSource>();
+        }
+
+        [Test]
+        public void DetermineHandlerSource_for_synchronous_with_session()
+        {
+            var chain = BehaviorChain.For<Action2>(x => x.M1());
+            chain.IsAsynchronous().ShouldBeFalse();
+
+            StandardRoutePolicy.DetermineHandlerSource(SessionStateRequirement.RequiresSessionState, chain)
+                .ShouldBeOfType<SynchronousHttpHandlerSource>();
+        }
+
+        [Test]
+        public void DetermineHandlerSource_for_asynch_and_sessionless()
+        {
+            var chain = BehaviorChain.For<Action3>(x => x.M1Async());
+            chain.IsAsynchronous().ShouldBeTrue();
+
+            StandardRoutePolicy.DetermineHandlerSource(SessionStateRequirement.DoesNotUseSessionState, chain)
+                .ShouldBeOfType<SessionlessAsynchronousHttpHandlerSource>();
+        }
+
+        [Test]
+        public void DetermineHandlerSource_for_async_and_requires_session()
+        {
+            var chain = BehaviorChain.For<Action3>(x => x.M1Async());
+            chain.IsAsynchronous().ShouldBeTrue();
+
+            StandardRoutePolicy.DetermineHandlerSource(SessionStateRequirement.RequiresSessionState, chain)
+                .ShouldBeOfType<AsynchronousHttpHandlerSource>();
+        }
         
         [Test]
         public void it_builds_routes_for_all_actions()
@@ -44,12 +104,6 @@ namespace FubuMVC.Tests.Routing
         public void it_assigns_routehandler_on_route()
         {
             _routes.Each(r => r.RouteHandler.ShouldBeOfType<IFubuRouteHandler>());
-        }
-
-        [Test]
-        public void when_returns_task_it_will_use_async_handler()
-        {
-            _routes.Select(r => r.RouteHandler).OfType<FubuAsyncRouteHandler>().ShouldHaveCount(1);
         }
 
         private BehaviorGraph setupActions()
