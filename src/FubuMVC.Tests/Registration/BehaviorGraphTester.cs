@@ -48,6 +48,14 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void requires_session_state_is_true_by_default()
+        {
+            var graph = new BehaviorGraph();
+
+            graph.Settings.Get<SessionStateRequirement>().ShouldEqual(SessionStateRequirement.RequiresSessionState);
+        }
+
+        [Test]
         public void RegisterService_can_be_called_multiple_times_to_store_multiple_implementations()
         {
             var graph = new BehaviorGraph();

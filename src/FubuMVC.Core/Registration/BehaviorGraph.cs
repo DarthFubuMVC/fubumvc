@@ -69,6 +69,8 @@ namespace FubuMVC.Core.Registration
         public BehaviorGraph()
         {
             _settings = new SettingsCollection(null);
+            _settings.Replace(SessionStateRequirement.RequiresSessionState);
+
             Views = ViewBag.Empty();
 
             RouteIterator = new SortByRouteRankIterator(); // can override in a registry
