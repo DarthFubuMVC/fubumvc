@@ -5,6 +5,7 @@ using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Resources.PathBased;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -28,6 +29,12 @@ namespace FubuMVC.Tests.Assets.Http
 
         private BehaviorChain theChain;
         private AssetContentCache theContentCache;
+
+        [Test]
+        public void the_chain_should_absolutely_not_require_session_state()
+        {
+            theChain.Route.SessionStateRequirement.ShouldEqual(SessionStateRequirement.DoesNotUseSessionState);
+        }
 
         [Test]
         public void generates_url_with_asset_path_of_different_lengths()

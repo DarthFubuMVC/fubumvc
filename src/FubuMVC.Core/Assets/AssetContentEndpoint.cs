@@ -54,6 +54,7 @@ namespace FubuMVC.Core.Assets
 
             chain.Route = RouteBuilder.Build(typeof (AssetPath), Pattern);
             chain.Route.AddHttpMethodConstraint("GET");
+            chain.Route.SessionStateRequirement = SessionStateRequirement.DoesNotUseSessionState;
             return chain;
         }
     }
