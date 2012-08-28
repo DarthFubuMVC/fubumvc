@@ -21,8 +21,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [SetUp]
         public void SetUp()
         {
-            observer = new RecordingConfigurationObserver();
-            graph = new BehaviorGraph(observer);
+            graph = new BehaviorGraph();
             chain = new BehaviorChain();
             lastCall = null;
 
@@ -34,7 +33,6 @@ namespace FubuMVC.Tests.Registration.Conventions
         private BehaviorGraph graph;
         private BehaviorChain chain;
         private RouteDefinitionResolver resolver;
-        private RecordingConfigurationObserver observer;
         private ActionCall lastCall;
 
         private IRouteDefinition buildRoute(Expression<Action<RouteResolverController>> expression,
@@ -269,34 +267,6 @@ namespace FubuMVC.Tests.Registration.Conventions
             var route = buildRoute(x => x.Querystring(null), c => { });
             route.Input.ShouldBeOfType<RouteInput<ModelWithQueryStrings>>();
             route.Input.QueryParameters.Select(x => x.Name).ShouldHaveTheSameElementsAs("Name", "Age");
-        }
-
-        [Test]
-        public void should_log_policy_decision_if_url_policy_is_loggable()
-        {
-            buildRoute(x => x.SomeMethod(null), c => { });
-            var log = observer.GetLog(lastCall);
-        }
-
-        [Test]
-        public void should_log_the_defined_route_pattern()
-        {
-            buildRoute(x => x.SomeMethod(null), c => { });
-
-            var log = observer.GetLog(lastCall);
-
-            log.Where(s => s.Contains("ubumvc/tests/registration/conventions/routeresolver/somemethod/{Name}/{Age}")).
-                Any().ShouldBeTrue();
-        }
-
-        [Test]
-        public void should_log_the_first_url_policy_that_matches()
-        {
-            buildRoute(x => x.SomeMethod(null), c => { });
-
-            var log = observer.GetLog(lastCall);
-
-            log.Where(s => s.Contains(": UrlPolicy")).Any().ShouldBeTrue();
         }
 
         [Test]

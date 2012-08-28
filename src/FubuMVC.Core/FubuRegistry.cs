@@ -251,16 +251,6 @@ namespace FubuMVC.Core
         }
 
 
-        /// <summary>
-        ///   Only useful for testing scenarios.  Builds a BehaviorGraph without
-        ///   the built in policies and services.
-        /// </summary>
-        /// <returns></returns>
-        internal BehaviorGraph BuildLightGraph()
-        {
-            return _configuration.BuildForImport(ViewBag.Empty());
-        }
-
         public void Services<T>() where T : IServiceRegistry, new()
         {
             _configuration.AddConfiguration((IConfigurationAction) new T(), ConfigurationType.Services);

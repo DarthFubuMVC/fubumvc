@@ -34,9 +34,9 @@ namespace FubuMVC.Core.Registration
         private readonly List<BehaviorChain> _behaviors = new List<BehaviorChain>();
 
         private readonly List<IChainForwarder> _forwarders = new List<IChainForwarder>();
-        private readonly NavigationGraph _navigation = new NavigationGraph();
         private readonly ServiceGraph _services = new ServiceGraph();
         private readonly Lazy<IFubuApplicationFiles> _files = new Lazy<IFubuApplicationFiles>(() => new FubuApplicationFiles());
+        private readonly SettingsCollection _settings;
 
         public static BehaviorGraph BuildFrom(FubuRegistry registry)
         {
@@ -56,19 +56,31 @@ namespace FubuMVC.Core.Registration
             return registry.BuildGraph();
         }
 
-        public BehaviorGraph(IConfigurationObserver observer)
+        public static BehaviorGraph ForChild(BehaviorGraph parent)
         {
+            return new BehaviorGraph(parent);
+        }
+
+        private BehaviorGraph(BehaviorGraph parent) : this()
+        {
+            _settings = new SettingsCollection(parent._settings);
+        }
+
+        public BehaviorGraph()
+        {
+            _settings = new SettingsCollection(null);
             Views = ViewBag.Empty();
 
             RouteIterator = new SortByRouteRankIterator(); // can override in a registry
-            Observer = observer;
+            Observer = new NulloConfigurationObserver();
 
             TypeResolver = new TypeResolver();
             _services.AddService<ITypeResolver>(TypeResolver);
         }
 
-        public BehaviorGraph() : this(new NulloConfigurationObserver())
+        public SettingsCollection Settings
         {
+            get { return _settings; }
         }
 
         public IFubuApplicationFiles Files
@@ -81,13 +93,15 @@ namespace FubuMVC.Core.Registration
             get { return _forwarders; }
         }
 
+        [Obsolete("Use Settings.Get<NavigationGraph>() instead")]
         public NavigationGraph Navigation
         {
-            get { return _navigation; }
+            get { return _settings.Get<NavigationGraph>(); }
         }
 
         public TypeResolver TypeResolver { get; private set; }
 
+        [Obsolete("IConfigurationObserver will be going away soon.  Use Trace() methods on either BehaviorChain or BehaviorNode")]
         public IConfigurationObserver Observer { get; private set; }
 
         public ServiceGraph Services
@@ -113,7 +127,18 @@ namespace FubuMVC.Core.Registration
         /// </summary>
         public IRouteIterator RouteIterator { get; set; }
 
-        public ViewBag Views { get; set; }
+        [Obsolete("Use Settings.Get<ViewBag>() or Settings.Replace<ViewBag>(viewBag) instead")]
+        public ViewBag Views
+        {
+            get
+            {
+                return Settings.Get<ViewBag>();
+            }
+            set
+            {
+                Settings.Replace(value);
+            }
+        }
 
         void IChainImporter.Import(BehaviorGraph graph, Action<BehaviorChain> alternation)
         {

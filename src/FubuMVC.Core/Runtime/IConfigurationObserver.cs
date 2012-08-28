@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using FubuCore.Util;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Runtime
 {
+    [Obsolete("This is getting replace soon anyway")]
     public interface IConfigurationObserver
     {
         bool IsRecording { get; }

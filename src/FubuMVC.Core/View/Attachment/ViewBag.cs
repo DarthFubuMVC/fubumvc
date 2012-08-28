@@ -20,6 +20,10 @@ namespace FubuMVC.Core.View.Attachment
             return new ViewBag(new IViewToken[0]);
         }
 
+        public ViewBag() : this(new IViewToken[0])
+        {
+        }
+
         public ViewBag(IEnumerable<IViewToken> views)
         {
             _views = views;

@@ -1,4 +1,5 @@
 using System;
+using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View.Attachment;
 
@@ -17,12 +18,12 @@ namespace FubuMVC.Core
             ImportInto(graph, graph.Views);
         }
 
-        public void ImportInto(IChainImporter graph, ViewBag views)
+        public void ImportInto(BehaviorGraph graph, ViewBag views)
         {
             // TODO -- will want this to suck in the configuration log business somehow
             Registry.Compile();
-            var childGraph = Registry.Configuration.BuildForImport(views);
-            graph.Import(childGraph, b =>
+            var childGraph = Registry.Configuration.BuildForImport(graph);
+            graph.As<IChainImporter>().Import(childGraph, b =>
             {
                 b.PrependToUrl(Prefix);
                 b.Origin = Registry.Name;

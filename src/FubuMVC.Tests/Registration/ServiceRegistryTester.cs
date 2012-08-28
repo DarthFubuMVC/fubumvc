@@ -101,7 +101,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void replace_service_by_specifying_a_value()
         {
-            var graph = new BehaviorGraph(null);
+            var graph = new BehaviorGraph();
             var resolver = MockRepository.GenerateMock<IObjectResolver>();
 
             var services = new ServiceRegistry();
@@ -116,7 +116,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void replace_service_by_specifying_types()
         {
-            var graph = new BehaviorGraph(null);
+            var graph = new BehaviorGraph();
 
             var services = new ServiceRegistry();
 

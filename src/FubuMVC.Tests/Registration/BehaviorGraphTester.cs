@@ -50,7 +50,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void RegisterService_can_be_called_multiple_times_to_store_multiple_implementations()
         {
-            var graph = new BehaviorGraph(null);
+            var graph = new BehaviorGraph();
             graph.Services.AddService<IRequestData, RequestData>();
             graph.Services.AddService<IRequestData, InMemoryRequestData>();
 
@@ -128,7 +128,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void the_first_call_to_RegisterService_for_a_type_registers_the_default()
         {
-            var graph = new BehaviorGraph(null);
+            var graph = new BehaviorGraph();
             graph.Services.AddService<IRequestData, RequestData>();
             graph.Services.DefaultServiceFor<IRequestData>().Type.ShouldEqual(typeof (RequestData));
         }
@@ -168,7 +168,7 @@ namespace FubuMVC.Tests.Registration
         [SetUp]
         public void SetUp()
         {
-            graph = new BehaviorGraph(null);
+            graph = new BehaviorGraph();
 
             chain1 = BehaviorChain.For<ControllerTarget>(x => x.OneInOneOut(null));
             graph.AddChain(chain1);
@@ -206,14 +206,14 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void should_throw_2150_if_the_input_type_cannot_be_found()
         {
-            Exception<FubuException>.ShouldBeThrownBy(() => { new BehaviorGraph(null).IdForType(typeof (Model1)); }).
+            Exception<FubuException>.ShouldBeThrownBy(() => { new BehaviorGraph().IdForType(typeof (Model1)); }).
                 ErrorCode.ShouldEqual(2150);
         }
 
         [Test]
         public void should_throw_2151_if_the_input_type_has_multiple_possible_behavior_chains()
         {
-            var graph = new BehaviorGraph(null);
+            var graph = new BehaviorGraph();
 
             graph.AddChain(BehaviorChain.For<ControllerTarget>(x => x.OneInOneOut(null)));
             graph.AddChain(BehaviorChain.For<ControllerTarget>(x => x.OneInZeroOut(null)));
@@ -225,7 +225,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void when_there_is_only_one_chain_for_that_input_model()
         {
-            var graph = new BehaviorGraph(null);
+            var graph = new BehaviorGraph();
 
             var chain = BehaviorChain.For<ControllerTarget>(x => x.OneInOneOut(null));
             graph.AddChain(chain);
@@ -295,8 +295,8 @@ namespace FubuMVC.Tests.Registration
         [SetUp]
         public void SetUp()
         {
-            graph1 = new BehaviorGraph(null);
-            graph2 = new BehaviorGraph(null);
+            graph1 = new BehaviorGraph();
+            graph2 = new BehaviorGraph();
 
             foo1 = new Foo();
             foo2 = new Foo();

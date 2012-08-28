@@ -129,7 +129,7 @@ namespace FubuMVC.Core
             yield return _views;
         }
 
-        public BehaviorGraph BuildForImport(ViewBag views)
+        public BehaviorGraph BuildForImport(BehaviorGraph parent)
         {
             var lightweightActions = allConventions()
                 .Union(_imports)
@@ -138,9 +138,7 @@ namespace FubuMVC.Core
                 .Union(viewAttachers())
                 .Union(_configurations[ConfigurationType.Reordering]);
 
-            var graph = new BehaviorGraph{
-                Views = views
-            };
+            var graph = BehaviorGraph.ForChild(parent);
 
             lightweightActions.Each(x => x.Configure(graph));
 
