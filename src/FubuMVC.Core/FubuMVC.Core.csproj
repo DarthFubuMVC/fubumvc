@@ -135,6 +135,9 @@
     <Compile Include="Registration\Conventions\NavigationRootPolicy.cs" />
     <Compile Include="Registration\Conventions\OutputBeforeAjaxContinuationPolicy.cs" />
     <Compile Include="Registration\Conventions\VaryByPolicy.cs" />
+    <Compile Include="Registration\Routes\IMakeMyOwnUrl.cs" />
+    <Compile Include="Registration\Routes\SessionStateRequirement.cs" />
+    <Compile Include="Registration\SettingsCollection.cs" />
     <Compile Include="Resources\Etags\IHeadersCache.cs" />
     <Compile Include="Runtime\Dates\DateFormattingRule.cs" />
     <Compile Include="Runtime\Dates\DateTimeFormatter.cs" />

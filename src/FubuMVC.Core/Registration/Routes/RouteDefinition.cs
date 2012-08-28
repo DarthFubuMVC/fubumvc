@@ -8,11 +8,6 @@ using FubuCore.Util;
 
 namespace FubuMVC.Core.Registration.Routes
 {
-    public interface IMakeMyOwnUrl
-    {
-        string ToUrlPart(string basePattern);
-    }
-
     public class RouteDefinition : IRouteDefinition
     {
         public static readonly IEnumerable<string> VERBS = new List<string>{
