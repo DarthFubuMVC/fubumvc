@@ -1,6 +1,8 @@
 using System;
+using FubuCore.Descriptions;
 using FubuCore.Logging;
 using FubuMVC.Core.Assets.Files;
+using FubuCore;
 
 namespace FubuMVC.Core.Assets.Caching
 {
@@ -31,7 +33,7 @@ namespace FubuMVC.Core.Assets.Caching
         }
     }
 
-    public class AssetFileChangeDetected : LogRecord
+    public class AssetFileChangeDetected : LogRecord, DescribesItself
     {
         public string Name { get; set; }
         public string Fullpath { get; set; }
@@ -57,6 +59,12 @@ namespace FubuMVC.Core.Assets.Caching
             {
                 return ((Name != null ? Name.GetHashCode() : 0)*397) ^ (Fullpath != null ? Fullpath.GetHashCode() : 0);
             }
+        }
+
+        public void Describe(Description description)
+        {
+            description.Title = "{0} changed".ToFormat(Name);
+            description.ShortDescription = "Change detected for asset file {0} at {1}".ToFormat(Fullpath, Time.ToUniversalTime());
         }
 
         public override string ToString()

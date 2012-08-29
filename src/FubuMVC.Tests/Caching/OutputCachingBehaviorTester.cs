@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using FubuCore;
 using FubuCore.Logging;
 using FubuMVC.Core.Behaviors;
@@ -63,7 +64,7 @@ namespace FubuMVC.Tests.Caching
         private StubOutputCache theCache;
         private readonly string theResource = Guid.NewGuid().ToString();
         private ILogger theLogger;
-        private string theDescription;
+        private IDictionary<string, string> theDescription;
 
         protected override void beforeEach()
         {
@@ -75,7 +76,7 @@ namespace FubuMVC.Tests.Caching
             MockFor<IResourceHash>().Stub(x => x.CreateHash())
                 .Return(theResource);
 
-            theDescription = Guid.NewGuid().ToString();
+            theDescription = new Dictionary<string, string>();
             MockFor<IResourceHash>().Stub(x => x.Describe()).Return(theDescription);
 
 
@@ -107,7 +108,7 @@ namespace FubuMVC.Tests.Caching
         private readonly string theResource = Guid.NewGuid().ToString();
         private IRecordedOutput theGeneratedOutput;
         private ILogger theLogger;
-        private string theDescription;
+        private Dictionary<string, string> theDescription;
 
         protected override void beforeEach()
         {
@@ -118,7 +119,7 @@ namespace FubuMVC.Tests.Caching
             Services.Inject<IOutputCache>(theCache);
 
 
-            theDescription = Guid.NewGuid().ToString();
+            theDescription = new Dictionary<string, string>();
             MockFor<IResourceHash>().Stub(x => x.Describe()).Return(theDescription);
             MockFor<IResourceHash>().Stub(x => x.CreateHash())
                 .Return(theResource);

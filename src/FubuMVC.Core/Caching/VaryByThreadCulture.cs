@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -5,9 +6,9 @@ namespace FubuMVC.Core.Caching
 {
     public class VaryByThreadCulture : IVaryBy
     {
-        public IDictionary<string, string> Values()
+        public void Apply(IDictionary<string, string> dictionary)
         {
-            return new Dictionary<string, string> { {"culture", Thread.CurrentThread.CurrentUICulture.Name} };
+            dictionary.Add("culture", Thread.CurrentThread.CurrentUICulture.Name);
         }
     }
 }

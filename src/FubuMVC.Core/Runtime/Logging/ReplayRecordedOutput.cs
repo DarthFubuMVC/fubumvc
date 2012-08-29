@@ -1,10 +1,13 @@
 using System;
+using FubuCore.Descriptions;
 using FubuCore.Logging;
 using FubuMVC.Core.Caching;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FubuMVC.Core.Runtime.Logging
 {
-    public class ReplayRecordedOutput : LogRecord, IHaveContentType
+    public class ReplayRecordedOutput : LogRecord, IHaveContentType, DescribesItself
     {
         private readonly IRecordedOutput _output;
 
@@ -31,6 +34,12 @@ namespace FubuMVC.Core.Runtime.Logging
         public override int GetHashCode()
         {
             return (_output != null ? _output.GetHashCode() : 0);
+        }
+
+        public void Describe(Description description)
+        {
+            description.Title = "Replaying recorded output";
+            description.AddList("Outputs", _output.Outputs);
         }
 
         public string ContentType

@@ -1,8 +1,10 @@
 using System.Collections.Generic;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
+    [Title("Write output model ToString() as text/html")]
     public class HtmlStringWriter<T> : IMediaWriter<T>
     {
         private readonly IOutputWriter _writer;

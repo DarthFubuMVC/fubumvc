@@ -4,6 +4,7 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Runtime.Conditionals;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -155,6 +156,8 @@ namespace FubuMVC.Tests.NewConneg
 
         protected override void theContextIs()
         {
+
+
             theSelectedMedia = MockFor<IMedia<OutputTarget>>();
             Services.PartialMockTheClassUnderTest();
 
@@ -168,6 +171,8 @@ namespace FubuMVC.Tests.NewConneg
             theCurrentMimeType.SelectFirstMatching(theSelectedMedia.Mimetypes)
                 .ShouldEqual(theAcceptedMimetype);
         
+
+
             ClassUnderTest.Write();
         }
 
@@ -205,9 +210,6 @@ namespace FubuMVC.Tests.NewConneg
         }
     }
 
-
-
-
     public abstract class OutputBehaviorContext : InteractionContext<OutputBehavior<OutputTarget>>
     {
         protected IMedia<OutputTarget>[] theMedia;
@@ -217,7 +219,15 @@ namespace FubuMVC.Tests.NewConneg
 
         protected override sealed void beforeEach()
         {
+            Services.RecordLogging();
+
             theMedia = Services.CreateMockArrayFor<IMedia<OutputTarget>>(5);
+
+            theMedia.Each(media =>
+            {
+                media.Stub<IMedia<OutputTarget>, IConditional>(x => x.Condition).Return(Always.Flyweight);
+            });
+
             theCurrentMimeType = new CurrentMimeType();
             theTarget = new OutputTarget();
 

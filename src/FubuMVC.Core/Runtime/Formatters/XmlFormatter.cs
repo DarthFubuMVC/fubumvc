@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Resources.Conneg;
 
@@ -10,6 +11,7 @@ namespace FubuMVC.Core.Runtime.Formatters
 {
     // See the StoryTeller tests for conneg
     [MimeType("text/xml", "application/xml")]
+    [Title("Xml Serialization")]
     public class XmlFormatter : IFormatter
     {
         private readonly IStreamingData _streaming;

@@ -1,4 +1,5 @@
 using System;
+using FubuCore;
 
 namespace FubuMVC.Core.View.Model
 {
@@ -36,6 +37,11 @@ namespace FubuMVC.Core.View.Model
         public bool HasViewModel()
         {
             return ViewModel != null;
+        }
+
+        public string FullName()
+        {
+            return Namespace.IsEmpty() ? Name() : Namespace + "." + Name();
         }
     }
 

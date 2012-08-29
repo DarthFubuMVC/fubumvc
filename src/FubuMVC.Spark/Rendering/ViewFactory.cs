@@ -1,4 +1,5 @@
 ﻿using System;
+using FubuCore.Descriptions;
 using FubuMVC.Core.View.Rendering;
 using Spark;
 
@@ -30,6 +31,11 @@ namespace FubuMVC.Spark.Rendering
             var view = (IFubuSparkView)func().CreateInstance();
             view = _service.Modify(view);
             return view;
+        }
+
+        public void Describe(Description description)
+        {
+            description.Title = "Spark View " + _viewEntrySource.GetViewEntry().ViewId;
         }
     }
 }

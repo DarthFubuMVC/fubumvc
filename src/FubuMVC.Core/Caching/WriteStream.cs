@@ -1,9 +1,11 @@
+using System;
 using System.IO;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Http;
 
 namespace FubuMVC.Core.Caching
 {
-    public class WriteStream : IRecordedHttpOutput
+    public class WriteStream : IRecordedHttpOutput, DescribesItself
     {
         private readonly MemoryStream _stream;
         private readonly object _locker = new object();
@@ -33,6 +35,12 @@ namespace FubuMVC.Core.Caching
                 var reader = new StreamReader(_stream);
                 return reader.ReadToEnd();
             }
+        }
+
+        public void Describe(Description description)
+        {
+            description.Title = "Write to stream";
+            description.LongDescription = ReadAll();
         }
     }
 }

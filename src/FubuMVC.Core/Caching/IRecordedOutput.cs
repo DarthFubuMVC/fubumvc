@@ -15,5 +15,7 @@ namespace FubuMVC.Core.Caching
         IEnumerable<Header> Headers();
 
         bool IsEmpty();
+
+        IEnumerable<IRecordedHttpOutput> Outputs { get; }
     }
 }

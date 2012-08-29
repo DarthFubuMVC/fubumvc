@@ -1,6 +1,8 @@
+using FubuCore.Descriptions;
+
 namespace FubuMVC.Core.Runtime.Conditionals
 {
-    // TODO -- I think this should be in Runtime
+    [Title("Always")]
     public class Always : IConditional
     {
         private Always()

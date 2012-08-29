@@ -5,9 +5,13 @@ using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Conversion;
 using FubuCore.Descriptions;
+using FubuCore.Logging;
+using FubuMVC.Core.Ajax;
+using FubuMVC.Core.Caching;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Runtime.Formatters;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -16,6 +20,69 @@ namespace FubuMVC.Tests.Runtime
     [TestFixture]
     public class must_be_descriptions_on_important_things
     {
+
+        [Test]
+        public void must_be_a_description_on_all_media_writers()
+        {
+            // IMediaWriter<T>
+            var types = typeof(FubuRequest).Assembly.GetExportedTypes()
+                .Where(x => x.IsConcrete() && x.IsOpenGeneric() && x.GetInterfaces().Any(t => t.Name.Contains("IMediaWriter")))
+                .Where(x => !Description.HasExplicitDescription(x));
+
+            types.Each(x => Debug.WriteLine(x.Name));
+
+            types.Any().ShouldBeFalse();
+        }
+
+        [Test]
+        public void must_be_a_description_on_all_media_readers()
+        {
+            // IMediaWriter<T>
+            var types = typeof(FubuRequest).Assembly.GetExportedTypes()
+                .Where(x => x.IsConcrete() && x.IsOpenGeneric() && x.GetInterfaces().Any(t => t.Name.Contains("IReader")))
+                .Where(x => !Description.HasExplicitDescription(x));
+
+            types.Each(x => Debug.WriteLine(x.Name));
+
+            types.Any().ShouldBeFalse();
+        }
+
+        [Test]
+        public void must_be_some_sort_of_description_on_every_IFormatter()
+        {
+            var types = typeof(FubuRequest).Assembly.GetExportedTypes()
+                .Where(x => x.IsConcreteTypeOf<IFormatter>())
+                .Where(x => !Description.HasExplicitDescription(x));
+
+            types.Each(x => Debug.WriteLine(x.Name));
+
+            types.Any().ShouldBeFalse();
+        }
+
+        [Test]
+        public void must_be_some_sort_of_description_on_every_IRecordedHttpOutput()
+        {
+            var types = typeof(FubuRequest).Assembly.GetExportedTypes()
+                .Where(x => x.IsConcreteTypeOf<IRecordedHttpOutput>())
+                .Where(x => !Description.HasExplicitDescription(x));
+
+            types.Each(x => Debug.WriteLine(x.Name));
+
+            types.Any().ShouldBeFalse();
+        }
+
+        [Test]
+        public void must_be_some_sort_of_description_on_every_LogRecord()
+        {
+            var types = typeof(FubuRequest).Assembly.GetExportedTypes()
+                .Where(x => x.IsConcreteTypeOf<LogRecord>())
+                .Where(x => !Description.HasExplicitDescription(x));
+
+            types.Each(x => Debug.WriteLine(x.Name));
+
+            types.Any().ShouldBeFalse();
+        }
+
 
         [Test]
         public void must_be_some_sort_of_description_on_every_BehaviorNode()

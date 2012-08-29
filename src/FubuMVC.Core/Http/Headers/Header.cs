@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Runtime;
 using System.Linq;
 
 namespace FubuMVC.Core.Http.Headers
 {
+    [Title("Http Header")]
     public class Header : IRecordedHttpOutput
     {
         public string Name { get; set; }

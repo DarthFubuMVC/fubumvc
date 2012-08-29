@@ -1,8 +1,10 @@
+using System;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Http;
 
 namespace FubuMVC.Core.Caching
 {
-    public class SetContentType : IRecordedHttpOutput
+    public class SetContentType : IRecordedHttpOutput, DescribesItself
     {
         private readonly string _contentType;
 
@@ -34,6 +36,11 @@ namespace FubuMVC.Core.Caching
         public override int GetHashCode()
         {
             return (_contentType != null ? _contentType.GetHashCode() : 0);
+        }
+
+        public void Describe(Description description)
+        {
+            description.Title = "ContentType is " + _contentType;
         }
 
         public override string ToString()

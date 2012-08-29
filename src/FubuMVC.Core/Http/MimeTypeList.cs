@@ -50,6 +50,9 @@ namespace FubuMVC.Core.Http
             return _mimeTypes.GetEnumerator();
         }
 
-        
+        public override string ToString()
+        {
+            return _mimeTypes.Join(", ");
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿using FubuCore;
+﻿using System;
+using FubuCore;
+using FubuCore.Descriptions;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Rendering;
 using FubuMVC.Razor.RazorModel;
@@ -44,6 +46,11 @@ namespace FubuMVC.Razor.Rendering
             }
             returnTemplate = _service.Modify(returnTemplate);
             return returnTemplate;
+        }
+
+        public void Describe(Description description)
+        {
+            description.Title = "Razor view " + _viewDescriptor.FullName();
         }
     }
 }

@@ -1,8 +1,10 @@
+using System;
+using FubuCore.Descriptions;
 using FubuCore.Logging;
 
 namespace FubuMVC.Core.Runtime.Logging
 {
-    public class FileOutputReport : LogRecord, IHaveContentType
+    public class FileOutputReport : LogRecord, IHaveContentType, DescribesItself
     {
         public string ContentType { get; set;}
         public string LocalFilePath;
@@ -32,6 +34,14 @@ namespace FubuMVC.Core.Runtime.Logging
                 result = (result * 397) ^ (DisplayName != null ? DisplayName.GetHashCode() : 0);
                 return result;
             }
+        }
+
+        public void Describe(Description description)
+        {
+            description.Title = "Wrote file " + LocalFilePath;
+            description.Properties["ContentType"] = ContentType;
+            description.Properties["LocalFilePath"] = LocalFilePath;
+            description.Properties["DisplayName"] = DisplayName;
         }
 
         public override string ToString()

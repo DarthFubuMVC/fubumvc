@@ -1,9 +1,12 @@
+using System;
 using System.Web;
+using FubuCore.Descriptions;
 using FubuCore.Logging;
+using FubuCore;
 
 namespace FubuMVC.Core.Runtime.Logging
 {
-    public class WriteCookieReport : LogRecord
+    public class WriteCookieReport : LogRecord, DescribesItself
     {
         private readonly HttpCookie _cookie;
 
@@ -35,6 +38,12 @@ namespace FubuMVC.Core.Runtime.Logging
         public override int GetHashCode()
         {
             return (_cookie != null ? _cookie.GetHashCode() : 0);
+        }
+
+        public void Describe(Description description)
+        {
+            description.Title = "Wrote cookie {0} to response".ToFormat(_cookie.Name);
+            description.ShortDescription = _cookie.ToString();
         }
 
         public override string ToString()

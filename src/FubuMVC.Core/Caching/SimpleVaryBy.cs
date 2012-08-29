@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using FubuCore.Util;
@@ -27,9 +28,10 @@ namespace FubuMVC.Core.Caching
             }
         }
 
-        public IDictionary<string, string> Values()
+        public void Apply(IDictionary<string, string> dictionary)
         {
-            return _values.ToDictionary();
+            _values.Each(dictionary.Add);
         }
+
     }
 }

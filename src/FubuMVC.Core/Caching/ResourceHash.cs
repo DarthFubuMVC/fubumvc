@@ -9,7 +9,7 @@ namespace FubuMVC.Core.Caching
     public interface IResourceHash
     {
         string CreateHash();
-        string Describe();
+        IDictionary<string, string> Describe();
     }
 
     public class ResourceHash : IResourceHash
@@ -33,12 +33,16 @@ namespace FubuMVC.Core.Caching
 
         public string CreateHash()
         {
-            return Describe().ToHash();
+            return Describe().Select(x => "{0}={1}".ToFormat(x.Key, x.Value)).Join("&").ToHash();
         }
 
-        public string Describe()
+        public IDictionary<string, string> Describe()
         {
-            return _varyBys.SelectMany(x => x.Values()).Select(pair => "{0}={1}".ToFormat(pair.Key, pair.Value)).Join("&");
+            var dictionary = new Dictionary<string, string>();
+
+            _varyBys.Each(x => x.Apply(dictionary));
+
+            return dictionary;
         }
 
     }
