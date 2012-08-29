@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Ajax
 {
+    [Title("AjaxContinuationWriter")]
     public class AjaxContinuationWriter<T> : IMediaWriter<T> where T : AjaxContinuation
     {
         private readonly IJsonWriter _writer;

@@ -1,6 +1,8 @@
-﻿namespace FubuMVC.Core.View.Rendering
+﻿using FubuCore.Descriptions;
+
+namespace FubuMVC.Core.View.Rendering
 {
-    public interface IViewFactory
+    public interface IViewFactory : DescribesItself
     {
         IRenderableView GetView();
         IRenderableView GetPartialView();

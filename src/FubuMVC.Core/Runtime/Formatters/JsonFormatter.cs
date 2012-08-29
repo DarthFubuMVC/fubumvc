@@ -1,11 +1,13 @@
 using System.Collections.Generic;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Resources.Conneg;
 
 namespace FubuMVC.Core.Runtime.Formatters
 {
-    // See the StoryTeller tests for conneg
+    // See the integration tests for conneg
     [MimeType("application/json", "text/json")]
+    [Title("Json Serialization")]
     public class JsonFormatter : IFormatter
     {
         private readonly IJsonReader _reader;

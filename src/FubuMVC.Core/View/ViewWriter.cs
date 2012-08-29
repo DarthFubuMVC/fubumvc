@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
@@ -6,7 +8,7 @@ using FubuMVC.Core.View.Rendering;
 
 namespace FubuMVC.Core.View
 {
-    public class ViewWriter<T> : IMediaWriter<T>
+    public class ViewWriter<T> : IMediaWriter<T>, DescribesItself
     {
         private readonly ICurrentChain _chains;
         private readonly IViewFactory _factory;
@@ -37,6 +39,11 @@ namespace FubuMVC.Core.View
             }
 
             return _factory.GetView();
+        }
+
+        public void Describe(Description description)
+        {
+            description.Title = Description.For(_factory).Title;
         }
     }
 }
