@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Runtime;
 
@@ -72,7 +73,7 @@ namespace FubuMVC.Core.Assets
             var requested = outstandingAssets()
                 .Where(x => MimeType.MimeTypeByFileName(x) == mimeType);
 
-            var names = returnOrderedDependenciesFor(requested);
+            var names = returnOrderedDependenciesFor(mimeType, requested);
             return new AssetPlanKey(mimeType, names);
         }
 
@@ -94,9 +95,14 @@ namespace FubuMVC.Core.Assets
             return _requirements.Except(_rendered).ToList();
         }
 
-        private IEnumerable<string> returnOrderedDependenciesFor(IEnumerable<string> requested)
+        private IEnumerable<string> returnOrderedDependenciesFor(MimeType mimeType, IEnumerable<string> requested)
         {
             var toRender = _finder.CompileDependenciesAndOrder(requested).ToList();
+            if (mimeType != null)
+            {
+                toRender.RemoveAll(x => MimeType.MimeTypeByFileName(x) != mimeType);
+            }
+
             toRender.RemoveAll(x => _rendered.Contains(x));
             _rendered.Fill(toRender);
 
