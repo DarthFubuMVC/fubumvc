@@ -123,6 +123,8 @@
     <Compile Include="ViewEngines\Spark\PartialNoLayout\Features\UsesPartial\UsesPartialController.cs" />
     <Compile Include="ViewEngines\Spark\PartialNoLayout\Features\UsesTransferTo\TransferToController.cs" />
     <Compile Include="ViewEngines\Spark\PartialNoLayout\PartialNoLayoutIntegrationTester.cs" />
+    <Compile Include="ViewEngines\Spark\ThreePassRendering\ThreePassController.cs" />
+    <Compile Include="ViewEngines\Spark\ThreePassRendering\ThreePassRenderingTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuKayak\FubuKayak.csproj">
@@ -172,6 +174,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="ViewEngines\Spark\ThreePassRendering\Shared\bindings.xml" />
     <None Include="ActionlessViews\Attached.spark" />
     <None Include="ActionlessViews\Unattached.spark" />
     <None Include="FubuTestApplication.application.config">
@@ -287,6 +290,10 @@
     <None Include="ViewEngines\Spark\PartialNoLayout\Features\UsesPartial\UsesPartial.spark" />
     <None Include="ViewEngines\Spark\PartialNoLayout\Shared\Application.spark" />
     <None Include="ViewEngines\Spark\PartialNoLayout\Shared\PartialLayout.spark" />
+    <None Include="ViewEngines\Spark\ThreePassRendering\Shared\Application.spark" />
+    <None Include="ViewEngines\Spark\ThreePassRendering\Shared\Html.spark" />
+    <None Include="ViewEngines\Spark\ThreePassRendering\Shared\_Sidebar.spark" />
+    <None Include="ViewEngines\Spark\ThreePassRendering\ThreePassSample.spark" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\lib\chromedriver.exe">
