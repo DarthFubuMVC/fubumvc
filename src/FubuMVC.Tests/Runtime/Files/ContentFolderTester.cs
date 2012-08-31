@@ -47,6 +47,16 @@ namespace FubuMVC.Tests.Runtime.Files
         }
 
         [Test]
+        public void provenance_path_is_set_on_files()
+        {
+            theFolder.FindFiles(new FileSet
+            {
+                DeepSearch = true,
+                Include = "*.txt"
+            }).Each(f => f.ProvenancePath.ShouldEqual(FubuMvcPackageFacility.GetApplicationPath()));
+        }
+
+        [Test]
         public void can_find_files_case_insensitive()
         {
             var files = theFolder.FindFiles(new FileSet

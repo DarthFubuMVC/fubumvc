@@ -15,6 +15,7 @@ namespace FubuMVC.Core.Runtime.Files
         public string Path { get; private set; }
         public string Provenance { get; private set; }
         public string RelativePath { get; set; }
+        public string ProvenancePath { get; set; }
 
         public string ReadContents()
         {

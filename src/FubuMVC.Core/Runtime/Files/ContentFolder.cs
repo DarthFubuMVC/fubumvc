@@ -31,11 +31,9 @@ namespace FubuMVC.Core.Runtime.Files
 
             foreach (var package in PackageRegistry.Packages)
             {
-                package.ForFolder(BottleFiles.WebContentFolder,
-                                  folder =>
-                                  {
-                                      list.Add(new ContentFolder(package.Name, folder));
-                                  });
+                var name = package.Name;
+                package.ForFolder(BottleFiles.WebContentFolder, 
+                    folder => list.Add(new ContentFolder(name, folder)));
             }
 
             return list;
@@ -53,8 +51,11 @@ namespace FubuMVC.Core.Runtime.Files
         {
             return _fileSystem.FindFiles(Path, fileSet).Select(file =>
             {
-                var fubuFile = new FubuFile(file, Provenance);
-                fubuFile.RelativePath = file.PathRelativeTo(Path).Replace("\\", "/");
+                var fubuFile = new FubuFile(file, Provenance)
+                {
+                    ProvenancePath = Path,
+                    RelativePath = file.PathRelativeTo(Path).Replace("\\", "/")
+                };
 
                 return fubuFile;
             });

@@ -7,6 +7,7 @@ namespace FubuMVC.Core.Runtime.Files
     {
         string Path { get; }
         string Provenance { get; }
+        string ProvenancePath { get; set; }
         string RelativePath { get; set; }
         string ReadContents();
         void ReadContents(Action<Stream> action);
