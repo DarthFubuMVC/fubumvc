@@ -40,9 +40,29 @@ namespace FubuMVC.Tests.Registration
             chain.Last().ShouldBeTheSameAs(theAction);
         }
 
+        [Test]
+        public void chains_with_input()
+        {
+            var graph = BehaviorGraph.BuildFrom(x =>
+            {
+                x.Actions.IncludeType<AjaxController>();
+            });
+
+            var chain = graph.BehaviorFor<AjaxController>(x => x.get_with_input(null));
+            var nodes = chain.ToList();
+            nodes[0].ShouldBeOfType<InputNode>();
+            nodes[1].ShouldBeOfType<OutputNode>();
+            nodes.Last().ShouldBeOfType<ActionCall>();
+        }
+
         public class AjaxController
         {
             public AjaxContinuation get_success()
+            {
+                return AjaxContinuation.Successful();
+            }
+
+            public AjaxContinuation get_with_input(AjaxControllerInput input)
             {
                 return AjaxContinuation.Successful();
             }
@@ -55,5 +75,7 @@ namespace FubuMVC.Tests.Registration
                 };
             }
         }
+
+        public class AjaxControllerInput { }
     }
 }

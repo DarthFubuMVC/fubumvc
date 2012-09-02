@@ -22,6 +22,7 @@ namespace FubuMVC.TestingHarness
     public abstract class FubuRegistryHarness
     {
         private Harness theHarness;
+        private IContainer theContainer;
 
         public RemoteBehaviorGraph remote
         {
@@ -45,7 +46,11 @@ namespace FubuMVC.TestingHarness
             runFubu("packages harness --clean-all --remove-all");
 
             initializeBottles();
-            theHarness = Harness.Run(configure);
+
+            theContainer = new Container();
+            configureContainer(theContainer);
+
+            theHarness = Harness.Run(configure, theContainer);
         }
 
         protected virtual void beforeRunning()
@@ -67,7 +72,11 @@ namespace FubuMVC.TestingHarness
         protected void restart()
         {
             TearDown();
-            theHarness = Harness.Run(configure);
+            theHarness = Harness.Run(configure, theContainer);
+        }
+
+        protected virtual void configureContainer(IContainer container)
+        {
         }
 
         protected virtual void configure(FubuRegistry registry)
@@ -125,10 +134,12 @@ namespace FubuMVC.TestingHarness
     public class SimpleSource : IApplicationSource
     {
         private readonly Action<FubuRegistry> _configuration;
+        private readonly IContainer _container; 
 
-        public SimpleSource(Action<FubuRegistry> configuration)
+        public SimpleSource(Action<FubuRegistry> configuration, IContainer container)
         {
             _configuration = configuration;
+            _container = container;
         }
 
         public FubuApplication BuildApplication()
@@ -141,7 +152,7 @@ namespace FubuMVC.TestingHarness
                 _configuration(registry);
 
                 return registry;
-            }).StructureMap(new Container());
+            }).StructureMap(_container);
         }
     }
 
@@ -184,13 +195,13 @@ namespace FubuMVC.TestingHarness
             _application.Stop();
         }
 
-        public static Harness Run(Action<FubuRegistry> configure)
+        public static Harness Run(Action<FubuRegistry> configure, IContainer container)
         {
             var applicationDirectory = GetApplicationDirectory();
             FubuMvcPackageFacility.PhysicalRootPath = applicationDirectory;
 
 
-            var application = new FubuKayakApplication(new SimpleSource(configure));
+            var application = new FubuKayakApplication(new SimpleSource(configure, container));
             var port = PortFinder.FindPort(_port++);
 
             var reset = new ManualResetEvent(false);
