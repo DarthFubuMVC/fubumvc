@@ -58,6 +58,16 @@ namespace FubuMVC.Tests.Ajax
             theContinuation.ToDictionary()["errors"].ShouldBeOfType<AjaxError[]>()
                 .Single().message.ShouldEqual("bad!");
         }
+        
+        [Test]
+        public void navigate_page_is_only_written_to_the_dictionary_if_it_exists()
+        {
+            theContinuation.ToDictionary().ContainsKey("navigatePage").ShouldBeFalse();
+
+            theContinuation.NavigatePage = "/test";
+            theContinuation.ToDictionary()["navigatePage"].ShouldEqual("/test");
+
+        }
 
         [Test]
         public void Successful_builder_method()

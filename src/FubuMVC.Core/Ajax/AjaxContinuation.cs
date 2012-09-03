@@ -29,6 +29,7 @@ namespace FubuMVC.Core.Ajax
             get { return _errors; }
         }
 
+        public string NavigatePage { get; set; }
         public bool Success { get; set; }
         public string Message { get; set; }
 
@@ -66,6 +67,7 @@ namespace FubuMVC.Core.Ajax
             };
 
             Message.IfNotNull(x => dict.Add("message", x));
+            NavigatePage.IfNotNull(x => dict.Add("navigatePage", x));
 
             _data.Each(dict.Add);
 

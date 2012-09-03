@@ -121,6 +121,8 @@
     <Compile Include="Http\AspNet\AspNetResponse.cs" />
     <Compile Include="Http\Compression\DeflateHttpContentEncoding.cs" />
     <Compile Include="Http\Compression\DoNotCompressAttribute.cs" />
+    <Compile Include="Http\CookieValue.cs" />
+    <Compile Include="Http\ICookieValue.cs" />
     <Compile Include="Http\IResponse.cs" />
     <Compile Include="Registration\Conventions\ActionlessViewConvention.cs" />
     <Compile Include="Registration\Conventions\CacheAttributePolicy.cs" />
