@@ -23,7 +23,8 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public void Trace(string text, params object[] parameters)
         {
-            _events.Enqueue(new Traced(text.ToFormat(parameters)));
+            var message = parameters.Any() ? text.ToFormat(parameters) : text;
+            _events.Enqueue(new Traced(message));
         }
 
         IEnumerable<NodeEvent> ITracedModel.StagedEvents

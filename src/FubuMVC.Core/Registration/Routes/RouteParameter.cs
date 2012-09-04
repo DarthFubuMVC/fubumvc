@@ -130,5 +130,12 @@ namespace FubuMVC.Core.Registration.Routes
         {
             return (_accessor != null ? _accessor.GetHashCode() : 0);
         }
+
+        public override string ToString()
+        {
+            if (DefaultValue != null) return string.Format("Accessor: {0}, DefaultValue: {1}", _accessor, DefaultValue);
+
+            return "Accessor: {0}".ToFormat(_accessor);
+        }
     }
 }

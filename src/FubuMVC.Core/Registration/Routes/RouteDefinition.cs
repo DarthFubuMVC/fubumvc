@@ -49,10 +49,24 @@ namespace FubuMVC.Core.Registration.Routes
 
         public void RegisterRouteCustomization(Action<Route> action)
         {
+            Trace("Route customization was registered");
             _alterations.Add(action);
         }
 
-        public SessionStateRequirement SessionStateRequirement { get; set; }
+        private SessionStateRequirement _sessionStateRequirement;
+        public SessionStateRequirement SessionStateRequirement
+        {
+            get { return _sessionStateRequirement; }
+            set
+            {
+                if (value != null)
+                {
+                    Trace("Set the SessionStateRequirement to '{0}'", value);
+                }
+                
+                _sessionStateRequirement = value;
+            }
+        }
 
         public virtual string CreateTemplate(object input, Func<object, object>[] hash)
         {
@@ -66,6 +80,8 @@ namespace FubuMVC.Core.Registration.Routes
             {
                 if (value != null)
                 {
+                    Trace("Added RouteInput " + value);
+
                     value.Parent = this;
                 }
 
@@ -119,6 +135,8 @@ namespace FubuMVC.Core.Registration.Routes
 
         public void Append(string patternPart)
         {
+            Trace("Appending {0} to the url pattern", patternPart);
+
             _pattern += "/" + patternPart;
             _pattern = _pattern.Replace("//", "/").TrimStart('/');
         }
@@ -130,6 +148,8 @@ namespace FubuMVC.Core.Registration.Routes
 
         public void RemoveLastPatternPart()
         {
+            Trace("Removing the last part from the url pattern");
+
             var parts = Pattern.Split('/');
             var newParts = parts.Take(parts.Length - 1).ToArray();
             _pattern = newParts.Join("/");
@@ -147,6 +167,8 @@ namespace FubuMVC.Core.Registration.Routes
 
         public void AddHttpMethodConstraint(string method)
         {
+            Trace("Adding Http Method Constraint for " + method.ToUpper());
+
             _httpMethods.Fill(method.ToUpper());
         }
 
@@ -162,6 +184,8 @@ namespace FubuMVC.Core.Registration.Routes
 
         public void Prepend(string prefix)
         {
+            Trace("Prepending '{0}' to the url pattern", prefix);
+
             if (prefix.IsEmpty()) return;
 
             // Apparently this is necessary
