@@ -18,14 +18,12 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             _method = ReflectionHelper.GetMethod<TestController>(c => c.SomeAction(null));
             _policy = new DefaultRouteMethodBasedUrlPolicy(_method);
-            _log = new NulloConfigurationObserver();
         }
 
         #endregion
 
         private MethodInfo _method;
         private DefaultRouteMethodBasedUrlPolicy _policy;
-        private NulloConfigurationObserver _log;
 
         [Test]
         public void should_build_a_route_definition_from_the_action_call()
@@ -39,7 +37,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             var method = ReflectionHelper.GetMethod<TestController>(c => c.SomeAction(null));
             var call = new ActionCall(typeof (TestController), method);
-            _policy.Matches(call, _log).ShouldBeTrue();
+            _policy.Matches(call).ShouldBeTrue();
         }
 
         [Test]
@@ -47,7 +45,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             var anotherMethod = ReflectionHelper.GetMethod<TestController>(c => c.AnotherAction(null));
             var call = new ActionCall(typeof (TestController), anotherMethod);
-            _policy.Matches(call, _log).ShouldBeFalse();
+            _policy.Matches(call).ShouldBeFalse();
         }
     }
 }

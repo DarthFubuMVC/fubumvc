@@ -9,7 +9,7 @@ namespace FubuMVC.Core.Registration.Conventions
         private const string DefaultHomeControllerConvention = "HomeEndpoint";
         private const string DefaultHomeMethodConvention = "Index";
 
-        public bool Matches(ActionCall call, IConfigurationObserver log)
+        public bool Matches(ActionCall call)
         {
             return call.Method.DeclaringType.Name == DefaultHomeControllerConvention && 
                    call.Method.Name == DefaultHomeMethodConvention;

@@ -14,7 +14,7 @@ namespace FubuMVC.Core.Registration.Conventions
             _method = method;
         }
 
-        public bool Matches(ActionCall call, IConfigurationObserver log)
+        public bool Matches(ActionCall call)
         {
             return call.Method == _method;
         }

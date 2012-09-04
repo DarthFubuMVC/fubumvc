@@ -220,7 +220,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                 return route;
             }
 
-            public bool Matches(ActionCall call, IConfigurationObserver log)
+            public bool Matches(ActionCall call)
             {
                 return call.HandlerType.Name.EndsWith("Controller");
             }

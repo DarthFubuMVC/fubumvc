@@ -92,7 +92,7 @@ namespace FubuMVC.Tests.Registration.Expressions
             var graph = BehaviorGraph.BuildFrom(registry);
 
             graph.Behaviors.Count().ShouldEqual(3);
-            var visitor = new BehaviorVisitor(new NulloConfigurationObserver(), "");
+            var visitor = new BehaviorVisitor("");
             visitor.Actions += chain =>
             {
                 // Don't bother with the asset node

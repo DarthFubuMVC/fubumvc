@@ -37,7 +37,7 @@ namespace FubuMVC.Core.Registration.Conventions
         public bool IgnoreControllerNamespaceEntirely { get; set; }
         public bool IgnoreControllerNamesEntirely { get; set; }
 
-        public bool Matches(ActionCall call, IConfigurationObserver log)
+        public bool Matches(ActionCall call)
         {
             return _filter(call);
         }
@@ -51,7 +51,7 @@ namespace FubuMVC.Core.Registration.Conventions
             // TODO -- far better diagnostics here
             if (MethodToUrlBuilder.Matches(call.Method.Name))
             {
-                MethodToUrlBuilder.Alter(route, call, new NulloConfigurationObserver());
+                MethodToUrlBuilder.Alter(route, call);
                 return route;
             }
 

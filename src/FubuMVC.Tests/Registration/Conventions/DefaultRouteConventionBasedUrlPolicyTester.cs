@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
@@ -14,14 +14,12 @@ namespace FubuMVC.Tests.Registration.Conventions
     {
         private MethodInfo _method;
         private DefaultRouteConventionBasedUrlPolicy _policy;
-        private NulloConfigurationObserver _log;
 
         [SetUp]
         public void SetUp()
         {
             _method = ReflectionHelper.GetMethod<TestController>(c => c.SomeAction(null));
             _policy = new DefaultRouteConventionBasedUrlPolicy();
-            _log = new NulloConfigurationObserver();
         }
 
         [Test]
@@ -47,7 +45,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             var index = ReflectionHelper.GetMethod<HomeEndpoint>(c => c.Index());
             var call = new ActionCall(typeof(HomeEndpoint), index);
-            _policy.Matches(call, _log).ShouldBeTrue();
+            _policy.Matches(call).ShouldBeTrue();
         }
 
         [Test]
@@ -55,7 +53,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             var anotherMethod = ReflectionHelper.GetMethod<HomeEndpoint>(c => c.Action());
             var call = new ActionCall(typeof(HomeEndpoint), anotherMethod);
-            _policy.Matches(call, _log).ShouldBeFalse();
+            _policy.Matches(call).ShouldBeFalse();
         }
 
         [Test]
@@ -63,7 +61,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             var anotherMethod = ReflectionHelper.GetMethod<AnotherEndpoint>(c => c.Index());
             var call = new ActionCall(typeof(HomeEndpoint), anotherMethod);
-            _policy.Matches(call, _log).ShouldBeFalse();
+            _policy.Matches(call).ShouldBeFalse();
         } 
 
         private class HomeEndpoint

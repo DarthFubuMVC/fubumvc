@@ -71,7 +71,7 @@ namespace FubuMVC.Tests.Registration.Expressions
         {
             _graph.Behaviors.Count().ShouldEqual(2);
 
-            var visitor = new BehaviorVisitor(new NulloConfigurationObserver(), "");
+            var visitor = new BehaviorVisitor("");
             visitor.Filters += chain => !chain.Calls.Any(call => call.InputType() == typeof (InputModel));
             visitor.Filters += chain => !chain.Any(x => x is OutputCachingNode);
             visitor.Actions += chain => chain.Top.ShouldBeNull();

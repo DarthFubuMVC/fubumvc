@@ -23,7 +23,7 @@ namespace FubuMVC.Core.Registration.Conventions
             return call.ToRouteDefinition();
         }
 
-        public bool Matches(ActionCall call, IConfigurationObserver log)
+        public bool Matches(ActionCall call)
         {
             var result = call.InputType() == _inputType;
 

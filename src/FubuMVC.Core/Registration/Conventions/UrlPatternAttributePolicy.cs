@@ -8,7 +8,7 @@ namespace FubuMVC.Core.Registration.Conventions
 {
     public class UrlPatternAttributePolicy : IUrlPolicy
     {
-        public bool Matches(ActionCall call, IConfigurationObserver log)
+        public bool Matches(ActionCall call)
         {
             return call.HasAttribute<UrlPatternAttribute>();
         }

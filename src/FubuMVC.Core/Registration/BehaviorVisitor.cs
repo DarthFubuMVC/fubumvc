@@ -20,7 +20,7 @@ namespace FubuMVC.Core.Registration
 
         public void Configure(BehaviorGraph graph)
         {
-            var visitor = new BehaviorVisitor(graph.Observer, _reasonToVisit);
+            var visitor = new BehaviorVisitor(_reasonToVisit);
             _configureAction(visitor);
             graph.VisitBehaviors(visitor);
         }
@@ -30,12 +30,10 @@ namespace FubuMVC.Core.Registration
     {
         private readonly CompositeAction<BehaviorChain> _actions = new CompositeAction<BehaviorChain>();
         private readonly CompositePredicate<BehaviorChain> _filters = new CompositePredicate<BehaviorChain>();
-        private readonly IConfigurationObserver _observer;
         private readonly string _reasonToVisit;
 
-        public BehaviorVisitor(IConfigurationObserver observer, string reasonToVisit)
+        public BehaviorVisitor(string reasonToVisit)
         {
-            _observer = observer;
             _reasonToVisit = reasonToVisit;
         }
 

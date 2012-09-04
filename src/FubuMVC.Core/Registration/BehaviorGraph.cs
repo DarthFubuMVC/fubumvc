@@ -74,7 +74,6 @@ namespace FubuMVC.Core.Registration
             Views = ViewBag.Empty();
 
             RouteIterator = new SortByRouteRankIterator(); // can override in a registry
-            Observer = new NulloConfigurationObserver();
 
             TypeResolver = new TypeResolver();
             _services.AddService<ITypeResolver>(TypeResolver);
@@ -102,9 +101,6 @@ namespace FubuMVC.Core.Registration
         }
 
         public TypeResolver TypeResolver { get; private set; }
-
-        [Obsolete("IConfigurationObserver will be going away soon.  Use Trace() methods on either BehaviorChain or BehaviorNode")]
-        public IConfigurationObserver Observer { get; private set; }
 
         public ServiceGraph Services
         {

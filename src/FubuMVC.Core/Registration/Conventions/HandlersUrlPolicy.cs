@@ -23,7 +23,7 @@ namespace FubuMVC.Core.Registration.Conventions
             _markerTypes = markerTypes;
         }
 
-        public virtual bool Matches(ActionCall call, IConfigurationObserver log)
+        public virtual bool Matches(ActionCall call)
         {
             if (!IsHandlerCall(call))
             {

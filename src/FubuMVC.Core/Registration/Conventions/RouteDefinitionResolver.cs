@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
-using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
@@ -17,7 +15,6 @@ namespace FubuMVC.Core.Registration.Conventions
         private readonly UrlPolicy _defaultUrlPolicy;
         private readonly RouteInputPolicy _inputPolicy = new RouteInputPolicy();
         private readonly List<IUrlPolicy> _policies = new List<IUrlPolicy>();
-        private IConfigurationObserver _observer;
 
         public RouteDefinitionResolver()
         {
@@ -75,17 +72,15 @@ namespace FubuMVC.Core.Registration.Conventions
                 return;
             }
 
-            _observer = graph.Observer;
-
             var call = chain.Calls.FirstOrDefault();
             if (call == null) return;
 
-            var policy = _policies.FirstOrDefault(x => x.Matches(call, _observer)) ?? _defaultUrlPolicy;
+            var policy = _policies.FirstOrDefault(x => x.Matches(call)) ?? _defaultUrlPolicy;
 
             call.Trace("First matching UrlPolicy (or default): {0}", policy.GetType().Name);
 
             var route = policy.Build(call);
-            _constraintPolicy.Apply(call, route, _observer);
+            _constraintPolicy.Apply(call, route);
 
             route.Trace("Route definition determined by url policy: [{0}]", route.ToRoute().Url);
 

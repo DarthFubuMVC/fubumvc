@@ -82,7 +82,7 @@ namespace FubuMVC.Tests.Registration.Expressions
         [Test]
         public void other_actions_should_not_be_wrapped()
         {
-            var visitor = new BehaviorVisitor(new NulloConfigurationObserver(), "");
+            var visitor = new BehaviorVisitor("");
             visitor.Filters += chain => chain.Calls.Any(call => call.Method.Name != "SomeAction");
             visitor.Filters += chain => chain.Calls.Any(call => call.HandlerType != typeof (AssetWriter));
 
@@ -94,7 +94,7 @@ namespace FubuMVC.Tests.Registration.Expressions
         [Test]
         public void someaction_call_should_be_wrapped()
         {
-            var visitor = new BehaviorVisitor(new NulloConfigurationObserver(), "");
+            var visitor = new BehaviorVisitor("");
             visitor.Filters += chain => chain.Calls.Any(call => call.Method.Name == "SomeAction");
             visitor.Actions += chain =>
             {

@@ -5,7 +5,6 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
-using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
@@ -16,7 +15,7 @@ namespace FubuMVC.Core.Registration.Conventions
             return methodName.Contains("_");
         }
 
-        public static void Alter(IRouteDefinition route, ActionCall call, IConfigurationObserver observer)
+        public static void Alter(IRouteDefinition route, ActionCall call)
         {
             var properties = call.HasInput
                                  ? new TypeDescriptorCache().GetPropertiesFor(call.InputType()).Keys

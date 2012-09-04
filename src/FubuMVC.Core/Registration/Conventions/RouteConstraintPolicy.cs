@@ -2,10 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
-using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
@@ -14,11 +12,12 @@ namespace FubuMVC.Core.Registration.Conventions
         private readonly IList<HttpMethodFilter> _httpMethodFilters = new List<HttpMethodFilter>();
 
 
-        public void Apply(ActionCall call, IRouteDefinition routeDefinition, IConfigurationObserver observer)
+        public void Apply(ActionCall call, IRouteDefinition routeDefinition)
         {
             _httpMethodFilters.Where(x => x.Filter(call)).Each(filter =>
             {
-                routeDefinition.Trace("Adding route constraint {0} based on filter [{1}]", filter.Method, filter.Description);
+                routeDefinition.Trace("Adding route constraint {0} based on filter [{1}]", filter.Method,
+                                      filter.Description);
 
                 routeDefinition.AddHttpMethodConstraint(filter.Method);
             });

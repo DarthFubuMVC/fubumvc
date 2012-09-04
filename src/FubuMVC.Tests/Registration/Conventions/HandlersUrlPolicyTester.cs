@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Runtime;
@@ -65,21 +65,19 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void should_not_match_calls_with_url_pattern_attribute()
         {
-            var log = new NulloConfigurationObserver();
             _policy
-                .Matches(HandlersObjectMother.HandlerWithAttributeCall(), log)
+                .Matches(HandlersObjectMother.HandlerWithAttributeCall())
                 .ShouldBeFalse();
         }
 
         [Test]
         public void should_only_match_calls_with_handler_type_ending_with_handler()
         {
-            var log = new NulloConfigurationObserver();
             _policy
-                .Matches(HandlersObjectMother.HandlerCall(), log)
+                .Matches(HandlersObjectMother.HandlerCall())
                 .ShouldBeTrue();
             _policy
-                .Matches(HandlersObjectMother.NonHandlerCall(), log)
+                .Matches(HandlersObjectMother.NonHandlerCall())
                 .ShouldBeFalse();
         }
 

@@ -15,8 +15,7 @@ namespace FubuMVC.Tests.Registration
         [SetUp]
         public void SetUp()
         {
-            observer = new RecordingConfigurationObserver();
-            visitor = new BehaviorVisitor(observer, "reasontovisit");
+            visitor = new BehaviorVisitor("reasontovisit");
             chain = new BehaviorChain();
             call = ActionCall.For<TestController>(c => c.SomeAction(null));
 
@@ -32,7 +31,6 @@ namespace FubuMVC.Tests.Registration
         private BehaviorVisitor visitor;
         private BehaviorChain chain;
         private BehaviorProcessor processor;
-        private RecordingConfigurationObserver observer;
         private ActionCall call;
 
         private bool getTrue()

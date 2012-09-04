@@ -338,7 +338,6 @@
     <Compile Include="Resources\Conneg\WriteString.cs" />
     <Compile Include="Resources\Conneg\WriteWithFormatter.cs" />
     <Compile Include="Runtime\HeaderValueAttribute.cs" />
-    <Compile Include="Runtime\IConfigurationObserver.cs" />
     <Compile Include="Registration\Services\ModelBindingServicesRegistry.cs" />
     <Compile Include="Registration\ActionMethodFilter.cs" />
     <Compile Include="Registration\ActionSource.cs" />

@@ -18,7 +18,6 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             _policy = new RouteConstraintPolicy();
             _routeDefinition = new RouteDefinition("something");
-            _observer = new RecordingConfigurationObserver();
             _policy.AddHttpMethodFilter(x => x.Method.Name.StartsWith("Query"), "GET");
             _policy.AddHttpMethodFilter(x => x.Method.Name.EndsWith("Command"), "POST");
         }
@@ -27,13 +26,11 @@ namespace FubuMVC.Tests.Registration.Conventions
 
         private RouteConstraintPolicy _policy;
         private IRouteDefinition _routeDefinition;
-        private RecordingConfigurationObserver _observer;
 
         [Test]
         public void should_add_an_HttpMethodConstraint_to_the_route_definition_for_multiple_methods_that_apply()
         {
-            _policy.Apply(ActionCall.For<SampleForConstraintPolicy>(c => c.QueryPartsAndAddCommand()), _routeDefinition,
-                          _observer);
+            _policy.Apply(ActionCall.For<SampleForConstraintPolicy>(c => c.QueryPartsAndAddCommand()), _routeDefinition);
 
             _routeDefinition.AllowedHttpMethods.ShouldHaveTheSameElementsAs("GET", "POST");
         }
@@ -41,7 +38,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void should_add_an_HttpMethodConstraint_to_the_route_definition_for_the_method_that_applies()
         {
-            _policy.Apply(ActionCall.For<SampleForConstraintPolicy>(c => c.QueryParts()), _routeDefinition, _observer);
+            _policy.Apply(ActionCall.For<SampleForConstraintPolicy>(c => c.QueryParts()), _routeDefinition);
 
             _routeDefinition.AllowedHttpMethods.ShouldHaveTheSameElementsAs("GET");
         }
