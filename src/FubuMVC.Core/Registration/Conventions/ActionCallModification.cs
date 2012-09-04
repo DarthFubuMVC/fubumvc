@@ -30,11 +30,9 @@ namespace FubuMVC.Core.Registration.Conventions
                 {
                     var matchingFilter = _filters.GetDescriptionOfFirstMatchingInclude(call);
 
-                    var log = "{0} [matched on filter '{1}']".ToFormat(_reasonForModification, matchingFilter);
+                    call.Trace("{0} [matched on filter '{1}']".ToFormat(_reasonForModification, matchingFilter));
 
-                    graph.Observer.RecordCallStatus(call, log);
                     _modification(call);
-                    
                 });
         }
     }

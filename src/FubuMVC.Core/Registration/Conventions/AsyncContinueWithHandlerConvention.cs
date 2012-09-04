@@ -17,7 +17,6 @@ namespace FubuMVC.Core.Registration.Conventions
                 call.AddAfter(call.Method.ReturnType == typeof(Task)
                                   ? new AsyncContinueWithNode()
                                   : new AsyncContinueWithNode(call.OutputType()));
-                graph.Observer.RecordCallStatus(call, "Adding AsyncContinueWithNode directly after action call");
             });
         }
     }

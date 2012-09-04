@@ -46,17 +46,6 @@ namespace FubuMVC.Tests.Registration.Conventions
             _routeDefinition.AllowedHttpMethods.ShouldHaveTheSameElementsAs("GET");
         }
 
-        [Test]
-        public void should_log_for_each_method_that_applies()
-        {
-            var call = ActionCall.For<SampleForConstraintPolicy>(c => c.QueryPartsAndAddCommand());
-            _policy.Apply(call, _routeDefinition, _observer);
-
-            var log = _observer.GetLog(call);
-
-            log.First().ShouldContain("GET");
-            log.Skip(1).First().ShouldContain("POST");
-        }
     }
 
     public class SampleForConstraintPolicy

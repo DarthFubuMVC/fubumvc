@@ -30,7 +30,8 @@ namespace FubuMVC.Core.Registration.Conventions
                 return false;
             }
 
-            log.RecordCallStatus(call, "Matched on {0}".ToFormat(GetType().Name));
+            call.Trace("Matched on {0}", GetType().Name);
+
             return true;
         }
 

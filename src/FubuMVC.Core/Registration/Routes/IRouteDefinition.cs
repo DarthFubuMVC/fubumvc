@@ -34,6 +34,8 @@ namespace FubuMVC.Core.Registration.Routes
         void RegisterRouteCustomization(Action<Route> action);
 
         SessionStateRequirement SessionStateRequirement { get; set; }
+
+        void Trace(string format, params object[] parameters);
     }
 
     public static class RouteDefinitionExtensions

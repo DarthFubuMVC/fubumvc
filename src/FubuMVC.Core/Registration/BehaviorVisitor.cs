@@ -61,9 +61,7 @@ namespace FubuMVC.Core.Registration
                 matchesDescriptions = "(no filters defined)";
             }
 
-            chain.Calls.Each(call => _observer.RecordCallStatus(call,
-                                                                "Visiting: {0}. Matched on filters [{1}]".ToFormat
-                                                                    (_reasonToVisit, matchesDescriptions)));
+            chain.Calls.Each(call => call.Trace("Visiting: {0}. Matched on filters [{1}]", _reasonToVisit, matchesDescriptions));
 
             _actions.Do(chain);
         }

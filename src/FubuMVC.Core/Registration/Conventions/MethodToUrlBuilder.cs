@@ -22,7 +22,7 @@ namespace FubuMVC.Core.Registration.Conventions
                                  ? new TypeDescriptorCache().GetPropertiesFor(call.InputType()).Keys
                                  : new string[0];
 
-            Alter(route, call.Method.Name, properties, text => observer.RecordCallStatus(call, text));
+            Alter(route, call.Method.Name, properties, text => call.Trace(text));
 
             if (call.HasInput)
             {

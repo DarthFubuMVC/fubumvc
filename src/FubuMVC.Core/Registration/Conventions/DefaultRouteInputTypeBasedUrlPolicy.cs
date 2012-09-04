@@ -39,11 +39,9 @@ namespace FubuMVC.Core.Registration.Conventions
 
             if (result) _foundCallAlready = true;
 
-            if (result && log.IsRecording)
+            if (result)
             {
-                log.RecordCallStatus(call,
-                                     "Action '{0}' is the default route since its input type is {1} which was specified in the configuration as the input model for the default route"
-                                         .ToFormat(call.Method.Name, _inputType.Name));
+                call.Trace("Action '{0}' is the default route since its input type is {1} which was specified in the configuration as the input model for the default route", call.Method.Name, _inputType.Name);
             }
 
             return result;

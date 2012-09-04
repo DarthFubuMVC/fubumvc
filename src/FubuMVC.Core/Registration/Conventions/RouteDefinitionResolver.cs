@@ -81,14 +81,14 @@ namespace FubuMVC.Core.Registration.Conventions
             if (call == null) return;
 
             var policy = _policies.FirstOrDefault(x => x.Matches(call, _observer)) ?? _defaultUrlPolicy;
-            _observer.RecordCallStatus(call,
-                                       "First matching UrlPolicy (or default): {0}".ToFormat(policy.GetType().Name));
+
+            call.Trace("First matching UrlPolicy (or default): {0}", policy.GetType().Name);
 
             var route = policy.Build(call);
             _constraintPolicy.Apply(call, route, _observer);
 
-            _observer.RecordCallStatus(call,
-                                       "Route definition determined by url policy: [{0}]".ToFormat(route.ToRoute().Url));
+            route.Trace("Route definition determined by url policy: [{0}]", route.ToRoute().Url);
+
             chain.Route = route;
         }
 

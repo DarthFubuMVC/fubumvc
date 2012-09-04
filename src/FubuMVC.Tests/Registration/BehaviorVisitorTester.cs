@@ -56,14 +56,6 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
-        public void should_log_each_matched_filter()
-        {
-            visitor.Filters += x => getTrue();
-            visitor.VisitBehavior(chain);
-            observer.LastLogEntry.ShouldContain("getTrue()");
-        }
-
-        [Test]
         public void should_not_call_the_inner_processor_if_the_filters_do_not_match()
         {
             visitor.Filters += x => false;

@@ -12,7 +12,6 @@ namespace FubuMVC.Core.Security
             {
                 if (!x.Authorization.HasRules()) return;
                 x.Prepend(x.Authorization);
-                x.Calls.Each(call => graph.Observer.RecordCallStatus(call, "Protected by authorization rules"));
             });
         }
     }

@@ -2,10 +2,12 @@ using System.Reflection;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Conventions;
+using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
+using System.Linq;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
@@ -42,7 +44,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             var call = new ActionCall(typeof (TestController), _method);
             _policy.Matches(call, _log);
 
-            _log.GetLog(call).ShouldNotBeEmpty();
+            call.As<ITracedModel>().StagedEvents.OfType<Traced>().Any().ShouldBeTrue();
         }
 
         [Test]

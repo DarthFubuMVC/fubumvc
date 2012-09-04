@@ -18,10 +18,7 @@ namespace FubuMVC.Core.Registration.Conventions
         {
             _httpMethodFilters.Where(x => x.Filter(call)).Each(filter =>
             {
-                observer.RecordCallStatus(call,
-                                          "Adding route constraint {0} based on filter [{1}]".ToFormat(filter.Method,
-                                                                                                       filter.
-                                                                                                           Description));
+                routeDefinition.Trace("Adding route constraint {0} based on filter [{1}]", filter.Method, filter.Description);
 
                 routeDefinition.AddHttpMethodConstraint(filter.Method);
             });

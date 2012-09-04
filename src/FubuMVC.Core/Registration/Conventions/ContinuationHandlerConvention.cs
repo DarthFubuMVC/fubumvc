@@ -11,11 +11,7 @@ namespace FubuMVC.Core.Registration.Conventions
     {
         public void Configure(BehaviorGraph graph)
         {
-            graph.Actions().Where(IsRedirectable).Each(call =>
-            {
-                call.AddAfter(new ContinuationNode());
-                graph.Observer.RecordCallStatus(call, "Adding ContinuationNode directly after action call");
-            });
+            graph.Actions().Where(IsRedirectable).Each(call => call.AddAfter(new ContinuationNode()));
         }
 
         public static bool IsRedirectable(ActionCall action)

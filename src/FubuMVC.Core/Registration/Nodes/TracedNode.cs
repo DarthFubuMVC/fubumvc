@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using FubuMVC.Core.Registration.Diagnostics;
 using System.Linq;
+using FubuCore;
 
 namespace FubuMVC.Core.Registration.Nodes
 {
@@ -20,9 +21,9 @@ namespace FubuMVC.Core.Registration.Nodes
             @event.Subject = this;
         }
 
-        public void Trace(string text)
+        public void Trace(string text, params object[] parameters)
         {
-            _events.Enqueue(new Traced(text));
+            _events.Enqueue(new Traced(text.ToFormat(parameters)));
         }
 
         IEnumerable<NodeEvent> ITracedModel.StagedEvents

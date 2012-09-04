@@ -5,10 +5,11 @@ using System.Text.RegularExpressions;
 using System.Web.Routing;
 using FubuCore;
 using FubuCore.Util;
+using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Registration.Routes
 {
-    public class RouteDefinition : IRouteDefinition
+    public class RouteDefinition : TracedNode, IRouteDefinition
     {
         public static readonly IEnumerable<string> VERBS = new List<string>{
             "POST",
@@ -29,6 +30,7 @@ namespace FubuMVC.Core.Registration.Routes
         {
             _pattern = pattern;
         }
+
 
         public string PatternWithoutDefaultValues
         {
