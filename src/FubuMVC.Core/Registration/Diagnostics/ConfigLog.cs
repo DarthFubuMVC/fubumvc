@@ -22,10 +22,11 @@ namespace FubuMVC.Core.Registration.Diagnostics
             return _currentSource;
         }
 
-        public void RecordEvents(ITracedModel model)
+        public void RecordEvents(BehaviorChain chain, ITracedModel model)
         {
-            model.RecordEvents(e =>
+            model.RecordEvents(chain, e =>
             {
+                e.Chain = chain;
                 _currentSource.AddEvent(e);
                 _bySubject[model].Add(e);
             });

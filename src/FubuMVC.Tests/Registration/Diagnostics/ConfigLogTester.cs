@@ -17,13 +17,14 @@ namespace FubuMVC.Tests.Registration.Diagnostics
         private ITracedModel node;
         private ITracedModel node2;
         private ConfigSource theConfigSource;
+        private BehaviorChain theChain;
 
         [SetUp]
         public void SetUp()
         {
             source1 = new LambdaConfigurationAction(g => { });
             theLog = new ConfigLog();
-
+            theChain = new BehaviorChain();
 
             node = new TracedNode();
             node.Trace("something");
@@ -32,8 +33,14 @@ namespace FubuMVC.Tests.Registration.Diagnostics
             node2 = new TracedNode();
 
             theConfigSource = theLog.StartSource(source1);
-            theLog.RecordEvents(node);
-            theLog.RecordEvents(node2);
+            theLog.RecordEvents(theChain, node);
+            theLog.RecordEvents(theChain, node2);
+        }
+
+        [Test]
+        public void places_the_chain_on_the_NodeEvent()
+        {
+            theConfigSource.Events.Each(x => x.Chain.ShouldBeTheSameAs(theChain));
         }
 
         [Test]

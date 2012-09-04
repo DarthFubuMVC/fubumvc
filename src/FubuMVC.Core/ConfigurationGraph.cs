@@ -10,14 +10,12 @@ using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
-using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Services;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Resources.PathBased;
-using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.UI;
@@ -28,51 +26,6 @@ using FubuMVC.Core.View.Attachment;
 
 namespace FubuMVC.Core
 {
-    [AttributeUsage(AttributeTargets.Class, Inherited = true)]
-    public class ConfigurationTypeAttribute : Attribute
-    {
-        private readonly ConfigurationType _configurationType;
-
-        public ConfigurationTypeAttribute(ConfigurationType configurationType)
-        {
-            _configurationType = configurationType;
-        }
-
-        public ConfigurationType ConfigurationType
-        {
-            get { return _configurationType; }
-        }
-    }
-
-    public class PolicyAttribute : ConfigurationTypeAttribute
-    {
-        public PolicyAttribute()
-            : base(ConfigurationType.Policy)
-        {
-        }
-    }
-
-    public class DiscoveryAttribute : ConfigurationTypeAttribute
-    {
-        public DiscoveryAttribute()
-            : base(ConfigurationType.Discovery)
-        {
-        }
-    }
-
-    public enum ConfigurationType
-    {
-        Discovery,
-        Explicit,
-        Policy,
-        Reordering,
-        Navigation,
-        Instrumentation,
-        Services,
-        ByNavigation
-    }
-
-
     /// <summary>
     ///   Orders and governs the construction of a BehaviorGraph
     /// </summary>
@@ -131,7 +84,7 @@ namespace FubuMVC.Core
 
         public BehaviorGraph BuildForImport(BehaviorGraph parent)
         {
-            var lightweightActions = allConventions()
+            var lightweightActions = allDiscoveryActions()
                 .Union(_imports)
                 .Union(_configurations[ConfigurationType.Explicit])
                 .Union(_configurations[ConfigurationType.Policy])
@@ -153,7 +106,8 @@ namespace FubuMVC.Core
                 {
                     yield return action;
 
-                    foreach (var descendentAction in _imports.SelectMany(x => x.Registry.Configuration.allChildrenImports()))
+                    foreach (
+                        var descendentAction in _imports.SelectMany(x => x.Registry.Configuration.allChildrenImports()))
                     {
                         yield return descendentAction;
                     }
@@ -173,12 +127,12 @@ namespace FubuMVC.Core
             return serviceRegistrations().OfType<IConfigurationAction>()
                 .Union(systemServices())
                 .Union(serviceRegistrations())
-                .Union(allConventions())
+                .Union(allDiscoveryActions())
                 .Union(uniqueImports())
                 .Union(_configurations[ConfigurationType.Explicit])
                 .Union(_configurations[ConfigurationType.Policy])
                 .Union(viewAttachers())
-                .Union(new IConfigurationAction[] { new ActionlessViewConvention() })
+                .Union(new IConfigurationAction[]{new ActionlessViewConvention()})
                 .Union(fullGraphPolicies())
                 .Union(navigationRegistrations().OfType<IConfigurationAction>())
                 .Union(new IConfigurationAction[]{new MenuItemAttributeConfigurator(), new CompileNavigationStep()})
@@ -227,7 +181,7 @@ namespace FubuMVC.Core
             };
         }
 
-        private IEnumerable<IConfigurationAction> allConventions()
+        private IEnumerable<IConfigurationAction> allDiscoveryActions()
         {
             if (_actionSources.Any())
             {
@@ -291,7 +245,7 @@ namespace FubuMVC.Core
                 {
                     yield return action;
                 }
-            }   
+            }
         }
 
         public void AddFacility(IViewFacility facility)
@@ -306,7 +260,6 @@ namespace FubuMVC.Core
             _imports.Add(import);
         }
 
-        // TODO -- I think this will solve an issue that's been outstanding for a *long* time
         public bool HasImported(FubuRegistry registry)
         {
             if (_imports.Any(x => x.Registry.GetType() == registry.GetType()))
@@ -366,47 +319,17 @@ namespace FubuMVC.Core
             return null;
         }
 
+        #region Nested type: FileRegistration
+
         internal class FileRegistration : IConfigurationAction
         {
             public void Configure(BehaviorGraph graph)
             {
-                graph.Services.Clear(typeof(IFubuApplicationFiles));
+                graph.Services.Clear(typeof (IFubuApplicationFiles));
                 graph.Services.AddService(graph.Files);
             }
-        } 
-    }
-
-    public static class ConfigurationActionListExtensions
-    {
-        public static void FillAction<T>(this IList<T> actions, T action)
-        {
-            var actionType = action.GetType();
-
-
-            if (TypeIsUnique(actionType) && actions.Any(x => x.GetType() == actionType))
-            {
-                return;
-            }
-
-            actions.Fill(action);
         }
 
-        public static bool TypeIsUnique(Type type)
-        {
-            if (type.HasAttribute<CanBeMultiplesAttribute>()) return false;
-
-            // If it does not have any non-default constructors
-            if (type.GetConstructors().Any(x => x.GetParameters().Any()))
-            {
-                return false;
-            }
-
-            if (type.GetProperties().Any(x => x.CanWrite))
-            {
-                return false;
-            }
-
-            return true;
-        }
+        #endregion
     }
 }

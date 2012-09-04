@@ -113,6 +113,10 @@
     <Compile Include="Caching\VaryByThreadCulture.cs" />
     <Compile Include="CanBeMultiplesAttribute.cs" />
     <Compile Include="Behaviors\WrappingBehavior.cs" />
+    <Compile Include="ConfigurationActionListExtensions.cs" />
+    <Compile Include="ConfigurationType.cs" />
+    <Compile Include="ConfigurationTypeAttribute.cs" />
+    <Compile Include="DiscoveryAttribute.cs" />
     <Compile Include="Endpoints\EndpointDriver.cs" />
     <Compile Include="Endpoints\EndpointFormatting.cs" />
     <Compile Include="Endpoints\EndpointInvocation.cs" />
@@ -124,6 +128,7 @@
     <Compile Include="Http\CookieValue.cs" />
     <Compile Include="Http\ICookieValue.cs" />
     <Compile Include="Http\IResponse.cs" />
+    <Compile Include="PolicyAttribute.cs" />
     <Compile Include="Registration\Conventions\ActionlessViewConvention.cs" />
     <Compile Include="Registration\Conventions\CacheAttributePolicy.cs" />
     <Compile Include="Registration\Conventions\CachedPartialConvention.cs" />

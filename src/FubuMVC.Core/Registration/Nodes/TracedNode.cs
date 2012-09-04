@@ -30,7 +30,8 @@ namespace FubuMVC.Core.Registration.Nodes
             get { return _events; }
         }
 
-        void ITracedModel.RecordEvents(Action<NodeEvent> callback)
+
+        void ITracedModel.RecordEvents(BehaviorChain chain, Action<NodeEvent> callback)
         {
             while (_events.Any())
             {
