@@ -31,6 +31,7 @@ namespace FubuMVC.Core
     /// </summary>
     public class ConfigurationGraph
     {
+        private readonly FubuRegistry _registry;
         private readonly List<IActionSource> _actionSources = new List<IActionSource>();
 
         private readonly Cache<ConfigurationType, IList<IConfigurationAction>> _configurations
@@ -41,6 +42,11 @@ namespace FubuMVC.Core
         private readonly RouteDefinitionResolver _routeResolver = new RouteDefinitionResolver();
         private readonly TypePool _types = new TypePool(FindTheCallingAssembly());
         private readonly ViewAttacher _views = new ViewAttacher();
+
+        public ConfigurationGraph(FubuRegistry registry)
+        {
+            _registry = registry;
+        }
 
         public ViewAttacher Views
         {
@@ -70,14 +76,18 @@ namespace FubuMVC.Core
             _configurations[type.Value].FillAction(action);
         }
 
-        public void Build(BehaviorGraph graph)
+        public BehaviorGraph Build()
         {
+            var graph = new BehaviorGraph();
+            
             graph.Views = _engineRegistry.BuildViewBag(_types);
 
             AllConfigurationActions().Each(x =>
             {
-                graph.Log.RunAction(x);
+                graph.Log.RunAction(_registry, x);
             });
+
+            return graph;
         }
 
         private IEnumerable<IConfigurationAction> viewAttachers()
@@ -96,7 +106,7 @@ namespace FubuMVC.Core
 
             var graph = BehaviorGraph.ForChild(parent);
 
-            lightweightActions.Each(x => x.Configure(graph));
+            lightweightActions.Each(x => graph.Log.RunAction(_registry, x));
 
             return graph;
         }

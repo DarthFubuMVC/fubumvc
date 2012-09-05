@@ -12,7 +12,7 @@ namespace FubuMVC.Tests
         [Test]
         public void building_a_ConfigurationGraph_with_no_modification_to_ViewAttacher_gets_you_the_default_view_attachment_filters()
         {
-            var graph = new ConfigurationGraph();
+            var graph = new ConfigurationGraph(new FubuRegistry());
 
             var attacher = graph.AllConfigurationActions().OfType<ViewAttacher>().Single();
 
@@ -23,7 +23,7 @@ namespace FubuMVC.Tests
         [Test]
         public void use_explicit_ViewAttachmentFilters_if_that_is_what_is_used()
         {
-            var graph = new ConfigurationGraph();
+            var graph = new ConfigurationGraph(new FubuRegistry());
             graph.Views.AddFilter(new ActionReturnsViewModelType());
 
             var attacher = graph.AllConfigurationActions().OfType<ViewAttacher>().Single();

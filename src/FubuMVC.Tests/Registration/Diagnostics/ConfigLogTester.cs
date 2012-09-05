@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
@@ -32,7 +33,7 @@ namespace FubuMVC.Tests.Registration.Diagnostics
 
             node2 = new TracedNode();
 
-            theConfigSource = theLog.StartSource(source1);
+            theConfigSource = theLog.StartSource(new FubuRegistry(), source1);
             theLog.RecordEvents(theChain, node);
             theLog.RecordEvents(theChain, node2);
         }
@@ -56,28 +57,5 @@ namespace FubuMVC.Tests.Registration.Diagnostics
             node2.StagedEvents.Any().ShouldBeFalse();
         }
 
-        [Test]
-        public void can_retrieve_all_the_events_for_the_first_node()
-        {
-            var nodeEvents = theLog.EventsBySubject(node);
-            nodeEvents.ShouldHaveCount(3);
-            nodeEvents.ElementAt(0).ShouldBeOfType<Created>();
-            nodeEvents.ElementAt(1).ShouldBeOfType<Traced>();
-            nodeEvents.ElementAt(2).ShouldBeOfType<Traced>();
-        }
-
-        [Test]
-        public void associates_the_source_with_all_the_events()
-        {
-            theLog.EventsBySubject(node).Each(x => x.Source.Action.ShouldBeTheSameAs(source1));
-            theLog.EventsBySubject(node2).Each(x => x.Source.Action.ShouldBeTheSameAs(source1));
-        }
-
-        [Test]
-        public void can_retrieve_events_for_the_second_node()
-        {
-            theLog.EventsBySubject(node2).Single().ShouldBeOfType<Created>()
-                .Subject.ShouldBeTheSameAs(node2);
-        }
     }
 }

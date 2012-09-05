@@ -149,6 +149,8 @@ namespace FubuMVC.Core.Registration
 
         void IChainImporter.Import(BehaviorGraph graph, Action<BehaviorChain> alternation)
         {
+            _log.Import(graph.Log);
+
             graph.Behaviors.Each(b =>
             {
                 AddChain(b);

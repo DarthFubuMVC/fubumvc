@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
+using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.UI.Navigation;
-using FubuMVC.Core.View.Attachment;
-using FubuCore;
 
 namespace FubuMVC.Core
 {
@@ -25,7 +24,7 @@ namespace FubuMVC.Core
     /// </example>
     public partial class FubuRegistry
     {
-        private readonly ConfigurationGraph _configuration = new ConfigurationGraph();
+        private readonly ConfigurationGraph _configuration;
         private readonly IList<Type> _importedTypes = new List<Type>();
         private readonly ActionMethodFilter _methodFilter = new ActionMethodFilter();
         private readonly IList<Action<TypePool>> _scanningOperations = new List<Action<TypePool>>();
@@ -34,9 +33,10 @@ namespace FubuMVC.Core
 
         public FubuRegistry()
         {
+            _configuration = new ConfigurationGraph(this);
         }
 
-        public FubuRegistry(Action<FubuRegistry> configure)
+        public FubuRegistry(Action<FubuRegistry> configure) : this()
         {
             configure(this);
         }
@@ -60,20 +60,6 @@ namespace FubuMVC.Core
         public virtual string Name
         {
             get { return GetType().ToString(); }
-        }
-
-        /// <summary>
-        ///   Constructs a <see cref = "BehaviorGraph" /> using the configuration expressions defined in this <see cref = "FubuRegistry" />. This method is mostly for internal usage.
-        /// </summary>
-        /// <returns></returns>
-        internal BehaviorGraph BuildGraph()
-        {
-            Compile();
-
-            var graph = new BehaviorGraph();
-            _configuration.Build(graph);
-
-            return graph;
         }
 
         /// <summary>
@@ -189,7 +175,7 @@ namespace FubuMVC.Core
             _configuration.AddImport(new RegistryImport{
                 Prefix = prefix,
                 Registry = new T(),
-                Type = typeof(T)
+                Type = typeof (T)
             });
         }
 
@@ -206,15 +192,6 @@ namespace FubuMVC.Core
         }
 
         /// <summary>
-        ///   Specifies whether to include diagnostics tracing. This is turned off by default
-        /// </summary>
-        [Obsolete("As of FubuMVC 0.9.7, you just need to deploy the FubuMVC.Diagnostics assembly to the bin path of the application to include the diagnostics")]
-        public void IncludeDiagnostics(bool shouldInclude)
-        {
-            throw new NotSupportedException("FubuRegistry.IncludeDiagnostics() is not longer supported.  Use the FubuMVC.Diagnostics nuget/Bottle instead");
-        }
-
-        /// <summary>
         ///   Allows you to directly manipulate the BehaviorGraph produced by this FubuRegistry.
         ///   This should only be used after careful consideration and subsequent rejection of all other entry points to configuring the runtime
         ///   behaviour.
@@ -222,6 +199,29 @@ namespace FubuMVC.Core
         public void Configure(Action<BehaviorGraph> alteration)
         {
             addExplicit(alteration);
+        }
+
+        /// <summary>
+        ///   Constructs a <see cref = "BehaviorGraph" /> using the configuration expressions defined in this <see cref = "FubuRegistry" />. This method is mostly for internal usage.
+        /// </summary>
+        /// <returns></returns>
+        internal BehaviorGraph BuildGraph()
+        {
+            Compile();
+
+            return _configuration.Build();
+        }
+
+        /// <summary>
+        ///   Specifies whether to include diagnostics tracing. This is turned off by default
+        /// </summary>
+        [Obsolete(
+            "As of FubuMVC 0.9.7, you just need to deploy the FubuMVC.Diagnostics assembly to the bin path of the application to include the diagnostics"
+            )]
+        public void IncludeDiagnostics(bool shouldInclude)
+        {
+            throw new NotSupportedException(
+                "FubuRegistry.IncludeDiagnostics() is not longer supported.  Use the FubuMVC.Diagnostics nuget/Bottle instead");
         }
 
         internal void Compile()
@@ -266,22 +266,19 @@ namespace FubuMVC.Core
         {
             if (_importedTypes.Contains(typeof (T))) return;
 
-            if (typeof(T).CanBeCastTo<FubuPackageRegistry>())
+            if (typeof (T).CanBeCastTo<FubuPackageRegistry>())
             {
-                _configuration.AddImport(new RegistryImport
-                {
+                _configuration.AddImport(new RegistryImport{
                     Prefix = null,
                     Registry = new T().As<FubuRegistry>(),
-                    Type = typeof(T)
-                });             
+                    Type = typeof (T)
+                });
             }
             else
             {
                 new T().Configure(this);
-                _importedTypes.Add(typeof(T));
+                _importedTypes.Add(typeof (T));
             }
-
-
         }
 
         /// <summary>

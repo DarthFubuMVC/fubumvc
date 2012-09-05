@@ -10,7 +10,6 @@ namespace FubuMVC.Core.Registration.Diagnostics
     public class ConfigLog
     {
         private readonly BehaviorGraph _graph;
-        private readonly Cache<object, IList<NodeEvent>> _bySubject = new Cache<object, IList<NodeEvent>>(o => new List<NodeEvent>());
         private readonly IList<ConfigSource> _sources = new List<ConfigSource>();
         private ConfigSource _currentSource;
 
@@ -19,9 +18,14 @@ namespace FubuMVC.Core.Registration.Diagnostics
             _graph = graph;
         }
 
-        public void RunAction(IConfigurationAction action)
+        internal void Import(ConfigLog log)
         {
-            StartSource(action);
+            _sources.AddRange(log._sources);
+        }
+
+        public void RunAction(FubuRegistry provenance, IConfigurationAction action)
+        {
+            StartSource(provenance, action);
 
             action.Configure(_graph);
 
@@ -46,9 +50,9 @@ namespace FubuMVC.Core.Registration.Diagnostics
             }
         }
 
-        public ConfigSource StartSource(IConfigurationAction action)
+        public ConfigSource StartSource(FubuRegistry provenance, IConfigurationAction action)
         {
-            var source = new ConfigSource(action);
+            var source = new ConfigSource(provenance, action);
             _sources.Add(source);
 
             _currentSource = source;
@@ -62,15 +66,8 @@ namespace FubuMVC.Core.Registration.Diagnostics
             {
                 e.Chain = chain;
                 _currentSource.AddEvent(e);
-                _bySubject[model].Add(e);
             });
         }        
-
-
-        public IEnumerable<NodeEvent> EventsBySubject(object subject)
-        {
-            return _bySubject[subject];
-        }
 
         public IEnumerable<ConfigSource> AllConfigSources()
         {

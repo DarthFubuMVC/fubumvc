@@ -1,5 +1,8 @@
 using System.Linq;
+using FubuCore;
+using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -52,6 +55,54 @@ namespace FubuMVC.Tests
                     e.Chain.ShouldBeTheSameAs(chain);
                 });
             });
+        }
+
+        [Test]
+        public void each_configuration_source_has_the_provenance_set_simple_case_of_only_one_FubuRegistry()
+        {
+            var registry = new FubuRegistry();
+            registry.Actions.IncludeClassesSuffixedWithController();
+
+            var graph = BehaviorGraph.BuildFrom(registry);
+
+            graph.Log.AllConfigSources().Any().ShouldBeTrue();
+            graph.Log.AllConfigSources().Each(x => x.Provenance.ShouldBeTheSameAs(registry));
+        }
+
+
+        [Test]
+        public void capture_the_configuration_source_from_imports()
+        {
+            var registry = new FubuRegistry();
+            registry.Actions.IncludeClassesSuffixedWithController();
+            registry.Import<FakeRegistry>();
+
+            var graph = BehaviorGraph.BuildFrom(registry);
+
+            var chain = graph.BehaviorFor<FakeThing>(x => x.SayHello()).As<ITracedModel>();
+
+            // This is simple
+            chain.AllEvents().OfType<Created>().Single().Source.Provenance.ShouldBeOfType<FakeRegistry>();
+
+            graph.Log.AllConfigSources().Where(x => x.Provenance is FakeRegistry).Any().ShouldBeTrue();
+        
+        }
+    }
+
+
+    public class FakeRegistry : FubuPackageRegistry
+    {
+        public FakeRegistry()
+        {
+            Actions.IncludeType<FakeThing>();
+        }
+    }
+
+    public class FakeThing
+    {
+        public string SayHello()
+        {
+            return "Hello!";
         }
     }
 }
