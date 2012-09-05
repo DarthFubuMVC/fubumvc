@@ -154,6 +154,7 @@ namespace FubuMVC.Core.Registration
             graph.Behaviors.Each(b =>
             {
                 AddChain(b);
+                b.Trace(new ChainImported());
                 alternation(b);
             });
         }
@@ -493,6 +494,11 @@ namespace FubuMVC.Core.Registration
         {
             return behaviors.OrderBy(b => b.Rank);
         }
+    }
+
+    public class ChainImported : NodeEvent
+    {
+        
     }
 
     public interface IRouteIterator

@@ -83,9 +83,12 @@ namespace FubuMVC.Tests
 
             // This is simple
             chain.AllEvents().OfType<Created>().Single().Source.Provenance.ShouldBeOfType<FakeRegistry>();
+            chain.AllEvents().OfType<ChainImported>().Single().Source.Action.ShouldBeOfType<RegistryImport>();
 
             graph.Log.AllConfigSources().Where(x => x.Provenance is FakeRegistry).Any().ShouldBeTrue();
         
+
+
         }
     }
 
