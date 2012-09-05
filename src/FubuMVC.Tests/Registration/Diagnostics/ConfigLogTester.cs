@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.Registration.Diagnostics
         public void SetUp()
         {
             source1 = new LambdaConfigurationAction(g => { });
-            theLog = new ConfigLog();
+            theLog = new ConfigLog(null);
             theChain = new BehaviorChain();
 
             node = new TracedNode();

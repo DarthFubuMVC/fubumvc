@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using FubuCore.Util;
 using FubuMVC.Core.Registration.Nodes;
@@ -8,9 +9,42 @@ namespace FubuMVC.Core.Registration.Diagnostics
 {
     public class ConfigLog
     {
+        private readonly BehaviorGraph _graph;
         private readonly Cache<object, IList<NodeEvent>> _bySubject = new Cache<object, IList<NodeEvent>>(o => new List<NodeEvent>());
         private readonly IList<ConfigSource> _sources = new List<ConfigSource>();
         private ConfigSource _currentSource;
+
+        public ConfigLog(BehaviorGraph graph)
+        {
+            _graph = graph;
+        }
+
+        public void RunAction(IConfigurationAction action)
+        {
+            StartSource(action);
+
+            action.Configure(_graph);
+
+            _graph.Behaviors.Each(chain =>
+            {
+                TracedModelsFor(chain).Each(node => RecordEvents(chain, node));
+            });
+        }
+
+        public IEnumerable<ITracedModel> TracedModelsFor(BehaviorChain chain)
+        {
+            yield return chain;
+
+            if (chain.Route != null)
+            {
+                yield return (ITracedModel) chain.Route;
+            }
+
+            foreach (var node in chain)
+            {
+                yield return node;
+            }
+        }
 
         public ConfigSource StartSource(IConfigurationAction action)
         {
@@ -24,7 +58,7 @@ namespace FubuMVC.Core.Registration.Diagnostics
 
         public void RecordEvents(BehaviorChain chain, ITracedModel model)
         {
-            model.RecordEvents(chain, e =>
+            model.RecordEvents(e =>
             {
                 e.Chain = chain;
                 _currentSource.AddEvent(e);

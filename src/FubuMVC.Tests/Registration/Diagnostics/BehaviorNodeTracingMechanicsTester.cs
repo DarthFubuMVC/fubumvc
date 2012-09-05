@@ -46,7 +46,7 @@ namespace FubuMVC.Tests.Registration.Diagnostics
         {
             var list = new List<NodeEvent>();
 
-            theTracedNode.RecordEvents(null, list.Add);
+            theTracedNode.RecordEvents(list.Add);
 
             list.Single().ShouldBeOfType<Created>();
 
@@ -54,7 +54,7 @@ namespace FubuMVC.Tests.Registration.Diagnostics
 
             theTracedNode.Trace("something");
 
-            theTracedNode.RecordEvents(null, list.Add);
+            theTracedNode.RecordEvents(list.Add);
 
             list.Last().ShouldBeOfType<Traced>().Text.ShouldEqual("something");
 

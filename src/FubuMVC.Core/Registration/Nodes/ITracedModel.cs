@@ -9,6 +9,7 @@ namespace FubuMVC.Core.Registration.Nodes
         void Trace(NodeEvent @event);
         void Trace(string text, params object[] parameters);
         IEnumerable<NodeEvent> StagedEvents { get; }
-        void RecordEvents(BehaviorChain chain, Action<NodeEvent> callback);
+        void RecordEvents(Action<NodeEvent> callback);
+        IEnumerable<NodeEvent> AllEvents();
     }
 }

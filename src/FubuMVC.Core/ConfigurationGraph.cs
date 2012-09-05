@@ -74,7 +74,10 @@ namespace FubuMVC.Core
         {
             graph.Views = _engineRegistry.BuildViewBag(_types);
 
-            AllConfigurationActions().Each(x => x.Configure(graph));
+            AllConfigurationActions().Each(x =>
+            {
+                graph.Log.RunAction(x);
+            });
         }
 
         private IEnumerable<IConfigurationAction> viewAttachers()

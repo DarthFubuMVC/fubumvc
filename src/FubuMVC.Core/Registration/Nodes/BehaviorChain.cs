@@ -367,4 +367,6 @@ namespace FubuMVC.Core.Registration.Nodes
             return resourceType != null && !resourceType.CanBeCastTo<Task>() && resourceType != typeof (void);
         }
     }
+
+
 }

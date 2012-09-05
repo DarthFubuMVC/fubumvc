@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using FubuCore;
+using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Querying;
@@ -37,6 +38,7 @@ namespace FubuMVC.Core.Registration
         private readonly ServiceGraph _services = new ServiceGraph();
         private readonly Lazy<IFubuApplicationFiles> _files = new Lazy<IFubuApplicationFiles>(() => new FubuApplicationFiles());
         private readonly SettingsCollection _settings;
+        private readonly ConfigLog _log;
 
         public static BehaviorGraph BuildFrom(FubuRegistry registry)
         {
@@ -56,6 +58,11 @@ namespace FubuMVC.Core.Registration
             return registry.BuildGraph();
         }
 
+        public ConfigLog Log
+        {
+            get { return _log; }
+        }
+
         public static BehaviorGraph ForChild(BehaviorGraph parent)
         {
             return new BehaviorGraph(parent);
@@ -68,6 +75,8 @@ namespace FubuMVC.Core.Registration
 
         public BehaviorGraph()
         {
+            _log = new ConfigLog(this);
+
             _settings = new SettingsCollection(null);
             _settings.Replace(SessionStateRequirement.RequiresSessionState);
 

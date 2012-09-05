@@ -101,6 +101,13 @@ namespace FubuMVC.Tests.Registration.Nodes
         #endregion
 
         [Test]
+        public void starts_with_the_ChainCreated_event()
+        {
+            var chain = new BehaviorChain();
+            chain.As<ITracedModel>().StagedEvents.Single().ShouldBeOfType<Created>();
+        }
+
+        [Test]
         public void adding_a_node_to_the_end_sets_the_chain_on_the_node()
         {
             var chain = new BehaviorChain();

@@ -158,6 +158,7 @@
     <Compile Include="Assets\Http\ContentPipelineTester.cs" />
     <Compile Include="Assets\Http\ContentWriterTester.cs" />
     <Compile Include="Assets\WarmUpSetsForCombinationPolicyTester.cs" />
+    <Compile Include="BehaviorGraph_Logging_IntegratedTester.cs" />
     <Compile Include="Behaviors\Chrome\ChromeAttributeTester.cs" />
     <Compile Include="Behaviors\Chrome\ChromeNodeTester.cs" />
     <Compile Include="Bugs\DoubleRegistrationOfImports.cs" />
