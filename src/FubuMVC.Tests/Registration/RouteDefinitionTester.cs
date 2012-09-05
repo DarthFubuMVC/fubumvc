@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 using System.Web.Routing;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuCore.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration.Routes;
@@ -617,5 +618,43 @@ namespace FubuMVC.Tests.Registration
 
             Assert.IsFalse(Regex.Match(route.Url, @":\w+").Success);
         }
+
+        [Test]
+        public void describing_itself_session_state()
+        {
+            var route = new RouteDefinition("something");
+            route.SessionStateRequirement.ShouldBeNull();
+
+            Description.For(route).Properties["SessionStateRequirement"].ShouldEqual("Default");
+
+
+            route.SessionStateRequirement = SessionStateRequirement.RequiresSessionState;
+
+            Description.For(route).Properties["SessionStateRequirement"].ShouldEqual(
+                SessionStateRequirement.RequiresSessionState.ToString());
+        }
+
+        [Test]
+        public void describing_itself_gets_the_title()
+        {
+            Description.For(new RouteDefinition("something")).Title.ShouldEqual("something");
+        }
+
+        [Test]
+        public void describe_itself_adds_child_for_RouteInput()
+        {
+            var route = RouteBuilder.Build(typeof (BigModel), "big/{Name}/{State}");
+
+            var description = Description.For(route);
+
+            description.Children["RouteInput"].Title.ShouldEqual(Description.For(route.Input).Title);
+        }
+
+    }
+
+    public class BigModel
+    {
+        public string Name { get; set; }
+        public string State { get; set; }
     }
 }

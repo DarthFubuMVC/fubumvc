@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuCore.Reflection;
 
 namespace FubuMVC.Core.Registration.Routes
 {
-    public class RouteParameter
+    public class RouteParameter : DescribesItself
     {
         // Use the first property to get the name
         // use the full blown accessor to get the value
@@ -129,6 +130,16 @@ namespace FubuMVC.Core.Registration.Routes
         public override int GetHashCode()
         {
             return (_accessor != null ? _accessor.GetHashCode() : 0);
+        }
+
+        void DescribesItself.Describe(Description description)
+        {
+            description.Title = _accessor.ToString();
+
+            if (DefaultValue != null)
+            {
+                description.Properties["DefaultValue"] = DefaultValue.ToString();
+            }
         }
 
         public override string ToString()

@@ -5,11 +5,12 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Web.Routing;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuCore.Reflection;
 
 namespace FubuMVC.Core.Registration.Routes
 {
-    public class RouteInput<T> : IRouteInput
+    public class RouteInput<T> : IRouteInput, DescribesItself
     {
         private RouteDefinition _parent;
         private readonly List<RouteParameter> _queryParameters = new List<RouteParameter>();
@@ -214,6 +215,25 @@ namespace FubuMVC.Core.Registration.Routes
         public override string ToString()
         {
             return "{0} --> {1}".ToFormat(_parent.Pattern, typeof(T).FullName);
+        }
+
+        void DescribesItself.Describe(Description description)
+        {
+            description.Title = "RouteInput for " + typeof (T).Name;
+            description.ShortDescription =
+                "Responsible for binding property values of an existing model {0} to a url pattern".ToFormat(
+                    typeof (T).Name);
+
+
+            if (_routeParameters.Any())
+            {
+                description.AddList("Route Inputs", _routeParameters);
+            }
+
+            if (_queryParameters.Any())
+            {
+                description.AddList("Query Inputs", _queryParameters);
+            }
         }
     }
 }

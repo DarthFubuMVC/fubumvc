@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.Routing;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuCore.Util;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Registration.Routes
 {
-    public class RouteDefinition : TracedNode, IRouteDefinition
+    public class RouteDefinition : TracedNode, IRouteDefinition, DescribesItself
     {
         public static readonly IEnumerable<string> VERBS = new List<string>{
             "POST",
@@ -216,6 +217,23 @@ namespace FubuMVC.Core.Registration.Routes
         {
             // TODO -- need to account for the input?
             return string.Format("{0}", _pattern);
+        }
+
+        void DescribesItself.Describe(Description description)
+        {
+            description.Title = Pattern;
+            if (_input != null) description.Children["RouteInput"] = Description.For(_input);
+
+            if (_constraints.Any())
+            {
+                description.AddList("Constraints", _constraints);
+            }
+
+            description.Properties["Http Verbs"] = AllowedHttpMethods.Any() ? AllowedHttpMethods.Join(", ") : "Any";
+
+            description.Properties["SessionStateRequirement"] = SessionStateRequirement == null
+                                                                    ? "Default"
+                                                                    : SessionStateRequirement.ToString();
         }
 
         public static IRouteDefinition Empty()
