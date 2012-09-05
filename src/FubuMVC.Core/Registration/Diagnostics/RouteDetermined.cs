@@ -1,12 +1,14 @@
+using FubuCore.Descriptions;
 using FubuMVC.Core.Registration.Routes;
 
 namespace FubuMVC.Core.Registration.Diagnostics
 {
-    public class RouteDefined : NodeEvent
+    [Title("Route Determined")]
+    public class RouteDetermined : NodeEvent
     {
         private readonly IRouteDefinition _definition;
 
-        public RouteDefined(IRouteDefinition definition)
+        public RouteDetermined(IRouteDefinition definition)
         {
             _definition = definition;
         }
@@ -16,7 +18,7 @@ namespace FubuMVC.Core.Registration.Diagnostics
             get { return _definition; }
         }
 
-        public bool Equals(RouteDefined other)
+        public bool Equals(RouteDetermined other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -27,8 +29,8 @@ namespace FubuMVC.Core.Registration.Diagnostics
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof (RouteDefined)) return false;
-            return Equals((RouteDefined) obj);
+            if (obj.GetType() != typeof (RouteDetermined)) return false;
+            return Equals((RouteDetermined) obj);
         }
 
         public override int GetHashCode()

@@ -1,8 +1,10 @@
+using System;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Registration.Diagnostics
 {
-    public class NodeReplaced : NodeEvent
+    public class NodeReplaced : NodeEvent, DescribesItself
     {
         private readonly TracedNode _oldNode;
         private readonly TracedNode _newNode;
@@ -44,6 +46,12 @@ namespace FubuMVC.Core.Registration.Diagnostics
             {
                 return ((_oldNode != null ? _oldNode.GetHashCode() : 0)*397) ^ (_newNode != null ? _newNode.GetHashCode() : 0);
             }
+        }
+
+        void DescribesItself.Describe(Description description)
+        {
+            description.Children["Old"] = Description.For(OldNode);
+            description.Children["New"] = Description.For(NewNode);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using FubuCore.Dates;
+using FubuCore.Descriptions;
 using FubuCore.Util;
 using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
@@ -141,7 +142,7 @@ namespace FubuMVC.Core.Registration
         }
     }
 
-    public class ServiceAdded : NodeEvent
+    public class ServiceAdded : NodeEvent, DescribesItself
     {
         private readonly Type _serviceType;
         private readonly ObjectDef _def;
@@ -184,9 +185,15 @@ namespace FubuMVC.Core.Registration
                 return ((_serviceType != null ? _serviceType.GetHashCode() : 0)*397) ^ (_def != null ? _def.GetHashCode() : 0);
             }
         }
+
+        void DescribesItself.Describe(Description description)
+        {
+            description.Properties["Service Type"] = _serviceType.FullName;
+            description.Children["ObjectDef"] = Description.For(_def);
+        }
     }
 
-    public class ServiceRemoved : NodeEvent
+    public class ServiceRemoved : NodeEvent, DescribesItself
     {
         private readonly Type _serviceType;
         private readonly ObjectDef _def;
@@ -228,6 +235,11 @@ namespace FubuMVC.Core.Registration
             {
                 return ((_serviceType != null ? _serviceType.GetHashCode() : 0)*397) ^ (_def != null ? _def.GetHashCode() : 0);
             }
+        }
+
+        void DescribesItself.Describe(Description description)
+        {
+            description.Children["Service"] = Description.For(_def);
         }
     }
 }

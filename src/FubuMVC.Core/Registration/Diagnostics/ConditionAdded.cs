@@ -1,8 +1,9 @@
 using System;
+using FubuCore.Descriptions;
 
 namespace FubuMVC.Core.Registration.Diagnostics
 {
-    public class ConditionAdded : NodeEvent
+    public class ConditionAdded : NodeEvent, DescribesItself
     {
         private readonly string _description;
         private readonly Type _type;
@@ -27,6 +28,11 @@ namespace FubuMVC.Core.Registration.Diagnostics
             get {
                 return _type;
             }
+        }
+
+        void DescribesItself.Describe(Description description)
+        {
+            description.Properties["Condition"] = _description;
         }
     }
 }

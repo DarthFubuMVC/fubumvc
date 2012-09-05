@@ -8,10 +8,12 @@ using FubuCore.Descriptions;
 using FubuCore.Logging;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Caching;
+using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
+using FubuMVC.Core.View.Attachment;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -20,6 +22,31 @@ namespace FubuMVC.Tests.Runtime
     [TestFixture]
     public class must_be_descriptions_on_important_things
     {
+
+        [Test]
+        public void must_be_a_description_on_all_node_events()
+        {
+            var types = typeof(FubuRequest).Assembly.GetExportedTypes()
+                .Where(x => x.IsConcreteTypeOf<NodeEvent>())
+                .Where(x => !Description.HasExplicitDescription(x));
+
+            types.Each(x => Debug.WriteLine(x.Name));
+
+            types.Any().ShouldBeFalse();
+        }
+
+        [Test]
+        public void must_be_a_description_on_all_IViewsForActionFilter_implementations()
+        {
+            var types = typeof(FubuRequest).Assembly.GetExportedTypes()
+                .Where(x => x.IsConcreteTypeOf<IViewsForActionFilter>())
+                .Where(x => !Description.HasExplicitDescription(x));
+
+            types.Each(x => Debug.WriteLine(x.Name));
+
+            types.Any().ShouldBeFalse();
+        }
+
 
         [Test]
         public void must_be_a_description_on_all_writer_nodes()

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
@@ -496,6 +497,7 @@ namespace FubuMVC.Core.Registration
         }
     }
 
+    [Title("Imported from another FubuRegistry")]
     public class ChainImported : NodeEvent
     {
         

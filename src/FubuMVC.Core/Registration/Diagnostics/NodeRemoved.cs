@@ -1,8 +1,10 @@
+using System;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Registration.Diagnostics
 {
-    public class NodeRemoved : NodeEvent
+    public class NodeRemoved : NodeEvent, DescribesItself
     {
         private readonly TracedNode _node;
 
@@ -34,6 +36,11 @@ namespace FubuMVC.Core.Registration.Diagnostics
         public override int GetHashCode()
         {
             return (_node != null ? _node.GetHashCode() : 0);
+        }
+
+        void DescribesItself.Describe(Description description)
+        {
+            description.Children["Node"] = Description.For(Node);
         }
     }
 }

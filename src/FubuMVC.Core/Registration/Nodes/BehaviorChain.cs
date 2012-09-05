@@ -123,7 +123,7 @@ namespace FubuMVC.Core.Registration.Nodes
             get { return _route; }
             set
             {
-                Trace(new RouteDefined(value));
+                Trace(new RouteDetermined(value));
                 _route = value;
             }
         }

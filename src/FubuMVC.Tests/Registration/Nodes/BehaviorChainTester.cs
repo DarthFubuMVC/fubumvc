@@ -126,7 +126,7 @@ namespace FubuMVC.Tests.Registration.Nodes
 
             chain.Route = route;
 
-            chain.As<ITracedModel>().StagedEvents.Last().ShouldEqual(new RouteDefined(route));
+            chain.As<ITracedModel>().StagedEvents.Last().ShouldEqual(new RouteDetermined(route));
         }
 
 
