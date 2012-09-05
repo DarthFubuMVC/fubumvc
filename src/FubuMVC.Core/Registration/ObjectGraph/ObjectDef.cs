@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using FubuCore;
+using FubuCore.Descriptions;
 
 namespace FubuMVC.Core.Registration.ObjectGraph
 {
@@ -22,7 +23,7 @@ namespace FubuMVC.Core.Registration.ObjectGraph
     /// IoC container-agnostic model of a service or configured object.  The
     /// equivalent of a StructureMap "Instance" or a Windsor "Component" 
     /// </summary>
-    public class ObjectDef
+    public class ObjectDef : DescribesItself
     {
         private readonly IList<IDependency> _dependencies;
 
@@ -261,6 +262,24 @@ namespace FubuMVC.Core.Registration.ObjectGraph
         public override string ToString()
         {
             return string.Format("Name: {0}, Type: {1}, Value: {2}", Name, Type, Value);
+        }
+
+        void DescribesItself.Describe(Description description)
+        {
+            if (Type != null)
+            {
+                description.Properties["Type"] = Type.FullName;
+            }
+
+            if (Value != null)
+            {
+                description.Properties["Value"] = Value.ToString();
+            }
+
+            _dependencies.Each(x =>
+            {
+                description.Children[x.DependencyType.FullName] = Description.For(x);
+            });
         }
 
         /// <summary>

@@ -36,5 +36,7 @@ namespace FubuMVC.Tests.Registration
 
             visitor.AssertWasCalled(x => x.Value(dependency));
         }
+
+
     }
 }

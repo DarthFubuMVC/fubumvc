@@ -10,6 +10,7 @@ using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
@@ -22,6 +23,19 @@ namespace FubuMVC.Tests.Runtime
     [TestFixture]
     public class must_be_descriptions_on_important_things
     {
+
+        [Test]
+        public void must_be_a_description_on_all_IDependency_types()
+        {
+            var types = typeof(FubuRequest).Assembly.GetExportedTypes()
+                .Where(x => x.IsConcreteTypeOf<IDependency>())
+                .Where(x => !Description.HasExplicitDescription(x));
+
+            types.Each(x => Debug.WriteLine(x.Name));
+
+            types.Any().ShouldBeFalse();            
+        }
+
 
         [Test]
         public void must_be_a_description_on_all_node_events()

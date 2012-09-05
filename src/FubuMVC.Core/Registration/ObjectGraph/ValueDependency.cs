@@ -1,5 +1,6 @@
 using System;
 using FubuCore;
+using FubuCore.Descriptions;
 
 namespace FubuMVC.Core.Registration.ObjectGraph
 {
@@ -35,6 +36,12 @@ namespace FubuMVC.Core.Registration.ObjectGraph
         public override string ToString()
         {
             return string.Format("DependencyType: {1}, Value: {0}", Value, DependencyType);
+        }
+
+        public void Describe(Description description)
+        {
+            description.Title = "Dependency of type " + DependencyType.FullName;
+            description.Children["Value"] = Description.For(Value);
         }
     }
 }

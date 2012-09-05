@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FubuCore.Descriptions;
 
 namespace FubuMVC.Core.Registration.ObjectGraph
 {
@@ -84,6 +85,12 @@ namespace FubuMVC.Core.Registration.ObjectGraph
         public void Clear()
         {
             _items.Clear();
+        }
+
+        void DescribesItself.Describe(Description description)
+        {
+            description.Title = "Enumerable Dependency of " + ElementType.FullName;
+            description.AddList("Items", _items);
         }
     }
 }
