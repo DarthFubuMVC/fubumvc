@@ -9,7 +9,7 @@ using FubuCore;
 
 namespace FubuMVC.Core.View
 {
-    public class ViewNode : WriterNode, DescribesItself
+    public class ViewNode : WriterNode
     {
         private readonly IViewToken _token;
 
@@ -47,13 +47,14 @@ namespace FubuMVC.Core.View
             return "View {0}, Condition {1}".ToFormat(_token.Name(), ConditionType.Name);
         }
 
-        void DescribesItself.Describe(Description description)
+        protected override void createDescription(Description description)
         {
-            description.ShortDescription = _token.Namespace.IsNotEmpty() 
-                ? "View {0}.{1}, Condition {2}".ToFormat(_token.Namespace,_token.Name(), ConditionType.Name) 
+            description.ShortDescription = _token.Namespace.IsNotEmpty()
+                ? "View {0}.{1}, Condition {2}".ToFormat(_token.Namespace, _token.Name(), ConditionType.Name)
                 : ToString();
 
             description.Title = "View " + _token.Name();
         }
+
     }
 }

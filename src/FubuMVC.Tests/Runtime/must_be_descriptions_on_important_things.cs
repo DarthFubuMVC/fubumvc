@@ -22,6 +22,30 @@ namespace FubuMVC.Tests.Runtime
     {
 
         [Test]
+        public void must_be_a_description_on_all_writer_nodes()
+        {
+            var types = typeof(FubuRequest).Assembly.GetExportedTypes()
+                .Where(x => x.IsConcreteTypeOf<WriterNode>())
+                .Where(x => !Description.HasExplicitDescription(x));
+
+            types.Each(x => Debug.WriteLine(x.Name));
+
+            types.Any().ShouldBeFalse();
+        }        
+
+        [Test]
+        public void must_be_a_description_on_all_reader_nodes()
+        {
+            var types = typeof(FubuRequest).Assembly.GetExportedTypes()
+                .Where(x => x.IsConcreteTypeOf<ReaderNode>())
+                .Where(x => !Description.HasExplicitDescription(x));
+
+            types.Each(x => Debug.WriteLine(x.Name));
+
+            types.Any().ShouldBeFalse();
+        }
+
+        [Test]
         public void must_be_a_description_on_all_media_writers()
         {
             // IMediaWriter<T>

@@ -155,6 +155,8 @@ namespace FubuMVC.Core.Resources.Conneg
         {
             description.Title = "OutputNode";
             description.ShortDescription = "Render the output for resource " + ResourceType.Name;
+
+            description.AddList("Writers", Writers);
         }
 
         public override string Description

@@ -7,7 +7,7 @@ using FubuMVC.Core.Registration.ObjectGraph;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
-    public class Writer : WriterNode, DescribesItself
+    public class Writer : WriterNode
     {
         private readonly Type _resourceType;
         private readonly Type _writerType;
@@ -64,7 +64,7 @@ namespace FubuMVC.Core.Resources.Conneg
             get { return MimeTypeAttribute.ReadFrom(WriterType); }
         }
 
-        void DescribesItself.Describe(Description description)
+        protected override void createDescription(Description description)
         {
             description.Title = _writerType.Name;
             description.ShortDescription = "Writes the resource model {0} with {1}".ToFormat(_resourceType.FullName,

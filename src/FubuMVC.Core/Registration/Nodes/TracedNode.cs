@@ -20,12 +20,18 @@ namespace FubuMVC.Core.Registration.Nodes
         {
             _stagedEvents.Enqueue(@event);
             @event.Subject = this;
+            _events.Add(@event);
         }
 
         public void Trace(string text, params object[] parameters)
         {
             var message = parameters.Any() ? text.ToFormat(parameters) : text;
-            _stagedEvents.Enqueue(new Traced(message));
+            Trace(new Traced(message));
+        }
+
+        protected T findLastLog<T>()
+        {
+            return _events.OfType<T>().LastOrDefault();
         }
 
         IEnumerable<NodeEvent> ITracedModel.StagedEvents
@@ -42,8 +48,6 @@ namespace FubuMVC.Core.Registration.Nodes
                 e.Subject = this;
 
                 callback(e);
-
-                _events.Add(e);
             }
         }
 

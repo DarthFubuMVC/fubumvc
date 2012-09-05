@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
@@ -66,6 +67,11 @@ namespace FubuMVC.Tests.Registration.Conventions
         public override IEnumerable<string> Mimetypes
         {
             get { throw new NotImplementedException(); }
+        }
+
+        protected override void createDescription(Description description)
+        {
+            throw new NotImplementedException();
         }
     }
 

@@ -119,6 +119,8 @@ namespace FubuMVC.Core.Resources.Conneg
         {
             description.ShortDescription =
                 "Performs content negotiation and model resolution from the request for the type " + InputType().Name;
+
+            description.AddList("Readers", _readers);
         }
     }
 }

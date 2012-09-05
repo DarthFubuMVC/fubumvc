@@ -7,7 +7,7 @@ using FubuMVC.Core.Runtime.Formatters;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
-    public class WriteWithFormatter : WriterNode, DescribesItself
+    public class WriteWithFormatter : WriterNode
     {
         private readonly Type _resourceType;
         private readonly Type _formatterType;
@@ -71,7 +71,7 @@ namespace FubuMVC.Core.Resources.Conneg
             }
         }
 
-        void DescribesItself.Describe(Description description)
+        protected override void createDescription(Description description)
         {
             description.Title = _formatterType.Name;
             description.ShortDescription = "Writes to the output stream by serializing the request body with " +

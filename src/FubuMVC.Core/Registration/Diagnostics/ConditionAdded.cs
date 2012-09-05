@@ -12,7 +12,7 @@ namespace FubuMVC.Core.Registration.Diagnostics
             _description = description;
         }
 
-        public ConditionAdded(Type type)
+        public ConditionAdded(Type type) : this(type.Name)
         {
             _type = type;
         }

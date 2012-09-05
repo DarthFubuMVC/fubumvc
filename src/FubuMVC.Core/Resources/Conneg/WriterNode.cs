@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
@@ -9,7 +10,7 @@ using FubuMVC.Core.Runtime.Conditionals;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
-    public abstract class WriterNode : Node<WriterNode, WriterChain>, IContainerModel
+    public abstract class WriterNode : Node<WriterNode, WriterChain>, IContainerModel, DescribesItself
     {
         private static readonly ObjectDef _always = ObjectDef.ForValue(Always.Flyweight);
 
@@ -100,5 +101,14 @@ namespace FubuMVC.Core.Resources.Conneg
         }
 
         public abstract IEnumerable<string> Mimetypes { get; }
+
+        void DescribesItself.Describe(Description description)
+        {
+            createDescription(description);
+            var conditionAdded = findLastLog<ConditionAdded>();
+            description.Properties["Condition"] = conditionAdded == null ? "Always" : conditionAdded.Description;
+        }
+
+        protected abstract void createDescription(Description description);
     }
 }
