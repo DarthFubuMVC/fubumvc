@@ -25,6 +25,12 @@ namespace FubuMVC.Tests
         }
 
         [Test]
+        public void the_ConfigurationGraph_is_registered_in_the_services_for_later()
+        {
+            theGraph.Services.ServicesFor(typeof (ConfigurationGraph)).Single().Value.ShouldNotBeNull();
+        }
+
+        [Test]
         public void source_and_chain_are_associated_with_each_event()
         {
             theGraph.Behaviors.OfType<ITracedModel>().Any().ShouldBeTrue();

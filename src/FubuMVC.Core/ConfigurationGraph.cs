@@ -87,6 +87,8 @@ namespace FubuMVC.Core
                 graph.Log.RunAction(_registry, x);
             });
 
+            graph.Services.AddService(this);
+
             return graph;
         }
 
@@ -97,7 +99,7 @@ namespace FubuMVC.Core
 
         public BehaviorGraph BuildForImport(BehaviorGraph parent)
         {
-            var lightweightActions = allDiscoveryActions()
+            var lightweightActions = AllDiscoveryActions()
                 .Union(_imports)
                 .Union(_configurations[ConfigurationType.Explicit])
                 .Union(_configurations[ConfigurationType.Policy])
@@ -128,7 +130,7 @@ namespace FubuMVC.Core
             }
         }
 
-        private IEnumerable<IConfigurationAction> uniqueImports()
+        public IEnumerable<IConfigurationAction> UniqueImports()
         {
             var children = allChildrenImports().ToList();
 
@@ -137,21 +139,40 @@ namespace FubuMVC.Core
 
         public IEnumerable<IConfigurationAction> AllConfigurationActions()
         {
-            return serviceRegistrations().OfType<IConfigurationAction>()
-                .Union(systemServices())
-                .Union(serviceRegistrations())
-                .Union(allDiscoveryActions())
-                .Union(uniqueImports())
+            return AllServiceRegistrations()
+                .Union(AllDiscoveryActions())
+                .Union(UniqueImports())
                 .Union(_configurations[ConfigurationType.Explicit])
-                .Union(_configurations[ConfigurationType.Policy])
-                .Union(viewAttachers())
-                .Union(new IConfigurationAction[]{new ActionlessViewConvention()})
-                .Union(fullGraphPolicies())
-                .Union(navigationRegistrations().OfType<IConfigurationAction>())
-                .Union(new IConfigurationAction[]{new MenuItemAttributeConfigurator(), new CompileNavigationStep()})
+                .Union(AllPolicies())
+                .Union(SystemPolicies())
                 .Union(_configurations[ConfigurationType.ByNavigation])
                 .Union(_configurations[ConfigurationType.Reordering])
                 .Union(_configurations[ConfigurationType.Instrumentation]);
+        }
+
+        public IEnumerable<IConfigurationAction> ConfigurationsByType(ConfigurationType configurationType)
+        {
+            return _configurations[configurationType];
+        }
+
+        public IEnumerable<IConfigurationAction> SystemPolicies()
+        {
+            return viewAttachers()
+                .Union(new IConfigurationAction[]{new ActionlessViewConvention()})
+                .Union(fullGraphPolicies())
+                .Union(navigationRegistrations().OfType<IConfigurationAction>())
+                .Union(new IConfigurationAction[]{new MenuItemAttributeConfigurator(), new CompileNavigationStep()});
+        }
+
+        public IList<IConfigurationAction> AllPolicies()
+        {
+            return _configurations[ConfigurationType.Policy];
+        }
+
+        public IEnumerable<IConfigurationAction> AllServiceRegistrations()
+        {
+            return serviceRegistrations().OfType<IConfigurationAction>()
+                .Union(systemServices());
         }
 
         private static IEnumerable<IConfigurationAction> fullGraphPolicies()
@@ -194,7 +215,7 @@ namespace FubuMVC.Core
             };
         }
 
-        private IEnumerable<IConfigurationAction> allDiscoveryActions()
+        public IEnumerable<IConfigurationAction> AllDiscoveryActions()
         {
             if (_actionSources.Any())
             {
@@ -344,5 +365,9 @@ namespace FubuMVC.Core
         }
 
         #endregion
+
+        
     }
+
+
 }
