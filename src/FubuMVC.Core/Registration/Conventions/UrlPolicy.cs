@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuCore.Reflection;
 using FubuCore.Util;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
-using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
+    [Title("Default route determination conventions")]
     public class UrlPolicy : IUrlPolicy
     {
         private readonly Builder<ActionCall, string> _appendClassBuilder = new Builder<ActionCall, string>(call => "");

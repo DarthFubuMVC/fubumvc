@@ -1,5 +1,6 @@
 using System;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Registration.Nodes;
@@ -8,7 +9,8 @@ using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
-    public class DefaultRouteInputTypeBasedUrlPolicy : IUrlPolicy
+    
+    public class DefaultRouteInputTypeBasedUrlPolicy : IUrlPolicy, DescribesItself
     {
         private readonly Type _inputType;
         private bool _foundCallAlready;
@@ -45,6 +47,11 @@ namespace FubuMVC.Core.Registration.Conventions
             }
 
             return result;
+        }
+
+        void DescribesItself.Describe(Description description)
+        {
+            description.Title = "'Home' route should be an endpoint where input type is " + _inputType.FullName;
         }
     }
 }

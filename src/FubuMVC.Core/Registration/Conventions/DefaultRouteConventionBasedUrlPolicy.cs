@@ -1,9 +1,11 @@
-﻿using FubuMVC.Core.Registration.Nodes;
+﻿using FubuCore.Descriptions;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
+    [Title("Method named HomeEndpoint.Index() is the default route if none is explicitly registered")]
     public class DefaultRouteConventionBasedUrlPolicy : IUrlPolicy
     {
         private const string DefaultHomeControllerConvention = "HomeEndpoint";

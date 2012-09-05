@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Text.RegularExpressions;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
@@ -10,6 +12,8 @@ using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
+    [Title("HandlerUrlPolicy")]
+    [Description("Single action 'Handler' policy")]
     public class HandlersUrlPolicy : IUrlPolicy
     {
         public const string HANDLER = "Handler";
