@@ -19,6 +19,11 @@ namespace FubuMVC.Core.Runtime.Files
             _files = new Cache<string, IFubuFile>(findFile);
         }
 
+        public string GetApplicationPath()
+        {
+            return FubuMvcPackageFacility.GetApplicationPath();
+        }
+
         public IEnumerable<ContentFolder> Folders
         {
             get { return _folders.Value; }

@@ -57,5 +57,11 @@ namespace FubuMVC.Tests.Runtime.Files
                 FubuApplicationFiles.IsNotUnderExplodedBottleFolder(fubuFile).ShouldBeTrue();
             });
         }
+
+        [Test]
+        public void get_application_path_delegates_to_fubumvc_package_facility()
+        {
+            theFiles.GetApplicationPath().ShouldEqual(FubuMvcPackageFacility.GetApplicationPath());
+        }
     }
 }

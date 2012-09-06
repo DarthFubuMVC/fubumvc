@@ -1,5 +1,5 @@
 ﻿using FubuCore;
-using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Spark.Rendering;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -16,15 +16,11 @@ namespace FubuMVC.Spark.Tests.Rendering
         private FubuSparkView _fubuSparkView;
         private ISparkViewEngine _engine;
         private IResourcePathManager _resourcePathManager;
-        private SiteResourceAttacher.AppPath _appPath;
 
         protected override void beforeEach()
         {
 			_fubuSparkView = MockFor<FubuSparkView>();
             _engine = MockFor<ISparkViewEngine>();
-            _appPath = new SiteResourceAttacher.AppPath();
-            MockFor<IFubuRequest>().Stub(x => x.Get<SiteResourceAttacher.AppPath>()).Return(_appPath);
-
             _resourcePathManager = MockFor<IResourcePathManager>();
             _engine.Stub(x => x.ResourcePathManager).Return(_resourcePathManager);
         }
@@ -61,7 +57,8 @@ namespace FubuMVC.Spark.Tests.Rendering
 		
 		private void after_modification_site_resource_resolves_correctly(string applicationPath, string root, string expected)
         {
-            _appPath.ApplicationPath = applicationPath;
+            MockFor<IFubuApplicationFiles>().Expect(x => x.GetApplicationPath()).Return(applicationPath);
+
             _resourcePathManager
                 .Stub(x => x.GetResourcePath(root, TestPath))
                 .Return(expected);
