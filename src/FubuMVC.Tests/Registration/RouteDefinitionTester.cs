@@ -637,7 +637,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void describing_itself_gets_the_title()
         {
-            Description.For(new RouteDefinition("something")).Title.ShouldEqual("something");
+            Description.For(new RouteDefinition("something")).Title.ShouldEqual("Route:  something");
         }
 
         [Test]
@@ -647,7 +647,7 @@ namespace FubuMVC.Tests.Registration
 
             var description = Description.For(route);
 
-            description.Children["RouteInput"].Title.ShouldEqual(Description.For(route.Input).Title);
+            description.Children["Input"].Title.ShouldEqual(Description.For(route.Input).Title);
         }
 
     }
