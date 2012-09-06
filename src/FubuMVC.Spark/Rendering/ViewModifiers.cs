@@ -25,12 +25,12 @@ namespace FubuMVC.Spark.Rendering
     public class SiteResourceAttacher : BasicViewModifier<IFubuSparkView>
     {
         private readonly ISparkViewEngine _engine;
-        private readonly CurrentRequest _request;
+        private readonly IFubuRequest _request;
 
         public SiteResourceAttacher(ISparkViewEngine engine, IFubuRequest request)
         {
             _engine = engine;
-            _request = request.Get<CurrentRequest>();
+            _request = request;
         }
 
         public override IFubuSparkView Modify(IFubuSparkView view)
@@ -40,7 +40,7 @@ namespace FubuMVC.Spark.Rendering
 
         public string SiteResource(string path)
         {
-            var appPath = _request.ApplicationPath;
+            var appPath = _request.Get<AppPath>().ApplicationPath;
             var siteRoot = string.Empty;
             if (appPath.IsNotEmpty() && !string.Equals(appPath, "/"))
             {
@@ -48,6 +48,11 @@ namespace FubuMVC.Spark.Rendering
             }
 
             return _engine.ResourcePathManager.GetResourcePath(siteRoot, path);
+        }
+
+        public class AppPath
+        {
+            public string ApplicationPath { get; set; } 
         }
     }
 
