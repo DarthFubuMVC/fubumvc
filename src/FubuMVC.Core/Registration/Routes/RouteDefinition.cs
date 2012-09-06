@@ -221,8 +221,8 @@ namespace FubuMVC.Core.Registration.Routes
 
         void DescribesItself.Describe(Description description)
         {
-            description.Title = Pattern;
-            if (_input != null) description.Children["RouteInput"] = Description.For(_input);
+            description.Title = "Route:  " + Pattern;
+            if (_input != null) description.Children["Input"] = Description.For(_input);
 
             if (_constraints.Any())
             {

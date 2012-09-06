@@ -224,6 +224,7 @@ namespace FubuMVC.Core.Registration.Routes
                 "Responsible for binding property values of an existing model {0} to a url pattern".ToFormat(
                     typeof (T).Name);
 
+            description.Properties["InputType"] = typeof (T).FullName;
 
             if (_routeParameters.Any())
             {

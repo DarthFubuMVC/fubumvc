@@ -146,7 +146,20 @@ namespace FubuMVC.Core.Registration.Nodes
             var shortTitle = "{0}.{1}()".ToFormat(HandlerType.Name, Method.Name);
 
             description.Title = shortTitle;
-            description.ShortDescription = Description;
+            description.Properties["Handler Type"] = HandlerType.FullName;
+            description.Properties["Assembly"] = HandlerType.Assembly.GetName().Name;
+            description.Properties["Method"] = Method.Name;
+
+
+            if (InputType() != null)
+            {
+                description.Properties["Input Type"] = InputType().FullName;
+            }
+
+            if (ResourceType() != null)
+            {
+                description.Properties["Resource Type"] = ResourceType().FullName;
+            }
         }
 
         public Type ResourceType()
