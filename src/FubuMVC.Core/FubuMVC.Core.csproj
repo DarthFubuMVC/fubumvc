@@ -35,16 +35,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles.0.9.1.343\lib\Bottles.dll</HintPath>
+      <HintPath>..\packages\Bottles.0.9.1.349\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
-      <HintPath>..\packages\FubuCore.0.9.9.177\lib\FubuCore.dll</HintPath>
+      <HintPath>..\packages\FubuCore.0.9.9.179\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuLocalization">
-      <HintPath>..\packages\FubuLocalization.0.9.5.75\lib\FubuLocalization.dll</HintPath>
+      <HintPath>..\packages\FubuLocalization.0.9.5.77\lib\FubuLocalization.dll</HintPath>
     </Reference>
     <Reference Include="HtmlTags">
-      <HintPath>..\packages\HtmlTags.1.1.0.101\lib\4.0\HtmlTags.dll</HintPath>
+      <HintPath>..\packages\HtmlTags.1.1.0.103\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Ionic.Zip">
       <HintPath>..\packages\DotNetZip.1.9.1.8\lib\net20\Ionic.Zip.dll</HintPath>
@@ -129,6 +129,7 @@
     <Compile Include="Http\ICookieValue.cs" />
     <Compile Include="Http\IResponse.cs" />
     <Compile Include="PolicyAttribute.cs" />
+    <Compile Include="Registration\BottleConfigurationDef.cs" />
     <Compile Include="Registration\Conventions\ActionlessViewConvention.cs" />
     <Compile Include="Registration\Conventions\CacheAttributePolicy.cs" />
     <Compile Include="Registration\Conventions\CachedPartialConvention.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="Registration\Conventions\NavigationRootPolicy.cs" />
     <Compile Include="Registration\Conventions\OutputBeforeAjaxContinuationPolicy.cs" />
     <Compile Include="Registration\Conventions\VaryByPolicy.cs" />
+    <Compile Include="Registration\IServiceGraphAlteration.cs" />
     <Compile Include="Registration\Routes\IMakeMyOwnUrl.cs" />
     <Compile Include="Registration\Routes\SessionStateRequirement.cs" />
     <Compile Include="Registration\SettingsCollection.cs" />

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration.ObjectGraph;
 
@@ -100,6 +101,14 @@ namespace FubuMVC.Core.Registration
         public void FillType(Type interfaceType, Type concreteType)
         {
             alter = x => x.FillType(interfaceType, concreteType);
+        }
+
+        public void ConfigureRequirements(Action<BottleConfigurationDef> action)
+        {
+            var def = new BottleConfigurationDef(GetType().Namespace);
+            action(def);
+
+            alter = x => def.As<IServiceGraphAlteration>().Alter(x);
         }
 
         private void fill(Type serviceType, ObjectDef def)
