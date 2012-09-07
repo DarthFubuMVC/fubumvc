@@ -8,6 +8,7 @@ using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Resources.Conneg;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -40,6 +41,18 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             _graph.Behaviors.ShouldNotHave(bc => bc.Outputs.Select(node => node.BehaviorType).Any(t => t == typeof(void)));
         }
+
+        [Test]
+        public void should_not_add_nodes_for_one_in_zero_out()
+        {
+            var graph = BehaviorGraph.BuildFrom(x =>
+            {
+                x.Actions.IncludeType<TestEndpoint>();
+            });
+
+            graph.BehaviorFor<TestEndpoint>(x => x.OneInZeroOut(null)).OfType<OutputNode>()
+                .Any().ShouldBeFalse();
+        }
     }
 
     public class TestEndpoint
@@ -52,5 +65,14 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             
         }
+
+        public void OneInZeroOut(FakeInput input)
+        {
+            
+        }
+
+
     }
+
+    public class FakeInput{}
 }
