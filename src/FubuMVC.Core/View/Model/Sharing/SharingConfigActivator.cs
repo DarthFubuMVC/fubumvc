@@ -3,62 +3,58 @@ using System.Linq;
 using Bottles;
 using Bottles.Diagnostics;
 using FubuCore;
-using FubuMVC.Core.Packaging;
+using FubuMVC.Core.Runtime.Files;
 
 namespace FubuMVC.Core.View.Model.Sharing
 {
     public class SharingConfigActivator : IActivator
     {
-        private readonly SharingGraph _graph;
-        private readonly IFileSystem _fileSystem;
-        private readonly SharingRegistrationDiagnostics _diagnostics;
+        private readonly SharingGraph _sharingGraph;
+        private readonly IFubuApplicationFiles _files;
+        private readonly SharingRegistrationDiagnostics _diagnostics; 
 
-        public SharingConfigActivator(SharingGraph graph, IFileSystem fileSystem, SharingLogsCache logs)
+        public SharingConfigActivator(SharingGraph sharingGraph, SharingLogsCache logs, IFubuApplicationFiles files)
         {
-            _graph = graph;
-            _fileSystem = fileSystem;
-            _diagnostics = new SharingRegistrationDiagnostics(_graph, logs);
+            _sharingGraph = sharingGraph;
+            _diagnostics = new SharingRegistrationDiagnostics(_sharingGraph, logs);
+            _files = files;
         }
 
         public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
         {
-            packages.Each(p => p.ForFolder(BottleFiles.WebContentFolder, folder => ReadSparkConfig(p.Name, folder, log)));
-            ReadSparkConfig(TemplateConstants.HostOrigin, FubuMvcPackageFacility.GetApplicationPath(), log);
-        }
-
-        public void ReadSparkConfig(string provenance, string folder, IPackageLog log)
-        {
-            log.Trace("Looking for *spark.config in {0}", folder);
-            var configs = _fileSystem.FindFiles(folder, new FileSet
+            log.Trace("Looking for *view.config files");
+            var configs = _files.FindFiles(new FileSet
             {
-                Include = "*spark.config;spark.config",
+                Include = "*view.config;view.config",
                 DeepSearch = false
             });
 
-            if (!configs.Any())
-            {
-                log.Trace("  No *spark.config files found");
-                return;
-            }
-
-            configs.Each(file => ReadFile(provenance, file, log));
+            ReadConfigs(configs, log);
         }
 
-        public void ReadFile(string provenance, string file, IPackageLog log)
+        public void ReadConfigs(IEnumerable<IFubuFile> configs, IPackageLog log)
         {
-            _diagnostics.SetCurrentProvenance(provenance);
+            SortConfigsFromApplicationLast(configs).Each(x => ReadConfig(x, log));            
+        }
+
+        public void ReadConfig(IFubuFile config, IPackageLog log)
+        {
+            _diagnostics.SetCurrentProvenance(config.Provenance);
             var reader = new SharingDslReader(_diagnostics);
 
-            log.Trace("  Reading spark directives from {0}", file);
-            log.TrapErrors(() => _fileSystem.ReadTextFile(file, text =>
+            log.Trace("  Reading sharing directives from {0}", config.ToString());
+            log.TrapErrors(() => config.ReadLines(text =>
             {
-                if (text.Trim().IsEmpty())
-                {
-                    return;
-                }
-
-                log.TrapErrors(() => reader.ReadLine(text, provenance));
+                if (text.Trim().IsEmpty()) return;                
+                log.TrapErrors(() => reader.ReadLine(text, config.Provenance));
             }));
+        }
+
+        public static IEnumerable<IFubuFile> SortConfigsFromApplicationLast(IEnumerable<IFubuFile> files)
+        {
+            var rearranged = files.ToList();            
+            return rearranged.Where(x => x.Provenance != ContentFolder.Application)
+                .Concat(rearranged.Where(x => x.Provenance == ContentFolder.Application));
         }
     }
 }

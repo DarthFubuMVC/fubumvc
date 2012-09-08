@@ -1,14 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Bottles.Diagnostics;
 using FubuCore;
+using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View.Model.Sharing;
 using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Spark.Tests.SparkModel.Sharing
 {
+    // TODO: Simplify this, no need to touch the FS.
+
     [TestFixture]
     public class SharingConfigActivatorTester
     {
@@ -21,16 +25,15 @@ namespace FubuMVC.Spark.Tests.SparkModel.Sharing
         [SetUp]
         public void beforeEach()
         {
-            Directory.GetFiles(".", "*spark.config").Each(File.Delete);
+            Directory.GetFiles(".", "*view.config").Each(File.Delete);
 
             _graph = new SharingGraph();
             _fileSystem = new FileSystem();
             _packageLog = new PackageLog();
             _sharingLogs = new SharingLogsCache();
 
-            _activator = new SharingConfigActivator(_graph, _fileSystem, _sharingLogs);
+            _activator = new SharingConfigActivator(_graph, _sharingLogs, new FubuApplicationFiles());
         }
-
 
         [Test]
         public void read_a_directory()
@@ -42,10 +45,11 @@ namespace FubuMVC.Spark.Tests.SparkModel.Sharing
             var exports = new StringBuilder();
             exports.AppendLine("export to all");
 
-            _fileSystem.WriteStringToFile("imports.spark.config", imports.ToString());
-            _fileSystem.WriteStringToFile("exports.spark.config", exports.ToString());
+            _fileSystem.WriteStringToFile("imports.view.config", imports.ToString());
+            _fileSystem.WriteStringToFile("exports.view.config", exports.ToString());
 
-            _activator.ReadSparkConfig("Pak2.Core", ".", _packageLog);
+            _activator.ReadConfig(new FubuFile("imports.view.config", "Pak2.Core"), _packageLog);
+            _activator.ReadConfig(new FubuFile("exports.view.config", "Pak2.Core"), _packageLog);
             
             _graph.CompileDependencies("Pak1", "Pak2.Core", "Pak2.Design", "Pak2.Bindings");
 
@@ -62,8 +66,8 @@ namespace FubuMVC.Spark.Tests.SparkModel.Sharing
             config.AppendLine("import from X");
             config.AppendLine("export to Z");
 
-            _fileSystem.WriteStringToFile("spark.config", config.ToString());
-            _activator.ReadFile("Prov", "spark.config", _packageLog);
+            _fileSystem.WriteStringToFile("view.config", config.ToString());
+            _activator.ReadConfig(new FubuFile("view.config", "Prov"), _packageLog);
 
             _graph.CompileDependencies("Prov", "X", "Y", "M");
 
@@ -71,6 +75,20 @@ namespace FubuMVC.Spark.Tests.SparkModel.Sharing
             _graph.SharingsFor("X").ShouldHaveCount(0);
             _graph.SharingsFor("Z").ShouldHaveTheSameElementsAs("Prov");
             _graph.SharingsFor("M").ShouldHaveCount(0);
+        }
+
+        [Test]
+        public void sort_application_files_last()
+        {
+            var configs = new[]
+            {
+                new FubuFile("a.txt", ContentFolder.Application),
+                new FubuFile("b.txt", "Pak1"),
+                new FubuFile("c.txt", "Pak2")
+            };
+
+            SharingConfigActivator.SortConfigsFromApplicationLast(configs.ToList())
+                .ShouldHaveTheSameElementsAs(configs[1], configs[2], configs[0]);
         }
     }
 }
