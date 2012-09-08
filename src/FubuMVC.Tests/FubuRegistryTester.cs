@@ -47,6 +47,20 @@ namespace FubuMVC.Tests
 
             FakeIncludeRegistry.Count.ShouldEqual(1);
         }
+
+        [Test]
+        public void alter_settings_modifies_settings_object()
+        {
+            var registry = new FubuRegistry(r => r.AlterSettings<SettingsObject>(so => so.Touched = true));
+            
+            BehaviorGraph.BuildFrom(registry)
+                .Settings.Get<SettingsObject>().Touched.ShouldBeTrue();
+        }
+    }
+
+    public class SettingsObject
+    {
+        public bool Touched { get; set; }
     }
 
     public class FakeIncludeRegistry : FubuRegistry

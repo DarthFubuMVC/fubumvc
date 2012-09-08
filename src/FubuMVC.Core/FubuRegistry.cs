@@ -192,6 +192,14 @@ namespace FubuMVC.Core
         }
 
         /// <summary>
+        /// Allows you to manipulate a settings object on <see cref="BehaviorGraph.Settings"/>.
+        /// </summary>
+        public void AlterSettings<T>(Action<T> alteration) where T : new()
+        {
+            Configure(graph => graph.Settings.Alter(alteration));
+        }
+
+        /// <summary>
         ///   Allows you to directly manipulate the BehaviorGraph produced by this FubuRegistry.
         ///   This should only be used after careful consideration and subsequent rejection of all other entry points to configuring the runtime
         ///   behaviour.
