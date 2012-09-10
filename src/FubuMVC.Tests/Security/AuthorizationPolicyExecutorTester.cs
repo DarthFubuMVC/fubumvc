@@ -1,8 +1,10 @@
 ﻿using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Runtime.Logging;
 using FubuMVC.Core.Security;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
+using System.Linq;
 
 namespace FubuMVC.Tests.Security
 {
@@ -16,11 +18,26 @@ namespace FubuMVC.Tests.Security
         {
             var request = MockFor<IFubuRequest>();
 
+            Services.RecordLogging();
+
             policies = Services.CreateMockArrayFor<IAuthorizationPolicy>(3);
             policies[0].Expect(x => x.RightsFor(request)).Return(AuthorizationRight.Allow).Repeat.Once();
             policies[1].Expect(x => x.RightsFor(request)).Return(AuthorizationRight.None).Repeat.Once();
             policies[2].Expect(x => x.RightsFor(request)).Return(AuthorizationRight.None).Repeat.Once();
             _answer = ClassUnderTest.IsAuthorized(request, policies);
+        }
+
+        [Test]
+        public void should_log_the_combined_result()
+        {
+            Services.RecordedLog().DebugMessages.OfType<AuthorizationResult>().Single().Rights.ShouldEqual(_answer);
+        }
+
+        [Test]
+        public void should_log_the_result_of_each_policy()
+        {
+            var results = Services.RecordedLog().DebugMessages.OfType<AuthorizationPolicyResult>();
+            results.Select(x => x.Rights.Name).ShouldHaveTheSameElementsAs("Allow", "None", "None");
         }
 
         [Test]
