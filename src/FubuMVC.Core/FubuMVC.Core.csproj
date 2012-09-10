@@ -147,6 +147,9 @@
     <Compile Include="Registration\IServiceGraphAlteration.cs" />
     <Compile Include="Registration\Routes\IMakeMyOwnUrl.cs" />
     <Compile Include="Registration\Routes\SessionStateRequirement.cs" />
+    <Compile Include="Registration\ServiceAdded.cs" />
+    <Compile Include="Registration\ServiceEvent.cs" />
+    <Compile Include="Registration\ServiceRemoved.cs" />
     <Compile Include="Registration\SettingsCollection.cs" />
     <Compile Include="Resources\Etags\IHeadersCache.cs" />
     <Compile Include="Runtime\Dates\DateFormattingRule.cs" />
