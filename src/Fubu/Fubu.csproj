@@ -98,6 +98,7 @@
     <Compile Include="InstallPackageInput.cs" />
     <Compile Include="IProcess.cs" />
     <Compile Include="IProcessFactory.cs" />
+    <Compile Include="ModeCommand.cs" />
     <Compile Include="NewCommand.cs" />
     <Compile Include="NewCommandInput.cs" />
     <Compile Include="PackagesCommand.cs" />

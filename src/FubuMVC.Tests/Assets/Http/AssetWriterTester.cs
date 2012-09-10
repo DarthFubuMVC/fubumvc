@@ -39,7 +39,7 @@ namespace FubuMVC.Tests.Assets.Http
                 .Return(theFiles);
 
 
-            FubuMode.Reset();
+            FubuMode.ClearEnvironmentVariable();
             FubuMode.InDevelopment().ShouldBeFalse();
 
             ClassUnderTest.Write(theAssetPath);
@@ -93,7 +93,7 @@ namespace FubuMVC.Tests.Assets.Http
                 .Stub(x => x.Create(theFiles))
                 .Return(theEtag);
 
-            FubuMode.Reset();
+            FubuMode.ClearEnvironmentVariable();
             FubuMode.InDevelopment().ShouldBeFalse();
 
             ClassUnderTest.Write(theAssetPath);

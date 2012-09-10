@@ -11,7 +11,7 @@ namespace FubuMVC.Tests
         [Test]
         public void DevMode_as_is_is_true()
         {
-            Environment.SetEnvironmentVariable("FubuMode", "Development");
+            Environment.SetEnvironmentVariable("FubuMode", "Development", EnvironmentVariableTarget.Machine);
             FubuMode.Reset();
             FubuMode.InDevelopment().ShouldBeTrue();
 
@@ -21,7 +21,7 @@ namespace FubuMVC.Tests
         [Test]
         public void DevMode_is_false()
         {
-            Environment.SetEnvironmentVariable("FubuMode", "Production");
+            Environment.SetEnvironmentVariable("FubuMode", "Production", EnvironmentVariableTarget.Machine);
             FubuMode.Reset();
             FubuMode.InDevelopment().ShouldBeFalse();
 

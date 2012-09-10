@@ -4,7 +4,19 @@ namespace FubuMVC.Core
 {
     public static class FubuMode
     {
+        public const string EnvironmentVariable = "FubuMode";
         public static readonly string Development = "Development";
+
+        public static void SetEnvironmentVariable(string mode)
+        {
+            Environment.SetEnvironmentVariable(EnvironmentVariable, mode, EnvironmentVariableTarget.Machine);
+            Reset();
+        }
+
+        public static void ClearEnvironmentVariable()
+        {
+            SetEnvironmentVariable(null);
+        }
 
         static FubuMode()
         {
@@ -24,7 +36,7 @@ namespace FubuMVC.Core
 
         public static void Reset()
         {
-            _determineMode = new Lazy<string>(() => Environment.GetEnvironmentVariable("FubuMode") ?? "");
+            _determineMode = new Lazy<string>(() => Environment.GetEnvironmentVariable(EnvironmentVariable, EnvironmentVariableTarget.Machine) ?? "");
         }
 
         public static void Mode(string mode)
