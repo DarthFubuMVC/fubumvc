@@ -41,6 +41,38 @@ namespace FubuMVC.Tests.Registration.DSL
         }
     }
 
+    [TestFixture]
+    public class when_defining_a_new_reordering_rule_inline
+    {
+        private BehaviorGraph graph;
+
+        [SetUp]
+        public void SetUp()
+        {
+            var registry = new FubuRegistry();
+            registry.Actions.IncludeType<OrderingPolicyController>();
+
+            registry.Policies.WrapBehaviorChainsWith<OPWrapper1>();
+            registry.Policies.Reorder(x =>
+            {
+                x.ThisWrapperBeBefore<OPWrapper1>();
+                x.ThisNodeMustBeAfter<AuthorizationNode>();
+            });
+
+            graph = BehaviorGraph.BuildFrom(registry);
+        }
+
+        [Test]
+        public void move_behavior_before_authorization()
+        {
+            // Ordinarily, AuthorizationNode would be before any other behavior wrappers
+
+            var chain = graph.BehaviorFor<OrderingPolicyController>(x => x.M1());
+            chain.First().ShouldBeOfType<Wrapper>().BehaviorType.ShouldEqual(typeof(OPWrapper1));
+            chain.ToList()[1].ShouldBeOfType<AuthorizationNode>();
+        }
+    }
+
     public class OrderingPolicyController
     {
         [WrapWith(typeof(OPWrapper2), typeof(OPWrapper3))]

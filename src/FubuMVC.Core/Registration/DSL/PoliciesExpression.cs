@@ -40,6 +40,22 @@ namespace FubuMVC.Core.Registration.DSL
             _configuration = configuration;
         }
 
+        /// <summary>
+        /// Apply a new behavior re-ordering rule in order to force behaviors to a certain order.
+        /// For example, force Authentication behaviors to always be before Authorization behaviors
+        /// </summary>
+        /// <param name="configure"></param>
+        /// <returns></returns>
+        public PoliciesExpression Reorder(Action<ReorderBehaviorsPolicy> configure)
+        {
+            var policy = new ReorderBehaviorsPolicy();
+            configure(policy);
+
+            _configuration.AddConfiguration(policy, ConfigurationType.Reordering);
+
+            return this;
+        }
+
         public IOrderPolicyExpression WrapBehaviorChainsWith<T>() where T : IActionBehavior
         {
             return applyWrapper<T>(chain => true);
