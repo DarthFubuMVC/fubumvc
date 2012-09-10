@@ -80,7 +80,7 @@ namespace FubuMVC.Core
         {
             var graph = new BehaviorGraph();
             
-            graph.Views = _engineRegistry.BuildViewBag(_types);
+            graph.Settings.Replace(_engineRegistry.BuildViewBag(_types));
 
             AllConfigurationActions().Each(x =>
             {

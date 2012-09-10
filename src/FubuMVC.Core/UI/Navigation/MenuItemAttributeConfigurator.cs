@@ -9,7 +9,7 @@ namespace FubuMVC.Core.UI.Navigation
     {
         public void Configure(BehaviorGraph graph)
         {
-            var navigationGraph = graph.Navigation;
+            var navigationGraph = graph.Settings.Get<NavigationGraph>();
             graph.Actions().Each(
                 action => action.ForAttributes<MenuItemAttribute>(att => Configure(action, att, navigationGraph)));
         }

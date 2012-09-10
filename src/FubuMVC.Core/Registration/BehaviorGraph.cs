@@ -81,7 +81,7 @@ namespace FubuMVC.Core.Registration
             _settings = new SettingsCollection(null);
             _settings.Replace(SessionStateRequirement.RequiresSessionState);
 
-            Views = ViewBag.Empty();
+            Settings.Replace(ViewBag.Empty());
 
             RouteIterator = new SortByRouteRankIterator(); // can override in a registry
 

@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.UI.Navigation
         [Test]
         public void puts_the_navigation_graph_in_the_right_order()
         {
-            var navigationGraph = graph.Navigation;
+            var navigationGraph = graph.Settings.Get<NavigationGraph>();
 
             navigationGraph.FindNode(new NavigationKey("Two")).ShouldBeOfType<MenuNode>().Previous.Key.Key.ShouldEqual("Three");
 

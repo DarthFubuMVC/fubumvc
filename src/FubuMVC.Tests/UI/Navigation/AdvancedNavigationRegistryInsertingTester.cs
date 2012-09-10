@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.UI.Navigation
                 {
                     x.Actions.IncludeType<Controller1>();
                     x.Navigation(registry);
-                }).Navigation;
+                }).Settings.Get<NavigationGraph>();
             });
         }
 

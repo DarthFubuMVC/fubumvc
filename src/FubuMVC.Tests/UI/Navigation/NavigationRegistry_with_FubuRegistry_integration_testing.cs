@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.UI.Navigation
                 x.Add += MenuNode.Node(FakeKeys.Key3);
             });
 
-            var graph = BehaviorGraph.BuildFrom(registry).Navigation;
+            var graph = BehaviorGraph.BuildFrom(registry).Settings.Get<NavigationGraph>();
 
             graph.MenuFor(FakeKeys.Key1).Select(x => x.Key)
                 .ShouldHaveTheSameElementsAs(FakeKeys.Key2, FakeKeys.Key3);
@@ -40,7 +40,7 @@ namespace FubuMVC.Tests.UI.Navigation
 
             registry.Import<ChildRegistry>();
 
-            var graph = BehaviorGraph.BuildFrom(registry).Navigation;
+            var graph = BehaviorGraph.BuildFrom(registry).Settings.Get<NavigationGraph>();
 
             graph.MenuFor(FakeKeys.Key1).Select(x => x.Key)
                 .ShouldHaveTheSameElementsAs(FakeKeys.Key2, FakeKeys.Key3, FakeKeys.Key4, FakeKeys.Key5);
@@ -62,7 +62,7 @@ namespace FubuMVC.Tests.UI.Navigation
 
             registry.Import<ChildRegistry>();
 
-            var graph = BehaviorGraph.BuildFrom(registry).Navigation;
+            var graph = BehaviorGraph.BuildFrom(registry).Settings.Get<NavigationGraph>();
 
             graph.MenuFor("Key1").Select(x => x.Key)
                 .ShouldHaveTheSameElementsAs(new NavigationKey("Key2"), new NavigationKey("Key3"));

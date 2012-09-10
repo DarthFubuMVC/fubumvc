@@ -22,7 +22,7 @@ namespace FubuMVC.Core.UI.Navigation
             _request = request;
             _stateService = stateService;
             _urls = urls;
-            _navigation = graph.Navigation;
+            _navigation = graph.Settings.Get<NavigationGraph>();
         }
 
         public IEnumerable<MenuItemToken> MenuFor(StringToken key)

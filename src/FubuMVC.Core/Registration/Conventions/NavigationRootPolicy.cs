@@ -37,7 +37,7 @@ namespace FubuMVC.Core.Registration.Conventions
 
         public void Configure(BehaviorGraph graph)
         {
-            _modifications.Each(x => x.Apply(graph.Navigation));
+            _modifications.Each(x => x.Apply(graph.Settings.Get<NavigationGraph>()));
         }
 
         public void WrapWithChrome<TChrome>() where TChrome : ChromeContent

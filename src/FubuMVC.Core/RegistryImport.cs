@@ -15,7 +15,7 @@ namespace FubuMVC.Core
 
         public void Configure(BehaviorGraph graph)
         {
-            ImportInto(graph, graph.Views);
+            ImportInto(graph, graph.Settings.Get<ViewBag>());
         }
 
         public void ImportInto(BehaviorGraph graph, ViewBag views)

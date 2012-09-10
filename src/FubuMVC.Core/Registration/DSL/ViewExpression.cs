@@ -5,6 +5,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Activation;
+using FubuMVC.Core.View.Attachment;
 
 namespace FubuMVC.Core.Registration.DSL
 {
@@ -165,7 +166,7 @@ namespace FubuMVC.Core.Registration.DSL
 
         public void Configure(BehaviorGraph graph)
         {
-            graph.Views
+            graph.Settings.Get<ViewBag>()
                 .Views
                 .Where(token => _viewTokenFilter(token))
                 .Each(token =>

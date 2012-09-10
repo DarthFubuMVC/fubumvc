@@ -12,11 +12,13 @@ namespace FubuMVC.Core.UI.Navigation
     {
         public void Configure(BehaviorGraph graph)
         {
-            graph.Navigation.Compile();
+            var navigation = graph.Settings.Get<NavigationGraph>();
+
+            navigation.Compile();
 
             var resolver = new ChainResolutionCache(new TypeResolver(), graph);
 
-            graph.Navigation.AllNodes().OfType<MenuNode>().Each(x =>
+            navigation.AllNodes().OfType<MenuNode>().Each(x =>
             {
                 try
                 {

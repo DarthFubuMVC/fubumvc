@@ -122,7 +122,7 @@ namespace FubuMVC.Core.View.Attachment
             public ProfileViewBag(IViewProfile profile, BehaviorGraph graph)
             {
                 Profile = profile;
-                Views = profile.Filter(graph.Views);
+                Views = profile.Filter(graph.Settings.Get<ViewBag>());
             }
 
             public ViewBag Views { get; private set; }

@@ -13,8 +13,7 @@ namespace FubuMVC.Core.UI.Navigation
 
         public void Configure(BehaviorGraph graph)
         {
-            Configure(graph.Navigation);
-            
+            graph.Settings.Alter<NavigationGraph>(Configure);
         }
 
         internal void Configure(NavigationGraph graph)
