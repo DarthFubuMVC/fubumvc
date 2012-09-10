@@ -34,7 +34,7 @@ namespace FubuMVC.Core
     }
 
     // TODO -- change to a ModifyChainAttribute
-    [AttributeUsage(AttributeTargets.Method)]
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
     public class UrlPatternAttribute : Attribute
     {
         private readonly string _pattern;

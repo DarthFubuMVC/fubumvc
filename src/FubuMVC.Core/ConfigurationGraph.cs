@@ -179,6 +179,7 @@ namespace FubuMVC.Core
         {
             yield return new AssetContentEndpoint();
 
+            yield return new UrlPatternAttributeOnViewModelPolicy();
             yield return new ModifyChainAttributeConvention();
             yield return new ResourcePathRoutePolicy();
             yield return new MissingRouteInputPolicy();

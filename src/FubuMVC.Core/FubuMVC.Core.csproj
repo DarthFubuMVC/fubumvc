@@ -142,6 +142,7 @@
     <Compile Include="Registration\Conventions\DefaultRouteConventionBasedUrlPolicy.cs" />
     <Compile Include="Registration\Conventions\NavigationRootPolicy.cs" />
     <Compile Include="Registration\Conventions\OutputBeforeAjaxContinuationPolicy.cs" />
+    <Compile Include="Registration\Conventions\UrlPatternAttributeOnViewModelPolicy.cs" />
     <Compile Include="Registration\Conventions\VaryByPolicy.cs" />
     <Compile Include="Registration\IServiceGraphAlteration.cs" />
     <Compile Include="Registration\Routes\IMakeMyOwnUrl.cs" />
