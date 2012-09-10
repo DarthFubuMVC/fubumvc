@@ -1,5 +1,6 @@
 ﻿using System;
 using FubuCore;
+using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 
@@ -13,9 +14,9 @@ namespace FubuMVC.Core.UI
         private readonly ITypeResolver _types;
         private readonly IOutputWriter _writer;
         readonly ISetterBinder _setterBinder;
+        private readonly IChainResolver _resolver;
 
-        public PartialInvoker(IPartialFactory factory, IFubuRequest request, IAuthorizationPreviewService authorization,
-                              ITypeResolver types, IOutputWriter writer, ISetterBinder setterBinder)
+        public PartialInvoker(IPartialFactory factory, IFubuRequest request, IAuthorizationPreviewService authorization, ITypeResolver types, IOutputWriter writer, ISetterBinder setterBinder, IChainResolver resolver)
         {
             _factory = factory;
             _request = request;
@@ -23,6 +24,7 @@ namespace FubuMVC.Core.UI
             _types = types;
             _writer = writer;
             _setterBinder = setterBinder;
+            _resolver = resolver;
         }
 
         public string Invoke<T>() where T : class
@@ -54,7 +56,8 @@ namespace FubuMVC.Core.UI
 
         private string invokeWrapped(Type requestType)
         {
-            var partial = _factory.BuildPartial(requestType);
+            var chain = _resolver.FindUniqueByType(requestType);
+            var partial = _factory.BuildPartial(chain);
             return _writer.Record(partial.InvokePartial).GetText();
         }
     }

@@ -15,6 +15,7 @@ namespace FubuMVC.Core.Continuations
         private ActionCall _call;
         private object _destination;
         public HttpStatusCode? _statusCode;
+        public string _categoryOrHttpMethod;
 
         private FubuContinuation(ContinuationType type, Action<IContinuationDirector> configure)
         {
@@ -34,51 +35,55 @@ namespace FubuMVC.Core.Continuations
             return _destination as T;
         }
 
-        public static FubuContinuation RedirectTo<T>(Expression<Action<T>> expression)
+        public static FubuContinuation RedirectTo<T>(Expression<Action<T>> expression, string categoryOrHttpMethod = null)
         {
             ActionCall call = ActionCall.For(expression);
-            return new FubuContinuation(ContinuationType.Redirect, d => d.RedirectToCall(call))
+            return new FubuContinuation(ContinuationType.Redirect, d => d.RedirectToCall(call, categoryOrHttpMethod))
             {
-                _call = call
+                _call = call,
+                _categoryOrHttpMethod = categoryOrHttpMethod
             };
         }
 
-        public static FubuContinuation RedirectTo<T>()
+        public static FubuContinuation RedirectTo<T>(string categoryOrHttpMethod = null)
             where T : new()
         {
-            return RedirectTo(new T());
+            return RedirectTo(new T(), categoryOrHttpMethod);
         }
 
-        public static FubuContinuation TransferTo<T>()
+        public static FubuContinuation TransferTo<T>(string categoryOrHttpMethod = null)
             where T : new()
         {
-            return TransferTo(new T());
+            return TransferTo(new T(), categoryOrHttpMethod);
         }
-        
-        public static FubuContinuation RedirectTo(object destination)
+
+        public static FubuContinuation RedirectTo(object destination, string categoryOrHttpMethod = null)
         {
             if (destination == null) throw new ArgumentNullException("destination");
-            return new FubuContinuation(ContinuationType.Redirect, d => d.RedirectTo(destination))
+            return new FubuContinuation(ContinuationType.Redirect, d => d.RedirectTo(destination, categoryOrHttpMethod))
             {
-                _destination = destination
+                _destination = destination,
+                _categoryOrHttpMethod = categoryOrHttpMethod
             };
         }
 
-        public static FubuContinuation TransferTo(object destination)
+        public static FubuContinuation TransferTo(object destination, string categoryOrHttpMethod = null)
         {
             if (destination == null) throw new ArgumentNullException("destination");
-            return new FubuContinuation(ContinuationType.Transfer, d => d.TransferTo(destination))
+            return new FubuContinuation(ContinuationType.Transfer, d => d.TransferTo(destination, categoryOrHttpMethod))
             {
-                _destination = destination
+                _destination = destination,
+                _categoryOrHttpMethod = categoryOrHttpMethod
             };
         }
 
-        public static FubuContinuation TransferTo<T>(Expression<Action<T>> expression)
+        public static FubuContinuation TransferTo<T>(Expression<Action<T>> expression, string categoryOrHttpMethod = null)
         {
             ActionCall call = ActionCall.For(expression);
-            return new FubuContinuation(ContinuationType.Transfer, d => d.TransferToCall(call))
+            return new FubuContinuation(ContinuationType.Transfer, d => d.TransferToCall(call, categoryOrHttpMethod))
             {
-                _call = call
+                _call = call,
+                _categoryOrHttpMethod = categoryOrHttpMethod
             };
         }
 
@@ -95,38 +100,41 @@ namespace FubuMVC.Core.Continuations
             return new FubuContinuation(ContinuationType.NextBehavior, d => d.InvokeNextBehavior());
         }
 
-        public void AssertWasTransferedTo<T>(Expression<Action<T>> expression)
+        public void AssertWasTransferedTo<T>(Expression<Action<T>> expression, string categoryOrHttpMethod = null)
         {
             ActionCall call = ActionCall.For(expression);
-            assertMatches(_type == ContinuationType.Transfer && callMatches(call));
+            assertMatches(_type == ContinuationType.Transfer && callMatches(call) && _categoryOrHttpMethod == categoryOrHttpMethod);
         }
 
-        public void AssertWasTransferedTo<T>(T destination)
+        public void AssertWasTransferedTo<T>(T destination, string categoryOrHttpMethod = null)
         {
             Func<T, bool> predicate = x => x.Equals(destination);
-            AssertWasTransferedTo(predicate);
+            AssertWasTransferedTo(predicate, categoryOrHttpMethod);
         }
 
-        public void AssertWasTransferedTo<T>(Func<T, bool> predicate)
+        public void AssertWasTransferedTo<T>(Func<T, bool> predicate, string categoryOrHttpMethod = null)
         {
+            assertMatches(_categoryOrHttpMethod == categoryOrHttpMethod);
             assertMatches(_destination != null && typeof (T) == _destination.GetType());
             assertMatches(_type == ContinuationType.Transfer && predicate((T) _destination));
         }
 
-        public void AssertWasRedirectedTo<T>(T destination)
+        public void AssertWasRedirectedTo<T>(T destination, string categoryOrHttpMethod = null)
         {
             Func<T, bool> predicate = x => x.Equals(destination);
-            AssertWasRedirectedTo(predicate);
+            AssertWasRedirectedTo(predicate, categoryOrHttpMethod);
         }
 
-        public void AssertWasRedirectedTo<T>(Func<T, bool> predicate)
+        public void AssertWasRedirectedTo<T>(Func<T, bool> predicate, string categoryOrHttpMethod = null)
         {
+            assertMatches(_categoryOrHttpMethod == categoryOrHttpMethod);
             assertMatches(_destination != null && typeof(T) == _destination.GetType());
             assertMatches(_type == ContinuationType.Redirect && predicate((T)_destination));
         }
 
-        public void AssertWasRedirectedTo<T>(Expression<Action<T>> expression)
+        public void AssertWasRedirectedTo<T>(Expression<Action<T>> expression, string categoryOrHttpMethod = null)
         {
+            assertMatches(_categoryOrHttpMethod == categoryOrHttpMethod);
             ActionCall call = ActionCall.For(expression);
             assertMatches(_type == ContinuationType.Redirect && callMatches(call));
         }
@@ -159,6 +167,11 @@ namespace FubuMVC.Core.Continuations
             if (_statusCode.HasValue )
             {
                 message += "\n status code:  " + _statusCode.Value.ToString();
+            }
+
+            if (_categoryOrHttpMethod.IsNotEmpty())
+            {
+                message += "\n categoryOrHttpMethod:  " + _categoryOrHttpMethod;
             }
 
             throw new FubuAssertionException(message);

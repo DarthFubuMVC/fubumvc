@@ -1,6 +1,8 @@
 using FubuCore;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Caching;
+using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.UI;
@@ -14,17 +16,22 @@ namespace FubuMVC.Tests.UI
     {
 		protected PartialInputModel theInput;
         protected IActionBehavior theAction;
+        private BehaviorChain theChain;
 
-    	protected abstract void Invoke();
+        protected abstract void Invoke();
     	protected abstract void Configure();
 		
         protected override void beforeEach()
         {
             theInput = new PartialInputModel();
+            theChain = new BehaviorChain();
+
+            MockFor<IChainResolver>().Stub(x => x.FindUniqueByType(theInput.GetType())).Return(theChain);
+
             theAction = MockFor<IActionBehavior>();
 
             MockFor<IAuthorizationPreviewService>().Expect(x => x.IsAuthorized(theInput)).Return(true);
-            MockFor<IPartialFactory>().Stub(x => x.BuildPartial(typeof(PartialInputModel))).Return(theAction);
+            MockFor<IPartialFactory>().Stub(x => x.BuildPartial(theChain)).Return(theAction);
 
             MockFor<IOutputWriter>()
                 .Expect(x => x.Record(theAction.InvokePartial))
@@ -134,6 +141,7 @@ namespace FubuMVC.Tests.UI
     {
         private PartialInputModel theInput;
         private IActionBehavior theAction;
+        private BehaviorChain theChain;
 
         protected override void beforeEach()
         {
@@ -142,7 +150,12 @@ namespace FubuMVC.Tests.UI
 
             MockFor<IFubuRequest>().Stub(x => x.Get<PartialInputModel>()).Return(theInput);
             MockFor<IAuthorizationPreviewService>().Expect(x => x.IsAuthorized(theInput)).Return(true);
-            MockFor<IPartialFactory>().Stub(x => x.BuildPartial(typeof (PartialInputModel))).Return(theAction);
+
+
+            theChain = new BehaviorChain();
+            MockFor<IChainResolver>().Stub(x => x.FindUniqueByType(typeof (PartialInputModel))).Return(theChain);
+
+            MockFor<IPartialFactory>().Stub(x => x.BuildPartial(theChain)).Return(theAction);
 
             MockFor<IOutputWriter>()
                 .Expect(x => x.Record(theAction.InvokePartial))
@@ -184,6 +197,7 @@ namespace FubuMVC.Tests.UI
         private PartialInputModel theInput;
         private string theOutput;
         private IActionBehavior theAction;
+        private BehaviorChain theChain;
 
         protected override void beforeEach()
         {
@@ -192,7 +206,11 @@ namespace FubuMVC.Tests.UI
 
             MockFor<IFubuRequest>().Stub(x => x.Get<PartialInputModel>()).Return(theInput);
             MockFor<IAuthorizationPreviewService>().Expect(x => x.IsAuthorized(theInput)).Return(false);
-            MockFor<IPartialFactory>().Stub(x => x.BuildPartial(typeof(PartialInputModel))).Return(theAction);
+
+            theChain = new BehaviorChain();
+            MockFor<IChainResolver>().Stub(x => x.FindUniqueByType(typeof (PartialInputModel))).Return(theChain);
+
+            MockFor<IPartialFactory>().Stub(x => x.BuildPartial(theChain)).Return(theAction);
 
             theOutput = ClassUnderTest.Invoke<PartialInputModel>();
         }
@@ -206,7 +224,7 @@ namespace FubuMVC.Tests.UI
         [Test]
         public void should_not_invoke_the_partial_behavior()
         {
-            MockFor<IPartialFactory>().AssertWasNotCalled(x => x.BuildPartial(typeof(PartialInputModel)));
+            MockFor<IPartialFactory>().AssertWasNotCalled(x => x.BuildPartial(theChain));
             theAction.AssertWasNotCalled(x => x.InvokePartial());
         }
 
@@ -230,6 +248,7 @@ namespace FubuMVC.Tests.UI
         private PartialInputModel theInput;
         private string theOutput;
         private IActionBehavior theAction;
+        private BehaviorChain theChain;
 
         protected override void beforeEach()
         {
@@ -238,7 +257,11 @@ namespace FubuMVC.Tests.UI
 
             MockFor<IFubuRequest>().Stub(x => x.Get<PartialInputModel>()).Return(theInput);
             MockFor<IAuthorizationPreviewService>().Expect(x => x.IsAuthorized(theInput)).Return(false);
-            MockFor<IPartialFactory>().Stub(x => x.BuildPartial(typeof(PartialInputModel))).Return(theAction);
+
+            theChain = new BehaviorChain();
+            MockFor<IChainResolver>().Stub(x => x.FindUnique(theInput)).Return(theChain);
+
+            MockFor<IPartialFactory>().Stub(x => x.BuildPartial(theChain)).Return(theAction);
             Services.Inject<ITypeResolver>(new TypeResolver());
 
             theOutput = ClassUnderTest.InvokeObject(theInput);
@@ -253,7 +276,7 @@ namespace FubuMVC.Tests.UI
         [Test]
         public void should_not_invoke_the_partial_behavior()
         {
-            MockFor<IPartialFactory>().AssertWasNotCalled(x => x.BuildPartial(typeof(PartialInputModel)));
+            MockFor<IPartialFactory>().AssertWasNotCalled(x => x.BuildPartial(theChain));
             MockFor<IActionBehavior>().AssertWasNotCalled(x => x.InvokePartial());
         }
 

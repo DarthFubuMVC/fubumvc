@@ -6,10 +6,10 @@ namespace FubuMVC.Core.Continuations
     public interface IContinuationDirector
     {
         void InvokeNextBehavior();
-        void RedirectTo(object input);
-        void RedirectToCall(ActionCall call);
-        void TransferTo(object input);
-        void TransferToCall(ActionCall call);
+        void RedirectTo(object input, string categoryOrHttpMethod = null);
+        void RedirectToCall(ActionCall call, string categoryOrHttpMethod = null);
+        void TransferTo(object input, string categoryOrHttpMethod = null);
+        void TransferToCall(ActionCall call, string categoryOrHttpMethod = null);
         void EndWithStatusCode(HttpStatusCode code);
     }
 }

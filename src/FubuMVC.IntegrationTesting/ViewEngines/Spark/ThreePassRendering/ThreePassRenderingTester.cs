@@ -23,7 +23,7 @@ namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.ThreePassRendering
                 .AppendLine("<h1>Three Pass Rendering Test!</h1>")
                 .AppendLine(@"<div id=""sidebar"">Say hello: Hello</div>")
                 .AppendLine("</body>")
-                .Append("</html>")
+                .Append("</html>").Replace("\r", string.Empty)
                 .ToString();
         }
 

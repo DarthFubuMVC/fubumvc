@@ -160,6 +160,7 @@
     <Compile Include="Runtime\Files\FubuFile.cs" />
     <Compile Include="Runtime\Files\IFubuApplicationFiles.cs" />
     <Compile Include="Runtime\Files\IFubuFile.cs" />
+    <Compile Include="Runtime\FullChainSwitcher.cs" />
     <Compile Include="Runtime\Handlers\AsynchronousHttpHandler.cs" />
     <Compile Include="Runtime\Handlers\AsynchronousHttpHandlerSource.cs" />
     <Compile Include="Runtime\Handlers\IHttpHandlerSource.cs" />
@@ -181,6 +182,8 @@
     <Compile Include="Runtime\Logging\StartedRecordingOutput.cs" />
     <Compile Include="Runtime\Logging\WriteCookieReport.cs" />
     <Compile Include="Runtime\Logging\WriteToStreamReport.cs" />
+    <Compile Include="Runtime\PartialChainSwitcher.cs" />
+    <Compile Include="Runtime\PartialFactory.cs" />
     <Compile Include="Runtime\SetValueReport.cs" />
     <Compile Include="UI\Navigation\CompileNavigationStep.cs" />
     <Compile Include="Registration\Conventions\HandlerConvention.cs" />

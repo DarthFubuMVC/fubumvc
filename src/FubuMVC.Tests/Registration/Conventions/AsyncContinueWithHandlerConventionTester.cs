@@ -82,7 +82,7 @@ namespace FubuMVC.Tests.Registration.Conventions
 
             public Task<FubuContinuation> ActionWithContinuationAsync()
             {
-                return Task<FubuContinuation>.Factory.StartNew(FubuContinuation.RedirectTo<Input>);
+                return Task<FubuContinuation>.Factory.StartNew(() => FubuContinuation.RedirectTo<Input>());
             }
 
             public Output NotAsync()

@@ -4,6 +4,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.Tests.Registration;
@@ -13,6 +14,105 @@ using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Continuations
 {
+    [TestFixture]
+    public class ContinuationHandlerTester : InteractionContext<ContinuationHandler>
+    {
+        private StubUrlRegistry urls;
+
+        protected override void beforeEach()
+        {
+            urls = new StubUrlRegistry();
+            Services.Inject<IUrlRegistry>(urls);
+            ClassUnderTest.InsideBehavior = MockFor<IActionBehavior>();
+        }
+
+        [Test]
+        public void invoke_next_behavior()
+        {
+            ClassUnderTest.InvokeNextBehavior();
+
+            MockFor<IActionBehavior>().AssertWasCalled(x => x.Invoke());
+        }
+
+        [Test]
+        public void redirect_with_string_assumes_that_it_is_a_url()
+        {
+            ClassUnderTest.RedirectTo("some url");
+
+            MockFor<IOutputWriter>().AssertWasCalled(x => x.RedirectToUrl("some url"));
+        }
+
+        [Test]
+        public void redirect_with_object_and_category()
+        {
+            var urlTarget = new UrlTarget();
+            ClassUnderTest.RedirectTo(urlTarget, "POST");
+
+            var expectedUrl = urls.UrlFor(urlTarget, "POST");
+            MockFor<IOutputWriter>().AssertWasCalled(x => x.RedirectToUrl(expectedUrl));
+        }
+
+        [Test]
+        public void redirect_to_call_with_category()
+        {
+            var actionCall = ActionCall.For<FakeEndpoint>(x => x.SayHello());
+            ClassUnderTest.RedirectToCall(actionCall, "POST");
+            var expectedUrl = urls.UrlFor(typeof (FakeEndpoint), actionCall.Method, "POST");
+
+            MockFor<IOutputWriter>().AssertWasCalled(x => x.RedirectToUrl(expectedUrl));
+        }
+
+        [Test]
+        public void transfer_to_with_category_and_input_model()
+        {
+            var foo = new Foo();
+            var theChain = new BehaviorChain();
+            MockFor<IChainResolver>().Stub(x => x.FindUnique(foo, "POST"))
+                .Return(theChain);
+
+            var theBehaviorBeingTransferedTo = MockRepository.GenerateMock<IActionBehavior>();
+
+            MockFor<IPartialFactory>().Stub(x => x.BuildBehavior(theChain)).Return(theBehaviorBeingTransferedTo);
+
+
+            ClassUnderTest.TransferTo(foo, "POST");
+
+            theBehaviorBeingTransferedTo.AssertWasCalled(x => x.InvokePartial());
+
+        }
+
+        [Test]
+        public void transfer_to_with_category_and_action_call()
+        {
+            var actionCall = ActionCall.For<FakeEndpoint>(x => x.SayHello());
+
+            var theChain = new BehaviorChain();
+            MockFor<IChainResolver>().Stub(x => x.Find(actionCall.HandlerType, actionCall.Method, "GET"))
+                .Return(theChain);
+
+            var theBehaviorBeingTransferedTo = MockRepository.GenerateMock<IActionBehavior>();
+
+            MockFor<IPartialFactory>().Stub(x => x.BuildBehavior(theChain)).Return(theBehaviorBeingTransferedTo);
+
+            ClassUnderTest.TransferToCall(actionCall, "GET");
+
+            theBehaviorBeingTransferedTo.AssertWasCalled(x => x.InvokePartial());
+        }
+
+        public class FakeEndpoint
+        {
+            public string SayHello()
+            {
+                return "Hello";
+            }
+        }
+
+        public class UrlTarget
+        {
+            
+        }
+    }
+
     public abstract class ContinuationHandlerContext : InteractionContext<ContinuationHandler>
     {
         protected IActionBehavior theInsideBehavior;
@@ -211,13 +311,19 @@ namespace FubuMVC.Tests.Continuations
     {
         private IActionBehavior partial;
         private InputModel input;
+        private BehaviorChain theChain;
 
         protected override void theContextIs()
         {
             partial = MockRepository.GenerateMock<IActionBehavior>();
-            input = new InputModel();
 
-            MockFor<IPartialFactory>().Expect(x => x.BuildBehavior(typeof (InputModel))).Return(partial);
+
+
+            input = new InputModel();
+            theChain = new BehaviorChain();
+            MockFor<IChainResolver>().Stub(x => x.FindUnique(input)).Return(theChain);
+
+            MockFor<IPartialFactory>().Expect(x => x.BuildBehavior(theChain)).Return(partial);
 
             ProcessContinuation(FubuContinuation.TransferTo(input));
         }
@@ -252,13 +358,17 @@ namespace FubuMVC.Tests.Continuations
     {
         private ActionCall call;
         private IActionBehavior partial;
+        private BehaviorChain theChain;
 
         protected override void theContextIs()
         {
             call = ActionCall.For<ControllerTarget>(x => x.ZeroInOneOut());
             partial = MockRepository.GenerateMock<IActionBehavior>();
 
-            MockFor<IPartialFactory>().Expect(x => x.BuildBehavior(call)).Return(partial);
+            theChain = new BehaviorChain();
+            MockFor<IChainResolver>().Stub(x => x.Find(call.HandlerType, call.Method)).Return(theChain);
+
+            MockFor<IPartialFactory>().Expect(x => x.BuildBehavior(theChain)).Return(partial);
 
             ProcessContinuation(FubuContinuation.TransferTo<ControllerTarget>(x => x.ZeroInOneOut()));
         }
