@@ -16,6 +16,8 @@ namespace FubuMVC.Core.Registration
             _def = def;
         }
 
+        public string RegistrationSource { get; set; }
+
         public Type ServiceType
         {
             get { return _serviceType; }

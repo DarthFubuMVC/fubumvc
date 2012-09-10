@@ -82,6 +82,16 @@ namespace FubuMVC.Core
             
             graph.Settings.Replace(_engineRegistry.BuildViewBag(_types));
 
+            AllServiceRegistrations().Each(services =>
+            {
+                graph.Log.RunAction(_registry, services);
+
+                // TODO -- temporary.  I think this will need to get better so that you can trace the source all the way through
+                graph.Log.EventsOfType<ServiceEvent>().Where(x => x.RegistrationSource == null).Each(
+                    x => x.RegistrationSource = services.GetType().Name);
+            });
+
+
             AllConfigurationActions().Each(x =>
             {
                 graph.Log.RunAction(_registry, x);
@@ -139,8 +149,7 @@ namespace FubuMVC.Core
 
         public IEnumerable<IConfigurationAction> AllConfigurationActions()
         {
-            return AllServiceRegistrations()
-                .Union(AllDiscoveryActions())
+            return AllDiscoveryActions()
                 .Union(UniqueImports())
                 .Union(_configurations[ConfigurationType.Explicit])
                 .Union(AllPolicies())
@@ -171,7 +180,7 @@ namespace FubuMVC.Core
 
         public IEnumerable<IConfigurationAction> AllServiceRegistrations()
         {
-            return serviceRegistrations().OfType<IConfigurationAction>()
+            return serviceRegistrations()
                 .Union(systemServices());
         }
 
@@ -236,7 +245,7 @@ namespace FubuMVC.Core
             }
         }
 
-        private static IEnumerable<IConfigurationAction> systemServices()
+        private static IEnumerable<ServiceRegistry> systemServices()
         {
             yield return new AssetServicesRegistry();
             yield return new ModelBindingServicesRegistry();

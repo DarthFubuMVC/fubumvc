@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using FubuCore.Dates;
+using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
-using FubuCore;
 
 namespace FubuMVC.Core.Registration
 {
@@ -23,12 +21,12 @@ namespace FubuMVC.Core.Registration
 
         public void AddService<TService, TImplementation>() where TImplementation : TService
         {
-            AddService(typeof(TService), ObjectDef.ForType<TImplementation>());
+            AddService(typeof (TService), ObjectDef.ForType<TImplementation>());
         }
 
         public void AddService<TService>(TService instance)
         {
-            AddService(typeof(TService), ObjectDef.ForValue(instance));
+            AddService(typeof (TService), ObjectDef.ForValue(instance));
         }
 
         public void Clear(Type serviceType)
@@ -47,7 +45,7 @@ namespace FubuMVC.Core.Registration
 
         public void FillType(Type interfaceType, Type concreteType)
         {
-            List<ObjectDef> list = _services[interfaceType];
+            var list = _services[interfaceType];
             if (list.Any(x => x.Type == concreteType)) return;
 
             AddService(interfaceType, new ObjectDef(concreteType));
@@ -55,7 +53,7 @@ namespace FubuMVC.Core.Registration
 
         public void SetServiceIfNone(Type serviceType, ObjectDef def)
         {
-            List<ObjectDef> list = _services[serviceType];
+            var list = _services[serviceType];
             if (list.Any()) return;
 
             AddService(serviceType, def);
@@ -68,12 +66,12 @@ namespace FubuMVC.Core.Registration
 
         public void SetServiceIfNone<TInterface, TImplementation>()
         {
-            SetServiceIfNone(typeof(TInterface), ObjectDef.ForType<TImplementation>());
+            SetServiceIfNone(typeof (TInterface), ObjectDef.ForType<TImplementation>());
         }
 
         /// <summary>
-        /// Returns the currently registered default registration for
-        /// the given TService
+        ///   Returns the currently registered default registration for
+        ///   the given TService
         /// </summary>
         /// <returns></returns>
         public ObjectDef DefaultServiceFor(Type serviceType)
@@ -87,9 +85,9 @@ namespace FubuMVC.Core.Registration
         }
 
         /// <summary>
-        /// Retrieves all the registered ObjectDef's for the specified type
+        ///   Retrieves all the registered ObjectDef's for the specified type
         /// </summary>
-        /// <param name="serviceType"></param>
+        /// <param name = "serviceType"></param>
         /// <returns></returns>
         public IEnumerable<ObjectDef> ServicesFor(Type serviceType)
         {
@@ -98,7 +96,7 @@ namespace FubuMVC.Core.Registration
 
         public IEnumerable<ObjectDef> ServicesFor<T>()
         {
-            return ServicesFor(typeof(T));
+            return ServicesFor(typeof (T));
         }
 
         public void Each(Action<Type, ObjectDef> action)
@@ -123,18 +121,18 @@ namespace FubuMVC.Core.Registration
         }
 
         /// <summary>
-        /// Returns an enumeration of all explicitly registered objects
-        /// of the type T
+        ///   Returns an enumeration of all explicitly registered objects
+        ///   of the type T
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name = "T"></typeparam>
         /// <returns></returns>
         public IEnumerable<T> FindAllValues<T>()
         {
-            foreach (ObjectDef def in _services[typeof(T)])
+            foreach (ObjectDef def in _services[typeof (T)])
             {
                 if (def.Value != null)
                 {
-                    yield return (T)def.Value;
+                    yield return (T) def.Value;
                 }
             }
         }

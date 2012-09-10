@@ -23,6 +23,11 @@ namespace FubuMVC.Core.Registration.Diagnostics
             _sources.AddRange(log._sources);
         }
 
+        public IEnumerable<T> EventsOfType<T>()
+        {
+            return _sources.SelectMany(x => x.Events.OfType<T>());
+        }
+
         public void RunAction(FubuRegistry provenance, IConfigurationAction action)
         {
             StartSource(provenance, action);
