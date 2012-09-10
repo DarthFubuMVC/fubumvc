@@ -6,7 +6,7 @@ using FubuMVC.Core.Caching;
 namespace FubuMVC.Core.Runtime.Logging
 {
     [Title("Finished recording output")]
-    public class FinishedRecordingOutput : LogRecord
+    public class FinishedRecordingOutput : LogRecord, DescribesItself
     {
         private readonly RecordedOutput _output;
 
@@ -18,6 +18,11 @@ namespace FubuMVC.Core.Runtime.Logging
         public RecordedOutput Output
         {
             get { return _output; }
+        }
+
+        public void Describe(Description description)
+        {
+            description.AddList("Writes", _output.Outputs);
         }
     }
 }
