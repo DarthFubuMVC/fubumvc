@@ -169,6 +169,29 @@ namespace FubuMVC.Tests.Assets
             theGraph.Alias("Name.js", "Name");
             theGraph.ObjectFor("Name").ShouldBeOfType<IFileDependency>()
                 .Name.ShouldEqual("Name.js");
+        }   
+
+        [Test]
+        public void only_the_very_first_alias_is_registered()
+        {
+            theGraph.Alias("jquery5.1.11.1.js", "jquery");
+            theGraph.Alias("jquery.1.8.1.js", "jquery");
+            theGraph.Alias("jquery.1.9.1.js", "jquery");
+
+            theGraph.ObjectFor("jquery").ShouldBeOfType<IFileDependency>()
+                .Name.ShouldEqual("jquery5.1.11.1.js");
+        }
+
+
+        [Test]
+        public void only_the_very_first_alias_is_registered_2()
+        {
+            theGraph.Alias("jquery.1.1.1.js", "jquery");
+            theGraph.Alias("jquery.1.8.1.js", "jquery");
+            theGraph.Alias("jquery.1.9.1.js", "jquery");
+
+            theGraph.ObjectFor("jquery").ShouldBeOfType<IFileDependency>()
+                .Name.ShouldEqual("jquery.1.1.1.js");
         }
 
         [Test]
