@@ -19,7 +19,7 @@ namespace FubuMVC.Core.Registration.Conventions
 
         public bool Matches(ActionCall call)
         {
-            return call.Method == _method;
+            return call.Method.Matches(_method);
         }
 
         public IRouteDefinition Build(ActionCall call)

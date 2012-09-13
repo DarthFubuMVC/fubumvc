@@ -18,17 +18,12 @@ namespace FubuMVC.Tests
             public bool Boolean { get; set; }
         }
 
-
-
+        [Test]
         public void UrlEncode_should_encode_string()
         {
             string test = "encode test";
 
             test.UrlEncoded().ShouldEqual("encode%20test");
         }
-
-
-
-
     }
 }

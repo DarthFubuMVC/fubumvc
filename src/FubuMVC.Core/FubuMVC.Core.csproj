@@ -129,6 +129,7 @@
     <Compile Include="Http\ICookieValue.cs" />
     <Compile Include="Http\IResponse.cs" />
     <Compile Include="PolicyAttribute.cs" />
+    <Compile Include="ReflectionExtensions.cs" />
     <Compile Include="Registration\BottleConfigurationDef.cs" />
     <Compile Include="Registration\Conventions\ActionlessViewConvention.cs" />
     <Compile Include="Registration\Conventions\CacheAttributePolicy.cs" />
