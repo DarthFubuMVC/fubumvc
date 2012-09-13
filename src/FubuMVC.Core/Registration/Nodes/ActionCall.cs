@@ -103,25 +103,7 @@ namespace FubuMVC.Core.Registration.Nodes
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(other.HandlerType, HandlerType) && methodsEqual(other.Method, Method);
-        }
-
-        private bool methodsEqual(MethodInfo method1, MethodInfo method2)
-        {
-            if (method1.Name != method2.Name) return false;
-            var parameters = method1.GetParameters();
-            if (parameters.Count() != method2.GetParameters().Count()) return false;
-            for (int i = 0; i < parameters.Count(); i++)
-            {
-                if (!parametersEqual(parameters[i], method2.GetParameters()[i])) return false;
-            }
-
-            return true;
-        }
-
-        private bool parametersEqual(ParameterInfo parameter1, ParameterInfo parameter2)
-        {
-            return parameter1.Name == parameter2.Name && parameter1.ParameterType == parameter2.ParameterType;
+            return Equals(other.HandlerType, HandlerType) && other.Method.Matches(Method);
         }
 
         public override bool Equals(object obj)
