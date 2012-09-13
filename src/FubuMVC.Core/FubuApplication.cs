@@ -129,6 +129,10 @@ namespace FubuMVC.Core
             BottleFiles.ContentFolder = FubuMvcPackageFacility.FubuContentFolder;
             BottleFiles.PackagesFolder = FileSystem.Combine("bin", FubuMvcPackageFacility.FubuPackagesFolder);
 
+            Console.WriteLine("PackageRegistry.ApplicationDirectory:  " + PackageRegistry.GetApplicationDirectory());
+            Console.WriteLine("BottleFiles.ContentFolder:  " + BottleFiles.ContentFolder);
+            Console.WriteLine("BottleFiles.PackagesFolder:  " + BottleFiles.PackagesFolder);
+
             PackageRegistry.LoadPackages(x =>
             {
                 x.Facility(_fubuFacility);

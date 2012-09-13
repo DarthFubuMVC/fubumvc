@@ -37,6 +37,11 @@ namespace Fubu.Applications
             var response = domain.Start(settings);
 
             response.WriteReport(settings);
+            if (response.Status != ApplicationStartStatus.Started)
+            {
+                return false;
+            }
+
 
             var url = "http://localhost:" + settings.Port;
             if (input.UrlFlag.IsNotEmpty())

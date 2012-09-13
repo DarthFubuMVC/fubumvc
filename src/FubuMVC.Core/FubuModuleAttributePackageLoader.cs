@@ -6,6 +6,7 @@ using System.Reflection;
 using Bottles;
 using Bottles.Diagnostics;
 using Bottles.PackageLoaders.Assemblies;
+using FubuCore;
 
 namespace FubuMVC.Core
 {
@@ -13,13 +14,21 @@ namespace FubuMVC.Core
     {
         public IEnumerable<IPackageInfo> Load(IPackageLog log)
         {
-            var list = new List<string>{AppDomain.CurrentDomain.BaseDirectory};
+            var list = new List<string> { AppDomain.CurrentDomain.SetupInformation.ApplicationBase };
 
             string binPath = AppDomain.CurrentDomain.SetupInformation.PrivateBinPath;
-            if (Directory.Exists(binPath))
+            if (binPath.IsNotEmpty())
             {
-                list.Add(binPath);
+                if (Path.IsPathRooted(binPath))
+                {
+                    list.Add(binPath);
+                }
+                else
+                {
+                    list.Add(AppDomain.CurrentDomain.SetupInformation.ApplicationBase.AppendPath(binPath));
+                }
             }
+
 
             list.Each(x =>
             {
