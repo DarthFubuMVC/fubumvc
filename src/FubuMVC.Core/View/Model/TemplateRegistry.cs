@@ -1,14 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
+using FubuCore.Util;
 
 namespace FubuMVC.Core.View.Model
 {
     // TODO: Reconsider this
-    public class TemplateRegistry<T> : List<T>, ITemplateRegistry<T> where T : ITemplateFile
+    public class TemplateRegistry<T> : ITemplateRegistry<T> where T : ITemplateFile
     {
-        public TemplateRegistry() {}
-        public TemplateRegistry(IEnumerable<T> templates) : base(templates) { }
+        private readonly Cache<string, T> _templates = new Cache<string, T>();
+
+        public TemplateRegistry() : this(Enumerable.Empty<T>()) {}
+        public TemplateRegistry(IEnumerable<T> templates)
+        {
+            templates.ToList().Each(Register);
+        }
+
+        public void Register(T template)
+        {
+            _templates.Fill(template.FilePath, template);
+        } 
 
         public IEnumerable<T> ByNameUnderDirectories(string name, IEnumerable<string> directories)
         {
@@ -26,15 +38,10 @@ namespace FubuMVC.Core.View.Model
             return this.Where(x => x.Origin == origin);
         }
 
-        public IEnumerable<T> AllTemplates()
-        {
-            return this;
-        }
-
         // TODO: UT
         public IEnumerable<TDescriptor> DescriptorsWithViewModels<TDescriptor>() where TDescriptor : ViewDescriptor<T>
         {
-            return AllTemplates().Where(t => t.Descriptor is TDescriptor)
+            return this.Where(t => t.Descriptor is TDescriptor)
                 .Select(x => x.Descriptor.As<TDescriptor>())
                 .Where(x => x.HasViewModel());
         }
@@ -43,12 +50,21 @@ namespace FubuMVC.Core.View.Model
         {
             return this.Where(x => x.FromHost());
         }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return _templates.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
     }
 
-    public interface ITemplateRegistry<T> : IEnumerable<T>
+    public interface ITemplateRegistry<out T> : IEnumerable<T> where T : ITemplateFile
     {
         IEnumerable<T> ByNameUnderDirectories(string name, IEnumerable<string> directories);
-        IEnumerable<T> AllTemplates();
         IEnumerable<T> ByOrigin(string origin);
         IEnumerable<T> FromHost();
     }

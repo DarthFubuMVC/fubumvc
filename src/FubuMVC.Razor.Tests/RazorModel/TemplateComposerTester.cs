@@ -43,7 +43,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
         {
             _template1 = new Template("tmpl1.cshtml", "x", "o1");
             _template2 = new Template("tmpl2.cshtml", "z", "o2");
-            _templateRegistry = new TemplateRegistry<IRazorTemplate> {_template1, _template2};
+            _templateRegistry = new TemplateRegistry<IRazorTemplate>(new[] {_template1, _template2});
 
             var viewParser = MockFor<IViewParser>();
             //null here probably won't work

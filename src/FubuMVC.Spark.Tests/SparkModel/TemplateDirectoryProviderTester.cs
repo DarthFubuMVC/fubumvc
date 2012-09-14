@@ -79,12 +79,12 @@ namespace FubuMVC.Spark.Tests.SparkModel
             _pak1Root = FileSystem.Combine(_root, "Packs", "Pak1");
             _pak2Root = FileSystem.Combine(_root, "Packs", "Pak2");
 
-            _templates = new TemplateRegistry<ITemplate>
+            _templates = new TemplateRegistry<ITemplate>(new[]
             {
                 new Template(FileSystem.Combine(_root, "Actions", "Home", "home.spark"), _root, TemplateConstants.HostOrigin), 
                 new Template(FileSystem.Combine(_pak1Root, "Actions", "Home", "home.spark"), _pak1Root, "Pak1"),
                 new Template(FileSystem.Combine(_pak2Root, "Home", "home.spark"), _pak2Root, "Pak2")
-            };
+            });
 
             _graph = new SharingGraph();
             _graph.Dependency("Pak1", "Pak2");
@@ -107,7 +107,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 FileSystem.Combine(_pak2Root, Shared)                                   
             };
 
-            ClassUnderTest.SharedPathsOf(_templates[1]).ShouldHaveTheSameElementsAs(expected);
+            ClassUnderTest.SharedPathsOf(templateAt(1)).ShouldHaveTheSameElementsAs(expected);
         }
 
         [Test]
@@ -120,7 +120,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 FileSystem.Combine(_root, Shared)                                   
             };
 
-            ClassUnderTest.SharedPathsOf(_templates[2]).ShouldHaveTheSameElementsAs(expected);
+            ClassUnderTest.SharedPathsOf(templateAt(2)).ShouldHaveTheSameElementsAs(expected);
         }
 
         [Test]
@@ -137,7 +137,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 FileSystem.Combine(_pak2Root, Shared)                                   
             };
 
-            ClassUnderTest.ReachablesOf(_templates[1]).ShouldHaveTheSameElementsAs(expected);
+            ClassUnderTest.ReachablesOf(templateAt(1)).ShouldHaveTheSameElementsAs(expected);
         }
 
         [Test]
@@ -152,7 +152,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 FileSystem.Combine(_root, Shared)                                   
             };
 
-            ClassUnderTest.ReachablesOf(_templates[2]).ShouldHaveTheSameElementsAs(expected);
+            ClassUnderTest.ReachablesOf(templateAt(2)).ShouldHaveTheSameElementsAs(expected);
         }
 
         [Test]
@@ -168,7 +168,12 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 FileSystem.Combine(_root, Shared)                               
             };
 
-            ClassUnderTest.ReachablesOf(_templates[0]).ShouldHaveTheSameElementsAs(expected);
+            ClassUnderTest.ReachablesOf(templateAt(0)).ShouldHaveTheSameElementsAs(expected);
+        }
+
+        private ITemplate templateAt(int index)
+        {
+            return _templates.ElementAt(index);
         }
 
         // TODO: More UT

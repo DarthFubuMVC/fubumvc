@@ -56,7 +56,7 @@ namespace FubuMVC.Spark
         {
             var engine = (SparkViewEngine) _engine;
 
-            engine.ViewFolder = new TemplateViewFolder(_templateRegistry.AllTemplates());
+            engine.ViewFolder = new TemplateViewFolder(_templateRegistry);
             log.Trace("Setting viewfolder [{0}] for view engine", _engine.ViewFolder.GetType().FullName);
             
             engine.DefaultPageBaseType = typeof(FubuSparkView).FullName;

@@ -37,12 +37,13 @@ namespace FubuMVC.Spark
         public void RegisterTemplates(IFubuApplicationFiles fubuFiles, SparkEngineSettings settings)
         {
             fubuFiles.FindFiles(settings.Search).Each(file => 
-                _templateRegistry.Add(new Template(file.Path, file.ProvenancePath, file.Provenance)));            
+                _templateRegistry.Register(new Template(file.Path, file.ProvenancePath, file.Provenance)));            
         }
 
         public void ComposeTemplates(SparkEngineSettings settings)
         {
-            _templateRegistry.Each(_parsings.Process);         
+            _templateRegistry.Each(_parsings.Process);     
+    
             var composer = new TemplateComposer<ITemplate>(_parsings);            
             settings.ComposerConfiguration(composer);
             composer.Compose(_templateRegistry);

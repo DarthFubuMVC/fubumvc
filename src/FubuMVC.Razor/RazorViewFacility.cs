@@ -37,12 +37,13 @@ namespace FubuMVC.Razor
         public void RegisterTemplates(IFubuApplicationFiles fubuFiles, RazorEngineSettings settings)
         {
             fubuFiles.FindFiles(settings.Search).Each(file => 
-                _templateRegistry.Add(new Template(file.Path, file.ProvenancePath, file.Provenance)));            
+                _templateRegistry.Register(new Template(file.Path, file.ProvenancePath, file.Provenance)));            
         }
 
         public void ComposeTemplates(RazorEngineSettings settings)
         {
             _templateRegistry.Each(_razorParsings.Parse);
+
             var composer = new TemplateComposer<IRazorTemplate>(_razorParsings);
             settings.ComposerConfiguration(composer);            
             composer.Compose(_templateRegistry);

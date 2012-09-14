@@ -53,7 +53,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
         [Test]
         public void all_templates()
         {
-            ClassUnderTest.AllTemplates().ShouldHaveCount(8).ShouldEqual(_templates);
+            ClassUnderTest.ShouldHaveCount(8).ShouldEqual(_templates);
         }
 
         [Test]

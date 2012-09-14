@@ -26,13 +26,13 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 Path.Combine("App", "Shared")
             };
 
-            _templates = new TemplateRegistry<ITemplate>
+            _templates = new TemplateRegistry<ITemplate>(new[]
             {
                 new Template(Path.Combine("App", "Shared", "application.spark"), "App", TemplateConstants.HostOrigin),
                 new Template(Path.Combine("App", "Shared", "sitemaster.spark"), "App", TemplateConstants.HostOrigin),
                 new Template(Path.Combine("App", "Views", "Shared", "application.spark"), "App", TemplateConstants.HostOrigin),
                 new Template(Path.Combine("App", "Views", "Shared", "site.xml"), "App", TemplateConstants.HostOrigin)
-            };
+            });
 
             Container.Inject<ITemplateSelector<ITemplate>>(new SparkTemplateSelector());
 
@@ -47,7 +47,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         {
             ClassUnderTest.LocateMaster("application", _template)
                 .ShouldNotBeNull()
-                .ShouldEqual(_templates[2]);
+                .ShouldEqual(_templates.ElementAt(2));
         }
 
         [Test]
@@ -82,7 +82,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 "App"
             };
 
-            _templates = new TemplateRegistry<ITemplate>
+            _templates = new TemplateRegistry<ITemplate>(new[]
             {
                 new Template(Path.Combine("App", "bindings.xml"), "App",TemplateConstants.HostOrigin),
                 new Template(Path.Combine("App", "Shared", "application.spark"), "App",TemplateConstants.HostOrigin),
@@ -91,7 +91,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 new Template(Path.Combine("App", "Views", "bindings.xml"), "App",TemplateConstants.HostOrigin),
                 new Template(Path.Combine("App", "Views", "Shared", "application.spark"), "App",TemplateConstants.HostOrigin),
                 new Template(Path.Combine("App", "Views", "Shared", "bindings.xml"), "App",TemplateConstants.HostOrigin)
-            };
+            });
 
             MockFor<ITemplateDirectoryProvider<ITemplate>>()
                 .Stub(x => x.ReachablesOf(_template))
@@ -103,13 +103,13 @@ namespace FubuMVC.Spark.Tests.SparkModel
         [Test]
         public void locate_binding_returns_template_that_match_shared_directories_and_name()
         {
-            var bindings = ClassUnderTest.LocateBindings("bindings", _template);
+            var bindings = ClassUnderTest.LocateBindings("bindings", _template).ToList();
             bindings.ShouldNotBeNull().ShouldHaveCount(4);
 
-            bindings.ElementAt(0).ShouldEqual(_templates[6]);
-            bindings.ElementAt(1).ShouldEqual(_templates[4]);
-            bindings.ElementAt(2).ShouldEqual(_templates[2]);
-            bindings.ElementAt(3).ShouldEqual(_templates[0]);
+            bindings.ElementAt(0).ShouldEqual(_templates.ElementAt(6));
+            bindings.ElementAt(1).ShouldEqual(_templates.ElementAt(4));
+            bindings.ElementAt(2).ShouldEqual(_templates.ElementAt(2));
+            bindings.ElementAt(3).ShouldEqual(_templates.ElementAt(0));
         }
 
         [Test]

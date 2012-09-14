@@ -78,12 +78,12 @@ namespace FubuMVC.Razor.Tests.RazorModel
             _pak1Root = FubuCore.FileSystem.Combine(_root, "Packs", "Pak1");
             _pak2Root = FubuCore.FileSystem.Combine(_root, "Packs", "Pak2");
 
-            _templates = new TemplateRegistry<IRazorTemplate>
+            _templates = new TemplateRegistry<IRazorTemplate>(new[]
             {
                 new Template(FubuCore.FileSystem.Combine(_root, "Actions", "Home", "home.cshtml"), _root, TemplateConstants.HostOrigin), 
                 new Template(FubuCore.FileSystem.Combine(_pak1Root, "Actions", "Home", "home.cshtml"), _pak1Root, "Pak1"),
                 new Template(FubuCore.FileSystem.Combine(_pak2Root, "Home", "home.cshtml"), _pak2Root, "Pak2")
-            };
+            });
 
             _graph = new SharingGraph();
             _graph.Dependency("Pak1", "Pak2");
@@ -106,7 +106,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
                 FubuCore.FileSystem.Combine(_pak2Root, Shared)                                   
             };
 
-            ClassUnderTest.SharedPathsOf(_templates[1]).ShouldHaveTheSameElementsAs(expected);
+            ClassUnderTest.SharedPathsOf(templateAt(1)).ShouldHaveTheSameElementsAs(expected);
         }
 
         [Test]
@@ -119,7 +119,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
                 FubuCore.FileSystem.Combine(_root, Shared)                                   
             };
 
-            ClassUnderTest.SharedPathsOf(_templates[2]).ShouldHaveTheSameElementsAs(expected);
+            ClassUnderTest.SharedPathsOf(templateAt(2)).ShouldHaveTheSameElementsAs(expected);
         }
 
         [Test]
@@ -136,7 +136,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
                 FubuCore.FileSystem.Combine(_pak2Root, Shared)                                   
             };
 
-            ClassUnderTest.ReachablesOf(_templates[1]).ShouldHaveTheSameElementsAs(expected);
+            ClassUnderTest.ReachablesOf(templateAt(1)).ShouldHaveTheSameElementsAs(expected);
         }
 
         [Test]
@@ -151,7 +151,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
                 FubuCore.FileSystem.Combine(_root, Shared)                                   
             };
 
-            ClassUnderTest.ReachablesOf(_templates[2]).ShouldHaveTheSameElementsAs(expected);
+            ClassUnderTest.ReachablesOf(templateAt(2)).ShouldHaveTheSameElementsAs(expected);
         }
 
         [Test]
@@ -167,7 +167,12 @@ namespace FubuMVC.Razor.Tests.RazorModel
                 FubuCore.FileSystem.Combine(_root, Shared)                               
             };
 
-            ClassUnderTest.ReachablesOf(_templates[0]).ShouldHaveTheSameElementsAs(expected);
+            ClassUnderTest.ReachablesOf(templateAt(0)).ShouldHaveTheSameElementsAs(expected);
+        }
+
+        private IRazorTemplate templateAt(int index)
+        {
+            return _templates.ElementAt(index);
         }
 
         // TODO: More UT

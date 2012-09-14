@@ -19,7 +19,7 @@ namespace FubuMVC.Spark.Tests
         protected override void beforeEach()
         {
             _root = AppDomain.CurrentDomain.BaseDirectory;
-            _templateRegistry = new SparkTemplateRegistry
+            _templateRegistry = new SparkTemplateRegistry(new[]
             {
                 new Template(Path.Combine(_root, "Views", "Home", "ModelAView.spark"), _root, TemplateConstants.HostOrigin),
                 new Template(Path.Combine(_root, "Views", "Home", "_partial1.spark"), _root, TemplateConstants.HostOrigin),
@@ -27,11 +27,12 @@ namespace FubuMVC.Spark.Tests
                 new Template(Path.Combine(_root, "Views", "Home", "_partial2.spark"), _root, TemplateConstants.HostOrigin),
                 new Template(Path.Combine(_root, "Views", "Home", "ModelCView.spark"), _root, TemplateConstants.HostOrigin),
                 new Template(Path.Combine(_root, "Views", "Home", "_partial3.spark"), _root, TemplateConstants.HostOrigin)
-            };
-            
-            _templateRegistry[0].Descriptor = new SparkDescriptor(_templateRegistry[0]) { ViewModel = typeof(ModelA) };
-            _templateRegistry[2].Descriptor = new SparkDescriptor(_templateRegistry[2]) { ViewModel = typeof(ModelB) };
-            _templateRegistry[4].Descriptor = new SparkDescriptor(_templateRegistry[4]) { ViewModel = typeof(ModelC) };
+            });
+
+            var templates = _templateRegistry.ToList();
+            templates[0].Descriptor = new SparkDescriptor(templates[0]) { ViewModel = typeof(ModelA) };
+            templates[2].Descriptor = new SparkDescriptor(templates[2]) { ViewModel = typeof(ModelB) };
+            templates[4].Descriptor = new SparkDescriptor(templates[4]) { ViewModel = typeof(ModelC) };
 
             Services.Inject(_templateRegistry);
         }

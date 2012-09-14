@@ -39,7 +39,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         {
             _template1 = new Template("tmpl1.spark", "x", "o1");
             _template2 = new Template("tmpl2.spark", "z", "o2");
-            _templateRegistry = new TemplateRegistry<ITemplate> {_template1, _template2};
+            _templateRegistry = new TemplateRegistry<ITemplate>(new[] {_template1, _template2});
 
             var parsingRegistrations = MockFor<IParsingRegistrations<ITemplate>>();
             parsingRegistrations.Stub(x => x.ParsingFor(Arg<Template>.Is.Anything)).Return(new Parsing());

@@ -133,7 +133,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         [Test]
         public void if_template_is_default_master_then_attacher_is_not_applied()
         {
-            ((ITemplateFile)_template).FilePath = "b/" + _parsing.Master + ".cshtml";
+            ((Template)_template).FilePath = "b/" + _parsing.Master + ".cshtml";
             ClassUnderTest.CanAttach(_request).ShouldBeFalse();
         }
 

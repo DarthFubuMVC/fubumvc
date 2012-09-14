@@ -64,7 +64,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         [Test]
         public void all_templates()
         {
-            ClassUnderTest.AllTemplates().ShouldHaveCount(8).ShouldEqual(_templates);
+            ClassUnderTest.ShouldHaveCount(8).ShouldEqual(_templates);
         }
 
         [Test]

@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.View.Model;
+using FubuCore;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -23,8 +25,10 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 Descriptor = _viewDescriptor                                
             };
 
-            _templates.Add(_template);
-            _templates.AddRange(Enumerable.Range(1, 5).Select(x => MockRepository.GenerateMock<ITemplate>()));
+            _templates.Register(_template);
+            Enumerable.Range(1, 5).Select(x => new Template("{0}.spark".ToFormat(x), "b", "c"))
+                .Each(_templates.Register);
+
 
             _request = new AttachRequest<ITemplate>
             {
@@ -74,7 +78,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
             ClassUnderTest.Attach(_request); 
             MockFor<ITemplateLogger>().AssertWasCalled(x => 
                 x.Log(Arg.Is(_template), Arg<string>.Is.Anything), 
-                x => x.Repeat.Times(_templates.Count));
+                x => x.Repeat.Times(_templates.Count()));
         }
     }
 }

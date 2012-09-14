@@ -34,8 +34,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
             var pathPackage1 = Path.Combine(pathApp, "fubu-packages", "Package1", "WebContent");
             var pathPackage2 = Path.Combine(testRoot, "Package2");
 
-            var allTemplates = new TemplateRegistry<ITemplate>();
-
+            var templateRegistry = new TemplateRegistry<ITemplate>();
             var sparkSet = new SparkEngineSettings().Search;
 
             new ContentFolder(TemplateConstants.HostOrigin, pathApp).FindFiles(sparkSet)
@@ -44,21 +43,22 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 .Each(x =>
                 {
                     if (x.Provenance == TemplateConstants.HostOrigin && x.Path.StartsWith(pathPackage1)) return;
-                    allTemplates.Add(new Template(x.Path, x.ProvenancePath, x.Provenance));
+                    templateRegistry.Register(new Template(x.Path, x.ProvenancePath, x.Provenance));
                 });
 
             var viewPathPolicy = new ViewPathPolicy<ITemplate>();
-            allTemplates.Each(viewPathPolicy.Apply);
-            _viewFolder = new TemplateViewFolder(allTemplates);
+            templateRegistry.Each(viewPathPolicy.Apply);
+
+            _viewFolder = new TemplateViewFolder(templateRegistry);
             _engine = new SparkViewEngine
             {
                 ViewFolder = _viewFolder,
-                BindingProvider = new FubuBindingProvider(new SparkTemplateRegistry(allTemplates))
+                BindingProvider = new FubuBindingProvider(new SparkTemplateRegistry(templateRegistry))
             };
 
-            _pak1TemplateRegistry = new TemplateRegistry<ITemplate>(allTemplates.ByOrigin(Package1));
-            _pak2TemplateRegistry = new TemplateRegistry<ITemplate>(allTemplates.ByOrigin(Package2));
-            _appTemplateRegistry = new TemplateRegistry<ITemplate>(allTemplates.FromHost());
+            _pak1TemplateRegistry = new TemplateRegistry<ITemplate>(templateRegistry.ByOrigin(Package1));
+            _pak2TemplateRegistry = new TemplateRegistry<ITemplate>(templateRegistry.ByOrigin(Package2));
+            _appTemplateRegistry = new TemplateRegistry<ITemplate>(templateRegistry.FromHost());
         }
 
         [Test]

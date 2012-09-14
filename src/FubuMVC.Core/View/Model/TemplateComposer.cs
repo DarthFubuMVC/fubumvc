@@ -57,7 +57,7 @@ namespace FubuMVC.Core.View.Model
 
         public void Compose(ITemplateRegistry<T> templates)
         {
-            templates.AllTemplates().Each(t =>
+            templates.Each(t =>
             {
                 var bindRequest = new BindRequest<T>
                 {

@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core.View.Model;
+﻿using FubuCore;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Razor.RazorModel;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -133,7 +134,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
         [Test]
         public void if_template_is_default_master_and_layout_is_itself_then_attacher_is_not_applied()
         {
-            ((ITemplateFile)_template).FilePath = "One/Shared/" + _parsing.Master + ".cshtml";
+            ((Template)_template).FilePath = "One/Shared/{0}.cshtml".ToFormat(_parsing.Master);
             ClassUnderTest.CanAttach(_request).ShouldBeFalse();
         }
 

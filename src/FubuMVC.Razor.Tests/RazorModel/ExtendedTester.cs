@@ -52,7 +52,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
                 .Each(x =>
                 {
                     if (x.Provenance == TemplateConstants.HostOrigin && x.Path.StartsWith(pathPackage1)) return;
-                    allTemplates.Add(new Template(x.Path, x.ProvenancePath, x.Provenance));
+                    allTemplates.Register(new Template(x.Path, x.ProvenancePath, x.Provenance));
                 });
 
             var viewPathPolicy = new ViewPathPolicy<IRazorTemplate>();

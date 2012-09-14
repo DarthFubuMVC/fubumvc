@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Razor.RazorModel;
 using FubuTestingSupport;
@@ -25,13 +26,13 @@ namespace FubuMVC.Razor.Tests.RazorModel
                 Path.Combine("App", "Shared")
             };
 
-            _templates = new TemplateRegistry<IRazorTemplate>
+            _templates = new TemplateRegistry<IRazorTemplate>(new[]
             {
                 new Template(Path.Combine("App", "Shared", "application.cshtml"), "App", TemplateConstants.HostOrigin),
                 new Template(Path.Combine("App", "Shared", "sitemaster.cshtml"), "App", TemplateConstants.HostOrigin),
                 new Template(Path.Combine("App", "Views", "Shared", "application.cshtml"), "App", TemplateConstants.HostOrigin),
                 new Template(Path.Combine("App", "Views", "Shared", "site.xml"), "App", TemplateConstants.HostOrigin)
-            };
+            });
 
             MockFor<ITemplateDirectoryProvider<IRazorTemplate>>()
                 .Stub(x => x.SharedPathsOf(_template)).Return(_directories);
@@ -46,7 +47,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
         {
             ClassUnderTest.LocateMaster("application", _template)
                 .ShouldNotBeNull()
-                .ShouldEqual(_templates[2]);
+                .ShouldEqual(_templates.ElementAt(2));
         }
 
         [Test]

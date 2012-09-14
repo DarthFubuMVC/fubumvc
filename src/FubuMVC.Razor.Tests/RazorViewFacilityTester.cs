@@ -19,7 +19,8 @@ namespace FubuMVC.Razor.Tests
         protected override void beforeEach()
         {
             _root = AppDomain.CurrentDomain.BaseDirectory;
-            _templateRegistry = new TemplateRegistry<IRazorTemplate>
+
+            _templateRegistry = new TemplateRegistry<IRazorTemplate>(new[]
             {
                 new Template(Path.Combine(_root, "Views", "Home", "ModelAView.cshtml"), _root, TemplateConstants.HostOrigin),
                 new Template(Path.Combine(_root, "Views", "Home", "_partial1.cshtml"), _root, TemplateConstants.HostOrigin),
@@ -27,11 +28,13 @@ namespace FubuMVC.Razor.Tests
                 new Template(Path.Combine(_root, "Views", "Home", "_partial2.cshtml"), _root, TemplateConstants.HostOrigin),
                 new Template(Path.Combine(_root, "Views", "Home", "ModelCView.cshtml"), _root, TemplateConstants.HostOrigin),
                 new Template(Path.Combine(_root, "Views", "Home", "_partial3.cshtml"), _root, TemplateConstants.HostOrigin)
-            };
+            });
 
-            _templateRegistry[0].Descriptor = new ViewDescriptor<IRazorTemplate>(_templateRegistry[0]) { ViewModel = typeof(ModelA) };
-            _templateRegistry[2].Descriptor = new ViewDescriptor<IRazorTemplate>(_templateRegistry[2]) { ViewModel = typeof(ModelB) };
-            _templateRegistry[4].Descriptor = new ViewDescriptor<IRazorTemplate>(_templateRegistry[4]) { ViewModel = typeof(ModelC) };
+            var templates = _templateRegistry.ToList();
+
+            templates[0].Descriptor = new ViewDescriptor<IRazorTemplate>(templates[0]) { ViewModel = typeof(ModelA) };
+            templates[2].Descriptor = new ViewDescriptor<IRazorTemplate>(templates[2]) { ViewModel = typeof(ModelB) };
+            templates[4].Descriptor = new ViewDescriptor<IRazorTemplate>(templates[4]) { ViewModel = typeof(ModelC) };
 
             Services.Inject(_templateRegistry);
         }

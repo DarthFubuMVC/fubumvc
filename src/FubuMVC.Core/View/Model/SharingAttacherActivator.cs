@@ -18,7 +18,7 @@ namespace FubuMVC.Core.View.Model
 
         public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
         {
-            _templates.AllTemplates().Each(t =>
+            _templates.Each(t =>
             {                
                 var context = new AttachRequest<T>
                 {
