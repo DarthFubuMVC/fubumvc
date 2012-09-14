@@ -14,7 +14,7 @@ namespace FubuMVC.Spark
         public SparkEngineSettings()
         {
             defaultSearch();
-            defaultComposerConfiguration();
+            defaultComposer();
         }
 
         private void defaultSearch()
@@ -25,9 +25,9 @@ namespace FubuMVC.Spark
             Search.AppendInclude("bindings.xml");                        
         }
 
-        private void defaultComposerConfiguration()
+        private void defaultComposer()
         {
-            ConfigureComposer(composer => composer
+            Register(composer => composer
                 .AddBinder<ViewDescriptorBinder>()
                 .AddBinder<GenericViewModelBinder<ITemplate>>()
                 .AddBinder<ViewModelBinder<ITemplate>>()
@@ -35,18 +35,21 @@ namespace FubuMVC.Spark
                 .Apply<ViewPathPolicy<ITemplate>>());            
         }
 
-        public void ConfigureComposer(Action<TemplateComposer<ITemplate>> config)
+        public void Register(Action<TemplateComposer<ITemplate>> alteration)
         {
-            _configurations += config;
+            _configurations += alteration;
         }
 
-        // TODO: Ask around
         public void ResetComposerConfiguration()
         {
             _configurations = new CompositeAction<TemplateComposer<ITemplate>>();
         }
 
+        public void Configure(TemplateComposer<ITemplate> composer)
+        {
+            _configurations.Do(composer);
+        }
+
         public FileSet Search { get; private set; }
-        public Action<TemplateComposer<ITemplate>> ComposerConfiguration { get { return _configurations.Do; } }
     }
 }

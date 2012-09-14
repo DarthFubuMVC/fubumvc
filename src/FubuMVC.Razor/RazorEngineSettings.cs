@@ -25,25 +25,28 @@ namespace FubuMVC.Razor
 
         private void defaultComposer()
         {
-            ConfigureComposer(composer => composer
+            Register(composer => composer
                 .AddBinder(new ViewDescriptorBinder<IRazorTemplate>(new RazorTemplateSelector()))
                 .AddBinder<GenericViewModelBinder<IRazorTemplate>>()
                 .AddBinder<ViewModelBinder<IRazorTemplate>>()
                 .Apply<ViewPathPolicy<IRazorTemplate>>());
         }
 
-        public void ConfigureComposer(Action<TemplateComposer<IRazorTemplate>> config)
+        public void Register(Action<TemplateComposer<IRazorTemplate>> alteration)
         {
-            _configurations += config;
+            _configurations += alteration;
         }
 
-        // TODO: Ask around
         public void ResetComposerConfiguration()
         {
             _configurations = new CompositeAction<TemplateComposer<IRazorTemplate>>();
         }
 
+        public void Configure(TemplateComposer<IRazorTemplate> composer)
+        {
+            _configurations.Do(composer);
+        }
+
         public FileSet Search { get; private set; }
-        public Action<TemplateComposer<IRazorTemplate>> ComposerConfiguration { get { return _configurations.Do; } } 
     }
 }

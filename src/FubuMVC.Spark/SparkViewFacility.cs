@@ -42,10 +42,9 @@ namespace FubuMVC.Spark
 
         public void ComposeTemplates(SparkEngineSettings settings)
         {
-            _templateRegistry.Each(_parsings.Process);     
-    
-            var composer = new TemplateComposer<ITemplate>(_parsings);            
-            settings.ComposerConfiguration(composer);
+            _templateRegistry.Each(_parsings.Process);         
+            var composer = new TemplateComposer<ITemplate>(_parsings);   
+            settings.Configure(composer);
             composer.Compose(_templateRegistry);
         }
     }

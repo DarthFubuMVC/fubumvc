@@ -45,7 +45,7 @@ namespace FubuMVC.Razor
             _templateRegistry.Each(_razorParsings.Parse);
 
             var composer = new TemplateComposer<IRazorTemplate>(_razorParsings);
-            settings.ComposerConfiguration(composer);            
+            settings.Configure(composer);            
             composer.Compose(_templateRegistry);
         }
     }
