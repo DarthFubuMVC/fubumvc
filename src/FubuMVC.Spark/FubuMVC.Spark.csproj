@@ -57,7 +57,6 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="FubuRegistryExtensions.cs" />
     <Compile Include="Rendering\IHtmlEncoder.cs" />
     <Compile Include="Rendering\ViewDefinitionPolicy.cs" />
     <Compile Include="Registration\ViewDescriptorHelper.cs" />

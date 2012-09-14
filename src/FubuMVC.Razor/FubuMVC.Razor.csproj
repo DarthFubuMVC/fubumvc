@@ -62,7 +62,6 @@
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="FubuTemplateService.cs" />
-    <Compile Include="FubuRegistryExtensions.cs" />
     <Compile Include="RazorEngineSettings.cs" />
     <Compile Include="RazorModel\RazorParsings.cs" />
     <Compile Include="Registration\ViewParser.cs" />

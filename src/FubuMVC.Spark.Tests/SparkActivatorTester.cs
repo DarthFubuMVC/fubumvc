@@ -55,7 +55,7 @@ namespace FubuMVC.Spark.Tests
             useNamespaces.ShouldHaveTheSameElementsAs(new[]
             { 
                 typeof(VirtualPathUtility).Namespace,
-                typeof(FubuRegistryExtensions).Namespace,
+                typeof(SparkViewFacility).Namespace,
                 typeof(FubuPageExtensions).Namespace,
                 typeof(ContentExtensionGraph).Namespace,
                 typeof(HtmlTag).Namespace

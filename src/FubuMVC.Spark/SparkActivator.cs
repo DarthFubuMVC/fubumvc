@@ -40,7 +40,7 @@ namespace FubuMVC.Spark
 			settings.AddAssembly (typeof(HtmlTag).Assembly)
                 .AddAssembly (typeof(FubuPageExtensions).Assembly)
                 .AddNamespace (typeof(VirtualPathUtility).Namespace) // System.Web
-                .AddNamespace (typeof(FubuRegistryExtensions).Namespace) // FubuMVC.Spark
+                .AddNamespace (typeof(SparkViewFacility).Namespace) // FubuMVC.Spark
                 .AddNamespace (typeof(FubuPageExtensions).Namespace) // FubuMVC.Core.UI
                 .AddNamespace(typeof(ContentExtensions).Namespace) // FubuMVC.Core.UI.Extensibility
                 .AddNamespace (typeof(HtmlTag).Namespace); // HtmlTags   

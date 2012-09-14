@@ -43,7 +43,7 @@ namespace FubuMVC.Razor.Tests
             useNamespaces.ShouldHaveTheSameElementsAs(new[]
             { 
                 typeof(VirtualPathUtility).Namespace,
-                typeof(FubuRegistryExtensions).Namespace,
+                typeof(RazorViewFacility).Namespace,
                 typeof(FubuPageExtensions).Namespace,
                 typeof(ContentExtensionGraph).Namespace,
                 typeof(HtmlTag).Namespace
