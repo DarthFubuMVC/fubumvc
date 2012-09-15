@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.View.Model;
@@ -8,6 +9,7 @@ namespace FubuMVC.Spark.SparkModel
     public interface ISparkTemplateRegistry : ITemplateRegistry<ITemplate>
     {
         IEnumerable<ITemplate> BindingsForView(string viewPath);
+        IEnumerable<SparkDescriptor> ViewDescriptors();
     }
 
     public class SparkTemplateRegistry : TemplateRegistry<ITemplate>, ISparkTemplateRegistry
@@ -17,9 +19,20 @@ namespace FubuMVC.Spark.SparkModel
 
         public IEnumerable<ITemplate> BindingsForView(string viewPath)
         {
-            return this.Where(x => x.ViewPath == viewPath && x.Descriptor is SparkDescriptor)
-                .SelectMany(x => x.Descriptor.As<SparkDescriptor>().Bindings)
+            return descriptors(t => t.ViewPath == viewPath)
+                .SelectMany(t => t.Bindings)
                 .ToList();
+        }
+
+        public IEnumerable<SparkDescriptor> ViewDescriptors()
+        {
+            return descriptors(t => t.IsSparkView()).ToList();
+        }
+
+        private IEnumerable<SparkDescriptor> descriptors(Func<ITemplate, bool> selector)
+        {
+            return this.Where(t => t.Descriptor is SparkDescriptor && selector(t))
+                .Select(t => t.Descriptor.As<SparkDescriptor>());
         }
     }
 }

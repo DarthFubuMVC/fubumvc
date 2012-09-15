@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Bottles;
 using Bottles.Diagnostics;
@@ -29,17 +28,12 @@ namespace FubuMVC.Spark
 
         public void Precompile(IPackageLog log)
         {
-            _templates.Where(t => t.Descriptor is SparkDescriptor).Each(view =>
+            _templates.ViewDescriptors().Each(vd => log.TrapErrors(() =>
             {
-                var sparkDescriptor = (SparkDescriptor) view.Descriptor;
-                var viewDef = sparkDescriptor.ToViewDefinition();
-
-                log.TrapErrors(() =>
-                {
-                    _providerCache.GetViewEntry(viewDef.ViewDescriptor);
-                    _providerCache.GetViewEntry(viewDef.PartialDescriptor);
-                });
-            });
+                var def = vd.ToViewDefinition();
+                _providerCache.GetViewEntry(def.ViewDescriptor);
+                _providerCache.GetViewEntry(def.PartialDescriptor);
+            }));
         }
     }
 }
