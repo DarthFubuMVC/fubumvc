@@ -82,6 +82,7 @@
     <Compile Include="SparkModel\Template.cs" />
     <Compile Include="SparkActivator.cs" />
     <Compile Include="SparkEngine.cs" />
+    <Compile Include="SparkPrecompiler.cs" />
     <Compile Include="SparkViewFacility.cs" />
     <Compile Include="SparkViewToken.cs" />
     <Compile Include="Rendering\FubuSparkView.cs" />

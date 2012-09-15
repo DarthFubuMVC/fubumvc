@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Bottles;
@@ -13,17 +14,19 @@ namespace FubuMVC.Spark
     {
         private readonly ISparkTemplateRegistry _templates;
         private readonly IViewEntryProviderCache _providerCache;
+        private Action<IPackageLog> _activation;
 
         public SparkPrecompiler(ISparkTemplateRegistry templates, IViewEntryProviderCache providerCache)
         {
             _templates = templates;
             _providerCache = providerCache;
+            UseActivation(p => Task.Factory.StartNew(() => Precompile(p)));
         }
 
         public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
         {
             if(FubuMode.InDevelopment()) return;
-            Task.Factory.StartNew(() => Precompile(log));
+            _activation(log);
         }
 
         public void Precompile(IPackageLog log)
@@ -34,6 +37,12 @@ namespace FubuMVC.Spark
                 _providerCache.GetViewEntry(def.ViewDescriptor);
                 _providerCache.GetViewEntry(def.PartialDescriptor);
             }));
+        }
+
+        // Just for testing
+        public void UseActivation(Action<IPackageLog> activation)
+        {
+            _activation = activation;
         }
     }
 }
