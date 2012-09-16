@@ -18,8 +18,9 @@ namespace FubuMVC.Spark.Tests
         protected override void beforeEach()
         {
             var descriptor = new SparkDescriptor(new Template("a.spark", "root", "origin"));
+            var nativePartial = new SparkDescriptor(new Template("_Yeah.spark", "root", "origin"));
 
-            MockFor<ISparkTemplateRegistry>().Expect(x => x.ViewDescriptors()).Return(new[] {descriptor});
+            MockFor<ISparkTemplateRegistry>().Expect(x => x.ViewDescriptors()).Return(new[] {descriptor, nativePartial});
             MockFor<IViewEntryProviderCache>().Expect(x => x.GetViewEntry(Arg<SparkViewDescriptor>.Is.NotNull)).Repeat.Twice();
         }
 
@@ -48,7 +49,7 @@ namespace FubuMVC.Spark.Tests
         }
 
         [Test]
-        public void precompile_invokes_provider_cache_with_descriptors_from_registry()
+        public void precompile_invokes_provider_cache_with_non_partial_descriptors_from_registry()
         {
             ClassUnderTest.Precompile(new PackageLog());
 

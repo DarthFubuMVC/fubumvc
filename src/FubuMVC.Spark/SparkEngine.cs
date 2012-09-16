@@ -42,6 +42,7 @@ namespace FubuMVC.Spark
             services.FillType<IActivator, SharingPolicyActivator>();
             services.FillType<IActivator, SharingAttacherActivator<ITemplate>>();
             services.FillType<IActivator, SparkActivator>();
+            services.FillType<IActivator, SparkPrecompiler>();
 
             services.FillType<ISharingAttacher<ITemplate>, MasterAttacher<ITemplate>>();
             services.FillType<ISharingAttacher<ITemplate>, BindingsAttacher>();

@@ -132,6 +132,7 @@
     <Compile Include="SparkModel\ChunkLoaderTester.cs" />
     <Compile Include="SparkModel\MasterAttacherTester.cs" />
     <Compile Include="SparkModel\Binding\ViewModelBinderTester.cs" />
+    <Compile Include="SparkPrecompilerTester.cs" />
     <Compile Include="SparkViewFacilityTester.cs" />
     <Compile Include="SparkViewTokenTester.cs" />
     <Compile Include="SparkEngineSettingsTester.cs" />
