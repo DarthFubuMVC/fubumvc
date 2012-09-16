@@ -33,8 +33,7 @@ namespace FubuMVC.Spark
 
         public void Precompile(IPackageLog log)
         {
-            nonNativePartialDescriptors().Each(vd => log.TrapErrors(() =>
-            {
+            Parallel.ForEach(nonNativePartialDescriptors(), vd=> log.TrapErrors(() => {
                 var def = vd.ToViewDefinition();
                 _providerCache.GetViewEntry(def.ViewDescriptor);
                 _providerCache.GetViewEntry(def.PartialDescriptor);
@@ -43,7 +42,7 @@ namespace FubuMVC.Spark
 
         private IEnumerable<SparkDescriptor> nonNativePartialDescriptors()
         {
-            return _templates.ViewDescriptors().Where(vd => !vd.Template.IsPartial());
+            return _templates.ViewDescriptors().Where(vd => !vd.Template.IsPartial()).AsParallel();
         }
 
         // Just for testing
