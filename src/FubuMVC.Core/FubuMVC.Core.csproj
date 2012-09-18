@@ -401,10 +401,6 @@
     <Compile Include="Http\RequestDataSource.cs" />
     <Compile Include="Http\RequestHeaders.cs" />
     <Compile Include="Http\StreamingDataExtensions.cs" />
-    <Compile Include="Localization\BasicLocalizationSupport.cs" />
-    <Compile Include="Localization\LabelBuilder.cs" />
-    <Compile Include="Localization\RegisterXmlDirectoryLocalizationStorage.cs" />
-    <Compile Include="Localization\SpinUpLocalizationCaches.cs" />
     <Compile Include="Packaging\ContentOnlyPackageInfo.cs" />
     <Compile Include="Registration\BehaviorAggregator.cs" />
     <Compile Include="Registration\Nodes\ActionCallBase.cs" />
