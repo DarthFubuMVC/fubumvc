@@ -6,7 +6,6 @@ using Bottles;
 using Bottles.Diagnostics;
 using FubuCore;
 using FubuMVC.Core.UI;
-using FubuMVC.Core.UI.Extensibility;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Razor.RazorModel;
 using FubuMVC.Razor.Rendering;
@@ -45,7 +44,6 @@ namespace FubuMVC.Razor.Tests
                 typeof(VirtualPathUtility).Namespace,
                 typeof(RazorViewFacility).Namespace,
                 typeof(FubuPageExtensions).Namespace,
-                typeof(ContentExtensionGraph).Namespace,
                 typeof(HtmlTag).Namespace
             });
         }

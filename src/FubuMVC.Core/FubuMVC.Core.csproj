@@ -577,13 +577,6 @@
     <Compile Include="UI\Configuration\LambdaElementModifier.cs" />
     <Compile Include="UI\Configuration\OptionalElementModifier.cs" />
     <Compile Include="UI\Configuration\PartialLambdaElementBuilder.cs" />
-    <Compile Include="UI\Extensibility\ContentExtensionGraph.cs" />
-    <Compile Include="UI\Extensibility\ContentExtensions.cs" />
-    <Compile Include="UI\Extensibility\ExtensionsExpression.cs" />
-    <Compile Include="UI\Extensibility\ExtensionShelf.cs" />
-    <Compile Include="UI\Extensibility\FilteredContentExtension.cs" />
-    <Compile Include="UI\Extensibility\IContentExtension.cs" />
-    <Compile Include="UI\Extensibility\LambdaExtension.cs" />
     <Compile Include="UI\Forms\DefinitionListLabelAndField.cs" />
     <Compile Include="UI\Forms\FormLineExpression.cs" />
     <Compile Include="UI\Forms\ILabelAndFieldLayout.cs" />

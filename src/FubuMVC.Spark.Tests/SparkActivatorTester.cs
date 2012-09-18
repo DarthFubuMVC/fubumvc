@@ -4,7 +4,6 @@ using System.Web;
 using Bottles;
 using Bottles.Diagnostics;
 using FubuMVC.Core.UI;
-using FubuMVC.Core.UI.Extensibility;
 using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
@@ -57,7 +56,6 @@ namespace FubuMVC.Spark.Tests
                 typeof(VirtualPathUtility).Namespace,
                 typeof(SparkViewFacility).Namespace,
                 typeof(FubuPageExtensions).Namespace,
-                typeof(ContentExtensionGraph).Namespace,
                 typeof(HtmlTag).Namespace
             });
         }
