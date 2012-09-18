@@ -29,6 +29,9 @@ namespace Fubu.Applications
 
         private void addDirectory(string directory)
         {
+            // This gets rid of issues from having non-existent Data folders
+            if (!Directory.Exists(directory)) return;
+
             var watcher = new FileSystemWatcher(directory){
                 IncludeSubdirectories = true
             };
