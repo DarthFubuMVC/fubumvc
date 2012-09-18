@@ -152,12 +152,6 @@
     <Compile Include="Registration\ServiceRemoved.cs" />
     <Compile Include="Registration\SettingsCollection.cs" />
     <Compile Include="Resources\Etags\IHeadersCache.cs" />
-    <Compile Include="Runtime\Dates\DateFormattingRule.cs" />
-    <Compile Include="Runtime\Dates\DateTimeFormatter.cs" />
-    <Compile Include="Runtime\Dates\DateTimeFormattingRules.cs" />
-    <Compile Include="Runtime\Dates\DateTimePolicies.cs" />
-    <Compile Include="Runtime\Dates\DateTimeToUtcConverterFamily.cs" />
-    <Compile Include="Runtime\Dates\UtcDateHandling.cs" />
     <Compile Include="Runtime\Files\ContentFolder.cs" />
     <Compile Include="Runtime\Files\FubuApplicationFiles.cs" />
     <Compile Include="Runtime\Files\FubuFile.cs" />
