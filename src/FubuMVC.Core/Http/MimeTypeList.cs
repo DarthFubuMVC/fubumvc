@@ -20,7 +20,10 @@ namespace FubuMVC.Core.Http
                 mimeType.ToDelimitedArray(',').Each(x =>
                 {
                     var type = x.Split(';').First();
-                    _mimeTypes.Add(type);
+                    if (type.IsNotEmpty())
+                    {
+                        _mimeTypes.Add(type);
+                    }
                 });
             }
         }
