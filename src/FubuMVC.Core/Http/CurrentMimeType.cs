@@ -45,7 +45,7 @@ namespace FubuMVC.Core.Http
 
         public bool AcceptsAny()
         {
-            return AcceptTypes.Contains("*/*");
+            return AcceptTypes.DefaultIfEmpty("*/*").Contains("*/*");
         }
 
         public string SelectFirstMatching(IEnumerable<string> candidates)

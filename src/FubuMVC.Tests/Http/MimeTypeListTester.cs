@@ -47,5 +47,26 @@ namespace FubuMVC.Tests.Http
             list.Matches("weird").ShouldBeFalse();
             list.Matches("weird", "wrong").ShouldBeFalse();
         }
+
+        [Test]
+        public void should_ignore_null()
+        {
+            var list = new MimeTypeList((string)null);
+            list.ShouldHaveCount(0);
+        }
+
+        [Test]
+        public void should_ignore_empty_string()
+        {
+            var list = new MimeTypeList(string.Empty);
+            list.ShouldHaveCount(0);
+        }
+
+        [Test]
+        public void should_ignore_whitespace_only_string()
+        {
+            var list = new MimeTypeList("    ");
+            list.ShouldHaveCount(0);
+        }
     }
 }

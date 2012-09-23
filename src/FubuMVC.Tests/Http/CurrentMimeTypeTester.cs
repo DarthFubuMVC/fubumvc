@@ -50,6 +50,24 @@ namespace FubuMVC.Tests.Http
         }
 
         [Test]
+        public void accepts_any_if_no_accept_header_specified()
+        {
+            new CurrentMimeType("application/x-www-form-urlencoded; charset=UTF-8", null).AcceptsAny().ShouldBeTrue();
+        }
+
+        [Test]
+        public void accepts_any_if_accept_header_is_all_spaces()
+        {
+            new CurrentMimeType("application/x-www-form-urlencoded; charset=UTF-8", "  ").AcceptsAny().ShouldBeTrue();
+        }
+
+        [Test]
+        public void accepts_any_if_accept_header_is_empty()
+        {
+            new CurrentMimeType("application/x-www-form-urlencoded; charset=UTF-8", string.Empty).AcceptsAny().ShouldBeTrue();
+        }
+
+        [Test]
         public void select_first_matching_no_matches()
         {
             new CurrentMimeType("application/x-www-form-urlencoded; charset=UTF-8", "text/html")
