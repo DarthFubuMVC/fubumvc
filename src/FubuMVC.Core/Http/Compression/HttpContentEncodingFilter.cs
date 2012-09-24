@@ -14,6 +14,8 @@ namespace FubuMVC.Core.Http.Compression
 
         public DoNext Filter(ServiceArguments arguments)
         {
+            if (arguments.Has(typeof(Latch))) return DoNext.Stop;
+
             arguments
                 .Get<IRequestData>()
                 .ValuesFor(RequestDataSource.Header)
@@ -26,7 +28,11 @@ namespace FubuMVC.Core.Http.Compression
                     writer.UseEncoding(encoding);
                 });
 
+            arguments.Set(typeof(Latch), new Latch());
+
             return DoNext.Continue;
         }
     }
+
+    public class Latch{}
 }

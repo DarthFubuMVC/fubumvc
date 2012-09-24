@@ -6,6 +6,7 @@ namespace FubuMVC.Core.Http.Compression
     {
         public static ContentEncoding GZip = new ContentEncoding("gzip");
         public static ContentEncoding Deflate = new ContentEncoding("deflate");
+        public static ContentEncoding None = new ContentEncoding("None");
 
         private readonly string _encoding;
 

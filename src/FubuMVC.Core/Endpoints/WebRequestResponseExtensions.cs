@@ -31,6 +31,11 @@ namespace FubuMVC.Core.Endpoints
             }
             catch (WebException e)
             {
+                if (e.Response == null)
+                {
+                    throw;
+                }
+
                 var errorResponse = new HttpResponse(e.Response.As<HttpWebResponse>());
                 Debug.WriteLine(errorResponse.ToString());
 

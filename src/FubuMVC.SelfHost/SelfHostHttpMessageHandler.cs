@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -15,17 +16,23 @@ namespace FubuMVC.SelfHost
     {
         private readonly FubuRuntime _runtime;
         private readonly HttpSelfHostConfiguration _configuration;
+        private readonly RouteCollection _routes;
 
         public SelfHostHttpMessageHandler(FubuRuntime runtime, HttpSelfHostConfiguration configuration)
         {
             _runtime = runtime;
             _configuration = configuration;
+
+            _routes = new RouteCollection();
+            _routes.AddRange(runtime.Routes);
+
+            RouteTable.Routes.Clear();
         }
 
-        private static RouteData determineRouteData(HttpRequestMessage request)
+        private RouteData determineRouteData(HttpRequestMessage request)
         {
             var context = new SelfHostHttpContext(request);
-            return RouteTable.Routes.GetRouteData(context);
+            return _routes.GetRouteData(context);
         }
 
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)

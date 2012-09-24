@@ -26,11 +26,9 @@
 </div>
 <div id="viewOutputArea"></div>
 
-#this.WriteExtensions("extension-placeholder");
-
 <content:footer>That's right baby!</content:footer>
 
-!{this.LinkTo<FireInputModel>().Text("Light her up!")}
-!{this.LinkTo<WaterInputModel>().Text("Cool her down!")} 
-!{this.LinkTo<EarthViewModel>().Text("Go to ground!")} 
-!{this.LinkTo<RemInputModel>().Text("Get some sleep!")}
+!{this.LinkTo<FubuMVC.IntegrationTesting.ViewEngines.Spark.FireInputModel>().Text("Light her up!")}
+!{this.LinkTo<FubuMVC.IntegrationTesting.ViewEngines.Spark.WaterInputModel>().Text("Cool her down!")} 
+!{this.LinkTo<FubuMVC.IntegrationTesting.ViewEngines.Spark.EarthViewModel>().Text("Go to ground!")} 
+!{this.LinkTo<FubuMVC.IntegrationTesting.ViewEngines.Spark.RemInputModel>().Text("Get some sleep!")}

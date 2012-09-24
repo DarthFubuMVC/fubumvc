@@ -125,6 +125,7 @@
     <Compile Include="ViewEngines\Spark\PartialNoLayout\PartialNoLayoutIntegrationTester.cs" />
     <Compile Include="ViewEngines\Spark\ThreePassRendering\ThreePassController.cs" />
     <Compile Include="ViewEngines\Spark\ThreePassRendering\ThreePassRenderingTester.cs" />
+    <Compile Include="ViewEngines\Spark\ViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuKayak\FubuKayak.csproj">

@@ -4,6 +4,8 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Compression;
@@ -33,6 +35,7 @@ namespace FubuMVC.SelfHost
         private Stream _output = new MemoryStream();
         private readonly Lazy<StreamWriter> _writer;
         private readonly IList<Action<StreamContent>> _modifications = new List<Action<StreamContent>>();
+        private IHttpContentEncoding _encoding;
 
         public SelfHostHttpWriter(HttpResponseMessage response)
         {
@@ -81,7 +84,11 @@ namespace FubuMVC.SelfHost
 
         public void Redirect(string url)
         {
-            throw new NotImplementedException();
+            WriteResponseCode(HttpStatusCode.Redirect, "Redirect");
+            AppendHeader(HttpResponseHeaders.Location, url);
+
+            var html = string.Format("<html><head><title>302 Found</title></head><body><h1>Found</h1><p>The document has moved <a href='{0}'>here</a>.</p></body></html>", url);
+            Write(html);
         }
 
         public void WriteResponseCode(HttpStatusCode status, string description)
@@ -97,7 +104,7 @@ namespace FubuMVC.SelfHost
 
         public void UseEncoding(IHttpContentEncoding encoding)
         {
-            _output = encoding.Encode(_output);
+            _encoding = encoding;
         }
 
         public void Write(Action<Stream> output)
@@ -113,11 +120,57 @@ namespace FubuMVC.SelfHost
         public void AttachContent()
         {
             _output.Position = 0;
-            var streamContent = new StreamContent(_output);
-            
+
+            var streamContent = buildContent();
+
             _modifications.Each(x => x(streamContent));
 
             _response.Content = streamContent;
         }
+
+        private StreamContent buildContent()
+        {
+            if (_encoding == null || _encoding is HttpContentEncoders.PassthroughEncoding)
+            {
+                return new StreamContent(_output);
+            }
+
+            return new CompressedContent(_output, _encoding);
+        }
     }
+
+
+    public class CompressedContent : StreamContent
+    {
+        private readonly IHttpContentEncoding _encoding;
+        private StreamContent _original;
+
+        public CompressedContent(Stream stream, IHttpContentEncoding encoding) : base(stream)
+        {
+            _encoding = encoding;
+            _original = new StreamContent(stream);
+        }
+
+        protected override Task SerializeToStreamAsync(Stream stream, TransportContext context)
+        {
+            var compressedStream = _encoding.Encode(stream);
+
+            return _original.CopyToAsync(compressedStream).ContinueWith(tsk =>
+            {
+                if (compressedStream != null)
+                {
+                    compressedStream.Dispose();
+                }
+            });
+        }
+
+        protected override bool TryComputeLength(out long length)
+        {
+            length = -1;
+
+            return false;
+        }
+    }
+
+
 }

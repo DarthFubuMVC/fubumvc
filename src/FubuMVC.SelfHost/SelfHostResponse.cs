@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Headers;
+using System.Linq;
 
 namespace FubuMVC.SelfHost
 {
@@ -18,27 +19,40 @@ namespace FubuMVC.SelfHost
 
         public string HeaderValueFor(HttpResponseHeader key)
         {
-            throw new NotImplementedException();
+            return HeaderValueFor(HttpResponseHeaders.HeaderNameFor(key));
         }
 
         public string HeaderValueFor(string headerKey)
         {
-            throw new NotImplementedException();
+            return headerValuesFor(headerKey).FirstOrDefault();
+        }
+
+        private IEnumerable<string> headerValuesFor(string headerKey)
+        {
+            var responseHeaders = _response.Headers.GetValues(headerKey);
+            return _response.Content == null
+                       ? responseHeaders
+                       : responseHeaders.Union(_response.Content.Headers.GetValues(headerKey));
         }
 
         public IEnumerable<Header> AllHeaders()
         {
-            throw new NotImplementedException();
+            var responseHeaders = _response.Headers.Select(x => new Header(x.Key, x.Value.Join(", ")));
+            return _response.Content == null
+                       ? responseHeaders
+                       : responseHeaders.Union(
+                           _response.Content.Headers.Select(x => new Header(x.Key, x.Value.Join(", "))));
         }
 
         public int StatusCode
         {
-            get { throw new NotImplementedException(); }
+            get { return (int) _response.StatusCode; }
         }
 
         public string StatusDescription
         {
-            get { throw new NotImplementedException(); }
+            // TODO -- figure out how to do this?
+            get { return _response.ReasonPhrase; }
         }
     }
 }

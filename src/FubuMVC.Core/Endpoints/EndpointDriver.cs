@@ -168,10 +168,10 @@ namespace FubuMVC.Core.Endpoints
             return Get(url, acceptType);
         }
 
-        public HttpResponse GetByInput<T>(T model, string categoryOrHttpMethod = "GET", string acceptType = "*/*", Action<HttpWebRequest> configure = null)
+        public HttpResponse GetByInput<T>(T model, string categoryOrHttpMethod = "GET", string acceptType = "*/*", Action<HttpWebRequest> configure = null, string acceptEncoding = null)
         {
             var url = _urls.UrlFor(model, categoryOrHttpMethod);
-            return Get(url, acceptType, configure:configure);
+            return Get(url, acceptType, configure:configure, acceptEncoding:acceptEncoding);
         }
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace FubuMVC.Core.Endpoints
         /// <param name="etag"></param>
         /// <param name="configure"> </param>
         /// <returns></returns>
-        public HttpResponse Get(string url, string acceptType = "*/*", string etag = null, Action<HttpWebRequest> configure = null)
+        public HttpResponse Get(string url, string acceptType = "*/*", string etag = null, Action<HttpWebRequest> configure = null, string acceptEncoding = null)
         {
             Debug.WriteLine("EndpointDriver getting url {0}".ToFormat(url));
 
@@ -199,6 +199,11 @@ namespace FubuMVC.Core.Endpoints
             if (etag.IsNotEmpty())
             {
                 request.Headers[HttpRequestHeader.IfNoneMatch] = etag;
+            }
+
+            if (acceptEncoding.IsNotEmpty())
+            {
+                request.Headers[HttpRequestHeader.AcceptEncoding] = acceptEncoding;
             }
 
             return request.ToHttpCall();

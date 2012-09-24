@@ -160,6 +160,12 @@ namespace FubuMVC.IntegrationTesting.Conneg
                 .StatusCodeShouldBe(HttpStatusCode.OK)
                 .ContentShouldBe("application/json", expectedJson);
 
+
+        }
+
+        [Test]
+        public void send_json_accepting_json_in_later_media_type()
+        {
             endpoints.PostJson(input, contentType: "application/json", accept: "text/xml,application/json")
                 .StatusCodeShouldBe(HttpStatusCode.OK)
                 .ContentShouldBe("application/json", expectedJson);

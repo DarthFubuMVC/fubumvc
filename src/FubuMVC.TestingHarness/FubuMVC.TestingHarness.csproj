@@ -88,17 +88,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FubuKayak\FubuKayak.csproj">
-      <Project>{3C9279B1-DDDF-4E6A-B95A-6276942882EC}</Project>
-      <Name>FubuKayak</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.OwinHost\FubuMVC.OwinHost.csproj">
-      <Project>{EA10DF80-FD95-4172-BC18-DB0DFB279844}</Project>
-      <Name>FubuMVC.OwinHost</Name>
+    <ProjectReference Include="..\FubuMVC.SelfHost\FubuMVC.SelfHost.csproj">
+      <Project>{E8DC2BF6-4F59-43BF-86B9-82C52803B5C0}</Project>
+      <Name>FubuMVC.SelfHost</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
       <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>

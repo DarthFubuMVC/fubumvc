@@ -46,7 +46,7 @@ namespace FubuMVC.SelfHost.Testing
             response.ResponseHeaderFor(HttpResponseHeaders.ContentDisposition).ShouldEqual("B");
             response.ResponseHeaderFor(HttpResponseHeaders.ContentLocation).ShouldEqual("C");
             response.ResponseHeaderFor(HttpResponseHeaders.Allow).ShouldEqual("D");
-            response.ResponseHeaderFor(HttpResponseHeaders.ContentEncoding).ShouldEqual("UTF-16");
+            response.ResponseHeaderFor(HttpResponseHeaders.ContentEncoding).ShouldContain("UTF-16");
             response.ResponseHeaderFor(HttpResponseHeaders.ContentLength).ShouldEqual("19");
             response.ResponseHeaderFor(HttpResponseHeaders.ContentLanguage).ShouldEqual("jp-JP");
             response.ResponseHeaderFor(HttpResponseHeaders.ContentRange).ShouldEqual("E");

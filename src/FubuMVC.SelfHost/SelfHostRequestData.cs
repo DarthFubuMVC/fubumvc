@@ -77,7 +77,7 @@ namespace FubuMVC.SelfHost
     public class HeaderKeyValues : IKeyValues
     {
         private readonly HttpHeaders _headers;
-        private Lazy<IList<string>> _keys;
+        private readonly Lazy<IList<string>> _keys;
 
         public HeaderKeyValues(HttpHeaders headers)
         {
@@ -92,7 +92,7 @@ namespace FubuMVC.SelfHost
 
         public string Get(string key)
         {
-            return _headers.GetValues(key).FirstOrDefault();
+            return _headers.GetValues(key).Join(", ");
         }
 
         public IEnumerable<string> GetKeys()

@@ -12,7 +12,7 @@ namespace FubuMVC.Core.Http.Compression
 
         public Stream Encode(Stream content)
         {
-            return new GZipStream(content, CompressionMode.Compress);
+            return new GZipStream(content, CompressionMode.Compress, true);
         }
     }
 }

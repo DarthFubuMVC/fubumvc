@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Web.Http.SelfHost;
+using System.Web.Routing;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Packaging;

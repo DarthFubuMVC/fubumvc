@@ -4,13 +4,12 @@ using System.Net;
 using System.Threading;
 using System.Xml;
 using FubuCore;
-using FubuKayak;
 using FubuMVC.Core;
 using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
-using FubuMVC.OwinHost;
+using FubuMVC.SelfHost;
 using FubuMVC.StructureMap;
 using FubuMVC.TestingHarness.Querying;
 using FubuTestingSupport;
@@ -158,24 +157,27 @@ namespace FubuMVC.TestingHarness
 
     public class Harness : IDisposable
     {
-        private static int _port = 5500;
-
-        private readonly FubuKayakApplication _application;
         private readonly EndpointDriver _endpoints;
         private readonly Lazy<RemoteBehaviorGraph> _remote;
         private readonly FubuRuntime _runtime;
+        private readonly SelfHostHttpServer _server;
 
-        public Harness(FubuRuntime runtime, FubuKayakApplication application, string root)
+        public Harness(FubuRuntime runtime, int port)
         {
             _runtime = runtime;
-            _application = application;
+
+            _server = new SelfHostHttpServer(port);
+            _server.Start(runtime, GetApplicationDirectory());
 
             var urls = _runtime.Facility.Get<IUrlRegistry>();
-            urls.As<UrlRegistry>().RootAt(root);
+            urls.As<UrlRegistry>().RootAt(_server.BaseAddress);
 
-            UrlContext.Stub(root);
+            UrlContext.Stub(_server.BaseAddress);
 
-            _remote = new Lazy<RemoteBehaviorGraph>(() => { return new RemoteBehaviorGraph(root); });
+            _remote = new Lazy<RemoteBehaviorGraph>(() =>
+            {
+                return new RemoteBehaviorGraph(_server.BaseAddress);
+            });
 
             _endpoints = new EndpointDriver(urls);
         }
@@ -192,7 +194,7 @@ namespace FubuMVC.TestingHarness
 
         public void Dispose()
         {
-            _application.Stop();
+            _server.Dispose();
         }
 
         public static Harness Run(Action<FubuRegistry> configure, IContainer container)
@@ -201,30 +203,10 @@ namespace FubuMVC.TestingHarness
             FubuMvcPackageFacility.PhysicalRootPath = applicationDirectory;
 
 
-            var application = new FubuKayakApplication(new SimpleSource(configure, container));
-            var port = PortFinder.FindPort(_port++);
+            var simpleSource = new SimpleSource(configure, container);
+            var runtime = simpleSource.BuildApplication().Bootstrap();
 
-            var reset = new ManualResetEvent(false);
-            FubuRuntime runtime = null;
-
-            ThreadPool.QueueUserWorkItem(o =>
-            {
-                // Need to make this capture the package registry failures cleanly
-                application.RunApplication(port, r =>
-                {
-                    runtime = r;
-                    reset.Set();
-                });
-            });
-
-            reset.WaitOne();
-
-            var root = "http://localhost:" + port;
-
-            return new Harness(runtime, application, root);
-
-
-            // Need to get the runtime
+            return new Harness(runtime, 5500);
         }
 
         public static string GetApplicationDirectory()
