@@ -83,7 +83,7 @@ def waitfor(&block)
 end
 
 desc "Compiles the app"
-task :compile => [:restore_if_missing, :clean, :version, :bottle_diagnostics] do
+task :compile => [:restore_if_missing, :clean, :version] do
   MSBuildRunner.compile :compilemode => COMPILE_TARGET, :solutionfile => 'src/FubuMVC.sln', :clrversion => CLR_TOOLS_VERSION
 
   copyOutputFiles "src/fubu/bin/#{COMPILE_TARGET}", "fubu.exe", props[:stage]
@@ -105,7 +105,7 @@ task :test => [:unit_test]
 desc "Runs unit tests"
 task :unit_test => :compile do
   runner = NUnitRunner.new :compilemode => COMPILE_TARGET, :source => 'src', :platform => 'x86'
-  runner.executeTests ['FubuMVC.Tests', 'FubuMVC.Spark.Tests', 'FubuMVC.Razor.Tests', 'FubuMVC.OwinHost.Testing', 'fubu.Testing']
+  runner.executeTests ['FubuMVC.Tests', 'FubuMVC.Spark.Tests', 'FubuMVC.Razor.Tests', 'FubuMVC.OwinHost.Testing', 'fubu.Testing', 'FubuMVC.SelfHost.Testing']
 end
 
 desc "Runs the integration tests"
@@ -132,10 +132,7 @@ task :bundle_getting_started do
   fubu("assembly-pak src/FubuMVC.GettingStarted --proj-file FubuMVC.GettingStarted.csproj")
 end
 
-desc "Packages the FubuMVC.Diagnostics bottle files"
-task :bottle_diagnostics do
-  bottles("assembly-pak src/FubuMVC.Diagnostics --proj-file FubuMVC.Diagnostics.csproj")
-end
+
 
 def self.bottles(args)
   bottles = Platform.runtime(Nuget.tool("Bottles", "BottleRunner.exe"))
