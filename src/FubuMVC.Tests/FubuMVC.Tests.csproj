@@ -98,10 +98,6 @@
     <Compile Include="Ajax\AjaxContinuationTester.cs" />
     <Compile Include="Ajax\AjaxContinuationWriterTester.cs" />
     <Compile Include="ApplicationSettingsTester.cs" />
-    <Compile Include="Applications\ApplicationRunnerTester.cs" />
-    <Compile Include="Applications\ApplicationSourceFinderTester.cs" />
-    <Compile Include="Applications\FubuMvcApplicationFileWatcherTester.cs" />
-    <Compile Include="Applications\KayakCommandTester.cs" />
     <Compile Include="Assets\AssetCacheHeadersTester.cs" />
     <Compile Include="Assets\AssetCombinationBuildingActivatorTester.cs" />
     <Compile Include="Assets\AssetDeclarationCheckerTester.cs" />
@@ -170,7 +166,6 @@
     <Compile Include="Caching\ResourceHashTester.cs" />
     <Compile Include="Caching\VaryByResourceTester.cs" />
     <Compile Include="Caching\VaryByThreadCultureTester.cs" />
-    <Compile Include="Commands\ModeCommandTester.cs" />
     <Compile Include="ConfigurationGraph_DetermineConfigurationType_Tester.cs" />
     <Compile Include="Default_ViewAttachment_Filters_Convention_Tester.cs" />
     <Compile Include="Http\Compression\ContentCompressionExtensionTester.cs" />
@@ -234,8 +229,6 @@
     <Compile Include="Caching\OuputCachingNodeTester.cs" />
     <Compile Include="Caching\OutputCachingBehaviorTester.cs" />
     <Compile Include="can_find_and_load_bottles_with_the_FubuModule_attribute.cs" />
-    <Compile Include="Commands\PackagesCommandTester.cs" />
-    <Compile Include="Commands\usage_graph_smoke_tester.cs" />
     <Compile Include="ConnegAttributeTester.cs" />
     <Compile Include="FakeHttpContext.cs" />
     <Compile Include="FubuApplicationTester.cs" />
@@ -279,8 +272,6 @@
     <Compile Include="NewConneg\WriteStringTester.cs" />
     <Compile Include="Packaging\ContentOnlyPackageInfoTester.cs" />
     <Compile Include="Packaging\FileSystemVirtualPathProviderTester.cs" />
-    <Compile Include="ProcessFactoryTester.cs" />
-    <Compile Include="ProcessWrapperTester.cs" />
     <Compile Include="Registration\ActionMethodFilterTester.cs" />
     <Compile Include="Registration\BehaviorAggregatorTester.cs" />
     <Compile Include="Registration\Conventions\actions_that_return_IDictionary_are_json.cs" />
@@ -370,17 +361,6 @@
     <Compile Include="Security\PrincipalRolesTester.cs" />
     <Compile Include="Security\AuthorizationPolicyExecutorTester.cs" />
     <Compile Include="StructureMapIoC\StubActivator.cs" />
-    <Compile Include="Templating\CloneGitRepositoryTester.cs" />
-    <Compile Include="Templating\CsProjGathererTester.cs" />
-    <Compile Include="Templating\GitAliasRegistryTester.cs" />
-    <Compile Include="Templating\GitAliasTokenTester.cs" />
-    <Compile Include="Templating\KeywordReplacerTester.cs" />
-    <Compile Include="Templating\NewCommandEndToEndTester.cs" />
-    <Compile Include="Templating\NewCommandTester.cs" />
-    <Compile Include="Templating\SolutionFileServiceTester.cs" />
-    <Compile Include="Templating\TemplatePlanExecutorTester.cs" />
-    <Compile Include="Templating\TemplatePlanTester.cs" />
-    <Compile Include="Templating\UnzipTemplateTester.cs" />
     <Compile Include="UI\AssetFilePageExtensionsTester.cs" />
     <Compile Include="UI\AuthorizationOnPageExtensionsTester.cs" />
     <Compile Include="UI\BootstrapLayout.cs" />
@@ -534,10 +514,6 @@
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Fubu\Fubu.csproj">
-      <Project>{90DBE31C-948D-47AF-8C17-0056511A7313}</Project>
-      <Name>Fubu</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TestPackage1\TestPackage1.csproj">
       <Project>{1F18D6EB-4D9C-407A-BD70-C5D525E377B6}</Project>
       <Name>TestPackage1</Name>
@@ -556,15 +532,6 @@
     <Content Include="Runtime\Files\Data\d.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Templating\data\example1\example1.csproj">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Templating\data\myproject.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Templating\sample\myproject.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="View\FakeViews\Folder1\A.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
@@ -579,12 +546,8 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Templating\repo.zip">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Commands\Packages\" />
     <Folder Include="Results\" />
     <Folder Include="View\FakeViews\Folder1\Folder2\Folder3\" />
   </ItemGroup>

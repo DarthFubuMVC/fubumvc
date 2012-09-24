@@ -48,6 +48,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.AspNetTesting", "Fu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.TestingHarness", "FubuMVC.TestingHarness\FubuMVC.TestingHarness.csproj", "{C9C9A405-1164-44AB-9CB4-3639F0979BE9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fubu.Testing", "fubu.Testing\fubu.Testing.csproj", "{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -346,6 +348,21 @@ Global
 		{C9C9A405-1164-44AB-9CB4-3639F0979BE9}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{C9C9A405-1164-44AB-9CB4-3639F0979BE9}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
 		{C9C9A405-1164-44AB-9CB4-3639F0979BE9}.Retail|x86.ActiveCfg = Release|Any CPU
+		{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}.Release|x86.ActiveCfg = Release|Any CPU
+		{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}.Retail|Any CPU.ActiveCfg = Release|Any CPU
+		{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}.Retail|Any CPU.Build.0 = Release|Any CPU
+		{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
+		{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}.Retail|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
