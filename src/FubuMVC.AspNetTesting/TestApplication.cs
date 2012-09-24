@@ -16,7 +16,7 @@ namespace FubuMVC.AspNetTesting
         private static readonly Lazy<FubuRuntime> _runtime = new Lazy<FubuRuntime>(() =>
         {
             var runner = new CommandRunner();
-            runner.RunFubu("createvdir src/AspNetApplication fubumvc_aspnet_testing");
+            runner.RunBottles("createvdir src/AspNetApplication fubumvc_aspnet_testing");
 
             return FubuApplication.For<AspNetApplicationFubuRegistry>().StructureMap(new Container()).Bootstrap();
         });
