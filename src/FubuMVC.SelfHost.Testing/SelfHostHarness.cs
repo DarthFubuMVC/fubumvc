@@ -20,24 +20,24 @@ namespace FubuMVC.SelfHost.Testing
         [SetUp]
         public void SetUp()
         {
-            Harness.Start();
+            SelfHostHarness.Start();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Harness.Shutdown();
+            SelfHostHarness.Shutdown();
         }
     }
 
-    public static class Harness
+    public static class SelfHostHarness
     {
         private static SelfHostHttpServer _server;
         private static EndpointDriver _endpoints;
 
         public static void Start()
         {
-            _server = new SelfHostHttpServer(5500);
+            _server = new SelfHostHttpServer(5501);
             var runtime = FubuApplication.For<HarnessRegistry>().StructureMap(new Container()).Bootstrap();
         
         

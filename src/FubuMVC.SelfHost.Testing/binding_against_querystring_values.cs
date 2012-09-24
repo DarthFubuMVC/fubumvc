@@ -15,7 +15,7 @@ namespace FubuMVC.SelfHost.Testing
                 Direction = "South"
             };
 
-            Harness.Endpoints.GetByInput(model).ReadAsText()
+            SelfHostHarness.Endpoints.GetByInput(model).ReadAsText()
                 .ShouldEqual(model.ToString());
         }
     }

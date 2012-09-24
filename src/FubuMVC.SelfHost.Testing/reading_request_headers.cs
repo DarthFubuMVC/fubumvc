@@ -11,7 +11,7 @@ namespace FubuMVC.SelfHost.Testing
         [Test]
         public void read_custom_header()
         {
-            Harness.Endpoints.GetByInput(new HeaderRequest{
+            SelfHostHarness.Endpoints.GetByInput(new HeaderRequest{
                 Name = "x-1"
             }, configure: req => req.Headers["x-1"] = "A").ReadAsText().ShouldEqual("A");
         }
@@ -19,7 +19,7 @@ namespace FubuMVC.SelfHost.Testing
         [Test]
         public void read_build_in_header()
         {
-            Harness.Endpoints.GetByInput(new HeaderRequest
+            SelfHostHarness.Endpoints.GetByInput(new HeaderRequest
             {
                 Name = HttpRequestHeaders.IfNoneMatch
             }, configure: req => req.Headers[HttpRequestHeaders.IfNoneMatch] = "A").ReadAsText().ShouldEqual("A");

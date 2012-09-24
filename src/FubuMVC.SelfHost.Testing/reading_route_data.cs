@@ -10,7 +10,7 @@ namespace FubuMVC.SelfHost.Testing
         [Test]
         public void bind_data_against_routing_data()
         {
-            Harness.Endpoints.GetByInput(new RouteInput{
+            SelfHostHarness.Endpoints.GetByInput(new RouteInput{
                 Name = "Jeremy",
                 Age = 38
             }).ReadAsText()

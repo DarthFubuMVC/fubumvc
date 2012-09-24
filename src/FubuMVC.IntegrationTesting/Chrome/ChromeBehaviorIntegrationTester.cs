@@ -10,13 +10,8 @@ using FubuCore;
 namespace FubuMVC.IntegrationTesting.Chrome
 {
     [TestFixture]
-    public class ChromeBehaviorIntegrationTester : FubuRegistryHarness
+    public class ChromeBehaviorIntegrationTester : SharedHarnessContext
     {
-        protected override void configure(FubuRegistry registry)
-        {
-            registry.Actions.IncludeType<ChromedEndpoints>();
-        }
-
         [Test]
         public void can_fetch_endpoints_that_are_chromed()
         {

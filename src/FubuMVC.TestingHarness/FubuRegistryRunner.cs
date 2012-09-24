@@ -23,6 +23,20 @@ namespace FubuMVC.TestingHarness
         private Harness theHarness;
         private IContainer theContainer;
 
+        private static Action _initialize;
+
+
+
+        static FubuRegistryHarness()
+        {
+            _initialize = () =>
+            {
+                runBottles("alias harness " + Harness.GetApplicationDirectory().FileEscape());
+
+                _initialize = () => { };
+            };
+        }
+
         public RemoteBehaviorGraph remote
         {
             get { return theHarness.Remote; }
@@ -39,7 +53,7 @@ namespace FubuMVC.TestingHarness
         {
             beforeRunning();
 
-            runBottles("alias harness " + Harness.GetApplicationDirectory().FileEscape());
+            _initialize();
 
             runBottles("link harness --clean-all");
             runFubu("packages harness --clean-all --remove-all");
@@ -98,7 +112,7 @@ namespace FubuMVC.TestingHarness
             });
         }
 
-        protected void runBottles(string commands)
+        protected static void runBottles(string commands)
         {
             var runner = new CommandRunner();
             commands.ReadLines(x =>
@@ -161,6 +175,7 @@ namespace FubuMVC.TestingHarness
         private readonly Lazy<RemoteBehaviorGraph> _remote;
         private readonly FubuRuntime _runtime;
         private readonly SelfHostHttpServer _server;
+        private static int _port = 5502;
 
         public Harness(FubuRuntime runtime, int port)
         {
@@ -206,7 +221,7 @@ namespace FubuMVC.TestingHarness
             var simpleSource = new SimpleSource(configure, container);
             var runtime = simpleSource.BuildApplication().Bootstrap();
 
-            return new Harness(runtime, 5500);
+            return new Harness(runtime, PortFinder.FindPort(_port++));
         }
 
         public static string GetApplicationDirectory()

@@ -10,10 +10,10 @@ namespace FubuMVC.SelfHost.Testing
         [Test]
         public void read_raw_url()
         {
-            var request = Harness.Endpoints.Get<HttpCurrentRequestEndpoints>(x => x.get_request_data())
+            var request = SelfHostHarness.Endpoints.Get<HttpCurrentRequestEndpoints>(x => x.get_request_data())
                 .ReadAsJson<HttpRequestData>();
 
-            var root = Harness.Root;
+            var root = SelfHostHarness.Root;
 
             request.RawUrl.ShouldEqual(root + "/request/data");
             request.RelativeUrl.ShouldEqual("request/data");

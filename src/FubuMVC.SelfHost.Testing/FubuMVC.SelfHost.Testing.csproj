@@ -99,7 +99,7 @@
     <Compile Include="Fake.cs" />
     <Compile Include="handling_501_responses.cs" />
     <Compile Include="handling_a_404.cs" />
-    <Compile Include="Harness.cs" />
+    <Compile Include="SelfHostHarness.cs" />
     <Compile Include="HeaderKeyValuesTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="reading_and_writing_json_and_xml_thru_conneg.cs" />

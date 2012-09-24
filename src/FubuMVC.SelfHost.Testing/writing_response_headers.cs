@@ -14,7 +14,7 @@ namespace FubuMVC.SelfHost.Testing
         [Test]
         public void can_write_extension_headers()
         {
-            var response = Harness.Endpoints.Get<ResponseHeadersEndpoint>(x => x.get_response_headers());
+            var response = SelfHostHarness.Endpoints.Get<ResponseHeadersEndpoint>(x => x.get_response_headers());
 
             response.ResponseHeaderFor("x-1").ShouldEqual("a");
             response.ResponseHeaderFor("x-2").ShouldEqual("b");
@@ -23,7 +23,7 @@ namespace FubuMVC.SelfHost.Testing
         [Test]
         public void can_write_built_in_response_headers()
         {
-            var response = Harness.Endpoints.Get<ResponseHeadersEndpoint>(x => x.get_response_headers());
+            var response = SelfHostHarness.Endpoints.Get<ResponseHeadersEndpoint>(x => x.get_response_headers());
             response.ResponseHeaderFor(HttpResponseHeaders.KeepAlive).ShouldEqual("True");
             response.ResponseHeaderFor(HttpResponseHeaders.Server).ShouldStartWith("Server1");
             
@@ -32,7 +32,7 @@ namespace FubuMVC.SelfHost.Testing
         [Test]
         public void can_write_etag()
         {
-            var response = Harness.Endpoints.Get<ResponseHeadersEndpoint>(x => x.get_etag());
+            var response = SelfHostHarness.Endpoints.Get<ResponseHeadersEndpoint>(x => x.get_etag());
 
             response.ResponseHeaderFor(HttpResponseHeaders.ETag).ShouldEqual("123456");
         }
@@ -40,7 +40,7 @@ namespace FubuMVC.SelfHost.Testing
         [Test]
         public void can_write_content_headers()
         {
-            var response = Harness.Endpoints.Get<ResponseHeadersEndpoint>(x => x.get_content_headers());
+            var response = SelfHostHarness.Endpoints.Get<ResponseHeadersEndpoint>(x => x.get_content_headers());
 
             response.ResponseHeaderFor(HttpResponseHeaders.ContentMd5).ShouldEqual("A");
             response.ResponseHeaderFor(HttpResponseHeaders.ContentDisposition).ShouldEqual("B");

@@ -13,7 +13,7 @@ using FubuTestingSupport;
 namespace FubuMVC.IntegrationTesting.Conneg
 {
     [TestFixture]
-    public class conneg_with_endpoint_that_accepts_all_formatters_and_form_posts : FubuRegistryHarness
+    public class conneg_with_endpoint_that_accepts_all_formatters_and_form_posts : SharedHarnessContext
     {
         private readonly XmlJsonHtmlMessage input;
         private readonly string expectedJson;
@@ -33,13 +33,6 @@ namespace FubuMVC.IntegrationTesting.Conneg
             };
             new XmlSerializer(typeof (XmlJsonHtmlMessage)).Serialize(xmlWriter, input);
             expectedXml = writer.ToString();
-        }
-
-        protected override void configure(FubuRegistry registry)
-        {
-            registry.Actions.IncludeType<ConnegController>();
-            registry.Media // TODO -- I really don't like that you have to do this.
-                .ApplyContentNegotiationToActions(call => true);
         }
 
         [Test]
@@ -123,7 +116,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
     }
 
     [TestFixture]
-    public class symmetric_json_endpoints_with_conneg : FubuRegistryHarness
+    public class symmetric_json_endpoints_with_conneg : SharedHarnessContext
     {
         private readonly SymmetricJson input;
         private readonly string expectedJson;
@@ -136,11 +129,6 @@ namespace FubuMVC.IntegrationTesting.Conneg
             };
 
             expectedJson = JsonUtil.ToJson(input);
-        }
-
-        protected override void configure(FubuRegistry registry)
-        {
-            registry.Actions.IncludeType<ConnegController>();
         }
 
         [Test]
@@ -203,7 +191,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
 
 
     [TestFixture]
-    public class asymmetric_json_endpoints_with_conneg : FubuRegistryHarness
+    public class asymmetric_json_endpoints_with_conneg : SharedHarnessContext
     {
         private readonly AsymmetricJson input;
         private readonly string expectedJson;
@@ -215,11 +203,6 @@ namespace FubuMVC.IntegrationTesting.Conneg
             };
 
             expectedJson = JsonUtil.ToJson(input);
-        }
-
-        protected override void configure(FubuRegistry registry)
-        {
-            registry.Actions.IncludeType<ConnegController>();
         }
 
         [Test]
@@ -280,7 +263,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
     }
 
 
-    public class ConnegController
+    public class ConnegEndpoints
     {
         [SymmetricJson]
         public SymmetricJson post_send_symmetric(SymmetricJson message)

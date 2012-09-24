@@ -11,7 +11,7 @@ namespace FubuMVC.SelfHost.Testing
         [Test]
         public void handle_the_exception_with_a_501_and_the_exception_message()
         {
-            var response = Harness.Endpoints.Get<ExceptionEndpoint>(x => x.get_exception());
+            var response = SelfHostHarness.Endpoints.Get<ExceptionEndpoint>(x => x.get_exception());
 
             response.StatusCode.ShouldEqual(HttpStatusCode.InternalServerError);
             var text = response.ReadAsText();

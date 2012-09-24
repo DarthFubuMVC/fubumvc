@@ -11,7 +11,7 @@ namespace FubuMVC.SelfHost.Testing
         [Test]
         public void can_write_strings_to_the_output()
         {
-            Harness.Endpoints.Get<StringEndpoint>(x => x.get_hello())
+            SelfHostHarness.Endpoints.Get<StringEndpoint>(x => x.get_hello())
                 .ContentShouldBe(MimeType.Text, "Hello.")
                 .StatusCode.ShouldEqual(HttpStatusCode.OK);
         }

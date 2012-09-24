@@ -12,7 +12,7 @@ namespace FubuMVC.IntegrationTesting.ViewEngines.Razor.HelloRazor
     {
         protected override void configure(FubuRegistry registry)
         {
-            registry.Actions.IncludeType<HelloRazorController>();
+            registry.Actions.IncludeType<HelloRazorEndpoints>();
 
             registry.Views
                 .TryToAttachWithDefaultConventions();
@@ -21,7 +21,7 @@ namespace FubuMVC.IntegrationTesting.ViewEngines.Razor.HelloRazor
         [Test]
         public void simple_get_of_razor_view_with_no_template()
         {
-            var text = endpoints.Get<HelloRazorController>(x => x.SayHello(new HelloWorldRazorInputModel()))
+            var text = endpoints.Get<HelloRazorEndpoints>(x => x.SayHello(new HelloWorldRazorInputModel()))
                 .ReadAsText();
 
             text.ShouldContain("Hello World! FubuMVC + Razor");

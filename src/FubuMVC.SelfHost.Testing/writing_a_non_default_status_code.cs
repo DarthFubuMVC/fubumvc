@@ -10,7 +10,7 @@ namespace FubuMVC.SelfHost.Testing
         [Test]
         public void can_write_a_different_status_code()
         {
-            Harness.Endpoints.Get<StatusCodeEndpoint>(x => x.get_not_modified())
+            SelfHostHarness.Endpoints.Get<StatusCodeEndpoint>(x => x.get_not_modified())
                 .StatusCodeShouldBe(HttpStatusCode.NotModified);
         }
     }

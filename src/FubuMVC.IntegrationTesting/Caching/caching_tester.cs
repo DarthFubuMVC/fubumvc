@@ -13,13 +13,8 @@ namespace FubuMVC.IntegrationTesting.Caching
 {
 
     [TestFixture]
-    public class caching_tester : FubuRegistryHarness
+    public class caching_tester : SharedHarnessContext
     {
-        protected override void configure(FubuRegistry registry)
-        {
-            registry.Actions.IncludeType<CachedEndpoints>();
-        }
-
         [Test]
         public void doughnut_caching()
         {

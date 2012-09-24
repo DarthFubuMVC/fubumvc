@@ -10,7 +10,7 @@ namespace FubuMVC.SelfHost.Testing
         [Test]
         public void get_response_for_non_existent_route()
         {
-            var response = Harness.Endpoints.Get(Harness.Root + "/nonexistent");
+            var response = SelfHostHarness.Endpoints.Get(SelfHostHarness.Root + "/nonexistent");
             response.StatusCode.ShouldEqual(HttpStatusCode.NotFound);
         }
     }
