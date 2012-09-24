@@ -4,9 +4,11 @@ using System.Net;
 using System.Xml;
 using System.Xml.Serialization;
 using FubuMVC.Core;
+using FubuMVC.Core.Runtime;
 using FubuMVC.TestingHarness;
 using HtmlTags;
 using NUnit.Framework;
+using FubuTestingSupport;
 
 namespace FubuMVC.IntegrationTesting.Conneg
 {
@@ -44,6 +46,15 @@ namespace FubuMVC.IntegrationTesting.Conneg
         public void requesting_an_unsupported_media_type_returns_406()
         {
             endpoints.PostJson(input, accept: "random/format").StatusCodeShouldBe(HttpStatusCode.NotAcceptable);
+        }
+
+        [Test]
+        public void send_no_accept_header_but_treat_like_anything_is_accepted()
+        {
+            endpoints.PostJson(input, accept: null)
+                .StatusCodeShouldBe(HttpStatusCode.OK)
+                .ContentTypeShouldBe(MimeType.Json)
+                .ReadAsJson<XmlJsonHtmlMessage>().Id.ShouldEqual(input.Id);
         }
 
         [Test]

@@ -19,7 +19,6 @@ namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.PartialNoLayout
     {
         protected override void configure(FubuRegistry registry)
         {
-            registry.Import<SparkEngine>();
             registry.Actions.IncludeType<UsesPartialController>();
             registry.Actions.IncludeType<HelloPartialController>();
             registry.Actions.IncludeType<TransferToController>();
