@@ -39,7 +39,7 @@ desc "Unit and Integration Tests"
 task :full => [:default, :integration_test]
 
 desc "Target used for the CI server"
-task :ci => [:update_all_dependencies, :default, :history, :package]
+task :ci => [:update_all_dependencies, :default, :integration_test, :history, :package]
 
 desc "Update the version information for the build"
 assemblyinfo :version do |asm|
