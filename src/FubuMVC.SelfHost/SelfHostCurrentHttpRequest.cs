@@ -1,21 +1,17 @@
 using System;
 using System.Net.Http;
-using System.Web.Http.SelfHost;
 using FubuMVC.Core;
 using FubuMVC.Core.Http;
-using FubuCore;
 
 namespace FubuMVC.SelfHost
 {
     public class SelfHostCurrentHttpRequest : ICurrentHttpRequest
     {
         private readonly HttpRequestMessage _request;
-        private readonly HttpSelfHostConfiguration _configuration;
 
-        public SelfHostCurrentHttpRequest(HttpRequestMessage request, HttpSelfHostConfiguration configuration)
+        public SelfHostCurrentHttpRequest(HttpRequestMessage request)
         {
             _request = request;
-            _configuration = configuration;
         }
 
         public string RawUrl()
@@ -35,7 +31,7 @@ namespace FubuMVC.SelfHost
 
         public string ToFullUrl(string url)
         {
-            return url.ToAbsoluteUrl(_configuration.BaseAddress.OriginalString);
+            return url.ToAbsoluteUrl(_request.RequestUri.GetComponents(UriComponents.SchemeAndServer, UriFormat.SafeUnescaped));
         }
 
         public string HttpMethod()

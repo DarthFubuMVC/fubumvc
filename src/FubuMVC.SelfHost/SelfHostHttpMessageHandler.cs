@@ -4,7 +4,6 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web.Http.SelfHost;
 using System.Web.Routing;
 using FubuCore;
 using FubuMVC.Core;
@@ -15,13 +14,11 @@ namespace FubuMVC.SelfHost
     public class SelfHostHttpMessageHandler : HttpMessageHandler
     {
         private readonly FubuRuntime _runtime;
-        private readonly HttpSelfHostConfiguration _configuration;
         private readonly RouteCollection _routes;
 
-        public SelfHostHttpMessageHandler(FubuRuntime runtime, HttpSelfHostConfiguration configuration)
+        public SelfHostHttpMessageHandler(FubuRuntime runtime)
         {
             _runtime = runtime;
-            _configuration = configuration;
 
             _routes = new RouteCollection();
             _routes.AddRange(runtime.Routes);
@@ -57,7 +54,7 @@ namespace FubuMVC.SelfHost
                 try
                 {
                     var response = new HttpResponseMessage(HttpStatusCode.OK);
-                    var arguments = new SelfHostServiceArguments(routeData, request, response, _configuration);
+                    var arguments = new SelfHostServiceArguments(routeData, request, response);
                     var invoker = routeData.RouteHandler.As<FubuRouteHandler>().Invoker;
                     invoker.Invoke(arguments, routeData.Values);
 
