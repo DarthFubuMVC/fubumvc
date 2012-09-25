@@ -1,22 +1,22 @@
 <?xml version="1.0"?>
 <package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
-    <id>FubuMVC.WebForms</id>
+    <id>FubuMVC.SelfHost</id>
     <version>0.0.0</version>
-    <authors>Chad Myers, Jeremy D. Miller, Joshua Flanagan</authors>
-    <owners>Joshua Flanagan</owners>
+    <authors>Jeremy D. Miller</authors>
+    <owners>Jeremy D. Miller</owners>
     <licenseUrl>https://github.com/DarthFubuMVC/fubumvc/raw/master/license.txt</licenseUrl>
     <projectUrl>http://mvc.fubu-project.org/</projectUrl>
     <iconUrl>https://github.com/DarthFubuMVC/fubu-collateral/raw/master/Icons/FubuMvc_256.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Support for using the ASP.NET WebForms view engine within a FubuMVC application.</description>
-    <tags>webforms fubumvc</tags>
+    <description>Run FubuMVC applications using the Web API Self Hosting alternative</description>
+    <tags>web framework specification fubumvc</tags>
     <dependencies>
-      <dependency id="FubuMVC.References" />
+	<dependency id="FubuMVC.References"/>
+    	<dependency id="Microsoft.AspNet.WebApi.SelfHost"/>
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\src\FubuMVC.WebForms\bin\release\FubuMVC.WebForms.*" target="lib\net40" />	
-    <file src="..\..\src\FubuMVC.WebForms\**\*.cs" target="src" />	
+    <file src="..\..\src\FubuMVC.SelfHost\bin\release\FubuMVC.SelfHost.*" target="lib\net40" />
   </files>
 </package>
