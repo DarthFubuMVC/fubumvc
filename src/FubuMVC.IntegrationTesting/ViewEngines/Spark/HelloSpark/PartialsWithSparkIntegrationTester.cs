@@ -8,24 +8,19 @@ using NUnit.Framework;
 namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.HelloSpark
 {
     [TestFixture]
-    public class Partials_and_actionless_views_WithSparkIntegrationTester : FubuRegistryHarness
+    public class Partials_and_actionless_views_WithSparkIntegrationTester : SharedHarnessContext
     {
-        protected override void configure(FubuRegistry registry)
-        {
-            registry.Actions.IncludeType<PartialController>();
-        }
-
         [Test]
         public void pair_of_nested_partials()
         {
-            var text = endpoints.Get<PartialController>(x => x.get_partials()).ReadAsText();
+            var text = endpoints.Get<PartialSparkEndpoints>(x => x.get_partials()).ReadAsText();
 
             text.ShouldContain("<h1>My name is Shiner</h1>");
             text.ShouldContain("<p>I am a 7 year old Labrador mix</p>");
         }
     }
 
-    public class PartialController
+    public class PartialSparkEndpoints
     {
         public FullViewModel get_partials()
         {

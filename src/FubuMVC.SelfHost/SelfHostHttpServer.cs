@@ -11,15 +11,14 @@ namespace FubuMVC.SelfHost
 {
     public class SelfHostHttpServer : IDisposable
     {
-        private readonly HttpSelfHostConfiguration _configuration;
+        private HttpSelfHostConfiguration _configuration;
         private HttpSelfHostServer _server;
-        private readonly string _baseAddress;
+        private string _baseAddress;
+        private int _port;
 
         public SelfHostHttpServer(int port)
         {
-            port = PortFinder.FindPort(port);
-            _baseAddress = "http://localhost:" + port;
-            _configuration = new HttpSelfHostConfiguration(_baseAddress);
+            _port = port;
         }
 
         public string BaseAddress
@@ -27,7 +26,10 @@ namespace FubuMVC.SelfHost
             get { return _baseAddress; }
         }
 
-        
+        public int Port
+        {
+            get { return _port; }
+        }
 
         public bool Verbose { get; set; }
 
@@ -38,6 +40,45 @@ namespace FubuMVC.SelfHost
 
         public void Start(FubuRuntime runtime, string rootDirectory)
         {
+            _port = PortFinder.FindPort(_port);
+
+
+            int i = 0;
+            while (!tryStartAtPort(rootDirectory, runtime) && i > 3)
+            {
+                i++;
+            }
+            
+
+
+        }
+
+        private bool tryStartAtPort(string rootDirectory, FubuRuntime runtime)
+        {
+            try
+            {
+                startAtPort(rootDirectory, runtime);
+                return true;
+            }
+            catch (AggregateException e)
+            {
+                if (e.InnerException is System.ServiceModel.AddressAlreadyInUseException)
+                {
+                    _port++;
+                    return false;
+                }
+
+                throw;
+            }
+
+            
+        }
+
+        private void startAtPort(string rootDirectory, FubuRuntime runtime)
+        {
+            _baseAddress = "http://localhost:" + _port;
+            _configuration = new HttpSelfHostConfiguration(_baseAddress);
+
             FubuMvcPackageFacility.PhysicalRootPath = rootDirectory;
 
             _server = new HttpSelfHostServer(_configuration, new SelfHostHttpMessageHandler(runtime, _configuration){
@@ -53,7 +94,7 @@ namespace FubuMVC.SelfHost
 
         public void Dispose()
         {
-            _server.CloseAsync().ContinueWith(t => _server.SafeDispose());
+            _server.CloseAsync().ContinueWith(t => _server.SafeDispose()).Wait();
         }
     }
 }

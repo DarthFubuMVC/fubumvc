@@ -24,8 +24,6 @@ namespace FubuMVC.IntegrationTesting.Packaging
         {
             runBottles(@"link harness --clean-all");
 
-            runFubu("packages harness --clean-all --remove-all");
-
             runBottles(@"
 init src/TestPackage1 pak1
 link harness pak1

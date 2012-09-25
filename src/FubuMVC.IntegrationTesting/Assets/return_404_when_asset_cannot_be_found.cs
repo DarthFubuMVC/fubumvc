@@ -7,7 +7,7 @@ using FubuTestingSupport;
 namespace FubuMVC.IntegrationTesting.Assets
 {
     [TestFixture]
-    public class return_404_when_asset_cannot_be_found : FubuRegistryHarness
+    public class return_404_when_asset_cannot_be_found : SharedHarnessContext
     {
         [Test]
         public void look_for_nonexistent_image()

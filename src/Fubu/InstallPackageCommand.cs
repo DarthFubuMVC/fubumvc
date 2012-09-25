@@ -16,42 +16,12 @@ namespace Fubu
         public override bool Execute(InstallPackageInput input)
         {
             var applicationFolder = new AliasService().GetFolderForAlias(input.AppFolder);
+            var uninstallFlag = input.UninstallFlag;
+            var packageFileName = input.PackageFile;
 
-            var packageFolder = FileSystem.Combine(applicationFolder, "bin", FubuMvcPackageFacility.FubuPackagesFolder);
+            var service = new PackageService(new FileSystem());
+            service.InstallPackage(applicationFolder, packageFileName, uninstallFlag);
 
-            var destinationFileName = FileSystem.Combine(packageFolder, Path.GetFileName(input.PackageFile));
-            if (input.UninstallFlag)
-            {
-                if (File.Exists(destinationFileName))
-                {
-                    Console.WriteLine("Deleting existing file " + destinationFileName);
-                    File.Delete(destinationFileName);
-                }
-                else
-                {
-                    Console.WriteLine("File {0} does not exist", destinationFileName);
-                }
-
-
-                return true;
-            }
-
-            if (!Directory.Exists(packageFolder))
-            {
-                Console.WriteLine("Creating folder " + packageFolder);
-                Directory.CreateDirectory(packageFolder);
-            }
-
-
-            if (File.Exists(destinationFileName))
-            {
-                Console.WriteLine("Deleting existing file at " + destinationFileName);
-                File.Delete(destinationFileName);
-            }
-
-            Console.WriteLine("Copying {0} to {1}", input.PackageFile, packageFolder);
-
-            File.Copy(input.PackageFile, destinationFileName);
             return true;
         }
     }

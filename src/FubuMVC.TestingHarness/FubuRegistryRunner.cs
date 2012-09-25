@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Xml;
+using Bottles.Commands;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Endpoints;
@@ -23,18 +24,15 @@ namespace FubuMVC.TestingHarness
         private Harness theHarness;
         private IContainer theContainer;
 
-        private static Action _initialize;
-
+        private static readonly CommandRunner _runner = new CommandRunner();
 
 
         static FubuRegistryHarness()
         {
-            _initialize = () =>
-            {
-                runBottles("alias harness " + Harness.GetApplicationDirectory().FileEscape());
-
-                _initialize = () => { };
-            };
+            new AliasCommand().Execute(new AliasInput{
+                Name = "harness",
+                Folder = Harness.GetApplicationDirectory().FileEscape()
+            });
         }
 
         public RemoteBehaviorGraph remote
@@ -53,10 +51,9 @@ namespace FubuMVC.TestingHarness
         {
             beforeRunning();
 
-            _initialize();
+            removeAllLinkedPackages();
 
-            runBottles("link harness --clean-all");
-            runFubu("packages harness --clean-all --remove-all");
+            cleanAndRemoveAllPackages();
 
             initializeBottles();
 
@@ -64,6 +61,26 @@ namespace FubuMVC.TestingHarness
             configureContainer(theContainer);
 
             theHarness = Harness.Run(configure, theContainer);
+        }
+
+        protected void installZipPackage(string zipFile)
+        {
+            _runner.InstallZipPackage(zipFile);
+        }
+
+        protected void uninstallZipPackage(string zipFile)
+        {
+            _runner.UnInstallZipPackage(zipFile);
+        }
+
+        protected void removeAllLinkedPackages()
+        {
+            _runner.RemoveAllLinks();
+        }
+
+        protected void cleanAndRemoveAllPackages()
+        {
+            _runner.CleanAndRemoveAllPackages();
         }
 
         protected virtual void beforeRunning()
@@ -100,26 +117,13 @@ namespace FubuMVC.TestingHarness
         {
         }
 
-        protected void runFubu(string commands)
-        {
-            var runner = new CommandRunner();
-            commands.ReadLines(x =>
-            {
-                if (x.Trim().IsNotEmpty())
-                {
-                    runner.RunFubu(x);
-                }
-            });
-        }
-
         protected static void runBottles(string commands)
         {
-            var runner = new CommandRunner();
             commands.ReadLines(x =>
             {
                 if (x.Trim().IsNotEmpty())
                 {
-                    runner.RunBottles(x);
+                    _runner.RunBottles(x);
                 }
             });
         }
@@ -183,6 +187,7 @@ namespace FubuMVC.TestingHarness
 
             _server = new SelfHostHttpServer(port);
             _server.Start(runtime, GetApplicationDirectory());
+            _port = _server.Port;
 
             var urls = _runtime.Facility.Get<IUrlRegistry>();
             urls.As<UrlRegistry>().RootAt(_server.BaseAddress);
@@ -195,6 +200,11 @@ namespace FubuMVC.TestingHarness
             });
 
             _endpoints = new EndpointDriver(urls);
+        }
+
+        public static int Port
+        {
+            get { return _port; }
         }
 
         public EndpointDriver Endpoints
@@ -221,7 +231,10 @@ namespace FubuMVC.TestingHarness
             var simpleSource = new SimpleSource(configure, container);
             var runtime = simpleSource.BuildApplication().Bootstrap();
 
-            return new Harness(runtime, PortFinder.FindPort(_port++));
+            var harness = new Harness(runtime, PortFinder.FindPort(_port++));
+
+            _port = Port + 1;
+            return harness;
         }
 
         public static string GetApplicationDirectory()

@@ -4,6 +4,7 @@ using Bottles.Diagnostics;
 using Bottles.Exploding;
 using FubuCore;
 using FubuCore.CommandLine;
+using FubuMVC.Core.Packaging;
 
 namespace Fubu
 {
@@ -17,17 +18,17 @@ namespace Fubu
         {
             input.AppFolder = new AliasService().GetFolderForAlias(input.AppFolder).ToFullPath();
 
-            Execute(input, _system);
+            Execute(input, new PackageService(_system));
             return true;
         }
 
-        public void Execute(PackagesInput input, IFileSystem fileSystem)
+        public void Execute(PackagesInput input, IPackageService service)
         {
             var exploder = BuildExploder();
 
             if (input.CleanAllFlag)
             {
-                exploder.CleanAll(input.AppFolder);
+                service.CleanAllPackages(input.AppFolder);
             }
             
 
@@ -42,13 +43,7 @@ namespace Fubu
             // TODO -- this doesn't work for anything but fubu
             if (input.RemoveAllFlag)
             {
-                var packageFolder = BottleFiles.GetApplicationPackagesDirectory(input.AppFolder);
-                Console.WriteLine("Removing all package files and directories from the application at " + packageFolder);
-                new FileSystem().DeleteDirectory(packageFolder);
-
-                var otherFolder = input.AppFolder.AppendPath("fubu-content");
-                Console.WriteLine("Removing all package files and directories from the application at " + otherFolder);
-                new FileSystem().DeleteDirectory(otherFolder);
+                service.RemoveAllPackages(input.AppFolder);
             }
 
             // TODO -- this needs to be redone

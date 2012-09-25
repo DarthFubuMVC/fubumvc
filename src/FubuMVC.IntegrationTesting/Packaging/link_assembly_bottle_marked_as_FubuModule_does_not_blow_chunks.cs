@@ -11,9 +11,6 @@ namespace FubuMVC.IntegrationTesting.Packaging
     {
         protected override void initializeBottles()
         {
-            runBottles(@"link harness --clean-all");
-            runFubu("packages harness --clean-all --remove-all");
-
             runBottles("link harness src/AssemblyPackage");
         }
 

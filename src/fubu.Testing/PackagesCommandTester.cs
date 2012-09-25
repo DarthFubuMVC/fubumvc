@@ -1,6 +1,7 @@
 using Bottles.Diagnostics;
 using Bottles.Exploding;
 using Fubu;
+using FubuMVC.Core.Packaging;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -48,7 +49,7 @@ namespace fubu.Testing
 
         private void execute()
         {
-            ClassUnderTest.Execute(theInput);
+            ClassUnderTest.Execute(theInput, MockFor<IPackageService>());
         }
 
         [Test]
@@ -78,7 +79,7 @@ namespace fubu.Testing
 
             execute();
 
-            MockFor<IBottleExploder>().AssertWasCalled(x => x.CleanAll(theInput.AppFolder));
+            MockFor<IPackageService>().AssertWasCalled(x => x.CleanAllPackages(theInput.AppFolder));
         }
 
 

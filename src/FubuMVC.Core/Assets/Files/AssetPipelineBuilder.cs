@@ -53,8 +53,6 @@ namespace FubuMVC.Core.Assets.Files
 
         public virtual void LoadFilesFromContentFolder(PackageAssetDirectory directory, string contentFolder)
         {
-            Console.WriteLine("Reading assets for package {0} in directory {1}", directory.PackageName, contentFolder);
-
             ReadAssetType(directory, contentFolder, AssetFolder.styles);
             
 

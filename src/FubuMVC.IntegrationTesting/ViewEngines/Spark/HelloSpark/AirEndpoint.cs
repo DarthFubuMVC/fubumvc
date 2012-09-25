@@ -2,7 +2,7 @@ using FubuCore;
 
 namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.HelloSpark
 {
-    public class AirController
+    public class AirEndpoint
     {
         public AirViewModel TakeABreath(AirRequest request)
         {

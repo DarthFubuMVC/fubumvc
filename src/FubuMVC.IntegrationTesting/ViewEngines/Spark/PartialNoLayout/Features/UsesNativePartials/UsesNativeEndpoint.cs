@@ -1,6 +1,6 @@
-﻿namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.PartialNoLayout.Features.UsesNativePartials
+namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.PartialNoLayout.Features.UsesNativePartials
 {
-    public class UsesNativeController
+    public class UsesNativeEndpoint
     {
         public UsesNativeViewModel Render()
         {

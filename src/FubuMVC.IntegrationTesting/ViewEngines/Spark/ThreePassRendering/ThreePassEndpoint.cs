@@ -1,6 +1,6 @@
 namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.ThreePassRendering
 {
-    public class ThreePassController
+    public class ThreePassEndpoint
     {
         public ThreePassModel ThreePassSample(ThreePassModel input)
         {

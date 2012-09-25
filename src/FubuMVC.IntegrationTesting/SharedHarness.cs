@@ -5,6 +5,7 @@ using System.Xml;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Endpoints;
+using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.StructureMap;
@@ -38,7 +39,9 @@ namespace FubuMVC.IntegrationTesting
 
         public static void Start()
         {
-            _server = new SelfHostHttpServer(5501);
+            FubuMvcPackageFacility.PhysicalRootPath = GetRootDirectory();
+
+            _server = new SelfHostHttpServer(5500);
             var runtime = FubuApplication.For<HarnessRegistry>().StructureMap(new Container()).Bootstrap();
 
 

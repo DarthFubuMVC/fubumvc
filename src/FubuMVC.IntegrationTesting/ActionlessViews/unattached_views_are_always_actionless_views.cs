@@ -7,13 +7,8 @@ using FubuTestingSupport;
 namespace FubuMVC.IntegrationTesting.ActionlessViews
 {
     [TestFixture]
-    public class unattached_views_are_always_actionless_views : FubuRegistryHarness
+    public class unattached_views_are_always_actionless_views : SharedHarnessContext
     {
-        protected override void configure(FubuRegistry registry)
-        {
-            registry.Actions.IncludeType<AttachedEndpoint>();
-        }
-
         [Test]
         public void can_happily_render_the_actionless_view_as_a_partial()
         {

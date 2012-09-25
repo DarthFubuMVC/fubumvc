@@ -1,3 +1,4 @@
+using FubuMVC.Core;
 using FubuMVC.Core.Endpoints;
 
 namespace FubuMVC.IntegrationTesting
@@ -8,6 +9,8 @@ namespace FubuMVC.IntegrationTesting
         {
             get
             {
+                UrlContext.Stub(SelfHostHarness.Root);
+
                 return SelfHostHarness.Endpoints;
             }
         }

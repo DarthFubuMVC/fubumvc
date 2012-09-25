@@ -114,18 +114,18 @@
     <Compile Include="ViewEngines\Razor\MultipleLayouts\Features\One\UsesClosest\ClosestController.cs" />
     <Compile Include="ViewEngines\Razor\MultipleLayouts\Features\Two\UsesDefault\UsesDefaultController.cs" />
     <Compile Include="ViewEngines\Razor\MultipleLayouts\RazorEngineMultipleLayoutsIntegrationTester.cs" />
-    <Compile Include="ViewEngines\Spark\HelloSpark\AirController.cs" />
+    <Compile Include="ViewEngines\Spark\HelloSpark\AirEndpoint.cs" />
     <Compile Include="ViewEngines\Spark\HelloSpark\PartialsWithSparkIntegrationTester.cs" />
     <Compile Include="ViewEngines\Spark\HelloSpark\SparkEngineIntegrationTester.cs" />
-    <Compile Include="ViewEngines\Spark\NestedPartials\FamilyController.cs" />
+    <Compile Include="ViewEngines\Spark\NestedPartials\FamilyEndpoint.cs" />
     <Compile Include="ViewEngines\Spark\NestedPartials\NestedPartialsIntegrationTester.cs" />
     <Compile Include="ViewEngines\Spark\NestedPartials\StringExtensions.cs" />
-    <Compile Include="ViewEngines\Spark\PartialNoLayout\Features\HelloPartial\HelloPartialController.cs" />
-    <Compile Include="ViewEngines\Spark\PartialNoLayout\Features\UsesNativePartials\UsesNativeController.cs" />
-    <Compile Include="ViewEngines\Spark\PartialNoLayout\Features\UsesPartial\UsesPartialController.cs" />
-    <Compile Include="ViewEngines\Spark\PartialNoLayout\Features\UsesTransferTo\TransferToController.cs" />
+    <Compile Include="ViewEngines\Spark\PartialNoLayout\Features\HelloPartial\HelloPartialEndpoint.cs" />
+    <Compile Include="ViewEngines\Spark\PartialNoLayout\Features\UsesNativePartials\UsesNativeEndpoint.cs" />
+    <Compile Include="ViewEngines\Spark\PartialNoLayout\Features\UsesPartial\UsesPartialEndpoint.cs" />
+    <Compile Include="ViewEngines\Spark\PartialNoLayout\Features\UsesTransferTo\TransferToEndpoint.cs" />
     <Compile Include="ViewEngines\Spark\PartialNoLayout\PartialNoLayoutIntegrationTester.cs" />
-    <Compile Include="ViewEngines\Spark\ThreePassRendering\ThreePassController.cs" />
+    <Compile Include="ViewEngines\Spark\ThreePassRendering\ThreePassEndpoint.cs" />
     <Compile Include="ViewEngines\Spark\ThreePassRendering\ThreePassRenderingTester.cs" />
     <Compile Include="ViewEngines\Spark\ViewModels.cs" />
   </ItemGroup>

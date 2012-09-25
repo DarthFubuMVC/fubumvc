@@ -6,14 +6,14 @@ using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.ThreePassRendering
 {
-    public class ThreePassRenderingTester : FubuRegistryHarness
+    [TestFixture]
+    public class ThreePassRenderingTester : SharedHarnessContext
     {
         private string theResult;
-        protected override void configure(FubuRegistry registry)
-        {
-            registry.Actions.IncludeType<ThreePassController>();
-            registry.Views.TryToAttachWithDefaultConventions();
 
+        [SetUp]
+        public void SetUp()
+        {
             theResult = new StringBuilder()
                 .AppendLine("<html>")
                 .AppendLine("<head>")
@@ -30,7 +30,7 @@ namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.ThreePassRendering
         [Test]
         public void three_pass_renders_correctly()
         {
-            endpoints.Get<ThreePassController>(x => x.ThreePassSample(null))
+            endpoints.Get<ThreePassEndpoint>(x => x.ThreePassSample(null))
                 .ReadAsText().ShouldEqual(theResult);
         }
     }

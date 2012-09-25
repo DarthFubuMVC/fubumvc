@@ -1,6 +1,6 @@
-﻿namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.PartialNoLayout.Features.HelloPartial
+namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.PartialNoLayout.Features.HelloPartial
 {
-    public class HelloPartialController
+    public class HelloPartialEndpoint
     {
          public HelloPartialViewModel SayHelloPartial(HelloPartialInputModel input)
          {

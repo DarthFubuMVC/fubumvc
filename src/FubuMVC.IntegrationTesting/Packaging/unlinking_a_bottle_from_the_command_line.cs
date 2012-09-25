@@ -12,7 +12,6 @@ namespace FubuMVC.IntegrationTesting.Packaging
     {
         protected override void initializeBottles()
         {
-            runFubu("packages harness --clean-all");
 
             runBottles(@"
 link harness --clean-all
@@ -20,7 +19,7 @@ init src/TestPackage1 pak1
 create pak1 -o pak1.zip
 ");
 
-            runFubu("install-pak pak1.zip harness");
+            installZipPackage("pak1.zip");
         }
 
         [Test]
@@ -43,8 +42,8 @@ ThreeController.Query()
 
             remote.All().EndpointsForAssembly("TestPackage1").Select(x => x.FirstActionDescription).OrderBy(x => x).ShouldHaveTheSameElementsAs(expectation);
 
+            uninstallZipPackage("pak1.zip");
 
-            runFubu("install-pak pak1.zip harness -u");
             restart();
 
             remote.All().EndpointsForAssembly("TestPackage1")

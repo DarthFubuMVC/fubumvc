@@ -14,12 +14,6 @@ namespace FubuMVC.IntegrationTesting.Packaging
         protected override void initializeBottles()
         {
             runBottles(@"
-link harness --clean-all
-            ");
-
-            runFubu("packages harness --clean-all --remove-all");
-
-            runBottles(@"
 init src/TestPackage1 pak1
 link harness pak1
 ");
@@ -74,17 +68,6 @@ ThreeController.Query()
     [TestFixture]
     public class linking_and_unlinking_packages : FubuRegistryHarness
     {
-        protected override void initializeBottles()
-        {
-            runBottles(@"
-link harness --clean-all
-            ");
-
-            runFubu("packages harness --clean-all --remove-all");
-        }
-
-
-
         [Test]
         public void script_linking_and_unlinking()
         {

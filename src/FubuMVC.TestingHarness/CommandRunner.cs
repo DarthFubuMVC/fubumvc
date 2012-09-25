@@ -1,14 +1,18 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using Bottles.Commands;
 using FubuCore;
 using FubuCore.CommandLine;
+using FubuMVC.Core.Packaging;
 
 namespace FubuMVC.TestingHarness
 {
     public class CommandRunner
     {
         private readonly string _solutionDirectory;
+        private readonly string _applicationDirectory;
+        private readonly IPackageService _packaging = new PackageService(new FileSystem());
 
         public CommandRunner()
         {
@@ -16,7 +20,8 @@ namespace FubuMVC.TestingHarness
 
             // Assuming that the assembly will be running in Fubu centric
             // [solution]/src/[library]/bin/debug
-            _solutionDirectory = path.ParentDirectory().ParentDirectory().ParentDirectory().ParentDirectory();
+            _applicationDirectory = path.ParentDirectory().ParentDirectory();
+            _solutionDirectory = _applicationDirectory.ParentDirectory().ParentDirectory();
         }
 
         public void RunBottles(string commandLine)
@@ -49,56 +54,29 @@ namespace FubuMVC.TestingHarness
             }
         }
 
-        private string findFubuFilename()
+
+        public void CleanAndRemoveAllPackages()
         {
-            var fileSystem = new FileSystem();
-            var fileName = Path.Combine(_solutionDirectory, @"src\fubu\bin\debug\fubu.exe");
-
-            if (fileSystem.FileExists(fileName))
-            {
-                return fileName;
-            }
-
-            fileName = Path.Combine(_solutionDirectory, @"src\fubu\bin\release\fubu.exe");
-            if (fileSystem.FileExists(fileName))
-            {
-                return fileName;
-            }
-
-            return _solutionDirectory.AppendPath("fubu.cmd");
+            _packaging.CleanAllPackages(_applicationDirectory);
+            _packaging.RemoveAllPackages(_applicationDirectory);
         }
 
-        public void RunFubu(string commandLine)
+        public void RemoveAllLinks()
         {
-            var fileName = findFubuFilename();
+            new LinkCommand().Execute(new LinkInput{
+                AppFolder = _applicationDirectory,
+                CleanAllFlag = true
+            });
+        }
 
-            Debug.WriteLine("Execute: {0} {1}".ToFormat(fileName, commandLine));
-            var startup = new ProcessStartInfo(fileName, commandLine){
-                CreateNoWindow = true,
-                RedirectStandardError = true,
-                RedirectStandardInput = true,
-                RedirectStandardOutput = true,
-                UseShellExecute = false,
-                WorkingDirectory = _solutionDirectory
-            };
+        public void InstallZipPackage(string zipFile)
+        {
+            _packaging.InstallPackage(_applicationDirectory, _solutionDirectory.AppendPath(zipFile), false);
+        }
 
-            try
-            {
-                var process = Process.Start(startup);
-                var processOutput = process.StandardOutput.ReadToEnd();
-                process.WaitForExit();
-
-                Debug.WriteLine(processOutput);
-
-                if (process.ExitCode != 0)
-                {
-                    throw new CommandFailureException("Command failed! -- " + commandLine + "\n" + processOutput);
-                }
-            }
-            catch (Exception e)
-            {
-                throw new ApplicationException("Trying to run " + fileName, e);
-            }
+        public void UnInstallZipPackage(string zipFile)
+        {
+            _packaging.InstallPackage(_applicationDirectory, _solutionDirectory.AppendPath(zipFile), true);
         }
     }
 }

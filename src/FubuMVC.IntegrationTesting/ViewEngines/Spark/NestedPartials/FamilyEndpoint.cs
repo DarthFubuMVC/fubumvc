@@ -1,6 +1,6 @@
 namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.NestedPartials
 {
-    public class FamilyController
+    public class FamilyEndpoint
     {
         public JackViewModel Jack(JackViewModel input)
         {

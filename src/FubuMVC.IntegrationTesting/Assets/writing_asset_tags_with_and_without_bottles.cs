@@ -14,12 +14,6 @@ namespace FubuMVC.IntegrationTesting.Assets
     [TestFixture]
     public class writing_asset_tags_with_and_without_bottles : FubuRegistryHarness
     {
-        protected override void initializeBottles()
-        {
-            runBottles("link harness --clean-all");
-            runFubu("packages harness --clean-all --remove-all");
-        }
-
         protected override void configure(FubuRegistry registry)
         {
             registry.Actions.IncludeType<ScriptsHandler>();

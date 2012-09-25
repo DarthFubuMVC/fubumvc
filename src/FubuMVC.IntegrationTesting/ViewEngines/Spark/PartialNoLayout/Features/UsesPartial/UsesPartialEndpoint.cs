@@ -1,6 +1,6 @@
-﻿namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.PartialNoLayout.Features.UsesPartial
+namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.PartialNoLayout.Features.UsesPartial
 {
-    public class UsesPartialController
+    public class UsesPartialEndpoint
     {
          public UsesPartialViewModel Execute()
          {
