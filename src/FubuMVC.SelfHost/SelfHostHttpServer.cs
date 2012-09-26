@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Web.Http.SelfHost;
-using System.Web.Routing;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Packaging;
@@ -81,7 +79,7 @@ namespace FubuMVC.SelfHost
 
             FubuMvcPackageFacility.PhysicalRootPath = rootDirectory;
 
-            _server = new HttpSelfHostServer(_configuration, new SelfHostHttpMessageHandler(runtime, _configuration){
+            _server = new HttpSelfHostServer(_configuration, new SelfHostHttpMessageHandler(runtime){
                 Verbose = Verbose
             });
 
