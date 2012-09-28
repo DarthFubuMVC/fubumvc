@@ -19,7 +19,6 @@ namespace FubuMVC.StructureMap
 
             For<ISessionState>().Use<SimpleSessionState>();
 
-            For<CurrentRequest>().Use(c => c.GetInstance<IFubuRequest>().Get<CurrentRequest>());
         }
 
         public HttpContext BuildContextWrapper()

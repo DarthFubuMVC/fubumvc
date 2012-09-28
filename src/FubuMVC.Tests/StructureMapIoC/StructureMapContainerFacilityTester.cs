@@ -202,12 +202,6 @@ namespace FubuMVC.Tests.StructureMapIoC
         }
 
         [Test]
-        public void smoke_test_get_the_current_request()
-        {
-            container.GetInstance<CurrentRequest>().ShouldNotBeNull();
-        }
-
-        [Test]
         public void standard_model_binder_should_not_be_registered_in_the_container()
         {
             container.GetAllInstances<IModelBinder>().Any(x => x is StandardModelBinder).ShouldBeFalse();

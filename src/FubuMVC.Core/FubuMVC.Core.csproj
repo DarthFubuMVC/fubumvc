@@ -428,7 +428,6 @@
     <Compile Include="Continuations\ContinuationType.cs" />
     <Compile Include="Continuations\IContinuationDirector.cs" />
     <Compile Include="FubuRegistry.OutOfBoxConventions.cs" />
-    <Compile Include="CurrentRequest.cs" />
     <Compile Include="EndpointService.cs" />
     <Compile Include="FubuApplication.cs" />
     <Compile Include="FubuEnvironment.cs" />
