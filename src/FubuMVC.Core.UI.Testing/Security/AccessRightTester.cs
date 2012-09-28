@@ -1,10 +1,10 @@
 using System;
-using FubuHtml.Security;
+using FubuMVC.Core.UI.Security;
 using FubuTestingSupport;
 using NUnit.Framework;
 using System.Linq;
 
-namespace FubuHtml.Testing.Security
+namespace FubuMVC.Core.UI.Testing.Security
 {
     [TestFixture]
     public class AccessRightTester

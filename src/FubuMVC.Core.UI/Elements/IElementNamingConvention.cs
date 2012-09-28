@@ -1,7 +1,7 @@
 using System;
 using FubuCore.Reflection;
 
-namespace FubuHtml.Elements
+namespace FubuMVC.Core.UI.Elements
 {
     public interface IElementNamingConvention
     {

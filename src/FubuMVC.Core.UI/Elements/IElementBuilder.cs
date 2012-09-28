@@ -1,6 +1,6 @@
 using HtmlTags.Conventions;
 
-namespace FubuHtml.Elements
+namespace FubuMVC.Core.UI.Elements
 {
     public interface IElementBuilder : ITagBuilder<ElementRequest>
     {

@@ -1,9 +1,7 @@
 using System;
 using System.Linq.Expressions;
-using FubuHtml;
-using FubuHtml.Testing.Elements;
-using FubuMVC.Core;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.UI.Testing.Elements;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using FubuTestingSupport;
@@ -11,7 +9,7 @@ using HtmlTags;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Tests.UI.Forms
+namespace FubuMVC.Core.UI.Testing.Forms
 {
     [TestFixture]
     public class FormForExpressionTester

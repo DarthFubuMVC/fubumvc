@@ -2,7 +2,7 @@ using System;
 using FubuCore;
 using HtmlTags.Conventions;
 
-namespace FubuHtml
+namespace FubuMVC.Core.UI
 {
     public class ServiceLocatorTagRequestActivator : ITagRequestActivator
     {

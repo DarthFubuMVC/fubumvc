@@ -4,7 +4,7 @@ using HtmlTags;
 using HtmlTags.Conventions;
 using FubuCore;
 
-namespace FubuHtml.Elements.Builders
+namespace FubuMVC.Core.UI.Elements.Builders
 {
     //Tested through HtmlConventionRegistry tests
     public class LambdaElementBuilder : LambdaTagBuilder<ElementRequest>, IElementBuilder, DescribesItself

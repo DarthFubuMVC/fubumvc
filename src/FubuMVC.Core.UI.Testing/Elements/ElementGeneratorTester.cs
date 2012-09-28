@@ -1,6 +1,5 @@
-using System;
-using FubuHtml.Elements;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.UI.Elements;
 using FubuTestingSupport;
 using HtmlTags;
 using HtmlTags.Conventions;
@@ -8,7 +7,7 @@ using NUnit.Framework;
 using Rhino.Mocks;
 using FubuCore;
 
-namespace FubuHtml.Testing.Elements
+namespace FubuMVC.Core.UI.Testing.Elements
 {
     [TestFixture]
     public class ElementGeneratorTester : InteractionContext<ElementGenerator<Address>>

@@ -1,6 +1,6 @@
-using FubuHtml.Elements.Builders;
+using FubuMVC.Core.UI.Elements.Builders;
 
-namespace FubuHtml
+namespace FubuMVC.Core.UI
 {
     public class DefaultHtmlConventions : HtmlConventionRegistry
     {

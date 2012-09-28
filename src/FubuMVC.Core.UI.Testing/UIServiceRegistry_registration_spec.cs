@@ -1,11 +1,10 @@
 using System.Linq;
 using Bottles;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.UI;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests.UI
+namespace FubuMVC.Core.UI.Testing
 {
     [TestFixture]
     public class UIServiceRegistry_registration_spec

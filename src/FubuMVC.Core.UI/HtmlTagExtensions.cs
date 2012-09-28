@@ -5,7 +5,7 @@ using FubuLocalization;
 using HtmlTags;
 using FubuCore;
 
-namespace FubuHtml
+namespace FubuMVC.Core.UI
 {
     public static class HtmlTagExtensions
     {

@@ -1,9 +1,9 @@
-using FubuHtml.Elements;
-using FubuHtml.Elements.Builders;
+using FubuMVC.Core.UI.Elements;
+using FubuMVC.Core.UI.Elements.Builders;
 using NUnit.Framework;
 using FubuTestingSupport;
 
-namespace FubuHtml.Testing.Elements.Builders
+namespace FubuMVC.Core.UI.Testing.Elements.Builders
 {
     [TestFixture]
     public class CheckboxBuilderTester

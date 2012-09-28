@@ -1,19 +1,18 @@
 using System;
 using System.Linq.Expressions;
-using FubuHtml.Elements;
 using FubuLocalization;
-using FubuMVC.Core;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.AntiForgery;
+using FubuMVC.Core.UI.Elements;
 using FubuMVC.Core.View;
 using HtmlTags;
 using HtmlTags.Extended.Attributes;
 using FubuCore;
 using FubuCore.Reflection;
 
-namespace FubuHtml
+namespace FubuMVC.Core.UI
 {
     public static class FubuPageExtensions
     {

@@ -1,9 +1,9 @@
-using FubuHtml.Testing.Elements;
+using FubuMVC.Core.UI.Testing.Elements;
 using HtmlTags;
 using NUnit.Framework;
 using FubuTestingSupport;
 
-namespace FubuHtml.Testing
+namespace FubuMVC.Core.UI.Testing
 {
     [TestFixture]
     public class configuring_conventions_by_profile : HtmlElementConventionsContext

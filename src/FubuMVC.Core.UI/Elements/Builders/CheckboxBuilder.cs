@@ -1,9 +1,8 @@
-using System;
 using System.ComponentModel;
 using HtmlTags;
 using FubuCore;
 
-namespace FubuHtml.Elements.Builders
+namespace FubuMVC.Core.UI.Elements.Builders
 {
     [Description("Builds an html checkbox for a boolean value")]
     public class CheckboxBuilder : IElementBuilder

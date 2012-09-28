@@ -5,7 +5,7 @@ using HtmlTags;
 using NUnit.Framework;
 using System.Collections.Generic;
 
-namespace FubuHtml.Testing
+namespace FubuMVC.Core.UI.Testing
 {
     [TestFixture]
     public class HtmlTagExtensionsTester

@@ -1,9 +1,9 @@
 using FubuCore.Reflection;
-using FubuHtml.Elements;
+using FubuMVC.Core.UI.Elements;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuHtml.Testing.Elements
+namespace FubuMVC.Core.UI.Testing.Elements
 {
     [TestFixture]
     public class DotNotationNamingConventionTester

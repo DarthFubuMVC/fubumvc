@@ -1,10 +1,9 @@
-using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using HtmlTags;
 
-namespace FubuHtml.Elements.Builders
+namespace FubuMVC.Core.UI.Elements.Builders
 {
     [Description("Builds a <label> element using the accessor name as the text and sets @for to the display id")]
     public class DefaultLabelBuilder : IElementBuilder

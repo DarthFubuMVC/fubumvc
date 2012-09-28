@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuCore.Formatting;
-using FubuHtml.Elements;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.UI.Elements;
 using HtmlTags.Conventions;
 
-namespace FubuHtml.Scenarios
+namespace FubuMVC.Core.UI.Scenarios
 {
     public static class HtmlElementScenario<T> where T : class
     {

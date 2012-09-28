@@ -1,4 +1,4 @@
-namespace FubuHtml.Elements
+namespace FubuMVC.Core.UI.Elements
 {
     public static class ElementConstants
     {

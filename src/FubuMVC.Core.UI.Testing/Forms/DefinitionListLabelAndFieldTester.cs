@@ -3,7 +3,7 @@ using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests.UI.Forms
+namespace FubuMVC.Core.UI.Testing.Forms
 {
     [TestFixture]
     public class DefinitionListLabelAndFieldTester

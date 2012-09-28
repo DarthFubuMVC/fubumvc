@@ -2,7 +2,7 @@ using System;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
 
-namespace FubuHtml.Elements
+namespace FubuMVC.Core.UI.Elements
 {
     public class AccessorDef
     {

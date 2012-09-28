@@ -1,7 +1,4 @@
-﻿using FubuMVC.Core;
-using FubuMVC.Core.UI;
-
-namespace FubuHtml
+﻿namespace FubuMVC.Core.UI
 {
     public class FubuHtmlRegistration : IFubuRegistryExtension
     {

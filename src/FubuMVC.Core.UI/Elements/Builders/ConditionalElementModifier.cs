@@ -1,8 +1,7 @@
 using System;
 using FubuCore.Descriptions;
-using FubuCore;
 
-namespace FubuHtml.Elements.Builders
+namespace FubuMVC.Core.UI.Elements.Builders
 {
     // Tested through HtmlConventionRegistry
     public class ConditionalElementModifier : IElementModifier, DescribesItself

@@ -1,11 +1,11 @@
 using System;
 using System.Linq.Expressions;
-using FubuCore.Reflection;
 using FubuMVC.Core.Runtime;
 using HtmlTags;
 using HtmlTags.Conventions;
+using FubuCore.Reflection;
 
-namespace FubuHtml.Elements
+namespace FubuMVC.Core.UI.Elements
 {
     public class ElementGenerator<T> : IElementGenerator<T> where T : class
     {

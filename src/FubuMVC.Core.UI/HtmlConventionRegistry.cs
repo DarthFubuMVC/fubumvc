@@ -1,12 +1,11 @@
 using System;
-using FubuCore;
-using FubuHtml.Elements;
-using FubuHtml.Elements.Builders;
-using FubuMVC.Core;
+using FubuMVC.Core.UI.Elements;
+using FubuMVC.Core.UI.Elements.Builders;
 using HtmlTags;
 using HtmlTags.Conventions;
+using FubuCore;
 
-namespace FubuHtml
+namespace FubuMVC.Core.UI
 {
     public class HtmlConventionRegistry : ProfileExpression, IFubuRegistryExtension
     {

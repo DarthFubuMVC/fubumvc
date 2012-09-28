@@ -1,7 +1,7 @@
 using System;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
-using FubuHtml.Elements;
+using FubuMVC.Core.UI.Elements;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using FubuTestingSupport;
@@ -9,7 +9,7 @@ using NUnit.Framework;
 using Rhino.Mocks;
 using FubuCore;
 
-namespace FubuHtml.Testing
+namespace FubuMVC.Core.UI.Testing
 {
     [TestFixture]
     public class when_calling_text_box_for_and_model_has_null_property : when_calling_text_box_for

@@ -3,7 +3,6 @@ using System.Linq;
 using System.Web;
 using Bottles;
 using Bottles.Diagnostics;
-using FubuHtml;
 using FubuMVC.Core.UI;
 using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.SparkModel;

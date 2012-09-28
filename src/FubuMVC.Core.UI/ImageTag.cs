@@ -1,7 +1,7 @@
 ﻿using FubuLocalization;
 using HtmlTags;
 
-namespace FubuHtml
+namespace FubuMVC.Core.UI
 {
     public class ImageTag : HtmlTag
     {

@@ -1,11 +1,9 @@
-using FubuHtml;
 using FubuMVC.Core.Security;
 using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
-using FubuMVC.Core.UI;
 
-namespace FubuMVC.Tests.UI
+namespace FubuMVC.Core.UI.Testing
 {
     [TestFixture]
     public class ReadOnlyIfNotAuthorizedTester

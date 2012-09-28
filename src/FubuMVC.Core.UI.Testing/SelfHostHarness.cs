@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Xml;
-using FubuCore;
-using FubuMVC.Core;
 using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
@@ -14,8 +10,9 @@ using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
+using FubuCore;
 
-namespace FubuHtml.Testing
+namespace FubuMVC.Core.UI.Testing
 {
     [SetUpFixture]
     public class HarnessBootstrapper

@@ -1,9 +1,7 @@
-using System;
 using FubuCore.Descriptions;
-using HtmlTags;
 using FubuCore;
 
-namespace FubuHtml.Elements.Builders
+namespace FubuMVC.Core.UI.Elements.Builders
 {
     public class AddClassModifier : IElementModifier, DescribesItself
     {

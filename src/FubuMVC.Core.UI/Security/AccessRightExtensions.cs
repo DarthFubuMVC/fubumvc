@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FubuHtml.Security
+namespace FubuMVC.Core.UI.Security
 {
     public static class AccessRightExtensions
     {

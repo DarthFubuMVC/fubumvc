@@ -1,11 +1,11 @@
 using System;
-using FubuHtml.Elements;
-using FubuHtml.Elements.Builders;
+using FubuMVC.Core.UI.Elements;
+using FubuMVC.Core.UI.Elements.Builders;
 using HtmlTags;
 using NUnit.Framework;
 using FubuTestingSupport;
 
-namespace FubuHtml.Testing
+namespace FubuMVC.Core.UI.Testing
 {
     [TestFixture]
     public class inline_definition_of_element_actions_with_always_condition : HtmlElementConventionsContext

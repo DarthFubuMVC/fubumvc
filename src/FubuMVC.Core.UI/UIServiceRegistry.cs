@@ -1,7 +1,7 @@
 using Bottles;
-using FubuHtml.Elements;
-using FubuHtml.Security;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.UI.Elements;
+using FubuMVC.Core.UI.Security;
 
 namespace FubuMVC.Core.UI
 {

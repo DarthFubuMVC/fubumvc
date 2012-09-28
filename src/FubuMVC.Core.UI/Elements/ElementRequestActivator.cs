@@ -1,6 +1,6 @@
 using FubuMVC.Core.Runtime;
 
-namespace FubuHtml.Elements
+namespace FubuMVC.Core.UI.Elements
 {
     public class ElementRequestActivator : TagRequestActivator<ElementRequest> 
     {

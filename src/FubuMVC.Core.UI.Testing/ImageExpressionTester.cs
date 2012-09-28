@@ -1,13 +1,11 @@
-using FubuHtml;
 using FubuMVC.Core.Assets.Files;
-using FubuMVC.Core.UI;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Tests.UI
+namespace FubuMVC.Core.UI.Testing
 {
     [TestFixture]
     public class ImageExpressionTester

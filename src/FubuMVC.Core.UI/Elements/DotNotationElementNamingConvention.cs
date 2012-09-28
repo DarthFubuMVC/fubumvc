@@ -3,7 +3,7 @@ using System.Linq;
 using FubuCore;
 using FubuCore.Reflection;
 
-namespace FubuHtml.Elements
+namespace FubuMVC.Core.UI.Elements
 {
     public class DotNotationElementNamingConvention : IElementNamingConvention
     {

@@ -1,7 +1,7 @@
-using FubuHtml.Elements;
+using FubuMVC.Core.UI.Elements;
 using HtmlTags.Conventions;
 
-namespace FubuHtml
+namespace FubuMVC.Core.UI
 {
     public class ProfileExpression
     {

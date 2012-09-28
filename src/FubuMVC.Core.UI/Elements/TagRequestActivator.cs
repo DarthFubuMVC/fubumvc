@@ -1,8 +1,9 @@
 using System;
-using FubuCore;
 using HtmlTags.Conventions;
+using FubuCore;
+using FubuCore.Reflection;
 
-namespace FubuHtml.Elements
+namespace FubuMVC.Core.UI.Elements
 {
     public abstract class TagRequestActivator<T> : ITagRequestActivator where T : TagRequest
     {

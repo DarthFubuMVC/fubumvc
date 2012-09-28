@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using FubuCore;
 
-namespace FubuHtml.Security
+namespace FubuMVC.Core.UI.Security
 {
     [Serializable]
     public class AccessRight : IComparable<AccessRight>, IEquatable<AccessRight>

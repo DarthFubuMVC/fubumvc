@@ -1,11 +1,11 @@
 using System;
-using FubuCore;
-using FubuCore.Reflection;
-using FubuHtml.Elements;
+using FubuMVC.Core.UI.Elements;
 using HtmlTags;
 using HtmlTags.Conventions;
+using FubuCore;
+using FubuCore.Reflection;
 
-namespace FubuHtml
+namespace FubuMVC.Core.UI
 {
     public class ElementCategoryExpression
     {

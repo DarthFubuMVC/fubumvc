@@ -2,7 +2,7 @@ using System;
 using System.Linq.Expressions;
 using HtmlTags;
 
-namespace FubuHtml.Elements
+namespace FubuMVC.Core.UI.Elements
 {
     public interface IElementGenerator<T> where T : class
     {

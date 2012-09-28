@@ -4,7 +4,7 @@ using HtmlTags.Conventions;
 using NUnit.Framework;
 using FubuTestingSupport;
 
-namespace FubuHtml.Testing
+namespace FubuMVC.Core.UI.Testing
 {
     [TestFixture]
     public class ServiceLocatorTagRequestActivatorTester

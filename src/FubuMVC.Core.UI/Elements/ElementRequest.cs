@@ -4,11 +4,11 @@ using System.Reflection;
 using FubuCore;
 using FubuCore.Formatting;
 using FubuCore.Reflection;
-using FubuHtml.Security;
+using FubuMVC.Core.UI.Security;
 using HtmlTags;
 using HtmlTags.Conventions;
 
-namespace FubuHtml.Elements
+namespace FubuMVC.Core.UI.Elements
 {
     public class ElementRequest : TagRequest, IServiceLocatorAware
     {

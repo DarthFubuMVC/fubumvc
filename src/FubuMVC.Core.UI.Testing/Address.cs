@@ -1,7 +1,7 @@
 using System;
-using FubuHtml.Testing.Elements;
+using FubuMVC.Core.UI.Testing.Elements;
 
-namespace FubuMVC.Tests.UI
+namespace FubuMVC.Core.UI.Testing
 {
     public class Address
     {

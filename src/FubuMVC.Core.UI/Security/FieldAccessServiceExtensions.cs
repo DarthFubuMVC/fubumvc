@@ -1,8 +1,9 @@
 using System;
 using System.Linq.Expressions;
+using FubuCore;
 using FubuCore.Reflection;
 
-namespace FubuHtml.Security
+namespace FubuMVC.Core.UI.Security
 {
     public static class FieldAccessServiceExtensions
     {

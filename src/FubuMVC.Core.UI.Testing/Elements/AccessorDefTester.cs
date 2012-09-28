@@ -1,8 +1,8 @@
-using FubuHtml.Elements;
+using FubuMVC.Core.UI.Elements;
 using NUnit.Framework;
 using FubuTestingSupport;
 
-namespace FubuHtml.Testing.Elements
+namespace FubuMVC.Core.UI.Testing.Elements
 {
     [TestFixture]
     public class AccessorDefTester

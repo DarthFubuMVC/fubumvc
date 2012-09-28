@@ -1,14 +1,13 @@
 using System;
 using FubuCore.Reflection;
-using FubuHtml.Elements;
-using FubuHtml.Elements.Builders;
-using FubuHtml.Scenarios;
-using FubuHtml.Testing.Elements;
+using FubuMVC.Core.UI.Elements;
+using FubuMVC.Core.UI.Elements.Builders;
+using FubuMVC.Core.UI.Scenarios;
 using HtmlTags;
 using NUnit.Framework;
 using FubuTestingSupport;
 
-namespace FubuHtml.Testing.Scenarios
+namespace FubuMVC.Core.UI.Testing.Scenarios
 {
     [TestFixture]
     public class HtmlElementScenarioTester
@@ -16,13 +15,13 @@ namespace FubuHtml.Testing.Scenarios
         [Test]
         public void simplest_possible_case()
         {
-            var generator = HtmlElementScenario<Address>.For(definition =>
+            var generator = HtmlElementScenario<Elements.Address>.For(definition =>
             {
                 definition.Configure(x =>
                 {
                     x.Displays.Add(new SpanDisplayBuilder());
                 });
-                definition.Model = new Address{
+                definition.Model = new Elements.Address{
                     Address1 = "22 Cherry Tree Lane"
                 };
             });
@@ -34,7 +33,7 @@ namespace FubuHtml.Testing.Scenarios
         [Test]
         public void customize_display_formatting()
         {
-            var generator = HtmlElementScenario<Address>.For(definition =>
+            var generator = HtmlElementScenario<Elements.Address>.For(definition =>
             {
                 definition.Display.IfIsType<string>().ConvertBy(start => "*" + start + "*");
 
@@ -42,7 +41,7 @@ namespace FubuHtml.Testing.Scenarios
                 {
                     x.Displays.Add(new SpanDisplayBuilder());
                 });
-                definition.Model = new Address
+                definition.Model = new Elements.Address
                 {
                     Address1 = "22 Cherry Tree Lane"
                 };
@@ -63,7 +62,7 @@ namespace FubuHtml.Testing.Scenarios
         [Test]
         public void using_a_different_naming_convention()
         {
-            var generator = HtmlElementScenario<Address>.For(definition =>
+            var generator = HtmlElementScenario<Elements.Address>.For(definition =>
             {
                 definition.Configure(x =>
                 {
@@ -72,7 +71,7 @@ namespace FubuHtml.Testing.Scenarios
 
                 definition.Naming = new FakeElementNamingConvention();
 
-                definition.Model = new Address
+                definition.Model = new Elements.Address
                 {
                     Address1 = "22 Cherry Tree Lane"
                 };
@@ -103,14 +102,14 @@ namespace FubuHtml.Testing.Scenarios
         [Test]
         public void register_a_service()
         {
-            var generator = HtmlElementScenario<Address>.For(definition =>
+            var generator = HtmlElementScenario<Elements.Address>.For(definition =>
             {
                 definition.Configure(x =>
                 {
                     x.Displays.Add(new FakeBuilder());
                 });
 
-                definition.Model = new Address();
+                definition.Model = new Elements.Address();
                 definition.Services.Add(new FakeService{Name = "Jeremy"});
             });
 

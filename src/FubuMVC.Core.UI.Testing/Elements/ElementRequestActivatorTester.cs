@@ -1,14 +1,12 @@
-using System;
 using FubuCore.Reflection;
-using FubuHtml.Elements;
-using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.UI.Elements;
 using FubuTestingSupport;
 using HtmlTags.Conventions;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuHtml.Testing.Elements
+namespace FubuMVC.Core.UI.Testing.Elements
 {
     [TestFixture]
     public class ElementRequestActivatorTester : InteractionContext<ElementRequestActivator>

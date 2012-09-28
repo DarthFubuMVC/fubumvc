@@ -1,8 +1,8 @@
-using FubuHtml.Elements;
+using FubuMVC.Core.UI.Elements;
 using HtmlTags;
 using HtmlTags.Conventions;
 
-namespace FubuHtml.Security
+namespace FubuMVC.Core.UI.Security
 {
     public class DegradingAccessElementBuilder : ITagBuilder<ElementRequest>
     {

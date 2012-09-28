@@ -2,7 +2,7 @@ using System;
 using FubuCore.Descriptions;
 using HtmlTags;
 
-namespace FubuHtml.Elements.Builders
+namespace FubuMVC.Core.UI.Elements.Builders
 {
     // Tested through HtmlConventionRegistry
     public class ConditionalElementBuilder : IElementBuilder, DescribesItself

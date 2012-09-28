@@ -1,9 +1,9 @@
 using System;
-using FubuHtml.Elements;
-using FubuHtml.Scenarios;
+using FubuMVC.Core.UI.Elements;
+using FubuMVC.Core.UI.Scenarios;
 using NUnit.Framework;
 
-namespace FubuHtml.Testing
+namespace FubuMVC.Core.UI.Testing
 {
     public abstract class HtmlElementConventionsContext
     {

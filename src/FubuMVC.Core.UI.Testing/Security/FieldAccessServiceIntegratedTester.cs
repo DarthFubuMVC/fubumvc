@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
-using FubuHtml.Elements;
-using FubuHtml.Security;
+using FubuMVC.Core.UI.Elements;
+using FubuMVC.Core.UI.Security;
 using FubuTestingSupport;
 using NUnit.Framework;
 using FubuCore;
 
-namespace FubuHtml.Testing.Security
+namespace FubuMVC.Core.UI.Testing.Security
 {
     [TestFixture]
     public class FieldAccessServiceIntegratedTester

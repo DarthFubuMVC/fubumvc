@@ -1,8 +1,7 @@
 using System;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
-using FubuHtml;
-using FubuHtml.Elements;
+using FubuMVC.Core.UI.Elements;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using FubuTestingSupport;
@@ -10,7 +9,7 @@ using NUnit.Framework;
 using Rhino.Mocks;
 using FubuCore;
 
-namespace FubuMVC.Tests.UI.Forms
+namespace FubuMVC.Core.UI.Testing.Forms
 {
     [TestFixture]
     public class when_calling_link_variable

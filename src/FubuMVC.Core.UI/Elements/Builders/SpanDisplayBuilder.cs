@@ -1,8 +1,7 @@
-using System;
 using System.ComponentModel;
 using HtmlTags;
 
-namespace FubuHtml.Elements.Builders
+namespace FubuMVC.Core.UI.Elements.Builders
 {
     [Description("Builds a <span>[accessor value]</span> element using IDisplayFormatter")]
     public class SpanDisplayBuilder : IElementBuilder

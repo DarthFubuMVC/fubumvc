@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace FubuHtml.Testing.Elements
+namespace FubuMVC.Core.UI.Testing.Elements
 {
     public class AddressViewModel
     {

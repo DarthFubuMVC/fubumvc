@@ -1,9 +1,9 @@
 using System;
-using FubuCore;
 using FubuCore.Descriptions;
 using HtmlTags.Conventions;
+using FubuCore;
 
-namespace FubuHtml.Elements.Builders
+namespace FubuMVC.Core.UI.Elements.Builders
 {
     // Tested through HtmlConventionRegistry
     public class LambdaElementModifier : LambdaTagModifier<ElementRequest>, IElementModifier, DescribesItself

@@ -1,8 +1,7 @@
-using System;
 using System.ComponentModel;
 using HtmlTags;
 
-namespace FubuHtml.Elements.Builders
+namespace FubuMVC.Core.UI.Elements.Builders
 {
     [Description("Builds an html textbox with the value equal to the string representation of the accessor value")]
     public class TextboxBuilder : IElementBuilder

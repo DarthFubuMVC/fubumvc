@@ -3,7 +3,7 @@ using FubuCore.Descriptions;
 using FubuCore.Reflection;
 using FubuCore;
 
-namespace FubuHtml.Elements.Builders
+namespace FubuMVC.Core.UI.Elements.Builders
 {
     public class AddClassForAttributeModifier<T> : IElementModifier, DescribesItself where T : Attribute
     {

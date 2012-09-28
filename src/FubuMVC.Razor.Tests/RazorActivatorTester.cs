@@ -5,7 +5,6 @@ using System.Web;
 using Bottles;
 using Bottles.Diagnostics;
 using FubuCore;
-using FubuHtml;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Razor.RazorModel;

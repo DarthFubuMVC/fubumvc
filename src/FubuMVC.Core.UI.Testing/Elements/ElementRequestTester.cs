@@ -1,12 +1,12 @@
 using FubuCore;
 using FubuCore.Formatting;
-using FubuHtml.Elements;
-using FubuHtml.Security;
+using FubuMVC.Core.UI.Elements;
+using FubuMVC.Core.UI.Security;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuHtml.Testing.Elements
+namespace FubuMVC.Core.UI.Testing.Elements
 {
     [TestFixture]
     public class ElementRequestTester

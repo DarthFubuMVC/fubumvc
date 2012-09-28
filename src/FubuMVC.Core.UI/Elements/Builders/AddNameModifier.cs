@@ -1,7 +1,6 @@
-using System;
 using System.ComponentModel;
 
-namespace FubuHtml.Elements.Builders
+namespace FubuMVC.Core.UI.Elements.Builders
 {
     [Description("Adds @name=[Accessor name] to any input elements to facilitate model binding")]
     public class AddNameModifier : IElementModifier

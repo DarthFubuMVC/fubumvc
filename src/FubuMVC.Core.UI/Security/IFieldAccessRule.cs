@@ -1,7 +1,7 @@
 using FubuCore.Reflection;
-using FubuHtml.Elements;
+using FubuMVC.Core.UI.Elements;
 
-namespace FubuHtml.Security
+namespace FubuMVC.Core.UI.Security
 {
     public enum FieldAccessCategory
     {

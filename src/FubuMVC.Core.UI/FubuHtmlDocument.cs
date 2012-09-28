@@ -1,14 +1,13 @@
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using FubuCore;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.UI;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using HtmlTags;
+using System.Collections.Generic;
 
-namespace FubuHtml
+namespace FubuMVC.Core.UI
 {
     public class FubuHtmlDocument : HtmlDocument, IFubuPage
     {

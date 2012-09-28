@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
-using FubuHtml.Elements;
-using FubuHtml.Security;
+using FubuMVC.Core.UI.Elements;
+using FubuMVC.Core.UI.Security;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuHtml.Testing.Security
+namespace FubuMVC.Core.UI.Testing.Security
 {
     [TestFixture]
     public class FieldAccessRightsTester

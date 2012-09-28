@@ -2,7 +2,7 @@ using NUnit.Framework;
 using FubuTestingSupport;
 using FubuCore;
 
-namespace FubuHtml.Testing
+namespace FubuMVC.Core.UI.Testing
 {
     [TestFixture]
     public class inline_definition_of_conditional_modifications_and_builders : HtmlElementConventionsContext

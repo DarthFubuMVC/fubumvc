@@ -1,17 +1,10 @@
 using System;
-using System.Linq.Expressions;
 using FubuCore.Reflection;
-using FubuHtml.Elements;
-using FubuHtml.Security;
-using FubuMVC.Core;
-using FubuMVC.StructureMap;
-using FubuTestingSupport;
-using HtmlTags;
-using HtmlTags.Conventions;
+using FubuMVC.Core.UI.Elements;
+using FubuMVC.Core.UI.Security;
 using NUnit.Framework;
-using StructureMap;
 
-namespace FubuHtml.Testing.Security
+namespace FubuMVC.Core.UI.Testing.Security
 {
     [TestFixture, Ignore("Just for 9/11/2012")]
     public class DegradingAccessElementBuilderIntegrationTester

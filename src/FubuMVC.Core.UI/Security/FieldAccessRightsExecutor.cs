@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using FubuHtml.Elements;
+using FubuMVC.Core.UI.Elements;
 
-
-namespace FubuHtml.Security
+namespace FubuMVC.Core.UI.Security
 {
     public interface IFieldAccessRightsExecutor
     {

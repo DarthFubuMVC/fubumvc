@@ -1,7 +1,7 @@
 ﻿using FubuMVC.Core.Security;
 using HtmlTags;
 
-namespace FubuHtml
+namespace FubuMVC.Core.UI
 {
     public static class AuthorizationOnPageExtensions
     {
