@@ -56,6 +56,20 @@ namespace FubuMVC.Tests
             BehaviorGraph.BuildFrom(registry)
                 .Settings.Get<SettingsObject>().Touched.ShouldBeTrue();
         }
+
+        [Test]
+        public void replace_settings()
+        {
+            var settings1 = new SettingsObject();
+
+            var registry = new FubuRegistry();
+            registry.ReplaceSettings(settings1);
+
+            BehaviorGraph.BuildFrom(registry).Settings.Get<SettingsObject>()
+                .ShouldBeTheSameAs(settings1);
+
+
+        }
     }
 
     public class SettingsObject

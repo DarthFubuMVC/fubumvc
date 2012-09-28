@@ -200,6 +200,16 @@ namespace FubuMVC.Core
         }
 
         /// <summary>
+        /// Completely replace the setting object for type T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="settings"></param>
+        public void ReplaceSettings<T>(T settings)
+        {
+            Configure(graph => graph.Settings.Replace(settings));
+        }
+
+        /// <summary>
         ///   Allows you to directly manipulate the BehaviorGraph produced by this FubuRegistry.
         ///   This should only be used after careful consideration and subsequent rejection of all other entry points to configuring the runtime
         ///   behaviour.
