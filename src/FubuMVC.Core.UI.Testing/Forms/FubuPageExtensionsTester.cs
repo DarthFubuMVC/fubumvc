@@ -38,7 +38,7 @@ namespace FubuMVC.Core.UI.Testing.Forms
         public void should_return_formatted_link_variable()
         {
             _page.LinkVariable("variable", _model).ShouldEqual("var {0} = '{1}';".ToFormat("variable",
-                                                                                           "url for FubuMVC.Tests.UI.Forms.InputModel"));
+                                                                                           "url for FubuMVC.Core.UI.Testing.Forms.InputModel"));
             _page.VerifyAllExpectations();
         }
 
@@ -46,7 +46,7 @@ namespace FubuMVC.Core.UI.Testing.Forms
         public void should_return_formatted_link_variable_of_new_model()
         {
             _page.LinkVariable<InputModel>("variable").ShouldEqual("var {0} = '{1}';".ToFormat("variable",
-                                                                                               "url for FubuMVC.Tests.UI.Forms.InputModel"));
+                                                                                               "url for FubuMVC.Core.UI.Testing.Forms.InputModel"));
             _page.VerifyAllExpectations();
         }
     }

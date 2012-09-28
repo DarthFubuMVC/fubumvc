@@ -11,14 +11,21 @@ namespace FubuMVC.Core.UI.Testing
     {
         private void registeredTypeIs<TService, TImplementation>()
         {
-            BehaviorGraph.BuildEmptyGraph().Services.DefaultServiceFor<TService>().Type.ShouldEqual(
+            var graph = buildGraph();
+            graph.Services.DefaultServiceFor<TService>().Type.ShouldEqual(
                 typeof(TImplementation));
+        }
+
+        private static BehaviorGraph buildGraph()
+        {
+            BehaviorGraph graph = BehaviorGraph.BuildFrom(x => x.Import<FubuHtmlRegistration>());
+            return graph;
         }
 
         [Test]
         public void an_activator_for_HtmlConventionActivator_is_registered()
         {
-            BehaviorGraph.BuildEmptyGraph().Services.ServicesFor<IActivator>()
+            buildGraph().Services.ServicesFor<IActivator>()
                 .Any(x => x.Type == typeof (HtmlConventionsActivator)).ShouldBeTrue();
         }
 
@@ -26,7 +33,7 @@ namespace FubuMVC.Core.UI.Testing
         [Test]
         public void registers_the_display_conversion_registry_activator()
         {
-            BehaviorGraph.BuildEmptyGraph().Services.ServicesFor(typeof (IActivator))
+            buildGraph().Services.ServicesFor(typeof(IActivator))
                 .Any(x => x.Type == typeof (DisplayConversionRegistryActivator));
         }
 
