@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using FubuHtml;
 using FubuMVC.Core;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Runtime;

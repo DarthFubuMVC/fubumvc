@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{95227E54-77E1-43CD-A7DF-146F78B78507}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FubuMVC.Core.UI.Testing</RootNamespace>
+    <AssemblyName>FubuMVC.Core.UI.Testing</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Bottles">
+      <HintPath>..\packages\Bottles.0.9.1.360\lib\Bottles.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuCore">
+      <HintPath>..\packages\FubuCore.0.9.9.180\lib\FubuCore.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuLocalization">
+      <HintPath>..\packages\FubuLocalization.0.9.5.78\lib\FubuLocalization.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuTestingSupport">
+      <HintPath>..\packages\FubuTestingSupport.0.9.9.180\lib\FubuTestingSupport.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlTags">
+      <HintPath>..\packages\HtmlTags.1.1.0.112\lib\4.0\HtmlTags.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.mocks">
+      <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="pnunit.framework">
+      <HintPath>..\packages\NUnit.2.5.10.11092\lib\pnunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\packages\RhinoMocks.3.6.1\lib\net\Rhino.Mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.AutoMocking">
+      <HintPath>..\packages\structuremap.automocking.2.6.3\lib\StructureMap.AutoMocking.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Address.cs" />
+    <Compile Include="AuthorizationOnPageExtensionsTester.cs" />
+    <Compile Include="AuthorizedLinkExpressionsTester.cs" />
+    <Compile Include="configuring_conventions_by_profile.cs" />
+    <Compile Include="DefaultHtmlConventionTester.cs" />
+    <Compile Include="Elements\AccessorDefTester.cs" />
+    <Compile Include="Elements\AddressClasses.cs" />
+    <Compile Include="Elements\Builders\AddClassForAttributeModifierTester.cs" />
+    <Compile Include="Elements\Builders\AddClassModifierTester.cs" />
+    <Compile Include="Elements\Builders\AddNameModifierTester.cs" />
+    <Compile Include="Elements\Builders\CheckboxBuilderTester.cs" />
+    <Compile Include="Elements\Builders\DefaultLabelBuilderTester.cs" />
+    <Compile Include="Elements\Builders\SpanDisplayBuilderTester.cs" />
+    <Compile Include="Elements\Builders\TextboxBuilderTester.cs" />
+    <Compile Include="Elements\DefaultElementNamingConventionTester.cs" />
+    <Compile Include="Elements\DotNotationNamingConventionTester.cs" />
+    <Compile Include="Elements\ElementGeneratorTester.cs" />
+    <Compile Include="Elements\ElementRequestActivatorTester.cs" />
+    <Compile Include="Elements\ElementRequestTester.cs" />
+    <Compile Include="Forms\DefinitionListLabelAndFieldTester.cs" />
+    <Compile Include="Forms\FormForExpressionTester.cs" />
+    <Compile Include="Forms\FubuPageExtensionsTester.cs" />
+    <Compile Include="FubuPageExtensionsTester.cs" />
+    <Compile Include="HtmlConventionRegistryTester.cs" />
+    <Compile Include="HtmlElementConventionsContext.cs" />
+    <Compile Include="HtmlTagExtensionsTester.cs" />
+    <Compile Include="ImageExpressionTester.cs" />
+    <Compile Include="ImageForExtensionMethodTester.cs" />
+    <Compile Include="inline_definition_of_conditional_modifications_and_builders.cs" />
+    <Compile Include="inline_definition_of_element_actions_with_always_condition.cs" />
+    <Compile Include="inline_definition_of_html_conventions_using_attributes.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scenarios\HtmlElementScenarioTester.cs" />
+    <Compile Include="Security\AccessRightTester.cs" />
+    <Compile Include="Security\DegradingAccessElementBuilderIntegrationTester.cs" />
+    <Compile Include="Security\DegradingAccessElementBuilderTester.cs" />
+    <Compile Include="Security\FieldAccessRightsTester.cs" />
+    <Compile Include="Security\FieldAccessServiceIntegratedTester.cs" />
+    <Compile Include="SelfHostHarness.cs" />
+    <Compile Include="ServiceLocatorTagRequestActivatorTester.cs" />
+    <Compile Include="UIServiceRegistry_registration_spec.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FubuMVC.Core.UI\FubuMVC.Core.UI.csproj">
+      <Project>{87208AF5-9ABE-4381-B49D-C930FDD042AE}</Project>
+      <Name>FubuMVC.Core.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
+      <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
+      <Name>FubuMVC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.SelfHost\FubuMVC.SelfHost.csproj">
+      <Project>{E8DC2BF6-4F59-43BF-86B9-82C52803B5C0}</Project>
+      <Name>FubuMVC.SelfHost</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
+      <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
+      <Name>FubuMVC.StructureMap</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Integration\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

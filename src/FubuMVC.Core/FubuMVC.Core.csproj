@@ -35,17 +35,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles.0.9.1.364\lib\Bottles.dll</HintPath>
+      <HintPath>..\packages\Bottles.0.9.1.360\lib\Bottles.dll</HintPath>
     </Reference>
-    <Reference Include="FubuCore, Version=0.9.9.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\FubuCore.0.9.9.181\lib\FubuCore.dll</HintPath>
+    <Reference Include="FubuCore">
+      <HintPath>..\packages\FubuCore.0.9.9.180\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuLocalization">
-      <HintPath>..\packages\FubuLocalization.0.9.5.79\lib\FubuLocalization.dll</HintPath>
+      <HintPath>..\packages\FubuLocalization.0.9.5.78\lib\FubuLocalization.dll</HintPath>
     </Reference>
     <Reference Include="HtmlTags">
-      <HintPath>..\packages\HtmlTags.1.1.0.114\lib\4.0\HtmlTags.dll</HintPath>
+      <HintPath>..\packages\HtmlTags.1.1.0.112\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Ionic.Zip">
       <HintPath>..\packages\DotNetZip.1.9.1.8\lib\net20\Ionic.Zip.dll</HintPath>
@@ -375,9 +374,6 @@
     <Compile Include="Runtime\IFubuRouteHandler.cs" />
     <Compile Include="Security\SecurityServicesRegistry.cs" />
     <Compile Include="UI\DisplayConversionRegistryActivator.cs" />
-    <Compile Include="UI\Forms\DefinitionListForm.cs" />
-    <Compile Include="UI\Forms\SimpleForm.cs" />
-    <Compile Include="UI\HtmlConventionsActivator.cs" />
     <Compile Include="Http\AspNet\AspNetHttpWriter.cs" />
     <Compile Include="Http\AspNet\AspNetCurrentHttpRequest.cs" />
     <Compile Include="Http\AspNet\ASPNetObjectConversionFamily.cs" />
@@ -435,7 +431,6 @@
     <Compile Include="FubuExtensionFinder.cs" />
     <Compile Include="FubuPackageRegistry.cs" />
     <Compile Include="ConfigurationGraph.cs" />
-    <Compile Include="FubuRegistry.UserInterfaceExpressions.cs" />
     <Compile Include="IFubuRegistryExtension.cs" />
     <Compile Include="Packaging\PackageSettingsSource.cs" />
     <Compile Include="Packaging\VirtualPaths\VirtualPathProviderActivator.cs" />
@@ -569,25 +564,6 @@
     <Compile Include="Security\PrincipalRoles.cs" />
     <Compile Include="Routing\StandardRoutePolicy.cs" />
     <Compile Include="ServiceRegistryExtensions.cs" />
-    <Compile Include="UI\AuthorizationOnPageExtensions.cs" />
-    <Compile Include="UI\Configuration\AccessorDef.cs" />
-    <Compile Include="UI\Configuration\AlwaysElementModifier.cs" />
-    <Compile Include="UI\Configuration\DefaultHtmlConventions.cs" />
-    <Compile Include="UI\Configuration\ElementRequest.cs" />
-    <Compile Include="UI\Configuration\Interfaces.cs" />
-    <Compile Include="UI\Configuration\LambdaElementBuilder.cs" />
-    <Compile Include="UI\Configuration\LambdaElementModifier.cs" />
-    <Compile Include="UI\Configuration\OptionalElementModifier.cs" />
-    <Compile Include="UI\Configuration\PartialLambdaElementBuilder.cs" />
-    <Compile Include="UI\Forms\DefinitionListLabelAndField.cs" />
-    <Compile Include="UI\Forms\FormLineExpression.cs" />
-    <Compile Include="UI\Forms\ILabelAndFieldLayout.cs" />
-    <Compile Include="UI\FubuHtmlDocument.cs" />
-    <Compile Include="UI\FubuPageExtensions.cs" />
-    <Compile Include="UI\HtmlConventionRegistry.cs" />
-    <Compile Include="UI\UIServiceRegistry.cs" />
-    <Compile Include="UI\HtmlTagExtensions.cs" />
-    <Compile Include="UI\ImageTag.cs" />
     <Compile Include="UI\IPartialInvoker.cs" />
     <Compile Include="UI\Navigation\AddAfter.cs" />
     <Compile Include="UI\Navigation\AddBefore.cs" />
@@ -625,24 +601,6 @@
     <Compile Include="Assets\AssetRequirements.cs" />
     <Compile Include="Assets\DependencyRule.cs" />
     <Compile Include="Assets\AssetSet.cs" />
-    <Compile Include="UI\Security\AccessRight.cs" />
-    <Compile Include="UI\Security\AccessRightExtensions.cs" />
-    <Compile Include="UI\Security\FieldAccessRightsExecutor.cs" />
-    <Compile Include="UI\Security\FieldAccessService.cs" />
-    <Compile Include="UI\Security\IFieldAccessRule.cs" />
-    <Compile Include="UI\ServiceLocatorExtensions.cs" />
-    <Compile Include="UI\ShowEditFieldExpressions.cs" />
-    <Compile Include="UI\Tags\PartialLambdaElementModifier.cs" />
-    <Compile Include="UI\Tags\PartialTagActionExpression.cs" />
-    <Compile Include="UI\Tags\PartialTagFactory.cs" />
-    <Compile Include="UI\Tags\PartialTagFactoryExpression.cs" />
-    <Compile Include="UI\Tags\TagActionExpression.cs" />
-    <Compile Include="UI\Tags\TagFactory.cs" />
-    <Compile Include="UI\Tags\TagFactoryExpression.cs" />
-    <Compile Include="UI\Tags\TagGenerator.cs" />
-    <Compile Include="UI\Tags\TagProfile.cs" />
-    <Compile Include="UI\Tags\TagProfileExpression.cs" />
-    <Compile Include="UI\Tags\TagProfileLibrary.cs" />
     <Compile Include="Registration\Querying\ChainInterrogator.cs" />
     <Compile Include="UrlContext.cs" />
     <Compile Include="UrlStringExtensions.cs" />
@@ -694,7 +652,6 @@
     <Compile Include="View\Activation\PageActivator.cs" />
     <Compile Include="View\Activation\SetPageModelActivationAction.cs" />
     <Compile Include="View\Activation\SetPageModelActivationSource.cs" />
-    <Compile Include="View\Activation\SetTagProfilePageActivationAction.cs" />
     <Compile Include="View\Activation\ViewTypeExtensions.cs" />
     <Compile Include="View\Attachment\DefaultProfile.cs" />
     <Compile Include="View\Attachment\IViewEngineRegistry.cs" />

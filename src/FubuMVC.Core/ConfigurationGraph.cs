@@ -248,7 +248,6 @@ namespace FubuMVC.Core
             yield return new AssetServicesRegistry();
             yield return new ModelBindingServicesRegistry();
             yield return new SecurityServicesRegistry();
-            yield return new UIServiceRegistry();
             yield return new HttpStandInServiceRegistry();
             yield return new ViewActivationServiceRegistry();
             yield return new CoreServiceRegistry();

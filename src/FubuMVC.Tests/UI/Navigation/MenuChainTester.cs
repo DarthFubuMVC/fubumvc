@@ -1,4 +1,5 @@
 using FubuMVC.Core.UI.Navigation;
+using FubuMVC.Tests.NewConneg;
 using NUnit.Framework;
 using FubuTestingSupport;
 

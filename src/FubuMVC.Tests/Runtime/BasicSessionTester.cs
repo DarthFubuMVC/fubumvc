@@ -1,4 +1,5 @@
 using FubuMVC.Core.Runtime;
+using FubuMVC.Tests.NewConneg;
 using FubuMVC.Tests.UI;
 using FubuTestingSupport;
 using NUnit.Framework;

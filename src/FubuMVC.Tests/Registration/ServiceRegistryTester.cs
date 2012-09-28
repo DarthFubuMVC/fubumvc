@@ -36,10 +36,10 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void ClearAll()
         {
-            var registry1 = new HtmlConventionRegistry();
-            var registry2 = new HtmlConventionRegistry();
-            var registry3 = new HtmlConventionRegistry();
-            var registry4 = new HtmlConventionRegistry();
+            var registry1 = new FakeRegistryThing();
+            var registry2 = new FakeRegistryThing();
+            var registry3 = new FakeRegistryThing();
+            var registry4 = new FakeRegistryThing();
 
             var services = new ServiceRegistry();
             services.AddService(registry1);
@@ -47,18 +47,18 @@ namespace FubuMVC.Tests.Registration
             services.AddService(registry3);
             services.AddService(registry4);
 
-            services.ClearAll<HtmlConventionRegistry>();
+            services.ClearAll<FakeRegistryThing>();
 
-            services.ToGraph().FindAllValues<HtmlConventionRegistry>().Any().ShouldBeFalse();
+            services.ToGraph().FindAllValues<FakeRegistryThing>().Any().ShouldBeFalse();
         }
 
         [Test]
         public void GetAllValues()
         {
-            var registry1 = new HtmlConventionRegistry();
-            var registry2 = new HtmlConventionRegistry();
-            var registry3 = new HtmlConventionRegistry();
-            var registry4 = new HtmlConventionRegistry();
+            var registry1 = new FakeRegistryThing();
+            var registry2 = new FakeRegistryThing();
+            var registry3 = new FakeRegistryThing();
+            var registry4 = new FakeRegistryThing();
 
             var services = new ServiceRegistry();
             services.AddService(registry1);
@@ -66,35 +66,35 @@ namespace FubuMVC.Tests.Registration
             services.AddService(registry3);
             services.AddService(registry4);
 
-            services.AddService<HtmlConventionRegistry, HtmlConventionRegistry>();
+            services.AddService<FakeRegistryThing, FakeRegistryThing>();
 
-            services.ToGraph().FindAllValues<HtmlConventionRegistry>()
+            services.ToGraph().FindAllValues<FakeRegistryThing>()
                 .ShouldHaveTheSameElementsAs(registry1, registry2, registry3, registry4);
         }
 
         [Test]
         public void fill_service_that_has_something_already_does_not_add_values()
         {
-            var registry1 = new HtmlConventionRegistry();
-            var registry2 = new HtmlConventionRegistry();
+            var registry1 = new FakeRegistryThing();
+            var registry2 = new FakeRegistryThing();
 
             var services = new ServiceRegistry();
             services.AddService(registry1);
 
             services.SetServiceIfNone(registry2);
 
-            services.ToGraph().FindAllValues<HtmlConventionRegistry>().ShouldHaveTheSameElementsAs(registry1);
+            services.ToGraph().FindAllValues<FakeRegistryThing>().ShouldHaveTheSameElementsAs(registry1);
         }
 
         [Test]
         public void fill_service_with_nothing_should_add_the_service()
         {
-            var registry1 = new HtmlConventionRegistry();
+            var registry1 = new FakeRegistryThing();
 
             var services = new ServiceRegistry();
             services.SetServiceIfNone(registry1);
 
-            services.ToGraph().FindAllValues<HtmlConventionRegistry>().ShouldHaveTheSameElementsAs(registry1);
+            services.ToGraph().FindAllValues<FakeRegistryThing>().ShouldHaveTheSameElementsAs(registry1);
         }
 
 
@@ -131,15 +131,15 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void should_add_object_def_directly()
         {
-            var registry1 = new HtmlConventionRegistry();
+            var registry1 = new FakeRegistryThing();
 
             var services = new ServiceRegistry();
-            var objectDef = new ObjectDef(typeof (HtmlConventionRegistry)){
+            var objectDef = new ObjectDef(typeof (FakeRegistryThing)){
                 Value = registry1
             };
-            services.AddService(typeof (HtmlConventionRegistry), objectDef);
+            services.AddService(typeof (FakeRegistryThing), objectDef);
 
-            services.ToGraph().DefaultServiceFor<HtmlConventionRegistry>().ShouldEqual(objectDef);
+            services.ToGraph().DefaultServiceFor<FakeRegistryThing>().ShouldEqual(objectDef);
         }
 
         [Test]
@@ -156,6 +156,8 @@ namespace FubuMVC.Tests.Registration
             ServiceRegistry.ShouldBeSingleton(typeof (IModelBinderCache)).ShouldBeTrue();
         }
     }
+
+    public class FakeRegistryThing{}
 
     public class FakeOutputWriter : IOutputWriter
     {

@@ -32,16 +32,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles.0.9.1.364\lib\Bottles.dll</HintPath>
+      <HintPath>..\packages\Bottles.0.9.1.360\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
-      <HintPath>..\packages\FubuCore.0.9.9.181\lib\FubuCore.dll</HintPath>
+      <HintPath>..\packages\FubuCore.0.9.9.180\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="HtmlTags">
-      <HintPath>..\packages\HtmlTags.1.1.0.114\lib\4.0\HtmlTags.dll</HintPath>
+      <HintPath>..\packages\HtmlTags.1.1.0.112\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Spark">
-      <HintPath>..\packages\Spark.1.7.4.0\lib\NET40\Spark.dll</HintPath>
+      <HintPath>..\packages\Spark.1.7.0.0\lib\NET40\Spark.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -95,6 +95,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FubuMVC.Core.UI\FubuMVC.Core.UI.csproj">
+      <Project>{87208AF5-9ABE-4381-B49D-C930FDD042AE}</Project>
+      <Name>FubuMVC.Core.UI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>

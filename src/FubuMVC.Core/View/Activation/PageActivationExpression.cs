@@ -39,18 +39,5 @@ namespace FubuMVC.Core.View.Activation
         {
             ActivateBy(new LambdaPageActivationAction((s, p) => action(s.GetInstance<T>(), p)));                
         }
-
-        public void SetTagProfileTo(string profileName)
-        {
-            var source = new LambdaPageActivationSource(_filter, type =>
-            {
-                var inputType = type.InputModel();
-                return
-                    typeof (SetTagProfilePageActivationAction<>)
-                        .CloseAndBuildAs<IPageActivationAction>(profileName, inputType);
-            });
-
-            _registration(source);
-        }
     }
 }
