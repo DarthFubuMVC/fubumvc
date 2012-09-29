@@ -56,6 +56,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AntiForgeryTokenFubuPageExtensions.cs" />
     <Compile Include="AuthorizationOnPageExtensions.cs" />
     <Compile Include="DefaultHtmlConventions.cs" />
     <Compile Include="ElementCategoryExpression.cs" />
@@ -88,8 +89,10 @@
     <Compile Include="FubuHtmlDocument.cs" />
     <Compile Include="FubuHtmlRegistration.cs" />
     <Compile Include="FubuPageExtensions.cs" />
+    <Compile Include="FubuPageFormExtensions.cs" />
     <Compile Include="HtmlConventionRegistry.cs" />
     <Compile Include="HtmlConventionsActivator.cs" />
+    <Compile Include="HtmlElementConventionFubuPageExtensions.cs" />
     <Compile Include="HtmlTagExtensions.cs" />
     <Compile Include="ImageTag.cs" />
     <Compile Include="ProfileExpression.cs" />

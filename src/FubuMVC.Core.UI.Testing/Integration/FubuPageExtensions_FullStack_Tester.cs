@@ -30,6 +30,14 @@ namespace FubuMVC.Core.UI.Testing.Integration
         }
 
         [Test]
+        public void ImageUrl()
+        {
+            execute(page => page.ImageUrl("something.png"));
+
+            theResult.ShouldEqual("{0}/_content/images/something.png".ToFormat(BaseAddress));
+        }
+
+        [Test]
         public void HeaderText()
         {
             execute(page => page.HeaderText(x => x.Age));
@@ -115,6 +123,43 @@ namespace FubuMVC.Core.UI.Testing.Integration
 
             theResult.ShouldEqual("<a href=\"{0}/creates/foo\"></a>".ToFormat(BaseAddress));
         }
+
+        [Test]
+        public void link_variable_simple()
+        {
+            execute(page => page.LinkVariable("foo", new InputWithPattern{Name = "Shiner"}));
+
+            theResult.ShouldEqual("var foo = '{0}/input/Shiner';".ToFormat(BaseAddress));
+        }
+
+        [Test]
+        public void link_varuable_by_input_type()
+        {
+            execute(page => page.LinkVariable<SpecificInput>("foo"));
+
+            theResult.ShouldEqual("var foo = '{0}/specific/input';".ToFormat(BaseAddress));
+        }
+
+        [Test]
+        public void element_name_for()
+        {
+            execute(page => page.ElementNameFor(x => x.NullableNow));
+
+            theResult.ShouldEqual("NullableNow");
+        }
+
+        [Test]
+        public void TextboxFor()
+        {
+            execute(page => {
+                page.Model.BigName = "some big name";
+
+                return page.TextBoxFor(x => x.BigName);
+            });
+
+            theResult.ShouldEqual("<input type=\"text\" name=\"BigName\" value=\"some big name\" />");
+        }
+
     }
 
 

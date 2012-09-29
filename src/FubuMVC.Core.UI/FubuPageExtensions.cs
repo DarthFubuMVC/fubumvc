@@ -42,6 +42,13 @@ namespace FubuMVC.Core.UI
             return LocalizationManager.GetHeader(expression);
         }
 
+        /// <summary>
+        /// Generic html helper to create an authorization aware link.  Typically, you would only use
+        /// this method as a helper for more specific html helpers
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="finder"></param>
+        /// <returns></returns>
         public static HtmlTag AuthorizedLinkTo(this IFubuPage page, Func<IEndpointService, Endpoint> finder)
         {
             var endpoints = page.Get<IEndpointService>();
@@ -51,12 +58,23 @@ namespace FubuMVC.Core.UI
                 .Authorized(endpoint.IsAuthorized);
         }
 
-
+        /// <summary>
+        /// Creates a link tag for the endpoint that accepts type T as the input.  This method is authorization aware.
+        /// </summary>
+        /// <typeparam name="TInputModel"></typeparam>
+        /// <param name="page"></param>
+        /// <returns></returns>
         public static HtmlTag LinkTo<TInputModel>(this IFubuPage page) where TInputModel : class, new()
         {
             return page.LinkTo(new TInputModel());
         }
 
+        /// <summary>
+        /// Creates a link tag for the input message.  This handler is authorization aware.
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="inputModel"></param>
+        /// <returns></returns>
         public static HtmlTag LinkTo(this IFubuPage page, object inputModel)
         {
             if (inputModel == null)
@@ -66,161 +84,81 @@ namespace FubuMVC.Core.UI
 
             return page.AuthorizedLinkTo(x => x.EndpointFor(inputModel));
         }
-
+        
+        /// <summary>
+        /// Creates a link tag pointing to the controller/endpoint method.  Nothing is output
+        /// if the user is not authorized to view this resource
+        /// </summary>
+        /// <typeparam name="TController"></typeparam>
+        /// <param name="page"></param>
+        /// <param name="actionExpression"></param>
+        /// <returns></returns>
         public static HtmlTag LinkTo<TController>(this IFubuPage page, Expression<Action<TController>> actionExpression)
         {
             return page.AuthorizedLinkTo(x => x.EndpointFor(actionExpression));
         }
 
+        /// <summary>
+        /// Creates a link tag pointing to the endpoint that is marked as 
+        /// creating type T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="page"></param>
+        /// <returns></returns>
         public static HtmlTag LinkToNew<T>(this IFubuPage page)
         {
             return page.AuthorizedLinkTo(x => x.EndpointForNew<T>());
         }
 
+        /// <summary>
+        /// Generates a json variable to the url for the "input" object like:
+        /// var [variable] = '[IUrlRegistry.UrlFor(input)]';
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="variable"></param>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static string LinkVariable(this IFubuPage page, string variable, object input)
         {
             string url = page.Urls.UrlFor(input);
             return "var {0} = '{1}';".ToFormat(variable, url);
         }
 
+        /// <summary>
+        /// Creates a json variable to the url for the input type T
+        /// var [variable] = '[IUrlRegistry.UrlFor<T>()]'
+        /// </summary>
+        /// <typeparam name="TInput"></typeparam>
+        /// <param name="page"></param>
+        /// <param name="variable"></param>
+        /// <returns></returns>
         public static string LinkVariable<TInput>(this IFubuPage page, string variable) where TInput : new()
         {
             return page.LinkVariable(variable, new TInput());
         }
 
-        public static IElementGenerator<T> Tags<T>(this IFubuPage<T> page) where T : class
-        {
-            return page.Get<IElementGenerator<T>>();
-        } 
-
+ 
         /// <summary>
-        ///   Builds a tag that accepts user input for a property of the page's view model
+        /// Exercises the IElementNamingConvention to determine the element name for an expression
         /// </summary>
-        /// <typeparam name = "T">The model type of the strongly typed view</typeparam>
-        /// <param name = "page">The view</param>
-        /// <param name = "expression">An expression that specifies a property on the model</param>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="page"></param>
+        /// <param name="expression"></param>
         /// <returns></returns>
-        public static HtmlTag InputFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression)
-            where T : class
-        {
-            return page.Tags().InputFor(expression);
-        }
-
-        /// <summary>
-        ///   Builds a tag that accepts user input for a property on a model retrieved from the <see cref = "IFubuRequest" />
-        /// </summary>
-        /// <typeparam name = "T">The type to retrieve from the request</typeparam>
-        /// <param name = "page">The view</param>
-        /// <param name = "expression">An expression that specifies a property on the retrieved type instance</param>
-        /// <returns></returns>
-        public static HtmlTag InputFor<T>(this IFubuPage page, Expression<Func<T, object>> expression) where T : class
-        {
-            return page.Get<IElementGenerator<T>>().InputFor(expression);
-        }
-
-        /// <summary>
-        ///   Builds a tag that accepts user input tag for a property on a provided model instance
-        /// </summary>
-        /// <typeparam name = "T">The type of the given model</typeparam>
-        /// <param name = "page">The view</param>
-        /// <param name = "model">The model used to provide values for the tag</param>
-        /// <param name = "expression">An expression that specifies a property on the provided model</param>
-        /// <returns></returns>
-        public static HtmlTag InputFor<T>(this IFubuPage page, T model, Expression<Func<T, object>> expression)
-            where T : class
-        {
-            throw new NotImplementedException();
-            //return page.Get<IElementGenerator<T>>().InputFor(expression);
-        }
-
-
-        /// <summary>
-        ///   Builds a tag that displays the name of a property on the page's view model
-        /// </summary>
-        /// <typeparam name = "T">The model type of the strongly typed view</typeparam>
-        /// <param name = "page">The view</param>
-        /// <param name = "expression">An expression that specifies a property on the model</param>
-        /// <returns></returns>
-        public static HtmlTag LabelFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression)
-            where T : class
-        {
-            return page.Get<IElementGenerator<T>>().LabelFor(expression);
-        }
-
-        /// <summary>
-        ///   Builds a tag that displays the name of a property on a model retrieved from the <see cref = "IFubuRequest" />
-        /// </summary>
-        /// <typeparam name = "T">The type to retrieve from the request</typeparam>
-        /// <param name = "page">The view</param>
-        /// <param name = "expression">An expression that specifies a property on the retrieved type instance</param>
-        /// <returns></returns>
-        public static HtmlTag LabelFor<T>(this IFubuPage page, Expression<Func<T, object>> expression) where T : class
-        {
-            return page.Get<IElementGenerator<T>>().LabelFor(expression);
-        }
-
-        /// <summary>
-        ///   Builds a tag that displays the name of a property on a given model
-        /// </summary>
-        /// <typeparam name = "T">The type of the given model</typeparam>
-        /// <param name = "page">The view</param>
-        /// <param name = "model">The model used to provide values for the tag</param>
-        /// <param name = "expression">An expression that specifies a property on the provided model</param>
-        /// <returns></returns>
-        public static HtmlTag LabelFor<T>(this IFubuPage page, T model, Expression<Func<T, object>> expression)
-            where T : class
-        {
-            throw new NotImplementedException();
-            //return page.Get<IElementGenerator<T>>().LabelFor(expression);
-        }
-
-        /// <summary>
-        ///   Builds a tag that displays the current value of a property on the page's view model
-        /// </summary>
-        /// <typeparam name = "T">The model type of the strongly typed view</typeparam>
-        /// <param name = "page">The view</param>
-        /// <param name = "expression">An expression that specifies a property on the model</param>
-        /// <returns></returns>
-        public static HtmlTag DisplayFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression)
-            where T : class
-        {
-            return page.Get<IElementGenerator<T>>().DisplayFor(expression);
-        }
-
-        /// <summary>
-        ///   Builds a tag that displays the current value of a property on a model retrieved from the <see cref = "IFubuRequest" />
-        /// </summary>
-        /// <typeparam name = "T">The type to retrieve from the request</typeparam>
-        /// <param name = "page">The view</param>
-        /// <param name = "expression">An expression that specifies a property on the retrieved type instance</param>
-        /// <returns></returns>
-        public static HtmlTag DisplayFor<T>(this IFubuPage page, Expression<Func<T, object>> expression)
-            where T : class
-        {
-             return page.Get<IElementGenerator<T>>().DisplayFor(expression);
-        }
-
-        /// <summary>
-        ///   Builds a tag that displays the current value of a property on a given model
-        /// </summary>
-        /// <typeparam name = "T">The type of the given model</typeparam>
-        /// <param name = "page">The view</param>
-        /// <param name = "model">The model used to provide values for the tag</param>
-        /// <param name = "expression">An expression that specifies a property on the provided model</param>
-        /// <returns></returns>
-        public static HtmlTag DisplayFor<T>(this IFubuPage page, T model, Expression<Func<T, object>> expression)
-            where T : class
-        {
-            throw new NotImplementedException();
-            //return page.Get<IElementGenerator<T>>().DisplayFor(expression);
-        }
-
         public static string ElementNameFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression)
             where T : class
         {
             return page.Get<IElementNamingConvention>().GetName(typeof (T), expression.ToAccessor());
         }
 
+        /// <summary>
+        /// Explicit helper to generate an <input type="text"></input> html element for 
+        /// a property on the current view model
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="page"></param>
+        /// <param name="expression"></param>
+        /// <returns></returns>
         public static TextboxTag TextBoxFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression)
             where T : class
         {
@@ -229,58 +167,12 @@ namespace FubuMVC.Core.UI
             return new TextboxTag(name, (value == null) ? "" : value.ToString());
         }
 
-        // TODO -- Jeremy to add tests
-        // IN Dovetail, want to add a label attribute for the localized header of the property
-        public static CheckboxTag CheckBoxFor<T>(this IFubuPage<T> page, Expression<Func<T, bool>> expression)
-            where T : class
-        {
-            // TODO -- run modifications on this?
-            return new CheckboxTag(page.Model.ValueOrDefault(expression));
-        }
-
-        public static FormTag FormFor(this IFubuPage page)
-        {
-            return new FormTag();
-        }
-
-        public static FormTag FormFor(this IFubuPage page, string url)
-        {
-            url = page.Get<ICurrentHttpRequest>().ToFullUrl(url);
-            return new FormTag(url);
-        }
-
-        public static FormTag FormFor<TInputModel>(this IFubuPage page) where TInputModel : new()
-        {
-            string url = page.Urls.UrlFor(new TInputModel(), categoryOrHttpMethod: "POST");
-            return new FormTag(url);
-        }
-
-        public static FormTag FormFor<TInputModel>(this IFubuPage page, TInputModel model)
-        {
-            string url = page.Urls.UrlFor(model, categoryOrHttpMethod: "POST");
-            return new FormTag(url);
-        }
-
-
-        public static FormTag FormFor<TController>(this IFubuPage view, Expression<Action<TController>> expression)
-        {
-            string url = view.Urls.UrlFor(expression, categoryOrHttpMethod: "POST");
-            return new FormTag(url);
-        }
-
-
-        public static FormTag FormFor(this IFubuPage view, object modelOrUrl)
-        {
-            string url = modelOrUrl as string ?? view.Urls.UrlFor(modelOrUrl, categoryOrHttpMethod: "POST");
-
-            return new FormTag(url);
-        }
-
-        public static string EndForm(this IFubuPage page)
-        {
-            return "</form>";
-        }
-
+        /// <summary>
+        /// Generates an html element like:  <span>[text]</span>
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public static HtmlTag Span(this IFubuPage page, string text)
         {
             return new HtmlTag("span").Text(text);
@@ -310,18 +202,6 @@ namespace FubuMVC.Core.UI
             return viewPage.Urls.UrlForAsset(AssetFolder.images, imageFilename);
         }
 
-        public static HtmlTag AntiForgeryToken(this IFubuPage page, string salt)
-        {
-            return AntiForgeryToken(page, salt, null, null);
-        }
 
-        public static HtmlTag AntiForgeryToken(this IFubuPage page, string salt, string path, string domain)
-        {
-            var antiForgeryService = page.Get<IAntiForgeryService>();
-            AntiForgeryData cookieToken = antiForgeryService.SetCookieToken(path, domain);
-            FormToken formToken = antiForgeryService.GetFormToken(cookieToken, salt);
-
-            return new HiddenTag().Name(formToken.Name).Value(formToken.TokenString);
-        }
     }
 }

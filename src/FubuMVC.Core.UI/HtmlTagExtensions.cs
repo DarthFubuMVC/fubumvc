@@ -41,5 +41,15 @@ namespace FubuMVC.Core.UI
             return tag.TextIfEmpty(token.ToString());
         }
 
+        // TODO - get this into HtmlTAgs itself
+        public static HtmlTag Name(this HtmlTag tag, string name)
+        {
+            return tag.Attr("name", name);
+        }
+
+        public static HtmlTag Value(this HtmlTag tag, string value)
+        {
+            return tag.Attr("value", value);
+        }
     }
 }
