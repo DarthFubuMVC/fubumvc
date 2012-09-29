@@ -65,11 +65,27 @@ namespace FubuMVC.Core.UI
 
     public class FubuHtmlDocument<T> : FubuHtmlDocument, IFubuPage<T> where T : class
     {
-        public FubuHtmlDocument(IServiceLocator services) : base(services)
+        private readonly IFubuRequest _request;
+        private T _model;
+
+        public FubuHtmlDocument(IServiceLocator services, IFubuRequest request) : base(services)
         {
+            _request = request;
         }
 
-        public T Model { get; set; }
+        public T Model
+        {
+            get
+            {
+                if (_model == null)
+                {
+                    _model = _request.Get<T>();
+                }
+                
+                return _model;
+            }
+            set { _model = value; }
+        }
 
         public void ShowProp(Expression<Func<T, object>> property)
         {

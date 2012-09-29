@@ -108,6 +108,7 @@
     <Compile Include="inline_definition_of_conditional_modifications_and_builders.cs" />
     <Compile Include="inline_definition_of_element_actions_with_always_condition.cs" />
     <Compile Include="inline_definition_of_html_conventions_using_attributes.cs" />
+    <Compile Include="Integration\FubuPageExtensions_FullStack_Tester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scenarios\HtmlElementScenarioTester.cs" />
     <Compile Include="Security\AccessRightTester.cs" />
@@ -136,10 +137,12 @@
       <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
       <Name>FubuMVC.StructureMap</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.TestingHarness\FubuMVC.TestingHarness.csproj">
+      <Project>{C9C9A405-1164-44AB-9CB4-3639F0979BE9}</Project>
+      <Name>FubuMVC.TestingHarness</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Integration\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

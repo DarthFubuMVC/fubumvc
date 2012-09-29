@@ -88,6 +88,11 @@ namespace FubuMVC.TestingHarness
             
         }
 
+        public string BaseAddress
+        {
+            get { return theHarness.BaseAddress; }
+        }
+
         [TestFixtureTearDown]
         public void TearDown()
         {
@@ -200,6 +205,11 @@ namespace FubuMVC.TestingHarness
             });
 
             _endpoints = new EndpointDriver(urls);
+        }
+
+        public string BaseAddress
+        {
+            get { return _server.BaseAddress; }
         }
 
         public static int Port

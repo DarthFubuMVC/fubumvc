@@ -42,30 +42,6 @@ namespace FubuMVC.Core.UI
             return LocalizationManager.GetHeader(expression);
         }
 
-        //public static ITagGenerator<T> Tags<T>(this IFubuPage<T> page) where T : class
-        //{
-        //    var generator = page.Get<ITagGenerator<T>>();
-        //    generator.Model = page.Model ?? page.Get<IFubuRequest>().Get<T>();
-        //    generator.ElementPrefix = page.ElementPrefix;
-        //    return generator;
-        //}
-
-        //public static ITagGenerator<T> Tags<T>(this IFubuPage page) where T : class
-        //{
-        //    var generator = page.Get<ITagGenerator<T>>();
-        //    generator.Model = page.Get<IFubuRequest>().Get<T>();
-        //    generator.ElementPrefix = page.ElementPrefix;
-        //    return generator;
-        //}
-
-        //public static ITagGenerator<T> Tags<T>(this IFubuPage page, T model) where T : class
-        //{
-        //    var generator = page.Get<ITagGenerator<T>>();
-        //    generator.Model = model;
-        //    generator.ElementPrefix = page.ElementPrefix;
-        //    return generator;
-        //}
-
         public static HtmlTag AuthorizedLinkTo(this IFubuPage page, Func<IEndpointService, Endpoint> finder)
         {
             var endpoints = page.Get<IEndpointService>();
@@ -112,6 +88,11 @@ namespace FubuMVC.Core.UI
             return page.LinkVariable(variable, new TInput());
         }
 
+        public static IElementGenerator<T> Tags<T>(this IFubuPage<T> page) where T : class
+        {
+            return page.Get<IElementGenerator<T>>();
+        } 
+
         /// <summary>
         ///   Builds a tag that accepts user input for a property of the page's view model
         /// </summary>
@@ -122,8 +103,7 @@ namespace FubuMVC.Core.UI
         public static HtmlTag InputFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression)
             where T : class
         {
-            throw new NotImplementedException();
-            //return page.Tags().InputFor(expression);
+            return page.Tags().InputFor(expression);
         }
 
         /// <summary>
@@ -135,8 +115,7 @@ namespace FubuMVC.Core.UI
         /// <returns></returns>
         public static HtmlTag InputFor<T>(this IFubuPage page, Expression<Func<T, object>> expression) where T : class
         {
-            throw new NotImplementedException();
-            //return page.Tags<T>().InputFor(expression);
+            return page.Get<IElementGenerator<T>>().InputFor(expression);
         }
 
         /// <summary>
@@ -151,7 +130,7 @@ namespace FubuMVC.Core.UI
             where T : class
         {
             throw new NotImplementedException();
-            //return page.Tags(model).InputFor(expression);
+            //return page.Get<IElementGenerator<T>>().InputFor(expression);
         }
 
 
@@ -165,8 +144,7 @@ namespace FubuMVC.Core.UI
         public static HtmlTag LabelFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression)
             where T : class
         {
-            throw new NotImplementedException();
-            //return page.Tags().LabelFor(expression);
+            return page.Get<IElementGenerator<T>>().LabelFor(expression);
         }
 
         /// <summary>
@@ -178,8 +156,7 @@ namespace FubuMVC.Core.UI
         /// <returns></returns>
         public static HtmlTag LabelFor<T>(this IFubuPage page, Expression<Func<T, object>> expression) where T : class
         {
-            throw new NotImplementedException();
-            //return page.Tags<T>().LabelFor(expression);
+            return page.Get<IElementGenerator<T>>().LabelFor(expression);
         }
 
         /// <summary>
@@ -194,7 +171,7 @@ namespace FubuMVC.Core.UI
             where T : class
         {
             throw new NotImplementedException();
-            //return page.Tags(model).LabelFor(expression);
+            //return page.Get<IElementGenerator<T>>().LabelFor(expression);
         }
 
         /// <summary>
@@ -207,8 +184,7 @@ namespace FubuMVC.Core.UI
         public static HtmlTag DisplayFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression)
             where T : class
         {
-            throw new NotImplementedException();
-            //return page.Tags().DisplayFor(expression);
+            return page.Get<IElementGenerator<T>>().DisplayFor(expression);
         }
 
         /// <summary>
@@ -221,8 +197,7 @@ namespace FubuMVC.Core.UI
         public static HtmlTag DisplayFor<T>(this IFubuPage page, Expression<Func<T, object>> expression)
             where T : class
         {
-            throw new NotImplementedException();
-            //return page.Tags<T>().DisplayFor(expression);
+             return page.Get<IElementGenerator<T>>().DisplayFor(expression);
         }
 
         /// <summary>
@@ -237,7 +212,7 @@ namespace FubuMVC.Core.UI
             where T : class
         {
             throw new NotImplementedException();
-            //return page.Tags(model).DisplayFor(expression);
+            //return page.Get<IElementGenerator<T>>().DisplayFor(expression);
         }
 
         public static string ElementNameFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression)

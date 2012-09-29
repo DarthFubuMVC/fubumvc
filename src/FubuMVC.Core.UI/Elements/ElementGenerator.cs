@@ -1,9 +1,9 @@
 using System;
 using System.Linq.Expressions;
+using FubuCore.Reflection;
 using FubuMVC.Core.Runtime;
 using HtmlTags;
 using HtmlTags.Conventions;
-using FubuCore.Reflection;
 
 namespace FubuMVC.Core.UI.Elements
 {
@@ -18,19 +18,7 @@ namespace FubuMVC.Core.UI.Elements
             _model = new Lazy<T>(request.Get<T>);
         }
 
-        public ElementRequest GetRequest(Expression<Func<T, object>> expression)
-        {
-            return new ElementRequest(expression.ToAccessor()){
-                Model = Model
-            };
-        }
-
-        private HtmlTag build(Expression<Func<T, object>> expression, string category, string profile = null)
-        {
-            var request = GetRequest(expression);
-            return _tags.Build(request, category, profile);
-        }
-
+        #region IElementGenerator<T> Members
 
         public HtmlTag LabelFor(Expression<Func<T, object>> expression, string profile = null)
         {
@@ -51,6 +39,22 @@ namespace FubuMVC.Core.UI.Elements
         {
             get { return _model.Value; }
             set { _model = new Lazy<T>(() => value); }
+        }
+
+        #endregion
+
+        public ElementRequest GetRequest(Expression<Func<T, object>> expression)
+        {
+            return new ElementRequest(expression.ToAccessor())
+            {
+                Model = Model
+            };
+        }
+
+        private HtmlTag build(Expression<Func<T, object>> expression, string category, string profile = null)
+        {
+            ElementRequest request = GetRequest(expression);
+            return _tags.Build(request, category, profile);
         }
     }
 }
