@@ -20,8 +20,12 @@ namespace FubuMVC.Core.UI.Testing.Elements
                 Address1 = "22 Cherry Lane"
             };
 
+            
+
             MockFor<IFubuRequest>().Stub(x => x.Get<Address>()).Return(theAddress);
             Services.Inject<ITagGenerator<ElementRequest>>(new AddressTagGenerator());
+
+            MockFor<ITagGeneratorFactory>().Stub(x => x.GeneratorFor<ElementRequest>()).Return(new AddressTagGenerator());
         }
 
         [Test]

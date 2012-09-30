@@ -17,7 +17,7 @@ namespace FubuMVC.Core.UI.Scenarios
             configure(definition);
 
             var activators = definition.Activators().ToList();
-            activators.Add(new ElementRequestActivator(null, definition.Naming));
+            activators.Add(new ElementRequestActivator(new InMemoryFubuRequest(), definition.Naming));
 
             var stringifier = definition.Display.BuildStringifier();
 
@@ -26,8 +26,8 @@ namespace FubuMVC.Core.UI.Scenarios
 
             definition.Library.Import(new DefaultHtmlConventions().Library);
 
-            var tagGenerator = new TagGenerator<ElementRequest>(definition.Library.For<ElementRequest>(), activators);
-            var generator = new ElementGenerator<T>(tagGenerator, new InMemoryFubuRequest());
+
+            var generator = ElementGenerator<T>.For(definition.Library, activators);
             generator.Model = definition.Model;
 
             return generator;

@@ -7,7 +7,7 @@ using HtmlTags;
 
 namespace FubuMVC.Core.UI
 {
-    public static class HtmlElementConventionFubuPageExtensions
+    public static class ElementConventionsFubuPageExtensions
     {
         public static IElementGenerator<T> Tags<T>(this IFubuPage<T> page) where T : class
         {
@@ -50,8 +50,7 @@ namespace FubuMVC.Core.UI
         public static HtmlTag InputFor<T>(this IFubuPage page, T model, Expression<Func<T, object>> expression)
             where T : class
         {
-            throw new NotImplementedException();
-            //return page.Get<IElementGenerator<T>>().InputFor(expression);
+            return page.Get<IElementGenerator<T>>().InputFor(expression, model: model);
         }
 
 
@@ -78,21 +77,6 @@ namespace FubuMVC.Core.UI
         public static HtmlTag LabelFor<T>(this IFubuPage page, Expression<Func<T, object>> expression) where T : class
         {
             return page.Get<IElementGenerator<T>>().LabelFor(expression);
-        }
-
-        /// <summary>
-        ///   Builds a tag that displays the name of a property on a given model
-        /// </summary>
-        /// <typeparam name = "T">The type of the given model</typeparam>
-        /// <param name = "page">The view</param>
-        /// <param name = "model">The model used to provide values for the tag</param>
-        /// <param name = "expression">An expression that specifies a property on the provided model</param>
-        /// <returns></returns>
-        public static HtmlTag LabelFor<T>(this IFubuPage page, T model, Expression<Func<T, object>> expression)
-            where T : class
-        {
-            throw new NotImplementedException();
-            //return page.Get<IElementGenerator<T>>().LabelFor(expression);
         }
 
         /// <summary>
@@ -125,15 +109,14 @@ namespace FubuMVC.Core.UI
         ///   Builds a tag that displays the current value of a property on a given model
         /// </summary>
         /// <typeparam name = "T">The type of the given model</typeparam>
-        /// <param name = "page">The view</param>
+        /// <param name = "page">The view</param>2
         /// <param name = "model">The model used to provide values for the tag</param>
         /// <param name = "expression">An expression that specifies a property on the provided model</param>
         /// <returns></returns>
         public static HtmlTag DisplayFor<T>(this IFubuPage page, T model, Expression<Func<T, object>> expression)
             where T : class
         {
-            throw new NotImplementedException();
-            //return page.Get<IElementGenerator<T>>().DisplayFor(expression);
+            return page.Get<IElementGenerator<T>>().DisplayFor(expression, model:model);
         }
     }
 }

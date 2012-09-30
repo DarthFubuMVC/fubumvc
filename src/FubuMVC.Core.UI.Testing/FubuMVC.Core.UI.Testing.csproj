@@ -108,6 +108,7 @@
     <Compile Include="inline_definition_of_conditional_modifications_and_builders.cs" />
     <Compile Include="inline_definition_of_element_actions_with_always_condition.cs" />
     <Compile Include="inline_definition_of_html_conventions_using_attributes.cs" />
+    <Compile Include="Integration\ElementConventionsFubuPageExtensions_FullStackTester_DefaultConventions.cs" />
     <Compile Include="Integration\FubuPageExtensions_FullStack_Tester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scenarios\HtmlElementScenarioTester.cs" />

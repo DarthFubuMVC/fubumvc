@@ -13,7 +13,7 @@ namespace FubuMVC.Core.UI.Elements.Builders
 
         public HtmlTag Build(ElementRequest request)
         {
-            return new TextboxTag().Attr("value", request.RawValue as string ?? string.Empty);
+            return new TextboxTag().Attr("value", (request.RawValue ?? string.Empty).ToString());
         }
     }
 }

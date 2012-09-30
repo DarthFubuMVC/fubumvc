@@ -92,7 +92,7 @@
     <Compile Include="FubuPageFormExtensions.cs" />
     <Compile Include="HtmlConventionRegistry.cs" />
     <Compile Include="HtmlConventionsActivator.cs" />
-    <Compile Include="HtmlElementConventionFubuPageExtensions.cs" />
+    <Compile Include="ElementConventionsFubuPageExtensions.cs" />
     <Compile Include="HtmlTagExtensions.cs" />
     <Compile Include="ImageTag.cs" />
     <Compile Include="ProfileExpression.cs" />
