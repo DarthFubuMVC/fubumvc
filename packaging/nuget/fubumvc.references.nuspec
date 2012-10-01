@@ -15,9 +15,9 @@
       <dependency id="Bottles" version="0.9.1.357" />
       <dependency id="FubuCore" version="0.9.9.172" />
       <dependency id="FubuLocalization" version="0.9.5.48" />
-      <dependency id="HtmlTags" version="1.0.0" />
+      <dependency id="HtmlTags" version="1.1.0.114" />
       <dependency id="FubuMVC.Core" />
-	  <dependency id="FubuMVC.StructureMap" />
+      <dependency id="FubuMVC.StructureMap" />
     </dependencies>
   </metadata>
   <files>

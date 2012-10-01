@@ -41,9 +41,5 @@ namespace FubuMVC.Core.UI
             return tag.TextIfEmpty(token.ToString());
         }
 
-        public static TagList ToTagList(this IEnumerable<HtmlTag> tags)
-        {
-            return new TagList(tags);
-        }
     }
 }

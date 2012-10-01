@@ -18,7 +18,7 @@
       <dependency id="FubuMVC.References" />
       <dependency id="FubuMVC.SelfHost" />
       <dependency id="FubuTestingSupport" />
-      <dependency id="HtmlTags" version="1.0.0" />
+      <dependency id="HtmlTags" version="1.1.0.114" />
       <dependency id="StructureMap" />
     </dependencies>
   </metadata>
