@@ -15,6 +15,7 @@ using FubuMVC.Core.Runtime.Formatters;
 using FubuMVC.Core.SessionState;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.Urls;
+using FubuCore;
 
 namespace FubuMVC.Core
 {
@@ -22,7 +23,10 @@ namespace FubuMVC.Core
     {
         public CoreServiceRegistry()
         {
-            SetServiceIfNone(new Stringifier());
+            var stringifier = new Stringifier();
+            SetServiceIfNone(stringifier);
+            SetServiceIfNone<IStringifier>(stringifier);
+
             AddService(new TypeDescriptorCache());
 
             SetServiceIfNone<IOutputWriter, OutputWriter>();

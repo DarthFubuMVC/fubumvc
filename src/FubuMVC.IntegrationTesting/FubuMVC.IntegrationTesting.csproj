@@ -36,7 +36,7 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles.0.9.1.363\lib\Bottles.dll</HintPath>
+      <HintPath>..\packages\Bottles.0.9.1.364\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="Castle.Core">
       <HintPath>..\packages\Castle.Core.3.0.0.4001\lib\net40-client\Castle.Core.dll</HintPath>
