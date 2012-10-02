@@ -101,10 +101,9 @@ namespace FubuMVC.Core.Registration.DSL
         ///   Define a view activation policy for views matching the filter.
         ///   <seealso cref = "IfTheInputModelOfTheViewMatches" />
         /// </summary>
-        public PageActivationExpression IfTheViewTypeMatches(Func<Type, bool> filter)
+        public PageActivationExpression IfTheViewMatches(Func<IViewToken, bool> filter)
         {
-            Action<IPageActivationSource> registration = source => _registry.Services(x => x.AddService(source));
-            return new PageActivationExpression(registration, filter);
+            return new PageActivationExpression(_registry, filter);
         }
 
         /// <summary>
@@ -114,13 +113,11 @@ namespace FubuMVC.Core.Registration.DSL
         /// </summary>
         public PageActivationExpression IfTheInputModelOfTheViewMatches(Func<Type, bool> filter)
         {
-            Func<Type, bool> combined = type =>
-            {
-                var inputType = type.InputModel();
-                return inputType == null ? false : filter(inputType);
+            Func<IViewToken, bool> combined = viewToken => {
+                return filter(viewToken.ViewModel);
             };
 
-            return IfTheViewTypeMatches(combined);
+            return IfTheViewMatches(combined);
         }
 
         /// <summary>

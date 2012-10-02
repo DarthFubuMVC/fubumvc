@@ -4,6 +4,7 @@ using FubuCore.Descriptions;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.View.Activation;
 using FubuMVC.Core.View.Rendering;
 
 namespace FubuMVC.Core.View
@@ -13,17 +14,24 @@ namespace FubuMVC.Core.View
         private readonly ICurrentChain _chains;
         private readonly IViewFactory _factory;
         private readonly IRequestHeaders _headers;
+        private readonly IFubuPageActivator _activator;
 
-        public ViewWriter(ICurrentChain chains, IViewFactory factory, IRequestHeaders headers)
+        public ViewWriter(ICurrentChain chains, IViewFactory factory, IRequestHeaders headers, IFubuPageActivator activator)
         {
             _chains = chains;
             _factory = factory;
             _headers = headers;
+            _activator = activator;
         }
 
         public void Write(string mimeType, T resource)
         {
-            BuildView().Render();
+            IRenderableView view = BuildView();
+            _activator.Activate(view);
+
+            view.Render();
+
+            _activator.Deactivate(view);
         }
 
         public IEnumerable<string> Mimetypes

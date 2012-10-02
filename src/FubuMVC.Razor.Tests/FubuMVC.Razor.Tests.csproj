@@ -92,7 +92,6 @@
     <Compile Include="Rendering\RenderActionTester.cs" />
     <Compile Include="Rendering\DefaultRenderStrategyTester.cs" />
     <Compile Include="Rendering\FubuRazorViewTester.cs" />
-    <Compile Include="Rendering\PageActivationTester.cs" />
     <Compile Include="Rendering\StubView.cs" />
     <Compile Include="Rendering\ViewModifierServiceTester.cs" />
     <Compile Include="Rendering\ViewRendererTester.cs" />

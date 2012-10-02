@@ -41,18 +41,4 @@ namespace FubuMVC.Core.View.Rendering
         public virtual bool Applies(T view) { return true; }
         public abstract T Modify(T view);
     }
-
-    public class PageActivation<T> : BasicViewModifier<T> where T : IRenderableView
-    {
-        private readonly IPageActivator _activator;
-        public PageActivation(IPageActivator activator)
-        {
-            _activator = activator;
-        }
-
-        public override T Modify(T view)
-        {
-            return view.Modify(v => _activator.Activate(v));
-        }
-    }
 }

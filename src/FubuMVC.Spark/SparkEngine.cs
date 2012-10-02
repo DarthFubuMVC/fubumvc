@@ -61,7 +61,6 @@ namespace FubuMVC.Spark
             services.SetServiceIfNone<IViewEntryProviderCache, ViewEntryProviderCache>();
             services.SetServiceIfNone<IViewModifierService<IFubuSparkView>, ViewModifierService<IFubuSparkView>>();
 
-            services.FillType<IViewModifier<IFubuSparkView>, PageActivation<IFubuSparkView>>();
             services.FillType<IViewModifier<IFubuSparkView>, SiteResourceAttacher>();
             services.FillType<IViewModifier<IFubuSparkView>, ContentActivation>();
             services.FillType<IViewModifier<IFubuSparkView>, OnceTableActivation>();

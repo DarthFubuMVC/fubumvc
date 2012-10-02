@@ -94,7 +94,6 @@
     <Compile Include="Rendering\FubuSparkViewTester.cs" />
     <Compile Include="Rendering\NestedOutputTester.cs" />
     <Compile Include="Rendering\NestedRenderStrategyTester.cs" />
-    <Compile Include="Rendering\PageActivationTester.cs" />
     <Compile Include="Rendering\SiteResourceAttacherTester.cs" />
     <Compile Include="Rendering\ViewContentDisposerTester.cs" />
     <Compile Include="Rendering\ViewDefinitionResolverTester.cs" />

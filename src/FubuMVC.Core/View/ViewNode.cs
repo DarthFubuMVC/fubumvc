@@ -4,6 +4,7 @@ using FubuCore.Descriptions;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.View.Activation;
 using FubuMVC.Core.View.Rendering;
 using FubuCore;
 
@@ -28,6 +29,11 @@ namespace FubuMVC.Core.View
             var def = new ObjectDef(typeof(ViewWriter<>), ResourceType);
 
             def.DependencyByType<IViewFactory>(_token.ToViewFactoryObjectDef());
+
+            var activator = new ObjectDef(typeof (FubuPageActivator<>), _token.ViewModel);
+            activator.DependencyByValue(typeof (IViewToken), _token);
+
+            def.Dependency(typeof (IFubuPageActivator), activator);
 
             return def;
         }
