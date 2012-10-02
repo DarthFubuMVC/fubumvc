@@ -20,5 +20,7 @@ namespace FubuMVC.Core.View
         string Namespace { get; }
 
         ObjectDef ToViewFactoryObjectDef();
+
+        string ProfileName { get; set; }
     }
 }

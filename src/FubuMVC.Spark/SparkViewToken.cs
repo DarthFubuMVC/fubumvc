@@ -28,6 +28,8 @@ namespace FubuMVC.Spark
             return def;
         }
 
+        public string ProfileName { get; set; }
+
         public Type ViewType
         {
             get { return typeof (ISparkView); }

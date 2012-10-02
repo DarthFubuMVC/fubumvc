@@ -109,11 +109,13 @@
     <Compile Include="SharedHarness.cs" />
     <Compile Include="SharedHarnessContext.cs" />
     <Compile Include="ViewAttachment\ProfiledAttachmentTester.cs" />
+    <Compile Include="ViewEngines\Razor\Activation\ActivationTest.cs" />
     <Compile Include="ViewEngines\Razor\HelloRazor\HelloRazorEndpoints.cs" />
     <Compile Include="ViewEngines\Razor\HelloRazor\RazorEngineIntegrationTester.cs" />
     <Compile Include="ViewEngines\Razor\MultipleLayouts\Features\One\UsesClosest\ClosestController.cs" />
     <Compile Include="ViewEngines\Razor\MultipleLayouts\Features\Two\UsesDefault\UsesDefaultController.cs" />
     <Compile Include="ViewEngines\Razor\MultipleLayouts\RazorEngineMultipleLayoutsIntegrationTester.cs" />
+    <Compile Include="ViewEngines\Spark\Activation\ActivationTest.cs" />
     <Compile Include="ViewEngines\Spark\HelloSpark\AirEndpoint.cs" />
     <Compile Include="ViewEngines\Spark\HelloSpark\PartialsWithSparkIntegrationTester.cs" />
     <Compile Include="ViewEngines\Spark\HelloSpark\SparkEngineIntegrationTester.cs" />
@@ -274,6 +276,8 @@
     <Content Include="ViewEngines\Razor\MultipleLayouts\Features\One\UsesClosest\Closest.cshtml" />
     <Content Include="ViewEngines\Razor\MultipleLayouts\Shared\Html.cshtml" />
     <Content Include="ViewEngines\Razor\MultipleLayouts\Features\Two\UsesDefault\UsesDefault.cshtml" />
+    <Content Include="ViewEngines\Razor\Activation\Activation.cshtml" />
+    <None Include="ViewEngines\Spark\Activation\Activation.spark" />
     <None Include="ViewEngines\Spark\HelloSpark\Breathe.spark" />
     <None Include="ViewEngines\Spark\HelloSpark\Full.spark" />
     <None Include="ViewEngines\Spark\HelloSpark\Partial2.spark" />

@@ -43,5 +43,7 @@ namespace FubuMVC.Core.View.Attachment
         {
             throw new NotSupportedException();
         }
+
+        public string ProfileName { get; set; }
     }
 }

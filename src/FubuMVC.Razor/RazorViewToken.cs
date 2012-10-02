@@ -27,6 +27,8 @@ namespace FubuMVC.Razor
             return def;
         }
 
+        public string ProfileName { get; set; }
+
         public Type ViewType
         {
             get { return typeof (ITemplate); }

@@ -156,6 +156,8 @@ namespace FubuMVC.Tests.View
             throw new NotImplementedException();
         }
 
+        public string ProfileName { get; set; }
+
         public Type ViewType { get; set;}
 
         protected override ObjectDef buildObjectDef()
