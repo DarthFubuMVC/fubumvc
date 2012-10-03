@@ -73,6 +73,10 @@ namespace FubuMVC.Razor.Rendering
             Get<IOutputWriter>().WriteHtml(result);
         }
 
+        public IFubuPage Page { 
+            get { return this; }
+        }
+
         void IFubuRazorView.RenderPartial()
         {
             _Layout = null;
@@ -159,7 +163,7 @@ namespace FubuMVC.Razor.Rendering
         }
     }
 
-    public interface IFubuRazorView : IRenderableView, ITemplate
+    public interface IFubuRazorView : IRenderableView, ITemplate, IFubuPage
     {
         void RenderPartial();
         ITemplate Layout { get; }

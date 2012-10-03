@@ -31,7 +31,7 @@ namespace FubuMVC.IntegrationTesting.ViewEngines.Spark.ThreePassRendering
         public void three_pass_renders_correctly()
         {
             endpoints.Get<ThreePassEndpoint>(x => x.ThreePassSample(null))
-                .ReadAsText().ShouldEqual(theResult);
+                .ReadAsText().Replace("\r\n", "\n").ShouldEqual(theResult);
         }
     }
 }

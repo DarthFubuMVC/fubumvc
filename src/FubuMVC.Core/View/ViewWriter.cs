@@ -27,11 +27,11 @@ namespace FubuMVC.Core.View
         public void Write(string mimeType, T resource)
         {
             IRenderableView view = BuildView();
-            _activator.Activate(view);
+            _activator.Activate(view.Page);
 
             view.Render();
 
-            _activator.Deactivate(view);
+            _activator.Deactivate(view.Page);
         }
 
         public IEnumerable<string> Mimetypes

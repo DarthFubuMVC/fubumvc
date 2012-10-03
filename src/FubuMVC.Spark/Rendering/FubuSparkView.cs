@@ -63,6 +63,10 @@ namespace FubuMVC.Spark.Rendering
         {
             return new HtmlString(value != null ? value.ToString() : null);
         }
+
+        public IFubuPage Page { 
+            get { return this; }
+        }
     }
 
     public abstract class FubuSparkView<TViewModel> : FubuSparkView, IFubuPage<TViewModel> where TViewModel : class
@@ -90,7 +94,7 @@ namespace FubuMVC.Spark.Rendering
         }
     }
 
-    public interface IFubuSparkView : IRenderableView
+    public interface IFubuSparkView : IRenderableView, IFubuPage
     {
         Dictionary<string, TextWriter> Content { set; get; }
         Dictionary<string, string> OnceTable { set; get; }
@@ -130,6 +134,11 @@ namespace FubuMVC.Spark.Rendering
             PreRender.Do(_view);
             _view.Render();
             PostRender.Do(_view);
+        }
+
+        public IFubuPage Page
+        {
+            get { return _view; }
         }
 
         public Guid GeneratedViewId

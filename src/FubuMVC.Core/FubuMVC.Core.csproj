@@ -690,7 +690,6 @@
     <Compile Include="View\ViewNode.cs" />
     <Compile Include="View\ViewWriter.cs" />
     <Compile Include="View\Registration\GenericParser.cs" />
-    <Compile Include="View\Rendering\FubuPageRenderingExtensions.cs" />
     <Compile Include="View\Rendering\IRenderableView.cs" />
     <Compile Include="View\Rendering\IRenderAction.cs" />
     <Compile Include="View\Rendering\IRenderStrategy.cs" />
