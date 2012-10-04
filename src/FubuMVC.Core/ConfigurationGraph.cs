@@ -39,16 +39,10 @@ namespace FubuMVC.Core
         private readonly FubuRegistry _registry;
         private readonly RouteDefinitionResolver _routeResolver = new RouteDefinitionResolver();
         private readonly TypePool _types = new TypePool(FindTheCallingAssembly());
-        private readonly ViewAttacher _views = new ViewAttacher();
 
         public ConfigurationGraph(FubuRegistry registry)
         {
             _registry = registry;
-        }
-
-        public ViewAttacher Views
-        {
-            get { return _views; }
         }
 
         public TypePool Types
@@ -95,18 +89,13 @@ namespace FubuMVC.Core
             return graph;
         }
 
-        private IEnumerable<IConfigurationAction> viewAttachers()
-        {
-            yield return _views;
-        }
-
         public BehaviorGraph BuildForImport(BehaviorGraph parent)
         {
             IEnumerable<IConfigurationAction> lightweightActions = AllDiscoveryActions()
                 .Union(_imports)
                 .Union(_configurations[ConfigurationType.Explicit])
                 .Union(_configurations[ConfigurationType.Policy])
-                .Union(viewAttachers())
+                .Union(new IConfigurationAction[]{new ViewAttacher()})
                 .Union(_configurations[ConfigurationType.Reordering]);
 
             BehaviorGraph graph = BehaviorGraph.ForChild(parent);
@@ -161,8 +150,6 @@ namespace FubuMVC.Core
         public IEnumerable<IConfigurationAction> SystemPolicies()
         {
             return new[] {new LambdaConfigurationAction(x => x.Settings.Replace(_engineRegistry.BuildViewBag(x)))}
-                .Union(viewAttachers())
-                .Union(new IConfigurationAction[] {new ActionlessViewConvention()})
                 .Union(fullGraphPolicies())
                 .Union(navigationRegistrations().OfType<IConfigurationAction>())
                 .Union(new IConfigurationAction[] {new MenuItemAttributeConfigurator(), new CompileNavigationStep()});
@@ -181,6 +168,9 @@ namespace FubuMVC.Core
 
         private static IEnumerable<IConfigurationAction> fullGraphPolicies()
         {
+            yield return new ViewAttacher();
+            yield return new ActionlessViewConvention();
+
             yield return new AssetContentEndpoint();
 
             yield return new UrlPatternAttributeOnViewModelPolicy();
