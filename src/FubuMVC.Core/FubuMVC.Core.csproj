@@ -310,7 +310,6 @@
     <Compile Include="Http\HttpStandinServiceRegistry.cs" />
     <Compile Include="Http\RequestDataExtensions.cs" />
     <Compile Include="Http\RouteDataValues.cs" />
-    <Compile Include="IFubuRegistry.cs" />
     <Compile Include="Registration\Conventions\BehaviorChainPolicy.cs" />
     <Compile Include="Registration\Conventions\AttachInputPolicy.cs" />
     <Compile Include="Registration\Conventions\AttachOutputPolicy.cs" />
@@ -687,6 +686,7 @@
     <Compile Include="View\Model\TemplateRegistry.cs" />
     <Compile Include="View\Model\ViewPathPolicy.cs" />
     <Compile Include="View\Model\ViewTypePool.cs" />
+    <Compile Include="View\ViewEngines.cs" />
     <Compile Include="View\ViewNode.cs" />
     <Compile Include="View\ViewWriter.cs" />
     <Compile Include="View\Registration\GenericParser.cs" />

@@ -18,10 +18,8 @@ using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Resources.PathBased;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Security;
-using FubuMVC.Core.UI;
 using FubuMVC.Core.UI.Navigation;
 using FubuMVC.Core.View;
-using FubuMVC.Core.View.Activation;
 using FubuMVC.Core.View.Attachment;
 
 namespace FubuMVC.Core
@@ -31,7 +29,6 @@ namespace FubuMVC.Core
     /// </summary>
     public class ConfigurationGraph
     {
-        private readonly FubuRegistry _registry;
         private readonly List<IActionSource> _actionSources = new List<IActionSource>();
 
         private readonly Cache<ConfigurationType, IList<IConfigurationAction>> _configurations
@@ -39,6 +36,7 @@ namespace FubuMVC.Core
 
         private readonly IViewEngineRegistry _engineRegistry = new ViewEngineRegistry();
         private readonly List<RegistryImport> _imports = new List<RegistryImport>();
+        private readonly FubuRegistry _registry;
         private readonly RouteDefinitionResolver _routeResolver = new RouteDefinitionResolver();
         private readonly TypePool _types = new TypePool(FindTheCallingAssembly());
         private readonly ViewAttacher _views = new ViewAttacher();
@@ -65,7 +63,7 @@ namespace FubuMVC.Core
 
         public void AddConfiguration(IConfigurationAction action, ConfigurationType? defaultType = null)
         {
-            var type = DetermineConfigurationType(action) ?? defaultType;
+            ConfigurationType? type = DetermineConfigurationType(action) ?? defaultType;
             if (type == null)
             {
                 throw new ArgumentOutOfRangeException(
@@ -80,8 +78,9 @@ namespace FubuMVC.Core
         {
             var graph = new BehaviorGraph();
 
-            AllServiceRegistrations().Each(services =>
-            {
+            graph.Types = Types;
+
+            AllServiceRegistrations().Each(services => {
                 graph.Log.RunAction(_registry, services);
 
                 // TODO -- temporary.  I think this will need to get better so that you can trace the source all the way through
@@ -89,10 +88,7 @@ namespace FubuMVC.Core
                     x => x.RegistrationSource = services.GetType().Name);
             });
 
-            AllConfigurationActions().Each(x =>
-            {
-                graph.Log.RunAction(_registry, x);
-            });
+            AllConfigurationActions().Each(x => { graph.Log.RunAction(_registry, x); });
 
             graph.Services.AddService(this);
 
@@ -106,14 +102,14 @@ namespace FubuMVC.Core
 
         public BehaviorGraph BuildForImport(BehaviorGraph parent)
         {
-            var lightweightActions = AllDiscoveryActions()
+            IEnumerable<IConfigurationAction> lightweightActions = AllDiscoveryActions()
                 .Union(_imports)
                 .Union(_configurations[ConfigurationType.Explicit])
                 .Union(_configurations[ConfigurationType.Policy])
                 .Union(viewAttachers())
                 .Union(_configurations[ConfigurationType.Reordering]);
 
-            var graph = BehaviorGraph.ForChild(parent);
+            BehaviorGraph graph = BehaviorGraph.ForChild(parent);
 
             lightweightActions.Each(x => graph.Log.RunAction(_registry, x));
 
@@ -122,14 +118,15 @@ namespace FubuMVC.Core
 
         private IEnumerable<IConfigurationAction> allChildrenImports()
         {
-            foreach (var import in _imports)
+            foreach (RegistryImport import in _imports)
             {
-                foreach (var action in import.Registry.Configuration._imports)
+                foreach (RegistryImport action in import.Registry.Configuration._imports)
                 {
                     yield return action;
 
                     foreach (
-                        var descendentAction in _imports.SelectMany(x => x.Registry.Configuration.allChildrenImports()))
+                        IConfigurationAction descendentAction in
+                            _imports.SelectMany(x => x.Registry.Configuration.allChildrenImports()))
                     {
                         yield return descendentAction;
                     }
@@ -139,7 +136,7 @@ namespace FubuMVC.Core
 
         public IEnumerable<IConfigurationAction> UniqueImports()
         {
-            var children = allChildrenImports().ToList();
+            List<IConfigurationAction> children = allChildrenImports().ToList();
 
             return _imports.Where(x => !children.Contains(x));
         }
@@ -163,12 +160,12 @@ namespace FubuMVC.Core
 
         public IEnumerable<IConfigurationAction> SystemPolicies()
         {
-            return new[] { new LambdaConfigurationAction(x => x.Settings.Replace(_engineRegistry.BuildViewBag(x)))}
+            return new[] {new LambdaConfigurationAction(x => x.Settings.Replace(_engineRegistry.BuildViewBag(x)))}
                 .Union(viewAttachers())
-                .Union(new IConfigurationAction[]{new ActionlessViewConvention()})
+                .Union(new IConfigurationAction[] {new ActionlessViewConvention()})
                 .Union(fullGraphPolicies())
                 .Union(navigationRegistrations().OfType<IConfigurationAction>())
-                .Union(new IConfigurationAction[]{new MenuItemAttributeConfigurator(), new CompileNavigationStep()});
+                .Union(new IConfigurationAction[] {new MenuItemAttributeConfigurator(), new CompileNavigationStep()});
         }
 
         public IList<IConfigurationAction> AllPolicies()
@@ -212,12 +209,14 @@ namespace FubuMVC.Core
 
             yield return new OutputBeforeAjaxContinuationPolicy();
 
-            yield return new ReorderBehaviorsPolicy{
+            yield return new ReorderBehaviorsPolicy
+            {
                 WhatMustBeBefore = node => node.Category == BehaviorCategory.Authentication,
                 WhatMustBeAfter = node => node.Category == BehaviorCategory.Authorization
             };
 
-            yield return new ReorderBehaviorsPolicy{
+            yield return new ReorderBehaviorsPolicy
+            {
                 WhatMustBeBefore = node => node is OutputCachingNode,
                 WhatMustBeAfter = node => node is OutputNode
             };
@@ -231,13 +230,13 @@ namespace FubuMVC.Core
             }
             else
             {
-                yield return new BehaviorAggregator(_types, new IActionSource[]{new EndpointActionSource()});
+                yield return new BehaviorAggregator(_types, new IActionSource[] {new EndpointActionSource()});
             }
 
             yield return new PartialOnlyConvention();
             yield return _routeResolver;
 
-            foreach (var action in _configurations[ConfigurationType.Discovery])
+            foreach (IConfigurationAction action in _configurations[ConfigurationType.Discovery])
             {
                 yield return action;
             }
@@ -256,15 +255,15 @@ namespace FubuMVC.Core
 
         private IEnumerable<IConfigurationAction> serviceRegistrations()
         {
-            foreach (var import in _imports)
+            foreach (RegistryImport import in _imports)
             {
-                foreach (var action in import.Registry.Configuration.serviceRegistrations())
+                foreach (IConfigurationAction action in import.Registry.Configuration.serviceRegistrations())
                 {
                     yield return action;
                 }
             }
 
-            foreach (var action in _configurations[ConfigurationType.Services])
+            foreach (IConfigurationAction action in _configurations[ConfigurationType.Services])
             {
                 yield return action;
             }
@@ -274,14 +273,14 @@ namespace FubuMVC.Core
 
         private IEnumerable<IConfigurationAction> navigationRegistrations()
         {
-            foreach (var action in _configurations[ConfigurationType.Navigation])
+            foreach (IConfigurationAction action in _configurations[ConfigurationType.Navigation])
             {
                 yield return action;
             }
 
-            foreach (var import in _imports)
+            foreach (RegistryImport import in _imports)
             {
-                foreach (var action in import.Registry.Configuration.navigationRegistrations())
+                foreach (IConfigurationAction action in import.Registry.Configuration.navigationRegistrations())
                 {
                     yield return action;
                 }
@@ -328,14 +327,14 @@ namespace FubuMVC.Core
         {
             var trace = new StackTrace(false);
 
-            var thisAssembly = Assembly.GetExecutingAssembly();
-            var fubuCore = typeof (ITypeResolver).Assembly;
+            Assembly thisAssembly = Assembly.GetExecutingAssembly();
+            Assembly fubuCore = typeof (ITypeResolver).Assembly;
 
             Assembly callingAssembly = null;
-            for (var i = 0; i < trace.FrameCount; i++)
+            for (int i = 0; i < trace.FrameCount; i++)
             {
-                var frame = trace.GetFrame(i);
-                var assembly = frame.GetMethod().DeclaringType.Assembly;
+                StackFrame frame = trace.GetFrame(i);
+                Assembly assembly = frame.GetMethod().DeclaringType.Assembly;
                 if (assembly != thisAssembly && assembly != fubuCore)
                 {
                     callingAssembly = assembly;
@@ -363,17 +362,17 @@ namespace FubuMVC.Core
 
         internal class FileRegistration : IConfigurationAction
         {
+            #region IConfigurationAction Members
+
             public void Configure(BehaviorGraph graph)
             {
                 graph.Services.Clear(typeof (IFubuApplicationFiles));
                 graph.Services.AddService(graph.Files);
             }
+
+            #endregion
         }
 
         #endregion
-
-        
     }
-
-
 }

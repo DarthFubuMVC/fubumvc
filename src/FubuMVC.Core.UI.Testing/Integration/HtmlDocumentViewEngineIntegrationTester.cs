@@ -21,10 +21,12 @@ namespace FubuMVC.Core.UI.Testing.Integration
         [Test]
         public void the_view_engine_can_find_documents()
         {
-            var types = new TypePool(GetType().Assembly);
-            var engine = new HtmlDocumentViewFacility(types);
+            var graph = new BehaviorGraph();
+            graph.Types.AddAssembly(GetType().Assembly);
 
-            engine.FindViews(null).Any(x => x.ViewType == typeof(DocViewModelDocument))
+            var engine = new HtmlDocumentViewFacility();
+
+            engine.FindViews(graph).Any(x => x.ViewType == typeof(DocViewModelDocument))
                 .ShouldBeTrue();
         }
 

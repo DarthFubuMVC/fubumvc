@@ -73,7 +73,7 @@ namespace FubuMVC.Core.Registration.DSL
         /// </summary>
         public ViewExpression TryToAttach(Action<ViewsForActionFilterExpression> configure)
         {
-            var expression = new ViewsForActionFilterExpression(_configuration.Views);
+            var expression = new ViewsForActionFilterExpression(_registry);
             configure(expression);
 
             return this;
@@ -137,7 +137,12 @@ namespace FubuMVC.Core.Registration.DSL
                 var name = view.Name();
                 return name.Substring(prefix.Length);
             };
-            _configuration.Views.AddProfile(typeof (T), x => x.Name().StartsWith(prefix), naming);
+
+
+            _registry.AlterSettings<ViewAttachmentPolicy>(policy => {
+                policy.AddProfile(typeof (T), x => x.Name().StartsWith(prefix), naming);
+            });
+
             return this;
         }
     }

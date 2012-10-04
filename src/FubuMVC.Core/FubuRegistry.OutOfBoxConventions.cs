@@ -4,7 +4,7 @@ using FubuMVC.Core.Registration.Conventions;
 
 namespace FubuMVC.Core
 {
-    public partial class FubuRegistry
+    public partial class FubuRegistry : IFubuRegistry
     {
         [Obsolete("Use Import<HandlerConvention>() instead.  Will be removed before 1.0")]
         public void ApplyHandlerConventions()

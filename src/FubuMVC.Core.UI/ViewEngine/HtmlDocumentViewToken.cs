@@ -43,5 +43,10 @@ namespace FubuMVC.Core.UI.ViewEngine
         }
 
         public string ProfileName { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("HtmlDocument: {0}, Profile: {1}", _documentType, ProfileName);
+        }
     }
 }

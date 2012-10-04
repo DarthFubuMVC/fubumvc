@@ -59,6 +59,8 @@ namespace FubuMVC.Core.Registration
             return registry.BuildGraph();
         }
 
+        public TypePool Types { get; internal set; }
+
         public ConfigLog Log
         {
             get { return _log; }

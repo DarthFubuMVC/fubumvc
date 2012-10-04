@@ -7,23 +7,11 @@ using FubuMVC.Core.Runtime.Conditionals;
 
 namespace FubuMVC.Core.View.Attachment
 {
-    [Policy]
-    public class ViewAttacher : IConfigurationAction
+    public class ViewAttachmentPolicy
     {
         private readonly IList<Func<IViewToken, bool>> _defaultExcludes = new List<Func<IViewToken, bool>>();
         private readonly IList<IViewsForActionFilter> _filters = new List<IViewsForActionFilter>();
         private readonly IList<IViewProfile> _profiles = new List<IViewProfile>();
-
-        public void Configure(BehaviorGraph graph)
-        {
-            FindLastActions(graph).Where(x => x.OutputType() != null).Each(
-                action => { Profiles(graph).Each(x => { Attach(x.Profile, x.Views, action); }); });
-        }
-
-        private IEnumerable<IViewsForActionFilter> filters()
-        {
-            return _filters.Any() ? _filters : defaultFilters().ToArray();
-        }
 
         private static IEnumerable<IViewsForActionFilter> defaultFilters()
         {
@@ -32,51 +20,16 @@ namespace FubuMVC.Core.View.Attachment
             yield return new ActionReturnsViewModelType();
         }
 
-        public virtual void Attach(IViewProfile viewProfile, ViewBag bag, ActionCall action)
+        public IEnumerable<IViewsForActionFilter> Filters()
         {
-            // No duplicate views!
-            var outputNode = action.ParentChain().Output;
-            if (outputNode.HasView(viewProfile.ConditionType)) return;
-
-            var log = new ViewAttachmentLog(viewProfile);
-            action.Trace(log);
-
-            foreach (var filter in filters())
-            {
-                var viewTokens = filter.Apply(action, bag);
-                var count = viewTokens.Count();
-
-                if (count > 0)
-                {
-                    log.FoundViews(filter, viewTokens.Select(x => x.Resolve()));
-                }
-
-                if (count != 1) continue;
-
-                var token = viewTokens.Single().Resolve();
-                outputNode.AddView(token, viewProfile.ConditionType);
-
-                break;
-            }
+            return _filters.Any() ? _filters : defaultFilters().ToArray();
         }
 
         public IEnumerable<IViewsForActionFilter> ActiveFilters
         {
             get
             {
-                return filters();
-            }
-        }
-
-        public static IEnumerable<ActionCall> FindLastActions(BehaviorGraph graph)
-        {
-            foreach (var chain in graph.Behaviors)
-            {
-                var last = chain.Calls.LastOrDefault();
-                if (last != null)
-                {
-                    yield return last;
-                }
+                return Filters();
             }
         }
 
@@ -90,7 +43,7 @@ namespace FubuMVC.Core.View.Attachment
                 }
 
                 Func<IViewToken, bool> defaultFilter = x => !_defaultExcludes.Any(test => test(x));
-                var defaultProfile = new ViewProfile(typeof (Always), defaultFilter, x => x.Name());
+                var defaultProfile = new ViewProfile(typeof(Always), defaultFilter, x => x.Name());
 
                 yield return new ProfileViewBag(defaultProfile, graph);
             }
@@ -115,8 +68,6 @@ namespace FubuMVC.Core.View.Attachment
             _filters.Add(filter);
         }
 
-        #region Nested type: ProfileViewBag
-
         public class ProfileViewBag
         {
             public ProfileViewBag(IViewProfile profile, BehaviorGraph graph)
@@ -129,6 +80,62 @@ namespace FubuMVC.Core.View.Attachment
             public IViewProfile Profile { get; private set; }
         }
 
-        #endregion
+    }
+
+    [Policy]
+    public class ViewAttacher : IConfigurationAction
+    {
+        public void Configure(BehaviorGraph graph)
+        {
+            var policy = graph.Settings.Get<ViewAttachmentPolicy>();
+
+            FindLastActions(graph).Where(x => x.OutputType() != null).Each(action => {
+                policy.Profiles(graph).Each(x => { Attach(policy, x.Profile, x.Views, action); });
+            });
+        }
+
+        public virtual void Attach(ViewAttachmentPolicy policy, IViewProfile viewProfile, ViewBag bag, ActionCall action)
+        {
+            // No duplicate views!
+            var outputNode = action.ParentChain().Output;
+            if (outputNode.HasView(viewProfile.ConditionType)) return;
+
+            var log = new ViewAttachmentLog(viewProfile);
+            action.Trace(log);
+
+            foreach (var filter in policy.Filters())
+            {
+                var viewTokens = filter.Apply(action, bag);
+                var count = viewTokens.Count();
+
+                if (count > 0)
+                {
+                    log.FoundViews(filter, viewTokens.Select(x => x.Resolve()));
+                }
+
+                if (count != 1) continue;
+
+                var token = viewTokens.Single().Resolve();
+                outputNode.AddView(token, viewProfile.ConditionType);
+
+                break;
+            }
+        }
+
+
+
+        public static IEnumerable<ActionCall> FindLastActions(BehaviorGraph graph)
+        {
+            foreach (var chain in graph.Behaviors)
+            {
+                var last = chain.Calls.LastOrDefault();
+                if (last != null)
+                {
+                    yield return last;
+                }
+            }
+        }
+
+
     }
 }

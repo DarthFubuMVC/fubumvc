@@ -1,5 +1,8 @@
 using System;
 using FubuCore;
+using FubuMVC.Core.View.Attachment;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace FubuMVC.Core.View.Activation
 {
@@ -48,7 +51,9 @@ namespace FubuMVC.Core.View.Activation
         /// <param name="profileName"></param>
         public void SetTagProfileTo(string profileName)
         {
-            throw new NotImplementedException();
+            _registry.Configure(x => {
+                x.Settings.Get<ViewBag>().Views.Where(_filter).Each(v => v.ProfileName = profileName);
+            });
         }
     }
 }

@@ -8,7 +8,7 @@ namespace FubuMVC.Core.UI
         {
             registry.Services<UIServiceRegistry>();
 
-            registry.WithTypes(types => registry.Views.Facility(new HtmlDocumentViewFacility(types)));
+            registry.Views.Facility(new HtmlDocumentViewFacility());
         }
     }
 }

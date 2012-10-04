@@ -5,11 +5,11 @@ namespace FubuMVC.Core.Registration.DSL
 {
     public class ViewsForActionFilterExpression
     {
-        private readonly ViewAttacher _attacher;
+        private readonly FubuRegistry _registry;
 
-        public ViewsForActionFilterExpression(ViewAttacher attacher)
+        public ViewsForActionFilterExpression(FubuRegistry registry)
         {
-            _attacher = attacher;
+            _registry = registry;
         }
 
         /// <summary>
@@ -17,7 +17,7 @@ namespace FubuMVC.Core.Registration.DSL
         /// </summary>
         public void by_ViewModel_and_Namespace_and_MethodName()
         {
-            _attacher.AddFilter(new ActionWithSameNameAndFolderAsViewReturnsViewModelType());
+            @by<ActionWithSameNameAndFolderAsViewReturnsViewModelType>();
         }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace FubuMVC.Core.Registration.DSL
         /// </summary>
         public void by_ViewModel_and_Namespace()
         {
-            _attacher.AddFilter(new ActionInSameFolderAsViewReturnsViewModelType());
+            @by<ActionInSameFolderAsViewReturnsViewModelType>();
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace FubuMVC.Core.Registration.DSL
         /// </summary>
         public void by_ViewModel()
         {
-            _attacher.AddFilter(new ActionReturnsViewModelType());
+            @by<ActionReturnsViewModelType>();
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace FubuMVC.Core.Registration.DSL
         /// </summary>
         public void @by<TFilter>() where TFilter : IViewsForActionFilter, new()
         {
-            _attacher.AddFilter(new TFilter());
+            @by(new TFilter());
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace FubuMVC.Core.Registration.DSL
         /// </summary>
         public void @by(IViewsForActionFilter strategy)
         {
-            _attacher.AddFilter(strategy);
+            _registry.AlterSettings<ViewAttachmentPolicy>(x => x.AddFilter(strategy));
         }
     }
 }

@@ -21,6 +21,7 @@ namespace FubuMVC.Tests.View.Attachment
         private ActionCall theAction;
         private ViewAttacher theAttacher;
         private BehaviorChain theChain;
+        private ViewAttachmentPolicy thePolicy;
 
         [SetUp]
         public void SetUp()
@@ -35,6 +36,7 @@ namespace FubuMVC.Tests.View.Attachment
             theChain = new BehaviorChain();
             theChain.AddToEnd(theAction);
 
+            thePolicy = new ViewAttachmentPolicy();
             theAttacher = new ViewAttacher();
         }
 
@@ -46,7 +48,7 @@ namespace FubuMVC.Tests.View.Attachment
         private IViewsForActionFilter filterMatching(params int[] indices)
         {
             var filter = new StubViewsForActionFilter(views(indices));
-            theAttacher.AddFilter(filter);
+            thePolicy.AddFilter(filter);
 
             return filter;
         }
@@ -55,7 +57,7 @@ namespace FubuMVC.Tests.View.Attachment
         {
             var matching = views(indices);
 
-            return theAttacher.AddProfile(typeof(T), x => matching.Contains(x), x => x.Name());
+            return thePolicy.AddProfile(typeof(T), x => matching.Contains(x), x => x.Name());
         }
 
         private void afterAttaching()
@@ -64,6 +66,7 @@ namespace FubuMVC.Tests.View.Attachment
             graph.AddChain(theChain);
 
             graph.Settings.Replace(new ViewBag(theViews));
+            graph.Settings.Replace(thePolicy);
 
             theAttacher.Configure(graph);
         }
