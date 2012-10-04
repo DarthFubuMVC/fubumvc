@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.View;
-using FubuMVC.Core.View.Attachment;
 
-namespace FubuMVC.Core.Registration.Conventions
+namespace FubuMVC.Core.View
 {
+    [Policy]
     public class ActionlessViewConvention : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)

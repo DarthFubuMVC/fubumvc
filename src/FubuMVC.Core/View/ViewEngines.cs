@@ -20,11 +20,16 @@ namespace FubuMVC.Core.View
             _viewBag = new Lazy<ViewBag>(buildViewBag);
         }
 
+        // Testing constructor
+        public ViewEngines(IEnumerable<IViewToken> theViews)
+        {
+            _viewBag = new Lazy<ViewBag>(() => new ViewBag(theViews));
+        }
+
         public void UseGraph(BehaviorGraph graph)
         {
             _graph = graph;
         }
-    
 
         public ViewBag Views {get { return _viewBag.Value; }}
 

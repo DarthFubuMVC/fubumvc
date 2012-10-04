@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.View;
@@ -18,45 +16,6 @@ namespace FubuMVC.Core.Registration.DSL
         {
             _configuration = configuration;
             _registry = registry;
-        }
-
-        /// <summary>
-        ///   Configure actionless views for view tokens matching the specified filter
-        /// </summary>
-        [Obsolete("This really is not necessary.  Unattached views are automatically added as 'Actionless View' chains now")]
-        public ViewExpression RegisterActionLessViews(Func<IViewToken, bool> viewTokenFilter)
-        {
-            return RegisterActionLessViews(viewTokenFilter, chain => { chain.IsPartialOnly = true; });
-        }
-
-        /// <summary>
-        ///   Specify which views should be treated as actionless views.
-        /// </summary>
-        /// <param name = "viewTokenFilter"></param>
-        /// <param name = "configureChain">Continuation for configuring each generated <see cref = "BehaviorChain" /></param>
-        /// <returns></returns>
-        [Obsolete("This really is not necessary.  Unattached views are automatically added as 'Actionless View' chains now")]
-        public ViewExpression RegisterActionLessViews(Func<IViewToken, bool> viewTokenFilter,
-                                                      Action<BehaviorChain> configureChain)
-        {
-            _configuration.AddConfiguration(new ActionLessViewConvention(viewTokenFilter, configureChain),
-                                            ConfigurationType.Discovery);
-            return this;
-        }
-
-        /// <summary>
-        ///   Specify which views should be treated as actionless views.
-        /// </summary>
-        /// <param name = "viewTokenFilter"></param>
-        /// <param name = "configureChain">Continuation for configuring each generated <see cref = "BehaviorChain" />, depending on the corresponding view token</param>
-        /// <returns></returns>
-        [Obsolete("This really is not necessary.  Unattached views are automatically added as 'Actionless View' chains now")]
-        public ViewExpression RegisterActionLessViews(Func<IViewToken, bool> viewTokenFilter,
-                                                      Action<BehaviorChain, IViewToken> configureChain)
-        {
-            _configuration.AddConfiguration(new ActionLessViewConvention(viewTokenFilter, configureChain),
-                                            ConfigurationType.Discovery);
-            return this;
         }
 
         /// <summary>
@@ -135,40 +94,6 @@ namespace FubuMVC.Core.Registration.DSL
             });
 
             return this;
-        }
-    }
-
-    [Policy, Obsolete("May be completely superseeded by the fix to GH-301")]
-    public class ActionLessViewConvention : IConfigurationAction
-    {
-        private readonly Action<BehaviorChain, IViewToken> _configureChain;
-        private readonly Func<IViewToken, bool> _viewTokenFilter;
-
-        public ActionLessViewConvention(Func<IViewToken, bool> viewTokenFilter, Action<BehaviorChain> configureChain)
-        {
-            _viewTokenFilter = viewTokenFilter;
-            _configureChain = (chain, token) => configureChain(chain);
-        }
-
-        public ActionLessViewConvention(Func<IViewToken, bool> viewTokenFilter,
-                                        Action<BehaviorChain, IViewToken> configureChain)
-        {
-            _viewTokenFilter = viewTokenFilter;
-            _configureChain = configureChain;
-        }
-
-        public void Configure(BehaviorGraph graph)
-        {
-            graph.Settings.Get<ViewBag>()
-                .Views
-                .Where(token => _viewTokenFilter(token))
-                .Each(token =>
-                {
-                    var chain = BehaviorChain.ForWriter(new ViewNode(token));
-                    graph.AddChain(chain);
-
-                    _configureChain(chain, token);
-                });
         }
     }
 }

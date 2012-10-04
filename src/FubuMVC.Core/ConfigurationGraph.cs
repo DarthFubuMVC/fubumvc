@@ -19,8 +19,6 @@ using FubuMVC.Core.Resources.PathBased;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.UI.Navigation;
-using FubuMVC.Core.View;
-using FubuMVC.Core.View.Attachment;
 
 namespace FubuMVC.Core
 {
@@ -94,7 +92,6 @@ namespace FubuMVC.Core
                 .Union(_imports)
                 .Union(_configurations[ConfigurationType.Explicit])
                 .Union(_configurations[ConfigurationType.Policy])
-                .Union(new IConfigurationAction[]{new ViewAttacher()})
                 .Union(_configurations[ConfigurationType.Reordering]);
 
             BehaviorGraph graph = BehaviorGraph.ForChild(parent);
@@ -166,9 +163,6 @@ namespace FubuMVC.Core
 
         private static IEnumerable<IConfigurationAction> fullGraphPolicies()
         {
-            yield return new ViewAttacher();
-            yield return new ActionlessViewConvention();
-
             yield return new AssetContentEndpoint();
 
             yield return new UrlPatternAttributeOnViewModelPolicy();

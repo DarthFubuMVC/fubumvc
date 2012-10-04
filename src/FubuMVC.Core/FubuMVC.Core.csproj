@@ -133,7 +133,7 @@
     <Compile Include="PolicyAttribute.cs" />
     <Compile Include="ReflectionExtensions.cs" />
     <Compile Include="Registration\BottleConfigurationDef.cs" />
-    <Compile Include="Registration\Conventions\ActionlessViewConvention.cs" />
+    <Compile Include="View\ActionlessViewConvention.cs" />
     <Compile Include="Registration\Conventions\CacheAttributePolicy.cs" />
     <Compile Include="Registration\Conventions\CachedPartialConvention.cs" />
     <Compile Include="Http\Compression\ContentCompression.cs" />
@@ -649,6 +649,7 @@
     <Compile Include="View\Attachment\ProfileViewToken.cs" />
     <Compile Include="View\Attachment\ViewAttacher.cs" />
     <Compile Include="View\Attachment\ViewAttachmentLog.cs" />
+    <Compile Include="View\Attachment\ViewAttachmentPolicy.cs" />
     <Compile Include="View\Attachment\ViewProfile.cs" />
     <Compile Include="View\Attachment\ViewsForFilterLog.cs" />
     <Compile Include="View\Attachment\ViewTokenExtensions.cs" />
