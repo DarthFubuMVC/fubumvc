@@ -21,15 +21,6 @@ namespace FubuMVC.Core.Registration.DSL
         }
 
         /// <summary>
-        ///   Register a view facility.
-        /// </summary>
-        public ViewExpression Facility(IViewFacility facility)
-        {
-            _configuration.AddFacility(facility);
-            return this;
-        }
-
-        /// <summary>
         ///   Configure actionless views for view tokens matching the specified filter
         /// </summary>
         [Obsolete("This really is not necessary.  Unattached views are automatically added as 'Actionless View' chains now")]

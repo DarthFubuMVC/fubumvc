@@ -2,6 +2,7 @@
 using Bottles;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.View;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Model.Sharing;
 using FubuMVC.Core.View.Rendering;
@@ -19,7 +20,7 @@ namespace FubuMVC.Spark
 
         void IFubuRegistryExtension.Configure(FubuRegistry registry)
         {
-            registry.Views.Facility(new SparkViewFacility(_templateRegistry, _parsings));
+            registry.ViewFacility(new SparkViewFacility(_templateRegistry, _parsings));
             registry.Services(configureServices);
         }
 

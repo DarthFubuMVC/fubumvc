@@ -1,6 +1,7 @@
 ﻿using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.View;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Model.Sharing;
 using FubuMVC.Core.View.Rendering;
@@ -19,7 +20,7 @@ namespace FubuMVC.Razor
 
         void IFubuRegistryExtension.Configure(FubuRegistry registry)
         {
-            registry.Views.Facility(new RazorViewFacility(_templateRegistry, _parsings));
+            registry.ViewFacility(new RazorViewFacility(_templateRegistry, _parsings));
             registry.Services(configureServices);
         }
 

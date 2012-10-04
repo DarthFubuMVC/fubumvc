@@ -12,15 +12,15 @@ using NUnit.Framework;
 namespace FubuMVC.Tests.View
 {
     [TestFixture]
-    public class ViewEngineRegistryTester
+    public class ViewEnginesTester
     {
-        private ViewEngineRegistry _runner;
+        private ViewEngines _runner;
 
         [SetUp]
         public void Setup()
         {
             var types = new TypePool(null);
-            _runner = new ViewEngineRegistry();
+            _runner = new ViewEngines();
         }
 
         [Test]

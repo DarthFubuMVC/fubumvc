@@ -7,22 +7,26 @@ using FubuMVC.Core.View.Attachment;
 
 namespace FubuMVC.Core.View
 {
-
-
-
     public class ViewEngines
     {
-        private readonly BehaviorGraph _graph;
+        private BehaviorGraph _graph;
         private readonly IList<ViewTokenPolicy> _viewPolicies = new List<ViewTokenPolicy>();
 
         private readonly List<IViewFacility> _facilities = new List<IViewFacility>();
-        private readonly Lazy<ViewBag> _viewBag; 
+        private readonly Lazy<ViewBag> _viewBag;
 
-        public ViewEngines(BehaviorGraph graph)
+        public ViewEngines()
         {
-            _graph = graph;
             _viewBag = new Lazy<ViewBag>(buildViewBag);
         }
+
+        public void UseGraph(BehaviorGraph graph)
+        {
+            _graph = graph;
+        }
+    
+
+        public ViewBag Views {get { return _viewBag.Value; }}
 
         private ViewBag buildViewBag()
         {
@@ -49,6 +53,11 @@ namespace FubuMVC.Core.View
             if (_facilities.Any(f => f.GetType() == typeOfFacility)) return;
 
             _facilities.Add(facility);
+        }
+
+        public void AddPolicy(ViewTokenPolicy policy)
+        {
+            _viewPolicies.Add(policy);
         }
     }
 

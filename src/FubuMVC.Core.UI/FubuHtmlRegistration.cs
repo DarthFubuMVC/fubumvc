@@ -1,4 +1,5 @@
 ﻿using FubuMVC.Core.UI.ViewEngine;
+using FubuMVC.Core.View;
 
 namespace FubuMVC.Core.UI
 {
@@ -8,7 +9,7 @@ namespace FubuMVC.Core.UI
         {
             registry.Services<UIServiceRegistry>();
 
-            registry.Views.Facility(new HtmlDocumentViewFacility());
+            registry.ViewFacility(new HtmlDocumentViewFacility());
         }
     }
 }

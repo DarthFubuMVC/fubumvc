@@ -34,7 +34,6 @@ namespace FubuMVC.Core
         private readonly Cache<ConfigurationType, IList<IConfigurationAction>> _configurations
             = new Cache<ConfigurationType, IList<IConfigurationAction>>(x => new List<IConfigurationAction>());
 
-        private readonly IViewEngineRegistry _engineRegistry = new ViewEngineRegistry();
         private readonly List<RegistryImport> _imports = new List<RegistryImport>();
         private readonly FubuRegistry _registry;
         private readonly RouteDefinitionResolver _routeResolver = new RouteDefinitionResolver();
@@ -149,8 +148,7 @@ namespace FubuMVC.Core
 
         public IEnumerable<IConfigurationAction> SystemPolicies()
         {
-            return new[] {new LambdaConfigurationAction(x => x.Settings.Replace(_engineRegistry.BuildViewBag(x)))}
-                .Union(fullGraphPolicies())
+            return fullGraphPolicies()
                 .Union(navigationRegistrations().OfType<IConfigurationAction>())
                 .Union(new IConfigurationAction[] {new MenuItemAttributeConfigurator(), new CompileNavigationStep()});
         }
@@ -275,11 +273,6 @@ namespace FubuMVC.Core
                     yield return action;
                 }
             }
-        }
-
-        public void AddFacility(IViewFacility facility)
-        {
-            _engineRegistry.AddFacility(facility);
         }
 
         public void AddImport(RegistryImport import)

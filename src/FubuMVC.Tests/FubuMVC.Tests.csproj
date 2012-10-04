@@ -466,7 +466,7 @@
     <Compile Include="View\New\ViewNodeTester.cs" />
     <Compile Include="View\New\ViewWriterTester.cs" />
     <Compile Include="View\FubuPageActivatorTester.cs" />
-    <Compile Include="View\ViewEngineRegistryTester.cs" />
+    <Compile Include="View\ViewEnginesTester.cs" />
     <Compile Include="View\ViewsForActionFiltersTester.cs" />
     <Compile Include="Web\Security\WebAuthenticationContextTester.cs" />
   </ItemGroup>

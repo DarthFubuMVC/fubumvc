@@ -34,6 +34,5 @@ namespace FubuMVC.Core
                 c.PolicyBuilder = policyBuilder;
             });
         }
-
     }
 }

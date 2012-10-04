@@ -1,16 +1,13 @@
 using System;
-using FubuCore;
-using FubuMVC.Core.View.Attachment;
 using System.Linq;
-using System.Collections.Generic;
+using FubuMVC.Core.View.Attachment;
 
 namespace FubuMVC.Core.View.Activation
 {
     public class PageActivationExpression
     {
-        private readonly FubuRegistry _registry;
         private readonly Func<IViewToken, bool> _filter;
-
+        private readonly FubuRegistry _registry;
 
         public PageActivationExpression(FubuRegistry registry, Func<IViewToken, bool> filter)
         {
@@ -18,41 +15,15 @@ namespace FubuMVC.Core.View.Activation
             _filter = filter;
         }
 
-        ///// <summary>
-        ///// For the given set of views, specify a <see cref="IPageActivationAction"/> instance
-        ///// </summary>
-        //public void ActivateBy(IPageActivationAction action)
-        //{
-        //    _registration(new LambdaPageActivationSource(_filter, type => action));
-        //}
-
-        ///// <summary>
-        ///// For the given set of views, access the instantiated <see cref="IFubuPage"/>
-        ///// </summary>
-        ///// <param name="action"></param>
-        //public void ActivateBy(Action<IFubuPage> action)
-        //{
-        //    ActivateBy(new LambdaPageActivationAction(action));
-        //}
-
-        ///// <summary>
-        ///// For the given set of views, specify any service T from the services known at runtime.
-        ///// It subsequently gets the chance to interact with the <see cref="IFubuPage"/> instance.
-        ///// </summary>
-        //public void ActivateBy<T>(Action<T, IFubuPage> action)
-        //{
-        //    throw new NotImplementedException();
-        //    //ActivateBy(new LambdaPageActivationAction((s, p) => action(s.GetInstance<T>(), p)));                
-        //}
-
         /// <summary>
         /// Sets the profile name for Html conventions
         /// </summary>
         /// <param name="profileName"></param>
         public void SetTagProfileTo(string profileName)
         {
-            _registry.Configure(x => {
-                x.Settings.Get<ViewBag>().Views.Where(_filter).Each(v => v.ProfileName = profileName);
+            _registry.AlterSettings<ViewEngines>(x => {
+                var description = "Profile = " + profileName;
+                x.AddPolicy(new ViewTokenPolicy(_filter, token => token.ProfileName = profileName, description));
             });
         }
     }
