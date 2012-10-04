@@ -109,6 +109,9 @@
     <Compile Include="ServiceLocatorTagRequestActivator.cs" />
     <Compile Include="ShowEditFieldExpressions.cs" />
     <Compile Include="UIServiceRegistry.cs" />
+    <Compile Include="ViewEngine\HtmlDocumentViewFacility.cs" />
+    <Compile Include="ViewEngine\HtmlDocumentViewFactory.cs" />
+    <Compile Include="ViewEngine\HtmlDocumentViewToken.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">

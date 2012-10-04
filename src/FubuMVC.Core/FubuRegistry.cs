@@ -230,17 +230,6 @@ namespace FubuMVC.Core
             return _configuration.Build();
         }
 
-        /// <summary>
-        ///   Specifies whether to include diagnostics tracing. This is turned off by default
-        /// </summary>
-        [Obsolete(
-            "As of FubuMVC 0.9.7, you just need to deploy the FubuMVC.Diagnostics assembly to the bin path of the application to include the diagnostics"
-            )]
-        public void IncludeDiagnostics(bool shouldInclude)
-        {
-            throw new NotSupportedException(
-                "FubuRegistry.IncludeDiagnostics() is not longer supported.  Use the FubuMVC.Diagnostics nuget/Bottle instead");
-        }
 
         internal void Compile()
         {

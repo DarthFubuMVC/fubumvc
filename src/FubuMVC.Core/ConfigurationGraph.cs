@@ -79,7 +79,7 @@ namespace FubuMVC.Core
         public BehaviorGraph Build()
         {
             var graph = new BehaviorGraph();
-            
+
             AllServiceRegistrations().Each(services =>
             {
                 graph.Log.RunAction(_registry, services);

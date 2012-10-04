@@ -43,8 +43,9 @@
     <Reference Include="FubuTestingSupport">
       <HintPath>..\packages\FubuTestingSupport.0.9.9.180\lib\FubuTestingSupport.dll</HintPath>
     </Reference>
-    <Reference Include="HtmlTags">
-      <HintPath>..\packages\HtmlTags.1.1.0.112\lib\4.0\HtmlTags.dll</HintPath>
+    <Reference Include="HtmlTags, Version=1.1.0.112, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\HtmlTags.1.1.0.114\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.framework.dll</HintPath>
@@ -109,7 +110,9 @@
     <Compile Include="inline_definition_of_element_actions_with_always_condition.cs" />
     <Compile Include="inline_definition_of_html_conventions_using_attributes.cs" />
     <Compile Include="Integration\ElementConventionsFubuPageExtensions_FullStackTester_DefaultConventions.cs" />
+    <Compile Include="Integration\ElementConventions_with_Profiles_Tester.cs" />
     <Compile Include="Integration\FubuPageExtensions_FullStack_Tester.cs" />
+    <Compile Include="Integration\HtmlDocumentViewEngineIntegrationTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scenarios\HtmlElementScenarioTester.cs" />
     <Compile Include="Security\AccessRightTester.cs" />
