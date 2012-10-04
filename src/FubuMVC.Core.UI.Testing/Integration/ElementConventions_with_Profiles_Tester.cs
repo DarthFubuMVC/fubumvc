@@ -1,6 +1,7 @@
 ﻿using System;
 using FubuCore;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.View;
 using FubuMVC.TestingHarness;
 using FubuTestingSupport;
 using HtmlTags;
@@ -16,7 +17,9 @@ namespace FubuMVC.Core.UI.Testing.Integration
             registry.Import<ProfiledHtmlConventions>();
             registry.Actions.IncludeType<ProfiledEndpoint>();
 
-            registry.Views.IfTheViewMatches(v => v.Name().Contains("Profile")).SetTagProfileTo("foo");
+            registry.AlterSettings<ViewEngines>(x => {
+                x.IfTheViewMatches(v => v.Name().Contains("Profile")).SetTagProfileTo("foo");
+            });
 
             // This wouldn't be necessary in most circumstances, but since this application
             // and registry is really built by FubuMVC.TestingHarness, we need to add the assembly

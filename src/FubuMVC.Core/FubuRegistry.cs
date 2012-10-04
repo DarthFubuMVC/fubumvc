@@ -23,11 +23,6 @@ namespace FubuMVC.Core
         RouteConventionExpression Routes { get; }
 
         /// <summary>
-        ///   Entry point to configure view attachment, conventions, and engines
-        /// </summary>
-        ViewExpression Views { get; }
-
-        /// <summary>
         ///   Expression builder for configuring conventions that execute near the end of the build up of the <see cref = "BehaviorGraph" />.
         ///   These are useful when conditionally applying conventions use criteria like route patterns, input/output models, etc
         /// </summary>
@@ -201,14 +196,6 @@ namespace FubuMVC.Core
         public RouteConventionExpression Routes
         {
             get { return new RouteConventionExpression(Configuration); }
-        }
-
-        /// <summary>
-        ///   Entry point to configure view attachment, conventions, and engines
-        /// </summary>
-        public ViewExpression Views
-        {
-            get { return new ViewExpression(_configuration, this); }
         }
 
         /// <summary>

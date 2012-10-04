@@ -1,7 +1,7 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
-using FubuMVC.IntegrationTesting.Conneg;
+using FubuMVC.Core.View.Attachment;
 using FubuMVC.TestingHarness;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -14,14 +14,15 @@ namespace FubuMVC.IntegrationTesting.ViewAttachment
         protected override void configure(FubuRegistry registry)
         {
             registry.Actions.IncludeType<ProfileController>();
-            registry.Views.TryToAttachWithDefaultConventions();
-            registry.Views.Profile<Mobile>("m.");
+
+            registry.AlterSettings<ViewAttachmentPolicy>(x => { x.Profile<Mobile>("m"); });
         }
 
         [Test]
         public void fetching_the_resource_in_a_way_that_trips_off_the_special_profile_should_give_you_the_mobile_view()
         {
-            endpoints.GetByInput(new ProfileInput{
+            endpoints.GetByInput(new ProfileInput
+            {
                 Name = "mobile"
             }).ReadAsText().ShouldContain("<p>I am the mobile view</p>");
         }
@@ -29,7 +30,8 @@ namespace FubuMVC.IntegrationTesting.ViewAttachment
         [Test]
         public void fetching_the_resource_when_it_does_not_match_the_special_profile()
         {
-            endpoints.GetByInput(new ProfileInput{
+            endpoints.GetByInput(new ProfileInput
+            {
                 Name = "wrong"
             }).ReadAsText().ShouldContain("<p>I am the regular view</p>");
         }
@@ -42,10 +44,10 @@ namespace FubuMVC.IntegrationTesting.ViewAttachment
         protected override void configure(FubuRegistry registry)
         {
             registry.Actions.IncludeType<ProfileController>();
-            
+
             // I want the default to work here.
             //registry.Views.TryToAttachWithDefaultConventions();
-            registry.Views.Profile<Mobile>("m.");
+            registry.AlterSettings<ViewAttachmentPolicy>(x => x.Profile<Mobile>("m."));
         }
 
         [Test]
@@ -86,10 +88,14 @@ namespace FubuMVC.IntegrationTesting.ViewAttachment
             _request = request;
         }
 
+        #region IConditional Members
+
         public bool ShouldExecute()
         {
             return _request.Get<ProfileInput>().Name == "mobile";
         }
+
+        #endregion
     }
 
     public class ProfileController

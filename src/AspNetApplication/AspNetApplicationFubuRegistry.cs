@@ -9,8 +9,6 @@ namespace AspNetApplication
         {
             Actions.IncludeClassesSuffixedWithController();
 
-            Views.TryToAttachWithDefaultConventions();
-
             Import<ContentCompression>(x => x.Exclude(chain => chain.FirstCall().HandlerType != typeof(CompressedContentController)));
         }
     }

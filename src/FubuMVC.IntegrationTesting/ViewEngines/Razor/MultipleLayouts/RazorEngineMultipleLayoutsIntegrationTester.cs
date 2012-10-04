@@ -16,9 +16,6 @@ namespace FubuMVC.IntegrationTesting.ViewEngines.Razor.MultipleLayouts
         {
             registry.Actions.IncludeType<ClosestController>();
             registry.Actions.IncludeType<UsesDefaultController>();
-
-            registry.Views
-                .TryToAttachWithDefaultConventions();
         }
 
         [Test]

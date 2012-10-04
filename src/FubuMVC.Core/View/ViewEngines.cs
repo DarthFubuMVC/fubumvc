@@ -31,6 +31,27 @@ namespace FubuMVC.Core.View
             _graph = graph;
         }
 
+        /// <summary>
+        ///   Define a view activation policy for views matching the filter.
+        ///   <seealso cref = "IfTheInputModelOfTheViewMatches" />
+        /// </summary>
+        public PageActivationExpression IfTheViewMatches(Func<IViewToken, bool> filter)
+        {
+            return new PageActivationExpression(this, filter);
+        }
+
+        /// <summary>
+        ///   Define a view activation policy by matching on the input type of a view.
+        ///   A view activation element implements <see cref = "IPageActivationAction" /> and takes part in setting up a View instance correctly
+        ///   at runtime.
+        /// </summary>
+        public PageActivationExpression IfTheInputModelOfTheViewMatches(Func<Type, bool> filter)
+        {
+            Func<IViewToken, bool> combined = viewToken => { return filter(viewToken.ViewModel); };
+
+            return IfTheViewMatches(combined);
+        }
+
         public ViewBag Views {get { return _viewBag.Value; }}
 
         private ViewBag buildViewBag()

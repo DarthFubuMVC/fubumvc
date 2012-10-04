@@ -7,8 +7,6 @@ namespace TestPackage2
         public TestPackage2Registry()
         {
             Actions.IncludeClassesSuffixedWithController();
-
-            Views.TryToAttachWithDefaultConventions();
         }
     }
 

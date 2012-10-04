@@ -638,11 +638,8 @@
     <Compile Include="SessionState\IFlash.cs" />
     <Compile Include="SessionState\IRequestDataProvider.cs" />
     <Compile Include="Urls\IUrlRegistry.cs" />
-    <Compile Include="Registration\DSL\ViewsForActionFilterExpression.cs" />
-    <Compile Include="Registration\DSL\ViewExpression.cs" />
     <Compile Include="View\Activation\IFubuPageActivator.cs" />
     <Compile Include="View\Attachment\ActionReturnsViewModelType.cs" />
-    <Compile Include="View\Activation\PageActivationExpression.cs" />
     <Compile Include="View\Attachment\DefaultProfile.cs" />
     <Compile Include="View\Attachment\IViewProfile.cs" />
     <Compile Include="View\Attachment\ProfileViewToken.cs" />

@@ -56,7 +56,7 @@ namespace FubuMVC.Tests.View.Attachment
         {
             IEnumerable<IViewToken> matching = views(indices);
 
-            return thePolicy.AddProfile(typeof (T), x => matching.Contains(x), x => x.Name());
+            return thePolicy.Profile(typeof (T), x => matching.Contains(x), x => x.Name());
         }
 
         private void afterAttaching()

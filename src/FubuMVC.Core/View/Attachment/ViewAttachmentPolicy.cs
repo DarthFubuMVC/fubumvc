@@ -52,7 +52,7 @@ namespace FubuMVC.Core.View.Attachment
             }
         }
 
-        public IViewProfile AddProfile(Type conditionType, Func<IViewToken, bool> filter,
+        public IViewProfile Profile(Type conditionType, Func<IViewToken, bool> filter,
                                        Func<IViewToken, string> nameCorrection)
         {
             _defaultExcludes.Add(filter);
@@ -79,5 +79,105 @@ namespace FubuMVC.Core.View.Attachment
             public IViewProfile Profile { get; private set; }
         }
 
+        public void TryToAttach(Action<ViewsForActionFilterExpression> configure)
+        {
+            var expression = new ViewsForActionFilterExpression(this);
+            configure(expression);
+        }
+
+        public class ViewsForActionFilterExpression
+        {
+            private readonly ViewAttachmentPolicy _policy;
+
+            public ViewsForActionFilterExpression(ViewAttachmentPolicy policy)
+            {
+                _policy = policy;
+            }
+
+            /// <summary>
+            /// views are matched to actions based on same namespace and the Action's underlying method name
+            /// </summary>
+            public void by_ViewModel_and_Namespace_and_MethodName()
+            {
+                @by<ActionWithSameNameAndFolderAsViewReturnsViewModelType>();
+            }
+
+            /// <summary>
+            /// views are matched to Actions based on the view model (Action's output model -> view's ViewModel)
+            /// and same namespace
+            /// </summary>
+            public void by_ViewModel_and_Namespace()
+            {
+                @by<ActionInSameFolderAsViewReturnsViewModelType>();
+            }
+
+            /// <summary>
+            /// views are matched to Actions solely based on the view model (Action's output model -> view's ViewModel)
+            /// </summary>
+            public void by_ViewModel()
+            {
+                @by<ActionReturnsViewModelType>();
+            }
+
+            /// <summary>
+            /// Specify your custom strategy to find attach views to Actions.
+            /// </summary>
+            public void @by<TFilter>() where TFilter : IViewsForActionFilter, new()
+            {
+                @by(new TFilter());
+            }
+
+            /// <summary>
+            /// Specify your custom strategy to find attach views to Actions.
+            /// </summary>
+            public void @by(IViewsForActionFilter strategy)
+            {
+                _policy.AddFilter(strategy);
+            }
+        }
+
+        /// <summary>
+        ///   This creates a view profile for the view attachment.  Used for scenarios like
+        ///   attaching multiple views to the same chain for different devices.
+        /// </summary>
+        /// <typeparam name = "T"></typeparam>
+        /// <param name = "prefix"></param>
+        /// <example>
+        ///   Profile<IsMobile>("m.") -- where "m" would mean look for views that are named "m.something"
+        /// </example>
+        /// <returns></returns>
+        public void Profile<T>(string prefix) where T : IConditional
+        {
+            Func<IViewToken, string> naming = view =>
+            {
+                string name = view.Name();
+                return name.Substring(prefix.Length);
+            };
+
+            Profile(typeof(T), x => x.Name().StartsWith(prefix), naming);
+        }
     }
+
+    public class PageActivationExpression
+    {
+        private readonly ViewEngines _parent;
+        private readonly Func<IViewToken, bool> _filter;
+
+        public PageActivationExpression(ViewEngines parent, Func<IViewToken, bool> filter)
+        {
+            _parent = parent;
+            _filter = filter;
+        }
+
+        /// <summary>
+        /// Sets the profile name for Html conventions
+        /// </summary>
+        /// <param name="profileName"></param>
+        public void SetTagProfileTo(string profileName)
+        {
+            var description = "Profile = " + profileName;
+            _parent.AddPolicy(new ViewTokenPolicy(_filter, token => token.ProfileName = profileName, description));
+        }
+    }
+
 }
