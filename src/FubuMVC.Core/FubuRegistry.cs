@@ -6,6 +6,7 @@ using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.UI.Navigation;
+using FubuMVC.Core.View;
 
 namespace FubuMVC.Core
 {
@@ -166,6 +167,9 @@ namespace FubuMVC.Core
         public FubuRegistry()
         {
             _configuration = new ConfigurationGraph(this);
+
+            // TODO -- Temporary!
+            Import<ViewEnginesExtension>();
         }
 
         public FubuRegistry(Action<FubuRegistry> configure) : this()

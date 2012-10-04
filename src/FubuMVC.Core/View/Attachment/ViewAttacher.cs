@@ -73,7 +73,7 @@ namespace FubuMVC.Core.View.Attachment
             public ProfileViewBag(IViewProfile profile, BehaviorGraph graph)
             {
                 Profile = profile;
-                Views = profile.Filter(graph.Settings.Get<ViewBag>());
+                Views = profile.Filter(graph.Settings.Get<ViewEngines>().Views);
             }
 
             public ViewBag Views { get; private set; }
@@ -90,7 +90,9 @@ namespace FubuMVC.Core.View.Attachment
             var policy = graph.Settings.Get<ViewAttachmentPolicy>();
 
             FindLastActions(graph).Where(x => x.OutputType() != null).Each(action => {
-                policy.Profiles(graph).Each(x => { Attach(policy, x.Profile, x.Views, action); });
+                policy.Profiles(graph).Each(x => {
+                    Attach(policy, x.Profile, x.Views, action);
+                });
             });
         }
 

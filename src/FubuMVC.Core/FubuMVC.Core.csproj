@@ -644,7 +644,6 @@
     <Compile Include="View\Activation\IFubuPageActivator.cs" />
     <Compile Include="View\Attachment\ActionReturnsViewModelType.cs" />
     <Compile Include="View\Activation\PageActivationExpression.cs" />
-    <Compile Include="View\Activation\ViewTypeExtensions.cs" />
     <Compile Include="View\Attachment\DefaultProfile.cs" />
     <Compile Include="View\Attachment\IViewProfile.cs" />
     <Compile Include="View\Attachment\ProfileViewToken.cs" />
@@ -686,6 +685,7 @@
     <Compile Include="View\Model\ViewPathPolicy.cs" />
     <Compile Include="View\Model\ViewTypePool.cs" />
     <Compile Include="View\ViewEngines.cs" />
+    <Compile Include="View\ViewEnginesExtension.cs" />
     <Compile Include="View\ViewNode.cs" />
     <Compile Include="View\ViewWriter.cs" />
     <Compile Include="View\Registration\GenericParser.cs" />

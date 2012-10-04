@@ -137,19 +137,6 @@ namespace FubuMVC.Core.Registration
         /// </summary>
         public IRouteIterator RouteIterator { get; set; }
 
-        [Obsolete("Use Settings.Get<ViewBag>() or Settings.Replace<ViewBag>(viewBag) instead")]
-        public ViewBag Views
-        {
-            get
-            {
-                return Settings.Get<ViewBag>();
-            }
-            set
-            {
-                Settings.Replace(value);
-            }
-        }
-
         void IChainImporter.Import(BehaviorGraph graph, Action<BehaviorChain> alternation)
         {
             _log.Import(graph.Log);
