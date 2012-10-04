@@ -34,7 +34,7 @@ namespace FubuMVC.Core.UI.Elements
         public static ElementGenerator<T> For(HtmlConventionLibrary library, IEnumerable<ITagRequestActivator> activators = null)
         {
             var tags = new TagGenerator<ElementRequest>(library.For<ElementRequest>(),
-                                                        activators ?? new ITagRequestActivator[0]);
+                                                        activators ?? new ITagRequestActivator[0], new ActiveProfile());
 
             return new ElementGenerator<T>(tags, new InMemoryFubuRequest());
         } 

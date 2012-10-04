@@ -32,7 +32,7 @@ namespace FubuMVC.Core.UI.Testing.Integration
             };
 
             endpoints.Get<ProfiledEndpoint>(x => x.get_profiled_page()).ReadAsText()
-                .ShouldContain("*foo*");
+                .ShouldContain("<div class=\"foo\">Jeremy</div>");
         }
     }
 

@@ -180,49 +180,49 @@ namespace FubuMVC.Spark.Tests
         [Test]
         public void view_modifiers()
         {
-            countForServiceCheck<IViewModifier<IFubuSparkView>>(8);
+            countForServiceCheck<IViewModifier<IFubuSparkView>>(7);
         }
 
         [Test]
         public void site_resource_attacher_view_modifier()
         {
-            defaultServicesCheck<IViewModifier<IFubuSparkView>, SiteResourceAttacher>(1);
+            defaultServicesCheck<IViewModifier<IFubuSparkView>, SiteResourceAttacher>(0);
         }
 
         [Test]
         public void content_activation_view_modifier()
         {
-            defaultServicesCheck<IViewModifier<IFubuSparkView>, ContentActivation>(2);
+            defaultServicesCheck<IViewModifier<IFubuSparkView>, ContentActivation>(1);
         }
 
         [Test]
         public void once_table_activation_view_modifier()
         {
-            defaultServicesCheck<IViewModifier<IFubuSparkView>, OnceTableActivation>(3);
+            defaultServicesCheck<IViewModifier<IFubuSparkView>, OnceTableActivation>(2);
         }
 
         [Test]
         public void outer_view_output_activator_view_modifier()
         {
-            defaultServicesCheck<IViewModifier<IFubuSparkView>, OuterViewOutputActivator>(4);
+            defaultServicesCheck<IViewModifier<IFubuSparkView>, OuterViewOutputActivator>(3);
         }
 
         [Test]
         public void nested_view_output_activator_view_modifier()
         {
-            defaultServicesCheck<IViewModifier<IFubuSparkView>, NestedViewOutputActivator>(5);
+            defaultServicesCheck<IViewModifier<IFubuSparkView>, NestedViewOutputActivator>(4);
         }
 
         [Test]
         public void view_content_disposer_view_modifier()
         {
-            defaultServicesCheck<IViewModifier<IFubuSparkView>, ViewContentDisposer>(6);
+            defaultServicesCheck<IViewModifier<IFubuSparkView>, ViewContentDisposer>(5);
         }
 
         [Test]
         public void nested_output_activation_view_modifier()
         {
-            defaultServicesCheck<IViewModifier<IFubuSparkView>, NestedOutputActivation>(7);
+            defaultServicesCheck<IViewModifier<IFubuSparkView>, NestedOutputActivation>(6);
         }
 
         [Test]

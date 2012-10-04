@@ -89,6 +89,8 @@ namespace FubuMVC.Core.Registration
 
             TypeResolver = new TypeResolver();
             _services.AddService<ITypeResolver>(TypeResolver);
+
+            Types = new TypePool(null); // need a default for some tests
         }
 
         public SettingsCollection Settings

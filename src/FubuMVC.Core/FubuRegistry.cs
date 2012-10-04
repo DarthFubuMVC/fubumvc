@@ -167,9 +167,6 @@ namespace FubuMVC.Core
         public FubuRegistry()
         {
             _configuration = new ConfigurationGraph(this);
-
-            // TODO -- Temporary!
-            Import<ViewEnginesExtension>();
         }
 
         public FubuRegistry(Action<FubuRegistry> configure) : this()
@@ -362,6 +359,9 @@ namespace FubuMVC.Core
         internal BehaviorGraph BuildGraph()
         {
             Compile();
+
+            // TEMPORARY!
+            Import<ViewEnginesExtension>();
 
             return _configuration.Build();
         }

@@ -25,8 +25,7 @@ namespace FubuMVC.Core
         {
             var stringifier = new Stringifier();
             SetServiceIfNone(stringifier);
-            SetServiceIfNone<IStringifier>(stringifier);
-
+            SetServiceIfNone<IStringifier>(stringifier); // Hack!
             AddService(new TypeDescriptorCache());
 
             SetServiceIfNone<IOutputWriter, OutputWriter>();
