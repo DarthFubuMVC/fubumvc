@@ -1,9 +1,8 @@
-using System.Linq;
 using FubuMVC.TestingHarness;
 using NUnit.Framework;
 using FubuTestingSupport;
 
-namespace FubuMVC.Core.Assets.Testing.Integration
+namespace FubuMVC.Core.Assets.IntegrationTesting
 {
     [TestFixture]
     public class loading_content_and_actions_from_a_linked_package : FubuRegistryHarness
@@ -12,7 +11,7 @@ namespace FubuMVC.Core.Assets.Testing.Integration
         {
             runBottles(@"
 init src/TestPackage1 pak1
-link src/FubuMVC.Core.Assets.Testing pak1
+link src/FubuMVC.Core.Assets.IntegrationTesting pak1
 ");
         }
 

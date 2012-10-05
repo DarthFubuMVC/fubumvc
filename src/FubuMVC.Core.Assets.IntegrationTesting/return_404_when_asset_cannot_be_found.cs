@@ -4,7 +4,7 @@ using FubuMVC.Core.Endpoints;
 using NUnit.Framework;
 using FubuTestingSupport;
 
-namespace FubuMVC.Core.Assets.Testing.Integration
+namespace FubuMVC.Core.Assets.IntegrationTesting
 {
     [TestFixture]
     public class return_404_when_asset_cannot_be_found : SharedHarnessContext

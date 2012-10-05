@@ -5,7 +5,7 @@ using FubuMVC.TestingHarness;
 using NUnit.Framework;
 using FubuTestingSupport;
 
-namespace FubuMVC.Core.Assets.Testing.Integration
+namespace FubuMVC.Core.Assets.IntegrationTesting
 {
     [TestFixture]
     public class reading_images : FubuRegistryHarness
@@ -14,7 +14,7 @@ namespace FubuMVC.Core.Assets.Testing.Integration
         {
             runBottles(@"
 init src/TestPackage1 pak1
-link src/FubuMVC.Core.Assets.Testing pak1
+link src/FubuMVC.Core.Assets.IntegrationTesting pak1
 
 ");
         }

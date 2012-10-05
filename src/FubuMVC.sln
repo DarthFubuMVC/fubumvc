@@ -56,6 +56,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewEngineIntegrationTestin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Core.Assets.Testing", "FubuMVC.Core.Assets.Testing\FubuMVC.Core.Assets.Testing.csproj", "{22424C9B-D73A-4BA5-9824-80B5E1335084}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Core.Assets.IntegrationTesting", "FubuMVC.Core.Assets.IntegrationTesting\FubuMVC.Core.Assets.IntegrationTesting.csproj", "{6CB0ED54-A71A-4809-B1E1-DB7E359F50D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -414,6 +416,21 @@ Global
 		{22424C9B-D73A-4BA5-9824-80B5E1335084}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{22424C9B-D73A-4BA5-9824-80B5E1335084}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
 		{22424C9B-D73A-4BA5-9824-80B5E1335084}.Retail|x86.ActiveCfg = Release|Any CPU
+		{6CB0ED54-A71A-4809-B1E1-DB7E359F50D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CB0ED54-A71A-4809-B1E1-DB7E359F50D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CB0ED54-A71A-4809-B1E1-DB7E359F50D7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{6CB0ED54-A71A-4809-B1E1-DB7E359F50D7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{6CB0ED54-A71A-4809-B1E1-DB7E359F50D7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6CB0ED54-A71A-4809-B1E1-DB7E359F50D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CB0ED54-A71A-4809-B1E1-DB7E359F50D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CB0ED54-A71A-4809-B1E1-DB7E359F50D7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6CB0ED54-A71A-4809-B1E1-DB7E359F50D7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{6CB0ED54-A71A-4809-B1E1-DB7E359F50D7}.Release|x86.ActiveCfg = Release|Any CPU
+		{6CB0ED54-A71A-4809-B1E1-DB7E359F50D7}.Retail|Any CPU.ActiveCfg = Release|Any CPU
+		{6CB0ED54-A71A-4809-B1E1-DB7E359F50D7}.Retail|Any CPU.Build.0 = Release|Any CPU
+		{6CB0ED54-A71A-4809-B1E1-DB7E359F50D7}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6CB0ED54-A71A-4809-B1E1-DB7E359F50D7}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
+		{6CB0ED54-A71A-4809-B1E1-DB7E359F50D7}.Retail|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

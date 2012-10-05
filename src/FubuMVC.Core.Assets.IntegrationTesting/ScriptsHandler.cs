@@ -7,7 +7,7 @@ using FubuMVC.Core.UI;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace FubuMVC.Core.Assets.Testing
+namespace FubuMVC.Core.Assets.IntegrationTesting
 {
     public class ScriptRequest
     {

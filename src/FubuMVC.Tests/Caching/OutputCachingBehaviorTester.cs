@@ -9,7 +9,6 @@ using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Resources.Etags;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Logging;
-using FubuMVC.Tests.Assets;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -211,6 +210,66 @@ namespace FubuMVC.Tests.Caching
         public void FlushAll()
         {
             throw new NotImplementedException();
+        }
+    }
+
+    public class InteractionContextLogger : ILogger
+    {
+        private readonly ILogger _inner;
+
+        public InteractionContextLogger(ILogger inner)
+        {
+            _inner = inner;
+        }
+
+        public void Debug(string message, params object[] parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Info(string message, params object[] parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Error(string message, Exception ex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Error(object correlationId, string message, Exception ex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Debug(Func<string> message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Info(Func<string> message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DebugMessage(LogTopic message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InfoMessage(LogTopic message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DebugMessage<T>(Func<T> message) where T : class, LogTopic
+        {
+            _inner.DebugMessage(message());
+        }
+
+        public void InfoMessage<T>(Func<T> message) where T : class, LogTopic
+        {
+            _inner.InfoMessage(message());
         }
     }
 }

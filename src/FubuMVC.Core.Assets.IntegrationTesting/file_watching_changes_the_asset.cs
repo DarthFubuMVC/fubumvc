@@ -1,13 +1,13 @@
 using System;
 using System.Diagnostics;
 using System.Threading;
+using FubuCore;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.TestingHarness;
 using NUnit.Framework;
-using FubuCore;
 using FubuTestingSupport;
 
-namespace FubuMVC.Core.Assets.Testing.Integration
+namespace FubuMVC.Core.Assets.IntegrationTesting
 {
     [TestFixture]
     public class file_watching_changes_the_asset : FubuRegistryHarness

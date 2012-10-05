@@ -110,7 +110,7 @@ end
 desc "Runs the integration tests"
 task :integration_test => :compile do
   runner = NUnitRunner.new :compilemode => COMPILE_TARGET, :source => 'src', :platform => 'x86'
-  runner.executeTests ['FubuMVC.IntegrationTesting']
+  runner.executeTests ['FubuMVC.IntegrationTesting', 'ViewEngineIntegrationTesting', 'FubuMVC.Core.Assets.IntegrationTesting']
 end
 
 desc "ZIPs up the build results"

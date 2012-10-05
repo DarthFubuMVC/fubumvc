@@ -1,7 +1,8 @@
 using System.Linq;
+using FubuMVC.Core;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Tags;
-using FubuMVC.Tests.Urls;
+using FubuMVC.Core.Http;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -30,6 +31,40 @@ namespace FubuMVC.Tests.Assets.Tags
         {
             new TraceOnlyMissingAssetHandler(new StubCurrentHttpRequest { TheApplicationRoot = "http://myserver" }).BuildTagsAndRecord(new MissingAssetTagSubject[0])
                 .Any().ShouldBeFalse();
+        }
+    }
+
+    public class StubCurrentHttpRequest : ICurrentHttpRequest
+    {
+        public string TheRawUrl;
+        public string TheRelativeUrl;
+        public string TheApplicationRoot = "http://server";
+        public string TheHttpMethod = "GET";
+        public string StubFullUrl = "http://server/";
+
+        public string RawUrl()
+        {
+            return TheRawUrl;
+        }
+
+        public string RelativeUrl()
+        {
+            return TheRelativeUrl;
+        }
+
+        public string FullUrl()
+        {
+            return StubFullUrl;
+        }
+
+        public string ToFullUrl(string url)
+        {
+            return url.ToAbsoluteUrl(TheApplicationRoot);
+        }
+
+        public string HttpMethod()
+        {
+            return TheHttpMethod;
         }
     }
 }
