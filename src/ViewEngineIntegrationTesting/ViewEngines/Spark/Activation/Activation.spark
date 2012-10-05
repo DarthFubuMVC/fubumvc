@@ -1,0 +1,4 @@
+﻿<viewdata model="ViewEngineIntegrationTesting.ViewEngines.Spark.Activation.ActivationModel" />
+<use namespace="ViewEngineIntegrationTesting.ViewEngines.Spark.Activation" />
+
+<div>!{this.Get<IActivationRenderer>().Print(Model)}</div>

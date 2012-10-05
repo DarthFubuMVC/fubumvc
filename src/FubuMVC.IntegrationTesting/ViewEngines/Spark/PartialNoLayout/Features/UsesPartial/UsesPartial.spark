@@ -1,4 +1,0 @@
-﻿<use namespace="FubuMVC.IntegrationTesting.ViewEngines.Spark.PartialNoLayout.Features.HelloPartial" />
-<viewdata model="FubuMVC.IntegrationTesting.ViewEngines.Spark.PartialNoLayout.Features.UsesPartial.UsesPartialViewModel" />
-<h1>Uses partial</h1>
-!{this.Partial(new HelloPartialInputModel())}

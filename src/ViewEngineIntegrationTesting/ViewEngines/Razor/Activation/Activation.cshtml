@@ -1,0 +1,6 @@
+﻿@using ViewEngineIntegrationTesting.ViewEngines.Razor.Activation
+@using FubuMVC.Core.UI;
+@model ViewEngineIntegrationTesting.ViewEngines.Razor.Activation.ActivationModel
+<div>
+    @( this.Get<ViewEngineIntegrationTesting.ViewEngines.Razor.Activation.IActivationRenderer>().Print(Model) )
+</div>

@@ -1,0 +1,7 @@
+﻿<use master="PartialLayout" />
+<viewdata model="ViewEngineIntegrationTesting.ViewEngines.Spark.PartialNoLayout.Features.HelloPartial.HelloPartialViewModel" />
+<p>In a partial</p>
+
+<content:head>
+  <script src="_/herp/derp.js"></script>
+</content:head>

@@ -1,0 +1,4 @@
+﻿@using ViewEngineIntegrationTesting.ViewEngines.Razor.HelloRazor
+@model ViewEngineIntegrationTesting.ViewEngines.Razor.HelloRazor.HelloWorldRazorViewModel
+<h1>@Model.Message</h1>
+@this.Partial(new HelloRazorPartialInputModel())

@@ -2,6 +2,7 @@ using System;
 using System.Net;
 using FubuMVC.Core;
 using FubuMVC.Core.Caching;
+using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.UI;
 using FubuMVC.TestingHarness;
@@ -16,19 +17,6 @@ namespace FubuMVC.IntegrationTesting.Caching
     public class caching_tester : SharedHarnessContext
     {
         [Test]
-        public void doughnut_caching()
-        {
-            var text1 = endpoints.Get<CachedEndpoints>(x => x.get_doughnut_cached()).ReadAsText();
-            var text2 = endpoints.Get<CachedEndpoints>(x => x.get_doughnut_cached()).ReadAsText();
-            var text3 = endpoints.Get<CachedEndpoints>(x => x.get_doughnut_cached()).ReadAsText();
-            var text4 = endpoints.Get<CachedEndpoints>(x => x.get_doughnut_cached()).ReadAsText();
-
-            text1.ShouldEqual(text2);
-            text1.ShouldEqual(text3);
-            text1.ShouldEqual(text4);
-        }
-
-        [Test]
         public void simple_vary_by_resource()
         {
             var text1_1 = endpoints.GetByInput(new CachedRequest { Name = "1" }).ReadAsText();
@@ -42,29 +30,20 @@ namespace FubuMVC.IntegrationTesting.Caching
 
             text1_1.ShouldNotEqual(text2_1);
         }
+
+
+
     }
 
     public class CachedEndpoints
     {
-        private readonly FubuHtmlDocument _document;
         private readonly IOutputWriter _writer;
 
-        public CachedEndpoints(FubuHtmlDocument document, IOutputWriter writer)
+        public CachedEndpoints(IOutputWriter writer)
         {
-            _document = document;
             _writer = writer;
         }
 
-
-
-        public HtmlDocument get_doughnut_cached()
-        {
-            _writer.AppendHeader(HttpResponseHeader.ETag, Guid.NewGuid().ToString());
-
-            _document.Add(new LiteralTag(_document.Partial<DateRequest>().ToString()));
-
-            return _document;
-        }
 
         [Cache]
         public HtmlTag get_cached_Name(CachedRequest request)
@@ -85,4 +64,6 @@ namespace FubuMVC.IntegrationTesting.Caching
     }
 
     public class DateRequest{}
+
+
 }

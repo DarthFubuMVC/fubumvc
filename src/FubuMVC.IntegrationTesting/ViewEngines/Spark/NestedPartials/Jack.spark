@@ -1,3 +1,0 @@
-﻿<viewdata model="FubuMVC.IntegrationTesting.ViewEngines.Spark.NestedPartials.JackViewModel" />
-<use namespace="FubuMVC.IntegrationTesting.ViewEngines.Spark.NestedPartials"/>
-<div>Jack->!{this.Partial<MarcusViewModel>()}</div>

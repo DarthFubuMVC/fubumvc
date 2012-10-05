@@ -1,0 +1,3 @@
+﻿<viewdata model="ViewEngineIntegrationTesting.ViewEngines.Spark.HelloSpark.BreatheViewModel" />
+
+<h2>${Model.Text}</h2>

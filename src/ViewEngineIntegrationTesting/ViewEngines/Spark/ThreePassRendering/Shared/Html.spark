@@ -1,0 +1,9 @@
+﻿<html>
+<head>
+<use content="head"/>
+</head>
+<body>
+<use content="view"/>
+<use content="tail"/>
+</body>
+</html>

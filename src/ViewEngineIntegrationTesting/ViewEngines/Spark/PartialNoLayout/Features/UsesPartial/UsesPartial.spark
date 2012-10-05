@@ -1,0 +1,4 @@
+﻿<use namespace="ViewEngineIntegrationTesting.ViewEngines.Spark.PartialNoLayout.Features.HelloPartial" />
+<viewdata model="ViewEngineIntegrationTesting.ViewEngines.Spark.PartialNoLayout.Features.UsesPartial.UsesPartialViewModel" />
+<h1>Uses partial</h1>
+!{this.Partial(new HelloPartialInputModel())}

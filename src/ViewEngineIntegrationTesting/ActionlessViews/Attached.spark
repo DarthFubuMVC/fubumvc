@@ -1,0 +1,6 @@
+﻿<viewdata model="ViewEngineIntegrationTesting.ActionlessViews.AttachedModel" />
+<p>The partial is below</p>
+
+!{this.Partial(Model.PartialRequest)}
+
+<p>The partial is above</p>

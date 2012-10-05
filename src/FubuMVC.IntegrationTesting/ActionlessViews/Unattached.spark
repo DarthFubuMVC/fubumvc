@@ -1,2 +1,0 @@
-﻿<viewdata model="FubuMVC.IntegrationTesting.ActionlessViews.UnattachedModel" />
-<p>The name is !{Model.Name}</p>

@@ -1,0 +1,3 @@
+﻿<viewdata model="ViewEngineIntegrationTesting.ViewEngines.Spark.NestedPartials.SilviaViewModel" />
+<use namespace="ViewEngineIntegrationTesting.ViewEngines.Spark.NestedPartials"/>
+<div>Silvia</div>

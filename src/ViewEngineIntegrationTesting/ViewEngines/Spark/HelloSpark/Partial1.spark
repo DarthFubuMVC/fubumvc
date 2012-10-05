@@ -1,0 +1,3 @@
+﻿<viewdata model="ViewEngineIntegrationTesting.ViewEngines.Spark.HelloSpark.PartialInput" />
+<h1>My name is !{Model.Name}</h1>
+!{this.Partial(Model.NestedInput)}

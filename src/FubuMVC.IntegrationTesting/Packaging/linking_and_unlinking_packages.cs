@@ -19,10 +19,6 @@ link harness pak1
 ");
         }
 
-        protected override void configure(FubuRegistry registry)
-        {
-            registry.Actions.IncludeType<ScriptsHandler>();
-        }
 
         [Test]
         public void load_actions_from_a_bottle()
@@ -47,21 +43,7 @@ ThreeController.Query()
                 .ShouldHaveTheSameElementsAs(expectation);
         }
 
-        [Test]
-        public void reads_asset_config_from_the_bottle()
-        {
-            var request = new ScriptRequest
-            {
-                Mandatories = "Pak1Set"
-            };
 
-            endpoints.GetByInput(request).ScriptNames()
-                .ShouldHaveTheSameElementsAs(
-                "_content/scripts/Pak1-A.js",
-                "_content/scripts/Script1.js",
-                "_content/scripts/Script2.js"
-                );
-        }
     }
 
 

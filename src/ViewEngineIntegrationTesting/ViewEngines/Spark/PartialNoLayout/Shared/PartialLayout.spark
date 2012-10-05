@@ -1,0 +1,13 @@
+﻿<html>
+<head>
+    <title>
+        <use content="title">Default Title</use>
+    </title>
+    <asset name="styles" />
+    <use content="head" />
+</head>
+<body>
+    <h1>This layout means FAIL!</h1>
+    <use content="view" />
+</body>
+</html>

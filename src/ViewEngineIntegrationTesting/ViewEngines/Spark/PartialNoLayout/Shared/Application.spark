@@ -1,0 +1,9 @@
+﻿<html>
+  <head>
+	<use content="head" />
+  </head>
+  <body>
+      <h1>Default layout</h1>
+      <use content="view"/>
+  </body>
+</html>

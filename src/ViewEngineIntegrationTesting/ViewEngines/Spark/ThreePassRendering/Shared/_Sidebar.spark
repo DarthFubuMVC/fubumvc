@@ -1,0 +1,4 @@
+﻿<content name="head">
+<script src="~/content/js/jquery-ui-accordian.js" once="jquery-accordian"/></script>
+</content>
+<div id="sidebar">Say hello: <SayHello /></div>

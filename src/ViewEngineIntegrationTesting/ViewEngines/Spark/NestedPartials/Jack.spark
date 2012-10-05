@@ -1,0 +1,3 @@
+﻿<viewdata model="ViewEngineIntegrationTesting.ViewEngines.Spark.NestedPartials.JackViewModel" />
+<use namespace="ViewEngineIntegrationTesting.ViewEngines.Spark.NestedPartials"/>
+<div>Jack->!{this.Partial<MarcusViewModel>()}</div>

@@ -81,11 +81,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActionlessViews\unattached_views_are_always_actionless_views.cs" />
     <Compile Include="Ajax\AjaxContinuationProcessingTester.cs" />
-    <Compile Include="Assets\file_watching_changes_the_asset.cs" />
-    <Compile Include="Assets\return_404_when_asset_cannot_be_found.cs" />
-    <Compile Include="Assets\writing_asset_tags_with_and_without_bottles.cs" />
     <Compile Include="Caching\caching_tester.cs" />
     <Compile Include="Chrome\ChromeBehaviorIntegrationTester.cs" />
     <Compile Include="Conneg\Conneg_Can_Choose_Output_Media_Based_on_Mimetypes.cs" />
@@ -93,7 +89,6 @@
     <Compile Include="Conneg\Output_from_actions_that_return_ajax_continuations.cs" />
     <Compile Include="Conneg\Output_from_Actions_that_return_HtmlTags.cs" />
     <Compile Include="debugger.cs" />
-    <Compile Include="Assets\reading_images.cs" />
     <Compile Include="Http\reading_and_writing_http_headers_and_responses_with_OWIN.cs" />
     <Compile Include="Issues\Issue313.cs" />
     <Compile Include="Http\compression_testing.cs" />
@@ -105,37 +100,10 @@
     <Compile Include="Packaging\reading_files_and_contents.cs" />
     <Compile Include="Packaging\unlinking_a_bottle_from_the_command_line.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScriptsHandler.cs" />
     <Compile Include="SharedHarness.cs" />
     <Compile Include="SharedHarnessContext.cs" />
-    <Compile Include="ViewAttachment\ProfiledAttachmentTester.cs" />
-    <Compile Include="ViewEngines\Razor\Activation\ActivationTest.cs" />
-    <Compile Include="ViewEngines\Razor\HelloRazor\HelloRazorEndpoints.cs" />
-    <Compile Include="ViewEngines\Razor\HelloRazor\RazorEngineIntegrationTester.cs" />
-    <Compile Include="ViewEngines\Razor\MultipleLayouts\Features\One\UsesClosest\ClosestController.cs" />
-    <Compile Include="ViewEngines\Razor\MultipleLayouts\Features\Two\UsesDefault\UsesDefaultController.cs" />
-    <Compile Include="ViewEngines\Razor\MultipleLayouts\RazorEngineMultipleLayoutsIntegrationTester.cs" />
-    <Compile Include="ViewEngines\Spark\Activation\ActivationTest.cs" />
-    <Compile Include="ViewEngines\Spark\HelloSpark\AirEndpoint.cs" />
-    <Compile Include="ViewEngines\Spark\HelloSpark\PartialsWithSparkIntegrationTester.cs" />
-    <Compile Include="ViewEngines\Spark\HelloSpark\SparkEngineIntegrationTester.cs" />
-    <Compile Include="ViewEngines\Spark\NestedPartials\FamilyEndpoint.cs" />
-    <Compile Include="ViewEngines\Spark\NestedPartials\NestedPartialsIntegrationTester.cs" />
-    <Compile Include="ViewEngines\Spark\NestedPartials\StringExtensions.cs" />
-    <Compile Include="ViewEngines\Spark\PartialNoLayout\Features\HelloPartial\HelloPartialEndpoint.cs" />
-    <Compile Include="ViewEngines\Spark\PartialNoLayout\Features\UsesNativePartials\UsesNativeEndpoint.cs" />
-    <Compile Include="ViewEngines\Spark\PartialNoLayout\Features\UsesPartial\UsesPartialEndpoint.cs" />
-    <Compile Include="ViewEngines\Spark\PartialNoLayout\Features\UsesTransferTo\TransferToEndpoint.cs" />
-    <Compile Include="ViewEngines\Spark\PartialNoLayout\PartialNoLayoutIntegrationTester.cs" />
-    <Compile Include="ViewEngines\Spark\ThreePassRendering\ThreePassEndpoint.cs" />
-    <Compile Include="ViewEngines\Spark\ThreePassRendering\ThreePassRenderingTester.cs" />
-    <Compile Include="ViewEngines\Spark\ViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FubuMVC.Core.UI\FubuMVC.Core.UI.csproj">
-      <Project>{87208AF5-9ABE-4381-B49D-C930FDD042AE}</Project>
-      <Name>FubuMVC.Core.UI</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Core.View\FubuMVC.Core.View.csproj">
       <Project>{2A1EC669-763F-4C2E-BC22-99A47A4BD5B7}</Project>
       <Name>FubuMVC.Core.View</Name>
@@ -179,9 +147,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="ViewEngines\Spark\ThreePassRendering\Shared\bindings.xml" />
-    <None Include="ActionlessViews\Attached.spark" />
-    <None Include="ActionlessViews\Unattached.spark" />
     <None Include="FubuTestApplication.application.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -270,37 +235,6 @@
     <Content Include="Tests\Packaging\Environment\Environment Runner captures errors from the Environment setup.xml" />
     <Content Include="Tests\Packaging\Environment\Execute Environment Happy Path.xml" />
     <Content Include="Tests\Packaging\Environment\Logging installer failures.xml" />
-    <Content Include="ViewEngines\Razor\HelloRazor\HelloPartial.cshtml" />
-    <Content Include="ViewEngines\Razor\HelloRazor\HelloWorld.cshtml" />
-    <Content Include="sets.script.config" />
-    <None Include="ViewAttachment\m.view.spark" />
-    <None Include="ViewAttachment\view.spark" />
-    <Content Include="ViewEngines\Razor\MultipleLayouts\Shared\Application.cshtml" />
-    <Content Include="ViewEngines\Razor\MultipleLayouts\Features\One\Shared\Application.cshtml" />
-    <Content Include="ViewEngines\Razor\MultipleLayouts\Features\One\UsesClosest\Closest.cshtml" />
-    <Content Include="ViewEngines\Razor\MultipleLayouts\Shared\Html.cshtml" />
-    <Content Include="ViewEngines\Razor\MultipleLayouts\Features\Two\UsesDefault\UsesDefault.cshtml" />
-    <Content Include="ViewEngines\Razor\Activation\Activation.cshtml" />
-    <None Include="ViewEngines\Spark\Activation\Activation.spark" />
-    <None Include="ViewEngines\Spark\HelloSpark\Breathe.spark" />
-    <None Include="ViewEngines\Spark\HelloSpark\Full.spark" />
-    <None Include="ViewEngines\Spark\HelloSpark\Partial2.spark" />
-    <None Include="ViewEngines\Spark\HelloSpark\Partial1.spark" />
-    <None Include="ViewEngines\Spark\HelloSpark\TakeABreath.spark" />
-    <None Include="ViewEngines\Spark\NestedPartials\George.spark" />
-    <None Include="ViewEngines\Spark\NestedPartials\Jack.spark" />
-    <None Include="ViewEngines\Spark\NestedPartials\Marcus.spark" />
-    <None Include="ViewEngines\Spark\NestedPartials\Silvia.spark" />
-    <None Include="ViewEngines\Spark\PartialNoLayout\Features\HelloPartial\SayHelloPartial.spark" />
-    <None Include="ViewEngines\Spark\PartialNoLayout\Features\UsesNativePartials\UserNative.spark" />
-    <None Include="ViewEngines\Spark\PartialNoLayout\Features\UsesNativePartials\_NativePartial.spark" />
-    <None Include="ViewEngines\Spark\PartialNoLayout\Features\UsesPartial\UsesPartial.spark" />
-    <None Include="ViewEngines\Spark\PartialNoLayout\Shared\Application.spark" />
-    <None Include="ViewEngines\Spark\PartialNoLayout\Shared\PartialLayout.spark" />
-    <None Include="ViewEngines\Spark\ThreePassRendering\Shared\Application.spark" />
-    <None Include="ViewEngines\Spark\ThreePassRendering\Shared\Html.spark" />
-    <None Include="ViewEngines\Spark\ThreePassRendering\Shared\_Sidebar.spark" />
-    <None Include="ViewEngines\Spark\ThreePassRendering\ThreePassSample.spark" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\lib\chromedriver.exe">

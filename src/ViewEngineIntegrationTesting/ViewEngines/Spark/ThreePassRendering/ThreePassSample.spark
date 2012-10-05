@@ -1,0 +1,2 @@
+﻿<viewdata model="ViewEngineIntegrationTesting.ViewEngines.Spark.ThreePassRendering.ThreePassModel" />
+<h1>${Model.Message}</h1>
