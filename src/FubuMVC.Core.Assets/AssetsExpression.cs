@@ -1,14 +1,21 @@
 using System;
 using System.IO;
-using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Combination;
 using FubuMVC.Core.Assets.Tags;
-using FubuCore;
 using System.Collections.Generic;
+using FubuCore;
 using System.Linq;
 
-namespace FubuMVC.Core.Registration.DSL
+namespace FubuMVC.Core.Assets
 {
+    public static class AssetsFubuRegistryExtensions
+    {
+        public static AssetsExpression Assets(this FubuRegistry registry)
+        {
+            return new AssetsExpression(registry);
+        }
+    }
+
 
     public class AssetsExpression
     {

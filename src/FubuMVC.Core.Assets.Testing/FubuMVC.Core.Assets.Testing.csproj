@@ -93,6 +93,8 @@
     <Compile Include="AssetDslReaderTester.cs" />
     <Compile Include="AssetExpressionUsageTester.cs" />
     <Compile Include="AssetFileChangeListenerTester.cs" />
+    <Compile Include="AssetFilePageExtensionsTester.cs" />
+    <Compile Include="AssetFolderTester.cs" />
     <Compile Include="AssetGraphConfigurationActivatorBehaviorTester.cs" />
     <Compile Include="AssetGraphConfigurationActivatorIntegrationTester.cs" />
     <Compile Include="AssetGraphScenarioTester.cs" />
@@ -150,6 +152,8 @@
     <Compile Include="Http\AssetWriterTester.cs" />
     <Compile Include="Http\ContentPipelineTester.cs" />
     <Compile Include="Http\ContentWriterTester.cs" />
+    <Compile Include="ImageExpressionTester.cs" />
+    <Compile Include="ImageForExtensionMethodTester.cs" />
     <Compile Include="MimetypeRegistrationActivatorTester.cs" />
     <Compile Include="MissingAssetTagSubjectTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -166,6 +170,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FubuMVC.Core.Assets\FubuMVC.Core.Assets.csproj">
+      <Project>{33E656BD-1BB8-49C6-9D67-DEF318324152}</Project>
+      <Name>FubuMVC.Core.Assets</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Core.UI\FubuMVC.Core.UI.csproj">
       <Project>{87208AF5-9ABE-4381-B49D-C930FDD042AE}</Project>
       <Name>FubuMVC.Core.UI</Name>

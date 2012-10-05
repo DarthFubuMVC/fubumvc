@@ -21,22 +21,6 @@ namespace FubuMVC.Core.UI.Testing.Integration
         {
             registry.Actions.IncludeType<ConventionEndpoint>();
         }
-
-        [Test]
-        public void ImageFor()
-        {
-            execute(page => page.ImageFor("something.png"));
-            theResult.ShouldEndWith("_content/images/something.png\" />");
-        }
-
-        [Test]
-        public void ImageUrl()
-        {
-            execute(page => page.ImageUrl("something.png"));
-
-            theResult.ShouldEqual("{0}/_content/images/something.png".ToFormat(BaseAddress));
-        }
-
         [Test]
         public void HeaderText()
         {

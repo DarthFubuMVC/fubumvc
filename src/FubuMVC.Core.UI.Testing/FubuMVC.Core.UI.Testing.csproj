@@ -103,8 +103,6 @@
     <Compile Include="HtmlConventionRegistryTester.cs" />
     <Compile Include="HtmlElementConventionsContext.cs" />
     <Compile Include="HtmlTagExtensionsTester.cs" />
-    <Compile Include="ImageExpressionTester.cs" />
-    <Compile Include="ImageForExtensionMethodTester.cs" />
     <Compile Include="inline_definition_of_conditional_modifications_and_builders.cs" />
     <Compile Include="inline_definition_of_element_actions_with_always_condition.cs" />
     <Compile Include="inline_definition_of_html_conventions_using_attributes.cs" />

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web.Routing;
 using FubuCore;
 using FubuMVC.Core;
-using FubuMVC.Core.Assets;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
@@ -26,10 +25,6 @@ namespace FubuMVC.Tests
         [SetUp]
         public void SetUp()
         {
-            AssetContentEndpoint.Latched = true;
-            AssetDeclarationVerificationActivator.Latched = true;
-
-
             registry = new FubuRegistry(x =>
             {
                 x.Actions.IncludeTypes(t => false);
@@ -78,13 +73,6 @@ namespace FubuMVC.Tests
         private FubuRegistry registry;
         private Container container;
         private IList<RouteBase> routes;
-
-        [TearDown]
-        public void TearDown()
-        {
-            AssetContentEndpoint.Latched = false;
-            AssetDeclarationVerificationActivator.Latched = false;
-        }
 
         [Test]
         public void should_have_a_route_in_the_RouteCollection_with_a_Fubu_RouteHandler_for_each_route_in_the_registry()

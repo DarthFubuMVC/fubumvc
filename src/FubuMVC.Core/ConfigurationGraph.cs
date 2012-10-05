@@ -4,10 +4,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using FubuCore;
-using FubuCore.Reflection;
 using FubuCore.Util;
 using FubuMVC.Core.Ajax;
-using FubuMVC.Core.Assets;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
@@ -19,6 +17,7 @@ using FubuMVC.Core.Resources.PathBased;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.UI.Navigation;
+using FubuCore.Reflection;
 
 namespace FubuMVC.Core
 {
@@ -163,8 +162,6 @@ namespace FubuMVC.Core
 
         private static IEnumerable<IConfigurationAction> fullGraphPolicies()
         {
-            yield return new AssetContentEndpoint();
-
             yield return new UrlPatternAttributeOnViewModelPolicy();
             yield return new ModifyChainAttributeConvention();
             yield return new ResourcePathRoutePolicy();
@@ -226,7 +223,6 @@ namespace FubuMVC.Core
 
         private static IEnumerable<ServiceRegistry> systemServices()
         {
-            yield return new AssetServicesRegistry();
             yield return new ModelBindingServicesRegistry();
             yield return new SecurityServicesRegistry();
             yield return new HttpStandInServiceRegistry();

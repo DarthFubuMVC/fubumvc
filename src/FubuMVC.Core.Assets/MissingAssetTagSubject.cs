@@ -14,7 +14,7 @@ namespace FubuMVC.Core.Assets
 
         public string Name { get; private set; }
 
-        public AssetFolder? Folder
+        public AssetFolder Folder
         {
             get { return null; }
         }

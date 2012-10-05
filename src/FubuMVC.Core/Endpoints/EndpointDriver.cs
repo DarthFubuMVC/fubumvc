@@ -9,7 +9,6 @@ using System.Web.Script.Serialization;
 using System.Xml.Serialization;
 using FubuCore;
 using FubuCore.Reflection;
-using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using System.Linq;

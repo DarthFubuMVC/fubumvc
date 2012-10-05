@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using FubuLocalization;
-using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Urls;

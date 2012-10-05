@@ -1,7 +1,6 @@
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
-using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Registration.Routes;
 
 namespace FubuMVC.Core.Urls

@@ -1,4 +1,3 @@
-using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Runtime;
 using NUnit.Framework;
 using FubuTestingSupport;
@@ -8,33 +7,6 @@ namespace FubuMVC.Tests.Runtime
     [TestFixture]
     public class MimeTypeTester
     {
-        [Test]
-        public void javascript_folder_is_scripts()
-        {
-            MimeType.Javascript.Folder().ShouldEqual(AssetFolder.scripts);
-        }
-
-        [Test]
-        public void css_folder_is_styles()
-        {
-            MimeType.Css.Folder().ShouldEqual(AssetFolder.styles);
-        }
-
-        [Test]
-        public void image_types_should_be_in_folder_images()
-        {
-            MimeType.Gif.Folder().ShouldEqual(AssetFolder.images);
-            MimeType.Png.Folder().ShouldEqual(AssetFolder.images);
-            MimeType.Bmp.Folder().ShouldEqual(AssetFolder.images);
-            MimeType.Jpg.Folder().ShouldEqual(AssetFolder.images);
-        }
-
-        [Test]
-        public void truetype_fonts_recorded_as_images_to_force_binary()
-        {
-            MimeType.TrueTypeFont.Folder().ShouldEqual(AssetFolder.images);
-        }
-
         [Test]
         public void find_default_extension_for_javascript()
         {

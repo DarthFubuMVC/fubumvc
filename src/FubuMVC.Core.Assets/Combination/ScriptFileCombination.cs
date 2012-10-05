@@ -16,7 +16,7 @@ namespace FubuMVC.Core.Assets.Combination
             Name = name;
         }
 
-        public override AssetFolder? Folder
+        public override AssetFolder Folder
         {
             get { return AssetFolder.scripts; }
         }

@@ -2,6 +2,7 @@
 using System.Reflection;
 using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.UI;

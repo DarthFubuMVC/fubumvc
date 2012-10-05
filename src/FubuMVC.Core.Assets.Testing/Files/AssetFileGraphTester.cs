@@ -53,7 +53,7 @@ namespace FubuMVC.Tests.Assets.Files
 
             _theFileGraph.AddFile(thePath, theFile);
 
-            theFile.Folder.ShouldEqual(thePath.Folder.Value);
+            theFile.Folder.ShouldEqual(thePath.Folder);
         }
 
         [Test]

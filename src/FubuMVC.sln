@@ -58,6 +58,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Core.Assets.Testing
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Core.Assets.IntegrationTesting", "FubuMVC.Core.Assets.IntegrationTesting\FubuMVC.Core.Assets.IntegrationTesting.csproj", "{6CB0ED54-A71A-4809-B1E1-DB7E359F50D7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Core.Assets", "FubuMVC.Core.Assets\FubuMVC.Core.Assets.csproj", "{33E656BD-1BB8-49C6-9D67-DEF318324152}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -431,6 +433,21 @@ Global
 		{6CB0ED54-A71A-4809-B1E1-DB7E359F50D7}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{6CB0ED54-A71A-4809-B1E1-DB7E359F50D7}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
 		{6CB0ED54-A71A-4809-B1E1-DB7E359F50D7}.Retail|x86.ActiveCfg = Release|Any CPU
+		{33E656BD-1BB8-49C6-9D67-DEF318324152}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33E656BD-1BB8-49C6-9D67-DEF318324152}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33E656BD-1BB8-49C6-9D67-DEF318324152}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{33E656BD-1BB8-49C6-9D67-DEF318324152}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{33E656BD-1BB8-49C6-9D67-DEF318324152}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{33E656BD-1BB8-49C6-9D67-DEF318324152}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33E656BD-1BB8-49C6-9D67-DEF318324152}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33E656BD-1BB8-49C6-9D67-DEF318324152}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{33E656BD-1BB8-49C6-9D67-DEF318324152}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{33E656BD-1BB8-49C6-9D67-DEF318324152}.Release|x86.ActiveCfg = Release|Any CPU
+		{33E656BD-1BB8-49C6-9D67-DEF318324152}.Retail|Any CPU.ActiveCfg = Release|Any CPU
+		{33E656BD-1BB8-49C6-9D67-DEF318324152}.Retail|Any CPU.Build.0 = Release|Any CPU
+		{33E656BD-1BB8-49C6-9D67-DEF318324152}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{33E656BD-1BB8-49C6-9D67-DEF318324152}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
+		{33E656BD-1BB8-49C6-9D67-DEF318324152}.Retail|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,6 +1,7 @@
 using System;
 using System.Linq.Expressions;
 using FubuCore;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;

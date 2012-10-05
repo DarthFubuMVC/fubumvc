@@ -12,7 +12,7 @@ namespace FubuMVC.Core.Assets
         /// <param name="folder"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        string UrlForAsset(AssetFolder? folder, string name);
+        string UrlForAsset(AssetFolder folder, string name);
     }
 
     public class AssetUrls : IAssetUrls
@@ -31,7 +31,7 @@ namespace FubuMVC.Core.Assets
         /// <param name="folder"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public string UrlForAsset(AssetFolder? folder, string name)
+        public string UrlForAsset(AssetFolder folder, string name)
         {
             var relativeUrl = DetermineRelativeAssetUrl(folder, name);
             return _httpRequest.ToFullUrl(relativeUrl);
@@ -47,7 +47,7 @@ namespace FubuMVC.Core.Assets
         }
 
         // TODO -- move the unit tests
-        public static string DetermineRelativeAssetUrl(AssetFolder? folder, string name)
+        public static string DetermineRelativeAssetUrl(AssetFolder folder, string name)
         {
             return "{0}/{1}/{2}".ToFormat(AssetsUrlFolder, folder, name);
         }

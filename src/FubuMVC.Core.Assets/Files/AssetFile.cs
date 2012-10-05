@@ -47,13 +47,13 @@ namespace FubuMVC.Core.Assets.Files
             return _name.Split('/').Reverse().Skip(1).Reverse().Join("/");
         }
 
-        public AssetFile(string name, AssetFolder? folder) : this(name)
+        public AssetFile(string name, AssetFolder folder) : this(name)
         {
             Folder = folder;
 
-            if (_mimeType == null && folder.HasValue)
+            if (_mimeType == null && folder != null)
             {
-                _mimeType = MimeType.ForFolder(folder.Value);
+                _mimeType = folder.DefaultMimetype();
             }
         }
 
@@ -63,14 +63,14 @@ namespace FubuMVC.Core.Assets.Files
         public bool Override { get; set; }
 
 
-        private AssetFolder? _folder;
-        public AssetFolder? Folder
+        private AssetFolder _folder;
+        public AssetFolder Folder
         {
             get
             {
-                if (!_folder.HasValue && _mimeType != null)
+                if (_folder == null && _mimeType != null)
                 {
-                    _folder = _mimeType.Folder();
+                    _folder = AssetFolder.FolderFor(_mimeType);
                 }
                 
                 
@@ -88,9 +88,9 @@ namespace FubuMVC.Core.Assets.Files
         {
             get
             {
-                if (_mimeType == null && _folder.HasValue)
+                if (_mimeType == null && _folder != null)
                 {
-                    _mimeType = MimeType.ForFolder(_folder.Value);
+                    _mimeType = Folder.DefaultMimetype();
                 }
 
                 return _mimeType;
@@ -117,7 +117,7 @@ namespace FubuMVC.Core.Assets.Files
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return other.Folder.Equals(Folder) && Equals(other.Name, Name) && Equals(other.FullPath, FullPath);
+            return (other.Folder == Folder) && Equals(other.Name, Name) && Equals(other.FullPath, FullPath);
         }
 
         public override bool Equals(object obj)
@@ -132,7 +132,7 @@ namespace FubuMVC.Core.Assets.Files
         {
             unchecked
             {
-                var result = (Folder.HasValue ? Folder.Value.GetHashCode() : 0);
+                var result = (Folder != null ? Folder.GetHashCode() : 0);
                 result = (result*397) ^ (Name != null ? Name.GetHashCode() : 0);
                 result = (result*397) ^ (FullPath != null ? FullPath.GetHashCode() : 0);
                 return result;

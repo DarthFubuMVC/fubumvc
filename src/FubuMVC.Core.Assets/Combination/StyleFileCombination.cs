@@ -17,7 +17,7 @@ namespace FubuMVC.Core.Assets.Combination
 
         }
 
-        public override AssetFolder? Folder
+        public override AssetFolder Folder
         {
             get { return AssetFolder.styles; }
         }

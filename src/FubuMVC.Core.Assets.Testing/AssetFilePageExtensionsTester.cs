@@ -1,12 +1,12 @@
-using FubuMVC.Core.Assets;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.View;
 using HtmlTags;
 using NUnit.Framework;
 using Rhino.Mocks;
 using FubuMVC.Core.UI;
 using FubuTestingSupport;
 
-namespace FubuMVC.Core.View.Testing
+namespace FubuMVC.Core.Assets.Testing
 {
     [TestFixture]
     public class AssetFilePageExtensionsTester

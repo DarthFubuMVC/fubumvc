@@ -1,15 +1,48 @@
-using System;
-using FubuCore;
-using FubuMVC.Core.Assets;
+using System.Linq;
+using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View;
 using HtmlTags;
-using System.Linq;
 
-namespace FubuMVC.Core.UI
+namespace FubuMVC.Core.Assets
 {
     public static class AssetFilePageExtensions
     {
+        /// <summary>
+        ///   Renders an HTML img tag to display the specified file from the application's image folder
+        /// </summary>
+        /// <param name = "viewPage"></param>
+        /// <param name = "imageFilename">The name of the image file, relative to the applications' image folder</param>
+        /// <returns></returns>
+        public static ImageTag Image(this IFubuPage viewPage, string imageFilename)
+        {
+            string imageUrl = viewPage.ImageUrl(imageFilename);
+            return new ImageTag(imageUrl);
+        }
+
+        /// <summary>
+        ///   Returns the absolute URL for an image (may be a customer overridden path or a package image path)
+        /// </summary>
+        /// <param name = "viewPage"></param>
+        /// <param name = "imageFilename">The name of the image file, relative to the applications' image folder</param>
+        /// <returns></returns>
+        public static string ImageUrl(this IFubuPage viewPage, string imageFilename)
+        {
+            return viewPage.Get<IAssetUrls>().UrlForAsset(AssetFolder.images, imageFilename);
+        }
+
+        /// <summary>
+        /// Writes an <image> tag for the named assetName using the url from the asset pipeline
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="assetName"></param>
+        /// <returns></returns>
+        public static HtmlTag ImageFor(this IFubuPage page, string assetName)
+        {
+            string url = page.Get<IAssetUrls>().UrlForAsset(AssetFolder.images, assetName);
+            return new HtmlTag("img").Attr("src", url);
+        }
+
         /// <summary>
         /// Registers one or more scripts and their dependencies as required assets,
         /// but does NOT write out any html tags.
@@ -144,7 +177,5 @@ namespace FubuMVC.Core.UI
             var correctedNames = page.Get<AssetGraph>().CorrectForAliases(names).ToArray();
             return page.Get<IAssetTagWriter>().WriteTags(MimeType.Css, correctedNames);
         }
-
-
     }
 }

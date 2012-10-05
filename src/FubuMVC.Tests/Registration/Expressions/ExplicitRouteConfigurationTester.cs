@@ -1,6 +1,5 @@
 using System.Linq;
 using FubuMVC.Core;
-using FubuMVC.Core.Assets;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.DSL;
@@ -18,8 +17,6 @@ namespace FubuMVC.Tests.Registration.Expressions
         [SetUp]
         public void SetUp()
         {
-            AssetContentEndpoint.Latched = true;
-
             var config = new ExplicitRouteConfiguration("some/pattern");
             config.Chain();
             _config = config;
@@ -37,12 +34,6 @@ namespace FubuMVC.Tests.Registration.Expressions
         }
 
         #endregion
-
-        [TearDown]
-        public void TearDown()
-        {
-            AssetContentEndpoint.Latched = false;
-        }
 
         private IConfigurationAction _config;
         private BehaviorGraph _graph;

@@ -1,8 +1,6 @@
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core;
-using FubuMVC.Core.Assets;
-using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
@@ -84,7 +82,6 @@ namespace FubuMVC.Tests.Registration.Expressions
         {
             var visitor = new BehaviorVisitor("");
             visitor.Filters += chain => chain.Calls.Any(call => call.Method.Name != "SomeAction");
-            visitor.Filters += chain => chain.Calls.Any(call => call.HandlerType != typeof (AssetWriter));
 
             visitor.Actions += chain => chain.Top.Next.ShouldBeOfType<ActionCall>();
 
@@ -115,8 +112,6 @@ namespace FubuMVC.Tests.Registration.Expressions
         [SetUp]
         public void SetUp()
         {
-            AssetContentEndpoint.Latched = false;
-
             registry = new FubuRegistry(x =>
             {
                 x.Actions.IncludeTypes(t => false);
@@ -145,18 +140,9 @@ namespace FubuMVC.Tests.Registration.Expressions
 
         private FubuRegistry registry;
 
-        [TearDown]
-        public void TearDown()
-        {
-            AssetContentEndpoint.Latched = false;
-            AssetDeclarationVerificationActivator.Latched = false;
-        }
-
         [Test]
         public void hydrate_through_container_facility_smoke_test()
         {
-            AssetContentEndpoint.Latched = false;
-
             var container = new Container(x =>
             {
                 x.For<IStreamingData>().Use(MockRepository.GenerateMock<IStreamingData>());

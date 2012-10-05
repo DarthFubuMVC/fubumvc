@@ -3,7 +3,6 @@ using System.Linq.Expressions;
 using System.Reflection;
 using FubuCore;
 using FubuCore.Reflection;
-using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Registration.Routes;
 
 namespace FubuMVC.Core.Urls
@@ -47,11 +46,6 @@ namespace FubuMVC.Core.Urls
         }
 
         public string BaseAddress { get { return "http://localhost"; } }
-
-        public string UrlForAsset(AssetFolder? folder, string name)
-        {
-            return "url for asset " + name + " in " + folder.ToString();
-        }
 
         public string UrlFor<TController>(Expression<Action<TController>> expression, string categoryOrHttpMethod)
         {

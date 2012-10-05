@@ -12,11 +12,6 @@ namespace FubuMVC.Core
     public interface IFubuRegistry
     {
         /// <summary>
-        ///   Modify or configure the settings, data, and policies of the Assets Pipeline
-        /// </summary>
-        AssetsExpression Assets { get; }
-
-        /// <summary>
         ///   Expression builder for configuring the default <see cref = "UrlPolicy" />, the default route, as well as supplying custom <see cref = "IUrlPolicy" /> implementations.
         /// </summary>
         RouteConventionExpression Routes { get; }
@@ -183,14 +178,6 @@ namespace FubuMVC.Core
         }
 
         #region IFubuRegistry Members
-
-        /// <summary>
-        ///   Modify or configure the settings, data, and policies of the Assets Pipeline
-        /// </summary>
-        public AssetsExpression Assets
-        {
-            get { return new AssetsExpression(this); }
-        }
 
         /// <summary>
         ///   Expression builder for configuring the default <see cref = "UrlPolicy" />, the default route, as well as supplying custom <see cref = "IUrlPolicy" /> implementations.

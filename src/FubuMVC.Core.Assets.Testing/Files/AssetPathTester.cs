@@ -10,16 +10,16 @@ namespace FubuMVC.Tests.Assets.Files
         [Test]
         public void is_image()
         {
-            new AssetPath("images/pict.bmp").IsImage().ShouldBeTrue();
-            new AssetPath("images/pict.jpg").IsImage().ShouldBeTrue();
-            new AssetPath("images/pict.jpeg").IsImage().ShouldBeTrue();
-            new AssetPath("images/pict.gif").IsImage().ShouldBeTrue();
-            new AssetPath("images/pict.png").IsImage().ShouldBeTrue();
-            new AssetPath("styles/pict.png").IsImage().ShouldBeTrue();
-            new AssetPath("images/pict.unk").IsImage().ShouldBeTrue(); // Use the folder as is
-            new AssetPath("styles/pict.unk").IsImage().ShouldBeFalse(); // Use the folder as is
-            new AssetPath("images/pict.js").IsImage().ShouldBeFalse();
-            new AssetPath("images/pict.css").IsImage().ShouldBeFalse();
+            new AssetPath("images/pict.bmp").IsBinary().ShouldBeTrue();
+            new AssetPath("images/pict.jpg").IsBinary().ShouldBeTrue();
+            new AssetPath("images/pict.jpeg").IsBinary().ShouldBeTrue();
+            new AssetPath("images/pict.gif").IsBinary().ShouldBeTrue();
+            new AssetPath("images/pict.png").IsBinary().ShouldBeTrue();
+            new AssetPath("styles/pict.png").IsBinary().ShouldBeTrue();
+            new AssetPath("images/pict.unk").IsBinary().ShouldBeTrue(); // Use the folder as is
+            new AssetPath("styles/pict.unk").IsBinary().ShouldBeFalse(); // Use the folder as is
+            new AssetPath("images/pict.js").IsBinary().ShouldBeFalse();
+            new AssetPath("images/pict.css").IsBinary().ShouldBeFalse();
         
         }
 

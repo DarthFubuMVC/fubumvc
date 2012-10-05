@@ -1,4 +1,5 @@
 using System.Linq;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Caching;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Assets.Http;
@@ -20,7 +21,7 @@ namespace FubuMVC.Tests.Assets.Http
         [SetUp]
         public void SetUp()
         {
-            var behaviorGraph = BehaviorGraph.BuildEmptyGraph();
+            var behaviorGraph = BehaviorGraph.BuildFrom(x => x.Import<AssetBottleRegistration>());
 
             theChain = behaviorGraph.BehaviorFor<AssetWriter>(x => x.Write(null));
         }

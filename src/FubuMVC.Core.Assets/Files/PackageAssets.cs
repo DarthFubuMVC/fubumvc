@@ -19,12 +19,12 @@ namespace FubuMVC.Core.Assets.Files
 
         public void AddFile(AssetPath path, AssetFile file)
         {
-            if (!path.Folder.HasValue)
+            if (path.Folder == null)
             {
                 throw new ArgumentException("AssetPath must have an AssetType to be used here");
             }
 
-            _files[path.Folder.Value].Add(file);
+            _files[path.Folder].Add(file);
         }
 
         public AssetFile FindByName(string name)
@@ -35,9 +35,9 @@ namespace FubuMVC.Core.Assets.Files
 
         public IEnumerable<AssetFile> FindByPath(AssetPath path)
         {
-            if (path.Folder.HasValue)
+            if (path.Folder != null)
             {
-                return matchingType(path.Folder.Value, path.Name);
+                return matchingType(path.Folder, path.Name);
             }
 
             var scripts = matchingType(AssetFolder.scripts, path.Name);

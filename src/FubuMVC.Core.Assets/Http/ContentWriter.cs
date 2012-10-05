@@ -30,7 +30,7 @@ namespace FubuMVC.Core.Assets.Http
 
         public IEnumerable<AssetFile> Write(AssetPath asset)
         {
-            if (asset.IsImage())
+            if (asset.IsBinary())
             {
                 return writeBinary(asset);
             }

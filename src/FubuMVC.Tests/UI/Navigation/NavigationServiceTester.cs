@@ -1,7 +1,6 @@
 using System;
 using System.Net;
 using FubuLocalization;
-using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
@@ -55,7 +54,7 @@ namespace FubuMVC.Tests.UI.Navigation
         [Test, Ignore("Until navigation is moved out")]
         public void will_resolve_the_asset_url_for_the_icon_if_it_exists()
         {
-            theToken.IconUrl.ShouldEqual(theUrls.UrlForAsset(AssetFolder.images, theNode.Icon()));
+            //theToken.IconUrl.ShouldEqual(theUrls.UrlForAsset(AssetFolder.images, theNode.Icon()));
         }
 
         [Test]

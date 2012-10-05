@@ -132,7 +132,7 @@ namespace FubuMVC.Tests.Assets
         public void should_register_the_recording_registration_as_a_policy_in_behavior_graph()
         {
             var registry = new FubuRegistry();
-            registry.Assets.Asset("a.js").Requires("b.js");
+            registry.Assets().Asset("a.js").Requires("b.js");
 
             var graph = BehaviorGraph.BuildFrom(registry);
 
@@ -171,7 +171,7 @@ crud includes a.js, b.js, c.js
         [Test]
         public void should_use_the_trace_only_missing_handler_option_if_nothing_else_is_configured()
         {
-            BehaviorGraph.BuildEmptyGraph().Services.DefaultServiceFor<IMissingAssetHandler>()
+            BehaviorGraph.BuildFrom(x => x.Import<AssetBottleRegistration>()).Services.DefaultServiceFor<IMissingAssetHandler>()
                 .Type.ShouldEqual(typeof (TraceOnlyMissingAssetHandler));
         }
 
@@ -179,9 +179,9 @@ crud includes a.js, b.js, c.js
         public void YSOD_false()
         {
             var registry = new FubuRegistry();
-            registry.Assets.YSOD_on_missing_assets(false);
+            registry.Assets().YSOD_on_missing_assets(false);
 
-            BehaviorGraph.BuildFrom(registry).Services.DefaultServiceFor<IMissingAssetHandler>()
+            BehaviorGraph.BuildFrom(x => x.Import<AssetBottleRegistration>()).Services.DefaultServiceFor<IMissingAssetHandler>()
                 .Type.ShouldEqual(typeof (TraceOnlyMissingAssetHandler));
         }
 
@@ -189,7 +189,7 @@ crud includes a.js, b.js, c.js
         public void YSOD_true()
         {
             var registry = new FubuRegistry();
-            registry.Assets.YSOD_on_missing_assets(true);
+            registry.Assets().YSOD_on_missing_assets(true);
 
             BehaviorGraph.BuildFrom(registry).Services.DefaultServiceFor<IMissingAssetHandler>()
                 .Type.ShouldEqual(typeof(YellowScreenMissingAssetHandler));
@@ -199,7 +199,7 @@ crud includes a.js, b.js, c.js
         public void register_a_custom_missing_asset_handler()
         {
             var registry = new FubuRegistry();
-            registry.Assets.HandleMissingAssetsWith<MyDifferentMissingAssetHandler>();
+            registry.Assets().HandleMissingAssetsWith<MyDifferentMissingAssetHandler>();
 
             BehaviorGraph.BuildFrom(registry).Services.DefaultServiceFor<IMissingAssetHandler>()
                 .Type.ShouldEqual(typeof(MyDifferentMissingAssetHandler));
@@ -209,7 +209,7 @@ crud includes a.js, b.js, c.js
         public void apply_the_simplistic_asset_combination_approach()
         {
             var registry = new FubuRegistry();
-            registry.Assets.CombineAllUniqueAssetRequests();
+            registry.Assets().CombineAllUniqueAssetRequests();
 
             BehaviorGraph.BuildFrom(registry).Services.DefaultServiceFor<ICombinationDeterminationService>()
                 .Type.ShouldEqual(typeof(CombineAllUniqueSetsCombinationDeterminationService)); 
@@ -221,7 +221,7 @@ crud includes a.js, b.js, c.js
         public void adds_a_warm_up_policy_for_asset_combinations()
         {
             var registry = new FubuRegistry();
-            registry.Assets.CombineAllUniqueAssetRequests();
+            registry.Assets().CombineAllUniqueAssetRequests();
 
             BehaviorGraph.BuildFrom(registry).Services.ServicesFor<IAssetPolicy>()
                 .ShouldContain(x => x.Type == typeof(WarmUpSetsForCombinationPolicy));
@@ -231,7 +231,7 @@ crud includes a.js, b.js, c.js
         public void register_a_combination_policy_with_CombineWith()
         {
             var registry = new FubuRegistry();
-            registry.Assets
+            registry.Assets()
                 .CombineWith<CombineAllScriptFiles>()
                 .CombineWith<CombineAllStylesheets>();
 

@@ -33,7 +33,7 @@ namespace FubuMVC.Core.Assets.Combination
             get; set;
         }
 
-        public abstract AssetFolder? Folder { get; }
+        public abstract AssetFolder Folder { get; }
         public MimeType MimeType { get; private set; }
 
         public IEnumerable<AssetFile> Files

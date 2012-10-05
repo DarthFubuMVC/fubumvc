@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{33E656BD-1BB8-49C6-9D67-DEF318324152}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FubuMVC.Core.Assets</RootNamespace>
+    <AssemblyName>FubuMVC.Core.Assets</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Bottles">
+      <HintPath>..\packages\Bottles.0.9.1.365\lib\Bottles.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuCore">
+      <HintPath>..\packages\FubuCore.0.9.9.181\lib\FubuCore.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlTags">
+      <HintPath>..\packages\HtmlTags.1.1.0.115\lib\4.0\HtmlTags.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="AssetBase.cs" />
+    <Compile Include="AssetBottleRegistration.cs" />
+    <Compile Include="AssetCacheHeaders.cs" />
+    <Compile Include="AssetCombinationBuildingActivator.cs" />
+    <Compile Include="AssetContentEndpoint.cs" />
+    <Compile Include="AssetDeclarationChecker.cs" />
+    <Compile Include="AssetDeclarationVerificationActivator.cs" />
+    <Compile Include="AssetDependency.cs" />
+    <Compile Include="AssetDependencyFinderCache.cs" />
+    <Compile Include="AssetDslReader.cs" />
+    <Compile Include="AssetFileDataMother.cs" />
+    <Compile Include="AssetFileGraphBuilderActivator.cs" />
+    <Compile Include="AssetFilePageExtensions.cs" />
+    <Compile Include="AssetGatherer.cs" />
+    <Compile Include="AssetGraph.cs" />
+    <Compile Include="AssetGraphConfigurationActivator.cs" />
+    <Compile Include="AssetGraphScenario.cs" />
+    <Compile Include="AssetNamesKey.cs" />
+    <Compile Include="AssetPlanKey.cs" />
+    <Compile Include="AssetPolicyActivator.cs" />
+    <Compile Include="AssetPrecompilerActivator.cs" />
+    <Compile Include="AssetRequirements.cs" />
+    <Compile Include="AssetServicesRegistry.cs" />
+    <Compile Include="AssetSet.cs" />
+    <Compile Include="AssetsExpression.cs" />
+    <Compile Include="AssetTagPlanCache.cs" />
+    <Compile Include="AssetTagPlanner.cs" />
+    <Compile Include="AssetTagWriter.cs" />
+    <Compile Include="AssetUrls.cs" />
+    <Compile Include="Caching\AssetContentCache.cs" />
+    <Compile Include="Caching\AssetFileMonitoringSettings.cs" />
+    <Compile Include="Caching\AssetFileWatcher.cs" />
+    <Compile Include="Caching\AssetFileWatchingActivator.cs" />
+    <Compile Include="Caching\IAssetFileChangeListener.cs" />
+    <Compile Include="Caching\IAssetFileWatcher.cs" />
+    <Compile Include="Combination\AssetCombinationCache.cs" />
+    <Compile Include="Combination\AssetCombinationSet.cs" />
+    <Compile Include="Combination\AssetFileCombination.cs" />
+    <Compile Include="Combination\AssetGrouper.cs" />
+    <Compile Include="Combination\AssetTagPlan.cs" />
+    <Compile Include="Combination\CombinationCandidate.cs" />
+    <Compile Include="Combination\CombinationDeterminationService.cs" />
+    <Compile Include="Combination\CombineAllScriptFiles.cs" />
+    <Compile Include="Combination\CombineAllStylesheets.cs" />
+    <Compile Include="Combination\CombineAllUniqueSetsCombinationDeterminationService.cs" />
+    <Compile Include="Combination\IAssetCombinationCache.cs" />
+    <Compile Include="Combination\ICombinationDeterminationService.cs" />
+    <Compile Include="Combination\ICombinationPolicy.cs" />
+    <Compile Include="Combination\MimetypeCombinations.cs" />
+    <Compile Include="Combination\ScriptFileCombination.cs" />
+    <Compile Include="Combination\StyleFileCombination.cs" />
+    <Compile Include="Content\ActionType.cs" />
+    <Compile Include="Content\Combination.cs" />
+    <Compile Include="Content\ContentPipeline.cs" />
+    <Compile Include="Content\ContentPlan.cs" />
+    <Compile Include="Content\ContentPlanCache.cs" />
+    <Compile Include="Content\ContentPlanner.cs" />
+    <Compile Include="Content\FileRead.cs" />
+    <Compile Include="Content\IContentPipeline.cs" />
+    <Compile Include="Content\IContentPlanCache.cs" />
+    <Compile Include="Content\IContentPlanner.cs" />
+    <Compile Include="Content\IContentPlanVisitor.cs" />
+    <Compile Include="Content\IContentSource.cs" />
+    <Compile Include="Content\ITransformer.cs" />
+    <Compile Include="Content\ITransformerPolicy.cs" />
+    <Compile Include="Content\ITransformerPolicyLibrary.cs" />
+    <Compile Include="Content\TooManyBatchedTransformationsException.cs" />
+    <Compile Include="Content\Transform.cs" />
+    <Compile Include="Content\TransformerComparer.cs" />
+    <Compile Include="Content\TransformerPolicy.cs" />
+    <Compile Include="Content\TransformerPolicyLibrary.cs" />
+    <Compile Include="Content\TransformerRequirements.cs" />
+    <Compile Include="DependencyRule.cs" />
+    <Compile Include="Diagnostics\AssetLog.cs" />
+    <Compile Include="Diagnostics\AssetLogEntry.cs" />
+    <Compile Include="Diagnostics\AssetLogsCache.cs" />
+    <Compile Include="Diagnostics\AssetRegistrationDiagnostics.cs" />
+    <Compile Include="EndpointDriverExtensions.cs" />
+    <Compile Include="Extension.cs" />
+    <Compile Include="Files\AssetFile.cs" />
+    <Compile Include="Files\AssetFileBuilder.cs" />
+    <Compile Include="Files\AssetFileGraph.cs" />
+    <Compile Include="Files\AssetFileGraphBuilder.cs" />
+    <Compile Include="Files\AssetFileSource.cs" />
+    <Compile Include="Files\AssetFolder.cs" />
+    <Compile Include="Files\AssetPath.cs" />
+    <Compile Include="Files\AssetPathException.cs" />
+    <Compile Include="Files\IAssetFileGraph.cs" />
+    <Compile Include="Files\IAssetFileRegistration.cs" />
+    <Compile Include="Files\PackageAssets.cs" />
+    <Compile Include="Http\AssetFileEtagGenerator.cs" />
+    <Compile Include="Http\AssetWriter.cs" />
+    <Compile Include="Http\ContentWriter.cs" />
+    <Compile Include="IAssetCacheHeaders.cs" />
+    <Compile Include="IAssetDependencyFinder.cs" />
+    <Compile Include="IAssetPrecompiler.cs" />
+    <Compile Include="IAssetRegistration.cs" />
+    <Compile Include="IAssetTagPlanCache.cs" />
+    <Compile Include="IAssetTagPlanner.cs" />
+    <Compile Include="IAssetTagSubject.cs" />
+    <Compile Include="Interfaces.cs" />
+    <Compile Include="MimetypeRegistrationActivator.cs" />
+    <Compile Include="MissingAssetTagSubject.cs" />
+    <Compile Include="MixedMimetypeException.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecordingAssetRegistration.cs" />
+    <Compile Include="Tags\AssetTagBuilder.cs" />
+    <Compile Include="Tags\IAssetTagBuilder.cs" />
+    <Compile Include="Tags\IMissingAssetHandler.cs" />
+    <Compile Include="Tags\MissingAssetsException.cs" />
+    <Compile Include="Tags\TraceOnlyMissingAssetHandler.cs" />
+    <Compile Include="Tags\YellowScreenMissingAssetHandler.cs" />
+    <Compile Include="WarmUpSetsForCombinationPolicy.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FubuMVC.Core.View\FubuMVC.Core.View.csproj">
+      <Project>{2A1EC669-763F-4C2E-BC22-99A47A4BD5B7}</Project>
+      <Name>FubuMVC.Core.View</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
+      <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
+      <Name>FubuMVC.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

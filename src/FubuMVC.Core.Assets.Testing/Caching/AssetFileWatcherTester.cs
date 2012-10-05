@@ -4,6 +4,7 @@ using System.Threading;
 using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Caching;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Registration;
@@ -20,7 +21,7 @@ namespace FubuMVC.Tests.Assets.Caching
         [Test]
         public void asset_file_watcher_should_be_registered_as_a_singleton()
         {
-            BehaviorGraph.BuildEmptyGraph()
+            BehaviorGraph.BuildFrom(x => x.Import<AssetBottleRegistration>())
                 .Services
                 .DefaultServiceFor<IAssetFileWatcher>()
                 .Type.ShouldEqual(typeof(AssetFileWatcher));

@@ -31,7 +31,7 @@ namespace FubuMVC.Core.Assets.Files
             readPath(path);
         }
 
-        public AssetPath(string package, string name, AssetFolder? folder) : base(name)
+        public AssetPath(string package, string name, AssetFolder folder) : base(name)
         {
             if (package == null) throw new ArgumentNullException("package");
             if (name == null) throw new ArgumentNullException("name");
@@ -41,7 +41,7 @@ namespace FubuMVC.Core.Assets.Files
             Folder = folder;
         }
 
-        public AssetPath(string path, AssetFolder? folder) : base(path)
+        public AssetPath(string path, AssetFolder folder) : base(path)
         {
             Folder = folder;
         }
@@ -51,7 +51,7 @@ namespace FubuMVC.Core.Assets.Files
             var name = "";
 
             Package.IfNotNull(x => name += x + ":");
-            if (Folder.HasValue) name += Folder + "/";
+            if (Folder != null) name += Folder.Name + "/";
             
             name += Name;
 
@@ -63,7 +63,7 @@ namespace FubuMVC.Core.Assets.Files
 
         public string Name { get; private set; }
         public string Package { get; private set; }
-        public AssetFolder? Folder { get; private set; }
+        public AssetFolder Folder { get; private set; }
 
         private void readPath(string path)
         {
@@ -73,7 +73,7 @@ namespace FubuMVC.Core.Assets.Files
                 return;
             }
 
-            foreach (AssetFolder type in Enum.GetValues(typeof (AssetFolder)))
+            foreach (AssetFolder type in AssetFolder.AllFolders())
             {
                 var prefix = type + "/";
 
@@ -88,16 +88,17 @@ namespace FubuMVC.Core.Assets.Files
             Name = path;
         }
 
-        public bool IsImage()
+        // TODO -- this smells to high heaven and it's going to be brittle
+        public bool IsBinary()
         {
             var mimeType = MimeType.MimeTypeByFileName(Name);
 
-            if (mimeType != null && mimeType.Folder() != null)
+            if (mimeType != null)
             {
-                return mimeType.Folder() == AssetFolder.images;
+                return mimeType != MimeType.Css && mimeType != MimeType.Javascript;
             }
 
-            return Folder.Equals(AssetFolder.images);
+            return Folder.Equals(AssetFolder.images) || Folder.Equals(AssetFolder.fonts);
         }
 
         public bool Equals(AssetPath other)
@@ -121,7 +122,7 @@ namespace FubuMVC.Core.Assets.Files
             {
                 int result = (Name != null ? Name.GetHashCode() : 0);
                 result = (result*397) ^ (Package != null ? Package.GetHashCode() : 0);
-                result = (result*397) ^ (Folder.HasValue ? Folder.Value.GetHashCode() : 0);
+                result = (result*397) ^ (Folder != null ? Folder.GetHashCode() : 0);
                 return result;
             }
         }

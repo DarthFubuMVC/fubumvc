@@ -4,7 +4,6 @@ using Bottles;
 using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core;
-using FubuMVC.Core.Assets.Caching;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Caching;
@@ -104,12 +103,6 @@ namespace FubuMVC.Tests.StructureMapIoC
         private StructureMapContainerFacility facility;
 
         [Test]
-        public void PropertyBinderCache_should_be_a_singleton()
-        {
-            container.Model.For<IAssetContentCache>().Lifecycle.ShouldEqual("Singleton");
-        }
-
-        [Test]
         public void behavior_factory_is_available_in_the_container()
         {
             container.GetInstance<IBehaviorFactory>().ShouldBeOfType<PartialBehaviorFactory>();
@@ -118,7 +111,7 @@ namespace FubuMVC.Tests.StructureMapIoC
         [Test]
         public void can_return_all_the_registered_activators_smoke_test()
         {
-            facility.GetAllActivators().Count().ShouldBeGreaterThan(9);
+            facility.GetAllActivators().Count().ShouldBeGreaterThan(3);
         }
 
         [Test]

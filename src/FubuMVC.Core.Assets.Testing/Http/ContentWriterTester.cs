@@ -24,7 +24,7 @@ namespace FubuMVC.Tests.Assets.Http
             theAssetPath = new AssetPath("images/icon.gif");
 
             // Precondition here
-            theAssetPath.IsImage().ShouldBeTrue();
+            theAssetPath.IsBinary().ShouldBeTrue();
 
             theFile = new AssetFile(theAssetPath.ToFullName()){
                 FullPath = theAssetPath.ToFullName().ToFullPath()
@@ -59,7 +59,7 @@ namespace FubuMVC.Tests.Assets.Http
         protected override void beforeEach()
         {
             var assetPath = new AssetPath("scripts/combo1.js");
-            assetPath.IsImage().ShouldBeFalse();
+            assetPath.IsBinary().ShouldBeFalse();
 
             theFiles = new AssetFile[]{
                 new AssetFile("script1.js"){FullPath = "1.js"},

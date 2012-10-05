@@ -31,7 +31,7 @@ namespace FubuMVC.Core.Assets.Files
 
         public void AddFile(AssetPath path, AssetFile file)
         {
-            if (path.Folder != null) file.Folder = path.Folder.Value;
+            if (path.Folder != null) file.Folder = path.Folder;
             _packages[path.Package].AddFile(path, file);
         }
 

@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.Assets
     {
         private void registeredTypeIs<TService, TImplementation>()
         {
-            BehaviorGraph.BuildEmptyGraph().Services.DefaultServiceFor<TService>().Type.ShouldEqual(
+            BehaviorGraph.BuildFrom(x => x.Import<AssetBottleRegistration>()).Services.DefaultServiceFor<TService>().Type.ShouldEqual(
                 typeof(TImplementation));
         }
 
@@ -67,7 +67,8 @@ namespace FubuMVC.Tests.Assets
         [Test]
         public void asset_graph_and_pipeline_activators_are_registered_in_the_correct_order()
         {
-            var activators = BehaviorGraph.BuildEmptyGraph().Services.ServicesFor<IActivator>().ToList();
+            var services = BehaviorGraph.BuildFrom(x => x.Import<AssetBottleRegistration>()).Services;
+            var activators = services.ServicesFor<IActivator>().ToList();
 
             activators.Any(x => x.Type == typeof(AssetGraphConfigurationActivator)).ShouldBeTrue();
             activators.Any(x => x.Type == typeof(AssetFileGraphBuilderActivator)).ShouldBeTrue();
@@ -90,7 +91,7 @@ namespace FubuMVC.Tests.Assets
         [Test]
         public void asset_file_graph_is_registered_as_both_IAssetFileGraph_and_IAssetFileRegistration_as_the_same_instance()
         {
-            var services = BehaviorGraph.BuildEmptyGraph().Services;
+            var services = BehaviorGraph.BuildFrom(x => x.Import<AssetBottleRegistration>()).Services;
             var pipeline1 = services.DefaultServiceFor<IAssetFileGraph>().Value.ShouldBeOfType<AssetFileGraph>();
             var pipeline2 = services.DefaultServiceFor<IAssetFileRegistration>().Value.ShouldBeOfType<AssetFileGraph>();
 
@@ -165,13 +166,15 @@ namespace FubuMVC.Tests.Assets
         [Test]
         public void script_graph_is_registered()
         {
-            BehaviorGraph.BuildEmptyGraph().Services.DefaultServiceFor<AssetGraph>().Value.ShouldNotBeNull();
+            var services = BehaviorGraph.BuildFrom(x => x.Import<AssetBottleRegistration>()).Services;
+            services.DefaultServiceFor<AssetGraph>().Value.ShouldNotBeNull();
         }
 
         [Test]
         public void should_be_a_script_configuration_activator_registered_as_a_service()
         {
-            BehaviorGraph.BuildEmptyGraph().Services.ServicesFor<IActivator>()
+            var services = BehaviorGraph.BuildFrom(x => x.Import<AssetBottleRegistration>()).Services;
+            services.ServicesFor<IActivator>()
                 .Any(x => x.Type == typeof(AssetGraphConfigurationActivator)).ShouldBeTrue();
         }
 

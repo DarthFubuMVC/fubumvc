@@ -7,7 +7,7 @@ namespace FubuMVC.Core.Assets
 {
     public static class EndpointDriverExtensions
     {
-        public static HttpResponse GetAsset(this EndpointDriver endpoints, AssetFolder? folder, string name, string etag = null)
+        public static HttpResponse GetAsset(this EndpointDriver endpoints, AssetFolder folder, string name, string etag = null)
         {
             var path = new AssetPath(name, folder);
 

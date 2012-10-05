@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core;
-using FubuMVC.Core.Assets;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
@@ -28,8 +27,6 @@ namespace FubuMVC.Tests.Registration.Expressions
         [SetUp]
         public void SetUp()
         {
-            AssetContentEndpoint.Latched = true;
-
             registry = new FubuRegistry(x =>
             {
                 x.Actions.IncludeTypes(t => false);
@@ -53,12 +50,6 @@ namespace FubuMVC.Tests.Registration.Expressions
         }
 
         #endregion
-
-        [TearDown]
-        public void TearDown()
-        {
-            AssetContentEndpoint.Latched = false;
-        }
 
         private FubuRegistry registry;
 

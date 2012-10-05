@@ -74,7 +74,6 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="AssetFilePageExtensionsTester.cs" />
     <Compile Include="Attachment\DefaultProfileTester.cs" />
     <Compile Include="Attachment\ProfileViewTokenTester.cs" />
     <Compile Include="Attachment\ViewAttacherTester.cs" />

@@ -1,15 +1,9 @@
 using System;
 using System.Linq.Expressions;
 using FubuLocalization;
-using FubuMVC.Core.Assets;
-using FubuMVC.Core.Assets.Files;
-using FubuMVC.Core.Http;
-using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Security.AntiForgery;
 using FubuMVC.Core.UI.Elements;
 using FubuMVC.Core.View;
 using HtmlTags;
-using HtmlTags.Extended.Attributes;
 using FubuCore;
 using FubuCore.Reflection;
 
@@ -17,19 +11,6 @@ namespace FubuMVC.Core.UI
 {
     public static class FubuPageExtensions
     {
-        /// <summary>
-        /// Writes an <image> tag for the named assetName using the url from the asset pipeline
-        /// </summary>
-        /// <param name="page"></param>
-        /// <param name="assetName"></param>
-        /// <returns></returns>
-        public static HtmlTag ImageFor(this IFubuPage page, string assetName)
-        {
-            string url = page.Get<IAssetUrls>().UrlForAsset(AssetFolder.images, assetName);
-            return new HtmlTag("img").Attr("src", url);
-        }
-
-
         /// <summary>
         ///   Just returns the localized header text for a property of the view model
         /// </summary>
@@ -85,7 +66,7 @@ namespace FubuMVC.Core.UI
 
             return page.AuthorizedLinkTo(x => x.EndpointFor(inputModel));
         }
-        
+
         /// <summary>
         /// Creates a link tag pointing to the controller/endpoint method.  Nothing is output
         /// if the user is not authorized to view this resource
@@ -138,7 +119,7 @@ namespace FubuMVC.Core.UI
             return page.LinkVariable(variable, new TInput());
         }
 
- 
+
         /// <summary>
         /// Exercises the IElementNamingConvention to determine the element name for an expression
         /// </summary>
@@ -178,31 +159,5 @@ namespace FubuMVC.Core.UI
         {
             return new HtmlTag("span").Text(text);
         }
-
-
-        /// <summary>
-        ///   Renders an HTML img tag to display the specified file from the application's image folder
-        /// </summary>
-        /// <param name = "viewPage"></param>
-        /// <param name = "imageFilename">The name of the image file, relative to the applications' image folder</param>
-        /// <returns></returns>
-        public static ImageTag Image(this IFubuPage viewPage, string imageFilename)
-        {
-            string imageUrl = viewPage.ImageUrl(imageFilename);
-            return new ImageTag(imageUrl);
-        }
-
-        /// <summary>
-        ///   Returns the absolute URL for an image (may be a customer overridden path or a package image path)
-        /// </summary>
-        /// <param name = "viewPage"></param>
-        /// <param name = "imageFilename">The name of the image file, relative to the applications' image folder</param>
-        /// <returns></returns>
-        public static string ImageUrl(this IFubuPage viewPage, string imageFilename)
-        {
-            return viewPage.Get<IAssetUrls>().UrlForAsset(AssetFolder.images, imageFilename);
-        }
-
-
     }
 }

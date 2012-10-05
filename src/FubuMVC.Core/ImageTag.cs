@@ -1,8 +1,9 @@
 ﻿using FubuLocalization;
 using HtmlTags;
 
-namespace FubuMVC.Core.UI
+namespace FubuMVC.Core
 {
+    // TODO -- move this to HtmlTags!!!!!
     public class ImageTag : HtmlTag
     {
         public ImageTag(string url)
