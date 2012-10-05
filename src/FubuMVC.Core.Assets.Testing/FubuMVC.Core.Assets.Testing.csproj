@@ -158,6 +158,7 @@
     <Compile Include="Tags\AssetTagBuilderTester.cs" />
     <Compile Include="Tags\TraceOnlyMissingAssetHandlerTester.cs" />
     <Compile Include="Tags\YellowScreenMissingAssetHandlerTester.cs" />
+    <Compile Include="AssetUrlsTester.cs" />
     <Compile Include="WarmUpSetsForCombinationPolicyTester.cs" />
   </ItemGroup>
   <ItemGroup />

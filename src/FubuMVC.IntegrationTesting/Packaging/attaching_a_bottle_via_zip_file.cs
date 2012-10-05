@@ -10,6 +10,7 @@ using FubuTestingSupport;
 using NUnit.Framework;
 using TestPackage1;
 using FubuCore;
+using FubuMVC.Core.Assets;
 
 namespace FubuMVC.IntegrationTesting.Packaging
 {

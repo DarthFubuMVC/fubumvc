@@ -63,6 +63,7 @@ namespace FubuMVC.Core.Assets
             FillType(typeof(IActivator), typeof(AssetPolicyActivator));
             FillType(typeof(IActivator), typeof(AssetFileWatchingActivator));
 
+            SetServiceIfNone<IAssetUrls, AssetUrls>();
         }
     }
 }

@@ -1,5 +1,6 @@
 using System.Linq;
 using FubuMVC.Core;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Urls;
@@ -9,9 +10,9 @@ namespace FubuMVC.TestingHarness.Querying
     public class GraphQuery
     {
         private readonly BehaviorGraph _graph;
-        private readonly IUrlRegistry _urls;
+        private readonly IAssetUrls _urls;
 
-        public GraphQuery(BehaviorGraph graph, IUrlRegistry urls)
+        public GraphQuery(BehaviorGraph graph, IAssetUrls urls)
         {
             _graph = graph;
             _urls = urls;

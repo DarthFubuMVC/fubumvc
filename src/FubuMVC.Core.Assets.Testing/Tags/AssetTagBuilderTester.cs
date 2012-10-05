@@ -27,7 +27,7 @@ namespace FubuMVC.Tests.Assets.Tags
                 .Return(new HtmlTag[0])
                 .IgnoreArguments();
 
-            MockFor<IUrlRegistry>().Stub(x => x.UrlForAsset(AssetFolder.scripts, "script.js"))
+            MockFor<IAssetUrls>().Stub(x => x.UrlForAsset(AssetFolder.scripts, "script.js"))
                 .Return("http://myapp/_content/scripts/script.js");
 
             var file = new AssetFile("script.js", AssetFolder.scripts);
@@ -46,7 +46,7 @@ namespace FubuMVC.Tests.Assets.Tags
                 .Return(new HtmlTag[0])
                 .IgnoreArguments();
 
-            MockFor<IUrlRegistry>().Stub(x => x.UrlForAsset(AssetFolder.styles, "main.css"))
+            MockFor<IAssetUrls>().Stub(x => x.UrlForAsset(AssetFolder.styles, "main.css"))
                 .Return("http://myapp/_content/styles/main.css");
 
             var file = new AssetFile("main.css", AssetFolder.styles);

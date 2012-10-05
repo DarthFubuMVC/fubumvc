@@ -1,6 +1,7 @@
 using System;
 using System.Linq.Expressions;
 using FubuLocalization;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
@@ -24,7 +25,7 @@ namespace FubuMVC.Core.UI
         /// <returns></returns>
         public static HtmlTag ImageFor(this IFubuPage page, string assetName)
         {
-            string url = page.Urls.UrlForAsset(AssetFolder.images, assetName);
+            string url = page.Get<IAssetUrls>().UrlForAsset(AssetFolder.images, assetName);
             return new HtmlTag("img").Attr("src", url);
         }
 
@@ -199,7 +200,7 @@ namespace FubuMVC.Core.UI
         /// <returns></returns>
         public static string ImageUrl(this IFubuPage viewPage, string imageFilename)
         {
-            return viewPage.Urls.UrlForAsset(AssetFolder.images, imageFilename);
+            return viewPage.Get<IAssetUrls>().UrlForAsset(AssetFolder.images, imageFilename);
         }
 
 

@@ -43,10 +43,11 @@ namespace FubuMVC.Core.UI.Navigation
                 MenuItemState = _stateService.DetermineStateFor(node)
             };
 
-            if (node.Icon().IsNotEmpty())
-            {
-                token.IconUrl = _urls.UrlForAsset(AssetFolder.images, node.Icon());
-            }
+            // TODO -- needs to come back here!  GH-418
+            //if (node.Icon().IsNotEmpty())
+            //{
+            //    token.IconUrl = _urls.UrlForAsset(AssetFolder.images, node.Icon());
+            //}
 
             if (node.Type == MenuNodeType.Leaf)
             {

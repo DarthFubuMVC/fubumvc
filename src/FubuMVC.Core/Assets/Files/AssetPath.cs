@@ -41,6 +41,11 @@ namespace FubuMVC.Core.Assets.Files
             Folder = folder;
         }
 
+        public AssetPath(string path, AssetFolder? folder) : base(path)
+        {
+            Folder = folder;
+        }
+
         public string ToFullName()
         {
             var name = "";

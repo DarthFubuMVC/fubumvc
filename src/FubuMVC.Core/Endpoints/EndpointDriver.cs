@@ -44,12 +44,6 @@ namespace FubuMVC.Core.Endpoints
             return request.ToHttpCall();
         } 
 
-        public HttpResponse GetAsset(AssetFolder? folder, string name, string etag = null)
-        {
-            var url = _urls.UrlForAsset(folder, name);
-            return Get(url, etag: etag);
-        }
-
         public HttpResponse PostAsForm<T>(T target, string contentType = "application/x-www-form-urlencoded", string accept="*/*")
         {
             var dictionary = new Dictionary<string, object>();

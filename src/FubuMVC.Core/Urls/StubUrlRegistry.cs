@@ -46,6 +46,8 @@ namespace FubuMVC.Core.Urls
             return "url for {0}/{1} with parameters {2}".ToFormat(modelType.FullName, categoryOrHttpMethod, parameters);
         }
 
+        public string BaseAddress { get { return "http://localhost"; } }
+
         public string UrlForAsset(AssetFolder? folder, string name)
         {
             return "url for asset " + name + " in " + folder.ToString();

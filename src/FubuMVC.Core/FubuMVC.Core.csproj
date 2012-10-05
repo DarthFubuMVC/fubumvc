@@ -77,6 +77,7 @@
     <Compile Include="Assets\AssetGraphScenario.cs" />
     <Compile Include="Assets\AssetPrecompilerActivator.cs" />
     <Compile Include="Assets\AssetServicesRegistry.cs" />
+    <Compile Include="Assets\AssetUrls.cs" />
     <Compile Include="Assets\Caching\AssetContentCache.cs" />
     <Compile Include="Assets\Caching\AssetFileMonitoringSettings.cs" />
     <Compile Include="Assets\Caching\AssetFileWatcher.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Assets\Diagnostics\AssetLogEntry.cs" />
     <Compile Include="Assets\Diagnostics\AssetLogsCache.cs" />
     <Compile Include="Assets\Diagnostics\AssetRegistrationDiagnostics.cs" />
+    <Compile Include="Assets\EndpointDriverExtensions.cs" />
     <Compile Include="Assets\Http\AssetFileEtagGenerator.cs" />
     <Compile Include="Assets\Http\AssetWriter.cs" />
     <Compile Include="Assets\IAssetCacheHeaders.cs" />

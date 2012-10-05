@@ -26,6 +26,12 @@ namespace FubuMVC.Tests.Assets
         }
 
         [Test]
+        public void asset_urls_are_registered()
+        {
+            registeredTypeIs<IAssetUrls, AssetUrls>();
+        }
+
+        [Test]
         public void asset_file_change_listener_is_registered()
         {
             registeredTypeIs<IAssetFileChangeListener, AssetFileChangeListener>();

@@ -52,7 +52,7 @@ namespace FubuMVC.Tests.UI.Navigation
             theToken = ClassUnderTest.BuildToken(theNode);
         }
 
-        [Test]
+        [Test, Ignore("Until navigation is moved out")]
         public void will_resolve_the_asset_url_for_the_icon_if_it_exists()
         {
             theToken.IconUrl.ShouldEqual(theUrls.UrlForAsset(AssetFolder.images, theNode.Icon()));

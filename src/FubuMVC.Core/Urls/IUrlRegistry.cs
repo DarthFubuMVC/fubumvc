@@ -88,14 +88,6 @@ namespace FubuMVC.Core.Urls
         /// <param name="categoryOrHttpMethod"></param>
         /// <returns></returns>
         string UrlFor(Type modelType, RouteParameters parameters, string categoryOrHttpMethod = null);
-
-        /// <summary>
-        /// Resolve the url for a named asset
-        /// </summary>
-        /// <param name="folder"></param>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        string UrlForAsset(AssetFolder? folder, string name);
     }
 
     public static class UrlRegistryExtensions

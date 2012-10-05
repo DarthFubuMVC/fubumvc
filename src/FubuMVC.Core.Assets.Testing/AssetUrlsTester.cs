@@ -1,12 +1,13 @@
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Urls;
-using FubuTestingSupport;
+using FubuMVC.Tests.Assets.Tags;
 using NUnit.Framework;
+using FubuTestingSupport;
 
-namespace FubuMVC.Tests.Urls
+namespace FubuMVC.Core.Assets.Testing
 {
     [TestFixture]
-    public class UrlRegistryTester
+    public class AssetUrlsTester
     {
         [Test]
         public void determine_asset_url_simple()
@@ -16,7 +17,7 @@ namespace FubuMVC.Tests.Urls
                 Folder = AssetFolder.scripts
             };
 
-            UrlRegistry.DetermineRelativeAssetUrl(file)
+            AssetUrls.DetermineRelativeAssetUrl(file)
                 .ShouldEqual("_content/scripts/jquery.forms.js");
         }
 
@@ -28,14 +29,14 @@ namespace FubuMVC.Tests.Urls
                 Folder = AssetFolder.scripts
             };
 
-            UrlRegistry.DetermineRelativeAssetUrl(file)
+            AssetUrls.DetermineRelativeAssetUrl(file)
                 .ShouldEqual("_content/scripts/shared/jquery.forms.js");
         }
 
         [Test]
         public void determine_asset_url_respects_absolute_path()
         {
-            var registry = new UrlRegistry(null, null, new StubCurrentHttpRequest{TheApplicationRoot = "http://server"});
+            var registry = new AssetUrls(new StubCurrentHttpRequest{TheApplicationRoot = "http://server"});
             registry.UrlForAsset(AssetFolder.images, "icon.png")
                 .ShouldEqual("http://server/_content/images/icon.png");
         }

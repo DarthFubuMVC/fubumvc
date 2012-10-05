@@ -23,7 +23,7 @@ namespace FubuMVC.Core.Resources.PathBased
         public virtual string ToUrlPart(string basePattern)
         {
             var baseUrl = basePattern.Contains(UrlSuffix) ? basePattern.Replace(UrlSuffix, "") : basePattern;
-            return (baseUrl + "/" + _path).Trim('/').Replace("//", "/");
+            return (baseUrl.TrimEnd('/') + "/" + _path.TrimStart('/')).Trim('/');
         }
 
     }

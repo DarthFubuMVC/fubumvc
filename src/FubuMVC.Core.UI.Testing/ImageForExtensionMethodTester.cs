@@ -1,3 +1,4 @@
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
@@ -14,9 +15,9 @@ namespace FubuMVC.Core.UI.Testing
         public void image_for()
         {
             var page = MockRepository.GenerateMock<IFubuPage>();
-            var urls = MockRepository.GenerateMock<IUrlRegistry>();
+            var urls = MockRepository.GenerateMock<IAssetUrls>();
 
-            page.Stub(x => x.Urls).Return(urls);
+            page.Stub(x => x.Get<IAssetUrls>()).Return(urls);
 
             var assetName = "icon.png";
             var url = "the url for icon.png";
