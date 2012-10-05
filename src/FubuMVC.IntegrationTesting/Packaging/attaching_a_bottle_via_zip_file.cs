@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
-using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Runtime;
 using FubuMVC.IntegrationTesting.Conneg;
 using FubuMVC.TestingHarness;
@@ -10,7 +9,6 @@ using FubuTestingSupport;
 using NUnit.Framework;
 using TestPackage1;
 using FubuCore;
-using FubuMVC.Core.Assets;
 
 namespace FubuMVC.IntegrationTesting.Packaging
 {
@@ -29,26 +27,6 @@ create pak1 -o pak1.zip
 
         }
 
-
-
-
-
-        [Test]
-        public void read_image_from_a_package()
-        {
-            endpoints.GetAsset(AssetFolder.images, "icon-add-alt.png")
-                .LengthShouldBe(3517)
-                .ContentTypeShouldBe(MimeType.Png)
-                .StatusCodeShouldBe(HttpStatusCode.OK);
-        }
-
-        [Test]
-        public void read_asset_from_a_bottle()
-        {
-            endpoints.GetAsset(AssetFolder.scripts, "Pak1-A.js")
-                .ContentTypeShouldBe(MimeType.Javascript)
-                .ReadAsText().ShouldContain("var name = 'Pak1-A.js';");
-        }
 
         [Test]
         public void load_actions_from_a_bottle()

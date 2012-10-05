@@ -89,6 +89,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="attaching_a_bottle_via_zip_file.cs" />
     <Compile Include="Image_FubuPage_Extension_methods_Integrated_tester.cs" />
     <Compile Include="file_watching_changes_the_asset.cs" />
     <Compile Include="linking_and_unlinking_packages.cs" />
