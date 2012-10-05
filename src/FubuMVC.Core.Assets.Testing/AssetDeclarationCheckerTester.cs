@@ -33,7 +33,7 @@ namespace FubuMVC.Tests.Assets
         [Test]
         public void does_not_log_a_problem_if_an_asset_file_can_be_found()
         {
-            MockFor<IAssetPipeline>().Stub(x => x.Find(theAssetName)).Return(new AssetFile("something.js"));
+            MockFor<IAssetFileGraph>().Stub(x => x.Find(theAssetName)).Return(new AssetFile("something.js"));
 
             ClassUnderTest.VerifyFileDependency(theAssetName);
 
@@ -43,7 +43,7 @@ namespace FubuMVC.Tests.Assets
         [Test]
         public void asset_the_log_message_contains_provenance()
         {
-             MockFor<IAssetPipeline>().Stub(x => x.Find(theAssetName)).Return(null);
+             MockFor<IAssetFileGraph>().Stub(x => x.Find(theAssetName)).Return(null);
 
             ClassUnderTest.VerifyFileDependency(theAssetName);
 
@@ -58,7 +58,7 @@ namespace FubuMVC.Tests.Assets
         [Test]
         public void log_a_problem_if_an_asset_file_cannot_be_found()
         {
-            MockFor<IAssetPipeline>().Stub(x => x.Find(theAssetName)).Return(null);
+            MockFor<IAssetFileGraph>().Stub(x => x.Find(theAssetName)).Return(null);
 
             ClassUnderTest.VerifyFileDependency(theAssetName);
 

@@ -13,7 +13,7 @@ namespace FubuMVC.Tests.Assets
     {
         AssetGraph _assetGraph;
         IAssetPrecompiler _precompiler;
-        IAssetPipeline _assetPipeline;
+        IAssetFileGraph _assetFileGraph;
         IPackageLog _log;
         bool _result;
 
@@ -21,10 +21,10 @@ namespace FubuMVC.Tests.Assets
         {
             _assetGraph = MockFor<AssetGraph>();
             _precompiler = MockFor<IAssetPrecompiler>();
-            _assetPipeline = MockFor<IAssetPipeline>();
+            _assetFileGraph = MockFor<IAssetFileGraph>();
             _precompiler
-                .Expect(x => x.Precompile(Arg<IAssetPipeline>.Is.Same(_assetPipeline), Arg<IAssetRegistration>.Is.Same(_assetGraph)))
-                .Callback<IAssetPipeline, IAssetRegistration>((x, y) => _result = true);
+                .Expect(x => x.Precompile(Arg<IAssetFileGraph>.Is.Same(_assetFileGraph), Arg<IAssetRegistration>.Is.Same(_assetGraph)))
+                .Callback<IAssetFileGraph, IAssetRegistration>((x, y) => _result = true);
             _log = MockFor<IPackageLog>();
             Services.Inject<IEnumerable<IAssetPrecompiler>>(new[] { _precompiler });
         }

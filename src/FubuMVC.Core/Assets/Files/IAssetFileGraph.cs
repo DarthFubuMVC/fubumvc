@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace FubuMVC.Core.Assets.Files
 {
-    public interface IAssetPipeline
+    public interface IAssetFileGraph
     {
         AssetFile Find(string path);
         AssetPath AssetPathOf(AssetFile file);

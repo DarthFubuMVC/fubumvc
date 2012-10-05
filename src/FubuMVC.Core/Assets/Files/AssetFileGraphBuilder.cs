@@ -5,19 +5,13 @@ using System.Collections.Generic;
 
 namespace FubuMVC.Core.Assets.Files
 {
-    
-
     public class PackageAssetDirectory
     {
         public string PackageName { get; set; }
         public string Directory { get; set; }
     }
 
-
-
-
-
-    public class AssetPipelineBuilder
+    public class AssetFileGraphBuilder
     {
         public static readonly string NoContentFoundForPackageAt = "No content folders found underneath {0}";
         public static readonly string LoadingContentForPackageAt = "Discovered asset files at {0}";
@@ -27,7 +21,7 @@ namespace FubuMVC.Core.Assets.Files
         private readonly IAssetFileRegistration _registration;
         private readonly IPackageLog _log;
 
-        public AssetPipelineBuilder(IFileSystem system, IAssetFileRegistration registration, IPackageLog log)
+        public AssetFileGraphBuilder(IFileSystem system, IAssetFileRegistration registration, IPackageLog log)
         {
             _system = system;
             _registration = registration;

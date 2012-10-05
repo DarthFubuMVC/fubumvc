@@ -16,7 +16,7 @@ namespace FubuMVC.Core.Assets
             _finder = finder;
         }
 
-        public void Apply(IPackageLog log, IAssetPipeline pipeline, AssetGraph graph)
+        public void Apply(IPackageLog log, IAssetFileGraph fileGraph, AssetGraph graph)
         {
             graph.ForEachSetName(WarmUpSet);
         }

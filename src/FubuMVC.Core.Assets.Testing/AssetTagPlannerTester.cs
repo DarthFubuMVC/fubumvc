@@ -13,7 +13,7 @@ namespace FubuMVC.Tests.Assets
         [Test]
         public void find_subjects_where_some_can_be_found_and_some_cannot()
         {
-            var pipeline = MockFor<IAssetPipeline>();
+            var pipeline = MockFor<IAssetFileGraph>();
             var file1 = new AssetFile("a.js");
             var file2 = new AssetFile("b.js");
             var file3 = new AssetFile("c.js");

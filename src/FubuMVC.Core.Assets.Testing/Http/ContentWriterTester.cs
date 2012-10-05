@@ -30,7 +30,7 @@ namespace FubuMVC.Tests.Assets.Http
                 FullPath = theAssetPath.ToFullName().ToFullPath()
             };
 
-            MockFor<IAssetPipeline>().Stub(x => x.Find(theAssetPath))
+            MockFor<IAssetFileGraph>().Stub(x => x.Find(theAssetPath))
                 .Return(theFile);
 
             theReturnedFiles = ClassUnderTest.Write(theAssetPath);

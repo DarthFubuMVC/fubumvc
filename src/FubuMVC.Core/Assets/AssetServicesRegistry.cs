@@ -17,8 +17,8 @@ namespace FubuMVC.Core.Assets
     {
         public AssetServicesRegistry()
         {
-            var pipeline = new AssetPipeline();
-            SetServiceIfNone<IAssetPipeline>(pipeline);
+            var pipeline = new AssetFileGraph();
+            SetServiceIfNone<IAssetFileGraph>(pipeline);
             SetServiceIfNone<IAssetFileRegistration>(pipeline);
 
             SetServiceIfNone(new AssetGraph());
@@ -56,7 +56,7 @@ namespace FubuMVC.Core.Assets
 
             FillType(typeof (IActivator), typeof (AssetPrecompilerActivator));
             FillType(typeof(IActivator), typeof(AssetGraphConfigurationActivator));
-            FillType(typeof(IActivator), typeof(AssetPipelineBuilderActivator));
+            FillType(typeof(IActivator), typeof(AssetFileGraphBuilderActivator));
             FillType(typeof(IActivator), typeof(AssetDeclarationVerificationActivator));
             FillType(typeof(IActivator), typeof(MimetypeRegistrationActivator));
             FillType(typeof(IActivator), typeof(AssetCombinationBuildingActivator));

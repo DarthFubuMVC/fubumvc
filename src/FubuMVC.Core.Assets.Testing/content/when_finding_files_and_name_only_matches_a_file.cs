@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Assets.Content
 
             MockFor<IAssetCombinationCache>().Stub(x => x.FindCombination(theFile.Name)).Return(null);
 
-            MockFor<IAssetPipeline>().Stub(x => x.Find(theFile.Name)).Return(theFile);
+            MockFor<IAssetFileGraph>().Stub(x => x.Find(theFile.Name)).Return(theFile);
         }
 
         [Test]

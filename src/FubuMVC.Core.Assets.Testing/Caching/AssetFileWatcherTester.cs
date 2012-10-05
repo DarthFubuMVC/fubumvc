@@ -45,7 +45,7 @@ namespace FubuMVC.Tests.Assets.Caching
         [Test]
         public void big_integrated_smoke_test()
         {
-            var pipeline = new StubAssetPipeline();
+            var pipeline = new StubAssetFileGraph();
             var listener = MockRepository.GenerateMock<IAssetFileChangeListener>();
 
 
@@ -86,7 +86,7 @@ namespace FubuMVC.Tests.Assets.Caching
         }        
     }
 
-    public class StubAssetPipeline : IAssetPipeline
+    public class StubAssetFileGraph : IAssetFileGraph
     {
         private readonly Cache<string, AssetFile> _files = new Cache<string, AssetFile>();
         private readonly IFileSystem _system = new FileSystem();

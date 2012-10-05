@@ -10,20 +10,20 @@ namespace FubuMVC.Core.Assets
     {
         readonly IEnumerable<IAssetPrecompiler> _precompilers;
         readonly AssetGraph _assetGraph;
-        readonly IAssetPipeline _assetPipeline;
+        readonly IAssetFileGraph _assetFileGraph;
 
-        public AssetPrecompilerActivator(IEnumerable<IAssetPrecompiler> precompilers, AssetGraph assetGraph, IAssetPipeline assetPipeline)
+        public AssetPrecompilerActivator(IEnumerable<IAssetPrecompiler> precompilers, AssetGraph assetGraph, IAssetFileGraph assetFileGraph)
         {
             _precompilers = precompilers;
             _assetGraph = assetGraph;
-            _assetPipeline = assetPipeline;
+            _assetFileGraph = assetFileGraph;
         }
 
         public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
         {
             _precompilers.Each(x =>
             {
-                Action<IAssetRegistration> action = registration => x.Precompile(_assetPipeline, registration);
+                Action<IAssetRegistration> action = registration => x.Precompile(_assetFileGraph, registration);
                 _assetGraph.OnPrecompile(action);
             });
         }

@@ -10,13 +10,13 @@ namespace FubuMVC.Core.Assets.Content
     {
         private readonly IAssetCombinationCache _combinations;
         private readonly ITransformerPolicyLibrary _library;
-        private readonly IAssetPipeline _pipeline;
+        private readonly IAssetFileGraph _fileGraph;
 
-        public ContentPlanner(IAssetCombinationCache combinations, IAssetPipeline pipeline,
+        public ContentPlanner(IAssetCombinationCache combinations, IAssetFileGraph fileGraph,
                               ITransformerPolicyLibrary library)
         {
             _combinations = combinations;
-            _pipeline = pipeline;
+            _fileGraph = fileGraph;
             _library = library;
         }
 
@@ -127,7 +127,7 @@ namespace FubuMVC.Core.Assets.Content
                 return combination.Files;
             }
 
-            var assetFile = _pipeline.Find(name);
+            var assetFile = _fileGraph.Find(name);
 
             if (assetFile == null)
             {

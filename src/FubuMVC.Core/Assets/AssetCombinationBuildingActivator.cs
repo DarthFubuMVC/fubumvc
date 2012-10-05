@@ -17,14 +17,14 @@ namespace FubuMVC.Core.Assets
         private readonly IContainerFacility _container;
         private readonly AssetGraph _graph;
         private readonly IAssetCombinationCache _cache;
-        private readonly IAssetPipeline _pipeline;
+        private readonly IAssetFileGraph _fileGraph;
 
-        public AssetCombinationBuildingActivator(IContainerFacility container, AssetGraph graph, IAssetCombinationCache cache, IAssetPipeline pipeline)
+        public AssetCombinationBuildingActivator(IContainerFacility container, AssetGraph graph, IAssetCombinationCache cache, IAssetFileGraph fileGraph)
         {
             _container = container;
             _graph = graph;
             _cache = cache;
-            _pipeline = pipeline;
+            _fileGraph = fileGraph;
         }
 
         public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
@@ -47,7 +47,7 @@ namespace FubuMVC.Core.Assets
             _graph.ForCombinations((name, assetNames) =>
             {
                 var mimeType = MimeType.MimeTypeByFileName(assetNames.First());
-                _cache.AddFilesToCandidate(mimeType, name, assetNames.Select(x => _pipeline.Find(x)));
+                _cache.AddFilesToCandidate(mimeType, name, assetNames.Select(x => _fileGraph.Find(x)));
             });
 
         }

@@ -14,14 +14,14 @@ using FubuTestingSupport;
 namespace FubuMVC.Tests.Assets
 {
     [TestFixture]
-    public class AssetPipelineBuilderActivatorIntegratedTester
+    public class AssetFileGraphBuilderActivatorIntegratedTester
     {
         private string currentDirectory;
         private string packageDirectory;
         private IFileSystem fileSystem = new FileSystem();
         private string _packageName;
         private System.Collections.Generic.List<IPackageInfo> _packages;
-        private AssetPipeline thePipeline;
+        private AssetFileGraph _theFileGraph;
         private PackageLog theLog;
 
         private void startPackage(string packageName)
@@ -83,8 +83,8 @@ namespace FubuMVC.Tests.Assets
             AssetFolderIs = AssetFolder.scripts;
             writeFile("a.js");
 
-            thePipeline = new AssetPipeline();
-            var activator = new AssetPipelineBuilderActivator(thePipeline,new AssetLogsCache());
+            _theFileGraph = new AssetFileGraph();
+            var activator = new AssetFileGraphBuilderActivator(_theFileGraph,new AssetLogsCache());
             theLog = new PackageLog();
             activator.Activate(_packages, theLog);
 
@@ -94,21 +94,21 @@ namespace FubuMVC.Tests.Assets
         [Test]
         public void picked_up_application_and_all_possible_packages()
         {
-            thePipeline.AllPackages.Select(x => x.PackageName).ShouldHaveTheSameElementsAs(AssetPipeline.Application, "pak1", "pak2", "pak3");
+            _theFileGraph.AllPackages.Select(x => x.PackageName).ShouldHaveTheSameElementsAs(AssetFileGraph.Application, "pak1", "pak2", "pak3");
         }
 
         [Test]
         public void got_files_from_package()
         {
-            thePipeline.AssetsFor("pak1").FilesForAssetType(AssetFolder.scripts).Select(x => x.Name)
+            _theFileGraph.AssetsFor("pak1").FilesForAssetType(AssetFolder.scripts).Select(x => x.Name)
                 .ShouldHaveTheSameElementsAs("e.js", "f.js");
         }
 
         [Test]
         public void find_file()
         {
-            thePipeline.Find("a.js").ShouldBeTheSameAs(
-                thePipeline.AssetsFor(AssetPipeline.Application).FindByName("a.js"));
+            _theFileGraph.Find("a.js").ShouldBeTheSameAs(
+                _theFileGraph.AssetsFor(AssetFileGraph.Application).FindByName("a.js"));
         }
         
     }

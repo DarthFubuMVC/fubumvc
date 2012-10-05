@@ -14,15 +14,15 @@ namespace FubuMVC.Core.Assets.Http
 
     public class ContentWriter : IContentWriter
     {
-        private readonly IAssetPipeline _pipeline;
+        private readonly IAssetFileGraph _fileGraph;
         private readonly IContentPlanCache _cache;
         private readonly IContentPipeline _contentPipeline;
         private readonly IOutputWriter _writer;
 
-        public ContentWriter(IAssetPipeline pipeline, IContentPlanCache cache, IContentPipeline contentPipeline,
+        public ContentWriter(IAssetFileGraph fileGraph, IContentPlanCache cache, IContentPipeline contentPipeline,
                              IOutputWriter writer)
         {
-            _pipeline = pipeline;
+            _fileGraph = fileGraph;
             _cache = cache;
             _contentPipeline = contentPipeline;
             _writer = writer;
@@ -55,7 +55,7 @@ namespace FubuMVC.Core.Assets.Http
 
         private IEnumerable<AssetFile> writeBinary(AssetPath asset)
         {
-            var file = _pipeline.Find(asset);
+            var file = _fileGraph.Find(asset);
 
             if (file == null)
             {

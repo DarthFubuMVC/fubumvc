@@ -32,7 +32,7 @@ namespace FubuMVC.Tests.Assets
             theCache = new AssetCombinationCache();
             Services.Inject<IAssetCombinationCache>(theCache);
 
-            Services.Inject<IAssetPipeline>(new StubAssetPipeline());
+            Services.Inject<IAssetFileGraph>(new StubAssetFileGraph());
 
             theGraph.AddToCombination("combo1", "a.js");
             theGraph.AddToCombination("combo1", "b.js");
@@ -64,7 +64,7 @@ namespace FubuMVC.Tests.Assets
 
 
 
-    public class StubAssetPipeline : IAssetPipeline
+    public class StubAssetFileGraph : IAssetFileGraph
     {
         private readonly Cache<string, AssetFile> _files = new Cache<string, AssetFile>(name => new AssetFile(name));
 
@@ -176,7 +176,7 @@ namespace FubuMVC.Tests.Assets
 
     public class FakeAssetPolicy1 : IAssetPolicy
     {
-        public void Apply(IPackageLog log, IAssetPipeline pipeline, AssetGraph graph)
+        public void Apply(IPackageLog log, IAssetFileGraph fileGraph, AssetGraph graph)
         {
             throw new NotImplementedException();
         }
@@ -184,7 +184,7 @@ namespace FubuMVC.Tests.Assets
 
     public class FakeAssetPolicy2 : IAssetPolicy
     {
-        public void Apply(IPackageLog log, IAssetPipeline pipeline, AssetGraph graph)
+        public void Apply(IPackageLog log, IAssetFileGraph fileGraph, AssetGraph graph)
         {
             throw new NotImplementedException();
         }

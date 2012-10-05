@@ -9,11 +9,11 @@ using FubuTestingSupport;
 namespace FubuMVC.Tests.Assets.Files
 {
     [TestFixture]
-    public class AssetPipelineBuilderIntegratedTester
+    public class AssetFileGraphBuilderIntegratedTester
     {
         private FileSystem system;
-        private AssetPipeline thePipeline;
-        private AssetPipelineBuilder theBuilder;
+        private AssetFileGraph _theFileGraph;
+        private AssetFileGraphBuilder theBuilder;
         private const string AppDirectory = "application";
         private const string PackageDirectory = "pak1";
 
@@ -27,11 +27,11 @@ namespace FubuMVC.Tests.Assets.Files
             writeFiles();
 
 
-            thePipeline = new AssetPipeline();
-            theBuilder = new AssetPipelineBuilder(new FileSystem(), thePipeline, new PackageLog());
+            _theFileGraph = new AssetFileGraph();
+            theBuilder = new AssetFileGraphBuilder(new FileSystem(), _theFileGraph, new PackageLog());
             theBuilder.LoadFiles(new PackageAssetDirectory(){
                 Directory = AppDirectory,
-                PackageName = AssetPipeline.Application
+                PackageName = AssetFileGraph.Application
             });
 
             theBuilder.LoadFiles(new PackageAssetDirectory(){
@@ -74,7 +74,7 @@ namespace FubuMVC.Tests.Assets.Files
         public void find_asset_file_by_path()
         {
             var path = AppDirectory.ToFullPath().AppendPath("content", "scripts", "folder1", "script1.js");
-            var file = thePipeline.FindByPath(path);
+            var file = _theFileGraph.FindByPath(path);
 
             file.FullPath.ShouldEqual(path);
             file.Name.ShouldEqual("folder1/script1.js");
@@ -83,7 +83,7 @@ namespace FubuMVC.Tests.Assets.Files
         [Test]
         public void load_asset_files_from_an_overrides_sub_folder()
         {
-            var file = thePipeline.Find("folder1/script1.js");
+            var file = _theFileGraph.Find("folder1/script1.js");
             file.Override.ShouldBeTrue();
             file.FullPath.ShouldContain(FileSystem.Combine("pak1","content","scripts", "overrides","folder1", "script1.js"));
         }
@@ -91,14 +91,14 @@ namespace FubuMVC.Tests.Assets.Files
         [Test]
         public void can_fetch_files()
         {
-            thePipeline.Find("jquery.js").FullPath.ShouldContain(AppDirectory);
-            thePipeline.Find("pak1:jquery.js").FullPath.ShouldContain(PackageDirectory);
+            _theFileGraph.Find("jquery.js").FullPath.ShouldContain(AppDirectory);
+            _theFileGraph.Find("pak1:jquery.js").FullPath.ShouldContain(PackageDirectory);
         }
 
         [Test]
         public void verify_the_styles()
         {
-            var styles = thePipeline.AssetsFor(AssetPipeline.Application).FilesForAssetType(AssetFolder.styles);
+            var styles = _theFileGraph.AssetsFor(AssetFileGraph.Application).FilesForAssetType(AssetFolder.styles);
             styles.OrderBy(x => x.Name).Select(x => x.Name)
                 .ShouldHaveTheSameElementsAs("folder2/page.css", "main.css", "sidebar.css");
         }
@@ -106,7 +106,7 @@ namespace FubuMVC.Tests.Assets.Files
         [Test]
         public void verify_that_application_files_were_loaded()
         {
-            var scripts = thePipeline.AssetsFor(AssetPipeline.Application).FilesForAssetType(AssetFolder.scripts);
+            var scripts = _theFileGraph.AssetsFor(AssetFileGraph.Application).FilesForAssetType(AssetFolder.scripts);
             scripts.OrderBy(x => x.Name).Select(x => x.Name).ShouldHaveTheSameElementsAs(
                 "folder1/folder2/script3.js",
                 "folder1/script1.js",
@@ -120,7 +120,7 @@ namespace FubuMVC.Tests.Assets.Files
         [Test]
         public void verify_the_file_path_is_correct()
         {
-            var scripts = thePipeline.AssetsFor(AssetPipeline.Application).FilesForAssetType(AssetFolder.scripts);
+            var scripts = _theFileGraph.AssetsFor(AssetFileGraph.Application).FilesForAssetType(AssetFolder.scripts);
 
             var file = scripts.Single(x => x.Name == "folder1/script1.js");
             file.FullPath.ShouldEqual(AppDirectory.AppendPath("content", AssetFolder.scripts.ToString(), "folder1", "script1.js").ToFullPath());   

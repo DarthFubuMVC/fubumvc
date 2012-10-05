@@ -7,19 +7,19 @@ namespace FubuMVC.Core.Assets
 {
     public interface IAssetPolicy
     {
-        void Apply(IPackageLog log, IAssetPipeline pipeline, AssetGraph graph);
+        void Apply(IPackageLog log, IAssetFileGraph fileGraph, AssetGraph graph);
     }
 
     public class AssetPolicyActivator : IActivator
     {
         private readonly IEnumerable<IAssetPolicy> _policies;
-        private readonly IAssetPipeline _pipeline;
+        private readonly IAssetFileGraph _fileGraph;
         private readonly AssetGraph _graph;
 
-        public AssetPolicyActivator(IEnumerable<IAssetPolicy> policies, IAssetPipeline pipeline, AssetGraph graph)
+        public AssetPolicyActivator(IEnumerable<IAssetPolicy> policies, IAssetFileGraph fileGraph, AssetGraph graph)
         {
             _policies = policies;
-            _pipeline = pipeline;
+            _fileGraph = fileGraph;
             _graph = graph;
         }
 
@@ -28,7 +28,7 @@ namespace FubuMVC.Core.Assets
             _policies.Each(p =>
             {
                 log.Trace("Running " + p);
-                p.Apply(log, _pipeline, _graph);
+                p.Apply(log, _fileGraph, _graph);
             });
         }
     }

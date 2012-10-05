@@ -70,7 +70,7 @@ namespace FubuMVC.Tests.Assets
             var activators = BehaviorGraph.BuildEmptyGraph().Services.ServicesFor<IActivator>().ToList();
 
             activators.Any(x => x.Type == typeof(AssetGraphConfigurationActivator)).ShouldBeTrue();
-            activators.Any(x => x.Type == typeof(AssetPipelineBuilderActivator)).ShouldBeTrue();
+            activators.Any(x => x.Type == typeof(AssetFileGraphBuilderActivator)).ShouldBeTrue();
             activators.Any(x => x.Type == typeof(AssetDeclarationVerificationActivator)).ShouldBeTrue();
             activators.Any(x => x.Type == typeof(AssetPolicyActivator)).ShouldBeTrue();
 
@@ -78,7 +78,7 @@ namespace FubuMVC.Tests.Assets
 
             activators[0].Type.ShouldEqual(typeof(AssetPrecompilerActivator));
             activators[1].Type.ShouldEqual(typeof(AssetGraphConfigurationActivator));
-            activators[2].Type.ShouldEqual(typeof(AssetPipelineBuilderActivator));
+            activators[2].Type.ShouldEqual(typeof(AssetFileGraphBuilderActivator));
             activators[3].Type.ShouldEqual(typeof(AssetDeclarationVerificationActivator));
             activators[4].Type.ShouldEqual(typeof(MimetypeRegistrationActivator));
             activators[5].Type.ShouldEqual(typeof(AssetCombinationBuildingActivator));
@@ -88,11 +88,11 @@ namespace FubuMVC.Tests.Assets
         }
 
         [Test]
-        public void asset_pipeline_is_registered_as_both_IAssetPipeline_and_IAssetFileRegistration_as_the_same_instance()
+        public void asset_file_graph_is_registered_as_both_IAssetFileGraph_and_IAssetFileRegistration_as_the_same_instance()
         {
             var services = BehaviorGraph.BuildEmptyGraph().Services;
-            var pipeline1 = services.DefaultServiceFor<IAssetPipeline>().Value.ShouldBeOfType<AssetPipeline>();
-            var pipeline2 = services.DefaultServiceFor<IAssetFileRegistration>().Value.ShouldBeOfType<AssetPipeline>();
+            var pipeline1 = services.DefaultServiceFor<IAssetFileGraph>().Value.ShouldBeOfType<AssetFileGraph>();
+            var pipeline2 = services.DefaultServiceFor<IAssetFileRegistration>().Value.ShouldBeOfType<AssetFileGraph>();
 
             pipeline1.ShouldNotBeNull();
             pipeline2.ShouldNotBeNull();

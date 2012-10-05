@@ -8,39 +8,39 @@ namespace FubuMVC.Tests.Assets.Files
     [TestFixture]
     public class when_finding_files_in_the_asset_pipeline
     {
-        private AssetPipeline _thePipeline;
+        private AssetFileGraph _theFileGraph;
         private AssetFile _theFile;
         private AssetPath _thePath;
 
         [SetUp]
         public void SetUp()
         {
-            _thePipeline = new AssetPipeline();
+            _theFileGraph = new AssetFileGraph();
             _theFile = new AssetFile("a.js");
             _thePath = new AssetPath("pak1", "a.js", AssetFolder.scripts);
-            _thePipeline.AddFile(_thePath, _theFile);
+            _theFileGraph.AddFile(_thePath, _theFile);
         }
 
         [Test]
         public void should_use_case_insensitive_search_when_searching_by_file_only()
         {            
-            var assetFile = _thePipeline.Find("A.js");
+            var assetFile = _theFileGraph.Find("A.js");
             assetFile.ShouldNotBeNull();
             assetFile.Name.ShouldEqual("a.js");            
         }     
     }
 
     [TestFixture]
-    public class AssetPipelineTester
+    public class AssetFileGraphTester
     {
-        private AssetPipeline thePipeline;
+        private AssetFileGraph _theFileGraph;
         private AssetFileDataMother theFiles;
 
         [SetUp]
         public void SetUp()
         {
-            thePipeline = new AssetPipeline();
-            theFiles = new AssetFileDataMother(thePipeline.AddFile);
+            _theFileGraph = new AssetFileGraph();
+            theFiles = new AssetFileDataMother(_theFileGraph.AddFile);
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace FubuMVC.Tests.Assets.Files
 
             var thePath = new AssetPath("pak1", "a.js", AssetFolder.styles);
 
-            thePipeline.AddFile(thePath, theFile);
+            _theFileGraph.AddFile(thePath, theFile);
 
             theFile.Folder.ShouldEqual(thePath.Folder.Value);
         }
@@ -66,7 +66,7 @@ pak1-script=pak1:scripts/jquery.js
 pak2=pak1:scripts/jquery.js
 ");
 
-            thePipeline.Find("pak1:scripts/jquery.js").ShouldBeTheSameAs(theFiles["pak1-script"]);
+            _theFileGraph.Find("pak1:scripts/jquery.js").ShouldBeTheSameAs(theFiles["pak1-script"]);
         }
 
         [Test]
@@ -77,7 +77,7 @@ app=application:scripts/jquery.js
 pak1=pak1:scripts/jquery.js
 ");
 
-            thePipeline.Find("scripts/jquery.js").ShouldBeTheSameAs(theFiles["app"]);
+            _theFileGraph.Find("scripts/jquery.js").ShouldBeTheSameAs(theFiles["app"]);
         }
 
         [Test]
@@ -89,7 +89,7 @@ pak2=pak2:scripts/jquery.js
 pak3=pak3:scripts/jquery.js
 ");
 
-            thePipeline.Find("scripts/jquery.js").ShouldBeTheSameAs(theFiles["pak1"]);
+            _theFileGraph.Find("scripts/jquery.js").ShouldBeTheSameAs(theFiles["pak1"]);
 
         }
 
@@ -101,7 +101,7 @@ app=application:scripts/jquery.js
 pak1=pak1:scripts/jquery.js!override
 ");
 
-            thePipeline.Find("scripts/jquery.js").ShouldBeTheSameAs(theFiles["pak1"]);
+            _theFileGraph.Find("scripts/jquery.js").ShouldBeTheSameAs(theFiles["pak1"]);
         }
     }
 }

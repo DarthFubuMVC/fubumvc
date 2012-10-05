@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Assets.Content
         public void should_cleanly_return_an_empty_enumerable_for_happy_404_when_findfiles_cannot_find_anything()
         {
             MockFor<IAssetCombinationCache>().Stub(x => x.FindCombination("script1")).Return(null);
-            MockFor<IAssetPipeline>().Stub(x => x.Find("script1")).Return(null);
+            MockFor<IAssetFileGraph>().Stub(x => x.Find("script1")).Return(null);
 
             ClassUnderTest.FindFiles("script1").Any().ShouldBeFalse();
         }

@@ -86,10 +86,10 @@ namespace FubuMVC.Tests.Assets.Content
                 combinations.StoreCombination(_combination.MimeType, _combination);
             }
 
-            var pipeline = new AssetPipeline();
+            var pipeline = new AssetFileGraph();
             _files.Each(f =>
             {
-                var path = new AssetPath(AssetPipeline.Application, f.Name, f.Folder);
+                var path = new AssetPath(AssetFileGraph.Application, f.Name, f.Folder);
                 pipeline.AddFile(path, f);
             });
 

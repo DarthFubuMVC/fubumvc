@@ -213,7 +213,7 @@
     <Compile Include="Assets\AssetPolicyActivator.cs" />
     <Compile Include="Assets\AssetGraph.cs" />
     <Compile Include="Assets\AssetNamesKey.cs" />
-    <Compile Include="Assets\AssetPipelineBuilderActivator.cs" />
+    <Compile Include="Assets\AssetFileGraphBuilderActivator.cs" />
     <Compile Include="Assets\AssetPlanKey.cs" />
     <Compile Include="Assets\AssetTagPlanCache.cs" />
     <Compile Include="Assets\AssetTagPlanner.cs" />
@@ -251,11 +251,11 @@
     <Compile Include="Assets\Files\AssetFileSource.cs" />
     <Compile Include="Assets\Files\AssetPath.cs" />
     <Compile Include="Assets\Files\AssetPathException.cs" />
-    <Compile Include="Assets\Files\AssetPipeline.cs" />
-    <Compile Include="Assets\Files\AssetPipelineBuilder.cs" />
+    <Compile Include="Assets\Files\AssetFileGraph.cs" />
+    <Compile Include="Assets\Files\AssetFileGraphBuilder.cs" />
     <Compile Include="Assets\Files\AssetFolder.cs" />
     <Compile Include="Assets\Files\IAssetFileRegistration.cs" />
-    <Compile Include="Assets\Files\IAssetPipeline.cs" />
+    <Compile Include="Assets\Files\IAssetFileGraph.cs" />
     <Compile Include="Assets\Files\PackageAssets.cs" />
     <Compile Include="Assets\Content\ContentPipeline.cs" />
     <Compile Include="Assets\Http\ContentWriter.cs" />

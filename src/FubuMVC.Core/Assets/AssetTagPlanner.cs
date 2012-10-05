@@ -10,12 +10,12 @@ namespace FubuMVC.Core.Assets
 {
     public class AssetTagPlanner : IAssetTagPlanner
     {
-        private readonly IAssetPipeline _pipeline;
+        private readonly IAssetFileGraph _fileGraph;
         private readonly ICombinationDeterminationService _combinations;
 
-        public AssetTagPlanner(IAssetPipeline pipeline, ICombinationDeterminationService combinations)
+        public AssetTagPlanner(IAssetFileGraph fileGraph, ICombinationDeterminationService combinations)
         {
-            _pipeline = pipeline;
+            _fileGraph = fileGraph;
             _combinations = combinations;
         }
 
@@ -54,7 +54,7 @@ namespace FubuMVC.Core.Assets
         {
             foreach (var name in names)
             {
-                var file = _pipeline.Find(name);
+                var file = _fileGraph.Find(name);
                 if (file != null)
                 {
                     yield return file;

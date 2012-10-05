@@ -14,13 +14,13 @@ namespace FubuMVC.Core.Assets
       
 
 
-        private readonly IAssetPipeline _pipeline;
+        private readonly IAssetFileGraph _fileGraph;
         private readonly IPackageLog _log;
         private readonly AssetLogsCache _assetLogs;
 
-        public AssetDeclarationChecker(IAssetPipeline pipeline, IPackageLog log, AssetLogsCache assetLogs)
+        public AssetDeclarationChecker(IAssetFileGraph fileGraph, IPackageLog log, AssetLogsCache assetLogs)
         {
-            _pipeline = pipeline;
+            _fileGraph = fileGraph;
             _log = log;
             _assetLogs = assetLogs;
         }
@@ -29,7 +29,7 @@ namespace FubuMVC.Core.Assets
         // i.e. -- which file had the wrong stuff
         public void VerifyFileDependency(string name)
         {
-            var file = _pipeline.Find(name);
+            var file = _fileGraph.Find(name);
             if (file == null)
             {
                 // Guard clause to allow automated tests with faked up data work

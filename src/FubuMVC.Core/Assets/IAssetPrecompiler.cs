@@ -4,6 +4,6 @@ namespace FubuMVC.Core.Assets
 {
     public interface IAssetPrecompiler
     {
-        void Precompile(IAssetPipeline pipeline, IAssetRegistration registration);
+        void Precompile(IAssetFileGraph fileGraph, IAssetRegistration registration);
     }
 }

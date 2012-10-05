@@ -6,7 +6,7 @@ using FubuCore.Util;
 
 namespace FubuMVC.Core.Assets.Files
 {
-    public class AssetPipeline : IAssetFileRegistration, IAssetPipeline
+    public class AssetFileGraph : IAssetFileRegistration, IAssetFileGraph
     {
         public static readonly string Application = "application";
 
@@ -14,7 +14,7 @@ namespace FubuMVC.Core.Assets.Files
         private readonly Cache<string, PackageAssets> _packages;
         private readonly Cache<string, AssetFile> _memoizedFiles;
 
-        public AssetPipeline()
+        public AssetFileGraph()
         {
             _packages = new Cache<string, PackageAssets>(name =>
             {

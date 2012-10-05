@@ -20,14 +20,14 @@ namespace FubuMVC.Core.Assets
     public class AssetRequirements : IAssetRequirements
     {
         private readonly IAssetDependencyFinder _finder;
-        private readonly IAssetPipeline _pipeline;
+        private readonly IAssetFileGraph _fileGraph;
         private readonly List<string> _rendered = new List<string>();
         private readonly List<string> _requirements = new List<string>();
 
-        public AssetRequirements(IAssetDependencyFinder finder, IAssetPipeline pipeline)
+        public AssetRequirements(IAssetDependencyFinder finder, IAssetFileGraph fileGraph)
         {
             _finder = finder;
-            _pipeline = pipeline;
+            _fileGraph = fileGraph;
         }
 
         public void Require(params string[] name)
@@ -61,7 +61,7 @@ namespace FubuMVC.Core.Assets
         {
             names.Each(name =>
             {
-                if (_pipeline.Find(name) != null)
+                if (_fileGraph.Find(name) != null)
                 {
                     Require(name);
                 }

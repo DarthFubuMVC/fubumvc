@@ -14,13 +14,13 @@ namespace FubuMVC.Tests.Assets
     {
         private void scriptExists(string name)
         {
-            MockFor<IAssetPipeline>().Stub(x => x.Find(name))
+            MockFor<IAssetFileGraph>().Stub(x => x.Find(name))
                 .Return(new AssetFile(name));
         }
 
         private void scriptDoesNotExist(string name)
         {
-            MockFor<IAssetPipeline>().Stub(x => x.Find(name))
+            MockFor<IAssetFileGraph>().Stub(x => x.Find(name))
                 .Return(null);
         }
 

@@ -101,7 +101,7 @@
     <Compile Include="AssetNamesKeyTester.cs" />
     <Compile Include="AssetObjectBaseTester.cs" />
     <Compile Include="AssetOrderingAndQueryingAcceptanceTests.cs" />
-    <Compile Include="AssetPipelineBuilderActivatorIntegratedTester.cs" />
+    <Compile Include="AssetFileGraphBuilderActivatorIntegratedTester.cs" />
     <Compile Include="AssetPrecompilerActivatorTester.cs" />
     <Compile Include="AssetRequirementsTester.cs" />
     <Compile Include="AssetServicesRegistrationTester.cs" />
@@ -142,9 +142,9 @@
     <Compile Include="FileDependencyTester.cs" />
     <Compile Include="Files\AssetFileTester.cs" />
     <Compile Include="Files\AssetPathTester.cs" />
-    <Compile Include="Files\AssetPipelineBuilderIntegratedTester.cs" />
+    <Compile Include="Files\AssetFileGraphBuilderIntegratedTester.cs" />
     <Compile Include="Files\AssetPipelineBuilderTester.cs" />
-    <Compile Include="Files\AssetPipelineTester.cs" />
+    <Compile Include="Files\AssetFileGraphTester.cs" />
     <Compile Include="Files\PackageAssetsTester.cs" />
     <Compile Include="Http\AssetContentEndpointConstructionTester.cs" />
     <Compile Include="Http\AssetWriterTester.cs" />

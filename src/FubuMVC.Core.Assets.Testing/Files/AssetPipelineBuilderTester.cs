@@ -9,7 +9,7 @@ using Rhino.Mocks;
 namespace FubuMVC.Tests.Assets.Files
 {
     [TestFixture]
-    public class finding_the_content_folder : InteractionContext<AssetPipelineBuilder>
+    public class finding_the_content_folder : InteractionContext<AssetFileGraphBuilder>
     {
         private string theDirectory;
 
@@ -47,7 +47,7 @@ namespace FubuMVC.Tests.Assets.Files
     }
 
     [TestFixture]
-    public class when_the_content_folder_cannot_be_found_for_a_package : InteractionContext<AssetPipelineBuilder>
+    public class when_the_content_folder_cannot_be_found_for_a_package : InteractionContext<AssetFileGraphBuilder>
     {
         private PackageAssetDirectory thePackageDirectory;
 
@@ -77,13 +77,13 @@ namespace FubuMVC.Tests.Assets.Files
         [Test]
         public void logged_that_no_content_was_scanned()
         {
-            var theMessage = AssetPipelineBuilder.NoContentFoundForPackageAt.ToFormat(thePackageDirectory.Directory);
+            var theMessage = AssetFileGraphBuilder.NoContentFoundForPackageAt.ToFormat(thePackageDirectory.Directory);
             MockFor<IPackageLog>().AssertWasCalled(x => x.Trace(theMessage));
         }
     }
 
     [TestFixture]
-    public class when_the_content_folder_can_be_found_for_a_package : InteractionContext<AssetPipelineBuilder>
+    public class when_the_content_folder_can_be_found_for_a_package : InteractionContext<AssetFileGraphBuilder>
     {
         private PackageAssetDirectory thePackageDirectory;
         private string theContentFolder;
@@ -109,7 +109,7 @@ namespace FubuMVC.Tests.Assets.Files
         [Test]
         public void should_log_where_the_content_is_being_scanned_from()
         {
-            var theMessage = AssetPipelineBuilder.LoadingContentForPackageAt.ToFormat(theContentFolder);
+            var theMessage = AssetFileGraphBuilder.LoadingContentForPackageAt.ToFormat(theContentFolder);
             MockFor<IPackageLog>().AssertWasCalled(x => x.Trace(theMessage));
         }
 

@@ -10,13 +10,13 @@ namespace FubuMVC.Core.Assets
     {
         private readonly AssetGraph _graph;
         private readonly AssetLogsCache _assetLogs;
-        private readonly IAssetPipeline _pipeline;
+        private readonly IAssetFileGraph _fileGraph;
 
         public static bool Latched { get; set; }
 
-        public AssetDeclarationVerificationActivator(IAssetPipeline pipeline, AssetGraph graph, AssetLogsCache assetLogs)
+        public AssetDeclarationVerificationActivator(IAssetFileGraph fileGraph, AssetGraph graph, AssetLogsCache assetLogs)
         {
-            _pipeline = pipeline;
+            _fileGraph = fileGraph;
             _graph = graph;
             _assetLogs = assetLogs;
         }
@@ -24,7 +24,7 @@ namespace FubuMVC.Core.Assets
         // No automated tests for this.
         public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
         {
-            var checker = new AssetDeclarationChecker(_pipeline, log, _assetLogs);
+            var checker = new AssetDeclarationChecker(_fileGraph, log, _assetLogs);
             _graph.AllDependencies().Each(x => checker.VerifyFileDependency(x.Name));
         }
 

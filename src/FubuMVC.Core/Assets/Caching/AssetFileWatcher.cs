@@ -9,15 +9,15 @@ namespace FubuMVC.Core.Assets.Caching
     [Singleton]
     public class AssetFileWatcher : IAssetFileWatcher, IDisposable
     {
-        private readonly IAssetPipeline _pipeline;
+        private readonly IAssetFileGraph _fileGraph;
         private readonly IAssetFileChangeListener _listener;
         private readonly AssetFileMonitoringSettings _settings;
         private FileChangePollingWatcher _watcher;
             
 
-        public AssetFileWatcher(IAssetPipeline pipeline, IAssetFileChangeListener listener, AssetFileMonitoringSettings settings)
+        public AssetFileWatcher(IAssetFileGraph fileGraph, IAssetFileChangeListener listener, AssetFileMonitoringSettings settings)
         {
-            _pipeline = pipeline;
+            _fileGraph = fileGraph;
             _listener = listener;
             _settings = settings;
         }
@@ -25,7 +25,7 @@ namespace FubuMVC.Core.Assets.Caching
         public void StartWatchingAll()
         {
             _watcher = new FileChangePollingWatcher();
-            _pipeline.AllFiles().Each(file =>
+            _fileGraph.AllFiles().Each(file =>
             {
                 _watcher.WatchFile(file.FullPath, () => _listener.Changed(file));
             });

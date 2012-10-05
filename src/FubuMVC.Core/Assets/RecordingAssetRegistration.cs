@@ -19,7 +19,7 @@ namespace FubuMVC.Core.Assets
             }
         }
 
-        public void Apply(IPackageLog log, IAssetPipeline pipeline, AssetGraph graph)
+        public void Apply(IPackageLog log, IAssetFileGraph fileGraph, AssetGraph graph)
         {
             // TODO -- make this recording later?
             Replay(graph);

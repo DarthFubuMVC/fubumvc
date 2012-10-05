@@ -8,18 +8,18 @@ using FubuMVC.Core.Packaging;
 
 namespace FubuMVC.Core.Assets
 {
-    public class AssetPipelineBuilderActivator : IActivator
+    public class AssetFileGraphBuilderActivator : IActivator
     {
         private readonly IAssetFileRegistration _pipeline;
 
-        public AssetPipelineBuilderActivator(IAssetFileRegistration pipeline, AssetLogsCache assetLogsCache)
+        public AssetFileGraphBuilderActivator(IAssetFileRegistration pipeline, AssetLogsCache assetLogsCache)
         {
             _pipeline = new RecordingAssetFileRegistrator(pipeline, assetLogsCache);
         }
 
         public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
         {
-            var builder = new AssetPipelineBuilder(new FileSystem(), _pipeline, log);
+            var builder = new AssetFileGraphBuilder(new FileSystem(), _pipeline, log);
             findDirectories(packages).Each(builder.LoadFiles);
         }
 
@@ -27,7 +27,7 @@ namespace FubuMVC.Core.Assets
         {
             yield return new PackageAssetDirectory(){
                 Directory = FubuMvcPackageFacility.GetApplicationPath(),
-                PackageName = AssetPipeline.Application
+                PackageName = AssetFileGraph.Application
             };
 
             foreach (var pak in packages)
@@ -50,7 +50,7 @@ namespace FubuMVC.Core.Assets
 
         public override string ToString()
         {
-            return "Building the AssetPipeline from the application and package content folders";
+            return "Building the assetFileGraph from the application and package content folders";
         }
     }
 
@@ -67,7 +67,7 @@ namespace FubuMVC.Core.Assets
 
         public void AddFile(AssetPath path, AssetFile file)
         {
-            _assetLogsCache.FindByName(file.Name).Add(path.Package,"Adding {0} to IAssetPipeline".ToFormat(file.FullPath));
+            _assetLogsCache.FindByName(file.Name).Add(path.Package,"Adding {0} to IAssetFileGraph".ToFormat(file.FullPath));
             _inner.AddFile(path, file);
         }
     }
