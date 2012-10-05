@@ -12,8 +12,9 @@
     <description>Support for using the Spark view engine within a FubuMVC application.</description>
     <tags>fubumvc spark</tags>
     <dependencies>
-      <dependency id="Spark" version="1.7.0.0" />
-      <dependency id="FubuMVC.References" />
+      <dependency id="Spark" version="1.7.4.0" />
+      <dependency id="FubuMVC.Core" />
+      <dependency id="FubuMVC.Core.View" />
     </dependencies>
   </metadata>
   <files>

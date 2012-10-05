@@ -12,7 +12,7 @@
     <description>Run FubuMVC applications using the Web API Self Hosting alternative</description>
     <tags>web framework specification fubumvc</tags>
     <dependencies>
-	<dependency id="FubuMVC.References"/>
+	<dependency id="FubuMVC.Core"/>
     	<dependency id="Microsoft.AspNet.WebApi.SelfHost"/>
     </dependencies>
   </metadata>

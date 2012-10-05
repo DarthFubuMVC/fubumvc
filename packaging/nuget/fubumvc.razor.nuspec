@@ -13,7 +13,8 @@
     <tags>fubumvc razor razorengine fubu</tags>
     <dependencies>
       <dependency id="RazorEngine" version="3.0.8" />
-      <dependency id="FubuMVC.References" />
+      <dependency id="FubuMVC.Core" />
+      <dependency id="FubuMVC.Core.View" />
     </dependencies>
   </metadata>
   <files>
