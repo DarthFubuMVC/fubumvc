@@ -1,14 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
-using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.Runtime.Formatters;
-using FubuMVC.Core.View;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
@@ -19,7 +16,7 @@ namespace FubuMVC.Core.Resources.Conneg
 
         public OutputNode(Type resourceType)
         {
-            if (resourceType == typeof(void))
+            if (resourceType == typeof (void))
             {
                 throw new ArgumentOutOfRangeException("Void is not a valid resource type");
             }
@@ -42,12 +39,38 @@ namespace FubuMVC.Core.Resources.Conneg
             get { return _resourceType; }
         }
 
+        public override string Description
+        {
+            get { return ToString(); }
+        }
+
+        #region DescribesItself Members
+
+        void DescribesItself.Describe(Description description)
+        {
+            description.Title = "OutputNode";
+            description.ShortDescription = "Render the output for resource " + ResourceType.Name;
+
+            description.AddList("Writers", Writers);
+        }
+
+        #endregion
+
+        #region IMayHaveResourceType Members
+
+        Type IMayHaveResourceType.ResourceType()
+        {
+            return ResourceType;
+        }
+
+        #endregion
+
         protected override ObjectDef buildObjectDef()
         {
             var def = new ObjectDef(typeof (OutputBehavior<>), _resourceType);
 
-            var mediaType = typeof (IMedia<>).MakeGenericType(_resourceType);
-            var enumerableType = typeof (IEnumerable<>).MakeGenericType(mediaType);
+            Type mediaType = typeof (IMedia<>).MakeGenericType(_resourceType);
+            Type enumerableType = typeof (IEnumerable<>).MakeGenericType(mediaType);
             var dependency = new ListDependency(enumerableType);
             dependency.AddRange(Writers.OfType<IContainerModel>().Select(x => x.ToObjectDef()));
 
@@ -58,14 +81,13 @@ namespace FubuMVC.Core.Resources.Conneg
 
         public WriteWithFormatter AddFormatter<T>() where T : IFormatter
         {
-
             var formatter = new WriteWithFormatter(_resourceType, typeof (T));
-            var existing = Writers.FirstOrDefault(x => x.Equals(formatter));
+            WriterNode existing = Writers.FirstOrDefault(x => x.Equals(formatter));
             if (existing != null)
             {
                 return existing as WriteWithFormatter;
             }
-            
+
 
             Writers.AddToEnd(formatter);
 
@@ -74,10 +96,11 @@ namespace FubuMVC.Core.Resources.Conneg
 
         public Writer AddWriter<T>()
         {
-            var writerType = typeof (IMediaWriter<>).MakeGenericType(_resourceType);
-            if (!typeof(T).CanBeCastTo(writerType))
+            Type writerType = typeof (IMediaWriter<>).MakeGenericType(_resourceType);
+            if (!typeof (T).CanBeCastTo(writerType))
             {
-                throw new ArgumentOutOfRangeException("{0} cannot be cast to {1}".ToFormat(typeof(T).FullName, writerType.FullName));
+                throw new ArgumentOutOfRangeException("{0} cannot be cast to {1}".ToFormat(typeof (T).FullName,
+                                                                                           writerType.FullName));
             }
 
             var writer = new Writer(typeof (T));
@@ -89,7 +112,7 @@ namespace FubuMVC.Core.Resources.Conneg
 
         public WriteHtml AddHtml()
         {
-            var existing = Writers.OfType<WriteHtml>().FirstOrDefault();
+            WriteHtml existing = Writers.OfType<WriteHtml>().FirstOrDefault();
             if (existing != null)
             {
                 return existing;
@@ -99,19 +122,6 @@ namespace FubuMVC.Core.Resources.Conneg
             Writers.AddToEnd(write);
 
             return write;
-        }
-
-        public ViewNode AddView(IViewToken view, Type conditionType = null)
-        {
-            var node = new ViewNode(view);
-            if (conditionType != null && conditionType != typeof(Always))
-            {
-                node.Condition(conditionType);
-            }
-
-            Writers.AddToEnd(node);
-
-            return node;
         }
 
         public void ClearAll()
@@ -127,7 +137,7 @@ namespace FubuMVC.Core.Resources.Conneg
 
         public bool UsesFormatter<T>()
         {
-            return Writers.OfType<WriteWithFormatter>().Any(x => x.FormatterType == typeof(T));
+            return Writers.OfType<WriteWithFormatter>().Any(x => x.FormatterType == typeof (T));
         }
 
         public void AddWriter(Type writerType)
@@ -136,32 +146,9 @@ namespace FubuMVC.Core.Resources.Conneg
             Writers.AddToEnd(writer);
         }
 
-        Type IMayHaveResourceType.ResourceType()
-        {
-            return ResourceType;
-        }
-
-        public bool HasView(Type conditionalType)
-        {
-            return Writers.OfType<ViewNode>().Any(x => x.ConditionType == conditionalType);
-        }
-
         public override string ToString()
         {
             return Writers.Select(x => x.ToString()).Join(", ");
-        }
-
-        void DescribesItself.Describe(Description description)
-        {
-            description.Title = "OutputNode";
-            description.ShortDescription = "Render the output for resource " + ResourceType.Name;
-
-            description.AddList("Writers", Writers);
-        }
-
-        public override string Description
-        {
-            get { return ToString(); }
         }
     }
 }

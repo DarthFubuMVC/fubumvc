@@ -6,7 +6,6 @@ using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.UI.Navigation;
-using FubuMVC.Core.View;
 
 namespace FubuMVC.Core
 {
@@ -123,7 +122,8 @@ namespace FubuMVC.Core
         void ApplyHandlerConventions<T>()
             where T : class;
 
-        [Obsolete("Use Import<HandlerConvention>(c => markerTypes.Each(c.MarkerType) instead.  Will be removed before 1.0")]
+        [Obsolete(
+            "Use Import<HandlerConvention>(c => markerTypes.Each(c.MarkerType) instead.  Will be removed before 1.0")]
         void ApplyHandlerConventions(params Type[] markerTypes);
 
         [Obsolete("Use Import<HandlerConvention>(Action<HandlerConvention>) instead.  Will be removed before 1.0")]
@@ -175,19 +175,21 @@ namespace FubuMVC.Core
         }
 
         /// <summary>
-        ///   Modify or configure the settings, data, and policies of the Assets Pipeline
-        /// </summary>
-        public AssetsExpression Assets
-        {
-            get { return new AssetsExpression(this); }
-        }
-
-        /// <summary>
         ///   Gets the name of the <see cref = "FubuRegistry" />. Mostly used for diagnostics.
         /// </summary>
         public virtual string Name
         {
             get { return GetType().ToString(); }
+        }
+
+        #region IFubuRegistry Members
+
+        /// <summary>
+        ///   Modify or configure the settings, data, and policies of the Assets Pipeline
+        /// </summary>
+        public AssetsExpression Assets
+        {
+            get { return new AssetsExpression(this); }
         }
 
         /// <summary>
@@ -254,21 +256,6 @@ namespace FubuMVC.Core
         /// <summary>
         ///   Adds a configuration convention to be applied to the <see cref = "BehaviorGraph" /> produced by this <see cref = "FubuRegistry" />
         /// </summary>
-        public void ApplyConvention<TConvention>(Action<TConvention> configuration = null)
-            where TConvention : IConfigurationAction, new()
-        {
-            var convention = new TConvention();
-            if (configuration != null)
-            {
-                configuration(convention);
-            }
-
-            ApplyConvention(convention);
-        }
-
-        /// <summary>
-        ///   Adds a configuration convention to be applied to the <see cref = "BehaviorGraph" /> produced by this <see cref = "FubuRegistry" />
-        /// </summary>
         public void ApplyConvention<TConvention>(TConvention convention)
             where TConvention : IConfigurationAction
         {
@@ -292,7 +279,8 @@ namespace FubuMVC.Core
         /// </summary>
         public void Import<T>(string prefix) where T : FubuRegistry, new()
         {
-            _configuration.AddImport(new RegistryImport{
+            _configuration.AddImport(new RegistryImport
+            {
                 Prefix = prefix,
                 Registry = new T(),
                 Type = typeof (T)
@@ -305,7 +293,8 @@ namespace FubuMVC.Core
         /// </summary>
         public void Import(FubuRegistry registry, string prefix)
         {
-            _configuration.AddImport(new RegistryImport{
+            _configuration.AddImport(new RegistryImport
+            {
                 Prefix = prefix,
                 Registry = registry
             });
@@ -339,36 +328,6 @@ namespace FubuMVC.Core
             addExplicit(alteration);
         }
 
-        /// <summary>
-        ///   Constructs a <see cref = "BehaviorGraph" /> using the configuration expressions defined in this <see cref = "FubuRegistry" />. This method is mostly for internal usage.
-        /// </summary>
-        /// <returns></returns>
-        internal BehaviorGraph BuildGraph()
-        {
-            Compile();
-
-            // TEMPORARY!
-            Import<ViewEnginesExtension>();
-
-            return _configuration.Build();
-        }
-
-
-        internal void Compile()
-        {
-            if (!_hasCompiled)
-            {
-                _scanningOperations.Each(x => x(_configuration.Types));
-                _hasCompiled = true;
-            }
-        }
-
-        private void addExplicit(Action<BehaviorGraph> action)
-        {
-            var explicitAction = new LambdaConfigurationAction(action);
-            _configuration.AddConfiguration(explicitAction, ConfigurationType.Explicit);
-        }
-
 
         /// <summary>
         ///   Access the TypePool with all the assemblies represented in the AppliesTo expressions
@@ -398,7 +357,8 @@ namespace FubuMVC.Core
 
             if (typeof (T).CanBeCastTo<FubuPackageRegistry>())
             {
-                _configuration.AddImport(new RegistryImport{
+                _configuration.AddImport(new RegistryImport
+                {
                     Prefix = null,
                     Registry = new T().As<FubuRegistry>(),
                     Type = typeof (T)
@@ -441,6 +401,50 @@ namespace FubuMVC.Core
         public void Navigation(NavigationRegistry registry)
         {
             _configuration.AddConfiguration(registry);
+        }
+
+        #endregion
+
+        /// <summary>
+        ///   Adds a configuration convention to be applied to the <see cref = "BehaviorGraph" /> produced by this <see cref = "FubuRegistry" />
+        /// </summary>
+        public void ApplyConvention<TConvention>(Action<TConvention> configuration = null)
+            where TConvention : IConfigurationAction, new()
+        {
+            var convention = new TConvention();
+            if (configuration != null)
+            {
+                configuration(convention);
+            }
+
+            ApplyConvention(convention);
+        }
+
+        /// <summary>
+        ///   Constructs a <see cref = "BehaviorGraph" /> using the configuration expressions defined in this <see cref = "FubuRegistry" />. This method is mostly for internal usage.
+        /// </summary>
+        /// <returns></returns>
+        internal BehaviorGraph BuildGraph()
+        {
+            Compile();
+
+            return _configuration.Build();
+        }
+
+
+        internal void Compile()
+        {
+            if (!_hasCompiled)
+            {
+                _scanningOperations.Each(x => x(_configuration.Types));
+                _hasCompiled = true;
+            }
+        }
+
+        private void addExplicit(Action<BehaviorGraph> action)
+        {
+            var explicitAction = new LambdaConfigurationAction(action);
+            _configuration.AddConfiguration(explicitAction, ConfigurationType.Explicit);
         }
     }
 }

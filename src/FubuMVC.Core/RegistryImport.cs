@@ -1,7 +1,6 @@
 using System;
 using FubuCore;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.View.Attachment;
 
 namespace FubuMVC.Core
 {
@@ -13,18 +12,21 @@ namespace FubuMVC.Core
 
         public Type Type { get; set; }
 
+        #region IConfigurationAction Members
+
         public void Configure(BehaviorGraph graph)
         {
-            ImportInto(graph, graph.Settings.Get<ViewBag>());
+            ImportInto(graph);
         }
 
-        public void ImportInto(BehaviorGraph graph, ViewBag views)
+        #endregion
+
+        public void ImportInto(BehaviorGraph graph)
         {
             // TODO -- will want this to suck in the configuration log business somehow
             Registry.Compile();
-            var childGraph = Registry.Configuration.BuildForImport(graph);
-            graph.As<IChainImporter>().Import(childGraph, b =>
-            {
+            BehaviorGraph childGraph = Registry.Configuration.BuildForImport(graph);
+            graph.As<IChainImporter>().Import(childGraph, b => {
                 b.PrependToUrl(Prefix);
                 b.Origin = Registry.Name;
             });

@@ -57,6 +57,7 @@
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AntiForgeryTokenFubuPageExtensions.cs" />
+    <Compile Include="AssetFilePageExtensions.cs" />
     <Compile Include="AuthorizationOnPageExtensions.cs" />
     <Compile Include="DefaultHtmlConventions.cs" />
     <Compile Include="ElementCategoryExpression.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="ElementConventionsFubuPageExtensions.cs" />
     <Compile Include="HtmlTagExtensions.cs" />
     <Compile Include="ImageTag.cs" />
+    <Compile Include="PartialExpressionExtensions.cs" />
     <Compile Include="ProfileExpression.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scenarios\HtmlElementScenario.cs" />
@@ -114,6 +116,10 @@
     <Compile Include="ViewEngine\HtmlDocumentViewToken.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FubuMVC.Core.View\FubuMVC.Core.View.csproj">
+      <Project>{2A1EC669-763F-4C2E-BC22-99A47A4BD5B7}</Project>
+      <Name>FubuMVC.Core.View</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>

@@ -88,6 +88,10 @@
       <Project>{87208AF5-9ABE-4381-B49D-C930FDD042AE}</Project>
       <Name>FubuMVC.Core.UI</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Core.View\FubuMVC.Core.View.csproj">
+      <Project>{2A1EC669-763F-4C2E-BC22-99A47A4BD5B7}</Project>
+      <Name>FubuMVC.Core.View</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>

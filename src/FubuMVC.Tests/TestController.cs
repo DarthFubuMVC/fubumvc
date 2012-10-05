@@ -2,10 +2,7 @@ using System;
 using System.Web.UI;
 using FubuCore;
 using FubuMVC.Core.Behaviors;
-using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
-using FubuMVC.Core.View;
-
 
 namespace FubuMVC.Tests
 {
@@ -18,7 +15,10 @@ namespace FubuMVC.Tests
 
     public class TestController
     {
-        public TestOutputModel Index(){ return new TestOutputModel(); }
+        public TestOutputModel Index()
+        {
+            return new TestOutputModel();
+        }
 
         public TestOutputModel SomeAction(TestInputModel value)
         {
@@ -84,95 +84,11 @@ namespace FubuMVC.Tests
         public string PartialModelProp1 { get; set; }
     }
 
-    public class TestView : IFubuPage<TestOutputModel>
-    {
-
-        public string ElementPrefix
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
-
-        public IServiceLocator ServiceLocator
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
-
-        public T Get<T>()
-        {
-            throw new NotImplementedException();
-        }
-
-        public T GetNew<T>()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Write(object content)
-        {
-            throw new NotImplementedException();
-        }
-
-        public object GetModel()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IUrlRegistry Urls
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public TestOutputModel Model { get; set;  }
-    }
-
-    public class TestUserControl : UserControl, IFubuPage<TestPartialModel>
-    {
-
-        public TestPartialModel Model { get; set; }
-
-        public string ElementPrefix
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
-
-        public IServiceLocator ServiceLocator
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
-
-        public T Get<T>()
-        {
-            throw new NotImplementedException();
-        }
-
-        public T GetNew<T>()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Write(object content)
-        {
-            throw new NotImplementedException();
-        }
-
-        public object GetModel()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IUrlRegistry Urls
-        {
-            get { throw new NotImplementedException(); }
-        }
-    }
-
     public class TestBehavior2 : IActionBehavior
     {
         public IActionBehavior InsideBehavior { get; set; }
+
+        #region IActionBehavior Members
 
         public void Invoke()
         {
@@ -183,12 +99,16 @@ namespace FubuMVC.Tests
         {
             throw new NotImplementedException();
         }
+
+        #endregion
     }
 
     public class TestBehavior : IActionBehavior
     {
         public IActionBehavior InsideBehavior { get; set; }
 
+        #region IActionBehavior Members
+
         public void Invoke()
         {
             throw new NotImplementedException();
@@ -198,5 +118,7 @@ namespace FubuMVC.Tests
         {
             throw new NotImplementedException();
         }
+
+        #endregion
     }
 }

@@ -10,10 +10,8 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Registration.Routes;
-using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.UI.Navigation;
-using FubuMVC.Core.View.Attachment;
 
 namespace FubuMVC.Core.Registration
 {
@@ -35,41 +33,14 @@ namespace FubuMVC.Core.Registration
     {
         private readonly List<BehaviorChain> _behaviors = new List<BehaviorChain>();
 
+        private readonly Lazy<IFubuApplicationFiles> _files =
+            new Lazy<IFubuApplicationFiles>(() => new FubuApplicationFiles());
+
         private readonly List<IChainForwarder> _forwarders = new List<IChainForwarder>();
-        private readonly ServiceGraph _services = new ServiceGraph();
-        private readonly Lazy<IFubuApplicationFiles> _files = new Lazy<IFubuApplicationFiles>(() => new FubuApplicationFiles());
-        private readonly SettingsCollection _settings;
         private readonly ConfigLog _log;
+        private readonly ServiceGraph _services = new ServiceGraph();
 
-        public static BehaviorGraph BuildFrom(FubuRegistry registry)
-        {
-            return registry.BuildGraph();
-        }
-
-        public static BehaviorGraph BuildFrom<T>() where T : FubuRegistry, new()
-        {
-            return new T().BuildGraph();
-        }
-
-        public static BehaviorGraph BuildFrom(Action<FubuRegistry> configure)
-        {
-            var registry = new FubuRegistry();
-            configure(registry);
-
-            return registry.BuildGraph();
-        }
-
-        public TypePool Types { get; internal set; }
-
-        public ConfigLog Log
-        {
-            get { return _log; }
-        }
-
-        public static BehaviorGraph ForChild(BehaviorGraph parent)
-        {
-            return new BehaviorGraph(parent);
-        }
+        private readonly SettingsCollection _settings;
 
         private BehaviorGraph(BehaviorGraph parent) : this()
         {
@@ -83,14 +54,19 @@ namespace FubuMVC.Core.Registration
             _settings = new SettingsCollection(null);
             _settings.Replace(SessionStateRequirement.RequiresSessionState);
 
-            Settings.Replace(ViewBag.Empty());
-
             RouteIterator = new SortByRouteRankIterator(); // can override in a registry
 
             TypeResolver = new TypeResolver();
             _services.AddService<ITypeResolver>(TypeResolver);
 
             Types = new TypePool(null); // need a default for some tests
+        }
+
+        public TypePool Types { get; internal set; }
+
+        public ConfigLog Log
+        {
+            get { return _log; }
         }
 
         public SettingsCollection Settings
@@ -139,17 +115,22 @@ namespace FubuMVC.Core.Registration
         /// </summary>
         public IRouteIterator RouteIterator { get; set; }
 
+        #region IChainImporter Members
+
         void IChainImporter.Import(BehaviorGraph graph, Action<BehaviorChain> alternation)
         {
             _log.Import(graph.Log);
 
-            graph.Behaviors.Each(b =>
-            {
+            graph.Behaviors.Each(b => {
                 AddChain(b);
                 b.Trace(new ChainImported());
                 alternation(b);
             });
         }
+
+        #endregion
+
+        #region IRegisterable Members
 
         void IRegisterable.Register(Action<Type, ObjectDef> action)
         {
@@ -164,9 +145,35 @@ namespace FubuMVC.Core.Registration
 
             _behaviors.OfType<IRegisterable>().Each(chain => chain.Register(action));
 
-            action(typeof (BehaviorGraph), new ObjectDef{
+            action(typeof (BehaviorGraph), new ObjectDef
+            {
                 Value = this
             });
+        }
+
+        #endregion
+
+        public static BehaviorGraph BuildFrom(FubuRegistry registry)
+        {
+            return registry.BuildGraph();
+        }
+
+        public static BehaviorGraph BuildFrom<T>() where T : FubuRegistry, new()
+        {
+            return new T().BuildGraph();
+        }
+
+        public static BehaviorGraph BuildFrom(Action<FubuRegistry> configure)
+        {
+            var registry = new FubuRegistry();
+            configure(registry);
+
+            return registry.BuildGraph();
+        }
+
+        public static BehaviorGraph ForChild(BehaviorGraph parent)
+        {
+            return new BehaviorGraph(parent);
         }
 
         /// <summary>
@@ -211,10 +218,11 @@ namespace FubuMVC.Core.Registration
         /// <returns></returns>
         public BehaviorChain BehaviorFor(IRouteDefinition route)
         {
-            var chain = _behaviors.FirstOrDefault(x => x.Route == route);
+            BehaviorChain chain = _behaviors.FirstOrDefault(x => x.Route == route);
             if (chain == null)
             {
-                chain = new BehaviorChain{
+                chain = new BehaviorChain
+                {
                     Route = route
                 };
                 _behaviors.Fill(chain);
@@ -242,7 +250,7 @@ namespace FubuMVC.Core.Registration
         {
             foreach (BehaviorChain chain in _behaviors)
             {
-                var call = chain.FirstCall();
+                ActionCall call = chain.FirstCall();
                 if (call != null)
                 {
                     yield return call;
@@ -270,7 +278,7 @@ namespace FubuMVC.Core.Registration
         /// <returns></returns>
         public BehaviorChain BehaviorFor<T>(Expression<Action<T>> expression)
         {
-            var call = ActionCall.For(expression);
+            ActionCall call = ActionCall.For(expression);
             return _behaviors.Where(x => x.Calls.Contains(call)).FirstOrDefault();
         }
 
@@ -283,7 +291,7 @@ namespace FubuMVC.Core.Registration
         /// <returns></returns>
         public BehaviorChain BehaviorFor<T>(Expression<Func<T, object>> expression)
         {
-            var call = ActionCall.For(expression);
+            ActionCall call = ActionCall.For(expression);
             return _behaviors.Where(x => x.Calls.Contains(call)).FirstOrDefault();
         }
 
@@ -348,11 +356,11 @@ namespace FubuMVC.Core.Registration
         {
             if (arguments.Any())
             {
-                var closedType = actionType.MakeGenericType(arguments);
+                Type closedType = actionType.MakeGenericType(arguments);
                 return AddActionFor(urlPattern, closedType);
             }
 
-            var action = ActionCall.For(actionType);
+            ActionCall action = ActionCall.For(actionType);
             var chain = new BehaviorChain();
             chain.AddToEnd(action);
             chain.Route = action.BuildRouteForPattern(urlPattern);
@@ -381,7 +389,7 @@ namespace FubuMVC.Core.Registration
         /// <returns></returns>
         public BehaviorChain BehaviorFor(Type inputType)
         {
-            var chains = Behaviors.Where(x => x.InputType() == inputType);
+            IEnumerable<BehaviorChain> chains = Behaviors.Where(x => x.InputType() == inputType);
             if (chains.Count() == 1)
             {
                 return chains.First();
@@ -429,7 +437,7 @@ namespace FubuMVC.Core.Registration
 
         private BehaviorChain BehaviorForActionCall(ActionCall call)
         {
-            var chain = Behaviors.FirstOrDefault(x => x.FirstCall().Equals(call));
+            BehaviorChain chain = Behaviors.FirstOrDefault(x => x.FirstCall().Equals(call));
 
             if (chain == null)
             {
@@ -451,7 +459,7 @@ namespace FubuMVC.Core.Registration
         /// </summary>
         public HandlerActionsSet ActionsForHandler(Type handlerType)
         {
-            var actions = FirstActions().Where(x => x.HandlerType == handlerType);
+            IEnumerable<ActionCall> actions = FirstActions().Where(x => x.HandlerType == handlerType);
             return new HandlerActionsSet(actions, handlerType);
         }
 
@@ -482,16 +490,19 @@ namespace FubuMVC.Core.Registration
 
     public class SortByRouteRankIterator : IRouteIterator
     {
+        #region IRouteIterator Members
+
         public IEnumerable<BehaviorChain> Over(IEnumerable<BehaviorChain> behaviors)
         {
             return behaviors.OrderBy(b => b.Rank);
         }
+
+        #endregion
     }
 
     [Title("Imported from another FubuRegistry")]
     public class ChainImported : NodeEvent
     {
-        
     }
 
     public interface IRouteIterator
