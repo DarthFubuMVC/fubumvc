@@ -120,10 +120,6 @@ zip :package do |zip|
 	zip.output_path = [props[:artifacts]]
 end
 
-desc "Bundles up the packaged content in FubuFastPack"
-task :bundle_getting_started do
-  fubu("assembly-pak src/FubuMVC.GettingStarted --proj-file FubuMVC.GettingStarted.csproj")
-end
 
 
 

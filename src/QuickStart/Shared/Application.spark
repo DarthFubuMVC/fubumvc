@@ -1,8 +1,0 @@
-﻿<html>
-<head>
-    <title><use content="title" /></title>
-</head>
-<body>
-    <use:view />
-</body>
-</html>
