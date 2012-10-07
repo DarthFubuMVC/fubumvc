@@ -1,2 +1,0 @@
-﻿<viewdata model="ViewEngineIntegrationTesting.ActionlessViews.UnattachedModel" />
-<p>The name is !{Model.Name}</p>

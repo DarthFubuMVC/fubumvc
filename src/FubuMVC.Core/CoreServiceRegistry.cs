@@ -79,6 +79,8 @@ namespace FubuMVC.Core
             SetServiceIfNone<ISystemTime, SystemTime>();
 
             SetServiceIfNone<IExceptionHandlingObserver, ExceptionHandlingObserver>();
+
+            SetServiceIfNone<IPartialInvoker, PartialInvoker>();
         }
     }
 }

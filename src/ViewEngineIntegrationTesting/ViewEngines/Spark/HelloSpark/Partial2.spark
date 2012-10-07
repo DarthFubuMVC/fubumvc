@@ -1,2 +1,0 @@
-﻿<viewdata model="ViewEngineIntegrationTesting.ViewEngines.Spark.HelloSpark.MoreInput" />
-<p>!{Model.Description}</p>

@@ -104,13 +104,13 @@ task :test => [:unit_test]
 desc "Runs unit tests"
 task :unit_test => :compile do
   runner = NUnitRunner.new :compilemode => COMPILE_TARGET, :source => 'src', :platform => 'x86'
-  runner.executeTests ['FubuMVC.Tests', 'FubuMVC.Spark.Tests', 'FubuMVC.Razor.Tests', 'FubuMVC.SelfHost.Testing', 'FubuMVC.Core.UI.Testing', 'FubuMVC.Core.View.Testing', 'FubuMVC.Core.Assets.Testing']
+  runner.executeTests ['FubuMVC.Tests', 'FubuMVC.SelfHost.Testing']
 end
 
 desc "Runs the integration tests"
 task :integration_test => :compile do
   runner = NUnitRunner.new :compilemode => COMPILE_TARGET, :source => 'src', :platform => 'x86'
-  runner.executeTests ['FubuMVC.IntegrationTesting', 'ViewEngineIntegrationTesting', 'FubuMVC.Core.Assets.IntegrationTesting']
+  runner.executeTests ['FubuMVC.IntegrationTesting']
 end
 
 desc "ZIPs up the build results"
