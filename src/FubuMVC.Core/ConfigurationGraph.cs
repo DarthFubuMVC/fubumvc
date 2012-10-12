@@ -219,6 +219,8 @@ namespace FubuMVC.Core
             {
                 yield return action;
             }
+
+            yield return new AccessorOverridesFinder();
         }
 
         private static IEnumerable<ServiceRegistry> systemServices()

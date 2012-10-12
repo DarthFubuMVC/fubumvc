@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="AssemblyPackageMarker.cs" />
     <Compile Include="AssemblyPackageRegistry.cs" />
+    <Compile Include="FakeTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
