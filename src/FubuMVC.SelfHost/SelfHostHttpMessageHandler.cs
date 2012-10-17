@@ -13,14 +13,19 @@ namespace FubuMVC.SelfHost
 {
     public class SelfHostHttpMessageHandler : HttpMessageHandler
     {
-        private readonly FubuRuntime _runtime;
-        private readonly RouteCollection _routes;
+        private FubuRuntime _runtime;
+        private readonly RouteCollection _routes = new RouteCollection();
 
         public SelfHostHttpMessageHandler(FubuRuntime runtime)
         {
+            ReplaceRuntime(runtime);
+        }
+
+        public void ReplaceRuntime(FubuRuntime runtime)
+        {
             _runtime = runtime;
 
-            _routes = new RouteCollection();
+            _routes.Clear();
             _routes.AddRange(runtime.Routes);
 
             RouteTable.Routes.Clear();
@@ -83,5 +88,6 @@ namespace FubuMVC.SelfHost
                 Content = new StringContent("Sorry, I can't find this resource")
             };
         }
+
     }
 }

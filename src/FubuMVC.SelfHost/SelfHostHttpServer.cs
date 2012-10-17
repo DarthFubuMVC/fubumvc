@@ -1,4 +1,6 @@
 using System;
+using System.ServiceModel;
+using System.Threading.Tasks;
 using System.Web.Http.SelfHost;
 using FubuCore;
 using FubuMVC.Core;
@@ -9,10 +11,11 @@ namespace FubuMVC.SelfHost
 {
     public class SelfHostHttpServer : IDisposable
     {
-        private HttpSelfHostConfiguration _configuration;
-        private HttpSelfHostServer _server;
         private string _baseAddress;
+        private HttpSelfHostConfiguration _configuration;
         private int _port;
+        private SelfHostHttpMessageHandler _selfHostHttpMessageHandler;
+        private HttpSelfHostServer _server;
 
         public SelfHostHttpServer(int port)
         {
@@ -36,19 +39,24 @@ namespace FubuMVC.SelfHost
             get { return _configuration; }
         }
 
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            _server.CloseAsync().ContinueWith(t => _server.SafeDispose()).Wait();
+        }
+
+        #endregion
+
         public void Start(FubuRuntime runtime, string rootDirectory)
         {
             _port = PortFinder.FindPort(_port);
-
 
             int i = 0;
             while (!tryStartAtPort(rootDirectory, runtime) && i > 3)
             {
                 i++;
             }
-            
-
-
         }
 
         private bool tryStartAtPort(string rootDirectory, FubuRuntime runtime)
@@ -60,7 +68,7 @@ namespace FubuMVC.SelfHost
             }
             catch (AggregateException e)
             {
-                if (e.InnerException is System.ServiceModel.AddressAlreadyInUseException)
+                if (e.InnerException is AddressAlreadyInUseException)
                 {
                     _port++;
                     return false;
@@ -68,8 +76,6 @@ namespace FubuMVC.SelfHost
 
                 throw;
             }
-
-            
         }
 
         private void startAtPort(string rootDirectory, FubuRuntime runtime)
@@ -79,20 +85,26 @@ namespace FubuMVC.SelfHost
 
             FubuMvcPackageFacility.PhysicalRootPath = rootDirectory;
 
-            _server = new HttpSelfHostServer(_configuration, new SelfHostHttpMessageHandler(runtime){
+            _selfHostHttpMessageHandler = new SelfHostHttpMessageHandler(runtime)
+            {
                 Verbose = Verbose
-            });
+            };
 
-            runtime.Facility.Register(typeof(HttpSelfHostConfiguration), ObjectDef.ForValue(_configuration));
+            _server = new HttpSelfHostServer(_configuration, _selfHostHttpMessageHandler);
+
+            runtime.Facility.Register(typeof (HttpSelfHostConfiguration), ObjectDef.ForValue(_configuration));
 
             Console.WriteLine("Starting to listen for requests at " + _configuration.BaseAddress);
 
             _server.OpenAsync().Wait();
         }
 
-        public void Dispose()
+        public Task Recycle(FubuRuntime runtime)
         {
-            _server.CloseAsync().ContinueWith(t => _server.SafeDispose()).Wait();
+            return _server.CloseAsync().ContinueWith(t => {
+                _selfHostHttpMessageHandler.ReplaceRuntime(runtime);
+            }).ContinueWith(t => _server.OpenAsync());
+
         }
     }
 }
