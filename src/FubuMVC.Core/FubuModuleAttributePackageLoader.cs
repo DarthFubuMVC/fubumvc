@@ -35,10 +35,20 @@ namespace FubuMVC.Core
                 log.Trace("Looking for assemblies marked with the [FubuModule] attribute in " + x);
             });
 
-            return list.SelectMany(
-                x =>
-                AssembliesFromPath(x, assem => assem.GetCustomAttributes(typeof (FubuModuleAttribute), false).Any()))
+            return LoadPackages(list);
+        }
+
+        public static IEnumerable<IPackageInfo> LoadPackages(List<string> list)
+        {
+            return FindAssemblies(list)
                 .Select(assem => new AssemblyPackageInfo(assem));
+        }
+
+        public static IEnumerable<Assembly> FindAssemblies(IEnumerable<string> directories)
+        {
+            return directories.SelectMany(
+                x =>
+                AssembliesFromPath(x, assem => assem.GetCustomAttributes(typeof (FubuModuleAttribute), false).Any()));
         }
 
         // TODO -- this is so common here and in FubuMVC, just get something into FubuCore
