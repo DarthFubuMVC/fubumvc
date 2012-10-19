@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 
 namespace FubuMVC.Core.Http.AspNet
@@ -14,14 +16,29 @@ namespace FubuMVC.Core.Http.AspNet
             _response = context.Response.Cookies;
         }
 
-        public HttpCookieCollection Request
+        public bool Has(string name)
         {
-            get { return _request; }
+            throw new NotImplementedException();
         }
 
-        public HttpCookieCollection Response
+        public HttpCookie Get(string name)
         {
-            get { return _response; }
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<HttpCookie> Request
+        {
+            get { return cookiesFor(_request); }
+        }
+
+        public IEnumerable<HttpCookie> Response
+        {
+            get { return cookiesFor(_response); }
+        }
+
+        private static IEnumerable<HttpCookie> cookiesFor(HttpCookieCollection collection)
+        {
+            return collection.AllKeys.Select(x => collection[x]);
         }
     }
 
