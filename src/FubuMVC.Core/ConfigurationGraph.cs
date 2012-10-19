@@ -31,7 +31,6 @@ namespace FubuMVC.Core
 
         private readonly List<RegistryImport> _imports = new List<RegistryImport>();
         private readonly FubuRegistry _registry;
-        private readonly RouteDefinitionResolver _routeResolver = new RouteDefinitionResolver();
         private readonly TypePool _types = new TypePool(FindTheCallingAssembly());
 
         public ConfigurationGraph(FubuRegistry registry)
@@ -42,11 +41,6 @@ namespace FubuMVC.Core
         public TypePool Types
         {
             get { return _types; }
-        }
-
-        public RouteDefinitionResolver RouteResolver
-        {
-            get { return _routeResolver; }
         }
 
         public void AddConfiguration(IConfigurationAction action, string defaultType = null)
@@ -206,7 +200,7 @@ namespace FubuMVC.Core
             yield return new BehaviorAggregator();
 
             yield return new PartialOnlyConvention();
-            yield return _routeResolver;
+            yield return new RouteDetermination();
 
             foreach (IConfigurationAction action in _configurations[ConfigurationType.Discovery])
             {

@@ -7,9 +7,28 @@ using FubuMVC.Core.Registration.Routes;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
-    // TODO -- need a way to ignore routes
     [Policy]
-    public class RouteDefinitionResolver : IConfigurationAction
+    public class RouteDetermination : IConfigurationAction
+    {
+        public void Configure(BehaviorGraph graph)
+        {
+            Configure(graph, graph.Settings.Get<RouteDefinitionResolver>());
+        }
+
+        public static void Configure(BehaviorGraph graph, RouteDefinitionResolver resolver)
+        {
+            //if no default route is specified, this one comes for free
+            if (!resolver.HasDefaultRoute())
+            {
+                resolver.RegisterUrlPolicy(new DefaultRouteConventionBasedUrlPolicy(), true);
+            }
+
+            resolver.ApplyToAll(graph);
+        }
+    }
+
+    // TODO -- need a way to ignore routes
+    public class RouteDefinitionResolver
     {
         private readonly RouteConstraintPolicy _constraintPolicy = new RouteConstraintPolicy();
         private readonly UrlPolicy _defaultUrlPolicy;
@@ -46,16 +65,6 @@ namespace FubuMVC.Core.Registration.Conventions
         public RouteConstraintPolicy ConstraintPolicy
         {
             get { return _constraintPolicy; }
-        }
-
-        public void Configure(BehaviorGraph graph)
-        {
-            //if no default route is specified, this one comes for free
-            if (!defaultRouteSpecified())
-            {
-                RegisterUrlPolicy(new DefaultRouteConventionBasedUrlPolicy(), true);
-            }
-            ApplyToAll(graph);
         }
 
         public void Apply(BehaviorGraph graph, BehaviorChain chain)
@@ -114,7 +123,7 @@ namespace FubuMVC.Core.Registration.Conventions
             _inputPolicy.InputBuilders.Register(where, action);
         }
 
-        private bool defaultRouteSpecified()
+        public bool HasDefaultRoute()
         {
             return _policies.Any(x => x is DefaultRouteMethodBasedUrlPolicy || x is DefaultRouteInputTypeBasedUrlPolicy);
         }

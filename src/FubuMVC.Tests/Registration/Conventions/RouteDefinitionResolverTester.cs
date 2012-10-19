@@ -289,7 +289,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void adds_convention_based_home_policy_if_not_specified()
         {
-            resolver.Configure(graph);
+            RouteDetermination.Configure(graph, resolver);
             var route = buildRoute<HomeEndpoint>(x => x.Index(), c => { });
             route.Pattern.ShouldEqual("");
         }
@@ -301,7 +301,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             resolver.DefaultUrlPolicy.IgnoreControllerNamespaceEntirely = true;
             resolver.RegisterUrlPolicy(new DefaultRouteMethodBasedUrlPolicy(ReflectionHelper.GetMethod<RouteResolverController>(x => x.Index())));
 
-            resolver.Configure(graph);
+            RouteDetermination.Configure(graph, resolver);
 
             var route = buildRoute<HomeEndpoint>(x => x.Index(), c => { });
             route.Pattern.ShouldEqual("home/index");

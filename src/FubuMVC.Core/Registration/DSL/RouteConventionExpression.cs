@@ -13,17 +13,20 @@ namespace FubuMVC.Core.Registration.DSL
     public class RouteConventionExpression
     {
         private readonly ConfigurationGraph _configuration;
-        private RouteDefinitionResolver _resolver;
 
         public RouteConventionExpression(ConfigurationGraph configuration)
         {
             _configuration = configuration;
-            _resolver = configuration.RouteResolver;
+        }
+
+        private void alter(Action<RouteDefinitionResolver> alteration)
+        {
+            _configuration.AddConfiguration(new SettingAlteration<RouteDefinitionResolver>(alteration));
         }
 
         public RouteConventionExpression IgnoreNamespaceText(string nameSpace)
         {
-            _resolver.DefaultUrlPolicy.IgnoreNamespace(nameSpace);
+            alter(x => x.DefaultUrlPolicy.IgnoreNamespace(nameSpace));
             return this;
         }
 
@@ -31,19 +34,19 @@ namespace FubuMVC.Core.Registration.DSL
 
         public RouteConventionExpression IgnoreMethodsNamed(string methodName)
         {
-            _resolver.DefaultUrlPolicy.IgnoreMethods(methodName);
+            alter(x => x.DefaultUrlPolicy.IgnoreMethods(methodName));
             return this;
         }
 
         public RouteConventionExpression IgnoreClassSuffix(string suffix)
         {
-            _resolver.DefaultUrlPolicy.IgnoreClassSuffix(suffix);
+            alter(x => x.DefaultUrlPolicy.IgnoreClassSuffix(suffix));
             return this;
         }
 
         public RouteConventionExpression IgnoreClassNameForType<T>()
         {
-            _resolver.DefaultUrlPolicy.IgnoreClassName(typeof(T));
+            alter(x => x.DefaultUrlPolicy.IgnoreClassName(typeof(T)));
             return this;
         }
 
@@ -51,56 +54,56 @@ namespace FubuMVC.Core.Registration.DSL
             Func<ActionCall, bool> methodFilter, Expression<Func<T, object>> propertyFilter)
         {
             Accessor prop = ReflectionHelper.GetAccessor(propertyFilter);
-            _resolver.InputPolicy.PropertyFilters.Excludes.Add(
-                input => methodFilter(input.Call) && input.InputProperty.Name == prop.InnerProperty.Name);
+            alter(x => x.InputPolicy.PropertyFilters.Excludes.Add(
+                input => methodFilter(input.Call) && input.InputProperty.Name == prop.InnerProperty.Name));
             return this;
         }
 
         public RouteConventionExpression IgnoreInputsForInputTypeAndMethod<T>(Func<ActionCall, bool> filter)
         {
-            _resolver.InputPolicy.InputBuilders.Register(filter, (r, t) => { });
+            alter(x => x.InputPolicy.InputBuilders.Register(filter, (r, t) => { }));
             return this;
         }
 
         public RouteConventionExpression IgnoreControllerFolderName()
         {
-            _resolver.DefaultUrlPolicy.IgnoreControllerFolderName = true;
+            alter(x => x.DefaultUrlPolicy.IgnoreControllerFolderName = true);
             return this;
         }
 
         public RouteConventionExpression IgnoreControllerNamesEntirely()
         {
-            _resolver.DefaultUrlPolicy.IgnoreControllerNamesEntirely = true;
+            alter(x => x.DefaultUrlPolicy.IgnoreControllerNamesEntirely = true);
             return this;
         }
 
         public RouteConventionExpression IgnoreControllerNamespaceEntirely()
         {
-            _resolver.DefaultUrlPolicy.IgnoreControllerNamespaceEntirely = true;
+            alter(x => x.DefaultUrlPolicy.IgnoreControllerNamespaceEntirely = true);
             return this;
         }
 
         public RouteConventionExpression AppendClassesWith(Func<ActionCall, bool> filter, string pattern)
         {
-            _resolver.DefaultUrlPolicy.AppendClassesWith(filter, pattern);
+            alter(x => x.DefaultUrlPolicy.AppendClassesWith(filter, pattern));
             return this;
         }
 
         public RouteConventionExpression AppendAllClassesWith(string pattern)
         {
-            _resolver.DefaultUrlPolicy.AppendClassesWith(x=>true,pattern);
+            alter(x => x.DefaultUrlPolicy.AppendClassesWith(o=>true,pattern));
             return this;
         }
 
         public RouteConventionExpression ModifyRouteDefinitions(Func<ActionCall, bool> filter, Action<IRouteDefinition> modification)
         {
-            _resolver.DefaultUrlPolicy.RegisterRouteModification(filter, modification);
+            alter(x => x.DefaultUrlPolicy.RegisterRouteModification(filter, modification));
             return this;
         }
 
         public RouteConventionExpression ConstrainToHttpMethod(Expression<Func<ActionCall, bool>> filter, string method)
         {
-            _resolver.ConstraintPolicy.AddHttpMethodFilter(filter, method);
+            alter(x => x.ConstraintPolicy.AddHttpMethodFilter(filter, method));
             return this;
         }
 
@@ -109,8 +112,8 @@ namespace FubuMVC.Core.Registration.DSL
             var inputs = new InputTypeRouteInputsModel<T>();
             configure(inputs);
 
-            _resolver.InputPolicy.InputBuilders.Register(call => call.InputType().CanBeCastTo<T>(),
-                                                         (r, t) => inputs.Modify(r));
+            alter(x => x.InputPolicy.InputBuilders.Register(call => call.InputType().CanBeCastTo<T>(),
+                                                         (r, t) => inputs.Modify(r)));
 
             return this;
         }
@@ -127,7 +130,7 @@ namespace FubuMVC.Core.Registration.DSL
 
         public RouteConventionExpression IgnoreMethodSuffix(string suffix)
         {
-            _resolver.DefaultUrlPolicy.IgnoreMethodSuffix(suffix);
+            alter(x => x.DefaultUrlPolicy.IgnoreMethodSuffix(suffix));
             return this;
         }
 
@@ -138,20 +141,20 @@ namespace FubuMVC.Core.Registration.DSL
 
         public RouteConventionExpression UrlPolicy(IUrlPolicy policy)
         {
-            _resolver.RegisterUrlPolicy(policy);
+            alter(x => x.RegisterUrlPolicy(policy));
             return this;
         }
 
         public RouteConventionExpression HomeIs<TController>(Expression<Action<TController>> controllerAction)
         {
             var method = ReflectionHelper.GetMethod(controllerAction);
-            _resolver.RegisterUrlPolicy(new DefaultRouteMethodBasedUrlPolicy(method), true);
+            alter(x => x.RegisterUrlPolicy(new DefaultRouteMethodBasedUrlPolicy(method), true));
             return this;
         }
 
         public RouteConventionExpression HomeIs<TInputModel>()
         {
-            _resolver.RegisterUrlPolicy(new DefaultRouteInputTypeBasedUrlPolicy(typeof (TInputModel)), true);
+            alter(x => x.RegisterUrlPolicy(new DefaultRouteInputTypeBasedUrlPolicy(typeof (TInputModel)), true));
             return this;
         }
 

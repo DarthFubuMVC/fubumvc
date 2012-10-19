@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Descriptions;
+using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
@@ -46,6 +47,7 @@ namespace FubuMVC.Core.Registration
         {
             _settings = new SettingsCollection(parent._settings);
             _settings.Replace(new ActionSources()); // you absolutely have to do this, or you'll get the sources from the parent too.
+            _settings.Replace(new RouteDefinitionResolver()); // see the above
         }
 
         public BehaviorGraph()
