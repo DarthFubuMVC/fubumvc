@@ -87,7 +87,8 @@ namespace FubuMVC.Core
 
         public BehaviorGraph BuildForImport(BehaviorGraph parent)
         {
-            IEnumerable<IConfigurationAction> lightweightActions = AllDiscoveryActions()
+            IEnumerable<IConfigurationAction> lightweightActions = _configurations[ConfigurationType.Settings]
+                .Union(AllDiscoveryActions())
                 .Union(_imports)
                 .Union(_configurations[ConfigurationType.Explicit])
                 .Union(_configurations[ConfigurationType.Policy])
@@ -127,7 +128,8 @@ namespace FubuMVC.Core
 
         public IEnumerable<IConfigurationAction> AllConfigurationActions()
         {
-            return AllDiscoveryActions()
+            return _configurations[ConfigurationType.Settings]
+                .Union(AllDiscoveryActions())
                 .Union(UniqueImports())
                 .Union(_configurations[ConfigurationType.Explicit])
                 .Union(AllPolicies())

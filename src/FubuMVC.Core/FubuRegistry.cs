@@ -292,7 +292,7 @@ namespace FubuMVC.Core
         /// </summary>
         public void AlterSettings<T>(Action<T> alteration) where T : new()
         {
-            Configure(graph => graph.Settings.Alter(alteration));
+            Configuration.AddConfiguration(new SettingAlteration<T>(alteration));
         }
 
         /// <summary>
@@ -302,7 +302,7 @@ namespace FubuMVC.Core
         /// <param name="settings"></param>
         public void ReplaceSettings<T>(T settings)
         {
-            Configure(graph => graph.Settings.Replace(settings));
+            Configuration.AddConfiguration(new SettingReplacement<T>(settings));
         }
 
         /// <summary>
