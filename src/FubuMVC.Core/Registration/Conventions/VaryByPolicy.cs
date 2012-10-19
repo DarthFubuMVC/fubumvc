@@ -5,7 +5,7 @@ using FubuMVC.Core.Caching;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
-    [CanBeMultiples, ConfigurationType(ConfigurationType.Reordering)]
+    [CanBeMultiples, ConfigurationType(ConfigurationType.Conneg)]
     public class VaryByPolicy : IConfigurationAction
     {
         private readonly IList<Action<OutputCachingNode>> _modifications = new List<Action<OutputCachingNode>>();

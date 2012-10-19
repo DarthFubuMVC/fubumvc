@@ -11,5 +11,11 @@ namespace FubuMVC.Core
         public const string Instrumentation = "Instrumentation";
         public const string Services = "Services";
         public const string ByNavigation = "ByNavigation";
+
+        public const string Attributes = "Attributes";
+        public const string ModifyRoutes = "ModifyRoutes";
+        public const string InjectNodes = "InjectNodes";
+        public const string Conneg = "Conneg";
+        public const string Attachment = "Attachment";
     }
 }

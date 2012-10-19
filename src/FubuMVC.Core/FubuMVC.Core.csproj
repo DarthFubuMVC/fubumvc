@@ -89,8 +89,10 @@
     <Compile Include="CanBeMultiplesAttribute.cs" />
     <Compile Include="Behaviors\WrappingBehavior.cs" />
     <Compile Include="ConfigurationActionListExtensions.cs" />
+    <Compile Include="ConfigurationPack.cs" />
     <Compile Include="ConfigurationType.cs" />
     <Compile Include="ConfigurationTypeAttribute.cs" />
+    <Compile Include="DefaultConfigurationPack.cs" />
     <Compile Include="DiscoveryAttribute.cs" />
     <Compile Include="Endpoints\EndpointDriver.cs" />
     <Compile Include="Endpoints\EndpointFormatting.cs" />

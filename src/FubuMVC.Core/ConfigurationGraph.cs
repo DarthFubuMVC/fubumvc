@@ -3,17 +3,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using Bottles;
 using FubuCore;
 using FubuCore.Util;
-using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
-using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Services;
-using FubuMVC.Core.Resources.Conneg;
-using FubuMVC.Core.Resources.PathBased;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Security;
 using FubuCore.Reflection;
@@ -55,9 +52,14 @@ namespace FubuMVC.Core
             _configurations[type].FillAction(action);
         }
 
+        // TODO -- make this *seal* itself so that you can't do it twice.
         public BehaviorGraph Build()
         {
+            new DefaultConfigurationPack().WriteTo(this);
+
             var graph = new BehaviorGraph {Types = Types};
+
+
 
             AllServiceRegistrations().Each(services => {
                 graph.Log.RunAction(_registry, services);
@@ -122,9 +124,14 @@ namespace FubuMVC.Core
                 .Union(UniqueImports())
                 .Union(_configurations[ConfigurationType.Explicit])
                 .Union(AllPolicies())
-                .Union(fullGraphPolicies())
                 .Union(_configurations[ConfigurationType.Navigation])
                 .Union(_configurations[ConfigurationType.ByNavigation])
+                .Union(_configurations[ConfigurationType.Attributes])
+                .Union(_configurations[ConfigurationType.ModifyRoutes])
+                .Union(_configurations[ConfigurationType.InjectNodes])
+                .Union(_configurations[ConfigurationType.Conneg])
+                .Union(_configurations[ConfigurationType.Attachment])
+
                 .Union(_configurations[ConfigurationType.Reordering])
                 .Union(_configurations[ConfigurationType.Instrumentation]);
         }
@@ -145,46 +152,7 @@ namespace FubuMVC.Core
                 .Union(systemServices());
         }
 
-        private static IEnumerable<IConfigurationAction> fullGraphPolicies()
-        {
-            yield return new UrlPatternAttributeOnViewModelPolicy();
-            yield return new ModifyChainAttributeConvention();
-            yield return new ResourcePathRoutePolicy();
-            yield return new MissingRouteInputPolicy();
 
-            yield return new ContinuationHandlerConvention();
-            yield return new AsyncContinueWithHandlerConvention();
-
-            yield return new CachedPartialConvention();
-
-            yield return new JsonMessageInputConvention();
-            yield return new AjaxContinuationPolicy();
-            yield return new DictionaryOutputConvention();
-            yield return new StringOutputPolicy();
-            yield return new HtmlTagOutputPolicy();
-            yield return new DefaultOutputPolicy();
-            
-
-            yield return new CacheAttributePolicy();
-
-            yield return new AttachAuthorizationPolicy();
-            yield return new AttachInputPolicy();
-            yield return new AttachOutputPolicy();
-
-            yield return new OutputBeforeAjaxContinuationPolicy();
-
-            yield return new ReorderBehaviorsPolicy
-            {
-                WhatMustBeBefore = node => node.Category == BehaviorCategory.Authentication,
-                WhatMustBeAfter = node => node.Category == BehaviorCategory.Authorization
-            };
-
-            yield return new ReorderBehaviorsPolicy
-            {
-                WhatMustBeBefore = node => node is OutputCachingNode,
-                WhatMustBeAfter = node => node is OutputNode
-            };
-        }
 
         public IEnumerable<IConfigurationAction> AllDiscoveryActions()
         {
@@ -261,13 +229,14 @@ namespace FubuMVC.Core
 
             Assembly thisAssembly = Assembly.GetExecutingAssembly();
             Assembly fubuCore = typeof (ITypeResolver).Assembly;
+            Assembly bottles = typeof (IPackageLoader).Assembly;
 
             Assembly callingAssembly = null;
             for (int i = 0; i < trace.FrameCount; i++)
             {
                 StackFrame frame = trace.GetFrame(i);
                 Assembly assembly = frame.GetMethod().DeclaringType.Assembly;
-                if (assembly != thisAssembly && assembly != fubuCore)
+                if (assembly != thisAssembly && assembly != fubuCore && assembly != bottles)
                 {
                     callingAssembly = assembly;
                     break;
