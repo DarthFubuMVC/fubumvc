@@ -83,7 +83,7 @@ namespace FubuMVC.Tests
         [Test]
         public void should_have_registered_behaviors_in_the_container()
         {
-            container.GetAllInstances<IActionBehavior>().Count.ShouldBeGreaterThan(6);
+            container.GetAllInstances<IActionBehavior>().Count.ShouldEqual(6);
         }
 
         [Test]

@@ -7,26 +7,18 @@ namespace FubuMVC.Core.Registration
     [ConfigurationType(ConfigurationType.Discovery)]
     public class BehaviorAggregator : IConfigurationAction
     {
-        private readonly TypePool _types;
-        private readonly IEnumerable<IActionSource> _sources;
-
-        public BehaviorAggregator(TypePool types, IEnumerable<IActionSource> sources)
-        {
-            _types = types;
-            _sources = sources;
-        }
-
         public void Configure(BehaviorGraph graph)
         {
-            _sources
-                .SelectMany(src => src.FindActions(_types))
-				.Distinct()
-                .Each(call =>
-                          {
-                              var chain = new BehaviorChain();
-                              chain.AddToEnd(call);
-                              graph.AddChain(chain);
-                          });
+            var sources = graph.Settings.Get<ActionSources>().AllSources();
+
+            sources
+                .SelectMany(src => src.FindActions(graph.Types))
+                .Distinct()
+                .Each(call => {
+                    var chain = new BehaviorChain();
+                    chain.AddToEnd(call);
+                    graph.AddChain(chain);
+                });
         }
     }
 }

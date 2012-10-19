@@ -20,7 +20,7 @@ namespace FubuMVC.Core.Registration.DSL
             _mainSource = new Lazy<ActionSource>(() =>
             {
                 var source = new ActionSource(_methodFilter);
-                configuration.AddActions(source);
+                configuration.AddConfiguration(new RegisterActionSource(source));
 
                 return source;
             });
@@ -140,7 +140,7 @@ namespace FubuMVC.Core.Registration.DSL
         /// </summary>
         public ActionCallCandidateExpression FindWith(IActionSource actionSource)
         {
-            _configuration.AddActions(actionSource);
+            _configuration.AddConfiguration(new RegisterActionSource(actionSource));
             return this;
         }
 

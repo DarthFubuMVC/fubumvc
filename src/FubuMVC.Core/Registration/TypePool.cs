@@ -129,7 +129,14 @@ namespace FubuMVC.Core.Registration
 
                 if (_assemblies.Any() == false && !_ignoreCallingAssembly)
                 {
-                    yield return _defaultAssembly;
+                    if (_defaultAssembly == null)
+                    {
+                        yield break;
+                    }
+                    else
+                    {
+                        yield return _defaultAssembly;
+                    }
                 }
 
                 foreach (var assembly in _assemblies.Distinct())

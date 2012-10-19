@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core;
@@ -13,6 +14,7 @@ using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 using StructureMap;
+using System.Collections.Generic;
 
 namespace FubuMVC.Tests.Registration.Expressions
 {
@@ -157,17 +159,17 @@ namespace FubuMVC.Tests.Registration.Expressions
 
             FubuApplication.For(() => registry).StructureMap(container).Bootstrap();
 
-            container.Model.InstancesOf<IActionBehavior>().Count().ShouldBeGreaterThan(3);
+            container.Model.InstancesOf<IActionBehavior>().Count().ShouldEqual(3);
 
             var behaviors = container.GetAllInstances<IActionBehavior>().ToArray();
 
             // The first behavior is an InputBehavior
-            behaviors[1].As<BasicBehavior>().InsideBehavior.ShouldBeOfType
+            behaviors[0].As<BasicBehavior>().InsideBehavior.ShouldBeOfType
                 <ConditionallyWrapBehaviorChainsWithTester.FakeUnitOfWorkBehavior>().Inner.
                 ShouldNotBeNull();
-            behaviors[2].As<BasicBehavior>().InsideBehavior.ShouldNotBeOfType
+            behaviors[1].As<BasicBehavior>().InsideBehavior.ShouldNotBeOfType
                 <ConditionallyWrapBehaviorChainsWithTester.FakeUnitOfWorkBehavior>();
-            behaviors[3].As<BasicBehavior>().InsideBehavior.ShouldNotBeOfType
+            behaviors[2].As<BasicBehavior>().InsideBehavior.ShouldNotBeOfType
                 <ConditionallyWrapBehaviorChainsWithTester.FakeUnitOfWorkBehavior>();
         }
     }

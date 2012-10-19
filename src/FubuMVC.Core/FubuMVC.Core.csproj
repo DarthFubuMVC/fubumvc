@@ -125,6 +125,7 @@
     <Compile Include="Registration\IServiceGraphAlteration.cs" />
     <Compile Include="Registration\Nodes\ActionFilter.cs" />
     <Compile Include="Registration\OverridesFor.cs" />
+    <Compile Include="Registration\RegisterActionSource.cs" />
     <Compile Include="Registration\Routes\IMakeMyOwnUrl.cs" />
     <Compile Include="Registration\Routes\SessionStateRequirement.cs" />
     <Compile Include="Registration\ServiceAdded.cs" />

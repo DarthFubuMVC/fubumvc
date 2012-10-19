@@ -26,8 +26,6 @@ namespace FubuMVC.Core
     /// </summary>
     public class ConfigurationGraph
     {
-        private readonly List<IActionSource> _actionSources = new List<IActionSource>();
-
         private readonly Cache<string, IList<IConfigurationAction>> _configurations
             = new Cache<string, IList<IConfigurationAction>>(x => new List<IConfigurationAction>());
 
@@ -205,14 +203,7 @@ namespace FubuMVC.Core
 
         public IEnumerable<IConfigurationAction> AllDiscoveryActions()
         {
-            if (_actionSources.Any())
-            {
-                yield return new BehaviorAggregator(_types, _actionSources);
-            }
-            else
-            {
-                yield return new BehaviorAggregator(_types, new IActionSource[] {new EndpointActionSource()});
-            }
+            yield return new BehaviorAggregator();
 
             yield return new PartialOnlyConvention();
             yield return _routeResolver;
@@ -289,11 +280,6 @@ namespace FubuMVC.Core
             }
 
             return false;
-        }
-
-        public void AddActions(IActionSource source)
-        {
-            _actionSources.FillAction(source);
         }
 
         /// <summary>

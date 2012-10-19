@@ -115,7 +115,7 @@ namespace FubuMVC.Tests.Registration.Expressions
 
             FubuApplication.For(() => registry).StructureMap(container).Bootstrap();
 
-            container.Model.InstancesOf<IActionBehavior>().Count().ShouldBeGreaterThan(3);
+            container.Model.InstancesOf<IActionBehavior>().Count().ShouldEqual(3);
 
             // The InputBehavior is first
             container.GetAllInstances<IActionBehavior>().Each(x =>

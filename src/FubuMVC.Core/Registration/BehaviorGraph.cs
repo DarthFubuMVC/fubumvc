@@ -45,6 +45,7 @@ namespace FubuMVC.Core.Registration
         private BehaviorGraph(BehaviorGraph parent) : this()
         {
             _settings = new SettingsCollection(parent._settings);
+            _settings.Replace(new ActionSources()); // you absolutely have to do this, or you'll get the sources from the parent too.
         }
 
         public BehaviorGraph()
