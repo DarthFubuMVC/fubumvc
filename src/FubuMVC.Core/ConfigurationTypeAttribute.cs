@@ -5,16 +5,16 @@ namespace FubuMVC.Core
     [AttributeUsage(AttributeTargets.Class, Inherited = true)]
     public class ConfigurationTypeAttribute : Attribute
     {
-        private readonly ConfigurationType _configurationType;
+        private readonly string _type;
 
-        public ConfigurationTypeAttribute(ConfigurationType configurationType)
+        public ConfigurationTypeAttribute(string type)
         {
-            _configurationType = configurationType;
+            _type = type;
         }
 
-        public ConfigurationType ConfigurationType
+        public string Type
         {
-            get { return _configurationType; }
+            get { return _type; }
         }
     }
 }

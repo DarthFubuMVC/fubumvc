@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             // This is important.  This has to be like this in order to work 
             // correctly in the configuration ordering
             typeof (NavigationRootPolicy).GetAttribute<ConfigurationTypeAttribute>()
-                .ConfigurationType.ShouldEqual(ConfigurationType.ByNavigation);
+                .Type.ShouldEqual(ConfigurationType.ByNavigation);
         }
 
         private static BehaviorGraph buildGraph(Action<FubuRegistry> configuration)

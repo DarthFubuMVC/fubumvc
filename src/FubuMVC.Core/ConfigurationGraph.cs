@@ -28,8 +28,8 @@ namespace FubuMVC.Core
     {
         private readonly List<IActionSource> _actionSources = new List<IActionSource>();
 
-        private readonly Cache<ConfigurationType, IList<IConfigurationAction>> _configurations
-            = new Cache<ConfigurationType, IList<IConfigurationAction>>(x => new List<IConfigurationAction>());
+        private readonly Cache<string, IList<IConfigurationAction>> _configurations
+            = new Cache<string, IList<IConfigurationAction>>(x => new List<IConfigurationAction>());
 
         private readonly List<RegistryImport> _imports = new List<RegistryImport>();
         private readonly FubuRegistry _registry;
@@ -51,17 +51,17 @@ namespace FubuMVC.Core
             get { return _routeResolver; }
         }
 
-        public void AddConfiguration(IConfigurationAction action, ConfigurationType? defaultType = null)
+        public void AddConfiguration(IConfigurationAction action, string defaultType = null)
         {
-            ConfigurationType? type = DetermineConfigurationType(action) ?? defaultType;
+            string type = DetermineConfigurationType(action) ?? defaultType;
             if (type == null)
             {
                 throw new ArgumentOutOfRangeException(
-                    "No ConfigurationType specified and unable to determine what the configuration type for " +
+                    "No Type specified and unable to determine what the configuration type for " +
                     action.GetType());
             }
 
-            _configurations[type.Value].FillAction(action);
+            _configurations[type].FillAction(action);
         }
 
         public BehaviorGraph Build()
@@ -137,7 +137,7 @@ namespace FubuMVC.Core
                 .Union(_configurations[ConfigurationType.Instrumentation]);
         }
 
-        public IEnumerable<IConfigurationAction> ConfigurationsByType(ConfigurationType configurationType)
+        public IEnumerable<IConfigurationAction> ConfigurationsByType(string configurationType)
         {
             return _configurations[configurationType];
         }
@@ -177,8 +177,8 @@ namespace FubuMVC.Core
             yield return new DictionaryOutputConvention();
             yield return new StringOutputPolicy();
             yield return new HtmlTagOutputPolicy();
-
             yield return new DefaultOutputPolicy();
+            
 
             yield return new CacheAttributePolicy();
 
@@ -319,7 +319,7 @@ namespace FubuMVC.Core
             return callingAssembly;
         }
 
-        public static ConfigurationType? DetermineConfigurationType(IConfigurationAction action)
+        public static string DetermineConfigurationType(IConfigurationAction action)
         {
             if (action is ReorderBehaviorsPolicy) return ConfigurationType.Reordering;
             if (action is NavigationRegistry) return ConfigurationType.Navigation;
@@ -327,7 +327,7 @@ namespace FubuMVC.Core
 
             if (action.GetType().HasAttribute<ConfigurationTypeAttribute>())
             {
-                return action.GetType().GetAttribute<ConfigurationTypeAttribute>().ConfigurationType;
+                return action.GetType().GetAttribute<ConfigurationTypeAttribute>().Type;
             }
 
             return null;
