@@ -108,6 +108,7 @@
     <Compile Include="Packaging\PackageService.cs" />
     <Compile Include="PolicyAttribute.cs" />
     <Compile Include="ReflectionExtensions.cs" />
+    <Compile Include="Registration\ApplicationLevelAttribute.cs" />
     <Compile Include="Registration\BottleConfigurationDef.cs" />
     <Compile Include="Registration\Conventions\CacheAttributePolicy.cs" />
     <Compile Include="Registration\Conventions\CachedPartialConvention.cs" />
@@ -494,6 +495,7 @@
     <Compile Include="UI\Navigation\NavigationGraph.cs" />
     <Compile Include="UI\Navigation\NavigationKey.cs" />
     <Compile Include="UI\Navigation\NavigationRegistry.cs" />
+    <Compile Include="UI\Navigation\NavigationRegistryExtension.cs" />
     <Compile Include="UI\Navigation\NavigationService.cs" />
     <Compile Include="UI\Navigation\NavigationServiceRegistry.cs" />
     <Compile Include="UI\PartialInvoker.cs" />

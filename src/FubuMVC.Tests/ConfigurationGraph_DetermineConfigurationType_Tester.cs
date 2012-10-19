@@ -67,13 +67,6 @@ namespace FubuMVC.Tests
         }
 
         [Test]
-        public void navigation_registry_is_navigation_duh()
-        {
-            ConfigurationGraph.DetermineConfigurationType(new NavigationRegistry())
-                .ShouldEqual(ConfigurationType.Navigation);
-        }
-
-        [Test]
         public void reorder_policy_is_reording()
         {
             ConfigurationGraph.DetermineConfigurationType(new ReorderBehaviorsPolicy())

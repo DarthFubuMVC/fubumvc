@@ -1,6 +1,7 @@
 using System;
 using FubuCore.Util;
 using FubuCore;
+using FubuCore.Reflection;
 
 namespace FubuMVC.Core.Registration
 {
@@ -32,7 +33,7 @@ namespace FubuMVC.Core.Registration
 
         public T Get<T>()
         {
-            if (_parent != null && !HasExplicit<T>() && _parent._settings.Has(typeof(T)))
+            if (_parent != null && !HasExplicit<T>() && (_parent._settings.Has(typeof(T)) || typeof(T).HasAttribute<ApplicationLevelAttribute>()))
             {
                 return (T)_parent._settings[typeof(T)];
             }
@@ -42,7 +43,14 @@ namespace FubuMVC.Core.Registration
 
         public void Alter<T>(Action<T> alteration)
         {
-            alteration((T) _settings[typeof(T)]);
+            if (_parent != null && typeof(T).HasAttribute<ApplicationLevelAttribute>())
+            {
+                alteration(_parent.Get<T>());
+            }
+            else
+            {
+                alteration((T)_settings[typeof(T)]);
+            }
         }
 
         public void Replace<T>(T settings)

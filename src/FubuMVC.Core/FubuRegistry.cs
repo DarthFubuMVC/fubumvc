@@ -157,6 +157,9 @@ namespace FubuMVC.Core
         public FubuRegistry()
         {
             _configuration = new ConfigurationGraph(this);
+        
+            // TODO -- yank this out!!!
+            Import<NavigationRegistryExtension>();
         }
 
         public FubuRegistry(Action<FubuRegistry> configure) : this()

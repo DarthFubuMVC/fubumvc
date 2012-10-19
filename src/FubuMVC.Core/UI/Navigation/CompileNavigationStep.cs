@@ -8,6 +8,7 @@ using FubuMVC.Core.Registration.Querying;
 namespace FubuMVC.Core.UI.Navigation
 {
     // Depending on integration tests for this one.
+    [ConfigurationType(ConfigurationType.Navigation)]
     public class CompileNavigationStep : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)

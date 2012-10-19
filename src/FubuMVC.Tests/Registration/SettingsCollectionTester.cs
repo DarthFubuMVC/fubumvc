@@ -27,6 +27,15 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void pull_defaults_from_parent_if_the_settings_is_marked_as_ApplicationLevel()
+        {
+            theParent.HasExplicit<AppSettings>().ShouldBeFalse();
+
+            // should force the parent to build it now
+            theSettings.Get<AppSettings>().ShouldBeTheSameAs(theParent.Get<AppSettings>());
+        }
+
+        [Test]
         public void child_value_superceeds_the_parent()
         {
             theParent.Replace(new FakeSettings());
@@ -71,6 +80,15 @@ namespace FubuMVC.Tests.Registration
 
             theParent.Get<FakeSettings>().Hometown.ShouldNotEqual("Austin");
             theSettings.Get<FakeSettings>().Hometown.ShouldEqual("Austin");
+        }
+
+        [Test]
+        public void alter_will_use_the_parent_for_application_level_settings()
+        {
+            theSettings.Alter<AppSettings>(fake => fake.Name = "Shiner");
+
+            theSettings.Get<AppSettings>().ShouldBeTheSameAs(theParent.Get<AppSettings>());
+            theSettings.Get<AppSettings>().Name.ShouldEqual("Shiner");
         }
     }
 
@@ -126,6 +144,12 @@ namespace FubuMVC.Tests.Registration
 
             theSettings.HasExplicit<FakeSettings>().ShouldBeTrue();
         }
+    }
+
+    [ApplicationLevel]
+    public class AppSettings
+    {
+        public string Name { get; set; }
     }
 
     public class FakeSettings

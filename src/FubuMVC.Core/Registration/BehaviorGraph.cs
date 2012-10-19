@@ -46,6 +46,8 @@ namespace FubuMVC.Core.Registration
         private BehaviorGraph(BehaviorGraph parent) : this()
         {
             _settings = new SettingsCollection(parent._settings);
+
+            // TODO -- use another [IsolatedLevel] attribute on Settings for this
             _settings.Replace(new ActionSources()); // you absolutely have to do this, or you'll get the sources from the parent too.
             _settings.Replace(new RouteDefinitionResolver()); // see the above
         }

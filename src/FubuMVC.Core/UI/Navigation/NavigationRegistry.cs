@@ -5,7 +5,7 @@ using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.UI.Navigation
 {
-    [CanBeMultiples, ConfigurationType(ConfigurationType.Navigation)]
+    [CanBeMultiples, ConfigurationType(ConfigurationType.Settings)]
     public class NavigationRegistry : IConfigurationAction
     {
         private readonly IList<IMenuRegistration> _registrations = new List<IMenuRegistration>();

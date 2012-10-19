@@ -4,10 +4,12 @@ using System.Linq;
 using FubuCore.DependencyAnalysis;
 using FubuCore.Util;
 using FubuLocalization;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.UI.Navigation
 {
+    [ApplicationLevel]
     public class NavigationGraph
     {
         private readonly Cache<StringToken, MenuChain> _chains = new Cache<StringToken, MenuChain>(key => new MenuChain(key));

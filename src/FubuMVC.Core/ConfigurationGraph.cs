@@ -16,7 +16,6 @@ using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Resources.PathBased;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Security;
-using FubuMVC.Core.UI.Navigation;
 using FubuCore.Reflection;
 
 namespace FubuMVC.Core
@@ -58,9 +57,7 @@ namespace FubuMVC.Core
 
         public BehaviorGraph Build()
         {
-            var graph = new BehaviorGraph();
-
-            graph.Types = Types;
+            var graph = new BehaviorGraph {Types = Types};
 
             AllServiceRegistrations().Each(services => {
                 graph.Log.RunAction(_registry, services);
@@ -125,7 +122,8 @@ namespace FubuMVC.Core
                 .Union(UniqueImports())
                 .Union(_configurations[ConfigurationType.Explicit])
                 .Union(AllPolicies())
-                .Union(SystemPolicies())
+                .Union(fullGraphPolicies())
+                .Union(_configurations[ConfigurationType.Navigation])
                 .Union(_configurations[ConfigurationType.ByNavigation])
                 .Union(_configurations[ConfigurationType.Reordering])
                 .Union(_configurations[ConfigurationType.Instrumentation]);
@@ -134,13 +132,6 @@ namespace FubuMVC.Core
         public IEnumerable<IConfigurationAction> ConfigurationsByType(string configurationType)
         {
             return _configurations[configurationType];
-        }
-
-        public IEnumerable<IConfigurationAction> SystemPolicies()
-        {
-            return fullGraphPolicies()
-                .Union(navigationRegistrations().OfType<IConfigurationAction>())
-                .Union(new IConfigurationAction[] {new MenuItemAttributeConfigurator(), new CompileNavigationStep()});
         }
 
         public IList<IConfigurationAction> AllPolicies()
@@ -216,7 +207,6 @@ namespace FubuMVC.Core
             yield return new SecurityServicesRegistry();
             yield return new HttpStandInServiceRegistry();
             yield return new CoreServiceRegistry();
-            yield return new NavigationServiceRegistry();
             yield return new CachingServiceRegistry();
         }
 
@@ -238,21 +228,6 @@ namespace FubuMVC.Core
             yield return new FileRegistration();
         }
 
-        private IEnumerable<IConfigurationAction> navigationRegistrations()
-        {
-            foreach (IConfigurationAction action in _configurations[ConfigurationType.Navigation])
-            {
-                yield return action;
-            }
-
-            foreach (RegistryImport import in _imports)
-            {
-                foreach (IConfigurationAction action in import.Registry.Configuration.navigationRegistrations())
-                {
-                    yield return action;
-                }
-            }
-        }
 
         public void AddImport(RegistryImport import)
         {
@@ -304,7 +279,6 @@ namespace FubuMVC.Core
         public static string DetermineConfigurationType(IConfigurationAction action)
         {
             if (action is ReorderBehaviorsPolicy) return ConfigurationType.Reordering;
-            if (action is NavigationRegistry) return ConfigurationType.Navigation;
             if (action is ServiceRegistry) return ConfigurationType.Services;
 
             if (action.GetType().HasAttribute<ConfigurationTypeAttribute>())
