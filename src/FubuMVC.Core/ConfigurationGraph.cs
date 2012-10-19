@@ -32,6 +32,9 @@ namespace FubuMVC.Core
         public ConfigurationGraph(FubuRegistry registry)
         {
             _registry = registry;
+
+            // TODO-- track more
+            new DiscoveryActionsConfigurationPack().WriteTo(this);
         }
 
         public TypePool Types
@@ -52,9 +55,16 @@ namespace FubuMVC.Core
             _configurations[type].FillAction(action);
         }
 
+        private bool _sealed;
+
         // TODO -- make this *seal* itself so that you can't do it twice.
         public BehaviorGraph Build()
         {
+            if (_sealed)
+            {
+                throw new InvalidOperationException("A ConfigurationGraph can only \"Build()\" once");
+            }
+
             new DefaultConfigurationPack().WriteTo(this);
 
             var graph = new BehaviorGraph {Types = Types};
@@ -73,13 +83,15 @@ namespace FubuMVC.Core
 
             graph.Services.AddService(this);
 
+            _sealed = true;
+
             return graph;
         }
 
         public BehaviorGraph BuildForImport(BehaviorGraph parent)
         {
             IEnumerable<IConfigurationAction> lightweightActions = _configurations[ConfigurationType.Settings]
-                .Union(AllDiscoveryActions())
+                .Union(_configurations[ConfigurationType.Discovery])
                 .Union(_imports)
                 .Union(_configurations[ConfigurationType.Explicit])
                 .Union(_configurations[ConfigurationType.Policy])
@@ -120,10 +132,10 @@ namespace FubuMVC.Core
         public IEnumerable<IConfigurationAction> AllConfigurationActions()
         {
             return _configurations[ConfigurationType.Settings]
-                .Union(AllDiscoveryActions())
+                .Union(_configurations[ConfigurationType.Discovery])
                 .Union(UniqueImports())
                 .Union(_configurations[ConfigurationType.Explicit])
-                .Union(AllPolicies())
+                .Union(_configurations[ConfigurationType.Policy])
                 .Union(_configurations[ConfigurationType.Navigation])
                 .Union(_configurations[ConfigurationType.ByNavigation])
                 .Union(_configurations[ConfigurationType.Attributes])
@@ -141,33 +153,12 @@ namespace FubuMVC.Core
             return _configurations[configurationType];
         }
 
-        public IList<IConfigurationAction> AllPolicies()
-        {
-            return _configurations[ConfigurationType.Policy];
-        }
-
         public IEnumerable<IConfigurationAction> AllServiceRegistrations()
         {
             return serviceRegistrations()
                 .Union(systemServices());
         }
 
-
-
-        public IEnumerable<IConfigurationAction> AllDiscoveryActions()
-        {
-            yield return new BehaviorAggregator();
-
-            yield return new PartialOnlyConvention();
-            yield return new RouteDetermination();
-
-            foreach (IConfigurationAction action in _configurations[ConfigurationType.Discovery])
-            {
-                yield return action;
-            }
-
-            yield return new AccessorOverridesFinder();
-        }
 
         private static IEnumerable<ServiceRegistry> systemServices()
         {
