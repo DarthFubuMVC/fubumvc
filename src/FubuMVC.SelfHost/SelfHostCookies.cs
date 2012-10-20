@@ -22,12 +22,15 @@ namespace FubuMVC.SelfHost
 
         public bool Has(string name)
         {
-            throw new NotImplementedException();
+            // TODO -- optimize this
+            return Get(name) != null;
         }
 
         public HttpCookie Get(string name)
         {
-            throw new NotImplementedException();
+            // TODO -- optimize this
+            return CookiesFor(_request.Headers.GetCookies())
+                .FirstOrDefault(x => x.Name == name);
         }
 
         public IEnumerable<HttpCookie> Request
@@ -37,7 +40,26 @@ namespace FubuMVC.SelfHost
 
         public IEnumerable<HttpCookie> Response
         {
-            get { yield break; }
+            get { return CookiesFor(responseCookies()); }
+        }
+
+        private IEnumerable<CookieHeaderValue> responseCookies()
+        {
+            var result = new List<CookieHeaderValue>();
+            IEnumerable<string> cookieHeaders;
+            if (_response.Headers.TryGetValues("Cookie", out cookieHeaders))
+            {
+                cookieHeaders.Each(header =>
+                {
+                    CookieHeaderValue cookieHeaderValue;
+                    if (CookieHeaderValue.TryParse(header, out cookieHeaderValue))
+                    {
+                        result.Add(cookieHeaderValue);
+                    }
+                });
+            }
+
+            return result;
         }
 
         // Keep these public for testing
@@ -61,6 +83,8 @@ namespace FubuMVC.SelfHost
             {
                 cookie.Expires = value.Expires.Value.UtcDateTime;
             }
+
+            FillValues(value, cookie);
 
             return cookie;
         }

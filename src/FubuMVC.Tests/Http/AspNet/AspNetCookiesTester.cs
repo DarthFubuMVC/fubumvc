@@ -45,5 +45,23 @@ namespace FubuMVC.Tests.Http.AspNet
         {
             ClassUnderTest.Response.ShouldHaveTheSameElementsAs(c2);
         }
+
+        [Test]
+        public void has_cookie()
+        {
+            ClassUnderTest.Has(c1.Name).ShouldBeTrue();
+        }
+
+        [Test]
+        public void has_cookie_negative()
+        {
+            ClassUnderTest.Has("SomethingElse").ShouldBeFalse();
+        }
+
+        [Test]
+        public void gets_the_cookie()
+        {
+            ClassUnderTest.Get(c1.Name).ShouldBeTheSameAs(c1);
+        }
     }
 }

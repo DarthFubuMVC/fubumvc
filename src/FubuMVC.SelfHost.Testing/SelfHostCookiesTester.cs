@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Linq;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
 using FubuTestingSupport;
@@ -8,45 +11,53 @@ using NUnit.Framework;
 namespace FubuMVC.SelfHost.Testing
 {
     [TestFixture]
-    public class SelfHostCookiesTester
+    public class SelfHostCookiesTester : InteractionContext<SelfHostCookies>
     {
-        private CookieHeaderValue theOriginal;
-        private NameValueCollection theValues;
-        private DateTime theExpiration;
+        private HttpRequestMessage theMessage;
+        private HttpResponseMessage theResponse;
 
-        [SetUp]
-        public void SetUp()
+        protected override void beforeEach()
         {
-            theValues = new NameValueCollection();
-            theValues.Add("x", "aaa");
-            theValues.Add("y", "bbb");
+            theMessage = new HttpRequestMessage();
+            theResponse = new HttpResponseMessage();
 
-            theExpiration = DateTime.Today.ToUniversalTime().AddDays(1);
+            Services.Inject(theMessage);
+            Services.Inject(theResponse);
+        }
 
-            theOriginal = new CookieHeaderValue("Test", theValues);
-            theOriginal.Domain = "fubu-project.org";
-            theOriginal.Path = "/";
-            theOriginal.HttpOnly = true;
-            theOriginal.Secure = true;
-            theOriginal.Expires = new DateTimeOffset(theExpiration);
+
+        [Test]
+        public void has_cookie()
+        {
+            theMessage.Headers.Add("Cookie", "TestCookie=Hello");
+            ClassUnderTest.Has("TestCookie").ShouldBeTrue();
         }
 
         [Test]
-        public void maps_the_cookie_values()
+        public void has_cookie_negative()
         {
-            var cookie = SelfHostCookies.CookieFor(theOriginal);
-
-            cookie.Domain.ShouldEqual(theOriginal.Domain);
-            cookie.Path.ShouldEqual(theOriginal.Path);
-            cookie.Expires.ShouldEqual(theExpiration);
-
-            cookie.Name.ShouldEqual("Test");
-
-            cookie.HttpOnly.ShouldEqual(theOriginal.HttpOnly);
-            cookie.Secure.ShouldEqual(theOriginal.Secure);
+            ClassUnderTest.Has("TestCookie").ShouldBeFalse();
         }
 
-        
+        [Test]
+        public void gets_the_cookie()
+        {
+            theMessage.Headers.Add("Cookie", "TestCookie=Hello");
+            ClassUnderTest.Get("TestCookie").ShouldNotBeNull();
+        }
+
+        [Test]
+        public void get_just_returns_null_if_nothing_is_found()
+        {
+            ClassUnderTest.Get("TestCookie").ShouldBeNull();
+        }
+
+        [Test]
+        public void gets_the_response_cookies()
+        {
+            theResponse.Headers.Add("Cookie", "TestCookie=Hello");
+            ClassUnderTest.Response.Single().Name.ShouldEqual("TestCookie");
+        }
     }
 
     [TestFixture]

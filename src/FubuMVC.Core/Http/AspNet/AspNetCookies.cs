@@ -18,12 +18,12 @@ namespace FubuMVC.Core.Http.AspNet
 
         public bool Has(string name)
         {
-            throw new NotImplementedException();
+            return _request.AllKeys.Contains(name);
         }
 
         public HttpCookie Get(string name)
         {
-            throw new NotImplementedException();
+            return _request[name];
         }
 
         public IEnumerable<HttpCookie> Request

@@ -5,6 +5,7 @@ using System.Web;
 
 namespace FubuMVC.Core.Http
 {
+    // This is meant to be readonly
     public interface ICookies
     {
         bool Has(string name);
