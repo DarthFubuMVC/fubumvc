@@ -183,6 +183,7 @@ namespace FubuMVC.Core.Endpoints
             request.ContentType = MimeType.HttpFormMimetype;
             request.UserAgent = "EndpointDriver User Agent 1.0";
             request.As<HttpWebRequest>().Accept = acceptType;
+            request.As<HttpWebRequest>().CookieContainer = new CookieContainer();
 
             if(configure != null)
             {
@@ -224,6 +225,7 @@ namespace FubuMVC.Core.Endpoints
             request.Method = "POST";
 
             request.As<HttpWebRequest>().Accept = accept;
+            request.As<HttpWebRequest>().CookieContainer = new CookieContainer();
 
             var stream = request.GetRequestStream();
             setRequest(stream);
