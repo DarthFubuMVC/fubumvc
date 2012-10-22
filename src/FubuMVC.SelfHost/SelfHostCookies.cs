@@ -105,7 +105,7 @@ namespace FubuMVC.SelfHost
 
             if(values.Count == 1)
             {
-                cookie.Value = state.Value;
+                cookie.Value = state.Values.ToString();
                 return;
             }
 
