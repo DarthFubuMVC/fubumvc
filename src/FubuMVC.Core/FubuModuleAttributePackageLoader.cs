@@ -7,6 +7,7 @@ using Bottles;
 using Bottles.Diagnostics;
 using Bottles.PackageLoaders.Assemblies;
 using FubuCore;
+using FubuMVC.Core.Packaging;
 
 namespace FubuMVC.Core
 {
@@ -29,6 +30,19 @@ namespace FubuMVC.Core
                 }
             }
 
+
+
+            // This is a workaround for Self Hosted apps where the physical path is different than the AppDomain's original
+            // path
+            if (FubuMvcPackageFacility.PhysicalRootPath.IsNotEmpty())
+            {
+
+                var path = FubuMvcPackageFacility.PhysicalRootPath.ToFullPath().AppendPath("bin");
+                if (Directory.Exists(path) && !list.Select(x => x.ToLower()).Contains(path.ToLower()))
+                {
+                    list.Add(path);
+                }
+            }
 
             list.Each(x =>
             {
