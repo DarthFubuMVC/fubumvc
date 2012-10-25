@@ -1,5 +1,7 @@
-﻿using System.Web;
+﻿using System.Linq;
+using System.Web;
 using FubuCore.Dates;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Http
 {
@@ -9,11 +11,13 @@ namespace FubuMVC.Core.Http
         private readonly string _cookieName;
         private readonly ICookies _cookies;
         private readonly ISystemTime _time;
+        private readonly IOutputWriter _writer;
 
-        public CookieValue(string cookieName, ISystemTime time, ICookies cookies)
+        public CookieValue(string cookieName, ISystemTime time, ICookies cookies, IOutputWriter writer)
         {
             _time = time;
             _cookies = cookies;
+            _writer = writer;
             _cookieName = cookieName;
         }
 
@@ -21,7 +25,7 @@ namespace FubuMVC.Core.Http
         {
             get
             {
-                var cookie = _cookies.Request[_cookieName];
+                var cookie = _cookies.Request.SingleOrDefault(x => x.Name == _cookieName);
                 return cookie == null ? null : cookie.Value;
             }
             set
@@ -32,7 +36,7 @@ namespace FubuMVC.Core.Http
                     Expires = _time.UtcNow().AddYears(1)
                 };
 
-                _cookies.Response.Add(cookie);
+                _writer.AppendCookie(cookie);
             }
         }
 
@@ -43,7 +47,7 @@ namespace FubuMVC.Core.Http
                 Expires = _time.UtcNow().AddYears(-1)
             };
 
-            _cookies.Response.Add(cookie);
+            _writer.AppendCookie(cookie);
         }
     }
 }

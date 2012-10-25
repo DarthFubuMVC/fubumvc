@@ -1,31 +1,55 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 
 namespace FubuMVC.Core.Http
 {
+    // This is meant to be readonly
     public interface ICookies
     {
-        HttpCookieCollection Request { get; }
-        HttpCookieCollection Response { get; }
+        bool Has(string name);
+        HttpCookie Get(string name);
+
+        IEnumerable<HttpCookie> Request { get; }
+        IEnumerable<HttpCookie> Response { get; }
     }
 
     public class InMemoryCookies : ICookies
     {
-        public InMemoryCookies()
+        private readonly IList<HttpCookie> _request = new List<HttpCookie>(); 
+        private readonly IList<HttpCookie> _response = new List<HttpCookie>();
+ 
+
+        public bool Has(string name)
         {
-            Request = new HttpCookieCollection();
-            Response = new HttpCookieCollection();
+            return Get(name) != null;
         }
 
-        public HttpCookieCollection Request
+        public HttpCookie Get(string name)
         {
-            get; private set;
+            return _request.SingleOrDefault(x => x.Name == name);
         }
 
-        public HttpCookieCollection Response
+        public IEnumerable<HttpCookie> Request
         {
-            get; private set;
+            get { return _request; }
+        }
+
+        public IEnumerable<HttpCookie> Response
+        {
+            get { return _response; }
+        }
+
+        // For testing
+        public void AddRequestCookie(HttpCookie cookie)
+        {
+            _request.Add(cookie);
+        }
+
+        public void AddResponseCookie(HttpCookie cookie)
+        {
+            _response.Add(cookie);
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using FubuCore;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Compression;
 using HttpResponseHeaders = FubuMVC.Core.Http.HttpResponseHeaders;
@@ -99,7 +100,14 @@ namespace FubuMVC.SelfHost
 
         public void AppendCookie(HttpCookie cookie)
         {
-            throw new NotImplementedException();
+            var value = new CookieHeaderValue(cookie.Name, cookie.Value);
+            value.Expires = new DateTimeOffset(cookie.Expires);
+            if(cookie.Path.IsEmpty())
+            {
+                value.Path = "/";
+            }
+
+            _response.Headers.AddCookies(new[] { value });
         }
 
         public void UseEncoding(IHttpContentEncoding encoding)

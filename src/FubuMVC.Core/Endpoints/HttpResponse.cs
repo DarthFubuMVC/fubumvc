@@ -26,6 +26,11 @@ namespace FubuMVC.Core.Endpoints
             }
         }
 
+        public CookieCollection Cookies
+        {
+            get { return _response.Cookies; }
+        }
+
         public string ResponseHeaderFor(string name)
         {
             return _response.GetResponseHeader(name);
