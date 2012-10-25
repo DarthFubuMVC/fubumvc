@@ -27,7 +27,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void should_be_a_policy()
         {
-            ConfigurationGraph.DetermineConfigurationType(new AsyncContinueWithHandlerConvention())
+            ConfigGraph.DetermineConfigurationType(new AsyncContinueWithHandlerConvention())
                 .ShouldEqual(ConfigurationType.Policy);
 
         }

@@ -32,10 +32,10 @@ namespace FubuMVC.Core.Registration.DSL
 
     public class PoliciesExpression : IOrderPolicyExpression
     {
-        private readonly ConfigurationGraph _configuration;
+        private readonly ConfigGraph _configuration;
         private Func<BehaviorNode, bool> _lastNodeMatch;
 
-        public PoliciesExpression(ConfigurationGraph configuration)
+        public PoliciesExpression(ConfigGraph configuration)
         {
             _configuration = configuration;
         }
@@ -51,7 +51,7 @@ namespace FubuMVC.Core.Registration.DSL
             var policy = new ReorderBehaviorsPolicy();
             configure(policy);
 
-            _configuration.AddConfiguration(policy, ConfigurationType.Reordering);
+            _configuration.Add(policy, ConfigurationType.Reordering);
 
             return this;
         }
@@ -63,16 +63,7 @@ namespace FubuMVC.Core.Registration.DSL
 
         private IOrderPolicyExpression applyWrapper<T>(Func<BehaviorChain, bool> filter) where T : IActionBehavior
         {
-            _configuration.AddConfiguration(new WrapAction<T>(filter));
-
-            _lastNodeMatch = ReorderBehaviorsPolicy.FuncForWrapper(typeof(T));
-
-            return this;
-        }
-
-        private IOrderPolicyExpression applyWrapper<T>(VisitBehaviorsAction configAction)
-        {
-            _configuration.AddConfiguration(configAction, ConfigurationType.Policy);
+            _configuration.Add(new WrapAction<T>(filter));
 
             _lastNodeMatch = ReorderBehaviorsPolicy.FuncForWrapper(typeof(T));
 
@@ -89,7 +80,7 @@ namespace FubuMVC.Core.Registration.DSL
         private void addPolicy(Action<BehaviorGraph> action)
         {
             var policy = new LambdaConfigurationAction(action);
-            _configuration.AddConfiguration(policy, ConfigurationType.Policy);
+            _configuration.Add(policy, ConfigurationType.Policy);
         }
 
         public IPoliciesExpression EnrichCallsWith<T>(Func<ActionCall, bool> filter) where T : IActionBehavior
@@ -114,7 +105,7 @@ namespace FubuMVC.Core.Registration.DSL
 
         public IPoliciesExpression Add(IConfigurationAction alteration)
         {
-            _configuration.AddConfiguration(alteration, ConfigurationType.Policy);
+            _configuration.Add(alteration, ConfigurationType.Policy);
             return this;
         }
 
@@ -132,9 +123,9 @@ namespace FubuMVC.Core.Registration.DSL
         public class BehaviorOrderPolicyExpression
         {
             private readonly Func<BehaviorNode, bool> _lastNodeMatch;
-            private readonly ConfigurationGraph _configuration;
+            private readonly ConfigGraph _configuration;
 
-            public BehaviorOrderPolicyExpression(Func<BehaviorNode, bool> lastNodeMatch, ConfigurationGraph configuration)
+            public BehaviorOrderPolicyExpression(Func<BehaviorNode, bool> lastNodeMatch, ConfigGraph configuration)
             {
                 _lastNodeMatch = lastNodeMatch;
                 _configuration = configuration;
@@ -147,7 +138,7 @@ namespace FubuMVC.Core.Registration.DSL
                 };
 
                 policy.ThisNodeMustBeAfter<AuthorizationNode>();
-                _configuration.AddConfiguration(policy);
+                _configuration.Add(policy);
             }
         }
 
@@ -163,7 +154,7 @@ namespace FubuMVC.Core.Registration.DSL
         {
             var registry = new ServiceRegistry();
             registry.AddService(typeof (DisplayConversionRegistry), ObjectDef.ForValue(conversions));
-            _configuration.AddConfiguration(registry, ConfigurationType.Services);
+            _configuration.Add(registry);
         }
 
         public void StringConversions(Action<DisplayConversionRegistry> configure)

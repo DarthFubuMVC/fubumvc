@@ -147,17 +147,16 @@ namespace FubuMVC.Core
     /// </example>
     public partial class FubuRegistry : IFubuRegistry
     {
-        private readonly ConfigurationGraph _configuration;
         private readonly IList<Type> _importedTypes = new List<Type>();
         private readonly ActionMethodFilter _methodFilter = new ActionMethodFilter();
         private readonly IList<Action<TypePool>> _scanningOperations = new List<Action<TypePool>>();
+        private readonly TypePool _types = new TypePool(TypePool.FindTheCallingAssembly());
+        private readonly ConfigGraph _config = new ConfigGraph();
 
         private bool _hasCompiled;
 
         public FubuRegistry()
         {
-            _configuration = new ConfigurationGraph(this);
-        
             // TODO -- yank this out!!!
             Import<NavigationRegistryExtension>();
         }
@@ -167,9 +166,9 @@ namespace FubuMVC.Core
             configure(this);
         }
 
-        internal ConfigurationGraph Configuration
+        internal ConfigGraph Config
         {
-            get { return _configuration; }
+            get { return _config; }
         }
 
         /// <summary>
@@ -187,7 +186,7 @@ namespace FubuMVC.Core
         /// </summary>
         public RouteConventionExpression Routes
         {
-            get { return new RouteConventionExpression(Configuration); }
+            get { return new RouteConventionExpression(Config); }
         }
 
         /// <summary>
@@ -196,7 +195,7 @@ namespace FubuMVC.Core
         /// </summary>
         public PoliciesExpression Policies
         {
-            get { return new PoliciesExpression(_configuration); }
+            get { return new PoliciesExpression(_config); }
         }
 
         /// <summary>
@@ -212,7 +211,7 @@ namespace FubuMVC.Core
         /// </summary>
         public AppliesToExpression Applies
         {
-            get { return new AppliesToExpression(_configuration.Types); }
+            get { return new AppliesToExpression(_types); }
         }
 
 
@@ -221,7 +220,7 @@ namespace FubuMVC.Core
         /// </summary>
         public ActionCallCandidateExpression Actions
         {
-            get { return new ActionCallCandidateExpression(_methodFilter, _configuration); }
+            get { return new ActionCallCandidateExpression(_methodFilter, _config); }
         }
 
         /// <summary>
@@ -240,7 +239,7 @@ namespace FubuMVC.Core
         {
             var registry = new ServiceRegistry();
             configure(registry);
-            _configuration.AddConfiguration(registry);
+            _config.Add(registry);
         }
 
         /// <summary>
@@ -249,7 +248,7 @@ namespace FubuMVC.Core
         public void ApplyConvention<TConvention>(TConvention convention)
             where TConvention : IConfigurationAction
         {
-            _configuration.AddConfiguration(convention, ConfigurationType.Discovery);
+            _config.Add(convention, ConfigurationType.Discovery);
         }
 
         /// <summary>
@@ -258,7 +257,7 @@ namespace FubuMVC.Core
         public ExplicitRouteConfiguration.ChainedBehaviorExpression Route(string pattern)
         {
             var expression = new ExplicitRouteConfiguration(pattern);
-            _configuration.AddConfiguration(expression, ConfigurationType.Explicit);
+            _config.Add(expression, ConfigurationType.Explicit);
 
             return expression.Chain();
         }
@@ -269,11 +268,10 @@ namespace FubuMVC.Core
         /// </summary>
         public void Import<T>(string prefix) where T : FubuRegistry, new()
         {
-            _configuration.AddImport(new RegistryImport
+            _config.AddImport(new RegistryImport
             {
                 Prefix = prefix,
-                Registry = new T(),
-                Type = typeof (T)
+                Registry = new T()
             });
         }
 
@@ -283,7 +281,7 @@ namespace FubuMVC.Core
         /// </summary>
         public void Import(FubuRegistry registry, string prefix)
         {
-            _configuration.AddImport(new RegistryImport
+            _config.AddImport(new RegistryImport
             {
                 Prefix = prefix,
                 Registry = registry
@@ -295,7 +293,7 @@ namespace FubuMVC.Core
         /// </summary>
         public void AlterSettings<T>(Action<T> alteration) where T : new()
         {
-            Configuration.AddConfiguration(new SettingAlteration<T>(alteration));
+            Config.Add(new SettingAlteration<T>(alteration));
         }
 
         /// <summary>
@@ -305,7 +303,7 @@ namespace FubuMVC.Core
         /// <param name="settings"></param>
         public void ReplaceSettings<T>(T settings)
         {
-            Configuration.AddConfiguration(new SettingReplacement<T>(settings));
+            Config.Add(new SettingReplacement<T>(settings));
         }
 
         /// <summary>
@@ -332,7 +330,7 @@ namespace FubuMVC.Core
 
         public void Services<T>() where T : IServiceRegistry, new()
         {
-            _configuration.AddConfiguration((IConfigurationAction) new T(), ConfigurationType.Services);
+            _config.Add((IConfigurationAction) new T(), ConfigurationType.Services);
         }
 
         /// <summary>
@@ -347,11 +345,10 @@ namespace FubuMVC.Core
 
             if (typeof (T).CanBeCastTo<FubuPackageRegistry>())
             {
-                _configuration.AddImport(new RegistryImport
+                _config.AddImport(new RegistryImport
                 {
                     Prefix = null,
-                    Registry = new T().As<FubuRegistry>(),
-                    Type = typeof (T)
+                    Registry = new T().As<FubuRegistry>()
                 });
             }
             else
@@ -375,22 +372,24 @@ namespace FubuMVC.Core
             _importedTypes.Add(typeof (T));
         }
 
+        [Obsolete, MarkedForTermination]
         public void Navigation<T>() where T : NavigationRegistry, new()
         {
-            _configuration.AddConfiguration(new T());
+            _config.Add(new T());
         }
 
+        [Obsolete, MarkedForTermination]
         public void Navigation(Action<NavigationRegistry> configuration)
         {
             var registry = new NavigationRegistry();
             configuration(registry);
 
-            _configuration.AddConfiguration(registry);
+            _config.Add(registry);
         }
 
         public void Navigation(NavigationRegistry registry)
         {
-            _configuration.AddConfiguration(registry);
+            _config.Add(registry);
         }
 
         #endregion
@@ -416,25 +415,26 @@ namespace FubuMVC.Core
         /// <returns></returns>
         internal BehaviorGraph BuildGraph()
         {
-            Compile();
-
-            return _configuration.Build();
+            var builder = new BehaviorGraphBuilder();
+            return builder.Build(this);
         }
 
-
-        internal void Compile()
-        {
-            if (!_hasCompiled)
-            {
-                _scanningOperations.Each(x => x(_configuration.Types));
-                _hasCompiled = true;
-            }
-        }
 
         private void addExplicit(Action<BehaviorGraph> action)
         {
             var explicitAction = new LambdaConfigurationAction(action);
-            _configuration.AddConfiguration(explicitAction, ConfigurationType.Explicit);
+            _config.Add(explicitAction, ConfigurationType.Explicit);
+        }
+
+        public TypePool BuildTypePool()
+        {
+            if (!_hasCompiled)
+            {
+                _scanningOperations.Each(x => x(_types));
+                _hasCompiled = true;
+            }
+
+            return _types;
         }
     }
 }

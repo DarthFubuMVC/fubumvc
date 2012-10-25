@@ -17,7 +17,7 @@ namespace FubuMVC.Tests.Registration.Diagnostics
         private ConfigLog theLog;
         private ITracedModel node;
         private ITracedModel node2;
-        private ConfigSource theConfigSource;
+        private ActionLog theActionLog;
         private BehaviorChain theChain;
 
         [SetUp]
@@ -32,22 +32,16 @@ namespace FubuMVC.Tests.Registration.Diagnostics
             node.Trace("else");
 
             node2 = new TracedNode();
-
-            theConfigSource = theLog.StartSource(new FubuRegistry(), source1);
+            Assert.Fail("NWO");
+            //theActionLog = theLog.StartSource(new FubuRegistry(), source1);
             theLog.RecordEvents(theChain, node);
             theLog.RecordEvents(theChain, node2);
         }
 
         [Test]
-        public void places_the_chain_on_the_NodeEvent()
-        {
-            theConfigSource.Events.Each(x => x.Chain.ShouldBeTheSameAs(theChain));
-        }
-
-        [Test]
         public void theConfigSource_has_all_the_events()
         {
-            theConfigSource.Events.Count.ShouldEqual(4);
+            theActionLog.Events.Count.ShouldEqual(4);
         }
 
         [Test]

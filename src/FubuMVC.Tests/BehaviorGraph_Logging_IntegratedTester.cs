@@ -27,7 +27,7 @@ namespace FubuMVC.Tests
         [Test]
         public void the_ConfigurationGraph_is_registered_in_the_services_for_later()
         {
-            theGraph.Services.ServicesFor(typeof (ConfigurationGraph)).Single().Value.ShouldNotBeNull();
+            theGraph.Services.ServicesFor(typeof (ConfigGraph)).Single().Value.ShouldNotBeNull();
         }
 
         [Test]
@@ -39,7 +39,6 @@ namespace FubuMVC.Tests
             {
                 chain.AllEvents().Each(e =>
                 {
-                    e.Chain.ShouldBeTheSameAs(chain);
                     e.Source.ShouldNotBeNull();
                     e.Subject.ShouldBeTheSameAs(chain);
                 });
@@ -58,7 +57,6 @@ namespace FubuMVC.Tests
                 {
                     e.Subject.ShouldBeTheSameAs(node);
                     e.Source.ShouldNotBeNull();
-                    e.Chain.ShouldBeTheSameAs(chain);
                 });
             });
         }
@@ -66,33 +64,35 @@ namespace FubuMVC.Tests
         [Test]
         public void each_configuration_source_has_the_provenance_set_simple_case_of_only_one_FubuRegistry()
         {
-            var registry = new FubuRegistry();
-            registry.Actions.IncludeClassesSuffixedWithController();
-
-            var graph = BehaviorGraph.BuildFrom(registry);
-
-            graph.Log.AllConfigSources().Any().ShouldBeTrue();
-            graph.Log.AllConfigSources().Each(x => x.Provenance.ShouldBeTheSameAs(registry));
+            Assert.Fail("NWO");
+//            var registry = new FubuRegistry();
+//            registry.Actions.IncludeClassesSuffixedWithController();
+//
+//            var graph = BehaviorGraph.BuildFrom(registry);
+//
+//            graph.Log.AllConfigSources().Any().ShouldBeTrue();
+//            graph.Log.AllConfigSources().Each(x => x.Provenance.ShouldBeTheSameAs(registry));
         }
 
 
         [Test]
         public void capture_the_configuration_source_from_imports()
         {
-            var registry = new FubuRegistry();
-            registry.Actions.IncludeClassesSuffixedWithController();
-            registry.Import<FakeRegistry>();
-
-            var graph = BehaviorGraph.BuildFrom(registry);
-
-            var chain = graph.BehaviorFor<FakeThing>(x => x.SayHello()).As<ITracedModel>();
-
-            // This is simple
-            chain.AllEvents().OfType<Created>().Single().Source.Provenance.ShouldBeOfType<FakeRegistry>();
-            chain.AllEvents().OfType<ChainImported>().Single().Source.Action.ShouldBeOfType<RegistryImport>();
-
-            graph.Log.AllConfigSources().Where(x => x.Provenance is FakeRegistry).Any().ShouldBeTrue();
-        
+            Assert.Fail("NWO");
+//            var registry = new FubuRegistry();
+//            registry.Actions.IncludeClassesSuffixedWithController();
+//            registry.Import<FakeRegistry>();
+//
+//            var graph = BehaviorGraph.BuildFrom(registry);
+//
+//            var chain = graph.BehaviorFor<FakeThing>(x => x.SayHello()).As<ITracedModel>();
+//
+//            // This is simple
+//            chain.AllEvents().OfType<Created>().Single().Source.Provenance.ShouldBeOfType<FakeRegistry>();
+//            chain.AllEvents().OfType<ChainImported>().Single().Source.Action.ShouldBeOfType<RegistryImport>();
+//
+//            graph.Log.AllConfigSources().Where(x => x.Provenance is FakeRegistry).Any().ShouldBeTrue();
+//        
 
 
         }

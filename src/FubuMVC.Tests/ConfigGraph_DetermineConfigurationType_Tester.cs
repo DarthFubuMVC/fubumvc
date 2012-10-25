@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace FubuMVC.Tests
 {
     [TestFixture]
-    public class ConfigurationGraph_DetermineConfigurationType_Tester
+    public class ConfigGraph_DetermineConfigurationType_Tester
     {
         [ConfigurationType(ConfigurationType.Policy)]
         public class FakePolicy1 : IConfigurationAction
@@ -51,39 +51,33 @@ namespace FubuMVC.Tests
         [Test]
         public void reads_from_attribute()
         {
-            ConfigurationGraph.DetermineConfigurationType(new FakePolicy1())
+            ConfigGraph.DetermineConfigurationType(new FakePolicy1())
                 .ShouldEqual(ConfigurationType.Policy);
 
 
-            ConfigurationGraph.DetermineConfigurationType(new FakePolicy2())
+            ConfigGraph.DetermineConfigurationType(new FakePolicy2())
                 .ShouldEqual(ConfigurationType.Explicit);
 
 
-            ConfigurationGraph.DetermineConfigurationType(new FakePolicy3())
+            ConfigGraph.DetermineConfigurationType(new FakePolicy3())
                 .ShouldEqual(ConfigurationType.Policy);
 
-            ConfigurationGraph.DetermineConfigurationType(new FakePolicy4())
+            ConfigGraph.DetermineConfigurationType(new FakePolicy4())
                 .ShouldEqual(ConfigurationType.Discovery);
         }
 
         [Test]
         public void reorder_policy_is_reording()
         {
-            ConfigurationGraph.DetermineConfigurationType(new ReorderBehaviorsPolicy())
+            ConfigGraph.DetermineConfigurationType(new ReorderBehaviorsPolicy())
                 .ShouldEqual(ConfigurationType.Reordering);
         }
 
-        [Test]
-        public void ServiceRegistry_is_services()
-        {
-            ConfigurationGraph.DetermineConfigurationType(new ServiceRegistry())
-                .ShouldEqual(ConfigurationType.Services);
-        }
 
         [Test]
         public void lambda_should_be_indeterminate()
         {
-            ConfigurationGraph.DetermineConfigurationType(new LambdaConfigurationAction(g => { }))
+            ConfigGraph.DetermineConfigurationType(new LambdaConfigurationAction(g => { }))
                 .ShouldEqual(null);
         }
 

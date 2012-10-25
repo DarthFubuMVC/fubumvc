@@ -10,8 +10,8 @@ namespace FubuMVC.Core.Registration.Diagnostics
     public class ConfigLog
     {
         private readonly BehaviorGraph _graph;
-        private readonly IList<ConfigSource> _sources = new List<ConfigSource>();
-        private ConfigSource _currentSource;
+        private readonly IList<ActionLog> _sources = new List<ActionLog>();
+        private ActionLog _currentSource;
 
         public ConfigLog(BehaviorGraph graph)
         {
@@ -30,8 +30,6 @@ namespace FubuMVC.Core.Registration.Diagnostics
 
         public void RunAction(FubuRegistry provenance, IConfigurationAction action)
         {
-            StartSource(provenance, action);
-
             action.Configure(_graph);
 
             _graph.Behaviors.Each(chain =>
@@ -55,31 +53,20 @@ namespace FubuMVC.Core.Registration.Diagnostics
             }
         }
 
-        public ConfigSource StartSource(FubuRegistry provenance, IConfigurationAction action)
-        {
-            var source = new ConfigSource(provenance, action);
-            _sources.Add(source);
-
-            _currentSource = source;
-
-            return _currentSource;
-        }
-
         public void RecordEvents(BehaviorChain chain, ITracedModel model)
         {
             model.RecordEvents(e =>
             {
-                e.Chain = chain;
                 _currentSource.AddEvent(e);
             });
         }        
 
-        public IEnumerable<ConfigSource> AllConfigSources()
+        public IEnumerable<ActionLog> AllConfigSources()
         {
             return _sources;
         }
 
-        public ConfigSource SourceFor(Guid id)
+        public ActionLog SourceFor(Guid id)
         {
             return _sources.FirstOrDefault(x => x.Id == id);
         }

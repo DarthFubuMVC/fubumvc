@@ -32,7 +32,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void should_be_classified_as_a_policy()
         {
-            ConfigurationGraph.DetermineConfigurationType(new DownloadFileConvention())
+            ConfigGraph.DetermineConfigurationType(new DownloadFileConvention())
                 .ShouldEqual(ConfigurationType.Policy);
         }
 

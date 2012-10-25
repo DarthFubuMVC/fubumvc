@@ -6,8 +6,13 @@ using FubuMVC.Core.Registration.ObjectGraph;
 
 namespace FubuMVC.Core.Registration
 {
-    [CanBeMultiples]
-    public class ServiceRegistry : IServiceRegistry, IConfigurationAction
+    public interface IServiceRegistration
+    {
+        void Apply(ServiceGraph services);
+    }
+
+
+    public class ServiceRegistry : IServiceRegistry, IServiceRegistration
     {
         private readonly IList<Action<ServiceGraph>> _alterations = new List<Action<ServiceGraph>>();
 
@@ -18,11 +23,10 @@ namespace FubuMVC.Core.Registration
             set { _alterations.Add(value); }
         }
 
-        void IConfigurationAction.Configure(BehaviorGraph graph)
+        void IServiceRegistration.Apply(ServiceGraph services)
         {
-            _alterations.Each(x => x(graph.Services));
+            _alterations.Each(x => x(services));
         }
-
 
         public void SetServiceIfNone<TService, TImplementation>() where TImplementation : TService
         {

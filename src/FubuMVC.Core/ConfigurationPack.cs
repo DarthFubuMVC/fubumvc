@@ -6,10 +6,10 @@ namespace FubuMVC.Core
 {
     public class ConfigurationPack
     {
-        private readonly IList<Action<ConfigurationGraph>> _actions = new List<Action<ConfigurationGraph>>();
+        private readonly IList<Action<ConfigGraph>> _actions = new List<Action<ConfigGraph>>();
         private string _configurationType;
 
-        private Action<ConfigurationGraph> alter
+        private Action<ConfigGraph> alter
         {
             set { _actions.Add(value); }
         }
@@ -21,18 +21,28 @@ namespace FubuMVC.Core
 
         public void Add(IConfigurationAction action)
         {
-            alter = graph => graph.AddConfiguration(action, _configurationType);
+            alter = graph => graph.Add(action, _configurationType);
         }
 
         public void Add<T>() where T : IConfigurationAction, new()
         {
             var type = _configurationType;
-            alter = graph => graph.AddConfiguration(new T(), type);
+            alter = graph => graph.Add(new T(), type);
         }
 
-        public void WriteTo(ConfigurationGraph configurationGraph)
+        public void Services<T>() where T : IServiceRegistry, new()
         {
-            _actions.Each(x => x(configurationGraph));
+            Services(new T());
+        }
+
+        public void Services(IServiceRegistry registry)
+        {
+            alter = graph => graph.Add(registry);
+        }
+
+        public void WriteTo(ConfigGraph ConfigGraph)
+        {
+            _actions.Each(x => x(ConfigGraph));
         }
     }
 }

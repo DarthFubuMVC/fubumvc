@@ -108,8 +108,8 @@
     <Compile Include="Caching\ResourceHashTester.cs" />
     <Compile Include="Caching\VaryByResourceTester.cs" />
     <Compile Include="Caching\VaryByThreadCultureTester.cs" />
-    <Compile Include="ConfigurationGraph_DetermineConfigurationType_Tester.cs" />
     <Compile Include="Http\AspNet\AspNetCookiesTester.cs" />
+    <Compile Include="ConfigGraph_DetermineConfigurationType_Tester.cs" />
     <Compile Include="Http\Compression\ContentCompressionExtensionTester.cs" />
     <Compile Include="Http\Compression\DeflateEncodingTester.cs" />
     <Compile Include="Http\HttpStandInServiceRegistry_specification.cs" />

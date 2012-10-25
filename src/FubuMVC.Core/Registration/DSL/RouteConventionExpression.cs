@@ -12,16 +12,16 @@ namespace FubuMVC.Core.Registration.DSL
 {
     public class RouteConventionExpression
     {
-        private readonly ConfigurationGraph _configuration;
+        private readonly ConfigGraph _configuration;
 
-        public RouteConventionExpression(ConfigurationGraph configuration)
+        public RouteConventionExpression(ConfigGraph configuration)
         {
             _configuration = configuration;
         }
 
         private void alter(Action<RouteDefinitionResolver> alteration)
         {
-            _configuration.AddConfiguration(new SettingAlteration<RouteDefinitionResolver>(alteration));
+            _configuration.Add(new SettingAlteration<RouteDefinitionResolver>(alteration));
         }
 
         public RouteConventionExpression IgnoreNamespaceText(string nameSpace)
@@ -122,7 +122,7 @@ namespace FubuMVC.Core.Registration.DSL
         {
             var alteration = new RouteMethodAlteration<T>(filter);
 
-            _configuration.AddConfiguration(alteration, ConfigurationType.Policy);
+            _configuration.Add(alteration, ConfigurationType.Policy);
 
             return alteration;
         }
@@ -194,7 +194,7 @@ namespace FubuMVC.Core.Registration.DSL
         /// <returns></returns>
         public RouteConventionExpression RootAtAssemblyNamespace()
         {
-            var assembly = ConfigurationGraph.FindTheCallingAssembly();
+            var assembly = TypePool.FindTheCallingAssembly();
             return IgnoreNamespaceText(assembly.GetName().Name);
         }
 

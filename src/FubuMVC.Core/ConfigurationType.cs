@@ -17,5 +17,8 @@ namespace FubuMVC.Core
         public const string InjectNodes = "InjectNodes";
         public const string Conneg = "Conneg";
         public const string Attachment = "Attachment";
+
+        public const string Import = "Import";
+
     }
 }

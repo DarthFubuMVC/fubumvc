@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using Bottles;
+using FubuCore;
 
 namespace FubuMVC.Core.Registration
 {
@@ -181,6 +183,34 @@ namespace FubuMVC.Core.Registration
         public void AddAssemblies(IEnumerable<Assembly> assemblies)
         {
             _assemblies.AddRange(assemblies);
+        }
+
+
+
+        /// <summary>
+        ///   Finds the currently executing assembly.
+        /// </summary>
+        /// <returns></returns>
+        public static Assembly FindTheCallingAssembly()
+        {
+            var trace = new StackTrace(false);
+
+            Assembly thisAssembly = Assembly.GetExecutingAssembly();
+            Assembly fubuCore = typeof(ITypeResolver).Assembly;
+            Assembly bottles = typeof(IPackageLoader).Assembly;
+
+            Assembly callingAssembly = null;
+            for (int i = 0; i < trace.FrameCount; i++)
+            {
+                StackFrame frame = trace.GetFrame(i);
+                Assembly assembly = frame.GetMethod().DeclaringType.Assembly;
+                if (assembly != thisAssembly && assembly != fubuCore && assembly != bottles)
+                {
+                    callingAssembly = assembly;
+                    break;
+                }
+            }
+            return callingAssembly;
         }
     }
 }
