@@ -4,13 +4,14 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
 
 namespace FubuMVC.Core.Registration.Nodes
 {
-    public abstract class ActionCallBase : BehaviorNode
+    public abstract class ActionCallBase : BehaviorNode, DescribesItself
     {
         private Lazy<ObjectDef> _handlerDependencies;
 
@@ -172,6 +173,34 @@ namespace FubuMVC.Core.Registration.Nodes
         public Type InputType()
         {
             return HasInput ? Method.GetParameters().First().ParameterType : null;
+        }
+
+
+        public Type ResourceType()
+        {
+            return OutputType();
+        }
+
+
+        void DescribesItself.Describe(Description description)
+        {
+            var shortTitle = "{0}.{1}()".ToFormat(HandlerType.Name, Method.Name);
+
+            description.Title = shortTitle;
+            description.Properties["Handler Type"] = HandlerType.FullName;
+            description.Properties["Assembly"] = HandlerType.Assembly.GetName().Name;
+            description.Properties["Method"] = Method.Name;
+
+
+            if (InputType() != null)
+            {
+                description.Properties["Input Type"] = InputType().FullName;
+            }
+
+            if (ResourceType() != null)
+            {
+                description.Properties["Resource Type"] = ResourceType().FullName;
+            }
         }
     }
 }

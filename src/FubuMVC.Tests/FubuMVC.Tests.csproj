@@ -125,6 +125,7 @@
     <Compile Include="Logging\ExceptionReportTester.cs" />
     <Compile Include="ReflectionExtensionsTester.cs" />
     <Compile Include="Registration\AccessOverridesFinderIntegratedTester.cs" />
+    <Compile Include="Registration\ActionFilterTester.cs" />
     <Compile Include="Registration\Conventions\AttachOutputPolicyTester.cs" />
     <Compile Include="Registration\BottleConfigurationDefTester.cs" />
     <Compile Include="Registration\Conventions\CacheAttributePolicyTester.cs" />
