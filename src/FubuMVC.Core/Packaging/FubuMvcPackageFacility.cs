@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web.Hosting;
 using Bottles;
+using Bottles.PackageLoaders;
 using Bottles.PackageLoaders.LinkedFolders;
 using FubuCore;
 using FubuMVC.Core.Packaging.VirtualPaths;
@@ -59,6 +60,8 @@ namespace FubuMVC.Core.Packaging
         {
             return FileSystem.Combine(GetApplicationPath(), FubuContentFolder);
         }
+
+        public static DateTime? Restarted { get; set; }
 
         private static string determineApplicationPathFromAppDomain()
         {

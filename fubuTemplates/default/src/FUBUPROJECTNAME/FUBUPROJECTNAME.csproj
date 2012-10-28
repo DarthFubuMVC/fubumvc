@@ -33,15 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Bottles">
-      <HintPath>..\..\..\..\src\packages\Bottles.0.9.1.163\lib\Bottles.dll</HintPath>
-    </Reference>
-    <Reference Include="FubuCore">
-      <HintPath>..\..\..\..\src\packages\FubuCore.0.9.3.98\lib\FubuCore.dll</HintPath>
-    </Reference>
-    <Reference Include="FubuLocalization">
-      <HintPath>..\..\..\..\src\packages\FubuLocalization.0.9.3.98\lib\FubuLocalization.dll</HintPath>
-    </Reference>
     <Reference Include="FubuMVC.Core">
       <HintPath>..\..\..\..\src\packages\FubuMVC.References.0.9.1.651\lib\net40\FubuMVC.Core.dll</HintPath>
     </Reference>

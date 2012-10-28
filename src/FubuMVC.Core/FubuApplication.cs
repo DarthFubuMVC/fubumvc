@@ -156,7 +156,11 @@ namespace FubuMVC.Core
                 });
             });
 
-            PackageRegistry.AssertNoFailures();
+            FubuMvcPackageFacility.Restarted = DateTime.Now;
+
+            PackageRegistry.AssertNoFailures(() => {
+                throw new FubuException(0, FubuApplicationDescriber.WriteDescription());
+            });
 
             var routes = buildRoutes(factory, graph);
             routes.Each(r => RouteTable.Routes.Add(r));
