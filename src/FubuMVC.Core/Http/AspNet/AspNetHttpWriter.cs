@@ -65,7 +65,7 @@ namespace FubuMVC.Core.Http.AspNet
 
         public void Flush()
         {
-            _response.Flush();
+            //no-op asp.net takes care of this
         }
     }
 }
