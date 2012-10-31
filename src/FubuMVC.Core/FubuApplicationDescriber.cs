@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Bottles;
 using FubuCore;
 using FubuCore.Descriptions;
@@ -71,20 +72,34 @@ namespace FubuMVC.Core
         private static void writeAssemblies(StringWriter writer)
         {
             var report = new TextReport();
-            report.StartColumns(2);
+            report.StartColumns(3);
             report.AddDivider('-');
             report.AddText("Assemblies");
             report.AddDivider('-');
 
             AppDomain.CurrentDomain.GetAssemblies().Each(assem => {
                 var assemblyName = assem.GetName();
-                report.AddColumnData(assemblyName.Name, assemblyName.Version.ToString());
+                var file = findCodebase(assem);
+                report.AddColumnData(assemblyName.Name, assemblyName.Version.ToString(), file);
             });
 
             report.AddDivider('-');
             report.Write(writer);
 
             writer.WriteLine();
+        }
+
+        private static string findCodebase(Assembly assem)
+        {
+            try
+            {
+                var file = assem.CodeBase;
+                return file ?? "None";
+            }
+            catch (Exception)
+            {
+                return "None";
+            }
         }
 
         private static void writeProperties(StringWriter writer)
