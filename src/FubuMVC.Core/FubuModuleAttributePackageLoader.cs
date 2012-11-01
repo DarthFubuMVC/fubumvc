@@ -82,14 +82,23 @@ namespace FubuMVC.Core
 
             foreach (string assemblyPath in assemblyPaths)
             {
-                Assembly assembly = null;
-                try
+                Assembly assembly =
+                    AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(
+                        x => x.GetName().Name == Path.GetFileNameWithoutExtension(assemblyPath));
+
+                if (assembly == null)
                 {
-                    assembly = Assembly.LoadFrom(assemblyPath);
-                }
-                catch
-                {
-                }
+                    try
+                    {
+                        assembly = Assembly.LoadFrom(assemblyPath);
+                    }
+                    catch
+                    {
+                    }
+                }             
+
+
+
 
                 if (assembly != null && assemblyFilter(assembly))
                 {

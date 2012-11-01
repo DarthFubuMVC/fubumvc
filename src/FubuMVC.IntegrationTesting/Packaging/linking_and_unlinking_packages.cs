@@ -83,7 +83,7 @@ link harness pak2
 link harness --clean-all
 init src/TestPackage1 pak1
 link harness pak1
-init-pak src/TestPackage2 pak2
+init src/TestPackage2 pak2
 link harness pak2
 link harness pak1 --remove
 ");
