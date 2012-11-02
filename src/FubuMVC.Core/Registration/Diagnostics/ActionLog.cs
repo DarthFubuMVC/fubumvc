@@ -8,7 +8,7 @@ namespace FubuMVC.Core.Registration.Diagnostics
     public class ActionLog
     {
         private readonly IConfigurationAction _action;
-        private readonly IEnumerable<Provenance> _provenanceChain;
+        private IEnumerable<Provenance> _provenanceChain;
         private readonly Lazy<Description> _description;
         private readonly IList<NodeEvent> _events = new List<NodeEvent>();
 
@@ -28,6 +28,20 @@ namespace FubuMVC.Core.Registration.Diagnostics
         public IConfigurationAction Action
         {
             get { return _action; }
+        }
+
+        public void PrependProvenance(IEnumerable<Provenance> forebears)
+        {
+            _provenanceChain = forebears.Union(_provenanceChain).ToArray();
+        }
+
+        public void Execute(BehaviorGraph graph)
+        {
+            _action.Configure(graph);
+
+            graph.AllTracedModels().Each(model => {
+                model.RecordEvents(AddEvent);
+            });
         }
 
         public Guid Id { get; private set;}

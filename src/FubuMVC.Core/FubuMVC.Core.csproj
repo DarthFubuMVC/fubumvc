@@ -128,6 +128,7 @@
     <Compile Include="Registration\Conventions\OutputBeforeAjaxContinuationPolicy.cs" />
     <Compile Include="Registration\Conventions\UrlPatternAttributeOnViewModelPolicy.cs" />
     <Compile Include="Registration\Conventions\VaryByPolicy.cs" />
+    <Compile Include="Registration\Diagnostics\ConfigLog.cs" />
     <Compile Include="Registration\Diagnostics\Provenance.cs" />
     <Compile Include="Registration\IServiceGraphAlteration.cs" />
     <Compile Include="Registration\Nodes\ActionFilter.cs" />
@@ -265,7 +266,6 @@
     <Compile Include="Registration\Diagnostics\ConditionAdded.cs" />
     <Compile Include="Registration\Diagnostics\ActionLog.cs" />
     <Compile Include="Registration\Diagnostics\Created.cs" />
-    <Compile Include="Registration\Diagnostics\ConfigLog.cs" />
     <Compile Include="Registration\Diagnostics\NodeEvent.cs" />
     <Compile Include="Registration\Diagnostics\NodeRemoved.cs" />
     <Compile Include="Registration\Diagnostics\NodeReplaced.cs" />

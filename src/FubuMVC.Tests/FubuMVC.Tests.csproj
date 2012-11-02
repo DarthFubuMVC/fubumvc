@@ -136,6 +136,7 @@
     <Compile Include="Registration\Conventions\UrlPatternAttributeOnViewModelPolicyTester.cs" />
     <Compile Include="Registration\Conventions\VaryByPolicyTester.cs" />
     <Compile Include="Registration\default_action_discovery.cs" />
+    <Compile Include="Registration\Diagnostics\ActionLogTester.cs" />
     <Compile Include="Registration\OutputBeforeAjaxContinuationPolicyTester.cs" />
     <Compile Include="Registration\Registration\ModelBindingServiceRegistry_specification.cs" />
     <Compile Include="Registration\SettingsCollectionTester.cs" />
@@ -218,7 +219,6 @@
     <Compile Include="Registration\Conventions\MediaExpressionAndConnegAttachmentPolicyTester.cs" />
     <Compile Include="Registration\Conventions\PartialOnlyConventionTester.cs" />
     <Compile Include="Registration\Diagnostics\BehaviorNodeTracingMechanicsTester.cs" />
-    <Compile Include="Registration\Diagnostics\ConfigLogTester.cs" />
     <Compile Include="Registration\Nodes\ActionCallBaseObjectDefCreationTester.cs" />
     <Compile Include="Registration\Querying\ChainSearchTester.cs" />
     <Compile Include="Registration\ServiceGraphTester.cs" />

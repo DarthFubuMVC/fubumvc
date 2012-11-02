@@ -7,6 +7,7 @@ using FubuMVC.Core.Registration.Diagnostics;
 using NUnit.Framework;
 using System.Linq;
 using FubuTestingSupport;
+using System.Collections.Generic;
 
 namespace FubuMVC.Tests
 {
@@ -123,6 +124,44 @@ namespace FubuMVC.Tests
 
             graph.ActionsFor(ConfigurationType.Conneg).Single()
                 .ShouldBeTheSameAs(action);
+        }
+
+        [Test]
+        public void add_configuration_pak()
+        {
+            var pack = new DiscoveryActionsConfigurationPack();
+            var graph = new ConfigGraph();
+
+            graph.Add(pack);
+
+            graph.LogsFor(ConfigurationType.Discovery).Each(log => {
+                log.ProvenanceChain.ShouldHaveTheSameElementsAs(new ConfigurationPackProvenance(pack));
+            });
+
+            graph.LogsFor(ConfigurationType.Discovery).Any().ShouldBeTrue();
+
+            graph.ProvenanceStack.Any().ShouldBeFalse(); // should pop
+        }
+
+        [Test]
+        public void add_configuration_pack_has_to_be_idempotent()
+        {
+            var pack = new DiscoveryActionsConfigurationPack();
+            var graph = new ConfigGraph();
+
+            graph.Add(pack);
+
+            var count = graph.LogsFor(ConfigurationType.Discovery).Count();
+
+            graph.Add(new DiscoveryActionsConfigurationPack());
+            graph.Add(new DiscoveryActionsConfigurationPack());
+            graph.Add(new DiscoveryActionsConfigurationPack());
+            graph.Add(new DiscoveryActionsConfigurationPack());
+            graph.Add(new DiscoveryActionsConfigurationPack());
+
+
+            graph.LogsFor(ConfigurationType.Discovery).Count()
+                .ShouldEqual(count);
         }
     }
     

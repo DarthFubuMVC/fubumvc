@@ -38,7 +38,6 @@ namespace FubuMVC.Core.Registration
             new Lazy<IFubuApplicationFiles>(() => new FubuApplicationFiles());
 
         private readonly List<IChainForwarder> _forwarders = new List<IChainForwarder>();
-        private readonly ConfigLog _log;
         private readonly ServiceGraph _services = new ServiceGraph();
 
         private readonly SettingsCollection _settings;
@@ -54,8 +53,6 @@ namespace FubuMVC.Core.Registration
 
         public BehaviorGraph()
         {
-            _log = new ConfigLog(this);
-
             _settings = new SettingsCollection(null);
             _settings.Replace(SessionStateRequirement.RequiresSessionState);
 
@@ -68,11 +65,6 @@ namespace FubuMVC.Core.Registration
         }
 
         public TypePool Types { get; internal set; }
-
-        public ConfigLog Log
-        {
-            get { return _log; }
-        }
 
         public SettingsCollection Settings
         {
@@ -124,7 +116,8 @@ namespace FubuMVC.Core.Registration
 
         void IChainImporter.Import(BehaviorGraph graph, Action<BehaviorChain> alternation)
         {
-            _log.Import(graph.Log);
+            throw new NotImplementedException();
+            //_log.Import(graph.Log);
 
             graph.Behaviors.Each(b => {
                 AddChain(b);
@@ -489,6 +482,24 @@ namespace FubuMVC.Core.Registration
         public static BehaviorGraph BuildEmptyGraph()
         {
             return BuildFrom(new FubuRegistry());
+        }
+
+        public IEnumerable<ITracedModel> AllTracedModels()
+        {
+            foreach (BehaviorChain chain in Behaviors)
+            {
+                yield return chain;
+
+                if (chain.Route != null)
+                {
+                    yield return (ITracedModel)chain.Route;
+                }
+
+                foreach (var node in chain)
+                {
+                    yield return node;
+                }
+            }
         }
     }
 

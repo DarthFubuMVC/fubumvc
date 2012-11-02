@@ -70,8 +70,8 @@ namespace FubuMVC.Tests
 //
 //            var graph = BehaviorGraph.BuildFrom(registry);
 //
-//            graph.Log.AllConfigSources().Any().ShouldBeTrue();
-//            graph.Log.AllConfigSources().Each(x => x.Provenance.ShouldBeTheSameAs(registry));
+//            graph.Log.AllLogs().Any().ShouldBeTrue();
+//            graph.Log.AllLogs().Each(x => x.Provenance.ShouldBeTheSameAs(registry));
         }
 
 
@@ -91,7 +91,7 @@ namespace FubuMVC.Tests
 //            chain.AllEvents().OfType<Created>().Single().Source.Provenance.ShouldBeOfType<FakeRegistry>();
 //            chain.AllEvents().OfType<ChainImported>().Single().Source.Action.ShouldBeOfType<RegistryImport>();
 //
-//            graph.Log.AllConfigSources().Where(x => x.Provenance is FakeRegistry).Any().ShouldBeTrue();
+//            graph.Log.AllLogs().Where(x => x.Provenance is FakeRegistry).Any().ShouldBeTrue();
 //        
 
 

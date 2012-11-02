@@ -23,7 +23,7 @@ namespace FubuMVC.Core
             get { return _provenanceStack.Reverse(); }
         }
 
-        public void RunActions(string configurationType)
+        public void RunActions(string configurationType, BehaviorGraph graph)
         {
             throw new NotImplementedException();
         }
@@ -58,10 +58,13 @@ namespace FubuMVC.Core
             return _configurations[configurationType].Actions;
         } 
 
-        // TODO -- this has to be idempotent!!!!
         public void Add(ConfigurationPack pack)
         {
-            throw new NotImplementedException();
+            _provenanceStack.Push(new ConfigurationPackProvenance(pack));
+
+            pack.WriteTo(this);
+
+            _provenanceStack.Pop();
         }
 
         public void AddImport(RegistryImport import)
@@ -71,6 +74,7 @@ namespace FubuMVC.Core
             _imports.Add(import);
         }
 
+        // Tested through the FubuRegistry.Import()
         public bool HasImported(FubuRegistry registry)
         {
             if (_imports.Any(x => x.Registry.GetType() == registry.GetType()))
@@ -78,7 +82,6 @@ namespace FubuMVC.Core
                 return true;
             }
 
-            // TODO -- this will have to change
             if (_imports.Any(x => x.Registry.Config.HasImported(registry)))
             {
                 return true;

@@ -16,6 +16,8 @@ namespace FubuMVC.Core
         {
             var types = registry.BuildTypePool();
 
+            // Need to register the ConfigGraph!!!!
+
             // use SystemServicesPack
             // use DefaultConfigurationPack
 
