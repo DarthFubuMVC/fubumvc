@@ -95,6 +95,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="binding_against_request_cookies.cs" />
     <Compile Include="reading_cookies.cs" />
     <Compile Include="SelfHostCookiesTester.cs" />
     <Compile Include="binding_against_form_data.cs" />

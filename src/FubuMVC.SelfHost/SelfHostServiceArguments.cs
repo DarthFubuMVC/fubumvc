@@ -14,13 +14,14 @@ namespace FubuMVC.SelfHost
             With(request);
             With(response);
 
-            With<IRequestData>(new SelfHostRequestData(routeData, request));
+            var cookies = new SelfHostCookies(request, response);
+            With<IRequestData>(new SelfHostRequestData(routeData, request, cookies));
             With<ICurrentHttpRequest>(new SelfHostCurrentHttpRequest(request));
             With<IStreamingData>(new SelfHostStreamingData(request));
             _writer = new SelfHostHttpWriter(response);
             With<IHttpWriter>(_writer);
             With<IClientConnectivity>(new SelfHostClientConnectivity());
-            With<ICookies>(new SelfHostCookies(request, response));
+            With<ICookies>(cookies);
             With<IResponse>(new SelfHostResponse(response));
         }
 

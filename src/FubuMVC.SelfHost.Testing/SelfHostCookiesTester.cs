@@ -47,6 +47,22 @@ namespace FubuMVC.SelfHost.Testing
         }
 
         [Test]
+        public void gets_the_cookie_with_multiple_cookie_states()
+        {
+            theMessage.Headers.Add("Cookie", "TestCookie=Hello;AnotherCookie=Goodbye");
+            ClassUnderTest.Get("TestCookie").ShouldNotBeNull();
+            ClassUnderTest.Get("AnotherCookie").ShouldNotBeNull();
+        }
+
+        [Test]
+        public void gets_the_cookie_with_multiple_cookie_states_with_name_value_pairs()
+        {
+            theMessage.Headers.Add("Cookie", "TestCookie=a1=b1&a2=b2;AnotherCookie=y1=z1&y2=z2");
+            ClassUnderTest.Get("TestCookie").ShouldNotBeNull().Values.AllKeys.ShouldHaveTheSameElementsAs("a1", "a2");
+            ClassUnderTest.Get("AnotherCookie").ShouldNotBeNull().Values.AllKeys.ShouldHaveTheSameElementsAs("y1", "y2");
+        }
+
+        [Test]
         public void get_just_returns_null_if_nothing_is_found()
         {
             ClassUnderTest.Get("TestCookie").ShouldBeNull();
@@ -57,82 +73,6 @@ namespace FubuMVC.SelfHost.Testing
         {
             theResponse.Headers.Add("Cookie", "TestCookie=Hello");
             ClassUnderTest.Response.Single().Name.ShouldEqual("TestCookie");
-        }
-    }
-
-    [TestFixture]
-    public class determining_the_name_of_a_CookieHeaderValue
-    {
-        [Test]
-        public void name_for_a_single_cookie_state()
-        {
-            var value = new CookieHeaderValue("Test", "Value");
-            SelfHostCookies.DetermineName(value).ShouldEqual("Test");
-        }
-
-        [Test]
-        public void throws_when_no_cookie_state_is_found()
-        {
-            var value = new CookieHeaderValue("Test", "Value");
-            value.Cookies.Clear();
-
-            Exception<ArgumentException>
-                .ShouldBeThrownBy(() =>SelfHostCookies.DetermineName(value));
-        }
-
-        [Test]
-        public void name_for_multiple_cookie_states()
-        {
-            var theValues = new NameValueCollection();
-            theValues.Add("x", "aaa");
-            theValues.Add("y", "bbb");
-
-            var value = new CookieHeaderValue("Test", theValues);
-            
-            SelfHostCookies.DetermineName(value).ShouldEqual("Test");
-        }
-    }
-
-    [TestFixture]
-    public class determining_the_value_of_a_CookieHeaderValue
-    {
-        [Test]
-        public void value_for_a_single_cookie_state()
-        {
-            var value = new CookieHeaderValue("Test", "Value");
-            var cookie = new HttpCookie("Test");
-
-            SelfHostCookies.FillValues(value, cookie);
-
-            cookie.Value.ShouldEqual("Value");
-        }
-
-        [Test]
-        public void throws_when_no_cookie_state_is_found()
-        {
-            var value = new CookieHeaderValue("Test", "Value");
-            value.Cookies.Clear();
-
-            var cookie = new HttpCookie("Test");
-
-            Exception<ArgumentException>
-                .ShouldBeThrownBy(() => SelfHostCookies.FillValues(value, cookie));
-        }
-
-        [Test]
-        public void values_for_multiple_cookie_states()
-        {
-            var theValues = new NameValueCollection();
-            theValues.Add("x", "aaa");
-            theValues.Add("y", "bbb");
-
-            var value = new CookieHeaderValue("Test", theValues);
-            var cookie = new HttpCookie("Test");
-
-            SelfHostCookies.FillValues(value, cookie);
-
-            cookie.Values["x"].ShouldEqual("aaa");
-            cookie.Values["y"].ShouldEqual("bbb");
         }
     }
 }

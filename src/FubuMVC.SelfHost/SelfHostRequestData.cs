@@ -9,12 +9,13 @@ using FubuCore.Binding.Values;
 using FubuCore.Util;
 using FubuMVC.Core.Http;
 using System.Linq;
+using FubuMVC.Core.Http.AspNet;
 
 namespace FubuMVC.SelfHost
 {
     public class SelfHostRequestData : RequestData
     {
-        public SelfHostRequestData(RouteData routeData, HttpRequestMessage request)
+        public SelfHostRequestData(RouteData routeData, HttpRequestMessage request, ICookies cookies)
         {
             AddValues(new RouteDataValues(routeData));
 
@@ -30,6 +31,12 @@ namespace FubuMVC.SelfHost
             var headers = AggregateKeyValues.For(new HeaderKeyValues(request.Headers),
                                                  new HeaderKeyValues(request.Content.Headers));
             AddValues(RequestDataSource.Header.ToString(), headers);
+
+            Func<string, IEnumerable<string>, bool> ignoreCaseKeyFinder = (key, keys) => keys.Contains(key, StringComparer.InvariantCultureIgnoreCase);
+            var values = new SimpleKeyValues(key => cookies.Get(key).Value, () => cookies.Request.Select(x => x.Name), ignoreCaseKeyFinder);
+            var valueSource = new FlatValueSource<object>(values, RequestDataSource.Cookie.ToString());
+
+            AddValues(valueSource);
         }
     }
 
