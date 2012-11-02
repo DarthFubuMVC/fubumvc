@@ -11,8 +11,8 @@ namespace FubuMVC.Core
 {
     public class ConfigGraph
     {
-        private readonly Cache<string, IList<ActionLog>> _configurations
-            = new Cache<string, IList<ActionLog>>(x => new List<ActionLog>());
+        private readonly Cache<string, ConfigurationActionSet> _configurations
+            = new Cache<string, ConfigurationActionSet>(x => new ConfigurationActionSet(x));
 
         private readonly IList<RegistryImport> _imports = new List<RegistryImport>();
         private readonly Stack<Provenance> _provenanceStack = new Stack<Provenance>();
@@ -20,7 +20,7 @@ namespace FubuMVC.Core
 
         public IEnumerable<Provenance> ProvenanceStack
         {
-            get { return _provenanceStack; }
+            get { return _provenanceStack.Reverse(); }
         }
 
         public void RunActions(string configurationType)
@@ -30,19 +30,33 @@ namespace FubuMVC.Core
 
         public void Push(FubuRegistry registry)
         {
-            throw new NotImplementedException();
+            _provenanceStack.Push(new FubuRegistryProvenance(registry));
         }
 
-        // This'll do all the work of getting the registrations out of the bottle
-        public void Add(IPackageInfo bottle)
+        public void Push(IPackageInfo bottle)
         {
-            throw new NotImplementedException();
+            _provenanceStack.Push(new BottleProvenance(bottle));
+        }
+
+        public void Push(IFubuRegistryExtension extension)
+        {
+            _provenanceStack.Push(new FubuRegistryExtensionProvenance(extension));
         }
 
         public void Pop()
         {
-            throw new NotImplementedException();
+            _provenanceStack.Pop();
         }
+
+        public IEnumerable<ActionLog> LogsFor(string configurationType)
+        {
+            return _configurations[configurationType].Logs;
+        } 
+
+        public IEnumerable<IConfigurationAction> ActionsFor(string configurationType)
+        {
+            return _configurations[configurationType].Actions;
+        } 
 
         // TODO -- this has to be idempotent!!!!
         public void Add(ConfigurationPack pack)
@@ -108,24 +122,9 @@ namespace FubuMVC.Core
                     action.GetType());
             }
 
-            throw new NotImplementedException();
-            //_configurations[type].FillAction(action); 
+            _configurations[type].Fill(ProvenanceStack, action); 
         }
 
-//        internal static void FillAction<T>(this IList<T> actions, T action)
-//        {
-//            throw new NotImplementedException();
-//
-//            var actionType = action.GetType();
-//
-//
-//            if (TypeIsUnique(actionType) && actions.Any(x => x.GetType() == actionType))
-//            {
-//                return;
-//            }
-//
-//            actions.Fill(action);
-//        }
 
 
         public void Add(IServiceRegistry services)

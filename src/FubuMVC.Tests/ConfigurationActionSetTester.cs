@@ -1,4 +1,6 @@
-﻿using FubuMVC.Core;
+﻿using System;
+using Bottles;
+using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Diagnostics;
 using NUnit.Framework;
@@ -17,9 +19,18 @@ namespace FubuMVC.Tests
         {
             provenanceStack = new Provenance[]
             {
-                new BottleProvenance("B1"),
+                new BottleProvenance(new PackageInfo(new PackageManifest{Name = "B1"})),
                 new ConfigurationPackProvenance(new DefaultConfigurationPack()),
             };
+        }
+
+        [Test]
+        public void try_to_add_without_provenance_throws_exception()
+        {
+            Exception<ArgumentException>.ShouldBeThrownBy(() => {
+                var actions = new ConfigurationActionSet("something");
+                actions.Fill(new Provenance[0], new UniquePolicy());
+            });
         }
 
         [Test]

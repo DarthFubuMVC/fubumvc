@@ -157,6 +157,9 @@ namespace FubuMVC.Core
 
         public FubuRegistry()
         {
+            _config.Push(this);
+
+
             // TODO -- yank this out!!!
             Import<NavigationRegistryExtension>();
         }
@@ -330,7 +333,7 @@ namespace FubuMVC.Core
 
         public void Services<T>() where T : IServiceRegistry, new()
         {
-            _config.Add((IConfigurationAction) new T(), ConfigurationType.Services);
+            _config.Add(new T());
         }
 
         /// <summary>

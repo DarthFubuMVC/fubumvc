@@ -15,7 +15,7 @@ namespace FubuMVC.Core.Registration.Diagnostics
         public ActionLog(IConfigurationAction action, IEnumerable<Provenance> provenanceChain)
         {
             _action = action;
-            _provenanceChain = provenanceChain.ToArray();
+            _provenanceChain = provenanceChain.ToArray(); // You *must* do this somewhere, and I like having it here
             Id = Guid.NewGuid();
             _description = new Lazy<Description>(() => Description.For(action));
         }

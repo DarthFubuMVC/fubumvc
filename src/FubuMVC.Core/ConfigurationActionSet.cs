@@ -34,6 +34,11 @@ namespace FubuMVC.Core
 
         public void Fill(IEnumerable<Provenance> provenanceStack, IConfigurationAction action)
         {
+            if (!provenanceStack.Any())
+            {
+                throw new ArgumentException("No provenance supplied!");
+            }
+
             Type actionType = action.GetType();
 
 
