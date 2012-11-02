@@ -1,20 +1,32 @@
 using System;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Diagnostics;
 
 namespace FubuMVC.Core
 {
     public class BehaviorGraphBuilder
     {
-        public BehaviorGraph BuildForImport(FubuRegistry registry)
+        // Need to track the ConfigLog
+        public BehaviorGraph Import(FubuRegistry registry, BehaviorGraph parent)
         {
-            var types = registry.BuildTypePool();
-        
-            throw new NotImplementedException();
+            var graph = BehaviorGraph.ForChild(parent);
+            startBehaviorGraph(registry, graph);
+            var config = registry.Config;
+
+            config.RunActions(ConfigurationType.Settings, graph);
+            config.RunActions(ConfigurationType.Discovery, graph);
+            config.RunActions(ConfigurationType.Explicit, graph);
+            config.RunActions(ConfigurationType.Policy, graph);
+            config.RunActions(ConfigurationType.Reordering, graph);
+
+
+            return graph;
         }
 
         public BehaviorGraph Build(FubuRegistry registry)
         {
-            var types = registry.BuildTypePool();
+            var graph = new BehaviorGraph();
+            startBehaviorGraph(registry, graph);
 
             // Need to register the ConfigGraph!!!!
 
@@ -24,48 +36,16 @@ namespace FubuMVC.Core
             throw new NotImplementedException();
         }
 
-        /*
-         * 
-         * graph.Services.AddService(this); <----- ConfigLog
-         * 
-         * 
-        public BehaviorGraph BuildForImport(BehaviorGraph parent)
+        private BehaviorGraph startBehaviorGraph(FubuRegistry registry, BehaviorGraph graph)
         {
-            IEnumerable<IConfigurationAction> lightweightActions = _configurations[ConfigurationType.Settings]
-                .Union(_configurations[ConfigurationType.Discovery])
-                //.Union(_imports)
-                .Union(_configurations[ConfigurationType.Explicit])
-                .Union(_configurations[ConfigurationType.Policy])
-                .Union(_configurations[ConfigurationType.Reordering]);
+            var types = registry.BuildTypePool();
+            var graph = parent == null ? new BehaviorGraph { Types = types } : new BehaviorGraph(parent){Types = types};
 
-            BehaviorGraph graph = BehaviorGraph.ForChild(parent);
-
-            lightweightActions.Each(x => graph.Log.RunAction(_registry, x));
+            registry.Config.Add(new DiscoveryActionsConfigurationPack());
 
             return graph;
         }
-         * 
-         * 
-         * 
-         * 
-        public IEnumerable<IConfigurationAction> AllConfigurationActions()
-        {
-            return _configurations[ConfigurationType.Settings]
-                .Union(_configurations[ConfigurationType.Discovery])
-                //.Union(UniqueImports())
-                .Union(_configurations[ConfigurationType.Explicit])
-                .Union(_configurations[ConfigurationType.Policy])
-                .Union(_configurations[ConfigurationType.Navigation])
-                .Union(_configurations[ConfigurationType.ByNavigation])
-                .Union(_configurations[ConfigurationType.Attributes])
-                .Union(_configurations[ConfigurationType.ModifyRoutes])
-                .Union(_configurations[ConfigurationType.InjectNodes])
-                .Union(_configurations[ConfigurationType.Conneg])
-                .Union(_configurations[ConfigurationType.Attachment])
 
-                .Union(_configurations[ConfigurationType.Reordering])
-                .Union(_configurations[ConfigurationType.Instrumentation]);
-        }
-         */
+
     }
 }

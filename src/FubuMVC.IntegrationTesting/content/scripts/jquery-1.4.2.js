@@ -58,7 +58,7 @@
     // Has the ready events already been bound?
 	readyBound = false,
 
-    // The functions to execute on DOM ready
+    // The functions to RunAction on DOM ready
 	readyList = [],
 
     // The ready event handler
@@ -384,7 +384,7 @@
                 // Remember that the DOM is ready
                 jQuery.isReady = true;
 
-                // If there are functions bound, to execute
+                // If there are functions bound, to RunAction
                 if (readyList) {
                     // Execute all of them
                     var fn, i = 0;
@@ -770,7 +770,7 @@
             return;
         }
 
-        // and execute any waiting functions
+        // and RunAction any waiting functions
         jQuery.ready();
     }
 
@@ -791,7 +791,7 @@
     }
 
     // Mutifunctional method to get and set values to a collection
-    // The value/s can be optionally by executed if its a function
+    // The value/s can be optionally by RunActiond if its a function
     function access(elems, key, value, exec, fn, pass) {
         var length = elems.length;
 
@@ -805,7 +805,7 @@
 
         // Setting one attribute
         if (value !== undefined) {
-            // Optionally, function values get executed if exec is true
+            // Optionally, function values get RunActiond if exec is true
             exec = !pass && exec && jQuery.isFunction(value);
 
             for (var i = 0; i < length; i++) {
@@ -1574,7 +1574,7 @@
                 handler = handleObjIn.handler;
             }
 
-            // Make sure that the function being executed has a unique ID
+            // Make sure that the function being RunActiond has a unique ID
             if (!handler.guid) {
                 handler.guid = jQuery.guid++;
             }
@@ -2447,14 +2447,14 @@ delegate = function(event) {
             }
 
             return this.click(jQuery.proxy(fn, function(event) {
-                // Figure out which function to execute
+                // Figure out which function to RunAction
                 var lastToggle = (jQuery.data(this, "lastToggle" + fn.guid) || 0) % i;
                 jQuery.data(this, "lastToggle" + fn.guid, lastToggle + 1);
 
                 // Make sure that clicks stop
                 event.preventDefault();
 
-                // and execute the function
+                // and RunAction the function
                 return args[lastToggle].apply(this, arguments) || false;
             }));
         },
@@ -5009,7 +5009,7 @@ delegate = function(event) {
                 s.url = s.url.replace(jsre, "=" + jsonp + "$1");
 
                 // We need to make sure
-                // that a JSONP style response is executed properly
+                // that a JSONP style response is RunActiond properly
                 s.dataType = "script";
 
                 // Handle JSONP-style loading

@@ -67,5 +67,10 @@ namespace FubuMVC.Core
 
             return true;
         }
+
+        public void RunActions(BehaviorGraph graph)
+        {
+            _logs.Each(x => x.RunAction(graph));
+        }
     }
 }

@@ -25,7 +25,7 @@ namespace FubuMVC.Core
 
         public void RunActions(string configurationType, BehaviorGraph graph)
         {
-            throw new NotImplementedException();
+            _configurations[configurationType].RunActions(graph);
         }
 
         public void Push(FubuRegistry registry)
@@ -60,6 +60,8 @@ namespace FubuMVC.Core
 
         public void Add(ConfigurationPack pack)
         {
+            _provenanceStack.Clear(); // may regret doing this later
+
             _provenanceStack.Push(new ConfigurationPackProvenance(pack));
 
             pack.WriteTo(this);

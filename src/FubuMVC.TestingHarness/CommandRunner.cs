@@ -27,7 +27,7 @@ namespace FubuMVC.TestingHarness
         public void RunBottles(string commandLine)
         {
             var fileName = Path.Combine(_solutionDirectory, @"bottles.cmd");
-            Debug.WriteLine("Execute: {0} {1}".ToFormat(fileName, commandLine));
+            Debug.WriteLine("RunAction: {0} {1}".ToFormat(fileName, commandLine));
             var startup = new ProcessStartInfo(fileName, commandLine){
                 CreateNoWindow = true,
                 RedirectStandardError = true,

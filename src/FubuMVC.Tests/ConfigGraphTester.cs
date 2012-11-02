@@ -58,7 +58,8 @@ namespace FubuMVC.Tests
 
             graph.ProvenanceStack.Any().ShouldBeFalse();
         }
-        
+
+
 
 
         [Test]

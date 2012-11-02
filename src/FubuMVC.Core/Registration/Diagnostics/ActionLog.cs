@@ -35,7 +35,7 @@ namespace FubuMVC.Core.Registration.Diagnostics
             _provenanceChain = forebears.Union(_provenanceChain).ToArray();
         }
 
-        public void Execute(BehaviorGraph graph)
+        public void RunAction(BehaviorGraph graph)
         {
             _action.Configure(graph);
 

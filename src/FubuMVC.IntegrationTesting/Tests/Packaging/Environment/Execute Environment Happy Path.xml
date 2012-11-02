@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<Test name="Execute Environment Happy Path" lifecycle="Regression">
+<Test name="RunAction Environment Happy Path" lifecycle="Regression">
   <EnvironmentRunner>
     <ForEnvironment isStep="True" name="EnvironmentWithAllGoodInstallers" />
     <InstallLogs isStep="True">

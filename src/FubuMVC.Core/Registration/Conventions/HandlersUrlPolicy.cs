@@ -17,7 +17,7 @@ namespace FubuMVC.Core.Registration.Conventions
     public class HandlersUrlPolicy : IUrlPolicy
     {
         public const string HANDLER = "Handler";
-        public const string METHOD = "Execute";
+        public const string METHOD = "RunAction";
         public static readonly Regex HandlerExpression = new Regex("_[hH]andler", RegexOptions.Compiled);
 
         private readonly IEnumerable<Type> _markerTypes;
