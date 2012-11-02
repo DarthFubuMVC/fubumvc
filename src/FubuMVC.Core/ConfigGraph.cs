@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Bottles;
+using FubuCore.Reflection;
 using FubuCore.Util;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Diagnostics;
@@ -36,11 +37,6 @@ namespace FubuMVC.Core
         public void Add(IPackageInfo bottle)
         {
             throw new NotImplementedException();
-        }
-
-        public IEnumerable<RegistryImport> AllImports()
-        {
-            return _configurations[ConfigurationType.Import].OfType<RegistryImport>();
         }
 
         public void Pop()
@@ -139,7 +135,7 @@ namespace FubuMVC.Core
 
         public IEnumerable<IServiceRegistry> AllServiceRegistrations()
         {
-            foreach (RegistryImport import in _imports)
+            foreach (RegistryImport import in UniqueImports())
             {
                 foreach (IServiceRegistry registry in import.Registry.Config.AllServiceRegistrations())
                 {
@@ -161,53 +157,6 @@ namespace FubuMVC.Core
             }
 
             return null;
-        }
-    }
-
-    public class ConfigurationActionSet
-    {
-        private readonly IList<ActionLog> _actions = new List<ActionLog>();
-        private readonly string _configurationType;
-
-        public ConfigurationActionSet(string configurationType)
-        {
-            _configurationType = configurationType;
-        }
-
-        public string ConfigurationType
-        {
-            get { return _configurationType; }
-        }
-
-        public void Fill(IEnumerable<Provenance> provenanceStack, IConfigurationAction action)
-        {
-            Type actionType = action.GetType();
-
-
-            if (TypeIsUnique(actionType) && _actions.Any(x => x.Action.GetType() == actionType))
-            {
-                return;
-            }
-
-            _actions.Fill(new ActionLog(action, provenanceStack));
-        }
-
-        public static bool TypeIsUnique(Type type)
-        {
-            if (type.HasAttribute<CanBeMultiplesAttribute>()) return false;
-
-            // If it does not have any non-default constructors
-            if (type.GetConstructors().Any(x => x.GetParameters().Any()))
-            {
-                return false;
-            }
-
-            if (type.GetProperties().Any(x => x.CanWrite))
-            {
-                return false;
-            }
-
-            return true;
         }
     }
 }

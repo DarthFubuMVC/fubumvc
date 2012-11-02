@@ -90,6 +90,7 @@
     <Compile Include="CanBeMultiplesAttribute.cs" />
     <Compile Include="Behaviors\WrappingBehavior.cs" />
     <Compile Include="ConfigGraph.cs" />
+    <Compile Include="ConfigurationActionSet.cs" />
     <Compile Include="ConfigurationPack.cs" />
     <Compile Include="ConfigurationType.cs" />
     <Compile Include="ConfigurationTypeAttribute.cs" />
