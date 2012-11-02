@@ -153,12 +153,12 @@ namespace FubuMVC.Core.Registration
 
         public static BehaviorGraph BuildFrom(FubuRegistry registry)
         {
-            return registry.BuildGraph();
+            return BehaviorGraphBuilder.Build(registry);
         }
 
         public static BehaviorGraph BuildFrom<T>() where T : FubuRegistry, new()
         {
-            return new T().BuildGraph();
+            return BehaviorGraphBuilder.Build(new T());
         }
 
         public static BehaviorGraph BuildFrom(Action<FubuRegistry> configure)
@@ -166,7 +166,7 @@ namespace FubuMVC.Core.Registration
             var registry = new FubuRegistry();
             configure(registry);
 
-            return registry.BuildGraph();
+            return BehaviorGraphBuilder.Build(registry);
         }
 
         public static BehaviorGraph ForChild(BehaviorGraph parent)

@@ -30,12 +30,12 @@ namespace FubuMVC.Core
             alter = graph => graph.Add(new T(), type);
         }
 
-        public void Services<T>() where T : IServiceRegistry, new()
+        public void Services<T>() where T : ServiceRegistry, new()
         {
             Services(new T());
         }
 
-        public void Services(IServiceRegistry registry)
+        public void Services(ServiceRegistry registry)
         {
             alter = graph => graph.Add(registry);
         }

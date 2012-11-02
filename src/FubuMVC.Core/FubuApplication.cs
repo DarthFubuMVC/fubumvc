@@ -183,7 +183,7 @@ namespace FubuMVC.Core
 
         private BehaviorGraph buildBehaviorGraph()
         {
-            var graph = _registry.Value.BuildGraph();
+            var graph = BehaviorGraphBuilder.Build(_registry.Value);
 
             return graph;
         }

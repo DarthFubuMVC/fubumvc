@@ -1,9 +1,11 @@
 ﻿using Bottles;
 using Bottles.Configuration;
+using FubuCore;
 using FubuMVC.Core.Registration.ObjectGraph;
 
 namespace FubuMVC.Core.Registration
 {
+    [MarkedForTermination("Don't like this implementation")]
     public class BottleConfigurationDef : IServiceGraphAlteration
     {
         private readonly ObjectDef _objectDef;

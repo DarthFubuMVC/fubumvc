@@ -16,7 +16,7 @@ namespace FubuMVC.Core
 
         private readonly IList<RegistryImport> _imports = new List<RegistryImport>();
         private readonly Stack<Provenance> _provenanceStack = new Stack<Provenance>();
-        private readonly IList<IServiceRegistry> _services = new List<IServiceRegistry>();
+        private readonly IList<ServiceRegistry> _services = new List<ServiceRegistry>();
 
         public IEnumerable<Provenance> ProvenanceStack
         {
@@ -132,22 +132,22 @@ namespace FubuMVC.Core
 
 
 
-        public void Add(IServiceRegistry services)
+        public void Add(ServiceRegistry services)
         {
             _services.Add(services);
         }
 
-        public IEnumerable<IServiceRegistry> AllServiceRegistrations()
+        public IEnumerable<IServiceGraphAlteration> AllServiceRegistrations()
         {
             foreach (RegistryImport import in UniqueImports())
             {
-                foreach (IServiceRegistry registry in import.Registry.Config.AllServiceRegistrations())
+                foreach (IServiceGraphAlteration registry in import.Registry.Config.AllServiceRegistrations())
                 {
                     yield return registry;
                 }
             }
 
-            foreach (IServiceRegistry registry in _services)
+            foreach (IServiceGraphAlteration registry in _services)
             {
                 yield return registry;
             }
