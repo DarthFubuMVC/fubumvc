@@ -9,16 +9,15 @@ namespace FubuMVC.Core
         public string Prefix { get; set; }
         public FubuRegistry Registry { get; set; }
 
-        public void ImportInto(BehaviorGraph graph)
+        public void ImportInto(BehaviorGraph parent)
         {
-            throw new NotImplementedException();
-            // TODO -- will want this to suck in the configuration log business somehow
-//            Registry.Compile();
-//            BehaviorGraph childGraph = Registry.Configuration.BuildForImport(graph);
-//            graph.As<IChainImporter>().Import(childGraph, b => {
-//                b.PrependToUrl(Prefix);
-//                b.Origin = Registry.Name;
-//            });
+            var childGraph = BehaviorGraphBuilder.Import(Registry, parent);
+            parent.As<IChainImporter>().Import(childGraph, b => {
+                b.PrependToUrl(Prefix);
+                b.Origin = Registry.Name;
+            });
+
+            // TODO -- import the logs here!
         }
 
         public bool Equals(RegistryImport other)

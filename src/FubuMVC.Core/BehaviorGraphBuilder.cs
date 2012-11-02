@@ -1,13 +1,14 @@
 using System;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Diagnostics;
+using System.Collections.Generic;
 
 namespace FubuMVC.Core
 {
-    public class BehaviorGraphBuilder
+    public static class BehaviorGraphBuilder
     {
         // Need to track the ConfigLog
-        public BehaviorGraph Import(FubuRegistry registry, BehaviorGraph parent)
+        public static BehaviorGraph Import(FubuRegistry registry, BehaviorGraph parent)
         {
             var graph = BehaviorGraph.ForChild(parent);
             startBehaviorGraph(registry, graph);
@@ -15,6 +16,9 @@ namespace FubuMVC.Core
 
             config.RunActions(ConfigurationType.Settings, graph);
             config.RunActions(ConfigurationType.Discovery, graph);
+
+            config.UniqueImports().Each(import => import.ImportInto(graph));
+
             config.RunActions(ConfigurationType.Explicit, graph);
             config.RunActions(ConfigurationType.Policy, graph);
             config.RunActions(ConfigurationType.Reordering, graph);
@@ -23,27 +27,48 @@ namespace FubuMVC.Core
             return graph;
         }
 
-        public BehaviorGraph Build(FubuRegistry registry)
+        public static BehaviorGraph Build(FubuRegistry registry)
         {
             var graph = new BehaviorGraph();
             startBehaviorGraph(registry, graph);
+            var config = registry.Config;
 
-            // Need to register the ConfigGraph!!!!
+            config.AllServiceRegistrations().Each(x => {
+                
+            });
 
-            // use SystemServicesPack
-            // use DefaultConfigurationPack
 
-            throw new NotImplementedException();
-        }
+            config.Add(new SystemServicesPack());
+            config.Add(new DefaultConfigurationPack());
 
-        private BehaviorGraph startBehaviorGraph(FubuRegistry registry, BehaviorGraph graph)
-        {
-            var types = registry.BuildTypePool();
-            var graph = parent == null ? new BehaviorGraph { Types = types } : new BehaviorGraph(parent){Types = types};
+            config.RunActions(ConfigurationType.Settings, graph);
+            config.RunActions(ConfigurationType.Discovery, graph);
 
-            registry.Config.Add(new DiscoveryActionsConfigurationPack());
+            config.UniqueImports().Each(import => import.ImportInto(graph));
+
+            config.RunActions(ConfigurationType.Explicit, graph);
+            config.RunActions(ConfigurationType.Policy, graph);
+            config.RunActions(ConfigurationType.Navigation, graph);
+            config.RunActions(ConfigurationType.ByNavigation, graph);
+            config.RunActions(ConfigurationType.Attributes, graph);
+            config.RunActions(ConfigurationType.ModifyRoutes, graph);
+            config.RunActions(ConfigurationType.InjectNodes, graph);
+            config.RunActions(ConfigurationType.Conneg, graph);
+            config.RunActions(ConfigurationType.Attachment, graph);
+            config.RunActions(ConfigurationType.Reordering, graph);
+            config.RunActions(ConfigurationType.Instrumentation, graph);
+
+
+            graph.Services.AddService(config);
 
             return graph;
+        }
+
+        private static void startBehaviorGraph(FubuRegistry registry, BehaviorGraph graph)
+        {
+            var types = registry.BuildTypePool();
+            graph.Types = types;
+            registry.Config.Add(new DiscoveryActionsConfigurationPack());
         }
 
 
