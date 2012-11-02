@@ -40,9 +40,8 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FubuCore, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\FubuCore.0.9.1.39\lib\FubuCore.dll</HintPath>
+    <Reference Include="FubuCore">
+      <HintPath>..\packages\FubuCore.0.9.9.205\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Core">
       <HintPath>..\packages\FubuMVC.References.0.9.1.544\lib\FubuMVC.Core.dll</HintPath>

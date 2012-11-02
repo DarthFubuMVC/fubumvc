@@ -36,7 +36,7 @@ namespace FubuMVC.Tests.Packaging
 
             linkedFolderReader = new LinkedFolderPackageLoader(theApplicationDirectory, f => f);
 
-            reader = new BottleManifestReader(fileSystem, folder => folder);
+            reader = new PackageManifestReader(fileSystem, folder => folder);
         }
 
         [TearDown]
@@ -48,7 +48,7 @@ namespace FubuMVC.Tests.Packaging
         #endregion
 
         private string packageFolder;
-        private BottleManifestReader reader;
+        private PackageManifestReader reader;
         private readonly string theApplicationDirectory = "../../".ToFullPath();
         private LinkedFolderPackageLoader linkedFolderReader;
 
