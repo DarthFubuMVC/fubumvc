@@ -17,7 +17,7 @@ namespace FubuMVC.Core
             config.RunActions(ConfigurationType.Settings, graph);
             config.RunActions(ConfigurationType.Discovery, graph);
 
-            config.UniqueImports().Each(import => import.ImportInto(graph));
+            config.Imports.Each(import => import.ImportInto(graph));
 
             config.RunActions(ConfigurationType.Explicit, graph);
             config.RunActions(ConfigurationType.Policy, graph);

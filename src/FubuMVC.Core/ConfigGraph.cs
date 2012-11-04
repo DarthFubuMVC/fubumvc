@@ -23,6 +23,11 @@ namespace FubuMVC.Core
             get { return _provenanceStack.Reverse(); }
         }
 
+        public IEnumerable<RegistryImport> Imports
+        {
+            get { return _imports; }
+        }
+
         public void RunActions(string configurationType, BehaviorGraph graph)
         {
             _configurations[configurationType].RunActions(graph);

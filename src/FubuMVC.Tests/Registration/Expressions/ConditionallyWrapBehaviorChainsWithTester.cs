@@ -117,6 +117,7 @@ namespace FubuMVC.Tests.Registration.Expressions
             registry = new FubuRegistry(x =>
             {
                 x.Actions.IncludeTypes(t => false);
+                x.Actions.IncludeMethods(t => false);
 
                 // Tell FubuMVC to wrap the behavior chain for each
                 // RouteHandler with the "FakeUnitOfWorkBehavior"
@@ -159,17 +160,18 @@ namespace FubuMVC.Tests.Registration.Expressions
 
             FubuApplication.For(() => registry).StructureMap(container).Bootstrap();
 
-            container.Model.InstancesOf<IActionBehavior>().Count().ShouldEqual(3);
+
+            (container.Model.InstancesOf<IActionBehavior>().Count() >= 3).ShouldBeTrue(); // don't ever write any more tests like this one
 
             var behaviors = container.GetAllInstances<IActionBehavior>().ToArray();
 
             // The first behavior is an InputBehavior
-            behaviors[0].As<BasicBehavior>().InsideBehavior.ShouldBeOfType
+            behaviors[1].As<BasicBehavior>().InsideBehavior.ShouldBeOfType
                 <ConditionallyWrapBehaviorChainsWithTester.FakeUnitOfWorkBehavior>().Inner.
                 ShouldNotBeNull();
-            behaviors[1].As<BasicBehavior>().InsideBehavior.ShouldNotBeOfType
-                <ConditionallyWrapBehaviorChainsWithTester.FakeUnitOfWorkBehavior>();
             behaviors[2].As<BasicBehavior>().InsideBehavior.ShouldNotBeOfType
+                <ConditionallyWrapBehaviorChainsWithTester.FakeUnitOfWorkBehavior>();
+            behaviors[3].As<BasicBehavior>().InsideBehavior.ShouldNotBeOfType
                 <ConditionallyWrapBehaviorChainsWithTester.FakeUnitOfWorkBehavior>();
         }
     }
