@@ -7,6 +7,7 @@ namespace FubuMVC.Core.Http
         RequestProperty,
         File,
         Header,
+        Cookie,
         Other
     }
 }

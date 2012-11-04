@@ -64,57 +64,42 @@ namespace FubuMVC.SelfHost
         // Keep these public for testing
         public static IEnumerable<HttpCookie> CookiesFor(IEnumerable<CookieHeaderValue> cookies)
         {
-            return cookies.Select(CookieFor);
+            return cookies.SelectMany(CookiesFor);
         }
 
-        public static HttpCookie CookieFor(CookieHeaderValue value)
+        public static IEnumerable<HttpCookie> CookiesFor(CookieHeaderValue value)
         {
-            var name = DetermineName(value);
-            var cookie = new HttpCookie(name)
+            return value.Cookies.Select(x =>
             {
-                Path = value.Path, 
-                Domain = value.Domain, 
-                HttpOnly = value.HttpOnly, 
-                Secure = value.Secure
-            };
+                var cookie = new HttpCookie(x.Name)
+                {
+                    Path = value.Path,
+                    Domain = value.Domain,
+                    HttpOnly = value.HttpOnly,
+                    Secure = value.Secure
+                };
 
-            if (value.Expires.HasValue)
-            {
-                cookie.Expires = value.Expires.Value.UtcDateTime;
-            }
+                if (value.Expires.HasValue)
+                {
+                    cookie.Expires = value.Expires.Value.UtcDateTime;
+                }
 
-            FillValues(value, cookie);
+                if (x.Values.Count == 1)
+                {
+                    cookie.Value = x.Values.ToString();
+                    return cookie;
+                }
 
-            return cookie;
-        }
+                x.Values
+                    .AllKeys
+                    .Each(key =>
+                          {
+                              cookie.Values[key] = x.Values[key];
+                          });
 
-        public static string DetermineName(CookieHeaderValue value)
-        {
-            var state = value.Cookies.SingleOrDefault();
-            if(state == null) throw new ArgumentException("Must contain at least one CookieState", "value");
+                return cookie;
+            });
 
-            return state.Name;
-        }
-
-        public static void FillValues(CookieHeaderValue value, HttpCookie cookie)
-        {
-            if (!value.Cookies.Any()) throw new ArgumentException("Must contain at least one CookieState", "value");
-
-            var state = value.Cookies.Single();
-            var values = state.Values;
-
-            if(values.Count == 1)
-            {
-                cookie.Value = state.Values.ToString();
-                return;
-            }
-
-            values
-                .AllKeys
-                .Each(x =>
-                      {
-                          cookie.Values[x] = values[x];
-                      });
         }
     }
 }

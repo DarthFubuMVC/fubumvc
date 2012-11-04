@@ -31,9 +31,13 @@ namespace FubuMVC.Core.Http.AspNet
             var files = request.Files;
             addValues(RequestDataSource.File, key => files[key], () => files.AllKeys);
 
-            addValues(RequestDataSource.Header, key => request.Headers[key], () => request.Headers.AllKeys,(key,keys) => keys.Contains(key, StringComparer.InvariantCultureIgnoreCase));
+            Func<string, IEnumerable<string>, bool> ignoreCaseKeyFinder = (key, keys) => keys.Contains(key, StringComparer.InvariantCultureIgnoreCase);
 
-            AddValues(new RequestPropertyValueSource(context.HttpContext.Request));
+            addValues(RequestDataSource.Header, key => request.Headers[key], () => request.Headers.AllKeys, ignoreCaseKeyFinder);
+
+            AddValues(new RequestPropertyValueSource(request));
+
+            addValues(RequestDataSource.Cookie, key => request.Cookies[key].Value, () => request.Cookies.AllKeys, ignoreCaseKeyFinder);
         }
 
 
