@@ -126,7 +126,6 @@
     <Compile Include="Registration\AccessOverridesFinderIntegratedTester.cs" />
     <Compile Include="Registration\ActionFilterTester.cs" />
     <Compile Include="Registration\Conventions\AttachOutputPolicyTester.cs" />
-    <Compile Include="Registration\BottleConfigurationDefTester.cs" />
     <Compile Include="Registration\Conventions\CacheAttributePolicyTester.cs" />
     <Compile Include="Registration\Conventions\CachedPartialConventionTester.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteConventionBasedUrlPolicyTester.cs" />
@@ -214,7 +213,6 @@
     <Compile Include="Registration\Conventions\actions_that_return_IDictionary_are_json.cs" />
     <Compile Include="Registration\Conventions\AsyncContinueWithHandlerConventionTester.cs" />
     <Compile Include="Registration\Conventions\DefaultConnegOutputIsAppliedToAnyEndpointWithoutAnyPriorOutputTester.cs" />
-    <Compile Include="Registration\Conventions\Handlers\Posts\PostHandler.cs" />
     <Compile Include="Registration\Conventions\JsonAttributeTesting.cs" />
     <Compile Include="Registration\Conventions\MediaExpressionAndConnegAttachmentPolicyTester.cs" />
     <Compile Include="Registration\Conventions\PartialOnlyConventionTester.cs" />
@@ -237,16 +235,6 @@
     <Compile Include="Registration\BehaviorNodeTester.cs" />
     <Compile Include="Registration\Conventions\AllowRoleAttributeTester.cs" />
     <Compile Include="Registration\Conventions\AuthorizedByAttributeConventionTester.cs" />
-    <Compile Include="Registration\Conventions\HandlersConventionTester.cs" />
-    <Compile Include="Registration\Conventions\HandlersUrlPolicyTester.cs" />
-    <Compile Include="Registration\Conventions\Handlers\HandlersMarker.cs" />
-    <Compile Include="Registration\Conventions\Handlers\JsonResponse.cs" />
-    <Compile Include="Registration\Conventions\Handlers\HandlersObjectMother.cs" />
-    <Compile Include="Registration\Conventions\Handlers\Posts\ComplexRoute\GetHandler.cs" />
-    <Compile Include="Registration\Conventions\Handlers\Posts\Create\get_handler.cs" />
-    <Compile Include="Registration\Conventions\Handlers\Posts\get_Year_Month_Title_handler.cs" />
-    <Compile Include="Registration\Conventions\Handlers\Posts\UrlPatternHandler.cs" />
-    <Compile Include="Registration\Conventions\Handlers\SampleController.cs" />
     <Compile Include="Registration\Conventions\MethodToUrlBuilderTester.cs" />
     <Compile Include="Registration\Conventions\PartialRegistrationConventionTester.cs" />
     <Compile Include="Registration\Conventions\RenderStatusCodeConventionTester.cs" />

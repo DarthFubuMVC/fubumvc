@@ -107,7 +107,7 @@ namespace FubuMVC.Tests.Registration
             var services = new ServiceRegistry();
 
             services.ReplaceService(resolver);
-            services.As<IConfigurationAction>().Configure(graph);
+            services.As<IServiceRegistration>().Apply(graph.Services);
 
             graph.Services.DefaultServiceFor<IObjectResolver>().Value.ShouldBeTheSameAs(resolver);
         }
@@ -122,7 +122,7 @@ namespace FubuMVC.Tests.Registration
 
 
             services.ReplaceService<IOutputWriter, FakeOutputWriter>();
-            services.As<IConfigurationAction>().Configure(graph);
+            services.As<IServiceRegistration>().Apply(graph.Services);
 
 
             graph.Services.DefaultServiceFor<IOutputWriter>().Type.ShouldEqual(typeof (FakeOutputWriter));
@@ -227,7 +227,7 @@ namespace FubuMVC.Tests.Registration
         public static ServiceGraph ToGraph(this IServiceRegistry registry)
         {
             var behaviorGraph = new BehaviorGraph();
-            registry.As<IConfigurationAction>().Configure(behaviorGraph);
+            registry.As<IServiceRegistration>().Apply(behaviorGraph.Services);
 
             return behaviorGraph.Services;
         }

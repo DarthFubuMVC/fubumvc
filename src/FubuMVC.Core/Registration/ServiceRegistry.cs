@@ -107,14 +107,6 @@ namespace FubuMVC.Core.Registration
             alter = x => x.FillType(interfaceType, concreteType);
         }
 
-        public void ConfigureRequirements(Action<BottleConfigurationDef> action)
-        {
-            var def = new BottleConfigurationDef(GetType().Namespace);
-            action(def);
-
-            alter = x => def.As<IServiceGraphAlteration>().Alter(x);
-        }
-
         private void fill(Type serviceType, ObjectDef def)
         {
             alter = x => x.SetServiceIfNone(serviceType, def);

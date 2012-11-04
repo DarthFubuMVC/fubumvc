@@ -116,9 +116,6 @@ namespace FubuMVC.Core.Registration
 
         void IChainImporter.Import(BehaviorGraph graph, Action<BehaviorChain> alternation)
         {
-            throw new NotImplementedException();
-            //_log.Import(graph.Log);
-
             graph.Behaviors.Each(b => {
                 AddChain(b);
                 b.Trace(new ChainImported());

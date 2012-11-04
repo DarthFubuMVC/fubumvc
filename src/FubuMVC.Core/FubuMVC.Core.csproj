@@ -114,7 +114,6 @@
     <Compile Include="PolicyAttribute.cs" />
     <Compile Include="ReflectionExtensions.cs" />
     <Compile Include="Registration\ApplicationLevelAttribute.cs" />
-    <Compile Include="Registration\BottleConfigurationDef.cs" />
     <Compile Include="Registration\Conventions\CacheAttributePolicy.cs" />
     <Compile Include="Registration\Conventions\CachedPartialConvention.cs" />
     <Compile Include="Http\Compression\ContentCompression.cs" />
@@ -130,7 +129,6 @@
     <Compile Include="Registration\Conventions\VaryByPolicy.cs" />
     <Compile Include="Registration\Diagnostics\ConfigLog.cs" />
     <Compile Include="Registration\Diagnostics\Provenance.cs" />
-    <Compile Include="Registration\IServiceGraphAlteration.cs" />
     <Compile Include="Registration\Nodes\ActionFilter.cs" />
     <Compile Include="Registration\OverridesFor.cs" />
     <Compile Include="Registration\RegisterActionSource.cs" />
@@ -176,7 +174,6 @@
     <Compile Include="Runtime\SetValueReport.cs" />
     <Compile Include="SystemServicesPack.cs" />
     <Compile Include="UI\Navigation\CompileNavigationStep.cs" />
-    <Compile Include="Registration\Conventions\HandlerConvention.cs" />
     <Compile Include="Http\AspNet\AspNetClientConnectivity.cs" />
     <Compile Include="Http\AspNet\AspNetCookies.cs" />
     <Compile Include="Http\IClientConnectivity.cs" />
@@ -336,7 +333,6 @@
     <Compile Include="Continuations\FubuContinuation.cs" />
     <Compile Include="Continuations\ContinuationType.cs" />
     <Compile Include="Continuations\IContinuationDirector.cs" />
-    <Compile Include="FubuRegistry.OutOfBoxConventions.cs" />
     <Compile Include="EndpointService.cs" />
     <Compile Include="FubuApplication.cs" />
     <Compile Include="FubuEnvironment.cs" />
@@ -353,7 +349,6 @@
     <Compile Include="Registration\AssemblyScanner.cs" />
     <Compile Include="Registration\AssemblyScanningExtensions.cs" />
     <Compile Include="Registration\ConnectImplementationsServiceRegistrationConvention.cs" />
-    <Compile Include="Registration\Conventions\HandlersUrlPolicy.cs" />
     <Compile Include="Registration\Conventions\MethodToUrlBuilder.cs" />
     <Compile Include="Registration\Conventions\MissingRouteInputPolicy.cs" />
     <Compile Include="Registration\DSL\MediaExpression.cs" />

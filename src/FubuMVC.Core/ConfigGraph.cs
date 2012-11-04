@@ -137,17 +137,17 @@ namespace FubuMVC.Core
             _services.Add(services);
         }
 
-        public IEnumerable<IServiceGraphAlteration> AllServiceRegistrations()
+        public IEnumerable<IServiceRegistration> AllServiceRegistrations()
         {
             foreach (RegistryImport import in UniqueImports())
             {
-                foreach (IServiceGraphAlteration registry in import.Registry.Config.AllServiceRegistrations())
+                foreach (IServiceRegistration registry in import.Registry.Config.AllServiceRegistrations())
                 {
                     yield return registry;
                 }
             }
 
-            foreach (IServiceGraphAlteration registry in _services)
+            foreach (IServiceRegistration registry in _services)
             {
                 yield return registry;
             }

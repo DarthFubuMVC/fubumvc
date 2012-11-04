@@ -33,13 +33,13 @@ namespace FubuMVC.Core
             startBehaviorGraph(registry, graph);
             var config = registry.Config;
 
-            config.AllServiceRegistrations().Each(x => {
-                
-            });
-
-
             config.Add(new SystemServicesPack());
             config.Add(new DefaultConfigurationPack());
+
+            // TODO -- log the provenance of all
+            config.AllServiceRegistrations().Each(x => {
+                x.Apply(graph.Services);
+            });
 
             config.RunActions(ConfigurationType.Settings, graph);
             config.RunActions(ConfigurationType.Discovery, graph);
