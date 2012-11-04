@@ -96,7 +96,6 @@
     <Compile Include="Ajax\AjaxContinuationTester.cs" />
     <Compile Include="Ajax\AjaxContinuationWriterTester.cs" />
     <Compile Include="ApplicationSettingsTester.cs" />
-    <Compile Include="BehaviorGraph_Logging_IntegratedTester.cs" />
     <Compile Include="Behaviors\Chrome\ChromeAttributeTester.cs" />
     <Compile Include="Behaviors\Chrome\ChromeNodeTester.cs" />
     <Compile Include="Bugs\DoubleRegistrationOfImports.cs" />
