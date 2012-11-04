@@ -6,6 +6,8 @@ using FubuMVC.Core.Registration.Diagnostics;
 using NUnit.Framework;
 using FubuTestingSupport;
 using System.Linq;
+using Rhino.Mocks;
+using System.Collections.Generic;
 
 namespace FubuMVC.Tests
 {
@@ -92,6 +94,26 @@ namespace FubuMVC.Tests
             actions.Fill(provenanceStack, policy2);
 
             actions.Actions.ShouldHaveTheSameElementsAs(policy1, policy2);
+        }
+
+        [Test]
+        public void prepend_provenance()
+        {
+            var p1 = MockRepository.GenerateMock<Provenance>();
+            var p2 = MockRepository.GenerateMock<Provenance>();
+
+            var policy1 = new ConfiguredPolicy("foo");
+            var policy2 = new ConfiguredPolicy("bar");
+
+            var actions = new ConfigurationActionSet("something");
+            actions.Fill(provenanceStack, policy1);
+            actions.Fill(provenanceStack, policy2);
+
+            actions.PrependProvenance(new Provenance[]{p1, p2});
+
+            actions.Logs.Each(log => {
+                log.ProvenanceChain.ShouldHaveTheSameElementsAs(p1, p2, provenanceStack[0], provenanceStack[1]);
+            });
         }
 
         [Test]

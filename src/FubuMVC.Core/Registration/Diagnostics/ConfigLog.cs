@@ -9,15 +9,17 @@ namespace FubuMVC.Core.Registration.Diagnostics
 {
     public class ConfigLog
     {
+        private readonly IList<ConfigGraph> _allGraphs = new List<ConfigGraph>(); 
+
         internal void Import(ConfigGraph graph)
         {
-            throw new NotImplementedException();
+            _allGraphs.Add(graph);
         }
 
         internal void Import(ConfigGraph graph, IEnumerable<Provenance> forebears)
         {
-            throw new NotImplementedException();
-            //graph.
+            graph.PrependProvenance(forebears);
+            _allGraphs.Add(graph);
         }
 
         public IEnumerable<T> EventsOfType<T>()

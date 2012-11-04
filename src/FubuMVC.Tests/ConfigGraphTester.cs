@@ -8,6 +8,7 @@ using NUnit.Framework;
 using System.Linq;
 using FubuTestingSupport;
 using System.Collections.Generic;
+using Rhino.Mocks;
 
 namespace FubuMVC.Tests
 {
@@ -163,6 +164,38 @@ namespace FubuMVC.Tests
 
             graph.LogsFor(ConfigurationType.Discovery).Count()
                 .ShouldEqual(count);
+        }
+
+        [Test]
+        public void prepend_provenance()
+        {
+            var graph = new ConfigGraph();
+            var defaultConfigurationPack = new DefaultConfigurationPack();
+            graph.Add(defaultConfigurationPack);
+
+            var p1 = MockRepository.GenerateMock<Provenance>();
+            var p2 = MockRepository.GenerateMock<Provenance>();
+
+            graph.PrependProvenance(new Provenance[]{p1, p2});
+
+            graph.LogsFor(ConfigurationType.Conneg).Each(log => {
+                log.ProvenanceChain.ShouldHaveTheSameElementsAs(p1, p2, new ConfigurationPackProvenance(defaultConfigurationPack));
+            });
+
+            graph.LogsFor(ConfigurationType.ModifyRoutes).Each(log =>
+            {
+                log.ProvenanceChain.ShouldHaveTheSameElementsAs(p1, p2, new ConfigurationPackProvenance(defaultConfigurationPack));
+            });
+
+            graph.LogsFor(ConfigurationType.InjectNodes).Each(log =>
+            {
+                log.ProvenanceChain.ShouldHaveTheSameElementsAs(p1, p2, new ConfigurationPackProvenance(defaultConfigurationPack));
+            });
+
+            graph.LogsFor(ConfigurationType.Attachment).Each(log =>
+            {
+                log.ProvenanceChain.ShouldHaveTheSameElementsAs(p1, p2, new ConfigurationPackProvenance(defaultConfigurationPack));
+            });
         }
     }
     

@@ -72,5 +72,10 @@ namespace FubuMVC.Core
         {
             _logs.Each(x => x.RunAction(graph));
         }
+
+        public void PrependProvenance(IEnumerable<Provenance> forebears)
+        {
+            _logs.Each(x => x.PrependProvenance(forebears));
+        }
     }
 }

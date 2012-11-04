@@ -28,6 +28,11 @@ namespace FubuMVC.Core
             get { return _imports; }
         }
 
+        public void PrependProvenance(IEnumerable<Provenance> forebears)
+        {
+            _configurations.Each(x => x.PrependProvenance(forebears));
+        }
+
         public void RunActions(string configurationType, BehaviorGraph graph)
         {
             _configurations[configurationType].RunActions(graph);
