@@ -8,7 +8,7 @@ namespace FubuMVC.Core
     public static class BehaviorGraphBuilder
     {
         // Need to track the ConfigLog
-        public static BehaviorGraph Import(FubuRegistry registry, BehaviorGraph parent)
+        public static BehaviorGraph Import(FubuRegistry registry, BehaviorGraph parent, ConfigLog log)
         {
             var graph = BehaviorGraph.ForChild(parent);
             startBehaviorGraph(registry, graph);
@@ -17,7 +17,7 @@ namespace FubuMVC.Core
             config.RunActions(ConfigurationType.Settings, graph);
             config.RunActions(ConfigurationType.Discovery, graph);
 
-            config.Imports.Each(import => import.ImportInto(graph));
+            config.Imports.Each(import => import.ImportInto(graph, log));
 
             config.RunActions(ConfigurationType.Explicit, graph);
             config.RunActions(ConfigurationType.Policy, graph);
@@ -33,6 +33,10 @@ namespace FubuMVC.Core
             startBehaviorGraph(registry, graph);
             var config = registry.Config;
 
+            var log = new ConfigLog();
+            graph.Services.AddService(log);
+            log.Import(config);
+
             config.Add(new SystemServicesPack());
             config.Add(new DefaultConfigurationPack());
 
@@ -44,7 +48,7 @@ namespace FubuMVC.Core
             config.RunActions(ConfigurationType.Settings, graph);
             config.RunActions(ConfigurationType.Discovery, graph);
 
-            config.UniqueImports().Each(import => import.ImportInto(graph));
+            config.UniqueImports().Each(import => import.ImportInto(graph, log));
 
             config.RunActions(ConfigurationType.Explicit, graph);
             config.RunActions(ConfigurationType.Policy, graph);

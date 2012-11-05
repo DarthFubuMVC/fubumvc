@@ -495,9 +495,19 @@ namespace FubuMVC.Core.Registration
                 foreach (var node in chain)
                 {
                     yield return node;
+
+                    var composite = node as ICompositeTracedModel;
+                    if (composite != null)
+                    {
+                        foreach (var child in composite.Children)
+                        {
+                            yield return child;
+                        }
+                    }
                 }
             }
         }
+
     }
 
 

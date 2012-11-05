@@ -129,6 +129,7 @@
     <Compile Include="Registration\Conventions\VaryByPolicy.cs" />
     <Compile Include="Registration\Diagnostics\ConfigLog.cs" />
     <Compile Include="Registration\Diagnostics\Provenance.cs" />
+    <Compile Include="Registration\Diagnostics\ProvenanceChain.cs" />
     <Compile Include="Registration\Nodes\ActionFilter.cs" />
     <Compile Include="Registration\OverridesFor.cs" />
     <Compile Include="Registration\RegisterActionSource.cs" />

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Web.Routing;
 using Bottles;
 using Bottles.Diagnostics;
@@ -141,9 +142,12 @@ namespace FubuMVC.Core
                     // container facility has to be spun up here
                     var containerFacility = _facility.Value;
 
+                    // Need to do this to make the provenance for bottles come out right
+                    _registry.Value.Config.Pop();
+
                     applyRegistryModifications();
 
-                    applyFubuExtensionsFromPackages(log);
+                    applyFubuExtensionsFromPackages();
 
                     graph = buildBehaviorGraph();
 
@@ -203,13 +207,20 @@ namespace FubuMVC.Core
             return routes;
         }
 
-        private void applyFubuExtensionsFromPackages(IPackageLog log)
+        private void applyFubuExtensionsFromPackages()
         {
-            FubuExtensionFinder.FindAllExtensions().Each(x1 =>
-            {
-                log.Trace("Applying extension {0}", x1.GetType().FullName);
-                x1.Configure(_registry.Value);
+            PackageRegistry.Diagnostics.EachLog((o, l) => {
+                if (o is IPackageInfo)
+                {
+                    _registry.Value.Config.Push(o.As<IPackageInfo>());
+                    var assemblies = l.FindChildren<Assembly>();
+
+                    FubuExtensionFinder.ApplyExtensions(_registry.Value, assemblies);
+
+                    _registry.Value.Config.Pop();
+                }
             });
+
         }
 
         public FubuApplication Packages(Action<IPackageFacility> configure)

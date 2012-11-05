@@ -32,9 +32,9 @@ namespace FubuMVC.Core
             get { return _logs.Select(x => x.Action); }
         } 
 
-        public void Fill(IEnumerable<Provenance> provenanceStack, IConfigurationAction action)
+        public void Fill(ProvenanceChain provenanceStack, IConfigurationAction action)
         {
-            if (!provenanceStack.Any())
+            if (provenanceStack == null || !provenanceStack.Chain.Any())
             {
                 throw new ArgumentException("No provenance supplied!");
             }
@@ -73,9 +73,14 @@ namespace FubuMVC.Core
             _logs.Each(x => x.RunAction(graph));
         }
 
-        public void PrependProvenance(IEnumerable<Provenance> forebears)
+        public void Fill(Provenance[] provenanceStack, IConfigurationAction action)
         {
-            _logs.Each(x => x.PrependProvenance(forebears));
+            Fill(new ProvenanceChain(provenanceStack), action);
+        }
+
+        public IEnumerable<T> AllEvents<T>()
+        {
+            return _logs.SelectMany(x => x.Events.OfType<T>());
         }
     }
 }

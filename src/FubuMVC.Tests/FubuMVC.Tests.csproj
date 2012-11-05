@@ -96,6 +96,7 @@
     <Compile Include="Ajax\AjaxContinuationTester.cs" />
     <Compile Include="Ajax\AjaxContinuationWriterTester.cs" />
     <Compile Include="ApplicationSettingsTester.cs" />
+    <Compile Include="BehaviorGraph_logging_integration_tester.cs" />
     <Compile Include="Behaviors\Chrome\ChromeAttributeTester.cs" />
     <Compile Include="Behaviors\Chrome\ChromeNodeTester.cs" />
     <Compile Include="Bugs\DoubleRegistrationOfImports.cs" />
@@ -134,7 +135,7 @@
     <Compile Include="Registration\Conventions\UrlPatternAttributeOnViewModelPolicyTester.cs" />
     <Compile Include="Registration\Conventions\VaryByPolicyTester.cs" />
     <Compile Include="Registration\default_action_discovery.cs" />
-    <Compile Include="Registration\Diagnostics\ActionLogTester.cs" />
+    <Compile Include="Registration\Diagnostics\ProvenanceChainTester.cs" />
     <Compile Include="Registration\OutputBeforeAjaxContinuationPolicyTester.cs" />
     <Compile Include="Registration\Registration\ModelBindingServiceRegistry_specification.cs" />
     <Compile Include="Registration\SettingsCollectionTester.cs" />

@@ -12,4 +12,9 @@ namespace FubuMVC.Core.Registration.Nodes
         void RecordEvents(Action<NodeEvent> callback);
         IEnumerable<NodeEvent> AllEvents();
     }
+
+    public interface ICompositeTracedModel
+    {
+        IEnumerable<ITracedModel> Children { get; } 
+    }
 }

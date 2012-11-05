@@ -1,4 +1,5 @@
 using FubuMVC.Core;
+using FubuMVC.Core.Behaviors;
 using HtmlTags;
 
 namespace AssemblyPackage
@@ -13,5 +14,24 @@ namespace AssemblyPackage
         {
             return "Hello.";
         }
+    }
+
+    public class AssemblyPackageExtension : IFubuRegistryExtension
+    {
+        public void Configure(FubuRegistry registry)
+        {
+            registry.Policies.ConditionallyWrapBehaviorChainsWith<BehaviorFromAssemblyBottle>(
+                x => x.HandlerType == typeof (AssemblyEndpoint));
+        }
+    }
+
+    public class BehaviorFromAssemblyBottle : BasicBehavior
+    {
+        public BehaviorFromAssemblyBottle()
+            : base(PartialBehavior.Executes)
+        {
+        }
+
+
     }
 }

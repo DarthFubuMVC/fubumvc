@@ -224,19 +224,26 @@ namespace FubuMVC.Core
         {
             if (_importedTypes.Contains(typeof (T))) return;
 
+            var extension = new T();
             if (typeof (T).CanBeCastTo<FubuPackageRegistry>())
             {
+                _config.Push(extension.As<FubuRegistry>());
+
                 _config.AddImport(new RegistryImport
                 {
                     Prefix = null,
-                    Registry = new T().As<FubuRegistry>()
+                    Registry = extension.As<FubuRegistry>()
                 });
             }
             else
             {
-                new T().Configure(this);
+                _config.Push(extension);
+
+                extension.Configure(this);
                 _importedTypes.Add(typeof (T));
             }
+
+            _config.Pop();
         }
 
         /// <summary>
@@ -246,11 +253,15 @@ namespace FubuMVC.Core
         public void Import<T>(Action<T> configuration) where T : IFubuRegistryExtension, new()
         {
             var extension = new T();
+            _config.Push(extension);
+
             configuration(extension);
 
             extension.Configure(this);
 
             _importedTypes.Add(typeof (T));
+        
+            _config.Pop();
         }
 
         [Obsolete, MarkedForTermination]
@@ -268,6 +279,7 @@ namespace FubuMVC.Core
             _config.Add(registry);
         }
 
+        [Obsolete, MarkedForTermination]
         public void Navigation(NavigationRegistry registry)
         {
             _config.Add(registry);

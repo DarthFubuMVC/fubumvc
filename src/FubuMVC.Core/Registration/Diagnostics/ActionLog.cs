@@ -8,19 +8,19 @@ namespace FubuMVC.Core.Registration.Diagnostics
     public class ActionLog
     {
         private readonly IConfigurationAction _action;
-        private IEnumerable<Provenance> _provenanceChain;
+        private readonly ProvenanceChain _provenanceChain;
         private readonly Lazy<Description> _description;
         private readonly IList<NodeEvent> _events = new List<NodeEvent>();
 
-        public ActionLog(IConfigurationAction action, IEnumerable<Provenance> provenanceChain)
+        public ActionLog(IConfigurationAction action, ProvenanceChain provenanceChain)
         {
             _action = action;
-            _provenanceChain = provenanceChain.ToArray(); // You *must* do this somewhere, and I like having it here
+            _provenanceChain = provenanceChain;
             Id = Guid.NewGuid();
             _description = new Lazy<Description>(() => Description.For(action));
         }
 
-        public IEnumerable<Provenance> ProvenanceChain
+        public ProvenanceChain ProvenanceChain
         {
             get { return _provenanceChain; }
         }
@@ -28,11 +28,6 @@ namespace FubuMVC.Core.Registration.Diagnostics
         public IConfigurationAction Action
         {
             get { return _action; }
-        }
-
-        public void PrependProvenance(IEnumerable<Provenance> forebears)
-        {
-            _provenanceChain = forebears.Union(_provenanceChain).ToArray();
         }
 
         public void RunAction(BehaviorGraph graph)

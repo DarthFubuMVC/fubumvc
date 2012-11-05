@@ -43,7 +43,7 @@ namespace FubuMVC.Tests
 
             var log = actions.Logs.Single();
         
-            log.ProvenanceChain.ShouldHaveTheSameElementsAs(provenanceStack);
+            log.ProvenanceChain.Chain.ShouldHaveTheSameElementsAs(provenanceStack);
         }
 
         [Test]
@@ -96,25 +96,6 @@ namespace FubuMVC.Tests
             actions.Actions.ShouldHaveTheSameElementsAs(policy1, policy2);
         }
 
-        [Test]
-        public void prepend_provenance()
-        {
-            var p1 = MockRepository.GenerateMock<Provenance>();
-            var p2 = MockRepository.GenerateMock<Provenance>();
-
-            var policy1 = new ConfiguredPolicy("foo");
-            var policy2 = new ConfiguredPolicy("bar");
-
-            var actions = new ConfigurationActionSet("something");
-            actions.Fill(provenanceStack, policy1);
-            actions.Fill(provenanceStack, policy2);
-
-            actions.PrependProvenance(new Provenance[]{p1, p2});
-
-            actions.Logs.Each(log => {
-                log.ProvenanceChain.ShouldHaveTheSameElementsAs(p1, p2, provenanceStack[0], provenanceStack[1]);
-            });
-        }
 
         [Test]
         public void type_is_unique_is_false_if_the_CanBeMultiplesAttribute_exists()

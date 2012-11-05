@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AssemblyPackage;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
@@ -122,6 +123,7 @@ namespace FubuMVC.Tests.Registration.Expressions
             {
                 // Don't mess with the asset content chain
                 if (x is OutputCachingBehavior) return;
+                if (x is BehaviorFromAssemblyBottle) return;
 
                 if (x.GetType().Closes(typeof (InputBehavior<>)))
                 {

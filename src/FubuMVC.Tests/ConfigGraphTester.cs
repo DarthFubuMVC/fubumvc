@@ -23,7 +23,7 @@ namespace FubuMVC.Tests
 
             graph.Push(bottle);
 
-            graph.ProvenanceStack.ShouldHaveTheSameElementsAs(new BottleProvenance(bottle));
+            graph.CurrentProvenance.ShouldHaveTheSameElementsAs(new BottleProvenance(bottle));
 
 
         }
@@ -38,7 +38,7 @@ namespace FubuMVC.Tests
             var extension = new FakeRegistryExtension();
             graph.Push(extension);
 
-            graph.ProvenanceStack.ShouldHaveTheSameElementsAs(new BottleProvenance(bottle), new FubuRegistryExtensionProvenance(extension));
+            graph.CurrentProvenance.ShouldHaveTheSameElementsAs(new BottleProvenance(bottle), new FubuRegistryExtensionProvenance(extension));
         }
 
         [Test]
@@ -53,11 +53,11 @@ namespace FubuMVC.Tests
 
             graph.Pop();
 
-            graph.ProvenanceStack.ShouldHaveTheSameElementsAs(new BottleProvenance(bottle));
+            graph.CurrentProvenance.ShouldHaveTheSameElementsAs(new BottleProvenance(bottle));
 
             graph.Pop();
 
-            graph.ProvenanceStack.Any().ShouldBeFalse();
+            graph.CurrentProvenance.Any().ShouldBeFalse();
         }
 
 
@@ -70,7 +70,7 @@ namespace FubuMVC.Tests
             var graph = new ConfigGraph();
             graph.Push(registry);
 
-            graph.ProvenanceStack.Single().ShouldEqual(new FubuRegistryProvenance(registry));
+            graph.CurrentProvenance.Single().ShouldEqual(new FubuRegistryProvenance(registry));
         }
 
         [Test]
@@ -142,7 +142,6 @@ namespace FubuMVC.Tests
 
             graph.LogsFor(ConfigurationType.Discovery).Any().ShouldBeTrue();
 
-            graph.ProvenanceStack.Any().ShouldBeFalse(); // should pop
         }
 
         [Test]

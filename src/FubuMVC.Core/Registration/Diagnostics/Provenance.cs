@@ -1,11 +1,27 @@
-﻿using Bottles;
+﻿using System;
+using Bottles;
 using FubuCore.Descriptions;
 
 namespace FubuMVC.Core.Registration.Diagnostics
 {
     public abstract class Provenance : DescribesItself
     {
+        public readonly Guid Id = Guid.NewGuid();
+
         public abstract void Describe(Description description);
+
+
+        private readonly Lazy<Description> _description;
+
+        protected Provenance()
+        {
+            _description = new Lazy<Description>(() => Description.For(this));
+        }
+
+        public Description Description
+        {
+            get { return _description.Value; }
+        }
     }
 
     public class BottleProvenance : Provenance
@@ -38,6 +54,11 @@ namespace FubuMVC.Core.Registration.Diagnostics
         public override int GetHashCode()
         {
             return (_bottle != null ? _bottle.GetHashCode() : 0);
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Bottle: {0}", _bottle.Name);
         }
     }
 
@@ -78,6 +99,11 @@ namespace FubuMVC.Core.Registration.Diagnostics
             description.Title = "FubuRegistry:  " + _registry.GetType().Name;
             description.Children["Registry"] = Description.For(_registry);
         }
+
+        public override string ToString()
+        {
+            return _registry.GetType().Name;
+        }
     }
 
     public class FubuRegistryExtensionProvenance : Provenance
@@ -117,6 +143,11 @@ namespace FubuMVC.Core.Registration.Diagnostics
             description.Title = "IFubuRegistryExtension: " + _extension.GetType().Name;
             description.Children["Extension"] = Description.For(_extension);
         }
+
+        public override string ToString()
+        {
+            return string.Format("Extension: {0}", _extension.GetType().Name);
+        }
     }
 
     public class ConfigurationPackProvenance : Provenance
@@ -155,6 +186,11 @@ namespace FubuMVC.Core.Registration.Diagnostics
         {
             description.Title = "ConfigurationPack:  " + _pack.GetType().Name;
             description.Children["Pack"] = Description.For(_pack);
+        }
+
+        public override string ToString()
+        {
+            return _pack.GetType().Name;
         }
     }
 

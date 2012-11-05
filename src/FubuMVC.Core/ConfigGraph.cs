@@ -15,12 +15,17 @@ namespace FubuMVC.Core
             = new Cache<string, ConfigurationActionSet>(x => new ConfigurationActionSet(x));
 
         private readonly IList<RegistryImport> _imports = new List<RegistryImport>();
-        private readonly Stack<Provenance> _provenanceStack = new Stack<Provenance>();
+        private ProvenanceChain _currentProvenance = new ProvenanceChain(new Provenance[0]);
         private readonly IList<ServiceRegistry> _services = new List<ServiceRegistry>();
 
-        public IEnumerable<Provenance> ProvenanceStack
+        public IEnumerable<ActionLog> AllLogs()
         {
-            get { return _provenanceStack.Reverse(); }
+            return _configurations.SelectMany(x => x.Logs);
+        }
+
+        public ProvenanceChain CurrentProvenance
+        {
+            get { return _currentProvenance; }
         }
 
         public IEnumerable<RegistryImport> Imports
@@ -30,7 +35,8 @@ namespace FubuMVC.Core
 
         public void PrependProvenance(IEnumerable<Provenance> forebears)
         {
-            _configurations.Each(x => x.PrependProvenance(forebears));
+            _configurations.SelectMany(x => x.Logs).Select(x => x.ProvenanceChain).Distinct().Each(
+                x => x.Prepend(forebears));
         }
 
         public void RunActions(string configurationType, BehaviorGraph graph)
@@ -40,22 +46,22 @@ namespace FubuMVC.Core
 
         public void Push(FubuRegistry registry)
         {
-            _provenanceStack.Push(new FubuRegistryProvenance(registry));
+            _currentProvenance = _currentProvenance.Push(new FubuRegistryProvenance(registry));
         }
 
         public void Push(IPackageInfo bottle)
         {
-            _provenanceStack.Push(new BottleProvenance(bottle));
+            _currentProvenance = _currentProvenance.Push(new BottleProvenance(bottle));
         }
 
         public void Push(IFubuRegistryExtension extension)
         {
-            _provenanceStack.Push(new FubuRegistryExtensionProvenance(extension));
+            _currentProvenance = _currentProvenance.Push(new FubuRegistryExtensionProvenance(extension));
         }
 
         public void Pop()
         {
-            _provenanceStack.Pop();
+            _currentProvenance = _currentProvenance.Pop();
         }
 
         public IEnumerable<ActionLog> LogsFor(string configurationType)
@@ -70,19 +76,16 @@ namespace FubuMVC.Core
 
         public void Add(ConfigurationPack pack)
         {
-            _provenanceStack.Clear(); // may regret doing this later
-
-            _provenanceStack.Push(new ConfigurationPackProvenance(pack));
+            _currentProvenance = new ProvenanceChain(new Provenance[]{new ConfigurationPackProvenance(pack), });
 
             pack.WriteTo(this);
-
-            _provenanceStack.Pop();
         }
 
         public void AddImport(RegistryImport import)
         {
             if (HasImported(import.Registry)) return;
 
+            import.Provenance = CurrentProvenance;
             _imports.Add(import);
         }
 
@@ -137,7 +140,7 @@ namespace FubuMVC.Core
                     action.GetType());
             }
 
-            _configurations[type].Fill(ProvenanceStack, action); 
+            _configurations[type].Fill(_currentProvenance, action); 
         }
 
 
@@ -171,6 +174,11 @@ namespace FubuMVC.Core
             }
 
             return null;
+        }
+
+        public IEnumerable<T> AllEvents<T>()
+        {
+            return _configurations.SelectMany(x => x.AllEvents<T>());
         }
     }
 }
