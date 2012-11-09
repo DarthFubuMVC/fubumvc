@@ -14,7 +14,7 @@ namespace FubuMVC.Tests.UI.Navigation
         public void navigation_method_on_fubu_registry_works()
         {
             var registry = new FubuRegistry();
-            registry.Navigation(x =>
+            registry.ApplyConvention<NavigationRegistry>(x =>
             {
                 x.ForMenu(FakeKeys.Key1);
                 x.Add += MenuNode.Node(FakeKeys.Key2);
@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.UI.Navigation
         public void import_navigation_from_child_registry()
         {
             var registry = new FubuRegistry();
-            registry.Navigation(x =>
+            registry.ApplyConvention<NavigationRegistry>(x =>
             {
                 x.ForMenu(FakeKeys.Key1);
                 x.Add += MenuNode.Node(FakeKeys.Key2);
@@ -53,7 +53,7 @@ namespace FubuMVC.Tests.UI.Navigation
         public void import_with_strings_instead_of_StringToken()
         {
             var registry = new FubuRegistry();
-            registry.Navigation(x =>
+            registry.ApplyConvention<NavigationRegistry>(x =>
             {
                 x.ForMenu("Key1");
                 x.Add += MenuNode.Node("Key2");
@@ -72,7 +72,7 @@ namespace FubuMVC.Tests.UI.Navigation
         {
             public ChildRegistry()
             {
-                Navigation<ChildNavigation>();
+                ApplyConvention<ChildNavigation>();
             }
         }
 

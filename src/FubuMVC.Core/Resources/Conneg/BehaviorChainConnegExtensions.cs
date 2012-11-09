@@ -12,7 +12,7 @@ namespace FubuMVC.Core.Resources.Conneg
     {
         public static void AlterConnegOutput(this BehaviorChain chain, Action<OutputNode> configure)
         {
-            var node = chain.OutputNode();
+            var node = chain.Output;
             if (node != null)
             {
                 configure(node);
@@ -21,7 +21,7 @@ namespace FubuMVC.Core.Resources.Conneg
 
         public static void AlterConnegInput(this BehaviorChain chain, Action<InputNode> configure)
         {
-            var node = chain.InputNode();
+            var node = chain.Input;
             if (node != null)
             {
                 configure(node);
@@ -84,24 +84,6 @@ namespace FubuMVC.Core.Resources.Conneg
             }
 
             return true;
-        }
-
-        [Obsolete, MarkedForTermination]
-        public static InputNode InputNode(this BehaviorChain chain)
-        {
-            return chain.FirstOrDefault(x => x is InputNode) as InputNode;
-        }
-
-        [Obsolete, MarkedForTermination]
-        public static OutputNode OutputNode(this BehaviorChain chain)
-        {
-            return chain.FirstOrDefault(x => x is OutputNode) as OutputNode;
-        }
-
-        [Obsolete, MarkedForTermination]
-        public static bool HasConnegOutput(this BehaviorChain chain)
-        {
-            return chain.OutputNode() != null;
         }
 
         public static void RemoveConneg(this BehaviorChain chain)

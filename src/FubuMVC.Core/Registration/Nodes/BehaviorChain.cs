@@ -100,7 +100,6 @@ namespace FubuMVC.Core.Registration.Nodes
         /// <summary>
         ///   All the Output nodes in this chain
         /// </summary>
-        [MarkedForTermination("Dying with the new Conneg")]
         public IEnumerable<BehaviorNode> Outputs
         {
             get { return this.Where(x => x.Category == BehaviorCategory.Output); }

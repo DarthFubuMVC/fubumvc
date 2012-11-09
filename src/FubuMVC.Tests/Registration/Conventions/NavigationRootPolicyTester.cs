@@ -41,7 +41,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             var graph = buildGraph(x =>
             {
-                x.Navigation(r =>
+                x.ApplyConvention<NavigationRegistry>(r =>
                 {
                     r.ForMenu("Menu1");
                     r.Add += MenuNode.ForAction<OneController>("something", c => c.Go());
@@ -72,7 +72,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             var graph = buildGraph(x =>
             {
-                x.Navigation(r =>
+                x.ApplyConvention<NavigationRegistry>(r =>
                 {
                     r.ForMenu("Menu1");
                     r.Add += MenuNode.ForAction<OneController>("something", c => c.Go());
@@ -113,7 +113,7 @@ namespace FubuMVC.Tests.Registration.Conventions
 
             var graph = buildGraph(x =>
             {
-                x.Navigation(r =>
+                x.ApplyConvention<NavigationRegistry>(r =>
                 {
                     r.ForMenu(key);
                     r.Add += MenuNode.ForAction<OneController>("something", c => c.Go());
@@ -144,7 +144,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             var graph = buildGraph(x =>
             {
-                x.Navigation(r =>
+                x.ApplyConvention<NavigationRegistry>(r =>
                 {
                     r.ForMenu("Menu1");
                     r.Add += MenuNode.ForAction<OneController>("something", c => c.Go());

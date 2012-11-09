@@ -6,6 +6,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
 using NUnit.Framework;
 using FubuTestingSupport;
+using System.Linq;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
@@ -36,9 +37,9 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             theFubuRegistry.Media.ApplyContentNegotiationToActions(x => x.OutputType() == typeof (ViewModel3));
 
-            chainFor(x => x.C()).HasConnegOutput().ShouldBeTrue();
-            chainFor(x => x.D()).HasConnegOutput().ShouldBeTrue();
-            chainFor(x => x.E()).HasConnegOutput().ShouldBeTrue();
+            chainFor(x => x.C()).Output.Writers.Any().ShouldBeTrue();
+            chainFor(x => x.D()).Output.Writers.Any().ShouldBeTrue();
+            chainFor(x => x.E()).Output.Writers.Any().ShouldBeTrue();
 
         }
 
@@ -47,7 +48,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             theFubuRegistry.Media.ApplyContentNegotiationTo(chain => chain.FirstCall().Method.Name == "A");
 
-            chainFor(x => x.A()).HasConnegOutput().ShouldBeTrue();
+            chainFor(x => x.A()).Output.Writers.Any().ShouldBeTrue();
 
             // Pretty close to killing this altogether
             //chainFor(x => x.B()).HasConnegOutput().ShouldBeFalse();

@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.UI.Navigation
                 return BehaviorGraph.BuildFrom(x =>
                 {
                     x.Actions.IncludeType<Controller1>();
-                    x.Navigation(registry);
+                    x.ApplyConvention(registry);
                 }).Settings.Get<NavigationGraph>();
             });
         }

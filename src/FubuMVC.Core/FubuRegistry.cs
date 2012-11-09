@@ -264,32 +264,12 @@ namespace FubuMVC.Core
             _config.Pop();
         }
 
-        [Obsolete, MarkedForTermination]
-        public void Navigation<T>() where T : NavigationRegistry, new()
-        {
-            _config.Add(new T());
-        }
-
-        [Obsolete, MarkedForTermination]
-        public void Navigation(Action<NavigationRegistry> configuration)
-        {
-            var registry = new NavigationRegistry();
-            configuration(registry);
-
-            _config.Add(registry);
-        }
-
-        [Obsolete, MarkedForTermination]
-        public void Navigation(NavigationRegistry registry)
-        {
-            _config.Add(registry);
-        }
-
         #endregion
 
         /// <summary>
         ///   Adds a configuration convention to be applied to the <see cref = "BehaviorGraph" /> produced by this <see cref = "FubuRegistry" />
         /// </summary>
+        [Obsolete("Change to Apply<T>()")]
         public void ApplyConvention<TConvention>(Action<TConvention> configuration = null)
             where TConvention : IConfigurationAction, new()
         {
