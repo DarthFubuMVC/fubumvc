@@ -78,26 +78,6 @@ namespace FubuMVC.Tests.Registration.Expressions
             }
         }
 
-        [Test]
-        public void all_behaviors_chains_should_start_with_the_declared_behavior()
-        {
-            var graph = BehaviorGraph.BuildFrom(registry);
-
-            graph.Behaviors.Count().ShouldEqual(3);
-            var visitor = new BehaviorVisitor("");
-            visitor.Actions += chain =>
-            {
-                // Don't bother with the asset node
-                if (chain.Any(x => x is OutputCachingNode)) return;
-
-                // Input node is first
-                var wrapper = chain.Top.Next.ShouldBeOfType<Wrapper>();
-                wrapper.BehaviorType.ShouldEqual(typeof (FakeUnitOfWorkBehavior));
-                wrapper.Next.ShouldBeOfType<ActionCall>();
-            };
-
-            graph.VisitBehaviors(visitor);
-        }
 
         [Test]
         public void hydrate_through_container_facility_smoke_test()

@@ -81,12 +81,6 @@ namespace FubuMVC.Core.Registration
             get { return _forwarders; }
         }
 
-        [Obsolete("Use Settings.Get<NavigationGraph>() instead")]
-        public NavigationGraph Navigation
-        {
-            get { return _settings.Get<NavigationGraph>(); }
-        }
-
         public TypeResolver TypeResolver { get; private set; }
 
         public ServiceGraph Services
@@ -291,15 +285,6 @@ namespace FubuMVC.Core.Registration
         }
 
         /// <summary>
-        ///   Applies the giving IRouteVisitor to each IRouteDefinition
-        /// </summary>
-        /// <param name = "visitor"></param>
-        public void VisitRoutes(IRouteVisitor visitor)
-        {
-            RouteIterator.Over(_behaviors).Each(x => visitor.VisitRoute(x.Route, x));
-        }
-
-        /// <summary>
         ///   Writes a summary of the BehaviorGraph to Trace
         /// </summary>
         public void Describe()
@@ -307,26 +292,6 @@ namespace FubuMVC.Core.Registration
             _behaviors.Each(x => { Trace.WriteLine(x.FirstCall().Description.PadRight(70) + x.Route.Pattern); });
         }
 
-        /// <summary>
-        ///   Applies the giving IRouteVisitor to each IRouteDefinition
-        /// </summary>
-        /// <param name = "configure"></param>
-        [Obsolete("The usage is awkward and really doesn't provide much value over a custom IConfigurationAction")]
-        public void VisitRoutes(Action<RouteVisitor> configure)
-        {
-            var visitor = new RouteVisitor();
-            configure(visitor);
-            VisitRoutes(visitor);
-        }
-
-        /// <summary>
-        ///   Applies the given IBehaviorVisitor to each BehaviorChain
-        /// </summary>
-        /// <param name = "visitor"></param>
-        public void VisitBehaviors(IBehaviorVisitor visitor)
-        {
-            _behaviors.Each(visitor.VisitBehavior);
-        }
 
         public void AddChain(BehaviorChain chain)
         {

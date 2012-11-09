@@ -30,7 +30,7 @@ namespace FubuMVC.Core.Ajax
 
         public static bool IsAjaxContinuation(BehaviorChain chain)
         {
-            var outputType = chain.ActionOutputType();
+            var outputType = chain.ResourceType();
             return outputType != null && outputType.CanBeCastTo<AjaxContinuation>();
         }
     }

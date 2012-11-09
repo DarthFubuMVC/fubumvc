@@ -123,19 +123,6 @@ namespace FubuMVC.Tests.StructureMapIoC
         }
 
         [Test]
-        public void each_IActionBehavior_is_wrapped_with_a_nested_container_behavior()
-        {
-            graph.VisitRoutes(x =>
-            {
-                x.Actions += (r, chain) =>
-                {
-                    factory.BuildBehavior(new ServiceArguments(), chain.UniqueId).ShouldBeOfType
-                        <NestedStructureMapContainerBehavior>();
-                };
-            });
-        }
-
-        [Test]
         public void factory_itself_is_registered_in_the_container()
         {
             container.GetInstance<IBehaviorFactory>().ShouldBeOfType<PartialBehaviorFactory>();

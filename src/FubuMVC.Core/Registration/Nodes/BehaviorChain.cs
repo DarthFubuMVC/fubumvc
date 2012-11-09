@@ -204,16 +204,6 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
 
-        /// <summary>
-        ///   Finds the output model type of the *last*
-        ///   ActionCall in this BehaviorChain.  May be null
-        /// </summary>
-        /// <returns></returns>
-        [Obsolete("Please use BehaviorChain.ResourceType() instead")]
-        public Type ActionOutputType()
-        {
-            return ResourceType();
-        }
 
 
         /// <summary>

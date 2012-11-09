@@ -394,14 +394,11 @@
     <Compile Include="Behaviors\BasicBehavior.cs" />
     <Compile Include="DoNext.cs" />
     <Compile Include="Behaviors\IActionBehavior.cs" />
-    <Compile Include="Behaviors\load_the_current_principal.cs" />
     <Compile Include="Behaviors\NulloBehavior.cs" />
     <Compile Include="Behaviors\OneInOneOutActionInvoker.cs" />
     <Compile Include="Behaviors\OneInZeroOutActionInvoker.cs" />
     <Compile Include="Behaviors\ZeroInOneOutActionInvoker.cs" />
     <Compile Include="Bootstrapping\IContainerFacility.cs" />
-    <Compile Include="Registration\BehaviorVisitor.cs" />
-    <Compile Include="Registration\Conventions\IChainConvention.cs" />
     <Compile Include="Registration\Conventions\IRouteInputPolicy.cs" />
     <Compile Include="Registration\Conventions\IUrlPolicy.cs" />
     <Compile Include="Registration\Conventions\RouteDefinitionResolver.cs" />
@@ -409,8 +406,6 @@
     <Compile Include="Registration\Conventions\UrlPolicy.cs" />
     <Compile Include="Registration\DSL\TypeMethodPolicy.cs" />
     <Compile Include="Registration\IActionSource.cs" />
-    <Compile Include="Registration\IBehaviorVisitor.cs" />
-    <Compile Include="Registration\IRouteVisitor.cs" />
     <Compile Include="Registration\Nodes\ContinuationNode.cs" />
     <Compile Include="Registration\Nodes\IMayHaveInputType.cs" />
     <Compile Include="Registration\Nodes\UrlCategory.cs" />
@@ -418,7 +413,6 @@
     <Compile Include="Registration\Querying\ChainResolutionCache.cs" />
     <Compile Include="Registration\Querying\ChainForwarder.cs" />
     <Compile Include="Registration\Querying\IChainResolver.cs" />
-    <Compile Include="Registration\RouteVisitor.cs" />
     <Compile Include="Registration\ServiceRegistry.cs" />
     <Compile Include="Registration\TypePool.cs" />
     <Compile Include="Registration\DSL\RouteConventionExpression.cs" />
