@@ -6,14 +6,14 @@ namespace FubuMVC.Core.Registration.DSL
 {
     public class ModelsExpression
     {
-        private readonly Action<Action<IServiceRegistry>> _callback;
+        private readonly Action<Action<ServiceRegistry>> _callback;
 
-        public ModelsExpression(Action<Action<IServiceRegistry>> callback)
+        public ModelsExpression(Action<Action<ServiceRegistry>> callback)
         {
             _callback = callback;
         }
 
-        private ModelsExpression add(Action<IServiceRegistry> configuration)
+        private ModelsExpression add(Action<ServiceRegistry> configuration)
         {
             _callback(configuration);
             return this;

@@ -13,7 +13,7 @@ namespace FubuMVC.Core.Registration
             _pluginType = pluginType;
         }
 
-        public void Register(IEnumerable<Type> matchedTypes, IServiceRegistry services)
+        public void Register(IEnumerable<Type> matchedTypes, ServiceRegistry services)
         {
             matchedTypes
                 .Where(t => _pluginType.IsAssignableFrom(t) && t.IsClass && !t.IsAbstract)

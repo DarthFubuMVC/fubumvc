@@ -9,7 +9,7 @@ namespace FubuMVC.Tests.Registration.Scanning
     public class AssemblyScannerTester
     {
         private AssemblyScanner _scanner;
-        private IServiceRegistry _registry;
+        private ServiceRegistry _registry;
 
         [SetUp]
         public void SetUp()

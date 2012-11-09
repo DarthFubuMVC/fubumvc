@@ -14,7 +14,7 @@ namespace FubuMVC.Core.Registration
             _openType = openType;
         }
 
-        public void Register(IEnumerable<Type> matchedTypes, IServiceRegistry services)
+        public void Register(IEnumerable<Type> matchedTypes, ServiceRegistry services)
         {
             matchedTypes
                 .Where(t => t.Closes(_openType) && t.IsClass && !t.IsAbstract)

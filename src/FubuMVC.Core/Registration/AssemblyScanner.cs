@@ -51,7 +51,7 @@ namespace FubuMVC.Core.Registration
 			return this;
 		}
 
-		public void Configure(IServiceRegistry services)
+		public void Configure(ServiceRegistry services)
 		{
 			var matchedTypes = _types.TypesMatching(_typeFilters.Matches);
 			_conventions

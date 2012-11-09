@@ -224,7 +224,7 @@ namespace FubuMVC.Tests.Registration
 
     public static class ServiceRegistryExtensions
     {
-        public static ServiceGraph ToGraph(this IServiceRegistry registry)
+        public static ServiceGraph ToGraph(this ServiceRegistry registry)
         {
             var behaviorGraph = new BehaviorGraph();
             registry.As<IServiceRegistration>().Apply(behaviorGraph.Services);

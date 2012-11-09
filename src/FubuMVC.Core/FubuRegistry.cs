@@ -116,7 +116,7 @@ namespace FubuMVC.Core
         ///   Configures the <see cref = "IServiceRegistry" /> to specify dependencies. 
         ///   This is an IoC-agnostic method of dependency configuration that will be consumed by the underlying implementation (e.g., StructureMap)
         /// </summary>
-        public void Services(Action<IServiceRegistry> configure)
+        public void Services(Action<ServiceRegistry> configure)
         {
             var registry = new ServiceRegistry();
             configure(registry);

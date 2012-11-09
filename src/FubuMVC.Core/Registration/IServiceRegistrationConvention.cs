@@ -5,6 +5,6 @@ namespace FubuMVC.Core.Registration
 {
 	public interface IServiceRegistrationConvention
 	{
-		void Register(IEnumerable<Type> matchedTypes, IServiceRegistry services);
+		void Register(IEnumerable<Type> matchedTypes, ServiceRegistry services);
 	}
 }
