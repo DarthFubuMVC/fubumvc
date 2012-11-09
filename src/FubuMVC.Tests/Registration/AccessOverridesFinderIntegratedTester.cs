@@ -24,7 +24,6 @@ namespace FubuMVC.Tests.Registration
                 .ShouldEqual(typeof (AssemblyPackage.Address).Assembly);
 
             theGraph = BehaviorGraph.BuildFrom(x => {
-                x.Applies.ToAssembly(GetType().Assembly);
             });
         }
 

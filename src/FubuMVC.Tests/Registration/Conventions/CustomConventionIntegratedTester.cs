@@ -17,7 +17,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             graph = BehaviorGraph.BuildFrom(x =>
             {
-                x.Actions.IncludeTypesImplementing<JsonOutputAttachmentTesterController>();
+                x.Actions.IncludeType<JsonOutputAttachmentTesterController>();
 
                 x.ApplyConvention<TestCustomConvention>();
             });

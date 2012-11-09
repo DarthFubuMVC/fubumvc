@@ -137,6 +137,7 @@
     <Compile Include="Registration\Diagnostics\ProvenanceChain.cs" />
     <Compile Include="Registration\Diagnostics\ServiceRegistryLog.cs" />
     <Compile Include="Registration\Diagnostics\ServiceRegistryProvenance.cs" />
+    <Compile Include="Registration\DSL\AppliesToExpression.cs" />
     <Compile Include="Registration\Nodes\ActionFilter.cs" />
     <Compile Include="Registration\OverridesFor.cs" />
     <Compile Include="Registration\RegisterActionSource.cs" />
@@ -389,7 +390,6 @@
     <Compile Include="Registration\Conventions\UrlPatternAttributePolicy.cs" />
     <Compile Include="Registration\DSL\ActionCallCandidateExpression.cs" />
     <Compile Include="Registration\DSL\ActionCallFilterExpression.cs" />
-    <Compile Include="Registration\DSL\AppliesToExpression.cs" />
     <Compile Include="Attributes.cs" />
     <Compile Include="Behaviors\BasicBehavior.cs" />
     <Compile Include="DoNext.cs" />

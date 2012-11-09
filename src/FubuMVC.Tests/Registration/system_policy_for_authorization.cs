@@ -18,9 +18,8 @@ namespace FubuMVC.Tests.Registration
         [SetUp]
         public void SetUp()
         {
-            var registry = new FubuRegistry(x =>
-            {
-                x.Actions.IncludeTypesNamed(t => t.EndsWith("Controller"));
+            var registry = new FubuRegistry(x => {
+                x.Actions.IncludeClassesSuffixedWithController();
 
                 x.Configure(g =>
                 {

@@ -20,9 +20,10 @@ namespace FubuMVC.Tests.Registration.Conventions
         [SetUp]
         public void SetUp()
         {
-            graph = BehaviorGraph.BuildFrom(x =>
-            {
-                x.Actions.IncludeTypesNamed(o => o.StartsWith("Special"));
+            graph = BehaviorGraph.BuildFrom(x => {
+                x.Actions.FindBy(source => {
+                    source.IncludeTypesNamed(o => o.StartsWith("Special"));
+                });
 
                 x.Routes
                     .IgnoreNamespaceForUrlFrom<SpecialMessage>()

@@ -71,8 +71,7 @@ namespace FubuMVC.Core
 
         private static void startBehaviorGraph(FubuRegistry registry, BehaviorGraph graph)
         {
-            var types = registry.BuildTypePool();
-            graph.Types = types;
+            graph.ApplicationAssembly = registry.ApplicationAssembly;
             registry.Config.Add(new DiscoveryActionsConfigurationPack());
         }
 

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Registration
@@ -10,7 +11,7 @@ namespace FubuMVC.Core.Registration
     /// </summary>
     public interface IActionSource
     {
-        IEnumerable<ActionCall> FindActions(TypePool types);
+        IEnumerable<ActionCall> FindActions(Assembly applicationAssembly);
     }
 
     public class ActionSources

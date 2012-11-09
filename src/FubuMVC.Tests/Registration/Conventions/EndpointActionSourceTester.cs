@@ -15,10 +15,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void only_finds_methods_that_follow_the_right_pattern_and_are_not_on_object()
         {
-            var pool = new TypePool(Assembly.GetExecutingAssembly());
-            pool.AddType(typeof(HomeEndpoint));
-
-            var actions = new EndpointActionSource().FindActions(pool);
+            var actions = new EndpointActionSource().FindActions(Assembly.GetExecutingAssembly());
 
             var matching = actions.Where(x => x.HandlerType == typeof(HomeEndpoint)).Select(x => x.Description);
             matching.Each(x => Debug.WriteLine(x));

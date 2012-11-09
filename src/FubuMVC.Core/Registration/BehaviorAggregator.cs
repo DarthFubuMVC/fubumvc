@@ -12,7 +12,7 @@ namespace FubuMVC.Core.Registration
             var sources = graph.Settings.Get<ActionSources>().AllSources();
 
             sources
-                .SelectMany(src => src.FindActions(graph.Types))
+                .SelectMany(src => src.FindActions(graph.ApplicationAssembly))
                 .Distinct()
                 .Each(call => {
                     var chain = new BehaviorChain();

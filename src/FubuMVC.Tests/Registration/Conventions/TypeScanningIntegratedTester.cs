@@ -29,32 +29,15 @@ namespace FubuMVC.Tests.Registration.Conventions
         #endregion
 
         [Test]
-        public void limit_behaviors_by_policy_on_interface_methods()
-        {
-            var graph = BehaviorGraph.BuildFrom(x =>
-            {
-                x.Actions.ExcludeNonConcreteTypes().ForTypesOf<IRouter>(o =>
-                {
-                    o.Include(c => c.Go());
-                });
-            });
-
-
-            IEnumerable<string> calls = graph.Behaviors
-                .Where(x => x.FirstCall().HandlerType.Assembly != typeof(BehaviorGraph).Assembly)
-                .Select(x => x.Calls.First().Method)
-                .Select(m => "{0} - {1}".ToFormat(m.DeclaringType.Name, m.Name));
-
-            calls.ShouldHaveTheSameElementsAs("Router1 - Go", "Router2 - Go", "Router3 - Go");
-        }
-
-        [Test]
         public void pick_up_behaviors_from_another_assembly()
         {
-            var graph = BehaviorGraph.BuildFrom(x =>
-            {
-                x.Applies.ToAssemblyContainingType<ClassInAnotherAssembly>();
-                x.Actions.IncludeTypesNamed(name => name.EndsWith("Controller"));
+            var graph = BehaviorGraph.BuildFrom(x => {
+                x.Actions.FindBy(o => {
+                    o.Applies.ToAssemblyContainingType<ClassInAnotherAssembly>();
+                    o.IncludeTypesNamed(name => name.EndsWith("Controller"));
+                });
+
+
             });
 
             graph.Behaviors.Count().ShouldBeGreaterThan(0);
@@ -74,9 +57,8 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void pick_up_behaviors_from_this_assembly()
         {
-            var graph = BehaviorGraph.BuildFrom(x =>
-            {
-                x.Actions.IncludeTypesNamed(name => name.EndsWith("Controller"));
+            var graph = BehaviorGraph.BuildFrom(x => {
+                x.Actions.IncludeClassesSuffixedWithController();
             });
 
             graph.Behaviors.Count().ShouldBeGreaterThan(0);

@@ -25,9 +25,10 @@ namespace FubuMVC.Tests
         [SetUp]
         public void SetUp()
         {
-            registry = new FubuRegistry(x =>
-            {
-                x.Actions.IncludeTypes(t => false);
+            registry = new FubuRegistry(x => {
+                x.Actions.FindBy(o => {
+                    o.IncludeTypes(y => false);
+                });
 
                 x.Route("area/sub/{Name}/{Age}")
                     .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();

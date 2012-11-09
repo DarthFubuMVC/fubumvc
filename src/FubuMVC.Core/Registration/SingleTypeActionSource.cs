@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Registration
@@ -16,7 +17,7 @@ namespace FubuMVC.Core.Registration
             _methodFilter = methodFilter;
         }
 
-        public IEnumerable<ActionCall> FindActions(TypePool types)
+        public IEnumerable<ActionCall> FindActions(Assembly applicationAssembly)
         {
             return _actionType.PublicInstanceMethods().Where(_methodFilter.Matches)
                 .Select(method => new ActionCall(_actionType, method));

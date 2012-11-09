@@ -17,7 +17,6 @@ namespace FubuMVC.Tests.Registration
         {
             var registry = new FubuRegistry(x =>
             {
-                x.Applies.ToThisAssembly();
                 x.Actions.IncludeClassesSuffixedWithController();
             });
 

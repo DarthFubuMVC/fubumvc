@@ -17,7 +17,7 @@ namespace FubuMVC.Tests.Registration
         [SetUp]
         public void SetUp()
         {
-            graph = BehaviorGraph.BuildFrom(x => x.Actions.IncludeTypesNamed(o => o.EndsWith("Controller")));
+            graph = BehaviorGraph.BuildFrom(x => x.Actions.IncludeClassesSuffixedWithController());
         }
 
         [Test]
@@ -58,9 +58,8 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void can_prepend_behaviors_in_front_of_an_action_4()
         {
-            graph = BehaviorGraph.BuildFrom(x =>
-            {
-                x.Actions.IncludeTypesNamed(o => o.EndsWith("Controller"));
+            graph = BehaviorGraph.BuildFrom(x => {
+                x.Actions.IncludeClassesSuffixedWithController();
 
                 x.Policies.AlterActions(a => a.WrapWith<MyWrapper>());
             });

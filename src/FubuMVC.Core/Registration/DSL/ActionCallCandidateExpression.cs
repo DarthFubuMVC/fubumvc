@@ -9,122 +9,40 @@ namespace FubuMVC.Core.Registration.DSL
 {
     public class ActionCallCandidateExpression
     {
-        private readonly ActionMethodFilter _methodFilter;
         private readonly ConfigGraph _configuration;
-        private readonly Lazy<ActionSource> _mainSource;
 
-        public ActionCallCandidateExpression(ActionMethodFilter methodFilter, ConfigGraph configuration)
+        public ActionCallCandidateExpression(ConfigGraph configuration)
         {
-            _methodFilter = methodFilter;
             _configuration = configuration;
-            _mainSource = new Lazy<ActionSource>(() =>
-            {
-                var source = new ActionSource(_methodFilter);
-                configuration.Add(new RegisterActionSource(source));
-
-                return source;
-            });
         }
 
         /// <summary>
-        /// Find Actions on classes that end on 'Controller'
+        /// Find Actions on classes that end on 'Controller' from the main application assembly
         /// </summary>
         public ActionCallCandidateExpression IncludeClassesSuffixedWithController()
         {
-            return IncludeTypes(x => x.Name.EndsWith("Controller"));
+            return FindBy(x => x.IncludeClassesSuffixedWithController());
         }
 
         /// <summary>
-        /// Exclude types that match on the provided filter for finding Actions
+        /// Create an adhoc policy for discovering actions 
         /// </summary>
-        public ActionCallCandidateExpression ExcludeTypes(Expression<Func<Type, bool>> filter)
+        /// <param name="configuration"></param>
+        public ActionCallCandidateExpression FindBy(Action<ActionSource> configuration)
         {
-            _mainSource.Value.TypeFilters.Excludes += filter;
-            return this;
+            var source = new ActionSource();
+            configuration(source);
+
+            return FindWith(source);
         }
 
-        /// <summary>
-        /// Find Action on types that match on the provided filter based on their name
-        /// </summary>
-        public ActionCallCandidateExpression IncludeTypesNamed(Expression<Func<string, bool>> filter)
-        {
-            var typeParam = Expression.Parameter(typeof (Type), "type"); // type =>
-            var nameProp = Expression.Property(typeParam, "Name");  // type.Name
-            var invokeFilter = Expression.Invoke(filter, nameProp); // filter(type.Name)
-            var lambda = Expression.Lambda<Func<Type, bool>>(invokeFilter, typeParam); // type => filter(type.Name)
-            
-            return IncludeTypes(lambda);
-        }
-
-        /// <summary>
-        /// Find Actions on types that match on the provided filter
-        /// </summary>
-        public ActionCallCandidateExpression IncludeTypes(Expression<Func<Type, bool>> filter)
-        {
-            _mainSource.Value.IncludeTypes(filter);
-            return this;
-        }
-
-        /// <summary>
-        /// Find Actions on concrete types assignable to T
-        /// </summary>
-        public ActionCallCandidateExpression IncludeTypesImplementing<T>()
-        {
-            return IncludeTypes(type => !type.IsOpenGeneric() && type.IsConcreteTypeOf<T>());
-        }
-
-        /// <summary>
-        /// Actions that match on the provided filter will be added to the runtime. 
-        /// </summary>
-        public ActionCallCandidateExpression IncludeMethods(Expression<Func<MethodInfo, bool>> filter)
-        {
-            _methodFilter.Includes += filter;
-            return this;
-        }
-
-        /// <summary>
-        /// Actions that match on the provided filter will NOT be added to the runtime. 
-        /// </summary>
-        public ActionCallCandidateExpression ExcludeMethods(Expression<Func<MethodInfo, bool>> filter)
-        {
-            _methodFilter.Excludes += filter;
-            return this;
-        }
-
-        public ActionCallCandidateExpression IgnoreMethodsDeclaredBy<T>()
-        {
-            _methodFilter.IgnoreMethodsDeclaredBy<T>();
-            return this;
-        }
-
-        public ActionCallCandidateExpression ForTypesOf<T>(Action<TypeMethodPolicy<T>> configure)
-        {
-            _mainSource.Value.TypeFilters.Includes += type => type.IsConcreteTypeOf<T>();
-
-            var filter = new CompositeFilter<MethodInfo>();
-
-            var policy = new TypeMethodPolicy<T>(filter);
-            configure(policy);
-
-            _mainSource.Value.CallFilters.Excludes +=
-                call => call.HandlerType.IsConcreteTypeOf<T>() && !filter.Matches(call.Method);
-
-            return this;
-        }
-
-
-        public ActionCallCandidateExpression ExcludeNonConcreteTypes()
-        {
-            _mainSource.Value.TypeFilters.Excludes += type => !type.IsConcrete();
-            return this;
-        }
 
         /// <summary>
         /// Find actions on the specified type
         /// </summary>
         public ActionCallCandidateExpression IncludeType<T>()
         {
-            return FindWith(new SingleTypeActionSource(typeof (T), _methodFilter));
+            return FindWith(new SingleTypeActionSource(typeof (T), new ActionMethodFilter()));
         }
 
         /// <summary>
@@ -146,7 +64,7 @@ namespace FubuMVC.Core.Registration.DSL
 
         /// <summary>
         /// Finds actions in concrete classes that are suffixed with either "Endpoint" or
-        /// "Endpoints"
+        /// "Endpoints" in the main application assembly
         /// </summary>
         /// <returns></returns>
         public ActionCallCandidateExpression IncludeClassesSuffixedWithEndpoint()

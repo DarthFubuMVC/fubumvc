@@ -9,23 +9,18 @@ namespace FubuMVC.Core.Registration
 {
 	public class AssemblyScanner : IAssemblyScanner
 	{
-		private readonly TypePool _types;
 		private readonly CompositeFilter<Type> _typeFilters;
 		private readonly List<IServiceRegistrationConvention> _conventions = new List<IServiceRegistrationConvention>();
+        private readonly AppliesToExpression _applies = new AppliesToExpression();
 
 		public AssemblyScanner()
 		{
-			_types = new TypePool(GetType().Assembly){
-			    IgnoreExportTypeFailures = false
-			};
 			_typeFilters = new CompositeFilter<Type>();
-
-			IncludeTypes(t => true);
 		}
 
 		public AppliesToExpression Applies
 		{
-			get { return new AppliesToExpression(_types); }
+			get { return _applies; }
 		}
 
 		public IAssemblyScanner IncludeTypes(Expression<Func<Type, bool>> filter)
@@ -53,7 +48,9 @@ namespace FubuMVC.Core.Registration
 
 		public void Configure(ServiceRegistry services)
 		{
-			var matchedTypes = _types.TypesMatching(_typeFilters.Matches);
+		    var types = _applies.BuildPool(TypePool.FindTheCallingAssembly());
+
+			var matchedTypes = types.TypesMatching(_typeFilters.Matches);
 			_conventions
 				.Each(convention => convention.Register(matchedTypes, services));
 		}

@@ -36,7 +36,7 @@ namespace FubuMVC.Core
         {
             if (!assemblies.Any()) return new Type[0];
 
-            var pool = new TypePool(null);
+            var pool = new TypePool();
 
             pool.AddAssemblies(assemblies);
 

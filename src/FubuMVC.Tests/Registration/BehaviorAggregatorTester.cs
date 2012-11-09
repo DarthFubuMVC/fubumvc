@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using NUnit.Framework;
@@ -43,7 +44,7 @@ namespace FubuMVC.Tests.Registration
                 _builder = builder;
             }
 
-            public IEnumerable<ActionCall> FindActions(TypePool types)
+            public IEnumerable<ActionCall> FindActions(Assembly applicationAssembly)
             {
                 return _builder();
             }

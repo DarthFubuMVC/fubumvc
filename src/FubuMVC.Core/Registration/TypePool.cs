@@ -14,34 +14,21 @@ namespace FubuMVC.Core.Registration
     /// </summary>
     public class TypePool
     {
-        private readonly Assembly _defaultAssembly;
         private readonly List<Assembly> _assemblies = new List<Assembly>();
         private readonly IList<Type> _types = new List<Type>();
         private bool _scanned;
-        private bool _ignoreCallingAssembly;
         private readonly IList<Func<IEnumerable<Assembly>>> _sources = new List<Func<IEnumerable<Assembly>>>();
-        
+
 
         /// <summary>
         /// Construct a type pool
         /// </summary>
-        /// <param name="defaultAssembly">The default assembly, typically the calling assembly</param>
-        public TypePool(Assembly defaultAssembly)
+        public TypePool()
         {
-            _defaultAssembly = defaultAssembly;
             IgnoreExportTypeFailures = true;
         }
 
         public bool IgnoreExportTypeFailures { get; set; }
-
-        /// <summary>
-        /// Ignore the assembly provided as default assemlbly in the constructor when enumerating assemblies
-        /// of this type pool
-        /// </summary>
-        public void IgnoreCallingAssembly()
-        {
-            _ignoreCallingAssembly = true;
-        }
 
         /// <summary>
         /// Register a function as a source of assemblies
@@ -128,18 +115,6 @@ namespace FubuMVC.Core.Registration
             get
             {
                 _assemblies.AddRange(_sources.SelectMany(x => x()));
-
-                if (_assemblies.Any() == false && !_ignoreCallingAssembly)
-                {
-                    if (_defaultAssembly == null)
-                    {
-                        yield break;
-                    }
-                    else
-                    {
-                        yield return _defaultAssembly;
-                    }
-                }
 
                 foreach (var assembly in _assemblies.Distinct())
                 {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
@@ -66,7 +67,7 @@ namespace FubuMVC.Tests.Registration
 
     public class FakeActionSource : IActionSource
     {
-        public IEnumerable<ActionCall> FindActions(TypePool types)
+        public IEnumerable<ActionCall> FindActions(Assembly applicationAssembly)
         {
             yield break;
         }

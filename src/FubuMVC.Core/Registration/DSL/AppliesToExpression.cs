@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Bottles;
 
@@ -6,64 +8,81 @@ namespace FubuMVC.Core.Registration.DSL
 {
     public class AppliesToExpression
     {
-        private readonly TypePool _pool;
+        private readonly IList<Action<TypePool>> _typePoolConfigurations = new List<Action<TypePool>>(); 
 
-        public AppliesToExpression(TypePool pool)
+        private Action<TypePool> configure
         {
-            _pool = pool;
+            set
+            {
+                _typePoolConfigurations.Add(value);
+            }
+        }
+
+        internal TypePool BuildPool(Assembly applicationAssembly)
+        {
+            var types = new TypePool();
+
+            if (_typePoolConfigurations.Any())
+            {
+                _typePoolConfigurations.Each(x => x(types));
+            }
+            else
+            {
+                types.AddAssembly(applicationAssembly);
+            }
+
+            return types;
         }
 
         /// <summary>
         /// Include all assemblies known through packages
         /// that come in as bottles
         /// </summary>
-        public AppliesToExpression ToAllPackageAssemblies()
+        public void ToAllPackageAssemblies()
         {
-            _pool.AddSource(() => PackageRegistry.PackageAssemblies);
-            return this;
+            configure  = pool => pool.AddSource(() => PackageRegistry.PackageAssemblies);
         }
 
         /// <summary>
         /// Include the calling assembly (i.e., the assembly of your code calling this method)
         /// </summary>
-        public AppliesToExpression ToThisAssembly()
+        public void ToThisAssembly()
         {
-            return ToAssembly(TypePool.FindTheCallingAssembly());
+            ToAssembly(TypePool.FindTheCallingAssembly());
         }
 
         /// <summary>
         /// Include the given assembly
         /// </summary>
-        public AppliesToExpression ToAssembly(Assembly assembly)
+        public void ToAssembly(Assembly assembly)
         {
-            _pool.AddAssembly(assembly);
-            return this;
+            configure = pool => pool.AddAssembly(assembly);
         }
 
         /// <summary>
         /// Include the assembly containing the provided type
         /// </summary>
-        public AppliesToExpression ToAssemblyContainingType<T>()
+        public void ToAssemblyContainingType<T>()
         {
-            return ToAssemblyContainingType(typeof (T));
+            ToAssemblyContainingType(typeof (T));
         }
 
         /// <summary>
         /// Include the assembly containing the provided type
         /// </summary>
-        public AppliesToExpression ToAssemblyContainingType(Type type)
+        public void ToAssemblyContainingType(Type type)
         {
-            return ToAssembly(type.Assembly);
+            ToAssembly(type.Assembly);
         }
 
         /// <summary>
         /// Include the assembly identified by the provided name.
         /// All restrictions known from <see cref="Assembly.Load(string)"/> apply.
         /// </summary>
-        public AppliesToExpression ToAssembly(string assemblyName)
+        public void ToAssembly(string assemblyName)
         {
             var assembly = Assembly.Load(assemblyName);
-            return ToAssembly(assembly);
+            ToAssembly(assembly);
         }
     }
 }

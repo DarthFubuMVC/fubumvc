@@ -161,7 +161,6 @@
     <Compile Include="Behaviors\InterceptExceptionBehaviorTester.cs" />
     <Compile Include="Behaviors\ITargetController.cs" />
     <Compile Include="Behaviors\RenderStatusCodeBehaviorTester.cs" />
-    <Compile Include="Bugs\DoubleActionRegistrationWhenDiagnosticsIsOnTester.cs" />
     <Compile Include="Caching\OuputCachingNodeTester.cs" />
     <Compile Include="Caching\OutputCachingBehaviorTester.cs" />
     <Compile Include="can_find_and_load_bottles_with_the_FubuModule_attribute.cs" />
@@ -169,7 +168,6 @@
     <Compile Include="FakeHttpContext.cs" />
     <Compile Include="FubuApplicationTester.cs" />
     <Compile Include="FubuModeTester.cs" />
-    <Compile Include="FubuRegistryWithTypesTester.cs" />
     <Compile Include="Http\AspNet\AspNetCurrentHttpRequestTester.cs" />
     <Compile Include="Http\AspNet\AspNetModelBindingTester.cs" />
     <Compile Include="Http\AspNet\AspNetServiceArgumentsTester.cs" />
@@ -332,7 +330,6 @@
     <Compile Include="Registration\Expressions\ActionCallFilterExpressionTester.cs" />
     <Compile Include="Registration\Expressions\EnrichCallsWithTester.cs" />
     <Compile Include="Registration\Expressions\ModelExpressionTester.cs" />
-    <Compile Include="Registration\Expressions\WrapBehaviorChainsWithTester.cs" />
     <Compile Include="Registration\Nodes\BehaviorChainTester.cs" />
     <Compile Include="Registration\ServiceRegistryTester.cs" />
     <Compile Include="Registration\Utilities\ActionCallSpec.cs" />

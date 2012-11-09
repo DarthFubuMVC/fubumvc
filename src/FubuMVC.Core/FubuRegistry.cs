@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
@@ -27,11 +28,8 @@ namespace FubuMVC.Core
     {
         private readonly IList<Type> _importedTypes = new List<Type>();
         private readonly ActionMethodFilter _methodFilter = new ActionMethodFilter();
-        private readonly IList<Action<TypePool>> _scanningOperations = new List<Action<TypePool>>();
-        private readonly TypePool _types = new TypePool(TypePool.FindTheCallingAssembly());
+        private readonly Assembly _applicationAssembly = TypePool.FindTheCallingAssembly();
         private readonly ConfigGraph _config = new ConfigGraph();
-
-        private bool _hasCompiled;
 
         public FubuRegistry()
         {
@@ -88,20 +86,11 @@ namespace FubuMVC.Core
         }
 
         /// <summary>
-        ///   Expression builder for configuring the assemblies to include within the scanning operations used to produce the <see cref = "BehaviorGraph" />
-        /// </summary>
-        public AppliesToExpression Applies
-        {
-            get { return new AppliesToExpression(_types); }
-        }
-
-
-        /// <summary>
         ///   Entry point to configuring how actions are found. Actions are the nuclei of behavior chains.
         /// </summary>
         public ActionCallCandidateExpression Actions
         {
-            get { return new ActionCallCandidateExpression(_methodFilter, _config); }
+            get { return new ActionCallCandidateExpression(_config); }
         }
 
         /// <summary>
@@ -198,17 +187,6 @@ namespace FubuMVC.Core
         }
 
 
-        /// <summary>
-        ///   Access the TypePool with all the assemblies represented in the AppliesTo expressions
-        ///   to make conventional registrations of any kind
-        /// </summary>
-        /// <param name = "configuration"></param>
-        public void WithTypes(Action<TypePool> configuration)
-        {
-            _scanningOperations.Add(configuration);
-        }
-
-
         public void Services<T>() where T : ServiceRegistry, new()
         {
             _config.Add(new T());
@@ -289,15 +267,9 @@ namespace FubuMVC.Core
             _config.Add(explicitAction, ConfigurationType.Explicit);
         }
 
-        public TypePool BuildTypePool()
+        internal Assembly ApplicationAssembly
         {
-            if (!_hasCompiled)
-            {
-                _scanningOperations.Each(x => x(_types));
-                _hasCompiled = true;
-            }
-
-            return _types;
+            get { return _applicationAssembly; }
         }
     }
 }

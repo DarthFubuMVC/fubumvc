@@ -73,9 +73,9 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void description_writes_each_behavior_first_call_and_route_pattern()
         {
-            var graph = BehaviorGraph.BuildFrom(x =>
-            {
-                x.Applies.ToAssemblyContainingType<OneController>();
+            var graph = BehaviorGraph.BuildFrom(x => {
+                x.Actions.IncludeType<OneController>();
+
                 x.Policies.WrapBehaviorChainsWith<WrappingBehavior2>();
                 x.Policies.WrapBehaviorChainsWith<WrappingBehavior>();
             });
@@ -93,7 +93,6 @@ namespace FubuMVC.Tests.Registration
         {
             var graph = BehaviorGraph.BuildFrom(x =>
             {
-                x.Applies.ToThisAssembly();
                 x.Actions.IncludeClassesSuffixedWithController();
 
                 x.Routes.HomeIs<MyHomeController>(c => c.ThisIsHome());
@@ -107,7 +106,6 @@ namespace FubuMVC.Tests.Registration
         {
             var graph = BehaviorGraph.BuildFrom(x =>
             {
-                x.Applies.ToThisAssembly();
                 x.Actions.IncludeClassesSuffixedWithController();
             });
 
@@ -119,7 +117,6 @@ namespace FubuMVC.Tests.Registration
         {
             var graph = BehaviorGraph.BuildFrom(x =>
             {
-                x.Applies.ToThisAssembly();
                 x.Actions.IncludeClassesSuffixedWithController();
 
                 x.Routes.HomeIs<MyHomeController>(c => c.ThisIsHome());

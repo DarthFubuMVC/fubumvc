@@ -21,7 +21,6 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void SetUp()
         {
             theFubuRegistry = new FubuRegistry();
-            theFubuRegistry.Applies.ToThisAssembly();
             theFubuRegistry.Actions.IncludeType<Controller1>();
 
             theGraph = new Lazy<BehaviorGraph>(() => BehaviorGraph.BuildFrom(theFubuRegistry));

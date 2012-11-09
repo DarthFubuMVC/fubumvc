@@ -36,7 +36,6 @@ namespace FubuMVC.Tests.Urls
             registry.Actions.IncludeType<TwoController>();
         	registry.Actions.IncludeType<QueryStringTestController>();
         	registry.Actions.IncludeType<OnlyOneActionController>();
-            registry.Actions.ExcludeMethods(x => x.Name.Contains("Ignore"));
 
             registry.Routes
                 .IgnoreControllerFolderName()
@@ -154,7 +153,7 @@ namespace FubuMVC.Tests.Urls
 
             Exception<FubuException>.ShouldBeThrownBy(() =>
             {
-                urls.UrlFor<OneController>(x => x.Ignored(), null);
+                urls.UrlFor<RandomClass>(x => x.Ignored(), null);
             });
         }
 
@@ -171,7 +170,7 @@ namespace FubuMVC.Tests.Urls
         {
             Exception<FubuException>.ShouldBeThrownBy(() =>
             {
-                var method = ReflectionHelper.GetMethod<OneController>(x => x.Ignored());
+                var method = ReflectionHelper.GetMethod<RandomClass>(x => x.Ignored());
                 urls.UrlFor(typeof (OneController), method, null);
             }).ErrorCode.ShouldEqual(2104);
         }
@@ -264,6 +263,13 @@ namespace FubuMVC.Tests.Urls
         }
     }
 
+    public class RandomClass
+    {
+        public void Ignored()
+        {
+
+        }
+    }
 
     public class OneController
     {
@@ -276,10 +282,7 @@ namespace FubuMVC.Tests.Urls
         public void A(Model6 input){}
         public void B(Model7 input){}
 
-        public void Ignored()
-        {
-            
-        }
+
 
         public void M1(Model1 input){}
         public void M2(){}

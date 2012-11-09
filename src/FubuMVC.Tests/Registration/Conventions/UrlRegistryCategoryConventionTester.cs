@@ -21,7 +21,11 @@ namespace FubuMVC.Tests.Registration.Conventions
 
             graph = BehaviorGraph.BuildFrom(x =>
             {
-                x.Actions.IncludeTypesNamed(n => n.StartsWith("UrlCategory"));
+                x.Actions.FindBy(source => {
+                   source.IncludeTypesNamed(n => n.StartsWith("UrlCategory"));
+                });
+                    
+                    
             });
 
             registry = new UrlRegistry(new ChainResolutionCache(new TypeResolver(), graph), new JQueryUrlTemplate(), new StubCurrentHttpRequest{TheApplicationRoot = "http://server/app"});

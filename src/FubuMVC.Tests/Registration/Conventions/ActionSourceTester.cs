@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using AssemblyPackage;
 using FubuCore;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
@@ -16,85 +17,151 @@ namespace FubuMVC.Tests.Registration.Conventions
     [TestFixture]
     public class ActionSourceTester
     {
-        #region Setup/Teardown
+        private Lazy<BehaviorGraph> _graph;
+        private ActionSource source;
 
         [SetUp]
         public void SetUp()
         {
-            matcher = new ActionSource(new ActionMethodFilter());
-
-            pool = new TypePool(null);
-            pool.IgnoreCallingAssembly();
-
-            pool.AddType<DifferentPatternClass>();
-            pool.AddType<OneController>();
-            pool.AddType<TwoController>();
-            pool.AddType<ThreeController>();
-
-            calls = null;
-        }
-
-        #endregion
-
-        private ActionSource matcher;
-        private TypePool pool;
-        private IEnumerable<ActionCall> calls;
-
-        private void setFilters(Action action)
-        {
-            action();
-            calls = matcher.FindActions(pool);
-        }
-
-        [Test]
-        public void scan_with_a_filter_on_controller_implements_interface()
-        {
-            setFilters(() => { matcher.TypeFilters.Includes += t => t.IsConcreteTypeOf<IPattern>(); });
-
-            calls.Count(x => x.HandlerType == typeof (DifferentPatternClass)).ShouldEqual(3);
-            calls.Count(x => x.HandlerType == typeof (OneController)).ShouldEqual(3);
-            calls.Count(x => x.HandlerType == typeof (TwoController)).ShouldEqual(0);
-            calls.Count(x => x.HandlerType == typeof (ThreeController)).ShouldEqual(0);
-        }
-
-        [Test]
-        public void scan_with_a_filter_on_controller_name()
-        {
-            setFilters(() => { matcher.TypeFilters.Includes += t => t.Name.EndsWith("Controller"); });
-
-            calls.Count(x => x.HandlerType == typeof (DifferentPatternClass)).ShouldEqual(0);
-            calls.Count(x => x.HandlerType == typeof (OneController)).ShouldEqual(3);
-            calls.Count(x => x.HandlerType == typeof (TwoController)).ShouldEqual(3);
-            calls.Count(x => x.HandlerType == typeof (ThreeController)).ShouldEqual(3);
-        }
-
-        [Test]
-        public void scan_with_a_filter_to_exclude_method()
-        {
-            setFilters(() =>
-            {
-                matcher.TypeFilters.Includes += type => type.IsConcrete();
-                matcher.CallFilters.Excludes += call => call.Method.Name.Contains("Go");
+            source = new ActionSource();
+            _graph = new Lazy<BehaviorGraph>(() => {
+                return BehaviorGraph.BuildFrom(r => {
+                    r.Actions.FindWith(source);
+                });
             });
+        }
 
-            calls.Count(x => x.HandlerType == typeof (DifferentPatternClass)).ShouldEqual(2);
-            calls.Count(x => x.HandlerType == typeof (OneController)).ShouldEqual(2);
-            calls.Count(x => x.HandlerType == typeof (TwoController)).ShouldEqual(2);
-            calls.Count(x => x.HandlerType == typeof (ThreeController)).ShouldEqual(2);
+        private BehaviorGraph theResultingGraph
+        {
+            get { return _graph.Value; }
+        }
+            
+            
+        [Test]
+        public void uses_the_application_assembly_if_none_is_specified()
+        {
+            source.IncludeClassesSuffixedWithController();
+
+            theResultingGraph.BehaviorFor<OneController>(x => x.Query(null))
+                .ShouldNotBeNull();
         }
 
         [Test]
-        public void scan_with_no_filters_other_than_concrete_should_have_every_public_method_of_the_concrete_types()
+        public void does_not_use_The_application_assembly_if_other_assemblies_are_specified()
         {
-            setFilters(() => { matcher.TypeFilters.Includes += type => type.IsConcrete(); });
+            source.Applies.ToAssemblyContainingType<AssemblyPackage.AssemblyEndpoint>();
 
-            calls.Any(x => x.HandlerType == typeof (IPattern)).ShouldBeFalse();
-            calls.Count(x => x.HandlerType == typeof (DifferentPatternClass)).ShouldEqual(3);
-            calls.Count(x => x.HandlerType == typeof (OneController)).ShouldEqual(3);
-            calls.Count(x => x.HandlerType == typeof (TwoController)).ShouldEqual(3);
-            calls.Count(x => x.HandlerType == typeof (ThreeController)).ShouldEqual(3);
+            theResultingGraph.BehaviorFor<OneController>(x => x.Query(null))
+                .ShouldBeNull();
         }
 
+        [Test]
+        public void does_find_actions_from_other_assemblies()
+        {
+            source.Applies.ToAssemblyContainingType<AssemblyPackage.AssemblyEndpoint>();
+            source.IncludeClassesSuffixedWithEndpoint();
+
+            theResultingGraph.BehaviorFor<AssemblyEndpoint>(x => x.get_hello())
+                .ShouldNotBeNull();
+        }
+
+        [Test]
+        public void match_by_endpoint()
+        {
+            source.IncludeClassesSuffixedWithEndpoint();
+
+            theResultingGraph.BehaviorFor<OneEndpoint>(x => x.Report()).ShouldNotBeNull();
+            theResultingGraph.BehaviorFor<OneController>(x => x.Report()).ShouldBeNull();
+        }
+
+        [Test]
+        public void match_by_controller_suffix()
+        {
+            source.IncludeClassesSuffixedWithController();
+
+            theResultingGraph.BehaviorFor<OneEndpoint>(x => x.Report()).ShouldBeNull();
+            theResultingGraph.BehaviorFor<OneController>(x => x.Report()).ShouldNotBeNull();
+        }
+
+        [Test]
+        public void match_by_name()
+        {
+            source.IncludeTypesNamed(x => x.StartsWith("One"));
+
+            theResultingGraph.BehaviorFor<OneEndpoint>(x => x.Report()).ShouldNotBeNull();
+            theResultingGraph.BehaviorFor<OneController>(x => x.Report()).ShouldNotBeNull();
+            theResultingGraph.BehaviorFor<TwoEndpoint>(x => x.Report()).ShouldBeNull();
+        }
+
+        [Test]
+        public void match_by_types()
+        {
+            source.IncludeTypes(x => x.Name.StartsWith("One"));
+
+            theResultingGraph.BehaviorFor<OneEndpoint>(x => x.Report()).ShouldNotBeNull();
+            theResultingGraph.BehaviorFor<OneController>(x => x.Report()).ShouldNotBeNull();
+            theResultingGraph.BehaviorFor<TwoEndpoint>(x => x.Report()).ShouldBeNull();
+        }
+
+        [Test]
+        public void match_by_types_implementing()
+        {
+            source.IncludeTypesImplementing<IPattern>();
+
+            theResultingGraph.BehaviorFor<DifferentPatternClass>(x => x.Report())
+                .ShouldNotBeNull();
+        }
+
+        [Test]
+        public void include_methods()
+        {
+            source.IncludeClassesSuffixedWithController();
+            source.IncludeMethods(x => x.Name.StartsWith("Q"));
+
+            theResultingGraph.BehaviorFor<OneController>(x => x.Query(null)).ShouldNotBeNull();
+            theResultingGraph.BehaviorFor<OneController>(x => x.Report()).ShouldBeNull();
+        }
+
+        [Test]
+        public void exclude_types()
+        {
+            source.IncludeClassesSuffixedWithController();
+            source.ExcludeTypes(x => x == typeof(TwoController));
+
+            theResultingGraph.BehaviorFor<OneController>(x => x.Query(null)).ShouldNotBeNull();
+            theResultingGraph.BehaviorFor<TwoController>(x => x.Query(null)).ShouldBeNull();
+
+        }
+
+        [Test]
+        public void exclude_methods()
+        {
+            source.IncludeClassesSuffixedWithController();
+            source.ExcludeMethods(x => x.Name.StartsWith("Q"));
+
+            theResultingGraph.BehaviorFor<OneController>(x => x.Query(null)).ShouldBeNull();
+            theResultingGraph.BehaviorFor<OneController>(x => x.Report()).ShouldNotBeNull();
+        }
+
+        [Test]
+        public void ignore_methods_declared_by()
+        {
+            source.IncludeClassesSuffixedWithController();
+            source.IgnoreMethodsDeclaredBy<OneController>();
+
+            theResultingGraph.BehaviorFor<ChildController>(x => x.Report()).ShouldBeNull();
+            theResultingGraph.BehaviorFor<ChildController>(x => x.ChildQuery(null)).ShouldNotBeNull();
+        }
+
+        [Test]
+        public void exclude_non_concrete_types()
+        {
+            source.IncludeTypes(x => x.CanBeCastTo<IPattern>());
+            source.ExcludeNonConcreteTypes();
+
+            theResultingGraph.BehaviorFor<IPattern>(x => x.Query(null))
+                .ShouldBeNull();
+        }
     }
 
     public class SimpleInputModel
@@ -139,6 +206,22 @@ namespace FubuMVC.Tests.Registration.Conventions
         SimpleOutputModel Query(SimpleInputModel model);
     }
 
+    public class OneEndpoint
+    {
+        public SimpleOutputModel Report()
+        {
+            return new SimpleOutputModel();
+        }  
+    }
+
+    public class TwoEndpoint
+    {
+        public SimpleOutputModel Report()
+        {
+            return new SimpleOutputModel();
+        }
+    }
+
     public class OneController : IPattern
     {
         public void Go()
@@ -158,6 +241,14 @@ namespace FubuMVC.Tests.Registration.Conventions
 
         public static void MethodThatShouldNotBeHere()
         {
+        }
+    }
+
+    public class ChildController : OneController
+    {
+        public SimpleOutputModel ChildQuery(SimpleInputModel model)
+        {
+            return new SimpleOutputModel();
         }
     }
 

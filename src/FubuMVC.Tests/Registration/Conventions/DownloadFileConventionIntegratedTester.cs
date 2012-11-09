@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             graph = BehaviorGraph.BuildFrom(x =>
             {
-                x.Actions.IncludeTypesImplementing<DownloadTestController>();
+                x.Actions.IncludeType<DownloadTestController>();
 
                 x.ApplyConvention<DownloadFileConvention>();
             });

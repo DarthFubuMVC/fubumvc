@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Registration.Conventions;
@@ -60,11 +61,9 @@ namespace FubuMVC.Core.Registration
 
             TypeResolver = new TypeResolver();
             _services.AddService<ITypeResolver>(TypeResolver);
-
-            Types = new TypePool(null); // need a default for some tests
         }
 
-        public TypePool Types { get; internal set; }
+        internal Assembly ApplicationAssembly { get; set; }
 
         public SettingsCollection Settings
         {
