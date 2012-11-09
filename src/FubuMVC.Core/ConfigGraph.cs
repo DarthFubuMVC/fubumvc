@@ -16,7 +16,7 @@ namespace FubuMVC.Core
 
         private readonly IList<RegistryImport> _imports = new List<RegistryImport>();
         private ProvenanceChain _currentProvenance = new ProvenanceChain(new Provenance[0]);
-        private readonly IList<ServiceRegistry> _services = new List<ServiceRegistry>();
+        private readonly IList<ServiceRegistryLog> _services = new List<ServiceRegistryLog>();
 
         public IEnumerable<ActionLog> AllLogs()
         {
@@ -147,20 +147,25 @@ namespace FubuMVC.Core
 
         public void Add(ServiceRegistry services)
         {
-            _services.Add(services);
+            _services.Add(new ServiceRegistryLog(services, CurrentProvenance));
         }
 
-        public IEnumerable<IServiceRegistration> AllServiceRegistrations()
+        public void RegisterServices(ServiceGraph services)
+        {
+            AllServiceRegistrations().Each(x => x.Apply(services));
+        }
+
+        public IEnumerable<ServiceRegistryLog> AllServiceRegistrations()
         {
             foreach (RegistryImport import in UniqueImports())
             {
-                foreach (IServiceRegistration registry in import.Registry.Config.AllServiceRegistrations())
+                foreach (ServiceRegistryLog log in import.Registry.Config.AllServiceRegistrations())
                 {
-                    yield return registry;
+                    yield return log;
                 }
             }
 
-            foreach (IServiceRegistration registry in _services)
+            foreach (ServiceRegistryLog registry in _services)
             {
                 yield return registry;
             }
@@ -178,7 +183,7 @@ namespace FubuMVC.Core
 
         public IEnumerable<T> AllEvents<T>()
         {
-            return _configurations.SelectMany(x => x.AllEvents<T>());
+            return _configurations.SelectMany(x => x.AllEvents<T>()).Union(_services.SelectMany(x => x.Events.OfType<T>()));
         }
     }
 }

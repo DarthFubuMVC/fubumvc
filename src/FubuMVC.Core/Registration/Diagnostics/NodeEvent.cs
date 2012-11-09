@@ -6,6 +6,6 @@ namespace FubuMVC.Core.Registration.Diagnostics
     {
         public object Subject { get; set; }
 
-        public ActionLog Source { get; set; }
+        public ISourceLog Source { get; set; }
     }
 }

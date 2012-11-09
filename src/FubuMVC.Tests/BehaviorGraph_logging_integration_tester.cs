@@ -121,6 +121,17 @@ namespace FubuMVC.Tests
                     <DefaultConfigurationPack>();
             });
         }
+
+        [Test]
+        public void every_service_added_has_a_provenance()
+        {
+            var events = theLogs.EventsOfType<ServiceEvent>().ToList();
+            events.Any().ShouldBeTrue();
+            events.Each(x => {
+                Debug.WriteLine(x.Source.ProvenanceChain);
+                x.Source.ProvenanceChain.ShouldNotBeNull();
+            });
+        }
     }
 
     public class LoggedFubuRegistry : FubuRegistry

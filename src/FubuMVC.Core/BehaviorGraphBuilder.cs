@@ -2,10 +2,11 @@ using System;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Diagnostics;
 using System.Collections.Generic;
+using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core
 {
-    public static class BehaviorGraphBuilder
+    internal static class BehaviorGraphBuilder
     {
         // Need to track the ConfigLog
         public static BehaviorGraph Import(FubuRegistry registry, BehaviorGraph parent, ConfigLog log)

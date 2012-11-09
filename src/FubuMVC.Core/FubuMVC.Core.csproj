@@ -127,9 +127,16 @@
     <Compile Include="Registration\Conventions\OutputBeforeAjaxContinuationPolicy.cs" />
     <Compile Include="Registration\Conventions\UrlPatternAttributeOnViewModelPolicy.cs" />
     <Compile Include="Registration\Conventions\VaryByPolicy.cs" />
+    <Compile Include="Registration\Diagnostics\BottleProvenance.cs" />
     <Compile Include="Registration\Diagnostics\ConfigLog.cs" />
+    <Compile Include="Registration\Diagnostics\ConfigurationPackProvenance.cs" />
+    <Compile Include="Registration\Diagnostics\FubuRegistryExtensionProvenance.cs" />
+    <Compile Include="Registration\Diagnostics\FubuRegistryProvenance.cs" />
+    <Compile Include="Registration\Diagnostics\ISourceLog.cs" />
     <Compile Include="Registration\Diagnostics\Provenance.cs" />
     <Compile Include="Registration\Diagnostics\ProvenanceChain.cs" />
+    <Compile Include="Registration\Diagnostics\ServiceRegistryLog.cs" />
+    <Compile Include="Registration\Diagnostics\ServiceRegistryProvenance.cs" />
     <Compile Include="Registration\Nodes\ActionFilter.cs" />
     <Compile Include="Registration\OverridesFor.cs" />
     <Compile Include="Registration\RegisterActionSource.cs" />

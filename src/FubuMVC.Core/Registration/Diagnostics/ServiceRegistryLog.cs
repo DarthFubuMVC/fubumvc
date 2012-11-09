@@ -1,25 +1,32 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using FubuCore.Descriptions;
+using FubuMVC.Core.Registration.Nodes;
 using FubuCore;
 using FubuCore.Reflection;
 
+
 namespace FubuMVC.Core.Registration.Diagnostics
 {
-    public class ActionLog : ISourceLog
+    public class ServiceRegistryLog : ISourceLog
     {
-        private readonly IConfigurationAction _action;
+        private readonly ServiceRegistry _registry;
         private readonly ProvenanceChain _provenanceChain;
         private readonly Lazy<Description> _description;
         private readonly IList<NodeEvent> _events = new List<NodeEvent>();
 
-        public ActionLog(IConfigurationAction action, ProvenanceChain provenanceChain)
+        public ServiceRegistryLog(ServiceRegistry registry, ProvenanceChain provenanceChain)
         {
-            _action = action;
-            _provenanceChain = provenanceChain;
+            _registry = registry;
+            _provenanceChain = registry.GetType() == typeof(ServiceRegistry) ? provenanceChain : provenanceChain.Push(new ServiceRegistryProvenance(registry));
             Id = Guid.NewGuid();
-            _description = new Lazy<Description>(() => Description.For(action));
+            _description = new Lazy<Description>(() => Description.For(registry));
+        }
+
+        public void Apply(ServiceGraph services)
+        {
+            _registry.As<IServiceRegistration>().Apply(services);
+            services.As<ITracedModel>().RecordEvents(AddEvent);
         }
 
         public ProvenanceChain ProvenanceChain
@@ -27,18 +34,16 @@ namespace FubuMVC.Core.Registration.Diagnostics
             get { return _provenanceChain; }
         }
 
-        public IConfigurationAction Action
+        public ServiceRegistry Registry
         {
-            get { return _action; }
+            get { return _registry; }
         }
 
-        public void RunAction(BehaviorGraph graph)
+        public void RunAction(ServiceGraph graph)
         {
-            _action.Configure(graph);
+            _registry.As<IServiceRegistration>().Apply(graph);
 
-            graph.AllTracedModels().Each(model => {
-                model.RecordEvents(AddEvent);
-            });
+            graph.As<ITracedModel>().RecordEvents(AddEvent);
         }
 
         public Guid Id { get; private set;}
@@ -59,9 +64,9 @@ namespace FubuMVC.Core.Registration.Diagnostics
             get { return _events; }
         }
 
-        protected bool Equals(ActionLog other)
+        protected bool Equals(ServiceRegistryLog other)
         {
-            return Equals(_action, other._action);
+            return Equals(_registry, other._registry);
         }
 
         public override bool Equals(object obj)
@@ -74,7 +79,7 @@ namespace FubuMVC.Core.Registration.Diagnostics
 
         public override int GetHashCode()
         {
-            return (_action != null ? _action.GetHashCode() : 0);
+            return (_registry != null ? _registry.GetHashCode() : 0);
         }
     }
 }
