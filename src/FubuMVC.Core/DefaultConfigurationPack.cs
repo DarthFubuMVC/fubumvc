@@ -31,6 +31,7 @@ namespace FubuMVC.Core
             Add<JsonMessageInputConvention>();
             Add<AjaxContinuationPolicy>();
             Add<DictionaryOutputConvention>();
+            Add<HtmlStringOutputPolicy>();
             Add<StringOutputPolicy>();
             Add<HtmlTagOutputPolicy>();
 

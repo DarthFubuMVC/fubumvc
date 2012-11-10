@@ -6,26 +6,26 @@ using FubuMVC.Core.Resources.Conneg;
 namespace FubuMVC.Core.Registration.Conventions
 {
     [Policy]
-    public class StringOutputPolicy : IConfigurationAction
+    public class StringOutputPolicy : Policy
     {
-        public void Configure(BehaviorGraph graph)
+        public StringOutputPolicy()
         {
-            graph.Behaviors
-                .Where(x => x.ResourceType() == typeof (string))
-                .Each(x =>
-                {
-                    var shouldBeHtml = x.LastCall().Method.Name.EndsWith("Html", StringComparison.InvariantCultureIgnoreCase);
-
-                    if (shouldBeHtml)
-                    {
-                        x.Output.AddHtml();
-                    }
-                    else
-                    {
-                        x.Output.Writers.AddToEnd(new WriteString());
-                    }
-                });
-
+            Where.ResourceTypeIs<string>();
+            Conneg.AddWriter<WriteString>();
         }
     }
+
+    [Policy]
+    public class HtmlStringOutputPolicy : Policy
+    {
+        public HtmlStringOutputPolicy()
+        {
+            Where.ResourceTypeIs<string>();
+            Where.LastActionMatches(call => call.Method.Name.EndsWith("HTML", StringComparison.InvariantCultureIgnoreCase));
+
+            Conneg.AddHtml();
+        }
+    }
+
+
 }

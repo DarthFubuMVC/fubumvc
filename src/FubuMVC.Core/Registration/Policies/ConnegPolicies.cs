@@ -32,6 +32,19 @@ namespace FubuMVC.Core.Registration.Policies
         {
             _policy.ModifyWith(new AddWriter(source));
         }
+
+        public void AddHtml()
+        {
+            _policy.ModifyWith<AddHtml>();
+        }
+    }
+
+    public class AddHtml : IChainModification
+    {
+        public void Modify(BehaviorChain chain)
+        {
+            chain.Output.AddHtml();
+        }
     }
 
     public class AddWriter : IChainModification

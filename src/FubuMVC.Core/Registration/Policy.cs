@@ -76,12 +76,12 @@ namespace FubuMVC.Core.Registration
 
             public IOrExpression LastActionMatches(Func<ActionCall, bool> filter, string description)
             {
-                throw new NotImplementedException();
+                return addFilter(new LastActionMatch(filter, description));
             }
 
             public IOrExpression LastActionMatches(Expression<Func<ActionCall, bool>> expression)
             {
-                throw new NotImplementedException();
+                return addFilter(new LastActionMatch(expression));
             }
 
             public IOrExpression IsPartialOnly()
