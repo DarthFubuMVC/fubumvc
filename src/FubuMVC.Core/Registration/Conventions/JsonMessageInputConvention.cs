@@ -6,14 +6,13 @@ using FubuMVC.Core.Resources.Conneg;
 namespace FubuMVC.Core.Registration.Conventions
 {
     [Policy]
-    public class JsonMessageInputConvention : IConfigurationAction
+    public class JsonMessageInputConvention : Policy
     {
-        public void Configure(BehaviorGraph graph)
+        public JsonMessageInputConvention()
         {
-            graph.Behaviors
-                .Where(x => !x.IsPartialOnly)
-                .Where(x => x.ResourceType().CanBeCastTo<JsonMessage>() || x.InputType().CanBeCastTo<JsonMessage>())
-                .Each(x => x.MakeAsymmetricJson());
+            Where.IsNotPartial();
+            Where.ResourceTypeImplements<JsonMessage>().Or.InputTypeImplements<JsonMessage>();
+            Conneg.MakeAsymmetricJson();
         }
     }
 }

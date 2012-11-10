@@ -45,6 +45,8 @@ namespace FubuMVC.Core.Registration
                     var orFilter = new OrChainFilter();
                     orFilter.Add(last);
                     orFilter.Add(filter);
+
+                    _wheres.Add(orFilter);
                 }
             }
         }
@@ -71,14 +73,14 @@ namespace FubuMVC.Core.Registration
                 return addFilter(new T());
             }
 
-            public IOrExpression IsPartialOnly
+            public IOrExpression IsPartialOnly()
             {
-                get { return addFilter(new IsPartial()); }
+                return addFilter(new IsPartial());
             }
 
-            public IOrExpression IsNotPartial
+            public IOrExpression IsNotPartial()
             {
-                get { return addFilter(new IsNotPartial()); }
+                return addFilter(new IsNotPartial());
             }
 
             public IOrExpression ResourceTypeImplements<T>()
@@ -106,6 +108,14 @@ namespace FubuMVC.Core.Registration
         public void ModifyWith<T>() where T : IChainModification, new()
         {
             _actions.Add(new T());
+        }
+
+        public ConnegExpression Conneg
+        {
+            get
+            {
+                return new ConnegExpression(this);
+            }
         }
     }
 
