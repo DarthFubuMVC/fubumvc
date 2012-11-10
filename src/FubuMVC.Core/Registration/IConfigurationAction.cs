@@ -8,6 +8,4 @@ namespace FubuMVC.Core.Registration
     {
         void Configure(BehaviorGraph graph);
     }
-
-
 }

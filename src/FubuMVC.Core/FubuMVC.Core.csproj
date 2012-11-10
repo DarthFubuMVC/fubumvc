@@ -138,8 +138,17 @@
     <Compile Include="Registration\Diagnostics\ServiceRegistryLog.cs" />
     <Compile Include="Registration\Diagnostics\ServiceRegistryProvenance.cs" />
     <Compile Include="Registration\DSL\AppliesToExpression.cs" />
+    <Compile Include="Registration\Policies\ConnegPolicies.cs" />
+    <Compile Include="Registration\Policies\IChainFilter.cs" />
+    <Compile Include="Registration\Policies\IChainModification.cs" />
+    <Compile Include="Registration\Policies\OrChainFilter.cs" />
+    <Compile Include="Registration\Policies\InputTypeImplements.cs" />
+    <Compile Include="Registration\Policies\IsNotPartial.cs" />
+    <Compile Include="Registration\Policies\IsPartial.cs" />
     <Compile Include="Registration\Nodes\ActionFilter.cs" />
     <Compile Include="Registration\OverridesFor.cs" />
+    <Compile Include="Registration\Policies\ResourceTypeImplements.cs" />
+    <Compile Include="Registration\Policy.cs" />
     <Compile Include="Registration\RegisterActionSource.cs" />
     <Compile Include="Registration\Routes\IMakeMyOwnUrl.cs" />
     <Compile Include="Registration\Routes\SessionStateRequirement.cs" />
@@ -231,7 +240,6 @@
     <Compile Include="Http\HttpStandinServiceRegistry.cs" />
     <Compile Include="Http\RequestDataExtensions.cs" />
     <Compile Include="Http\RouteDataValues.cs" />
-    <Compile Include="Registration\Conventions\BehaviorChainPolicy.cs" />
     <Compile Include="Registration\Conventions\AttachInputPolicy.cs" />
     <Compile Include="Registration\Conventions\AttachOutputPolicy.cs" />
     <Compile Include="Registration\Conventions\HtmlTagOutputPolicy.cs" />

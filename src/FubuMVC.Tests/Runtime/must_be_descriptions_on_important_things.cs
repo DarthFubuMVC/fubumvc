@@ -8,6 +8,7 @@ using FubuCore.Conversion;
 using FubuCore.Descriptions;
 using FubuCore.Logging;
 using FubuMVC.Core.Caching;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
@@ -23,6 +24,19 @@ namespace FubuMVC.Tests.Runtime
     [TestFixture]
     public class must_be_descriptions_on_important_things
     {
+        [Test, Explicit]
+        public void must_be_a_description_on_all_IConfigurationAction_types()
+        {
+            IEnumerable<Type> types = typeof(FubuRequest).Assembly.GetExportedTypes()
+                .Where(x => x.IsConcreteTypeOf<IConfigurationAction>())
+                .Where(x => !Description.HasExplicitDescription(x));
+
+            types.Each(x => Debug.WriteLine(x.Name));
+
+            types.Any().ShouldBeFalse();
+        }
+
+
         [Test]
         public void must_be_a_description_on_all_IDependency_types()
         {
