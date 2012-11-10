@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core.Registration.Nodes;
+﻿using System;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
 
 namespace FubuMVC.Core.Registration.Policies
@@ -20,6 +21,38 @@ namespace FubuMVC.Core.Registration.Policies
         public void MakeSymmetricJson()
         {
             _policy.ModifyWith<SymmetricJsonModification>();
+        }
+
+        public void AddWriter<T>() where T : WriterNode, new()
+        {
+            _policy.ModifyWith<AddWriter<T>>();       
+        }
+
+        public void AddWriter(Func<BehaviorChain, WriterNode> source)
+        {
+            _policy.ModifyWith(new AddWriter(source));
+        }
+    }
+
+    public class AddWriter : IChainModification
+    {
+        private readonly Func<BehaviorChain, WriterNode> _writerSource;
+
+        public AddWriter(Func<BehaviorChain, WriterNode> writerSource)
+        {
+            _writerSource = writerSource;
+        }
+
+        public void Modify(BehaviorChain chain)
+        {
+            chain.Output.Writers.AddToEnd(_writerSource(chain));
+        }
+    }
+
+    public class AddWriter<T> : AddWriter where T : WriterNode, new()
+    {
+        public AddWriter() : base(chain => new T())
+        {
         }
     }
 

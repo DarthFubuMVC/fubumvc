@@ -136,13 +136,17 @@
     <Compile Include="Registration\Conventions\VaryByPolicyTester.cs" />
     <Compile Include="Registration\default_action_discovery.cs" />
     <Compile Include="Registration\Diagnostics\ProvenanceChainTester.cs" />
+    <Compile Include="Registration\Policies\AddWriterTester.cs" />
+    <Compile Include="Registration\Policies\InputTypeIsTester.cs" />
     <Compile Include="Registration\Policies\LambdaChainModificationTester.cs" />
+    <Compile Include="Registration\Policies\LastActionMatchTester.cs" />
     <Compile Include="Registration\Policies\OrChainFilterTester.cs" />
     <Compile Include="Registration\OutputBeforeAjaxContinuationPolicyTester.cs" />
     <Compile Include="Registration\Policies\InputTypeImplementsTester.cs" />
     <Compile Include="Registration\Policies\IsNotPartialTester.cs" />
     <Compile Include="Registration\Policies\IsPartialTester.cs" />
     <Compile Include="Registration\Policies\ResourceTypeImplementsTester.cs" />
+    <Compile Include="Registration\Policies\ResourceTypeIsTester.cs" />
     <Compile Include="Registration\Registration\ModelBindingServiceRegistry_specification.cs" />
     <Compile Include="Registration\SettingsCollectionTester.cs" />
     <Compile Include="Resources\Conneg\ReaderChoiceTester.cs" />

@@ -141,6 +141,8 @@
     <Compile Include="Registration\Policies\ConnegPolicies.cs" />
     <Compile Include="Registration\Policies\IChainFilter.cs" />
     <Compile Include="Registration\Policies\IChainModification.cs" />
+    <Compile Include="Registration\Policies\InputTypeIs.cs" />
+    <Compile Include="Registration\Policies\LastActionMatch.cs" />
     <Compile Include="Registration\Policies\OrChainFilter.cs" />
     <Compile Include="Registration\Policies\InputTypeImplements.cs" />
     <Compile Include="Registration\Policies\IsNotPartial.cs" />
@@ -148,6 +150,7 @@
     <Compile Include="Registration\Nodes\ActionFilter.cs" />
     <Compile Include="Registration\OverridesFor.cs" />
     <Compile Include="Registration\Policies\ResourceTypeImplements.cs" />
+    <Compile Include="Registration\Policies\ResourceTypeIs.cs" />
     <Compile Include="Registration\Policy.cs" />
     <Compile Include="Registration\RegisterActionSource.cs" />
     <Compile Include="Registration\Routes\IMakeMyOwnUrl.cs" />

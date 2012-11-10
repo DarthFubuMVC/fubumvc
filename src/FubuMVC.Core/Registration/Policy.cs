@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Policies;
@@ -73,6 +74,16 @@ namespace FubuMVC.Core.Registration
                 return addFilter(new T());
             }
 
+            public IOrExpression LastActionMatches(Func<ActionCall, bool> filter, string description)
+            {
+                throw new NotImplementedException();
+            }
+
+            public IOrExpression LastActionMatches(Expression<Func<ActionCall, bool>> expression)
+            {
+                throw new NotImplementedException();
+            }
+
             public IOrExpression IsPartialOnly()
             {
                 return addFilter(new IsPartial());
@@ -88,9 +99,19 @@ namespace FubuMVC.Core.Registration
                 return addFilter(new ResourceTypeImplements<T>());
             }
 
+            public IOrExpression ResourceTypeIs<T>()
+            {
+                return addFilter(new ResourceTypeIs<T>());
+            }
+
             public IOrExpression InputTypeImplements<T>()
             {
                 return addFilter(new InputTypeImplements<T>());
+            }
+
+            public IOrExpression InputTypeIs<T>()
+            {
+                return addFilter(new InputTypeIs<T>());
             }
 
             private IOrExpression addFilter(IChainFilter filter)
@@ -116,6 +137,11 @@ namespace FubuMVC.Core.Registration
             {
                 return new ConnegExpression(this);
             }
+        }
+
+        public void ModifyWith(IChainModification chainModification)
+        {
+            _actions.Add(chainModification);
         }
     }
 
