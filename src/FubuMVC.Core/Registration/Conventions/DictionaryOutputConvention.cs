@@ -7,14 +7,12 @@ using FubuMVC.Core.Resources.Conneg;
 namespace FubuMVC.Core.Registration.Conventions
 {
     [Policy]
-    public class DictionaryOutputConvention : IConfigurationAction
+    public class DictionaryOutputConvention : Policy
     {
-        public void Configure(BehaviorGraph graph)
+        public DictionaryOutputConvention()
         {
-            graph
-                .Behaviors
-                .Where(x => x.ResourceType().CanBeCastTo<IDictionary<string, object>>())
-                .Each(x => x.MakeAsymmetricJson());
+            Where.ResourceTypeImplements<IDictionary<string, object>>();
+            Conneg.MakeAsymmetricJson();
         }
     }
 }
