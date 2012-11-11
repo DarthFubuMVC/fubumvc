@@ -20,8 +20,10 @@ namespace AssemblyPackage
     {
         public void Configure(FubuRegistry registry)
         {
-            registry.Policies.ConditionallyWrapBehaviorChainsWith<BehaviorFromAssemblyBottle>(
-                x => x.HandlerType == typeof (AssemblyEndpoint));
+            registry.Policies.Add(policy => {
+                policy.Where.LastActionMatches(call => call.HandlerType == typeof (AssemblyEndpoint));
+                policy.Wrap.WithBehavior<BehaviorFromAssemblyBottle>();
+            });
         }
     }
 

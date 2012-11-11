@@ -337,8 +337,6 @@
     <Compile Include="Registration\Conventions\RouteDefinitionResolverTester.cs" />
     <Compile Include="Registration\Conventions\TypeScanningIntegratedTester.cs" />
     <Compile Include="Registration\CoreServiceRegistry_specification.cs" />
-    <Compile Include="Registration\Expressions\ActionCallFilterExpressionTester.cs" />
-    <Compile Include="Registration\Expressions\EnrichCallsWithTester.cs" />
     <Compile Include="Registration\Expressions\ModelExpressionTester.cs" />
     <Compile Include="Registration\Nodes\BehaviorChainTester.cs" />
     <Compile Include="Registration\ServiceRegistryTester.cs" />

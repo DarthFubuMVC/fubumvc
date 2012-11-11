@@ -76,8 +76,11 @@ namespace FubuMVC.Tests.Registration
             var graph = BehaviorGraph.BuildFrom(x => {
                 x.Actions.IncludeType<OneController>();
 
-                x.Policies.WrapBehaviorChainsWith<WrappingBehavior2>();
-                x.Policies.WrapBehaviorChainsWith<WrappingBehavior>();
+                x.Policies.Add(policy => {
+                    policy.Wrap.WithBehavior<WrappingBehavior2>();
+                    policy.Wrap.WithBehavior<WrappingBehavior>();
+                });
+
             });
 
             var listener = MockRepository.GenerateStub<TraceListener>();

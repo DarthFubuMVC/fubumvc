@@ -203,7 +203,6 @@
     <Compile Include="Http\IClientConnectivity.cs" />
     <Compile Include="MoveToDiagnosticsAttribute.cs" />
     <Compile Include="Registration\Conventions\DefaultOutputPolicy.cs" />
-    <Compile Include="Registration\Conventions\WrapAction.cs" />
     <Compile Include="Registration\EndpointActionSource.cs" />
     <Compile Include="Runtime\Conditionals\Always.cs" />
     <Compile Include="Behaviors\Conditional\ConditionalBehavior.cs" />
@@ -403,7 +402,6 @@
     <Compile Include="Registration\Conventions\DownloadFileConvention.cs" />
     <Compile Include="Registration\Conventions\UrlPatternAttributePolicy.cs" />
     <Compile Include="Registration\DSL\ActionCallCandidateExpression.cs" />
-    <Compile Include="Registration\DSL\ActionCallFilterExpression.cs" />
     <Compile Include="Attributes.cs" />
     <Compile Include="Behaviors\BasicBehavior.cs" />
     <Compile Include="DoNext.cs" />

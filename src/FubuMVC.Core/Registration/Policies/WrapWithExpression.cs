@@ -26,7 +26,7 @@ namespace FubuMVC.Core.Registration.Policies
             _policy.ModifyBy(chain => chain.InsertFirst(new T()));
         }
 
-        public void WithBehavior<T>() where T : IActionBehavior, new()
+        public void WithBehavior<T>() where T : IActionBehavior
         {
             _policy.ModifyBy(chain => chain.InsertFirst(Wrapper.For<T>()));
         }

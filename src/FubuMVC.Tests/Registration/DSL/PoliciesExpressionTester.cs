@@ -21,9 +21,13 @@ namespace FubuMVC.Tests.Registration.DSL
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<OrderingPolicyController>();
 
-            registry.Policies.WrapBehaviorChainsWith<OPWrapper1>().Ordering(x =>
-            {
-                x.MustBeBeforeAuthorization();
+            registry.Policies.Add(policy => {
+                policy.Wrap.WithBehavior<OPWrapper1>();
+            });
+
+            registry.Policies.Reorder(policy => {
+                policy.ThisWrapperBeBefore<OPWrapper1>();
+                policy.WhatMustBeAfter = node => node.Category == BehaviorCategory.Authorization;
             });
 
             graph = BehaviorGraph.BuildFrom(registry);
@@ -52,7 +56,10 @@ namespace FubuMVC.Tests.Registration.DSL
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<OrderingPolicyController>();
 
-            registry.Policies.WrapBehaviorChainsWith<OPWrapper1>();
+            registry.Policies.Add(policy => {
+                policy.Wrap.WithBehavior<OPWrapper1>();
+            });
+
             registry.Policies.Reorder(x =>
             {
                 x.ThisWrapperBeBefore<OPWrapper1>();

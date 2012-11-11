@@ -166,7 +166,7 @@ namespace FubuMVC.Tests
             import.Route("a/m1").Calls<Action1>(x => x.M1());
             import.Route("a/m2").Calls<Action1>(x => x.M2());
 
-            import.Policies.WrapBehaviorChainsWith<Wrapper>();
+            import.Policies.Add(policy => policy.Wrap.WithBehavior<Wrapper>());
 
             parent.Import(import, "import");
 
@@ -200,7 +200,7 @@ namespace FubuMVC.Tests
             parent.Route("b/m1").Calls<Action2>(x => x.M1());
             parent.Route("b/m2").Calls<Action2>(x => x.M2());
 
-            parent.Policies.WrapBehaviorChainsWith<Wrapper>();
+            parent.Policies.Add(policy => policy.Wrap.WithBehavior<Wrapper>());
 
             var graph = BehaviorGraph.BuildFrom(parent);
 

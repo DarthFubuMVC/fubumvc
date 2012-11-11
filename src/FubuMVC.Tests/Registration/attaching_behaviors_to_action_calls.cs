@@ -55,22 +55,6 @@ namespace FubuMVC.Tests.Registration
             });
         }
 
-        [Test]
-        public void can_prepend_behaviors_in_front_of_an_action_4()
-        {
-            graph = BehaviorGraph.BuildFrom(x => {
-                x.Actions.IncludeClassesSuffixedWithController();
-
-                x.Policies.AlterActions(a => a.WrapWith<MyWrapper>());
-            });
-
-            graph.Actions().Each(x => x.WrapWith(typeof(MyWrapper)));
-
-            graph.Actions().Each(x =>
-            {
-                x.Previous.ShouldBeOfType<Wrapper>().BehaviorType.ShouldEqual(typeof(MyWrapper));
-            });
-        }
     }
 
     public class MyWrapper : BasicBehavior
