@@ -6,23 +6,14 @@ using FubuMVC.Core.Registration.Nodes;
 namespace FubuMVC.Core.Registration.Conventions
 {
     [Policy]
-    public class PartialOnlyConvention : IConfigurationAction
+    public class PartialOnlyConvention : Policy
     {
         public const string Partial = "Partial";
 
-
-        public void Configure(BehaviorGraph graph)
+        public PartialOnlyConvention()
         {
-            graph
-                .Actions()
-                .Where(ShouldBePartial)
-                .Select(x => x.ParentChain())
-                .Each(x => x.IsPartialOnly = true);
-        }
-
-        public static bool ShouldBePartial(ActionCall call)
-        {
-            return call.Method.Name.EndsWith(Partial);
+            Where.AnyActionMatches(call => call.Method.Name.EndsWith("Partial"));
+            ModifyBy(chain => chain.IsPartialOnly = true);
         }
     }
 }
