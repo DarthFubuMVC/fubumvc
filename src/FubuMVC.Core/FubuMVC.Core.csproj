@@ -451,7 +451,7 @@
     <Compile Include="Security\AntiForgery\AntiForgeryService.cs" />
     <Compile Include="Security\AntiForgery\AntiForgeryTokenAttribute.cs" />
     <Compile Include="Security\AntiForgery\AntiForgeryBehavior.cs" />
-    <Compile Include="Security\AntiForgery\AntiForgeryPolicy.cs" />
+    <Compile Include="Security\AntiForgery\AntiForgeryServiceRegistry.cs" />
     <Compile Include="Security\AntiForgery\AntiForgeryData.cs" />
     <Compile Include="Security\AntiForgery\AntiForgeryNode.cs" />
     <Compile Include="Security\AntiForgery\AntiForgeryValidator.cs" />
