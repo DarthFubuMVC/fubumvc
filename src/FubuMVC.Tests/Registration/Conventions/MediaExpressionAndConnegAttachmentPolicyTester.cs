@@ -34,7 +34,11 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void apply_content_by_action()
         {
-            theFubuRegistry.Media.ApplyContentNegotiationToActions(x => x.OutputType() == typeof (ViewModel3));
+            theFubuRegistry.Policies.Add(policy => {
+                policy.Where.ResourceTypeIs<ViewModel3>();
+
+                policy.Conneg.ApplyConneg();
+            });
 
             chainFor(x => x.C()).Output.Writers.Any().ShouldBeTrue();
             chainFor(x => x.D()).Output.Writers.Any().ShouldBeTrue();
@@ -45,7 +49,10 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void apply_content_by_looking_at_a_chain()
         {
-            theFubuRegistry.Media.ApplyContentNegotiationTo(chain => chain.FirstCall().Method.Name == "A");
+            theFubuRegistry.Policies.Add(policy => {
+                policy.Where.AnyActionMatches(call => call.Method.Name == "A");
+                policy.Conneg.ApplyConneg();
+            });
 
             chainFor(x => x.A()).Output.Writers.Any().ShouldBeTrue();
 

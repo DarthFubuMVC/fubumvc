@@ -58,6 +58,11 @@ namespace FubuMVC.Core.Registration.Policies
         {
             _policy.ModifyBy(chain => chain.Output.ClearAll());
         }
+
+        public void ApplyConneg()
+        {
+            _policy.ModifyBy(chain => chain.ApplyConneg());
+        }
     }
 
     public class AcceptJson : IChainModification

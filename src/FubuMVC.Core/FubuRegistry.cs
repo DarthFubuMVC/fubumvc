@@ -94,14 +94,6 @@ namespace FubuMVC.Core
         }
 
         /// <summary>
-        ///   Expression builder for configuring content negotiation
-        /// </summary>
-        public MediaExpression Media
-        {
-            get { return new MediaExpression(this); }
-        }
-
-        /// <summary>
         ///   Configures the <see cref = "IServiceRegistry" /> to specify dependencies. 
         ///   This is an IoC-agnostic method of dependency configuration that will be consumed by the underlying implementation (e.g., StructureMap)
         /// </summary>
