@@ -3,35 +3,22 @@ using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime.Formatters;
 
 namespace FubuMVC.Core.Ajax
 {
-    public class AjaxContinuationPolicy : IConfigurationAction
+    public class AjaxContinuationPolicy : Policy
     {
-        public void Configure(BehaviorGraph graph)
+        public AjaxContinuationPolicy()
         {
-            graph
-                .Behaviors
-                .Where(IsAjaxContinuation)
-                .Each(chain =>
-                {
-                    // Apply json formatting and http model binding coming up, but strip out
-					if (chain.InputType() != null)
-					{
-						chain.Input.AllowHttpFormPosts = true;
-						chain.Input.AddFormatter<JsonFormatter>();
-					}
+            Where.ResourceTypeImplements<AjaxContinuation>();
 
-					chain.Output.ClearAll();
-                    chain.Output.AddWriter(typeof (AjaxContinuationWriter<>));
-                });
-        }
+            Conneg.AllowHttpFormPosts();
+            Conneg.AcceptJson();
 
-        public static bool IsAjaxContinuation(BehaviorChain chain)
-        {
-            var outputType = chain.ResourceType();
-            return outputType != null && outputType.CanBeCastTo<AjaxContinuation>();
+            Conneg.ClearAllWriters();
+            Conneg.AddWriter(typeof (AjaxContinuationWriter<>));
         }
     }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Runtime.Formatters;
 
 namespace FubuMVC.Core.Registration.Policies
 {
@@ -36,6 +37,46 @@ namespace FubuMVC.Core.Registration.Policies
         public void AddHtml()
         {
             _policy.ModifyWith<AddHtml>();
+        }
+
+        public void AllowHttpFormPosts()
+        {
+            _policy.ModifyWith<AllowHttpFormPosts>();
+        }
+
+        public void AcceptJson()
+        {
+            _policy.ModifyWith<AcceptJson>();
+        }
+
+        public void AddWriter(Type writerType)
+        {
+            _policy.ModifyBy(chain => chain.Output.AddWriter(writerType));
+        }
+
+        public void ClearAllWriters()
+        {
+            _policy.ModifyBy(chain => chain.Output.ClearAll());
+        }
+    }
+
+    public class AcceptJson : IChainModification
+    {
+        public void Modify(BehaviorChain chain)
+        {
+            if (chain.InputType() == null) return;
+
+            chain.Input.AddFormatter<JsonFormatter>();
+        }
+    }
+
+    public class AllowHttpFormPosts : IChainModification
+    {
+        public void Modify(BehaviorChain chain)
+        {
+            if (chain.InputType() == null) return;
+
+            chain.Input.AllowHttpFormPosts = true;
         }
     }
 
