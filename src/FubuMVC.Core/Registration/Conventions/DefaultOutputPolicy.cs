@@ -6,14 +6,14 @@ using FubuMVC.Core.Resources.Conneg;
 namespace FubuMVC.Core.Registration.Conventions
 {
     [Policy]
-    public class DefaultOutputPolicy : IConfigurationAction
+    public class DefaultOutputPolicy : Policy
     {
-        public void Configure(BehaviorGraph graph)
+        public DefaultOutputPolicy()
         {
-            graph.Behaviors
-                .Where(x => !x.IsPartialOnly)
-                .Where(x => x.HasResourceType() && !x.HasOutput())
-                .Each(x => x.ApplyConneg());
+            Where.IsNotPartial();
+            Where.ChainMatches(x => x.HasResourceType() && !x.HasOutput());
+            ModifyBy(chain => chain.ApplyConneg());
         }
+
     }
 }
