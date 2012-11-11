@@ -99,6 +99,16 @@ namespace FubuMVC.Core.Registration
                 return addFilter(new LastActionMatch(expression));
             }
 
+            public IOrExpression AnyActionMatches(Func<ActionCall, bool> filter, string description)
+            {
+                return addFilter(new AnyActionMatch(filter, description));
+            }
+
+            public IOrExpression AnyActionMatches(Expression<Func<ActionCall, bool>> expression)
+            {
+                return addFilter(new AnyActionMatch(expression));
+            } 
+
             public IOrExpression IsPartialOnly()
             {
                 return addFilter(new IsPartial());

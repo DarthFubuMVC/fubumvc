@@ -139,6 +139,7 @@
     <Compile Include="Registration\Diagnostics\ServiceRegistryProvenance.cs" />
     <Compile Include="Registration\DSL\AppliesToExpression.cs" />
     <Compile Include="Registration\Policies\AddToEndExpression.cs" />
+    <Compile Include="Registration\Policies\AnyActionMatch.cs" />
     <Compile Include="Registration\Policies\ConnegPolicies.cs" />
     <Compile Include="Registration\Policies\IChainFilter.cs" />
     <Compile Include="Registration\Policies\IChainModification.cs" />

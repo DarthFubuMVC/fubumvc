@@ -12,39 +12,6 @@ namespace FubuMVC.Tests.Registration.Conventions
     [TestFixture]
     public class CachedPartialConventionTester
     {
-        [Test]
-        public void modify_without_any_prior_caching()
-        {
-            var chain = new BehaviorChain();
-
-            CachedPartialConvention.Modify(chain);
-
-            chain.Last().ShouldBeOfType<OutputCachingNode>()
-                .VaryByPolicies().Single().ShouldEqual(typeof (VaryByResource));
-        }
-
-        [Test]
-        public void modify_is_idempotent()
-        {
-            var chain = new BehaviorChain();
-
-            CachedPartialConvention.Modify(chain);
-            CachedPartialConvention.Modify(chain);
-            CachedPartialConvention.Modify(chain);
-            CachedPartialConvention.Modify(chain);
-
-            chain.Last().ShouldBeOfType<OutputCachingNode>()
-                .VaryByPolicies().Single().ShouldEqual(typeof(VaryByResource));
-        }
-
-        [Test]
-        public void ShouldBeCachedPartial()
-        {
-            CachedPartialConvention.ShouldBeCachedPartial(ActionCall.For<CachedController>(x => x.OneCachedPartial())).ShouldBeTrue();
-            CachedPartialConvention.ShouldBeCachedPartial(ActionCall.For<CachedController>(x => x.TwoPartial())).ShouldBeFalse();
-            CachedPartialConvention.ShouldBeCachedPartial(ActionCall.For<CachedController>(x => x.Cached())).ShouldBeFalse();
-            CachedPartialConvention.ShouldBeCachedPartial(ActionCall.For<CachedController>(x => x.Something())).ShouldBeFalse();
-        }
 
         [Test]
         public void integrated_test()
