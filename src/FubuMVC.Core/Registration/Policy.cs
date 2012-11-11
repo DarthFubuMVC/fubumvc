@@ -57,6 +57,21 @@ namespace FubuMVC.Core.Registration
             WhereExpression Or { get; }
         }
 
+        public AddToEndExpression Add
+        {
+            get
+            {
+                return new AddToEndExpression(this);
+            }
+        }
+
+        public WrapWithExpression Wrap
+        {
+            get
+            {
+                return new WrapWithExpression(this);
+            }
+        }
 
         public class WhereExpression : IOrExpression
         {
@@ -114,6 +129,16 @@ namespace FubuMVC.Core.Registration
                 return addFilter(new InputTypeIs<T>());
             }
 
+            public IOrExpression ChainMatches(Expression<Func<BehaviorChain, bool>> expression)
+            {
+                return addFilter(new LambdaChainFilter(expression));
+            }
+
+            public IOrExpression ChainMatches(Func<BehaviorChain, bool> filter, string description)
+            {
+                return addFilter(new LambdaChainFilter(filter, description));
+            }
+
             private IOrExpression addFilter(IChainFilter filter)
             {
                 _register(filter);
@@ -142,6 +167,14 @@ namespace FubuMVC.Core.Registration
         public void ModifyWith(IChainModification chainModification)
         {
             _actions.Add(chainModification);
+        }
+
+        public void ModifyBy(Action<BehaviorChain> alteration, string description = "User defined")
+        {
+            _actions.Add(new LambdaChainModification(alteration)
+            {
+                Description = description
+            });
         }
     }
 
