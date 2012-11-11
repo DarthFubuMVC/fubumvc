@@ -78,7 +78,7 @@ namespace FubuMVC.Tests.Bugs
 
             var graph = BehaviorGraph.BuildFrom(x =>
             {
-                x.ApplyConvention<SpecialPolicy>();
+                x.Policies.Add<SpecialPolicy>();
                 x.Import<OneExtension>();
                 x.Import<TwoExtension>();
                 x.Import<ThreeExtension>();
@@ -128,7 +128,7 @@ namespace FubuMVC.Tests.Bugs
 
         public void Configure(FubuRegistry registry)
         {
-            registry.ApplyConvention<SpecialPolicy>();
+            registry.Policies.Add<SpecialPolicy>();
             registry.Import<SubModule>();
 
             Applied++;
@@ -141,7 +141,7 @@ namespace FubuMVC.Tests.Bugs
 
         public void Configure(FubuRegistry registry)
         {
-            registry.ApplyConvention<SpecialPolicy>();
+            registry.Policies.Add<SpecialPolicy>();
             registry.Import<SubModule>();
             Applied++;
         }

@@ -52,6 +52,14 @@ namespace FubuMVC.Core.Registration.DSL
             Add(new T(), ConfigurationType.Policy);
         }
 
+        public void Add<T>(Action<T> configure, string configurationType = null) where T : IConfigurationAction, new()
+        {
+            var action = new T();
+            configure(action);
+
+            Add(action, configurationType);
+        }
+
         public void Add(Action<Policy> configuration, string configurationType = ConfigurationType.Policy)
         {
             var policy = new Policy();

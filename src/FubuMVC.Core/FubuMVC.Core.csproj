@@ -398,7 +398,6 @@
     <Compile Include="Registration\Conventions\RouteConstraintPolicy.cs" />
     <Compile Include="Registration\DSL\ModelsExpression.cs" />
     <Compile Include="Registration\DSL\PoliciesExpression.cs" />
-    <Compile Include="Registration\Conventions\ActionCallModification.cs" />
     <Compile Include="Registration\Conventions\DownloadFileConvention.cs" />
     <Compile Include="Registration\Conventions\UrlPatternAttributePolicy.cs" />
     <Compile Include="Registration\DSL\ActionCallCandidateExpression.cs" />

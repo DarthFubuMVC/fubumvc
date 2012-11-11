@@ -42,7 +42,7 @@ namespace FubuMVC.Core.Http.Compression
                 services.SetServiceIfNone<IHttpContentEncoders>(encoders);
             });
 
-            registry.ApplyConvention(new ContentCompressionConvention(_filters.Matches));
+            registry.Policies.Add(new ContentCompressionConvention(_filters.Matches));
         }
 
         // Instrumentation lets us go after the asset stuff

@@ -37,10 +37,10 @@ namespace FubuMVC.Core.Registration
 
 		public IAssemblyScanner ApplyConvention<T>() where T : IServiceRegistrationConvention, new()
 		{
-			return ApplyConvention(new T());
+            return ApplyConvention(new T());
 		}
 
-		public IAssemblyScanner ApplyConvention(IServiceRegistrationConvention convention)
+        public IAssemblyScanner ApplyConvention(IServiceRegistrationConvention convention)
 		{
 			_conventions.Fill(convention);
 			return this;

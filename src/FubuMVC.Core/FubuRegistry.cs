@@ -113,15 +113,6 @@ namespace FubuMVC.Core
         }
 
         /// <summary>
-        ///   Adds a configuration convention to be applied to the <see cref = "BehaviorGraph" /> produced by this <see cref = "FubuRegistry" />
-        /// </summary>
-        public void ApplyConvention<TConvention>(TConvention convention)
-            where TConvention : IConfigurationAction
-        {
-            _config.Add(convention, ConfigurationType.Discovery);
-        }
-
-        /// <summary>
         ///   Expression builder for defining and configuring a <see cref = "BehaviorChain" /> for a specific route
         /// </summary>
         public ExplicitRouteConfiguration.ChainedBehaviorExpression Route(string pattern)
@@ -243,22 +234,6 @@ namespace FubuMVC.Core
         }
 
         #endregion
-
-        /// <summary>
-        ///   Adds a configuration convention to be applied to the <see cref = "BehaviorGraph" /> produced by this <see cref = "FubuRegistry" />
-        /// </summary>
-        [Obsolete("Change to Apply<T>()")]
-        public void ApplyConvention<TConvention>(Action<TConvention> configuration = null)
-            where TConvention : IConfigurationAction, new()
-        {
-            var convention = new TConvention();
-            if (configuration != null)
-            {
-                configuration(convention);
-            }
-
-            ApplyConvention(convention);
-        }
 
 
         private void addExplicit(Action<BehaviorGraph> action)

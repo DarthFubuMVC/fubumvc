@@ -41,7 +41,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             var graph = buildGraph(x =>
             {
-                x.ApplyConvention<NavigationRegistry>(r =>
+                x.Policies.Add<NavigationRegistry>(r =>
                 {
                     r.ForMenu("Menu1");
                     r.Add += MenuNode.ForAction<OneController>("something", c => c.Go());
@@ -49,7 +49,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                     r.Add += MenuNode.ForAction<OneController>("different", c => c.Report());
                 });
 
-                x.ApplyConvention<NavigationRootPolicy>(policy =>
+                x.Policies.Add<NavigationRootPolicy>(policy =>
                 {
                     policy.ForKey("Menu1");
                     policy.RequireRole("role1");
@@ -72,7 +72,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             var graph = buildGraph(x =>
             {
-                x.ApplyConvention<NavigationRegistry>(r =>
+                x.Policies.Add<NavigationRegistry>(r =>
                 {
                     r.ForMenu("Menu1");
                     r.Add += MenuNode.ForAction<OneController>("something", c => c.Go());
@@ -85,7 +85,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                     r.Add += MenuNode.ForAction<TwoController>("different", c => c.Report());
                 });
 
-                x.ApplyConvention<NavigationRootPolicy>(policy =>
+                x.Policies.Add<NavigationRootPolicy>(policy =>
                 {
                     policy.ForKey("Menu1");
                     policy.RequireRole("role1");
@@ -113,7 +113,7 @@ namespace FubuMVC.Tests.Registration.Conventions
 
             var graph = buildGraph(x =>
             {
-                x.ApplyConvention<NavigationRegistry>(r =>
+                x.Policies.Add<NavigationRegistry>(r =>
                 {
                     r.ForMenu(key);
                     r.Add += MenuNode.ForAction<OneController>("something", c => c.Go());
@@ -121,7 +121,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                     r.Add += MenuNode.ForAction<OneController>("different", c => c.Report());
                 });
 
-                x.ApplyConvention<NavigationRootPolicy>(policy =>
+                x.Policies.Add<NavigationRootPolicy>(policy =>
                 {
                     policy.ForKey(key);
                     policy.RequireRole("role1");
@@ -144,7 +144,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             var graph = buildGraph(x =>
             {
-                x.ApplyConvention<NavigationRegistry>(r =>
+                x.Policies.Add<NavigationRegistry>(r =>
                 {
                     r.ForMenu("Menu1");
                     r.Add += MenuNode.ForAction<OneController>("something", c => c.Go());
@@ -152,7 +152,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                     r.Add += MenuNode.ForAction<OneController>("different", c => c.Report());
                 });
 
-                x.ApplyConvention<NavigationRootPolicy>(policy =>
+                x.Policies.Add<NavigationRootPolicy>(policy =>
                 {
                     policy.ForKey("Menu1");
 
