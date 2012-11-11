@@ -1,4 +1,5 @@
 using System;
+using FubuCore;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Collections.Generic;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
-    [Policy]
+    [Policy][Obsolete, MarkedForTermination]
     public class WrapAction<T> : IConfigurationAction where T : IActionBehavior
     {
         private readonly Func<BehaviorChain, bool> _filter;

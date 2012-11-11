@@ -6,13 +6,12 @@ using FubuCore;
 namespace FubuMVC.Core.Registration.Conventions
 {
     [Policy]
-    public class HtmlTagOutputPolicy : IConfigurationAction
+    public class HtmlTagOutputPolicy : Policy
     {
-        public void Configure(BehaviorGraph graph)
+        public HtmlTagOutputPolicy()
         {
-            graph.Behaviors
-                .Where(x => x.ResourceType() != null && x.ResourceType().CanBeCastTo<HtmlTag>() || x.ResourceType().CanBeCastTo<HtmlDocument>())
-                .Each(x => x.Output.AddHtml());
+            Where.ResourceTypeImplements<HtmlTag>().Or.ResourceTypeImplements<HtmlDocument>();
+            Conneg.AddHtml();
         }
     }
 }
