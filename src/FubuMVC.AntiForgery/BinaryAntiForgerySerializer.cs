@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using FubuCore;
 
-namespace FubuMVC.Core.Security.AntiForgery
+namespace FubuMVC.AntiForgery
 {
     public class BinaryAntiForgerySerializer : IAntiForgerySerializer
     {

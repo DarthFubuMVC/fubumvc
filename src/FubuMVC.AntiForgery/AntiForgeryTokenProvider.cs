@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace FubuMVC.Core.Security.AntiForgery
+namespace FubuMVC.AntiForgery
 {
     public class AntiForgeryTokenProvider : IAntiForgeryTokenProvider
     {

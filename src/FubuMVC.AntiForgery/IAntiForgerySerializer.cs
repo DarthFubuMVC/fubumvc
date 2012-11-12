@@ -1,4 +1,4 @@
-﻿namespace FubuMVC.Core.Security.AntiForgery
+﻿namespace FubuMVC.AntiForgery
 {
     public interface IAntiForgerySerializer
     {

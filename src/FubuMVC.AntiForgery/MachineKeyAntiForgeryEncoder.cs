@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using System.Web.Security;
 
-namespace FubuMVC.Core.Security.AntiForgery
+namespace FubuMVC.AntiForgery
 {
     public class MachineKeyAntiForgeryEncoder : IAntiForgeryEncoder
     {

@@ -4,12 +4,11 @@ using System.Security.Principal;
 using System.Web;
 using FubuCore.Binding;
 using FubuMVC.Core.Security;
-using FubuMVC.Core.Security.AntiForgery;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Tests.Security.AntiForgery
+namespace FubuMVC.AntiForgery.Testing
 {
     [TestFixture]
     public class AntiForgeryValidatorTester : InteractionContext<AntiForgeryValidator>

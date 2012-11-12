@@ -274,13 +274,6 @@
     <Compile Include="Runtime\MimeTypeTester.cs" />
     <Compile Include="Caching\RecordedOutputTester.cs" />
     <Compile Include="Security\AllowRoleTester.cs" />
-    <Compile Include="Security\AntiForgery\AntiForgeryBehaviorTester.cs" />
-    <Compile Include="Security\AntiForgery\AntiForgeryServiceTester.cs" />
-    <Compile Include="Security\AntiForgery\AntiForgeryTokenAttributeTester.cs" />
-    <Compile Include="Security\AntiForgery\AntiForgeryTokenProviderTester.cs" />
-    <Compile Include="Security\AntiForgery\AntiForgeryValidatorTester.cs" />
-    <Compile Include="Security\AntiForgery\BinaryAntiForgerySerializerTester.cs" />
-    <Compile Include="Security\AntiForgery\MachineKeyAntiForgeryEncoderTester.cs" />
     <Compile Include="Security\AuthorizationBehaviorTester.cs" />
     <Compile Include="Security\AuthorizationNodeTester.cs" />
     <Compile Include="Security\AuthorizationRightTester.cs" />

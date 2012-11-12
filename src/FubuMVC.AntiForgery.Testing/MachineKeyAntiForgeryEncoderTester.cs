@@ -1,8 +1,7 @@
-using FubuMVC.Core.Security.AntiForgery;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests.Security.AntiForgery
+namespace FubuMVC.AntiForgery.Testing
 {
     [TestFixture]
     public class MachineKeyAntiForgeryEncoderTester : InteractionContext<MachineKeyAntiForgeryEncoder>

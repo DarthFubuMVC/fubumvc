@@ -1,12 +1,9 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Security.AntiForgery;
 using NUnit.Framework;
-using System.Linq;
 using FubuTestingSupport;
 
-namespace FubuMVC.Tests.Security.AntiForgery
+namespace FubuMVC.AntiForgery.Testing
 {
     [TestFixture]
     public class AntiForgeryTokenAttributeTester

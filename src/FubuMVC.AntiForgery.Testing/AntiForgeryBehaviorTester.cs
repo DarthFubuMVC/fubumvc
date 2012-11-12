@@ -1,12 +1,11 @@
 using System.Net;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Security.AntiForgery;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Tests.Security.AntiForgery
+namespace FubuMVC.AntiForgery.Testing
 {
     [TestFixture]
     public class when_validator_passes : InteractionContext<AntiForgeryBehavior>

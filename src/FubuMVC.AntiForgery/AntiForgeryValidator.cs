@@ -2,8 +2,9 @@ using System;
 using System.Collections.Specialized;
 using System.Web;
 using FubuCore.Binding;
+using FubuMVC.Core.Security;
 
-namespace FubuMVC.Core.Security.AntiForgery
+namespace FubuMVC.AntiForgery
 {
     public class AntiForgeryValidator : IAntiForgeryValidator
     {

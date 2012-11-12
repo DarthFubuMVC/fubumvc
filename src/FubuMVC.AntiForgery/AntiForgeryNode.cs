@@ -3,7 +3,7 @@ using System.ComponentModel;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 
-namespace FubuMVC.Core.Security.AntiForgery
+namespace FubuMVC.AntiForgery
 {
     [Description("Applies XSS anti forgery checks against this BehaviorChain")]
     public class AntiForgeryNode : BehaviorNode

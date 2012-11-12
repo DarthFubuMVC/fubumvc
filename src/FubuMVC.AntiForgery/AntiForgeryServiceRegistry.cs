@@ -1,6 +1,6 @@
 using FubuMVC.Core.Registration;
 
-namespace FubuMVC.Core.Security.AntiForgery
+namespace FubuMVC.AntiForgery
 {
     public class AntiForgeryServiceRegistry : ServiceRegistry
     {

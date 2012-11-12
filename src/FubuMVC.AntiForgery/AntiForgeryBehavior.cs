@@ -1,8 +1,9 @@
 ﻿using System.Net;
+using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
 
-namespace FubuMVC.Core.Security.AntiForgery
+namespace FubuMVC.AntiForgery
 {
     public class AntiForgeryBehavior : BasicBehavior
     {

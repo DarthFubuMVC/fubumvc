@@ -1,7 +1,7 @@
 using System;
 using System.Security.Principal;
 
-namespace FubuMVC.Core.Security.AntiForgery
+namespace FubuMVC.AntiForgery
 {
     public class AntiForgeryData
     {
