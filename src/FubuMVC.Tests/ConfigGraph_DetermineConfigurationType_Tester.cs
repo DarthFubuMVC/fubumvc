@@ -2,7 +2,6 @@ using System;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
-using FubuMVC.Core.UI.Navigation;
 using FubuTestingSupport;
 using NUnit.Framework;
 

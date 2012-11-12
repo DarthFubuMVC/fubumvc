@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6BDF3EF2-E719-4F04-B231-57C8F50CA01A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FubuMVC.Navigation</RootNamespace>
+    <AssemblyName>FubuMVC.Navigation</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FubuCore">
+      <HintPath>..\packages\FubuCore.0.9.9.205\lib\FubuCore.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuLocalization">
+      <HintPath>..\packages\FubuLocalization.0.9.5.97\lib\FubuLocalization.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="AddAfter.cs" />
+    <Compile Include="AddBefore.cs" />
+    <Compile Include="AddChild.cs" />
+    <Compile Include="AuthorizedContextualMenu.cs" />
+    <Compile Include="ByName.cs" />
+    <Compile Include="CompileNavigationStep.cs" />
+    <Compile Include="IContextualAction.cs" />
+    <Compile Include="IContextualMenu.cs" />
+    <Compile Include="IMenuPlacementStrategy.cs" />
+    <Compile Include="IMenuRegistration.cs" />
+    <Compile Include="IMenuStateService.cs" />
+    <Compile Include="INavigationService.cs" />
+    <Compile Include="IStringTokenMatcher.cs" />
+    <Compile Include="Literal.cs" />
+    <Compile Include="MenuChain.cs" />
+    <Compile Include="MenuItemAttribute.cs" />
+    <Compile Include="MenuItemAttributeConfigurator.cs" />
+    <Compile Include="MenuItemState.cs" />
+    <Compile Include="MenuItemToken.cs" />
+    <Compile Include="MenuNode.cs" />
+    <Compile Include="MenuNodeType.cs" />
+    <Compile Include="MenuRegistration.cs" />
+    <Compile Include="MenuStateService.cs" />
+    <Compile Include="NavigationGraph.cs" />
+    <Compile Include="NavigationKey.cs" />
+    <Compile Include="NavigationRegistry.cs" />
+    <Compile Include="NavigationRegistryExtension.cs" />
+    <Compile Include="NavigationRootPolicy.cs" />
+    <Compile Include="NavigationService.cs" />
+    <Compile Include="NavigationServiceRegistry.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
+      <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
+      <Name>FubuMVC.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -13,7 +13,6 @@ using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Runtime.Files;
-using FubuMVC.Core.UI.Navigation;
 
 namespace FubuMVC.Core.Registration
 {

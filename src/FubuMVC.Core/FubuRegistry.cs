@@ -6,7 +6,6 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.UI.Navigation;
 
 namespace FubuMVC.Core
 {
@@ -34,10 +33,6 @@ namespace FubuMVC.Core
         public FubuRegistry()
         {
             _config.Push(this);
-
-
-            // TODO -- yank this out!!!
-            Import<NavigationRegistryExtension>();
         }
 
         public FubuRegistry(Action<FubuRegistry> configure) : this()
