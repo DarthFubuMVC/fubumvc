@@ -18,6 +18,11 @@ namespace FubuMVC.Core
         private ProvenanceChain _currentProvenance = new ProvenanceChain(new Provenance[0]);
         private readonly IList<ServiceRegistryLog> _services = new List<ServiceRegistryLog>();
 
+        public ConfigGraph()
+        {
+            _configurations[ConfigurationType.Discovery] = new ActionSourceConfigurationActionSet();
+        }
+
         public IEnumerable<ActionLog> AllLogs()
         {
             return _configurations.SelectMany(x => x.Logs);
@@ -148,6 +153,11 @@ namespace FubuMVC.Core
         public void Add(ServiceRegistry services)
         {
             _services.Add(new ServiceRegistryLog(services, CurrentProvenance));
+        }
+
+        public void Add(IActionSource source)
+        {
+            Add(new ActionSourceRunner(source), ConfigurationType.Discovery);
         }
 
         public void RegisterServices(ServiceGraph services)

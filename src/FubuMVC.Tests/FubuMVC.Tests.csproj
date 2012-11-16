@@ -216,7 +216,6 @@
     <Compile Include="Packaging\ContentOnlyPackageInfoTester.cs" />
     <Compile Include="Packaging\FileSystemVirtualPathProviderTester.cs" />
     <Compile Include="Registration\ActionMethodFilterTester.cs" />
-    <Compile Include="Registration\BehaviorAggregatorTester.cs" />
     <Compile Include="Registration\Conventions\actions_that_return_IDictionary_are_json.cs" />
     <Compile Include="Registration\Conventions\AsyncContinueWithHandlerConventionTester.cs" />
     <Compile Include="Registration\Conventions\DefaultConnegOutputIsAppliedToAnyEndpointWithoutAnyPriorOutputTester.cs" />

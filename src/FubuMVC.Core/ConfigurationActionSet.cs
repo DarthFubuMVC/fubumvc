@@ -9,7 +9,7 @@ namespace FubuMVC.Core
 {
     public class ConfigurationActionSet
     {
-        private readonly IList<ActionLog> _logs = new List<ActionLog>();
+        protected readonly IList<ActionLog> _logs = new List<ActionLog>();
         private readonly string _configurationType;
 
         public ConfigurationActionSet(string configurationType)
@@ -68,7 +68,7 @@ namespace FubuMVC.Core
             return true;
         }
 
-        public void RunActions(BehaviorGraph graph)
+        public virtual void RunActions(BehaviorGraph graph)
         {
             _logs.Each(x => x.RunAction(graph));
         }
@@ -81,6 +81,23 @@ namespace FubuMVC.Core
         public IEnumerable<T> AllEvents<T>()
         {
             return _logs.SelectMany(x => x.Events.OfType<T>());
+        }
+    }
+
+    public class ActionSourceConfigurationActionSet : ConfigurationActionSet
+    {
+        public ActionSourceConfigurationActionSet() : base(Core.ConfigurationType.Discovery)
+        {
+        }
+
+        public override void RunActions(BehaviorGraph graph)
+        {
+            if (!_logs.Any(x => x.Action is ActionSourceRunner))
+            {
+                _logs.Insert(0, new ActionLog(new ActionSourceRunner(new EndpointActionSource()), new ProvenanceChain(new Provenance[]{new ConfigurationPackProvenance(new DefaultConfigurationPack()), })));
+            }
+
+            base.RunActions(graph);
         }
     }
 }

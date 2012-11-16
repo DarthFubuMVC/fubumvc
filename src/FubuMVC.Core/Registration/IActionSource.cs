@@ -13,19 +13,4 @@ namespace FubuMVC.Core.Registration
     {
         IEnumerable<ActionCall> FindActions(Assembly applicationAssembly);
     }
-
-    public class ActionSources
-    {
-        private readonly IList<IActionSource> _sources = new List<IActionSource>();
- 
-        public void AddSource(IActionSource source)
-        {
-            _sources.Add(source);
-        }
-
-        public IEnumerable<IActionSource> AllSources()
-        {
-            return _sources.Any() ? _sources : new IActionSource[] { new EndpointActionSource() };
-        } 
-    }
 }

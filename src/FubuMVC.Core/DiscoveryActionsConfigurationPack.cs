@@ -9,7 +9,6 @@ namespace FubuMVC.Core
         {
             For(ConfigurationType.Discovery);
 
-            Add<BehaviorAggregator>();
             Add<PartialOnlyConvention>();
             Add<RouteDetermination>();
             Add<AccessorOverridesFinder>();

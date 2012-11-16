@@ -58,7 +58,7 @@ namespace FubuMVC.Core.Registration.DSL
         /// </summary>
         public ActionCallCandidateExpression FindWith(IActionSource actionSource)
         {
-            _configuration.Add(new RegisterActionSource(actionSource));
+            _configuration.Add(actionSource);
             return this;
         }
 
