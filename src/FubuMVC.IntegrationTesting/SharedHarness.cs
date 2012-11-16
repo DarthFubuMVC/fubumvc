@@ -41,11 +41,11 @@ namespace FubuMVC.IntegrationTesting
         {
             FubuMvcPackageFacility.PhysicalRootPath = GetRootDirectory();
 
-            _server = new SelfHostHttpServer(5500);
-            var runtime = FubuApplication.For<HarnessRegistry>().StructureMap(new Container()).Bootstrap();
+            _server = new SelfHostHttpServer(5500, GetRootDirectory());
+            var runtime = bootstrapRuntime();
 
 
-            _server.Start(runtime, GetRootDirectory());
+            _server.Start(runtime);
 
             var urls = runtime.Facility.Get<IUrlRegistry>();
             urls.As<UrlRegistry>().RootAt(_server.BaseAddress);
@@ -79,6 +79,16 @@ namespace FubuMVC.IntegrationTesting
         public static void Shutdown()
         {
             _server.SafeDispose();
+        }
+
+        public static void Recycle()
+        {
+            _server.Recycle(bootstrapRuntime());
+        }
+
+        private static FubuRuntime bootstrapRuntime()
+        {
+            return FubuApplication.For<HarnessRegistry>().StructureMap(new Container()).Bootstrap();
         }
     }
 

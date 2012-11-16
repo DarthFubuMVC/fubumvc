@@ -1,6 +1,5 @@
 using System;
 using System.ServiceModel;
-using System.Threading.Tasks;
 using System.Web.Http.SelfHost;
 using FubuCore;
 using FubuMVC.Core;
@@ -14,12 +13,14 @@ namespace FubuMVC.SelfHost
         private string _baseAddress;
         private HttpSelfHostConfiguration _configuration;
         private int _port;
+        private readonly string _rootDirectory;
         private SelfHostHttpMessageHandler _selfHostHttpMessageHandler;
         private HttpSelfHostServer _server;
 
-        public SelfHostHttpServer(int port)
+        public SelfHostHttpServer(int port, string rootDirectory)
         {
             _port = port;
+            _rootDirectory = rootDirectory;
         }
 
         public string BaseAddress
@@ -43,27 +44,33 @@ namespace FubuMVC.SelfHost
 
         public void Dispose()
         {
-            _server.CloseAsync().ContinueWith(t => _server.SafeDispose()).Wait();
+            close();
         }
 
         #endregion
 
-        public void Start(FubuRuntime runtime, string rootDirectory)
+        public void Start(FubuRuntime runtime)
         {
             _port = PortFinder.FindPort(_port);
 
             int i = 0;
-            while (!tryStartAtPort(rootDirectory, runtime) && i > 3)
+            while (!tryStartAtPort(runtime) && i > 3)
             {
                 i++;
             }
         }
 
-        private bool tryStartAtPort(string rootDirectory, FubuRuntime runtime)
+        public void Recycle(FubuRuntime runtime)
+        {
+            close();
+            Start(runtime);
+        }
+
+        private bool tryStartAtPort(FubuRuntime runtime)
         {
             try
             {
-                startAtPort(rootDirectory, runtime);
+                startAtPort(runtime);
                 return true;
             }
             catch (AggregateException e)
@@ -78,12 +85,12 @@ namespace FubuMVC.SelfHost
             }
         }
 
-        private void startAtPort(string rootDirectory, FubuRuntime runtime)
+        private void startAtPort(FubuRuntime runtime)
         {
             _baseAddress = "http://localhost:" + _port;
             _configuration = new HttpSelfHostConfiguration(_baseAddress);
 
-            FubuMvcPackageFacility.PhysicalRootPath = rootDirectory;
+            FubuMvcPackageFacility.PhysicalRootPath = _rootDirectory;
 
             _selfHostHttpMessageHandler = new SelfHostHttpMessageHandler(runtime)
             {
@@ -99,12 +106,9 @@ namespace FubuMVC.SelfHost
             _server.OpenAsync().Wait();
         }
 
-        public Task Recycle(FubuRuntime runtime)
+        private void close()
         {
-            return _server.CloseAsync().ContinueWith(t => {
-                _selfHostHttpMessageHandler.ReplaceRuntime(runtime);
-            }).ContinueWith(t => _server.OpenAsync());
-
+            _server.CloseAsync().ContinueWith(t => _server.SafeDispose()).Wait();
         }
     }
 }

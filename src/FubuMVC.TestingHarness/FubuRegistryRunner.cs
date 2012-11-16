@@ -190,8 +190,8 @@ namespace FubuMVC.TestingHarness
         {
             _runtime = runtime;
 
-            _server = new SelfHostHttpServer(port);
-            _server.Start(runtime, GetApplicationDirectory());
+            _server = new SelfHostHttpServer(port, GetApplicationDirectory());
+            _server.Start(runtime);
             _port = _server.Port;
 
             var urls = _runtime.Facility.Get<IUrlRegistry>();
