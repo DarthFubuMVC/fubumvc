@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Linq;
 namespace FubuMVC.Core.Registration.Conventions
 {
     [ConfigurationType(ConfigurationType.Reordering)]
+    [Title("Behavior Ordering Rule")]
     public class ReorderBehaviorsPolicy : IConfigurationAction
     {
         public Func<BehaviorNode, bool> WhatMustBeBefore { get; set; }

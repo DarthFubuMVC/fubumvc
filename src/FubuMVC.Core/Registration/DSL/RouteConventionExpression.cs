@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
@@ -161,6 +162,7 @@ namespace FubuMVC.Core.Registration.DSL
         #region Nested type: RouteMethodAlteration
 
         [ConfigurationType(ConfigurationType.Explicit)]
+        [Title("Explicit route alteration")]
         public class RouteMethodAlteration<T> : IConfigurationAction
         {
             private readonly Func<ActionCall, bool> _filter;

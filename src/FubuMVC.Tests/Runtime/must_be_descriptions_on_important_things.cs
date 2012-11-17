@@ -65,7 +65,7 @@ namespace FubuMVC.Tests.Runtime
         }
 
 
-        [Test, Explicit]
+        [Test]
         public void must_be_a_description_on_all_IConfigurationAction_types()
         {
             IEnumerable<Type> types = typeof(FubuRequest).Assembly.GetExportedTypes()

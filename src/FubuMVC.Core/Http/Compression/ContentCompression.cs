@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuCore.Util;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
@@ -47,6 +48,7 @@ namespace FubuMVC.Core.Http.Compression
 
         // Instrumentation lets us go after the asset stuff
         [ConfigurationType(ConfigurationType.Instrumentation)]
+        [Title("Applies content compression to matching behavior chains")]
         public class ContentCompressionConvention : IConfigurationAction
         {
             private readonly Func<BehaviorChain, bool> _predicate;

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Nodes;
@@ -8,6 +9,7 @@ using FubuMVC.Core.Registration.Routes;
 namespace FubuMVC.Core.Registration.Conventions
 {
     [Policy]
+    [Description("Determines the route for any BehaviorChain that does not already have a Route and is not marked as IsPartialOnly")]
     public class RouteDetermination : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)

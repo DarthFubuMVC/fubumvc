@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Continuations;
@@ -7,6 +8,7 @@ using FubuMVC.Core.Registration.Nodes;
 namespace FubuMVC.Core.Registration.Conventions
 {
     [Policy]
+    [Description("Add a ContinuationNode behind any ActionFilter or ActionCall that returns a FubuContinuation")]
     public class ContinuationHandlerConvention : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)

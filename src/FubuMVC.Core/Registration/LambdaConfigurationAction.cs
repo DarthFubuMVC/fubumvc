@@ -1,7 +1,9 @@
 using System;
+using FubuCore.Descriptions;
 
 namespace FubuMVC.Core.Registration
 {
+    [Title("Explicit configuration action")]
     public class LambdaConfigurationAction : IConfigurationAction
     {
         private readonly Action<BehaviorGraph> _action;

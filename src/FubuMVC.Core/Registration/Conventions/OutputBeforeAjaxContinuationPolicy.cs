@@ -1,3 +1,4 @@
+using FubuCore.Descriptions;
 using FubuMVC.Core.Ajax;
 using System.Linq;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using FubuMVC.Core.Resources.Conneg;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
+    [Title("Reorder the chain for special semantics when the resource type is AjaxContinuation")]
     public class OutputBeforeAjaxContinuationPolicy : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)

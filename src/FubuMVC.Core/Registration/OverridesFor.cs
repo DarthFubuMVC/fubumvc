@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using Bottles;
@@ -9,6 +10,7 @@ using FubuCore;
 namespace FubuMVC.Core.Registration
 {
     [ConfigurationType(ConfigurationType.Discovery)]
+    [Description("Finds and applies property specific rules expressed by classes that implement the IAccessorRulesRegistration interface")]
     public class AccessorOverridesFinder : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)
