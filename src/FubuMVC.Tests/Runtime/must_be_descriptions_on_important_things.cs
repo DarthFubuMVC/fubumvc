@@ -13,6 +13,7 @@ using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Core.Registration.Policies;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
@@ -21,9 +22,36 @@ using FubuTestingSupport;
 
 namespace FubuMVC.Tests.Runtime
 {
+
+    
+    
     [TestFixture]
     public class must_be_descriptions_on_important_things
     {
+        [Test]
+        public void must_be_a_description_on_all_IChainModification_types()
+        {
+            IEnumerable<Type> types = typeof(FubuRequest).Assembly.GetExportedTypes()
+                .Where(x => x.IsConcreteTypeOf<IChainModification>())
+                .Where(x => !Description.HasExplicitDescription(x));
+
+            types.Each(x => Debug.WriteLine(x.Name));
+
+            types.Any().ShouldBeFalse();
+        }
+
+        [Test]
+        public void must_be_a_description_on_all_IChainFilter_types()
+        {
+            IEnumerable<Type> types = typeof(FubuRequest).Assembly.GetExportedTypes()
+                .Where(x => x.IsConcreteTypeOf<IChainFilter>())
+                .Where(x => !Description.HasExplicitDescription(x));
+
+            types.Each(x => Debug.WriteLine(x.Name));
+
+            types.Any().ShouldBeFalse();
+        }        
+        
         [Test]
         public void must_be_a_description_on_all_IActionSource_types()
         {

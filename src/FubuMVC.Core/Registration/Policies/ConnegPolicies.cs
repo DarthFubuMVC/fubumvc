@@ -1,4 +1,5 @@
 ﻿using System;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime.Formatters;
@@ -44,9 +45,10 @@ namespace FubuMVC.Core.Registration.Policies
         /// Add an additional Writer to chains matching this policy
         /// </summary>
         /// <param name="source"></param>
-        public void AddWriter(Func<BehaviorChain, WriterNode> source)
+        /// <param name="description">Description of the writer for diagnostics</param>
+        public void AddWriter(Func<BehaviorChain, WriterNode> source, string description)
         {
-            _policy.ModifyWith(new AddWriter(source));
+            _policy.ModifyWith(new AddWriter(source, description));
         }
 
         /// <summary>
@@ -100,6 +102,7 @@ namespace FubuMVC.Core.Registration.Policies
         }
     }
 
+    [Title("Accept Json")]
     public class AcceptJson : IChainModification
     {
         public void Modify(BehaviorChain chain)
@@ -110,6 +113,7 @@ namespace FubuMVC.Core.Registration.Policies
         }
     }
 
+    [Title("Accept form posts as mimetype 'application/x-www-form-urlencoded'")]
     public class AllowHttpFormPosts : IChainModification
     {
         public void Modify(BehaviorChain chain)
@@ -120,6 +124,7 @@ namespace FubuMVC.Core.Registration.Policies
         }
     }
 
+    [Title("Write the resource type as text/html by calling ToString() on the resource")]
     public class AddHtml : IChainModification
     {
         public void Modify(BehaviorChain chain)
@@ -128,28 +133,37 @@ namespace FubuMVC.Core.Registration.Policies
         }
     }
 
-    public class AddWriter : IChainModification
+    [Title("Add Writer")]
+    public class AddWriter : IChainModification, DescribesItself
     {
         private readonly Func<BehaviorChain, WriterNode> _writerSource;
+        private readonly string _description;
 
-        public AddWriter(Func<BehaviorChain, WriterNode> writerSource)
+        public AddWriter(Func<BehaviorChain, WriterNode> writerSource, string description)
         {
             _writerSource = writerSource;
+            _description = description;
         }
 
         public void Modify(BehaviorChain chain)
         {
             chain.Output.Writers.AddToEnd(_writerSource(chain));
         }
+
+        public void Describe(Description description)
+        {
+            description.Properties["Writer"] = _description;
+        }
     }
 
     public class AddWriter<T> : AddWriter where T : WriterNode, new()
     {
-        public AddWriter() : base(chain => new T())
+        public AddWriter() : base(chain => new T(), "Add " + typeof(T).Name)
         {
         }
     }
 
+    [Title("Accepts Json or Http form posts, outputs Json only")]
     public class AsymmetricJsonModification : IChainModification
     {
         public void Modify(BehaviorChain chain)
@@ -158,6 +172,7 @@ namespace FubuMVC.Core.Registration.Policies
         }
     }
 
+    [Title("Accepts and writes Json only")]
     public class SymmetricJsonModification : IChainModification
     {
         public void Modify(BehaviorChain chain)

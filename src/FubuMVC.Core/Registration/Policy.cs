@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Policies;
 
@@ -11,7 +12,7 @@ namespace FubuMVC.Core.Registration
     /// <summary>
     /// Class used to define BehaviorChain policies and conventions
     /// </summary>
-    public class Policy : IConfigurationAction
+    public class Policy : IConfigurationAction, DescribesItself
     {
         private readonly IList<IChainModification> _actions = new List<IChainModification>();
         private readonly IList<IChainFilter> _wheres = new List<IChainFilter>();
@@ -287,6 +288,17 @@ namespace FubuMVC.Core.Registration
             {
                 Description = description
             });
+        }
+
+        void DescribesItself.Describe(Description description)
+        {
+            describe(description);
+        }
+
+        protected virtual void describe(Description description)
+        {
+            description.AddList("Where", _wheres);
+            description.AddList("Actions", _actions);
         }
     }
 

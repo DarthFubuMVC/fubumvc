@@ -186,7 +186,7 @@ namespace FubuMVC.Core.Registration
 
             description.Title = "Action Source";
             description.BulletLists.Add(list);
-
+            description.LongDescription = _description.ToString();
 
         }
     }
