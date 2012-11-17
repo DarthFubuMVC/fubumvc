@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Registration
 {
-    public class SingleTypeActionSource : IActionSource
+    public class SingleTypeActionSource : IActionSource, DescribesItself
     {
         private readonly Type _actionType;
         private readonly ActionMethodFilter _methodFilter;
@@ -21,6 +22,11 @@ namespace FubuMVC.Core.Registration
         {
             return _actionType.PublicInstanceMethods().Where(_methodFilter.Matches)
                 .Select(method => new ActionCall(_actionType, method));
+        }
+
+        public void Describe(Description description)
+        {
+            description.Title = "Type: " + _actionType.FullName;
         }
     }
 }

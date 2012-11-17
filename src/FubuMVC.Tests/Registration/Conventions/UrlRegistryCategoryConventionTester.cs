@@ -34,7 +34,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void action_that_has_no_attribute_on_either_class_or_method_should_have_no_category()
         {
-            graph.BehaviorFor<UrlCategoryController3>(x => x.Go()).UrlCategory.Category.ShouldBeNull();
+            graph.BehaviorFor<UrlCategoryController3>(x => x.Go(null)).UrlCategory.Category.ShouldBeNull();
             graph.BehaviorFor<UrlCategoryController3>(x => x.Comeback()).UrlCategory.Category.ShouldBeNull();
 
         }
@@ -42,7 +42,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void class_attribute_sets_the_category_if_there_is_no_method_level_attribute()
         {
-            graph.BehaviorFor<UrlCategoryController1>(x => x.Go()).UrlCategory.Category.ShouldEqual("admin");
+            graph.BehaviorFor<UrlCategoryController1>(x => x.Go(null)).UrlCategory.Category.ShouldEqual("admin");
         }
 
         [Test]
@@ -82,18 +82,19 @@ namespace FubuMVC.Tests.Registration.Conventions
     public class UrlCategoryController1
     {
         [UrlForNew(typeof(UrlNewTarget))]
-        public void CreateNewTarget()
+        public string CreateNewTarget()
         {
-            
+            return "new one!";
         }
 
-        public void Go()
+        public void Go(InputModel model)
         {
         }
 
         [UrlRegistryCategory("public")]
-        public void Comeback()
+        public string Comeback()
         {
+            return "over here";
         }
     }
 
@@ -104,19 +105,21 @@ namespace FubuMVC.Tests.Registration.Conventions
         }
 
         [UrlRegistryCategory("public")]
-        public void DecoratedMethod()
+        public string DecoratedMethod()
         {
+            return "decorated";
         }
     }
 
     public class UrlCategoryController3
     {
-        public void Go()
+        public void Go(InputModel model)
         {
         }
 
-        public void Comeback()
+        public string Comeback()
         {
+            return "over here";
         }
     }
 }

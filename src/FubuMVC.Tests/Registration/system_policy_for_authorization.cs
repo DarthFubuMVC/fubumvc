@@ -23,14 +23,14 @@ namespace FubuMVC.Tests.Registration
 
                 x.Configure(g =>
                 {
-                    g.BehaviorFor<AuthorizedController>(c => c.Go()).Authorization.AddRole("RoleA");
+                    g.BehaviorFor<AuthorizedController>(c => c.Go(null)).Authorization.AddRole("RoleA");
                 });
             });
 
             graph = BehaviorGraph.BuildFrom(registry);
 
-            goChain = graph.BehaviorFor<AuthorizedController>(x => x.Go());
-            moveChain = graph.BehaviorFor<AuthorizedController>(x => x.Move());
+            goChain = graph.BehaviorFor<AuthorizedController>(x => x.Go(null));
+            moveChain = graph.BehaviorFor<AuthorizedController>(x => x.Move(null));
         }
 
 
@@ -50,12 +50,12 @@ namespace FubuMVC.Tests.Registration
 
     public class AuthorizedController
     {
-        public void Go()
+        public void Go(InputModel model)
         {
             
         }
 
-        public void Move()
+        public void Move(InputModel model)
         {
             
         }

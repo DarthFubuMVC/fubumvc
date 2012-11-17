@@ -193,8 +193,9 @@ namespace FubuMVC.Tests.Registration.Conventions
 
         public class OneController
         {
-            public void Home()
+            public string Home()
             {
+                return "you are home";
             }
 
             public SimpleOutputModel HomeWithInputOutput(SimpleInputModel model)

@@ -24,6 +24,19 @@ namespace FubuMVC.Tests.Runtime
     [TestFixture]
     public class must_be_descriptions_on_important_things
     {
+        [Test]
+        public void must_be_a_description_on_all_IActionSource_types()
+        {
+            IEnumerable<Type> types = typeof(FubuRequest).Assembly.GetExportedTypes()
+                .Where(x => x.IsConcreteTypeOf<IActionSource>())
+                .Where(x => !Description.HasExplicitDescription(x));
+
+            types.Each(x => Debug.WriteLine(x.Name));
+
+            types.Any().ShouldBeFalse();
+        }
+
+
         [Test, Explicit]
         public void must_be_a_description_on_all_IConfigurationAction_types()
         {

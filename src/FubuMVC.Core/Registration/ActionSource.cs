@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq.Expressions;
 using System.Reflection;
 using Bottles;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuCore.Util;
 using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Registration.Nodes;
@@ -11,10 +13,11 @@ using System.Linq;
 
 namespace FubuMVC.Core.Registration
 {
-    public class ActionSource : IActionSource
+    public class ActionSource : IActionSource, DescribesItself
     {
-        private readonly IList<Action<TypePool>> _typePoolConfigurations = new List<Action<TypePool>>(); 
         private readonly AppliesToExpression _applies = new AppliesToExpression();
+        private readonly List<Assembly> _assemblies = new List<Assembly>(); 
+        private readonly StringWriter _description = new StringWriter();
 
         public static bool IsCandidate(MethodInfo method)
         {
@@ -39,6 +42,8 @@ namespace FubuMVC.Core.Registration
 
         public ActionSource()
         {
+            _description.WriteLine("Public methods that follow the 1 in/1 out, 0 in/ 1 out, or 1 in/ 0 out pattern");
+
             _methodFilters = new ActionMethodFilter();
         }
 
@@ -51,6 +56,7 @@ namespace FubuMVC.Core.Registration
         IEnumerable<ActionCall> IActionSource.FindActions(Assembly applicationAssembly)
         {
             var types = _applies.BuildPool(applicationAssembly);
+            _assemblies.AddRange(types.Assemblies);
 
             return types.TypesMatching(_typeFilters.Matches).SelectMany(actionsFromType);
         }
@@ -59,6 +65,7 @@ namespace FubuMVC.Core.Registration
         {
             return type.PublicInstanceMethods()
                 .Where(_methodFilters.Matches)
+                .Where(IsCandidate)
                 .Select(m => buildAction(type, m))
                 .Where(_callFilters.Matches);
         }
@@ -73,6 +80,7 @@ namespace FubuMVC.Core.Registration
         /// </summary>
         public void IncludeClassesSuffixedWithController()
         {
+            _description.WriteLine("Public classes that are suffixed by 'Controller'");
             IncludeTypesNamed(x => x.EndsWith("Controller"));
         }
 
@@ -81,11 +89,14 @@ namespace FubuMVC.Core.Registration
         /// </summary>
         public void IncludeClassesSuffixedWithEndpoint()
         {
-            IncludeTypesNamed(x => x.EndsWith("Endpoint"));
+            _description.WriteLine("Public class that are suffixed by 'Endpoint' or 'Endpoints'");
+            IncludeTypesNamed(x => x.EndsWith("Endpoint") || x.EndsWith("Endpoints"));
         }
 
         public void IncludeTypesNamed(Expression<Func<string, bool>> filter)
         {
+            _description.WriteLine("Classes that match " + filter.ToString());
+
             var typeParam = Expression.Parameter(typeof(Type), "type"); // type =>
             var nameProp = Expression.Property(typeParam, "Name");  // type.Name
             var invokeFilter = Expression.Invoke(filter, nameProp); // filter(type.Name)
@@ -99,6 +110,8 @@ namespace FubuMVC.Core.Registration
         /// </summary>
         public void IncludeTypes(Expression<Func<Type, bool>> filter)
         {
+            _description.WriteLine("Public class that match " + filter.ToString());
+
             _typeFilters.Includes += filter;
         }
 
@@ -107,6 +120,7 @@ namespace FubuMVC.Core.Registration
         /// </summary>
         public void IncludeTypesImplementing<T>()
         {
+            _description.WriteLine("Where types are concrete types that implement the {0} interface".ToFormat(typeof(T).FullName));
             IncludeTypes(type => !type.IsOpenGeneric() && type.IsConcreteTypeOf<T>());
         }
 
@@ -115,6 +129,7 @@ namespace FubuMVC.Core.Registration
         /// </summary>
         public void IncludeMethods(Expression<Func<MethodInfo, bool>> filter)
         {
+            _description.WriteLine("Methods matching " + filter.ToString());
             _methodFilters.Includes += filter;
         }
 
@@ -123,6 +138,7 @@ namespace FubuMVC.Core.Registration
         /// </summary>
         public void ExcludeTypes(Expression<Func<Type, bool>> filter)
         {
+            _description.WriteLine("Exclude types matching " + filter.ToString());
             _typeFilters.Excludes += filter;
         }
 
@@ -131,6 +147,7 @@ namespace FubuMVC.Core.Registration
         /// </summary>
         public void ExcludeMethods(Expression<Func<MethodInfo, bool>> filter)
         {
+            _description.WriteLine("Exclude methods matching " + filter);
             _methodFilters.Excludes += filter;
         }
 
@@ -140,6 +157,7 @@ namespace FubuMVC.Core.Registration
         /// <typeparam name="T"></typeparam>
         public void IgnoreMethodsDeclaredBy<T>()
         {
+            _description.WriteLine("Exclude methods declared by type " + typeof(T).FullName);
             _methodFilters.IgnoreMethodsDeclaredBy<T>();
         }
 
@@ -148,7 +166,28 @@ namespace FubuMVC.Core.Registration
         /// </summary>
         public void ExcludeNonConcreteTypes()
         {
+            _description.WriteLine("Excludes non-concrete types");
             _typeFilters.Excludes += type => !type.IsConcrete();
+        }
+
+        void DescribesItself.Describe(Description description)
+        {
+            var list = new BulletList
+            {
+                Name = "Assemblies"
+            };
+
+            _assemblies.Each(assem => {
+                list.Children.Add(new Description
+                {
+                    Title = assem.FullName
+                });
+            });
+
+            description.Title = "Action Source";
+            description.BulletLists.Add(list);
+
+
         }
     }
 }

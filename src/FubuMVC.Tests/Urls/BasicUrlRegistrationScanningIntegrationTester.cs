@@ -72,8 +72,9 @@ namespace FubuMVC.Tests.Urls
                 return "something";
             }
 
-            public void Index()
+            public string Index()
             {
+                return "the index";
             }
 
             public void Generic<T>()
