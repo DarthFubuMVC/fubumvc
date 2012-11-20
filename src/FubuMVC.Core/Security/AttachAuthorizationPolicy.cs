@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 namespace FubuMVC.Core.Security
 {
-    [Policy]
     [Title("Attaches the AuthorizationNode to a BehaviorChain if there are any authorization rules on the chain")]
     public class AttachAuthorizationPolicy : IConfigurationAction
     {

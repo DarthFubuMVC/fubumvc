@@ -7,7 +7,6 @@ using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
-    [Policy]
     [Description("Adds the necessary behaviors to a chain for asynchronous Behavior Chain's that contain an action that returns a Task")]
     public class AsyncContinueWithHandlerConvention : IConfigurationAction
     {
