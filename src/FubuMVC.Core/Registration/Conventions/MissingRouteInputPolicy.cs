@@ -4,7 +4,6 @@ using FubuCore.Descriptions;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
-    [Policy]
     [Title("Modifies the RouteDefinition of a Route to reflect the Input Type properties")]
     public class MissingRouteInputPolicy : IConfigurationAction
     {

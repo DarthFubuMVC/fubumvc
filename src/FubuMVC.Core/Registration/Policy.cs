@@ -12,6 +12,7 @@ namespace FubuMVC.Core.Registration
     /// <summary>
     /// Class used to define BehaviorChain policies and conventions
     /// </summary>
+    [CanBeMultiples]
     public class Policy : IConfigurationAction, DescribesItself
     {
         private readonly IList<IChainModification> _actions = new List<IChainModification>();

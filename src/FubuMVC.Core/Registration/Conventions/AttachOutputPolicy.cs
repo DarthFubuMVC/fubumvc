@@ -7,7 +7,6 @@ using FubuMVC.Core.Continuations;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
-    [Policy]
     [Description("Attaches the OutputNode to a BehaviorChain if there are any output writers registered to the node")]
     public class AttachOutputPolicy : IConfigurationAction
     {

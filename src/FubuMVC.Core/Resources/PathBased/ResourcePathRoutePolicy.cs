@@ -6,7 +6,6 @@ using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.Resources.PathBased
 {
-    [Policy]
     [Title("Builds out the url pattern and route inputs for chains where the Input Type is derived from ResourceHash")]
     public class ResourcePathRoutePolicy : IConfigurationAction
     {

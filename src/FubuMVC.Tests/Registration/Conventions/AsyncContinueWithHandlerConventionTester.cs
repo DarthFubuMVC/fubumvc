@@ -25,14 +25,6 @@ namespace FubuMVC.Tests.Registration.Conventions
         }
 
         [Test]
-        public void should_be_a_policy()
-        {
-            ConfigGraph.DetermineConfigurationType(new AsyncContinueWithHandlerConvention())
-                .ShouldEqual(ConfigurationType.Policy);
-
-        }
-
-        [Test]
         public void should_attach_async_node_to_actions_that_return_a_task_with_result()
         {
             graph.BehaviorFor<TestControllerForAsync>(x => x.ActionWithInputWithOutputAsync(null))
