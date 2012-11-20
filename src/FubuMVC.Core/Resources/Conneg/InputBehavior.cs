@@ -28,6 +28,9 @@ namespace FubuMVC.Core.Resources.Conneg
 
         protected override DoNext performInvoke()
         {
+            // Might already be there from a different way
+            if (_request.Has<T>()) return DoNext.Continue;
+
             var mimeTypes = _request.Get<CurrentMimeType>();
 
             
