@@ -8,7 +8,6 @@ using FubuMVC.Core.Registration.Routes;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
-    [Policy]
     [Title("[UrlPattern] on actionless view models")]
     [Description("Applies a route matching the [UrlPattern] attribute on the Resource Type (View Model) of a BehaviorChain.  Mostly used to add a Route to an 'actionless view'")]
     public class UrlPatternAttributeOnViewModelPolicy : IConfigurationAction

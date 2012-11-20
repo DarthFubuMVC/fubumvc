@@ -5,7 +5,6 @@ using FubuMVC.Core.Resources.Conneg;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
-    [Policy]
     public class StringOutputPolicy : Policy
     {
         public StringOutputPolicy()
@@ -15,7 +14,6 @@ namespace FubuMVC.Core.Registration.Conventions
         }
     }
 
-    [Policy]
     public class HtmlStringOutputPolicy : Policy
     {
         public HtmlStringOutputPolicy()

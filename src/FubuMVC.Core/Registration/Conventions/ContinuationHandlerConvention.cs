@@ -7,7 +7,6 @@ using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
-    [Policy]
     [Description("Add a ContinuationNode behind any ActionFilter or ActionCall that returns a FubuContinuation")]
     public class ContinuationHandlerConvention : IConfigurationAction
     {
