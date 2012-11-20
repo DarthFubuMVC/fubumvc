@@ -53,13 +53,13 @@ namespace FubuMVC.Core
 
             config.RunActions(ConfigurationType.Explicit, graph);
             config.RunActions(ConfigurationType.Policy, graph);
-            config.RunActions(ConfigurationType.Navigation, graph);
-            config.RunActions(ConfigurationType.ByNavigation, graph);
             config.RunActions(ConfigurationType.Attributes, graph);
             config.RunActions(ConfigurationType.ModifyRoutes, graph);
             config.RunActions(ConfigurationType.InjectNodes, graph);
             config.RunActions(ConfigurationType.Conneg, graph);
             config.RunActions(ConfigurationType.Attachment, graph);
+            config.RunActions(ConfigurationType.Navigation, graph);
+            config.RunActions(ConfigurationType.ByNavigation, graph);
             config.RunActions(ConfigurationType.Reordering, graph);
             config.RunActions(ConfigurationType.Instrumentation, graph);
 
