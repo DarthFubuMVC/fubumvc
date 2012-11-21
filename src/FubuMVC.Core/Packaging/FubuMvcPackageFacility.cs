@@ -25,7 +25,7 @@ namespace FubuMVC.Core.Packaging
                 Loader(new LinkedFolderPackageLoader(GetApplicationPath(), folder => folder));
 
                 // Production mode with zip files and standalone assemblies (e.g., Spark.Web.FubuMVC)
-                Loader(new ZipFilePackageLoader());
+                Loader(new FubuMvcZipFilePackageLoader());
 
                 var standaloneLoader = new StandaloneAssemblyPackageLoader(new StandaloneAssemblyFinder());
                 Loader(standaloneLoader);

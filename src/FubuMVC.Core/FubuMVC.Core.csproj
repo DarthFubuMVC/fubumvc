@@ -35,7 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles.0.9.9.407\lib\Bottles.dll</HintPath>
+      <HintPath>..\packages\Bottles.1.0.0.412\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
       <HintPath>..\packages\FubuCore.1.0.0.210\lib\FubuCore.dll</HintPath>
@@ -361,7 +361,7 @@
     <Compile Include="IFubuRegistryExtension.cs" />
     <Compile Include="Packaging\PackageSettingsSource.cs" />
     <Compile Include="Packaging\VirtualPaths\VirtualPathProviderActivator.cs" />
-    <Compile Include="Packaging\ZipFilePackageLoader.cs" />
+    <Compile Include="Packaging\FubuMvcZipFilePackageLoader.cs" />
     <Compile Include="Resources\PathBased\ResourcePathBinder.cs" />
     <Compile Include="Resources\PathBased\ResourcePath.cs" />
     <Compile Include="Resources\PathBased\ResourcePathRoutePolicy.cs" />

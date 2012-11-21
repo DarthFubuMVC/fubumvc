@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using Bottles;
 using Bottles.Exploding;
+using Bottles.Manifest;
 using Bottles.PackageLoaders.Assemblies;
 using FubuCore;
 
