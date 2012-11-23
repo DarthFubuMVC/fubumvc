@@ -1,6 +1,8 @@
 ﻿using System.Web;
 using FubuMVC.Core.UI;
+using FubuMVC.Core.Urls;
 using HtmlTags;
+using FubuCore;
 
 namespace AspNetApplication.FileUpload
 {
@@ -18,36 +20,36 @@ namespace AspNetApplication.FileUpload
 
     public class FileUploadController
     {
-        private readonly FubuHtmlDocument<FileUploadOutput> _document;
+        private readonly IUrlRegistry _urls;
 
-        public FileUploadController(FubuHtmlDocument<FileUploadOutput> document)
+        public FileUploadController(IUrlRegistry urls)
         {
-            _document = document;
+            _urls = urls;
         }
 
         private HtmlDocument buildDocument(FileUploadOutput model)
         {
-            _document.Model = model;
+            var document = new HtmlDocument();
+            document.Title = "File Upload View";
 
-            _document.Title = "File Upload View";
-            _document.Add("h1").Text(model.Text);
+            document.Add("h1").Text(model.Text);
 
-            _document.Add("form")
+            document.Add("form")
                 .Attr("method", "post")
                 .Attr("enctype", "multipart/form-data")
-                .Attr("action", _document.Urls.UrlFor<FileUploadInput>(null));
+                .Attr("action", _urls.UrlFor<FileUploadInput>(null));
 
-            _document.Add("br");
+            document.Add("br");
 
-            _document.Push("p");
-            _document.Add("span").Text("File 1:  ");
-            _document.Add("input").Attr("type", "file").Attr("name", "File1");
+            document.Push("p");
+            document.Add("span").Text("File 1:  ");
+            document.Add("input").Attr("type", "file").Attr("name", "File1");
 
             
-            _document.Add("br");
-            _document.Add("input").Attr("type", "submit");
+            document.Add("br");
+            document.Add("input").Attr("type", "submit");
 
-            return _document;
+            return document;
         }
 
         public HtmlDocument get_file_upload_test(FileUploadTestInput input)

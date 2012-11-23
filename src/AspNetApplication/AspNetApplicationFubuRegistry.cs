@@ -9,7 +9,10 @@ namespace AspNetApplication
         {
             Actions.IncludeClassesSuffixedWithController();
 
-            Import<ContentCompression>(x => x.Exclude(chain => chain.FirstCall().HandlerType != typeof(CompressedContentController)));
+            Policies.Add(x => {
+                x.Where.AnyActionMatches(call => call.HandlerType == typeof (CompressedContentController));
+                x.ContentCompression.Apply();
+            });
         }
     }
 }
