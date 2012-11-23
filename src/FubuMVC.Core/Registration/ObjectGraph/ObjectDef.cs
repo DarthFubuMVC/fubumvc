@@ -367,5 +367,11 @@ namespace FubuMVC.Core.Registration.ObjectGraph
         {
             return Dependencies.FirstOrDefault(x => x.DependencyType == type);
         }
+
+        public ObjectDef Named(string name)
+        {
+            Name = name;
+            return this;
+        }
     }
 }

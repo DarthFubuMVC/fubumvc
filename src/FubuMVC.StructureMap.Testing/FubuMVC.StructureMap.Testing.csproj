@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compliance\Does_not_require_explicit_registration_in_order_to_retrieve_a_concrete_type.cs" />
+    <Compile Include="Compliance\IServiceLocator_Compliance.cs" />
     <Compile Include="Compliance\ObjectDef_Compliance.cs" />
     <Compile Include="ContainerFacilitySource.cs" />
     <Compile Include="Internals\AppSettingProviderRegistrySmokeTester.cs" />

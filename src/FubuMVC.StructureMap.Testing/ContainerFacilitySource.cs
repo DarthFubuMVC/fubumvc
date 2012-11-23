@@ -1,4 +1,5 @@
 ﻿using System;
+using FubuCore;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Runtime;
 using StructureMap;
@@ -15,6 +16,16 @@ namespace FubuMVC.StructureMap.Testing
              // A ContainerFacility cannot be considered "ready" for business until BuildFactory() has been
              // called
              return facility.BuildFactory();
+         }
+
+         public static IServiceLocator Services(Action<IContainerFacility> configure)
+         {
+             var facility = new StructureMapContainerFacility(new Container());
+             configure(facility);
+
+             // A ContainerFacility cannot be considered "ready" for business until BuildFactory() has been
+             // called
+             return facility.BuildFactory().Get<IServiceLocator>();
          }
     }
 }
