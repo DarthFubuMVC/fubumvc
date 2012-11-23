@@ -6,6 +6,7 @@ using FubuCore.Formatting;
 using FubuCore.Logging;
 using FubuCore.Reflection;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Http.Compression;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Routing;
@@ -15,7 +16,6 @@ using FubuMVC.Core.Runtime.Formatters;
 using FubuMVC.Core.SessionState;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.Urls;
-using FubuCore;
 
 namespace FubuMVC.Core
 {
@@ -81,6 +81,10 @@ namespace FubuMVC.Core
             SetServiceIfNone<IExceptionHandlingObserver, ExceptionHandlingObserver>();
 
             SetServiceIfNone<IPartialInvoker, PartialInvoker>();
+
+            AddService<IHttpContentEncoding, GZipHttpContentEncoding>();
+            AddService<IHttpContentEncoding, DeflateHttpContentEncoding>();
+            SetServiceIfNone<IHttpContentEncoders, HttpContentEncoders>();
         }
     }
 }

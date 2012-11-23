@@ -2,12 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Bottles;
-using FubuMVC.Core.Packaging;
-using FubuMVC.Core.Registration;
-using FubuCore.Reflection;
-using System.Collections.Generic;
 using FubuCore;
+using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core
 {
@@ -17,19 +13,6 @@ namespace FubuMVC.Core
         {
             FindAllExtensionTypes(assemblies).Select(type => typeof (Importer<>).CloseAndBuildAs<IImporter>(type)).Each(
                 x => x.Apply(registry));
-        }
-
-        public interface IImporter
-        {
-            void Apply(FubuRegistry registry);
-        }
-
-        public class Importer<T> : IImporter where T : IFubuRegistryExtension, new()
-        {
-            public void Apply(FubuRegistry registry)
-            {
-                registry.Import<T>();
-            }
         }
 
         public static IEnumerable<Type> FindAllExtensionTypes(IEnumerable<Assembly> assemblies)
@@ -49,6 +32,19 @@ namespace FubuMVC.Core
         private static bool hasDefaultCtor(Type type)
         {
             return type.GetConstructor(new Type[0]) != null;
+        }
+
+        public interface IImporter
+        {
+            void Apply(FubuRegistry registry);
+        }
+
+        public class Importer<T> : IImporter where T : IFubuRegistryExtension, new()
+        {
+            public void Apply(FubuRegistry registry)
+            {
+                registry.Import<T>();
+            }
         }
     }
 }

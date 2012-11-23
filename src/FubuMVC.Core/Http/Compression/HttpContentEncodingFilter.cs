@@ -1,9 +1,10 @@
 using FubuCore.Binding;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Http.Compression
 {
-    public class HttpContentEncodingFilter : IBehaviorInvocationFilter
+    public class HttpContentEncodingFilter : IBehaviorInvocationFilter, DescribesItself
     {
         private readonly IHttpContentEncoders _encoders;
 
@@ -31,6 +32,11 @@ namespace FubuMVC.Core.Http.Compression
             arguments.Set(typeof(Latch), new Latch());
 
             return DoNext.Continue;
+        }
+
+        public void Describe(Description description)
+        {
+            description.AddList("Encoders", _encoders.Encodings);
         }
     }
 

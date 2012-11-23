@@ -41,6 +41,8 @@ namespace FubuMVC.Core.Registration.Conventions
         {
             _defaultUrlPolicy = new UrlPolicy(call => true, _inputPolicy);
             _defaultUrlPolicy.IgnoreClassSuffix("controller");
+            _defaultUrlPolicy.IgnoreClassSuffix("endpoint");
+            _defaultUrlPolicy.IgnoreClassSuffix("endpoints");
 
             _inputPolicy.PropertyFilters.Includes +=
                 prop => prop.InputProperty.HasAttribute<RouteInputAttribute>();

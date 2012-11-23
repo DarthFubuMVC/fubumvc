@@ -27,6 +27,8 @@ namespace FubuMVC.Core.Registration.Conventions
             {
                 route.ApplyInputType(call.InputType());
             }
+
+            route.Trace("Route pattern determined by the default 'Method Url' policy");
         }
 
         public static void Alter(IRouteDefinition route, string methodName, IEnumerable<string> properties,

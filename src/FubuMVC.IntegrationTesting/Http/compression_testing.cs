@@ -13,7 +13,7 @@ namespace FubuMVC.IntegrationTesting.Http
         protected override void configure(FubuRegistry registry)
         {
             registry.Actions.IncludeType<CompressionController>();
-            registry.Import<ContentCompression>();
+            registry.Policies.Add(policy => policy.ContentCompression.Apply());
         }
 
         [Test]

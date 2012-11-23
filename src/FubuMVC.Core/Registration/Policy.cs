@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Descriptions;
+using FubuMVC.Core.Http.Compression;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Policies;
 using FubuCore.Reflection;
@@ -326,6 +327,17 @@ namespace FubuMVC.Core.Registration
 
             return ConfigurationType.Policy;
 
+        }
+
+        /// <summary>
+        /// Apply content compression to matching chains
+        /// </summary>
+        public ContentCompressionActions ContentCompression
+        {
+            get
+            {
+                return new ContentCompressionActions(this);
+            }
         }
 
         public static string DetermineConfigurationType(IChainModification modification)

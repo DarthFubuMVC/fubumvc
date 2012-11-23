@@ -104,6 +104,7 @@
     <Compile Include="Endpoints\WebRequestResponseExtensions.cs" />
     <Compile Include="FubuApplicationDescriber.cs" />
     <Compile Include="Http\AspNet\AspNetResponse.cs" />
+    <Compile Include="Http\Compression\ApplyContentCompression.cs" />
     <Compile Include="Http\Compression\DeflateHttpContentEncoding.cs" />
     <Compile Include="Http\Compression\DoNotCompressAttribute.cs" />
     <Compile Include="Http\CookieValue.cs" />
@@ -116,7 +117,7 @@
     <Compile Include="Registration\ApplicationLevelAttribute.cs" />
     <Compile Include="Registration\Conventions\CacheAttributePolicy.cs" />
     <Compile Include="Registration\Conventions\CachedPartialConvention.cs" />
-    <Compile Include="Http\Compression\ContentCompression.cs" />
+    <Compile Include="Http\Compression\ContentCompressionActions.cs" />
     <Compile Include="Http\Compression\ContentEncoding.cs" />
     <Compile Include="Http\Compression\GZipHttpContentEncoding.cs" />
     <Compile Include="Http\Compression\HttpContentEncodingFilter.cs" />

@@ -8,6 +8,7 @@ namespace FubuMVC.Core.Http.Compression
     public interface IHttpContentEncoders
     {
         IHttpContentEncoding MatchFor(string acceptEncoding);
+        IEnumerable<IHttpContentEncoding> Encodings { get; }
     }
 
     public class HttpContentEncoders : IHttpContentEncoders
@@ -17,6 +18,11 @@ namespace FubuMVC.Core.Http.Compression
         public HttpContentEncoders(IEnumerable<IHttpContentEncoding> encodings)
         {
             _encodings = encodings;
+        }
+
+        public IEnumerable<IHttpContentEncoding> Encodings
+        {
+            get { return _encodings; }
         }
 
         public IHttpContentEncoding MatchFor(string acceptEncoding)
