@@ -22,11 +22,17 @@ namespace FubuMVC.StructureMap
 
         public void Invoke()
         {
+            var behavior = StartInnerBehavior();
+
+            behavior.Invoke();
+        }
+
+        public IActionBehavior StartInnerBehavior()
+        {
             _nested = _container.GetNestedContainer();
             _nested.Configure(x => _arguments.EachService((type, value) => x.For(type).Use(value)));
             var behavior = _nested.GetInstance<IActionBehavior>(_behaviorId.ToString());
-
-            behavior.Invoke();
+            return behavior;
         }
 
         public void InvokePartial()

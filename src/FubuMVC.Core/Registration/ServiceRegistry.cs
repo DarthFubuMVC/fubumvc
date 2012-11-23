@@ -188,6 +188,8 @@ namespace FubuMVC.Core.Registration
 
         public static bool ShouldBeSingleton(Type type)
         {
+            if (type == null) return false;
+
             return type.Name.EndsWith("Cache") || type.HasAttribute<SingletonAttribute>();
         }
     }
