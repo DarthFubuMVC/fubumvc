@@ -25,17 +25,17 @@ namespace FubuMVC.Core
     public class FubuRuntime
     {
         private readonly IContainerFacility _facility;
-        private readonly IBehaviorFactory _factory;
+        private readonly IServiceFactory _factory;
         private readonly IList<RouteBase> _routes;
 
-        public FubuRuntime(IBehaviorFactory factory, IContainerFacility facility, IList<RouteBase> routes)
+        public FubuRuntime(IServiceFactory factory, IContainerFacility facility, IList<RouteBase> routes)
         {
             _factory = factory;
             _facility = facility;
             _routes = routes;
         }
 
-        public IBehaviorFactory Factory
+        public IServiceFactory Factory
         {
             get { return _factory; }
         }
@@ -121,7 +121,7 @@ namespace FubuMVC.Core
 
             _fubuFacility = new FubuMvcPackageFacility();
 
-            IBehaviorFactory factory = null;
+            IServiceFactory factory = null;
             BehaviorGraph graph = null;
 
             // TODO -- I think Bottles probably needs to enforce a "tell me the paths"
@@ -156,7 +156,7 @@ namespace FubuMVC.Core
                     // factory HAS to be spun up here.
                     factory = containerFacility.BuildFactory();
 
-                    return containerFacility.GetAllActivators();
+                    return factory.GetAll<IActivator>();
                 });
             });
 
@@ -197,12 +197,12 @@ namespace FubuMVC.Core
             _registryModifications.Each(m => m(_registry.Value));
         }
 
-        private IList<RouteBase> buildRoutes(IBehaviorFactory factory, BehaviorGraph graph)
+        private IList<RouteBase> buildRoutes(IServiceFactory factory, BehaviorGraph graph)
         {
             var routes = new List<RouteBase>();
 
             // Build route objects from route definitions on graph + add packaging routes
-            _facility.Value.Get<IRoutePolicy>().BuildRoutes(graph, factory).Each(routes.Add);
+            factory.Get<IRoutePolicy>().BuildRoutes(graph, factory).Each(routes.Add);
 
             return routes;
         }
@@ -240,11 +240,6 @@ namespace FubuMVC.Core
         {
             _registryModifications.Add(modifications);
             return this;
-        }
-
-        public IEnumerable<IInstaller> GetAllInstallers()
-        {
-            return _facility.Value.GetAllInstallers();
         }
 
     }

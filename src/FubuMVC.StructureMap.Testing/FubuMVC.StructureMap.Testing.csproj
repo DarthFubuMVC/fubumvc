@@ -68,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compliance\ObjectDef_Compliance.cs" />
     <Compile Include="ContainerFacilitySource.cs" />
     <Compile Include="Internals\AppSettingProviderRegistrySmokeTester.cs" />
     <Compile Include="Internals\ObjectDefInstanceTester.cs" />
@@ -91,9 +92,7 @@
       <Name>FubuMVC.StructureMap</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Compliance\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

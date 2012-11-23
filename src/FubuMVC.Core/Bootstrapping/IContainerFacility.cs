@@ -9,16 +9,9 @@ namespace FubuMVC.Core.Bootstrapping
 {
     public interface IContainerFacility
     {
-        IBehaviorFactory BuildFactory();
+        IServiceFactory BuildFactory();
         void Register(Type serviceType, ObjectDef def);
 
         void Inject(Type abstraction, Type concretion);
-        
-        // TODO -- just get rid of these methods now that we broke down and did GetAll<T>()
-        IEnumerable<IActivator> GetAllActivators();
-        IEnumerable<IInstaller> GetAllInstallers();
-
-        T Get<T>();
-        IEnumerable<T> GetAll<T>();
     }
 }

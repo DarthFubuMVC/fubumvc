@@ -13,7 +13,7 @@ namespace FubuMVC.Tests.Runtime
     [TestFixture]
     public class AsyncBehaviorInvokerTester
     {
-        private IBehaviorFactory theFactory;
+        private IServiceFactory theFactory;
         private BehaviorChain theChain;
         private BehaviorInvoker theInvoker;
         private IActionBehavior theBehavior;
@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.Runtime
         [SetUp]
         public void SetUp()
         {
-            theFactory = MockRepository.GenerateMock<IBehaviorFactory>();
+            theFactory = MockRepository.GenerateMock<IServiceFactory>();
             theChain = new BehaviorChain()
             {
                 Route = new RouteDefinition("something")

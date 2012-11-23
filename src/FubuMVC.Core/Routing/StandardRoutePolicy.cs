@@ -12,13 +12,13 @@ namespace FubuMVC.Core.Routing
 {
     public class StandardRoutePolicy : IRoutePolicy
     {
-        public IList<RouteBase> BuildRoutes(BehaviorGraph graph, IBehaviorFactory factory)
+        public IList<RouteBase> BuildRoutes(BehaviorGraph graph, IServiceFactory factory)
         {
             var defaultSessionRequirement = graph.Settings.Get<SessionStateRequirement>();
             return graph.Behaviors.Where(x => x.Route != null).OrderBy(x => x.Route.Rank).Select(x => BuildRoute(factory, defaultSessionRequirement, x)).ToList();
         }
 
-        public RouteBase BuildRoute(IBehaviorFactory factory, SessionStateRequirement defaultSessionRequirement, BehaviorChain chain)
+        public RouteBase BuildRoute(IServiceFactory factory, SessionStateRequirement defaultSessionRequirement, BehaviorChain chain)
         {
             var requiresSession = chain.Route.SessionStateRequirement ?? defaultSessionRequirement;
 
@@ -31,7 +31,7 @@ namespace FubuMVC.Core.Routing
             return route;
         }
 
-        public static IBehaviorInvoker DetermineInvoker(IBehaviorFactory factory, BehaviorChain chain)
+        public static IBehaviorInvoker DetermineInvoker(IServiceFactory factory, BehaviorChain chain)
         {
             return chain.IsAsynchronous() ? new AsyncBehaviorInvoker(factory, chain) : new BehaviorInvoker(factory, chain);
         }

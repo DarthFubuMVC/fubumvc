@@ -194,7 +194,7 @@ namespace FubuMVC.TestingHarness
             _server.Start(runtime);
             _port = _server.Port;
 
-            var urls = _runtime.Facility.Get<IUrlRegistry>();
+            var urls = _runtime.Factory.Get<IUrlRegistry>();
             urls.As<UrlRegistry>().RootAt(_server.BaseAddress);
 
             UrlContext.Stub(_server.BaseAddress);

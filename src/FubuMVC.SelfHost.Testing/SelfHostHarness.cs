@@ -42,7 +42,7 @@ namespace FubuMVC.SelfHost.Testing
         
             _server.Start(runtime);
 
-            var urls = runtime.Facility.Get<IUrlRegistry>();
+            var urls = runtime.Factory.Get<IUrlRegistry>();
             urls.As<UrlRegistry>().RootAt(_server.BaseAddress);
 
             UrlContext.Stub(_server.BaseAddress);

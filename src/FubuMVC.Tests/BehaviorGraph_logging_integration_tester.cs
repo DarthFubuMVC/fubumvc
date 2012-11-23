@@ -32,7 +32,7 @@ namespace FubuMVC.Tests
             // Do it this way so that it gets the assembly package
             container = new Container();
             theGraph = FubuApplication.For(theRegistry).StructureMap(container)
-                .Bootstrap().Facility.Get<BehaviorGraph>();
+                .Bootstrap().Factory.Get<BehaviorGraph>();
 
             theLogs = container.GetInstance<ConfigLog>();
         }

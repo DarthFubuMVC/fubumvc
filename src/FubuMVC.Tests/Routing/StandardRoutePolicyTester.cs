@@ -24,12 +24,12 @@ namespace FubuMVC.Tests.Routing
     {
         private IEnumerable<Guid> _actionIds;
         private IEnumerable<Route> _routes;
-        private IBehaviorFactory theFactory;
+        private IServiceFactory theFactory;
 
         [SetUp]
         public void SetUp()
         {
-            theFactory = MockRepository.GenerateMock<IBehaviorFactory>();
+            theFactory = MockRepository.GenerateMock<IServiceFactory>();
 
             var graph = setupActions();
             _actionIds = graph.Actions().Select(x => x.ParentChain().UniqueId);
@@ -117,10 +117,10 @@ namespace FubuMVC.Tests.Routing
             return BehaviorGraph.BuildFrom(registry);
         }
 
-        public class BehaviorFactory : IBehaviorFactory
+        public class ServiceFactory : IServiceFactory
         {
             private readonly IEnumerable<Guid> _behaviorIds;
-            public BehaviorFactory(IEnumerable<Guid> behaviorIds) { _behaviorIds = behaviorIds; }
+            public ServiceFactory(IEnumerable<Guid> behaviorIds) { _behaviorIds = behaviorIds; }
 
             public IActionBehavior BuildBehavior(ServiceArguments arguments, Guid behaviorId)
             {
@@ -128,6 +128,16 @@ namespace FubuMVC.Tests.Routing
             }
 
             public IEndPointAuthorizor AuthorizorFor(Guid behaviorId)
+            {
+                throw new NotImplementedException();
+            }
+
+            public T Get<T>()
+            {
+                throw new NotImplementedException();
+            }
+
+            public IEnumerable<T> GetAll<T>()
             {
                 throw new NotImplementedException();
             }

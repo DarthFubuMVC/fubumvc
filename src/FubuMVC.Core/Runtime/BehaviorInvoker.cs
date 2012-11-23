@@ -10,10 +10,10 @@ namespace FubuMVC.Core.Runtime
 {
     public class BehaviorInvoker : IBehaviorInvoker
     {
-        private readonly IBehaviorFactory _factory;
+        private readonly IServiceFactory _factory;
         private readonly BehaviorChain _chain;
 
-        public BehaviorInvoker(IBehaviorFactory factory, BehaviorChain chain)
+        public BehaviorInvoker(IServiceFactory factory, BehaviorChain chain)
         {
             _factory = factory;
             _chain = chain;

@@ -359,7 +359,6 @@
     <Compile Include="Continuations\IContinuationDirector.cs" />
     <Compile Include="EndpointService.cs" />
     <Compile Include="FubuApplication.cs" />
-    <Compile Include="FubuEnvironment.cs" />
     <Compile Include="FubuExtensionFinder.cs" />
     <Compile Include="FubuPackageRegistry.cs" />
     <Compile Include="IFubuRegistryExtension.cs" />
@@ -498,7 +497,7 @@
     <Compile Include="Registration\Routes\RouteParameter.cs" />
     <Compile Include="Runtime\FubuRequest.cs" />
     <Compile Include="Runtime\OutputWriter.cs" />
-    <Compile Include="Runtime\IBehaviorFactory.cs" />
+    <Compile Include="Runtime\IServiceFactory.cs" />
     <Compile Include="Runtime\IFubuRequest.cs" />
     <Compile Include="Runtime\MimeType.cs" />
     <Compile Include="Runtime\Handlers\FubuRouteHandler.cs" />

@@ -97,19 +97,19 @@ namespace FubuMVC.StructureMap.Testing.Internals
 
         private Container container;
         private BehaviorGraph graph;
-        private IBehaviorFactory factory;
+        private IServiceFactory factory;
         private StructureMapContainerFacility facility;
 
         [Test]
         public void behavior_factory_is_available_in_the_container()
         {
-            container.GetInstance<IBehaviorFactory>().ShouldBeOfType<PartialBehaviorFactory>();
+            container.GetInstance<IServiceFactory>().ShouldBeOfType<PartialServiceFactory>();
         }
 
         [Test]
         public void can_return_all_the_registered_activators_smoke_test()
         {
-            facility.GetAllActivators().Count().ShouldBeGreaterThan(3);
+            facility.GetAll<IActivator>().Count().ShouldBeGreaterThan(3);
         }
 
         [Test]
@@ -117,13 +117,13 @@ namespace FubuMVC.StructureMap.Testing.Internals
         {
             var uniqueId = container.GetInstance<BehaviorGraph>().Behaviors.First().UniqueId;
 
-            container.GetInstance<IBehaviorFactory>().AuthorizorFor(uniqueId).ShouldNotBeNull();
+            container.GetInstance<IServiceFactory>().AuthorizorFor(uniqueId).ShouldNotBeNull();
         }
 
         [Test]
         public void factory_itself_is_registered_in_the_container()
         {
-            container.GetInstance<IBehaviorFactory>().ShouldBeOfType<PartialBehaviorFactory>();
+            container.GetInstance<IServiceFactory>().ShouldBeOfType<PartialServiceFactory>();
         }
 
         [Test]

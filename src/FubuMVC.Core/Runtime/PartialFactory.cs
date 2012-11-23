@@ -9,9 +9,9 @@ namespace FubuMVC.Core.Runtime
     {
         private readonly ServiceArguments _arguments;
         private readonly ICurrentChain _currentChain;
-        private readonly IBehaviorFactory _factory;
+        private readonly IServiceFactory _factory;
 
-        public PartialFactory(IBehaviorFactory factory, ServiceArguments arguments, ICurrentChain currentChain)
+        public PartialFactory(IServiceFactory factory, ServiceArguments arguments, ICurrentChain currentChain)
         {
             _factory = factory;
             _arguments = arguments;

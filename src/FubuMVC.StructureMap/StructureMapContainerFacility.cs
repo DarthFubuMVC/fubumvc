@@ -17,7 +17,7 @@ using StructureMap.Pipeline;
 
 namespace FubuMVC.StructureMap
 {
-    public class StructureMapContainerFacility : IContainerFacility, IBehaviorFactory
+    public class StructureMapContainerFacility : IContainerFacility, IServiceFactory
     {
         private readonly IContainer _container;
         private readonly Registry _registry;
@@ -66,10 +66,16 @@ namespace FubuMVC.StructureMap
             throw new NotImplementedException();
         }
 
-        public IBehaviorFactory BuildFactory()
+        public IServiceFactory BuildFactory()
         {
-            _registry.For<IBehaviorFactory>().Use<PartialBehaviorFactory>();
-            _container.Configure(x => x.AddRegistry(_registry));
+            _registry.For<IServiceFactory>().Use<PartialServiceFactory>();
+            _container.Configure(x => {
+                x.AddRegistry(_registry);
+                if (_initializeSingletonsToWorkAroundSMBug)
+                {
+                    x.For<IActivator>().Add<SingletonSpinupActivator>();
+                }
+            });
 
             _registration = (serviceType, def) =>
             {
@@ -110,19 +116,6 @@ namespace FubuMVC.StructureMap
             return _container.GetAllInstances<T>();
         }
 
-        public IEnumerable<IActivator> GetAllActivators()
-        {  
-            foreach (var activator in _container.GetAllInstances<IActivator>())
-            {
-                yield return activator;
-            }
-
-            if (_initializeSingletonsToWorkAroundSMBug)
-            {
-                yield return new SingletonSpinupActivator(_container);
-            }
-        }
-
         public IEnumerable<IInstaller> GetAllInstallers()
         {
             return _container.GetAllInstances<IInstaller>();
@@ -158,11 +151,11 @@ namespace FubuMVC.StructureMap
 
     }
 
-    public class PartialBehaviorFactory : IBehaviorFactory
+    public class PartialServiceFactory : IServiceFactory
     {
         private readonly IContainer _container;
 
-        public PartialBehaviorFactory(IContainer container)
+        public PartialServiceFactory(IContainer container)
         {
             _container = container;
         }
@@ -175,6 +168,16 @@ namespace FubuMVC.StructureMap
         public IEndPointAuthorizor AuthorizorFor(Guid behaviorId)
         {
             return _container.GetInstance<IEndPointAuthorizor>(behaviorId.ToString());
+        }
+
+        public T Get<T>()
+        {
+            return _container.GetInstance<T>();
+        }
+
+        public IEnumerable<T> GetAll<T>()
+        {
+            return _container.GetAllInstances<T>();
         }
     }
 }

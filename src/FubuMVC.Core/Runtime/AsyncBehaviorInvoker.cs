@@ -7,7 +7,7 @@ namespace FubuMVC.Core.Runtime
 {
     public class AsyncBehaviorInvoker : BehaviorInvoker
     {
-        public AsyncBehaviorInvoker(IBehaviorFactory factory, BehaviorChain chain) : base(factory, chain)
+        public AsyncBehaviorInvoker(IServiceFactory factory, BehaviorChain chain) : base(factory, chain)
         {
         }
 

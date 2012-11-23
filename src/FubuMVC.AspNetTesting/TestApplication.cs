@@ -31,7 +31,7 @@ namespace FubuMVC.AspNetTesting
 
         private static readonly Lazy<IUrlRegistry> _urls = new Lazy<IUrlRegistry>(() =>
         {
-            var urls = _runtime.Value.Facility.Get<IUrlRegistry>();
+            var urls = _runtime.Value.Factory.Get<IUrlRegistry>();
             urls.As<UrlRegistry>().RootAt("http://localhost/fubumvc_aspnet_testing");
 
             return urls;

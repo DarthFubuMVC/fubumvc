@@ -19,10 +19,10 @@ namespace FubuMVC.Core.Security
     public class ChainAuthorizor : IChainAuthorizor
     {
         private readonly IFubuRequest _request;
-        private readonly IBehaviorFactory _factory;
+        private readonly IServiceFactory _factory;
         private readonly ITypeResolver _types;
 
-        public ChainAuthorizor(IFubuRequest request, IBehaviorFactory factory, ITypeResolver types)
+        public ChainAuthorizor(IFubuRequest request, IServiceFactory factory, ITypeResolver types)
         {
             _request = request;
             _factory = factory;

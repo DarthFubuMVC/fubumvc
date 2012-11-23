@@ -7,6 +7,6 @@ namespace FubuMVC.Core.Routing
 {
     public interface IRoutePolicy
     {
-        IList<RouteBase> BuildRoutes(BehaviorGraph graph, IBehaviorFactory factory);
+        IList<RouteBase> BuildRoutes(BehaviorGraph graph, IServiceFactory factory);
     }
 }
