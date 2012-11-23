@@ -215,7 +215,14 @@ namespace FubuMVC.Core
                     _registry.Value.Config.Push(o.As<IPackageInfo>());
                     var assemblies = l.FindChildren<Assembly>();
 
-                    FubuExtensionFinder.ApplyExtensions(_registry.Value, assemblies);
+                    try
+                    {
+                        FubuExtensionFinder.ApplyExtensions(_registry.Value, assemblies);
+                    }
+                    catch (Exception e)
+                    {
+                        l.MarkFailure(e);
+                    }
 
                     _registry.Value.Config.Pop();
                 }

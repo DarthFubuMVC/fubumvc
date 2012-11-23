@@ -19,8 +19,7 @@ namespace FubuMVC.Core
         {
             if (!assemblies.Any()) return new Type[0];
 
-            var pool = new TypePool();
-
+            var pool = new TypePool {IgnoreExportTypeFailures = false};
             pool.AddAssemblies(assemblies);
 
             // Yeah, it really does have to be this way
