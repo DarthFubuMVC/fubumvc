@@ -27,8 +27,14 @@ namespace FubuMVC.Core.Runtime
         public void InvokePartial()
         {
             _chainStack.Push(_targetChain);
-            Inner.InvokePartial();
-            _chainStack.Pop();
+            try
+            {
+                Inner.InvokePartial();
+            }
+            finally
+            {
+                _chainStack.Pop();
+            }
         }
     }
 }
