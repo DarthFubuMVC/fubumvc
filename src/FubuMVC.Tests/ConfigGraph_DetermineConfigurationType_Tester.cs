@@ -4,6 +4,7 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuTestingSupport;
 using NUnit.Framework;
+using FubuCore;
 
 namespace FubuMVC.Tests
 {
@@ -45,6 +46,26 @@ namespace FubuMVC.Tests
             {
                 throw new NotImplementedException();
             }
+        }
+
+        public class FakePolicy5 : IConfigurationAction, IKnowMyConfigurationType
+        {
+            public void Configure(BehaviorGraph graph)
+            {
+                
+            }
+
+            string IKnowMyConfigurationType.DetermineConfigurationType()
+            {
+                return Core.ConfigurationType.Attachment;
+            }
+        }
+
+        [Test]
+        public void will_use_the_IKnowMyConfigurationType_if_it_exists()
+        {
+            ConfigGraph.DetermineConfigurationType(new FakePolicy5())
+                       .ShouldEqual(new FakePolicy5().As<IKnowMyConfigurationType>().DetermineConfigurationType());
         }
 
         [Test]

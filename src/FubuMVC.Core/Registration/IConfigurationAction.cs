@@ -8,4 +8,9 @@ namespace FubuMVC.Core.Registration
     {
         void Configure(BehaviorGraph graph);
     }
+
+    public interface IKnowMyConfigurationType
+    {
+        string DetermineConfigurationType();
+    }
 }

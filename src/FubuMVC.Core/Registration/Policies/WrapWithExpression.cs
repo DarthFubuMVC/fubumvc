@@ -13,22 +13,22 @@ namespace FubuMVC.Core.Registration.Policies
             _policy = policy;
         }
 
-        public void With(Func<BehaviorChain, BehaviorNode> source)
+        public void With(Func<BehaviorChain, BehaviorNode> source, string description = "Wrap with a BehaviorNode built by a Lambda")
         {
             _policy.ModifyBy(chain => {
                 BehaviorNode node = source(chain);
                 chain.InsertFirst(node);
-            });
+            }, description, ConfigurationType.InjectNodes);
         }
 
         public void WithNode<T>() where T : BehaviorNode, new()
         {
-            _policy.ModifyBy(chain => chain.InsertFirst(new T()));
+            _policy.ModifyBy(chain => chain.InsertFirst(new T()), "Wrap with node " + typeof(T).FullName, ConfigurationType.InjectNodes);
         }
 
         public void WithBehavior<T>() where T : IActionBehavior
         {
-            _policy.ModifyBy(chain => chain.InsertFirst(Wrapper.For<T>()));
+            _policy.ModifyBy(chain => chain.InsertFirst(Wrapper.For<T>()),"Wrap with behavior " + typeof(T).FullName, ConfigurationType.InjectNodes);
         }
     }
 }

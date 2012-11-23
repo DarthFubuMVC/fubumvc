@@ -6,6 +6,7 @@ using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Policies;
+using FubuCore.Reflection;
 
 namespace FubuMVC.Core.Registration
 {
@@ -13,7 +14,7 @@ namespace FubuMVC.Core.Registration
     /// Class used to define BehaviorChain policies and conventions
     /// </summary>
     [CanBeMultiples]
-    public class Policy : IConfigurationAction, DescribesItself
+    public class Policy : IConfigurationAction, DescribesItself, IKnowMyConfigurationType
     {
         private readonly IList<IChainModification> _actions = new List<IChainModification>();
         private readonly IList<IChainFilter> _wheres = new List<IChainFilter>();
@@ -283,11 +284,12 @@ namespace FubuMVC.Core.Registration
         /// </summary>
         /// <param name="alteration"></param>
         /// <param name="description">Optional description for diagnostics</param>
-        public void ModifyBy(Action<BehaviorChain> alteration, string description = "User defined")
+        public void ModifyBy(Action<BehaviorChain> alteration, string description = "User defined", string configurationType = ConfigurationType.Explicit)
         {
             _actions.Add(new LambdaChainModification(alteration)
             {
-                Description = description
+                Description = description,
+                ConfigurationType = configurationType
             });
         }
 
@@ -300,6 +302,45 @@ namespace FubuMVC.Core.Registration
         {
             description.AddList("Where", _wheres);
             description.AddList("Actions", _actions);
+        }
+
+        string IKnowMyConfigurationType.DetermineConfigurationType()
+        {
+            if (GetType().HasAttribute<ConfigurationTypeAttribute>())
+            {
+                return GetType().GetAttribute<ConfigurationTypeAttribute>().Type;
+            }
+
+            var types = _actions.Select(DetermineConfigurationType).Distinct().ToArray();
+
+            if (types.Count() == 1)
+            {
+                return types.Single();
+            }
+
+
+            foreach (var type in BehaviorGraphBuilder.ConfigurationOrder().Reverse())
+            {
+                if (types.Contains(type)) return type;
+            }
+
+            return ConfigurationType.Policy;
+
+        }
+
+        public static string DetermineConfigurationType(IChainModification modification)
+        {
+            string configurationType = null;
+
+            modification.GetType().ForAttribute<ConfigurationTypeAttribute>(att => configurationType = att.Type);
+
+            var lambda = modification as LambdaChainModification;
+            if (lambda != null)
+            {
+                configurationType = lambda.ConfigurationType;
+            }
+
+            return configurationType;
         }
     }
 

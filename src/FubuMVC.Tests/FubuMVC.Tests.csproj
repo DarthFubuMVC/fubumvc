@@ -147,6 +147,7 @@
     <Compile Include="Registration\Policies\IsPartialTester.cs" />
     <Compile Include="Registration\Policies\ResourceTypeImplementsTester.cs" />
     <Compile Include="Registration\Policies\ResourceTypeIsTester.cs" />
+    <Compile Include="Registration\Policy_implementation_of_IKnowMyConfigurationType.cs" />
     <Compile Include="Registration\Registration\ModelBindingServiceRegistry_specification.cs" />
     <Compile Include="Registration\SettingsCollectionTester.cs" />
     <Compile Include="Resources\Conneg\ReaderChoiceTester.cs" />

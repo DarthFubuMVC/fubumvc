@@ -11,7 +11,7 @@ namespace FubuMVC.Core.Registration.Conventions
         {
             Where.IsNotPartial();
             Where.ChainMatches(x => x.HasResourceType() && !x.HasOutput());
-            ModifyBy(chain => chain.ApplyConneg());
+            ModifyBy(chain => chain.ApplyConneg(), configurationType:ConfigurationType.Conneg);
         }
 
     }

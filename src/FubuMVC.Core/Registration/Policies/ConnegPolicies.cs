@@ -82,7 +82,7 @@ namespace FubuMVC.Core.Registration.Policies
         /// <param name="writerType"></param>
         public void AddWriter(Type writerType)
         {
-            _policy.ModifyBy(chain => chain.Output.AddWriter(writerType));
+            _policy.ModifyBy(chain => chain.Output.AddWriter(writerType), configurationType:ConfigurationType.Conneg);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace FubuMVC.Core.Registration.Policies
         /// </summary>
         public void ClearAllWriters()
         {
-            _policy.ModifyBy(chain => chain.Output.ClearAll());
+            _policy.ModifyBy(chain => chain.Output.ClearAll(), configurationType: ConfigurationType.Conneg);
         }
 
         /// <summary>
@@ -98,11 +98,12 @@ namespace FubuMVC.Core.Registration.Policies
         /// </summary>
         public void ApplyConneg()
         {
-            _policy.ModifyBy(chain => chain.ApplyConneg());
+            _policy.ModifyBy(chain => chain.ApplyConneg(), configurationType: ConfigurationType.Conneg);
         }
     }
 
     [Title("Accept Json")]
+    [ConfigurationType(ConfigurationType.Conneg)]
     public class AcceptJson : IChainModification
     {
         public void Modify(BehaviorChain chain)
@@ -114,6 +115,7 @@ namespace FubuMVC.Core.Registration.Policies
     }
 
     [Title("Accept form posts as mimetype 'application/x-www-form-urlencoded'")]
+    [ConfigurationType(ConfigurationType.Conneg)]
     public class AllowHttpFormPosts : IChainModification
     {
         public void Modify(BehaviorChain chain)
@@ -125,6 +127,7 @@ namespace FubuMVC.Core.Registration.Policies
     }
 
     [Title("Write the resource type as text/html by calling ToString() on the resource")]
+    [ConfigurationType(ConfigurationType.Conneg)]
     public class AddHtml : IChainModification
     {
         public void Modify(BehaviorChain chain)
@@ -134,6 +137,7 @@ namespace FubuMVC.Core.Registration.Policies
     }
 
     [Title("Add Writer")]
+    [ConfigurationType(ConfigurationType.Conneg)]
     public class AddWriter : IChainModification, DescribesItself
     {
         private readonly Func<BehaviorChain, WriterNode> _writerSource;
@@ -164,6 +168,7 @@ namespace FubuMVC.Core.Registration.Policies
     }
 
     [Title("Accepts Json or Http form posts, outputs Json only")]
+    [ConfigurationType(ConfigurationType.Conneg)]
     public class AsymmetricJsonModification : IChainModification
     {
         public void Modify(BehaviorChain chain)
@@ -173,6 +178,7 @@ namespace FubuMVC.Core.Registration.Policies
     }
 
     [Title("Accepts and writes Json only")]
+    [ConfigurationType(ConfigurationType.Conneg)]
     public class SymmetricJsonModification : IChainModification
     {
         public void Modify(BehaviorChain chain)

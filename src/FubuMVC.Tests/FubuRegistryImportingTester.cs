@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Web;
+using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Caching;

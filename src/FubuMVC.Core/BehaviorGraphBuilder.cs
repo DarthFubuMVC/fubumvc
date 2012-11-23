@@ -23,7 +23,10 @@ namespace FubuMVC.Core
             config.RunActions(ConfigurationType.Explicit, graph);
             config.RunActions(ConfigurationType.Policy, graph);
             config.RunActions(ConfigurationType.Reordering, graph);
-
+            config.RunActions(ConfigurationType.Attributes, graph);
+            config.RunActions(ConfigurationType.ModifyRoutes, graph);
+            config.RunActions(ConfigurationType.InjectNodes, graph);
+            config.RunActions(ConfigurationType.Conneg, graph);
 
             return graph;
         }
@@ -68,6 +71,30 @@ namespace FubuMVC.Core
 
             return graph;
         }
+
+
+        // TODO -- try to eliminate the duplication from above
+        public static IEnumerable<string> ConfigurationOrder()
+        {
+            return new string[]
+                   {
+                       ConfigurationType.Settings,
+                       ConfigurationType.Discovery,
+                       ConfigurationType.Explicit,
+                       ConfigurationType.Policy,
+                       ConfigurationType.Attributes,
+                       ConfigurationType.ModifyRoutes,
+                       ConfigurationType.InjectNodes,
+                       ConfigurationType.Conneg,
+                       ConfigurationType.Attachment,
+                       ConfigurationType.Navigation,
+                       ConfigurationType.ByNavigation,
+                       ConfigurationType.Reordering,
+                       ConfigurationType.Instrumentation
+                   };
+        } 
+
+        
 
         private static void startBehaviorGraph(FubuRegistry registry, BehaviorGraph graph)
         {
