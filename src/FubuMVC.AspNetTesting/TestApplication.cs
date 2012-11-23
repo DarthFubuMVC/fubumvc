@@ -55,6 +55,11 @@ namespace FubuMVC.AspNetTesting
             get { return _urls.Value; }
         }
 
+        public static string Root
+        {
+            get { return "http://localhost/fubumvc_aspnet_testing"; }
+        }
+
         public static void DebugRemoteBehaviorGraph()
         {
             throw new NotImplementedException("Redo.");

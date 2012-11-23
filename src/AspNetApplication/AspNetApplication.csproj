@@ -63,6 +63,7 @@
     <Content Include="content\scripts\jquery-1.7.min.js" />
     <Content Include="content\scripts\sse\serverSideEventPage.js" />
     <Content Include="Global.asax" />
+    <Content Include="Test.txt" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -73,14 +74,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AspNetApplicationFubuRegistry.cs" />
+    <Compile Include="binding_against_form_data.cs" />
+    <Compile Include="binding_against_querystring_values.cs" />
+    <Compile Include="binding_against_request_cookies.cs" />
     <Compile Include="CompressedContentController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="GoHereController.cs" />
+    <Compile Include="handling_501_responses.cs" />
     <Compile Include="Http\ResponseController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FileUpload\FileUploadController.cs" />
+    <Compile Include="reading_and_writing_json_and_xml_thru_conneg.cs" />
+    <Compile Include="reading_cookies.cs" />
+    <Compile Include="reading_request_headers.cs" />
+    <Compile Include="reading_route_data.cs" />
+    <Compile Include="writing_a_file_to_output.cs" />
+    <Compile Include="writing_a_non_default_status_code.cs" />
+    <Compile Include="writing_response_headers.cs" />
+    <Compile Include="writing_string_output.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">

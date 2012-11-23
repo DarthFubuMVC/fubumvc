@@ -8,6 +8,7 @@ namespace AspNetApplication
         public AspNetApplicationFubuRegistry()
         {
             Actions.IncludeClassesSuffixedWithController();
+            Actions.IncludeClassesSuffixedWithEndpoint();
 
             Policies.Add(x => {
                 x.Where.AnyActionMatches(call => call.HandlerType == typeof (CompressedContentController));
