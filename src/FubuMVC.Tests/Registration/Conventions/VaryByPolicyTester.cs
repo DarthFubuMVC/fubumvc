@@ -16,7 +16,10 @@ namespace FubuMVC.Tests.Registration.Conventions
             var graph = BehaviorGraph.BuildFrom(x =>
             {
                 x.Actions.IncludeType<CachedController>();
-                x.Policies.Add(new VaryByPolicy().Apply<VaryByThreadCulture>());
+
+                x.Policies.Add(policy => {
+                    policy.Caching.VaryBy<VaryByThreadCulture>();
+                });
             });
 
             graph.BehaviorFor<CachedController>(x => x.OneCachedPartial())

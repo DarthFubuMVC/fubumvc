@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Http.Compression;
+using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Policies;
 using FubuCore.Reflection;
@@ -339,6 +340,19 @@ namespace FubuMVC.Core.Registration
                 return new ContentCompressionActions(this);
             }
         }
+
+        /// <summary>
+        /// Apply caching rules to matching chains
+        /// </summary>
+        public CachingExpression Caching
+        {
+            get
+            {
+                return new CachingExpression(this);
+            }
+        }
+
+
 
         public static string DetermineConfigurationType(IChainModification modification)
         {
