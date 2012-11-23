@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetApplication", "AspNet
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.AspNetTesting", "FubuMVC.AspNetTesting\FubuMVC.AspNetTesting.csproj", "{37231105-CDFD-4A1C-8A68-DD31E59C9AE1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.StructureMap.Testing", "FubuMVC.StructureMap.Testing\FubuMVC.StructureMap.Testing.csproj", "{556755E1-4B75-4596-825D-29D01866DA23}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -227,6 +229,21 @@ Global
 		{37231105-CDFD-4A1C-8A68-DD31E59C9AE1}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{37231105-CDFD-4A1C-8A68-DD31E59C9AE1}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
 		{37231105-CDFD-4A1C-8A68-DD31E59C9AE1}.Retail|x86.ActiveCfg = Release|Any CPU
+		{556755E1-4B75-4596-825D-29D01866DA23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{556755E1-4B75-4596-825D-29D01866DA23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{556755E1-4B75-4596-825D-29D01866DA23}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{556755E1-4B75-4596-825D-29D01866DA23}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{556755E1-4B75-4596-825D-29D01866DA23}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{556755E1-4B75-4596-825D-29D01866DA23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{556755E1-4B75-4596-825D-29D01866DA23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{556755E1-4B75-4596-825D-29D01866DA23}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{556755E1-4B75-4596-825D-29D01866DA23}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{556755E1-4B75-4596-825D-29D01866DA23}.Release|x86.ActiveCfg = Release|Any CPU
+		{556755E1-4B75-4596-825D-29D01866DA23}.Retail|Any CPU.ActiveCfg = Release|Any CPU
+		{556755E1-4B75-4596-825D-29D01866DA23}.Retail|Any CPU.Build.0 = Release|Any CPU
+		{556755E1-4B75-4596-825D-29D01866DA23}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{556755E1-4B75-4596-825D-29D01866DA23}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
+		{556755E1-4B75-4596-825D-29D01866DA23}.Retail|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

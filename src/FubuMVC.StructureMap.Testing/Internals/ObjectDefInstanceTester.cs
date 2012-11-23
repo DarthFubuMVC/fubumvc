@@ -6,31 +6,17 @@ using FubuCore.Dates;
 using FubuCore.Logging;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
-using FubuMVC.Core.Http.AspNet;
 using FubuMVC.Core.Registration.ObjectGraph;
-using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Runtime.Logging;
-using FubuMVC.StructureMap;
-using FubuMVC.Tests.Behaviors;
 using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
 
-namespace FubuMVC.Tests.StructureMapIoC
+namespace FubuMVC.StructureMap.Testing.Internals
 {
     [TestFixture]
     public class ObjectDefInstanceTester
     {
-        #region Setup/Teardown
-
-        [SetUp]
-        public void SetUp()
-        {
-        }
-
-        #endregion
-
         public class FakeJsonBehavior : IActionBehavior
         {
             public FakeJsonBehavior(IJsonWriter writer, IFubuRequest request, IRequestData data) 

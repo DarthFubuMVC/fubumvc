@@ -1,6 +1,8 @@
 using System;
+using FubuCore.Binding;
+using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Tests.StructureMapIoC;
+using FubuMVC.Core.Runtime;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -16,9 +18,9 @@ namespace FubuMVC.Tests.Registration
         [SetUp]
         public void SetUp()
         {
-            node1 = new Wrapper(typeof(ObjectDefInstanceTester.FakeJsonBehavior));
-            node2 = new Wrapper(typeof(ObjectDefInstanceTester.FakeJsonBehavior));
-            node3 = new Wrapper(typeof(ObjectDefInstanceTester.FakeJsonBehavior));
+            node1 = new Wrapper(typeof(FakeJsonBehavior));
+            node2 = new Wrapper(typeof(FakeJsonBehavior));
+            node3 = new Wrapper(typeof(FakeJsonBehavior));
             node1.AddToEnd(node2);
             node1.AddToEnd(node3);
         }
@@ -76,5 +78,28 @@ namespace FubuMVC.Tests.Registration
             missing.AssertWasCalled(x => x.Invoke());
         }
 
+    }
+
+    public class FakeJsonBehavior : IActionBehavior
+    {
+        public FakeJsonBehavior(IJsonWriter writer, IFubuRequest request, IRequestData data)
+        {
+            Writer = writer;
+            Request = request;
+            Data = data;
+        }
+
+        public IJsonWriter Writer { get; set; }
+        public IFubuRequest Request { get; set; }
+        public IRequestData Data { get; set; }
+        public void Invoke()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InvokePartial()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

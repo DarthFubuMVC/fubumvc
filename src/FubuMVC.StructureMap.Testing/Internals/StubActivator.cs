@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Bottles;
 using Bottles.Diagnostics;
 
-namespace FubuMVC.Tests.StructureMapIoC
+namespace FubuMVC.StructureMap.Testing.Internals
 {
     public class StubActivator : IActivator
     {

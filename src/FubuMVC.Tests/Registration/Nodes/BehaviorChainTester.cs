@@ -12,7 +12,6 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
 using FubuMVC.Core.Security;
 using FubuMVC.StructureMap;
-using FubuMVC.Tests.StructureMapIoC;
 using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
@@ -113,7 +112,7 @@ namespace FubuMVC.Tests.Registration.Nodes
         public void adding_a_node_to_the_end_sets_the_chain_on_the_node()
         {
             var chain = new BehaviorChain();
-            var wrapper = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
+            var wrapper = new Wrapper(typeof (FakeJsonBehavior));
 
             chain.AddToEnd(wrapper);
 
@@ -136,7 +135,7 @@ namespace FubuMVC.Tests.Registration.Nodes
         public void append_with_no_behaviors()
         {
             var chain = new BehaviorChain();
-            var wrapper = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
+            var wrapper = new Wrapper(typeof (FakeJsonBehavior));
 
             chain.AddToEnd(wrapper);
 
@@ -147,13 +146,13 @@ namespace FubuMVC.Tests.Registration.Nodes
         public void appending_a_node_also_sets_the_previous()
         {
             var chain = new BehaviorChain();
-            var wrapper = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
+            var wrapper = new Wrapper(typeof (FakeJsonBehavior));
 
             chain.AddToEnd(wrapper);
 
             wrapper.Previous.ShouldBeNull();
 
-            var wrapper2 = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
+            var wrapper2 = new Wrapper(typeof (FakeJsonBehavior));
 
             wrapper.AddToEnd(wrapper2);
 
@@ -166,14 +165,14 @@ namespace FubuMVC.Tests.Registration.Nodes
         public void appending_a_node_also_sets_the_previous_2()
         {
             var chain = new BehaviorChain();
-            var wrapper = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
+            var wrapper = new Wrapper(typeof (FakeJsonBehavior));
 
             chain.AddToEnd(wrapper);
 
             wrapper.Previous.ShouldBeNull();
             wrapper.ParentChain().ShouldBeTheSameAs(chain);
 
-            var wrapper2 = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
+            var wrapper2 = new Wrapper(typeof (FakeJsonBehavior));
 
             chain.AddToEnd(wrapper2);
 
@@ -211,7 +210,7 @@ namespace FubuMVC.Tests.Registration.Nodes
         [Test]
         public void find_the_chain_when_the_parent_is_null_should_be_null()
         {
-            var node = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
+            var node = new Wrapper(typeof (FakeJsonBehavior));
             node.ParentChain().ShouldBeNull();
         }
 
@@ -219,7 +218,7 @@ namespace FubuMVC.Tests.Registration.Nodes
         public void find_the_parent_chain_when_the_chain_is_the_immediate_parent()
         {
             var chain = new BehaviorChain();
-            var node = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
+            var node = new Wrapper(typeof (FakeJsonBehavior));
             chain.AddToEnd(node);
             node.ParentChain().ShouldBeTheSameAs(chain);
         }
@@ -228,13 +227,13 @@ namespace FubuMVC.Tests.Registration.Nodes
         public void find_the_parent_from_deep_in_behavior_chain()
         {
             var chain = new BehaviorChain();
-            var node = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
+            var node = new Wrapper(typeof (FakeJsonBehavior));
             chain.AddToEnd(node);
 
-            var node2 = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
+            var node2 = new Wrapper(typeof (FakeJsonBehavior));
             node.AddToEnd(node2);
 
-            var node3 = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
+            var node3 = new Wrapper(typeof (FakeJsonBehavior));
             node2.AddToEnd(node3);
 
             node3.ParentChain().ShouldBeTheSameAs(chain);
@@ -285,11 +284,11 @@ namespace FubuMVC.Tests.Registration.Nodes
         public void insert_before_on_a_node()
         {
             var chain = new BehaviorChain();
-            var wrapper = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
+            var wrapper = new Wrapper(typeof (FakeJsonBehavior));
 
             chain.AddToEnd(wrapper);
 
-            var wrapper2 = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
+            var wrapper2 = new Wrapper(typeof (FakeJsonBehavior));
 
             wrapper.AddBefore(wrapper2);
 
@@ -335,7 +334,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             var call = ActionCall.For<TestController>(x => x.AnotherAction(null));
             chain.AddToEnd(call);
 
-            var wrapper = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
+            var wrapper = new Wrapper(typeof (FakeJsonBehavior));
             chain.Prepend(wrapper);
 
             chain.Top.ShouldBeTheSameAs(wrapper);
@@ -346,7 +345,7 @@ namespace FubuMVC.Tests.Registration.Nodes
         public void prepend_with_no_behaviors()
         {
             var chain = new BehaviorChain();
-            var wrapper = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
+            var wrapper = new Wrapper(typeof (FakeJsonBehavior));
 
             chain.Prepend(wrapper);
 
@@ -356,9 +355,9 @@ namespace FubuMVC.Tests.Registration.Nodes
         [Test]
         public void removing_a_node_maintains_the_link_between_its_predecessor_and_successor()
         {
-            var node1 = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
-            var node2 = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
-            var node3 = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
+            var node1 = new Wrapper(typeof (FakeJsonBehavior));
+            var node2 = new Wrapper(typeof (FakeJsonBehavior));
+            var node3 = new Wrapper(typeof (FakeJsonBehavior));
             node1.AddToEnd(node2);
             node1.AddToEnd(node3);
             node2.Remove();
@@ -372,8 +371,8 @@ namespace FubuMVC.Tests.Registration.Nodes
         [Test]
         public void removing_a_node_without_a_predecessor_sets_its_successor_to_the_front()
         {
-            var node1 = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
-            var node2 = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
+            var node1 = new Wrapper(typeof (FakeJsonBehavior));
+            var node2 = new Wrapper(typeof (FakeJsonBehavior));
             node1.AddToEnd(node2);
 
             node1.Remove();
@@ -386,10 +385,10 @@ namespace FubuMVC.Tests.Registration.Nodes
         [Test]
         public void replacing_a_node_should_disconnect_the_node_being_replaced()
         {
-            var node1 = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
-            var node2 = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
-            var node3 = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
-            var newNode = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
+            var node1 = new Wrapper(typeof (FakeJsonBehavior));
+            var node2 = new Wrapper(typeof (FakeJsonBehavior));
+            var node3 = new Wrapper(typeof (FakeJsonBehavior));
+            var newNode = new Wrapper(typeof (FakeJsonBehavior));
             node1.AddToEnd(node2);
             node1.AddToEnd(node3);
             node2.ReplaceWith(newNode);
@@ -402,10 +401,10 @@ namespace FubuMVC.Tests.Registration.Nodes
         [Test]
         public void replacing_a_node_should_set_the_new_nodes_predecessor_and_successor()
         {
-            var node1 = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
-            var node2 = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
-            var node3 = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
-            var newNode = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
+            var node1 = new Wrapper(typeof (FakeJsonBehavior));
+            var node2 = new Wrapper(typeof (FakeJsonBehavior));
+            var node3 = new Wrapper(typeof (FakeJsonBehavior));
+            var newNode = new Wrapper(typeof (FakeJsonBehavior));
             node1.AddToEnd(node2);
             node1.AddToEnd(node3);
             node2.ReplaceWith(newNode);
@@ -419,9 +418,9 @@ namespace FubuMVC.Tests.Registration.Nodes
         [Test]
         public void replacing_a_node_without_a_predecessor_should_set_the_new_node_to_the_front()
         {
-            var node1 = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
-            var node2 = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
-            var newNode = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
+            var node1 = new Wrapper(typeof (FakeJsonBehavior));
+            var node2 = new Wrapper(typeof (FakeJsonBehavior));
+            var newNode = new Wrapper(typeof (FakeJsonBehavior));
             node1.AddToEnd(node2);
             node1.ReplaceWith(newNode);
 

@@ -157,7 +157,6 @@
     <Compile Include="Runtime\Logger_should_be_registered.cs" />
     <Compile Include="Runtime\PartialChainSwitcherTester.cs" />
     <Compile Include="Security\SecurityServicesRegistry_specification.cs" />
-    <Compile Include="StructureMapIoC\UsesTheIsSingletonPropertyTester.cs" />
     <Compile Include="StubRequestHeaders.cs" />
     <Compile Include="Behaviors\AsyncContinueWithBehaviorTests.cs" />
     <Compile Include="Behaviors\AsyncInterceptExceptionBehaviorTester.cs" />
@@ -284,7 +283,6 @@
     <Compile Include="Security\EndPointAuthorizorTester.cs" />
     <Compile Include="Security\PrincipalRolesTester.cs" />
     <Compile Include="Security\AuthorizationPolicyExecutorTester.cs" />
-    <Compile Include="StructureMapIoC\StubActivator.cs" />
     <Compile Include="UI\PartialInvokerTester.cs" />
     <Compile Include="UrlExtensionsTester.cs" />
     <Compile Include="Behaviors\ActionInvokersTester.cs" />
@@ -328,10 +326,6 @@
     <Compile Include="Runtime\PartialFactoryTester.cs" />
     <Compile Include="SessionState\FlashProviderTester.cs" />
     <Compile Include="SessionState\RequestDataProviderTester.cs" />
-    <Compile Include="StructureMapIoC\AppSettingProviderRegistrySmokeTester.cs" />
-    <Compile Include="StructureMapIoC\ObjectDefInstanceTester.cs" />
-    <Compile Include="StructureMapIoC\StructureMapContainerFacilityTester.cs" />
-    <Compile Include="StructureMapIoC\StructureMapServiceLocatorTester.cs" />
     <Compile Include="TestController.cs" />
     <Compile Include="Urls\BasicUrlRegistrationScanningIntegrationTester.cs" />
     <Compile Include="Urls\StubCurrentHttpRequest.cs" />

@@ -1,15 +1,12 @@
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.Web.Security;
-using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 using StructureMap;
 
-namespace FubuMVC.Tests.StructureMapIoC
+namespace FubuMVC.StructureMap.Testing.Internals
 {
     [TestFixture]
     public class StructureMapServiceLocatorTester
@@ -44,5 +41,10 @@ namespace FubuMVC.Tests.StructureMapIoC
             new StructureMapServiceLocator(container).GetInstance(typeof (ISecurityContext))
                 .ShouldBeTheSameAs(_mockSecurityContext);
         }
+    }
+
+    public class FakeHttpContext : HttpContextBase
+    {
+
     }
 }

@@ -3,9 +3,8 @@ using FubuMVC.Core;
 using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
-using FubuMVC.StructureMap;
 
-namespace FubuMVC.Tests.StructureMapIoC
+namespace FubuMVC.StructureMap.Testing.Internals
 {
     [TestFixture]
     public class UsesTheIsSingletonPropertyTester

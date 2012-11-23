@@ -88,7 +88,6 @@ namespace FubuMVC.Tests.Registration.Conventions
 
         private List<string> theProperties;
         private RouteDefinition theRoute;
-        private string baseRoute;
 
         [Test]
         public void allow_get_as_a_prefix()

@@ -3,7 +3,6 @@ using System.Reflection;
 using Bottles;
 using FubuCore;
 using FubuCore.Binding;
-using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Caching;
@@ -11,14 +10,12 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
-using FubuMVC.StructureMap;
-using FubuMVC.Tests.Urls;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 using StructureMap;
 
-namespace FubuMVC.Tests.StructureMapIoC
+namespace FubuMVC.StructureMap.Testing.Internals
 {
     [TestFixture]
     public class StructureMapContainerFacilityTester
@@ -34,8 +31,9 @@ namespace FubuMVC.Tests.StructureMapIoC
                 x.For<IStreamingData>().Use(MockRepository.GenerateMock<IStreamingData>());
                 x.For<IHttpWriter>().Use(new NulloHttpWriter());
                 x.For<ICurrentChain>().Use(new CurrentChain(null, null));
-                x.For<ICurrentHttpRequest>().Use(new StubCurrentHttpRequest{
-                    TheApplicationRoot = "http://server"
+                x.For<ICurrentHttpRequest>().Use(new StandInCurrentHttpRequest(){
+                   
+                    ApplicationRoot = "http://server"
                 });
 
                 x.For<IResourceHash>().Use(MockRepository.GenerateMock<IResourceHash>());
@@ -170,7 +168,7 @@ namespace FubuMVC.Tests.StructureMapIoC
         [Test]
         public void should_be_able_to_pull_all_of_the_route_behaviors_out_of_the_container()
         {
-            container.GetAllInstances<IActionBehavior>().Count.ShouldBeGreaterThan(3);
+            container.GetAllInstances<IActionBehavior>().Count.ShouldEqual(3);
         }
 
         [Test]
