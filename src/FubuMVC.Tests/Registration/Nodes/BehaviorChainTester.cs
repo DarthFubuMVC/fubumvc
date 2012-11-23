@@ -8,6 +8,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
 using FubuMVC.Core.Security;
 using FubuMVC.StructureMap;
@@ -15,6 +16,7 @@ using FubuMVC.Tests.StructureMapIoC;
 using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
+using Rhino.Mocks;
 using StructureMap;
 using TestPackage1.FakeControllers;
 
@@ -466,6 +468,17 @@ namespace FubuMVC.Tests.Registration.Nodes
 
             container.GetInstance<IEndPointAuthorizor>(chain.UniqueId.ToString())
                 .ShouldNotBeNull().ShouldBeOfType<EndPointAuthorizor>();
+        }
+
+        [Test]
+        public void adding_a_filter_logs()
+        {
+            var filter = MockRepository.GenerateMock<IBehaviorInvocationFilter>();
+
+            var chain = new BehaviorChain();
+            chain.AddFilter(filter);
+
+            chain.As<ITracedModel>().StagedEvents.OfType<FilterAdded>().Single().ShouldEqual(new FilterAdded(filter));
         }
     }
 

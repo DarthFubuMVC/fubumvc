@@ -73,9 +73,15 @@ namespace FubuMVC.Core.Registration.Nodes
         ///   to apply guard conditions at runtime *before* the behaviors
         ///   are created
         /// </summary>
-        public IList<IBehaviorInvocationFilter> Filters
+        public IEnumerable<IBehaviorInvocationFilter> Filters
         {
             get { return _filters; }
+        }
+
+        public void AddFilter(IBehaviorInvocationFilter filter)
+        {
+            Trace(new FilterAdded(filter));
+            _filters.Add(filter);
         }
 
         public Guid UniqueId
@@ -356,6 +362,4 @@ namespace FubuMVC.Core.Registration.Nodes
             return resourceType != null && !resourceType.CanBeCastTo<Task>() && resourceType != typeof (void);
         }
     }
-
-
 }

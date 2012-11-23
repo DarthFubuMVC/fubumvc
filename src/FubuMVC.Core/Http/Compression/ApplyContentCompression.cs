@@ -30,7 +30,7 @@ namespace FubuMVC.Core.Http.Compression
                 return;
             }
 
-            chain.Filters.Add(_filter);
+            chain.AddFilter(_filter);
         }
 
         void DescribesItself.Describe(Description description)

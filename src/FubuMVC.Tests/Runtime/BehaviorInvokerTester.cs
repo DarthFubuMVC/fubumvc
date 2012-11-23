@@ -61,7 +61,7 @@ namespace FubuMVC.Tests.Runtime
         [Test]
         public void invoke_happy_path_with_a_continuation_filter()
         {
-            theChain.Filters.Add(new StubBehaviorInvocationFilter(DoNext.Continue));
+            theChain.AddFilter(new StubBehaviorInvocationFilter(DoNext.Continue));
 
             theInvoker.Invoke(theArguments, theRouteData);
             theBehavior.AssertWasCalled(x => x.Invoke());
@@ -70,9 +70,9 @@ namespace FubuMVC.Tests.Runtime
         [Test]
         public void invoke_happy_path_with_multiple_continuation_filter()
         {
-            theChain.Filters.Add(new StubBehaviorInvocationFilter(DoNext.Continue));
-            theChain.Filters.Add(new StubBehaviorInvocationFilter(DoNext.Continue));
-            theChain.Filters.Add(new StubBehaviorInvocationFilter(DoNext.Continue));
+            theChain.AddFilter(new StubBehaviorInvocationFilter(DoNext.Continue));
+            theChain.AddFilter(new StubBehaviorInvocationFilter(DoNext.Continue));
+            theChain.AddFilter(new StubBehaviorInvocationFilter(DoNext.Continue));
 
             theInvoker.Invoke(theArguments, theRouteData);
             theBehavior.AssertWasCalled(x => x.Invoke());
@@ -81,7 +81,7 @@ namespace FubuMVC.Tests.Runtime
         [Test]
         public void invoke_with_a_filter_that_says_stop()
         {
-            theChain.Filters.Add(new StubBehaviorInvocationFilter(DoNext.Stop));
+            theChain.AddFilter(new StubBehaviorInvocationFilter(DoNext.Stop));
 
             theInvoker.Invoke(theArguments, theRouteData);
             theBehavior.AssertWasNotCalled(x => x.Invoke());
@@ -90,9 +90,9 @@ namespace FubuMVC.Tests.Runtime
         [Test]
         public void invoke_with_a_filter_that_says_stop_2()
         {
-            theChain.Filters.Add(new StubBehaviorInvocationFilter(DoNext.Continue));
-            theChain.Filters.Add(new StubBehaviorInvocationFilter(DoNext.Continue));
-            theChain.Filters.Add(new StubBehaviorInvocationFilter(DoNext.Stop));
+            theChain.AddFilter(new StubBehaviorInvocationFilter(DoNext.Continue));
+            theChain.AddFilter(new StubBehaviorInvocationFilter(DoNext.Continue));
+            theChain.AddFilter(new StubBehaviorInvocationFilter(DoNext.Stop));
 
             theInvoker.Invoke(theArguments, theRouteData);
             theBehavior.AssertWasNotCalled(x => x.Invoke());
