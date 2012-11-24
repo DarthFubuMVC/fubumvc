@@ -113,14 +113,6 @@ namespace FubuMVC.StructureMap.Testing.Internals
         }
 
         [Test]
-        public void can_return_the_endpoint_authorizor_for_an_id_smoke_test()
-        {
-            var uniqueId = container.GetInstance<BehaviorGraph>().Behaviors.First().UniqueId;
-
-            container.GetInstance<IServiceFactory>().AuthorizorFor(uniqueId).ShouldNotBeNull();
-        }
-
-        [Test]
         public void factory_itself_is_registered_in_the_container()
         {
             container.GetInstance<IServiceFactory>().ShouldBeOfType<PartialServiceFactory>();

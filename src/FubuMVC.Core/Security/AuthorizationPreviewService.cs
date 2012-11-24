@@ -19,13 +19,13 @@ namespace FubuMVC.Core.Security
     public class ChainAuthorizor : IChainAuthorizor
     {
         private readonly IFubuRequest _request;
-        private readonly IServiceFactory _factory;
+        private readonly IServiceLocator _services;
         private readonly ITypeResolver _types;
 
-        public ChainAuthorizor(IFubuRequest request, IServiceFactory factory, ITypeResolver types)
+        public ChainAuthorizor(IFubuRequest request, IServiceLocator services, ITypeResolver types)
         {
             _request = request;
-            _factory = factory;
+            _services = services;
             _types = types;
         }
 
@@ -37,7 +37,7 @@ namespace FubuMVC.Core.Security
                 _request.Set(_types.ResolveType(model), model);
             }
 
-            var endpoint = _factory.AuthorizorFor(chain.UniqueId);
+            var endpoint = _services.GetInstance<IEndPointAuthorizor>(chain.UniqueId.ToString());
             return endpoint.IsAuthorized(_request);
         }
     }

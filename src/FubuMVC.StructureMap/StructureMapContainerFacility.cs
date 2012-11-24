@@ -61,11 +61,6 @@ namespace FubuMVC.StructureMap
             return new NestedStructureMapContainerBehavior(_container, arguments, behaviorId);
         }
 
-        public IEndPointAuthorizor AuthorizorFor(Guid behaviorId)
-        {
-            throw new NotImplementedException();
-        }
-
         public IServiceFactory BuildFactory()
         {
             _registry.For<IServiceFactory>().Use<PartialServiceFactory>();
@@ -163,11 +158,6 @@ namespace FubuMVC.StructureMap
         public IActionBehavior BuildBehavior(ServiceArguments arguments, Guid behaviorId)
         {
             return _container.GetInstance<IActionBehavior>(arguments.ToExplicitArgs(), behaviorId.ToString());
-        }
-
-        public IEndPointAuthorizor AuthorizorFor(Guid behaviorId)
-        {
-            return _container.GetInstance<IEndPointAuthorizor>(behaviorId.ToString());
         }
 
         public T Get<T>()
