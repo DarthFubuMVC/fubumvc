@@ -1,5 +1,0 @@
-﻿<viewdata model="FubuMVC.HelloWorld.Controllers.Family.JackViewModel" />
-<div>
-    ${this.LinkTo<FubuMVC.HelloWorld.Controllers.Family.JackViewModel>().Text("Jack")} is ${this.LinkTo<FubuMVC.HelloWorld.Controllers.Family.GeorgeViewModel>().Text("George's")} son.
-    ${this.Partial<FubuMVC.HelloWorld.Controllers.Family.MarcusViewModel>()}
-</div>

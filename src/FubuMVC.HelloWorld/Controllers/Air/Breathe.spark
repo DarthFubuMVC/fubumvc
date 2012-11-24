@@ -1,3 +1,0 @@
-﻿<viewdata model="FubuMVC.HelloWorld.Controllers.Air.BreatheViewModel" />
-
-<h2>${Model.Text}</h2>

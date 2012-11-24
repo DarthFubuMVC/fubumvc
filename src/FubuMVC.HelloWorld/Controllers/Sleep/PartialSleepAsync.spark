@@ -1,5 +1,0 @@
-﻿<viewdata model="FubuMVC.HelloWorld.Controllers.Sleep.PartialSleepViewModel" />
-
-<h1>
-    ${Model.Message}
-</h1>
