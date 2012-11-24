@@ -74,6 +74,7 @@
     <Compile Include="Compliance\ObjectDef_Compliance.cs" />
     <Compile Include="Compliance\OpenGeneric_Registration_Compliance.cs" />
     <Compile Include="Compliance\ServiceArgument_Injection_Compliance.cs" />
+    <Compile Include="Compliance\Setter_Injection_from_ObjectDef_Dependency.cs" />
     <Compile Include="ContainerFacilitySource.cs" />
     <Compile Include="Internals\AppSettingProviderRegistrySmokeTester.cs" />
     <Compile Include="Internals\ObjectDefInstanceTester.cs" />
