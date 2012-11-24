@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ajax\AjaxContinuationProcessingTester.cs" />
+    <Compile Include="Authorization\end_to_end_authorization_tester.cs" />
     <Compile Include="Caching\caching_tester.cs" />
     <Compile Include="Chrome\ChromeBehaviorIntegrationTester.cs" />
     <Compile Include="Conneg\Conneg_Can_Choose_Output_Media_Based_on_Mimetypes.cs" />
