@@ -72,6 +72,8 @@
     <Compile Include="Compliance\IServiceLocator_Compliance.cs" />
     <Compile Include="Compliance\Lifecycle_Scoping_Compliance.cs" />
     <Compile Include="Compliance\ObjectDef_Compliance.cs" />
+    <Compile Include="Compliance\OpenGeneric_Registration_Compliance.cs" />
+    <Compile Include="Compliance\ServiceArgument_Injection_Compliance.cs" />
     <Compile Include="ContainerFacilitySource.cs" />
     <Compile Include="Internals\AppSettingProviderRegistrySmokeTester.cs" />
     <Compile Include="Internals\ObjectDefInstanceTester.cs" />

@@ -36,12 +36,13 @@ namespace FubuMVC.StructureMap.Testing
                                                      ObjectDef behaviorDef, Action<IContainerFacility> configuration)
          {
              var id = Guid.NewGuid();
+             behaviorDef.Name = id.ToString();
 
-             var facility = ContainerFacilitySource.New(x => {
+             var facility = New(x => {
                  configuration(x);
 
 
-                 x.Register(typeof(IActionBehavior), ObjectDef.ForType<Behavior1>().Named(id.ToString()));
+                 x.Register(typeof (IActionBehavior), behaviorDef);
              });
 
              var behavior = facility.BuildBehavior(arguments, id);
