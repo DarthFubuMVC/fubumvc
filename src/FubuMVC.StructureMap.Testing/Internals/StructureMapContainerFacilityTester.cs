@@ -101,21 +101,9 @@ namespace FubuMVC.StructureMap.Testing.Internals
         private StructureMapContainerFacility facility;
 
         [Test]
-        public void behavior_factory_is_available_in_the_container()
-        {
-            container.GetInstance<IServiceFactory>().ShouldBeOfType<PartialServiceFactory>();
-        }
-
-        [Test]
         public void can_return_all_the_registered_activators_smoke_test()
         {
             facility.GetAll<IActivator>().Count().ShouldBeGreaterThan(3);
-        }
-
-        [Test]
-        public void factory_itself_is_registered_in_the_container()
-        {
-            container.GetInstance<IServiceFactory>().ShouldBeOfType<PartialServiceFactory>();
         }
 
         [Test]

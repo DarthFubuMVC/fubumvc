@@ -63,7 +63,6 @@ namespace FubuMVC.StructureMap
 
         public IServiceFactory BuildFactory()
         {
-            _registry.For<IServiceFactory>().Use<PartialServiceFactory>();
             _container.Configure(x => {
                 x.AddRegistry(_registry);
                 if (_initializeSingletonsToWorkAroundSMBug)
@@ -146,28 +145,4 @@ namespace FubuMVC.StructureMap
 
     }
 
-    public class PartialServiceFactory : IServiceFactory
-    {
-        private readonly IContainer _container;
-
-        public PartialServiceFactory(IContainer container)
-        {
-            _container = container;
-        }
-
-        public IActionBehavior BuildBehavior(ServiceArguments arguments, Guid behaviorId)
-        {
-            return _container.GetInstance<IActionBehavior>(arguments.ToExplicitArgs(), behaviorId.ToString());
-        }
-
-        public T Get<T>()
-        {
-            return _container.GetInstance<T>();
-        }
-
-        public IEnumerable<T> GetAll<T>()
-        {
-            return _container.GetAllInstances<T>();
-        }
-    }
 }
