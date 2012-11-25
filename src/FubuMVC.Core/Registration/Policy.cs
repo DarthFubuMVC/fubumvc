@@ -126,18 +126,6 @@ namespace FubuMVC.Core.Registration
             /// Configure the applicability of this policy by matching against any ActionCall
             /// in the chain
             /// </summary>
-            /// <param name="filter"></param>
-            /// <param name="description">Optional diagnostic description of the 'where' filter</param>
-            /// <returns></returns>
-            public IOrExpression AnyActionMatches(Func<ActionCall, bool> filter, string description = "User defined")
-            {
-                return addFilter(new AnyActionMatch(filter, description));
-            }
-
-            /// <summary>
-            /// Configure the applicability of this policy by matching against any ActionCall
-            /// in the chain
-            /// </summary>
             /// <param name="expression"></param>
             /// <returns></returns>
             public IOrExpression AnyActionMatches(Expression<Func<ActionCall, bool>> expression)
