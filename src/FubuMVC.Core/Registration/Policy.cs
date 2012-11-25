@@ -232,7 +232,7 @@ namespace FubuMVC.Core.Registration
             /// <param name="filter"></param>
             /// <param name="description">Optional description used in diagnostics</param>
             /// <returns></returns>
-            public IOrExpression ChainMatches(Func<BehaviorChain, bool> filter, string description = "User defined")
+            public IOrExpression ChainMatches(Func<BehaviorChain, bool> filter, string description)
             {
                 return addFilter(new LambdaChainFilter(filter, description));
             }
