@@ -111,19 +111,6 @@ namespace FubuMVC.Core.Registration
                 return addFilter(new T());
             }
 
-
-            /// <summary>
-            /// Configure the applicability of this policy by matching against the *last* ActionCall
-            /// in the chain
-            /// </summary>
-            /// <param name="filter"></param>
-            /// <param name="description"></param>
-            /// <returns></returns>
-            public IOrExpression LastActionMatches(Func<ActionCall, bool> filter, string description)
-            {
-                return addFilter(new LastActionMatch(filter, description));
-            }
-
             /// <summary>
             /// Configure the applicability of this policy by matching against the *last* ActionCall
             /// in the chain
@@ -224,17 +211,6 @@ namespace FubuMVC.Core.Registration
             public IOrExpression ChainMatches(Expression<Func<BehaviorChain, bool>> expression)
             {
                 return addFilter(new LambdaChainFilter(expression));
-            }
-
-            /// <summary>
-            /// Use your own filter to limit the applicability of this policy
-            /// </summary>
-            /// <param name="filter"></param>
-            /// <param name="description">Optional description used in diagnostics</param>
-            /// <returns></returns>
-            public IOrExpression ChainMatches(Func<BehaviorChain, bool> filter, string description)
-            {
-                return addFilter(new LambdaChainFilter(filter, description));
             }
 
             private IOrExpression addFilter(IChainFilter filter)
