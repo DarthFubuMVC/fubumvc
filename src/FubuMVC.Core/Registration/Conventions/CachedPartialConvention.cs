@@ -1,7 +1,4 @@
 using FubuMVC.Core.Caching;
-using FubuMVC.Core.Registration.Nodes;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
