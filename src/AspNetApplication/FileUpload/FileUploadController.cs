@@ -37,7 +37,7 @@ namespace AspNetApplication.FileUpload
             document.Add("form")
                 .Attr("method", "post")
                 .Attr("enctype", "multipart/form-data")
-                .Attr("action", _urls.UrlFor<FileUploadInput>(null));
+                .Attr("action", _urls.UrlFor<FileUploadInput>());
 
             document.Add("br");
 
