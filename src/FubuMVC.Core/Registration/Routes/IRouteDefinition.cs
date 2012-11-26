@@ -30,12 +30,12 @@ namespace FubuMVC.Core.Registration.Routes
 
         string CreateUrlFromInput(object input);
         void AddHttpMethodConstraint(string method);
-        bool RespondsToGet();
         void RegisterRouteCustomization(Action<Route> action);
 
         SessionStateRequirement SessionStateRequirement { get; set; }
 
         void Trace(string format, params object[] parameters);
+        bool RespondsToMethod(string method);
     }
 
     public static class RouteDefinitionExtensions

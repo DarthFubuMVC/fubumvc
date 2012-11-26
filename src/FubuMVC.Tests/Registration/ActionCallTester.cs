@@ -281,7 +281,7 @@ namespace FubuMVC.Tests.Registration
     {
         public override BehaviorCategory Category
         {
-            get { throw new NotImplementedException(); }
+            get { return BehaviorCategory.Process; }
         }
 
         protected override ObjectDef buildObjectDef()

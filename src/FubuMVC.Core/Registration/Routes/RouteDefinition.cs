@@ -173,9 +173,9 @@ namespace FubuMVC.Core.Registration.Routes
             _httpMethods.Fill(method.ToUpper());
         }
 
-        public bool RespondsToGet()
+        public bool RespondsToMethod(string method)
         {
-            return _httpMethods.Any() ? _httpMethods.Contains("GET") : true;
+            return _httpMethods.Any() ? _httpMethods.Contains(method.ToUpper()) : true;
         }
 
         public IList<string> AllowedHttpMethods

@@ -588,7 +588,7 @@ namespace FubuMVC.Tests.Registration
         public void responds_to_get_with_no_constraints()
         {
             var route = new RouteDefinition("something");
-            route.RespondsToGet().ShouldBeTrue();
+            route.RespondsToMethod("GET").ShouldBeTrue();
         }
 
         [Test]
@@ -597,7 +597,7 @@ namespace FubuMVC.Tests.Registration
             var route = new RouteDefinition("something");
             route.AddHttpMethodConstraint("Get");
             route.AddHttpMethodConstraint("POST");
-            route.RespondsToGet().ShouldBeTrue();
+            route.RespondsToMethod("GET").ShouldBeTrue();
         }
 
         [Test]
@@ -605,7 +605,7 @@ namespace FubuMVC.Tests.Registration
         {
             var route = new RouteDefinition("something");
             route.AddHttpMethodConstraint("POST");
-            route.RespondsToGet().ShouldBeFalse();
+            route.RespondsToMethod("GET").ShouldBeFalse();
         }
 
         [Test]

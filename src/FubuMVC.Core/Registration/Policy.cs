@@ -214,6 +214,29 @@ namespace FubuMVC.Core.Registration
             {
                 get { return new WhereExpression(_parent, _parent.registerOrFilter); }
             }
+
+            /// <summary>
+            /// Filter based on whether or not a chain responds to any of these Http methods
+            /// </summary>
+            /// <param name="methods">GET, POST, PUT, DELETE, etc.</param>
+            /// <returns></returns>
+            public IOrExpression RespondsToHttpMethod(params string[] methods)
+            {
+                if (methods.Count() == 0) throw new ArgumentOutOfRangeException("You need to specify at least one http method");
+
+                if (methods.Count() > 1)
+                {
+                    var filter = new OrChainFilter();
+                    methods.Each(method => filter.Add(new HttpMethodFilter(method)));
+
+                    return addFilter(filter);
+                }
+
+                return addFilter(new HttpMethodFilter(methods.Single()));
+            }
+
+
+
         }
 
         /// <summary>
