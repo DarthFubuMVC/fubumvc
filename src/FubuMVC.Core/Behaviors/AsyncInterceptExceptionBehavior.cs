@@ -28,17 +28,12 @@ namespace FubuMVC.Core.Behaviors
             var task = Task.Factory.StartNew(() => InsideBehavior.Invoke(), TaskCreationOptions.AttachedToParent);
             task.ContinueWith(x =>
             {
-                try
+                if(x.IsFaulted || x.Exception != null)
                 {
-                    //this will allow a catching an exception rather than inspecting task data
-                    x.Wait();
-                }
-                catch (AggregateException e)
-                {
-                    var aggregateException = e.Flatten();
+                    var aggregateException = x.Exception.Flatten();
                     aggregateException.InnerExceptions.Each(TryHandle);
                 }
-            }, TaskContinuationOptions.OnlyOnFaulted | TaskContinuationOptions.AttachedToParent);
+            }, TaskContinuationOptions.AttachedToParent);
         }
 
         public void InvokePartial()

@@ -108,8 +108,7 @@ namespace FubuMVC.Tests.Behaviors
             _observer = MockFor<IExceptionHandlingObserver>();
             ClassUnderTest.InsideBehavior = _insideBehavior;
             var testTask = new Task(() => ClassUnderTest.Invoke());
-            testTask.Start();
-            testTask.Wait();
+			testTask.RunSynchronously();
         }
 
         [Test]
