@@ -34,7 +34,17 @@ namespace FubuMVC.SelfHost.Testing
         public void get_file_contents_Name(FileInput input)
         {
             var file = _files.Find(input.Name);
-            _writer.WriteFile(MimeType.Text, file.Path, input.Name);
+
+            if (file == null)
+            {
+                _writer.Write( MimeType.Text,"Could not find file " + input.Name);
+            }
+            else
+            {
+                _writer.WriteFile(MimeType.Text, file.Path, input.Name);
+            }
+
+            
         }
     }    
 

@@ -103,6 +103,7 @@
     <Compile Include="Fake.cs" />
     <Compile Include="handling_501_responses.cs" />
     <Compile Include="handling_a_404.cs" />
+    <Compile Include="EmbeddedFubuMvcServerTester.cs" />
     <Compile Include="SelfHostHarness.cs" />
     <Compile Include="HeaderKeyValuesTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -119,7 +120,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Test.txt" />
+    <Content Include="Test.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">

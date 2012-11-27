@@ -10,7 +10,6 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Security;
 using StructureMap;
 using StructureMap.Configuration.DSL;
 using StructureMap.Pipeline;
