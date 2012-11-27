@@ -36,7 +36,7 @@ namespace FubuMVC.SelfHost.Testing
                 Direction = "East"
             };
 
-            var response = SelfHostHarness.Endpoints.PostJson(message, contentType: "text/json", accept: "text/json");
+            var response = _application.Endpoints.PostJson(message, contentType: "text/json", accept: "text/json");
 
             response.StatusCodeShouldBe(HttpStatusCode.OK);
             response.ContentType.ShouldEqual("text/json");
@@ -53,7 +53,7 @@ namespace FubuMVC.SelfHost.Testing
                 Direction = "East"
             };
 
-            var response = SelfHostHarness.Endpoints.PostXml(message, contentType: "text/xml", accept: "text/xml");
+            var response = _application.Endpoints.PostXml(message, contentType: "text/xml", accept: "text/xml");
 
             response.StatusCodeShouldBe(HttpStatusCode.OK);
             response.ContentType.ShouldEqual("text/xml");
