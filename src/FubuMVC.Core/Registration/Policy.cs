@@ -24,9 +24,14 @@ namespace FubuMVC.Core.Registration
         /// <summary>
         /// Define the applicability of this policy
         /// </summary>
-        public WhereExpression Where
+        public ChainPredicate Where
         {
-            get { return new WhereExpression(this, filter => _wheres.Add(filter)); }
+            get { 
+                var predicate = new ChainPredicate();
+                _wheres.Add(predicate);
+
+                return predicate;
+            }
         }
 
         
@@ -36,36 +41,6 @@ namespace FubuMVC.Core.Registration
             graph.Behaviors
                 .Where(chain => _wheres.All(x => x.Matches(chain)))
                 .Each(chain => _actions.Each(x => x.Modify(chain)));
-        }
-
-        private void registerOrFilter(IChainFilter filter)
-        {
-            IChainFilter last = _wheres.LastOrDefault();
-            if (last == null)
-            {
-                _wheres.Add(filter);
-            }
-            else
-            {
-                if (last is OrChainFilter)
-                {
-                    last.As<OrChainFilter>().Add(filter);
-                }
-                else
-                {
-                    _wheres.Remove(last);
-                    var orFilter = new OrChainFilter();
-                    orFilter.Add(last);
-                    orFilter.Add(filter);
-
-                    _wheres.Add(orFilter);
-                }
-            }
-        }
-
-        public interface IOrExpression
-        {
-            WhereExpression Or { get; }
         }
 
         /// <summary>
@@ -88,155 +63,6 @@ namespace FubuMVC.Core.Registration
             {
                 return new WrapWithExpression(this);
             }
-        }
-
-        public class WhereExpression : IOrExpression
-        {
-            private readonly Policy _parent;
-            private readonly Action<IChainFilter> _register;
-
-            public WhereExpression(Policy parent, Action<IChainFilter> register)
-            {
-                _register = register;
-                _parent = parent;
-            }
-
-            /// <summary>
-            /// Directly add an IChainFilter "where" filter to this policy
-            /// </summary>
-            /// <typeparam name="T"></typeparam>
-            /// <returns></returns>
-            public IOrExpression Matching<T>() where T : IChainFilter, new()
-            {
-                return addFilter(new T());
-            }
-
-            /// <summary>
-            /// Configure the applicability of this policy by matching against the *last* ActionCall
-            /// in the chain
-            /// </summary>
-            /// <param name="expression"></param>
-            /// <returns></returns>
-            public IOrExpression LastActionMatches(Expression<Func<ActionCall, bool>> expression)
-            {
-                return addFilter(new LastActionMatch(expression));
-            }
-
-            /// <summary>
-            /// Configure the applicability of this policy by matching against any ActionCall
-            /// in the chain
-            /// </summary>
-            /// <param name="expression"></param>
-            /// <returns></returns>
-            public IOrExpression AnyActionMatches(Expression<Func<ActionCall, bool>> expression)
-            {
-                return addFilter(new AnyActionMatch(expression));
-            } 
-
-            /// <summary>
-            /// This policy will only apply to chains that are marked as IsPartialOnly
-            /// </summary>
-            /// <returns></returns>
-            public IOrExpression IsPartialOnly()
-            {
-                return addFilter(new IsPartial());
-            }
-
-            /// <summary>
-            /// This policy will only apply to chains that are not marked as IsPartialOnly
-            /// </summary>
-            /// <returns></returns>
-            public IOrExpression IsNotPartial()
-            {
-                return addFilter(new IsNotPartial());
-            }
-
-            /// <summary>
-            /// Limit the policy to chains where the resource (output) type can be cast to "T"
-            /// </summary>
-            /// <typeparam name="T"></typeparam>
-            /// <returns></returns>
-            public IOrExpression ResourceTypeImplements<T>()
-            {
-                return addFilter(new ResourceTypeImplements<T>());
-            }
-
-            /// <summary>
-            /// Limit the policy to chains where the resource (output) type is T
-            /// </summary>
-            /// <typeparam name="T"></typeparam>
-            /// <returns></returns>
-            public IOrExpression ResourceTypeIs<T>()
-            {
-                return addFilter(new ResourceTypeIs<T>());
-            }
-
-            /// <summary>
-            /// Limit the policy to chains where the input type can be cast to T
-            /// </summary>
-            /// <typeparam name="T"></typeparam>
-            /// <returns></returns>
-            public IOrExpression InputTypeImplements<T>()
-            {
-                return addFilter(new InputTypeImplements<T>());
-            }
-
-            /// <summary>
-            /// Limit the policy to chains where the input type is T
-            /// </summary>
-            /// <typeparam name="T"></typeparam>
-            /// <returns></returns>
-            public IOrExpression InputTypeIs<T>()
-            {
-                return addFilter(new InputTypeIs<T>());
-            }
-
-            /// <summary>
-            /// Use your own filter to limit the applicability of this policy
-            /// </summary>
-            /// <param name="expression"></param>
-            /// <returns></returns>
-            public IOrExpression ChainMatches(Expression<Func<BehaviorChain, bool>> expression)
-            {
-                return addFilter(new LambdaChainFilter(expression));
-            }
-
-            private IOrExpression addFilter(IChainFilter filter)
-            {
-                _register(filter);
-                return this;
-            }
-
-            /// <summary>
-            /// Chain multiple filters together in a boolean 'Or' manner
-            /// </summary>
-            public WhereExpression Or
-            {
-                get { return new WhereExpression(_parent, _parent.registerOrFilter); }
-            }
-
-            /// <summary>
-            /// Filter based on whether or not a chain responds to any of these Http methods
-            /// </summary>
-            /// <param name="methods">GET, POST, PUT, DELETE, etc.</param>
-            /// <returns></returns>
-            public IOrExpression RespondsToHttpMethod(params string[] methods)
-            {
-                if (methods.Count() == 0) throw new ArgumentOutOfRangeException("You need to specify at least one http method");
-
-                if (methods.Count() > 1)
-                {
-                    var filter = new OrChainFilter();
-                    methods.Each(method => filter.Add(new HttpMethodFilter(method)));
-
-                    return addFilter(filter);
-                }
-
-                return addFilter(new HttpMethodFilter(methods.Single()));
-            }
-
-
-
         }
 
         /// <summary>

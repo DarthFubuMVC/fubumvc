@@ -150,7 +150,7 @@
     <Compile Include="Registration\Policies\InputTypeIs.cs" />
     <Compile Include="Registration\Policies\LambdaChainFilter.cs" />
     <Compile Include="Registration\Policies\LastActionMatch.cs" />
-    <Compile Include="Registration\Policies\OrChainFilter.cs" />
+    <Compile Include="Registration\Policies\ChainPredicate.cs" />
     <Compile Include="Registration\Policies\InputTypeImplements.cs" />
     <Compile Include="Registration\Policies\IsNotPartial.cs" />
     <Compile Include="Registration\Policies\IsPartial.cs" />
