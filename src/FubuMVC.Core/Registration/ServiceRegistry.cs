@@ -40,6 +40,16 @@ namespace FubuMVC.Core.Registration
             fill(typeof (TService), new ObjectDef(typeof (TImplementation)));
         }
 
+
+        /// <summary>
+        /// Sets the default implementation of a service if there is no
+        /// previous registration
+        /// </summary>
+        public void SetServiceIfNone(Type type, ObjectDef def)
+        {
+            fill(type, def);
+        }
+
         /// <summary>
         /// Sets the default implementation of a service if there is no
         /// previous registration, and allows you to customize the ObjectDef created

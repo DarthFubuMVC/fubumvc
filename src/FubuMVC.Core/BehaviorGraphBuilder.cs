@@ -1,5 +1,6 @@
 using System;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Diagnostics;
 using System.Collections.Generic;
 using FubuMVC.Core.Registration.Nodes;
@@ -44,12 +45,15 @@ namespace FubuMVC.Core
             config.Add(new SystemServicesPack());
             config.Add(new DefaultConfigurationPack());
 
-            // TODO -- log the provenance of all
+            // Apply settings
+            config.RunActions(ConfigurationType.Settings, graph);
+            config.Add(new RegisterAllSettings(graph));
+
             config.AllServiceRegistrations().Each(x => {
                 x.Apply(graph.Services);
             });
 
-            config.RunActions(ConfigurationType.Settings, graph);
+            
             config.RunActions(ConfigurationType.Discovery, graph);
 
             config.UniqueImports().Each(import => import.ImportInto(graph, log));

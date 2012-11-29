@@ -129,6 +129,7 @@
     <Compile Include="Registration\Conventions\DefaultRouteConventionBasedUrlPolicyTester.cs" />
     <Compile Include="Registration\Conventions\EndpointActionSourceTester.cs" />
     <Compile Include="Registration\Conventions\JsonMessageInputConventionTester.cs" />
+    <Compile Include="Registration\Conventions\RegisterAllSettingsTester.cs" />
     <Compile Include="Registration\Conventions\UrlPatternAttributeOnViewModelPolicyTester.cs" />
     <Compile Include="Registration\Conventions\VaryByPolicyTester.cs" />
     <Compile Include="Registration\default_action_discovery.cs" />

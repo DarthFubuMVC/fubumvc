@@ -75,5 +75,10 @@ namespace FubuMVC.Core.Registration
         {
             object Default();
         }
+
+        public void ForAllSettings(Action<Type, object> callback)
+        {
+            _settings.Each(callback);
+        }
     }
 }

@@ -125,6 +125,7 @@
     <Compile Include="Http\Compression\IHttpContentEncoding.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteConventionBasedUrlPolicy.cs" />
     <Compile Include="Registration\Conventions\OutputBeforeAjaxContinuationPolicy.cs" />
+    <Compile Include="Registration\Conventions\RegisterAllSettings.cs" />
     <Compile Include="Registration\Conventions\UrlPatternAttributeOnViewModelPolicy.cs" />
     <Compile Include="Registration\Conventions\VaryByModification.cs" />
     <Compile Include="Registration\Conventions\CachingExpression.cs" />
