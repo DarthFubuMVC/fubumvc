@@ -200,6 +200,7 @@
     <Compile Include="Runtime\PartialChainSwitcher.cs" />
     <Compile Include="Runtime\PartialFactory.cs" />
     <Compile Include="Runtime\SetValueReport.cs" />
+    <Compile Include="Security\NotAuthenticatedAttribute.cs" />
     <Compile Include="SystemServicesPack.cs" />
     <Compile Include="Http\AspNet\AspNetClientConnectivity.cs" />
     <Compile Include="Http\AspNet\AspNetCookies.cs" />
