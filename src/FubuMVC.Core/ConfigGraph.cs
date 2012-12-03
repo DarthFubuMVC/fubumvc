@@ -51,17 +51,17 @@ namespace FubuMVC.Core
 
         public void Push(FubuRegistry registry)
         {
-            _currentProvenance = _currentProvenance.Push(new FubuRegistryProvenance(registry));
+            _currentProvenance = (_currentProvenance ?? new ProvenanceChain(new Provenance[0])).Push(new FubuRegistryProvenance(registry));
         }
 
         public void Push(IPackageInfo bottle)
         {
-            _currentProvenance = _currentProvenance.Push(new BottleProvenance(bottle));
+            _currentProvenance = (_currentProvenance ?? new ProvenanceChain(new Provenance[0])).Push(new BottleProvenance(bottle));
         }
 
         public void Push(IFubuRegistryExtension extension)
         {
-            _currentProvenance = _currentProvenance.Push(new FubuRegistryExtensionProvenance(extension));
+            _currentProvenance = (_currentProvenance ?? new ProvenanceChain(new Provenance[0])).Push(new FubuRegistryExtensionProvenance(extension));
         }
 
         public void Pop()
@@ -197,6 +197,23 @@ namespace FubuMVC.Core
         public IEnumerable<T> AllEvents<T>()
         {
             return _configurations.SelectMany(x => x.AllEvents<T>()).Union(_services.SelectMany(x => x.Events.OfType<T>()));
+        }
+        
+        /// <summary>
+        /// Honestly, this is 50% a HACK.  This just gives ConfigGraph a chance to apply the default endpoint action source
+        /// if the FubuRegistry doesn't already have any
+        /// </summary>
+        public void Seal()
+        {
+            var actions = _configurations[ConfigurationType.Discovery];
+
+            if (!actions.Logs.Any(x => x.Action is ActionSourceRunner))
+            {
+                _currentProvenance = new ProvenanceChain(new Provenance[]{new ConfigurationPackProvenance(new DiscoveryActionsConfigurationPack()), });
+                Add(new EndpointActionSource());
+            }
+
+            Pop();
         }
     }
 }
