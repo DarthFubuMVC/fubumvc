@@ -136,6 +136,11 @@ namespace FubuMVC.Tests.Routing
             {
                 throw new NotImplementedException();
             }
+
+            public void Dispose()
+            {
+                throw new NotImplementedException();
+            }
         }
         public class ActionBehavior : IActionBehavior
         {
