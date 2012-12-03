@@ -142,6 +142,10 @@ namespace FubuMVC.StructureMap
             return this;
         }
 
+        public void Dispose()
+        {
+            _container.Dispose();
+        }
     }
 
 }
