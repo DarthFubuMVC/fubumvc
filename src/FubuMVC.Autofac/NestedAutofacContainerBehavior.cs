@@ -1,8 +1,6 @@
 ﻿using System;
 
 using Autofac;
-using Autofac.Core;
-using Autofac.Core.Registration;
 
 using FubuCore.Binding;
 
@@ -31,9 +29,8 @@ namespace FubuMVC.Autofac {
 		}
 
 		public IActionBehavior StartInnerBehavior() {
-			_nestedScope = _container.BeginLifetimeScope();
-			// TODO: Configure the services.
-			
+			_nestedScope = _container.BeginLifetimeScope(
+				builder => _arguments.EachService((type, value) => builder.Register(context => value).As(type)));
 
 			var behavior = _nestedScope.Resolve<IActionBehavior>(new PositionalParameter(0, _behaviorId.ToString()));
 			return behavior;
