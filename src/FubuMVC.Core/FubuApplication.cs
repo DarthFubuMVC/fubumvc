@@ -17,47 +17,12 @@ using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core
 {
-    public interface IApplicationSource
-    {
-        FubuApplication BuildApplication();
-    }
-
-    public class FubuRuntime
-    {
-        private readonly IContainerFacility _facility;
-        private readonly IServiceFactory _factory;
-        private readonly IList<RouteBase> _routes;
-
-        public FubuRuntime(IServiceFactory factory, IContainerFacility facility, IList<RouteBase> routes)
-        {
-            _factory = factory;
-            _facility = facility;
-            _routes = routes;
-        }
-
-        public IServiceFactory Factory
-        {
-            get { return _factory; }
-        }
-
-        public IContainerFacility Facility
-        {
-            get { return _facility; }
-        }
-
-        public IList<RouteBase> Routes
-        {
-            get { return _routes; }
-        }
-    }
-
-    // PLEASE NOTE:  This code is primarily tested with the StoryTeller suite for Packaging
+    // PLEASE NOTE:  This code is primarily tested through the integration tests
     public class FubuApplication : IContainerFacilityExpression
     {
         private readonly Lazy<IContainerFacility> _facility;
         private readonly List<Action<IPackageFacility>> _packagingDirectives = new List<Action<IPackageFacility>>();
         private readonly Lazy<FubuRegistry> _registry;
-        private readonly List<Action<FubuRegistry>> _registryModifications = new List<Action<FubuRegistry>>();
         private Func<IContainerFacility> _facilitySource;
         private FubuMvcPackageFacility _fubuFacility;
 
@@ -98,21 +63,56 @@ namespace FubuMVC.Core
             return this;
         }
 
+        /// <summary>
+        /// Use the policies and conventions specified by the FubuRegistry built by the specified lambda.  
+        /// Use this overload if the FubuRegistry type needs to use the scanned Bottle assemblies and packages 
+        /// hanging off of PackageRegistry
+        /// </summary>
+        /// <param name="registry"></param>
+        /// <returns></returns>
         public static IContainerFacilityExpression For(Func<FubuRegistry> registry)
         {
             return new FubuApplication(registry);
         }
 
+        /// <summary>
+        /// Use the policies and conventions specified by the registry
+        /// </summary>
+        /// <param name="registry"></param>
+        /// <returns></returns>
         public static IContainerFacilityExpression For(FubuRegistry registry)
         {
             return new FubuApplication(() => registry);
         }
 
+        /// <summary>
+        /// Use only the default FubuMVC policies and conventions
+        /// </summary>
+        /// <returns></returns>
+        public static IContainerFacilityExpression DefaultPolicies()
+        {
+            return new FubuApplication(() => new FubuRegistry());
+        }
+
+        /// <summary>
+        /// Use the policies and conventions specified by a specific FubuRegistry of type "T"
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static IContainerFacilityExpression For<T>() where T : FubuRegistry, new()
         {
             return For(() => new T());
         }
 
+        /// <summary>
+        /// Shortcut method to immediately bootstrap the specified FubuMVC application
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static FubuRuntime BootstrapApplication<T>() where T : IApplicationSource, new()
+        {
+            return new T().BuildApplication().Bootstrap();
+        }
 
         [SkipOverForProvenance]
         public FubuRuntime Bootstrap()
@@ -145,8 +145,6 @@ namespace FubuMVC.Core
                     // Need to do this to make the provenance for bottles come out right
                     _registry.Value.Config.Seal();
 
-                    applyRegistryModifications();
-
                     applyFubuExtensionsFromPackages();
 
                     graph = buildBehaviorGraph();
@@ -172,6 +170,7 @@ namespace FubuMVC.Core
             return new FubuRuntime(factory, _facility.Value, routes);
         }
 
+        [Obsolete("Just use the static BindingContext.AddNamingStrategy()")]
         public static void SetupNamingStrategyForHttpHeaders()
         {
             BindingContext.AddNamingStrategy(HttpRequestHeaders.HeaderDictionaryNameForProperty);
@@ -190,11 +189,6 @@ namespace FubuMVC.Core
             var graph = BehaviorGraphBuilder.Build(_registry.Value);
 
             return graph;
-        }
-
-        private void applyRegistryModifications()
-        {
-            _registryModifications.Each(m => m(_registry.Value));
         }
 
         private IList<RouteBase> buildRoutes(IServiceFactory factory, BehaviorGraph graph)
@@ -230,23 +224,17 @@ namespace FubuMVC.Core
 
         }
 
+        /// <summary>
+        /// Modify the Bottles configuration for this application
+        /// </summary>
+        /// <param name="configure"></param>
+        /// <returns></returns>
         public FubuApplication Packages(Action<IPackageFacility> configure)
         {
             _packagingDirectives.Add(configure);
             return this;
         }
 
-        public FubuApplication ModifyRegistry(Action<FubuRegistry> modifications)
-        {
-            _registryModifications.Add(modifications);
-            return this;
-        }
 
-    }
-
-    public interface IContainerFacilityExpression
-    {
-        FubuApplication ContainerFacility(IContainerFacility facility);
-        FubuApplication ContainerFacility(Func<IContainerFacility> facilitySource);
     }
 }

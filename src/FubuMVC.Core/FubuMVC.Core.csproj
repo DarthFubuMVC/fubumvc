@@ -103,6 +103,7 @@
     <Compile Include="Endpoints\HttpResponse.cs" />
     <Compile Include="Endpoints\WebRequestResponseExtensions.cs" />
     <Compile Include="FubuApplicationDescriber.cs" />
+    <Compile Include="FubuRuntime.cs" />
     <Compile Include="Http\AspNet\AspNetResponse.cs" />
     <Compile Include="Http\Compression\ApplyContentCompression.cs" />
     <Compile Include="Http\Compression\DeflateHttpContentEncoding.cs" />
@@ -110,6 +111,8 @@
     <Compile Include="Http\CookieValue.cs" />
     <Compile Include="Http\ICookieValue.cs" />
     <Compile Include="Http\IResponse.cs" />
+    <Compile Include="IApplicationSource.cs" />
+    <Compile Include="IContainerFacilityExpression.cs" />
     <Compile Include="ImageTag.cs" />
     <Compile Include="Packaging\PackageService.cs" />
     <Compile Include="PolicyAttribute.cs" />
