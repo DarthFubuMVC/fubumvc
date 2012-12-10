@@ -56,8 +56,6 @@ namespace FubuMVC.Autofac.Testing.Compliance
         public void should_be_a_singleton_because_an_ObjectDef_says_that_it_should_be()
         {
             var container = ContainerFacilitySource.New(x => {
-                // Any concrete class suffixed with "Cache" is supposed to be a 
-                // singleton
                 var objectDef = ObjectDef.ForType<SimpleService>();
                 objectDef.IsSingleton = true;
 
