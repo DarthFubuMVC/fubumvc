@@ -9,15 +9,15 @@ using FubuMVC.Core.Behaviors;
 
 namespace FubuMVC.Autofac {
 	public class NestedAutofacContainerBehavior : IActionBehavior, IDisposable {
-		private readonly IContainer _container;
+		private readonly ILifetimeScope _lifetimeScope;
 		private readonly ServiceArguments _arguments;
 		private readonly Guid _behaviorId;
 
 		private ILifetimeScope _nestedScope;
 
 
-		public NestedAutofacContainerBehavior(IContainer container, ServiceArguments arguments, Guid behaviorId) {
-			_container = container;
+		public NestedAutofacContainerBehavior(ILifetimeScope lifetimeScope, ServiceArguments arguments, Guid behaviorId) {
+			_lifetimeScope = lifetimeScope;
 			_arguments = arguments;
 			_behaviorId = behaviorId;
 		}
@@ -29,10 +29,10 @@ namespace FubuMVC.Autofac {
 		}
 
 		public IActionBehavior StartInnerBehavior() {
-			_nestedScope = _container.BeginLifetimeScope(
+			_nestedScope = _lifetimeScope.BeginLifetimeScope(
 				builder => _arguments.EachService((type, value) => builder.Register(context => value).As(type)));
 
-			var behavior = _nestedScope.Resolve<IActionBehavior>(new PositionalParameter(0, _behaviorId.ToString()));
+			var behavior = _nestedScope.ResolveNamed<IActionBehavior>(_behaviorId.ToString());
 			return behavior;
 		}
 
