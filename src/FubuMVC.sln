@@ -38,7 +38,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.StructureMap.Testin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Autofac", "FubuMVC.Autofac\FubuMVC.Autofac.csproj", "{3662E1AE-D402-43B5-8F81-0D9A04B6F434}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Autofac.Testing", FubuMVC.Autofac.Testing\FubuMVC.Autofac.Testing.csproj", "{C90503FF-B4DE-41AC-B1D2-4032261A8160}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Autofac.Testing", "FubuMVC.Autofac.Testing\FubuMVC.Autofac.Testing.csproj", "{C90503FF-B4DE-41AC-B1D2-4032261A8160}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
