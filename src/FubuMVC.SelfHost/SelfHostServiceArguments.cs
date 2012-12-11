@@ -16,9 +16,10 @@ namespace FubuMVC.SelfHost
 
             var cookies = new SelfHostCookies(request, response);
             With<IRequestData>(new SelfHostRequestData(routeData, request, cookies));
-            With<ICurrentHttpRequest>(new SelfHostCurrentHttpRequest(request));
+            var httpRequest = new SelfHostCurrentHttpRequest(request);
+            With<ICurrentHttpRequest>(httpRequest);
             With<IStreamingData>(new SelfHostStreamingData(request));
-            _writer = new SelfHostHttpWriter(response);
+            _writer = new SelfHostHttpWriter(response, httpRequest);
             With<IHttpWriter>(_writer);
             With<IClientConnectivity>(new SelfHostClientConnectivity());
             With<ICookies>(cookies);

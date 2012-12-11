@@ -86,7 +86,7 @@ namespace FubuMVC.SelfHost
 
                 if (x.Values.Count == 1)
                 {
-                    cookie.Value = x.Values.ToString();
+                    cookie.Value = HttpUtility.UrlDecode(x.Values.ToString());
                     return cookie;
                 }
 
@@ -94,7 +94,7 @@ namespace FubuMVC.SelfHost
                     .AllKeys
                     .Each(key =>
                           {
-                              cookie.Values[key] = x.Values[key];
+                              cookie.Values[key] = HttpUtility.UrlDecode(x.Values[key]);
                           });
 
                 return cookie;

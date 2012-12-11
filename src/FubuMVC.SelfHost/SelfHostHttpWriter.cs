@@ -33,14 +33,16 @@ namespace FubuMVC.SelfHost
         }
 
         private readonly HttpResponseMessage _response;
+        private readonly SelfHostCurrentHttpRequest _httpRequest;
         private Stream _output = new MemoryStream();
         private readonly Lazy<StreamWriter> _writer;
         private readonly IList<Action<StreamContent>> _modifications = new List<Action<StreamContent>>();
         private IHttpContentEncoding _encoding;
 
-        public SelfHostHttpWriter(HttpResponseMessage response)
+        public SelfHostHttpWriter(HttpResponseMessage response, SelfHostCurrentHttpRequest httpRequest)
         {
             _response = response;
+            _httpRequest = httpRequest;
             _writer = new Lazy<StreamWriter>(() => new StreamWriter(_output));
         }
 
@@ -85,6 +87,7 @@ namespace FubuMVC.SelfHost
 
         public void Redirect(string url)
         {
+            url = _httpRequest.ToFullUrl(url);
             WriteResponseCode(HttpStatusCode.Redirect, "Redirect");
             AppendHeader(HttpResponseHeaders.Location, url);
 

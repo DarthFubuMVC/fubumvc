@@ -28,6 +28,8 @@ namespace FubuMVC.SelfHost.Testing
                     request.CookieContainer = cookies;
                 }).ReadAsText().ShouldEqual(value);
         }
+
+
     }
 
     [TestFixture]
