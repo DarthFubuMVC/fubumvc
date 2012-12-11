@@ -1,3 +1,5 @@
+require 'bundler/setup'
+
 COMPILE_TARGET = ENV['config'].nil? ? "Debug" : ENV['config'] # Keep this in sync w/ VS settings since Mono is case-sensitive
 CLR_TOOLS_VERSION = "v4.0.30319"
 
