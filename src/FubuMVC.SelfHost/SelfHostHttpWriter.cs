@@ -103,7 +103,12 @@ namespace FubuMVC.SelfHost
 
         public void AppendCookie(HttpCookie cookie)
         {
-            var value = new CookieHeaderValue(cookie.Name, cookie.Value);
+            string cookieValue = cookie.Value;
+            if (cookieValue.IsEmpty()) cookieValue = "BLANK"; // SelfHost does NOT like blank cookie values, 
+                                                              // but that's exactly what happens when we try to null
+                                                              // out the authentication ticket in FubuMVC.Authentication
+
+            var value = new CookieHeaderValue(cookie.Name, cookieValue);
             value.Expires = new DateTimeOffset(cookie.Expires);
             if(cookie.Path.IsEmpty())
             {
