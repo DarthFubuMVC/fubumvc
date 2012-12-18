@@ -56,6 +56,8 @@ namespace FubuMVC.Core
         public string Url { get; set; }
         public bool IsAuthorized { get; set; }
 
+        public BehaviorChain Chain { get; set; }
+
         public bool Equals(Endpoint other)
         {
             if (ReferenceEquals(null, other)) return false;
@@ -138,7 +140,8 @@ namespace FubuMVC.Core
             var urlFromInput = chain.Route.CreateUrlFromInput(model);
             return new Endpoint{
                 IsAuthorized = _authorizor.Authorize(chain, model) == AuthorizationRight.Allow,
-                Url = _httpRequest.ToFullUrl(urlFromInput)
+                Url = _httpRequest.ToFullUrl(urlFromInput),
+                Chain = chain
             };
         }
     }

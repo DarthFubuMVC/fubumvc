@@ -26,7 +26,6 @@ namespace FubuMVC.Core
     public partial class FubuRegistry
     {
         private readonly IList<Type> _importedTypes = new List<Type>();
-        private readonly ActionMethodFilter _methodFilter = new ActionMethodFilter();
         private readonly Assembly _applicationAssembly = TypePool.FindTheCallingAssembly();
         private readonly ConfigGraph _config = new ConfigGraph();
 
