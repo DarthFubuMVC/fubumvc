@@ -46,12 +46,7 @@ namespace FubuMVC.Core.Registration
                 {
                     _scanned = true;
 
-
-
-
-                    // TODO:  Good exception message when an assembly blows up on 
-                    // GetExportedTypes()
-                    _types.AddRange(Assemblies.SelectMany(x =>
+                    _types.AddRange(Assemblies.Where(x => !x.IsDynamic).SelectMany(x =>
                     {
                         try
                         {
