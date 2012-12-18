@@ -117,6 +117,8 @@
     <Compile Include="Packaging\PackageService.cs" />
     <Compile Include="PolicyAttribute.cs" />
     <Compile Include="ReflectionExtensions.cs" />
+    <Compile Include="Registration\AccessorOverridesFinder.cs" />
+    <Compile Include="Registration\AccessorRulesExpression.cs" />
     <Compile Include="Registration\ApplicationLevelAttribute.cs" />
     <Compile Include="Registration\Conventions\CacheAttributePolicy.cs" />
     <Compile Include="Registration\Conventions\CachedPartialConvention.cs" />
@@ -145,6 +147,8 @@
     <Compile Include="Registration\Diagnostics\VaryByAdded.cs" />
     <Compile Include="Registration\DSL\AppliesToExpression.cs" />
     <Compile Include="Registration\Diagnostics\FilterAdded.cs" />
+    <Compile Include="Registration\IAccessorRulesExpression.cs" />
+    <Compile Include="Registration\IAccessorRulesRegistration.cs" />
     <Compile Include="Registration\Policies\AddToEndExpression.cs" />
     <Compile Include="Registration\Policies\AnyActionMatch.cs" />
     <Compile Include="Registration\Policies\ConnegPolicies.cs" />
