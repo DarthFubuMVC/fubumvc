@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Web.Routing;
 using FubuMVC.Core.Bootstrapping;
@@ -5,7 +6,7 @@ using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core
 {
-    public class FubuRuntime
+    public class FubuRuntime : IDisposable
     {
         private readonly IContainerFacility _facility;
         private readonly IServiceFactory _factory;
@@ -31,6 +32,11 @@ namespace FubuMVC.Core
         public IList<RouteBase> Routes
         {
             get { return _routes; }
+        }
+
+        public void Dispose()
+        {
+            Factory.Dispose();
         }
     }
 }
