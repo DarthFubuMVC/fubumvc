@@ -7,11 +7,16 @@ namespace FubuMVC.Core
     {
         public DiscoveryActionsConfigurationPack()
         {
+            // Settings
+            Add<AccessorOverridesFinder>();
+
             For(ConfigurationType.Discovery);
 
             Add<PartialOnlyConvention>();
             Add<RouteDetermination>();
-            Add<AccessorOverridesFinder>();
+
+
+            
         }
     }
 }

@@ -7,7 +7,7 @@ using FubuCore.Reflection;
 
 namespace FubuMVC.Core.Registration
 {
-    [ConfigurationType(ConfigurationType.Discovery)]
+    [ConfigurationType(ConfigurationType.Settings)]
     [Description("Finds and applies property specific rules expressed by classes that implement the IAccessorRulesRegistration interface")]
     public class AccessorOverridesFinder : IConfigurationAction
     {
@@ -25,7 +25,7 @@ namespace FubuMVC.Core.Registration
                   })
                  .Each(x => x.AddRules(rules));
 
-            graph.Services.AddService(rules);
+            graph.Settings.Replace(rules);
         }
     }
 }

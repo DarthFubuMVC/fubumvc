@@ -140,7 +140,8 @@ namespace FubuMVC.Tests
                 log.ProvenanceChain.ShouldHaveTheSameElementsAs(new ConfigurationPackProvenance(pack));
             });
 
-            graph.LogsFor(ConfigurationType.Discovery).Any().ShouldBeTrue();
+            // Changed the access overrides to settings
+            graph.LogsFor(ConfigurationType.Settings).Any().ShouldBeTrue();
 
         }
 
