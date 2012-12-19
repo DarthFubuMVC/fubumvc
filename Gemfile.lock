@@ -10,4 +10,5 @@ PLATFORMS
 
 DEPENDENCIES
   albacore
+  rake
   rubyzip
