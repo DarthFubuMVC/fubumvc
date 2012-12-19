@@ -83,19 +83,7 @@ namespace FubuMVC.Core.Registration.Querying
 
         public BehaviorChain Find(Type handlerType, MethodInfo method, string category = null)
         {
-            var search = new ChainSearch{
-                Type = handlerType,
-                TypeMode = TypeSearchMode.HandlerOnly,
-                MethodName = method == null ? null : method.Name,
-                CategoryOrHttpMethod = category
-            };
-
-            if (method == null)
-            {
-                search.TypeMode = TypeSearchMode.Any;
-            }
-
-            return Find(search);
+            return Find(ChainSearch.ForMethod(handlerType, method, category));
         }
 
         public BehaviorChain FindUnique(object model, string category = null)
@@ -113,22 +101,17 @@ namespace FubuMVC.Core.Registration.Querying
 
             var modelType = _typeResolver.ResolveType(model);
 
-            return Find(new ChainSearch{
-                Type = modelType,
-                TypeMode = TypeSearchMode.InputModelOnly,
-                CategoryOrHttpMethod = category
-            });
-        }
+            var search = new ChainSearch
+            {
+                Type = modelType, TypeMode = TypeSearchMode.InputModelOnly, CategoryOrHttpMethod = category
+            };
 
+            return Find(search);
+        }
 
         public BehaviorChain FindUniqueByType(Type modelType, string category = null)
         {
-            return Find(new ChainSearch
-            {
-                Type = modelType,
-                TypeMode = TypeSearchMode.Any,
-                CategoryOrHttpMethod = category
-            });
+            return Find(ChainSearch.ByUniqueInputType(modelType, category));
         }
 
 

@@ -17,7 +17,8 @@ namespace FubuMVC.Core.Registration.Querying
 
         void RootAt(string baseUrl);
         IChainForwarder FindForwarder(object model, string category = null);
-        
+
+        BehaviorChain Find(ChainSearch search);
     }
 
     public static class ChainResolverExtensions

@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Reflection;
+using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Urls;
 using System.Linq;
@@ -9,6 +12,41 @@ namespace FubuMVC.Core.Registration.Querying
 {
     public class ChainSearch
     {
+        public static ChainSearch ByUniqueInputType(Type modelType, string categoryOrHttpMethod = null)
+        {
+            return new ChainSearch
+            {
+                Type = modelType,
+                TypeMode = TypeSearchMode.Any,
+                CategoryOrHttpMethod = categoryOrHttpMethod
+            }; 
+        }
+
+        public static ChainSearch ForMethod(Type handlerType, MethodInfo method, string categoryOrHttpMethod = null)
+        {
+            var search = new ChainSearch
+            {
+                Type = handlerType,
+                TypeMode = TypeSearchMode.HandlerOnly,
+                MethodName = method == null ? null : method.Name,
+                CategoryOrHttpMethod = categoryOrHttpMethod
+            };
+
+            if (method == null)
+            {
+                search.TypeMode = TypeSearchMode.Any;
+            }
+
+            return search;
+        }
+
+        public static ChainSearch ForMethod<T>(Expression<Func<T, object>> expression,
+                                               string categoryOrHttpMethod = null)
+        {
+            MethodInfo method = ReflectionHelper.GetMethod(expression);
+            return ForMethod(typeof (T), method, categoryOrHttpMethod);
+        }
+
         public Type Type;
         public string CategoryOrHttpMethod = Categories.DEFAULT;
         public CategorySearchMode CategoryMode = CategorySearchMode.Relaxed;
