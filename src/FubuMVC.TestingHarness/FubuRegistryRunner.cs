@@ -45,15 +45,16 @@ namespace FubuMVC.TestingHarness
             get { return theHarness.Endpoints; }
         }
 
+        public string BaseAddress
+        {
+            get { return theHarness.BaseAddress; }
+        }
+
 
         [TestFixtureSetUp]
         public void SetUp()
         {
             beforeRunning();
-
-            removeAllLinkedPackages();
-
-            cleanAndRemoveAllPackages();
 
             initializeBottles();
 
@@ -86,11 +87,6 @@ namespace FubuMVC.TestingHarness
         protected virtual void beforeRunning()
         {
             
-        }
-
-        public string BaseAddress
-        {
-            get { return theHarness.BaseAddress; }
         }
 
         [TestFixtureTearDown]

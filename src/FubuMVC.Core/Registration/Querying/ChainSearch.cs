@@ -40,7 +40,7 @@ namespace FubuMVC.Core.Registration.Querying
             return search;
         }
 
-        public static ChainSearch ForMethod<T>(Expression<Func<T, object>> expression,
+        public static ChainSearch ForMethod<T>(Expression<Action<T>> expression,
                                                string categoryOrHttpMethod = null)
         {
             MethodInfo method = ReflectionHelper.GetMethod(expression);
