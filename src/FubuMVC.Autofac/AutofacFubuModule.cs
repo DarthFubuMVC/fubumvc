@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Web;
 
 using Autofac;
-using Autofac.Builder;
 
 using FubuCore;
 
+using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
 
 
@@ -20,9 +20,7 @@ namespace FubuMVC.Autofac {
 			builder.Register(c => new HttpContextWrapper(BuildContextWrapper())).As<HttpContextBase>();
 
 			builder.RegisterType<AutofacServiceLocator>().As<IServiceLocator>();
-
 			builder.RegisterType<SimpleSessionState>().As<ISessionState>();
-
 			
 			foreach (Action<ContainerBuilder> registration in _registrations) {
 				registration(builder);
@@ -30,19 +28,13 @@ namespace FubuMVC.Autofac {
 		}
 
 
-		public void AddInstanceRegistration(Type type, object instance, string name, bool isSingleton) {
+		public void AddRegistration(Type abstraction, ObjectDef definition, bool isSingleton) {
 			_registrations.Add(builder => {
-				var registration = builder.Register(context => instance);
-				UpdateRegistration(registration, type, name, isSingleton);
+				var registration = new ObjectDefRegistration(builder, definition, isSingleton);
+				registration.Register(abstraction);
 			});
 		}
 
-		public void AddTypeRegistration(Type abstraction, Type concretion, string name, bool isSingleton) {
-			_registrations.Add(builder => {
-				var registration = builder.RegisterType(concretion);
-				UpdateRegistration(registration, abstraction, name, isSingleton);
-			});
-		}
 
 		public static HttpContext BuildContextWrapper() {
 			try {
@@ -66,21 +58,6 @@ namespace FubuMVC.Autofac {
 			}
 
 			return null;
-		}
-
-
-		private static void UpdateRegistration<TActivatorData>(IRegistrationBuilder<object, TActivatorData, SingleRegistrationStyle> registration, Type type, string name, bool isSingleton) {
-			registration.As(type);
-
-			if (name != null) {
-				registration.Named(name, type);
-			}
-
-			if (isSingleton) {
-				registration.SingleInstance();
-			} else {
-				registration.InstancePerLifetimeScope();
-			}
 		}
 	}
 }

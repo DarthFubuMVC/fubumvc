@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Autofac;
 using Autofac.Features.ResolveAnything;
 
+using FubuCore;
 using FubuCore.Binding;
 
 using FubuMVC.Core.Behaviors;
@@ -27,13 +28,7 @@ namespace FubuMVC.Autofac {
 
 			_register = (serviceType, def) => {
 				bool isSingleton = (ServiceRegistry.ShouldBeSingleton(serviceType) || ServiceRegistry.ShouldBeSingleton(def.Type) || def.IsSingleton);
-
-				if (def.Value == null) {
-					// TODO: Account for def.Value == null.
-					_module.AddTypeRegistration(serviceType, def.Type, def.Name, isSingleton);
-				} else {
-					_module.AddInstanceRegistration(serviceType, def.Value, def.Name, isSingleton);
-				}
+				_module.AddRegistration(serviceType, def, isSingleton);
 			};
 		}
 
@@ -48,16 +43,18 @@ namespace FubuMVC.Autofac {
 			builder.RegisterModule(_module);
 			builder.Update(_context.ComponentRegistry);
 
-			_register = (serviceType, def) => {
-				if (def.Value == null) {
-					// TODO: Account for def.Value == null.
-					RegisterType(serviceType, def.Type);
-				} else {
-					RegisterInstance(serviceType, def.Value);
-				}
-			};
+			_register = UpdateRegistry;
 
 			return this;
+		}
+
+		private void UpdateRegistry(Type abstraction, ObjectDef definition) {
+			var builder = GetContainerBuilder();
+			
+			var registration = new ObjectDefRegistration(builder, definition, false);
+			registration.Register(abstraction);
+
+			builder.Update(_context.ComponentRegistry);
 		}
 
 		public void Register(Type serviceType, ObjectDef def) {
@@ -83,15 +80,16 @@ namespace FubuMVC.Autofac {
 		}
 
 
-		private void RegisterInstance(Type type, object instance) {
-			var builder = GetContainerBuilder();
-			builder.Register(context => instance).As(type).InstancePerLifetimeScope();
-			builder.Update(_context.ComponentRegistry);
-		}
-
+		
 		private void RegisterType(Type abstraction, Type concretion) {
 			var builder = GetContainerBuilder();
-			builder.RegisterType(concretion).As(abstraction).InstancePerLifetimeScope();
+
+			if (concretion.IsOpenGeneric()) {
+				builder.RegisterGeneric(concretion).As(abstraction).InstancePerLifetimeScope();
+			} else {
+				builder.RegisterType(concretion).As(abstraction).InstancePerLifetimeScope();
+			}
+			
 			builder.Update(_context.ComponentRegistry);
 		}
 
