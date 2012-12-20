@@ -15,11 +15,7 @@ namespace FubuMVC.Core.Registration
         {
             var rules = graph.Settings.Get<AccessorRules>();
 
-            var types = new TypePool();
-            types.AddAssemblies(AppDomain.CurrentDomain.GetAssemblies());
-            types.IgnoreExportTypeFailures = true;
-
-            types.TypesMatching(x => x.CanBeCastTo<IAccessorRulesRegistration>() && x.IsConcreteWithDefaultCtor() && !x.IsOpenGeneric()).
+            TypePool.AppDomainTypes().TypesMatching(x => x.CanBeCastTo<IAccessorRulesRegistration>() && x.IsConcreteWithDefaultCtor() && !x.IsOpenGeneric()).
                   Distinct().Select(x => {
                       return Activator.CreateInstance(x).As<IAccessorRulesRegistration>();
                   })
