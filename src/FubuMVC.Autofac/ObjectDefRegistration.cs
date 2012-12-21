@@ -70,7 +70,7 @@ namespace FubuMVC.Autofac {
 				SetDependencyValue(dependency.DependencyType, dependency.Definition.Value);
 			} else {
 				var registration = new ObjectDefRegistration(_builder, dependency.Definition, false);
-				registration.Register(dependency.Definition.Type);
+				registration.Register(dependency.DependencyType);
 			}
 		}
 
@@ -94,14 +94,15 @@ namespace FubuMVC.Autofac {
 
 			throw new DependencyResolutionException("Explicit dependency could not be found");
 		}
-
+		
 		private ParameterInfo FindFirstConstructorParameterOfType(Type dependencyType) {
 			// Get the constructors and their parameters.
 			Type targetType = _registration.ActivatorData.ImplementationType;
 			ConstructorInfo[] constructors = _registration.ActivatorData.ConstructorFinder.FindConstructors(targetType);
 			var parametersByConstructor = constructors.Select(ctor => ctor.GetParameters()).ToList();
 
-			// Find the set of parameters that are the longest.
+			// Find the set(s) of parameters that are the longest.
+			// NOTE: This may not be ideal, but Autofac does not seem to surface the chosen constructor.
 			int maxParameterLength = parametersByConstructor.Max(l => l.Length);
 			var parameterCandidates = parametersByConstructor.Where(l => l.Length == maxParameterLength).SelectMany(l => l);
 
