@@ -43,6 +43,9 @@ task :full => [:default, :integration_test]
 desc "Target used for the CI server"
 task :ci => [:update_all_dependencies, :default, :history, :package]
 
+desc "Target used for CI on Mono"
+task :mono_ci => [:update_all_dependencies, :compile, :mono_unit_test]
+
 desc "Update the version information for the build"
 assemblyinfo :version do |asm|
   asm_version = BUILD_NUMBER
@@ -107,6 +110,12 @@ desc "Runs unit tests"
 task :unit_test => :compile do
   runner = NUnitRunner.new :compilemode => COMPILE_TARGET, :source => 'src', :platform => 'x86'
   runner.executeTests ['FubuMVC.Tests', 'FubuMVC.SelfHost.Testing', 'FubuMVC.StructureMap.Testing']
+end
+
+desc "Runs some of the unit tests for Mono"
+task :mono_unit_test => :compile do
+  runner = NUnitRunner.new :compilemode => COMPILE_TARGET, :source => 'src', :platform => 'x86'
+  runner.executeTests ['FubuMVC.Tests', 'FubuMVC.StructureMap.Testing']
 end
 
 desc "Runs the integration tests"
