@@ -42,39 +42,6 @@ namespace FubuMVC.Tests.Runtime.Files
         }
 
         [Test]
-        public void is_not_under_exploded_bottle_folder_negative()
-        {
-            new[] { FubuMvcPackageFacility.FubuContentFolder, FubuMvcPackageFacility.FubuPackagesFolder}.Each(folder =>
-            {
-                var directory = "Runtime*{0}*p1".Replace('*', Path.DirectorySeparatorChar).ToFormat(folder);
-                var fubuFile = new FubuFile("{0}*a.txt".Replace('*', Path.DirectorySeparatorChar).ToFormat(directory), "p1");
-                fubuFile.RelativePath = fubuFile.Path.PathRelativeTo(directory);
-
-
-                if (FubuApplicationFiles.IsNotUnderExplodedBottleFolder(fubuFile))
-                {
-                    Assert.Fail(fubuFile.RelativePath + " was considered to be under the exploded bottle folder - " + directory + "-" + fubuFile.Path);
-
-
-                    // a.txt was considered to be under the exploded bottle folder - Runtime/fubu-content/p1 - Runtime/fubu-content/p1/a.txt
-                }
-            });
-        }
-
-        [Test]
-        public void is_not_under_exploded_bottle_folder_positive()
-        {
-            new[] { "some/content", "custom/packages", "files" }.Each(folder =>
-            {
-                var directory = "Runtime*{0}".Replace('*', Path.DirectorySeparatorChar).ToFormat(folder);
-                var fubuFile = new FubuFile("{0}*b.txt".Replace('*', Path.DirectorySeparatorChar).ToFormat(directory), "app");
-                fubuFile.RelativePath = fubuFile.Path.PathRelativeTo(directory);
-
-                FubuApplicationFiles.IsNotUnderExplodedBottleFolder(fubuFile).ShouldBeTrue();
-            });
-        }
-
-        [Test]
         public void get_application_path_delegates_to_fubumvc_package_facility()
         {
             theFiles.GetApplicationPath().ShouldEqual(FubuMvcPackageFacility.GetApplicationPath());
