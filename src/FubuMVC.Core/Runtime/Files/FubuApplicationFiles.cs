@@ -48,7 +48,7 @@ namespace FubuMVC.Core.Runtime.Files
 
         public IFubuFile Find(string relativeName)
         {
-            return _files[relativeName];
+            return _files[relativeName.Replace("\\", "/")];
         }
 
         public void AssertHasFile(string relativeName)
@@ -75,7 +75,7 @@ namespace FubuMVC.Core.Runtime.Files
         {
             var fileSet = new FileSet{
                 DeepSearch = true,
-                Include = name.Replace("\\", "/")
+                Include = name
             };
 
             return FindFiles(fileSet).FirstOrDefault();
