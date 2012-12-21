@@ -26,9 +26,6 @@ namespace FubuMVC.Tests.Runtime.Files
             IFubuFile fubuFile = theFiles.Find("Runtime/Files/Data/a.txt");
             fubuFile.ShouldNotBeNull();
 
-            //fubuFile.RelativePath.ShouldNotBeNull();
-            //fubuFile.Path.ShouldNotBeNull();
-
             fubuFile.ReadContents()
                 .Trim().ShouldEqual("some text from a.txt");
         }
@@ -36,11 +33,10 @@ namespace FubuMVC.Tests.Runtime.Files
         [Test]
         public void find_file_canonicizes_paths()
         {
-            theFiles.AssertHasFile("Runtime/Files/Data/a.txt");
-//            theFiles.AssertHasFile("Runtime\\Files\\Data\\A.txt");
-//
-//            theFiles.Find("Runtime\\Files\\Data\\A.txt").ReadContents()
-//                .Trim().ShouldEqual("some text from a.txt");
+            theFiles.AssertHasFile("Runtime\\Files\\Data\\A.txt");
+
+            theFiles.Find("Runtime\\Files\\Data\\A.txt").ReadContents()
+                .Trim().ShouldEqual("some text from a.txt");
         }
 
         [Test]
