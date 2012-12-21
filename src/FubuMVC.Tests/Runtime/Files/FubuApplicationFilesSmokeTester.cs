@@ -21,18 +21,18 @@ namespace FubuMVC.Tests.Runtime.Files
         [Test]
         public void find_file()
         {
-            theFiles.AssertHasFile("runtime/files/data/a.txt");
+            theFiles.AssertHasFile("Runtime/Files/Data/a.txt");
 
-            theFiles.Find("runtime/files/data/a.txt").ReadContents()
+            theFiles.Find("Runtime/Files/Data/a.txt").ReadContents()
                 .Trim().ShouldEqual("some text from a.txt");
         }
 
         [Test]
         public void find_file_canonicizes_paths()
         {
-            theFiles.AssertHasFile("runtime\\files\\data\\A.txt");
+            theFiles.AssertHasFile("Runtime\\Files\\Data\\A.txt");
 
-            theFiles.Find("runtime\\files\\data\\A.txt").ReadContents()
+            theFiles.Find("Runtime\\Files\\Data\\A.txt").ReadContents()
                 .Trim().ShouldEqual("some text from a.txt");
         }
 
@@ -41,7 +41,7 @@ namespace FubuMVC.Tests.Runtime.Files
         {
             new[] { FubuMvcPackageFacility.FubuContentFolder, FubuMvcPackageFacility.FubuPackagesFolder}.Each(folder =>
             {
-                var directory = "runtime/{0}/p1".ToFormat(folder);
+                var directory = "Runtime/{0}/p1".ToFormat(folder);
                 var fubuFile = new FubuFile("{0}/a.txt".ToFormat(directory), "p1");
                 fubuFile.RelativePath = fubuFile.Path.PathRelativeTo(directory);
 
@@ -54,7 +54,7 @@ namespace FubuMVC.Tests.Runtime.Files
         {
             new[] { "some/content", "custom/packages", "files" }.Each(folder =>
             {
-                var directory = "runtime/{0}".ToFormat(folder);
+                var directory = "Runtime/{0}".ToFormat(folder);
                 var fubuFile = new FubuFile("{0}/b.txt".ToFormat(directory), "app");
                 fubuFile.RelativePath = fubuFile.Path.PathRelativeTo(directory);
 
