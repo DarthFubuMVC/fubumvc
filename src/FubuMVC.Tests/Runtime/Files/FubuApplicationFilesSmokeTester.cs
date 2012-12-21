@@ -48,6 +48,8 @@ namespace FubuMVC.Tests.Runtime.Files
                 var fubuFile = new FubuFile("{0}/a.txt".ToFormat(directory), "p1");
                 fubuFile.RelativePath = fubuFile.Path.PathRelativeTo(directory);
 
+                fubuFile.RelativePath.ShouldEqual("foo");
+
                 FubuApplicationFiles.IsNotUnderExplodedBottleFolder(fubuFile).ShouldBeFalse();
             });
         }
