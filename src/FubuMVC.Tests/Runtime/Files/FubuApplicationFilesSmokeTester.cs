@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using FubuCore;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Runtime.Files;
@@ -45,14 +46,17 @@ namespace FubuMVC.Tests.Runtime.Files
         {
             new[] { FubuMvcPackageFacility.FubuContentFolder, FubuMvcPackageFacility.FubuPackagesFolder}.Each(folder =>
             {
-                var directory = "Runtime/{0}/p1".ToFormat(folder);
-                var fubuFile = new FubuFile("{0}/a.txt".ToFormat(directory), "p1");
+                var directory = "Runtime*{0}*p1".Replace('*', Path.DirectorySeparatorChar).ToFormat(folder);
+                var fubuFile = new FubuFile("{0}*a.txt".Replace('*', Path.DirectorySeparatorChar).ToFormat(directory), "p1");
                 fubuFile.RelativePath = fubuFile.Path.PathRelativeTo(directory);
 
 
                 if (FubuApplicationFiles.IsNotUnderExplodedBottleFolder(fubuFile))
                 {
                     Assert.Fail(fubuFile.RelativePath + " was considered to be under the exploded bottle folder - " + directory + "-" + fubuFile.Path);
+
+
+                    // a.txt was considered to be under the exploded bottle folder - Runtime/fubu-content/p1 - Runtime/fubu-content/p1/a.txt
                 }
             });
         }
@@ -62,8 +66,8 @@ namespace FubuMVC.Tests.Runtime.Files
         {
             new[] { "some/content", "custom/packages", "files" }.Each(folder =>
             {
-                var directory = "Runtime/{0}".ToFormat(folder);
-                var fubuFile = new FubuFile("{0}/b.txt".ToFormat(directory), "app");
+                var directory = "Runtime*{0}".Replace('*', Path.DirectorySeparatorChar).ToFormat(folder);
+                var fubuFile = new FubuFile("{0}*b.txt".Replace('*', Path.DirectorySeparatorChar).ToFormat(directory), "app");
                 fubuFile.RelativePath = fubuFile.Path.PathRelativeTo(directory);
 
                 FubuApplicationFiles.IsNotUnderExplodedBottleFolder(fubuFile).ShouldBeTrue();
