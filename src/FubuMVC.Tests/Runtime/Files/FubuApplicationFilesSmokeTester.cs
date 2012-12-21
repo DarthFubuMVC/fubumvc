@@ -52,7 +52,7 @@ namespace FubuMVC.Tests.Runtime.Files
 
                 if (FubuApplicationFiles.IsNotUnderExplodedBottleFolder(fubuFile))
                 {
-                    Assert.Fail(fubuFile.RelativePath + " was considered to be under the exploded bottle folder");
+                    Assert.Fail(fubuFile.RelativePath + " was considered to be under the exploded bottle folder - " + directory + fubuFile.Path);
                 }
             });
         }
