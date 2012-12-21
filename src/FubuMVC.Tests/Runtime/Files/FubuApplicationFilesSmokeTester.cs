@@ -23,8 +23,14 @@ namespace FubuMVC.Tests.Runtime.Files
         {
             theFiles.AssertHasFile("Runtime/Files/Data/a.txt");
 
-//            theFiles.Find("Runtime/Files/Data/a.txt").ReadContents()
-//                .Trim().ShouldEqual("some text from a.txt");
+            IFubuFile fubuFile = theFiles.Find("Runtime/Files/Data/a.txt");
+            fubuFile.ShouldNotBeNull();
+
+            fubuFile.RelativePath.ShouldNotBeNull();
+            fubuFile.Path.ShouldNotBeNull();
+
+            fubuFile.ReadContents()
+                .Trim().ShouldEqual("some text from a.txt");
         }
 
         [Test]
