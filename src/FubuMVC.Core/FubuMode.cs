@@ -1,21 +1,92 @@
 using System;
+using FubuCore;
+using FubuMVC.Core.Packaging;
 
 namespace FubuMVC.Core
 {
-    public static class FubuMode
+    public interface IModeDetector
+    {
+        string GetMode();
+        void SetMode(string mode);
+    }
+
+    public class EnvironmentVariableDetector : IModeDetector
     {
         public const string EnvironmentVariable = "FubuMode";
-        public static readonly string Development = "Development";
 
-        public static void SetEnvironmentVariable(string mode)
+        public string GetMode()
         {
-            Environment.SetEnvironmentVariable(EnvironmentVariable, mode, EnvironmentVariableTarget.Machine);
-            Reset();
+            return Environment.GetEnvironmentVariable(EnvironmentVariableDetector.EnvironmentVariable, EnvironmentVariableTarget.Machine) ?? "";
         }
 
-        public static void ClearEnvironmentVariable()
+        public void SetMode(string mode)
         {
-            SetEnvironmentVariable(null);
+            Environment.SetEnvironmentVariable(EnvironmentVariableDetector.EnvironmentVariable, mode, EnvironmentVariableTarget.Machine);
+        }
+    }
+
+    public class FubuModeFileDetector : IModeDetector
+    {
+        public static readonly string File = ".fubumode";
+
+        private static string filename()
+        {
+            return FubuMvcPackageFacility.GetApplicationPath().AppendPath(File);
+        }
+
+        public string GetMode()
+        {
+            var system = new FileSystem();
+            var file = filename();
+            if (system.FileExists(file))
+            {
+                return (system.ReadStringFromFile(file) ?? "").Trim();
+            }
+
+            return string.Empty;
+        }
+
+        public void SetMode(string mode)
+        {
+            var fileSystem = new FileSystem();
+            string file = filename();
+            if (mode.IsEmpty())
+            {
+                fileSystem.DeleteFile(file);
+            }
+            else
+            {
+                fileSystem.WriteStringToFile(file, mode);
+            }
+        }
+
+        public static void Clear()
+        {
+            var fileSystem = new FileSystem();
+            string file = filename();
+
+            fileSystem.DeleteFile(file);
+        }
+    }
+
+
+    public static class FubuMode
+    {
+        public static readonly string Development = "Development";
+
+        public static IModeDetector Detector
+        {
+            get { return _detector; }
+            set
+            {
+                _detector = value;
+                _determineMode = new Lazy<string>(_detector.GetMode);
+            }
+        }
+
+        public static bool IsRunningOnMono()
+        {
+            return Type.GetType("Mono.Runtime") != null;
         }
 
         static FubuMode()
@@ -23,7 +94,21 @@ namespace FubuMVC.Core
             Reset();
         }
 
+        public static void Reset()
+        {
+            if (IsRunningOnMono())
+            {
+                Detector = new FubuModeFileDetector();
+            }
+            else
+            {
+                Detector = new EnvironmentVariableDetector();
+            }
+        }
+
         private static Lazy<string> _determineMode;
+        private static IModeDetector _detector;
+
         public static bool InDevelopment()
         {
             return Mode().Equals(Development, StringComparison.OrdinalIgnoreCase);
@@ -32,11 +117,6 @@ namespace FubuMVC.Core
         public static string Mode()
         {
             return _determineMode.Value;
-        }
-
-        public static void Reset()
-        {
-            _determineMode = new Lazy<string>(() => Environment.GetEnvironmentVariable(EnvironmentVariable, EnvironmentVariableTarget.Machine) ?? "");
         }
 
         public static void Mode(string mode)

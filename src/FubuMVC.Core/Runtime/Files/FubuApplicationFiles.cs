@@ -74,7 +74,7 @@ namespace FubuMVC.Core.Runtime.Files
         {
             var fileSet = new FileSet{
                 DeepSearch = true,
-                Include = name.ToLower()
+                Include = name
             };
 
             return FindFiles(fileSet).FirstOrDefault();
