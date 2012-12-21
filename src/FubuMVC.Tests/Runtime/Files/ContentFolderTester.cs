@@ -57,19 +57,5 @@ namespace FubuMVC.Tests.Runtime.Files
             }).Each(f => f.ProvenancePath.ShouldEqual(FubuMvcPackageFacility.GetApplicationPath()));
         }
 
-        [Test]
-        public void can_find_files_case_insensitive()
-        {
-            var files = theFolder.FindFiles(new FileSet
-            {
-                DeepSearch = true,
-                Include = "A.txt"
-            }).Select(x => x.Path.PathRelativeTo(FubuMvcPackageFacility.GetApplicationPath()));
-
-            var description = files.Join("\n");
-            Assert.Fail(description);
-
-            //files.Select(x => x.ToLowerInvariant()).ShouldContain(@"Runtime{0}Files{0}Data{0}a.txt".ToFormat(Path.DirectorySeparatorChar).ToLowerInvariant());
-        }
     }
 }

@@ -53,7 +53,7 @@ namespace FubuMVC.Core.Runtime.Files
 
         public void AssertHasFile(string relativeName)
         {
-            var file = findFile(relativeName);
+            var file = findFile(relativeName.Replace("\\", "/"));
             if (file == null)
             {
                 var files = AllFolders.SelectMany(x => FindFiles(FileSet.Deep("*"))).Select(x => x.Path);
