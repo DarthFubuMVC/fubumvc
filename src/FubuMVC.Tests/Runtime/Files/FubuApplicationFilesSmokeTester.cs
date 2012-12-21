@@ -21,6 +21,8 @@ namespace FubuMVC.Tests.Runtime.Files
         [Test]
         public void find_file()
         {
+            theFiles.AssertHasFile("runtime/files/data/a.txt");
+
             theFiles.Find("runtime/files/data/a.txt").ReadContents()
                 .Trim().ShouldEqual("some text from a.txt");
         }
@@ -28,6 +30,8 @@ namespace FubuMVC.Tests.Runtime.Files
         [Test]
         public void find_file_canonicizes_paths()
         {
+            theFiles.AssertHasFile("runtime\\files\\data\\A.txt");
+
             theFiles.Find("runtime\\files\\data\\A.txt").ReadContents()
                 .Trim().ShouldEqual("some text from a.txt");
         }

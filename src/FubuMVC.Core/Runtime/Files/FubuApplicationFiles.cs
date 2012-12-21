@@ -51,6 +51,20 @@ namespace FubuMVC.Core.Runtime.Files
             return _files[relativeName.ToLower()];
         }
 
+        public void AssertHasFile(string relativeName)
+        {
+            var file = findFile(relativeName);
+            if (file == null)
+            {
+                var files = AllFolders.SelectMany(x => FindFiles(FileSet.Deep("*"))).Select(x => x.Path);
+
+                var description = "Could not find " + relativeName;
+                files.Each(x => description += "\n" + x);
+
+                throw new ApplicationException(description);
+            }
+        }
+
         public IEnumerable<ContentFolder> AllFolders
         {
             get { return _folders.Value; }

@@ -66,7 +66,7 @@ namespace FubuMVC.Tests.Runtime.Files
                 Include = "A.txt"
             }).Select(x => x.Path.PathRelativeTo(FubuMvcPackageFacility.GetApplicationPath()));
 
-            files.ShouldContain(@"Runtime{0}Files{0}Data{0}a.txt".ToFormat(Path.DirectorySeparatorChar));
+            files.Select(x => x.ToLowerInvariant()).ShouldContain(@"Runtime{0}Files{0}Data{0}a.txt".ToFormat(Path.DirectorySeparatorChar).ToLowerInvariant());
         }
     }
 }
