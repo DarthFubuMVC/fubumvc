@@ -48,15 +48,6 @@ namespace FubuMVC.Autofac {
 			return this;
 		}
 
-		private void UpdateRegistry(Type abstraction, ObjectDef definition) {
-			var builder = GetContainerBuilder();
-			
-			var registration = new ObjectDefRegistration(builder, definition, false);
-			registration.Register(abstraction);
-
-			builder.Update(_context.ComponentRegistry);
-		}
-
 		public void Register(Type serviceType, ObjectDef def) {
 			_register(serviceType, def);
 		}
@@ -80,16 +71,24 @@ namespace FubuMVC.Autofac {
 		}
 
 
-		
 		private void RegisterType(Type abstraction, Type concretion) {
 			var builder = GetContainerBuilder();
 
 			if (concretion.IsOpenGeneric()) {
 				builder.RegisterGeneric(concretion).As(abstraction).InstancePerLifetimeScope();
 			} else {
-				builder.RegisterType(concretion).As(abstraction).InstancePerLifetimeScope();
+				builder.RegisterType(concretion).PreserveExistingDefaults().As(abstraction).InstancePerLifetimeScope();
 			}
 			
+			builder.Update(_context.ComponentRegistry);
+		}
+
+		private void UpdateRegistry(Type abstraction, ObjectDef definition) {
+			var builder = GetContainerBuilder();
+			
+			var registration = new ObjectDefRegistration(builder, definition, false);
+			registration.Register(abstraction);
+
 			builder.Update(_context.ComponentRegistry);
 		}
 
