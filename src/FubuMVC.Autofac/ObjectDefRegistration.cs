@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -78,37 +79,40 @@ namespace FubuMVC.Autofac {
 
 		void IDependencyVisitor.List(ListDependency dependency) {
 			var items = dependency.Items.ToArray();
-			if (items.All(def => def.Value != null)) {
-				SetDependencyValue(dependency.DependencyType, items.Select(def => def.Value));
-			} else {
-				foreach (ObjectDef definition in dependency.Items) {
-					var registration = new ObjectDefRegistration(_builder, definition, false);
-					registration.Register(dependency.DependencyType);
-				}
+
+			// Register the type-based items.
+			foreach (ObjectDef definition in items.Where(def => def.Value == null)) {
+				var registration = new ObjectDefRegistration(_builder, definition, false);
+				registration.Register(definition.Type);
 			}
+
+			SetDependencyList(dependency.DependencyType, dependency.ElementType, items);
 		}
 
 
 		private void SetDependencyValue(Type dependencyType, object value) {
-			ParameterInfo parameter = FindFirstConstructorParameterOfType(dependencyType);
-			if (parameter != null) {
-				_registration.WithParameter(parameter.Name, value);
-				return;
-			}
-
-			PropertyInfo property = FindFirstWriteablePropertyOfType(dependencyType);
-			if (property != null) {
-				_registration.WithProperty(property.Name, value);
-				return;
-			}
-
-			throw new DependencyResolutionException("Explicit dependency could not be found");
+			SetDependency(dependencyType, (info, context) => value);
 		}
 
 		private void SetDependencyForType(Type dependencyType, Type type) {
+			SetDependency(dependencyType, (info, context) => context.Resolve(type));
+		}
+
+		private void SetDependencyList(Type dependencyType, Type elementType, IEnumerable<ObjectDef> objectDefs) {
+			SetDependency(
+				dependencyType,
+				(info, context) => {
+					var builder = typeof(ListBuilder<>).CloseAndBuildAs<IListBuilder>(elementType);
+					return builder.Create(objectDefs.Select(def => def.Value ?? context.Resolve(def.Type)).ToList());
+				});
+		}
+
+		private void SetDependency(Type dependencyType, Func<ParameterInfo, IComponentContext, object> valueProvider) {
 			ParameterInfo parameter = FindFirstConstructorParameterOfType(dependencyType);
 			if (parameter != null) {
-				_registration.WithParameter((info, context) => info.Name == parameter.Name, (info, context) => context.Resolve(type));
+				_registration.WithParameter(
+					(info, context) => info.Name == parameter.Name,
+					valueProvider);
 				return;
 			}
 
@@ -119,7 +123,7 @@ namespace FubuMVC.Autofac {
 						                           PropertyInfo propertyInfo;
 						                           return (info.TryGetDeclaringProperty(out propertyInfo) && propertyInfo.Name == property.Name);
 					                           },
-					                           (info, context) => context.Resolve(type)));
+					                           valueProvider));
 				return;
 			}
 
@@ -149,18 +153,18 @@ namespace FubuMVC.Autofac {
 			// Look for a property that is writeable and whose type matches the dependency type.
 			return properties.FirstOrDefault(p => p.CanWrite && p.PropertyType == dependencyType);
 		}
-	}
 
-	internal static class ReflectionExtensions {
-		internal static bool TryGetDeclaringProperty(this ParameterInfo parameterInfo, out PropertyInfo propertyInfo) {
-			var methodInfo = parameterInfo.Member as MethodInfo;
-			if (methodInfo != null && methodInfo.IsSpecialName && methodInfo.Name.StartsWith("set_", StringComparison.Ordinal) && methodInfo.DeclaringType != null) {
-				propertyInfo = methodInfo.DeclaringType.GetProperty(methodInfo.Name.Substring(4));
-				return true;
+
+
+		// *** Helpers for dynamic casting.
+		public interface IListBuilder {
+			object Create(IEnumerable<object> items);
+		}
+
+		public class ListBuilder<T> : IListBuilder {
+			public object Create(IEnumerable<object> items) {
+				return items.Cast<T>();
 			}
-
-			propertyInfo = null;
-			return false;
 		}
 	}
 }
