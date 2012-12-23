@@ -17,44 +17,52 @@ namespace FubuMVC.Autofac {
 		private readonly ContainerBuilder _builder;
 		private readonly ObjectDef _definition;
 		private readonly bool _isSingleton;
+		private readonly bool _isDependency;
 
 		private IRegistrationBuilder<object, ReflectionActivatorData, object> _registration;
 
 
-		public ObjectDefRegistration(ContainerBuilder builder, ObjectDef definition, bool isSingleton) {
+		public ObjectDefRegistration(ContainerBuilder builder, ObjectDef definition, bool isSingleton, bool isDependency) {
 			_builder = builder;
 			_definition = definition;
 			_isSingleton = isSingleton;
+			_isDependency = isDependency;
 		}
 
 
 		public void Register(Type abstraction) {
 			if (_definition.Value != null) {
 				// By instance.
-				UpdateRegistration(_builder.Register(context => _definition.Value), abstraction, _definition.Name, _isSingleton);
+				UpdateRegistration(_builder.Register(context => _definition.Value), abstraction);
 			} else {
 				// By type.
 				if (_definition.Type.IsOpenGeneric()) {
 					_registration = _builder.RegisterGeneric(_definition.Type);
-					UpdateRegistration(_registration, abstraction, _definition.Name, _isSingleton);
+					UpdateRegistration(_registration, abstraction);
 				} else {
 					_registration = _builder.RegisterType(_definition.Type).PreserveExistingDefaults();
-					UpdateRegistration(_registration, abstraction, _definition.Name, _isSingleton);
+					UpdateRegistration(_registration, abstraction);
 				}
-
-				_definition.AcceptVisitor(this);
 			}
+
+			_definition.AcceptVisitor(this);
 		}
 
 
-		private static void UpdateRegistration<TActivatorData, TRegistrationStyle>(IRegistrationBuilder<object, TActivatorData, TRegistrationStyle> registration, Type type, string name, bool isSingleton) {
-			registration.As(type);
-
-			if (name != null) {
-				registration.Named(name, type);
+		private void UpdateRegistration<TActivatorData, TRegistrationStyle>(IRegistrationBuilder<object, TActivatorData, TRegistrationStyle> registration, Type type) {
+			if (_isDependency && _definition.Name == null) {
+				throw new FubuAssertionException("An explicit dependency must be named.");
+			}
+			
+			if (!_isDependency) {
+				registration.As(type);
 			}
 
-			if (isSingleton) {
+			if (_definition.Name != null) {
+				registration.Named(_definition.Name, type);
+			}
+
+			if (_isSingleton) {
 				registration.SingleInstance();
 			} else {
 				registration.InstancePerLifetimeScope();
@@ -70,10 +78,10 @@ namespace FubuMVC.Autofac {
 			if (dependency.Definition.Value != null) {
 				SetDependencyValue(dependency.DependencyType, dependency.Definition.Value);
 			} else {
-				var registration = new ObjectDefRegistration(_builder, dependency.Definition, false);
+				var registration = new ObjectDefRegistration(_builder, dependency.Definition, false, true);
 				registration.Register(dependency.DependencyType);
 
-				SetDependencyForType(dependency.DependencyType, dependency.Definition.Type);
+				SetDependencyType(dependency.DependencyType, dependency.Definition.Name);
 			}
 		}
 
@@ -82,7 +90,7 @@ namespace FubuMVC.Autofac {
 
 			// Register the type-based items.
 			foreach (ObjectDef definition in items.Where(def => def.Value == null)) {
-				var registration = new ObjectDefRegistration(_builder, definition, false);
+				var registration = new ObjectDefRegistration(_builder, definition, false, true);
 				registration.Register(definition.Type);
 			}
 
@@ -94,8 +102,8 @@ namespace FubuMVC.Autofac {
 			SetDependency(dependencyType, (info, context) => value);
 		}
 
-		private void SetDependencyForType(Type dependencyType, Type type) {
-			SetDependency(dependencyType, (info, context) => context.Resolve(type));
+		private void SetDependencyType(Type dependencyType, string dependencyName) {
+			SetDependency(dependencyType, (info, context) => context.ResolveNamed(dependencyName, dependencyType));
 		}
 
 		private void SetDependencyList(Type dependencyType, Type elementType, IEnumerable<ObjectDef> objectDefs) {
@@ -103,7 +111,7 @@ namespace FubuMVC.Autofac {
 				dependencyType,
 				(info, context) => {
 					var builder = typeof(ListBuilder<>).CloseAndBuildAs<IListBuilder>(elementType);
-					return builder.Create(objectDefs.Select(def => def.Value ?? context.Resolve(def.Type)).ToList());
+					return builder.Create(objectDefs.Select(def => def.Value ?? context.ResolveNamed(def.Name, def.Type)).ToList());
 				});
 		}
 

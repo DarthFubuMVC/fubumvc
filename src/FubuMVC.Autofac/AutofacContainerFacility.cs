@@ -86,7 +86,7 @@ namespace FubuMVC.Autofac {
 		private void UpdateRegistry(Type abstraction, ObjectDef definition) {
 			var builder = GetContainerBuilder();
 			
-			var registration = new ObjectDefRegistration(builder, definition, false);
+			var registration = new ObjectDefRegistration(builder, definition, false, false);
 			registration.Register(abstraction);
 
 			builder.Update(_context.ComponentRegistry);
