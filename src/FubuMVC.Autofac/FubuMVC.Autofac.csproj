@@ -50,6 +50,7 @@
     <Compile Include="AutofacContainerFacility.cs" />
     <Compile Include="AutofacFubuModule.cs" />
     <Compile Include="AutofacServiceLocator.cs" />
+    <Compile Include="BootstrapperExtensions.cs" />
     <Compile Include="NestedAutofacContainerBehavior.cs" />
     <Compile Include="ObjectDefRegistration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
