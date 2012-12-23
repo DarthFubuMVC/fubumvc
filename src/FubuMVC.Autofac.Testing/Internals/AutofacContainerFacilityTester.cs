@@ -96,7 +96,7 @@ namespace FubuMVC.Autofac.Testing.Internals {
 
 		[Test]
 		public void can_return_all_the_registered_activators_smoke_test() {
-			facility.GetAll<IActivator>().Count().ShouldBeGreaterThan(3);
+			facility.GetAll<IActivator>().Count().ShouldEqual(3);
 		}
 
 		[Test]
