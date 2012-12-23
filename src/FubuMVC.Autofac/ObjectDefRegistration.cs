@@ -157,11 +157,12 @@ namespace FubuMVC.Autofac {
 
 
 		// *** Helpers for dynamic casting.
-		public interface IListBuilder {
+		internal interface IListBuilder {
 			object Create(IEnumerable<object> items);
 		}
 
-		public class ListBuilder<T> : IListBuilder {
+
+		internal class ListBuilder<T> : IListBuilder {
 			public object Create(IEnumerable<object> items) {
 				return items.Cast<T>();
 			}
