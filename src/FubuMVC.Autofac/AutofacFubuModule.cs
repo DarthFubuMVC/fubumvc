@@ -30,7 +30,7 @@ namespace FubuMVC.Autofac {
 
 		public void AddRegistration(Type abstraction, ObjectDef definition, bool isSingleton) {
 			_registrations.Add(builder => {
-				var registration = new ObjectDefRegistration(builder, definition, isSingleton);
+				var registration = new ObjectDefRegistration(builder, definition, isSingleton, false);
 				registration.Register(abstraction);
 			});
 		}
