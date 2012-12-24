@@ -7,7 +7,7 @@ using FubuMVC.Core;
 
 namespace FubuMVC.Autofac {
 	public static class BootstrapperExtensions {
-		public static FubuApplication StructureMapObjectFactory(this IContainerFacilityExpression expression) {
+		public static FubuApplication Autofac(this IContainerFacilityExpression expression) {
 			return expression.Autofac(() => {
 				var builder = new ContainerBuilder();
 				return builder.Build();
