@@ -70,6 +70,8 @@ namespace FubuMVC.Autofac {
 			return _context.Resolve<IEnumerable<T>>();
 		}
 
+		public void Dispose() {}
+
 
 		private void RegisterType(Type abstraction, Type concretion) {
 			var builder = GetContainerBuilder();
