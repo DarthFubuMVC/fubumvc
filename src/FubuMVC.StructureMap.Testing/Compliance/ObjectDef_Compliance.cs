@@ -42,6 +42,26 @@ namespace FubuMVC.StructureMap.Testing.Compliance
             container.Get<GuyWithService>().Service.ShouldBeOfType<SimpleService>();
         }
 
+		[Test]
+		public void auto_wiring_applies_even_when_another_dependency_is_set_explicitly() {
+			var container = ContainerFacilitySource.New(x => {
+				x.Register(typeof(IService), ObjectDef.ForType<SimpleService>());
+				x.Register(typeof(IThing), ObjectDef.ForType<ThingOne>());
+
+				var def = ObjectDef.ForType<GuyWithServiceAndThing>();
+				def.DependencyByType<IThing>(ObjectDef.ForType<ThingTwo>());
+
+				var highLevelDef = ObjectDef.ForType<HighLevelObject>();
+				highLevelDef.DependencyByType<GuyWithServiceAndThing>(def);
+
+				x.Register(typeof(IHighLevelObject), highLevelDef);
+			});
+
+			var guyWithServiceAndThing = container.Get<GuyWithServiceAndThing>();
+			guyWithServiceAndThing.Service.ShouldBeOfType<SimpleService>(); // auto-wired
+			guyWithServiceAndThing.Thing.ShouldBeOfType<ThingOne>(); // auto-wired, even though explicitly set to ThingTwo for HighLevelObject
+		}
+
         [Test]
         public void ObjectDef_with_one_explicit_dependency_defined_by_type()
         {
