@@ -29,21 +29,18 @@ namespace FubuMVC.Tests.Behaviors
         }
 
         [Test]
-        [Platform(Exclude = "Mono", Reason = "Incomplete Mono implementation")]
         public void should_not_call_handle()
         {
             _exceptionHandler.VerifyAllExpectations();
         }
 
         [Test]
-        [Platform(Exclude = "Mono", Reason = "Incomplete Mono implementation")]
         public void should_not_be_observed_as_handled()
         {
             _observer.VerifyAllExpectations();
         }
 
         [Test]
-        [Platform(Exclude = "Mono", Reason = "Incomplete Mono implementation")]
         public void should_have_the_correct_exception()
         {
             _exception.InnerExceptions.Contains(_argumentException);
@@ -73,21 +70,18 @@ namespace FubuMVC.Tests.Behaviors
         }
 
         [Test]
-        [Platform(Exclude = "Mono", Reason = "Incomplete Mono implementation")]
         public void should_call_handle()
         {
             _exceptionHandler.VerifyAllExpectations();
         }
 
         [Test]
-        [Platform(Exclude = "Mono", Reason = "Incomplete Mono implementation")]
         public void should_be_observed_as_handled()
         {
             _observer.VerifyAllExpectations();
         }
 
         [Test]
-        [Platform(Exclude = "Mono", Reason = "Incomplete Mono implementation")]
         public void should_have_the_correct_exception()
         {
             _exception.InnerExceptions.Contains(_argumentException);

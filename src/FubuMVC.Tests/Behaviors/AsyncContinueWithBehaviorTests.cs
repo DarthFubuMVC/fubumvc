@@ -37,7 +37,6 @@ namespace FubuMVC.Tests.Behaviors
         }
 
         [Test]
-        [Platform(Exclude = "Mono", Reason = "Incomplete Mono implementation")]
         public void should_call_inner_behavior()
         {
             MockFor<IActionBehavior>().AssertWasCalled(x => x.Invoke());

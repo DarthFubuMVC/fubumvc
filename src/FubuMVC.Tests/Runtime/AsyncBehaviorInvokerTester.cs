@@ -41,7 +41,6 @@ namespace FubuMVC.Tests.Runtime
         }
 
         [Test]
-        [Platform(Exclude = "Mono", Reason = "Incomplete Mono implementation")]
         public void invoke_calls_the_behavior_invoke()
         {
             var testTask = new Task(() => theInvoker.Invoke(theArguments, theRouteData));
