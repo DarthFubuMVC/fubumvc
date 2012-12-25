@@ -13,7 +13,8 @@ namespace FubuMVC.Autofac.Testing.Compliance
         [Test]
         public void close_an_open_generic_type_from_registration_if_nothing_explicit_is_added()
         {
-            var facility = ContainerFacilitySource.New(x => {
+            var facility = ContainerFacilitySource.New(x =>
+            {
                 x.Register(typeof(IService<>), new ObjectDef(typeof(SimpleService<>)));
             });
 
@@ -38,7 +39,13 @@ namespace FubuMVC.Autofac.Testing.Compliance
         
     }
 
-    public class SimpleService<T> : IService<T>{}
+    public class SimpleService<T> : IService<T>
+    {
+	    
+    }
 
-    public class ThingService : IService<IThing>{}
+    public class ThingService : IService<IThing>
+    {
+	    
+    }
 }

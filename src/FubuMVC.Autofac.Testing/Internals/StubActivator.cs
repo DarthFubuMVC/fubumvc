@@ -15,8 +15,6 @@ namespace FubuMVC.Autofac.Testing.Internals
         {
             _packages = packages;
             _log = log;
-
-
         }
 
         public IEnumerable<IPackageInfo> Packages

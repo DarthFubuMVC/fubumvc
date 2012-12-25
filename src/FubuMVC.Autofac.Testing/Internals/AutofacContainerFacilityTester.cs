@@ -24,130 +24,156 @@ using NUnit.Framework;
 using Rhino.Mocks;
 
 
-namespace FubuMVC.Autofac.Testing.Internals {
-	[TestFixture]
-	public class AutofacContainerFacilityTester {
-		#region Setup/Teardown
+namespace FubuMVC.Autofac.Testing.Internals
+{
+    [TestFixture]
+    public class AutofacContainerFacilityTester
+    {
+        #region Setup/Teardown
 
-		[SetUp]
-		public void SetUp() {
-			var builder = new ContainerBuilder();
-			builder.RegisterType<FileSystem>().As<IFileSystem>();
-			builder.RegisterInstance(MockRepository.GenerateMock<IStreamingData>()).As<IStreamingData>();
-			builder.RegisterInstance(new NulloHttpWriter()).As<IHttpWriter>();
-			builder.RegisterInstance(new CurrentChain(null, null)).As<ICurrentChain>();
-			builder.RegisterInstance(new StandInCurrentHttpRequest {
-				ApplicationRoot = "http://server"
-			}).As<ICurrentHttpRequest>();
-			builder.RegisterInstance(MockRepository.GenerateMock<IResourceHash>()).As<IResourceHash>();
-			builder.RegisterType<AutofacContainerFacility>().As<IContainerFacility>();
-			context = builder.Build();
+        [SetUp]
+        public void SetUp()
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<FileSystem>().As<IFileSystem>();
+            builder.RegisterInstance(MockRepository.GenerateMock<IStreamingData>()).As<IStreamingData>();
+            builder.RegisterInstance(new NulloHttpWriter()).As<IHttpWriter>();
+            builder.RegisterInstance(new CurrentChain(null, null)).As<ICurrentChain>();
+            builder.RegisterInstance(
+                new StandInCurrentHttpRequest
+                {
+                    ApplicationRoot = "http://server"
+                }).As<ICurrentHttpRequest>();
+            builder.RegisterInstance(MockRepository.GenerateMock<IResourceHash>()).As<IResourceHash>();
+            builder.RegisterType<AutofacContainerFacility>().As<IContainerFacility>();
+            context = builder.Build();
 
-			graph = BehaviorGraph.BuildFrom(x => {
-				x.Route("/area/sub/{Name}/{Age}")
-					.Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
+            graph = BehaviorGraph.BuildFrom(
+                x =>
+                {
+                    x.Route("/area/sub/{Name}/{Age}")
+                     .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
 
-				x.Route("/area/sub2/{Name}/{Age}")
-					.Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
+                    x.Route("/area/sub2/{Name}/{Age}")
+                     .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
 
-				x.Route("/area/sub3/{Name}/{Age}")
-					.Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
+                    x.Route("/area/sub3/{Name}/{Age}")
+                     .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
 
-				x.Models.ConvertUsing<ExampleConverter>().ConvertUsing<ExampleConverter2>();
+                    x.Models.ConvertUsing<ExampleConverter>().ConvertUsing<ExampleConverter2>();
 
 
-				x.Services(s => s.AddService<IActivator>(new StubActivator()));
-				x.Services(s => s.AddService<IActivator>(new StubActivator()));
-				x.Services(s => s.AddService<IActivator>(new StubActivator()));
-			});
+                    x.Services(s => s.AddService<IActivator>(new StubActivator()));
+                    x.Services(s => s.AddService<IActivator>(new StubActivator()));
+                    x.Services(s => s.AddService<IActivator>(new StubActivator()));
+                });
 
-			facility = new AutofacContainerFacility(context);
-			graph.As<IRegisterable>().Register(facility.Register);
+            facility = new AutofacContainerFacility(context);
+            graph.As<IRegisterable>().Register(facility.Register);
 
-			factory = facility.BuildFactory();
-		}
+            factory = facility.BuildFactory();
+        }
 
-		#endregion
+        #endregion
 
-		public class ExampleConverter : IConverterFamily {
-			public bool Matches(PropertyInfo prop) {
-				return true;
-			}
+        public class ExampleConverter : IConverterFamily
+        {
+            public bool Matches(PropertyInfo prop)
+            {
+                return true;
+            }
 
-			public ValueConverter Build(IValueConverterRegistry registry, PropertyInfo prop) {
-				return null;
-			}
-		}
+            public ValueConverter Build(IValueConverterRegistry registry, PropertyInfo prop)
+            {
+                return null;
+            }
+        }
 
-		public class ExampleConverter2 : IConverterFamily {
-			public bool Matches(PropertyInfo prop) {
-				return true;
-			}
 
-			public ValueConverter Build(IValueConverterRegistry registry, PropertyInfo prop) {
-				return null;
-			}
-		}
+        public class ExampleConverter2 : IConverterFamily
+        {
+            public bool Matches(PropertyInfo prop)
+            {
+                return true;
+            }
 
-		private IComponentContext context;
-		private BehaviorGraph graph;
-		private IServiceFactory factory;
-		private AutofacContainerFacility facility;
+            public ValueConverter Build(IValueConverterRegistry registry, PropertyInfo prop)
+            {
+                return null;
+            }
+        }
 
-		[Test]
-		public void can_return_all_the_registered_activators_smoke_test() {
-			facility.GetAll<IActivator>().Count().ShouldEqual(3);
-		}
 
-		[Test]
-		public void factory_should_be_itself() {
-			factory.ShouldNotBeNull();
-			factory.ShouldBeTheSameAs(facility);
-		}
+        private IComponentContext context;
+        private BehaviorGraph graph;
+        private IServiceFactory factory;
+        private AutofacContainerFacility facility;
 
-		[Test]
-		public void register_a_service_by_value() {
-			var builder = new ContainerBuilder();
-			var myContext = builder.Build();
-			var myFacility = new AutofacContainerFacility(myContext);
+        [Test]
+        public void can_return_all_the_registered_activators_smoke_test()
+        {
+            facility.GetAll<IActivator>().Count().ShouldEqual(3);
+        }
 
-			var registry = new TypeResolver();
+        [Test]
+        public void factory_should_be_itself()
+        {
+            factory.ShouldNotBeNull();
+            factory.ShouldBeTheSameAs(facility);
+        }
 
-			myFacility.Register(typeof(ITypeResolver), new ObjectDef {
-				Value = registry
-			});
+        [Test]
+        public void register_a_service_by_value()
+        {
+            var builder = new ContainerBuilder();
+            var myContext = builder.Build();
+            var myFacility = new AutofacContainerFacility(myContext);
 
-			myFacility.BuildFactory();
+            var registry = new TypeResolver();
 
-			myContext.Resolve<ITypeResolver>().ShouldBeTheSameAs(registry);
-		}
+            myFacility.Register(
+                typeof(ITypeResolver),
+                new ObjectDef
+                {
+                    Value = registry
+                });
 
-		[Test]
-		public void should_be_able_to_create_the_basic_services_from_the_container() {
-			context.Resolve<IOutputWriter>().ShouldBeOfType<OutputWriter>();
-		}
+            myFacility.BuildFactory();
 
-		[Test]
-		public void should_be_able_to_inject_multiple_implementations_as_a_dependency() {
-			var converterFamilies = context.Resolve<BindingRegistry>().AllConverterFamilies().ToList();
-			converterFamilies.ShouldContain(f => f.GetType() == typeof(ExampleConverter));
-			converterFamilies.ShouldContain(f => f.GetType() == typeof(ExampleConverter2));
-		}
+            myContext.Resolve<ITypeResolver>().ShouldBeTheSameAs(registry);
+        }
 
-		[Test]
-		public void should_be_able_to_pull_all_of_the_route_behaviors_out_of_the_container() {
-			context.Resolve<IEnumerable<IActionBehavior>>().Count().ShouldEqual(3);
-		}
+        [Test]
+        public void should_be_able_to_create_the_basic_services_from_the_container()
+        {
+            context.Resolve<IOutputWriter>().ShouldBeOfType<OutputWriter>();
+        }
 
-		[Test]
-		public void should_register_a_service_locator() {
-			context.Resolve<IServiceLocator>()
-				.ShouldBeOfType<AutofacServiceLocator>();
-		}
+        [Test]
+        public void should_be_able_to_inject_multiple_implementations_as_a_dependency()
+        {
+            var converterFamilies = context.Resolve<BindingRegistry>().AllConverterFamilies().ToList();
+            converterFamilies.ShouldContain(f => f.GetType() == typeof(ExampleConverter));
+            converterFamilies.ShouldContain(f => f.GetType() == typeof(ExampleConverter2));
+        }
 
-		[Test]
-		public void standard_model_binder_should_not_be_registered_in_the_container() {
-			context.Resolve<IEnumerable<IModelBinder>>().Any(x => x is StandardModelBinder).ShouldBeFalse();
-		}
-	}
+        [Test]
+        public void should_be_able_to_pull_all_of_the_route_behaviors_out_of_the_container()
+        {
+            context.Resolve<IEnumerable<IActionBehavior>>().Count().ShouldEqual(3);
+        }
+
+        [Test]
+        public void should_register_a_service_locator()
+        {
+            context.Resolve<IServiceLocator>()
+                   .ShouldBeOfType<AutofacServiceLocator>();
+        }
+
+        [Test]
+        public void standard_model_binder_should_not_be_registered_in_the_container()
+        {
+            context.Resolve<IEnumerable<IModelBinder>>().Any(x => x is StandardModelBinder).ShouldBeFalse();
+        }
+    }
 }

@@ -12,36 +12,43 @@ using NUnit.Framework;
 using Rhino.Mocks;
 
 
-namespace FubuMVC.Autofac.Testing.Internals {
-	[TestFixture]
-	public class AutofacServiceLocatorTester {
-		#region Setup/Teardown
+namespace FubuMVC.Autofac.Testing.Internals
+{
+    [TestFixture]
+    public class AutofacServiceLocatorTester
+    {
+        #region Setup/Teardown
 
-		[SetUp]
-		public void SetUp() {
-			_testInstanceKey = "test";
+        [SetUp]
+        public void SetUp()
+        {
+            _testInstanceKey = "test";
 
-			_mockSecurityContext = MockRepository.GenerateStub<ISecurityContext>();
+            _mockSecurityContext = MockRepository.GenerateStub<ISecurityContext>();
 
-			var builder = new ContainerBuilder();
-			builder.RegisterInstance(_mockSecurityContext).As<ISecurityContext>();
-			builder.RegisterInstance(new FakeHttpContext()).As<HttpContextBase>();
-			builder.RegisterType<WebSecurityContext>().Named<ISecurityContext>(_testInstanceKey);
-			context = builder.Build();
-		}
+            var builder = new ContainerBuilder();
+            builder.RegisterInstance(_mockSecurityContext).As<ISecurityContext>();
+            builder.RegisterInstance(new FakeHttpContext()).As<HttpContextBase>();
+            builder.RegisterType<WebSecurityContext>().Named<ISecurityContext>(_testInstanceKey);
+            context = builder.Build();
+        }
 
-		#endregion
+        #endregion
 
-		private string _testInstanceKey;
-		private ISecurityContext _mockSecurityContext;
-		private IComponentContext context;
+        private string _testInstanceKey;
+        private ISecurityContext _mockSecurityContext;
+        private IComponentContext context;
 
-		[Test]
-		public void should_resolve_unnamed_instances() {
-			new AutofacServiceLocator(context).GetInstance(typeof(ISecurityContext))
-				.ShouldBeTheSameAs(_mockSecurityContext);
-		}
-	}
+        [Test]
+        public void should_resolve_unnamed_instances()
+        {
+            new AutofacServiceLocator(context).GetInstance(typeof(ISecurityContext))
+                                              .ShouldBeTheSameAs(_mockSecurityContext);
+        }
+    }
 
-	public class FakeHttpContext : HttpContextBase {}
+
+    public class FakeHttpContext : HttpContextBase
+    {
+    }
 }

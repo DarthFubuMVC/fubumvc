@@ -20,7 +20,8 @@ namespace FubuMVC.Autofac.Testing.Compliance
         [Test]
         public void should_be_a_singleton_because_of_Cache_suffix()
         {
-            var container = ContainerFacilitySource.New(x => {
+            var container = ContainerFacilitySource.New(x => 
+            {
                 // Any concrete class suffixed with "Cache" is supposed to be a 
                 // singleton
                 x.Register(typeof (IService), ObjectDef.ForType<SingletonCache>());
@@ -55,7 +56,8 @@ namespace FubuMVC.Autofac.Testing.Compliance
         [Test]
         public void should_be_a_singleton_because_an_ObjectDef_says_that_it_should_be()
         {
-            var container = ContainerFacilitySource.New(x => {
+            var container = ContainerFacilitySource.New(x => 
+            {
                 var objectDef = ObjectDef.ForType<SimpleService>();
                 objectDef.IsSingleton = true;
 
@@ -77,9 +79,9 @@ namespace FubuMVC.Autofac.Testing.Compliance
         {
             var id = Guid.NewGuid();
 
-            var facility = ContainerFacilitySource.New(x => {
+            var facility = ContainerFacilitySource.New(x => 
+            {
                 x.Register(typeof(IService), ObjectDef.ForType<SimpleService>());
-
 
                 x.Register(typeof(IActionBehavior), ObjectDef.ForType<Behavior1>().Named(id.ToString()));
             });
@@ -94,7 +96,8 @@ namespace FubuMVC.Autofac.Testing.Compliance
         public void nested_container_scoping_within_a_request()
         {
             var instance1 = ContainerFacilitySource.BuildBehavior(new ServiceArguments(), ObjectDef.ForType<Behavior1>(),
-                x => {
+                x => 
+                {
                     x.Register(typeof (IService), ObjectDef.ForType<SimpleService>());
                 }).As<Behavior1>();
 

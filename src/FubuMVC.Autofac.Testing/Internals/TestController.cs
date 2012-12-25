@@ -12,6 +12,7 @@ namespace FubuMVC.Autofac.Testing.Internals
         public int IntProperty { get; set; }
     }
 
+
     public class TestController
     {
         public TestOutputModel Index()
@@ -55,6 +56,7 @@ namespace FubuMVC.Autofac.Testing.Internals
         }
     }
 
+
     public class TestInputModel
     {
         public int PropInt { get; set; }
@@ -63,10 +65,12 @@ namespace FubuMVC.Autofac.Testing.Internals
         public int Age { get; set; }
     }
 
+
     public class TestOutputModel
     {
         public string Prop1 { get; set; }
     }
+
 
     public class TestOutputModel2 : TestOutputModel
     {
@@ -74,14 +78,17 @@ namespace FubuMVC.Autofac.Testing.Internals
         public int Age { get; set; }
     }
 
+
     public class TestOutputModel3 : TestOutputModel
     {
     }
+
 
     public class TestPartialModel
     {
         public string PartialModelProp1 { get; set; }
     }
+
 
     public class TestBehavior2 : IActionBehavior
     {
@@ -101,6 +108,7 @@ namespace FubuMVC.Autofac.Testing.Internals
 
         #endregion
     }
+
 
     public class TestBehavior : IActionBehavior
     {
