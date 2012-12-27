@@ -16,9 +16,11 @@ namespace FubuMVC.Core.Behaviors
             var task = FubuRequest.Get<Task<T>>();
             task.ContinueWith(x =>
             {
+                if (x.IsFaulted) return;
+
                 FubuRequest.Set(task.Result);
                 action();
-            }, TaskContinuationOptions.NotOnFaulted | TaskContinuationOptions.AttachedToParent);
+            }, TaskContinuationOptions.AttachedToParent);
         }
     }
 
