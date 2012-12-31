@@ -18,6 +18,10 @@ using FubuMVC.Core.Runtime;
 namespace FubuMVC.Core
 {
     // PLEASE NOTE:  This code is primarily tested through the integration tests
+
+    /// <summary>
+    /// Key class used to define and bootstrap a FubuMVC application
+    /// </summary>
     public class FubuApplication : IContainerFacilityExpression
     {
         private readonly Lazy<IContainerFacility> _facility;
@@ -91,7 +95,8 @@ namespace FubuMVC.Core
         /// <returns></returns>
         public static IContainerFacilityExpression DefaultPolicies()
         {
-            return new FubuApplication(() => new FubuRegistry());
+            var assembly = TypePool.FindTheCallingAssembly();
+            return new FubuApplication(() => new FubuRegistry(assembly));
         }
 
         /// <summary>
@@ -114,6 +119,10 @@ namespace FubuMVC.Core
             return new T().BuildApplication().Bootstrap();
         }
 
+        /// <summary>
+        /// Called to bootstrap and "start" a FubuMVC application 
+        /// </summary>
+        /// <returns></returns>
         [SkipOverForProvenance]
         public FubuRuntime Bootstrap()
         {

@@ -39,6 +39,11 @@ namespace FubuMVC.Core
             configure(this);
         }
 
+        public FubuRegistry(Assembly assembly) : this()
+        {
+            _applicationAssembly = assembly;
+        }
+
         internal ConfigGraph Config
         {
             get { return _config; }

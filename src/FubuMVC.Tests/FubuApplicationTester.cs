@@ -4,6 +4,7 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Packaging;
+using FubuMVC.Core.Registration;
 using NUnit.Framework;
 using StructureMap;
 using FubuMVC.StructureMap;
@@ -65,6 +66,23 @@ namespace FubuMVC.Tests
 
             Debug.WriteLine(description);
 
+        }
+
+        [Test]
+        public void can_use_the_default_policies()
+        {
+            var application = FubuApplication.DefaultPolicies().StructureMap(new Container()).Bootstrap();
+            var graph = application.Factory.Get<BehaviorGraph>();
+
+            graph.BehaviorFor<TargetEndpoint>(x => x.get_hello()).ShouldNotBeNull();
+        }
+    }
+
+    public class TargetEndpoint
+    {
+        public string get_hello()
+        {
+            return "Hello";
         }
     }
 }   
