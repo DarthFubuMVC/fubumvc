@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web;
 using FubuCore;
 using FubuMVC.Core.Http;
+using System.Linq;
 
 namespace FubuMVC.OwinHost
 {
@@ -10,10 +11,14 @@ namespace FubuMVC.OwinHost
     public class OwinCurrentHttpRequest : ICurrentHttpRequest
     {
         private readonly IDictionary<string, object> _environment;
+        private readonly Lazy<IDictionary<string, string[]>> _headers; 
 
         public OwinCurrentHttpRequest(IDictionary<string, object> environment)
         {
             _environment = environment;
+            _headers = new Lazy<IDictionary<string, string[]>>(() => {
+                return environment.Get<IDictionary<string, string[]>>(OwinConstants.RequestHeadersKey);
+            });
         }
 
         private T Get<T>(string key)
@@ -39,7 +44,6 @@ namespace FubuMVC.OwinHost
 
         public string FullUrl()
         {
-            var requestHeaders = Get<IDictionary<string, string[]>>(OwinConstants.RequestHeadersKey);
             var requestScheme = Get<string>(OwinConstants.RequestSchemeKey);
             var requestPathBase = Get<string>(OwinConstants.RequestPathBaseKey);
             var requestPath = Get<string>(OwinConstants.RequestPathKey);
@@ -51,7 +55,7 @@ namespace FubuMVC.OwinHost
 
             // if a single host header is available
             string[] hostAndPort;
-            if (requestHeaders.TryGetValue("Host", out hostAndPort) &&
+            if (_headers.Value.TryGetValue("Host", out hostAndPort) &&
                 hostAndPort != null &&
                 hostAndPort.Length == 1 &&
                 !String.IsNullOrWhiteSpace(hostAndPort[0]))
@@ -94,6 +98,24 @@ namespace FubuMVC.OwinHost
         public string HttpMethod()
         {
             return Get<string>(OwinConstants.RequestMethodKey);
+        }
+
+        public bool HasHeader(string key)
+        {
+            return _headers.Value.ContainsKey(key) || _headers.Value.Keys.Any(x => x.EqualsIgnoreCase(key));
+        }
+
+        public IEnumerable<string> GetHeader(string key)
+        {
+            if (!HasHeader(key)) return new string[0];
+
+            key = _headers.Value.Keys.FirstOrDefault(x => x.EqualsIgnoreCase(key));
+            return key.IsEmpty() ? new string[0] : _headers.Value.Get(key);
+        }
+
+        public IEnumerable<string> AllHeaderKeys()
+        {
+            return _headers.Value.Keys;
         }
     }
 }

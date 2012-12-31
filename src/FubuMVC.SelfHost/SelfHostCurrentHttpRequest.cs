@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using FubuMVC.Core;
 using FubuMVC.Core.Http;
+using System.Linq;
 
 namespace FubuMVC.SelfHost
 {
@@ -37,6 +39,21 @@ namespace FubuMVC.SelfHost
         public string HttpMethod()
         {
             return _request.Method.Method;
+        }
+
+        public bool HasHeader(string key)
+        {
+            return _request.Headers.Contains(key);
+        }
+
+        public IEnumerable<string> GetHeader(string key)
+        {
+            return _request.Headers.GetValues(key);
+        }
+
+        public IEnumerable<string> AllHeaderKeys()
+        {
+            return _request.Headers.Select(x => x.Key).Distinct().ToArray();
         }
     }
 }

@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Net;
+
 namespace FubuMVC.Core.Http
 {
     public interface ICurrentHttpRequest
@@ -28,7 +31,40 @@ namespace FubuMVC.Core.Http
         /// <remarks>This method does not return a fully qualified URI. That is, the return value will not contain the scheme (e.g. http, https), the server host or IP, or port number.</remarks>
         string ToFullUrl(string url);
 
+        /// <summary>
+        /// Name of the Http Method, i.e., POST/GET/PUT/DELETE
+        /// </summary>
+        /// <returns></returns>
         string HttpMethod();
+
+        /// <summary>
+        /// Is there any value(s) for the header key
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        bool HasHeader(string key);
+
+        /// <summary>
+        /// Get all the header values for a given header key
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        IEnumerable<string> GetHeader(string key);
+
+        IEnumerable<string> AllHeaderKeys();
+    }
+
+    public static class CurrentHttpRequestExtensions
+    {
+        public static bool HasHeader(this ICurrentHttpRequest request, HttpRequestHeader key)
+        {
+            return request.HasHeader(HttpRequestHeaders.HeaderNameFor(key));
+        }
+
+        public static IEnumerable<string> GetHeader(this ICurrentHttpRequest request, HttpRequestHeader key)
+        {
+            return request.GetHeader(HttpRequestHeaders.HeaderNameFor(key));
+        }
     }
 
     public class StandInCurrentHttpRequest : ICurrentHttpRequest
@@ -62,6 +98,21 @@ namespace FubuMVC.Core.Http
         public string HttpMethod()
         {
             return TheHttpMethod;
+        }
+
+        public bool HasHeader(string key)
+        {
+            return false;
+        }
+
+        public IEnumerable<string> GetHeader(string key)
+        {
+            return new string[0];
+        }
+
+        public IEnumerable<string> AllHeaderKeys()
+        {
+            return new string[0];
         }
     }
 }

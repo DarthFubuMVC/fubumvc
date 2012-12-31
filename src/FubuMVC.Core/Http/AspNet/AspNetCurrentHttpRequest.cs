@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Web;
 using FubuCore;
+using System.Linq;
 
 namespace FubuMVC.Core.Http.AspNet
 {
@@ -53,14 +55,19 @@ namespace FubuMVC.Core.Http.AspNet
             return _request.HttpMethod;
         }
 
-        public T GetHeader<T>(HttpRequestHeader header)
+        public bool HasHeader(string key)
         {
-            throw new NotImplementedException();
+            return _request.Headers.Get(key).Any();
         }
 
-        public T GetHeader<T>(string headerName)
+        public IEnumerable<string> GetHeader(string key)
         {
-            throw new NotImplementedException();
+            return _request.Headers.GetValues(key);
+        }
+
+        public IEnumerable<string> AllHeaderKeys()
+        {
+            return _request.Headers.AllKeys;
         }
     }
 }

@@ -21,8 +21,6 @@ namespace FubuMVC.OwinHost
             With<IHttpWriter>(new OwinHttpWriter(environment));
 
             With<IResponse>(new OwinResponse(environment));
-
-            With<ICookies>(new OwinCookies(headers));
         }
     }
 }

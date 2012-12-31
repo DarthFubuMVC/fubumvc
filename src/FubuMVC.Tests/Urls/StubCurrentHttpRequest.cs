@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using FubuCore.Util;
 using FubuMVC.Core;
 using FubuMVC.Core.Http;
 
@@ -36,6 +38,23 @@ namespace FubuMVC.Tests.Urls
         public string HttpMethod()
         {
             return TheHttpMethod;
+        }
+
+        public Cache<string, string[]> Headers = new Cache<string, string[]>(key => new string[0]); 
+
+        public bool HasHeader(string key)
+        {
+            return Headers.Has(key);
+        }
+
+        public IEnumerable<string> GetHeader(string key)
+        {
+            return Headers[key];
+        }
+
+        public IEnumerable<string> AllHeaderKeys()
+        {
+            return Headers.GetAllKeys();
         }
     }
 }

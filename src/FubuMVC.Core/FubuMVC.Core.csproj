@@ -111,6 +111,7 @@
     <Compile Include="Http\Cookies\CookieState.cs" />
     <Compile Include="Http\Cookies\CookieValue.cs" />
     <Compile Include="Http\Cookies\CookieParser.cs" />
+    <Compile Include="Http\Cookies\ICookies.cs" />
     <Compile Include="Http\Cookies\ICookieValue.cs" />
     <Compile Include="Http\Cookies\Segment.cs" />
     <Compile Include="Http\IResponse.cs" />

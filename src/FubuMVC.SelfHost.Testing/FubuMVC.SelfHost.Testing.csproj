@@ -105,6 +105,7 @@
     <Compile Include="handling_501_responses.cs" />
     <Compile Include="handling_a_404.cs" />
     <Compile Include="EmbeddedFubuMvcServerTester.cs" />
+    <Compile Include="SelfHostCurrentHttpRequestTester.cs" />
     <Compile Include="SelfHostHarness.cs" />
     <Compile Include="HeaderKeyValuesTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
