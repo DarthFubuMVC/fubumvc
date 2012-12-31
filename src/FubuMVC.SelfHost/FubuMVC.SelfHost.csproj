@@ -82,7 +82,6 @@
     <Compile Include="PortFinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SelfHostClientConnectivity.cs" />
-    <Compile Include="SelfHostCookies.cs" />
     <Compile Include="SelfHostCurrentHttpRequest.cs" />
     <Compile Include="SelfHostHttpContext.cs" />
     <Compile Include="SelfHostHttpMessageHandler.cs" />

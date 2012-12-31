@@ -108,7 +108,6 @@
     <Compile Include="Caching\VaryByThreadCultureTester.cs" />
     <Compile Include="ConfigGraphTester.cs" />
     <Compile Include="ConfigurationActionSetTester.cs" />
-    <Compile Include="Http\AspNet\AspNetCookiesTester.cs" />
     <Compile Include="ConfigGraph_DetermineConfigurationType_Tester.cs" />
     <Compile Include="Http\Compression\ContentCompressionExtensionTester.cs" />
     <Compile Include="Http\Compression\DeflateEncodingTester.cs" />

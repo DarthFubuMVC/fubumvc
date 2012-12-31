@@ -91,6 +91,22 @@ namespace FubuMVC.Core.Http.Cookies
         /// </returns>
         public bool HttpOnly { get; set; }
 
+        /// <summary>
+        /// This is only usable if there is only one state and one value
+        /// </summary>
+        public string Value
+        {
+            get
+            {
+                if (_states.Count != 1)
+                {
+                    return null;
+                }
+
+                return _states.Single().Value;
+            }
+        }
+
         public void Add(CookieState state)
         {
             _states.Add(state);
@@ -155,43 +171,4 @@ namespace FubuMVC.Core.Http.Cookies
         }
     }
 
-    // This is meant to be readonly
-
-    public class InMemoryCookies : ICookies
-    {
-        private readonly IList<HttpCookie> _request = new List<HttpCookie>(); 
-        private readonly IList<HttpCookie> _response = new List<HttpCookie>();
- 
-
-        public bool Has(string name)
-        {
-            return Get(name) != null;
-        }
-
-        public HttpCookie Get(string name)
-        {
-            return _request.SingleOrDefault(x => x.Name == name);
-        }
-
-        public IEnumerable<HttpCookie> Request
-        {
-            get { return _request; }
-        }
-
-        public IEnumerable<HttpCookie> Response
-        {
-            get { return _response; }
-        }
-
-        // For testing
-        public void AddRequestCookie(HttpCookie cookie)
-        {
-            _request.Add(cookie);
-        }
-
-        public void AddResponseCookie(HttpCookie cookie)
-        {
-            _response.Add(cookie);
-        }
-    }
 }

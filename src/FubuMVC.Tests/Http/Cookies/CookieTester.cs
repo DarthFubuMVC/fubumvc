@@ -51,6 +51,26 @@ namespace FubuMVC.Tests.Http.Cookies
             cookie.ToString().ShouldContain("expires=" + cookie.Expires.Value.ToString("r", CultureInfo.InvariantCulture));
         }
 
+        [Test]
+        public void value_with_only_one_state_with_only_one_value()
+        {
+            Assert.Fail("do.");
+        }
+
+        [Test]
+        public void value_with_more_than_one_state()
+        {
+            Assert.Fail("do.");
+        }
+
+        [Test]
+        public void value_with_no_states()
+        {
+            Assert.Fail("do.");
+        }
+
+
+
         private void roundTrip(string text)
         {
             var cookie = CookieParser.ToCookie(text);

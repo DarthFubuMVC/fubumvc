@@ -5,6 +5,7 @@ using FubuCore.Formatting;
 using FubuCore.Logging;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
@@ -30,6 +31,12 @@ namespace FubuMVC.Tests.Registration
         public void exception_handling_observer_is_registered()
         {
             registeredTypeIs<IExceptionHandlingObserver, ExceptionHandlingObserver>();
+        }
+
+        [Test]
+        public void registers_Cookies()
+        {
+            registeredTypeIs<ICookies, Cookies>();
         }
 
         [Test]

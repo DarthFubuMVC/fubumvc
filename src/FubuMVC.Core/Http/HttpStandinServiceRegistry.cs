@@ -20,8 +20,6 @@ namespace FubuMVC.Core.Http
             SetServiceIfNone<IRequestData>(new RequestData());
             SetServiceIfNone<IClientConnectivity, StandInClientConnectivity>();
 
-            SetServiceIfNone<ICookies, InMemoryCookies>();
-
             SetServiceIfNone<IHttpWriter, NulloHttpWriter>();
 
             SetServiceIfNone<ICurrentChain>(new CurrentChain(null, null));

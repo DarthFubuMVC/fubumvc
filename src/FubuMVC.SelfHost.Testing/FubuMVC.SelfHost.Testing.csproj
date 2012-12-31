@@ -98,7 +98,6 @@
     <Compile Include="binding_against_request_cookies.cs" />
     <Compile Include="debugging.cs" />
     <Compile Include="reading_cookies.cs" />
-    <Compile Include="SelfHostCookiesTester.cs" />
     <Compile Include="binding_against_form_data.cs" />
     <Compile Include="binding_against_querystring_values.cs" />
     <Compile Include="Fake.cs" />

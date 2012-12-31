@@ -16,7 +16,7 @@ namespace FubuMVC.SelfHost
 {
     public class SelfHostRequestData : RequestData
     {
-        public SelfHostRequestData(RouteData routeData, HttpRequestMessage request, ICookies cookies, SelfHostCurrentHttpRequest httpRequest)
+        public SelfHostRequestData(RouteData routeData, HttpRequestMessage request, SelfHostCurrentHttpRequest httpRequest)
         {
             AddValues(new RouteDataValues(routeData));
 
@@ -31,11 +31,8 @@ namespace FubuMVC.SelfHost
 
             AddValues(new HeaderValueSource(httpRequest));
 
-            Func<string, IEnumerable<string>, bool> ignoreCaseKeyFinder = (key, keys) => keys.Contains(key, StringComparer.InvariantCultureIgnoreCase);
-            var values = new SimpleKeyValues(key => cookies.Get(key).Value, () => cookies.Request.Select(x => x.Name), ignoreCaseKeyFinder);
-            var valueSource = new FlatValueSource<object>(values, RequestDataSource.Cookie.ToString());
+            // TODO -- ADD COOKIES BACK IN!
 
-            AddValues(valueSource);
         }
     }
 

@@ -25,8 +25,8 @@ namespace FubuMVC.Core.Http.Cookies
         {
             get
             {
-                var cookie = _cookies.Request.SingleOrDefault(x => x.Name == _cookieName);
-                return cookie == null ? null : cookie.Value;
+                var cookie = _cookies.Request.SingleOrDefault(x => x.Matches(_cookieName));
+                return cookie == null ? null : cookie.For(_cookieName).Value;
             }
             set
             {

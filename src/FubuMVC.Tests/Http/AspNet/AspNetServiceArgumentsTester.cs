@@ -35,12 +35,6 @@ namespace FubuMVC.Tests.Http.AspNet
         }
 
         [Test]
-        public void should_register_the_aspnet_cookies_service()
-        {
-            theArguments.Get<ICookies>().ShouldBeOfType<AspNetCookies>();
-        }
-
-        [Test]
         public void should_have_the_client_connectivity()
         {
             theArguments.Get<IClientConnectivity>().ShouldBeOfType<AspNetClientConnectivity>();
