@@ -64,5 +64,111 @@ namespace FubuMVC.Tests.Registration.Policies
 
             thePredicate.As<IChainFilter>().Matches(aChain).ShouldBeTrue();
         }
+
+        [Test]
+        public void matches_with_and_negative()
+        {
+            var predicate = new ChainPredicate();
+            predicate.Matching(filter1).And.Matching(filter2);
+
+            predicate.As<IChainFilter>().Matches(aChain).ShouldBeFalse();
+
+            filter1.Stub(x => x.Matches(aChain)).Return(true);
+
+            predicate.As<IChainFilter>().Matches(aChain).ShouldBeFalse();
+        }
+
+        [Test]
+        public void matches_with_and_positive()
+        {
+            var predicate = new ChainPredicate();
+            predicate.Matching(filter1).And.Matching(filter2);
+
+
+            filter1.Stub(x => x.Matches(aChain)).Return(true);            
+            filter2.Stub(x => x.Matches(aChain)).Return(true);
+
+            predicate.As<IChainFilter>().Matches(aChain).ShouldBeTrue();
+        }
+
+        [Test]
+        public void three_wide_and()
+        {
+            var predicate = new ChainPredicate();
+            predicate.Matching(filter1).And.Matching(filter2).And.Matching(filter3);
+
+            filter1.Stub(x => x.Matches(aChain)).Return(true);
+            filter2.Stub(x => x.Matches(aChain)).Return(true);
+
+            predicate.As<IChainFilter>().Matches(aChain).ShouldBeFalse();
+
+            filter3.Stub(x => x.Matches(aChain)).Return(true);
+
+            predicate.As<IChainFilter>().Matches(aChain).ShouldBeTrue();
+        }
+
+        [Test]
+        public void mixed_and_and_ors_1()
+        {
+            var predicate = new ChainPredicate();
+            predicate.Matching(filter1).And.Matching(filter2).Or.Matching(filter3);
+
+            predicate.As<IChainFilter>().Matches(aChain).ShouldBeFalse();
+
+            filter1.Stub(x => x.Matches(aChain)).Return(true);
+
+            predicate.As<IChainFilter>().Matches(aChain).ShouldBeFalse();
+
+            filter2.Stub(x => x.Matches(aChain)).Return(true);
+
+            predicate.As<IChainFilter>().Matches(aChain).ShouldBeTrue();
+
+        }
+
+        [Test]
+        public void mixed_and_and_ors_2()
+        {
+            var predicate = new ChainPredicate();
+            predicate.Matching(filter1).And.Matching(filter2).Or.Matching(filter3);
+
+            predicate.As<IChainFilter>().Matches(aChain).ShouldBeFalse();
+
+            filter1.Stub(x => x.Matches(aChain)).Return(true);
+
+            predicate.As<IChainFilter>().Matches(aChain).ShouldBeFalse();
+
+            filter3.Stub(x => x.Matches(aChain)).Return(true);
+
+            predicate.As<IChainFilter>().Matches(aChain).ShouldBeTrue();
+
+        }
+
+        [Test]
+        public void mixed_and_and_or_3()
+        {
+            var predicate = new ChainPredicate();
+            predicate.Matching(filter1).Or.Matching(filter2).And.Matching(filter3);
+            predicate.As<IChainFilter>().Matches(aChain).ShouldBeFalse();
+
+            filter1.Stub(x => x.Matches(aChain)).Return(true);
+
+            predicate.As<IChainFilter>().Matches(aChain).ShouldBeTrue();
+        }
+
+        [Test]
+        public void mixed_and_and_or_4()
+        {
+            var predicate = new ChainPredicate();
+            predicate.Matching(filter1).Or.Matching(filter2).And.Matching(filter3);
+            predicate.As<IChainFilter>().Matches(aChain).ShouldBeFalse();
+
+            filter2.Stub(x => x.Matches(aChain)).Return(true);
+
+            predicate.As<IChainFilter>().Matches(aChain).ShouldBeFalse();
+
+            filter3.Stub(x => x.Matches(aChain)).Return(true);
+
+            predicate.As<IChainFilter>().Matches(aChain).ShouldBeTrue();
+        }
     }
 }

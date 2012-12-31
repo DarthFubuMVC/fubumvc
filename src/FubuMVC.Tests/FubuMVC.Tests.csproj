@@ -135,6 +135,7 @@
     <Compile Include="Registration\default_action_discovery.cs" />
     <Compile Include="Registration\Diagnostics\ProvenanceChainTester.cs" />
     <Compile Include="Registration\Policies\AddWriterTester.cs" />
+    <Compile Include="Registration\Policies\AndChainFilterTester.cs" />
     <Compile Include="Registration\Policies\HttpMethodFilterTester.cs" />
     <Compile Include="Registration\Policies\InputTypeIsTester.cs" />
     <Compile Include="Registration\Policies\LambdaChainModificationTester.cs" />

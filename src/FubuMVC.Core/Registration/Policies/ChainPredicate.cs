@@ -10,6 +10,12 @@ namespace FubuMVC.Core.Registration.Policies
     public class ChainPredicate : IChainFilter, DescribesItself, IOrExpression
     {
         private readonly IList<IChainFilter> _filters = new List<IChainFilter>();
+        private Action<IChainFilter> _add;
+
+        public ChainPredicate()
+        {
+            _add = f => _filters.Add(f);
+        }
 
         bool IChainFilter.Matches(BehaviorChain chain)
         {
@@ -132,18 +138,24 @@ namespace FubuMVC.Core.Registration.Policies
             return addFilter(new LambdaChainFilter(expression));
         }
 
+        
+
         private IOrExpression addFilter(IChainFilter filter)
         {
-            _filters.Add(filter);
+            _add(filter);
             return this;
         }
 
         /// <summary>
         /// Chain multiple filters together in a boolean 'Or' manner
         /// </summary>
-        public ChainPredicate Or
+        ChainPredicate IOrExpression.Or
         {
-            get { return this; }
+            get
+            {
+                _add = f => _filters.Add(f);
+                return this;
+            }
         }
 
         /// <summary>
@@ -160,11 +172,43 @@ namespace FubuMVC.Core.Registration.Policies
             return this;
         }
 
+        /// <summary>
+        /// Creates a boolean "and" relationship with the previous filter
+        /// in this expression.
+        /// </summary>
+        ChainPredicate IOrExpression.And
+        {
+            get { 
+                _add = and;
+                return this;
+            }
+        }
 
+        private void and(IChainFilter filter)
+        {
+            var last = _filters.LastOrDefault();
+            if (last == null)
+            {
+                _filters.Add(filter);
+
+                return;
+            }
+
+            var and = last as AndChainFilter;
+            if (and == null)
+            {
+                _filters.Remove(last);
+                and = new AndChainFilter(last);
+                _filters.Add(and);
+            }
+
+            and.Add(filter);
+        }
     }
 
     public interface IOrExpression
     {
         ChainPredicate Or { get; }
+        ChainPredicate And { get; }
     }
 }

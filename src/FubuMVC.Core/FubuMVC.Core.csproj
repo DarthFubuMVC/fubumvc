@@ -150,6 +150,7 @@
     <Compile Include="Registration\IAccessorRulesExpression.cs" />
     <Compile Include="Registration\IAccessorRulesRegistration.cs" />
     <Compile Include="Registration\Policies\AddToEndExpression.cs" />
+    <Compile Include="Registration\Policies\AndChainFilter.cs" />
     <Compile Include="Registration\Policies\AnyActionMatch.cs" />
     <Compile Include="Registration\Policies\ConnegPolicies.cs" />
     <Compile Include="Registration\Policies\HttpMethodFilter.cs" />
