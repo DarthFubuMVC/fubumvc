@@ -1,4 +1,4 @@
-﻿namespace FubuMVC.Core.Http
+﻿namespace FubuMVC.Core.Http.Cookies
 {
     public interface ICookieValue
     {

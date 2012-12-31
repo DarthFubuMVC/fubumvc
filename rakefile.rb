@@ -109,7 +109,7 @@ task :test => [:unit_test]
 desc "Runs unit tests"
 task :unit_test => :compile do
   runner = NUnitRunner.new :compilemode => COMPILE_TARGET, :source => 'src', :platform => 'x86'
-  runner.executeTests ['FubuMVC.Tests', 'FubuMVC.SelfHost.Testing', 'FubuMVC.StructureMap.Testing', 'FubuMVC.Autofac.Testing']
+  runner.executeTests ['FubuMVC.Tests', 'FubuMVC.SelfHost.Testing', 'FubuMVC.StructureMap.Testing', 'FubuMVC.Autofac.Testing', 'FubuMVC.OwinHost.Testing']
 end
 
 desc "Runs some of the unit tests for Mono"

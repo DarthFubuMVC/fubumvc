@@ -2,6 +2,7 @@ using System.Net.Http;
 using System.Web.Routing;
 using FubuCore.Binding;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Cookies;
 
 namespace FubuMVC.SelfHost
 {

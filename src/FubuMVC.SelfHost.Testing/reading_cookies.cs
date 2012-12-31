@@ -3,8 +3,10 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Cookies;
 using FubuTestingSupport;
 using NUnit.Framework;
+using Cookie = System.Net.Cookie;
 
 namespace FubuMVC.SelfHost.Testing
 {

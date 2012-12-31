@@ -3,7 +3,7 @@ using System.Web;
 using FubuCore.Dates;
 using FubuMVC.Core.Runtime;
 
-namespace FubuMVC.Core.Http
+namespace FubuMVC.Core.Http.Cookies
 {
     // TODO -- This is a great big bag of fail for testing
     public class CookieValue : ICookieValue

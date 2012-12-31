@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Cookies;
 
 namespace AspNetApplication
 {

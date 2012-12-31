@@ -10,6 +10,7 @@ using FubuCore.Util;
 using FubuMVC.Core.Http;
 using System.Linq;
 using FubuMVC.Core.Http.AspNet;
+using FubuMVC.Core.Http.Cookies;
 
 namespace FubuMVC.SelfHost
 {

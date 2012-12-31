@@ -1,6 +1,7 @@
 using System;
 using System.Web.Routing;
 using FubuCore.Binding;
+using FubuMVC.Core.Http.Cookies;
 
 namespace FubuMVC.Core.Http.AspNet
 {

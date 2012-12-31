@@ -108,8 +108,11 @@
     <Compile Include="Http\Compression\ApplyContentCompression.cs" />
     <Compile Include="Http\Compression\DeflateHttpContentEncoding.cs" />
     <Compile Include="Http\Compression\DoNotCompressAttribute.cs" />
-    <Compile Include="Http\CookieValue.cs" />
-    <Compile Include="Http\ICookieValue.cs" />
+    <Compile Include="Http\Cookies\CookieState.cs" />
+    <Compile Include="Http\Cookies\CookieValue.cs" />
+    <Compile Include="Http\Cookies\HttpCookieFormatter.cs" />
+    <Compile Include="Http\Cookies\ICookieValue.cs" />
+    <Compile Include="Http\Cookies\Segment.cs" />
     <Compile Include="Http\IResponse.cs" />
     <Compile Include="IApplicationSource.cs" />
     <Compile Include="IContainerFacilityExpression.cs" />
@@ -325,7 +328,7 @@
     <Compile Include="Http\AspNet\AspNetCurrentHttpRequest.cs" />
     <Compile Include="Http\AspNet\ASPNetObjectConversionFamily.cs" />
     <Compile Include="Http\AspNet\AspNetServiceArguments.cs" />
-    <Compile Include="Http\Cookie.cs" />
+    <Compile Include="Http\Cookies\Cookie.cs" />
     <Compile Include="Http\CurrentChain.cs" />
     <Compile Include="Http\CurrentMimeType.cs" />
     <Compile Include="Http\CurrentMimeTypeModelBinder.cs" />
