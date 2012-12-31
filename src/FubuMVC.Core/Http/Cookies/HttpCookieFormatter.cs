@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using FubuCore;
@@ -9,6 +10,25 @@ namespace FubuMVC.Core.Http.Cookies
 {
     public static class HttpCookieFormatter
     {
+        private static readonly string[] dateFormats = new string[15]
+    {
+      "ddd, d MMM yyyy H:m:s 'GMT'",
+      "ddd, d MMM yyyy H:m:s",
+      "d MMM yyyy H:m:s 'GMT'",
+      "d MMM yyyy H:m:s",
+      "ddd, d MMM yy H:m:s 'GMT'",
+      "ddd, d MMM yy H:m:s",
+      "d MMM yy H:m:s 'GMT'",
+      "d MMM yy H:m:s",
+      "dddd, d'-'MMM'-'yy H:m:s 'GMT'",
+      "dddd, d'-'MMM'-'yy H:m:s",
+      "ddd MMM d H:m:s yyyy",
+      "ddd, d MMM yyyy H:m:s zzz",
+      "ddd, d MMM yyyy H:m:s",
+      "d MMM yyyy H:m:s zzz",
+      "d MMM yyyy H:m:s"
+    };
+
         private const string ExpiresToken = "expires";
         private const string MaxAgeToken = "max-age";
         private const string DomainToken = "domain";
@@ -22,7 +42,15 @@ namespace FubuMVC.Core.Http.Cookies
 
         static HttpCookieFormatter()
         {
-            _setters[ExpiresToken] = (cookie, value) => { throw new NotImplementedException(); };
+            _setters[ExpiresToken] = (cookie, value) => {
+                DateTimeOffset offset;
+                if (TryParseDate(value, out offset))
+                {
+                    cookie.Expires = offset;
+                }
+                
+                
+            };
 
             _setters[MaxAgeToken] = (cookie, value) => {
                 try
@@ -78,6 +106,14 @@ namespace FubuMVC.Core.Http.Cookies
             throw new NotImplementedException();
         }
 
+        public static string DateToString(DateTimeOffset dateTime)
+        {
+            return dateTime.ToUniversalTime().ToString("r", (IFormatProvider)CultureInfo.InvariantCulture);
+        }
 
+        public static bool TryParseDate(string input, out DateTimeOffset result)
+        {
+            return DateTimeOffset.TryParseExact(input, dateFormats, (IFormatProvider)DateTimeFormatInfo.InvariantInfo, DateTimeStyles.AllowWhiteSpaces | DateTimeStyles.AssumeUniversal, out result);
+        }
     }
 }

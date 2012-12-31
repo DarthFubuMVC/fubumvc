@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core.Http.Cookies;
+﻿using System;
+using FubuMVC.Core.Http.Cookies;
 using NUnit.Framework;
 using System.Linq;
 using FubuTestingSupport;
@@ -136,6 +137,23 @@ namespace FubuMVC.Tests.Http.Cookies
         {
             var cookie = HttpCookieFormatter.ToCookie("a=1; Domain=http://cnn.com;");
             cookie.HttpOnly.ShouldBeFalse();
+        }
+
+        [Test]
+        public void expires_is_not_set_by_default()
+        {
+            var cookie = HttpCookieFormatter.ToCookie("a=1; Domain=http://cnn.com;");
+            cookie.Expires.ShouldBeNull();
+        }
+
+        [Test]
+        public void expires_smoke()
+        {
+            var date = DateTime.Today.AddHours(5).ToUniversalTime();
+
+            var cookie = HttpCookieFormatter.ToCookie("a=1; Domain=http://cnn.com; expires=" + date.ToString("dddd, d'-'MMM'-'yy H:m:s 'GMT'"));
+
+            cookie.Expires.Value.ToLocalTime().TimeOfDay.ShouldEqual(date.ToLocalTime().TimeOfDay);
         }
     }
 }
