@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Text;
 using System.Web;
 using FubuCore;
 
@@ -102,6 +103,36 @@ namespace FubuMVC.Core.Http.Cookies
         public NameValueCollection Values
         {
             get { return _values; }
+        }
+
+        public void Write(StringBuilder builder)
+        {
+            builder.Append(Name);
+            builder.Append("=");
+
+            if (Value.IsNotEmpty())
+            {
+                builder.Append(Value);
+            }
+            else
+            {
+                builder.Append(_values.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Returns the string representation the current object.
+        /// </summary>
+        /// 
+        /// <returns>
+        /// The string representation the current object.
+        /// </returns>
+        public override string ToString()
+        {
+            var builder = new StringBuilder();
+            Write(builder);
+
+            return builder.ToString();
         }
     }
 }

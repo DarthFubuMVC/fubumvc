@@ -8,7 +8,7 @@ using FubuCore.Util;
 
 namespace FubuMVC.Core.Http.Cookies
 {
-    public static class HttpCookieFormatter
+    public static class CookieParser
     {
         private static readonly string[] dateFormats = new string[15]
     {
@@ -40,7 +40,7 @@ namespace FubuMVC.Core.Http.Cookies
             new Cache<string, Action<Cookie, string>>();
 
 
-        static HttpCookieFormatter()
+        static CookieParser()
         {
             _setters[ExpiresToken] = (cookie, value) => {
                 DateTimeOffset offset;
@@ -99,11 +99,6 @@ namespace FubuMVC.Core.Http.Cookies
             });
 
             return cookie;
-        }
-
-        public static string WriteHeaderValue(HttpCookie cookie)
-        {
-            throw new NotImplementedException();
         }
 
         public static string DateToString(DateTimeOffset dateTime)

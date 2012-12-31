@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Web;
 using FubuCore;
 
@@ -92,6 +94,64 @@ namespace FubuMVC.Core.Http.Cookies
         public void Add(CookieState state)
         {
             _states.Add(state);
+        }
+
+        public override string ToString()
+        {
+            var builder = new StringBuilder();
+
+            _states.Each(x => {
+                x.Write(builder);
+                builder.Append("; ");
+            });
+
+            if (Expires.HasValue)
+            {
+                builder.Append("expires=");
+                string displayedExpiration = Expires.Value.ToString("r", CultureInfo.InvariantCulture);
+                builder.Append(displayedExpiration);
+                builder.Append("; ");
+            }
+
+            if (MaxAge.HasValue)
+            {
+                builder.Append("max-age=");
+                builder.Append(MaxAge.Value.TotalSeconds);
+                builder.Append("; ");
+            }
+
+            if (Domain.IsNotEmpty())
+            {
+                builder.Append("domain=");
+                builder.Append(Domain);
+                builder.Append("; ");
+            }
+
+            if (Path.IsNotEmpty())
+            {
+                builder.Append("path=");
+                builder.Append(Path);
+                builder.Append("; ");  
+            }
+
+            if (Secure)
+            {
+                builder.Append("secure; ");
+            }
+
+            if (HttpOnly)
+            {
+                builder.Append("httponly; ");
+            }
+
+           
+
+            return builder.ToString().TrimEnd(';', ' ');
+        }
+
+        public static string DateToString(DateTimeOffset dateTime)
+        {
+            return dateTime.ToUniversalTime().ToString("r", (IFormatProvider)CultureInfo.InvariantCulture);
         }
     }
 

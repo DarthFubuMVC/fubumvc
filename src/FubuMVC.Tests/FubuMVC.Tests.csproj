@@ -114,7 +114,7 @@
     <Compile Include="Http\Compression\DeflateEncodingTester.cs" />
     <Compile Include="Http\Cookies\CookieStateTester.cs" />
     <Compile Include="Http\Cookies\CookieTester.cs" />
-    <Compile Include="Http\Cookies\HttpCookieFormatterTester.cs" />
+    <Compile Include="Http\Cookies\CookieParserTester.cs" />
     <Compile Include="Http\Cookies\SegmentTester.cs" />
     <Compile Include="Http\HttpStandInServiceRegistry_specification.cs" />
     <Compile Include="Http\Compression\ContentEncodingTester.cs" />

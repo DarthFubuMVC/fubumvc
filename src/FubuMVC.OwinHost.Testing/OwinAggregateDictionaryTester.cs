@@ -18,7 +18,7 @@ namespace FubuMVC.OwinHost.Testing
             environment[OwinConstants.RequestHeadersKey] = headers;
             environment[OwinConstants.RequestQueryStringKey] = "";
             new OwinRequestReader().Read(environment);
-            var dictionary = new OwinRequestData(new RouteData(), environment, TODO);
+            var dictionary = new OwinRequestData(new RouteData(), environment, new Dictionary<string, string[]>());
             dictionary.ValuesFor(OwinRequestData.Querystring).ShouldNotBeNull();
             dictionary.ValuesFor(OwinRequestData.FormPost).ShouldNotBeNull();
         }

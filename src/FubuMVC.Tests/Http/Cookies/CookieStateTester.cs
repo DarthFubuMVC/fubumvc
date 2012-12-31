@@ -47,5 +47,19 @@ namespace FubuMVC.Tests.Http.Cookies
             state["a"].ShouldEqual("1");
             state["b"].ShouldEqual("2");
         }
+
+        private void roundtrips(string name, string text)
+        {
+            var state = CookieState.Parse(name, text);
+            state.ToString().ShouldEqual(name + "=" + text);
+        }
+
+        [Test]
+        public void writing()
+        {
+            roundtrips("a", "1");
+            roundtrips("a", "a1=1&a2=2&a3=3");
+
+        }
     }
 }
