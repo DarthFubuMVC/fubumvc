@@ -15,7 +15,7 @@ namespace FubuMVC.SelfHost.Testing
         [SetUp]
         public void SetUp()
         {
-            theMessage = new HttpRequestMessage();
+            theMessage = new HttpRequestMessage{};
             headers = theMessage.Headers;
             request = new SelfHostCurrentHttpRequest(theMessage);
         }

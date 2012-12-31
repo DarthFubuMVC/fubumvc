@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Web.Routing;
+using FubuMVC.Core.Http;
 using FubuMVC.OwinHost.Readers;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -18,7 +19,7 @@ namespace FubuMVC.OwinHost.Testing
             environment[OwinConstants.RequestHeadersKey] = headers;
             environment[OwinConstants.RequestQueryStringKey] = "";
             new OwinRequestReader().Read(environment);
-            var dictionary = new OwinRequestData(new RouteData(), environment, new Dictionary<string, string[]>());
+            var dictionary = new OwinRequestData(new RouteData(), environment, new StandInCurrentHttpRequest());
             dictionary.ValuesFor(OwinRequestData.Querystring).ShouldNotBeNull();
             dictionary.ValuesFor(OwinRequestData.FormPost).ShouldNotBeNull();
         }

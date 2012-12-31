@@ -17,16 +17,13 @@ namespace FubuMVC.OwinHost
         public static readonly string Querystring = "OwinQuerystring";
         public static readonly string FormPost = "OwinFormPost";
 
-        public OwinRequestData(RouteData routeData, IDictionary<string, object> environment, IDictionary<string, string[]> headers)
+        public OwinRequestData(RouteData routeData, IDictionary<string, object> environment, ICurrentHttpRequest currentRequest)
         {
             AddValues(new RouteDataValues(routeData));
             AddValues(Querystring, new NamedKeyValues(HttpUtility.ParseQueryString(environment.Get<string>(OwinConstants.RequestQueryStringKey))));
             AddValues(FormPost, new NamedKeyValues(environment.Get<NameValueCollection>(OwinConstants.RequestFormKey)));
             
-            var headerValues = headers.ToDictionary(x => x.Key, x => string.Join(",", x.Value));
-            AddValues(RequestDataSource.Header.ToString(), new DictionaryKeyValues(headerValues));
-
-
+            AddValues(new HeaderValueSource(currentRequest));
         }
 
     }

@@ -12,7 +12,7 @@ namespace FubuMVC.Core.Http.AspNet
 {
     public class AspNetRequestData : RequestData
     {
-        public AspNetRequestData(RequestContext context)
+        public AspNetRequestData(RequestContext context, AspNetCurrentHttpRequest currentRequest)
         {
             /*
              *  1.) Route
@@ -33,11 +33,12 @@ namespace FubuMVC.Core.Http.AspNet
 
             Func<string, IEnumerable<string>, bool> ignoreCaseKeyFinder = (key, keys) => keys.Contains(key, StringComparer.InvariantCultureIgnoreCase);
 
-            addValues(RequestDataSource.Header, key => request.Headers[key], () => request.Headers.AllKeys, ignoreCaseKeyFinder);
+            addValues(RequestDataSource.Cookie, key => request.Cookies[key].Value, () => request.Cookies.AllKeys, ignoreCaseKeyFinder);
+            AddValues(new HeaderValueSource(currentRequest));
 
             AddValues(new RequestPropertyValueSource(request));
 
-            addValues(RequestDataSource.Cookie, key => request.Cookies[key].Value, () => request.Cookies.AllKeys, ignoreCaseKeyFinder);
+            
         }
 
 

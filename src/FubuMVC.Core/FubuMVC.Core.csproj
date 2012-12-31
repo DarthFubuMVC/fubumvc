@@ -114,6 +114,7 @@
     <Compile Include="Http\Cookies\ICookies.cs" />
     <Compile Include="Http\Cookies\ICookieValue.cs" />
     <Compile Include="Http\Cookies\Segment.cs" />
+    <Compile Include="Http\HeaderValueSource.cs" />
     <Compile Include="Http\IResponse.cs" />
     <Compile Include="IApplicationSource.cs" />
     <Compile Include="IContainerFacilityExpression.cs" />

@@ -16,7 +16,7 @@ namespace FubuMVC.SelfHost
 {
     public class SelfHostRequestData : RequestData
     {
-        public SelfHostRequestData(RouteData routeData, HttpRequestMessage request, ICookies cookies)
+        public SelfHostRequestData(RouteData routeData, HttpRequestMessage request, ICookies cookies, SelfHostCurrentHttpRequest httpRequest)
         {
             AddValues(new RouteDataValues(routeData));
 
@@ -29,9 +29,7 @@ namespace FubuMVC.SelfHost
 
             AddValues(RequestDataSource.Request.ToString(), new NamedKeyValues(formData));
 
-            var headers = AggregateKeyValues.For(new HeaderKeyValues(request.Headers),
-                                                 new HeaderKeyValues(request.Content.Headers));
-            AddValues(RequestDataSource.Header.ToString(), headers);
+            AddValues(new HeaderValueSource(httpRequest));
 
             Func<string, IEnumerable<string>, bool> ignoreCaseKeyFinder = (key, keys) => keys.Contains(key, StringComparer.InvariantCultureIgnoreCase);
             var values = new SimpleKeyValues(key => cookies.Get(key).Value, () => cookies.Request.Select(x => x.Name), ignoreCaseKeyFinder);
@@ -82,41 +80,4 @@ namespace FubuMVC.SelfHost
         }
     }
 
-    public class HeaderKeyValues : IKeyValues
-    {
-        private readonly HttpHeaders _headers;
-        private readonly Lazy<IList<string>> _keys;
-
-        public HeaderKeyValues(HttpHeaders headers)
-        {
-            _headers = headers;
-            _keys = new Lazy<IList<string>>(() => headers.Select(x => x.Key).ToList());
-        }
-
-        public bool Has(string key)
-        {
-            return _keys.Value.Contains(key);
-        }
-
-        public string Get(string key)
-        {
-            return _headers.GetValues(key).Join(", ");
-        }
-
-        public IEnumerable<string> GetKeys()
-        {
-            return _keys.Value;
-        }
-
-        public bool ForValue(string key, Action<string, string> callback)
-        {
-            if (Has(key))
-            {
-                callback(key, Get(key));
-                return true;
-            }
-
-            return false;
-        }
-    }
 }

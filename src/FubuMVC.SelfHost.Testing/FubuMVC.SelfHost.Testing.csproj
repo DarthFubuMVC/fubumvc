@@ -107,7 +107,6 @@
     <Compile Include="EmbeddedFubuMvcServerTester.cs" />
     <Compile Include="SelfHostCurrentHttpRequestTester.cs" />
     <Compile Include="SelfHostHarness.cs" />
-    <Compile Include="HeaderKeyValuesTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="reading_and_writing_json_and_xml_thru_conneg.cs" />
     <Compile Include="reading_request_headers.cs" />

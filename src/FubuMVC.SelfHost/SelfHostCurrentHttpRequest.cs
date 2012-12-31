@@ -4,6 +4,7 @@ using System.Net.Http;
 using FubuMVC.Core;
 using FubuMVC.Core.Http;
 using System.Linq;
+using FubuCore;
 
 namespace FubuMVC.SelfHost
 {
@@ -43,17 +44,27 @@ namespace FubuMVC.SelfHost
 
         public bool HasHeader(string key)
         {
-            return _request.Headers.Contains(key);
+            return allHeaders().Any(x => x.Key.EqualsIgnoreCase(key));
         }
 
         public IEnumerable<string> GetHeader(string key)
         {
-            return _request.Headers.GetValues(key);
+            if (!HasHeader(key))
+            {
+                return new string[0];
+            }
+
+            return allHeaders().FirstOrDefault(x => x.Key.EqualsIgnoreCase(key)).Value;
         }
 
         public IEnumerable<string> AllHeaderKeys()
         {
-            return _request.Headers.Select(x => x.Key).Distinct().ToArray();
+            return allHeaders().Select(x => x.Key).Distinct().ToArray();
+        }
+
+        private IEnumerable<KeyValuePair<string, IEnumerable<string>>> allHeaders()
+        {
+            return _request.Content == null ? _request.Headers : _request.Headers.Union(_request.Content.Headers);
         }
     }
 }

@@ -13,12 +13,12 @@ namespace FubuMVC.Core.Http
         private readonly IObjectResolver _resolver;
         private readonly IValueSource _values;
 
-        public RequestHeaders(IObjectConverter converter, IObjectResolver resolver, IRequestData requestData)
+        public RequestHeaders(IObjectConverter converter, IObjectResolver resolver, ICurrentHttpRequest request)
         {
             _converter = converter;
             _resolver = resolver;
 
-            _values = requestData.ValuesFor(RequestDataSource.Header);
+            _values = new HeaderValueSource(request);
         }
 
         public void Value<T>(string header, Action<T> callback)
