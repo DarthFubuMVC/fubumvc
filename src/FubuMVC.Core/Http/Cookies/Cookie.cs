@@ -107,9 +107,10 @@ namespace FubuMVC.Core.Http.Cookies
             }
         }
 
-        public void Add(CookieState state)
+        public Cookie Add(CookieState state)
         {
             _states.Add(state);
+            return this;
         }
 
         public override string ToString()
@@ -168,6 +169,12 @@ namespace FubuMVC.Core.Http.Cookies
         public static string DateToString(DateTimeOffset dateTime)
         {
             return dateTime.ToUniversalTime().ToString("r", (IFormatProvider)CultureInfo.InvariantCulture);
+        }
+
+        public string GetValue(string name)
+        {
+            var state = _states.FirstOrDefault(x => x.Name.EqualsIgnoreCase(name));
+            return state == null ? null : state.Value;
         }
     }
 

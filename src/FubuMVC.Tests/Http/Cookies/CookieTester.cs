@@ -54,19 +54,23 @@ namespace FubuMVC.Tests.Http.Cookies
         [Test]
         public void value_with_only_one_state_with_only_one_value()
         {
-            Assert.Fail("do.");
+            var cookie = new Cookie("a", "2");
+            cookie.Value.ShouldEqual("2");
         }
 
         [Test]
         public void value_with_more_than_one_state()
         {
-            Assert.Fail("do.");
+            var cookie = new Cookie("a").Add(new CookieState("a1", "1"));
+            cookie.Value.ShouldBeNull();
+
         }
 
         [Test]
         public void value_with_no_states()
         {
-            Assert.Fail("do.");
+            var cookie = new Cookie("foo");
+            cookie.Value.ShouldBeNull();
         }
 
 
@@ -75,6 +79,15 @@ namespace FubuMVC.Tests.Http.Cookies
         {
             var cookie = CookieParser.ToCookie(text);
             cookie.ToString().ShouldEqual(text);
+        }
+
+        [Test]
+        public void get_value()
+        {
+            var cookie = new Cookie("foo").Add(new CookieState("a", "1")).Add(new CookieState("b", "2"));
+
+            cookie.GetValue("a").ShouldEqual("1");
+            cookie.GetValue("b").ShouldEqual("2");
         }
     }
 }

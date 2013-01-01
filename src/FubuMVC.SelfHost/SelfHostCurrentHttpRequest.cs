@@ -64,7 +64,14 @@ namespace FubuMVC.SelfHost
 
         private IEnumerable<KeyValuePair<string, IEnumerable<string>>> allHeaders()
         {
-            return _request.Content == null ? _request.Headers : _request.Headers.Union(_request.Content.Headers);
+            IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers = _request.Headers;
+            if (_request.Content != null)
+            {
+                headers = headers.Union(_request.Content.Headers);
+            }
+
+
+            return headers;
         }
     }
 }

@@ -11,6 +11,8 @@ namespace FubuMVC.Core.Http.Cookies
         bool Has(string name);
         Cookie Get(string name);
 
+        string GetValue(string name);
+
         IEnumerable<Cookie> Request { get; }
     }
 
@@ -34,6 +36,12 @@ namespace FubuMVC.Core.Http.Cookies
         public Cookie Get(string name)
         {
             return _cookies.Value.FirstOrDefault(x => x.Matches(name));
+        }
+
+        public string GetValue(string name)
+        {
+            var cookie = Get(name);
+            return cookie.GetValue(name);
         }
 
         public IEnumerable<Cookie> Request

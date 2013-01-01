@@ -9,6 +9,7 @@ using FubuCore.Binding;
 using FubuCore.Binding.Values;
 using FubuCore.Util;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Cookies;
 
 namespace FubuMVC.OwinHost
 {
@@ -22,7 +23,8 @@ namespace FubuMVC.OwinHost
             AddValues(new RouteDataValues(routeData));
             AddValues(Querystring, new NamedKeyValues(HttpUtility.ParseQueryString(environment.Get<string>(OwinConstants.RequestQueryStringKey))));
             AddValues(FormPost, new NamedKeyValues(environment.Get<NameValueCollection>(OwinConstants.RequestFormKey)));
-            
+
+            AddValues(new CookieValueSource(new Cookies(currentRequest)));
             AddValues(new HeaderValueSource(currentRequest));
         }
 

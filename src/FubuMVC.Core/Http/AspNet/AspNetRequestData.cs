@@ -7,6 +7,7 @@ using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Binding.Values;
 using FubuCore.Util;
+using FubuMVC.Core.Http.Cookies;
 
 namespace FubuMVC.Core.Http.AspNet
 {
@@ -34,6 +35,8 @@ namespace FubuMVC.Core.Http.AspNet
             Func<string, IEnumerable<string>, bool> ignoreCaseKeyFinder = (key, keys) => keys.Contains(key, StringComparer.InvariantCultureIgnoreCase);
 
             addValues(RequestDataSource.Cookie, key => request.Cookies[key].Value, () => request.Cookies.AllKeys, ignoreCaseKeyFinder);
+
+            AddValues(new CookieValueSource(new Cookies.Cookies(currentRequest)));
             AddValues(new HeaderValueSource(currentRequest));
 
             AddValues(new RequestPropertyValueSource(request));

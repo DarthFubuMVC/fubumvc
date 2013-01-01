@@ -7,6 +7,7 @@ using FubuCore.Logging;
 using FubuCore.Reflection;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http.Compression;
+using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Routing;
@@ -85,6 +86,8 @@ namespace FubuMVC.Core
             AddService<IHttpContentEncoding, GZipHttpContentEncoding>();
             AddService<IHttpContentEncoding, DeflateHttpContentEncoding>();
             SetServiceIfNone<IHttpContentEncoders, HttpContentEncoders>();
+
+            SetServiceIfNone<ICookies, Cookies>();
         }
     }
 }

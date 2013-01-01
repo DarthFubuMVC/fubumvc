@@ -114,6 +114,7 @@
     <Compile Include="Http\Cookies\CookieStateTester.cs" />
     <Compile Include="Http\Cookies\CookieTester.cs" />
     <Compile Include="Http\Cookies\CookieParserTester.cs" />
+    <Compile Include="Http\Cookies\CookieValueSourceTester.cs" />
     <Compile Include="Http\Cookies\SegmentTester.cs" />
     <Compile Include="Http\HeaderValueSourceTester.cs" />
     <Compile Include="Http\HttpStandInServiceRegistry_specification.cs" />

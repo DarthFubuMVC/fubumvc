@@ -3,7 +3,6 @@ using System.Web.Routing;
 using FubuCore.Binding;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.AspNet;
-using FubuMVC.Core.Http.Cookies;
 using NUnit.Framework;
 using Rhino.Mocks;
 using FubuTestingSupport;
