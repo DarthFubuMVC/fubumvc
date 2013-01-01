@@ -47,12 +47,19 @@ ThreeController.Query()
     }
 
 
-    [TestFixture]
+    [TestFixture, Ignore("unreliable in CI")]
     public class linking_and_unlinking_packages : FubuRegistryHarness
     {
         [Test]
         public void script_linking_and_unlinking()
         {
+            removeAllLinkedPackages();
+            cleanAndRemoveAllPackages();
+            runBottles(@"
+link harness --clean-all
+
+");
+
             remote.All().EndpointsForAssembly("TestPackage1").Any().ShouldBeFalse();
             remote.All().EndpointsForAssembly("TestPackage2").Any().ShouldBeFalse();
         

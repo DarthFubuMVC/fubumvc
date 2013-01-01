@@ -1,6 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Net;
 using FubuCore.Binding;
+using System.Linq;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Http
 {
@@ -20,12 +24,26 @@ namespace FubuMVC.Core.Http
 
         public object Bind(Type type, IBindingContext context)
         {
-            var contentType = context.Data.ValueAs<string>("Content-Type");
-            var acceptType = context.Data.ValueAs<string>("Accept");
+            var request = context.Service<ICurrentHttpRequest>();
+
+            var contentType = request.GetHeader(HttpRequestHeader.ContentType).FirstOrDefault() ??
+                              MimeType.HttpFormMimetype;
+            
+            var acceptType = ReadAcceptType(request.GetHeader(HttpRequestHeader.Accept));
+            
+            
+
             var currentMimeType = new CurrentMimeType(contentType, acceptType);
 
 
             return currentMimeType;
+        }
+
+        private string ReadAcceptType(IEnumerable<string> header)
+        {
+            if (header == null || header.Count() == 0) return "*/*";
+
+            return header.Join(", ");
         }
     }
 }
