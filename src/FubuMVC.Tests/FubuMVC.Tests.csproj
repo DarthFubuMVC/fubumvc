@@ -328,6 +328,7 @@
     <Compile Include="SessionState\FlashProviderTester.cs" />
     <Compile Include="SessionState\RequestDataProviderTester.cs" />
     <Compile Include="TestController.cs" />
+    <Compile Include="UrlStringExtensionsTester.cs" />
     <Compile Include="Urls\BasicUrlRegistrationScanningIntegrationTester.cs" />
     <Compile Include="Urls\StubCurrentHttpRequest.cs" />
     <Compile Include="Urls\UrlRegistryIntegrationTester.cs" />

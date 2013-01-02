@@ -35,10 +35,14 @@ namespace FubuMVC.Core
 
         public static string ToAbsoluteUrl(this string url, string applicationUrl)
         {
+            
+
             if (!Uri.IsWellFormedUriString(applicationUrl, UriKind.Absolute))
             {
                 throw new ArgumentOutOfRangeException("applicationUrl", "applicationUrl must be an absolute url");
             }
+
+            if (Uri.IsWellFormedUriString(url, UriKind.Absolute)) return url;
 
             url = url ?? string.Empty;
             url = url.TrimStart('~', '/').TrimStart('/');
