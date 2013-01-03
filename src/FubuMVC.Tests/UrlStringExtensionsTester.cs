@@ -28,5 +28,12 @@ namespace FubuMVC.Tests
             "~/foo".ToAbsoluteUrl("http://localhost:5050")
                   .ShouldEqual("http://localhost:5050/foo");
         }
+
+        [Test]
+        public void to_absolute_url_respects_the_template()
+        {
+            "http://cnn.com/{script}".ToAbsoluteUrl("http://localhost:5050")
+                                     .ShouldEqual("http://cnn.com/{script}");
+        }
     }
 }
