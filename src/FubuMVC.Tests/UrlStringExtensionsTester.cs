@@ -18,8 +18,6 @@ namespace FubuMVC.Tests
         [Test]
         public void to_absolute_url_from_relative_to_absolute()
         {
-            Uri.IsWellFormedUriString("/foo", UriKind.Absolute).ShouldBeFalse();
-
 
             "/foo".ToAbsoluteUrl("http://localhost:5050")
                   .ShouldEqual("http://localhost:5050/foo");
