@@ -40,10 +40,10 @@
     <Reference Include="FubuLocalization">
       <HintPath>..\packages\FubuLocalization.0.9.5.124\lib\FubuLocalization.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Owin.Host.HttpListener">
+    <Reference Include="Microsoft.Owin.Host.HttpListener, Version=0.18.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Host.HttpListener.0.18-alpha\lib\net40\Microsoft.Owin.Host.HttpListener.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Owin.Hosting">
+    <Reference Include="Microsoft.Owin.Hosting, Version=0.18.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Hosting.0.18-alpha\lib\Microsoft.Owin.Hosting.dll</HintPath>
     </Reference>
     <Reference Include="Owin">
