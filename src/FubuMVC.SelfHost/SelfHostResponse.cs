@@ -37,11 +37,24 @@ namespace FubuMVC.SelfHost
 
         public IEnumerable<Header> AllHeaders()
         {
-            var responseHeaders = _response.Headers.Select(x => new Header(x.Key, x.Value.Join(", ")));
-            return _response.Content == null
-                       ? responseHeaders
-                       : responseHeaders.Union(
-                           _response.Content.Headers.Select(x => new Header(x.Key, x.Value.Join(", "))));
+            foreach (var httpResponseHeader in _response.Headers)
+            {
+                foreach (var value in httpResponseHeader.Value)
+                {
+                    yield return new Header(httpResponseHeader.Key, value);
+                }
+            }
+
+            if (_response.Content != null)
+            {
+                foreach (var httpResponseHeader in _response.Content.Headers)
+                {
+                    foreach (var value in httpResponseHeader.Value)
+                    {
+                        yield return new Header(httpResponseHeader.Key, value);
+                    }
+                }
+            }
         }
 
         public int StatusCode
