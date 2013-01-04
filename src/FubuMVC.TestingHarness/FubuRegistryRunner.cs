@@ -10,12 +10,14 @@ using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
-using FubuMVC.SelfHost;
+using FubuMVC.Katana;
+using FubuMVC.OwinHost;
 using FubuMVC.StructureMap;
 using FubuMVC.TestingHarness.Querying;
 using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
+using StructureMap.Source;
 
 namespace FubuMVC.TestingHarness
 {
@@ -176,31 +178,18 @@ namespace FubuMVC.TestingHarness
 
     public class Harness : IDisposable
     {
-        private readonly EndpointDriver _endpoints;
         private readonly Lazy<RemoteBehaviorGraph> _remote;
-        private readonly FubuRuntime _runtime;
-        private readonly SelfHostHttpServer _server;
         private static int _port = 5502;
+        private readonly EmbeddedFubuMvcServer _server;
 
         public Harness(FubuRuntime runtime, int port)
         {
-            _runtime = runtime;
-
-            _server = new SelfHostHttpServer(port, GetApplicationDirectory());
-            _server.Start(runtime);
-            _port = _server.Port;
-
-            var urls = _runtime.Factory.Get<IUrlRegistry>();
-            urls.As<UrlRegistry>().RootAt(_server.BaseAddress);
-
-            UrlContext.Stub(_server.BaseAddress);
+            _server = new EmbeddedFubuMvcServer(runtime, GetApplicationDirectory(), port);
 
             _remote = new Lazy<RemoteBehaviorGraph>(() =>
             {
                 return new RemoteBehaviorGraph(_server.BaseAddress);
             });
-
-            _endpoints = new EndpointDriver(urls);
         }
 
         public string BaseAddress
@@ -215,7 +204,7 @@ namespace FubuMVC.TestingHarness
 
         public EndpointDriver Endpoints
         {
-            get { return _endpoints; }
+            get { return _server.Endpoints; }
         }
 
         public RemoteBehaviorGraph Remote

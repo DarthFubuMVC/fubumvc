@@ -9,10 +9,16 @@ namespace FubuMVC.OwinHost
          public static void RunFubu<TSource>(this IAppBuilder builder) where TSource : IApplicationSource, new()
          {
              var source = new TSource();
-             source.BuildApplication()
-                 .Bootstrap();
-             var host = new FubuOwinHost();
-             builder.Run(host);
+             var application = source.BuildApplication();
+
+             builder.RunFubu(application);
          }
+
+        public static void RunFubu(this IAppBuilder builder, FubuApplication application)
+        {
+            application.Bootstrap();
+            var host = new FubuOwinHost();
+            builder.Run(host);
+        }
     }
 }

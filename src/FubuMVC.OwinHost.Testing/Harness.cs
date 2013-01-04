@@ -1,19 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Threading;
 using System.Xml;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Urls;
+using FubuMVC.Katana;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
-using Microsoft.Owin.Hosting;
 using NUnit.Framework;
-using Owin;
 using StructureMap;
 
 namespace FubuMVC.OwinHost.Testing
@@ -38,36 +35,32 @@ namespace FubuMVC.OwinHost.Testing
     {
         public FubuApplication BuildApplication()
         {
-            return FubuApplication.For<HarnessRegistry>().StructureMap(Harness.Container);
+            return FubuApplication.For<HarnessRegistry>().StructureMap(new Container());
         }
     }
 
     public static class Harness
     {
-        private static IDisposable _server;
-        private static EndpointDriver _endpoints;
-        private static string _root;
+        private static EmbeddedFubuMvcServer _server;
 
-        public static IContainer Container { get; set; }
+
+        public static string Root
+        {
+            get { return _server.BaseAddress; }
+        }
+
+        public static EndpointDriver Endpoints
+        {
+            get { return _server.Endpoints; }
+        }
 
         public static void Start()
         {
             FubuMvcPackageFacility.PhysicalRootPath = GetRootDirectory();
-            Container = new Container();
 
-            var port = PortFinder.FindPort(5501);
+            int port = PortFinder.FindPort(5501);
 
-            FubuRuntime runtime = null;
-            _server = WebApplication.Start<Starter>(port: port, verbosity:1);
-
-            _root = "http://localhost:" + port;
-
-            var urls = Container.GetInstance<IUrlRegistry>();
-            urls.As<UrlRegistry>().RootAt(_root);
-
-            UrlContext.Stub(_root);
-
-            _endpoints = new EndpointDriver(urls);
+            _server = EmbeddedFubuMvcServer.For<HarnessApplication>(GetRootDirectory(), port);
         }
 
         public static string GetRootDirectory()
@@ -75,40 +68,15 @@ namespace FubuMVC.OwinHost.Testing
             return AppDomain.CurrentDomain.BaseDirectory.ParentDirectory().ParentDirectory();
         }
 
-        public static string Root
-        {
-            get
-            {
-                return _root;
-            }
-        }
-
-        public static EndpointDriver Endpoints
-        {
-            get
-            {
-                return _endpoints;
-            }
-        }
-
         public static void Shutdown()
         {
             _server.Dispose();
-            Container = null;
         }
     }
 
-    public class Starter
-    {
-        public void Configuration(IAppBuilder builder)
-        {
-            builder.RunFubu<HarnessApplication>();
-        }
-    }
 
     public class HarnessRegistry : FubuRegistry
     {
-        
     }
 
     public static class HttpResponseExtensions
@@ -164,12 +132,12 @@ namespace FubuMVC.OwinHost.Testing
 
         public static IEnumerable<string> ScriptNames(this HttpResponse response)
         {
-            var document = response.ReadAsXml();
-            var tags = document.DocumentElement.SelectNodes("//script");
+            XmlDocument document = response.ReadAsXml();
+            XmlNodeList tags = document.DocumentElement.SelectNodes("//script");
 
             foreach (XmlElement tag in tags)
             {
-                var name = tag.GetAttribute("src");
+                string name = tag.GetAttribute("src");
                 yield return name.Substring(name.IndexOf('_'));
             }
         }

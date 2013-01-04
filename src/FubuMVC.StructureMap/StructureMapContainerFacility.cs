@@ -26,6 +26,8 @@ namespace FubuMVC.StructureMap
 
         public StructureMapContainerFacility(IContainer container)
         {
+            if (container == null) throw new ArgumentNullException("container");
+
             _container = container;
             _registry = new StructureMapFubuRegistry();
 
