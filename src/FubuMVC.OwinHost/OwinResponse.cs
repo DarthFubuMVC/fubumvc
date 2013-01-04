@@ -45,11 +45,10 @@ namespace FubuMVC.OwinHost
 
         public IEnumerable<Header> AllHeaders()
         {
-            return _environment.Get<IDictionary<string, string>>(OwinConstants.ResponseHeadersKey)
-                               .Select(x =>
-                               {
-                                   return new Header(x.Key, x.Value);
-                               }).ToArray();
+            return
+                _environment.Get<IDictionary<string, string[]>>(OwinConstants.ResponseHeadersKey).SelectMany(pair => {
+                    return pair.Value.Select(x => new Header(pair.Key, x));
+                });
         }
     }
 }

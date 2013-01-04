@@ -35,7 +35,7 @@ namespace FubuMVC.Core.Resources.Conneg
 
         public void Write()
         {
-            WriteHeaders();
+            
 
             var mimeTypes = _request.Get<CurrentMimeType>();
             var media = SelectMedia(mimeTypes);
@@ -43,8 +43,8 @@ namespace FubuMVC.Core.Resources.Conneg
             if (media == null)
             {
                 // TODO -- better error message?
-                _writer.Write(MimeType.Text, "406:  Not acceptable");
                 _writer.WriteResponseCode(HttpStatusCode.NotAcceptable);
+                _writer.Write(MimeType.Text, "406:  Not acceptable");
             }
             else
             {
@@ -52,6 +52,8 @@ namespace FubuMVC.Core.Resources.Conneg
                 var outputMimetype = mimeTypes.SelectFirstMatching(media.Mimetypes);
                 media.Write(outputMimetype, resource);
             }
+
+            WriteHeaders();
         }
 
         public void WriteHeaders()

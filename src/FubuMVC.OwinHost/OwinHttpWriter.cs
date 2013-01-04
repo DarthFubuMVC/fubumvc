@@ -56,7 +56,7 @@ namespace FubuMVC.OwinHost
 
         public void WriteResponseCode(HttpStatusCode status, string description = null)
         {
-            _environment[OwinConstants.ResponseStatusCodeKey] = status;
+            _environment[OwinConstants.ResponseStatusCodeKey] = status.As<int>();
             _environment[OwinConstants.ResponseReasonPhraseKey] = description;
         }
 

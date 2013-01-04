@@ -2,6 +2,7 @@
 using System.Net;
 using NUnit.Framework;
 using FubuTestingSupport;
+using FubuCore;
 
 namespace FubuMVC.OwinHost.Testing
 {
@@ -23,7 +24,7 @@ namespace FubuMVC.OwinHost.Testing
         {
             writer.WriteResponseCode(HttpStatusCode.UseProxy);
 
-            environment[OwinConstants.ResponseStatusCodeKey].ShouldEqual(HttpStatusCode.UseProxy);
+            environment[OwinConstants.ResponseStatusCodeKey].ShouldEqual(HttpStatusCode.UseProxy.As<int>());
         }
 
         [Test]
@@ -31,7 +32,7 @@ namespace FubuMVC.OwinHost.Testing
         {
             const string description = "why u no make good request?";
             writer.WriteResponseCode(HttpStatusCode.BadRequest, description);
-            environment[OwinConstants.ResponseStatusCodeKey].ShouldEqual(HttpStatusCode.BadRequest);
+            environment[OwinConstants.ResponseStatusCodeKey].ShouldEqual(HttpStatusCode.BadRequest.As<int>());
             environment[OwinConstants.ResponseReasonPhraseKey].ShouldEqual(description);
         }
     }

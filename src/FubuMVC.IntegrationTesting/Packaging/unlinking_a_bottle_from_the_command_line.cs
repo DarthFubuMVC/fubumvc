@@ -7,12 +7,11 @@ using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Packaging
 {
-    [TestFixture]
+    [TestFixture, Ignore("passes, but it's too unreliable for CI")]
     public class unlinking_a_bottle_from_the_command_line : FubuRegistryHarness
     {
         protected override void initializeBottles()
         {
-
             runBottles(@"
 link harness --clean-all
 init src/TestPackage1 pak1

@@ -53,11 +53,20 @@
     <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetZip.1.9.1.8\lib\net20\Ionic.Zip.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Owin.Host.HttpListener">
+      <HintPath>..\packages\Microsoft.Owin.Host.HttpListener.0.18-alpha\lib\net40\Microsoft.Owin.Host.HttpListener.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Hosting">
+      <HintPath>..\packages\Microsoft.Owin.Hosting.0.18-alpha\lib\Microsoft.Owin.Hosting.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="nunit.mocks">
       <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
     <Reference Include="pnunit.framework">
       <HintPath>..\packages\NUnit.2.5.10.11092\lib\pnunit.framework.dll</HintPath>
@@ -111,9 +120,13 @@
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.SelfHost\FubuMVC.SelfHost.csproj">
-      <Project>{E8DC2BF6-4F59-43BF-86B9-82C52803B5C0}</Project>
-      <Name>FubuMVC.SelfHost</Name>
+    <ProjectReference Include="..\FubuMVC.Katana\FubuMVC.Katana.csproj">
+      <Project>{48BC51C2-B759-48DB-AAE1-F4686CD6D02A}</Project>
+      <Name>FubuMVC.Katana</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.OwinHost\FubuMVC.OwinHost.csproj">
+      <Project>{EA10DF80-FD95-4172-BC18-DB0DFB279844}</Project>
+      <Name>FubuMVC.OwinHost</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
       <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>

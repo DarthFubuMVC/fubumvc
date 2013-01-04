@@ -43,6 +43,8 @@ namespace FubuMVC.Core.Http
         {
             if (header == null || header.Count() == 0) return "*/*";
 
+            if (header.Count() == 1) return header.Single();
+
             return header.Join(", ");
         }
     }

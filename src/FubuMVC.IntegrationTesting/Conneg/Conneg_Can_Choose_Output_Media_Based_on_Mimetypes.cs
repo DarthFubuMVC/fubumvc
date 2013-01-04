@@ -258,7 +258,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
         [Test]
         public void will_not_accept_xml_as_an_input()
         {
-            endpoints.PostXml(input, accept: "*/*").StatusCodeShouldBe(HttpStatusCode.UnsupportedMediaType);
+            endpoints.PostXml(input).StatusCodeShouldBe(HttpStatusCode.UnsupportedMediaType);
         }
     }
 

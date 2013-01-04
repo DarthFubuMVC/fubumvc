@@ -8,11 +8,12 @@ using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
+using FubuMVC.Katana;
+using FubuMVC.OwinHost;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
-using FubuMVC.SelfHost;
 
 namespace FubuMVC.IntegrationTesting
 {
@@ -34,25 +35,11 @@ namespace FubuMVC.IntegrationTesting
 
     public static class SelfHostHarness
     {
-        private static SelfHostHttpServer _server;
-        private static EndpointDriver _endpoints;
+        private static EmbeddedFubuMvcServer _server;
 
         public static void Start()
         {
-            FubuMvcPackageFacility.PhysicalRootPath = GetRootDirectory();
-
-            _server = new SelfHostHttpServer(5500, GetRootDirectory());
-            var runtime = bootstrapRuntime();
-
-
-            _server.Start(runtime);
-
-            var urls = runtime.Factory.Get<IUrlRegistry>();
-            urls.As<UrlRegistry>().RootAt(_server.BaseAddress);
-
-            UrlContext.Stub(_server.BaseAddress);
-
-            _endpoints = new EndpointDriver(urls);
+            Recycle();
         }
 
         public static string GetRootDirectory()
@@ -72,7 +59,7 @@ namespace FubuMVC.IntegrationTesting
         {
             get
             {
-                return _endpoints;
+                return _server.Endpoints;
             }
         }
 
@@ -83,7 +70,17 @@ namespace FubuMVC.IntegrationTesting
 
         public static void Recycle()
         {
-            _server.Recycle(bootstrapRuntime());
+            if (_server != null)
+            {
+                _server.Dispose();
+            }
+
+            FubuMvcPackageFacility.PhysicalRootPath = GetRootDirectory();
+
+            var port = PortFinder.FindPort(5500);
+            var runtime = bootstrapRuntime();
+
+            _server = new EmbeddedFubuMvcServer(runtime, GetRootDirectory(), port);
         }
 
         private static FubuRuntime bootstrapRuntime()
