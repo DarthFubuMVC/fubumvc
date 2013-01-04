@@ -14,11 +14,11 @@
     <dependencies>
 	<dependency id="FubuMVC.Core"/>
     	<dependency id="FubuMVC.OwinHost"/>
-        <dependency id="Microsoft.Owin.Hosting" />
-        <dependency id="Microsoft.Owin.Host.HttpListener" />
     </dependencies>
   </metadata>
   <files>
     <file src="..\..\src\FubuMVC.Katana\bin\release\FubuMVC.Katana.*" target="lib\net40" />
+    <file src="..\..\src\FubuMVC.Katana\bin\release\Microsoft.Owin.Hosting.*" target="lib\net40" />
+    <file src="..\..\src\FubuMVC.Katana\bin\release\Microsoft.Owin.Host.HttpListener.*" target="lib\net40" />
   </files>
 </package>
