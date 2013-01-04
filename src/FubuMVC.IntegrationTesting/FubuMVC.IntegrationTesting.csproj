@@ -90,6 +90,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutEndpointIntegrationTester.cs" />
     <Compile Include="Ajax\AjaxContinuationProcessingTester.cs" />
     <Compile Include="Authorization\end_to_end_authorization_tester.cs" />
     <Compile Include="Caching\caching_tester.cs" />

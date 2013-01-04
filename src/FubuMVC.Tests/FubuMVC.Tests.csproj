@@ -87,6 +87,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AboutEndpointTester.cs" />
     <Compile Include="AddressClasses.cs" />
     <Compile Include="AjaxExtensionsTester.cs" />
     <Compile Include="Ajax\AjaxContinuationPolicyIntegratedTester.cs" />

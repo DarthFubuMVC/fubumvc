@@ -14,9 +14,6 @@ namespace FubuMVC.Core
 
             Add<PartialOnlyConvention>();
             Add<RouteDetermination>();
-
-
-            
         }
     }
 }

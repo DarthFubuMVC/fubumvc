@@ -13,6 +13,12 @@ namespace FubuMVC.Core
     {
         public DefaultConfigurationPack()
         {
+            For(ConfigurationType.Discovery);
+            if (FubuMode.InDevelopment())
+            {
+                Add<RegisterAbout>();
+            }
+
             For(ConfigurationType.Attributes);
             Add<UrlPatternAttributeOnViewModelPolicy>();
             Add<ModifyChainAttributeConvention>();
