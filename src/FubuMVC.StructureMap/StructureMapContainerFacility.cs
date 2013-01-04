@@ -96,11 +96,6 @@ namespace FubuMVC.StructureMap
             _registration(serviceType, def);
         }
 
-        public void Inject(Type abstraction, Type concretion)
-        {
-            _container.Configure(x => x.For(abstraction).Add(concretion));
-        }
-
         public T Get<T>()
         {
             return _container.GetInstance<T>();

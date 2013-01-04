@@ -59,11 +59,6 @@ namespace FubuMVC.Autofac
             _register(serviceType, def);
         }
 
-        public void Inject(Type abstraction, Type concretion)
-        {
-            RegisterType(abstraction, concretion);
-        }
-
 
         public virtual IActionBehavior BuildBehavior(ServiceArguments arguments, Guid behaviorId)
         {

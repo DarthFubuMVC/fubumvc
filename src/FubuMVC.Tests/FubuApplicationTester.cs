@@ -30,18 +30,6 @@ namespace FubuMVC.Tests
         }
 
         [Test]
-        public void icontainer_facility_is_registered_during_construction_for_later()
-        {
-
-            var container = new Container();
-            FubuApplication.For(new FubuRegistry()).StructureMap(container).Bootstrap();
-
-            container.GetInstance<IContainerFacility>()
-                .ShouldBeOfType<StructureMapContainerFacility>()
-                .ShouldNotBeNull();
-        }
-
-        [Test]
         public void the_restarted_property_is_set()
         {
             var floor = DateTime.Now.AddSeconds(-5);

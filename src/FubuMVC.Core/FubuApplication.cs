@@ -188,9 +188,6 @@ namespace FubuMVC.Core
         private void bakeBehaviorGraphIntoContainer(BehaviorGraph graph, IContainerFacility containerFacility)
         {
             graph.As<IRegisterable>().Register(containerFacility.Register);
-
-            // Important to register itself
-            containerFacility.Register(typeof (IContainerFacility), ObjectDef.ForValue(containerFacility));
         }
 
         private BehaviorGraph buildBehaviorGraph()
