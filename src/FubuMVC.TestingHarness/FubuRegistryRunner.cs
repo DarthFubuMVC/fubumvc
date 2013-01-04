@@ -182,12 +182,14 @@ namespace FubuMVC.TestingHarness
     public class Harness : IDisposable
     {
         private readonly Lazy<RemoteBehaviorGraph> _remote;
-        private static int _port = 5502;
+        private static int _port = 5550;
         private readonly EmbeddedFubuMvcServer _server;
 
         public Harness(FubuRuntime runtime, int port)
         {
-            _server = new EmbeddedFubuMvcServer(runtime, GetApplicationDirectory(), port);
+            _port = PortFinder.FindPort(port);
+            _server = new EmbeddedFubuMvcServer(runtime, GetApplicationDirectory(), _port);
+            _port = port;
 
             _remote = new Lazy<RemoteBehaviorGraph>(() =>
             {

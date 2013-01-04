@@ -17,9 +17,9 @@ namespace FubuMVC.Core.Registration
             return this;
         }
 
-        public IAccessorRulesExpression Add<T>() where T : new()
+        public IAccessorRulesExpression Add<TRule>() where TRule : new()
         {
-            return Add(new T());
+            return Add(new TRule());
         }
     }
 }

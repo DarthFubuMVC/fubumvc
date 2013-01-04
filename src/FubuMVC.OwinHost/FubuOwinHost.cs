@@ -13,10 +13,18 @@ namespace FubuMVC.OwinHost
 {
     public class FubuOwinHost
     {
+        private readonly RouteCollection _routes;
+
+        public FubuOwinHost(IEnumerable<RouteBase> routes)
+        {
+            _routes = new RouteCollection();
+            _routes.AddRange(routes);
+        }
+
         public Task Invoke(IDictionary<string, object> environment)
         {
             var owinHttpContext = new OwinHttpContext(environment);
-            var routeData = RouteTable.Routes.GetRouteData(owinHttpContext);
+            var routeData = _routes.GetRouteData(owinHttpContext);
             if (routeData == null)
             {
                 write404(environment);

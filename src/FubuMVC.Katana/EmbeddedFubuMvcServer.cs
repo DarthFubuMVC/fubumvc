@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Web.Routing;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Endpoints;
@@ -71,11 +73,20 @@ namespace FubuMVC.Katana
 
         public class Starter
         {
+            private readonly IList<RouteBase> _routes;
+
+            public Starter(FubuRuntime runtime)
+            {
+                _routes = runtime.Routes;
+            }
+
             public void Configuration(IAppBuilder builder)
             {
-                var host = new FubuOwinHost();
+                var host = new FubuOwinHost(_routes);
                 builder.Run(host);
             }
+
+
         }
 
         public EmbeddedFubuMvcServer(FubuRuntime runtime, string physicalPath = null, int port = 5500, StartParameters parameters = null)
@@ -87,17 +98,24 @@ namespace FubuMVC.Katana
 
             FubuMvcPackageFacility.PhysicalRootPath = physicalPath ?? AppDomain.CurrentDomain.BaseDirectory;
 
-            _server = WebApplication.Start<Starter>(port: port, verbosity: 1);
+            //_server = WebApplication.Start<Starter>(port: port, verbosity: 1);
 
-//            var context = new StartContext
-//            {
-//                Parameters = parameters,
-//                ServerFactory = new Starter()
-//            };
-//
-//            var settings = new KatanaSettings();
-//            var engine  = new KatanaEngine(settings);
-//            _server = engine.Start(context);
+            var context = new StartContext
+            {
+                Parameters = parameters,
+            };
+
+            var settings = new KatanaSettings
+            {
+                LoaderFactory = () => (s => builder => {
+                    var host = new FubuOwinHost(_runtime.Routes);
+                    builder.Run(host);
+                }),
+
+            };
+
+            var engine  = new KatanaEngine(settings);
+            _server = engine.Start(context);
 
             _baseAddress = "http://localhost:" + port;
 
