@@ -44,10 +44,24 @@ namespace FubuMVC.OwinHost
 
         public string FullUrl()
         {
+            var requestPath = Get<string>(OwinConstants.RequestPathKey);
+
+
+            var uriBuilder = uriBuilderFor(requestPath);
+
+
+            var requestQueryString = Get<string>(OwinConstants.RequestQueryStringKey);
+            if (!String.IsNullOrEmpty(requestQueryString))
+            {
+                uriBuilder.Query = requestQueryString;
+            }
+            return uriBuilder.Uri.ToString();
+        }
+
+        private UriBuilder uriBuilderFor(string requestPath)
+        {
             var requestScheme = Get<string>(OwinConstants.RequestSchemeKey);
             var requestPathBase = Get<string>(OwinConstants.RequestPathBaseKey);
-            var requestPath = Get<string>(OwinConstants.RequestPathKey);
-            var requestQueryString = Get<string>(OwinConstants.RequestQueryStringKey);
 
             // default values, in absence of a host header
             string host = "127.0.0.1";
@@ -69,30 +83,12 @@ namespace FubuMVC.OwinHost
             }
 
             var uriBuilder = new UriBuilder(requestScheme, host, port, requestPathBase + requestPath);
-            if (!String.IsNullOrEmpty(requestQueryString))
-            {
-                uriBuilder.Query = requestQueryString;
-            }
-            return uriBuilder.Uri.ToString();
+            return uriBuilder;
         }
 
         public string ToFullUrl(string url)
         {
-            if (Uri.IsWellFormedUriString(url, UriKind.Absolute)) return url;
-            if (url.IsEmpty()) { url = "~/"; }
-
-            var urlParts = url.Split(new[] { '?' }, 2);
-            var baseUrl = urlParts[0];
-
-            if (!VirtualPathUtility.IsAbsolute(baseUrl))
-            {
-                baseUrl = VirtualPathUtility.Combine("~", baseUrl);
-            }
-
-            var absoluteUrl = VirtualPathUtility.ToAbsolute(baseUrl);
-
-            if (urlParts.Length > 1) absoluteUrl += ("?" + urlParts[1]);
-            return absoluteUrl;
+            return uriBuilderFor(url).Uri.ToString();
         }
 
         public string HttpMethod()

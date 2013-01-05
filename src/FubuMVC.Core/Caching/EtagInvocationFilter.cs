@@ -6,6 +6,8 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Resources.Etags;
 using FubuMVC.Core.Runtime;
+using FubuCore;
+using System.Linq;
 
 namespace FubuMVC.Core.Caching
 {
@@ -30,10 +32,14 @@ namespace FubuMVC.Core.Caching
         {
             string etag = null;
 
-            arguments.Get<IRequestData>().ValuesFor(RequestDataSource.Header)
-                .Value(HttpRequestHeaders.IfNoneMatch, value => etag = value.RawValue as string);
+            var request = arguments.Get<ICurrentHttpRequest>();
+            if (!request.HasHeader(HttpRequestHeader.IfNoneMatch)) return DoNext.Continue;
 
-            if (etag == null) return DoNext.Continue;
+            etag = request.GetHeader(HttpRequestHeader.IfNoneMatch).FirstOrDefault();
+
+            if (etag.IsEmpty()) return DoNext.Continue;
+
+
 
             var resourceHash = _hashing(arguments);
             var headers = _cache.Current(resourceHash);
@@ -41,11 +47,12 @@ namespace FubuMVC.Core.Caching
 
             if (etag != currentEtag) return DoNext.Continue;
 
-
             var writer = arguments.Get<IHttpWriter>();
             writer.WriteResponseCode(HttpStatusCode.NotModified);
 
+
             headers.Each(x => x.Replay(writer));
+            
 
             return DoNext.Stop;
         }
