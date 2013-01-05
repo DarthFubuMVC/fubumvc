@@ -179,7 +179,6 @@ namespace FubuMVC.Core
             return new FubuRuntime(factory, _facility.Value, routes);
         }
 
-        [Obsolete("Just use the static BindingContext.AddNamingStrategy()")]
         public static void SetupNamingStrategyForHttpHeaders()
         {
             BindingContext.AddNamingStrategy(HttpRequestHeaders.HeaderDictionaryNameForProperty);

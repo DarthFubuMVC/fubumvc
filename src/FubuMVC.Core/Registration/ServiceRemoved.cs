@@ -24,6 +24,13 @@ namespace FubuMVC.Core.Registration
             return Equals((ServiceRemoved) obj);
         }
 
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ((ServiceType != null ? ServiceType.GetHashCode() : 0) * 397) ^ (Def != null ? Def.GetHashCode() : 0);
+            }
+        }
 
         protected override string title()
         {

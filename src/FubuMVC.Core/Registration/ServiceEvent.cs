@@ -36,6 +36,8 @@ namespace FubuMVC.Core.Registration
             }
         }
 
+
+
         void DescribesItself.Describe(Description description)
         {
             description.Title = title();
