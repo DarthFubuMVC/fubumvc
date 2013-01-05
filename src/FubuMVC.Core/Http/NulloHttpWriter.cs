@@ -33,10 +33,6 @@ namespace FubuMVC.Core.Http
         {
         }
 
-        public void AppendCookie(HttpCookie cookie)
-        {
-        }
-
         public void UseEncoding(IHttpContentEncoding encoding)
         {
         }

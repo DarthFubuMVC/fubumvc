@@ -5,6 +5,7 @@ using System.Text;
 using System.Web;
 using FubuCore.Util;
 using FubuMVC.Core.Caching;
+using Cookie = FubuMVC.Core.Http.Cookies.Cookie;
 
 namespace FubuMVC.Core.Runtime
 {
@@ -57,7 +58,7 @@ namespace FubuMVC.Core.Runtime
         {
         }
 
-        public void AppendCookie(HttpCookie cookie)
+        public void AppendCookie(Cookie cookie)
         {
         }
 

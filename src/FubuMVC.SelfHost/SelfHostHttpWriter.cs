@@ -34,7 +34,7 @@ namespace FubuMVC.SelfHost
 
         private readonly HttpResponseMessage _response;
         private readonly SelfHostCurrentHttpRequest _httpRequest;
-        private Stream _output = new MemoryStream();
+        private readonly Stream _output = new MemoryStream();
         private readonly Lazy<StreamWriter> _writer;
         private readonly IList<Action<StreamContent>> _modifications = new List<Action<StreamContent>>();
         private IHttpContentEncoding _encoding;
@@ -99,23 +99,6 @@ namespace FubuMVC.SelfHost
         {
             _response.StatusCode = status;
             _response.ReasonPhrase = description;
-        }
-
-        public void AppendCookie(HttpCookie cookie)
-        {
-            string cookieValue = cookie.Value;
-            if (cookieValue.IsEmpty()) cookieValue = "BLANK"; // SelfHost does NOT like blank cookie values, 
-                                                              // but that's exactly what happens when we try to null
-                                                              // out the authentication ticket in FubuMVC.Authentication
-
-            var value = new CookieHeaderValue(cookie.Name, cookieValue);
-            value.Expires = new DateTimeOffset(cookie.Expires);
-            if(cookie.Path.IsEmpty())
-            {
-                value.Path = "/";
-            }
-
-            _response.Headers.AddCookies(new[] { value });
         }
 
         public void UseEncoding(IHttpContentEncoding encoding)

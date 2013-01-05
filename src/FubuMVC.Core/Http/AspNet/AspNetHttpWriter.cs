@@ -48,11 +48,6 @@ namespace FubuMVC.Core.Http.AspNet
             if (description.IsNotEmpty()) _response.StatusDescription = description;
         }
 
-        public void AppendCookie(HttpCookie cookie)
-        {
-            _response.AppendCookie(cookie);
-        }
-
         public void UseEncoding(IHttpContentEncoding encoding)
         {
             _response.Filter = encoding.Encode(_response.Filter);

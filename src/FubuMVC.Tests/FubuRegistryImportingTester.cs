@@ -10,6 +10,7 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
+using Cookie = FubuMVC.Core.Http.Cookies.Cookie;
 
 namespace FubuMVC.Tests
 {
@@ -61,6 +62,11 @@ namespace FubuMVC.Tests
             }
 
             public void RedirectToUrl(string url)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void AppendCookie(Cookie cookie)
             {
                 throw new NotImplementedException();
             }

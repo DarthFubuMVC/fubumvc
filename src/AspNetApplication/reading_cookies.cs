@@ -1,6 +1,7 @@
 ﻿using System.Web;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Cookies;
+using FubuMVC.Core.Runtime;
 
 namespace AspNetApplication
 {
@@ -9,9 +10,9 @@ namespace AspNetApplication
         public const string CookieName = "Test";
 
         private readonly ICookies _cookies;
-        private readonly IHttpWriter _writer;
+        private readonly IOutputWriter _writer;
 
-        public CookieEndpoint(ICookies cookies, IHttpWriter writer)
+        public CookieEndpoint(ICookies cookies, IOutputWriter writer)
         {
             _cookies = cookies;
             _writer = writer;
@@ -24,7 +25,7 @@ namespace AspNetApplication
 
         public void post_write_cookie(WriteCookieRequest request)
         {
-            _writer.AppendCookie(new HttpCookie(request.Name, request.Value));
+            _writer.AppendCookie(new Cookie(request.Name, request.Value));
         }
     }
 

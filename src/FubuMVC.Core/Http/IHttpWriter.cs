@@ -15,7 +15,6 @@ namespace FubuMVC.Core.Http
         void Write(string content);
         void Redirect(string url);
         void WriteResponseCode(HttpStatusCode status, string description = null);
-        void AppendCookie(HttpCookie cookie);
 
         void UseEncoding(IHttpContentEncoding encoding);
 
@@ -54,11 +53,6 @@ namespace FubuMVC.Core.Http
         }
 
         public void WriteResponseCode(HttpStatusCode status, string description = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AppendCookie(HttpCookie cookie)
         {
             throw new NotImplementedException();
         }

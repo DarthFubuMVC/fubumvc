@@ -13,6 +13,7 @@ using FubuMVC.Core.UI;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
+using Cookie = FubuMVC.Core.Http.Cookies.Cookie;
 
 namespace FubuMVC.Tests.Registration
 {
@@ -177,6 +178,11 @@ namespace FubuMVC.Tests.Registration
         }
 
         public void RedirectToUrl(string url)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AppendCookie(Cookie cookie)
         {
             throw new NotImplementedException();
         }

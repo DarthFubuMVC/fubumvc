@@ -1,8 +1,8 @@
 using System;
 using System.IO;
 using System.Net;
-using System.Web;
 using FubuMVC.Core.Caching;
+using Cookie = FubuMVC.Core.Http.Cookies.Cookie;
 
 namespace FubuMVC.Core.Runtime
 {
@@ -15,7 +15,7 @@ namespace FubuMVC.Core.Runtime
 
 
         void RedirectToUrl(string url);
-        void AppendCookie(HttpCookie cookie);
+        void AppendCookie(Cookie cookie);
 
         void AppendHeader(string key, string value);
 

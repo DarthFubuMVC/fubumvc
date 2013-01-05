@@ -30,7 +30,7 @@ namespace FubuMVC.AspNetTesting
         }
     }
 
-    [TestFixture, Explicit("Succeeds by itself, fails in the build.  I blame IIS, but I'd be happy for someone else to get into this")]
+    [TestFixture]
     public class writing_cookies
     {
         [Test]

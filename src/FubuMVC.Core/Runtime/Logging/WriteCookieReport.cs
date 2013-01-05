@@ -3,19 +3,20 @@ using System.Web;
 using FubuCore.Descriptions;
 using FubuCore.Logging;
 using FubuCore;
+using Cookie = FubuMVC.Core.Http.Cookies.Cookie;
 
 namespace FubuMVC.Core.Runtime.Logging
 {
     public class WriteCookieReport : LogRecord, DescribesItself
     {
-        private readonly HttpCookie _cookie;
+        private readonly Cookie _cookie;
 
-        public WriteCookieReport(HttpCookie cookie)
+        public WriteCookieReport(Cookie cookie)
         {
             _cookie = cookie;
         }
 
-        public HttpCookie Cookie
+        public Cookie Cookie
         {
             get { return _cookie; }
         }
@@ -42,7 +43,7 @@ namespace FubuMVC.Core.Runtime.Logging
 
         public void Describe(Description description)
         {
-            description.Title = "Wrote cookie {0} to response".ToFormat(_cookie.Name);
+            description.Title = "Wrote cookie {0} to response".ToFormat(_cookie);
             description.ShortDescription = _cookie.ToString();
         }
 

@@ -12,6 +12,7 @@ using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 using System.Linq;
+using Cookie = FubuMVC.Core.Http.Cookies.Cookie;
 
 namespace FubuMVC.Tests.Runtime
 {
@@ -157,7 +158,7 @@ namespace FubuMVC.Tests.Runtime
         [Test]
         public void write_cookie()
         {
-            var cookie = new HttpCookie("something");
+            var cookie = new Cookie("something", "else");
 
             ClassUnderTest.AppendCookie(cookie);
 

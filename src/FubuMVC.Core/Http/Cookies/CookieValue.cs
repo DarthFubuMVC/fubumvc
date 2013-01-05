@@ -30,9 +30,8 @@ namespace FubuMVC.Core.Http.Cookies
             }
             set
             {
-                var cookie = new HttpCookie(_cookieName)
+                var cookie = new Cookie(_cookieName, value)
                 {
-                    Value = value,
                     Expires = _time.UtcNow().AddYears(1)
                 };
 
@@ -42,7 +41,7 @@ namespace FubuMVC.Core.Http.Cookies
 
         public void Erase()
         {
-            var cookie = new HttpCookie(_cookieName)
+            var cookie = new Cookie(_cookieName, "BLANK")
             {
                 Expires = _time.UtcNow().AddYears(-1)
             };

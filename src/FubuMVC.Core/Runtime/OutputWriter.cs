@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Web;
 using FubuCore;
 using FubuCore.Logging;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime.Logging;
+using Cookie = FubuMVC.Core.Http.Cookies.Cookie;
 
 namespace FubuMVC.Core.Runtime
 {
@@ -120,11 +120,11 @@ namespace FubuMVC.Core.Runtime
         }
 
 
-        public virtual void AppendCookie(HttpCookie cookie)
+        public virtual void AppendCookie(Cookie cookie)
         {
             _logger.DebugMessage(() => new WriteCookieReport(cookie));
 
-            Writer.AppendCookie(cookie);
+            CurrentState.AppendHeader(HttpResponseHeaders.SetCookie, cookie.ToString());
         }
 
         public void AppendHeader(string key, string value)

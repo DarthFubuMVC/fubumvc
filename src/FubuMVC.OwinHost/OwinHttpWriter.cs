@@ -63,11 +63,6 @@ namespace FubuMVC.OwinHost
             _environment[OwinConstants.ResponseReasonPhraseKey] = description;
         }
 
-        public void AppendCookie(HttpCookie cookie)
-        {
-            throw new NotImplementedException();
-        }
-
         public void UseEncoding(IHttpContentEncoding encoding)
         {
             // TODO -- Come back to this one. The integration tests can't be done until we do

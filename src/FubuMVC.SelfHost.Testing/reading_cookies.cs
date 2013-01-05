@@ -4,6 +4,7 @@ using System.Net;
 using System.Web;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Cookies;
+using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Cookie = System.Net.Cookie;
@@ -56,9 +57,9 @@ namespace FubuMVC.SelfHost.Testing
         public const string CookieName = "Test";
 
         private readonly ICookies _cookies;
-        private readonly IHttpWriter _writer;
+        private readonly IOutputWriter _writer;
 
-        public CookieEndpoint(ICookies cookies, IHttpWriter writer)
+        public CookieEndpoint(ICookies cookies, IOutputWriter writer)
         {
             _cookies = cookies;
             _writer = writer;
@@ -71,7 +72,7 @@ namespace FubuMVC.SelfHost.Testing
 
         public void post_write_cookie(WriteCookieRequest request)
         {
-            _writer.AppendCookie(new HttpCookie(request.Name, request.Value));
+            _writer.AppendCookie(new Core.Http.Cookies.Cookie(request.Name, request.Value));
         }
     }
 
