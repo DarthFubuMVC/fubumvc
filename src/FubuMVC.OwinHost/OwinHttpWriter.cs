@@ -29,9 +29,10 @@ namespace FubuMVC.OwinHost
 
         public void WriteFile(string file)
         {
-            var fileStream = new FileStream(file, FileMode.Open);
-
-            Write(stream => fileStream.CopyTo(stream, 64000));
+            using (var fileStream = new FileStream(file, FileMode.Open))
+            {
+                Write(stream => fileStream.CopyTo(stream, 64000));
+            }
         }
 
         public void WriteContentType(string contentType)

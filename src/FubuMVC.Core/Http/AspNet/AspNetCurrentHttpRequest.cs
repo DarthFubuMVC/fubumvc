@@ -62,7 +62,7 @@ namespace FubuMVC.Core.Http.AspNet
 
         public IEnumerable<string> GetHeader(string key)
         {
-            return _request.Headers.GetValues(key);
+            return _request.Headers.GetValues(key) ?? new string[0];
         }
 
         public IEnumerable<string> AllHeaderKeys()
