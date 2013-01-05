@@ -57,7 +57,10 @@ namespace FubuMVC.Core.Http.AspNet
 
         public bool HasHeader(string key)
         {
-            return _request.Headers.Get(key).Any();
+            var headers = _request.Headers.Get(key);
+            if (headers == null) return false;
+
+            return headers.Any();
         }
 
         public IEnumerable<string> GetHeader(string key)
