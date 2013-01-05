@@ -88,6 +88,9 @@ namespace FubuMVC.OwinHost
 
         public string ToFullUrl(string url)
         {
+            var requestScheme = Get<string>(OwinConstants.RequestSchemeKey) + "://";
+            if (url.StartsWith(requestScheme, StringComparison.OrdinalIgnoreCase)) return url;
+
             return uriBuilderFor(url).Uri.ToString();
         }
 
