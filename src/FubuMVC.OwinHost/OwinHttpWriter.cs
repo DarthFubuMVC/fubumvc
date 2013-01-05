@@ -12,24 +12,26 @@ namespace FubuMVC.OwinHost
     public class OwinHttpWriter : IHttpWriter
     {
         private readonly IDictionary<string, object> _environment;
+        private readonly MemoryStream _output;
 
         public OwinHttpWriter(IDictionary<string, object> environment)
         {
             _environment = environment;
+
+            _output = new MemoryStream();
         }
 
         public void AppendHeader(string key, string value)
         {
-            var headers =_environment.Get<IDictionary<string, string[]>>(OwinConstants.ResponseHeadersKey);
-            headers[key] = new []{value};
+            var headers = _environment.Get<IDictionary<string, string[]>>(OwinConstants.ResponseHeadersKey);
+            headers[key] = new[] {value};
         }
 
         public void WriteFile(string file)
         {
-            using (var fileStream = new FileStream(file, FileMode.Open))
-            {
-                Write(stream => fileStream.CopyTo(stream, 64000));
-            }
+            var fileStream = new FileStream(file, FileMode.Open);
+
+            Write(stream => fileStream.CopyTo(stream, 64000));
         }
 
         public void WriteContentType(string contentType)
@@ -39,11 +41,8 @@ namespace FubuMVC.OwinHost
 
         public void Write(string content)
         {
-            var response = _environment.Get<Stream>(OwinConstants.ResponseBodyKey);
-            using (var writer = new StreamWriter(response))
-            {
-                writer.Write(content);
-            }
+            var writer = new StreamWriter(_output){AutoFlush = true};
+            writer.Write(content);
         }
 
         public void Redirect(string url)
@@ -51,7 +50,10 @@ namespace FubuMVC.OwinHost
             // TODO: This is a hack, better way to accomplish this?
             _environment[OwinConstants.ResponseStatusCodeKey] = HttpStatusCode.Redirect;
             AppendHeader("Location", url);
-            Write(string.Format("<html><head><title>302 Found</title></head><body><h1>Found</h1><p>The document has moved <a href='{0}'>here</a>.</p></body></html>", url));
+            Write(
+                string.Format(
+                    "<html><head><title>302 Found</title></head><body><h1>Found</h1><p>The document has moved <a href='{0}'>here</a>.</p></body></html>",
+                    url));
         }
 
         public void WriteResponseCode(HttpStatusCode status, string description = null)
@@ -72,13 +74,14 @@ namespace FubuMVC.OwinHost
 
         public void Write(Action<Stream> output)
         {
-            var outputStream = _environment.Get<Stream>(OwinConstants.ResponseBodyKey);
-            output(outputStream);
+            output(_output);
         }
 
         public void Flush()
         {
-            // TODO -- honestly have no idea what to do here
+            var response = _environment.Get<Stream>(OwinConstants.ResponseBodyKey);
+            _output.Position =0;
+            _output.CopyTo(response);
         }
     }
 }

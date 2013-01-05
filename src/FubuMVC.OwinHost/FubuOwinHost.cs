@@ -5,6 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Routing;
 using FubuCore;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Handlers;
 using FubuMVC.OwinHost.Readers;
