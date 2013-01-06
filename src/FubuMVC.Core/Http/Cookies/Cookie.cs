@@ -105,6 +105,15 @@ namespace FubuMVC.Core.Http.Cookies
 
                 return _states.Single().Value;
             }
+            set
+            {
+                if (_states.Count != 1)
+                {
+                    throw new InvalidOperationException("This action is only valid for single value cookies");
+                }
+
+                _states.Single().Value = value;
+            }
         }
 
         public Cookie Add(CookieState state)

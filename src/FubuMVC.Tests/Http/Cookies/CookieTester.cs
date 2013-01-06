@@ -3,6 +3,7 @@ using System.Globalization;
 using FubuMVC.Core.Http.Cookies;
 using NUnit.Framework;
 using FubuTestingSupport;
+using System.Linq;
 
 namespace FubuMVC.Tests.Http.Cookies
 {
@@ -56,6 +57,19 @@ namespace FubuMVC.Tests.Http.Cookies
         {
             var cookie = new Cookie("a", "2");
             cookie.Value.ShouldEqual("2");
+        }
+
+        [Test]
+        public void can_set_value_for_single_value_cookies()
+        {
+            var cookie = new Cookie("a", "2");
+            cookie.Value.ShouldEqual("2");
+
+            cookie.Value = "3";
+
+            cookie.Value.ShouldEqual("3");
+
+            cookie.States.Single().Value.ShouldEqual("3");
         }
 
         [Test]

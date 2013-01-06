@@ -187,11 +187,6 @@ namespace FubuMVC.Tests.Registration
             throw new NotImplementedException();
         }
 
-        public void AppendCookie(HttpCookie cookie)
-        {
-            throw new NotImplementedException();
-        }
-
         public void AppendHeader(string key, string value)
         {
             throw new NotImplementedException();
