@@ -7,14 +7,21 @@ using FubuLocalization;
 
 namespace FubuMVC.Core.Ajax
 {
+    /// <summary>
+    /// Used as the return value from Ajax endpoints to standardize the communication and interaction of the server
+    /// and client.  Several built in conventions and external Bottles work with AjaxContinuation
+    /// </summary>
     public class AjaxContinuation
     {
         private readonly Cache<string, object> _data = new Cache<string, object>();
         private readonly IList<AjaxError> _errors = new List<AjaxError>();
 
-        // Probably put some convenience static builder methods here for things like
 
-        // You'll want to smuggle in your own data in all likelihood
+        /// <summary>
+        /// Apply key/value pairs
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         [IndexerName("Data")]
         public object this[string key]
         {
@@ -22,19 +29,32 @@ namespace FubuMVC.Core.Ajax
             set { _data[key] = value; }
         }
 
-        // I don't care enough about Law of Demeter here
-        // to do anything differently
+        /// <summary>
+        /// List of AjaxError's to communicate validation errors to the client
+        /// </summary>
         public IList<AjaxError> Errors
         {
             get { return _errors; }
         }
 
+        /// <summary>
+        /// If expressed, tells the client page to navigate the browser to the designated url
+        /// </summary>
         public string NavigatePage { get; set; }
+
         public bool Success { get; set; }
+        
         public string Message { get; set; }
 
+        /// <summary>
+        /// Should the entire page or at least the part of the UI that originated the Ajax call be refreshed?
+        /// </summary>
         public bool ShouldRefresh { get; set; }
 
+        /// <summary>
+        /// Convenience method to get an empty AjaxContinuation{Success = true}
+        /// </summary>
+        /// <returns></returns>
         public static AjaxContinuation Successful()
         {
             return new AjaxContinuation
@@ -43,11 +63,21 @@ namespace FubuMVC.Core.Ajax
             };
         }
 
+        /// <summary>
+        /// Convenience method to build an AjaxContinuation for a failure message
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public static AjaxContinuation ForMessage(StringToken message)
         {
             return ForMessage(message.ToString());
         }
 
+        /// <summary>
+        /// Convenience method to build an AjaxContinuation for a failure message
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public static AjaxContinuation ForMessage(string message)
         {
             return new AjaxContinuation
@@ -56,8 +86,10 @@ namespace FubuMVC.Core.Ajax
             };
         }
 
-        // *This* will be serialized to Json so that the resulting blob
-        // of json data is easier to work with in JavaScript
+        /// <summary>
+        /// Builds a dictionary that FubuMVC will serialize to Json
+        /// </summary>
+        /// <returns></returns>
         public virtual IDictionary<string, object> ToDictionary()
         {
             var dict = new Dictionary<string, object>
@@ -79,6 +111,11 @@ namespace FubuMVC.Core.Ajax
             return dict;
         }
 
+        /// <summary>
+        /// Does this AjaxContinuation have a value for the key?
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public virtual bool HasData(string key)
         {
             return _data.Has(key);

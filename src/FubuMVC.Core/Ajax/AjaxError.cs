@@ -1,13 +1,17 @@
 namespace FubuMVC.Core.Ajax
 {
+    /// <summary>
+    /// DTO class to standardize the transmission of validation errors
+    /// to a client page from the server.
+    /// </summary>
     public class AjaxError
     {
-        // error/warning/I don't know.
+        /// <summary>
+        /// error/warning/etc.
+        /// </summary>
         public string category { get; set; }
 
-        // Use this to attach the server side validation errors 
         public string field { get; set; }
-		// Use this to display the accessor (via localization)
 		public string label { get; set; }
         public string message { get; set; }
     }
