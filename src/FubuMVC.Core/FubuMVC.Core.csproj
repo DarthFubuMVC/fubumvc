@@ -343,8 +343,6 @@
     <Compile Include="Http\ICurrentChain.cs" />
     <Compile Include="Http\ICurrentHttpRequest.cs" />
     <Compile Include="Http\IRequestHeaders.cs" />
-    <Compile Include="Http\MimetypeRequestConditional.cs" />
-    <Compile Include="Http\IRequestConditional.cs" />
     <Compile Include="Http\MimeTypeList.cs" />
     <Compile Include="Http\AspNet\AspNetStreamingData.cs" />
     <Compile Include="Http\NulloHttpWriter.cs" />

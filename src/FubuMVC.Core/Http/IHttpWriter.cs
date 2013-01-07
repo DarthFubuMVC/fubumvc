@@ -7,18 +7,66 @@ using FubuMVC.Core.Http.Compression;
 
 namespace FubuMVC.Core.Http
 {
+    /// <summary>
+    /// Lowest level service to write to the Http output
+    /// </summary>
     public interface IHttpWriter
     {
+        /// <summary>
+        /// Write a header value to the response
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
         void AppendHeader(string key, string value);
+
+        /// <summary>
+        /// Write the contents of the file location out into the output stream
+        /// </summary>
+        /// <param name="file"></param>
         void WriteFile(string file);
+
+        /// <summary>
+        /// Set the Content-Type response header
+        /// </summary>
+        /// <param name="contentType"></param>
         void WriteContentType(string contentType);
+
+        /// <summary>
+        /// Write string content to the output.  This method can be called multiple times
+        /// for each request.  Many Bothans died to bring you this functionality.
+        /// </summary>
+        /// <param name="content"></param>
         void Write(string content);
+
+        /// <summary>
+        /// Writes a 302 redirect response and body to the http output
+        /// </summary>
+        /// <param name="url"></param>
         void Redirect(string url);
+
+        /// <summary>
+        /// Writes the status code and an optional status description to the response
+        /// </summary>
+        /// <param name="status"></param>
+        /// <param name="description"></param>
         void WriteResponseCode(HttpStatusCode status, string description = null);
 
+        /// <summary>
+        /// Applies output encoding to the response.  Mostly used by FubuMVC's internal support for content compression
+        /// </summary>
+        /// <param name="encoding"></param>
         void UseEncoding(IHttpContentEncoding encoding);
 
+        /// <summary>
+        /// Write directly to the output stream
+        /// </summary>
+        /// <param name="output"></param>
         void Write(Action<Stream> output);
+
+        /// <summary>
+        /// Force the output to write to the http output.  Do NOT use this unless you know exactly what the ramifications are, and
+        /// this varies by host type.  
+        /// </summary>
         void Flush();
     }
 

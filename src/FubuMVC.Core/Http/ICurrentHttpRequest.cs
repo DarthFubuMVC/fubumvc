@@ -51,6 +51,10 @@ namespace FubuMVC.Core.Http
         /// <returns></returns>
         IEnumerable<string> GetHeader(string key);
 
+        /// <summary>
+        /// All request header keys
+        /// </summary>
+        /// <returns></returns>
         IEnumerable<string> AllHeaderKeys();
     }
 

@@ -22,9 +22,18 @@ namespace FubuMVC.Core.Http
         /// <returns></returns>
         T BindToHeaders<T>();
 
-
+        /// <summary>
+        /// Does the current request have a value for this header
+        /// </summary>
+        /// <param name="header"></param>
+        /// <returns></returns>
         bool HasHeader(string header);
 
+        /// <summary>
+        /// Tests whether or not the current request originated from XmlHttpRequest inside
+        /// a browser by testing for the X-Requested-With request header
+        /// </summary>
+        /// <returns></returns>
         bool IsAjaxRequest();
     }
 }

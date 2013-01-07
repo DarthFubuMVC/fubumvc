@@ -11,7 +11,12 @@ namespace FubuMVC.Core.Http
         /// <value></value>
         BehaviorChain Current { get; }
 
+        /// <summary>
+        /// The original BehaviorChain that started this request.  This will
+        /// be different than the Current property within partial requests
+        /// </summary>
         BehaviorChain OriginatingChain { get; }
+
         IDictionary<string, object> RouteData { get; }
 
         // This is necessary if we wanna get handle partials too
