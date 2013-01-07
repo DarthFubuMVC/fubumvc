@@ -3,6 +3,7 @@ using System.Diagnostics;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Bootstrapping;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using NUnit.Framework;

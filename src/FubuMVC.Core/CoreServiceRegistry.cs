@@ -20,6 +20,9 @@ using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core
 {
+    /// <summary>
+    /// The core runtime service registry for a FubuMVC application
+    /// </summary>
     public class CoreServiceRegistry : ServiceRegistry
     {
         public CoreServiceRegistry()

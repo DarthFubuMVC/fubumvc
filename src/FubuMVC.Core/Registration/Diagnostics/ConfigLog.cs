@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using FubuCore.Util;
+using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Registration.Nodes;
 using System.Linq;
 

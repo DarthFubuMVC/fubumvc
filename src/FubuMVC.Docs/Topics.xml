@@ -4,14 +4,21 @@
       <Topic title="Detecting an Ajax Request"/>
     </Topic>
   </Ajax>
-  <Behaviors>
-    <Topic title="Russian Doll Pattern"/>
-    <Topic title="Behaviors">
-      <Topic title="Wrappers">
+  <Architecture>
+    <Topic title="FubuMVC Architecture">
+      <Topic title="Russian Doll Pattern"/>
+      <Behaviors>
         
-      </Topic>
+        <Topic title="Behaviors">
+          <Topic title="Wrappers">
+
+          </Topic>
+        </Topic>
+      </Behaviors>
     </Topic>
-  </Behaviors>
+
+  </Architecture>
+
   <Bottles>
     <Topic title="Modularity with Bottles">
       <Topic title="FubuMVC Bottle Loading"/>
@@ -20,6 +27,23 @@
       <Topic title="Linked Bottles"/>
     </Topic>
   </Bottles>
+  <Configuration>
+    <Topic title="Configuring FubuMVC">
+      <Topic title="The Configuration DSL">
+
+      </Topic>
+      <Topic title="The Configuration Model">
+        <Topic title="IConfigurationAction"/>
+      </Topic>
+      <Conventions>
+        <Topic title="Conventions and Policies">
+          <Topic title="Out of the Box Conventions"/>
+          <Topic title="Custom Policies" />
+        </Topic>
+      </Conventions>
+
+    </Topic>
+  </Configuration>
   <Conneg>
     <Topic title="Content Negotiation">
       <Topic title="How it Works"/>
@@ -33,6 +57,7 @@
       <Topic title="Html Endpoints" />
     </Topic>
   </Conneg>
+
   <Hosts>
     <Topic title="Hosts"/>
     <AspNet>

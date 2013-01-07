@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.OwinHost;
 using FubuMVC.TestingHarness;
 using NUnit.Framework;

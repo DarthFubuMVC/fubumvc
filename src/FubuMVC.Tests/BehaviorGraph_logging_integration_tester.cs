@@ -2,6 +2,7 @@
 using AssemblyPackage;
 using Bottles;
 using FubuMVC.Core;
+using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;

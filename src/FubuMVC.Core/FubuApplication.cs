@@ -8,6 +8,8 @@ using Bottles.Environment;
 using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core.Bootstrapping;
+using FubuMVC.Core.Configuration;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;

@@ -5,8 +5,9 @@ namespace FubuMVC.Docs
         public FubuMvcMainTopicTopicRegistry()
         {
             For<FubuMVC.Docs.FubuMvcMainTopic>().Append<FubuMVC.Docs.Ajax.AjaxEndpoints>();
-            For<FubuMVC.Docs.FubuMvcMainTopic>().Append<FubuMVC.Docs.Behaviors.RussianDollPattern>();
-            For<FubuMVC.Docs.FubuMvcMainTopic>().Append<FubuMVC.Docs.Behaviors.Behaviors>();
+            For<FubuMVC.Docs.FubuMvcMainTopic>().Append<FubuMVC.Docs.Architecture.FubumvcArchitecture>();
+            For<FubuMVC.Docs.FubuMvcMainTopic>().Append<FubuMVC.Docs.Bottles.ModularityWithBottles>();
+            For<FubuMVC.Docs.FubuMvcMainTopic>().Append<FubuMVC.Docs.Configuration.ConfiguringFubumvc>();
             For<FubuMVC.Docs.FubuMvcMainTopic>().Append<FubuMVC.Docs.Conneg.ContentNegotiation>();
             For<FubuMVC.Docs.FubuMvcMainTopic>().Append<FubuMVC.Docs.Hosts.Hosts>();
             For<FubuMVC.Docs.FubuMvcMainTopic>().Append<FubuMVC.Docs.Hosts.AspNet.HostingInAsp.Net>();
@@ -17,7 +18,24 @@ namespace FubuMVC.Docs
 
             For<FubuMVC.Docs.Ajax.AjaxEndpoints>().Append<FubuMVC.Docs.Ajax.DetectingAnAjaxRequest>();
 
-            For<FubuMVC.Docs.Behaviors.Behaviors>().Append<FubuMVC.Docs.Behaviors.Wrappers>();
+            For<FubuMVC.Docs.Architecture.FubumvcArchitecture>().Append<FubuMVC.Docs.Architecture.RussianDollPattern>();
+            For<FubuMVC.Docs.Architecture.FubumvcArchitecture>().Append<FubuMVC.Docs.Architecture.Behaviors.Behaviors>();
+
+            For<FubuMVC.Docs.Architecture.Behaviors.Behaviors>().Append<FubuMVC.Docs.Architecture.Behaviors.Wrappers>();
+
+            For<FubuMVC.Docs.Bottles.ModularityWithBottles>().Append<FubuMVC.Docs.Bottles.FubumvcBottleLoading>();
+            For<FubuMVC.Docs.Bottles.ModularityWithBottles>().Append<FubuMVC.Docs.Bottles.AssemblyBottles>();
+            For<FubuMVC.Docs.Bottles.ModularityWithBottles>().Append<FubuMVC.Docs.Bottles.ZipBottles>();
+            For<FubuMVC.Docs.Bottles.ModularityWithBottles>().Append<FubuMVC.Docs.Bottles.LinkedBottles>();
+
+            For<FubuMVC.Docs.Configuration.ConfiguringFubumvc>().Append<FubuMVC.Docs.Configuration.TheConfigurationDsl>();
+            For<FubuMVC.Docs.Configuration.ConfiguringFubumvc>().Append<FubuMVC.Docs.Configuration.TheConfigurationModel>();
+            For<FubuMVC.Docs.Configuration.ConfiguringFubumvc>().Append<FubuMVC.Docs.Configuration.Conventions.ConventionsAndPolicies>();
+
+            For<FubuMVC.Docs.Configuration.TheConfigurationModel>().Append<FubuMVC.Docs.Configuration.Iconfigurationaction>();
+
+            For<FubuMVC.Docs.Configuration.Conventions.ConventionsAndPolicies>().Append<FubuMVC.Docs.Configuration.Conventions.OutOfTheBoxConventions>();
+            For<FubuMVC.Docs.Configuration.Conventions.ConventionsAndPolicies>().Append<FubuMVC.Docs.Configuration.Conventions.CustomPolicies>();
 
             For<FubuMVC.Docs.Conneg.ContentNegotiation>().Append<FubuMVC.Docs.Conneg.HowItWorks>();
             For<FubuMVC.Docs.Conneg.ContentNegotiation>().Append<FubuMVC.Docs.Conneg.DefaultConventions>();

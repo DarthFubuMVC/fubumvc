@@ -7,6 +7,9 @@ namespace FubuMVC.Core
 {
     using FubuCore;
 
+    /// <summary>
+    /// Helper class for url string manipulation
+    /// </summary>
     public static class UrlContext
     {
         static UrlContext()

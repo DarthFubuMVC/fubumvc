@@ -6,6 +6,9 @@ using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core
 {
+    /// <summary>
+    /// Represents a running FubuMVC application, with access to the key parts of the application
+    /// </summary>
     public class FubuRuntime : IDisposable
     {
         private readonly IContainerFacility _facility;

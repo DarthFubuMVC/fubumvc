@@ -48,6 +48,13 @@ namespace FubuMVC.Core
         bool HasNewEndpoint<T>();
         bool HasNewEndpoint(Type type);
 
+        /// <summary>
+        /// Find an Endpoint for the given handler type, method, and category or http method
+        /// </summary>
+        /// <param name="handlerType"></param>
+        /// <param name="method"></param>
+        /// <param name="categoryOrHttpMethod"></param>
+        /// <returns></returns>
         Endpoint EndpointFor(Type handlerType, MethodInfo method, string categoryOrHttpMethod = null);
     }
 

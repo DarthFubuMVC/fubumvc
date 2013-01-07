@@ -7,6 +7,9 @@ using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core
 {
+    /// <summary>
+    /// Helper class to find and apply concrete IFubuRegistryExtension classes in Bottle assemblies
+    /// </summary>
     public static class FubuExtensionFinder
     {
         public static void ApplyExtensions(FubuRegistry registry, IEnumerable<Assembly> assemblies)

@@ -1,5 +1,8 @@
 namespace FubuMVC.Core
 {
+    /// <summary>
+    /// Constants for the various configuration type categories of an IConfigurationAction
+    /// </summary>
     public static class ConfigurationType
     {
         public const string Settings = "Settings";

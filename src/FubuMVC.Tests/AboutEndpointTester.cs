@@ -1,4 +1,5 @@
 ﻿using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using NUnit.Framework;
 using FubuTestingSupport;

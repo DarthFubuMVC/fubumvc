@@ -1,4 +1,5 @@
 using FubuCore.Descriptions;
+using FubuMVC.Core.Configuration;
 
 namespace FubuMVC.Core.Registration.Diagnostics
 {

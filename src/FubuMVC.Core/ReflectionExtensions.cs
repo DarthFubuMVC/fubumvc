@@ -8,6 +8,13 @@ namespace FubuMVC.Core
 {
     public static class ReflectionExtensions
     {
+        /// <summary>
+        /// You must use this extension method in place of MethodInfo.Equals(MethodInfo) 
+        /// because MethodInfo.Equals is a liar.
+        /// </summary>
+        /// <param name="method1"></param>
+        /// <param name="method2"></param>
+        /// <returns></returns>
         public static bool Matches(this MethodInfo method1, MethodInfo method2)
         {
             if (method1.DeclaringType != method2.DeclaringType || method1.Name != method2.Name)
@@ -24,6 +31,12 @@ namespace FubuMVC.Core
             return true;
         }
 
+        /// <summary>
+        /// Equivalency check for ParameterInfo objects
+        /// </summary>
+        /// <param name="parameter1"></param>
+        /// <param name="parameter2"></param>
+        /// <returns></returns>
         public static bool Matches(this ParameterInfo parameter1, ParameterInfo parameter2)
         {
             return parameter1.Name == parameter2.Name && parameter1.ParameterType == parameter2.ParameterType;

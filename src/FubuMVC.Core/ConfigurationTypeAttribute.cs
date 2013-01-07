@@ -2,6 +2,10 @@ using System;
 
 namespace FubuMVC.Core
 {
+    /// <summary>
+    /// Used on IConfigurationAction types to control the relative placement
+    /// of an IConfigurationAction in the BehaviorGraph construction cycle
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class, Inherited = true)]
     public class ConfigurationTypeAttribute : Attribute
     {

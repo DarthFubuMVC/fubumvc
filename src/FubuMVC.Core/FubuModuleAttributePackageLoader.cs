@@ -11,6 +11,10 @@ using FubuMVC.Core.Packaging;
 
 namespace FubuMVC.Core
 {
+    /// <summary>
+    /// Bottles IPackageLoader that finds and loads assemblies in the application binary directory marked
+    /// with the [FubuModule] attribute
+    /// </summary>
     public class FubuModuleAttributePackageLoader : IPackageLoader
     {
         public IEnumerable<IPackageInfo> Load(IPackageLog log)

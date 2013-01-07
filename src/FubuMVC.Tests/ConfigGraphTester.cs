@@ -2,6 +2,7 @@
 using System.Reflection;
 using Bottles.PackageLoaders.Assemblies;
 using FubuMVC.Core;
+using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Diagnostics;
 using NUnit.Framework;

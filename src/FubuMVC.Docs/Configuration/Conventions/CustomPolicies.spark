@@ -1,0 +1,11 @@
+<viewdata model="FubuMVC.Docs.Configuration.Conventions.CustomPolicies"/>
+<use master="Topic" />
+<content:main>
+
+<markdown>
+  <Section title="[CanBeMultiples]" id="canbemultiples_attribute">
+    
+  </Section>
+</markdown>
+
+</content:main>

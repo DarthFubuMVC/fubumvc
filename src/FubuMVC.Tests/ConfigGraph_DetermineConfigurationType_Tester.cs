@@ -1,5 +1,6 @@
 using System;
 using FubuMVC.Core;
+using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuTestingSupport;
@@ -39,7 +40,7 @@ namespace FubuMVC.Tests
         }
 
 
-        [Discovery]
+        [ConfigurationType(ConfigurationType.Discovery)]
         public class FakePolicy4 : IConfigurationAction
         {
             public void Configure(BehaviorGraph graph)

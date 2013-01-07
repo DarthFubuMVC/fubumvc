@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using FubuCore;
 using FubuCore.Util;
+using FubuMVC.Core.Configuration;
 
 namespace FubuMVC.Core.Registration.DSL
 {

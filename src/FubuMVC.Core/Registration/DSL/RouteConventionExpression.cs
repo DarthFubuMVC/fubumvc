@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuCore.Reflection;
+using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;

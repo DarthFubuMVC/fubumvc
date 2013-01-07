@@ -69,11 +69,17 @@ namespace FubuMVC.Core
         }
     }
 
-
+    /// <summary>
+    /// Detects the machine or environment "mode" of a FubuMVC application.  Generally used
+    /// to latch development features
+    /// </summary>
     public static class FubuMode
     {
         public static readonly string Development = "Development";
 
+        /// <summary>
+        /// Change the mechanism used to detect the FubuMode
+        /// </summary>
         public static IModeDetector Detector
         {
             get { return _detector; }
@@ -94,6 +100,11 @@ namespace FubuMVC.Core
             Reset();
         }
 
+        /// <summary>
+        /// Sets the detection strategy back to the default for the runtime,
+        /// environment variable detection for Windows, and the .fubumode file
+        /// while running in Mono
+        /// </summary>
         public static void Reset()
         {
             if (IsRunningOnMono())
@@ -109,21 +120,38 @@ namespace FubuMVC.Core
         private static Lazy<string> _determineMode;
         private static IModeDetector _detector;
 
+        /// <summary>
+        /// Is the "Development" mode detected?
+        /// </summary>
+        /// <returns></returns>
         public static bool InDevelopment()
         {
             return Mode().Equals(Development, StringComparison.OrdinalIgnoreCase);
         }
 
+        /// <summary>
+        /// The name of the FubuMode detected
+        /// </summary>
+        /// <returns></returns>
         public static string Mode()
         {
             return _determineMode.Value;
         }
 
+        /// <summary>
+        /// Programmatically set the FubuMode.  Generally only used for testing scenarios
+        /// </summary>
+        /// <param name="mode"></param>
         public static void Mode(string mode)
         {
             _determineMode = new Lazy<string>(() => mode);
         }
 
+        /// <summary>
+        /// Conditionally execute code if the current mode matches the given node
+        /// </summary>
+        /// <param name="mode"></param>
+        /// <returns></returns>
         public static DoExpression ForMode(string mode)
         {
             return new DoExpression(Mode() == mode);
@@ -150,6 +178,10 @@ namespace FubuMVC.Core
                 _shouldDo = shouldDo;
             }
 
+            /// <summary>
+            /// Perform an action if the mode matches
+            /// </summary>
+            /// <param name="action"></param>
             public void Do(Action action)
             {
                 if (_shouldDo)

@@ -1,4 +1,5 @@
 ﻿using FubuCore.Descriptions;
+using FubuMVC.Core.Diagnostics;
 
 namespace FubuMVC.Core.Runtime
 {
