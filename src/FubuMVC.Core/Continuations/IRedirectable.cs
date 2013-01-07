@@ -61,6 +61,10 @@ namespace FubuMVC.Core.Continuations
         }
     }
 
+    /// <summary>
+    /// Returns an IRedirectable that transfers to another chain
+    /// </summary>
+    /// <typeparam name="TModel"></typeparam>
     public static class Transfer<TModel> where TModel : IRedirectable, new()
     {
         /// <summary>
