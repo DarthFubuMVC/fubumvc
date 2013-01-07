@@ -8,6 +8,9 @@ using FubuMVC.Core.Runtime.Formatters;
 
 namespace FubuMVC.Core
 {
+    /// <summary>
+    /// Marks a property as a route input
+    /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public class RouteInputAttribute : Attribute
     {
@@ -28,12 +31,21 @@ namespace FubuMVC.Core
         public string DefaultValue { get; set; }
     }
 
+    /// <summary>
+    /// Marks a property as bound to the querystring so that a non-default
+    /// value of the marked property will be added to the generated url
+    /// in IUrlRegistry
+    /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public class QueryStringAttribute : Attribute
     {
     }
 
     // TODO -- change to a ModifyChainAttribute
+    /// <summary>
+    /// Explicitly specify the url pattern for the chain containing this method
+    /// as its ActionCall.  Supports inputs like "folder/find/{Id}"
+    /// </summary>
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
     public class UrlPatternAttribute : Attribute
     {
@@ -50,6 +62,11 @@ namespace FubuMVC.Core
         }
     }
 
+    /// <summary>
+    /// Alters the route generation in the default routing conventions
+    /// to override the usual handling of the class name with the value of 
+    /// the [UrlFolder] name
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     public class UrlFolderAttribute : Attribute
     {
@@ -66,6 +83,9 @@ namespace FubuMVC.Core
         }
     }
 
+    /// <summary>
+    /// Explicitly directs FubuMVC that this endpoint should support output to Json
+    /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
     public class JsonEndpointAttribute : ModifyChainAttribute
     {
@@ -75,6 +95,10 @@ namespace FubuMVC.Core
         }
     }
 
+    /// <summary>
+    /// Explicitly marks this endpoint as asymmetric Json, meaning that it
+    /// accepts either form posts or Json posts and outputs json
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class AsymmetricJsonAttribute : ModifyChainAttribute
     {
@@ -84,7 +108,10 @@ namespace FubuMVC.Core
         }
     }
 
-
+    /// <summary>
+    /// Explicitly applies the selected content negotiation policies and formats
+    /// to this endpoint
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class ConnegAttribute : ModifyChainAttribute
     {
@@ -149,6 +176,10 @@ namespace FubuMVC.Core
         All = 8
     }
 
+    /// <summary>
+    /// Explicitly marks this endpoint as "symmetric Json," meaning that it
+    /// will only accept Json and output to Json
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class SymmetricJsonAttribute : ModifyChainAttribute
     {
@@ -159,12 +190,16 @@ namespace FubuMVC.Core
     }
 
     /// <summary>
-    ///   This is a marker interface that denotes a Json Endpoint
+    ///  This is a marker interface that denotes a Json Endpoint
     /// </summary>
     public interface JsonMessage
     {
     }
 
+    /// <summary>
+    /// Explicitly marks this endpoint as returning Html by calling 
+    /// the ToString() method on the output as mimetype "text/html"
+    /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
     public class HtmlEndpointAttribute : ModifyChainAttribute
     {
@@ -176,6 +211,9 @@ namespace FubuMVC.Core
     }
 
     // TODO -- this has to take place before routes
+    /// <summary>
+    /// Explicitly marks an endpoint as "partial only"
+    /// </summary>
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
     public class FubuPartialAttribute : ModifyChainAttribute
     {
@@ -185,7 +223,11 @@ namespace FubuMVC.Core
         }
     }
 
-
+    /// <summary>
+    /// Applies one or more "Wrapper" behaviors of the given types to 
+    /// this chain.  The Wrapper nodes are applied immediately before
+    /// this ActionCall, from inside to outside
+    /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     public class WrapWithAttribute : ModifyChainAttribute
     {
@@ -207,7 +249,10 @@ namespace FubuMVC.Core
         }
     }
 
-
+    /// <summary>
+    /// Explicitly adds a category to the Route of this endpoint.  Used to resolve or match
+    /// url's or endpoints in usages like IUrlRegistry.UrlFor(model, category)
+    /// </summary>
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false)]
     public class UrlRegistryCategoryAttribute : ModifyChainAttribute
     {
@@ -229,6 +274,10 @@ namespace FubuMVC.Core
         }
     }
 
+    /// <summary>
+    /// Marks this endpoint as the creator of the designated type
+    /// so that this endpoint will resolve as IUrlRegistry.UrlForNew(type)
+    /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     public class UrlForNewAttribute : ModifyChainAttribute
     {
@@ -250,30 +299,12 @@ namespace FubuMVC.Core
         }
     }
 
+    /// <summary>
+    /// FubuMVC applications will treat any assembly marked with the 
+    /// [FubuModule] attribute as a Bottle
+    /// </summary>
     [AttributeUsage(AttributeTargets.Assembly)]
     public class FubuModuleAttribute : Attribute
     {
-    }
-
-
-    [AttributeUsage(AttributeTargets.Assembly)]
-    public class FubuAppAttribute : Attribute
-    {
-        private Type _type;
-
-        public Type ApplicationSourceType
-        {
-            get { return _type; }
-            set
-            {
-                if (!value.CanBeCastTo<IApplicationSource>() || !value.IsConcreteWithDefaultCtor())
-                {
-                    throw new ArgumentOutOfRangeException("ApplicationSourceType",
-                                                          "ApplicationSourceType must be a concrete class of IApplicationSource with a no-arg constructor");
-                }
-
-                _type = value;
-            }
-        }
     }
 }

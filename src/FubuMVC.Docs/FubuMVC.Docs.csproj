@@ -44,8 +44,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ajax\DetectingAnAjaxRequest.cs" />
-    <Compile Include="Ajax\WorkingWithAjaxEndpoints.cs" />
+    <Compile Include="Conneg\ContentNegotiation.cs" />
+    <Compile Include="Conneg\DefaultConventions.cs" />
+    <Compile Include="Conneg\JsonEndpoints.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Routing\RoutingAttributes.cs" />
+    <Compile Include="Routing\WorkingWithRouting.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
@@ -58,11 +62,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Ajax\DetectingAnAjaxRequest.spark" />
-    <None Include="Ajax\WorkingWithAjaxEndpoints.spark" />
+    <None Include="Conneg\ContentNegotiation.spark" />
+    <None Include="Conneg\DefaultConventions.spark" />
+    <None Include="Conneg\JsonEndpoints.spark" />
     <None Include="packages.config" />
     <EmbeddedResource Include="pak-Config.zip" />
     <EmbeddedResource Include="pak-Data.zip" />
     <EmbeddedResource Include="pak-WebContent.zip" />
+    <None Include="Routing\RoutingAttributes.spark" />
+    <None Include="Routing\WorkingWithRouting.spark" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Topics.xml" />
