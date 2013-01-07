@@ -5,6 +5,10 @@ using FubuCore.Configuration;
 
 namespace FubuMVC.Core
 {
+    // TODO -- move this to fubu.exe
+    /// <summary>
+    /// Describes a FubuMVC application for simple hosts and test automation infrastructure
+    /// </summary>
     [Serializable]
     public class ApplicationSettings
     {
@@ -14,14 +18,35 @@ namespace FubuMVC.Core
             ParentFolder = AppDomain.CurrentDomain.BaseDirectory;
         }
 
+        /// <summary>
+        /// The root directory of the application, equivalent to FubuMvcPackageFacility.PhysicalPath
+        /// </summary>
         public string PhysicalPath { get; set; }
+
+        /// <summary>
+        /// The root url of the application.  This is primarily used for test automation scenarios
+        /// where the FubuMVC application is hosted separately from the automated test code
+        /// </summary>
         public string RootUrl { get; set; }
+
+
         public string Name { get; set; }
+        
+        /// <summary>
+        /// Default is 5500
+        /// </summary>
         public int Port { get; set; }
 
-        // Needs to be an assembly qualified name of a class implementing IApplicationSource
+        /// <summary>
+        /// Needs to be an assembly qualified name of a class implementing IApplicationSource
+        /// </summary>
         public string ApplicationSourceName { get; set; }
 
+        /// <summary>
+        /// Reads an Xml serialized ApplicationSettings object from a file
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
         public static ApplicationSettings Read(string file)
         {
             var settingsData = SettingsData.ReadFromFile(SettingCategory.core, file);
@@ -32,8 +57,16 @@ namespace FubuMVC.Core
             return settings;
         }
 
+        /// <summary>
+        /// The parent folder containing an ApplicationSettings object loaded from the file system
+        /// </summary>
         public string ParentFolder { get; set; }
 
+        /// <summary>
+        /// Reads the ApplicationSettings for a named IApplicationSource
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public static ApplicationSettings ReadByName(string name)
         {
             var file = GetFileNameFor(name);
@@ -61,14 +94,24 @@ namespace FubuMVC.Core
                 return Read(file);
             }
 
+            // TODO -- stop throwing the exception!!!!!  It's annoying when running Serenity tests
             throw new ArgumentOutOfRangeException("Cannot find the requested file for " + GetFileNameFor(name) + " in the current directory or two parents");
         }
 
+        /// <summary>
+        /// Reads the ApplicationSettings for a named IApplicationSource
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static ApplicationSettings ReadFor<T>() where T : IApplicationSource
         {
             return ReadByName(typeof (T).Name.Replace("Application", ""));
         }
 
+        /// <summary>
+        /// Determines the application folder for the application described by this settings class
+        /// </summary>
+        /// <returns></returns>
         public string GetApplicationFolder()
         {
             if (PhysicalPath.IsEmpty())
@@ -83,6 +126,9 @@ namespace FubuMVC.Core
             return ParentFolder.ToFullPath().AppendPath(PhysicalPath).ToFullPath();
         }
 
+        /// <summary>
+        /// Writes this instance of ApplicationSettings back to the original filename
+        /// </summary>
         public void Write()
         {
             var file = GetFileName();
@@ -101,18 +147,31 @@ namespace FubuMVC.Core
         }
 
         
-
+        /// <summary>
+        /// Returns the absolute path for this ApplicationSettings by its name
+        /// </summary>
+        /// <returns></returns>
         public string GetFileName()
         {
             var file = GetFileNameFor(Name);
             return ParentFolder.AppendPath(file);
         }
 
+        /// <summary>
+        /// Returns only the file name for this ApplicationSettings
+        /// </summary>
+        /// <param name="applicationName"></param>
+        /// <returns></returns>
         public static string GetFileNameFor(string applicationName)
         {
             return applicationName + ".application.config";
         }
 
+        /// <summary>
+        /// Builds the default ApplicationSettings object for type T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static ApplicationSettings For<T>() where T : IApplicationSource
         {
             return new ApplicationSettings{
@@ -123,6 +182,10 @@ namespace FubuMVC.Core
             };
         }
 
+        /// <summary>
+        /// FileSet that searches for all serialized ApplicationSetting objects
+        /// </summary>
+        /// <returns></returns>
         public static FileSet FileSearch()
         {
             return new FileSet{
@@ -131,6 +194,11 @@ namespace FubuMVC.Core
             };
         }
 
+        /// <summary>
+        /// Creates a FileSet to search for the ApplicationSettings for a specific application
+        /// </summary>
+        /// <param name="applicationName"></param>
+        /// <returns></returns>
         public static FileSet FileSearch(string applicationName)
         {
             return new FileSet
