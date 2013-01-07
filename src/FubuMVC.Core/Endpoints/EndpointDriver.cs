@@ -22,6 +22,10 @@ namespace FubuMVC.Core.Endpoints
         xml
     }
 
+    /// <summary>
+    /// Primarily used to "drive" a remote or embedded FubuMVC application in testing scenarios
+    /// by issuing http requests and reading the corresponding response
+    /// </summary>
     public class EndpointDriver
     {
         private readonly IUrlRegistry _urls;
@@ -31,6 +35,11 @@ namespace FubuMVC.Core.Endpoints
             _urls = urls;
         }
 
+        /// <summary>
+        /// Send an http request to the application
+        /// </summary>
+        /// <param name="invocation"></param>
+        /// <returns></returns>
         public HttpResponse Send(EndpointInvocation invocation)
         {
             var request = requestForUrlTarget(invocation.Target);
@@ -43,6 +52,15 @@ namespace FubuMVC.Core.Endpoints
             return request.ToHttpCall();
         } 
 
+        /// <summary>
+        /// Reads all the public gettable properties of the target and issues an Http form post against the endpoint that
+        /// accepts a POST of type T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="target"></param>
+        /// <param name="contentType"></param>
+        /// <param name="accept"></param>
+        /// <returns></returns>
         public HttpResponse PostAsForm<T>(T target, string contentType = "application/x-www-form-urlencoded", string accept="*/*")
         {
             var dictionary = new Dictionary<string, object>();
@@ -64,6 +82,14 @@ namespace FubuMVC.Core.Endpoints
             });
         }
 
+        /// <summary>
+        /// Posts a file to the endpoint that accepts type T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="target"></param>
+        /// <param name="fileInputFormName"></param>
+        /// <param name="accept"></param>
+        /// <returns></returns>
         public HttpResponse PostFile<T>(T target, string fileInputFormName, string accept="*/*")
         {
             var boundary = "---------------------------" + DateTime.Now.Ticks.ToString("x");
@@ -102,6 +128,15 @@ namespace FubuMVC.Core.Endpoints
             return wr.ToHttpCall();
         }
 
+        /// <summary>
+        /// Posts target as serialized Json to the endpoint that accepts a POST of input.GetType()
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="target"></param>
+        /// <param name="input"></param>
+        /// <param name="contentType"></param>
+        /// <param name="accept"></param>
+        /// <returns></returns>
         public HttpResponse PostJson<T>(T target, object input, string contentType = "text/json", string accept = "*/*")
         {
             return post(target, contentType, accept, stream =>
@@ -115,6 +150,15 @@ namespace FubuMVC.Core.Endpoints
                 stream.Write(bytes, 0, bytes.Length);
             });
         }
+
+        /// <summary>
+        /// Posts target as serialized Json to the endpoint that accepts type T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="target"></param>
+        /// <param name="contentType"></param>
+        /// <param name="accept"></param>
+        /// <returns></returns>
         public HttpResponse PostJson<T>(T target, string contentType = "text/json", string accept = "*/*")
         {
             return post(target, contentType, accept, stream =>
@@ -129,6 +173,14 @@ namespace FubuMVC.Core.Endpoints
             });
         }
 
+        /// <summary>
+        /// Posts target as serialized xml to the endpoint that accepts type T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="target"></param>
+        /// <param name="contentType"></param>
+        /// <param name="accept"></param>
+        /// <returns></returns>
         public HttpResponse PostXml<T>(T target, string contentType = "text/xml", string accept = "*/*")
         {
             return post(target, contentType, accept, stream =>
@@ -144,6 +196,12 @@ namespace FubuMVC.Core.Endpoints
             });
         }
 
+        /// <summary>
+        /// Issues an Http GET for the url represented by subject
+        /// </summary>
+        /// <param name="subject"></param>
+        /// <param name="acceptType"></param>
+        /// <returns></returns>
         public HttpResponse GetBySubject(object subject, string acceptType = "*/*")
         {
             var request = requestForUrlTarget(subject);
@@ -155,6 +213,14 @@ namespace FubuMVC.Core.Endpoints
             return request.ToHttpCall();
         }
 
+        /// <summary>
+        /// Issues an Http GET to the designated controller action endpoint
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="expression"></param>
+        /// <param name="categoryOrHttpMethod"></param>
+        /// <param name="acceptType"></param>
+        /// <returns></returns>
         public HttpResponse Get<T>(Expression<Action<T>> expression, string categoryOrHttpMethod = null, string acceptType = "*/*")
         {
             var url = _urls.UrlFor(expression, categoryOrHttpMethod);
@@ -168,7 +234,7 @@ namespace FubuMVC.Core.Endpoints
         }
 
         /// <summary>
-        /// Executes a GET to the url
+        /// Executes a GET to the designated url
         /// </summary>
         /// <param name="url"></param>
         /// <param name="etag"></param>
@@ -203,12 +269,25 @@ namespace FubuMVC.Core.Endpoints
             return request.ToHttpCall();
         }
 
+        /// <summary>
+        /// Issues an Http GET to the endpoint that accepts input.GetType() and reads the 
+        /// response body as text
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public string ReadTextFrom(object input)
         {
             var url = _urls.UrlFor(input);
             return new WebClient().DownloadString(url);
         }
 
+        /// <summary>
+        /// Issues an Http GET to the endpoint that contains the designated controller
+        /// action
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="expression"></param>
+        /// <returns></returns>
         public string ReadTextFrom<T>(Expression<Action<T>> expression)
         {
             var url = _urls.UrlFor(expression);

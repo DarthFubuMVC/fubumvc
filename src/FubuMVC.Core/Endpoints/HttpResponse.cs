@@ -18,6 +18,7 @@ namespace FubuMVC.Core.Endpoints
             _body = new StreamReader(response.GetResponseStream(), Encoding.UTF8).ReadToEnd();
         }
 
+
         public HttpStatusCode StatusCode
         {
             get
@@ -86,21 +87,39 @@ namespace FubuMVC.Core.Endpoints
             return _body;
         }
 
+        /// <summary>
+        /// Tries to deserialize the response body as Json using the
+        /// JavaScriptSerializer to type T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public T ReadAsJson<T>()
         {
             return new JavaScriptSerializer().Deserialize<T>(_body);
         }
 
+        /// <summary>
+        /// Reads the response body as a string
+        /// </summary>
+        /// <returns></returns>
         public string ReadAsText()
         {
             return ToString();
         }
 
+        /// <summary>
+        /// Returns the value of the etag header in the response
+        /// </summary>
+        /// <returns></returns>
         public string Etag()
         {
             return _response.Headers[HttpResponseHeader.ETag];
         }
 
+        /// <summary>
+        /// Tries to read the response body into an XmlDocument
+        /// </summary>
+        /// <returns></returns>
         public XmlDocument ReadAsXml()
         {
             var document = new XmlDocument();
