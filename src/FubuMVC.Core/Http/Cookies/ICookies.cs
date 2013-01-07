@@ -6,17 +6,27 @@ using System.Linq;
 
 namespace FubuMVC.Core.Http.Cookies
 {
+    /// <summary>
+    /// Provides access to cookies in the request
+    /// </summary>
     public interface ICookies
     {
         bool Has(string name);
         Cookie Get(string name);
 
+        /// <summary>
+        /// This function is only useful for single value cookies
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         string GetValue(string name);
 
+        /// <summary>
+        /// All the cookies in the http request
+        /// </summary>
         IEnumerable<Cookie> Request { get; }
     }
 
-    // TODO -- need to register this
     public class Cookies : ICookies
     {
         private readonly Lazy<IEnumerable<Cookie>> _cookies;
