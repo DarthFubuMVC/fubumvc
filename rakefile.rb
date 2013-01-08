@@ -41,10 +41,10 @@ desc "Unit and Integration Tests"
 task :full => [:default, :integration_test]
 
 desc "Target used for the CI server"
-task :ci => [:update_all_dependencies, :default, :history, :package]
+task :ci => [:update_all_dependencies, :default, :integration_test, :history, :package]
 
 desc "Target used for CI on Mono"
-task :mono_ci => [:update_all_dependencies, :compile, :mono_unit_test]
+task :mono_ci => [:update_all_dependencies, :compile, :mono_unit_test, :integration_test]
 
 desc "Update the version information for the build"
 assemblyinfo :version do |asm|
