@@ -7,7 +7,8 @@ using StringController = TestPackage1.StringController;
 
 namespace FubuMVC.IntegrationTesting.Packaging
 {
-    [TestFixture]
+    // File system manipulation is just too undependable on the CI box
+    [TestFixture, Explicit]
     public class invoking_endpoints_from_a_package : FubuRegistryHarness
     {
         protected override void initializeBottles()
