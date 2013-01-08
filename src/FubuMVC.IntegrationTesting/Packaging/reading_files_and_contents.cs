@@ -89,7 +89,7 @@ link harness pak2
 
         public string get_folders()
         {
-            _files.Folders.Each(folder => _writer.WriteLine(folder.Provenance +"|" + folder.Path));
+            _files.AllFolders.Each(folder => _writer.WriteLine(folder.Provenance +"|" + folder.Path));
 
             return _writer.ToString();
         }

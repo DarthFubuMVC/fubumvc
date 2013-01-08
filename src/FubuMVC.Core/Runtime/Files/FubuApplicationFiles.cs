@@ -24,11 +24,6 @@ namespace FubuMVC.Core.Runtime.Files
             return FubuMvcPackageFacility.GetApplicationPath();
         }
 
-        public IEnumerable<ContentFolder> Folders
-        {
-            get { return _folders.Value; }
-        }
-
         // I'm okay with this finding nulls
 
         public IEnumerable<IFubuFile> FindFiles(FileSet fileSet)

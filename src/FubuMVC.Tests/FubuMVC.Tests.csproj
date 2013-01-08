@@ -198,7 +198,6 @@
     <Compile Include="Http\Headers\HttpHeaderValuesTester.cs" />
     <Compile Include="Http\HttpRequestHeadersTester.cs" />
     <Compile Include="Http\MimeTypeListTester.cs" />
-    <Compile Include="Http\MimetypeRequestConditionalTester.cs" />
     <Compile Include="Http\RequestHeadersIntegratedTester.cs" />
     <Compile Include="Http\RouteDataValuesTester.cs" />
     <Compile Include="NewConneg\FormatterWriterTester.cs" />
