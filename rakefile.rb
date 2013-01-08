@@ -88,7 +88,9 @@ def waitfor(&block)
 end
 
 desc "Compiles the app"
-task :compile => [:restore_if_missing, :clean, :version] do
+task :compile => [:restore_if_missing, :clean, :version, "docs:bottle"] do
+
+
   MSBuildRunner.compile :compilemode => COMPILE_TARGET, :solutionfile => 'src/FubuMVC.sln', :clrversion => CLR_TOOLS_VERSION
 
   copyOutputFiles "src/fubu/bin/#{COMPILE_TARGET}", "Bottles*.{dll,pdb,exe}", props[:stage]
