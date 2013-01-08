@@ -56,9 +56,6 @@ namespace FubuMVC.TestingHarness
         [TestFixtureSetUp]
         public void SetUp()
         {
-            cleanAndRemoveAllPackages();
-            removeAllLinkedPackages();
-
             beforeRunning();
 
             initializeBottles();
