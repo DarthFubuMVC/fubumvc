@@ -90,7 +90,7 @@ namespace FubuMVC.Core.Registration
         public void IncludeClassesSuffixedWithEndpoint()
         {
             _description.WriteLine("Public class that are suffixed by 'Endpoint' or 'Endpoints'");
-            IncludeTypesNamed(x => x.EndsWith("Endpoint") || x.EndsWith("Endpoints"));
+            IncludeTypesNamed(x => x.EndsWith("Endpoint", StringComparison.OrdinalIgnoreCase) || x.EndsWith("Endpoints", StringComparison.OrdinalIgnoreCase));
         }
 
         public void IncludeTypesNamed(Expression<Func<string, bool>> filter)
