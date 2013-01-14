@@ -25,6 +25,19 @@ namespace FubuMVC.Tests.Registration.Conventions
             matching
                 .ShouldHaveTheSameElementsAs("HomeEndpoint.Index() : HtmlDocument");
         }
+
+        [Test]
+        public void finds_methods_case_insensitively()
+        {
+            var actions = new EndpointActionSource().As<IActionSource>().FindActions(Assembly.GetExecutingAssembly());
+
+            var matching = actions.Where(x => x.HandlerType == typeof(WeirdEndPoint)).Select(x => x.Description);
+            matching.Each(x => Debug.WriteLine(x));
+
+
+            matching
+                .ShouldHaveTheSameElementsAs("WeirdEndPoint.get_something() : String");
+        }
     }
 
     public class HomeEndpoint
@@ -32,6 +45,14 @@ namespace FubuMVC.Tests.Registration.Conventions
         public HtmlDocument Index()
         {
             return new HtmlDocument();
+        }
+    }
+
+    public class WeirdEndPoint
+    {
+        public string get_something()
+        {
+            return "something";
         }
     }
 }
