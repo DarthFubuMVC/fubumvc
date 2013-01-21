@@ -5,7 +5,6 @@ using FubuCore.Configuration;
 
 namespace FubuMVC.Core
 {
-    // TODO -- move this to fubu.exe
     /// <summary>
     /// Describes a FubuMVC application for simple hosts and test automation infrastructure
     /// </summary>
@@ -94,8 +93,7 @@ namespace FubuMVC.Core
                 return Read(file);
             }
 
-            // TODO -- stop throwing the exception!!!!!  It's annoying when running Serenity tests
-            throw new ArgumentOutOfRangeException("Cannot find the requested file for " + GetFileNameFor(name) + " in the current directory or two parents");
+            return null;
         }
 
         /// <summary>
