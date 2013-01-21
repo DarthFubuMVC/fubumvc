@@ -77,6 +77,7 @@
     <Compile Include="Compliance\Setter_Injection_from_ObjectDef_Dependency.cs" />
     <Compile Include="ContainerFacilitySource.cs" />
     <Compile Include="Internals\AppSettingProviderRegistrySmokeTester.cs" />
+    <Compile Include="Internals\Include_StructureMap_registrys.cs" />
     <Compile Include="Internals\ObjectDefInstanceTester.cs" />
     <Compile Include="Internals\StructureMapContainerFacilityTester.cs" />
     <Compile Include="Internals\StructureMapServiceLocatorTester.cs" />
