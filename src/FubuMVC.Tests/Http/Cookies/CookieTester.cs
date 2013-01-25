@@ -10,8 +10,6 @@ namespace FubuMVC.Tests.Http.Cookies
     [TestFixture]
     public class CookieTester
     {
-        
-
         [Test]
         public void matches()
         {
@@ -103,5 +101,17 @@ namespace FubuMVC.Tests.Http.Cookies
             cookie.GetValue("a").ShouldEqual("1");
             cookie.GetValue("b").ShouldEqual("2");
         }
+
+		[Test]
+		public void parse_multiple_cookies()
+		{
+			var text = "ASP.NET SessionId=1234; FubuAuthTicket=56789;";
+		}
+
+		[Test]
+		public void split_values()
+		{
+			CookieParser.SplitValues("a=b;c=d;").ShouldHaveTheSameElementsAs("a=b", "c=d");
+		}
     }
 }

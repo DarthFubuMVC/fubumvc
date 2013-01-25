@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Web;
 using System.Linq;
+using FubuCore;
 
 namespace FubuMVC.Core.Http.Cookies
 {
@@ -33,8 +34,12 @@ namespace FubuMVC.Core.Http.Cookies
 
         public Cookies(ICurrentHttpRequest request)
         {
-            _cookies = new Lazy<IEnumerable<Cookie>>(() => {
-                return request.GetHeader(HttpRequestHeader.Cookie).Select(x => CookieParser.ToCookie(x)).ToArray();
+            _cookies = new Lazy<IEnumerable<Cookie>>(() => 
+			{
+				var value = request.GetHeader(HttpRequestHeader.Cookie).SingleOrDefault();
+				if(value.IsEmpty()) return new Cookie[0];
+
+                return CookieParser.SplitValues(value).Select(CookieParser.ToCookie).ToArray();
             });
         }
 

@@ -83,7 +83,7 @@ namespace FubuMVC.Core.Http.Cookies
 
             var cookie = new Cookie();
 
-            var segments = headerValue.TrimEnd().TrimEnd(';').Split(';').Select(x => new Segment(x.Trim()));
+            var segments = SplitValues(headerValue).Select(x => new Segment(x.Trim()));
             segments.Each(segment => {
                 string canonicalKey = segment.Key.ToLowerInvariant();
 
@@ -110,5 +110,10 @@ namespace FubuMVC.Core.Http.Cookies
         {
             return DateTimeOffset.TryParseExact(input, dateFormats, (IFormatProvider)DateTimeFormatInfo.InvariantInfo, DateTimeStyles.AllowWhiteSpaces | DateTimeStyles.AssumeUniversal, out result);
         }
+
+	    public static IEnumerable<string> SplitValues(string input)
+	    {
+		    return input.TrimEnd().TrimEnd(';').Split(';').Select(x => x.Trim());
+	    }
     }
 }
