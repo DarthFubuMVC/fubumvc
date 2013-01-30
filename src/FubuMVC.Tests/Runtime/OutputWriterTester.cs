@@ -196,11 +196,11 @@ namespace FubuMVC.Tests.Runtime
         }
 
         [Test]
-        public void dispose_flushes()
+        public void dispose_does_not_flush()
         {
             Services.PartialMockTheClassUnderTest();
             ClassUnderTest.Dispose();
-            ClassUnderTest.AssertWasCalled(x => x.Flush());
+            ClassUnderTest.AssertWasNotCalled(x => x.Flush());
         }
     }
 

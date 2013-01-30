@@ -9,7 +9,7 @@ namespace FubuMVC.Core.Runtime
     /// <summary>
     /// Primary abstraction to write to the Http response
     /// </summary>
-    public interface IOutputWriter : IDisposable
+    public interface IOutputWriter
     {
         /// <summary>
         /// Write the contents of a file to the Http response body with the Content-Type header and display name header

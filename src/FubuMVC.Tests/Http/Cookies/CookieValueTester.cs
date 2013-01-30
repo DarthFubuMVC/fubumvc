@@ -63,11 +63,6 @@ namespace FubuMVC.Tests.Http.Cookies
     {
         public Cookie LastCookie;
 
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
-
         public void WriteFile(string contentType, string localFilePath, string displayName)
         {
             throw new NotImplementedException();

@@ -9,7 +9,7 @@ using FubuMVC.Core.Http.Compression;
 
 namespace FubuMVC.OwinHost
 {
-    public class OwinHttpWriter : IHttpWriter
+    public class OwinHttpWriter : IHttpWriter, IDisposable
     {
         private readonly IDictionary<string, object> _environment;
         private readonly MemoryStream _output;
@@ -78,6 +78,11 @@ namespace FubuMVC.OwinHost
             var response = _environment.Get<Stream>(OwinConstants.ResponseBodyKey);
             _output.Position =0;
             _output.CopyTo(response);
+        }
+
+        public void Dispose()
+        {
+            Flush();
         }
     }
 }
