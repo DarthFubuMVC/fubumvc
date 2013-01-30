@@ -100,11 +100,6 @@ namespace FubuMVC.Tests
             {
                 throw new NotImplementedException();
             }
-
-            public void Dispose()
-            {
-                throw new NotImplementedException();
-            }
         }
 
         public class Action1

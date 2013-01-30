@@ -153,7 +153,6 @@ namespace FubuMVC.Core.Runtime
 
         public void Dispose()
         {
-            Flush();
         }
     }
 }
