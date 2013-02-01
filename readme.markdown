@@ -13,9 +13,10 @@ http://lostechies.com/josharnold/2013/01/28/introducing-fubumvc-validation-for-r
 
 ## Where's the documentation?
 
-Yeah, we know. We've been criticized about this for a long time and it's still a problem. Here are some resources in the meantime:
+Yeah, we know. We've been criticized about this for a long time and it's still a problem. For now, hop on over to our Wiki.
 
-*http://mvc.fubu-project.org/getting-started/
+* https://github.com/DarthFubuMVC/fubumvc/wiki
+* https://github.com/DarthFubuMVC/fubumvc/wiki/Getting-Started
 
 What we lack in documentation, we make up for in response time in our mailing list. We welcome EVERY question and have a vibrant community willing to answer
 questions at all hours of the day/night. 
