@@ -160,6 +160,7 @@
     <Compile Include="Registration\Registration\ModelBindingServiceRegistry_specification.cs" />
     <Compile Include="Registration\SettingsCollectionTester.cs" />
     <Compile Include="Resources\Conneg\ReaderChoiceTester.cs" />
+    <Compile Include="Resources\PathBased\RouteRankingIntegratedTester.cs" />
     <Compile Include="Runtime\Files\ContentFolderTester.cs" />
     <Compile Include="Runtime\Files\FubuApplicationFilesSmokeTester.cs" />
     <Compile Include="Runtime\Files\FubuFileTester.cs" />
