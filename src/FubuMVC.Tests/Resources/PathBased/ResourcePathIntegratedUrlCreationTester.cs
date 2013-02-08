@@ -6,6 +6,64 @@ using NUnit.Framework;
 
 namespace FubuMVC.Tests.Resources.PathBased
 {
+	[TestFixture]
+	public class ResourcePathIntegratedRankingTester
+	{
+		private BehaviorGraph _graph;
+
+		public class Controller1
+		{
+			public string get_resource(ResourcePath path)
+			{
+				return null;
+			}
+
+			public string get_special(SpecialResourcePath path)
+			{
+				return null;
+			}
+
+			public string SayHello()
+			{
+				return null;
+			}
+		}
+
+		public class SpecialResourcePath : ResourcePath
+		{
+			public SpecialResourcePath(string path)
+				: base(path)
+			{
+			}
+		}
+
+		[SetUp]
+		public void beforeAll()
+		{
+			var registry = new FubuRegistry();
+			registry.Actions.IncludeType<Controller1>();
+
+			_graph = BehaviorGraph.BuildFrom(registry);
+		}
+
+		[Test]
+		public void should_highly_rank_the_resource_path_routes()
+		{
+			_graph.BehaviorFor<Controller1>(x => x.get_resource(null))
+				.Route.Rank.ShouldEqual(int.MaxValue);
+
+			_graph.BehaviorFor<Controller1>(x => x.get_special(null))
+				.Route.Rank.ShouldEqual(int.MaxValue);
+		}
+
+		[Test]
+		public void should_rank_non_resource_path_routes_normally()
+		{
+			_graph.BehaviorFor<Controller1>(x => x.SayHello())
+				.Route.Rank.ShouldEqual(0);
+		}
+	}
+
     [TestFixture]
     public class ResourcePathIntegratedUrlCreationTester
     {
@@ -16,7 +74,7 @@ namespace FubuMVC.Tests.Resources.PathBased
                 return null;
             }
 
-            public string get_special(ResourcePath path)
+			public string get_special(SpecialResourcePath path)
             {
                 return null;
             }
