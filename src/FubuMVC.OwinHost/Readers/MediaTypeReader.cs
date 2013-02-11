@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.OwinHost.Readers
 {
@@ -9,7 +10,13 @@ namespace FubuMVC.OwinHost.Readers
         public void Read(IDictionary<string, object> environment)
         {
             var headers = environment.Get<IDictionary<string, string[]>>(OwinConstants.RequestHeadersKey);
-            var contentType = headers.Get(OwinConstants.ContentTypeHeader).First();
+	        var values = headers.Get(OwinConstants.ContentTypeHeader);
+	        var contentType = MimeType.Html.Value;
+
+			if (values != null && values.Any())
+			{
+				contentType = values.First();
+			}
 
             var commaSemicolon = new[] { ',', ';' };
             var delimiterPos = contentType.IndexOfAny(commaSemicolon);
