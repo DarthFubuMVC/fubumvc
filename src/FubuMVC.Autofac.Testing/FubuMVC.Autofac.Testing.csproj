@@ -37,13 +37,13 @@
       <HintPath>..\packages\Autofac.2.6.3.862\lib\NET40\Autofac.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles.1.0.0.446\lib\Bottles.dll</HintPath>
+      <HintPath>..\packages\Bottles.1.0.0.452\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
-      <HintPath>..\packages\FubuCore.1.0.1.228\lib\FubuCore.dll</HintPath>
+      <HintPath>..\packages\FubuCore.1.0.2.232\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuTestingSupport">
-      <HintPath>..\packages\FubuTestingSupport.1.0.1.228\lib\FubuTestingSupport.dll</HintPath>
+      <HintPath>..\packages\FubuTestingSupport.1.0.2.232\lib\FubuTestingSupport.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.framework.dll</HintPath>
