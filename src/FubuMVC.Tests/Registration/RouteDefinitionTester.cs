@@ -199,6 +199,18 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void create_url_with_input_model_and_encoded_variable()
+        {
+            var url = new RouteInput<SampleViewModel>("test/edit/{InPath}");
+            url.AddRouteInput(x => x.InPath);
+
+            url.CreateUrlFromInput(new SampleViewModel
+            {
+                InPath = "abc/def&ghi=jkl"
+            }).ShouldEqual("test/edit/abc%2Fdef%26ghi%3Djkl");
+        }
+
+        [Test]
         public void create_url_with_input_model_and_default_value_for_optional_input()
         {
             var url = new RouteInput<SampleViewModelWithInputs>("test/edit/{OptionalInput}");
@@ -323,6 +335,20 @@ namespace FubuMVC.Tests.Registration
             parameters[x => x.AlsoInPath] = "some text";
 
             url.CreateUrlFromParameters(parameters).ShouldEqual("test/edit/5/some%20text");
+        }
+
+        [Test]
+        public void create_url_with_encoded_variables_in_path_by_parameters()
+        {
+            var url = new RouteInput<SampleViewModel>("test/edit/{InPath}/{AlsoInPath}");
+            url.AddRouteInput(x => x.InPath);
+            url.AddRouteInput(x => x.AlsoInPath);
+
+            var parameters = new RouteParameters<SampleViewModel>();
+            parameters[x => x.InPath] = "5";
+            parameters[x => x.AlsoInPath] = "abc/def&ghi=jkl";
+
+            url.CreateUrlFromParameters(parameters).ShouldEqual("test/edit/5/abc%2Fdef%26ghi%3Djkl");
         }
 
         [Test]
