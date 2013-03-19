@@ -15,6 +15,7 @@ namespace FubuMVC.Core.Registration.Routes
 
         private readonly Accessor _accessor;
         private readonly Regex _regex;
+        private readonly Regex _regexGreedy;
 
         public RouteParameter(Accessor accessor)
         {
@@ -22,6 +23,7 @@ namespace FubuMVC.Core.Registration.Routes
             accessor.ForAttribute<RouteInputAttribute>(x => DefaultValue = x.DefaultValue);
 
             _regex = new Regex(@"{\*?" + Name + @"(?:\:.*?)?}", RegexOptions.Compiled);
+            _regexGreedy = new Regex(@"{\*" + Name + @"(?:\:.*?)?}", RegexOptions.Compiled);
         }
 
         public string Name { get { return _accessor.Name; } }
@@ -42,7 +44,7 @@ namespace FubuMVC.Core.Registration.Routes
 
         private string substitute(string url, string parameterValue)
         {
-            var encodedValue = encodeParameterValue(parameterValue);
+            var encodedValue = _regexGreedy.IsMatch(url) ? encodeParameterValue(parameterValue) : parameterValue.UrlEncoded();
             return _regex.Replace(url, encodedValue);
         }
 
