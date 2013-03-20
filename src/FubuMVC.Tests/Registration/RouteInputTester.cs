@@ -25,6 +25,12 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void to_query_string_fromwith_encoded_value()
+        {
+            _parameter.ToQueryString(new FakeInput { Code = "abc/def&ghi=jkl" }).ShouldEqual(_parameter.Name + "=abc%2Fdef%26ghi%3Djkl");
+        }
+
+        [Test]
         public void substitute_on_route_parameter()
         {
             var parameters = new RouteParameters<FakeInput>();
@@ -94,6 +100,15 @@ namespace FubuMVC.Tests.Registration
             parameters[x => x.Code] = "something";
 
             _parameter.ToQueryString(parameters).ShouldEqual("Code=something");
+        }
+
+        [Test]
+        public void to_query_string_from_route_parameter_with_an_encoded_value()
+        {
+            var parameters = new RouteParameters<FakeInput>();
+            parameters[x => x.Code] = "abc/def&ghi=jkl";
+
+            _parameter.ToQueryString(parameters).ShouldEqual("Code=abc%2Fdef%26ghi%3Djkl");
         }
     }
 }

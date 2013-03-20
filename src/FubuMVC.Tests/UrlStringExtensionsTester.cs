@@ -37,5 +37,11 @@ namespace FubuMVC.Tests
             "http://cnn.com/{script}".ToAbsoluteUrl("http://localhost:5050")
                                      .ShouldEqual("http://cnn.com/{script}");
         }
+
+        [Test]
+        public void url_encoding()
+        {
+            "abc/def&ghi=jkl".UrlEncoded().ShouldEqual("abc%2Fdef%26ghi%3Djkl");
+        }
     }
 }
