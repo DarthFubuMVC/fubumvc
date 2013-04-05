@@ -80,6 +80,34 @@ namespace FubuMVC.Tests.Registration.DSL
         }
     }
 
+    [TestFixture]
+    public class when_adding_an_iconfigurationaction_without_specifying_configuration_type
+    {
+        [Test]
+        public void it_should_default_to_policy()
+        {
+            FakePolicy.Count = 0;
+            BehaviorGraph.BuildFrom(graph => 
+                graph.Policies.Add(new FakePolicy()));
+
+            FakePolicy.Count.ShouldEqual(1);
+        }
+    }
+
+    [TestFixture]
+    public class when_adding_an_action_of_policy_without_specifying_configuration_type
+    {
+        [Test]
+        public void it_should_default_to_policy()
+        {
+            FakePolicy.Count = 0;
+            BehaviorGraph.BuildFrom(graph => 
+                graph.Policies.Add<FakePolicy>(x => x.NoOp()));
+
+            FakePolicy.Count.ShouldEqual(1);
+        }
+    }
+
     public class OrderingPolicyController
     {
         [WrapWith(typeof(OPWrapper2), typeof(OPWrapper3))]
@@ -128,5 +156,17 @@ namespace FubuMVC.Tests.Registration.DSL
         {
             throw new NotImplementedException();
         }
+    }
+
+    public class FakePolicy : IConfigurationAction
+    {
+        public static int Count;
+
+        public void Configure(BehaviorGraph graph)
+        {
+            Count++;
+        }
+
+        public void NoOp() { }
     }
 }
