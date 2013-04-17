@@ -18,7 +18,7 @@ namespace FubuMVC.Core.Continuations
         private readonly IOutputWriter _writer;
 
         public ContinuationHandler(IUrlRegistry registry, IOutputWriter writer, IFubuRequest request, IPartialFactory factory, IChainResolver resolver)
-            : base(PartialBehavior.Ignored)
+            : base(PartialBehavior.Executes)
         {
             _registry = registry;
             _writer = writer;

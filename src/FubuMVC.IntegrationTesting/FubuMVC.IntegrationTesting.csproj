@@ -56,7 +56,7 @@
       <HintPath>..\packages\Microsoft.Owin.Host.HttpListener\lib\net40\Microsoft.Owin.Host.HttpListener.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin.Hosting">
-      <HintPath>..\packages\Microsoft.Owin.Hosting\lib\net40\Microsoft.Owin.Hosting.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Owin.Hosting\lib\Microsoft.Owin.Hosting.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit\lib\nunit.framework.dll</HintPath>
@@ -100,6 +100,7 @@
     <Compile Include="Conneg\OutputFromAnActionThatReturnsStrings.cs" />
     <Compile Include="Conneg\Output_from_actions_that_return_ajax_continuations.cs" />
     <Compile Include="Conneg\Output_from_Actions_that_return_HtmlTags.cs" />
+    <Compile Include="Continuations\can_use_continuations_on_a_partial.cs" />
     <Compile Include="debugger.cs" />
     <Compile Include="EndpointServiceIntegratedSmokeTester.cs" />
     <Compile Include="Http\reading_and_writing_http_headers_and_responses_with_OWIN.cs" />
@@ -244,7 +245,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent></PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

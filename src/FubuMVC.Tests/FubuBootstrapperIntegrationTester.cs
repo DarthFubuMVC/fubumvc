@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -92,7 +93,7 @@ namespace FubuMVC.Tests
         {
             var urls = routes.OfType<Route>().Select(r => r.Url).Where(x => !x.Contains("hello"));
 
-            urls.Each(x => Debug.WriteLine(x));
+            urls.Each(x => Console.WriteLine(x));
 
             urls.ShouldHaveTheSameElementsAs(
                 "area/sub2/prop",
