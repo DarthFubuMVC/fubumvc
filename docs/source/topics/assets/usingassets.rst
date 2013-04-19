@@ -83,19 +83,19 @@ How do I configure it in code?
   {
     public ConfigureFubuMVC()
     {
-      Assets.Alias("jquery").Is("jquery-1.7.2.min.js");
-      Assets.Alias("jquery-ui").Is("jquery-ui-1.8.0.min.js");
-      Assets.Alias("jquery-validate").Is("jquery.validate.min.js");
+      this.Assets().Alias("jquery").Is("jquery-1.7.2.min.js");
+      this.Assets().Alias("jquery-ui").Is("jquery-ui-1.8.0.min.js");
+      this.Assets().Alias("jquery-validate").Is("jquery.validate.min.js");
 
-      Assets.Asset("jquery-ui").Requires("jquery");
-      Assets.Asset("jquery-validate").Requires("jquery");
+      this.Assets().Asset("jquery-ui").Requires("jquery");
+      this.Assets().Asset("jquery-validate").Requires("jquery");
 
-      Assets.OrderedSet("jquery-set").Is("jquery,jquery-ui,jquery-validate");
+      this.Assets().OrderedSet("jquery-set").Is("jquery,jquery-ui,jquery-validate");
 
-      Assets.Asset("jquery").Preceeds("jquery-ui");
-      Assets.Asset("jquery").Preceeds("jquery-validate");
+      this.Assets().Asset("jquery").Preceeds("jquery-ui");
+      this.Assets().Asset("jquery").Preceeds("jquery-validate");
 
-      Assets.Combination("jquery-combination").Includes("jquery,jquery-ui,jquery-validate");
+      this.Assets().Combination("jquery-combination").Includes("jquery,jquery-ui,jquery-validate");
     }
   }
 
