@@ -1,6 +1,8 @@
+using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Caching;
+using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
@@ -32,6 +34,7 @@ namespace FubuMVC.Tests.UI
 
             MockFor<IAuthorizationPreviewService>().Expect(x => x.IsAuthorized(theInput)).Return(true);
             MockFor<IPartialFactory>().Stub(x => x.BuildPartial(theChain)).Return(theAction);
+            MockFor<IRecordedOutput>().Stub(x => x.Headers()).Return(Enumerable.Empty<Header>());
 
             MockFor<IOutputWriter>()
                 .Expect(x => x.Record(theAction.InvokePartial))
@@ -156,6 +159,7 @@ namespace FubuMVC.Tests.UI
             MockFor<IChainResolver>().Stub(x => x.FindUniqueByType(typeof (PartialInputModel))).Return(theChain);
 
             MockFor<IPartialFactory>().Stub(x => x.BuildPartial(theChain)).Return(theAction);
+            MockFor<IRecordedOutput>().Stub(x => x.Headers()).Return(Enumerable.Empty<Header>());
 
             MockFor<IOutputWriter>()
                 .Expect(x => x.Record(theAction.InvokePartial))
@@ -209,7 +213,7 @@ namespace FubuMVC.Tests.UI
 
             theChain = new BehaviorChain();
             MockFor<IChainResolver>().Stub(x => x.FindUniqueByType(typeof (PartialInputModel))).Return(theChain);
-
+            MockFor<IRecordedOutput>().Stub(x => x.Headers()).Return(Enumerable.Empty<Header>());
             MockFor<IPartialFactory>().Stub(x => x.BuildPartial(theChain)).Return(theAction);
 
             theOutput = ClassUnderTest.Invoke<PartialInputModel>();
@@ -260,6 +264,7 @@ namespace FubuMVC.Tests.UI
 
             theChain = new BehaviorChain();
             MockFor<IChainResolver>().Stub(x => x.FindUnique(theInput)).Return(theChain);
+            MockFor<IRecordedOutput>().Stub(x => x.Headers()).Return(Enumerable.Empty<Header>());
 
             MockFor<IPartialFactory>().Stub(x => x.BuildPartial(theChain)).Return(theAction);
             Services.Inject<ITypeResolver>(new TypeResolver());
