@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using FubuCore;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
@@ -58,7 +59,9 @@ namespace FubuMVC.Core.UI
         {
             var chain = _resolver.FindUniqueByType(requestType);
             var partial = _factory.BuildPartial(chain);
-            return _writer.Record(partial.InvokePartial).GetText();
+            var output = _writer.Record(partial.InvokePartial);
+            output.Headers().Each(x => _writer.AppendHeader(x.Name, x.Value));
+            return output.GetText();
         }
     }
 }
