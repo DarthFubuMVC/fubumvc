@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace FubuMVC.Tests.Resources.PathBased
 {
-    [TestFixture]
+	[TestFixture]
     public class ResourcePathIntegratedUrlCreationTester
     {
         public class Controller1
@@ -16,7 +16,7 @@ namespace FubuMVC.Tests.Resources.PathBased
                 return null;
             }
 
-            public string get_special(ResourcePath path)
+			public string get_special(SpecialResourcePath path)
             {
                 return null;
             }

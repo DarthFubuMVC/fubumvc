@@ -3,7 +3,7 @@ using FubuMVC.Core.Registration.Routes;
 
 namespace FubuMVC.Core.Resources.PathBased
 {
-    public class ResourcePath : IMakeMyOwnUrl
+    public class ResourcePath : IMakeMyOwnUrl, IRankMeLast
     {
         public static readonly string UrlSuffix =
             "{Part0}/{Part1}/{Part2}/{Part3}/{Part4}/{Part5}/{Part6}/{Part7}/{Part8}/{Part9}";
@@ -25,6 +25,5 @@ namespace FubuMVC.Core.Resources.PathBased
             var baseUrl = basePattern.Contains(UrlSuffix) ? basePattern.Replace(UrlSuffix, "") : basePattern;
             return (baseUrl.TrimEnd('/') + "/" + _path.TrimStart('/')).Trim('/');
         }
-
     }
 }
