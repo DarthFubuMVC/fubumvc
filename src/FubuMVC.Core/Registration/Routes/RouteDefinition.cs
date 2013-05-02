@@ -156,10 +156,21 @@ namespace FubuMVC.Core.Registration.Routes
             _pattern = newParts.Join("/");
         }
 
-        public virtual int Rank
-        {
-            get { return Input == null ? 0 : Input.Rank; }
-        }
+	    public virtual int Rank
+	    {
+		    get
+		    {
+			    if (Input == null)
+				    return 0;
+
+			    if (Input.InputType.CanBeCastTo<IRankMeLast>())
+			    {
+				    return int.MaxValue;
+			    }
+
+			    return Input.Rank;
+		    }
+	    }
 
         public Indexer<string, IRouteConstraint> Constraints
         {

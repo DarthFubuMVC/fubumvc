@@ -181,6 +181,7 @@
     <Compile Include="Registration\Policies\WrapWithExpression.cs" />
     <Compile Include="Registration\Policy.cs" />
     <Compile Include="Registration\Routes\IMakeMyOwnUrl.cs" />
+    <Compile Include="Registration\Routes\IRankMeLast.cs" />
     <Compile Include="Registration\Routes\SessionStateRequirement.cs" />
     <Compile Include="Registration\ServiceAdded.cs" />
     <Compile Include="Registration\ServiceEvent.cs" />
