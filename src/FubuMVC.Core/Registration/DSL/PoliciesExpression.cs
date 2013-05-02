@@ -45,15 +45,15 @@ namespace FubuMVC.Core.Registration.DSL
             var policy = new Policy();
             policy.Wrap.WithBehavior<T>();
 
-            Add(policy, ConfigurationType.Policy);
+            Add(policy);
         }
 
         public void Add<T>() where T : IConfigurationAction, new()
         {
-            Add(new T(), ConfigurationType.Policy);
+            Add(new T());
         }
 
-        public void Add<T>(Action<T> configure, string configurationType = null) where T : IConfigurationAction, new()
+        public void Add<T>(Action<T> configure, string configurationType = ConfigurationType.Policy) where T : IConfigurationAction, new()
         {
             var action = new T();
             configure(action);
@@ -69,7 +69,7 @@ namespace FubuMVC.Core.Registration.DSL
             Add(policy, configurationType);
         }
 
-        public void Add(IConfigurationAction action, string configurationType = null)
+        public void Add(IConfigurationAction action, string configurationType = ConfigurationType.Policy)
         {
             _configuration.Add(action, configurationType);
         }
