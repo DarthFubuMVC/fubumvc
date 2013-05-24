@@ -1,1 +1,0 @@
-src\packages\Bottles\tools\BottleRunner.exe %*

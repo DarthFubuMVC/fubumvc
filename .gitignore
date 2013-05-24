@@ -57,3 +57,5 @@ deployment
 !docs/source/topics/deployment
 *ncrunch*
 fubu.cmd
+Gemfile.lock
+logs
