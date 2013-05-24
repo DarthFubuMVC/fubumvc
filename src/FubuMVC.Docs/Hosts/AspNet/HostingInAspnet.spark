@@ -1,9 +1,0 @@
-<viewdata model="FubuMVC.Docs.Hosts.AspNet.HostingInAspnet"/>
-<use master="Topic" />
-<content:main>
-
-<markdown>
-
-</markdown>
-
-</content:main>

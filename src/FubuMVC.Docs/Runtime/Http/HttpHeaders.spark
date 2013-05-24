@@ -1,9 +1,0 @@
-<viewdata model="FubuMVC.Docs.Runtime.Http.HttpHeaders"/>
-<use master="Topic" />
-<content:main>
-
-<markdown>
-
-</markdown>
-
-</content:main>

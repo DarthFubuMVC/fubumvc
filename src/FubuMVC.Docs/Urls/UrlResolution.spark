@@ -1,9 +1,0 @@
-<viewdata model="FubuMVC.Docs.Urls.UrlResolution"/>
-<use master="Topic" />
-<content:main>
-
-<markdown>
-
-</markdown>
-
-</content:main>

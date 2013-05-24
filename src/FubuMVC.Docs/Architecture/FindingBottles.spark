@@ -1,9 +1,0 @@
-<viewdata model="FubuMVC.Docs.Architecture.FindingBottles"/>
-<use master="Topic" />
-<content:main>
-
-<markdown>
-
-</markdown>
-
-</content:main>

@@ -1,9 +1,0 @@
-<viewdata model="FubuMVC.Docs.Bottles.ConfigurableBottles"/>
-<use master="Topic" />
-<content:main>
-
-<markdown>
-
-</markdown>
-
-</content:main>

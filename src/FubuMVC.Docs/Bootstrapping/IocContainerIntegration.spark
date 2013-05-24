@@ -1,9 +1,0 @@
-<viewdata model="FubuMVC.Docs.Bootstrapping.IocContainerIntegration"/>
-<use master="Topic" />
-<content:main>
-
-<markdown>
-
-</markdown>
-
-</content:main>

@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
 <ProjectRoot xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <TagLine>A member of the Fubu family of projects</TagLine>
+  <TagLine>The MVC framework that gets out of your way</TagLine>
   <Name>FubuMVC</Name>
   <GitHubPage>http://github.com/DarthFubuMVC/FubuMVC</GitHubPage>
   <UserGroupUrl>https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel</UserGroupUrl>
-  <BuildServerUrl>http://build.fubu-project.org/project.html?projectId=[CHANGEME]&amp;tab=projectOverview</BuildServerUrl>
+  <BuildServerUrl>http://build.fubu-project.org/project.html?projectId=project3&amp;tab=projectOverview</BuildServerUrl>
   <BottleName>FubuMVC.Docs</BottleName>
+  <TeamCityBuildType>bt3</TeamCityBuildType>
   <Nugets>
     <PublishedNuget>
       <Name>FubuMVC.Autofac</Name>

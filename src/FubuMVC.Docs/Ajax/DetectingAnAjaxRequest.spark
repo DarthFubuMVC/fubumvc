@@ -1,9 +1,0 @@
-<viewdata model="FubuMVC.Docs.Ajax.DetectingAnAjaxRequest"/>
-<use master="Topic" />
-<content:main>
-
-<markdown>
-* TODO -- show how to use AjaxExtensions
-</markdown>
-
-</content:main>

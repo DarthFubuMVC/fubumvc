@@ -1,9 +1,0 @@
-<viewdata model="FubuMVC.Docs.Authorization.AuthorizationRules"/>
-<use master="Topic" />
-<content:main>
-
-<markdown>
-
-</markdown>
-
-</content:main>

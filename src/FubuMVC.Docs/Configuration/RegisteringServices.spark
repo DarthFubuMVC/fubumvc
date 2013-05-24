@@ -1,9 +1,0 @@
-<viewdata model="FubuMVC.Docs.Configuration.RegisteringServices"/>
-<use master="Topic" />
-<content:main>
-
-<markdown>
-
-</markdown>
-
-</content:main>

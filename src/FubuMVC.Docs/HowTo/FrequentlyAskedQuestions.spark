@@ -1,9 +1,0 @@
-<viewdata model="FubuMVC.Docs.HowTo.FrequentlyAskedQuestions"/>
-<use master="Topic" />
-<content:main>
-
-<markdown>
-
-</markdown>
-
-</content:main>
