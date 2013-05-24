@@ -8,7 +8,7 @@ GEM
       fubudocs (>= 0.5)
       ripple-cli (~> 2.0)
     rake (10.0.4)
-    ripple-cli (2.0.0.51022)
+    ripple-cli (2.0.0.102)
 
 PLATFORMS
   x86-mingw32
