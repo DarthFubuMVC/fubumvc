@@ -36,7 +36,7 @@ task :mono_ci => [:compile, :mono_unit_test, :integration_test]
 
 desc "Runs some of the unit tests for Mono"
 task :mono_unit_test => :compile do
-  runner = NUnitRunner.new :compilemode => COMPILE_TARGET, :source => 'src', :platform => 'x86'
+  runner = NUnitRunner.new :compilemode => @solution.compilemode, :source => 'src', :platform => 'x86'
   runner.executeTests ['FubuMVC.Tests', 'FubuMVC.StructureMap.Testing', 'FubuMVC.Autofac.Testing', 'FubuMVC.OwinHost.Testing']
 end
 
