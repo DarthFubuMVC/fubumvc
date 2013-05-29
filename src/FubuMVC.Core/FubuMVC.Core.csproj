@@ -152,6 +152,7 @@
     <Compile Include="Registration\Diagnostics\ISourceLog.cs" />
     <Compile Include="Registration\Diagnostics\Provenance.cs" />
     <Compile Include="Registration\Diagnostics\ProvenanceChain.cs" />
+    <Compile Include="Registration\Diagnostics\RouteAliasAdded.cs" />
     <Compile Include="Registration\Diagnostics\ServiceRegistryLog.cs" />
     <Compile Include="Registration\Diagnostics\ServiceRegistryProvenance.cs" />
     <Compile Include="Registration\Diagnostics\VaryByAdded.cs" />

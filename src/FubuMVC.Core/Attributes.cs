@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime.Formatters;
 
@@ -59,6 +60,28 @@ namespace FubuMVC.Core
         public string Pattern
         {
             get { return _pattern; }
+        }
+    }
+
+    /// <summary>
+    /// Explicitly specifies an additional route for the chain containing this method as its ActionCall.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true)]
+    public class UrlAliasAttribute : ModifyChainAttribute
+    {
+        private readonly string _pattern;
+
+        public UrlAliasAttribute(string pattern)
+        {
+            _pattern = pattern;
+        }
+
+        public override void Alter(ActionCall call)
+        {
+            var chain = call.ParentChain();
+            var alias = call.BuildRouteForPattern(_pattern);
+
+            chain.AddRouteAlias(alias);
         }
     }
 

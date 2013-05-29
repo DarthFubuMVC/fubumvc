@@ -15,14 +15,30 @@ namespace FubuMVC.Core.Routing
         public IList<RouteBase> BuildRoutes(BehaviorGraph graph, IServiceFactory factory)
         {
             var defaultSessionRequirement = graph.Settings.Get<SessionStateRequirement>();
-            return graph.Behaviors.Where(x => x.Route != null).OrderBy(x => x.Route.Rank).Select(x => BuildRoute(factory, defaultSessionRequirement, x)).ToList();
+            return graph
+                .Behaviors
+                .Where(x => x.Route != null)
+                .OrderBy(x => x.Route.Rank)
+                .SelectMany(x => BuildRoute(factory, defaultSessionRequirement, x))
+                .ToList();
         }
 
-        public RouteBase BuildRoute(IServiceFactory factory, SessionStateRequirement defaultSessionRequirement, BehaviorChain chain)
+        public IEnumerable<RouteBase> BuildRoute(IServiceFactory factory, SessionStateRequirement defaultSessionRequirement, BehaviorChain chain)
         {
-            var requiresSession = chain.Route.SessionStateRequirement ?? defaultSessionRequirement;
+            yield return buildRoute(factory, defaultSessionRequirement, chain, chain.Route);
 
-            var route = chain.Route.ToRoute();
+            foreach (var alias in chain.AdditionalRoutes)
+            {
+                yield return buildRoute(factory, defaultSessionRequirement, chain, alias);
+            }
+        }
+
+        private RouteBase buildRoute(IServiceFactory factory, SessionStateRequirement defaultSessionRequirement,
+                                    BehaviorChain chain, IRouteDefinition routeDefinition)
+        {
+            var requiresSession = routeDefinition.SessionStateRequirement ?? defaultSessionRequirement;
+
+            var route = routeDefinition.ToRoute();
             var handlerSource = DetermineHandlerSource(requiresSession, chain);
             var invoker = DetermineInvoker(factory, chain);
 

@@ -23,6 +23,7 @@ namespace FubuMVC.Core.Registration.Nodes
     public class BehaviorChain : Chain<BehaviorNode, BehaviorChain>, IRegisterable, IContainerModel
     {
         private readonly IList<IBehaviorInvocationFilter> _filters = new List<IBehaviorInvocationFilter>();
+        private readonly IList<IRouteDefinition> _additionalRoutes = new List<IRouteDefinition>(); 
         private readonly Lazy<InputNode> _input;
         private Lazy<OutputNode> _output;
         private IRouteDefinition _route;
@@ -131,6 +132,24 @@ namespace FubuMVC.Core.Registration.Nodes
                 Trace(new RouteDetermined(value));
                 _route = value;
             }
+        }
+
+        /// <summary>
+        /// Collection of additional routes (aliases) that will be generated for this BehaviorChain.
+        /// </summary>
+        public IEnumerable<IRouteDefinition> AdditionalRoutes
+        {
+            get { return _additionalRoutes; }
+        }
+
+        /// <summary>
+        /// Adds the specified route as an additional route for this BehaviorChain to respond to.
+        /// </summary>
+        /// <param name="route"></param>
+        public void AddRouteAlias(IRouteDefinition route)
+        {
+            _additionalRoutes.Fill(route);
+            Trace(new RouteAliasAdded(route));
         }
 
         /// <summary>

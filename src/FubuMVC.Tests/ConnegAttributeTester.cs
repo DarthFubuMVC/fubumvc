@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;

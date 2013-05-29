@@ -247,6 +247,32 @@ namespace FubuMVC.Core.Registration.Routes
                                                                     : SessionStateRequirement.ToString();
         }
 
+        protected bool Equals(RouteDefinition other)
+        {
+            return string.Equals(_pattern, other._pattern, StringComparison.OrdinalIgnoreCase) 
+                && _constraints.SequenceEqual(other._constraints) 
+                && GetHttpMethodConstraints().SequenceEqual(other.GetHttpMethodConstraints());
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((RouteDefinition) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hashCode = _constraints.GetHashCode();
+                hashCode = (hashCode*397) ^ _httpMethods.GetHashCode();
+                hashCode = (hashCode*397) ^ _pattern.GetHashCode();
+                return hashCode;
+            }
+        }
+
         public static IRouteDefinition Empty()
         {
             return new RouteDefinition(string.Empty);

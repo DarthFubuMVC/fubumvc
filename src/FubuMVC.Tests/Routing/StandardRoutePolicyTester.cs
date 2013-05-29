@@ -106,6 +106,12 @@ namespace FubuMVC.Tests.Routing
             _routes.Each(r => r.RouteHandler.ShouldBeOfType<IFubuRouteHandler>());
         }
 
+        [Test]
+        public void builds_additional_routes_for_each_behavior_chain()
+        {
+            _routes.Any(x => x.Url.Equals("prefixed/a/m1", StringComparison.OrdinalIgnoreCase)).ShouldBeTrue();
+        }
+
         private BehaviorGraph setupActions()
         {          
             var registry = new FubuRegistry();
@@ -151,6 +157,7 @@ namespace FubuMVC.Tests.Routing
         }
         public class Action1
         {
+            [UrlAlias("prefixed/a/m1")]
             public void M1(){}
             public void M2(){}
         }

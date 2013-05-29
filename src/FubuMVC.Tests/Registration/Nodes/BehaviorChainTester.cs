@@ -130,6 +130,27 @@ namespace FubuMVC.Tests.Registration.Nodes
             chain.As<ITracedModel>().StagedEvents.Last().ShouldEqual(new RouteDetermined(route));
         }
 
+        [Test]
+        public void add_a_route_alias()
+        {
+            var chain = new BehaviorChain();
+            var alias = new RouteDefinition("something/else");
+
+            chain.AddRouteAlias(alias);
+
+            chain.AdditionalRoutes.ShouldHaveTheSameElementsAs(alias);
+        }
+
+        [Test]
+        public void adding_a_route_alias_adds_a_RouteAliasAdded_event()
+        {
+            var chain = new BehaviorChain();
+            var alias = new RouteDefinition("something/else");
+
+            chain.AddRouteAlias(alias);
+
+            chain.As<ITracedModel>().StagedEvents.Last().ShouldEqual(new RouteAliasAdded(alias));
+        }
 
         [Test]
         public void append_with_no_behaviors()
