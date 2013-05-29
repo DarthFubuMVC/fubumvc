@@ -97,7 +97,7 @@ namespace FubuMVC.Tests.Routing
         [Test]
         public void it_builds_routes_for_all_actions()
         {
-            _routes.ShouldHaveCount(_actionIds.Count());
+            _routes.ShouldHaveCount(_actionIds.Count() + 1);
         }
 
         [Test]

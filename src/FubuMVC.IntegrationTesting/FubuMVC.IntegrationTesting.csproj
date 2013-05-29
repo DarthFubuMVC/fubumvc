@@ -115,6 +115,7 @@
     <Compile Include="Packaging\reading_files_and_contents.cs" />
     <Compile Include="Packaging\unlinking_a_bottle_from_the_command_line.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Routing\end_to_end_route_alias_tester.cs" />
     <Compile Include="SharedHarness.cs" />
     <Compile Include="SharedHarnessContext.cs" />
     <Compile Include="SelfHostHttpServerTester.cs" />
