@@ -69,6 +69,22 @@ namespace FubuMVC.Core.Registration.Routes
             }
         }
 
+        private string _category;
+
+        public string Category
+        {
+            get { return _category; }
+            set
+            {
+                if (value.IsNotEmpty())
+                {
+                    Trace("Set the Category to '{0}'", value);
+                }
+
+                _category = value;
+            }
+        }
+
         public virtual string CreateTemplate(object input, Func<object, object>[] hash)
         {
             return Input == null ? _pattern : Input.CreateTemplate(input, hash);

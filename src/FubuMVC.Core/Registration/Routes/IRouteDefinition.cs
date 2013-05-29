@@ -36,6 +36,12 @@ namespace FubuMVC.Core.Registration.Routes
 
         void Trace(string format, params object[] parameters);
         bool RespondsToMethod(string method);
+
+        /// <summary>
+        /// Provides metadata for the usage of this route definition. 
+        /// This is particularly useful when creating route aliases.
+        /// </summary>
+        string Category { get; set; }
     }
 
     public static class RouteDefinitionExtensions
