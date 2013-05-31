@@ -1,8 +1,8 @@
 using System.Net.Http;
+using System.Web;
 using System.Web.Routing;
 using FubuCore.Binding;
 using FubuMVC.Core.Http;
-using FubuMVC.Core.Http.Cookies;
 
 namespace FubuMVC.SelfHost
 {
@@ -25,6 +25,8 @@ namespace FubuMVC.SelfHost
             With<IHttpWriter>(_writer);
             With<IClientConnectivity>(new SelfHostClientConnectivity());
             With<IResponse>(new SelfHostResponse(response));
+
+            With<HttpContextBase>(new SelfHostHttpContext(request));
         }
 
         public SelfHostHttpWriter Writer

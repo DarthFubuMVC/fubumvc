@@ -28,7 +28,6 @@ namespace FubuMVC.Autofac.Testing.Internals
 
             var builder = new ContainerBuilder();
             builder.RegisterInstance(_mockSecurityContext).As<ISecurityContext>();
-            builder.RegisterInstance(new FakeHttpContext()).As<HttpContextBase>();
             builder.RegisterType<WebSecurityContext>().Named<ISecurityContext>(_testInstanceKey);
             context = builder.Build();
         }
@@ -47,8 +46,4 @@ namespace FubuMVC.Autofac.Testing.Internals
         }
     }
 
-
-    public class FakeHttpContext : HttpContextBase
-    {
-    }
 }

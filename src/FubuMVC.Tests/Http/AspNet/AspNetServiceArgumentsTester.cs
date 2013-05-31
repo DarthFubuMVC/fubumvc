@@ -40,6 +40,12 @@ namespace FubuMVC.Tests.Http.AspNet
         }
 
         [Test]
+        public void registers_an_http_context_base()
+        {
+            theArguments.Get<HttpContextBase>().ShouldNotBeNull();
+        }
+
+        [Test]
         public void should_add_the_request_data()
         {
             theArguments.Get<IRequestData>().ShouldBeOfType<AspNetRequestData>();

@@ -10,49 +10,10 @@ namespace FubuMVC.StructureMap
     {
         public StructureMapFubuRegistry()
         {
-            For<HttpRequestWrapper>().Use(c => BuildRequestWrapper());
-
-
-            For<HttpContextBase>().Use<HttpContextWrapper>().Ctor<HttpContext>().Is(
-                x => x.ConstructedBy(BuildContextWrapper));
             For<IServiceLocator>().Use<StructureMapServiceLocator>();
 
             For<ISessionState>().Use<SimpleSessionState>();
-
         }
 
-        public HttpContext BuildContextWrapper()
-        {
-            try
-            {
-                if (HttpContext.Current != null)
-                {
-                    return HttpContext.Current;
-                }
-            }
-            catch (HttpException)
-            {
-                //This is only here for web startup when HttpContext.Current is not available.
-            }
-
-            return null;
-        }
-
-        public static HttpRequestWrapper BuildRequestWrapper()
-        {
-            try
-            {
-                if (HttpContext.Current != null)
-                {
-                    return new HttpRequestWrapper(HttpContext.Current.Request);
-                }
-            }
-            catch (HttpException)
-            {
-                //This is only here for web startup when HttpContext.Current is not available.
-            }
-
-            return null;
-        }
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Web;
 using System.Web.Routing;
 using FubuCore.Binding;
 using FubuMVC.Core.Http;
@@ -10,6 +11,9 @@ namespace FubuMVC.OwinHost
         public OwinServiceArguments(RouteData routeData, IDictionary<string, object> environment)
         {
             var httpRequest = new OwinCurrentHttpRequest(environment);
+
+            var httpContextBase = new OwinHttpContext(environment);
+            With<HttpContextBase>(httpContextBase);
 
             With<IRequestData>(new OwinRequestData(routeData, environment, httpRequest));
 

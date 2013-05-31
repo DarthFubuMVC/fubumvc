@@ -23,7 +23,6 @@ namespace FubuMVC.StructureMap.Testing.Internals
             container = new Container(x =>
             {
                 x.For<ISecurityContext>().Use(_mockSecurityContext);
-                x.For<HttpContextBase>().Use(new FakeHttpContext());
                 x.For<ISecurityContext>().AddInstances(
                     s => s.Type<WebSecurityContext>().Named(_testInstanceKey));
             });
@@ -43,8 +42,4 @@ namespace FubuMVC.StructureMap.Testing.Internals
         }
     }
 
-    public class FakeHttpContext : HttpContextBase
-    {
-
-    }
 }
