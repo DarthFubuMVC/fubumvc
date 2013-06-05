@@ -6,6 +6,7 @@ using System.Web;
 using FubuCore;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Compression;
+using FubuMVC.Core;
 
 namespace FubuMVC.OwinHost
 {
@@ -48,6 +49,11 @@ namespace FubuMVC.OwinHost
 
         public void Redirect(string url)
         {
+            if (url.StartsWith("~"))
+            {
+                url = url.TrimStart('~');
+            }
+
             // TODO: This is a hack, better way to accomplish this?
             _environment[OwinConstants.ResponseStatusCodeKey] = HttpStatusCode.Redirect;
             AppendHeader("Location", url);
