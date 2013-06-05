@@ -74,12 +74,12 @@ namespace FubuMVC.SelfHost
             _server.Start(_runtime);
 
             _urls = _runtime.Factory.Get<IUrlRegistry>();
-            _urls.As<UrlRegistry>().RootAt(_server.BaseAddress);
+            //_urls.As<UrlRegistry>().RootAt(_server.BaseAddress);
 
             UrlContext.Stub(_server.BaseAddress);
 
             _services = _runtime.Factory.Get<IServiceLocator>();
-            _endpoints = new EndpointDriver(_urls);
+            _endpoints = new EndpointDriver(_urls, _server.BaseAddress);
         }
 
         public EndpointDriver Endpoints

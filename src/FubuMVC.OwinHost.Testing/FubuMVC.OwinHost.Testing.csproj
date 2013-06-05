@@ -102,6 +102,7 @@
     <Compile Include="handling_a_404.cs" />
     <Compile Include="Harness.cs" />
     <Compile Include="OwinCurrentHttpRequestTester.cs" />
+    <Compile Include="Owin_url_resolution_tester.cs" />
     <Compile Include="OwnResponseTester.cs" />
     <Compile Include="OwnHttpWriterTester.cs" />
     <Compile Include="FormRequestReaderTester.cs" />

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net;
 
@@ -96,7 +97,14 @@ namespace FubuMVC.Core.Http
 
         public string ToFullUrl(string url)
         {
-            return url.ToAbsoluteUrl();
+            if (Uri.IsWellFormedUriString(url, UriKind.Absolute)) return url;
+
+            if (!url.StartsWith("/"))
+            {
+                return "/" + url;
+            }
+
+            return url;
         }
 
         public string HttpMethod()

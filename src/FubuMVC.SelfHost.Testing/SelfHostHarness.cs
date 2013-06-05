@@ -47,7 +47,7 @@ namespace FubuMVC.SelfHost.Testing
 
             UrlContext.Stub(_server.BaseAddress);
 
-            _endpoints = new EndpointDriver(urls);
+            _endpoints = new EndpointDriver(urls, _server.BaseAddress);
         }
 
         public static string GetRootDirectory()

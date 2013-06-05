@@ -120,12 +120,12 @@ namespace FubuMVC.Katana
             _baseAddress = "http://localhost:" + port;
 
             _urls = _runtime.Factory.Get<IUrlRegistry>();
-            _urls.As<UrlRegistry>().RootAt(_baseAddress);
+            //_urls.As<UrlRegistry>().RootAt(_baseAddress);
 
             UrlContext.Stub(_baseAddress);
 
             _services = _runtime.Factory.Get<IServiceLocator>();
-            _endpoints = new EndpointDriver(_urls);
+            _endpoints = new EndpointDriver(_urls, _baseAddress);
         }
 
         public FubuRuntime Runtime

@@ -88,6 +88,13 @@ namespace FubuMVC.OwinHost
 
         public string ToFullUrl(string url)
         {
+            if (Uri.IsWellFormedUriString(url, UriKind.Absolute)) return url;
+
+            if (!url.StartsWith("/"))
+            {
+                return "/" + url;
+            }
+
             var requestScheme = Get<string>(OwinConstants.RequestSchemeKey) + "://";
             if (url.StartsWith(requestScheme, StringComparison.OrdinalIgnoreCase)) return url;
 

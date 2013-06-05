@@ -29,10 +29,12 @@ namespace FubuMVC.Core.Endpoints
     public class EndpointDriver
     {
         private readonly IUrlRegistry _urls;
+        private readonly string _baseUrl;
 
-        public EndpointDriver(IUrlRegistry urls)
+        public EndpointDriver(IUrlRegistry urls, string baseUrl = null)
         {
             _urls = urls;
+            _baseUrl = baseUrl;
         }
 
         /// <summary>
@@ -223,13 +225,13 @@ namespace FubuMVC.Core.Endpoints
         /// <returns></returns>
         public HttpResponse Get<T>(Expression<Action<T>> expression, string categoryOrHttpMethod = null, string acceptType = "*/*")
         {
-            var url = _urls.UrlFor(expression, categoryOrHttpMethod);
+            var url = _urls.UrlFor(expression, categoryOrHttpMethod).ToAbsoluteUrl(_baseUrl);
             return Get(url, acceptType);
         }
 
         public HttpResponse GetByInput<T>(T model, string categoryOrHttpMethod = "GET", string acceptType = "*/*", Action<HttpWebRequest> configure = null, string acceptEncoding = null)
         {
-            var url = _urls.UrlFor(model, categoryOrHttpMethod);
+            var url = _urls.UrlFor(model, categoryOrHttpMethod).ToAbsoluteUrl(_baseUrl);
             return Get(url, acceptType, configure:configure, acceptEncoding:acceptEncoding);
         }
 
@@ -243,8 +245,9 @@ namespace FubuMVC.Core.Endpoints
         public HttpResponse Get(string url, string acceptType = "*/*", string etag = null, Action<HttpWebRequest> configure = null, string acceptEncoding = null)
         {
             Debug.WriteLine("EndpointDriver getting url {0}".ToFormat(url));
+            url = url.ToAbsoluteUrl(_baseUrl);
 
-            var request = (HttpWebRequest) WebRequest.Create(url);
+            var request = (HttpWebRequest) WebRequest.Create(url.ToAbsoluteUrl());
             request.Method = "GET";
             request.ContentType = MimeType.HttpFormMimetype;
             request.UserAgent = "EndpointDriver User Agent 1.0";
@@ -277,7 +280,7 @@ namespace FubuMVC.Core.Endpoints
         /// <returns></returns>
         public string ReadTextFrom(object input)
         {
-            var url = _urls.UrlFor(input);
+            var url = _urls.UrlFor(input).ToAbsoluteUrl(_baseUrl);
             return new WebClient().DownloadString(url);
         }
 
@@ -291,6 +294,8 @@ namespace FubuMVC.Core.Endpoints
         public string ReadTextFrom<T>(Expression<Action<T>> expression)
         {
             var url = _urls.UrlFor(expression);
+            url = url.ToAbsoluteUrl(_baseUrl);
+
             return new WebClient().DownloadString(url);
         }
 
@@ -316,6 +321,8 @@ namespace FubuMVC.Core.Endpoints
         private WebRequest requestForUrlTarget(object urlTarget, string categoryOrHttpMethod = null)
         {
             var url = _urls.UrlFor(urlTarget, categoryOrHttpMethod);
+            url = url.ToAbsoluteUrl(_baseUrl);
+
             return WebRequest.Create(url);
         }
 
