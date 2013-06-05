@@ -97,14 +97,7 @@ namespace FubuMVC.Core.Http
 
         public string ToFullUrl(string url)
         {
-            if (Uri.IsWellFormedUriString(url, UriKind.Absolute)) return url;
-
-            if (!url.StartsWith("/"))
-            {
-                return "/" + url;
-            }
-
-            return url;
+	        return url.ToAbsoluteUrl();
         }
 
         public string HttpMethod()
