@@ -11,8 +11,12 @@ namespace FubuMVC.OwinHost.Testing
         [Test]
         public void can_write_strings_to_the_output()
         {
-            Harness.Endpoints.Get<StringEndpoint>(x => x.get_hello()).ContentShouldBe(MimeType.Text, "Hello.")
-                .StatusCode.ShouldEqual(HttpStatusCode.OK);
+            HarnessApplication.Run(endpoints => {
+                endpoints.Get<StringEndpoint>(x => x.get_hello()).ContentShouldBe(MimeType.Text, "Hello.")
+                    .StatusCode.ShouldEqual(HttpStatusCode.OK);
+            });
+
+
         }
     }
 

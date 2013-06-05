@@ -37,6 +37,14 @@ namespace FubuMVC.OwinHost.Testing
         {
             return FubuApplication.For<HarnessRegistry>().StructureMap(new Container());
         }
+
+        public static void Run(Action<EndpointDriver> action)
+        {
+            using (var server = EmbeddedFubuMvcServer.For<HarnessApplication>())
+            {
+                action(server.Endpoints);
+            }
+        }
     }
 
     public static class Harness

@@ -10,11 +10,14 @@ namespace FubuMVC.OwinHost.Testing
         [Test]
         public void bind_data_against_routing_data()
         {
-            Harness.Endpoints.GetByInput(new RouteInput{
+            HarnessApplication.Run(x => {
+                x.GetByInput(new RouteInput{
                 Name = "Jeremy",
                 Age = 38
             }).ReadAsText()
                 .ShouldEqual("Name=Jeremy, Age=38");
+            });
+
         }
     }
 

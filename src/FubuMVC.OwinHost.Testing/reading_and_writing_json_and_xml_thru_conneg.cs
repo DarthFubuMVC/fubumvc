@@ -2,6 +2,7 @@ using System.IO;
 using System.Net;
 using System.Xml;
 using System.Xml.Serialization;
+using FubuMVC.Katana;
 using NUnit.Framework;
 using FubuTestingSupport;
 
@@ -13,35 +14,45 @@ namespace FubuMVC.OwinHost.Testing
         [Test]
         public void read_and_write_json()
         {
-            var message = new Message{
-                Color = "Blue",
-                Direction = "East"
-            };
+            HarnessApplication.Run(x => {
+                var message = new Message
+                {
+                    Color = "Blue",
+                    Direction = "East"
+                };
 
-            var response = Harness.Endpoints.PostJson(message, contentType:"text/json", accept:"text/json");
+                var response = x.PostJson(message, contentType: "text/json", accept: "text/json");
 
-            response.StatusCodeShouldBe(HttpStatusCode.OK);
-            response.ContentType.ShouldEqual("text/json");
+                response.StatusCodeShouldBe(HttpStatusCode.OK);
+                response.ContentType.ShouldEqual("text/json");
 
-            response.ReadAsJson<Message>().ShouldEqual(message);
+                response.ReadAsJson<Message>().ShouldEqual(message);
+            });
+
+
+
         }
 
         [Test]
         public void read_and_write_xml()
         {
-            var message = new Message
-            {
-                Color = "Blue",
-                Direction = "East"
-            };
+            HarnessApplication.Run(x => {
+                var message = new Message
+                {
+                    Color = "Blue",
+                    Direction = "East"
+                };
 
-            var response = Harness.Endpoints.PostXml(message, contentType: "text/xml", accept: "text/xml");
+                var response = x.PostXml(message, contentType: "text/xml", accept: "text/xml");
 
-            response.StatusCodeShouldBe(HttpStatusCode.OK);
-            response.ContentType.ShouldEqual("text/xml");
+                response.StatusCodeShouldBe(HttpStatusCode.OK);
+                response.ContentType.ShouldEqual("text/xml");
 
-            var serializer = new XmlSerializer(typeof (Message));
-            serializer.Deserialize(new XmlTextReader(new StringReader(response.ReadAsText()))).ShouldEqual(message);
+                var serializer = new XmlSerializer(typeof(Message));
+                serializer.Deserialize(new XmlTextReader(new StringReader(response.ReadAsText()))).ShouldEqual(message);
+            });
+
+
         }
     }
 

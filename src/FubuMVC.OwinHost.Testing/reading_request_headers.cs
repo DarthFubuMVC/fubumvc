@@ -1,6 +1,6 @@
 using FubuMVC.Core.Http;
-using NUnit.Framework;
 using FubuTestingSupport;
+using NUnit.Framework;
 
 namespace FubuMVC.OwinHost.Testing
 {
@@ -8,20 +8,25 @@ namespace FubuMVC.OwinHost.Testing
     public class reading_request_headers
     {
         [Test]
-        public void read_custom_header()
+        public void read_build_in_header()
         {
-            Harness.Endpoints.GetByInput(new HeaderRequest{
-                Name = "x-1"
-            }, configure: req => req.Headers["x-1"] = "A").ReadAsText().ShouldEqual("A");
+            HarnessApplication.Run(x => {
+                x.GetByInput(new HeaderRequest
+                {
+                    Name = HttpRequestHeaders.IfNoneMatch
+                }, configure: req => req.Headers[HttpRequestHeaders.IfNoneMatch] = "A").ReadAsText().ShouldEqual("A");
+            });
         }
 
         [Test]
-        public void read_build_in_header()
+        public void read_custom_header()
         {
-            Harness.Endpoints.GetByInput(new HeaderRequest
-            {
-                Name = HttpRequestHeaders.IfNoneMatch
-            }, configure: req => req.Headers[HttpRequestHeaders.IfNoneMatch] = "A").ReadAsText().ShouldEqual("A");
+            HarnessApplication.Run(x => {
+                x.GetByInput(new HeaderRequest
+                {
+                    Name = "x-1"
+                }, configure: req => req.Headers["x-1"] = "A").ReadAsText().ShouldEqual("A");
+            });
         }
     }
 

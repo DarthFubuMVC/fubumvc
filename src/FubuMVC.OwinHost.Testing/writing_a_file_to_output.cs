@@ -11,12 +11,17 @@ namespace FubuMVC.OwinHost.Testing
         [Test]
         public void can_write_the_contents_of_a_file_to_the_output()
         {
-            var response = Harness.Endpoints.GetByInput(new FileInput{
-                Name = "Test.txt"
+            HarnessApplication.Run(x => {
+                var response = x.GetByInput(new FileInput
+                {
+                    Name = "Test.txt"
+                });
+
+                response.ContentTypeShouldBe(MimeType.Text);
+                response.ReadAsText().ShouldContain("Some text here");
             });
 
-            response.ContentTypeShouldBe(MimeType.Text);
-            response.ReadAsText().ShouldContain("Some text here");
+
         }
     }
 
