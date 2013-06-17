@@ -38,6 +38,11 @@ namespace FubuMVC.Core.Http.AspNet
 
             var urlParts = url.Split(new[] { '?' }, 2);
             var baseUrl = urlParts[0];
+
+			if (baseUrl.IsEmpty())
+			{
+				baseUrl = "~/";
+			}
             
             if (!VirtualPathUtility.IsAbsolute(baseUrl))
             {
