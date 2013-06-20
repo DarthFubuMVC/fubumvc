@@ -7,20 +7,20 @@
     /// </summary>
     public class FubuPackageRegistry : FubuRegistry, IFubuRegistryExtension
     {
-        private readonly string _urlPrefix;
-
         public FubuPackageRegistry() : this(string.Empty)
         {
         }
 
         public FubuPackageRegistry(string urlPrefix)
         {
-            _urlPrefix = urlPrefix;
+            UrlPrefix = urlPrefix;
         }
+
+        public string UrlPrefix { get; protected internal set; }
 
         void IFubuRegistryExtension.Configure(FubuRegistry registry)
         {
-            registry.Import(this, _urlPrefix);
+            registry.Import(this, UrlPrefix);
         }
     }
 }

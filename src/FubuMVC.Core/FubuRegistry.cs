@@ -196,7 +196,7 @@ namespace FubuMVC.Core
 
                 _config.AddImport(new RegistryImport
                 {
-                    Prefix = null,
+                    Prefix = extension.As<FubuPackageRegistry>().UrlPrefix,
                     Registry = extension.As<FubuRegistry>()
                 });
             }
