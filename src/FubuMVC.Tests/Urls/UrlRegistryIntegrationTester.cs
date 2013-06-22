@@ -53,8 +53,9 @@ namespace FubuMVC.Tests.Urls
             graph = BehaviorGraph.BuildFrom(registry);
 
             var resolver = graph.Services.DefaultServiceFor<ITypeResolver>().Value;
+	        var urlResolver = new ChainUrlResolver(_theCurrentHttpRequest);
 
-            urls = new UrlRegistry(new ChainResolutionCache((ITypeResolver) resolver, graph), new JQueryUrlTemplate(), _theCurrentHttpRequest);
+            urls = new UrlRegistry(new ChainResolutionCache((ITypeResolver) resolver, graph), urlResolver, new JQueryUrlTemplate(), _theCurrentHttpRequest);
         }
 
         [Test]

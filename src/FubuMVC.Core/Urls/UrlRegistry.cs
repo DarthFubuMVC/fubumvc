@@ -12,14 +12,16 @@ namespace FubuMVC.Core.Urls
 {
     public class UrlRegistry : ChainInterrogator<string>, IUrlRegistry
     {
-        private readonly ICurrentHttpRequest _httpRequest;
-        private readonly Func<string, string> _templateFunc;
+	    private readonly IChainUrlResolver _urlResolver;
+	    private readonly ICurrentHttpRequest _httpRequest;
+	    private readonly Func<string, string> _templateFunc;
 
-        public UrlRegistry(IChainResolver resolver, IUrlTemplatePattern templatePattern, ICurrentHttpRequest httpRequest)
+        public UrlRegistry(IChainResolver resolver, IChainUrlResolver urlResolver, IUrlTemplatePattern templatePattern, ICurrentHttpRequest httpRequest)
             : base(resolver)
         {
-            _httpRequest = httpRequest;
-            _templateFunc = (s) => { return s.Replace("{", templatePattern.Start).Replace("}", templatePattern.End); };
+	        _urlResolver = urlResolver;
+	        _httpRequest = httpRequest;
+	        _templateFunc = (s) => { return s.Replace("{", templatePattern.Start).Replace("}", templatePattern.End); };
         }
 
         // TODO -- find a less shitastic way to do this
@@ -52,9 +54,7 @@ namespace FubuMVC.Core.Urls
         public string UrlFor(Type modelType, RouteParameters parameters, string categoryOrHttpMethod = null)
         {
             var chain = resolver.FindUniqueByType(modelType, categoryOrHttpMethod);
-            string url = chain.Route.Input.CreateUrlFromParameters(parameters);
-
-            return _httpRequest.ToFullUrl(url);
+	        return _urlResolver.UrlFor(chain, parameters);
         }
 
         public string UrlFor(Type handlerType, MethodInfo method, string categoryOrHttpMethod = null)
@@ -92,8 +92,7 @@ namespace FubuMVC.Core.Urls
 
         protected override string createResult(object model, BehaviorChain chain)
         {
-            string urlFromInput = chain.Route.CreateUrlFromInput(model);
-            return _httpRequest.ToFullUrl(urlFromInput);
+	        return _urlResolver.UrlFor(model, chain);
         }
 
         public string UrlFor<TInput>(RouteParameters parameters)

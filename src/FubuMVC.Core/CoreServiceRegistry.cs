@@ -35,6 +35,7 @@ namespace FubuMVC.Core
             SetServiceIfNone<IOutputWriter, OutputWriter>();
 
             SetServiceIfNone<IUrlRegistry, UrlRegistry>();
+			SetServiceIfNone<IChainUrlResolver, ChainUrlResolver>();
             SetServiceIfNone<IUrlTemplatePattern, NulloUrlTemplate>();
             SetServiceIfNone<IJsonWriter, JsonWriter>();
 

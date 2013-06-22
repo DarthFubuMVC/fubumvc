@@ -142,5 +142,11 @@ namespace FubuMVC.Tests.Registration
         {
             registeredTypeIs<IUrlRegistry, UrlRegistry>();
         }
+
+		[Test]
+		public void chain_url_resolver_is_registered()
+		{
+			registeredTypeIs<IChainUrlResolver, ChainUrlResolver>();
+		}
     }
 }

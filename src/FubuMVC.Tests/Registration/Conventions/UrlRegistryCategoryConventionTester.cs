@@ -28,7 +28,10 @@ namespace FubuMVC.Tests.Registration.Conventions
                     
             });
 
-            registry = new UrlRegistry(new ChainResolutionCache(new TypeResolver(), graph), new JQueryUrlTemplate(), new StubCurrentHttpRequest{TheApplicationRoot = "http://server/app"});
+			var request = new StubCurrentHttpRequest { TheApplicationRoot = "http://server/app" };
+			var urlResolver = new ChainUrlResolver(request);
+
+			registry = new UrlRegistry(new ChainResolutionCache(new TypeResolver(), graph), urlResolver, new JQueryUrlTemplate(), request);
         }
 
         [Test]

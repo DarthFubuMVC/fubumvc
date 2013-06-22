@@ -341,6 +341,7 @@
     <Compile Include="TestController.cs" />
     <Compile Include="UrlStringExtensionsTester.cs" />
     <Compile Include="Urls\BasicUrlRegistrationScanningIntegrationTester.cs" />
+    <Compile Include="Urls\ChainUrlResolverTester.cs" />
     <Compile Include="Urls\StubCurrentHttpRequest.cs" />
     <Compile Include="Urls\UrlRegistryIntegrationTester.cs" />
     <Compile Include="Web\Security\WebAuthenticationContextTester.cs" />

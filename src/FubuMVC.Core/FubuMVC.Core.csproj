@@ -489,6 +489,7 @@
     <Compile Include="Registration\Querying\ChainInterrogator.cs" />
     <Compile Include="UrlContext.cs" />
     <Compile Include="UrlStringExtensions.cs" />
+    <Compile Include="Urls\IChainUrlResolver.cs" />
     <Compile Include="Urls\IUrlTemplatePattern.cs" />
     <Compile Include="Urls\StubUrlRegistry.cs" />
     <Compile Include="Urls\UrlRegistry.cs" />
