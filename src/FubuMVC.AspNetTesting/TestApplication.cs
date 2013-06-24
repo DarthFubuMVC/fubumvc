@@ -38,7 +38,7 @@ namespace FubuMVC.AspNetTesting
         });
 
         private static readonly Lazy<EndpointDriver> _endpoints =
-            new Lazy<EndpointDriver>(() => { return new EndpointDriver(_urls.Value); });
+            new Lazy<EndpointDriver>(() => { return new EndpointDriver(_urls.Value, Root); });
 
         public static FubuRuntime Runtime
         {

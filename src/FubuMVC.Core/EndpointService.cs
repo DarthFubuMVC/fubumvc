@@ -6,6 +6,7 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Security;
+using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core
 {
@@ -97,16 +98,16 @@ namespace FubuMVC.Core
     public class EndpointService : ChainInterrogator<Endpoint>, IEndpointService
     {
         private readonly IChainAuthorizor _authorizor;
-        private readonly ICurrentHttpRequest _httpRequest;
+	    private readonly IChainUrlResolver _urlResolver;
 
-        public EndpointService(IChainAuthorizor authorizor, IChainResolver resolver, ICurrentHttpRequest httpRequest)
+        public EndpointService(IChainAuthorizor authorizor, IChainResolver resolver, IChainUrlResolver urlResolver)
             : base(resolver)
         {
-            _authorizor = authorizor;
-            _httpRequest = httpRequest;
+	        _authorizor = authorizor;
+	        _urlResolver = urlResolver;
         }
 
-        public Endpoint EndpointFor(object model, string categoryOrHttpMethod = null)
+	    public Endpoint EndpointFor(object model, string categoryOrHttpMethod = null)
         {
             return For(model, categoryOrHttpMethod);
         }
@@ -144,10 +145,10 @@ namespace FubuMVC.Core
 
         protected override Endpoint createResult(object model, BehaviorChain chain)
         {
-            var urlFromInput = chain.Route.CreateUrlFromInput(model);
+	        var url = _urlResolver.UrlFor(model, chain);
             return new Endpoint{
                 IsAuthorized = _authorizor.Authorize(chain, model) == AuthorizationRight.Allow,
-                Url = _httpRequest.ToFullUrl(urlFromInput),
+                Url = url,
                 Chain = chain
             };
         }
