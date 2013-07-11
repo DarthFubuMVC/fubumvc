@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Binding;
-using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
 
@@ -19,34 +18,26 @@ namespace FubuMVC.Core.Runtime
             _chain = chain;
         }
 
-        public void Invoke(ServiceArguments arguments, IDictionary<string, object> routeValues)
+        public void Invoke(ServiceArguments arguments, IDictionary<string, object> routeValues, IRequestCompletion requestCompletion)
         {
             var currentChain = new CurrentChain(_chain, routeValues);
             arguments.Set(typeof(ICurrentChain), currentChain);
+            arguments.Set(typeof(IRequestCompletion), requestCompletion);
 
             if (_chain.Filters.Any(filter => filter.Filter(arguments) == DoNext.Stop))
             {
                 return;
             }
-
             var behavior = _factory.BuildBehavior(arguments, _chain.UniqueId);
-            Invoke(behavior);
-        }
-
-        protected virtual void Invoke(IActionBehavior behavior)
-        {
-            try
-            {
-                behavior.Invoke();
-            }
-            finally
+            requestCompletion.WhenCompleteDo(x =>
             {
                 var disposable = behavior as IDisposable;
-                if(disposable != null)
+                if (disposable != null)
                 {
                     disposable.Dispose();
                 }
-            }
+            });
+            behavior.Invoke();
         }
     }
 }

@@ -6,39 +6,51 @@ namespace FubuMVC.Core.Behaviors
 {
     public class AsyncContinueWithBehavior<T> : AsyncContinueWithBehavior where T : class
     {
-        public AsyncContinueWithBehavior(IFubuRequest fubuRequest)
-            : base(fubuRequest)
+        public AsyncContinueWithBehavior(IFubuRequest fubuRequest, IAsyncCoordinator asyncCoordinator)
+            : base(fubuRequest, asyncCoordinator)
         {
         }
 
         protected override void invoke(Action action)
         {
-            var task = FubuRequest.Get<Task<T>>();
-            task.ContinueWith(x =>
+            internalInvoke<Task<T>>(x =>
             {
-                if (x.IsFaulted) return;
-
-                FubuRequest.Set(task.Result);
+                FubuRequest.Set(x.Result);
                 action();
-            }, TaskContinuationOptions.AttachedToParent);
+            });
         }
     }
 
     public class AsyncContinueWithBehavior : WrappingBehavior
     {
         private readonly IFubuRequest _fubuRequest;
+        private readonly IAsyncCoordinator _asyncCoordinator;
 
-        public AsyncContinueWithBehavior(IFubuRequest fubuRequest)
+        public AsyncContinueWithBehavior(IFubuRequest fubuRequest, IAsyncCoordinator asyncCoordinator)
         {
             _fubuRequest = fubuRequest;
+            _asyncCoordinator = asyncCoordinator;
         }
 
         public IFubuRequest FubuRequest { get { return _fubuRequest; } }
 
         protected override void invoke(Action action)
         {
-            var task = FubuRequest.Get<Task>();
-            task.ContinueWith(x => action(), TaskContinuationOptions.AttachedToParent | TaskContinuationOptions.NotOnFaulted);
+            internalInvoke<Task>(x => action());
+        }
+
+        protected void internalInvoke<T>(Action<T> action) where T : Task
+        {
+            var task = FubuRequest.Get<T>();
+            var continuation = task.ContinueWith(x =>
+            {
+                if (x.IsFaulted)
+                    return;
+
+                action(task);
+            });
+            _asyncCoordinator.Push(continuation);//continuation may fire too late, this order matters
+            _asyncCoordinator.Push(task);
         }
     }
 }
