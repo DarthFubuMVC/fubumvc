@@ -19,7 +19,8 @@ namespace FubuMVC.Core.Runtime.Handlers
 
         public void ProcessRequest(HttpContext context)
         {
-            _invoker.Invoke(_arguments, _routeData);
+            var requestCompletion = new RequestCompletion();
+            requestCompletion.Start(() => _invoker.Invoke(_arguments, _routeData, requestCompletion));
         }
 
         public bool IsReusable { get { return false; } }

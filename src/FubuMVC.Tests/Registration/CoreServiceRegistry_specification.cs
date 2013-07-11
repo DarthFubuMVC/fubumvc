@@ -28,9 +28,9 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
-        public void exception_handling_observer_is_registered()
+        public void async_coordinator_is_registered()
         {
-            registeredTypeIs<IExceptionHandlingObserver, ExceptionHandlingObserver>();
+            registeredTypeIs<IAsyncCoordinator, AsyncCoordinator>();
         }
 
         [Test]

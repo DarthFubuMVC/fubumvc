@@ -163,15 +163,16 @@
     <Compile Include="Registration\SettingsCollectionTester.cs" />
     <Compile Include="Resources\Conneg\ReaderChoiceTester.cs" />
     <Compile Include="Resources\PathBased\RouteRankingIntegratedTester.cs" />
+    <Compile Include="Runtime\AsyncCoordinatorTester.cs" />
     <Compile Include="Runtime\Files\ContentFolderTester.cs" />
     <Compile Include="Runtime\Files\FubuApplicationFilesSmokeTester.cs" />
     <Compile Include="Runtime\Files\FubuFileTester.cs" />
     <Compile Include="Runtime\Logger_should_be_registered.cs" />
     <Compile Include="Runtime\PartialChainSwitcherTester.cs" />
+    <Compile Include="Runtime\SynchronousCoordinator.cs" />
     <Compile Include="Security\SecurityServicesRegistry_specification.cs" />
     <Compile Include="StubRequestHeaders.cs" />
     <Compile Include="Behaviors\AsyncContinueWithBehaviorTests.cs" />
-    <Compile Include="Behaviors\AsyncInterceptExceptionBehaviorTester.cs" />
     <Compile Include="Behaviors\BasicBehaviorTester.cs" />
     <Compile Include="Behaviors\Conditional\AlwaysTester.cs" />
     <Compile Include="Behaviors\Conditional\building_conditional_behaviors_from_object_defs_testing.cs" />
@@ -274,7 +275,6 @@
     <Compile Include="Registration\TypePoolTester.cs" />
     <Compile Include="Routing\StandardRoutePolicyTester.cs" />
     <Compile Include="Runtime\AspNetPassthroughConverterTester.cs" />
-    <Compile Include="Runtime\AsyncBehaviorInvokerTester.cs" />
     <Compile Include="Runtime\BasicSessionTester.cs" />
     <Compile Include="Runtime\BehaviorInvokerTester.cs" />
     <Compile Include="Runtime\FubuSmartRequestTester.cs" />

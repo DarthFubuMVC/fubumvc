@@ -49,7 +49,7 @@ namespace FubuMVC.Core.Routing
 
         public static IBehaviorInvoker DetermineInvoker(IServiceFactory factory, BehaviorChain chain)
         {
-            return chain.IsAsynchronous() ? new AsyncBehaviorInvoker(factory, chain) : new BehaviorInvoker(factory, chain);
+            return new BehaviorInvoker(factory, chain);
         }
 
         public static IHttpHandlerSource DetermineHandlerSource(SessionStateRequirement sessionStateRequirement, BehaviorChain chain)

@@ -76,7 +76,6 @@
     <Compile Include="ApplicationSettings.cs" />
     <Compile Include="Configuration\BehaviorGraphBuilder.cs" />
     <Compile Include="Behaviors\AsyncContinueWithBehavior.cs" />
-    <Compile Include="Behaviors\AsyncInterceptExceptionBehavior.cs" />
     <Compile Include="Behaviors\Chrome\ChromeAttribute.cs" />
     <Compile Include="Behaviors\Chrome\ChromeBehavior.cs" />
     <Compile Include="Behaviors\Chrome\ChromeContent.cs" />
@@ -197,9 +196,11 @@
     <Compile Include="Runtime\Files\IFubuApplicationFiles.cs" />
     <Compile Include="Runtime\Files\IFubuFile.cs" />
     <Compile Include="Runtime\FullChainSwitcher.cs" />
+    <Compile Include="Runtime\AsyncCoordinator.cs" />
     <Compile Include="Runtime\Handlers\AsynchronousHttpHandler.cs" />
     <Compile Include="Runtime\Handlers\AsynchronousHttpHandlerSource.cs" />
     <Compile Include="Runtime\Handlers\IHttpHandlerSource.cs" />
+    <Compile Include="Runtime\RequestCompletion.cs" />
     <Compile Include="Runtime\Handlers\SessionlessAsynchronousHttpHandler.cs" />
     <Compile Include="Runtime\Handlers\SessionlessAsynchronousHttpHandlerSource.cs" />
     <Compile Include="Runtime\Handlers\SessionLessFubuHttpHandler.cs" />
@@ -322,9 +323,6 @@
     <Compile Include="Registration\SingleTypeActionSource.cs" />
     <Compile Include="Registration\TypeRegistrationExtensions.cs" />
     <Compile Include="Runtime\AspNetPassthroughConverter.cs" />
-    <Compile Include="Runtime\AsyncBehaviorInvoker.cs" />
-    <Compile Include="Runtime\AsyncExtensions.cs" />
-    <Compile Include="Runtime\ExceptionHandlingObserver.cs" />
     <Compile Include="Runtime\IExceptionHandler.cs" />
     <Compile Include="Runtime\IFubuRouteHandler.cs" />
     <Compile Include="Security\SecurityServicesRegistry.cs" />

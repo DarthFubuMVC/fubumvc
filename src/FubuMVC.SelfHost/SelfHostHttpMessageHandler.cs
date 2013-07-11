@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Routing;
 using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Handlers;
 
 namespace FubuMVC.SelfHost
@@ -61,7 +62,8 @@ namespace FubuMVC.SelfHost
                     var response = new HttpResponseMessage(HttpStatusCode.OK);
                     var arguments = new SelfHostServiceArguments(routeData, request, response);
                     var invoker = routeData.RouteHandler.As<FubuRouteHandler>().Invoker;
-                    invoker.Invoke(arguments, routeData.Values);
+                    var requestCompletion = new RequestCompletion();
+                    requestCompletion.Start(() => invoker.Invoke(arguments, routeData.Values, requestCompletion));
 
                     arguments.Writer.AttachContent();
 

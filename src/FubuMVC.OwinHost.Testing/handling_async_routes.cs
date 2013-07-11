@@ -29,7 +29,7 @@ namespace FubuMVC.OwinHost.Testing
     {
         public Task<string> get_async()
         {
-            return Task<string>.Factory.StartNew(() => "Hello", TaskCreationOptions.AttachedToParent);
+            return Task<string>.Factory.StartNew(() => "Hello");
         }
 
         public Task<string> get_async_error()
@@ -37,7 +37,7 @@ namespace FubuMVC.OwinHost.Testing
             return Task<string>.Factory.StartNew(() =>
             {
                 throw new InvalidOperationException("Error in async method");
-            }, TaskCreationOptions.AttachedToParent);
+            });
         }
     }
 }

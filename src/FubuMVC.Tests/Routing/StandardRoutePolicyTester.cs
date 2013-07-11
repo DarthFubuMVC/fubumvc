@@ -42,7 +42,7 @@ namespace FubuMVC.Tests.Routing
             var chain = BehaviorChain.For<Action3>(x => x.M1Async());
             chain.IsAsynchronous().ShouldBeTrue();
 
-            StandardRoutePolicy.DetermineInvoker(theFactory, chain).ShouldBeOfType<AsyncBehaviorInvoker>();
+            StandardRoutePolicy.DetermineInvoker(theFactory, chain).ShouldBeOfType<BehaviorInvoker>();
         }
 
         [Test]
