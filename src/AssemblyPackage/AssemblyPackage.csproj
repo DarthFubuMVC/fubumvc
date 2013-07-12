@@ -76,12 +76,6 @@
   </Target>
   -->
   <ItemGroup>
-    <EmbeddedResource Include="pak-WebContent.zip" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="pak-Data.zip" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
@@ -89,8 +83,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ripple.dependencies.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="pak-Config.zip" />
   </ItemGroup>
 </Project>
