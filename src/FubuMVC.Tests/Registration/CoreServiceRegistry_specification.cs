@@ -34,6 +34,12 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void exception_observer_is_registered()
+        {
+            registeredTypeIs<IExceptionHandlingObserver, ExceptionHandlingObserver>();
+        }
+
+        [Test]
         public void registers_Cookies()
         {
             registeredTypeIs<ICookies, Cookies>();

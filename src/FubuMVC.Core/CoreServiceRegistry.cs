@@ -83,6 +83,7 @@ namespace FubuMVC.Core
             SetServiceIfNone<ITimeZoneContext, MachineTimeZoneContext>();
             SetServiceIfNone<ISystemTime, SystemTime>();
 
+            SetServiceIfNone<IExceptionHandlingObserver, ExceptionHandlingObserver>();
             SetServiceIfNone<IAsyncCoordinator, AsyncCoordinator>();
 
             SetServiceIfNone<IPartialInvoker, PartialInvoker>();

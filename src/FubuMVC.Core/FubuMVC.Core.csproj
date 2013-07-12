@@ -191,6 +191,7 @@
     <Compile Include="Registration\SettingReplacement.cs" />
     <Compile Include="Registration\SettingsCollection.cs" />
     <Compile Include="Resources\Etags\IHeadersCache.cs" />
+    <Compile Include="Runtime\ExceptionHandlingObserver.cs" />
     <Compile Include="Runtime\Files\ContentFolder.cs" />
     <Compile Include="Runtime\Files\FubuApplicationFiles.cs" />
     <Compile Include="Runtime\Files\FubuFile.cs" />
