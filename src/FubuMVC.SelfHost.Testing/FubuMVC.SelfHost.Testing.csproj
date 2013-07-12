@@ -72,23 +72,23 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
-	  <Reference Include="System.Net.Http">
-		  <HintPath>..\packages\Microsoft.Net.Http\lib\net40\System.Net.Http.dll</HintPath>
-	  </Reference>
-	  <Reference Include="System.Net.Http.Formatting">
-		  <HintPath>..\packages\Microsoft.AspNet.WebApi.Client\lib\net40\System.Net.Http.Formatting.dll</HintPath>
-	  </Reference>
-	  <Reference Include="System.Net.Http.WebRequest">
-		  <HintPath>..\packages\Microsoft.Net.Http\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
-	  </Reference>
-	  <Reference Include="System.ServiceModel" />
-	  <Reference Include="System.Web" />
-	  <Reference Include="System.Web.Http">
-		  <HintPath>..\packages\Microsoft.AspNet.WebApi.Core\lib\net40\System.Web.Http.dll</HintPath>
-	  </Reference>
-	  <Reference Include="System.Web.Http.SelfHost">
-		  <HintPath>..\packages\Microsoft.AspNet.WebApi.SelfHost\lib\net40\System.Web.Http.SelfHost.dll</HintPath>
-	  </Reference>
+    <Reference Include="System.Net.Http">
+      <HintPath>..\packages\Microsoft.Net.Http\lib\net40\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+      <HintPath>..\packages\Microsoft.Net.Http\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Http">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.SelfHost">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.SelfHost\lib\net40\System.Web.Http.SelfHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>

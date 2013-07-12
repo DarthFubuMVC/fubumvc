@@ -32,6 +32,6 @@ desc "Unit and Integration Tests"
 task :full => [:default, :integration_test]
 
 desc "Target used for CI on Mono"
-task :mono_ci => [:compile, unit_test, :integration_test]
+task :mono_ci => [:compile, :unit_test, :integration_test]
 
 
