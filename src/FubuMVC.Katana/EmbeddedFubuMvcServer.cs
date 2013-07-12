@@ -76,23 +76,23 @@ namespace FubuMVC.Katana
         }
 
 
-        public class Starter
-        {
-            private readonly IList<RouteBase> _routes;
-
-            public Starter(FubuRuntime runtime)
-            {
-                _routes = runtime.Routes;
-            }
-
-            public void Configuration(IAppBuilder builder)
-            {
-                var host = new FubuOwinHost(_routes);
-                builder.Run(host);
-            }
-
-
-        }
+//        public class Starter
+//        {
+//            private readonly IList<RouteBase> _routes;
+//
+//            public Starter(FubuRuntime runtime)
+//            {
+//                _routes = runtime.Routes;
+//            }
+//
+//            public void Configuration(IAppBuilder builder)
+//            {
+//                var host = new FubuOwinHost(_routes);
+//                builder.Run(host);
+//            }
+//
+//
+//        }
 
         public EmbeddedFubuMvcServer(FubuRuntime runtime, string physicalPath = null, int port = 5500, StartOptions parameters = null)
         {
@@ -102,13 +102,7 @@ namespace FubuMVC.Katana
             parameters.Port = port;
 
             FubuMvcPackageFacility.PhysicalRootPath = physicalPath ?? AppDomain.CurrentDomain.BaseDirectory;
-
-            //_server = WebApplication.Start<Starter>(port: port, verbosity: 1);
-
-            Action<IAppBuilder> startup = builder => {
-                var host = new FubuOwinHost(_runtime.Routes);
-                builder.Run(host);
-            };
+            Action<IAppBuilder> startup = FubuOwinHost.ToStartup(_runtime);
 
             var context = new StartContext(parameters)
             {
@@ -118,13 +112,11 @@ namespace FubuMVC.Katana
             var engine = new HostingEngine(new AppBuilderFactory(), new TraceOutputFactory(), new AppLoader(new IAppLoaderFactory[0]),
                                            new ServerFactoryLoader(new ServerFactoryActivator(new ServiceProvider())));
 
-            //var engine  = new KatanaEngine(settings);
             _server = engine.Start(context);
 
             _baseAddress = "http://localhost:" + port;
 
             _urls = _runtime.Factory.Get<IUrlRegistry>();
-            //_urls.As<UrlRegistry>().RootAt(_baseAddress);
 
             UrlContext.Stub(_baseAddress);
 

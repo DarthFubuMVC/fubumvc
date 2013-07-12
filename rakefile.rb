@@ -25,6 +25,8 @@ end
 	
 	sln.integration_test = ['FubuMVC.IntegrationTesting']
 	sln.ci_steps = [:integration_test]
+	
+	sln.defaults = [:ilrepack]
 end
 
 
@@ -39,7 +41,6 @@ require_relative 'ILRepack'
 desc "Ilmerge the appropriate OWIN and Katana assemblies"
 task :ilrepack do
 	merge_owin_types("src/FubuMVC.OwinHost/bin/#{@solution.compilemode}", 'FubuMVC.OwinHost.dll')
-	merge_owin_types("src/FubuMVC.Katana/bin/#{@solution.compilemode}", 'FubuMVC.Katana.dll')
 	merge_katana("src/FubuMVC.Katana/bin/#{@solution.compilemode}", 'FubuMVC.Katana.dll')
 end
 

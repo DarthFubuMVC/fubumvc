@@ -5,15 +5,26 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Routing;
 using FubuCore;
+using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Handlers;
 using FubuMVC.OwinHost.Readers;
+using Owin;
 
 namespace FubuMVC.OwinHost
 {
     public class FubuOwinHost
     {
         private readonly RouteCollection _routes;
+
+        public static Action<IAppBuilder> ToStartup(FubuRuntime runtime)
+        {
+            return builder =>
+            {
+                var host = new FubuOwinHost(runtime.Routes);
+                builder.Run(host);
+            };
+        }
 
         public FubuOwinHost(IEnumerable<RouteBase> routes)
         {
