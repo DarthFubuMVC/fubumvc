@@ -49,10 +49,7 @@ namespace FubuMVC.Core.Behaviors
 
                 action(task);
             });
-            var all = Task.Factory.ContinueWhenAll(new Task[] { task, continuation }, x => { });
-            _asyncCoordinator.Push(all);
-            _asyncCoordinator.Push(task);
-            _asyncCoordinator.Push(continuation);
+            _asyncCoordinator.Push(task, continuation);
         }
     }
 }

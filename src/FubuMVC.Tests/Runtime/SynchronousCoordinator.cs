@@ -1,13 +1,14 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Tests.Runtime
 {
     public class SynchronousCoordinator : IAsyncCoordinator
     {
-        public void Push(Task task)
+        public void Push(params Task[] tasks)
         {
-            task.Wait();
+            tasks.Each(x => x.Wait());
         }
     }
 }

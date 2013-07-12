@@ -7,7 +7,7 @@ namespace FubuMVC.Core.Runtime
 {
     public interface IAsyncCoordinator
     {
-        void Push(Task task);
+        void Push(params Task[] task);
     }
 
     public class AsyncCoordinator : IAsyncCoordinator
@@ -25,10 +25,13 @@ namespace FubuMVC.Core.Runtime
             _requestCompletion.IsAsynchronous();
         }
 
-        public void Push(Task task)
+        public void Push(params Task[] tasks)
         {
-            inLock(() => _pendingOperations++);
-            task.ContinueWith(x => inLock(() => taskCompleted(x)), TaskContinuationOptions.ExecuteSynchronously);
+            inLock(() => _pendingOperations += tasks.Length);
+            Task.Factory.ContinueWhenAll(tasks, _ =>
+            {
+                tasks.Each(x => inLock(() => taskCompleted(x)));
+            }, TaskContinuationOptions.ExecuteSynchronously);
         }
 
         private void taskCompleted(Task task)
