@@ -34,4 +34,26 @@ task :full => [:default, :integration_test]
 desc "Target used for CI on Mono"
 task :mono_ci => [:compile, :unit_test, :integration_test]
 
+require_relative 'ILRepack'
 
+desc "Ilmerge the appropriate OWIN and Katana assemblies"
+task :ilrepack do
+	merge_owin_types("src/FubuMVC.OwinHost/bin/#{@solution.compilemode}", 'FubuMVC.OwinHost.dll')
+	merge_owin_types("src/FubuMVC.Katana/bin/#{@solution.compilemode}", 'FubuMVC.Katana.dll')
+	merge_katana("src/FubuMVC.Katana/bin/#{@solution.compilemode}", 'FubuMVC.Katana.dll')
+end
+
+def merge_owin_types(dir, assembly)
+	output = File.join(dir, assembly)
+	packer = ILRepack.new :out => output, :lib => dir
+	packer.merge :lib => dir, :refs => [assembly, 'Owin.Types.dll'], :clrversion => @solution.options[:clrversion]
+	packer.merge :lib => dir, :refs => [assembly, 'Owin.Extensions.dll'], :clrversion => @solution.options[:clrversion]
+end
+
+def merge_katana(dir, assembly)
+	output = File.join(dir, assembly)
+	packer = ILRepack.new :out => output, :lib => dir
+	packer.merge :lib => dir, :refs => [assembly, 'Microsoft.Owin.dll'], :clrversion => @solution.options[:clrversion]
+	packer.merge :lib => dir, :refs => [assembly, 'Microsoft.Owin.Host.HttpListener.dll'], :clrversion => @solution.options[:clrversion]
+	packer.merge :lib => dir, :refs => [assembly, 'Microsoft.Owin.Hosting.dll'], :clrversion => @solution.options[:clrversion]
+end
