@@ -35,13 +35,13 @@ namespace FubuMVC.Core.Continuations
 
         public void RedirectTo(object input, string categoryOrHttpMethod = null)
         {
-            string url = input as string ?? _registry.UrlFor(input, categoryOrHttpMethod);
+            string url = input as string ?? _registry.UrlFor(input, categoryOrHttpMethod ?? "GET");
             _writer.RedirectToUrl(url);
         }
 
         public void RedirectToCall(ActionCall call, string categoryOrHttpMethod = null)
         {
-            string url = _registry.UrlFor(call.HandlerType, call.Method, categoryOrHttpMethod);
+            string url = _registry.UrlFor(call.HandlerType, call.Method, categoryOrHttpMethod ?? "GET");
             _writer.RedirectToUrl(url);
         }
 

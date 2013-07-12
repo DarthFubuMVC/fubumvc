@@ -230,7 +230,7 @@ namespace FubuMVC.Tests.Continuations
             input = new InputModel();
             theUrl = "some/path/1";
 
-            MockFor<IUrlRegistry>().Expect(x => x.UrlFor(input)).Return(theUrl);
+            MockFor<IUrlRegistry>().Expect(x => x.UrlFor(input, "GET")).Return(theUrl);
 
             ProcessContinuation(FubuContinuation.RedirectTo(input));
         }
@@ -285,7 +285,7 @@ namespace FubuMVC.Tests.Continuations
             theUrl = "some/path/1";
             call = ActionCall.For<ControllerTarget>(x => x.ZeroInOneOut());
 
-            MockFor<IUrlRegistry>().Expect(x => x.UrlFor(call.HandlerType, call.Method, null)).Return(theUrl);
+            MockFor<IUrlRegistry>().Expect(x => x.UrlFor(call.HandlerType, call.Method, "GET")).Return(theUrl);
 
             ProcessContinuation(FubuContinuation.RedirectTo<ControllerTarget>(x => x.ZeroInOneOut()));
         }

@@ -44,7 +44,7 @@ namespace FubuMVC.Core.Continuations
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="expression"></param>
-        /// <param name="categoryOrHttpMethod"></param>
+        /// <param name="categoryOrHttpMethod">Defaults to GET</param>
         /// <returns></returns>
         public static FubuContinuation RedirectTo<T>(Expression<Action<T>> expression, string categoryOrHttpMethod = null)
         {
