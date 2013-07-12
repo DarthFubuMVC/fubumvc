@@ -121,6 +121,7 @@
     <Compile Include="Http\Cookies\CookieValueSourceTester.cs" />
     <Compile Include="Http\Cookies\CookieValueTester.cs" />
     <Compile Include="Http\Cookies\SegmentTester.cs" />
+    <Compile Include="Http\CurrentHttpRequestExtensionsTester.cs" />
     <Compile Include="Http\HeaderValueSourceTester.cs" />
     <Compile Include="Http\HttpStandInServiceRegistry_specification.cs" />
     <Compile Include="Http\Compression\ContentEncodingTester.cs" />
@@ -306,7 +307,8 @@
     <Compile Include="FubuBootstrapperIntegrationTester.cs" />
     <Compile Include="FubuRegistryTester.cs" />
     <Compile Include="HtmlGenerationTestExtensions.cs" />
-    <Compile Include="Registration\BehaviorGraphTester.cs"></Compile>
+    <Compile Include="Registration\BehaviorGraphTester.cs">
+    </Compile>
     <Compile Include="Registration\Conventions\ActionSourceTester.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConventionTester.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteInputTypeBasedUrlPolicyTester.cs" />

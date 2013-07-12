@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Net;
 
 namespace FubuMVC.Core.Http
 {
@@ -57,19 +56,6 @@ namespace FubuMVC.Core.Http
         /// </summary>
         /// <returns></returns>
         IEnumerable<string> AllHeaderKeys();
-    }
-
-    public static class CurrentHttpRequestExtensions
-    {
-        public static bool HasHeader(this ICurrentHttpRequest request, HttpRequestHeader key)
-        {
-            return request.HasHeader(HttpRequestHeaders.HeaderNameFor(key));
-        }
-
-        public static IEnumerable<string> GetHeader(this ICurrentHttpRequest request, HttpRequestHeader key)
-        {
-            return request.GetHeader(HttpRequestHeaders.HeaderNameFor(key));
-        }
     }
 
     public class StandInCurrentHttpRequest : ICurrentHttpRequest

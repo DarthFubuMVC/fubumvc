@@ -26,10 +26,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.IntegrationTesting"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.TestingHarness", "FubuMVC.TestingHarness\FubuMVC.TestingHarness.csproj", "{C9C9A405-1164-44AB-9CB4-3639F0979BE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.SelfHost", "FubuMVC.SelfHost\FubuMVC.SelfHost.csproj", "{E8DC2BF6-4F59-43BF-86B9-82C52803B5C0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.SelfHost.Testing", "FubuMVC.SelfHost.Testing\FubuMVC.SelfHost.Testing.csproj", "{C4FEF224-35FF-49FD-B733-FB11CF9F6673}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetApplication", "AspNetApplication\AspNetApplication.csproj", "{DC1BCE7A-CA17-423C-81F2-836292C3AF2C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.AspNetTesting", "FubuMVC.AspNetTesting\FubuMVC.AspNetTesting.csproj", "{37231105-CDFD-4A1C-8A68-DD31E59C9AE1}"
@@ -181,36 +177,6 @@ Global
 		{C9C9A405-1164-44AB-9CB4-3639F0979BE9}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{C9C9A405-1164-44AB-9CB4-3639F0979BE9}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
 		{C9C9A405-1164-44AB-9CB4-3639F0979BE9}.Retail|x86.ActiveCfg = Release|Any CPU
-		{E8DC2BF6-4F59-43BF-86B9-82C52803B5C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E8DC2BF6-4F59-43BF-86B9-82C52803B5C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E8DC2BF6-4F59-43BF-86B9-82C52803B5C0}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{E8DC2BF6-4F59-43BF-86B9-82C52803B5C0}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{E8DC2BF6-4F59-43BF-86B9-82C52803B5C0}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{E8DC2BF6-4F59-43BF-86B9-82C52803B5C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E8DC2BF6-4F59-43BF-86B9-82C52803B5C0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E8DC2BF6-4F59-43BF-86B9-82C52803B5C0}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{E8DC2BF6-4F59-43BF-86B9-82C52803B5C0}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{E8DC2BF6-4F59-43BF-86B9-82C52803B5C0}.Release|x86.ActiveCfg = Release|Any CPU
-		{E8DC2BF6-4F59-43BF-86B9-82C52803B5C0}.Retail|Any CPU.ActiveCfg = Release|Any CPU
-		{E8DC2BF6-4F59-43BF-86B9-82C52803B5C0}.Retail|Any CPU.Build.0 = Release|Any CPU
-		{E8DC2BF6-4F59-43BF-86B9-82C52803B5C0}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{E8DC2BF6-4F59-43BF-86B9-82C52803B5C0}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
-		{E8DC2BF6-4F59-43BF-86B9-82C52803B5C0}.Retail|x86.ActiveCfg = Release|Any CPU
-		{C4FEF224-35FF-49FD-B733-FB11CF9F6673}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C4FEF224-35FF-49FD-B733-FB11CF9F6673}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C4FEF224-35FF-49FD-B733-FB11CF9F6673}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{C4FEF224-35FF-49FD-B733-FB11CF9F6673}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{C4FEF224-35FF-49FD-B733-FB11CF9F6673}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{C4FEF224-35FF-49FD-B733-FB11CF9F6673}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C4FEF224-35FF-49FD-B733-FB11CF9F6673}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C4FEF224-35FF-49FD-B733-FB11CF9F6673}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{C4FEF224-35FF-49FD-B733-FB11CF9F6673}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{C4FEF224-35FF-49FD-B733-FB11CF9F6673}.Release|x86.ActiveCfg = Release|Any CPU
-		{C4FEF224-35FF-49FD-B733-FB11CF9F6673}.Retail|Any CPU.ActiveCfg = Release|Any CPU
-		{C4FEF224-35FF-49FD-B733-FB11CF9F6673}.Retail|Any CPU.Build.0 = Release|Any CPU
-		{C4FEF224-35FF-49FD-B733-FB11CF9F6673}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{C4FEF224-35FF-49FD-B733-FB11CF9F6673}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
-		{C4FEF224-35FF-49FD-B733-FB11CF9F6673}.Retail|x86.ActiveCfg = Release|Any CPU
 		{DC1BCE7A-CA17-423C-81F2-836292C3AF2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DC1BCE7A-CA17-423C-81F2-836292C3AF2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC1BCE7A-CA17-423C-81F2-836292C3AF2C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
