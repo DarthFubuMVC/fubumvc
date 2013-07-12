@@ -9,7 +9,12 @@ using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Urls;
 using FubuMVC.OwinHost;
 using Microsoft.Owin.Hosting;
-using Microsoft.Owin.Hosting.Settings;
+using Microsoft.Owin.Hosting.Builder;
+using Microsoft.Owin.Hosting.Engine;
+using Microsoft.Owin.Hosting.Loader;
+using Microsoft.Owin.Hosting.ServerFactory;
+using Microsoft.Owin.Hosting.Services;
+using Microsoft.Owin.Hosting.Tracing;
 using Owin;
 
 namespace FubuMVC.Katana
@@ -89,32 +94,31 @@ namespace FubuMVC.Katana
 
         }
 
-        public EmbeddedFubuMvcServer(FubuRuntime runtime, string physicalPath = null, int port = 5500, StartParameters parameters = null)
+        public EmbeddedFubuMvcServer(FubuRuntime runtime, string physicalPath = null, int port = 5500, StartOptions parameters = null)
         {
             _runtime = runtime;
 
-            parameters = parameters ?? new StartParameters();
+            parameters = parameters ?? new StartOptions();
             parameters.Port = port;
 
             FubuMvcPackageFacility.PhysicalRootPath = physicalPath ?? AppDomain.CurrentDomain.BaseDirectory;
 
             //_server = WebApplication.Start<Starter>(port: port, verbosity: 1);
 
-            var context = new StartContext
-            {
-                Parameters = parameters,
+            Action<IAppBuilder> startup = builder => {
+                var host = new FubuOwinHost(_runtime.Routes);
+                builder.Run(host);
             };
 
-            var settings = new KatanaSettings
+            var context = new StartContext(parameters)
             {
-                LoaderFactory = () => (s => builder => {
-                    var host = new FubuOwinHost(_runtime.Routes);
-                    builder.Run(host);
-                }),
-
+                Startup = startup
             };
 
-            var engine  = new KatanaEngine(settings);
+            var engine = new HostingEngine(new AppBuilderFactory(), new TraceOutputFactory(), new AppLoader(new IAppLoaderFactory[0]),
+                                           new ServerFactoryLoader(new ServerFactoryActivator(new ServiceProvider())));
+
+            //var engine  = new KatanaEngine(settings);
             _server = engine.Start(context);
 
             _baseAddress = "http://localhost:" + port;
