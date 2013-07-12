@@ -76,24 +76,6 @@ namespace FubuMVC.Katana
         }
 
 
-//        public class Starter
-//        {
-//            private readonly IList<RouteBase> _routes;
-//
-//            public Starter(FubuRuntime runtime)
-//            {
-//                _routes = runtime.Routes;
-//            }
-//
-//            public void Configuration(IAppBuilder builder)
-//            {
-//                var host = new FubuOwinHost(_routes);
-//                builder.Run(host);
-//            }
-//
-//
-//        }
-
         public EmbeddedFubuMvcServer(FubuRuntime runtime, string physicalPath = null, int port = 5500, StartOptions parameters = null)
         {
             _runtime = runtime;
