@@ -1,4 +1,5 @@
 using FubuCore.Configuration;
+using FubuCore.Conversion;
 using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
@@ -18,6 +19,13 @@ namespace FubuMVC.StructureMap.Testing.Internals
         {
             var container = new Container(new AppSettingProviderRegistry());
             container.GetInstance<AppSettingsProvider>().ShouldNotBeNull();
+        }
+
+        [Test]
+        public void can_build_the_object_converter()
+        {
+            var container = new Container(new AppSettingProviderRegistry());
+            container.GetInstance<IObjectConverter>().ShouldNotBeNull();
         }
     }
 }
