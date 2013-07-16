@@ -18,5 +18,8 @@
   </metadata>
   <files>
     <file src="..\..\src\FubuMVC.Katana\bin\release\FubuMVC.Katana.*" target="lib\net40" />
+	<file src="..\..\src\FubuMVC.Katana\bin\release\Microsoft.Owin.dll" target="lib\net40" />
+	<file src="..\..\src\FubuMVC.Katana\bin\release\Microsoft.Owin.Hosting.dll" target="lib\net40" />
+	<file src="..\..\src\FubuMVC.Katana\bin\release\Microsoft.Owin.Host.HttpListener.dll" target="lib\net40" />
   </files>
 </package>

@@ -41,8 +41,26 @@ require_relative 'ILRepack'
 desc "Ilmerge the appropriate OWIN and Katana assemblies"
 task :ilrepack do
 	merge_owin_types("src/FubuMVC.OwinHost/bin/#{@solution.compilemode}", 'FubuMVC.OwinHost.dll')
-	merge_katana("src/FubuMVC.Katana/bin/#{@solution.compilemode}", 'FubuMVC.Katana.dll')
+	#merge_owin_listener("src/FubuMVC.Katana/bin/#{@solution.compilemode}", "Microsoft.Owin.dll")
+	
+	#merge_katana("src/FubuMVC.Katana/bin/#{@solution.compilemode}", 'FubuMVC.Katana.dll')
+	
+	owin_file = "src/FubuMVC.OwinHost/bin/#{@solution.compilemode}/FubuMVC.OwinHost.dll"
+	katana_file = "src/FubuMVC.Katana/bin/#{@solution.compilemode}/FubuMVC.Katana.dll"
+	
+	
+	
+	FileUtils.cp owin_file,  "src/FubuMVC.IntegrationTesting/bin/#{@solution.compilemode}"
+	#FileUtils.cp katana_file,  "src/FubuMVC.IntegrationTesting/bin/#{@solution.compilemode}"
+	
+	#FileUtils.remove_file "src/FubuMVC.IntegrationTesting/bin/#{@solution.compilemode}/Microsoft.Owin.dll"
+	#FileUtils.remove_file "src/FubuMVC.IntegrationTesting/bin/#{@solution.compilemode}/Microsoft.Owin.Hosting.dll"
+	#FileUtils.remove_file "src/FubuMVC.IntegrationTesting/bin/#{@solution.compilemode}/Microsoft.Owin.Host.HttpListener.dll"
+	FileUtils.remove_file "src/FubuMVC.IntegrationTesting/bin/#{@solution.compilemode}/Owin.Types.dll"
+	FileUtils.remove_file "src/FubuMVC.IntegrationTesting/bin/#{@solution.compilemode}/Owin.Extensions.dll"
 end
+
+Rake::Task[:integration_test].enhance [:ilrepack]
 
 def merge_owin_types(dir, assembly)
 	output = File.join(dir, assembly)
@@ -51,10 +69,16 @@ def merge_owin_types(dir, assembly)
 	packer.merge :lib => dir, :refs => [assembly, 'Owin.Extensions.dll'], :clrversion => @solution.options[:clrversion]
 end
 
+def merge_owin_listener(dir, assembly)
+	output = File.join(dir, assembly)
+	packer = ILRepack.new :out => output, :lib => dir
+	
+	packer.merge :lib => dir, :refs => [assembly, 'Microsoft.Owin.Host.HttpListener.dll', 'Microsoft.Owin.Hosting.dll'], :clrversion => @solution.options[:clrversion]
+	#packer.merge :lib => dir, :refs => [assembly, ], :clrversion => @solution.options[:clrversion]
+end
+
 def merge_katana(dir, assembly)
 	output = File.join(dir, assembly)
 	packer = ILRepack.new :out => output, :lib => dir
 	packer.merge :lib => dir, :refs => [assembly, 'Microsoft.Owin.dll'], :clrversion => @solution.options[:clrversion]
-	packer.merge :lib => dir, :refs => [assembly, 'Microsoft.Owin.Host.HttpListener.dll'], :clrversion => @solution.options[:clrversion]
-	packer.merge :lib => dir, :refs => [assembly, 'Microsoft.Owin.Hosting.dll'], :clrversion => @solution.options[:clrversion]
 end

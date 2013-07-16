@@ -76,12 +76,11 @@ namespace FubuMVC.Katana
         }
 
 
-        public EmbeddedFubuMvcServer(FubuRuntime runtime, string physicalPath = null, int port = 5500, StartOptions parameters = null)
+        public EmbeddedFubuMvcServer(FubuRuntime runtime, string physicalPath = null, int port = 5500)
         {
             _runtime = runtime;
 
-            parameters = parameters ?? new StartOptions();
-            parameters.Port = port;
+            var parameters = new StartOptions {Port = port};
 
             FubuMvcPackageFacility.PhysicalRootPath = physicalPath ?? AppDomain.CurrentDomain.BaseDirectory;
             Action<IAppBuilder> startup = FubuOwinHost.ToStartup(_runtime);

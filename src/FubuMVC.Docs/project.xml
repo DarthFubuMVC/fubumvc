@@ -5,8 +5,8 @@
   <GitHubPage>http://github.com/DarthFubuMVC/FubuMVC</GitHubPage>
   <UserGroupUrl>https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel</UserGroupUrl>
   <BuildServerUrl>http://build.fubu-project.org/project.html?projectId=project3&amp;tab=projectOverview</BuildServerUrl>
-  <BottleName>FubuMVC.Docs</BottleName>
   <TeamCityBuildType>bt3</TeamCityBuildType>
+  <BottleName>FubuMVC.Docs</BottleName>
   <Nugets>
     <PublishedNuget>
       <Name>FubuMVC.Autofac</Name>
@@ -31,10 +31,6 @@
     <PublishedNuget>
       <Name>FubuMVC.TestingHarness</Name>
       <Description>Small library of classes to easily write integration tests against FubuMVC applications hosted by Kayak</Description>
-    </PublishedNuget>
-    <PublishedNuget>
-      <Name>FubuMVC.SelfHost</Name>
-      <Description>Run FubuMVC applications using the Web API Self Hosting alternative</Description>
     </PublishedNuget>
   </Nugets>
   <Url>fubumvc</Url>
