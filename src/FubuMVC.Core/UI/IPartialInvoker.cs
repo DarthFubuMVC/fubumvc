@@ -2,7 +2,7 @@
 {
     public interface IPartialInvoker
     {
-        string Invoke<T>() where T : class;
-        string InvokeObject(object model, bool withModelBinding = false);
+        string Invoke<T>(string categoryOrHttpMethod = null) where T : class;
+        string InvokeObject(object model, bool withModelBinding = false, string categoryOrHttpMethod = null);
     }
 }

@@ -8,6 +8,7 @@ using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.UI;
+using FubuMVC.Core.Urls;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -28,7 +29,7 @@ namespace FubuMVC.Tests.UI
             theInput = new PartialInputModel();
             theChain = new BehaviorChain();
 
-            MockFor<IChainResolver>().Stub(x => x.FindUniqueByType(theInput.GetType())).Return(theChain);
+            MockFor<IChainResolver>().Stub(x => x.FindUniqueByType(theInput.GetType(), Categories.VIEW)).Return(theChain);
 
             theAction = MockFor<IActionBehavior>();
 
@@ -156,7 +157,7 @@ namespace FubuMVC.Tests.UI
 
 
             theChain = new BehaviorChain();
-            MockFor<IChainResolver>().Stub(x => x.FindUniqueByType(typeof (PartialInputModel))).Return(theChain);
+            MockFor<IChainResolver>().Stub(x => x.FindUniqueByType(typeof (PartialInputModel), Categories.VIEW)).Return(theChain);
 
             MockFor<IPartialFactory>().Stub(x => x.BuildPartial(theChain)).Return(theAction);
             MockFor<IRecordedOutput>().Stub(x => x.Headers()).Return(Enumerable.Empty<Header>());
@@ -212,7 +213,7 @@ namespace FubuMVC.Tests.UI
             MockFor<IAuthorizationPreviewService>().Expect(x => x.IsAuthorized(theInput)).Return(false);
 
             theChain = new BehaviorChain();
-            MockFor<IChainResolver>().Stub(x => x.FindUniqueByType(typeof (PartialInputModel))).Return(theChain);
+            MockFor<IChainResolver>().Stub(x => x.FindUniqueByType(typeof (PartialInputModel), Categories.VIEW)).Return(theChain);
             MockFor<IRecordedOutput>().Stub(x => x.Headers()).Return(Enumerable.Empty<Header>());
             MockFor<IPartialFactory>().Stub(x => x.BuildPartial(theChain)).Return(theAction);
 
@@ -263,7 +264,6 @@ namespace FubuMVC.Tests.UI
             MockFor<IAuthorizationPreviewService>().Expect(x => x.IsAuthorized(theInput)).Return(false);
 
             theChain = new BehaviorChain();
-            MockFor<IChainResolver>().Stub(x => x.FindUnique(theInput)).Return(theChain);
             MockFor<IRecordedOutput>().Stub(x => x.Headers()).Return(Enumerable.Empty<Header>());
 
             MockFor<IPartialFactory>().Stub(x => x.BuildPartial(theChain)).Return(theAction);
@@ -301,6 +301,61 @@ namespace FubuMVC.Tests.UI
         public void should_not_bind_properties_on_the_input()
         {
             MockFor<ISetterBinder>().AssertWasNotCalled(x => x.BindProperties(theInput.GetType(), theInput));
+        }
+    }
+
+    [TestFixture]
+    public class when_the_POST_partial_request_is_authorized : InteractionContext<PartialInvoker>
+    {
+        private PartialInputModel theInput;
+        private IActionBehavior theAction;
+        private BehaviorChain theChain;
+
+        protected override void beforeEach()
+        {
+            theInput = new PartialInputModel();
+            theAction = MockFor<IActionBehavior>();
+
+            MockFor<IFubuRequest>().Stub(x => x.Get<PartialInputModel>()).Return(theInput);
+            MockFor<IAuthorizationPreviewService>().Expect(x => x.IsAuthorized(theInput)).Return(true);
+
+
+            theChain = new BehaviorChain();
+            MockFor<IChainResolver>().Stub(x => x.FindUniqueByType(typeof(PartialInputModel), category: "POST")).Return(theChain);
+
+            MockFor<IPartialFactory>().Stub(x => x.BuildPartial(theChain)).Return(theAction);
+            MockFor<IRecordedOutput>().Stub(x => x.Headers()).Return(Enumerable.Empty<Header>());
+
+            MockFor<IOutputWriter>()
+                .Expect(x => x.Record(theAction.InvokePartial))
+                .WhenCalled(r => theAction.InvokePartial())
+                .Return(MockFor<IRecordedOutput>());
+
+            ClassUnderTest.Invoke<PartialInputModel>("POST");
+        }
+
+        [Test]
+        public void should_have_tested_the_authorization()
+        {
+            MockFor<IAuthorizationPreviewService>().VerifyAllExpectations();
+        }
+
+        [Test]
+        public void should_invoke_the_partial_behavior()
+        {
+            theAction.AssertWasCalled(x => x.InvokePartial());
+        }
+
+        [Test]
+        public void should_record_on_the_outputwriter()
+        {
+            MockFor<IOutputWriter>().VerifyAllExpectations();
+        }
+
+        [Test]
+        public void should_return_recorded_output()
+        {
+            MockFor<IRecordedOutput>().AssertWasCalled(x => x.GetText());
         }
     }
 

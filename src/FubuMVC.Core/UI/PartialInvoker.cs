@@ -4,6 +4,7 @@ using FubuCore;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
+using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.UI
 {
@@ -14,7 +15,7 @@ namespace FubuMVC.Core.UI
         private readonly IAuthorizationPreviewService _authorization;
         private readonly ITypeResolver _types;
         private readonly IOutputWriter _writer;
-        readonly ISetterBinder _setterBinder;
+        private readonly ISetterBinder _setterBinder;
         private readonly IChainResolver _resolver;
 
         public PartialInvoker(IPartialFactory factory, IFubuRequest request, IAuthorizationPreviewService authorization, ITypeResolver types, IOutputWriter writer, ISetterBinder setterBinder, IChainResolver resolver)
@@ -28,36 +29,36 @@ namespace FubuMVC.Core.UI
             _resolver = resolver;
         }
 
-        public string Invoke<T>() where T : class
+        public string Invoke<T>(string categoryOrHttpMethod = null) where T : class
         {
             var output = string.Empty;
             var input = _request.Get<T>();
             if (_authorization.IsAuthorized(input))
             {
-                output = invokeWrapped(typeof (T));
+                output = invokeWrapped(typeof(T), categoryOrHttpMethod);
             }
             return output;
         }
 
-        public string InvokeObject(object model, bool withModelBinding = false)
+        public string InvokeObject(object model, bool withModelBinding = false, string categoryOrHttpMethod = null)
         {
             var output = string.Empty;
             if (_authorization.IsAuthorized(model))
             {
                 var requestType = _types.ResolveType(model);
-				if (withModelBinding)
-				{
-					_setterBinder.BindProperties(requestType, model);
-				}
-            	_request.Set(requestType, model);
-                output = invokeWrapped(requestType);
+                if (withModelBinding)
+                {
+                    _setterBinder.BindProperties(requestType, model);
+                }
+                _request.Set(requestType, model);
+                output = invokeWrapped(requestType, categoryOrHttpMethod);
             }
             return output;
         }
 
-        private string invokeWrapped(Type requestType)
+        private string invokeWrapped(Type requestType, string categoryOrHttpMethod = null)
         {
-            var chain = _resolver.FindUniqueByType(requestType);
+            var chain = _resolver.FindUniqueByType(requestType, category: categoryOrHttpMethod ?? Categories.VIEW);
             var partial = _factory.BuildPartial(chain);
             var output = _writer.Record(partial.InvokePartial);
             output.Headers().Each(x => _writer.AppendHeader(x.Name, x.Value));
