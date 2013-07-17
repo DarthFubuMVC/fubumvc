@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
@@ -16,7 +17,14 @@ namespace FubuMVC.Tests.Behaviors
 
         protected override void beforeEach()
         {
-            Services.Inject(typeof(IAsyncCoordinator), new SynchronousCoordinator());
+            var waitHandle = new ManualResetEvent(false);
+            var completion = new RequestCompletion();
+            completion.WhenCompleteDo(x => waitHandle.Set());
+            Services.Container.Configure(x =>
+            {
+                x.For<IRequestCompletion>().Use(completion);
+                x.For<IAsyncCoordinator>().Use<AsyncCoordinator>();
+            });
             ClassUnderTest.Inner = MockFor<IActionBehavior>();
             expectedOutput = new Output();
             var task = new Task<Output>(() => expectedOutput);
@@ -25,6 +33,7 @@ namespace FubuMVC.Tests.Behaviors
             MockFor<IFubuRequest>().Expect(x => x.Get<Task<Output>>()).Return(task);
 
             ClassUnderTest.Invoke();
+            waitHandle.WaitOne(TimeSpan.FromSeconds(1)).ShouldBeTrue();
         }
 
         [Test]
@@ -49,7 +58,14 @@ namespace FubuMVC.Tests.Behaviors
 
         protected override void beforeEach()
         {
-            Services.Container.Configure(x => x.For<IAsyncCoordinator>().Use<AsyncCoordinator>());
+            var waitHandle = new ManualResetEvent(false);
+            var completion = new RequestCompletion();
+            completion.WhenCompleteDo(x => waitHandle.Set());
+            Services.Container.Configure(x =>
+            {
+                x.For<IRequestCompletion>().Use(completion);
+                x.For<IAsyncCoordinator>().Use<AsyncCoordinator>();
+            });
             expectedOutput = new Output();
             var task = Task<Output>.Factory.StartNew(() =>
             {
@@ -58,6 +74,7 @@ namespace FubuMVC.Tests.Behaviors
 
             MockFor<IFubuRequest>().Expect(x => x.Get<Task<Output>>()).Return(task);
             ClassUnderTest.Invoke();
+            waitHandle.WaitOne(TimeSpan.FromSeconds(1)).ShouldBeTrue();
         }
 
         [Test]
@@ -78,7 +95,14 @@ namespace FubuMVC.Tests.Behaviors
     {
         protected override void beforeEach()
         {
-            Services.Container.Configure(x => x.For<IAsyncCoordinator>().Use<AsyncCoordinator>());
+            var waitHandle = new ManualResetEvent(false);
+            var completion = new RequestCompletion();
+            completion.WhenCompleteDo(x => waitHandle.Set());
+            Services.Container.Configure(x =>
+            {
+                x.For<IRequestCompletion>().Use(completion);
+                x.For<IAsyncCoordinator>().Use<AsyncCoordinator>();
+            });
             var task = Task.Factory.StartNew(() =>
             {
                 throw new Exception("Failed!");
@@ -87,6 +111,7 @@ namespace FubuMVC.Tests.Behaviors
             MockFor<IFubuRequest>().Expect(x => x.Get<Task>()).Return(task);
 
             ClassUnderTest.Invoke();
+            waitHandle.WaitOne(TimeSpan.FromSeconds(1)).ShouldBeTrue();
         }
 
         [Test]
@@ -101,14 +126,23 @@ namespace FubuMVC.Tests.Behaviors
     {
         protected override void beforeEach()
         {
-            Services.Container.Configure(x => x.For<IAsyncCoordinator>().Use<AsyncCoordinator>());
+            var waitHandle = new ManualResetEvent(false);
+            var completion = new RequestCompletion();
+            completion.WhenCompleteDo(x => waitHandle.Set());
+            Services.Container.Configure(x =>
+            {
+                x.For<IRequestCompletion>().Use(completion);
+                x.For<IAsyncCoordinator>().Use<AsyncCoordinator>();
+            });
             ClassUnderTest.Inner = MockFor<IActionBehavior>();
 
-            var task = Task.Factory.StartNew(() => { });
+            var task = new Task(() => { });
+            task.RunSynchronously();
 
             MockFor<IFubuRequest>().Expect(x => x.Get<Task>()).Return(task);
 
             ClassUnderTest.Invoke();
+            waitHandle.WaitOne(TimeSpan.FromSeconds(1)).ShouldBeTrue();
         }
 
         [Test]
