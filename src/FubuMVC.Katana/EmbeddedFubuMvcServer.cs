@@ -81,6 +81,7 @@ namespace FubuMVC.Katana
             _runtime = runtime;
 
             var parameters = new StartOptions {Port = port};
+            parameters.Urls.Add("http://*:" + port); //for netsh http add urlacl
 
             FubuMvcPackageFacility.PhysicalRootPath = physicalPath ?? AppDomain.CurrentDomain.BaseDirectory;
             Action<IAppBuilder> startup = FubuOwinHost.ToStartup(_runtime);
