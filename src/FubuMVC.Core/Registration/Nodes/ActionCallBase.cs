@@ -114,7 +114,7 @@ namespace FubuMVC.Core.Registration.Nodes
             }
         }
 
-        private Type determineHandlerType()
+        protected virtual Type determineHandlerType()
         {
             if (HasOutput && HasInput)
             {
