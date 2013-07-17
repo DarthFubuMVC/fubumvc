@@ -49,7 +49,7 @@ namespace FubuMVC.Tests.Behaviors
 
         protected override void beforeEach()
         {
-            Services.Inject(typeof(IAsyncCoordinator), new SynchronousCoordinator());
+            Services.Container.Configure(x => x.For<IAsyncCoordinator>().Use<AsyncCoordinator>());
             expectedOutput = new Output();
             var task = Task<Output>.Factory.StartNew(() =>
             {
@@ -78,7 +78,7 @@ namespace FubuMVC.Tests.Behaviors
     {
         protected override void beforeEach()
         {
-            Services.Inject(typeof(IAsyncCoordinator), new SynchronousCoordinator());
+            Services.Container.Configure(x => x.For<IAsyncCoordinator>().Use<AsyncCoordinator>());
             var task = Task.Factory.StartNew(() =>
             {
                 throw new Exception("Failed!");
@@ -101,7 +101,7 @@ namespace FubuMVC.Tests.Behaviors
     {
         protected override void beforeEach()
         {
-            Services.Inject(typeof(IAsyncCoordinator), new SynchronousCoordinator());
+            Services.Container.Configure(x => x.For<IAsyncCoordinator>().Use<AsyncCoordinator>());
             ClassUnderTest.Inner = MockFor<IActionBehavior>();
 
             var task = Task.Factory.StartNew(() => { });

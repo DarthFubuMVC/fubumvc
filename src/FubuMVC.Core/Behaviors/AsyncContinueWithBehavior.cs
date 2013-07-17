@@ -11,17 +11,17 @@ namespace FubuMVC.Core.Behaviors
         {
         }
 
-        protected override void invoke(Action action)
+        public override void Invoke()
         {
-            internalInvoke<Task<T>>(x =>
-            {
-                FubuRequest.Set(x.Result);
-                action();
-            });
+            internalInvoke<Task<T>>(task => FubuRequest.Set(task.Result), x => x.Invoke());
+        }
+        public override void InvokePartial()
+        {
+            internalInvoke<Task<T>>(task => FubuRequest.Set(task.Result), x => x.InvokePartial());
         }
     }
 
-    public class AsyncContinueWithBehavior : WrappingBehavior
+    public class AsyncContinueWithBehavior : IActionBehavior
     {
         private readonly IFubuRequest _fubuRequest;
         private readonly IAsyncCoordinator _asyncCoordinator;
@@ -33,13 +33,9 @@ namespace FubuMVC.Core.Behaviors
         }
 
         public IFubuRequest FubuRequest { get { return _fubuRequest; } }
+        public IActionBehavior Inner { get; set; }
 
-        protected override void invoke(Action action)
-        {
-            internalInvoke<Task>(x => action());
-        }
-
-        protected void internalInvoke<T>(Action<T> action) where T : Task
+        protected void internalInvoke<T>(Action<T> action, Action<IActionBehavior> innerAction) where T : Task
         {
             var task = FubuRequest.Get<T>();
             var continuation = task.ContinueWith(x =>
@@ -48,8 +44,22 @@ namespace FubuMVC.Core.Behaviors
                     return;
 
                 action(task);
+                if (Inner != null)
+                {
+                    innerAction(Inner);
+                }
             });
             _asyncCoordinator.Push(task, continuation);
+        }
+
+        public virtual void Invoke()
+        {
+            internalInvoke<Task>(_ => { }, x => x.Invoke());
+        }
+
+        public virtual void InvokePartial()
+        {
+            internalInvoke<Task>(_ => { }, x => x.InvokePartial());
         }
     }
 }
