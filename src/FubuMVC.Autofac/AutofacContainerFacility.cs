@@ -34,6 +34,8 @@ namespace FubuMVC.Autofac
                 bool isSingleton = (ServiceRegistry.ShouldBeSingleton(serviceType) || ServiceRegistry.ShouldBeSingleton(def.Type) || def.IsSingleton);
                 _module.AddRegistration(serviceType, def, isSingleton);
             };
+
+            _register(typeof (IServiceFactory), ObjectDef.ForValue(this));
         }
 
 

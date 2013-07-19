@@ -32,6 +32,7 @@ namespace FubuMVC.StructureMap
 
             _container = container;
             _registry = new StructureMapFubuRegistry();
+            _registry.For<IServiceFactory>().Use(this);
 
             _registration = (serviceType, def) =>
             {
@@ -160,7 +161,7 @@ namespace FubuMVC.StructureMap
 
         public void Dispose()
         {
-            _container.Dispose();
+            _container.SafeDispose();
         }
     }
 

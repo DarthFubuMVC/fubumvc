@@ -84,6 +84,7 @@
     <Compile Include="Internals\StubActivator.cs" />
     <Compile Include="Internals\TestController.cs" />
     <Compile Include="Internals\UsesTheIsSingletonPropertyTester.cs" />
+    <Compile Include="IServiceFactory_Compliance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
