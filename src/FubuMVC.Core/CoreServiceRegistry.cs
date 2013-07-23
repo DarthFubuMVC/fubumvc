@@ -39,7 +39,7 @@ namespace FubuMVC.Core
             SetServiceIfNone<IUrlTemplatePattern, NulloUrlTemplate>();
             SetServiceIfNone<IJsonWriter, JsonWriter>();
 
-            SetServiceIfNone<IFlash, FlashProvider>();
+            SetServiceIfNone<IFlash, CookieFlashProvider>();
             SetServiceIfNone<IRequestDataProvider, RequestDataProvider>();
 
             SetServiceIfNone<IFubuRequest, FubuRequest>();
