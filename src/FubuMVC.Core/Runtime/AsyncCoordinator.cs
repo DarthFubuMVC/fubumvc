@@ -10,9 +10,22 @@ namespace FubuMVC.Core.Runtime
         void Push(params Task[] task);
     }
 
-    public class AsyncCoordinator : IAsyncCoordinator
+    public interface ITrackRequestCompletion
     {
-        private readonly IList<Exception> _unhandledExceptions = new List<Exception>(); 
+        bool IsComplete();
+    }
+
+    public class DefaultSynchronousRequestTracker : ITrackRequestCompletion
+    {
+        public bool IsComplete()
+        {
+            return true;
+        }
+    }
+
+    public class AsyncCoordinator : IAsyncCoordinator, ITrackRequestCompletion
+    {
+        private readonly IList<Exception> _unhandledExceptions = new List<Exception>();
         private readonly IRequestCompletion _requestCompletion;
         private readonly IEnumerable<IExceptionHandler> _exceptionHandlers;
         private int _pendingOperations;
@@ -22,7 +35,7 @@ namespace FubuMVC.Core.Runtime
         {
             _requestCompletion = requestCompletion;
             _exceptionHandlers = exceptionHandlers;
-            _requestCompletion.IsAsynchronous();
+            _requestCompletion.TrackRequestCompletionWith(this);
         }
 
         public void Push(params Task[] tasks)
@@ -83,6 +96,13 @@ namespace FubuMVC.Core.Runtime
             {
                 action();
             }
+        }
+
+        public bool IsComplete()
+        {
+            bool complete = false;
+            inLock(() => complete = _pendingOperations == 0);
+            return complete;
         }
     }
 }
