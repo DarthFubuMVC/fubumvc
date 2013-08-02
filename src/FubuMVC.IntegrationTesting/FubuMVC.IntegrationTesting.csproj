@@ -99,6 +99,7 @@
   <ItemGroup>
     <Compile Include="AboutEndpointIntegrationTester.cs" />
     <Compile Include="Ajax\AjaxContinuationProcessingTester.cs" />
+    <Compile Include="Async\AsyncRouteIntegrationTester.cs" />
     <Compile Include="Authorization\end_to_end_authorization_tester.cs" />
     <Compile Include="Caching\caching_tester.cs" />
     <Compile Include="Chrome\ChromeBehaviorIntegrationTester.cs" />
@@ -254,7 +255,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent></PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,8 +1,8 @@
-﻿
-using System;
+﻿using System;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Runtime
 {
@@ -72,7 +72,9 @@ namespace FubuMVC.Tests.Runtime
         [Test]
         public void asynchronous_completes_when_told()
         {
-            _requestCompletion.IsAsynchronous();
+            var trackRequestCompletion = MockRepository.GenerateMock<ITrackRequestCompletion>();
+            trackRequestCompletion.Expect(x => x.IsComplete()).Return(false);
+            _requestCompletion.TrackRequestCompletionWith(trackRequestCompletion);
             _requestCompletion.Start(() => { });
             _completedCount.ShouldEqual(0);
             _requestCompletion.Complete();
@@ -82,7 +84,9 @@ namespace FubuMVC.Tests.Runtime
         [Test]
         public void asynchronous_completes_with_errors()
         {
-            _requestCompletion.IsAsynchronous();
+            var trackRequestCompletion = MockRepository.GenerateMock<ITrackRequestCompletion>();
+            trackRequestCompletion.Expect(x => x.IsComplete()).Return(false);
+            _requestCompletion.TrackRequestCompletionWith(trackRequestCompletion);
             _requestCompletion.Start(() => { });
             _exception.ShouldBeNull();
             _requestCompletion.CompleteWithErrors(new AggregateException());

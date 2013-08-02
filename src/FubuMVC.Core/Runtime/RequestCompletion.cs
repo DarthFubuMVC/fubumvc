@@ -5,7 +5,7 @@ namespace FubuMVC.Core.Runtime
 {
     public interface IRequestCompletion
     {
-        void IsAsynchronous();
+        void TrackRequestCompletionWith(ITrackRequestCompletion trackRequestCompletion);
         void Start(Action request);
         void SafeStart(Action request);
         void WhenCompleteDo(Action<Exception> onComplete);
@@ -15,12 +15,17 @@ namespace FubuMVC.Core.Runtime
 
     public class RequestCompletion : IRequestCompletion
     {
-        private readonly Stack<Action<Exception>> _subscribers = new Stack<Action<Exception>>(); 
-        private bool _isAsync;
+        private readonly Stack<Action<Exception>> _subscribers = new Stack<Action<Exception>>();
+        private ITrackRequestCompletion _trackRequestCompletion;
 
-        public void IsAsynchronous()
+        public RequestCompletion()
         {
-            _isAsync = true;
+            _trackRequestCompletion = new DefaultSynchronousRequestTracker();
+        }
+
+        public void TrackRequestCompletionWith(ITrackRequestCompletion trackRequestCompletion)
+        {
+            _trackRequestCompletion = trackRequestCompletion;
         }
 
         public void Start(Action action)
@@ -43,10 +48,10 @@ namespace FubuMVC.Core.Runtime
 
         private void tryComplete(Exception ex = null)
         {
-            if (_isAsync)
-                return;
-
-            complete(ex);
+            if (_trackRequestCompletion.IsComplete())
+            {
+                complete(ex);
+            }
         }
 
         public void WhenCompleteDo(Action<Exception> onComplete)
