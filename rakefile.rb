@@ -17,11 +17,12 @@ end
 				 
 	sln.assembly_info = {
 		:product_name => "FubuMVC",
-		:copyright => 'Copyright 2008-2013 Jeremy D. Miller, Joshua Arnold, Joshua Flanagan, Chad Myers, et al. All rights reserved.'
+		:copyright => 'Copyright 2008-2013 Jeremy D. Miller, Joshua Arnold, Corey Kaylor, Joshua Flanagan, et al. All rights reserved.'
 	}
 
 	sln.ripple_enabled = true
 	sln.fubudocs_enabled = true
+	sln.bottles_enabled = false # has to be all special in FubuMVC because of the zip package testing
 	
 	sln.integration_test = ['FubuMVC.IntegrationTesting']
 	sln.ci_steps = [:integration_test]
