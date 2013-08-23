@@ -17,7 +17,7 @@ namespace FubuMVC.Tests.SessionState
 
         protected override void beforeEach()
         {
-            theCookieValue = "{\"Name\":\"Joel\"}";
+            theCookieValue = CookieFlashProvider.ToBase64String("{\"Name\":\"Joel\"}");
 
             theOutputWriter = new RecordingOutputWriter();
 
