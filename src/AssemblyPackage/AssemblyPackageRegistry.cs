@@ -6,6 +6,13 @@ namespace AssemblyPackage
 {
     public class AssemblyPackageRegistry : FubuPackageRegistry
     {
+        public AssemblyPackageRegistry()
+        {
+            Actions.FindBy(x => {
+                x.Applies.ToAssemblyContainingType<AssemblyEndpoint>();
+                x.IncludeClassesSuffixedWithEndpoint();
+            });
+        }
     }
 
     public class AssemblyEndpoint
