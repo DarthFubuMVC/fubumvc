@@ -45,7 +45,10 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             source.IncludeClassesSuffixedWithController();
 
-            var description = source.As<IActionSource>().FindActions(Assembly.GetExecutingAssembly()).Select(x => x.Description).Join(", ");
+            var description = theResultingGraph.Behaviors.SelectMany(x => x.Calls).Select(x => x.Description).Join(", \n");
+
+
+            //var description = source.As<IActionSource>().FindActions(Assembly.GetExecutingAssembly()).Select(x => x.Description).Join(", ");
             description.ShouldContain("What in the world?");
 
             theResultingGraph.BehaviorFor<OneController>(x => x.Query(null))
