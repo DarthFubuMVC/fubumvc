@@ -187,7 +187,7 @@ namespace FubuMVC.Core.Registration
                 Assembly assembly = frame.GetMethod().DeclaringType.Assembly;
                 var name = assembly.GetName().Name;
 
-                if (name != thisAssembly && name != fubuCore && name != bottles)
+                if (name != thisAssembly && name != fubuCore && name != bottles && name != "mscorlib")
                 {
                     callingAssembly = assembly;
                     break;
