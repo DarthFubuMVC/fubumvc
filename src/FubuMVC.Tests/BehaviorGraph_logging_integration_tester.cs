@@ -35,6 +35,8 @@ namespace FubuMVC.Tests
             theGraph = FubuApplication.For(theRegistry).StructureMap(container)
                 .Bootstrap().Factory.Get<BehaviorGraph>();
 
+            theGraph.Behaviors.Any().ShouldBeTrueBecause("you should have found some chains");
+
             theLogs = container.GetInstance<ConfigLog>();
         }
 
