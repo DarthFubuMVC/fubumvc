@@ -165,16 +165,5 @@ namespace FubuMVC.StructureMap.Testing.Internals
             container.GetAllInstances<IModelBinder>().Any(x => x is StandardModelBinder).ShouldBeFalse();
         }
 
-        [Test]
-        public void should_dispose_internal_container()
-        {
-            var localContainer = MockRepository.GenerateMock<IContainer>();
-            localContainer.Stub(c => c.Dispose());
-            using(var localFacility = new StructureMapContainerFacility(localContainer))
-            {
-                
-            }
-            localContainer.AssertWasCalled(c => c.Dispose());
-        }
     }
 }

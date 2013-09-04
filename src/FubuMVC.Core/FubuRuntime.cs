@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Routing;
+using Bottles;
+using Bottles.Diagnostics;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Runtime;
 
@@ -39,7 +42,24 @@ namespace FubuMVC.Core
 
         public void Dispose()
         {
-            Factory.Dispose();
+            var deactivators = _factory.GetAll<IDeactivator>().ToArray();
+            var log = new PackageLog();
+            
+            deactivators.Each(x => {
+                try
+                {
+                    log.Trace("Running " + x);
+                    x.Deactivate(log);
+                }
+                catch (Exception e)
+                {
+                    log.MarkFailure(e);
+                }
+            });
+
+            Facility.Shutdown();
+
+            Console.WriteLine(log.FullTraceText());
         }
     }
 }

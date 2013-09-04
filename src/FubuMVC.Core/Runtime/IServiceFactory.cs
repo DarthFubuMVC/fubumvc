@@ -5,7 +5,7 @@ using FubuMVC.Core.Behaviors;
 
 namespace FubuMVC.Core.Runtime
 {
-    public interface IServiceFactory: IDisposable
+    public interface IServiceFactory : IDisposable
     {
         IActionBehavior BuildBehavior(ServiceArguments arguments, Guid behaviorId);
 

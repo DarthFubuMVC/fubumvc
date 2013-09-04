@@ -61,6 +61,11 @@ namespace FubuMVC.Autofac
             _register(serviceType, def);
         }
 
+        public void Shutdown()
+        {
+            
+        }
+
 
         public virtual IActionBehavior BuildBehavior(ServiceArguments arguments, Guid behaviorId)
         {

@@ -133,6 +133,7 @@ namespace FubuMVC.Katana
 
         public void Dispose()
         {
+            _runtime.Dispose();
             _server.Dispose();
         }
 

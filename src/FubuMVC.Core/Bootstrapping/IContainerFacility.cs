@@ -8,5 +8,7 @@ namespace FubuMVC.Core.Bootstrapping
     {
         IServiceFactory BuildFactory();
         void Register(Type serviceType, ObjectDef def);
+
+        void Shutdown();
     }
 }
