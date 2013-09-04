@@ -45,6 +45,9 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             source.IncludeClassesSuffixedWithController();
 
+            theResultingGraph.ApplicationAssembly.GetName()
+                .Name.ShouldEqual(Assembly.GetExecutingAssembly().GetName().Name);
+
             var description = theResultingGraph.Behaviors.SelectMany(x => x.Calls).Select(x => x.Description).Join(", \n");
 
 

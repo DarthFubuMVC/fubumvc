@@ -62,7 +62,7 @@ namespace FubuMVC.Core.Registration
             _services.AddService<ITypeResolver>(TypeResolver);
         }
 
-        internal Assembly ApplicationAssembly { get; set; }
+        public Assembly ApplicationAssembly { get; set; }
 
         public SettingsCollection Settings
         {
