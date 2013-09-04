@@ -172,7 +172,7 @@ namespace FubuMVC.Tests.Runtime
 
         protected override void beforeEach()
         {
-            logs = Services.RecordLogging();
+            logs = RecordLogging();
 
             registered = new BinderTarget();
             request = ClassUnderTest;

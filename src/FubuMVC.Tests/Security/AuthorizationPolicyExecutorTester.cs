@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Security
         {
             var request = MockFor<IFubuRequest>();
 
-            Services.RecordLogging();
+            RecordLogging();
 
             policies = Services.CreateMockArrayFor<IAuthorizationPolicy>(3);
             policies[0].Expect(x => x.RightsFor(request)).Return(AuthorizationRight.Allow).Repeat.Once();
@@ -30,13 +30,13 @@ namespace FubuMVC.Tests.Security
         [Test]
         public void should_log_the_combined_result()
         {
-            Services.RecordedLog().DebugMessages.OfType<AuthorizationResult>().Single().Rights.ShouldEqual(_answer);
+           RecordedLog().DebugMessages.OfType<AuthorizationResult>().Single().Rights.ShouldEqual(_answer);
         }
 
         [Test]
         public void should_log_the_result_of_each_policy()
         {
-            var results = Services.RecordedLog().DebugMessages.OfType<AuthorizationPolicyResult>();
+            var results = RecordedLog().DebugMessages.OfType<AuthorizationPolicyResult>();
             results.Select(x => x.Rights.Name).ShouldHaveTheSameElementsAs("Allow", "None", "None");
         }
 

@@ -126,7 +126,6 @@
     <Compile Include="Http\Compression\HttpContentEncodersTester.cs" />
     <Compile Include="Http\Compression\HttpContentEncodingFilterTester.cs" />
     <Compile Include="Http\StreamExtensions.cs" />
-    <Compile Include="InteractionContextExtensions.cs" />
     <Compile Include="Logging\ExceptionReportTester.cs" />
     <Compile Include="ReflectionExtensionsTester.cs" />
     <Compile Include="Registration\AccessOverridesFinderIntegratedTester.cs" />

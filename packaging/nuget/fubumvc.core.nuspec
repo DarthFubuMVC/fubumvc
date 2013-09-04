@@ -1,5 +1,5 @@
-<?xml version="1.0"?>
-<package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <id>FubuMVC.Core</id>
     <version>0.0.0</version>
@@ -13,12 +13,12 @@
     <tags>web framework mvc fubumvc</tags>
     <dependencies>
       <dependency id="Bottles" version="1.0.0.412" />
-      <dependency id="FubuCore" version="0.9.9.172" />
+      <dependency id="FubuCore" version="1.2.0.259" />
       <dependency id="FubuLocalization" version="0.9.5.48" />
       <dependency id="HtmlTags" version="1.1.0.114" />
     </dependencies>
   </metadata>
-  <files>
+  <files xmlns="">
     <file src="..\..\src\FubuMVC.Core\bin\release\FubuMVC.Core.*" target="lib\net40" />
   </files>
 </package>

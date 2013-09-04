@@ -219,7 +219,7 @@ namespace FubuMVC.Tests.NewConneg
 
         protected override sealed void beforeEach()
         {
-            Services.RecordLogging();
+            RecordLogging();
 
             theMedia = Services.CreateMockArrayFor<IMedia<OutputTarget>>(5);
 

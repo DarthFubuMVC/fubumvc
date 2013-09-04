@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.Runtime
         {
             theHttpWriter = MockFor<IHttpWriter>();
 
-            logs = Services.RecordLogging();
+            logs = RecordLogging();
         }
 
         [Test]
