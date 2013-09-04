@@ -176,16 +176,18 @@ namespace FubuMVC.Core.Registration
         {
             var trace = new StackTrace(false);
 
-            Assembly thisAssembly = Assembly.GetExecutingAssembly();
-            Assembly fubuCore = typeof(ITypeResolver).Assembly;
-            Assembly bottles = typeof(IPackageLoader).Assembly;
+            var thisAssembly = Assembly.GetExecutingAssembly().GetName().Name;
+            var fubuCore = typeof(ITypeResolver).Assembly.GetName().Name;
+            var bottles = typeof(IPackageLoader).Assembly.GetName().Name;
 
             Assembly callingAssembly = null;
             for (int i = 0; i < trace.FrameCount; i++)
             {
                 StackFrame frame = trace.GetFrame(i);
                 Assembly assembly = frame.GetMethod().DeclaringType.Assembly;
-                if (assembly != thisAssembly && assembly != fubuCore && assembly != bottles)
+                var name = assembly.GetName().Name;
+
+                if (name != thisAssembly && name != fubuCore && name != bottles)
                 {
                     callingAssembly = assembly;
                     break;
