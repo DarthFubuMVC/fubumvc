@@ -279,7 +279,7 @@ namespace FubuMVC.Core.Registration
         public BehaviorChain BehaviorFor<T>(Expression<Func<T, object>> expression)
         {
             ActionCall call = ActionCall.For(expression);
-            var chains = _behaviors.Where(x => x.Calls.Any(c => c.HandlerType.FullName == call.HandlerType.FullName && c.Method.Name == call.Method.Name));
+            var chains = _behaviors.Where(x => x.Calls.Contains(call));
             if (chains.Count() > 1)
             {
                 throw new FubuException(1020, "More than one behavior chain contains this ActionCall.  You will have to use a more specific search");

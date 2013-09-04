@@ -218,7 +218,7 @@ namespace FubuMVC.Core
 
                     try
                     {
-                        FubuExtensionFinder.ApplyExtensions(_registry.Value, assemblies);
+                        FubuExtensionFinder.ApplyExtensions(_registry.Value, assemblies, l);
                     }
                     catch (Exception e)
                     {

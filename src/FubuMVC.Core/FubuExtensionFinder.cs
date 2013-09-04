@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Bottles.Diagnostics;
 using FubuCore;
 using FubuMVC.Core.Registration;
 
@@ -12,10 +13,10 @@ namespace FubuMVC.Core
     /// </summary>
     public static class FubuExtensionFinder
     {
-        public static void ApplyExtensions(FubuRegistry registry, IEnumerable<Assembly> assemblies)
+        public static void ApplyExtensions(FubuRegistry registry, IEnumerable<Assembly> assemblies, IPackageLog packageLog)
         {
             FindAllExtensionTypes(assemblies).Select(type => typeof (Importer<>).CloseAndBuildAs<IImporter>(type)).Each(
-                x => x.Apply(registry));
+                x => x.Apply(registry, packageLog));
         }
 
         public static IEnumerable<Type> FindAllExtensionTypes(IEnumerable<Assembly> assemblies)
@@ -38,13 +39,14 @@ namespace FubuMVC.Core
 
         public interface IImporter
         {
-            void Apply(FubuRegistry registry);
+            void Apply(FubuRegistry registry, IPackageLog packageLog);
         }
 
         public class Importer<T> : IImporter where T : IFubuRegistryExtension, new()
         {
-            public void Apply(FubuRegistry registry)
+            public void Apply(FubuRegistry registry, IPackageLog packageLog)
             {
+                packageLog.Trace("Applying extension " + typeof(T).FullName);
                 registry.Import<T>();
             }
         }
