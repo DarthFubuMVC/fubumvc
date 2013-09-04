@@ -25,6 +25,8 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             source = new ActionSource();
             _graph = new Lazy<BehaviorGraph>(() => {
+                Console.WriteLine(TypePool.FindTheCallingAssembly().FullName);
+
                 return BehaviorGraph.BuildFrom(r => {
                     r.Actions.FindWith(source);
                 });
