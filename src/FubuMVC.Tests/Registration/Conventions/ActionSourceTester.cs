@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 using AssemblyPackage;
 using FubuCore;
 using FubuMVC.Core.Behaviors;
@@ -44,9 +45,8 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             source.IncludeClassesSuffixedWithController();
 
-            source.As<IActionSource>().FindActions(Assembly.GetExecutingAssembly()).Any(x => {
-                return x.HandlerType.Name == "OneController" && x.Method.Name == "Query";
-            }).ShouldBeTrueBecause(source.As<IActionSource>().FindActions(Assembly.GetExecutingAssembly()).Select(x => x.Description).Join(", "));
+            var description = source.As<IActionSource>().FindActions(Assembly.GetExecutingAssembly()).Select(x => x.Description).Join(", ");
+            description.ShouldContain("OneController.Query");
 
             theResultingGraph.BehaviorFor<OneController>(x => x.Query(null))
                 .ShouldNotBeNull();
