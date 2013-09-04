@@ -44,6 +44,10 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             source.IncludeClassesSuffixedWithController();
 
+            source.As<IActionSource>().FindActions(Assembly.GetExecutingAssembly()).Any(x => {
+                return x.HandlerType.Name == "OneController" && x.Method.Name == "Query";
+            }).ShouldBeTrueBecause(source.As<IActionSource>().FindActions(Assembly.GetExecutingAssembly()).Select(x => x.Description).Join(", "));
+
             theResultingGraph.BehaviorFor<OneController>(x => x.Query(null))
                 .ShouldNotBeNull();
         }
