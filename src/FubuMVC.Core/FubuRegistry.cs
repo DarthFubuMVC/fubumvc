@@ -27,11 +27,21 @@ namespace FubuMVC.Core
     public partial class FubuRegistry
     {
         private readonly IList<Type> _importedTypes = new List<Type>();
-        private readonly Assembly _applicationAssembly = TypePool.FindTheCallingAssembly();
+        private readonly Assembly _applicationAssembly;
         private readonly ConfigGraph _config = new ConfigGraph();
 
         public FubuRegistry()
         {
+            var type = GetType();
+            if (type == typeof (FubuRegistry) || type == typeof (FubuPackageRegistry))
+            {
+                _applicationAssembly = TypePool.FindTheCallingAssembly();
+            }
+            else
+            {
+                _applicationAssembly = type.Assembly;
+            }
+
             _config.Push(this);
         }
 

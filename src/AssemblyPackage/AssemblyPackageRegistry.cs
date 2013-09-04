@@ -8,10 +8,7 @@ namespace AssemblyPackage
     {
         public AssemblyPackageRegistry()
         {
-            Actions.FindBy(x => {
-                x.Applies.ToAssemblyContainingType<AssemblyEndpoint>();
-                x.IncludeClassesSuffixedWithEndpoint();
-            });
+
         }
     }
 
