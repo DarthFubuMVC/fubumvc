@@ -23,10 +23,10 @@ namespace FubuMVC.Tests.Registration.Conventions
         [SetUp]
         public void SetUp()
         {
+            TypePool.FindTheCallingAssembly().FullName.ShouldEqual(Assembly.GetExecutingAssembly().FullName);
+
             source = new ActionSource();
             _graph = new Lazy<BehaviorGraph>(() => {
-                Console.WriteLine(TypePool.FindTheCallingAssembly().FullName);
-
                 return BehaviorGraph.BuildFrom(r => {
                     r.Actions.FindWith(source);
                 });
