@@ -118,8 +118,8 @@ namespace FubuMVC.Core.Registration.Nodes
         {
             unchecked
             {
-                return ((HandlerType != null ? HandlerType.GetHashCode() : 0)*397) ^
-                       (Method != null ? Method.GetHashCode() : 0);
+                return ((HandlerType != null ? HandlerType.FullName.GetHashCode() : 0)*397) ^
+                       (Method != null ? Method.Name.GetHashCode() : 0);
             }
         }
 
