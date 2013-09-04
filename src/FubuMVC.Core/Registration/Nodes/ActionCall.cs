@@ -103,7 +103,7 @@ namespace FubuMVC.Core.Registration.Nodes
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(other.HandlerType.FullName, HandlerType.FullName) && other.Method.Matches(Method);
+            return other.HandlerType.FullName.Equals(HandlerType.FullName) && other.Method.Matches(Method);
         }
 
         public override bool Equals(object obj)
