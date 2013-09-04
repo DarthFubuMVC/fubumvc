@@ -214,7 +214,6 @@
     <Compile Include="Runtime\Logging\FinishedRecordingOutput.cs" />
     <Compile Include="Runtime\Logging\HttpStatusReport.cs" />
     <Compile Include="Runtime\Logging\OutputReport.cs" />
-    <Compile Include="Runtime\Logging\RecordingLogger.cs" />
     <Compile Include="Runtime\Logging\RedirectReport.cs" />
     <Compile Include="Runtime\Logging\ReplayRecordedOutput.cs" />
     <Compile Include="Runtime\Logging\SetHeaderValue.cs" />

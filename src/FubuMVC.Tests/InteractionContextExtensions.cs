@@ -1,10 +1,10 @@
 using FubuCore;
 using FubuCore.Logging;
-using FubuMVC.Core.Runtime.Logging;
 using StructureMap.AutoMocking;
 
 namespace FubuMVC.Tests
 {
+    // TODO -- get this into FubuTestingExtensions
     public static class InteractionContextExtensions
     {
         public static RecordingLogger RecordLogging<T>(this RhinoAutoMocker<T> mocker) where T : class

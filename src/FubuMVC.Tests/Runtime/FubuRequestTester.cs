@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Binding;
+using FubuCore.Logging;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Logging;
 using FubuMVC.StructureMap;
