@@ -55,6 +55,16 @@ namespace FubuMVC.Core.Registration.ObjectGraph
         }
 
         /// <summary>
+        /// Set the ObjectDef to a singleton and return itself
+        /// </summary>
+        /// <returns></returns>
+        public ObjectDef AsSingleton()
+        {
+            IsSingleton = true;
+            return this;
+        }
+
+        /// <summary>
         /// The name for this configured object when it is registered into the underlying IoC 
         /// container
         /// </summary>

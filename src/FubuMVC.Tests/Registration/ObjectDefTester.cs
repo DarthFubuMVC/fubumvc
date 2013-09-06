@@ -1,4 +1,6 @@
+using FubuCore.Configuration;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -37,6 +39,13 @@ namespace FubuMVC.Tests.Registration
             visitor.AssertWasCalled(x => x.Value(dependency));
         }
 
+        [Test]
+        public void as_singleton()
+        {
+            var def = ObjectDef.ForType<SettingsProvider>();
+            def.AsSingleton().ShouldBeTheSameAs(def);
 
+            def.IsSingleton.ShouldBeTrue();
+        }
     }
 }
