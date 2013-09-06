@@ -72,7 +72,8 @@ namespace FubuMVC.Core.Registration.Routes
             return false;
         }
 
-        public string ToQueryString(object input)
+        // virtual so you can override w/ different behavior
+        public virtual string ToQueryString(object input)
         {
             object rawValue = GetRawValue(input);
 
