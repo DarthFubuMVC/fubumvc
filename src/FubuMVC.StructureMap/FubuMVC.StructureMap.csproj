@@ -69,6 +69,10 @@
     <Compile Include="ObjectDefInstance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingsScanner.cs" />
+    <Compile Include="Settings\ConfigurationSettings.cs" />
+    <Compile Include="Settings\StructureMapExtensions.cs" />
+    <Compile Include="Settings\SettingRegistration.cs" />
+    <Compile Include="Settings\SettingRegistry.cs" />
     <Compile Include="SingletonSpinupActivator.cs" />
     <Compile Include="StructureMapContainerFacility.cs" />
     <Compile Include="StructureMapFubuRegistry.cs" />
