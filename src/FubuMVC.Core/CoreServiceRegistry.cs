@@ -10,6 +10,7 @@ using FubuMVC.Core.Http.Compression;
 using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
+using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Routing;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
@@ -73,6 +74,7 @@ namespace FubuMVC.Core
 
             AddService<IFormatter>(typeof (JsonFormatter));
             AddService<IFormatter>(typeof (XmlFormatter));
+            SetServiceIfNone<IResourceNotFoundHandler, DefaultResourceNotFoundHandler>();
 
             SetServiceIfNone<IConditionalService, ConditionalService>();
 

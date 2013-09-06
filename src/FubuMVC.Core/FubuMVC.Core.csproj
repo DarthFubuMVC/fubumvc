@@ -187,6 +187,8 @@
     <Compile Include="Registration\SettingAlteration.cs" />
     <Compile Include="Registration\SettingReplacement.cs" />
     <Compile Include="Registration\SettingsCollection.cs" />
+    <Compile Include="Resources\Conneg\IResourceNotFoundHandler.cs" />
+    <Compile Include="Resources\Conneg\DefaultResourceNotFoundHandler.cs" />
     <Compile Include="Resources\Etags\IHeadersCache.cs" />
     <Compile Include="Runtime\ExceptionHandlingObserver.cs" />
     <Compile Include="Runtime\Files\ContentFolder.cs" />

@@ -19,13 +19,15 @@ namespace FubuMVC.Core.Resources.Conneg
         private readonly IOutputWriter _writer;
         private readonly IEnumerable<IMedia<T>> _media;
         private readonly ILogger _logger;
+        private readonly IResourceNotFoundHandler _notFoundHandler;
 
-        public OutputBehavior(IFubuRequest request, IOutputWriter writer, IEnumerable<IMedia<T>> media, ILogger logger) : base(PartialBehavior.Executes)
+        public OutputBehavior(IFubuRequest request, IOutputWriter writer, IEnumerable<IMedia<T>> media, ILogger logger, IResourceNotFoundHandler notFoundHandler) : base(PartialBehavior.Executes)
         {
             _request = request;
             _writer = writer;
             _media = media;
             _logger = logger;
+            _notFoundHandler = notFoundHandler;
         }
 
         protected override void afterInsideBehavior()
@@ -35,7 +37,14 @@ namespace FubuMVC.Core.Resources.Conneg
 
         public void Write()
         {
-            
+            var resource = _request.Get<T>();
+            if (resource == null)
+            {
+                _writer.WriteResponseCode(HttpStatusCode.NotFound);
+                _notFoundHandler.HandleResourceNotFound<T>();
+
+                return;
+            }
 
             var mimeTypes = _request.Get<CurrentMimeType>();
             var media = SelectMedia(mimeTypes);
@@ -48,7 +57,7 @@ namespace FubuMVC.Core.Resources.Conneg
             }
             else
             {
-                var resource = _request.Get<T>();
+                
                 var outputMimetype = mimeTypes.SelectFirstMatching(media.Mimetypes);
                 media.Write(outputMimetype, resource);
             }

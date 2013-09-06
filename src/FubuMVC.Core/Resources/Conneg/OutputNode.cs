@@ -44,6 +44,23 @@ namespace FubuMVC.Core.Resources.Conneg
             get { return ToString(); }
         }
 
+        /// <summary>
+        /// Use this if you want to override the handling for 
+        /// the resource not being found on a chain by chain
+        /// basis
+        /// </summary>
+        public ObjectDef ResourceNotFound { get; set; }
+
+        /// <summary>
+        /// Use the specified type T as the resource not found handler strategy
+        /// for only this chain
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public void UseForResourceNotFound<T>() where T : IResourceNotFoundHandler
+        {
+            ResourceNotFound = ObjectDef.ForType<T>();
+        }
+
         #region DescribesItself Members
 
         void DescribesItself.Describe(Description description)
@@ -75,6 +92,11 @@ namespace FubuMVC.Core.Resources.Conneg
             dependency.AddRange(Writers.OfType<IContainerModel>().Select(x => x.ToObjectDef()));
 
             def.Dependency(dependency);
+
+            if (ResourceNotFound != null)
+            {
+                def.Dependency(typeof(IResourceNotFoundHandler), ResourceNotFound);
+            }
 
             return def;
         }

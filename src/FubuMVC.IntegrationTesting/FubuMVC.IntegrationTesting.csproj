@@ -104,6 +104,7 @@
     <Compile Include="Conneg\OutputFromAnActionThatReturnsStrings.cs" />
     <Compile Include="Conneg\Output_from_actions_that_return_ajax_continuations.cs" />
     <Compile Include="Conneg\Output_from_Actions_that_return_HtmlTags.cs" />
+    <Compile Include="Conneg\Resource_cannot_be_found_handling.cs" />
     <Compile Include="Continuations\can_use_continuations_on_a_partial.cs" />
     <Compile Include="Continuations\redirects_with_the_get.cs" />
     <Compile Include="debugger.cs" />

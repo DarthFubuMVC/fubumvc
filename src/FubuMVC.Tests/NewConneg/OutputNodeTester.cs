@@ -140,5 +140,36 @@ namespace FubuMVC.Tests.NewConneg
             var node = new OutputNode(typeof (Address));
             node.As<IMayHaveResourceType>().ResourceType().ShouldEqual(node.ResourceType);
         }
+
+        [Test]
+        public void add_a_custom_no_resource_handler()
+        {
+            var node = new OutputNode(typeof(Address));
+            node.UseForResourceNotFound<MyFakeResourceNotHandler>();
+
+            var def = node.As<IContainerModel>().ToObjectDef();
+
+            def.FindDependencyDefinitionFor<IResourceNotFoundHandler>()
+                .Type.ShouldEqual(typeof (MyFakeResourceNotHandler));
+        }
+
+        [Test]
+        public void no_custom_resource_not_found_handler()
+        {
+            var node = new OutputNode(typeof(Address));
+
+            var def = node.As<IContainerModel>().ToObjectDef();
+
+            def.DependencyFor<IResourceNotFoundHandler>()
+                .ShouldBeNull();
+        }
+    }
+
+    public class MyFakeResourceNotHandler : IResourceNotFoundHandler
+    {
+        public void HandleResourceNotFound<T>()
+        {
+            
+        }
     }
 }
