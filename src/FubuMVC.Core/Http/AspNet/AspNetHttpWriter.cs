@@ -60,7 +60,10 @@ namespace FubuMVC.Core.Http.AspNet
 
         public void Flush()
         {
-            _response.Flush();
+            if (_response.IsClientConnected && !_response.IsRequestBeingRedirected)
+            {
+                _response.Flush();
+            }
         }
     }
 }
