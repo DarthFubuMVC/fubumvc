@@ -35,6 +35,16 @@ namespace FubuMVC.StructureMap
         }
 
         /// <summary>
+        /// Applies a new StructureMap container to the FubuMVC application
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public static FubuApplication StructureMap(this IContainerFacilityExpression expression)
+        {
+            return expression.StructureMap(new Container());
+        }
+
+        /// <summary>
         /// Applies the given StructureMap container as the root container for this FubuMVC application
         /// </summary>
         /// <param name="expression"></param>

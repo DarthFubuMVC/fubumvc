@@ -24,7 +24,6 @@ namespace FubuMVC.Core.Urls
 	        _templateFunc = (s) => { return s.Replace("{", templatePattern.Start).Replace("}", templatePattern.End); };
         }
 
-        // TODO -- find a less shitastic way to do this
         public string UrlFor<TInput>(string categoryOrHttpMethod = null) where TInput : class
         {
             var type = typeof (TInput);

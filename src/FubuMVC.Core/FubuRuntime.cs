@@ -17,6 +17,7 @@ namespace FubuMVC.Core
         private readonly IContainerFacility _facility;
         private readonly IServiceFactory _factory;
         private readonly IList<RouteBase> _routes;
+        private bool _disposed;
 
         public FubuRuntime(IServiceFactory factory, IContainerFacility facility, IList<RouteBase> routes)
         {
@@ -42,6 +43,10 @@ namespace FubuMVC.Core
 
         public void Dispose()
         {
+            if (_disposed) return;
+
+            _disposed = true;
+
             var deactivators = _factory.GetAll<IDeactivator>().ToArray();
             var log = new PackageLog();
             

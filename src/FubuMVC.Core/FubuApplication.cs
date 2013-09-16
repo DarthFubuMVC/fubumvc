@@ -12,6 +12,7 @@ using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Routing;
 using FubuMVC.Core.Runtime;
 
@@ -173,7 +174,11 @@ namespace FubuMVC.Core
             var routes = buildRoutes(factory, graph);
             routes.Each(r => RouteTable.Routes.Add(r));
 
-            return new FubuRuntime(factory, _facility.Value, routes);
+            var runtime = new FubuRuntime(factory, _facility.Value, routes);
+
+            _facility.Value.Register(typeof(FubuRuntime), ObjectDef.ForValue(runtime));
+
+            return runtime;
         }
 
         public static void SetupNamingStrategyForHttpHeaders()
