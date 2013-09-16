@@ -1,3 +1,5 @@
+using Bottles.Services;
+
 namespace FubuMVC.Core
 {
     /// <summary>
@@ -6,8 +8,7 @@ namespace FubuMVC.Core
     /// Putting your application bootstrapping behind an IApplicationSource makes it much 
     /// easier to run your application in embedded hosts like OWIN
     /// </summary>
-    public interface IApplicationSource
+    public interface IApplicationSource : IApplicationSource<FubuApplication, FubuRuntime>
     {
-        FubuApplication BuildApplication();
     }
 }

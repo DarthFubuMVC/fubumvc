@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Web.Routing;
 using Bottles;
-using Bottles.Diagnostics;
-using Bottles.Environment;
+using Bottles.Services;
 using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core.Bootstrapping;
@@ -13,7 +12,6 @@ using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Routing;
 using FubuMVC.Core.Runtime;
 
@@ -24,7 +22,7 @@ namespace FubuMVC.Core
     /// <summary>
     /// Key class used to define and bootstrap a FubuMVC application
     /// </summary>
-    public class FubuApplication : IContainerFacilityExpression
+    public class FubuApplication : IContainerFacilityExpression, IApplication<FubuRuntime>
     {
         private readonly Lazy<IContainerFacility> _facility;
         private readonly List<Action<IPackageFacility>> _packagingDirectives = new List<Action<IPackageFacility>>();
@@ -142,14 +140,12 @@ namespace FubuMVC.Core
             BottleFiles.PackagesFolder = FileSystem.Combine("bin", FubuMvcPackageFacility.FubuPackagesFolder);
 
 
-            PackageRegistry.LoadPackages(x =>
-            {
+            PackageRegistry.LoadPackages(x => {
                 x.Facility(_fubuFacility);
                 _packagingDirectives.Each(d => d(x));
 
 
-                x.Bootstrap(log =>
-                {
+                x.Bootstrap(log => {
                     // container facility has to be spun up here
                     var containerFacility = _facility.Value;
 
@@ -171,9 +167,8 @@ namespace FubuMVC.Core
 
             FubuMvcPackageFacility.Restarted = DateTime.Now;
 
-            PackageRegistry.AssertNoFailures(() => {
-                throw new FubuException(0, FubuApplicationDescriber.WriteDescription());
-            });
+            PackageRegistry.AssertNoFailures(
+                () => { throw new FubuException(0, FubuApplicationDescriber.WriteDescription()); });
 
             var routes = buildRoutes(factory, graph);
             routes.Each(r => RouteTable.Routes.Add(r));
@@ -228,7 +223,6 @@ namespace FubuMVC.Core
                     _registry.Value.Config.Pop();
                 }
             });
-
         }
 
         /// <summary>
@@ -241,7 +235,5 @@ namespace FubuMVC.Core
             _packagingDirectives.Add(configure);
             return this;
         }
-
-
     }
 }

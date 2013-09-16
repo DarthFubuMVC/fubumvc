@@ -12,7 +12,7 @@
     <description>FubuMVC.Core Library</description>
     <tags>web framework mvc fubumvc</tags>
     <dependencies>
-      <dependency id="Bottles" version="1.0.0.412" />
+      <dependency id="Bottles" version="1.2.0.545" />
       <dependency id="FubuCore" version="1.2.0.259" />
       <dependency id="FubuLocalization" version="0.9.5.48" />
       <dependency id="HtmlTags" version="1.1.0.114" />
