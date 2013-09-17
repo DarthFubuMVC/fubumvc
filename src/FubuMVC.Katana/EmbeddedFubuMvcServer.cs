@@ -19,32 +19,16 @@ using Owin;
 
 namespace FubuMVC.Katana
 {
-    public static class FubuApplicationExtensions
-    {
-        /// <summary>
-        /// Creates an embedded web server for this FubuApplication running at the designated physical path and port
-        /// </summary>
-        /// <param name="application"></param>
-        /// <param name="physicalPath">The physical path of the web server path.  This only needs to be set if the location for application content like scripts or views is at a different place than the current AppDomain base directory</param>
-        /// <param name="port">The port to run the web server at.  The web server will try other port numbers starting at this point if it is unable to bind to this specific port</param>
-        /// <returns></returns>
-        public static EmbeddedFubuMvcServer RunEmbedded(this FubuApplication application, string physicalPath = null,
-                                                        int port = 5500)
-        {
-            return new EmbeddedFubuMvcServer(application.Bootstrap(), physicalPath, port);
-        }
-    }
-
     /// <summary>
     /// Embeds and runs a FubuMVC application in a normal process using the Web API self host libraries
     /// </summary>
     public class EmbeddedFubuMvcServer : IDisposable
     {
-        private readonly IDisposable _server;
-        private readonly IUrlRegistry _urls;
-        private readonly IServiceLocator _services;
-        private readonly EndpointDriver _endpoints;
-        private readonly string _baseAddress;
+        private IDisposable _server;
+        private IUrlRegistry _urls;
+        private IServiceLocator _services;
+        private EndpointDriver _endpoints;
+        private string _baseAddress;
         private readonly FubuRuntime _runtime;
 
         /// <summary>
@@ -80,30 +64,77 @@ namespace FubuMVC.Katana
         {
             _runtime = runtime;
 
+            // before anything else, make sure there is no server on the settings
+            // We're doing this hokey-pokey to ensure that things don't get double 
+            // disposed
+            var settings = runtime.Factory.Get<KatanaSettings>();
+            var peer = settings.EmbeddedServer;
+
+            if (peer == null)
+            {
+                startAllNew(runtime, physicalPath, port);
+            }
+            else
+            {
+                takeOverFromExistingServer(peer, settings);
+            }
+        }
+
+        private void startAllNew(FubuRuntime runtime, string physicalPath, int port)
+        {
+            startServer(runtime.Routes, physicalPath, port);
+
+            _urls = _runtime.Factory.Get<IUrlRegistry>();
+            _services = _runtime.Factory.Get<IServiceLocator>();
+
+            buildEndpointDriver(port);
+        }
+
+        private void takeOverFromExistingServer(EmbeddedFubuMvcServer peer, KatanaSettings settings)
+        {
+            _urls = peer.Urls;
+            _services = peer.Services;
+            _server = peer._server;
+            _baseAddress = peer._baseAddress;
+            _endpoints = peer.Endpoints;
+
+            settings.EmbeddedServer = null;
+        }
+
+        private void buildEndpointDriver(int port)
+        {
+            _baseAddress = "http://localhost:" + port;
+            UrlContext.Stub(_baseAddress);
+            _endpoints = new EndpointDriver(_urls, _baseAddress);
+        }
+
+        public EmbeddedFubuMvcServer(KatanaSettings settings, IUrlRegistry urls, IServiceLocator services, IList<RouteBase> routes)
+        {
+            _urls = urls;
+            _services = services;
+
+            startServer(routes, AppDomain.CurrentDomain.BaseDirectory, settings.Port);
+            buildEndpointDriver(settings.Port);
+        }
+
+        private void startServer(IList<RouteBase> routes, string physicalPath, int port)
+        {
             var parameters = new StartOptions {Port = port};
             parameters.Urls.Add("http://*:" + port); //for netsh http add urlacl
 
             FubuMvcPackageFacility.PhysicalRootPath = physicalPath ?? AppDomain.CurrentDomain.BaseDirectory;
-            Action<IAppBuilder> startup = FubuOwinHost.ToStartup(_runtime);
+            Action<IAppBuilder> startup = FubuOwinHost.ToStartup(routes);
 
             var context = new StartContext(parameters)
             {
                 Startup = startup
             };
 
-            var engine = new HostingEngine(new AppBuilderFactory(), new TraceOutputFactory(), new AppLoader(new IAppLoaderFactory[0]),
-                                           new ServerFactoryLoader(new ServerFactoryActivator(new ServiceProvider())));
+            var engine = new HostingEngine(new AppBuilderFactory(), new TraceOutputFactory(),
+                new AppLoader(new IAppLoaderFactory[0]),
+                new ServerFactoryLoader(new ServerFactoryActivator(new ServiceProvider())));
 
             _server = engine.Start(context);
-
-            _baseAddress = "http://localhost:" + port;
-
-            _urls = _runtime.Factory.Get<IUrlRegistry>();
-
-            UrlContext.Stub(_baseAddress);
-
-            _services = _runtime.Factory.Get<IServiceLocator>();
-            _endpoints = new EndpointDriver(_urls, _baseAddress);
         }
 
         public FubuRuntime Runtime
@@ -133,7 +164,7 @@ namespace FubuMVC.Katana
 
         public void Dispose()
         {
-            _runtime.Dispose();
+            if (_runtime != null) _runtime.Dispose();
             _server.Dispose();
         }
 

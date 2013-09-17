@@ -26,6 +26,15 @@ namespace FubuMVC.OwinHost
             };
         }
 
+        public static Action<IAppBuilder> ToStartup(IList<RouteBase> routes)
+        {
+            return builder =>
+            {
+                var host = new FubuOwinHost(routes);
+                builder.Run(host);
+            };
+        }
+
         public FubuOwinHost(IEnumerable<RouteBase> routes)
         {
             _routes = new RouteCollection();

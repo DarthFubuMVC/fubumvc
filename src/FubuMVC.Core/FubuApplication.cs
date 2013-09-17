@@ -140,11 +140,11 @@ namespace FubuMVC.Core
             BottleFiles.ContentFolder = FubuMvcPackageFacility.FubuContentFolder;
             BottleFiles.PackagesFolder = FileSystem.Combine("bin", FubuMvcPackageFacility.FubuPackagesFolder);
 
+            IList<RouteBase> routes = null;
 
             PackageRegistry.LoadPackages(x => {
                 x.Facility(_fubuFacility);
                 _packagingDirectives.Each(d => d(x));
-
 
                 x.Bootstrap(log => {
                     // container facility has to be spun up here
@@ -162,6 +162,10 @@ namespace FubuMVC.Core
                     // factory HAS to be spun up here.
                     factory = containerFacility.BuildFactory();
 
+                    routes = buildRoutes(factory, graph);
+                    routes.Each(r => RouteTable.Routes.Add(r));
+                    containerFacility.Register(typeof(FubuRouteTable), ObjectDef.ForValue(new FubuRouteTable{Routes = routes}));
+
                     return factory.GetAll<IActivator>();
                 });
             });
@@ -171,8 +175,6 @@ namespace FubuMVC.Core
             PackageRegistry.AssertNoFailures(
                 () => { throw new FubuException(0, FubuApplicationDescriber.WriteDescription()); });
 
-            var routes = buildRoutes(factory, graph);
-            routes.Each(r => RouteTable.Routes.Add(r));
 
             var runtime = new FubuRuntime(factory, _facility.Value, routes);
 
@@ -240,5 +242,10 @@ namespace FubuMVC.Core
             _packagingDirectives.Add(configure);
             return this;
         }
+    }
+
+    public class FubuRouteTable
+    {
+        public IList<RouteBase> Routes;
     }
 }
