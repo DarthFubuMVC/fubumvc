@@ -1,4 +1,5 @@
-﻿using Bottles;
+﻿using System;
+using Bottles;
 using Bottles.Diagnostics;
 
 namespace FubuMVC.Katana
@@ -16,6 +17,7 @@ namespace FubuMVC.Katana
         {
             if (_settings.EmbeddedServer != null)
             {
+                Console.WriteLine("Shutting down the embedded Katana server");
                 log.Trace("Shutting down the embedded Katana server");
                 _settings.EmbeddedServer.Dispose();
             }
