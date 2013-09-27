@@ -43,7 +43,13 @@ namespace FubuMVC.Core
 
         public void Dispose()
         {
-            if (_disposed) return;
+            dispose();
+            GC.SuppressFinalize(this);
+        }
+
+        private void dispose()
+        {
+             if (_disposed) return;
 
             _disposed = true;
 
@@ -65,6 +71,18 @@ namespace FubuMVC.Core
             Facility.Shutdown();
 
             Console.WriteLine(log.FullTraceText());
+        }
+
+        ~FubuRuntime()
+        {
+            try
+            {
+                dispose();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred in the finalizer {0}", ex);
+            }
         }
     }
 }
