@@ -10,7 +10,7 @@ src/CommonAssemblyInfo.cs
 _ReSharper.*
 *.[Rr]e[Ss]harper.user
 src/FubuMVC.*.ReSharper
-*.DotSettings.user
+*.DotSettings*
 *.suo
 *.cache
 ~$*
