@@ -5,6 +5,7 @@ using FubuCore.Formatting;
 using FubuCore.Logging;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
@@ -154,5 +155,12 @@ namespace FubuMVC.Tests.Registration
 		{
 			registeredTypeIs<IChainUrlResolver, ChainUrlResolver>();
 		}
+
+        [Test]
+        public void should_be_a_value_for_app_reloaded()
+        {
+            var services = BehaviorGraph.BuildEmptyGraph().Services;
+            services.DefaultServiceFor<AppReloaded>().Value.ShouldBeOfType<AppReloaded>();
+        }
     }
 }

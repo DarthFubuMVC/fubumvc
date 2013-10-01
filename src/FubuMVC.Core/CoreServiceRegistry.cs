@@ -6,9 +6,11 @@ using FubuCore.Formatting;
 using FubuCore.Logging;
 using FubuCore.Reflection;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http.Compression;
 using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Routing;
@@ -28,6 +30,8 @@ namespace FubuMVC.Core
     {
         public CoreServiceRegistry()
         {
+            SetServiceIfNone(typeof (AppReloaded), ObjectDef.ForValue(new AppReloaded()));
+
             var stringifier = new Stringifier();
             SetServiceIfNone(stringifier);
             SetServiceIfNone<IStringifier>(stringifier); // Hack!
