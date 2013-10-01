@@ -34,6 +34,9 @@ namespace FubuMVC.Core.Runtime
         public static readonly MimeType Xml = New("application/xml", ".xml");
         public static readonly MimeType Any = New("*/*");
         public static readonly MimeType TrueTypeFont = New("application/octet-stream", ".ttf");
+        public static readonly MimeType WebOpenFont = New("application/font-woff", ".woff");
+        public static readonly MimeType EmbeddedOpenType = New("application/vnd.ms-fontobject", ".eot");
+        public static readonly MimeType Svg = New("image/svg+xml", ".svg");
 
         private readonly IList<string> _extensions = new List<string>();
         private readonly string _mimeType;
