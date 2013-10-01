@@ -4,6 +4,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.OwinHost;
 using FubuMVC.TestingHarness;
+using HtmlTags;
 using NUnit.Framework;
 using FubuTestingSupport;
 using FubuMVC.StructureMap;
@@ -65,6 +66,49 @@ namespace FubuMVC.IntegrationTesting
             ts3.ShouldEqual(ts4);
 
             ts1.ShouldNotEqual(ts3);
+        }
+
+
+        [Test, Explicit]
+        public void manual_test_the_auto_reloading_tag()
+        {
+            FubuMode.Mode(FubuMode.Development);
+
+            using (var server = FubuApplication.DefaultPolicies().StructureMap().RunEmbedded(port: 5601))
+            {
+                Process.Start("http://localhost:5601/reloaded");
+                Thread.Sleep(20000);
+            }
+
+            using (var server = FubuApplication.DefaultPolicies().StructureMap().RunEmbedded(port: 5601))
+            {
+                Thread.Sleep(20000);
+            }
+
+            FubuMode.Reset();
+        }
+    }
+
+
+
+    public class ReloadingEndpoint
+    {
+        private readonly AppReloaded _reloaded;
+
+        public ReloadingEndpoint(AppReloaded reloaded)
+        {
+            _reloaded = reloaded;
+        }
+
+        public HtmlDocument get_reloaded()
+        {
+            var document = new HtmlDocument();
+            document.Title = "Manual Test Harness for reloading";
+            document.Add("h1").Text("Loaded at " + _reloaded.Timestamp);
+
+            document.Add(new AutoReloadingTag());
+
+            return document;
         }
     }
 }
