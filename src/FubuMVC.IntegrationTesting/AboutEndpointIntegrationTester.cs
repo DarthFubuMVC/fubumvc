@@ -53,7 +53,7 @@ namespace FubuMVC.IntegrationTesting
                 ts2 = server.Endpoints.Get<AboutEndpoint>(x => x.get__loaded()).ReadAsText();
             }
 
-            Thread.Sleep(100);
+            Thread.Sleep(10000);
 
             using (var server = FubuApplication.DefaultPolicies().StructureMap().RunEmbedded(port: PortFinder.FindPort(5500)))
             {
