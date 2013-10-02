@@ -244,7 +244,6 @@ namespace FubuMVC.Core.Endpoints
         /// <returns></returns>
         public HttpResponse Get(string url, string acceptType = "*/*", string etag = null, Action<HttpWebRequest> configure = null, string acceptEncoding = null)
         {
-            Debug.WriteLine("EndpointDriver getting url {0}".ToFormat(url));
             url = url.ToAbsoluteUrl(_baseUrl);
 
             var request = (HttpWebRequest) WebRequest.Create(url.ToAbsoluteUrl());

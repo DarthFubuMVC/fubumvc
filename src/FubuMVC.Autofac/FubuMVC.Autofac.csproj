@@ -37,7 +37,6 @@
       <HintPath>..\packages\Autofac\lib\NET40\Autofac.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="Bottles, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Bottles\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
