@@ -12,7 +12,6 @@ namespace FubuMVC.Core.Registration.Routes
         public static RouteDefinition Build<T>(string pattern)
         {
             var parent = new RouteDefinition(pattern);
-            var input = new RouteInput<T>(parent);
             Type inputType = typeof (T);
 
             parent.ApplyInputType(inputType);

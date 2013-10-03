@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Bottles;
 using Bottles.Diagnostics;
@@ -25,9 +24,8 @@ namespace FubuMVC.StructureMap
 
             foreach (var pluginType in allSingletons)
             {
-                var instance = _container.GetInstance(pluginType.PluginType);
+                _container.GetInstance(pluginType.PluginType);
             }
-
         }
     }
 }

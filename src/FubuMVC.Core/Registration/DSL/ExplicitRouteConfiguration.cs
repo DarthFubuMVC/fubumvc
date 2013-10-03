@@ -45,7 +45,6 @@ namespace FubuMVC.Core.Registration.DSL
         public class ChainedBehaviorExpression
         {
             private readonly ExplicitRouteConfiguration _parent;
-            private Type _outputType;
 
             public ChainedBehaviorExpression(ExplicitRouteConfiguration parent)
             {
@@ -56,8 +55,6 @@ namespace FubuMVC.Core.Registration.DSL
             {
                 var method = ReflectionHelper.GetMethod(expression);
                 var call = new ActionCall(typeof(C), method);
-
-                _outputType = call.OutputType();
 
                 _parent._nodes.Add(call);
 
