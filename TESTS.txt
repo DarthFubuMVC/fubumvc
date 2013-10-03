@@ -1,1 +1,2 @@
 FubuMVC.Tests
+FubuMVC.OwinHost.Testing
