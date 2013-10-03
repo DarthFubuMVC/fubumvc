@@ -1,3 +1,2 @@
 FubuMVC.Tests
-FubuMVC.StructureMap.Testing
-FubuMVC.OwinHost.Testing
+FubuMVC.Autofac.Testing
