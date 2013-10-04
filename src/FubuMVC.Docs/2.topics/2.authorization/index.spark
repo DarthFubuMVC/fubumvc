@@ -1,0 +1,13 @@
+<!--Title: Authorization-->
+<!--Url: authorization-->
+
+<markdown>
+Once a user has been identified after `authentication`, it may still be
+necessary to restrict a user from taking certain actions.  Fortunately for
+developers, FubuMVC already provides ways to control access through the use of
+authorization rules.
+
+  * <TopicLink name="fubumvc/topics/authorization/allow-role" />
+  * <TopicLink name="fubumvc/topics/authorization/working-with-authorization-policies" />
+</markdown>
+

@@ -110,6 +110,13 @@
     <Compile Include="ConfigurationActionSetTester.cs" />
     <Compile Include="ConfigGraph_DetermineConfigurationType_Tester.cs" />
     <Compile Include="deactivators_are_called_in_fuburuntime_dispose.cs" />
+    <Compile Include="Docs\Introduction\Overview\HomeController.cs" />
+    <Compile Include="Docs\Topics\Authorization\AuthorizationPolicyController.cs" />
+    <Compile Include="Docs\Topics\Authorization\Controller.cs" />
+    <Compile Include="Docs\Topics\Authorization\ProductController.cs" />
+    <Compile Include="Docs\Topics\Authorization\PurchasedProductPolicy.cs" />
+    <Compile Include="Docs\Topics\Authorization\PurchaseProductAuthorizationPolicy.cs" />
+    <Compile Include="Docs\Topics\Authorization\RoleModelAuthorizationPolicy.cs" />
     <Compile Include="FubuApplication_registers_the_FubuRuntime_in_bootstrap.cs" />
     <Compile Include="Http\Compression\ContentCompressionExtensionTester.cs" />
     <Compile Include="Http\Compression\DeflateEncodingTester.cs" />
@@ -309,7 +316,8 @@
     <Compile Include="FubuBootstrapperIntegrationTester.cs" />
     <Compile Include="FubuRegistryTester.cs" />
     <Compile Include="HtmlGenerationTestExtensions.cs" />
-    <Compile Include="Registration\BehaviorGraphTester.cs"></Compile>
+    <Compile Include="Registration\BehaviorGraphTester.cs">
+    </Compile>
     <Compile Include="Registration\Conventions\ActionSourceTester.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConventionTester.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteInputTypeBasedUrlPolicyTester.cs" />
