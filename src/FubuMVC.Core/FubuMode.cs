@@ -76,6 +76,7 @@ namespace FubuMVC.Core
     public static class FubuMode
     {
         public static readonly string Development = "Development";
+        public static readonly string Testing = "Testing";
 
         /// <summary>
         /// Change the mechanism used to detect the FubuMode
