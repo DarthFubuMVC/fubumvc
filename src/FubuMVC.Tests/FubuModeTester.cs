@@ -1,4 +1,5 @@
 using System;
+using Bottles;
 using FubuMVC.Core;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -92,6 +93,47 @@ namespace FubuMVC.Tests
             FubuModeFileDetector.Clear();
 
             FubuMode.InDevelopment().ShouldBeFalse();
+        }
+
+        [Test]
+        public void in_testing_mode_if_package_registry_is_set()
+        {
+            PackageRegistry.Properties[FubuMode.Testing] = true.ToString();
+
+            FubuMode.InTestingMode().ShouldBeTrue();
+        }
+
+        [Test]
+        public void in_testing_mode_is_false()
+        {
+            PackageRegistry.Properties[FubuMode.Testing] = false.ToString();
+
+            FubuMode.InTestingMode().ShouldBeFalse();
+        }
+
+        [Test]
+        public void in_testing_mode_is_false_if_no_property_exists()
+        {
+            PackageRegistry.Properties.Remove(FubuMode.Testing);
+
+            FubuMode.InTestingMode().ShouldBeFalse();
+        }
+
+        [Test]
+        public void setup_for_testing_mode()
+        {
+            PackageRegistry.Properties.Remove(FubuMode.Testing);
+            FubuMode.SetupForTestingMode();
+            FubuMode.InTestingMode().ShouldBeTrue();
+        }
+
+        [Test]
+        public void remote_testing_mode()
+        {
+            FubuMode.SetupForTestingMode();
+            FubuMode.RemoveTestingMode();
+
+            FubuMode.InTestingMode().ShouldBeFalse();
         }
     }
 }
