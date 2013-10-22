@@ -1,4 +1,4 @@
-using System.Web;
+using FubuMVC.Core.Runtime;
 using HtmlTags;
 
 namespace FubuMVC.Core.SessionState
@@ -17,22 +17,22 @@ namespace FubuMVC.Core.SessionState
         {
         }
 
-        public FlashProvider(HttpContextBase httpContext)
+        public FlashProvider(ISessionState sessionState)
         {
-            Session = httpContext.Session;
+            Session = sessionState;
         }
 
-        public HttpSessionStateBase Session { get; set; }
+        public ISessionState Session { get; set; }
 
         public void Flash(object flashObject)
         {
             string json = JsonUtil.ToJson(flashObject);
-            Session[FLASH_KEY] = json;
+            Session.Set(FLASH_KEY, json);
         }
 
         public T Retrieve<T>()
         {
-            var json = Session[FLASH_KEY] as string;
+            var json = Session.Get<string>(FLASH_KEY);
             Session.Remove(FLASH_KEY);
 
             return (json != null)

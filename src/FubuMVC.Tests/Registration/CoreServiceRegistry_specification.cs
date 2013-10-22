@@ -49,7 +49,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void IFlash_is_registered()
         {
-            registeredTypeIs<IFlash, CookieFlashProvider>();
+            registeredTypeIs<IFlash, FlashProvider>();
         }
 
         [Test]

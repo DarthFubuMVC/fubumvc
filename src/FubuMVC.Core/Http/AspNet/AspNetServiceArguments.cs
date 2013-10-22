@@ -1,8 +1,5 @@
-using System;
-using System.Web;
 using System.Web.Routing;
 using FubuCore.Binding;
-using FubuMVC.Core.Http.Cookies;
 
 namespace FubuMVC.Core.Http.AspNet
 {
@@ -14,6 +11,7 @@ namespace FubuMVC.Core.Http.AspNet
 
             With<IRequestData>(new AspNetRequestData(requestContext, currentRequest));
             With(requestContext.HttpContext);
+            With(requestContext.HttpContext.Session);
 
             
             With<ICurrentHttpRequest>(currentRequest);
@@ -25,8 +23,6 @@ namespace FubuMVC.Core.Http.AspNet
             With<IClientConnectivity>(new AspNetClientConnectivity(requestContext.HttpContext.Response));
 
             With<IResponse>(new AspNetResponse(requestContext.HttpContext.Response));
-
-            With<HttpContextBase>(requestContext.HttpContext);
         }
 
     }

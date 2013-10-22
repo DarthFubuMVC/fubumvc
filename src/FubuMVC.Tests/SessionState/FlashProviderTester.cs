@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-using System.Web;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.SessionState;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -21,13 +20,13 @@ namespace FubuMVC.Tests.SessionState
         [Test]
         public void should_json_serialize_model()
         {
-            _session.Values[FlashProvider.FLASH_KEY].ShouldBeOfType<string>().ShouldContain("\"PropInt\":99");
+            _session.Get<string>(FlashProvider.FLASH_KEY).ShouldContain("\"PropInt\":99");
         }
 
         [Test]
         public void should_store_model_in_session()
         {
-            _session.Values[FlashProvider.FLASH_KEY].ShouldNotBeNull();
+            _session.Get<string>(FlashProvider.FLASH_KEY).ShouldNotBeNull();
         }
     }
 
@@ -70,12 +69,12 @@ namespace FubuMVC.Tests.SessionState
     public abstract class the_flash_provider
     {
         protected FlashProvider _flash;
-        protected SessionMock _session;
+        protected BasicSessionState _session;
 
         [SetUp]
         public void SetUp()
         {
-            _session = new SessionMock();
+            _session = new BasicSessionState();
             _flash = new FlashProvider
             {
                 Session = _session
@@ -85,19 +84,6 @@ namespace FubuMVC.Tests.SessionState
 
         protected virtual void beforeEach()
         {
-        }
-    }
-
-    public class SessionMock : HttpSessionStateBase
-    {
-        private readonly IDictionary<string, object> _values = new Dictionary<string, object>();
-        public IDictionary<string, object> Values { get { return _values; } }
-
-        public override object this[string name] { get { return Values.ContainsKey(name) ? Values[name] : null; } set { Values[name] = value; } }
-
-        public override void Remove(string name)
-        {
-            Values.Remove(name);
         }
     }
 }

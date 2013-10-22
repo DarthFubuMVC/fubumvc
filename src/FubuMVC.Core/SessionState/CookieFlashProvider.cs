@@ -47,6 +47,7 @@ namespace FubuMVC.Core.SessionState
 
             var cookie = new Cookie(FlashKey)
             {
+                Path = "/",
                 Expires = _systemTime.UtcNow().AddYears(-1)
             };
 

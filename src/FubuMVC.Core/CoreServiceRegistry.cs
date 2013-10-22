@@ -30,7 +30,7 @@ namespace FubuMVC.Core
     {
         public CoreServiceRegistry()
         {
-            SetServiceIfNone(typeof (AppReloaded), ObjectDef.ForValue(new AppReloaded()));
+            SetServiceIfNone(typeof(AppReloaded), ObjectDef.ForValue(new AppReloaded()));
 
             var stringifier = new Stringifier();
             SetServiceIfNone(stringifier);
@@ -40,11 +40,11 @@ namespace FubuMVC.Core
             SetServiceIfNone<IOutputWriter, OutputWriter>();
 
             SetServiceIfNone<IUrlRegistry, UrlRegistry>();
-			SetServiceIfNone<IChainUrlResolver, ChainUrlResolver>();
+            SetServiceIfNone<IChainUrlResolver, ChainUrlResolver>();
             SetServiceIfNone<IUrlTemplatePattern, NulloUrlTemplate>();
             SetServiceIfNone<IJsonWriter, JsonWriter>();
 
-            SetServiceIfNone<IFlash, CookieFlashProvider>();
+            SetServiceIfNone<IFlash, FlashProvider>();
             SetServiceIfNone<IRequestDataProvider, RequestDataProvider>();
 
             SetServiceIfNone<IFubuRequest, FubuRequest>();
@@ -64,7 +64,7 @@ namespace FubuMVC.Core
 
             SetServiceIfNone<ISessionState, SimpleSessionState>();
 
-            
+
 
 
             SetServiceIfNone<IFileSystem, FileSystem>();
@@ -76,8 +76,8 @@ namespace FubuMVC.Core
             SetServiceIfNone<ISmartRequest, FubuSmartRequest>();
 
 
-            AddService<IFormatter>(typeof (JsonFormatter));
-            AddService<IFormatter>(typeof (XmlFormatter));
+            AddService<IFormatter>(typeof(JsonFormatter));
+            AddService<IFormatter>(typeof(XmlFormatter));
             SetServiceIfNone<IResourceNotFoundHandler, DefaultResourceNotFoundHandler>();
 
             SetServiceIfNone<IConditionalService, ConditionalService>();
