@@ -92,7 +92,7 @@ namespace FubuMVC.Core.Runtime
 
         public void Set<T>(string key, T value)
         {
-            _session[getKey<T>()] = value;
+            _session[key] = value;
         }
 
         public void Set<T>(T value)

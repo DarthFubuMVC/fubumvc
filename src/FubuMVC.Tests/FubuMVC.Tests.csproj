@@ -176,6 +176,7 @@
     <Compile Include="Runtime\Logger_should_be_registered.cs" />
     <Compile Include="Runtime\PartialChainSwitcherTester.cs" />
     <Compile Include="Runtime\RequestCompletionTester.cs" />
+    <Compile Include="Runtime\SimpleSessionStateTester.cs" />
     <Compile Include="Runtime\SynchronousCoordinator.cs" />
     <Compile Include="Security\SecurityServicesRegistry_specification.cs" />
     <Compile Include="SessionState\flashing_an_object.cs" />

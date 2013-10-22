@@ -11,7 +11,7 @@ namespace FubuMVC.Core.Http.AspNet
 
             With<IRequestData>(new AspNetRequestData(requestContext, currentRequest));
             With(requestContext.HttpContext);
-            With(requestContext.HttpContext.Session);
+            //With(requestContext.HttpContext.Session);
 
             
             With<ICurrentHttpRequest>(currentRequest);

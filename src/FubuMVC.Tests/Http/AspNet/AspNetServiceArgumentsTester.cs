@@ -17,7 +17,6 @@ namespace FubuMVC.Tests.Http.AspNet
         private AspNetServiceArguments theArguments;
         private HttpRequestBase theHttpRequest;
         private HttpResponseBase theHttpResponse;
-        private HttpSessionStateBase theHttpSession;
 
         [SetUp]
         public void SetUp()
@@ -30,9 +29,6 @@ namespace FubuMVC.Tests.Http.AspNet
 
             theHttpResponse = MockRepository.GenerateMock<HttpResponseBase>();
             theHttpContext.Stub(x => x.Response).Return(theHttpResponse);
-
-            theHttpSession = MockRepository.GenerateMock<HttpSessionStateBase>();
-            theHttpContext.Stub(x => x.Session).Return(theHttpSession);
 
             theArguments = new AspNetServiceArguments(theRequestContext);
         }
@@ -49,11 +45,6 @@ namespace FubuMVC.Tests.Http.AspNet
             theArguments.Get<HttpContextBase>().ShouldNotBeNull();
         }
 
-        [Test]
-        public void registers_an_http_session_base()
-        {
-            theArguments.Get<HttpSessionStateBase>().ShouldNotBeNull();
-        }
 
         [Test]
         public void should_add_the_request_data()
