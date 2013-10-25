@@ -1,7 +1,6 @@
 ﻿using FubuMVC.Core.Http;
-using NUnit.Framework;
-using Rhino.Mocks;
 using FubuTestingSupport;
+using NUnit.Framework;
 
 namespace FubuMVC.Tests.Http
 {

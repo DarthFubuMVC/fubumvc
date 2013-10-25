@@ -78,7 +78,7 @@ namespace FubuMVC.Core.Http
 
         public string FullUrl()
         {
-            return FullUrl();
+            return StubFullUrl;
         }
 
         public string ToFullUrl(string url)
