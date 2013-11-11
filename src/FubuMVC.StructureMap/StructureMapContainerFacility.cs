@@ -131,11 +131,6 @@ namespace FubuMVC.StructureMap
             return _container.GetAllInstances<T>();
         }
 
-        public IEnumerable<IInstaller> GetAllInstallers()
-        {
-            return _container.GetAllInstances<IInstaller>();
-        }
-
         public static IContainer GetBasicFubuContainer()
         {
             return GetBasicFubuContainer(x => { });
