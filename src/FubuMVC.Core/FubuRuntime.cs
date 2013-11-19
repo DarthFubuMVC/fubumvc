@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web.Routing;
 using Bottles;
 using Bottles.Diagnostics;
+using FubuCore.Descriptions;
+using FubuCore.Logging;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Runtime;
 
@@ -53,24 +55,26 @@ namespace FubuMVC.Core
 
             _disposed = true;
 
+            var logger = _factory.Get<ILogger>();
             var deactivators = _factory.GetAll<IDeactivator>().ToArray();
             var log = new PackageLog();
-            
+
             deactivators.Each(x => {
                 try
                 {
-                    log.Trace("Running " + x);
                     x.Deactivate(log);
                 }
                 catch (Exception e)
                 {
                     log.MarkFailure(e);
                 }
+                finally
+                {
+                    logger.InfoMessage(() => new DeactivatorExecuted { Deactivator = x.ToString(), Log = log});
+                }
             });
 
             Facility.Shutdown();
-
-            Console.WriteLine(log.FullTraceText());
         }
 
         ~FubuRuntime()
@@ -83,6 +87,17 @@ namespace FubuMVC.Core
             {
                 Console.WriteLine("An error occurred in the finalizer {0}", ex);
             }
+        }
+    }
+
+    public class DeactivatorExecuted : LogRecord, DescribesItself
+    {
+        public string Deactivator { get; set; }
+        public PackageLog Log { get; set; }
+        public void Describe(Description description)
+        {
+            description.Title = "Deactivator: " + Deactivator;
+            description.LongDescription = Log.FullTraceText();
         }
     }
 }
