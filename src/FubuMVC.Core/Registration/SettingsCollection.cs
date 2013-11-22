@@ -1,4 +1,6 @@
 using System;
+using FubuCore.Binding;
+using FubuCore.Configuration;
 using FubuCore.Util;
 using FubuCore;
 using FubuCore.Reflection;
@@ -25,7 +27,8 @@ namespace FubuMVC.Core.Registration
 
             if (type.IsConcreteWithDefaultCtor())
             {
-                return Activator.CreateInstance(type);
+                var provider = new AppSettingsProvider(ObjectResolver.Basic());
+                return provider.SettingsFor(type);
             }
 
             throw new ArgumentOutOfRangeException("Can only build default values for concrete classes with a default constructor and value types");

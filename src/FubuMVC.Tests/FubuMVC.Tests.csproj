@@ -171,6 +171,7 @@
     <Compile Include="Registration\Policy_implementation_of_IKnowMyConfigurationType.cs" />
     <Compile Include="Registration\Registration\ModelBindingServiceRegistry_specification.cs" />
     <Compile Include="Registration\SettingsCollectionTester.cs" />
+    <Compile Include="Registration\SettingsCollection_creates_with_the_app_setting_provider_Tester.cs" />
     <Compile Include="Resources\Conneg\ReaderChoiceTester.cs" />
     <Compile Include="Resources\PathBased\RouteRankingIntegratedTester.cs" />
     <Compile Include="Runtime\AsyncCoordinatorTester.cs" />
@@ -399,7 +400,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="FubuMVC.Tests.dll.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="ripple.dependencies.config">
       <SubType>Designer</SubType>
