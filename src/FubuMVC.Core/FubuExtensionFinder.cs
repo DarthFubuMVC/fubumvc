@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Bottles.Diagnostics;
 using FubuCore;
+using FubuCore.Reflection;
 using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core
@@ -29,7 +30,7 @@ namespace FubuMVC.Core
             // Yeah, it really does have to be this way
             return pool.TypesMatching(
                 t =>
-                hasDefaultCtor(t) && t.GetInterfaces().Any(i => i.FullName == typeof (IFubuRegistryExtension).FullName));
+                hasDefaultCtor(t) && t.GetInterfaces().Any(i => i.FullName == typeof (IFubuRegistryExtension).FullName) && !t.HasAttribute<DoNotAutoImportAttribute>());
         }
 
         private static bool hasDefaultCtor(Type type)

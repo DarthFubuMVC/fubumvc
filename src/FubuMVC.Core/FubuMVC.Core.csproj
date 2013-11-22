@@ -98,6 +98,7 @@
     <Compile Include="DiagnosticsSettings.cs" />
     <Compile Include="Diagnostics\AboutEndpoint.cs" />
     <Compile Include="Diagnostics\RegisterAbout.cs" />
+    <Compile Include="DoNotAutoImportAttribute.cs" />
     <Compile Include="Endpoints\EndpointDriver.cs" />
     <Compile Include="Endpoints\EndpointFormatting.cs" />
     <Compile Include="Endpoints\EndpointInvocation.cs" />

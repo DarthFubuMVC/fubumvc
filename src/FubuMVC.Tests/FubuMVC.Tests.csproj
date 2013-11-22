@@ -119,6 +119,7 @@
     <Compile Include="Docs\Topics\Authorization\PurchaseProductAuthorizationPolicy.cs" />
     <Compile Include="Docs\Topics\Authorization\RoleModelAuthorizationPolicy.cs" />
     <Compile Include="FubuApplication_registers_the_FubuRuntime_in_bootstrap.cs" />
+    <Compile Include="FubuExtensionFinderTester.cs" />
     <Compile Include="Http\Compression\ContentCompressionExtensionTester.cs" />
     <Compile Include="Http\Compression\DeflateEncodingTester.cs" />
     <Compile Include="Http\Cookies\CookieStateTester.cs" />
