@@ -39,7 +39,7 @@ namespace FubuMVC.Core.Http
 
         public IEnumerable<IValueSource> GetChildren(string key)
         {
-            throw new NotSupportedException();
+            return Enumerable.Empty<IValueSource>();
         }
 
         public void WriteReport(IValueReport report)

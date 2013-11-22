@@ -99,7 +99,7 @@ namespace FubuMVC.Core.Http.AspNet
 
         public IValueSource GetChild(string key)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public IEnumerable<IValueSource> GetChildren(string key)

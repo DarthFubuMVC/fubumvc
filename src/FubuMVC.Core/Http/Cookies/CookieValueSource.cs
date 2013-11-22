@@ -43,7 +43,7 @@ namespace FubuMVC.Core.Http.Cookies
 
         public IEnumerable<IValueSource> GetChildren(string key)
         {
-            throw new NotSupportedException();
+            return Enumerable.Empty<IValueSource>();
         }
 
         public void WriteReport(IValueReport report)
