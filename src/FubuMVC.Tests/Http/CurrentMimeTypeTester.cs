@@ -1,3 +1,4 @@
+using System.Linq;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 using NUnit.Framework;
@@ -8,6 +9,14 @@ namespace FubuMVC.Tests.Http
     [TestFixture]
     public class CurrentMimeTypeTester
     {
+        [Test]
+        public void default_is_to_accept_anything()
+        {
+            new CurrentMimeType()
+                .AcceptTypes.Single()
+                .ShouldEqual(MimeType.Any);
+        }
+
         [Test]
         public void feeding_in_null_for_contentType_defaults_to_HttpFormMimeType()
         {

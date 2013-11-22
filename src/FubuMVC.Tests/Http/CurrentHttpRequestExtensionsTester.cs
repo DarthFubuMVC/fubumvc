@@ -69,6 +69,8 @@ namespace FubuMVC.Tests.Http
             theRequest.TheRelativeUrl = "/bar";
             theRequest.ToRelativeContentUrl("/bar/1")
                 .ShouldEqual("1");
+
+
         }
     }
 }

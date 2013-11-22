@@ -9,6 +9,8 @@ namespace FubuMVC.Core.Http
     [DebuggerDisplay("{debuggerDisplay()}")]
     public class CurrentMimeType
     {
+        private MimeTypeList _acceptTypes;
+
         public CurrentMimeType()
         {
         }
@@ -34,7 +36,12 @@ namespace FubuMVC.Core.Http
         }
 
         public string ContentType { get; set; }
-        public MimeTypeList AcceptTypes { get; set; }
+
+        public MimeTypeList AcceptTypes
+        {
+            get { return _acceptTypes ?? new MimeTypeList(MimeType.Any); }
+            set { _acceptTypes = value; }
+        }
 
         public string Charset { get; set; }
 
