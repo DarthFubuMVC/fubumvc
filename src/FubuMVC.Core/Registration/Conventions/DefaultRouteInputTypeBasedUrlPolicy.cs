@@ -22,7 +22,15 @@ namespace FubuMVC.Core.Registration.Conventions
 
         public IRouteDefinition Build(ActionCall call)
         {
-            return call.ToRouteDefinition();
+            // I hate this, but it works.
+            var routeDefinition = call.ToRouteDefinition().As<RouteDefinition>();
+            if (MethodToUrlBuilder.Matches(call.Method.Name))
+            {
+                MethodToUrlBuilder.AddHttpConstraints(routeDefinition, call.Method.Name, txt => { });
+            }
+
+
+            return routeDefinition;
         }
 
         public bool Matches(ActionCall call)

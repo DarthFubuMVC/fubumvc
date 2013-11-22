@@ -41,7 +41,19 @@ namespace FubuMVC.Tests.Registration
             {
                 return string.Empty;
             }
+
+            public string get_home()
+            {
+                return "hello";
+            }
+
+            public string get_other_home(MyOtherRequestModel model)
+            {
+                return "hello";
+            }
         }
+
+        public class MyOtherRequestModel{}
 
         public class MyRequestModel
         {
@@ -102,6 +114,46 @@ namespace FubuMVC.Tests.Registration
             });
 
             graph.FindHomeChain().FirstCall().Method.Name.ShouldEqual("ThisIsHome");
+        }
+
+        [Test]
+        public void home_url()
+        {
+            var graph = BehaviorGraph.BuildFrom(x =>
+            {
+                x.Actions.IncludeClassesSuffixedWithController();
+
+                x.Routes.HomeIs<MyHomeController>(c => c.ThisIsHome());
+            });
+
+            graph.FindHomeChain().GetRoutePattern().ShouldEqual("");
+        }
+
+        [Test]
+        public void home_url_keeps_the_http_constraints()
+        {
+            var graph = BehaviorGraph.BuildFrom(x => {
+                x.Actions.IncludeType<MyHomeController>();
+
+                x.Routes.HomeIs<MyHomeController>(c => c.get_home());
+            });
+
+            graph.FindHomeChain().Route.AllowedHttpMethods.Single()
+                .ShouldEqual("GET");
+        }
+
+        [Test]
+        public void home_url_keeps_the_http_constraints_by_input_model()
+        {
+            var graph = BehaviorGraph.BuildFrom(x =>
+            {
+                x.Actions.IncludeType<MyHomeController>();
+
+                x.Routes.HomeIs<MyOtherRequestModel>();
+            });
+
+            graph.FindHomeChain().Route.AllowedHttpMethods.Single()
+                .ShouldEqual("GET");
         }
 
         [Test]

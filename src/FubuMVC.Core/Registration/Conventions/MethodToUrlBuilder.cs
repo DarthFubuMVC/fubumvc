@@ -35,15 +35,7 @@ namespace FubuMVC.Core.Registration.Conventions
                                  Action<string> log)
         {
             log("Method name interpreted by the MethodToUrlBuilder");
-            var parts = methodName.Split('_').ToList();
-
-            var method = parts.First().ToUpper();
-            if (RouteDefinition.VERBS.Contains(method))
-            {
-                log(" - adding Http method constraint {0}".ToFormat(method));
-                route.AddHttpMethodConstraint(method);
-                parts.RemoveAt(0);
-            }
+            var parts = AddHttpConstraints(route, methodName, log);
 
             for (var i = 0; i < parts.Count; i++)
             {
@@ -63,6 +55,20 @@ namespace FubuMVC.Core.Registration.Conventions
             {
                 route.Append(parts.Join("/"));
             }
+        }
+
+        public static List<string> AddHttpConstraints(IRouteDefinition route, string methodName, Action<string> log)
+        {
+            var parts = methodName.Split('_').ToList();
+
+            var method = parts.First().ToUpper();
+            if (RouteDefinition.VERBS.Contains(method))
+            {
+                log(" - adding Http method constraint {0}".ToFormat(method));
+                route.AddHttpMethodConstraint(method);
+                parts.RemoveAt(0);
+            }
+            return parts;
         }
     }
 }
