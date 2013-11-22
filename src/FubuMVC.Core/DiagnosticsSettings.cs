@@ -1,5 +1,8 @@
-﻿namespace FubuMVC.Core
+﻿using FubuMVC.Core.Registration;
+
+namespace FubuMVC.Core
 {
+    [ApplicationLevel]
     public class DiagnosticsSettings
     {
         public DiagnosticsSettings()
