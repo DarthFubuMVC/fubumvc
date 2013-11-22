@@ -54,5 +54,21 @@ namespace FubuMVC.Tests.Http
             theRequest.TheHttpMethod = "get";
             theRequest.IsPut().ShouldBeFalse();
         }
+
+        [Test]
+        public void relative_url()
+        {
+            theRequest.TheRelativeUrl = "";
+            theRequest.ToRelativeContentUrl("/foo")
+                .ShouldEqual("foo");
+
+            theRequest.TheRelativeUrl = "/bar";
+            theRequest.ToRelativeContentUrl("/foo")
+                .ShouldEqual("../foo");
+
+            theRequest.TheRelativeUrl = "/bar";
+            theRequest.ToRelativeContentUrl("/bar/1")
+                .ShouldEqual("1");
+        }
     }
 }
