@@ -17,8 +17,12 @@
       <dependency id="FubuLocalization" version="0.9.5.48" />
       <dependency id="HtmlTags" version="1.1.0.114" />
     </dependencies>
+<frameworkAssemblies>
+  <frameworkAssembly assemblyName="System.Web"  />
+</frameworkAssemblies>
   </metadata>
   <files xmlns="">
     <file src="..\..\src\FubuMVC.Core\bin\release\FubuMVC.Core.*" target="lib\net40" />
   </files>
+
 </package>
