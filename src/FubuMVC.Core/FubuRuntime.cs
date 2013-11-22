@@ -57,9 +57,11 @@ namespace FubuMVC.Core
 
             var logger = _factory.Get<ILogger>();
             var deactivators = _factory.GetAll<IDeactivator>().ToArray();
-            var log = new PackageLog();
+            
 
             deactivators.Each(x => {
+                var log = PackageRegistry.Diagnostics.LogFor(x);
+
                 try
                 {
                     x.Deactivate(log);
@@ -93,7 +95,7 @@ namespace FubuMVC.Core
     public class DeactivatorExecuted : LogRecord, DescribesItself
     {
         public string Deactivator { get; set; }
-        public PackageLog Log { get; set; }
+        public IPackageLog Log { get; set; }
         public void Describe(Description description)
         {
             description.Title = "Deactivator: " + Deactivator;
