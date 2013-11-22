@@ -68,6 +68,7 @@ namespace FubuMVC.Core
                 }
                 catch (Exception e)
                 {
+                    logger.Error("Failed while running Deactivator", e);
                     log.MarkFailure(e);
                 }
                 finally
