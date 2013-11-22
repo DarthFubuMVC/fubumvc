@@ -429,6 +429,20 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void will_not_use_query_string_if_there_is_no_value()
+        {
+            var url = new RouteInput<SampleViewModel>("test/edit/{InPath}");
+            url.AddRouteInput(x => x.InPath);
+            url.AddQueryInput(x => x.InQueryString);
+
+            url.CreateUrlFromInput(new SampleViewModel
+            {
+                InPath = "5",
+                InQueryString = null
+            }).ShouldEqual("test/edit/5");
+        }
+
+        [Test]
         public void create_url_with_querystring_and_inputmodel_with_parameters()
         {
             var url = new RouteInput<SampleViewModel>("test/edit/{InPath}");
