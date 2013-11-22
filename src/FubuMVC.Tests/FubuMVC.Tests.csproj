@@ -91,6 +91,7 @@
     <Compile Include="Ajax\AjaxContinuationTester.cs" />
     <Compile Include="Ajax\AjaxContinuationWriterTester.cs" />
     <Compile Include="ApplicationSettingsTester.cs" />
+    <Compile Include="AutoImport_of_configuration_actions_and_extensions_Tester.cs" />
     <Compile Include="BehaviorGraph_logging_integration_tester.cs" />
     <Compile Include="Behaviors\Chrome\ChromeAttributeTester.cs" />
     <Compile Include="Behaviors\Chrome\ChromeNodeTester.cs" />
@@ -364,6 +365,10 @@
     <ProjectReference Include="..\AssemblyPackage\AssemblyPackage.csproj">
       <Project>{99DBA82A-E811-4DA0-983C-12E8317F8642}</Project>
       <Name>AssemblyPackage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoImportTarget\AutoImportTarget.csproj">
+      <Project>{C63B4F81-360C-4218-96DF-CCB25F2071DB}</Project>
+      <Name>AutoImportTarget</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
       <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>

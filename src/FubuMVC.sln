@@ -44,6 +44,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Katana", "FubuMVC.K
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Docs", "FubuMVC.Docs\FubuMVC.Docs.csproj", "{B9505A07-A44B-4857-830F-9CAB21DF5FCC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoImportTarget", "AutoImportTarget\AutoImportTarget.csproj", "{C63B4F81-360C-4218-96DF-CCB25F2071DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -312,6 +314,21 @@ Global
 		{B9505A07-A44B-4857-830F-9CAB21DF5FCC}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{B9505A07-A44B-4857-830F-9CAB21DF5FCC}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
 		{B9505A07-A44B-4857-830F-9CAB21DF5FCC}.Retail|x86.ActiveCfg = Release|Any CPU
+		{C63B4F81-360C-4218-96DF-CCB25F2071DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C63B4F81-360C-4218-96DF-CCB25F2071DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C63B4F81-360C-4218-96DF-CCB25F2071DB}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C63B4F81-360C-4218-96DF-CCB25F2071DB}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C63B4F81-360C-4218-96DF-CCB25F2071DB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C63B4F81-360C-4218-96DF-CCB25F2071DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C63B4F81-360C-4218-96DF-CCB25F2071DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C63B4F81-360C-4218-96DF-CCB25F2071DB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C63B4F81-360C-4218-96DF-CCB25F2071DB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C63B4F81-360C-4218-96DF-CCB25F2071DB}.Release|x86.ActiveCfg = Release|Any CPU
+		{C63B4F81-360C-4218-96DF-CCB25F2071DB}.Retail|Any CPU.ActiveCfg = Release|Any CPU
+		{C63B4F81-360C-4218-96DF-CCB25F2071DB}.Retail|Any CPU.Build.0 = Release|Any CPU
+		{C63B4F81-360C-4218-96DF-CCB25F2071DB}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C63B4F81-360C-4218-96DF-CCB25F2071DB}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
+		{C63B4F81-360C-4218-96DF-CCB25F2071DB}.Retail|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

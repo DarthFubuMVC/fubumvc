@@ -1,3 +1,7 @@
+using System;
+using System.Linq;
+using FubuCore;
+using FubuCore.Reflection;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Diagnostics;
@@ -101,6 +105,18 @@ namespace FubuMVC.Core.Configuration
         private static void startBehaviorGraph(FubuRegistry registry, BehaviorGraph graph)
         {
             graph.ApplicationAssembly = registry.ApplicationAssembly;
+
+            var types = graph.ApplicationAssembly.GetExportedTypes().Where(x => x.HasAttribute<AutoImportAttribute>() && x.IsConcreteWithDefaultCtor()).ToArray();
+            types.Where(x => x.CanBeCastTo<IFubuRegistryExtension>()).Each(x => {
+                Activator.CreateInstance(x).As<IFubuRegistryExtension>().Configure(registry);
+            });
+
+            types.Where(x => x.CanBeCastTo<IConfigurationAction>()).Each(x => {
+                var policy = Activator.CreateInstance(x).As<IConfigurationAction>();
+                registry.Policies.Add(policy);
+            });
+            
+            
             registry.Config.Add(new DiscoveryActionsConfigurationPack());
         }
 

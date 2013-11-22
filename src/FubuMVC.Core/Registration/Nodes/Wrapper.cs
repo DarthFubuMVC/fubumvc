@@ -23,6 +23,17 @@ namespace FubuMVC.Core.Registration.Nodes
             };
         }
 
+        /// <summary>
+        /// The type of the wrapping behavior appliec
+        /// </summary>
+        public Type Type
+        {
+            get
+            {
+                return _objectDef.Type;
+            }
+        }
+
         public override BehaviorCategory Category { get { return BehaviorCategory.Wrapper; } }
 
         public static Wrapper For<T>() where T : IActionBehavior
