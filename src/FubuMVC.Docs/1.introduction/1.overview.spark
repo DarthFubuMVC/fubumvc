@@ -2,78 +2,29 @@
 <!--Url: overview-->
 
 <markdown>
-This guide covers getting up and running a simple FubuMVC application.
-After reading it, you should be familiar with:
 
-  * What FubuMVC is, why I might (or might not) use it, and how I get started
-  * Using NuGet to download and install FubuMVC in a new Visual Studio.NET
-    project
-  * The general layout of a FubuMVC project
-  * The basic architectural principles of FubuMVC
-  * Adding simple HTTP endpoints in FubuMVC
+<Section title="What is FubuMVC?" id="what-is-it">
 
+FubuMVC is an open source framework for web development in .Net written with the C# language started by a team of developers who
+were looking for a different type of development experience than what the mainstream .Net tools provide.
 
-  <Info>
-    All the code used in this guide is available under the QuickStart project
-    in the [FubuMVC](http://github.com/DarthFubuMVC/fubumvc) repository on GitHub</a>.
-  </Info>
+The goals and architectural philosophy of FubuMVC is:
 
-This Guide Assumes...
-=====================
-
-  *  That when you approach a new web application project, your first thought
-     isn't to open the designer and start dragging-and-dropping your way to
-     the finish line.
-  *  That you have a copy of Visual Studio 2010 (any SKU). While it is
-     possible to run FubuMVC on Mono/Linux with nginx, Apache, or XSP, this
-     guide assumes that you are working with Visual Studio.NET.
-  *  NuGet is installed on your machine
-  *  You are familiar with building basic ASP.NET applications (either
-     WebForms or MVC) and know how to basically get an ASP.NET app working in
-     IIS7 (Windows 2008, Windows 7).
-  *  That you have a good working knowledge of C1.3.0 and .NET 3.5 in general
-     including generics, lambda expressions, and using interfaces.
-  *  That you have a desire to build .NET/ASP.NET-based web applications and
-     are looking for a web framework that doesn't get in your way as much,
-     allows you to test as much as possible, and helps you stay focused on
-     your code and not pleasing your web framework.
-
-
-  <Info>
-    FubuMVC can work with IIS 6 (Windows 2003) and IIS 6.1 (XP), but it's more
-    complicated to set up. This guide will focus on IIS 7.
-  </Info>
-
-Introduction to FubuMVC
-=======================
-
-What is FubuMVC?
-----------------
-
-FubuMVC is a [Front
-Controller-style](http://martinfowler.com/eaaCatalog/frontController.html) MVC
-framework for .NET written in the C1.language. FubuMVC was started by a team of
-developers who wanted to stay on the .NET platform but were unhappy with the
-shape and direction of ASP.NET MVC. The goals and architectural philosophy of
-FubuMVC is:
+  * Allow developers to write very clean code with little or no coupling to framework infrastructure -- i.e.,
+    keep the repetitive ceremony code like attributes, marker interfaces, elaborate fluent interfaces, or mandatory base classes that seem to plague
+    other .Net frameworks to a bare minimum.	
 
   * Exploit the idea of [convention over
     configuration](http://msdn.microsoft.com/en-us/magazine/dd419655.aspx) for
     better productivity, but allow users to teach FubuMVC about their own
-    conventions against a well-defined semantic model.
-
-  * Decouple your application code from framework code and keep your
-    application relatively free from the scourges of XML configuration,
-    inheritance tangles, and attribute soup.
+    conventions if the built in conventions don't fit.
 
   * Remove friction from automated testing of your application code.
 
   * Maximize the ability to use composition throughout your application by
     focusing on SOLID principles, separation of concerns,
-    [DRY](http://en.wikipedia.org/wiki/Don't_repeat_yourself). Internally,
-    FubuMVC uses your application's Inversion of Control container to build out
-    its own dependencies.
-
+    [DRY](http://en.wikipedia.org/wiki/Don't_repeat_yourself). 
+	
   * Modular architectures. FubuMVC includes the most sophisticated and
     capable infrastructure for modularizing and extending web applications in
     the .NET ecosystem.
@@ -83,17 +34,18 @@ FubuMVC is:
 
   * Use static typing in an advantageous way. Many other alternative web
     frameworks in the .NET space are faithful copies of Ruby or Python
-    frameworks that have neither the strengths of Ruby/Python or C1. FubuMVC
+    frameworks that have neither the strengths of Ruby/Python or C#. FubuMVC
     uses the rich metadata from static typing to drive conventions and reduce
     errors. If you prefer Ruby on Rails or Sinatra style development, we
     think you should use Ruby on Rails or Sinatra instead of attempting to
-    work that way inside of C1.
+    work that way inside of C#.
 
   * Eliminate the dreaded "tag soup" problem in views by using advanced HTML
     helpers and conventions to DRY up your views
 
-What do I need to know before I get started?
---------------------------------------------
+</Section>	
+	
+<Section title="What do I need to know before I get started?" id="what-to-know">
 
 FubuMVC is open source. That means it's developed, for free, by dedicated
 individuals without a lot of free time (we have families and day jobs). While
@@ -118,8 +70,9 @@ the ecosystem richer and more viable for the long run.
     Your assistance and time are welcome more, though :)
   </Info>
 
-Core Architecture
-=================
+</Section>
+
+<Section title="Core Architecture" id="architecture">
 
 FubuMVC takes a slightly different approach to the classic [Model 2 Model View
 Controller pattern](http://en.wikipedia.org/wiki/Model_2) that puts more focus
@@ -143,8 +96,9 @@ As far as a developer is concerned, all the familiar elements of classic MVC
 are present, but there's nothing to stop you from composing a different
 pipeline of behaviors for more sophisticated request handling.
 
-View Models
------------
+</Section>
+
+<Section title="View Models" id="view-models">
 
 View models are typically [Data Transfer
 Objects](http://en.wikipedia.org/wiki/Data_transfer_object) that are either
@@ -156,8 +110,9 @@ authorization rules in the system. Likewise, output model signatures from
 action methods are used to "attach" view and other output behaviors to a
 behavior chain.
 
-Actions (Controllers)
----------------------
+</Section>
+
+<Section title="Actions / Endpoints" id="actions">
 
 In classic MVC the controllers have the responsibility of processing the HTTP
 input and deciding what data was to be displayed by the view layer.  In FubuMVC
@@ -184,8 +139,9 @@ prevalent in other .NET solutions. It also greatly improves our ability to
 compose the runtime pipeline and creates traceability between parts of the
 application.
 
-Views
------
+</Section>
+
+<Section title="Views" id="views">
 
 Now that you've got view models and actions to process them, you need something
 to render the view model into HTML. As of this writing, FubuMVC supports the
@@ -193,8 +149,9 @@ Web Forms and Spark view engines. In addition, you can happily have actions
 spit out raw HTML or
 [HtmlTag/HtmlDocument](https://github.com/DarthFubuMVC/htmltags) objects.
 
-Behaviors and Behavior Chains
------------------------------
+</Section>
+
+<Section title="Behaviors and Behavior Chains" id="behaviors">
 
 During day to day development most developers are going to be working strictly
 with view models, actions, and views. Internally, the FubuMVC framework sees
@@ -207,15 +164,17 @@ FubuMVC comes out of the box with behaviors for common tasks like Json
 serialization/deserialization, calling actions, and rendering views, you can
 build your own custom behaviors.
 
-Wrappers
---------
+</Section>
+
+<Section title="Wrappers" id="wrappers">
 
 Wrappers are simply behaviors that you can use to perform additional work
 during an HTTP request like authorization checks, caching, activity tracking,
 or just extra auditing.
 
-BehaviorGraph and FubuRegistry
-------------------------------
+</Section>
+
+<Section title="BehaviorGraph and FubuRegistry" id="behaviorgraph">
 
 FubuMVC contains a configuration model called BehaviorGraph that completely
 models how each possible HTTP endpoint will be handled. For each HTTP endpoint
@@ -232,8 +191,9 @@ You won't work directly with these objects daily, but understanding the
 underlying BehaviorGraph model is crucial to writing your own FubuMVC
 conventions and policies later.
 
-Inversion of Control Container
-------------------------------
+</Section>
+
+<Section title="Inversion of Control Container" id="ioc">
 
 FubuMVC is built around the idea of composition, but that composition can come
 at a cost. FubuMVC uses your application's IoC container to assemble all the
@@ -244,19 +204,20 @@ from the IoC container without hacks like "IDependencyResolver."
 
 
   <Info>
-    At this writing (May 2011), FubuMVC only supports the StructureMap container,
-    but work is ongoing to add Castle Windsor support for a following release.
+    At this writing (Nov 2013), FubuMVC supports the StructureMap, Autofac, and Castle Windsor containers, with work ongoing to support Ninject.
   </Info>
 
-Bottles
--------
+</Section>  
+  
+<Section title="Bottles" id="bottles">  
 
 FubuMVC uses the [Bottles project](https://github.com/DarthFubuMVC/bottles)
 for modularity.  Bottles can be used to break your application up into
 different "areas" or to extend your application with new content or abilities.
 
-Web.config dependencies
------------------------
+</Section>
+
+<Section title="Web.config dependencies" id="web-config">
 
 I wish it wasn't so, but for now FubuMVC has some required dependencies that
 must be configured via XML in web.config:
@@ -271,5 +232,11 @@ must be configured via XML in web.config:
      term)
   1. Access to the folder "fubu-content" should be denied for all users.
      This folder is related to the Bottles support in FubuMVC
+
+	 <Info>In the longer term, the FubuMVC team expects to move to using the new OWIN hosting directly with the recommendation that ASP.Net hosting be discontinued.  When and if that day comes, the web.config dependencies will be obsolete.</Info>
+	 
+	 
+</Section>	 
+	 
 </markdown>
 
