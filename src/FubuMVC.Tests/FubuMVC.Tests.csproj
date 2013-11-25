@@ -401,6 +401,7 @@
   <ItemGroup>
     <None Include="FubuMVC.Tests.dll.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
     <None Include="ripple.dependencies.config">
       <SubType>Designer</SubType>
