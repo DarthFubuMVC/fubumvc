@@ -1,0 +1,124 @@
+<!--Title: Introduction and Hello World-->
+<!--Url: introduction-->
+
+<markdown>
+FubuMVC is an open source framework for web development in .Net written with the C# language started by a team of developers who
+were looking for a different type of development experience than what the mainstream .Net tools provided at the time (and still don't in our opinion).
+
+FubuMVC is licensed under the [permissive Apache 2.0
+license](https://github.com/DarthFubuMVC/fubumvc/raw/master/license.txt).
+Contributions are most certainly welcome, just fork the [Git
+repository](https://github.com/DarthFubuMVC/fubumvc) and start firing off pull
+requests.
+
+<Section title="Hello World with ASP.Net" id="hello-world">
+To get to the obligatory _Hello World_ screen with Visual Studio.Net and ASP.NET hosting in a new solution:
+
+1. Add a new _Empty ASP.NET Empty Web Application_ project in Visual Studio.Net
+1. Install the <code>FubuMVC.StructureMap</code> nuget to your new project
+1. Add the following code to your <code>Global.asax.cs</code> file:
+
+<Snippet name="asp-net-hello-world-application" />
+
+Now, add this class to your project to say hello:
+
+<Snippet name="hello-world-home" />
+
+At this point, you're ready to run your application and see the words "Hello, World" as text in your browser.  
+
+<Info>You <i>might</i> need to manually add the ASP.Net UrlRoutingModule in your web.config file.</Info>
+
+</Section>
+
+<Section title="Hello World with OWIN and Katana" id="fubu-new">
+
+Fortunately with the advent of [OWIN](http://owin.org) and related web servers like [Katana](http://katanaproject.codeplex.com/documentation), it's now perfectly possible to use FubuMVC without IIS.  Moreover, that's quickly become the FubuMVC community's favored tooling for testing and embedded services.
+
+The bootstrapping is just a little bit simpler this time.  The steps are:
+
+1. Create a new class library project in Visual Studio.Net
+1. Install the <code>FubuMVC.StructureMap</code> nuget again
+1. Add the same <code>HomeEndpoint</code> class from the section above
+1. Add the following class to your project:
+
+<Snippet name="hello-world-application" />
+
+
+
+If you install the <ProjectLink name="fubu" /> tool on your local box, open a command prompt, navigate to the project folder and type:
+
+<pre>
+fubu run --open
+</pre>
+
+You **should** see your default browser pop up with the text "Hello, World."
+
+<Info>For the fastest possible bootstrapping of a brand new FubuMVC application from scratch, see the <a href="http://fubuworld.com/fubu">Fubu command line</a> tooling for project scaffolding.  Do note though that this approach builds out an entire code tree with the idiomatic FubuMVC defaults and organization.</Info>
+
+</Section>
+
+<Section title="Architectural Philosophy and Goals" id="philosophy">
+
+  * Allow developers to write very clean code with little or no coupling to framework infrastructure -- i.e.,
+    keep the repetitive ceremony code like attributes, marker interfaces, elaborate fluent interfaces, or mandatory base classes that seem to plague
+    other .Net frameworks to a bare minimum.	
+
+  * Exploit the idea of [convention over
+    configuration](http://msdn.microsoft.com/en-us/magazine/dd419655.aspx) for
+    better productivity, but allow users to teach FubuMVC about their own
+    conventions if the built in conventions don't fit.
+
+  * Remove friction from automated testing of your application code.
+
+  * Maximize the ability to use composition throughout your application by
+    focusing on SOLID principles, separation of concerns,
+    [DRY](http://en.wikipedia.org/wiki/Don't_repeat_yourself). 
+	
+  * Modular architectures. FubuMVC includes the most sophisticated and
+    capable infrastructure for modularizing and extending web applications in
+    the .NET ecosystem.
+
+  * Provide a less painful development experience with informative
+    diagnostics about your application
+
+  * Use static typing in an advantageous way. Many other alternative web
+    frameworks in the .NET space are faithful copies of Ruby or Python
+    frameworks that have neither the strengths of Ruby/Python or C#. FubuMVC
+    uses the rich metadata from static typing to drive conventions and reduce
+    errors. If you prefer Ruby on Rails or Sinatra style development, we
+    think you should use Ruby on Rails or Sinatra instead of attempting to
+    work that way inside of C#.
+
+  * Eliminate the dreaded "tag soup" problem in views by using advanced HTML
+    helpers and conventions to DRY up your views
+
+</Section>	
+
+<Section title="Core Architecture" id="architecture">
+
+FubuMVC takes a slightly different approach to the classic [Model 2 Model View
+Controller pattern](http://en.wikipedia.org/wiki/Model_2) that puts more focus
+on composing a pipeline of what we call "behaviors" that are completely unaware
+of each other rather than the traditional Model-View-Controller triad.
+
+A typical web request for a view will look something like:
+
+  1. An HTTP request is received by the web server. The ASP.NET routing
+     module acts as a front controller to choose a "chain" of behaviors to
+     execute.
+
+  1. The first behavior calls an "action" (think Controller) that interacts
+     with the rest of your application and returns a view model representing
+     the data to be rendered by the view.
+
+  1. A second behavior invokes a WebForms or Spark view to render the view
+     model that was returned from the action in the previous step.
+
+As far as a developer is concerned, all the familiar elements of classic MVC
+are present, but there's nothing to stop you from composing a different
+pipeline of behaviors for more sophisticated request handling.
+
+</Section>
+
+</markdown>
+

@@ -112,7 +112,7 @@
     <Compile Include="ConfigGraph_DetermineConfigurationType_Tester.cs" />
     <Compile Include="deactivators_are_called_in_fuburuntime_dispose.cs" />
     <Compile Include="DiagnosticsSettingsTester.cs" />
-    <Compile Include="Docs\Introduction\Overview\HomeController.cs" />
+    <Compile Include="Docs\Introduction\Overview\HomeEndpoint.cs" />
     <Compile Include="Docs\Topics\Authorization\AuthorizationPolicyController.cs" />
     <Compile Include="Docs\Topics\Authorization\Controller.cs" />
     <Compile Include="Docs\Topics\Authorization\ProductController.cs" />
