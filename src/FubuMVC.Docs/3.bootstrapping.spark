@@ -1,0 +1,92 @@
+<!--Title: Bootstrapping-->
+<!--Url: bootstrapping-->
+
+<markdown>
+
+The first step to building a new FubuMVC application is creating the bootstrapping code for the new application.  When you bootstrap a FubuMVC application,
+youll need to tell the <code>FubuApplication</code> class a couple pieces of information:
+
+1. Any custom conventions or policies for the application
+1. An _IoC container facility_ to handle service registration at bootstrapping time and behavior creation at runtime
+1. Optionally, you may also register additional <ProjectLink name="Bottles"/> package loaders, activators, and bootstrappers. 
+
+<Section title="Under the Covers" id="under-the-covers" >
+
+At bootstrapping time, <code>FubuApplication</code> takes the container facility, any custom conventions or policies, and the bottles loaders you specified 
+and uses those ingredients to build up a <code>FubuRuntime</code> by following these steps:
+
+1. Discovers and loads any <ProjectLink name="Bottles"/> packages deployed to the application
+1. Builds up the BehaviorGraph model for the application against assembly and the active conventions
+1. _Bakes_ the behaviors and service registrations into the application's IoC container
+1. Builds the routing table
+1. Runs any registered <ProjectLink name="Bottles"/> _Activators_
+
+You just need to declaratively provide the ingredients and <code>FubuApplication</code> will perform the right operations in the correct order.  
+
+</Section>
+
+<Section title="Building a FubuRuntime" id="fuburuntime">
+
+The <code>FubuRuntime</code> class simply holds all the runtime elements of a running FubuMVC application.  You generally won't interact with
+instances of <code>FubuRuntime</code> other than calling <code>Dispose()</code> to shutdown an application, but it is useful in testing scenarios to access the underlying IoC container, <code>BehaviorGraph</code>, and the routing table.
+
+The simplest possible way to bootstrap a FubuMVC application is to use the default policies and a new empty IoC container as in this code:
+
+<Snippet name="bootstrapping" />
+
+</Section>
+
+<Section title="IApplicationSource" id="iapplicationsource">
+
+While it isn't expressly mandatory, the FubuMVC team recommends that you embed your bootstrapping code into a class that implements the
+<code>IApplicationSource</code> interface like this class below:
+
+<Snippet name="bootstrapping-simplest-possible" />
+
+Using an <code>IApplicationSource</code> enables you to create a specification for how your application is bootstrapped that can be reused unchanged in different contexts
+such as ASP.Net hosting, embedded Katana servers, test harnesses, and the <ProjectLink name="fubu" /> development server.
+</Section>
+
+<Section title="Bootstrapping in ASP.Net" id="aspnet">
+
+To bootstrap a FubuMVC application for ASP.Net usage, you just need to build a <code>FubuRuntime</code> object at application startup and dispose it at application unloading like this:
+ 
+<Snippet name="bootstrapping-with-asp-net" />
+
+Do note that in the case of ASP.Net hosting that the routes are stored in the static <code>RouteTable.Routes</code> collection.
+
+</Section>
+
+
+<Section title="Bootstrapping for an Embedded Katana Server" id="embedded-katana">
+
+Bootstrapping FubuMVC for Katana uses the same <code>FubuApplication</code> / <code>FubuRuntime</code> mechanisms as we used above for ASP.Net:
+
+<Snippet name="bootstrapping-with-katana" />
+
+</Section>
+
+
+<Section title="Custom Policies and Conventions with FubuRegistry" id="custom-policies">
+
+You can register your own custom policies or conventions with FubuMVC to govern almost anything in your application using your own <code>FubuRegistry</code> class
+like the one following:
+
+<Snippet name="bootstrapping-custom-policies"/>
+
+See the topic on <code>FubuRegistry</code> for more information.
+
+</Section>
+
+<Section title="Customizing the Bottles Loading" id="bottles">
+<ProjectLink name="Bottles" /> itself is extensible.  If you want to load Bottles packages to your application in a different way than the defaults,
+you can register your custom loaders, activators, and bootstrappers with the <code>Packages()</code> method on <code>FubuApplication</code>:
+
+<Snippet name="bootstrapping-custom-bottles" />
+
+</Section>
+
+
+
+</markdown>
+

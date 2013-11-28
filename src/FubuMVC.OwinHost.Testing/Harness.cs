@@ -35,7 +35,7 @@ namespace FubuMVC.OwinHost.Testing
     {
         public FubuApplication BuildApplication()
         {
-            return FubuApplication.For<HarnessRegistry>().StructureMap(new Container());
+            return FubuApplication.For<HarnessRegistry>().StructureMap();
         }
 
         public static void Run(Action<EndpointDriver> action)
