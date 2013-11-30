@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ProjectRoot xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<ProjectRoot xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <TagLine>The MVC framework that gets out of your way</TagLine>
   <Name>FubuMVC</Name>
   <GitHubPage>http://github.com/DarthFubuMVC/FubuMVC</GitHubPage>
@@ -31,6 +31,10 @@
     <PublishedNuget>
       <Name>FubuMVC.TestingHarness</Name>
       <Description>Small library of classes to easily write integration tests against FubuMVC applications hosted by Kayak</Description>
+    </PublishedNuget>
+    <PublishedNuget>
+      <Name>FubuMVC.Windsor</Name>
+      <Description>Castle Windsor bootstrapping for FubuMVC applications</Description>
     </PublishedNuget>
   </Nugets>
   <Url>fubumvc</Url>
