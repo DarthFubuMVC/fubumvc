@@ -1,0 +1,21 @@
+<!--Title: StructureMap-->
+<!--Url: structuremap-->
+
+<markdown>
+<Section title="Using a new Container" id="new-container">
+ TODO(new SM container)
+</Section>
+
+<Section title="Bootstrapping with a Registry" id="registry">
+TODO(bootstrapping w/ an SM Registry)
+</Section>
+
+<Section title="Using ObjectFactory" id="objectfactory">
+First off, the FubuMVC/StructureMap team strongly urges caution when using <code>ObjectFactory</code>.
+
+TODO(ObjectFactory)
+
+</Section>
+
+</markdown>
+

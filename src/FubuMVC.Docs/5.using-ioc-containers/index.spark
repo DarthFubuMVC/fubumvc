@@ -1,0 +1,19 @@
+<!--Title: Using IoC Containers-->
+<!--Url: using-ioc-containers-->
+
+<markdown>
+
+<Section title="How FubuMVC uses an IoC Container" id="usage">
+TODO(Write some content!)
+</Section>
+
+<Section title="Object Lifecycles in a Request" id="request-lifecycle">
+TODO(Write some content!)
+</Section>
+
+<Section title="How FubuMVC expects an IoC Container to behave" id="assumptions">
+TODO(Write some content!)
+</Section>
+
+</markdown>
+
