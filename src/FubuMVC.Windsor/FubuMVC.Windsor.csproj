@@ -57,6 +57,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="BootstrappingExtensions.cs" />
     <Compile Include="WindsorDependencyVisitor.cs" />
     <Compile Include="NestedWindsorContainerBehavior.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
