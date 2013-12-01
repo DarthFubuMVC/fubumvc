@@ -3,8 +3,8 @@
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <id>FubuMVC.Windsor</id>
     <version>0.0.0</version>
-    <authors></authors>
-    <owners>Joshua Flanagan</owners>
+    <authors>Mikhail Tripolitov, Jeremy Miller</authors>
+    <owners>Jeremy Miller</owners>
     <licenseUrl>https://github.com/DarthFubuMVC/fubumvc/raw/master/license.txt</licenseUrl>
     <projectUrl>http://mvc.fubu-project.org/</projectUrl>
     <iconUrl>https://github.com/DarthFubuMVC/fubu-collateral/raw/master/Icons/FubuMvc_256.png</iconUrl>
