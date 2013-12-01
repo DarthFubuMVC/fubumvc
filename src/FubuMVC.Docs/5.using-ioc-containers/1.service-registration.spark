@@ -1,0 +1,26 @@
+<!--Title: Service Registration-->
+<!--Url: service-registration-->
+
+<markdown>
+<Section title="ServiceRegistry" id="service-registry">
+TODO(ServiceRegistry)
+
+TODO(import a ServiceRegistry)
+TODO(inline ServiceRegistry)
+</Section>
+
+<Section title="Setting Default Services" id="defaults">
+TODO(Setting Default Services)
+</Section>
+
+
+<Section title="Adding Additional Services" id="additional">
+TODO(Setting additional Services)
+</Section>
+
+<Section title="Singleton vs. Transient Scoping" id="scoping">
+TODO(scoping)
+</Section>
+
+</markdown>
+
