@@ -1,0 +1,53 @@
+<!--Title: Modularity with Bottles-->
+<!--Url: modularity-with-bottles-->
+
+TODO(flesh this out)
+
+
+<markdown>
+<Section title="How FubuMVC uses Bottles" id="how-it-works">
+1. Package loaders
+1. Activator's
+1. FubuMvcPackageFacility.CurrentPath or whatever it is.
+
+1. dll's in fubu-content
+1. dll's in bin/fubu-content
+
+
+</Section>
+
+<Section title="Extending the Application from a Bottle" id="extending">
+1. IFubuRegistryExtension
+</Section>
+
+<Section title="Default Package Loaders" id="defaults">
+
+</Section>
+
+<Section title="Creating a new FubuMVC Bottle" id="creating-new">
+1. [FubuModule]
+</Section>
+
+
+
+<Section title="What can be in a FubuMVC Bottle?" id="what">
+Any possible thing you can register, configure, or do in a FubuMVC application can be done in a Bottle.
+
+Unlike *ahem* ASP.Net MVC Portable Areas, FubuMVC does not treat endpoints, views, services, url resolution, or anything else related to a Bottle differently than the core application at runtime.  
+</Section>
+
+<Section title="Pre-Compilation Steps" id="pre-compilation">
+
+</Section>
+
+<Section title="Registering Custom Package Loaders" id="custom-package-loaders">
+
+</Section>
+
+<Section title="Assembly Scanning against Bottle Assemblies" id="scanning">
+
+<Info>This is a <i>sharp tool</i>, meaning that while you can use it to do powerful things, there's a lot of potential for unexpected results.  Use with caution.</Info>
+</Section>
+
+</markdown>
+
