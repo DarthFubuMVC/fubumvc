@@ -1,0 +1,20 @@
+<!--Title: Executing Rules-->
+<!--Url: executing-rules-->
+
+<markdown>
+
+<Section title="Authorization inside a Request" id="behavior">
+TODO(talk about how AuthorizationBehavior works)
+</Section>
+
+<Section title="Explicitly Invoking the Authorization Rules" id="invoking">
+1. IAuthorizationPreviewService
+1. IEndpointService
+1. 
+</Section>
+
+
+
+TODO(Write some content!)
+</markdown>
+

@@ -1,0 +1,16 @@
+<!--Title: Authorization Failures-->
+<!--Url: authorization-failures-->
+
+<markdown>
+
+<Section title="Default Behavior for Authorization Failures" id="defaults">
+
+</Section>
+
+<Section title="Custom Authorization Failure Handling" id="custom">
+
+</Section>
+
+TODO(custom failure )
+</markdown>
+

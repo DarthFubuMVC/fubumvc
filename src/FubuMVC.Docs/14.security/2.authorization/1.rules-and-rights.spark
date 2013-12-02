@@ -1,0 +1,41 @@
+<!--Title: Rules and Rights-->
+<!--Url: rules-and-rights-->
+
+TODO(Write some content!)
+<markdown>
+
+<Section title="Rights" id="authorizationright">
+TODO(discuss AuthorizationRight)
+</Section>
+
+
+<Section title="Rules and Policies" id="rules">
+1. IAuthorizationRule
+1. IAuthorizationPolicy
+</Section>
+
+<Info>The signatures of <code>IAuthorizationRule</code> and <code>IAuthorizationPolicy</code> are likely to change for FubuMVC 2.0.  The current plan is to make the rules and policies stateless and accept a service locator during a request so that we can simplify the configuration model and avoid having to recreate the little authorization objects.</Info>
+
+
+<Section title="Role or Permission Based Authorization" id="roles">
+
+</Section>
+
+<Section title="Custom Rules" id="custom">
+1. Rule for an input model
+1. totally custom rule
+1. Combining a rule and policy
+</Section>
+
+
+<Section title="Applying Authorization Rules with Attributes" id="attributes">
+
+</Section>
+
+<Section title="Applying Authorization Rules Conventionally" id="conventions">
+
+</Section>
+
+
+</markdown>
+
