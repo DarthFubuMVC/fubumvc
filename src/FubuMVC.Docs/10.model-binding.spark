@@ -1,0 +1,24 @@
+<!--Title: Model Binding-->
+<!--Url: model-binding-->
+
+TODO(Link to model binding in FubuCore)
+
+<markdown>
+
+<Section title="Out of the Box Model Binding" id="ootb">
+
+</Section>
+
+<Section title="Model Binding and Conneg" id="conneg">
+
+</Section>
+
+<Section title="Request Data" id="request-data">
+
+</Section>
+
+<Section title="Extending Model Binding" id="extending">
+TODO(Show how to register stuff off of FubuRegistry.Models)
+</Section>
+</markdown>
+
