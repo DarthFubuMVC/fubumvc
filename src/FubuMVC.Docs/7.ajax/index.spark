@@ -1,0 +1,39 @@
+<!--Title: Ajax-->
+<!--Url: ajax-->
+
+<markdown>
+
+<Section title="Your First Ajax Endpoint" id="first-endpoint">
+
+</Section>
+
+
+TODO(mention Conneg)
+
+<Section title="Default Conventions" id="conventions">
+
+</Section>
+
+<Section title="Symmetric or Asymmetric Json" id="symmetric">
+1. By attributes
+1. By convention
+</Section>
+
+
+<Section title="Workflow with AjaxContinuation" id="continuation">
+TODO(Describe AjaxContinuation)
+
+TODO(Link to jquery.continuations.js)
+</Section>
+
+<Section title="Json Services" id="json">
+TODO(talk about replacing the JsonFormatter)
+</Section>
+
+<Section title="Xml Services" id="xml">
+
+</Section>
+
+TODO(Write some content!)
+</markdown>
+
