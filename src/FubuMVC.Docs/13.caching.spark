@@ -1,0 +1,38 @@
+<!--Title: Caching-->
+<!--Url: caching-->
+
+<markdown>
+
+<Section title="Configuring Caching" id="applying">
+TODO(talk about the attribute)
+
+TODO(show doing it w/ a policy)
+</Section>
+
+<Section title="ETags" id="etags">
+
+</Section>
+
+<Section title="Resource Hash's" id="hashes">
+
+</Section>
+
+<Section title="IOutputCache" id="ioutputcache">
+
+</Section>
+
+<Section title="Built In IVaryBy Rules" id="ootb-rules">
+
+</Section>
+
+<Section title="Custom 'VaryBy' Rules" id="custom-rules">
+
+</Section>
+
+<Section title="Donut Caching" id="caching">
+
+</Section>
+
+
+</markdown>
+
