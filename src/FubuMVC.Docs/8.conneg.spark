@@ -1,0 +1,27 @@
+<!--Title: Content Negotiation-->
+<!--Url: conneg-->
+
+<markdown>
+<Section title="How it Works" id="how-it-works">
+TODO(Write some content!)
+</Section>
+
+<Section title="Spoofing the Mimetypes" id="spoofing">
+TODO(Write some content!)
+</Section>
+
+<Section title="Reading Requests with Readers" id="readers">
+TODO(Write some content!)
+</Section>
+
+<Section title="Writing Resources with Writers" id="writers">
+TODO(Write some content!)
+</Section>
+
+<Section title="Views and Conneg" id="views">
+TODO(Write some content!)
+</Section>
+
+
+</markdown>
+
