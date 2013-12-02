@@ -1,0 +1,15 @@
+<!--Title: Hosting-->
+<!--Url: hosting-->
+
+<markdown>
+As of this writing (December 2013), FubuMVC can be hosted on top of either ASP.Net on IIS/Apache/nginx or OWIN with Katana.  While there is _some_ behavior that is only available on ASP.Net (model binding integration with HttpContext server variables), 
+for the most part FubuMVC's behavior is consistent across the two types of hosting.  Many teams choose to use Katana for automated testing and increasingly for development
+while deploying to IIS for production.
+
+As the OWIN standard continues to mature, it is somewhat likely that a future version of FubuMVC will eliminate the ASP.Net hosting from the core in favor of making OWIN
+the lowest level HTTP abstraction internally.
+
+<TableOfContents />
+
+</markdown>
+

@@ -1,0 +1,17 @@
+<!--Title: Katana-->
+<!--Url: katana-->
+
+<markdown>
+<Section title="Using Katana as an Embedded Server" id="embedded">
+TODO(sample code for using it embedded)
+</Section>
+
+<Section title="Auto-starting Katana Hosting in Services" id="auto-starting">
+TODO(example code for KatanaSettings)
+</Section>
+
+<Section title="Using Katana from the Command Line" id="fubu-run">
+TODO(link to fubu run)
+</Section>
+</markdown>
+

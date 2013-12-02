@@ -1,0 +1,32 @@
+<!--Title: ASP.Net Hosting-->
+<!--Url: asp-net-->
+
+<markdown>
+TODO(Write some content!)
+
+TODO(explain all the ASP.Net services?)
+
+
+<Section title="Web.config dependencies" id="web-config">
+
+I wish it wasn't so, but for now FubuMVC has some required dependencies that
+must be configured via XML in web.config:
+
+  1. The System.Web.Routing.UrlRoutingModule module must be registered
+  1. Access to the folder "Content" should be authorized for all users
+     (this is where FubuMVC assumes that content like images, scripts, and
+     styles are stored)
+  1. Access to the folder "\_content" should be authorized for all users
+     (this is where FubuMVC assumes that content like images, scripts, and
+     styles are stored for packages. This will be changed in the near
+     term)
+  1. Access to the folder "fubu-content" should be denied for all users.
+     This folder is related to the Bottles support in FubuMVC
+
+	 <Info>In the longer term, the FubuMVC team expects to move to using the new OWIN hosting directly with the recommendation that ASP.Net hosting be discontinued.  When and if that day comes, the web.config dependencies will be obsolete.</Info>
+	 
+	 
+</Section>	 
+
+</markdown>
+
