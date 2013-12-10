@@ -8,7 +8,6 @@ using FubuCore.CommandLine;
 using FubuMVC.Core;
 using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Urls;
-using FubuMVC.IntegrationTesting;
 using FubuMVC.StructureMap;
 using FubuMVC.TestingHarness;
 using Container = StructureMap.Container;

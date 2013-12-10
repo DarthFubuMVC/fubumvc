@@ -9,5 +9,10 @@ namespace FubuMVC.Windsor
         {
             return expression.ContainerFacility(new WindsorContainerFacility(container));
         }
+
+        public static FubuApplication Windsor(this IContainerFacilityExpression expression)
+        {
+            return expression.ContainerFacility(new WindsorContainerFacility(new WindsorContainer()));
+        }
     }
 }
