@@ -312,6 +312,7 @@
     <Compile Include="Security\EndPointAuthorizorTester.cs" />
     <Compile Include="Security\PrincipalRolesTester.cs" />
     <Compile Include="Security\AuthorizationPolicyExecutorTester.cs" />
+    <Compile Include="TagAttributeTester.cs" />
     <Compile Include="UI\PartialInvokerTester.cs" />
     <Compile Include="UrlAliasAttributeTester.cs" />
     <Compile Include="UrlExtensionsTester.cs" />

@@ -22,6 +22,8 @@ namespace FubuMVC.Core.Registration.Nodes
     /// </summary>
     public class BehaviorChain : Chain<BehaviorNode, BehaviorChain>, IRegisterable, IContainerModel
     {
+        public const string NoTracing = "NoTracing";
+
         private readonly IList<IBehaviorInvocationFilter> _filters = new List<IBehaviorInvocationFilter>();
         private readonly IList<IRouteDefinition> _additionalRoutes = new List<IRouteDefinition>(); 
         private readonly Lazy<InputNode> _input;
@@ -379,6 +381,16 @@ namespace FubuMVC.Core.Registration.Nodes
         {
             var resourceType = ResourceType();
             return resourceType != null && !resourceType.CanBeCastTo<Task>() && resourceType != typeof (void);
+        }
+
+        /// <summary>
+        /// General purpose tagging for behavior chains
+        /// </summary>
+        public readonly IList<string> Tags = new List<string>();
+
+        public bool IsTagged(string tag)
+        {
+            return Tags.Any(x => x.EqualsIgnoreCase(tag));
         }
     }
 }

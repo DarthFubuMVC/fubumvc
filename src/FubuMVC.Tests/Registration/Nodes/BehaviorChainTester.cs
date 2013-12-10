@@ -747,4 +747,19 @@ namespace FubuMVC.Tests.Registration.Nodes
             throw new NotImplementedException();
         }
     }
+
+    [TestFixture]
+    public class BehaviorChain_tagging_behavior_Tester
+    {
+        [Test]
+        public void is_tagged()
+        {
+            var chain = new BehaviorChain();
+            chain.Tags.Add("foo");
+
+            chain.IsTagged("foo").ShouldBeTrue();
+            chain.IsTagged("Foo").ShouldBeTrue();
+            chain.IsTagged("bar").ShouldBeFalse();
+        }   
+    }
 }
