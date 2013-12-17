@@ -1,7 +1,3 @@
 <!--Title: Authentication-->
 <!--Url: authentication-->
-
-<markdown>
-TODO(import FubuMVC.Authentication here)
-</markdown>
-
+<!--Import: FubuMVC.Authentication-->

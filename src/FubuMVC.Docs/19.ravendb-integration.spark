@@ -1,7 +1,4 @@
 <!--Title: RavenDb Integration-->
 <!--Url: ravendb-integration-->
-
-<markdown>
-TODO(FubuMVC.RavenDb and FubuPersistence docs)
-</markdown>
+<!--Import:FubuMVC.RavenDb-->
 

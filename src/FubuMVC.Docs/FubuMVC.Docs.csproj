@@ -34,6 +34,9 @@
     <Reference Include="FubuDocs">
       <HintPath>..\packages\FubuDocs\lib\net40\FubuDocs.dll</HintPath>
     </Reference>
+    <Reference Include="FubuMVC.ViewEngines.Docs">
+      <HintPath>..\packages\FubuMVC.ViewEngines.Docs\lib\net40\FubuMVC.ViewEngines.Docs.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
