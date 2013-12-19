@@ -1,0 +1,8 @@
+﻿<!--Title: The Fubu Web Server-->
+
+
+
+<markdown>
+You can also run FubuMVC applications from a console window with the embedded Katana server in the <ProjectLink name="Fubu" /> command line tool.
+
+</markdown>

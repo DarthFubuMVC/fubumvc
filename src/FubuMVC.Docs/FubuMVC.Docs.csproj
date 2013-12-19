@@ -59,6 +59,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="pak-WebContent.zip" />
+    <None Include="7.hosting\1.asp-net.spark" />
+    <None Include="7.hosting\2.owin.spark" />
+    <None Include="7.hosting\3.embedded.spark" />
+    <None Include="7.hosting\4.fubu-server.spark" />
+    <None Include="7.hosting\index.spark" />
     <None Include="ripple.dependencies.config" />
     <None Include="splash.spark" />
   </ItemGroup>
