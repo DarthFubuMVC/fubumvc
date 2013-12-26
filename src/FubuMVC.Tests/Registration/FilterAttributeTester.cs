@@ -61,6 +61,7 @@ namespace FubuMVC.Tests.Registration
         }
     }
 
+    // SAMPLE: filter-attribute-usage
     public class FilterTargetEndpoint
     {
         [Filter(typeof(ValidFilter))]
@@ -70,6 +71,8 @@ namespace FubuMVC.Tests.Registration
         }
     }
 
+    // Note that the ValidFilter only has one method
+    // that returns a FubuContinuation
     public class ValidFilter
     {
         public FubuContinuation Filter()
@@ -77,6 +80,7 @@ namespace FubuMVC.Tests.Registration
             return FubuContinuation.NextBehavior();
         }
     }
+    // ENDSAMPLE
 
     public class InvalidFilter
     {
