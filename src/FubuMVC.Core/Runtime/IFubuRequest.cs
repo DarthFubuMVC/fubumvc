@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using FubuCore.Binding;
-using FubuCore.Util;
 
 namespace FubuMVC.Core.Runtime
 {
+    // SAMPLE: ifuburequest
     /// <summary>
     /// Primary model bag scoped per request.  IFubuRequest is the primary way to share state between behaviors
     /// in a running behavior chain
@@ -26,7 +25,7 @@ namespace FubuMVC.Core.Runtime
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-    	object Get(Type type);
+    	    object Get(Type type);
 
         /// <summary>
         /// Stores a value of type T in the FubuRequest
@@ -42,11 +41,18 @@ namespace FubuMVC.Core.Runtime
         /// <param name="target"></param>
         void Set(Type type, object target);
         
+        /// <summary>
+        /// Find any and all binding conversion problems
+        /// found while model binding the current
+        /// value of the type T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         IEnumerable<ConvertProblem> ProblemsFor<T>();
 
         /// <summary>
-        /// Attempts to find the first existing object in this FubuRequest that can be cast to
-        /// type T.  Can return null.
+        /// Attempts to find all the existing objects in this FubuRequest that can be cast to
+        /// type T.  Can return an empty enumerable.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
@@ -78,65 +84,5 @@ namespace FubuMVC.Core.Runtime
         /// <param name="type"></param>
         void Clear(Type type);
     }
-
-
-    public class InMemoryFubuRequest : IFubuRequest
-    {
-        private readonly Cache<Type, object> _cache = new Cache<Type, object>(onMissing => null);
-
-        public T Get<T>() where T : class
-        {
-            return _cache[typeof (T)] as T;
-        }
-
-    	public object Get(Type type)
-    	{
-    		return _cache[type];
-    	}
-
-    	public void Set<T>(T target) where T : class
-        {
-            _cache[typeof (T)] = target;
-        }
-
-        public void Set(Type type, object target)
-        {
-            _cache[type] = target;
-        }
-
-        public IEnumerable<ConvertProblem> ProblemsFor<T>()
-        {
-            return new ConvertProblem[0];
-        }
-
-        public IEnumerable<T> Find<T>() where T : class
-        {
-            return _cache.GetAll().OfType<T>();
-        }
-
-        public bool Has<T>()
-        {
-            return _cache.Has(typeof(T));
-        }
-
-        public bool Has(Type type)
-        {
-            return _cache.Has(type);
-        }
-
-        public void SetObject(object input)
-        {
-            if (input == null) throw new ArgumentNullException();
-
-            _cache[input.GetType()] = input;
-        }
-
-        public void Clear(Type getType)
-        {
-            if (_cache.Has(getType))
-            {
-                _cache.Remove(getType);
-            }
-        }
-    }
+    // ENDSAMPLE
 }

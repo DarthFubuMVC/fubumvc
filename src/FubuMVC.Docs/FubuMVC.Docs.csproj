@@ -59,6 +59,8 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="pak-WebContent.zip" />
+    <None Include="30.runtime-services\1.fuburequest.spark" />
+    <None Include="30.runtime-services\index.spark" />
     <None Include="7.hosting\1.asp-net.spark" />
     <None Include="7.hosting\2.owin.spark" />
     <None Include="7.hosting\3.embedded.spark" />

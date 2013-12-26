@@ -1,0 +1,68 @@
+﻿<!--Title: IFubuRequest-->
+
+<markdown>
+
+<code>IFubuRequest</code> will probably be the one FubuMVC service that you interact with the most.
+Think of <code>IFubuRequest</code> as a _model bag_ you can use to transfer state within a single
+request between _Behavior's_ without creating any direct coupling between the different _Behavior_ classes.
+</markdown>
+
+<Section title="Signature" id="signature">
+The signature of <code>IFubuRequest</code> is:
+
+<Snippet name="ifuburequest" />
+</Section>
+
+<markdown>
+
+<Section title="Auto Resolving" id="auto-resolving">
+If you request a model from <code>IFubuRequest.Get()</code> that has not been previously set,
+<code>IFubuRequest</code> will attempt to resolve it for you by model binding to the current
+request and storing that new object in its internal cache.
+
+Inside of <code>[FubuRequest](FubuRequest.cs)</code> itself:
+
+</Section>
+
+
+<Snippet name="auto-resolving-within-ifuburequest" />
+
+
+<Section title="IFubuRequest and Scoping" id="scoping">
+
+Just to make this perfectly clear, **<code>IFubuRequest</code> is scoped to each request**, meaning that
+you will get one instance of a <code>IFubuRequest</code> object inside all classes built within one
+request, including any objects built lazily through <code>IServiceLocator</code>.
+
+See <TopicLink name="using-ioc-containers" /> for more information about how IoC containers and object
+scoping works within a FubuMVC application.
+</Section>
+
+
+<Section title="InMemoryFubuRequest" id="in-memory">
+For testing purposes, there is a built in <code>InMemoryFubuRequest</code> version of <code>IFubuRequest</code>.
+
+<Snippet name="using-in-memory-fubu-request" />
+</Section>
+
+<Section title="Sample Usage" id="sample-usage">
+As an example of how you might use it, let's say that you have a behavior chain with two custom behaviors:
+
+1. MyFirstBehavior
+1. MySecondBehavior
+
+In this example, <code>MyFirstBehavior</code> runs first and creates a new instance of <code>PrivateMessage</code>
+and stores it in <code>IFubuRequest</code>.  When <code>MySecondBehavior</code> runs next, it is able to find
+that same instance of <code>PrivateMessage</code> from the shared <code>IFubuRequest</code> object.
+
+
+
+</Section>
+
+
+
+
+</markdown>
+
+
+<Snippet name="passing-state-with-ifuburequest" />

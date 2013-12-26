@@ -214,6 +214,7 @@
     <Compile Include="Runtime\Handlers\AsynchronousHttpHandler.cs" />
     <Compile Include="Runtime\Handlers\AsynchronousHttpHandlerSource.cs" />
     <Compile Include="Runtime\Handlers\IHttpHandlerSource.cs" />
+    <Compile Include="Runtime\InMemoryFubuRequest.cs" />
     <Compile Include="Runtime\RequestCompletion.cs" />
     <Compile Include="Runtime\Handlers\SessionlessAsynchronousHttpHandler.cs" />
     <Compile Include="Runtime\Handlers\SessionlessAsynchronousHttpHandlerSource.cs" />

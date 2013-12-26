@@ -12,11 +12,13 @@ namespace FubuMVC.Core.Runtime
         private readonly ILogger _logger;
         private readonly Cache<Type, BindResult> _values = new Cache<Type, BindResult>();
 
+        // SAMPLE: auto-resolving-within-ifuburequest
         public FubuRequest(IRequestData data, IObjectResolver resolver, ILogger logger)
         {
             _logger = logger;
             _values.OnMissing = (type => resolver.BindModel(type, data));
         }
+        // ENDSAMPLE
 
         public T Get<T>() where T : class
         {

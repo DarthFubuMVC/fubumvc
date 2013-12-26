@@ -1,10 +1,30 @@
 <!--Title: Content Negotiation-->
 <!--Url: conneg-->
 
+FubuMVC supports the HTTP concept of [Content Negotiation](http://en.wikipedia.org/wiki/Content_negotiation) (colloquially known as _Conneg_).
+
+
+<Info>As of FubuMVC 1.0+, view engine rendering is just another form of a conneg <code>Writer</code>.</Info>
+
 <markdown>
+
+<Section title="Terminology and Concepts" id="terminology">
+
+* **Writer** - blah
+* **Condition** - blah
+* **Reader** - blah
+
+
+</Section>
+
+
 <Section title="How it Works" id="how-it-works">
 TODO(Write some content!)
 </Section>
+
+
+
+<Snippet name="input-behavior-mechanics" />
 
 <Section title="Spoofing the Mimetypes" id="spoofing">
 TODO(Write some content!)
@@ -14,14 +34,25 @@ TODO(Write some content!)
 TODO(Write some content!)
 </Section>
 
+<Section title="Registering Readers" id="registering-readers">
+
+</Section>
+
 <Section title="Writing Resources with Writers" id="writers">
 TODO(Write some content!)
+</Section>
+
+<Section title="Registering Writers" id="registering-writers">
+
 </Section>
 
 <Section title="Views and Conneg" id="views">
 TODO(Write some content!)
 </Section>
 
+<Section title="Conditional Writers" id="conditional-writers">
+
+</Section>
 
 </markdown>
 
