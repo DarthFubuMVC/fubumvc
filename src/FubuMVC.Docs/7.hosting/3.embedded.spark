@@ -84,6 +84,12 @@ this code from our integration tests:
 You can specify the port number you want to use in your <code>FubuRegistry</code>, or set the port number
 value in the .Net _appSettings_ configuration with the key  <code>KatanaSettings.AutoHostingEnabled</code>.
 
+Katana hosting is set up by an <code>IActivator</code> if auto hosting is enabled.  The host is stopped and disposed by a <code>IDeactivator</code>
+when the containing application is disposed.
+
+<Info>It is possible to use the <code>fubu run</code> hosting against an application that has auto hosting enabled.  In that case, <code>fubu run</code>
+will use the port configuration from the <code>KatanaSettings</code></Info>
+
 </Section>
 
 </markdown>
