@@ -73,4 +73,17 @@ See <TopicLink name="automated-testing/using-endpointdriver" /> and <TopicLink n
 
 </Section>
 
+<Section title="Auto Start Katana Hosting" id="auto-hosting">
+
+If you are hosting a <ProjectLink name="FubuMVC" /> or <ProjectLink name="FubuTransportation" /> application in a service and want a Katana host
+to start for your application on startup, set the <code>KatanaSettings.AutoHostingEnabled</code> property to <code>true</code> as in
+this code from our integration tests:
+
+<Snippet name="katana-auto-hosting" />
+
+You can specify the port number you want to use in your <code>FubuRegistry</code>, or set the port number
+value in the .Net _appSettings_ configuration with the key  <code>KatanaSettings.AutoHostingEnabled</code>.
+
+</Section>
+
 </markdown>

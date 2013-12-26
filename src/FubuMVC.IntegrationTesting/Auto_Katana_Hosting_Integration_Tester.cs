@@ -34,17 +34,22 @@ namespace FubuMVC.IntegrationTesting
         }
     }
 
+    // SAMPLE: katana-auto-hosting
     public class KatanaRegistry : FubuRegistry
     {
         public KatanaRegistry()
         {
             Actions.IncludeType<KatanaEndpoint>();
+
             AlterSettings<KatanaSettings>(x => {
-                x.Port = 5601;
+                // This line is absolutely mandatory
                 x.AutoHostingEnabled = true;
+
+                x.Port = 5601;
             });
         }
     }
+    // ENDSAMPLE
 
     public class KatanaEndpoint
     {
