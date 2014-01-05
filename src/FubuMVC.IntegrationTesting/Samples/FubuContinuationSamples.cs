@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using System.Web.UI.WebControls;
 using Castle.Facilities.Startable;
@@ -245,9 +248,11 @@ namespace FubuMVC.IntegrationTesting.Samples
 
 
     // SAMPLE: redirectable
+    public class RedirectingNumber : Number{}
+
     public class RedirectableEndpoint
     {
-        public RedirectableNumber get_redirectable(Number number)
+        public RedirectableNumber get_redirectable(RedirectingNumber number)
         {
             return new RedirectableNumber
             {
