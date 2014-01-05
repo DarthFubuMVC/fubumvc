@@ -137,6 +137,7 @@
     <Compile Include="Packaging\unlinking_a_bottle_from_the_command_line.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Routing\end_to_end_route_alias_tester.cs" />
+    <Compile Include="Samples\ConnegSamples.cs" />
     <Compile Include="Samples\FubuContinuationSamples.cs" />
     <Compile Include="Samples\IFubuRequestUsage.cs" />
     <Compile Include="Samples\KatanaBootstrapping.cs" />

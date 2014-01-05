@@ -35,8 +35,11 @@ namespace FubuMVC.Core.Resources.Conneg
             Write();
         }
 
+        // SAMPLE: output-behavior-mechanics
         public void Write()
         {
+            // If the resource is NOT found, return 
+            // invoke the 404 handler
             var resource = _request.Get<T>();
             if (resource == null)
             {
@@ -46,24 +49,34 @@ namespace FubuMVC.Core.Resources.Conneg
                 return;
             }
 
+            // Resolve our CurrentMimeType object from the 
+            // HTTP request that we use to represent
+            // the mimetypes of the current request
             var mimeTypes = _request.Get<CurrentMimeType>();
+
+            // Select the appropriate media writer
+            // based on the mimetype and other runtime
+            // conditions
             var media = SelectMedia(mimeTypes);
 
             if (media == null)
             {
-                // TODO -- better error message?
+                // If no matching media can be found, write HTTP 406
                 _writer.WriteResponseCode(HttpStatusCode.NotAcceptable);
                 _writer.Write(MimeType.Text, "406:  Not acceptable");
             }
             else
             {
-                
+                // Write the media based on a matching media type
                 var outputMimetype = mimeTypes.SelectFirstMatching(media.Mimetypes);
                 media.Write(outputMimetype, resource);
             }
 
+            // Write any output headers exposed by the IHaveHeaders
+            // interface on the resource type
             WriteHeaders();
         }
+        // ENDSAMPLE
 
         public void WriteHeaders()
         {

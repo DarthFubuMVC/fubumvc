@@ -6,6 +6,7 @@ using Cookie = FubuMVC.Core.Http.Cookies.Cookie;
 
 namespace FubuMVC.Core.Runtime
 {
+    // SAMPLE: ioutputwriter
     /// <summary>
     /// Primary abstraction to write to the Http response
     /// </summary>
@@ -84,6 +85,7 @@ namespace FubuMVC.Core.Runtime
         /// </summary>
         void Flush();
     }
+    // ENDSAMPLE
 
    
 }
