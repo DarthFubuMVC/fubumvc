@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Http
             var request = new StandInCurrentHttpRequest();
             var mimeType = new CurrentMimeType("text/json", theOriginalMimetype);
 
-            new ConnegSettings().Correct(mimeType, request);
+            new ConnegSettings().InterpretQuerystring(mimeType, request);
 
             mimeType.AcceptTypes.Single().ShouldEqual(theOriginalMimetype);
         }
@@ -32,7 +32,7 @@ namespace FubuMVC.Tests.Http
 
             var mimeType = new CurrentMimeType("text/json", theOriginalMimetype);
 
-            new ConnegSettings().Correct(mimeType, request);
+            new ConnegSettings().InterpretQuerystring(mimeType, request);
 
             mimeType.AcceptTypes.Single().ShouldEqual(theOriginalMimetype);
         }
@@ -45,7 +45,7 @@ namespace FubuMVC.Tests.Http
 
             var mimeType = new CurrentMimeType("text/json", theOriginalMimetype);
 
-            new ConnegSettings().Correct(mimeType, request);
+            new ConnegSettings().InterpretQuerystring(mimeType, request);
 
             mimeType.AcceptTypes.Single().ShouldEqual(MimeType.Json.Value);
         }
@@ -58,7 +58,7 @@ namespace FubuMVC.Tests.Http
 
             var mimeType = new CurrentMimeType("text/json", theOriginalMimetype);
 
-            new ConnegSettings().Correct(mimeType, request);
+            new ConnegSettings().InterpretQuerystring(mimeType, request);
 
             mimeType.AcceptTypes.Single().ShouldEqual(MimeType.Xml.Value);
         }
@@ -74,7 +74,7 @@ namespace FubuMVC.Tests.Http
 
             var mimeType = new CurrentMimeType("text/json", theOriginalMimetype);
 
-            settings.Correct(mimeType, request);
+            settings.InterpretQuerystring(mimeType, request);
 
             mimeType.AcceptTypes.Single().ShouldEqual(MimeType.Text.Value);
         }

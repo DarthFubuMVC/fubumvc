@@ -23,29 +23,65 @@ namespace FubuMVC.Core.Http
 
         public object Bind(Type type, IBindingContext context)
         {
-            var request = context.Service<ICurrentHttpRequest>();
+            var mimetypeContext = context.Service<MimetypeContext>();
 
-            var contentType = request.GetHeader(HttpRequestHeader.ContentType).FirstOrDefault() ??
-                              MimeType.HttpFormMimetype;
-            
-            var acceptType = ReadAcceptType(request.GetHeader(HttpRequestHeader.Accept));
+
+            var contentType = mimetypeContext.ContentType;
+            var acceptType = mimetypeContext.Accepts;
             
             
 
             var currentMimeType = new CurrentMimeType(contentType, acceptType);
-
-            context.Service<ConnegSettings>().Correct(currentMimeType, request);
+            mimetypeContext.Correct(currentMimeType);
 
             return currentMimeType;
         }
 
-        private string ReadAcceptType(IEnumerable<string> header)
+
+
+        public class MimetypeContext
         {
-            if (header == null || header.Count() == 0) return "*/*";
+            private readonly ConnegSettings _settings;
+            private readonly ICurrentChain _currentChain;
+            private readonly ICurrentHttpRequest _request;
 
-            if (header.Count() == 1) return header.Single();
+            public MimetypeContext(ConnegSettings settings, ICurrentChain currentChain, ICurrentHttpRequest request)
+            {
+                _settings = settings;
+                _currentChain = currentChain;
+                _request = request;
+            }
 
-            return header.Join(", ");
+            public string ContentType
+            {
+                get
+                {
+                    return _request.GetHeader(HttpRequestHeader.ContentType).FirstOrDefault() ??
+                              MimeType.HttpFormMimetype;
+                }
+            }
+
+            public string Accepts
+            {
+                get
+                {
+                    return readAcceptType(_request.GetHeader(HttpRequestHeader.Accept));
+                }
+            }
+
+            private string readAcceptType(IEnumerable<string> header)
+            {
+                if (header == null || header.Count() == 0) return "*/*";
+
+                if (header.Count() == 1) return header.Single();
+
+                return header.Join(", ");
+            }
+
+            public void Correct(CurrentMimeType currentMimeType)
+            {
+                _settings.InterpretQuerystring(currentMimeType, _request);
+            }
         }
     }
 }

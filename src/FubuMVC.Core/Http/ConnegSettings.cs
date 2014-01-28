@@ -14,7 +14,7 @@ namespace FubuMVC.Core.Http
          public readonly IList<ConnegQuerystring> QuerystringParameters = 
              new List<ConnegQuerystring>{new ConnegQuerystring("Format", "JSON", MimeType.Json), new ConnegQuerystring("Format", "XML", MimeType.Xml)};
 
-        public void Correct(CurrentMimeType mimeType, ICurrentHttpRequest request)
+        public void InterpretQuerystring(CurrentMimeType mimeType, ICurrentHttpRequest request)
         {
             var corrected = QuerystringParameters.FirstValue(x => x.Determine(request.QueryString));
             if (corrected.IsNotEmpty())
