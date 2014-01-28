@@ -125,6 +125,7 @@
     <Compile Include="FubuExtensionFinderTester.cs" />
     <Compile Include="Http\Compression\ContentCompressionExtensionTester.cs" />
     <Compile Include="Http\Compression\DeflateEncodingTester.cs" />
+    <Compile Include="Http\ConnegQuerystringTester.cs" />
     <Compile Include="Http\Cookies\CookieStateTester.cs" />
     <Compile Include="Http\Cookies\CookiesTester.cs" />
     <Compile Include="Http\Cookies\CookieTester.cs" />
