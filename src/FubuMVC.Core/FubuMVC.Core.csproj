@@ -118,6 +118,7 @@
     <Compile Include="Http\Compression\ApplyContentCompression.cs" />
     <Compile Include="Http\Compression\DeflateHttpContentEncoding.cs" />
     <Compile Include="Http\Compression\DoNotCompressAttribute.cs" />
+    <Compile Include="Http\ConnegQuerystring.cs" />
     <Compile Include="Http\ConnegSettings.cs" />
     <Compile Include="Http\Cookies\CookieState.cs" />
     <Compile Include="Http\Cookies\CookieValue.cs" />

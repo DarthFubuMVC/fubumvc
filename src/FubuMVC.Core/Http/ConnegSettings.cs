@@ -1,44 +1,26 @@
 ﻿using System;
-using System.Collections.Specialized;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Http
 {
+    [ApplicationLevel]
     public class ConnegSettings
     {
-         
-    }
+         public readonly IList<ConnegQuerystring> QuerystringParameters = 
+             new List<ConnegQuerystring>{new ConnegQuerystring("Format", "JSON", MimeType.Json), new ConnegQuerystring("Format", "XML", MimeType.Xml)};
 
-    public class ConnegQuerystring
-    {
-        public ConnegQuerystring(string key, string value, string mimetype)
+        public void Correct(CurrentMimeType mimeType, ICurrentHttpRequest request)
         {
-            Key = key;
-            Value = value;
-            Mimetype = mimetype;
-        }
-
-        public ConnegQuerystring(string key, string value, MimeType mimetype)
-        {
-            Key = key;
-            Value = value;
-            Mimetype = mimetype.Value;
-        }
-
-        public string Key { get; private set; }
-        public string Value { get; private set; }
-        public string Mimetype { get; private set; }
-
-        public string Determine(NameValueCollection querystring)
-        {
-            var value = querystring[Key];
-
-
-            return value != null && value.EqualsIgnoreCase(Value)
-                ? Mimetype
-                : null;
+            var corrected = QuerystringParameters.FirstValue(x => x.Determine(request.QueryString));
+            if (corrected.IsNotEmpty())
+            {
+                mimeType.AcceptTypes = new MimeTypeList(corrected);
+            }
         }
     }
 }
