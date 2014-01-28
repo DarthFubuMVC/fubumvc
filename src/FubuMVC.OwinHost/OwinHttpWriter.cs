@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Web;
 using FubuCore;
@@ -24,8 +25,27 @@ namespace FubuMVC.OwinHost
 
         public void AppendHeader(string key, string value)
         {
+            if (!_environment.ContainsKey(OwinConstants.ResponseHeadersKey))
+            {
+                _environment.Add(OwinConstants.ResponseHeadersKey, new Dictionary<string, string[]>());
+            }
+
             var headers = _environment.Get<IDictionary<string, string[]>>(OwinConstants.ResponseHeadersKey);
-            headers[key] = new[] {value};
+            if (headers.ContainsKey(key))
+            {
+                var oldArray = headers[key];
+                var newArray = new string[oldArray.Length + 1];
+                oldArray.CopyTo(newArray, 0);
+                newArray[oldArray.Length] = value;
+
+                headers[key] = newArray;
+            }
+            else
+            {
+                headers[key] = new[] { value };
+            }
+
+            
         }
 
         public void WriteFile(string file)

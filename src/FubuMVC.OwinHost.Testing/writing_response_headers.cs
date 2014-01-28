@@ -1,5 +1,6 @@
 using System.Threading;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Core.Runtime;
 using NUnit.Framework;
 using FubuTestingSupport;
@@ -21,6 +22,8 @@ namespace FubuMVC.OwinHost.Testing
 
 
         }
+
+
 
         [Test]
         public void can_write_built_in_response_headers()
@@ -62,9 +65,17 @@ namespace FubuMVC.OwinHost.Testing
                 response.ResponseHeaderFor(HttpResponseHeaders.Expires).ShouldEqual("5");
                 response.ResponseHeaderFor(HttpResponseHeaders.LastModified).ShouldEqual("12345");
             });
+        }
 
-
-
+        [Test]
+        public void can_write_multiple_cookies()
+        {
+            HarnessApplication.Run(endpoints => {
+                var response = endpoints.Get<ResponseHeadersEndpoint>(x => x.get_multiple_cookies());
+                
+                response.Cookies["Foo"].Value.ShouldEqual("1");
+                response.Cookies["Bar"].Value.ShouldEqual("2");
+            });
         }
     }
 
@@ -105,6 +116,14 @@ namespace FubuMVC.OwinHost.Testing
 
 
             return "Nothing to see here";
+        }
+
+        public string get_multiple_cookies()
+        {
+            _writer.AppendCookie(new Cookie("Foo", "1"));
+            _writer.AppendCookie(new Cookie("Bar", "2"));
+
+            return "Just look at the cookies";
         }
 
         public string get_etag()

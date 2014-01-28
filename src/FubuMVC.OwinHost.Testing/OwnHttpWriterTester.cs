@@ -20,6 +20,17 @@ namespace FubuMVC.OwinHost.Testing
         }
 
         [Test]
+        public void can_write_multiple_values_for_the_same_header()
+        {
+            writer.AppendHeader("X-1", "A");
+            writer.AppendHeader("X-1", "B");
+
+            var dictionary = environment.Get<IDictionary<string, string[]>>(OwinConstants.ResponseHeadersKey);
+            dictionary
+                .Get("X-1").ShouldHaveTheSameElementsAs("A", "B");
+        }
+
+        [Test]
         public void should_set_response_code()
         {
             writer.WriteResponseCode(HttpStatusCode.UseProxy);
