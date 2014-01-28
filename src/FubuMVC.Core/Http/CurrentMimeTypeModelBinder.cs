@@ -34,6 +34,7 @@ namespace FubuMVC.Core.Http
 
             var currentMimeType = new CurrentMimeType(contentType, acceptType);
 
+            context.Service<ConnegSettings>().Correct(currentMimeType, request);
 
             return currentMimeType;
         }

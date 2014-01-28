@@ -115,6 +115,7 @@
     <Compile Include="Caching\caching_tester.cs" />
     <Compile Include="Chrome\ChromeBehaviorIntegrationTester.cs" />
     <Compile Include="Conneg\AjaxInputModelBindingIntegrationTester.cs" />
+    <Compile Include="Conneg\Conneg_can_be_corrected_with_querystring_parameters_for_JSON_and_XML.cs" />
     <Compile Include="Conneg\Conneg_Can_Choose_Output_Media_Based_on_Mimetypes.cs" />
     <Compile Include="Conneg\OutputFromAnActionThatReturnsStrings.cs" />
     <Compile Include="Conneg\Output_from_actions_that_return_ajax_continuations.cs" />
