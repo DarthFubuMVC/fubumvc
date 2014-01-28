@@ -81,6 +81,8 @@ namespace FubuMVC.Core.Http
             public void Correct(CurrentMimeType currentMimeType)
             {
                 _settings.InterpretQuerystring(currentMimeType, _request);
+
+                _settings.Corrections.Each(x => x.Correct(currentMimeType, _request, _currentChain.OriginatingChain));
             }
         }
     }
