@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Specialized;
 using FubuCore.Binding.Values;
 using FubuMVC.Core.Http;
 using FubuTestingSupport;
@@ -77,6 +78,8 @@ namespace FubuMVC.Tests.Http.Cookies
 			{
 				throw new System.NotImplementedException();
 			}
+
+		    public NameValueCollection QueryString { get; private set; }
 		}
 	}
 }

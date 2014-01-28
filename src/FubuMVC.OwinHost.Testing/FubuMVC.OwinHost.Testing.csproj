@@ -113,6 +113,7 @@
     <Compile Include="OwnCurrentHttpRequestTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="reading_and_writing_json_and_xml_thru_conneg.cs" />
+    <Compile Include="reading_querystring_values.cs" />
     <Compile Include="reading_request_headers.cs" />
     <Compile Include="reading_route_data.cs" />
     <Compile Include="writing_a_file_to_output.cs" />

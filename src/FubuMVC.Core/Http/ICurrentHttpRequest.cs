@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 
 namespace FubuMVC.Core.Http
 {
@@ -56,6 +57,13 @@ namespace FubuMVC.Core.Http
         /// </summary>
         /// <returns></returns>
         IEnumerable<string> AllHeaderKeys();
+
+
+        /// <summary>
+        /// Exposes the query string keys and values for
+        /// the current Http request
+        /// </summary>
+        NameValueCollection QueryString { get; }
     }
 
     public class StandInCurrentHttpRequest : ICurrentHttpRequest
@@ -65,6 +73,11 @@ namespace FubuMVC.Core.Http
         public string ApplicationRoot = "http://server";
         public string TheHttpMethod = "GET";
         public string StubFullUrl = "http://server/";
+
+        public StandInCurrentHttpRequest()
+        {
+            QueryString = new NameValueCollection();
+        }
 
         public string RawUrl()
         {
@@ -105,5 +118,7 @@ namespace FubuMVC.Core.Http
         {
             return new string[0];
         }
+
+        public NameValueCollection QueryString { get; private set; }
     }
 }

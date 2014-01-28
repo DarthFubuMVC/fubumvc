@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using FubuCore.Util;
 using FubuMVC.Core;
 using FubuMVC.Core.Http;
@@ -14,6 +15,11 @@ namespace FubuMVC.Tests.Urls
         public string TheApplicationRoot = "http://server";
         public string TheHttpMethod = "GET";
         public string StubFullUrl = "http://server/";
+
+        public StubCurrentHttpRequest()
+        {
+            QueryString = new NameValueCollection();
+        }
 
         public string RawUrl()
         {
@@ -56,5 +62,7 @@ namespace FubuMVC.Tests.Urls
         {
             return Headers.GetAllKeys();
         }
+
+        public NameValueCollection QueryString { get; private set; }
     }
 }

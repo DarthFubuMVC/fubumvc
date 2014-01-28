@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Web;
 using FubuCore;
 using FubuMVC.Core.Http;
@@ -11,13 +12,18 @@ namespace FubuMVC.OwinHost
     public class OwinCurrentHttpRequest : ICurrentHttpRequest
     {
         private readonly IDictionary<string, object> _environment;
-        private readonly Lazy<IDictionary<string, string[]>> _headers; 
+        private readonly Lazy<IDictionary<string, string[]>> _headers;
+        private Lazy<NameValueCollection> _querystring;
 
         public OwinCurrentHttpRequest(IDictionary<string, object> environment)
         {
             _environment = environment;
             _headers = new Lazy<IDictionary<string, string[]>>(() => {
                 return environment.Get<IDictionary<string, string[]>>(OwinConstants.RequestHeadersKey);
+            });
+
+            _querystring = new Lazy<NameValueCollection>(() => {
+                return HttpUtility.ParseQueryString(environment.Get<string>(OwinConstants.RequestQueryStringKey));
             });
         }
 
@@ -122,6 +128,15 @@ namespace FubuMVC.OwinHost
         public IEnumerable<string> AllHeaderKeys()
         {
             return _headers.Value.Keys;
+        }
+
+        public NameValueCollection QueryString
+        {
+            get
+            {
+                return _querystring.Value;
+            }
+            
         }
     }
 }

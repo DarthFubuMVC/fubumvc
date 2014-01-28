@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Net;
 using System.Web;
 using FubuCore;
@@ -76,6 +77,14 @@ namespace FubuMVC.Core.Http.AspNet
         public IEnumerable<string> AllHeaderKeys()
         {
             return _request.Headers.AllKeys;
+        }
+
+        public NameValueCollection QueryString
+        {
+            get
+            {
+                return _request.QueryString;
+            }
         }
     }
 }

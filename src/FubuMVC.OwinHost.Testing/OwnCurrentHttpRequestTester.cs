@@ -18,8 +18,11 @@ namespace FubuMVC.OwinHost.Testing
             headers = new Dictionary<string, string[]>();
             environment.Add(OwinConstants.RequestHeadersKey, headers);
             environment.Add(OwinConstants.RequestSchemeKey, "https");
+            
+            
             setHeader("Host", "localhost");
             request = new OwinCurrentHttpRequest(environment);
+
         }
 
         private void setHeader(string header, string value)
