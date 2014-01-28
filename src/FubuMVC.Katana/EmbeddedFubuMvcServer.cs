@@ -37,15 +37,16 @@ namespace FubuMVC.Katana
         /// <typeparam name="T"></typeparam>
         /// <param name="physicalPath">The physical path of the web server path.  This only needs to be set if the location for application content like scripts or views is at a different place than the current AppDomain base directory.  If this value is blank, the embedded server will attempt to find a folder with the same name as the assembly that contains the IApplicationSource</param>
         /// <param name="port">The port to run the web server at.  The web server will try other port numbers starting at this point if it is unable to bind to this specific port</param>
+        /// <param name="autoFindPort">If true, use the first unused port from 5500 and up</param>
         /// <returns></returns>
-        public static EmbeddedFubuMvcServer For<T>(string physicalPath = null, int port = 5500) where T : IApplicationSource, new()
+        public static EmbeddedFubuMvcServer For<T>(string physicalPath = null, int port = 5500, bool autoFindPort = false) where T : IApplicationSource, new()
         {
             if (physicalPath.IsEmpty())
             {
                 physicalPath = TryToGuessApplicationPath(typeof (T)) ?? AppDomain.CurrentDomain.BaseDirectory;
             }
 
-            return new EmbeddedFubuMvcServer(new T().BuildApplication().Bootstrap(), physicalPath, port);
+            return new EmbeddedFubuMvcServer(new T().BuildApplication().Bootstrap(), physicalPath, port, autoFindPort);
 
         }
 
@@ -60,8 +61,13 @@ namespace FubuMVC.Katana
         }
 
 
-        public EmbeddedFubuMvcServer(FubuRuntime runtime, string physicalPath = null, int port = 5500)
+        public EmbeddedFubuMvcServer(FubuRuntime runtime, string physicalPath = null, int port = 5500, bool autoFindPort = false)
         {
+            if (autoFindPort)
+            {
+                port = PortFinder.FindPort(5500);
+            }
+
             _runtime = runtime;
 
             // before anything else, make sure there is no server on the settings
