@@ -95,6 +95,12 @@ namespace FubuMVC.OwinHost.Testing
             return response;
         }
 
+        public static HttpResponse ShouldHaveHeaderValue(this HttpResponse response, string header, string value)
+        {
+            response.ResponseHeaderFor(header).ShouldEqual(value);
+            return response;
+        }
+
         public static HttpResponse ContentShouldBe(this HttpResponse response, MimeType mimeType, string content)
         {
             response.ContentType.ShouldEqual(mimeType.Value);

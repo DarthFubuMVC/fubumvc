@@ -13,6 +13,8 @@ namespace FubuMVC.Core.Registration.Nodes
         Process,
         Cache,
         Conditional,
-        Instrumentation
+        Instrumentation,
+        Transaction,
+        Compression
     }
 }
