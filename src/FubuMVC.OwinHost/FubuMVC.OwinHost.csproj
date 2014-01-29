@@ -68,6 +68,9 @@
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="FubuOwinHost.cs" />
+    <Compile Include="IAppBuilderConfiguration.cs" />
+    <Compile Include="MiddlewareChain.cs" />
+    <Compile Include="MiddlewareNode.cs" />
     <Compile Include="OwinClientConnectivity.cs" />
     <Compile Include="OwinContext.cs" />
     <Compile Include="OwinSettings.cs" />
