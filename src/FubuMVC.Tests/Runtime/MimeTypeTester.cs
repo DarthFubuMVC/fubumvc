@@ -55,5 +55,12 @@ namespace FubuMVC.Tests.Runtime
             MimeType.MimeTypeByFileName("file.coffee").ShouldEqual(MimeType.Javascript);
             MimeType.MimeTypeByFileName("file.scss").ShouldEqual(MimeType.Css);
         }
+
+        [Test]
+        public void mimetype_from_extended_extension_set()
+        {
+            MimeType.MimeTypeByFileName("foo.323")
+                .Value.ShouldEqual("text/h323");
+        }
     }
 }
