@@ -117,6 +117,7 @@
     <Compile Include="reading_querystring_values.cs" />
     <Compile Include="reading_request_headers.cs" />
     <Compile Include="reading_route_data.cs" />
+    <Compile Include="specifying_environment_key_values_for_owin.cs" />
     <Compile Include="writing_a_file_to_output.cs" />
     <Compile Include="writing_a_non_default_status_code.cs" />
     <Compile Include="writing_response_headers.cs" />

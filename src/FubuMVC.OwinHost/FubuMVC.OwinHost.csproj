@@ -69,6 +69,8 @@
     </Compile>
     <Compile Include="FubuOwinHost.cs" />
     <Compile Include="OwinClientConnectivity.cs" />
+    <Compile Include="OwinContext.cs" />
+    <Compile Include="OwinSettings.cs" />
     <Compile Include="Readers\IOwinRequestReader.cs" />
     <Compile Include="Readers\MediaTypeReader.cs" />
     <Compile Include="Readers\FormReader.cs" />

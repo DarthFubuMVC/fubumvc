@@ -88,7 +88,7 @@ namespace FubuMVC.Katana
 
         private void startAllNew(FubuRuntime runtime, string physicalPath, int port)
         {
-            startServer(runtime.Routes, physicalPath, port);
+            startServer(runtime.Factory.Get<OwinSettings>(), runtime.Routes, physicalPath, port);
 
             _urls = _runtime.Factory.Get<IUrlRegistry>();
             _services = _runtime.Factory.Get<IServiceLocator>();
@@ -119,22 +119,24 @@ namespace FubuMVC.Katana
             _urls = urls;
             _services = services;
 
-            startServer(routes, AppDomain.CurrentDomain.BaseDirectory, settings.Port);
+            startServer(services.GetInstance<OwinSettings>(), routes, AppDomain.CurrentDomain.BaseDirectory, settings.Port);
             buildEndpointDriver(settings.Port);
         }
 
-        private void startServer(IList<RouteBase> routes, string physicalPath, int port)
+        private void startServer(OwinSettings settings, IList<RouteBase> routes, string physicalPath, int port)
         {
             var parameters = new StartOptions {Port = port};
             parameters.Urls.Add("http://*:" + port); //for netsh http add urlacl
 
             FubuMvcPackageFacility.PhysicalRootPath = physicalPath ?? AppDomain.CurrentDomain.BaseDirectory;
-            Action<IAppBuilder> startup = FubuOwinHost.ToStartup(routes);
+            Action<IAppBuilder> startup = FubuOwinHost.ToStartup(settings, routes);
 
             var context = new StartContext(parameters)
             {
-                Startup = startup
+                Startup = startup,
             };
+
+            context.EnvironmentData.AddRange(settings.EnvironmentData.ToDictionary());
 
             var engine = new HostingEngine(new AppBuilderFactory(), new TraceOutputFactory(),
                 new AppLoader(new IAppLoaderFactory[0]),

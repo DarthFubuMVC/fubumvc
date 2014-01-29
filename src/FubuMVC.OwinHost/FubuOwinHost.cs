@@ -13,23 +13,19 @@ using Owin;
 
 namespace FubuMVC.OwinHost
 {
+    using AppFunc = Func<IDictionary<string, object>, Task>;
+
     public class FubuOwinHost
     {
         private readonly RouteCollection _routes;
 
-        public static Action<IAppBuilder> ToStartup(FubuRuntime runtime)
+        public static Action<IAppBuilder> ToStartup(OwinSettings settings, IList<RouteBase> routes)
         {
             return builder =>
             {
-                var host = new FubuOwinHost(runtime.Routes);
-                builder.Run(host);
-            };
-        }
+                settings.As<IAppBuilderConfiguration>()
+                    .Configure(builder);
 
-        public static Action<IAppBuilder> ToStartup(IList<RouteBase> routes)
-        {
-            return builder =>
-            {
                 var host = new FubuOwinHost(routes);
                 builder.Run(host);
             };

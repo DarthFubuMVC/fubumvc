@@ -13,7 +13,7 @@ namespace FubuMVC.OwinHost
     {
         private readonly IDictionary<string, object> _environment;
         private readonly Lazy<IDictionary<string, string[]>> _headers;
-        private Lazy<NameValueCollection> _querystring;
+        private readonly Lazy<NameValueCollection> _querystring;
 
         public OwinCurrentHttpRequest(IDictionary<string, object> environment)
         {

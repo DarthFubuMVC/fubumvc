@@ -23,6 +23,8 @@ namespace FubuMVC.OwinHost
             With<IHttpWriter>(new OwinHttpWriter(environment));
 
             With<IResponse>(new OwinResponse(environment));
+
+            With(new OwinContext(environment));
         }
     }
 }
