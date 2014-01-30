@@ -105,6 +105,7 @@
     <Compile Include="handling_async_routes.cs" />
     <Compile Include="handling_a_404.cs" />
     <Compile Include="Harness.cs" />
+    <Compile Include="MiddlewareContinuationTester.cs" />
     <Compile Include="OwinClientConnectivityTester.cs" />
     <Compile Include="OwinCurrentHttpRequestTester.cs" />
     <Compile Include="Owin_url_resolution_tester.cs" />
