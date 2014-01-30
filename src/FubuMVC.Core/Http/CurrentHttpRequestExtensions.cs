@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -50,6 +51,16 @@ namespace FubuMVC.Core.Http
         }
 
         /// <summary>
+        /// Is the current request an Http HEAD?
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static bool IsHead(this ICurrentHttpRequest request)
+        {
+            return request.HttpMethod().EqualsIgnoreCase("HEAD");
+        }
+
+        /// <summary>
         /// Is the currrent request an Http PUT?
         /// </summary>
         /// <param name="request"></param>
@@ -86,5 +97,170 @@ namespace FubuMVC.Core.Http
             return relativeUrl;
         }
 
+        /// <summary>
+        /// Get the associated values from the collection separated into individual values.
+        /// Quoted values will not be split, and the quotes will be removed.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static IEnumerable<string> GetDelimitedHeaderValues(this ICurrentHttpRequest request, string key)
+        {
+            return request.GetHeader(key).GetCommaSeparatedHeaderValues();
+        }
+
+        /// <summary>
+        /// Gets the first, raw header value for the key
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static string GetSingleHeader(this ICurrentHttpRequest request, string key)
+        {
+            return request.GetHeader(key).FirstOrDefault();
+        }
+
+        public static IEnumerable<string> GetCommaSeparatedHeaderValues(this IEnumerable<string> enumerable)
+        {
+            foreach (var content in enumerable)
+            {
+                var searchString = content.Trim();
+                if (searchString.Length == 0) break;
+
+                var parser = new CommaTokenParser();
+                content.ToCharArray().Each(parser.Read);
+
+                // Gotta force the parser to know it's done
+                parser.Read(',');
+
+                foreach (var token in parser.Tokens)
+                {
+                    yield return token.Trim();
+                }
+            }
+
+
+        } 
+    }
+
+    public class CommaTokenParser
+    {
+        private readonly List<string> _tokens = new List<string>();
+        private List<char> _characters;
+        private IMode _mode;
+
+        public CommaTokenParser()
+        {
+            _mode = new Searching(this);
+        }
+
+        public void Read(char c)
+        {
+            _mode.Read(c);
+        }
+
+        private void addChar(char c)
+        {
+            _characters.Add(c);
+        }
+
+        public IEnumerable<string> Tokens
+        {
+            get
+            {
+                return _tokens;
+            }
+        }
+
+        private void startToken(IMode mode)
+        {
+            _mode = mode;
+            _characters = new List<char>();
+        }
+
+        private void endToken()
+        {
+            var @string = new string(_characters.ToArray());
+            _tokens.Add(@string);
+
+            _mode = new Searching(this);
+        }
+
+
+        public interface IMode
+        {
+            void Read(char c);
+        }
+
+        public class Searching : IMode
+        {
+            private readonly CommaTokenParser _parent;
+
+            public Searching(CommaTokenParser parent)
+            {
+                _parent = parent;
+            }
+
+            public void Read(char c)
+            {
+                if (c == ',') return;
+
+                if (c == '"')
+                {
+                    _parent.startToken(new InsideQuotedToken(_parent));
+                }
+                else
+                {
+                    var normalToken = new InsideNormalToken(_parent);
+                    _parent.startToken(normalToken);
+                    normalToken.Read(c);
+                }
+            }
+        }
+
+        public class InsideQuotedToken : IMode
+        {
+            private readonly CommaTokenParser _parent;
+
+            public InsideQuotedToken(CommaTokenParser parent)
+            {
+                _parent = parent;
+            }
+
+
+            public void Read(char c)
+            {
+                if (c == '"')
+                {
+                    _parent.endToken();
+                }
+                else
+                {
+                    _parent.addChar(c);
+                }
+            }
+        }
+
+        public class InsideNormalToken : IMode
+        {
+            private readonly CommaTokenParser _parent;
+
+            public InsideNormalToken(CommaTokenParser parent)
+            {
+                _parent = parent;
+            }
+
+            public void Read(char c)
+            {
+                if (c == ',')
+                {
+                    _parent.endToken();
+                }
+                else
+                {
+                    _parent.addChar(c);
+                }
+            }
+        }
     }
 }

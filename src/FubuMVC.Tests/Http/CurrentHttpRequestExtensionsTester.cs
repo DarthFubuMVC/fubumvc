@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core.Http;
+﻿using System.Collections.Generic;
+using FubuMVC.Core.Http;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -26,6 +27,19 @@ namespace FubuMVC.Tests.Http
 
             theRequest.TheHttpMethod = "POST";
             theRequest.IsGet().ShouldBeFalse();
+        }
+
+        [Test]
+        public void is_head()
+        {
+            theRequest.TheHttpMethod = "head";
+            theRequest.IsHead().ShouldBeTrue();
+
+            theRequest.TheHttpMethod = "HEAD";
+            theRequest.IsHead().ShouldBeTrue();
+
+            theRequest.TheHttpMethod = "POST";
+            theRequest.IsHead().ShouldBeFalse();
         }
 
         [Test]
@@ -71,6 +85,18 @@ namespace FubuMVC.Tests.Http
                 .ShouldEqual("1");
 
 
+        }
+
+        [Test]
+        public void get_comma_separated_values_from_header()
+        {
+            new[] { "v1", "v2, v3", "\"v4, b\"", "v5, v6", "v7", }
+                .GetCommaSeparatedHeaderValues()
+                .ShouldHaveTheSameElementsAs("v1", "v2", "v3", "v4, b", "v5", "v6", "v7");
+
+            new []{"v1,v2, v3,\"v4, b\",v5, v6,v7"}
+                .GetCommaSeparatedHeaderValues()
+                .ShouldHaveTheSameElementsAs("v1", "v2", "v3", "v4, b", "v5", "v6", "v7");
         }
     }
 }
