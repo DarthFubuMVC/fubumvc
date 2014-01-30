@@ -5,10 +5,8 @@ using FubuMVC.OwinHost.Middleware;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.OwinHost.Testing
+namespace FubuMVC.OwinHost.Testing.Middleware
 {
-    using AppFunc = Func<IDictionary<string, object>, Task>;
-
     [TestFixture]
     public class MiddlewareContinuationTester
     {
@@ -16,7 +14,7 @@ namespace FubuMVC.OwinHost.Testing
 
         private static bool innerWasCalled;
         private static Task theInnerTask = Task.Factory.StartNew(() => { });
-        private AppFunc theInner = env => {
+        private Func<IDictionary<string, object>, Task> theInner = env => {
             env.ShouldBeTheSameAs(theEnvironment);
 
             return theInnerTask;
