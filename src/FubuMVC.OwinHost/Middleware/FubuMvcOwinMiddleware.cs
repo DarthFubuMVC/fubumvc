@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using FubuMVC.Core.Http;
 
-namespace FubuMVC.OwinHost
+namespace FubuMVC.OwinHost.Middleware
 {
-    using AppFunc = Func<IDictionary<string, object>, Task>;
-
     public abstract class FubuMvcOwinMiddleware
     {
-        private readonly AppFunc _inner;
+        private readonly Func<IDictionary<string, object>, Task> _inner;
 
-        protected FubuMvcOwinMiddleware(AppFunc inner)
+        protected FubuMvcOwinMiddleware(Func<IDictionary<string, object>, Task> inner)
         {
             _inner = inner;
         }

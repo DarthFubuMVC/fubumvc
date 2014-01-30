@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FubuMVC.OwinHost.Middleware;
 using FubuTestingSupport;
 using NUnit.Framework;
 

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core.Registration;
+using FubuMVC.OwinHost.Middleware;
 using Owin;
 
 namespace FubuMVC.OwinHost

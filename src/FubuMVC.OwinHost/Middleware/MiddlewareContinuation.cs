@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using FubuMVC.Core;
 
-namespace FubuMVC.OwinHost
+namespace FubuMVC.OwinHost.Middleware
 {
     public class MiddlewareContinuation
     {

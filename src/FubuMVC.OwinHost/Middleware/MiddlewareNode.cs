@@ -2,7 +2,7 @@
 using FubuMVC.Core.Registration.Nodes;
 using Owin;
 
-namespace FubuMVC.OwinHost
+namespace FubuMVC.OwinHost.Middleware
 {
     public class MiddlewareNode : Node<MiddlewareNode, MiddlewareChain>, IAppBuilderConfiguration
     {
