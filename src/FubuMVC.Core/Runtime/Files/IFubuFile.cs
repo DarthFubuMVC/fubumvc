@@ -42,5 +42,26 @@ namespace FubuMVC.Core.Runtime.Files
         /// </summary>
         /// <param name="read"></param>
         void ReadLines(Action<string> read);
+
+
+        /// <summary>
+        /// The size in bytes of this file
+        /// </summary>
+        /// <returns></returns>
+        long Length();
+
+
+        /// <summary>
+        /// Quoted ETag string value determined by the last modified time
+        /// and length 
+        /// </summary>
+        /// <returns></returns>
+        string Etag();
+
+        /// <summary>
+        /// The last modified time of this file
+        /// </summary>
+        /// <returns></returns>
+        DateTime LastModified();
     }
 }
