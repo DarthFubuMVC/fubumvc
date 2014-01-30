@@ -63,5 +63,7 @@ namespace FubuMVC.Core.Runtime.Files
         /// </summary>
         /// <returns></returns>
         DateTime LastModified();
+
+
     }
 }

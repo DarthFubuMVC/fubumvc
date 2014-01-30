@@ -45,5 +45,20 @@ namespace FubuMVC.OwinHost.Testing
                 .IfNoneMatch()
                 .ShouldHaveTheSameElementsAs("a", "b", "c");
         }
+
+        [Test]
+        public void HttpMethodMatchesAny()
+        {
+            var request = new OwinCurrentHttpRequest().HttpMethod("POST");
+
+            request.HttpMethodMatchesAny("get", "put").ShouldBeFalse();
+            request.HttpMethodMatchesAny("get").ShouldBeFalse();
+            request.HttpMethodMatchesAny("head", "PUT").ShouldBeFalse();
+
+            request.HttpMethodMatchesAny("POST").ShouldBeTrue();
+            request.HttpMethodMatchesAny("POST", "get").ShouldBeTrue();
+            request.HttpMethodMatchesAny("post", "get").ShouldBeTrue();
+            request.HttpMethodMatchesAny("Post", "get").ShouldBeTrue();
+        }
     }
 }

@@ -11,6 +11,28 @@ namespace FubuMVC.Core.Http
     public static class CurrentHttpRequestExtensions
     {
         /// <summary>
+        /// The current request matches one of these HTTP methods
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="httpMethods"></param>
+        /// <returns></returns>
+        public static bool HttpMethodMatchesAny(this ICurrentHttpRequest request, params string[] httpMethods)
+        {
+            return httpMethods.Any(x => x.EqualsIgnoreCase(request.HttpMethod()));
+        }
+
+        /// <summary>
+        /// Evaluates if the current request is for an HTTP method *other* than the supplied httpMethods
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="httpMethods"></param>
+        /// <returns></returns>
+        public static bool IsNotHttpMethod(this ICurrentHttpRequest request, params string[] httpMethods)
+        {
+            return !request.HttpMethodMatchesAny(httpMethods);
+        }
+
+        /// <summary>
         /// Is an Http header present in the current request?
         /// </summary>
         /// <param name="request"></param>

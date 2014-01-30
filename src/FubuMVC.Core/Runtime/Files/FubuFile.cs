@@ -48,7 +48,7 @@ namespace FubuMVC.Core.Runtime.Files
 
             var hash = lastModified.ToFileTimeUtc() ^ length;
 
-            return "\"{0}\"".ToFormat(Convert.ToString(hash, 16));
+            return Convert.ToString(hash, 16);
         }
 
         public DateTime LastModified()
