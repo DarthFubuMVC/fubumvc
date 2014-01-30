@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using FubuCore;
+using FubuMVC.Core.Runtime.Logging;
 
 namespace FubuMVC.Core.Http
 {
@@ -140,6 +142,55 @@ namespace FubuMVC.Core.Http
             }
 
 
+        }
+
+
+        public static void AppendValue(this IDictionary<string, string[]> headers, string key, string value)
+        {
+            if (headers.ContainsKey(key))
+            {
+                var oldArray = headers[key];
+                var newArray = new string[oldArray.Length + 1];
+                oldArray.CopyTo(newArray, 0);
+                newArray[oldArray.Length] = value;
+
+                headers[key] = newArray;
+            }
+            else
+            {
+                headers[key] = new[] { value };
+            }
+        }
+
+        public static DateTime? TryParseHttpDate(this string dateString)
+        {
+            DateTime date;
+
+            return DateTime.TryParseExact(dateString, "r", CultureInfo.InvariantCulture, DateTimeStyles.None, out date)
+                ? date
+                : null as DateTime?;
+        }
+
+        public static DateTime? IfModifiedSince(this ICurrentHttpRequest request)
+        {
+            return request.GetSingleHeader(HttpRequestHeaders.IfModifiedSince)
+                .TryParseHttpDate();
+        }
+
+        public static DateTime? IfUnModifiedSince(this ICurrentHttpRequest request)
+        {
+            return request.GetSingleHeader(HttpRequestHeaders.IfUnmodifiedSince)
+                .TryParseHttpDate();
+        }
+
+        public static IEnumerable<string> IfMatch(this ICurrentHttpRequest request)
+        {
+            return request.GetHeader(HttpRequestHeaders.IfMatch).GetCommaSeparatedHeaderValues();
+        }
+
+        public static IEnumerable<string> IfNoneMatch(this ICurrentHttpRequest request)
+        {
+            return request.GetHeader(HttpRequestHeaders.IfNoneMatch).GetCommaSeparatedHeaderValues();
         } 
     }
 

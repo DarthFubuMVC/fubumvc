@@ -40,7 +40,7 @@ namespace FubuMVC.OwinHost
 
         public string HeaderValueFor(string headerKey)
         {
-            return _environment.Get<IDictionary<string, string>>(OwinConstants.ResponseHeadersKey).Get(headerKey);
+            return _environment.Get<IDictionary<string, string[]>>(OwinConstants.ResponseHeadersKey).Get(headerKey).FirstOrDefault();
         }
 
         public IEnumerable<Header> AllHeaders()

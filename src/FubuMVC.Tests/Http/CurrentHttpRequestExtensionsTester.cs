@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FubuMVC.Core.Http;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -98,5 +99,7 @@ namespace FubuMVC.Tests.Http
                 .GetCommaSeparatedHeaderValues()
                 .ShouldHaveTheSameElementsAs("v1", "v2", "v3", "v4, b", "v5", "v6", "v7");
         }
+
+
     }
 }

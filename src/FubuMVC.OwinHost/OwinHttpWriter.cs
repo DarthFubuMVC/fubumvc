@@ -31,21 +31,7 @@ namespace FubuMVC.OwinHost
             }
 
             var headers = _environment.Get<IDictionary<string, string[]>>(OwinConstants.ResponseHeadersKey);
-            if (headers.ContainsKey(key))
-            {
-                var oldArray = headers[key];
-                var newArray = new string[oldArray.Length + 1];
-                oldArray.CopyTo(newArray, 0);
-                newArray[oldArray.Length] = value;
-
-                headers[key] = newArray;
-            }
-            else
-            {
-                headers[key] = new[] { value };
-            }
-
-            
+            headers.AppendValue(key, value);
         }
 
         public void WriteFile(string file)
