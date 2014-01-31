@@ -123,10 +123,9 @@ namespace FubuMVC.OwinHost.Testing.Middleware.StaticFiles
             theRequest.Header(HttpRequestHeaders.IfMatch, differentEtag);
 
             var continuation = forMethodAndFile("GET", "foo.css")
-                .ShouldBeOfType<WriteFileHeadContinuation>();
+                .ShouldBeOfType<WriteStatusCodeContinuation>();
 
             continuation.Status.ShouldEqual(HttpStatusCode.PreconditionFailed);
-            continuation.File.RelativePath.ShouldEqual("foo.css");
         }
 
         [Test]
@@ -195,6 +194,34 @@ namespace FubuMVC.OwinHost.Testing.Middleware.StaticFiles
                 .ShouldBeOfType<WriteFileContinuation>();
 
             continuation.File.RelativePath.ShouldEqual("foo.css");
+        }
+
+        [Test]
+        public void if_un_modified_value_is_satisfied_so_write_the_file()
+        {
+            var file = theFiles.WriteFile("foo.css", "some contents");
+
+            // the file has not been modified since the header time
+            theRequest.IfUnModifiedSince(file.LastModified().AddDays(1));
+
+            var continuation = forMethodAndFile("GET", "foo.css")
+                .ShouldBeOfType<WriteFileContinuation>();
+
+            continuation.File.RelativePath.ShouldEqual("foo.css");
+        }
+
+        [Test]
+        public void if_un_modified_value_is_not_satisfied_write_the_file_head_with_412()
+        {
+            var file = theFiles.WriteFile("foo.css", "some contents");
+
+            // the file *has* been modified since the header time
+            theRequest.IfUnModifiedSince(file.LastModified().AddDays(-1));
+
+            var continuation = forMethodAndFile("GET", "foo.css")
+                .ShouldBeOfType<WriteStatusCodeContinuation>();
+
+            continuation.Status.ShouldEqual(HttpStatusCode.PreconditionFailed);
         }
     }
 

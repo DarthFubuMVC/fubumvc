@@ -41,14 +41,9 @@ namespace FubuMVC.OwinHost.Middleware.StaticFiles
             }
 
             var ifMatch = request.IfMatch().EtagMatches(file.Etag());
-            if (ifMatch == EtagMatch.Yes)
-            {
-                return new WriteFileContinuation(writer, file);
-            }
-            
             if (ifMatch == EtagMatch.No)
             {
-                return new WriteFileHeadContinuation(writer, file, HttpStatusCode.PreconditionFailed);
+                return new WriteStatusCodeContinuation(writer, HttpStatusCode.PreconditionFailed, "If-Match test failed");
             }
 
             var ifNoneMatch = request.IfNoneMatch().EtagMatches(file.Etag());
@@ -68,16 +63,14 @@ namespace FubuMVC.OwinHost.Middleware.StaticFiles
                 return new WriteFileHeadContinuation(writer, file, HttpStatusCode.NotModified);
             }
 
-            // TODO -- do if-unmodified-since, return 412 if the file has been modified.  Looking for the same version as before.
+            var ifUnModifiedSince = request.IfUnModifiedSince();
+            if (ifUnModifiedSince.HasValue && file.LastModified() > ifUnModifiedSince.Value)
+            {
+                return new WriteStatusCodeContinuation(writer, HttpStatusCode.PreconditionFailed, "File has been modified");
+            }
 
-            // TODO -- just write the file.
 
             return new WriteFileContinuation(writer, file);
-        }
-
-        public virtual MiddlewareContinuation WriteFile(IHttpWriter writer, IFubuFile file)
-        {
-            throw new NotImplementedException();
         }
     }
 
@@ -183,12 +176,13 @@ namespace FubuMVC.OwinHost.Middleware.StaticFiles
 
     public class WriteStatusCodeContinuation : WriterContinuation
     {
-        private readonly HttpStatusCode _code;
+        private readonly HttpStatusCode _status;
         private readonly string _reason;
 
-        public WriteStatusCodeContinuation(IHttpWriter writer, HttpStatusCode code, string reason)
+        public WriteStatusCodeContinuation(IHttpWriter writer, HttpStatusCode status, string reason)
             : base(writer, DoNext.Stop)
         {
+            _status = status;
         }
 
         public override void Write(IHttpWriter writer)
@@ -198,9 +192,11 @@ namespace FubuMVC.OwinHost.Middleware.StaticFiles
             throw new NotImplementedException();
         }
 
-        public HttpStatusCode Code
+
+
+        public HttpStatusCode Status
         {
-            get { return _code; }
+            get { return _status; }
         }
 
         public string Reason
@@ -210,7 +206,7 @@ namespace FubuMVC.OwinHost.Middleware.StaticFiles
 
         protected bool Equals(WriteStatusCodeContinuation other)
         {
-            return _code == other._code && string.Equals(_reason, other._reason);
+            return _status == other._status && string.Equals(_reason, other._reason);
         }
 
         public override bool Equals(object obj)
@@ -225,13 +221,13 @@ namespace FubuMVC.OwinHost.Middleware.StaticFiles
         {
             unchecked
             {
-                return ((int) _code*397) ^ (_reason != null ? _reason.GetHashCode() : 0);
+                return ((int) _status*397) ^ (_reason != null ? _reason.GetHashCode() : 0);
             }
         }
 
         public override string ToString()
         {
-            return string.Format("Stopping with Code: {0}, Reason: {1}", _code, _reason);
+            return string.Format("Stopping with Code: {0}, Reason: {1}", _status, _reason);
         }
     }
 }
