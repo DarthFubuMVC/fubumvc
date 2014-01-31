@@ -33,6 +33,11 @@ namespace FubuMVC.OwinHost
             });
         }
 
+        public IDictionary<string, object> Environment
+        {
+            get { return _environment; }
+        }
+
         private T get<T>(string key)
         {
             object value;
@@ -63,7 +68,7 @@ namespace FubuMVC.OwinHost
 
         public string RelativeUrl()
         {
-            return _environment.Get<string>(OwinConstants.RequestPathKey);
+            return _environment.Get<string>(OwinConstants.RequestPathKey).TrimStart('/');
         }
 
         public string FullUrl()
