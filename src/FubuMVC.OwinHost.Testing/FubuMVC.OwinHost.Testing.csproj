@@ -109,6 +109,7 @@
     <Compile Include="Middleware\StaticFiles\DenyConfigRuleTester.cs" />
     <Compile Include="Middleware\MiddlewareContinuationTester.cs" />
     <Compile Include="Middleware\StaticFiles\StaticFileMiddlewareTester.cs" />
+    <Compile Include="Middleware\StaticFiles\WriteFileHeadContinuationTester.cs" />
     <Compile Include="OwinClientConnectivityTester.cs" />
     <Compile Include="OwinCurrentHttpRequestTester.cs" />
     <Compile Include="OwinSettingsTester.cs" />

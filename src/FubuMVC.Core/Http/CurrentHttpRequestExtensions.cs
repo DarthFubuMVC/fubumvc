@@ -166,6 +166,10 @@ namespace FubuMVC.Core.Http
 
         }
 
+        public static string Quoted(this string value)
+        {
+            return "\"{0}\"".ToFormat(value);
+        }
 
         public static void AppendValue(this IDictionary<string, string[]> headers, string key, string value)
         {

@@ -140,40 +140,6 @@ namespace FubuMVC.OwinHost.Middleware.StaticFiles
     }
 
 
-    public class WriteFileHeadContinuation : WriterContinuation
-    {
-        private readonly IFubuFile _file;
-        private readonly HttpStatusCode _status;
-
-        public WriteFileHeadContinuation(IHttpWriter writer, IFubuFile file, HttpStatusCode status) : base(writer, DoNext.Stop)
-        {
-            _file = file;
-            _status = status;
-        }
-
-        public IFubuFile File
-        {
-            get { return _file; }
-        }
-
-        public HttpStatusCode Status
-        {
-            get { return _status; }
-        }
-
-        public override void Write(IHttpWriter writer)
-        {
-//            //if (!string.IsNullOrEmpty(_contentType))
-//            {
-//                _response.ContentType = _contentType;
-//            }
-//            _response.Headers.Set(Constants.LastModified, _lastModifiedString);
-//            _response.ETag = _etagQuoted;
-            throw new NotImplementedException();
-        }
-    }
-
-
     public class WriteStatusCodeContinuation : WriterContinuation
     {
         private readonly HttpStatusCode _status;
