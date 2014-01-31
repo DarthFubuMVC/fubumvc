@@ -65,7 +65,7 @@ namespace FubuMVC.OwinHost
         public readonly IList<IStaticFileRule> StaticFileRules
             = new List<IStaticFileRule> {new AssetStaticFileRule(), new DenyConfigRule()};
 
-        public AuthorizationRight DetermineStaticFileRights(FubuFile file)
+        public AuthorizationRight DetermineStaticFileRights(IFubuFile file)
         {
             return AuthorizationRight.Combine(StaticFileRules.Select(x => x.IsAllowed(file)));
         }

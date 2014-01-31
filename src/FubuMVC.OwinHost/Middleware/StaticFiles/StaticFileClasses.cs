@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using FubuMVC.Core;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime.Files;
+using FubuMVC.Core.Security;
 
 namespace FubuMVC.OwinHost.Middleware.StaticFiles
 {
@@ -13,10 +14,12 @@ namespace FubuMVC.OwinHost.Middleware.StaticFiles
     public class StaticFileMiddleware : FubuMvcOwinMiddleware
     {
         private readonly IFubuApplicationFiles _files;
+        private readonly OwinSettings _settings;
 
-        public StaticFileMiddleware(Func<IDictionary<string, object>, Task> inner, IFubuApplicationFiles files) : base(inner)
+        public StaticFileMiddleware(Func<IDictionary<string, object>, Task> inner, IFubuApplicationFiles files, OwinSettings settings) : base(inner)
         {
             _files = files;
+            _settings = settings;
         }
 
         public override MiddlewareContinuation Invoke(ICurrentHttpRequest request, IHttpWriter writer)
@@ -26,10 +29,10 @@ namespace FubuMVC.OwinHost.Middleware.StaticFiles
             var file = _files.Find(request.RelativeUrl());
             if (file == null) return MiddlewareContinuation.Continue();
 
-
-
-
-            // TODO -- check if the file extension is protected.  Put it on OwinSettings.  If protected, write a 404.  Make sure that "*.config" is protected
+            if (_settings.DetermineStaticFileRights(file) != AuthorizationRight.Allow)
+            {
+                return MiddlewareContinuation.Continue();
+            }
 
 
             if (request.IsHead())

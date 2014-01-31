@@ -24,7 +24,7 @@ namespace FubuMVC.OwinHost.Testing.Middleware.StaticFiles
         {
             theRequest = new OwinCurrentHttpRequest();
             theWriter = new OwinHttpWriter(theRequest.Environment);
-            theMiddleware = new StaticFileMiddleware(null, theFiles);
+            theMiddleware = new StaticFileMiddleware(null, theFiles, new OwinSettings());
         }
 
         private void fileDoesNotExist(string path)
@@ -52,55 +52,66 @@ namespace FubuMVC.OwinHost.Testing.Middleware.StaticFiles
         }
 
         [Test]
+        public void will_not_write_a_file_that_is_denied_even_if_it_exists()
+        {
+            theFiles.WriteFile("my.config", "some stuff");
+        
+            forMethodAndFile("GET", "my.config")
+                .AssertOnlyContinuesToTheInner();
+        }
+
+        [Test]
         public void just_continue_if_not_GET_or_HEAD()
         {
-            theFiles.WriteFile("anything.txt", "some content");
+            theFiles.WriteFile("anything.htm", "some content");
 
-            forMethodAndFile("POST", "anything.txt").AssertOnlyContinuesToTheInner();
-            forMethodAndFile("PUT", "anything.txt").AssertOnlyContinuesToTheInner();
+            forMethodAndFile("POST", "anything.htm").AssertOnlyContinuesToTheInner();
+            forMethodAndFile("PUT", "anything.htm").AssertOnlyContinuesToTheInner();
         }
 
         [Test]
         public void GET_and_the_file_does_not_exist()
         {
-            fileDoesNotExist("something.txt");
+            fileDoesNotExist("something.js");
 
-            forMethodAndFile("GET", "something.txt")
+            forMethodAndFile("GET", "something.js")
                 .AssertOnlyContinuesToTheInner();
         }
 
         [Test]
         public void HEAD_and_the_file_does_not_exist()
         {
-            fileDoesNotExist("something.txt");
+            fileDoesNotExist("something.js");
 
-            forMethodAndFile("HEAD", "something.txt")
+            forMethodAndFile("HEAD", "something.js")
                 .AssertOnlyContinuesToTheInner();
         }
 
         [Test]
         public void file_exists_on_GET_request_no_headers_of_any_kind_should_write_file()
         {
-            theFiles.WriteFile("/folder1/foo.txt", "hey you!");
+            theFiles.WriteFile("/folder1/foo.htm", "hey you!");
 
-            var continuation = forMethodAndFile("GET", "/folder1/foo.txt")
+            var continuation = forMethodAndFile("GET", "/folder1/foo.htm")
                 .ShouldBeOfType<WriteFileContinuation>();
 
             continuation.File.RelativePath
-                .ShouldEqual("folder1/foo.txt");
+                .ShouldEqual("folder1/foo.htm");
         }
 
         [Test]
         public void file_exists_on_HEAD_request_when_file_exists()
         {
-            theFiles.WriteFile("foo.txt", "something grand");
+            theFiles.WriteFile("foo.css", "something grand");
 
-            var continuation = forMethodAndFile("HEAD", "foo.txt")
+            var continuation = forMethodAndFile("HEAD", "foo.css")
                 .ShouldBeOfType<WriteFileHeadContinuation>();
 
             continuation.Status.ShouldEqual(HttpStatusCode.OK);
-            continuation.File.RelativePath.ShouldEqual("foo.txt");
+            continuation.File.RelativePath.ShouldEqual("foo.css");
         }
+
+
     }
 
     public class StubFubuApplicationFiles : IFubuApplicationFiles
