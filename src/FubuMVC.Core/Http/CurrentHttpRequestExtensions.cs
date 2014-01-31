@@ -193,6 +193,11 @@ namespace FubuMVC.Core.Http
                 : null as DateTime?;
         }
 
+        public static string ToHttpDateString(this DateTime time)
+        {
+            return time.ToUniversalTime().ToString("r");
+        }
+
         public static DateTime? IfModifiedSince(this ICurrentHttpRequest request)
         {
             return request.GetSingleHeader(HttpRequestHeaders.IfModifiedSince)

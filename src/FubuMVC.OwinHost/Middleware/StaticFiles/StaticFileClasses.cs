@@ -62,9 +62,11 @@ namespace FubuMVC.OwinHost.Middleware.StaticFiles
                 return new WriteFileContinuation(writer, file);
             }
 
-            // TODO -- do if-none-match header.  Return 304 if the etag matches, otherwise write.
-
-            // TODO -- do if-modified-since, return 304 if not modified, otherwise write
+            var ifModifiedSince = request.IfModifiedSince();
+            if (ifModifiedSince.HasValue && file.LastModified() <= ifModifiedSince.Value.ToUniversalTime())
+            {
+                return new WriteFileHeadContinuation(writer, file, HttpStatusCode.NotModified);
+            }
 
             // TODO -- do if-unmodified-since, return 412 if the file has been modified.  Looking for the same version as before.
 

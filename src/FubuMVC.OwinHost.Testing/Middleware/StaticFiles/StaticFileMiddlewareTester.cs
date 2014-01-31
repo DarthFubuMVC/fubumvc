@@ -169,6 +169,33 @@ namespace FubuMVC.OwinHost.Testing.Middleware.StaticFiles
             continuation.Status.ShouldEqual(HttpStatusCode.NotModified);
             continuation.File.RelativePath.ShouldEqual("foo.css");
         }
+
+        [Test]
+        public void if_modified_since_is_false_on_a_good_request()
+        {
+            var file = theFiles.WriteFile("foo.css", "some contents");
+
+            theRequest.IfModifiedSince(file.LastModified().AddDays(1));
+
+            var continuation = forMethodAndFile("GET", "foo.css")
+                .ShouldBeOfType<WriteFileHeadContinuation>();
+
+            continuation.Status.ShouldEqual(HttpStatusCode.NotModified);
+            continuation.File.RelativePath.ShouldEqual("foo.css");
+        }
+
+        [Test]
+        public void if_modified_since_is_true_on_a_good_request_should_write_the_file()
+        {
+            var file = theFiles.WriteFile("foo.css", "some contents");
+
+            theRequest.IfModifiedSince(file.LastModified().AddDays(-1));
+
+            var continuation = forMethodAndFile("GET", "foo.css")
+                .ShouldBeOfType<WriteFileContinuation>();
+
+            continuation.File.RelativePath.ShouldEqual("foo.css");
+        }
     }
 
     public class StubFubuApplicationFiles : IFubuApplicationFiles
