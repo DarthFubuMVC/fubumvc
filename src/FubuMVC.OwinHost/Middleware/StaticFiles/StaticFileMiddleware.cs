@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using FubuMVC.Core;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Security;
@@ -71,71 +70,6 @@ namespace FubuMVC.OwinHost.Middleware.StaticFiles
 
 
             return new WriteFileContinuation(writer, file);
-        }
-    }
-
-    public abstract class WriterContinuation : MiddlewareContinuation
-    {
-        private readonly DoNext _doNext;
-
-        protected WriterContinuation(IHttpWriter writer, DoNext doNext)
-        {
-            if (writer == null) throw new ArgumentNullException("writer");
-
-            DoNext = doNext;
-
-            Action = () => Write(writer);
-        }
-
-        public abstract void Write(IHttpWriter writer);
-    }
-
-    public class WriteFileContinuation : WriterContinuation
-    {
-        private readonly IFubuFile _file;
-
-        public WriteFileContinuation(IHttpWriter writer, IFubuFile file) : base(writer, DoNext.Stop)
-        {
-            _file = file;
-        }
-
-        public override void Write(IHttpWriter writer)
-        {
-            // content-type
-            // content-length
-            // etag
-            // last modified
-
-            // TODO -- write the file w/ the right headers
-            throw new NotImplementedException();
-        }
-
-        public IFubuFile File
-        {
-            get { return _file; }
-        }
-
-        public override string ToString()
-        {
-            return string.Format("Write file: {0}", _file);
-        }
-
-        protected bool Equals(WriteFileContinuation other)
-        {
-            return Equals(_file, other._file);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return Equals((WriteFileContinuation) obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return (_file != null ? _file.GetHashCode() : 0);
         }
     }
 }

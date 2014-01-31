@@ -76,8 +76,10 @@
     <Compile Include="Middleware\StaticFiles\AssetStaticFileRule.cs" />
     <Compile Include="Middleware\StaticFiles\DenyConfigRule.cs" />
     <Compile Include="Middleware\StaticFiles\IStaticFileRule.cs" />
-    <Compile Include="Middleware\StaticFiles\StaticFileClasses.cs" />
+    <Compile Include="Middleware\StaticFiles\StaticFileMiddleware.cs" />
+    <Compile Include="Middleware\StaticFiles\WriteFileContinuation.cs" />
     <Compile Include="Middleware\StaticFiles\WriteFileHeadContinuation.cs" />
+    <Compile Include="Middleware\StaticFiles\WriterContinuation.cs" />
     <Compile Include="Middleware\StaticFiles\WriteStatusCodeContinuation.cs" />
     <Compile Include="OwinClientConnectivity.cs" />
     <Compile Include="OwinContext.cs" />
