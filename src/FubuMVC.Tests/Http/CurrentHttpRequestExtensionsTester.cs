@@ -100,5 +100,36 @@ namespace FubuMVC.Tests.Http
                 .ShouldHaveTheSameElementsAs("v1", "v2", "v3", "v4, b", "v5", "v6", "v7");
         }
 
+
+        [Test]
+        public void etag_matches_with_no_values()
+        {
+            new string[0].EtagMatches("foo")
+                .ShouldEqual(EtagMatch.None);
+        }
+
+        [Test]
+        public void etag_matches_with_wildcard()
+        {
+            new string[] {"a", "*", "b"}
+                .EtagMatches("foo")
+                .ShouldEqual(EtagMatch.Yes);
+        }
+
+        [Test]
+        public void etag_matches_positive()
+        {
+            new string[] {"a", "b", "foo"}
+                .EtagMatches("foo")
+                .ShouldEqual(EtagMatch.Yes);
+        }
+
+        [Test]
+        public void etag_matches_negative()
+        {
+            new string[] { "a", "b", "bar" }
+                .EtagMatches("foo")
+                .ShouldEqual(EtagMatch.No);
+        }
     }
 }

@@ -213,7 +213,24 @@ namespace FubuMVC.Core.Http
         public static IEnumerable<string> IfNoneMatch(this ICurrentHttpRequest request)
         {
             return request.GetHeader(HttpRequestHeaders.IfNoneMatch).GetCommaSeparatedHeaderValues();
-        } 
+        }
+
+        public static EtagMatch EtagMatches(this IEnumerable<string> values, string etag)
+        {
+            if (values == null || !values.Any()) return EtagMatch.None;
+
+            return values.Any(x => x.Equals(etag, StringComparison.Ordinal) || x == "*")
+                ? EtagMatch.Yes
+                : EtagMatch.No;
+
+        }
+    }
+
+    public enum EtagMatch
+    {
+        Yes,
+        No,
+        None
     }
 
     public class CommaTokenParser

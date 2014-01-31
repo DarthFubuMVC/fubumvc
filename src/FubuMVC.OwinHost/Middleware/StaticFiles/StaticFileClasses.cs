@@ -40,7 +40,16 @@ namespace FubuMVC.OwinHost.Middleware.StaticFiles
                 return new WriteFileHeadContinuation(writer, file, HttpStatusCode.OK);
             }
 
-            // TODO -- do if-match header, exact match on etag.  Return 412 if not an exact match
+            var ifMatch = request.IfMatch().EtagMatches(file.Etag());
+            if (ifMatch == EtagMatch.Yes)
+            {
+                return new WriteFileContinuation(writer, file);
+            }
+            
+            if (ifMatch == EtagMatch.No)
+            {
+                return new WriteFileHeadContinuation(writer, file, HttpStatusCode.PreconditionFailed);
+            }
 
             // TODO -- do if-none-match header.  Return 304 if the etag matches, otherwise write.
 

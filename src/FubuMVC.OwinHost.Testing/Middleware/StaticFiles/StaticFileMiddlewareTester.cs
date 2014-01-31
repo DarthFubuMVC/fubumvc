@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using FubuCore;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.OwinHost.Middleware;
 using FubuMVC.OwinHost.Middleware.StaticFiles;
@@ -36,9 +37,11 @@ namespace FubuMVC.OwinHost.Testing.Middleware.StaticFiles
             }
         }
 
-        private MiddlewareContinuation forMethodAndFile(string method, string path)
+        private MiddlewareContinuation forMethodAndFile(string method, string path, string etag = null)
         {
             theRequest.HttpMethod(method);
+
+
             if (theRequest.Environment.ContainsKey(OwinConstants.RequestPathKey))
             {
                 theRequest.Environment[OwinConstants.RequestPathKey] = path;
@@ -111,14 +114,43 @@ namespace FubuMVC.OwinHost.Testing.Middleware.StaticFiles
             continuation.File.RelativePath.ShouldEqual("foo.css");
         }
 
+        [Test]
+        public void file_exists_on_GET_but_miss_on_IfMatch_header()
+        {
+            var file = theFiles.WriteFile("foo.css", "some contents");
+            var differentEtag = file.Etag() + "!"; // just to make it different
 
+            theRequest.Header(HttpRequestHeaders.IfMatch, differentEtag);
+
+            var continuation = forMethodAndFile("GET", "foo.css")
+                .ShouldBeOfType<WriteFileHeadContinuation>();
+
+            continuation.Status.ShouldEqual(HttpStatusCode.PreconditionFailed);
+            continuation.File.RelativePath.ShouldEqual("foo.css");
+        }
+
+        [Test]
+        public void file_exists_on_GET_and_hit_on_IfMatch_header()
+        {
+            var file = theFiles.WriteFile("foo.css", "some contents");
+
+            theRequest.Header(HttpRequestHeaders.IfMatch, file.Etag());
+
+            var continuation = forMethodAndFile("GET", "foo.css")
+                .ShouldBeOfType<WriteFileContinuation>();
+
+            continuation.File.RelativePath.ShouldEqual("foo.css");
+        }
     }
 
     public class StubFubuApplicationFiles : IFubuApplicationFiles
     {
-        public void WriteFile(string relativePath, string contents)
+        public FubuFile WriteFile(string relativePath, string contents)
         {
-            new FileSystem().WriteStringToFile(relativePath.TrimStart('/').Replace('/', Path.DirectorySeparatorChar).TrimStart('/'), contents);
+            var path = relativePath.TrimStart('/').Replace('/', Path.DirectorySeparatorChar).TrimStart('/');
+            new FileSystem().WriteStringToFile(path, contents);
+        
+            return new FubuFile(path, "application");
         }
 
         public string GetApplicationPath()
