@@ -22,7 +22,7 @@ namespace FubuMVC.Core.Runtime
         public static readonly MimeType Html = New(MediaTypeNames.Text.Html, ".htm", ".html");
         public static readonly MimeType Json = New("application/json");
         public static readonly MimeType Text = New(MediaTypeNames.Text.Plain, ".txt");
-        public static readonly MimeType Javascript = New("application/javascript", ".js");
+        public static readonly MimeType Javascript = New("application/javascript", ".js", ".coffee");
         public static readonly MimeType Css = New("text/css", ".css");
 
         public static readonly MimeType Gif = New("image/gif", ".gif");

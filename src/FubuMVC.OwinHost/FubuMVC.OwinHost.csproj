@@ -73,6 +73,9 @@
     <Compile Include="Middleware\MiddlewareChain.cs" />
     <Compile Include="Middleware\MiddlewareContinuation.cs" />
     <Compile Include="Middleware\MiddlewareNode.cs" />
+    <Compile Include="Middleware\StaticFiles\AssetStaticFileRule.cs" />
+    <Compile Include="Middleware\StaticFiles\DenyConfigRule.cs" />
+    <Compile Include="Middleware\StaticFiles\IStaticFileRule.cs" />
     <Compile Include="Middleware\StaticFiles\StaticFileClasses.cs" />
     <Compile Include="OwinClientConnectivity.cs" />
     <Compile Include="OwinContext.cs" />

@@ -9,7 +9,7 @@ using FubuMVC.OwinHost.Middleware.StaticFiles;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.OwinHost.Testing.Middleware
+namespace FubuMVC.OwinHost.Testing.Middleware.StaticFiles
 {
     [TestFixture]
     public class StaticFileMiddlewareTester

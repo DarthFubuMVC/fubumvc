@@ -97,6 +97,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Middleware\StaticFiles\AssetStaticFileRuleTester.cs" />
     <Compile Include="binding_against_form_data.cs" />
     <Compile Include="binding_against_querystring_values.cs" />
     <Compile Include="binding_against_request_cookies.cs" />
@@ -105,10 +106,12 @@
     <Compile Include="handling_async_routes.cs" />
     <Compile Include="handling_a_404.cs" />
     <Compile Include="Harness.cs" />
+    <Compile Include="Middleware\StaticFiles\DenyConfigRuleTester.cs" />
     <Compile Include="Middleware\MiddlewareContinuationTester.cs" />
-    <Compile Include="Middleware\StaticFileMiddlewareTester.cs" />
+    <Compile Include="Middleware\StaticFiles\StaticFileMiddlewareTester.cs" />
     <Compile Include="OwinClientConnectivityTester.cs" />
     <Compile Include="OwinCurrentHttpRequestTester.cs" />
+    <Compile Include="OwinSettingsTester.cs" />
     <Compile Include="Owin_url_resolution_tester.cs" />
     <Compile Include="OwnResponseTester.cs" />
     <Compile Include="OwnHttpWriterTester.cs" />

@@ -5,7 +5,10 @@ using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Runtime.Files;
+using FubuMVC.Core.Security;
 using FubuMVC.OwinHost.Middleware;
+using FubuMVC.OwinHost.Middleware.StaticFiles;
 using Owin;
 
 namespace FubuMVC.OwinHost
@@ -57,6 +60,14 @@ namespace FubuMVC.OwinHost
         public void AddMiddleware(MiddlewareNode node)
         {
             Middleware.AddToEnd(node);
+        }
+
+        public readonly IList<IStaticFileRule> StaticFileRules
+            = new List<IStaticFileRule> {new AssetStaticFileRule(), new DenyConfigRule()};
+
+        public AuthorizationRight DetermineStaticFileRights(FubuFile file)
+        {
+            return AuthorizationRight.Combine(StaticFileRules.Select(x => x.IsAllowed(file)));
         }
     }
 }
