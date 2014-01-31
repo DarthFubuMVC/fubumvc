@@ -141,6 +141,34 @@ namespace FubuMVC.OwinHost.Testing.Middleware.StaticFiles
 
             continuation.File.RelativePath.ShouldEqual("foo.css");
         }
+
+        [Test]
+        public void file_exists_on_GET_but_miss_on_IfNoneMatch_header()
+        {
+            var file = theFiles.WriteFile("foo.css", "some contents");
+            var differentEtag = file.Etag() + "!"; // just to make it different
+
+            theRequest.Header(HttpRequestHeaders.IfNoneMatch, differentEtag);
+
+            var continuation = forMethodAndFile("GET", "foo.css")
+                .ShouldBeOfType<WriteFileContinuation>();
+
+            continuation.File.RelativePath.ShouldEqual("foo.css");
+        }
+
+        [Test]
+        public void file_exists_on_GET_and_hit_on_IfNoneMatch_header()
+        {
+            var file = theFiles.WriteFile("foo.css", "some contents");
+
+            theRequest.Header(HttpRequestHeaders.IfNoneMatch, file.Etag());
+
+            var continuation = forMethodAndFile("GET", "foo.css")
+                .ShouldBeOfType<WriteFileHeadContinuation>();
+
+            continuation.Status.ShouldEqual(HttpStatusCode.NotModified);
+            continuation.File.RelativePath.ShouldEqual("foo.css");
+        }
     }
 
     public class StubFubuApplicationFiles : IFubuApplicationFiles
