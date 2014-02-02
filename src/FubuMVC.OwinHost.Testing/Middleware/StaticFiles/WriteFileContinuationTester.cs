@@ -34,12 +34,6 @@ namespace FubuMVC.OwinHost.Testing.Middleware.StaticFiles
 
 
         [Test]
-        public void should_write_the_content_length()
-        {
-            assertHeaderValueWasWritten(HttpResponseHeaders.ContentLength, theFile.Length().ToString());
-        }
-
-        [Test]
         public void should_write_ok_as_the_status_code()
         {
             theWriter.AssertWasCalled(x => x.WriteResponseCode(HttpStatusCode.OK));

@@ -20,12 +20,6 @@ namespace FubuMVC.IntegrationTesting
     [SetUpFixture]
     public class HarnessBootstrapper
     {
-        [SetUp]
-        public void SetUp()
-        {
-            SelfHostHarness.Start();
-        }
-
         [TearDown]
         public void TearDown()
         {
@@ -51,6 +45,8 @@ namespace FubuMVC.IntegrationTesting
         {
             get
             {
+                if (_server == null) Recycle();
+
                 return _server.BaseAddress;
             }
         }
@@ -59,13 +55,15 @@ namespace FubuMVC.IntegrationTesting
         {
             get
             {
+                if (_server == null) Recycle();
+
                 return _server.Endpoints;
             }
         }
 
         public static void Shutdown()
         {
-            _server.SafeDispose();
+            if (_server != null) _server.SafeDispose();
         }
 
         public static void Recycle()
@@ -74,8 +72,6 @@ namespace FubuMVC.IntegrationTesting
             {
                 _server.Dispose();
             }
-
-            FubuMvcPackageFacility.PhysicalRootPath = GetRootDirectory();
 
             var port = PortFinder.FindPort(5500);
             var runtime = bootstrapRuntime();

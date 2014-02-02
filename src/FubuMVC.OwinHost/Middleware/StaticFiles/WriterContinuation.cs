@@ -14,7 +14,10 @@ namespace FubuMVC.OwinHost.Middleware.StaticFiles
 
             DoNext = doNext;
 
-            Action = () => Write(writer);
+            Action = () => {
+                Write(writer);
+                writer.Flush();
+            };
         }
 
         public abstract void Write(IHttpWriter writer);

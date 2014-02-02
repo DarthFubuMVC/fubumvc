@@ -45,7 +45,17 @@ namespace FubuMVC.OwinHost.Middleware
                 return inner(environment);
             }
 
-            return Task.Factory.StartNew(Action ?? (() => { }));
+            Action = Action ?? (() => { });
+
+            return Task.Factory.StartNew(Action);
+        }
+
+        // TODO -- this might be useful later
+        private static Task completedTask()
+        {
+            var tcs = new TaskCompletionSource<object>();
+            tcs.SetResult(null);
+            return tcs.Task;
         }
     }
 }

@@ -7,6 +7,7 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Handlers;
 using FubuMVC.StructureMap;
@@ -50,6 +51,8 @@ namespace FubuMVC.Tests
                     .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
             });
 
+            
+
             container = new Container(x =>
             {
                 x.For<IStreamingData>().Use(MockRepository.GenerateMock<IStreamingData>());
@@ -59,6 +62,8 @@ namespace FubuMVC.Tests
                 });
             });
 
+            FubuMvcPackageFacility.PhysicalRootPath = AppDomain.CurrentDomain.BaseDirectory;
+
             routes = FubuApplication.For(registry)
                 .StructureMap(container)
                 .Bootstrap()
@@ -67,10 +72,15 @@ namespace FubuMVC.Tests
                 .ToList();
 
             container.Configure(x => x.For<IOutputWriter>().Use(new InMemoryOutputWriter()));
-            Debug.WriteLine(container.WhatDoIHave());
         }
 
         #endregion
+
+        [TearDown]
+        public void TearDown()
+        {
+            FubuMvcPackageFacility.PhysicalRootPath = null;
+        }
 
         private FubuRegistry registry;
         private Container container;
@@ -92,8 +102,6 @@ namespace FubuMVC.Tests
         public void should_register_routes_in_order_of_the_number_of_their_inputs()
         {
             var urls = routes.OfType<Route>().Select(r => r.Url).Where(x => !x.Contains("hello"));
-
-            urls.Each(x => Console.WriteLine(x));
 
             urls.ShouldHaveTheSameElementsAs(
                 "area/sub2/prop",

@@ -42,7 +42,7 @@ namespace FubuMVC.OwinHost
                 }
             });
 
-            Middleware.OfType<IAppBuilderConfiguration>().Each(x => x.Configure(builder));
+            Middleware.OfType<IAppBuilderConfiguration>().ToArray().Each(x => x.Configure(builder));
         }
 
         public readonly MiddlewareChain Middleware = new MiddlewareChain();

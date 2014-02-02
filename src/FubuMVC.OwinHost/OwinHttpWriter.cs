@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -14,7 +15,7 @@ namespace FubuMVC.OwinHost
     public class OwinHttpWriter : IHttpWriter, IDisposable
     {
         private readonly IDictionary<string, object> _environment;
-        private readonly MemoryStream _output;
+        private readonly Stream _output;
 
         public OwinHttpWriter(IDictionary<string, object> environment)
         {
@@ -36,10 +37,15 @@ namespace FubuMVC.OwinHost
 
         public void WriteFile(string file)
         {
+            // TODO -- this has to change
+
+            AppendHeader(HttpResponseHeaders.ContentLength, new FileInfo(file).Length.ToString(CultureInfo.InvariantCulture));
             using (var fileStream = new FileStream(file, FileMode.Open))
             {
                 Write(stream => fileStream.CopyTo(stream, 64000));
             }
+
+            
         }
 
         public void WriteContentType(string contentType)
@@ -47,9 +53,33 @@ namespace FubuMVC.OwinHost
             AppendHeader(HttpResponseHeaders.ContentType, contentType);
         }
 
+        public long ContentLength
+        {
+            get
+            {
+                var headers = _environment.Get<IDictionary<string, string[]>>(OwinConstants.ResponseHeadersKey);
+                return headers.ContainsKey(OwinConstants.ContentLengthHeader)
+                    ? long.Parse(headers[OwinConstants.ContentLengthHeader][0])
+                    : 0;
+            }
+            set
+            {
+                var headers = _environment.Get<IDictionary<string, string[]>>(OwinConstants.ResponseHeadersKey);
+                if (headers.ContainsKey(OwinConstants.ContentLengthHeader))
+                {
+                    headers[OwinConstants.ContentLengthHeader][0] = value.ToString();
+                }
+                else
+                {
+                    headers.Add(OwinConstants.ContentLengthHeader, new []{value.ToString()});
+                }
+            }
+        }
+
         public void Write(string content)
         {
             var writer = new StreamWriter(_output){AutoFlush = true};
+
             writer.Write(content);
         }
 
@@ -87,9 +117,14 @@ namespace FubuMVC.OwinHost
 
         public void Flush()
         {
-            var response = _environment.Get<Stream>(OwinConstants.ResponseBodyKey);
-            _output.Position =0;
-            _output.CopyTo(response);
+            if (_output.Length <= 0) return;
+
+            _output.Position = 0;
+
+            var owinOutput = _environment.Get<Stream>(OwinConstants.ResponseBodyKey);
+            _output.CopyTo(owinOutput);
+
+            owinOutput.Flush();
         }
 
         public void Dispose()

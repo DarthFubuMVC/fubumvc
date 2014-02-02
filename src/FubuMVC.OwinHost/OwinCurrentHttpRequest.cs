@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.IO;
 using System.Web;
 using FubuCore;
 using FubuMVC.Core.Http;
@@ -19,6 +20,7 @@ namespace FubuMVC.OwinHost
         {
             _environment.Add(OwinConstants.RequestHeadersKey, new Dictionary<string, string[]>());
             _querystring = new Lazy<NameValueCollection>(() => new NameValueCollection());
+            _environment.Add(OwinConstants.ResponseBodyKey, new MemoryStream());
         }
 
         public OwinCurrentHttpRequest(IDictionary<string, object> environment)

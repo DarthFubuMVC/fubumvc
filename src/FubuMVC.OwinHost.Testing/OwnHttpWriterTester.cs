@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using NUnit.Framework;
 using FubuTestingSupport;
@@ -16,6 +17,8 @@ namespace FubuMVC.OwinHost.Testing
         protected void beforeEach()
         {
             environment = new Dictionary<string, object>();
+            environment.Add(OwinConstants.ResponseBodyKey, new MemoryStream());
+
             writer = new OwinHttpWriter(environment);
         }
 

@@ -48,6 +48,8 @@ namespace FubuMVC.OwinHost.Middleware.StaticFiles
             {
                 writer.AppendHeader(HttpResponseHeaders.ContentLength, _file.Length().ToString());
             }
+
+            writer.WriteResponseCode(_status);
         }
     }
 }

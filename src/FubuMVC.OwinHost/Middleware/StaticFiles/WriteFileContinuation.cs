@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,10 +22,10 @@ namespace FubuMVC.OwinHost.Middleware.StaticFiles
 
         public override void Write(IHttpWriter writer)
         {
-            WriteFileHeadContinuation.WriteHeaders(writer, _file);
-            writer.AppendHeader(HttpResponseHeaders.ContentLength, _file.Length().ToString());
-            writer.WriteResponseCode(HttpStatusCode.OK);
             writer.WriteFile(_file.Path);
+
+            WriteFileHeadContinuation.WriteHeaders(writer, _file);
+            writer.WriteResponseCode(HttpStatusCode.OK);
         }
 
         public IFubuFile File

@@ -6,8 +6,10 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Packaging;
+using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Urls;
 using FubuMVC.OwinHost;
+using FubuMVC.OwinHost.Middleware.StaticFiles;
 using Microsoft.Owin.Hosting;
 using Microsoft.Owin.Hosting.Builder;
 using Microsoft.Owin.Hosting.Engine;
@@ -69,6 +71,7 @@ namespace FubuMVC.Katana
             }
 
             _runtime = runtime;
+            _services = _runtime.Factory.Get<IServiceLocator>();
 
             // before anything else, make sure there is no server on the settings
             // We're doing this hokey-pokey to ensure that things don't get double 
@@ -128,7 +131,10 @@ namespace FubuMVC.Katana
             var parameters = new StartOptions {Port = port};
             parameters.Urls.Add("http://*:" + port); //for netsh http add urlacl
 
-            FubuMvcPackageFacility.PhysicalRootPath = physicalPath ?? AppDomain.CurrentDomain.BaseDirectory;
+            // Adding the static middleware
+            settings.AddMiddleware<StaticFileMiddleware>(_services.GetInstance<IFubuApplicationFiles>(), settings);
+
+            if (physicalPath != null) FubuMvcPackageFacility.PhysicalRootPath = physicalPath;
             Action<IAppBuilder> startup = FubuOwinHost.ToStartup(settings, routes);
 
             var context = new StartContext(parameters)

@@ -84,5 +84,10 @@ namespace FubuMVC.Core.Runtime.Files
         {
             return string.Format("Path: {0}, Provenance: {1}", Path, Provenance);
         }
+
+        public static IFubuFile Load(string relativePath)
+        {
+            return new FubuApplicationFiles().Find(relativePath);
+        }
     }
 }
