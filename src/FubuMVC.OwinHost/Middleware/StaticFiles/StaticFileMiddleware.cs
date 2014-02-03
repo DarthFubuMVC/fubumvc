@@ -8,14 +8,14 @@ using FubuMVC.Core.Security;
 
 namespace FubuMVC.OwinHost.Middleware.StaticFiles
 {
-
+    using AppFunc = Func<IDictionary<string, object>, Task>;
 
     public class StaticFileMiddleware : FubuMvcOwinMiddleware
     {
         private readonly IFubuApplicationFiles _files;
         private readonly OwinSettings _settings;
 
-        public StaticFileMiddleware(Func<IDictionary<string, object>, Task> inner, IFubuApplicationFiles files, OwinSettings settings) : base(inner)
+        public StaticFileMiddleware(AppFunc inner, IFubuApplicationFiles files, OwinSettings settings) : base(inner)
         {
             _files = files;
             _settings = settings;
@@ -38,7 +38,7 @@ namespace FubuMVC.OwinHost.Middleware.StaticFiles
                 return new WriteFileHeadContinuation(writer, file, HttpStatusCode.OK);
             }
 
-            if (request.IfMatchConditionDoesNotMatchEtag(file))
+            if (request.IfMatchHeaderDoesNotMatchEtag(file))
             {
                 return new WriteStatusCodeContinuation(writer, HttpStatusCode.PreconditionFailed, "If-Match test failed"); 
             }
@@ -47,7 +47,6 @@ namespace FubuMVC.OwinHost.Middleware.StaticFiles
             {
                 return new WriteFileHeadContinuation(writer, file, HttpStatusCode.NotModified);
             }
-
 
             if (request.IfModifiedSinceHeaderAndNotModified(file))
             {
@@ -84,7 +83,7 @@ namespace FubuMVC.OwinHost.Middleware.StaticFiles
             return request.IfNoneMatch().EtagMatches(file.Etag()) == EtagMatch.Yes;
         }
 
-        public static bool IfMatchConditionDoesNotMatchEtag(this ICurrentHttpRequest request, IFubuFile file)
+        public static bool IfMatchHeaderDoesNotMatchEtag(this ICurrentHttpRequest request, IFubuFile file)
         {
             return request.IfMatch().EtagMatches(file.Etag()) == EtagMatch.No;
         }
