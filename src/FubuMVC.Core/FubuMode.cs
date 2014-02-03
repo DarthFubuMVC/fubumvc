@@ -137,7 +137,7 @@ namespace FubuMVC.Core
         /// <returns></returns>
         public static string Mode()
         {
-            return _determineMode.Value;
+            return _determineMode.Value ?? string.Empty;
         }
 
         /// <summary>

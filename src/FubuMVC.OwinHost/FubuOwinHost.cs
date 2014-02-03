@@ -48,6 +48,7 @@ namespace FubuMVC.OwinHost
             }
 
             new OwinRequestReader().Read(environment);
+
             var arguments = new OwinServiceArguments(routeData, environment);
             var invoker = routeData.RouteHandler.As<FubuRouteHandler>().Invoker;
 

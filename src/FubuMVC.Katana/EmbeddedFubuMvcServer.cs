@@ -142,6 +142,7 @@ namespace FubuMVC.Katana
                 Startup = startup,
             };
 
+            settings.EnvironmentData[OwinConstants.AppMode] = FubuMode.Mode().ToLower();
             context.EnvironmentData.AddRange(settings.EnvironmentData.ToDictionary());
 
             var engine = new HostingEngine(new AppBuilderFactory(), new TraceOutputFactory(),

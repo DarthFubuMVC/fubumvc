@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Util;
+using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Security;
@@ -41,6 +42,8 @@ namespace FubuMVC.OwinHost
                     builder.Properties.Add(key, value);
                 }
             });
+
+            
 
             Middleware.OfType<IAppBuilderConfiguration>().ToArray().Each(x => x.Configure(builder));
         }

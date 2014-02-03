@@ -45,5 +45,7 @@
         //Fubu specific keys until owin has equivalents
         public const string MediaTypeKey = "fubu.MediaType";
         public const string RequestFormKey = "fubu.RequestForm";
+
+        public const string AppMode = "host.AppMode";
     }
 }
