@@ -6,6 +6,7 @@ namespace FubuMVC.Core.Http
     /// Used to test whether or not a client is actively
     /// connected to the request
     /// </summary>
+    // TODO -- fold this into ICurrentHttpRequest in 2.0
     public interface IClientConnectivity
     {
         bool IsClientConnected();

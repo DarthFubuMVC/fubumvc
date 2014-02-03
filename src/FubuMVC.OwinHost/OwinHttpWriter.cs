@@ -4,6 +4,8 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using FubuCore;
 using FubuMVC.Core.Http;
@@ -12,6 +14,8 @@ using FubuMVC.Core;
 
 namespace FubuMVC.OwinHost
 {
+    using SendFileFunc = Func<string, long, long?, CancellationToken, Task>;
+
     public class OwinHttpWriter : IHttpWriter, IDisposable
     {
         private readonly IDictionary<string, object> _environment;
@@ -37,14 +41,23 @@ namespace FubuMVC.OwinHost
 
         public void WriteFile(string file)
         {
-            // TODO -- this has to change
+            var fileInfo = new FileInfo(file);
 
-            AppendHeader(HttpResponseHeaders.ContentLength, new FileInfo(file).Length.ToString(CultureInfo.InvariantCulture));
-            using (var fileStream = new FileStream(file, FileMode.Open))
+            if (_environment.ContainsKey("sendfile.SendAsync"))
             {
-                Write(stream => fileStream.CopyTo(stream, 64000));
+                var sendFile = _environment.Get<SendFileFunc>("sendfile.SendAsync");
+                sendFile(file, 0, fileInfo.Length, _environment.Get<CancellationToken>(OwinConstants.CallCancelledKey));
+            }
+            else
+            {
+                AppendHeader(HttpResponseHeaders.ContentLength, fileInfo.Length.ToString(CultureInfo.InvariantCulture));
+                using (var fileStream = new FileStream(file, FileMode.Open))
+                {
+                    Write(stream => fileStream.CopyTo(stream));
+                }
             }
 
+            
             
         }
 
