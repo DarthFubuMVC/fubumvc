@@ -33,43 +33,60 @@ namespace FubuMVC.OwinHost.Middleware.StaticFiles
                 return MiddlewareContinuation.Continue();
             }
 
-
             if (request.IsHead())
             {
                 return new WriteFileHeadContinuation(writer, file, HttpStatusCode.OK);
             }
 
-            var ifMatch = request.IfMatch().EtagMatches(file.Etag());
-            if (ifMatch == EtagMatch.No)
+            if (request.IfMatchConditionDoesNotMatchEtag(file))
             {
-                return new WriteStatusCodeContinuation(writer, HttpStatusCode.PreconditionFailed, "If-Match test failed");
+                return new WriteStatusCodeContinuation(writer, HttpStatusCode.PreconditionFailed, "If-Match test failed"); 
             }
 
-            var ifNoneMatch = request.IfNoneMatch().EtagMatches(file.Etag());
-            if (ifNoneMatch == EtagMatch.Yes)
-            {
-                return new WriteFileHeadContinuation(writer, file, HttpStatusCode.NotModified);
-            }
-            
-            if (ifNoneMatch == EtagMatch.No)
-            {
-                return new WriteFileContinuation(writer, file);
-            }
-
-            var ifModifiedSince = request.IfModifiedSince();
-            if (ifModifiedSince.HasValue && file.LastModified().ToUniversalTime() <= ifModifiedSince.Value)
+            if (request.IfNoneMatchHeaderMatchesEtag(file))
             {
                 return new WriteFileHeadContinuation(writer, file, HttpStatusCode.NotModified);
             }
 
-            var ifUnModifiedSince = request.IfUnModifiedSince();
-            if (ifUnModifiedSince.HasValue && file.LastModified() > ifUnModifiedSince.Value)
+
+            if (request.IfModifiedSinceHeaderAndNotModified(file))
+            {
+                return new WriteFileHeadContinuation(writer, file, HttpStatusCode.NotModified);
+            }
+
+            if (request.IfUnModifiedSinceHeaderAndModifiedSince(file))
             {
                 return new WriteStatusCodeContinuation(writer, HttpStatusCode.PreconditionFailed, "File has been modified");
             }
 
-
             return new WriteFileContinuation(writer, file);
+        }
+
+        
+    }
+
+    public static class CurrentHttpRequestExtensions
+    {
+        public static bool IfUnModifiedSinceHeaderAndModifiedSince(this ICurrentHttpRequest request, IFubuFile file)
+        {
+            var ifUnModifiedSince = request.IfUnModifiedSince();
+            return ifUnModifiedSince.HasValue && file.LastModified() > ifUnModifiedSince.Value;
+        }
+
+        public static bool IfModifiedSinceHeaderAndNotModified(this ICurrentHttpRequest request, IFubuFile file)
+        {
+            var ifModifiedSince = request.IfModifiedSince();
+            return ifModifiedSince.HasValue && file.LastModified().ToUniversalTime() <= ifModifiedSince.Value;
+        }
+
+        public static bool IfNoneMatchHeaderMatchesEtag(this ICurrentHttpRequest request, IFubuFile file)
+        {
+            return request.IfNoneMatch().EtagMatches(file.Etag()) == EtagMatch.Yes;
+        }
+
+        public static bool IfMatchConditionDoesNotMatchEtag(this ICurrentHttpRequest request, IFubuFile file)
+        {
+            return request.IfMatch().EtagMatches(file.Etag()) == EtagMatch.No;
         }
     }
 }
