@@ -57,7 +57,7 @@ namespace FubuMVC.OwinHost.Middleware.StaticFiles
             }
 
             var ifModifiedSince = request.IfModifiedSince();
-            if (ifModifiedSince.HasValue && file.LastModified() <= ifModifiedSince.Value.ToUniversalTime())
+            if (ifModifiedSince.HasValue && file.LastModified().ToUniversalTime() <= ifModifiedSince.Value)
             {
                 return new WriteFileHeadContinuation(writer, file, HttpStatusCode.NotModified);
             }

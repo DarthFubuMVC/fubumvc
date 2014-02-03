@@ -136,6 +136,27 @@ namespace FubuMVC.IntegrationTesting
             return response;
         }
 
+        public static HttpResponse EtagShouldBe(this HttpResponse response, string etag)
+        {
+            etag.Trim('"').ShouldEqual(etag);
+            return response;
+        }
+
+        public static DateTime? LastModified(this HttpResponse response)
+        {
+            var lastModifiedString = response.ResponseHeaderFor(HttpResponseHeader.LastModified);
+            return lastModifiedString.IsEmpty() ? (DateTime?) null : DateTime.ParseExact(lastModifiedString, "r", null);
+        }
+
+        public static HttpResponse LastModifiedShouldBe(this HttpResponse response, DateTime expected)
+        {
+            var lastModified = response.LastModified();
+            lastModified.HasValue.ShouldBeTrueBecause("No value for LastModified");
+            lastModified.ShouldEqual(expected);
+
+            return response;
+        }
+
         public static string FileEscape(this string file)
         {
             return "\"{0}\"".ToFormat(file);
