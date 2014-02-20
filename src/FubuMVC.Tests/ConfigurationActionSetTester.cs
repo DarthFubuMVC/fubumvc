@@ -3,7 +3,6 @@ using Bottles;
 using FubuMVC.Core;
 using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.Diagnostics;
 using NUnit.Framework;
 using FubuTestingSupport;
 using System.Linq;
@@ -15,37 +14,6 @@ namespace FubuMVC.Tests
     [TestFixture]
     public class ConfigurationActionSetTester
     {
-        private Provenance[] provenanceStack;
-
-        [SetUp]
-        public void SetUp()
-        {
-            provenanceStack = new Provenance[]
-            {
-                new BottleProvenance(new PackageInfo(new PackageManifest{Name = "B1"})),
-                new ConfigurationPackProvenance(new DefaultConfigurationPack()),
-            };
-        }
-
-        [Test]
-        public void try_to_add_without_provenance_throws_exception()
-        {
-            Exception<ArgumentException>.ShouldBeThrownBy(() => {
-                var actions = new ConfigurationActionSet("something");
-                actions.Fill(new Provenance[0], new UniquePolicy());
-            });
-        }
-
-        [Test]
-        public void adds_with_the_entire_provenance_stack()
-        {
-            var actions = new ConfigurationActionSet("something");
-            actions.Fill(provenanceStack, new UniquePolicy());
-
-            var log = actions.Logs.Single();
-        
-            log.ProvenanceChain.Chain.ShouldHaveTheSameElementsAs(provenanceStack);
-        }
 
         [Test]
         public void latches_duplicate_types_if_they_are_unique()
@@ -54,10 +22,10 @@ namespace FubuMVC.Tests
             var policy2 = new UniquePolicy();
 
             var actions = new ConfigurationActionSet("something");
-            actions.Fill(provenanceStack, policy1);
+            actions.Fill(policy1);
 
             // policy2 should be treated as a duplicate of policy1
-            actions.Fill(provenanceStack, policy2);
+            actions.Fill(policy2);
 
             actions.Actions.Single().ShouldBeTheSameAs(policy1);
 
@@ -72,10 +40,10 @@ namespace FubuMVC.Tests
             policy1.ShouldEqual(policy2);
 
             var actions = new ConfigurationActionSet("something");
-            actions.Fill(provenanceStack, policy1);
+            actions.Fill(policy1);
 
             // policy2 should be treated as a duplicate of policy1
-            actions.Fill(provenanceStack, policy2);
+            actions.Fill(policy2);
 
             actions.Actions.Single().ShouldBeTheSameAs(policy1);
         }
@@ -89,10 +57,10 @@ namespace FubuMVC.Tests
             policy1.ShouldNotEqual(policy2);
 
             var actions = new ConfigurationActionSet("something");
-            actions.Fill(provenanceStack, policy1);
+            actions.Fill(policy1);
 
             // policy2 should be treated as a duplicate of policy1
-            actions.Fill(provenanceStack, policy2);
+            actions.Fill(policy2);
 
             actions.Actions.ShouldHaveTheSameElementsAs(policy1, policy2);
         }

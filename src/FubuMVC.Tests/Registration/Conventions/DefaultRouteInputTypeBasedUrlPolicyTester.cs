@@ -2,7 +2,6 @@ using System.Reflection;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Conventions;
-using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
@@ -35,15 +34,6 @@ namespace FubuMVC.Tests.Registration.Conventions
             _policy.Build(call).ShouldNotBeNull();
         }
 
-
-        [Test]
-        public void should_log_when_default_route_found()
-        {
-            var call = new ActionCall(typeof (TestController), _method);
-            _policy.Matches(call);
-
-            call.As<ITracedModel>().StagedEvents.OfType<Traced>().Any().ShouldBeTrue();
-        }
 
         [Test]
         public void should_match_the_action_call_input_type()

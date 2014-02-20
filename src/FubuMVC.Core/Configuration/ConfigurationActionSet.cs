@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.Diagnostics;
 
 namespace FubuMVC.Core.Configuration
 {
     public class ConfigurationActionSet
     {
-        protected readonly IList<ActionLog> _logs = new List<ActionLog>();
+        protected readonly IList<IConfigurationAction> _actions = new List<IConfigurationAction>();
         private readonly string _configurationType;
 
         public ConfigurationActionSet(string configurationType)
@@ -22,32 +21,22 @@ namespace FubuMVC.Core.Configuration
             get { return _configurationType; }
         }
 
-        public IEnumerable<ActionLog> Logs
-        {
-            get { return _logs; }
-        }
-
         public IEnumerable<IConfigurationAction> Actions
         {
-            get { return _logs.Select(x => x.Action); }
-        } 
+            get { return _actions; }
+        }
 
-        public void Fill(ProvenanceChain provenanceStack, IConfigurationAction action)
+        public void Fill(IConfigurationAction action)
         {
-            if (provenanceStack == null || !provenanceStack.Chain.Any())
-            {
-                throw new ArgumentException("No provenance supplied!");
-            }
-
             Type actionType = action.GetType();
 
 
-            if (TypeIsUnique(actionType) && _logs.Any(x => x.Action.GetType() == actionType))
+            if (TypeIsUnique(actionType) && _actions.Any(x => x.GetType() == actionType))
             {
                 return;
             }
 
-            _logs.Fill(new ActionLog(action, provenanceStack));
+            _actions.Fill(action);
         }
 
         public static bool TypeIsUnique(Type type)
@@ -70,17 +59,7 @@ namespace FubuMVC.Core.Configuration
 
         public virtual void RunActions(BehaviorGraph graph)
         {
-            _logs.Each(x => x.RunAction(graph));
-        }
-
-        public void Fill(Provenance[] provenanceStack, IConfigurationAction action)
-        {
-            Fill(new ProvenanceChain(provenanceStack), action);
-        }
-
-        public IEnumerable<T> AllEvents<T>()
-        {
-            return _logs.SelectMany(x => x.Events.OfType<T>());
+            _actions.Each(x => x.Configure(graph));
         }
     }
 
@@ -92,10 +71,12 @@ namespace FubuMVC.Core.Configuration
 
         public override void RunActions(BehaviorGraph graph)
         {
-            if (!_logs.Any(x => x.Action is ActionSourceRunner))
+            if (!Actions.OfType<ActionSourceRunner>().Any())
             {
-                _logs.Insert(0, new ActionLog(new ActionSourceRunner(new EndpointActionSource()), new ProvenanceChain(new Provenance[]{new ConfigurationPackProvenance(new DefaultConfigurationPack()), })));
+                new ActionSourceRunner(new EndpointActionSource()).Configure(graph);
             }
+
+            
 
             base.RunActions(graph);
         }

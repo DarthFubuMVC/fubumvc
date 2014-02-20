@@ -4,7 +4,6 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
-using FubuMVC.Core.Registration.Diagnostics;
 using System.Collections.Generic;
 
 namespace FubuMVC.Core.Configuration
@@ -12,7 +11,7 @@ namespace FubuMVC.Core.Configuration
     internal static class BehaviorGraphBuilder
     {
         // Need to track the ConfigLog
-        public static BehaviorGraph Import(FubuRegistry registry, BehaviorGraph parent, ConfigLog log)
+        public static BehaviorGraph Import(FubuRegistry registry, BehaviorGraph parent)
         {
             var graph = BehaviorGraph.ForChild(parent);
             startBehaviorGraph(registry, graph);
@@ -21,7 +20,7 @@ namespace FubuMVC.Core.Configuration
             config.RunActions(ConfigurationType.Settings, graph);
             config.RunActions(ConfigurationType.Discovery, graph);
 
-            config.Imports.Each(import => import.ImportInto(graph, log));
+            config.Imports.Each(import => import.ImportInto(graph));
 
             config.RunActions(ConfigurationType.Explicit, graph);
             config.RunActions(ConfigurationType.Policy, graph);
@@ -40,10 +39,6 @@ namespace FubuMVC.Core.Configuration
             startBehaviorGraph(registry, graph);
             var config = registry.Config;
 
-            var log = new ConfigLog();
-            graph.Services.AddService(log);
-            log.Import(config);
-
             config.Add(new SystemServicesPack());
             config.Add(new DefaultConfigurationPack());
 
@@ -51,14 +46,15 @@ namespace FubuMVC.Core.Configuration
             config.RunActions(ConfigurationType.Settings, graph);
             config.Add(new RegisterAllSettings(graph));
 
-            config.AllServiceRegistrations().Each(x => {
-                x.Apply(graph.Services);
-            });
+            config
+                .AllServiceRegistrations()
+                .OfType<IServiceRegistration>()
+                .Each(x => x.Apply(graph.Services));
 
             
             config.RunActions(ConfigurationType.Discovery, graph);
 
-            config.UniqueImports().Each(import => import.ImportInto(graph, log));
+            config.UniqueImports().Each(import => import.ImportInto(graph));
 
             config.RunActions(ConfigurationType.Explicit, graph);
             config.RunActions(ConfigurationType.Policy, graph);

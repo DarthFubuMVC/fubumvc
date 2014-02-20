@@ -9,7 +9,7 @@ using FubuMVC.Core.Runtime.Formatters;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
-    public class OutputNode : BehaviorNode, IMayHaveResourceType, DescribesItself, ICompositeTracedModel
+    public class OutputNode : BehaviorNode, IMayHaveResourceType, DescribesItself
     {
         private readonly WriterChain _chain = new WriterChain();
         private readonly Type _resourceType;
@@ -171,11 +171,6 @@ namespace FubuMVC.Core.Resources.Conneg
         public override string ToString()
         {
             return Writers.Select(x => x.ToString()).Join(", ");
-        }
-
-        IEnumerable<ITracedModel> ICompositeTracedModel.Children
-        {
-            get { return _chain; }
         }
     }
 }

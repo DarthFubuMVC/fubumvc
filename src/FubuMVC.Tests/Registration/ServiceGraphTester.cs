@@ -13,14 +13,12 @@ namespace FubuMVC.Tests.Registration
     public class ServiceGraphTester
     {
         private ServiceGraph theGraph;
-        private ITracedModel theTracedNode;
 
         [SetUp]
         public void SetUp()
         {
             theGraph = new ServiceGraph();
 
-            theTracedNode = theGraph.As<ITracedModel>();
         }
 
         public class Something
@@ -47,32 +45,6 @@ namespace FubuMVC.Tests.Registration
             graph.FindAllValues<Something>().Single().Message.ShouldEqual("abcde");
         }
 
-        [Test]
-        public void adding_a_service_registers_a_service_added_event()
-        {
-            theGraph.AddService(typeof(IFoo), new ObjectDef(typeof(Foo)));
-
-            var added = theTracedNode.StagedEvents.Last().ShouldBeOfType<ServiceAdded>();
-            added.ServiceType.ShouldEqual(typeof (IFoo));
-            added.Def.Type.ShouldEqual(typeof (Foo));
-
-        }
-
-        [Test]
-        public void clear_registers_service_removed_events()
-        {
-            theGraph.AddService(typeof(IFoo), new ObjectDef(typeof(Foo)));
-            theGraph.AddService(typeof(IFoo), new ObjectDef(typeof(Foo2)));
-            theGraph.AddService(typeof(IFoo), new ObjectDef(typeof(Foo3)));
-            theGraph.AddService(typeof(IFoo), new ObjectDef(typeof(Foo4)));
-        
-            theGraph.Clear(typeof(IFoo));
-
-            theTracedNode.StagedEvents.OfType<ServiceRemoved>().Where(x => x.ServiceType == typeof(IFoo))
-                .Select(x => x.Def.Type)
-                .ShouldHaveTheSameElementsAs(typeof(Foo), typeof(Foo2), typeof(Foo3), typeof(Foo4));
-
-        }
 
         [Test]
         public void has_any()

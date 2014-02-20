@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Caching;
-using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuTestingSupport;
@@ -39,14 +38,6 @@ namespace FubuMVC.Tests.Caching
                 .Items.Last().Type.ShouldEqual(typeof (VaryByThreadCulture));
         }
 
-        [Test]
-        public void apply_logs_the_addition_of_vary_by()
-        {
-            theNode.Apply<VaryByThreadCulture>();
-
-            theNode.As<ITracedModel>().StagedEvents.OfType<VaryByAdded>()
-                   .Any(x => x.VaryByType == typeof (VaryByThreadCulture)).ShouldBeTrue();
-        }
 
         [Test]
         public void apply_is_idempotent()

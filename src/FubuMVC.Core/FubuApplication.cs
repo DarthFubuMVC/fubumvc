@@ -215,7 +215,6 @@ namespace FubuMVC.Core
             PackageRegistry.Diagnostics.EachLog((o, l) => {
                 if (o is IPackageInfo)
                 {
-                    _registry.Value.Config.Push(o.As<IPackageInfo>());
                     var assemblies = l.FindChildren<Assembly>();
 
                     try
@@ -227,7 +226,6 @@ namespace FubuMVC.Core
                         l.MarkFailure(e);
                     }
 
-                    _registry.Value.Config.Pop();
                 }
             });
         }

@@ -34,7 +34,6 @@ namespace FubuMVC.Core.Registration.Routes
 
         SessionStateRequirement SessionStateRequirement { get; set; }
 
-        void Trace(string format, params object[] parameters);
         bool RespondsToMethod(string method);
 
         /// <summary>

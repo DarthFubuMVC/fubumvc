@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using FubuCore;
 using FubuCore.Reflection;
-using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.ObjectGraph;
 
 namespace FubuMVC.Core.Registration

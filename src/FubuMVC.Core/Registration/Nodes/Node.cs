@@ -3,11 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
-using FubuMVC.Core.Registration.Diagnostics;
 
 namespace FubuMVC.Core.Registration.Nodes
 {
-    public abstract class Node<T, TChain> : TracedNode, INode<T>, IEnumerable<T> 
+    public abstract class Node<T, TChain> : INode<T>, IEnumerable<T> 
         where T : Node<T, TChain> 
         where TChain : Chain<T, TChain>
     {
@@ -121,11 +120,6 @@ namespace FubuMVC.Core.Registration.Nodes
         /// </summary>
         public void Remove()
         {
-            if (ParentChain() != null)
-            {
-                ParentChain().Trace(new NodeRemoved(this));
-            }
-
             if (Next != null)
             {
                 Next.Previous = Previous;
@@ -150,11 +144,6 @@ namespace FubuMVC.Core.Registration.Nodes
         /// </summary>
         public void ReplaceWith(T newNode)
         {
-            if (ParentChain() != null)
-            {
-                ParentChain().Trace(new NodeReplaced(this, newNode));
-            }
-
             newNode.Next = Next;
 
             if (Previous != null)

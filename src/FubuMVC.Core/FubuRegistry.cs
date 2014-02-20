@@ -41,8 +41,6 @@ namespace FubuMVC.Core
             {
                 _applicationAssembly = type.Assembly;
             }
-
-            _config.Push(this);
         }
 
         public FubuRegistry(Action<FubuRegistry> configure) : this()
@@ -202,8 +200,6 @@ namespace FubuMVC.Core
             var extension = new T();
             if (typeof (T).CanBeCastTo<FubuPackageRegistry>())
             {
-                _config.Push(extension.As<FubuRegistry>());
-
                 _config.AddImport(new RegistryImport
                 {
                     Prefix = extension.As<FubuPackageRegistry>().UrlPrefix,
@@ -212,13 +208,9 @@ namespace FubuMVC.Core
             }
             else
             {
-                _config.Push(extension);
-
                 extension.Configure(this);
                 _importedTypes.Add(typeof (T));
             }
-
-            _config.Pop();
         }
 
         /// <summary>
@@ -228,15 +220,12 @@ namespace FubuMVC.Core
         public void Import<T>(Action<T> configuration) where T : IFubuRegistryExtension, new()
         {
             var extension = new T();
-            _config.Push(extension);
 
             configuration(extension);
 
             extension.Configure(this);
 
             _importedTypes.Add(typeof (T));
-        
-            _config.Pop();
         }
 
         #endregion

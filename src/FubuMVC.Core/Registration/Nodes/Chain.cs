@@ -12,7 +12,7 @@ namespace FubuMVC.Core.Registration.Nodes
 
     }
 
-    public abstract class Chain<T, TChain> : TracedNode, INode<T>, IEnumerable<T> 
+    public abstract class Chain<T, TChain> : INode<T>, IEnumerable<T> 
         where T : Node<T, TChain> 
         where TChain : Chain<T, TChain>
     {

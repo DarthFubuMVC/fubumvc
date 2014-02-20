@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using FubuCore;
-using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using System.Linq;
@@ -39,8 +38,6 @@ namespace FubuMVC.Core.Caching
             {
                 throw new ArgumentException("varyByType", "varyByType must implement IVaryBy");
             }
-
-            Trace(new VaryByAdded(varyByType));
 
             var objectDef = new ObjectDef(varyByType);
             ResourceHash.EnumerableDependenciesOf<IVaryBy>().Add(objectDef);

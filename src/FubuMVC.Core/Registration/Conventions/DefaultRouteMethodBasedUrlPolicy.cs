@@ -30,7 +30,7 @@ namespace FubuMVC.Core.Registration.Conventions
             var routeDefinition = call.ToRouteDefinition().As<RouteDefinition>();
             if (MethodToUrlBuilder.Matches(call.Method.Name))
             {
-                MethodToUrlBuilder.AddHttpConstraints(routeDefinition, call.Method.Name, txt => { });
+                MethodToUrlBuilder.AddHttpConstraints(routeDefinition, call.Method.Name);
             }
 
 

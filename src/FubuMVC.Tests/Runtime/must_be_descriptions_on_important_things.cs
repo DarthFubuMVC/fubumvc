@@ -11,7 +11,6 @@ using FubuMVC.Core;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
-using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Policies;
@@ -186,17 +185,6 @@ namespace FubuMVC.Tests.Runtime
             types.Any().ShouldBeFalse();
         }
 
-        [Test]
-        public void must_be_a_description_on_all_node_events()
-        {
-            IEnumerable<Type> types = typeof (FubuRequest).Assembly.GetExportedTypes()
-                .Where(x => x.IsConcreteTypeOf<NodeEvent>())
-                .Where(x => !Description.HasExplicitDescription(x));
-
-            types.Each(x => Debug.WriteLine(x.Name));
-
-            types.Any().ShouldBeFalse();
-        }
 
         [Test]
         public void must_be_a_description_on_all_property_binders()

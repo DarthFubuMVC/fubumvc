@@ -8,7 +8,6 @@ using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Registration.Conventions;
-using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Querying;
@@ -110,7 +109,6 @@ namespace FubuMVC.Core.Registration
         {
             graph.Behaviors.Each(b => {
                 AddChain(b);
-                b.Trace(new ChainImported());
                 alternation(b);
             });
         }
@@ -450,32 +448,6 @@ namespace FubuMVC.Core.Registration
             return BuildFrom(new FubuRegistry());
         }
 
-        public IEnumerable<ITracedModel> AllTracedModels()
-        {
-            foreach (BehaviorChain chain in Behaviors)
-            {
-                yield return chain;
-
-                if (chain.Route != null)
-                {
-                    yield return (ITracedModel)chain.Route;
-                }
-
-                foreach (var node in chain)
-                {
-                    yield return node;
-
-                    var composite = node as ICompositeTracedModel;
-                    if (composite != null)
-                    {
-                        foreach (var child in composite.Children)
-                        {
-                            yield return child;
-                        }
-                    }
-                }
-            }
-        }
 
     }
 
@@ -492,10 +464,6 @@ namespace FubuMVC.Core.Registration
         #endregion
     }
 
-    [Title("Imported from another FubuRegistry")]
-    public class ChainImported : NodeEvent
-    {
-    }
 
     public interface IRouteIterator
     {

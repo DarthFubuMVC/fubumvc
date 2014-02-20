@@ -17,8 +17,6 @@ namespace FubuMVC.Core.Registration.Conventions
         {
             var pattern = call.Method.GetAttribute<UrlPatternAttribute>().Pattern;
             var route = call.BuildRouteForPattern(pattern);
-            route.Trace("Action '{0}' has the [{1}] defined. Using explicitly defined URL pattern.", call.Method.Name,
-                        typeof (UrlPatternAttribute).Name);
 
             return route;
         }

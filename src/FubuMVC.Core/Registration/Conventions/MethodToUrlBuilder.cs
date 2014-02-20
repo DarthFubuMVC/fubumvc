@@ -21,28 +21,24 @@ namespace FubuMVC.Core.Registration.Conventions
                                  ? new TypeDescriptorCache().GetPropertiesFor(call.InputType()).Keys
                                  : new string[0];
 
-            Alter(route, call.Method.Name, properties, text => call.Trace(text));
+            Alter(route, call.Method.Name, properties);
 
             if (call.HasInput)
             {
                 route.ApplyInputType(call.InputType());
             }
 
-            route.Trace("Route pattern determined by the default 'Method Url' policy");
         }
 
-        public static void Alter(IRouteDefinition route, string methodName, IEnumerable<string> properties,
-                                 Action<string> log)
+        public static void Alter(IRouteDefinition route, string methodName, IEnumerable<string> properties)
         {
-            log("Method name interpreted by the MethodToUrlBuilder");
-            var parts = AddHttpConstraints(route, methodName, log);
+            var parts = AddHttpConstraints(route, methodName);
 
             for (var i = 0; i < parts.Count; i++)
             {
                 var part = parts[i];
                 if (properties.Contains(part))
                 {
-                    log(" - adding route input for property " + part);
                     parts[i] = "{" + part + "}";
                 }
                 else
@@ -57,14 +53,13 @@ namespace FubuMVC.Core.Registration.Conventions
             }
         }
 
-        public static List<string> AddHttpConstraints(IRouteDefinition route, string methodName, Action<string> log)
+        public static List<string> AddHttpConstraints(IRouteDefinition route, string methodName)
         {
             var parts = methodName.Split('_').ToList();
 
             var method = parts.First().ToUpper();
             if (RouteDefinition.VERBS.Contains(method))
             {
-                log(" - adding Http method constraint {0}".ToFormat(method));
                 route.AddHttpMethodConstraint(method);
                 parts.RemoveAt(0);
             }

@@ -5,7 +5,6 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core.Behaviors;
-using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Resources.Conneg;
@@ -83,7 +82,6 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public void AddFilter(IBehaviorInvocationFilter filter)
         {
-            Trace(new FilterAdded(filter));
             _filters.Add(filter);
         }
 
@@ -131,7 +129,6 @@ namespace FubuMVC.Core.Registration.Nodes
             get { return _route; }
             set
             {
-                Trace(new RouteDetermined(value));
                 _route = value;
             }
         }
@@ -151,7 +148,6 @@ namespace FubuMVC.Core.Registration.Nodes
         public void AddRouteAlias(IRouteDefinition route)
         {
             _additionalRoutes.Fill(route);
-            Trace(new RouteAliasAdded(route));
         }
 
         /// <summary>

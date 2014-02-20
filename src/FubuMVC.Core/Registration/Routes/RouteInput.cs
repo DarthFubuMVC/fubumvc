@@ -177,11 +177,6 @@ namespace FubuMVC.Core.Registration.Routes
             Accessor accessor = new SingleProperty(property);
             var input = new RouteParameter(accessor);
 
-            if (Parent != null)
-            {
-                Parent.Trace("Added '{0}' to query string parameters", input);
-            }
-
             _queryParameters.Fill(input);
         }
 
@@ -192,11 +187,6 @@ namespace FubuMVC.Core.Registration.Routes
             if (appendToUrl)
             {
                 _parent.Append("{" + parameter.Name + "}");
-            }
-
-            if (Parent != null)
-            {
-                Parent.Trace("Added '{0}' to route parameters",parameter);
             }
 
             _routeParameters.Add(parameter);

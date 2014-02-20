@@ -10,7 +10,7 @@ using FubuMVC.Core.Runtime.Formatters;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
-    public class InputNode : BehaviorNode, IMayHaveInputType, DescribesItself, ICompositeTracedModel
+    public class InputNode : BehaviorNode, IMayHaveInputType, DescribesItself
     {
         private readonly Type _inputType;
         private readonly ReaderChain _readers = new ReaderChain();
@@ -123,9 +123,5 @@ namespace FubuMVC.Core.Resources.Conneg
             description.AddList("Readers", _readers);
         }
 
-        IEnumerable<ITracedModel> ICompositeTracedModel.Children
-        {
-            get { return _readers; }
-        }
     }
 }

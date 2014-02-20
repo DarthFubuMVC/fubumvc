@@ -26,7 +26,7 @@ namespace FubuMVC.Core.Registration.Conventions
             var routeDefinition = call.ToRouteDefinition().As<RouteDefinition>();
             if (MethodToUrlBuilder.Matches(call.Method.Name))
             {
-                MethodToUrlBuilder.AddHttpConstraints(routeDefinition, call.Method.Name, txt => { });
+                MethodToUrlBuilder.AddHttpConstraints(routeDefinition, call.Method.Name);
             }
 
 
@@ -48,11 +48,6 @@ namespace FubuMVC.Core.Registration.Conventions
             }
 
             if (result) _foundCallAlready = true;
-
-            if (result)
-            {
-                call.Trace("Action '{0}' is the default route since its input type is {1} which was specified in the configuration as the input model for the default route", call.Method.Name, _inputType.Name);
-            }
 
             return result;
         }

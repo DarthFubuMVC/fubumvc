@@ -3,19 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuCore.Util;
-using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 
 namespace FubuMVC.Core.Registration
 {
-    public class ServiceGraph : TracedNode
+    public class ServiceGraph
     {
         private readonly Cache<Type, List<ObjectDef>> _services =
             new Cache<Type, List<ObjectDef>>(t => new List<ObjectDef>());
 
         public void AddService(Type serviceType, ObjectDef def)
         {
-            Trace(new ServiceAdded(serviceType, def));
             _services[serviceType].Add(def);
         }
 
@@ -32,9 +30,6 @@ namespace FubuMVC.Core.Registration
         public void Clear(Type serviceType)
         {
             var list = _services[serviceType];
-
-            list.Each(def => Trace(new ServiceRemoved(serviceType, def)));
-
             list.Clear();
         }
 
@@ -128,7 +123,7 @@ namespace FubuMVC.Core.Registration
         /// <returns></returns>
         public IEnumerable<T> FindAllValues<T>()
         {
-            foreach (ObjectDef def in _services[typeof (T)])
+            foreach (var def in _services[typeof (T)])
             {
                 if (def.Value != null)
                 {

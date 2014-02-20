@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
@@ -101,12 +100,6 @@ namespace FubuMVC.Tests.Registration.Nodes
 
         #endregion
 
-        [Test]
-        public void starts_with_the_ChainCreated_event()
-        {
-            var chain = new BehaviorChain();
-            chain.As<ITracedModel>().StagedEvents.Single().ShouldBeOfType<Created>();
-        }
 
         [Test]
         public void adding_a_node_to_the_end_sets_the_chain_on_the_node()
@@ -119,16 +112,6 @@ namespace FubuMVC.Tests.Registration.Nodes
             wrapper.ParentChain().ShouldBeTheSameAs(chain);
         }
 
-        [Test]
-        public void adding_a_route_adds_a_RouteDefined_event()
-        {
-            var chain = new BehaviorChain();
-            var route = new RouteDefinition("something");
-
-            chain.Route = route;
-
-            chain.As<ITracedModel>().StagedEvents.Last().ShouldEqual(new RouteDetermined(route));
-        }
 
         [Test]
         public void add_a_route_alias()
@@ -139,17 +122,6 @@ namespace FubuMVC.Tests.Registration.Nodes
             chain.AddRouteAlias(alias);
 
             chain.AdditionalRoutes.ShouldHaveTheSameElementsAs(alias);
-        }
-
-        [Test]
-        public void adding_a_route_alias_adds_a_RouteAliasAdded_event()
-        {
-            var chain = new BehaviorChain();
-            var alias = new RouteDefinition("something/else");
-
-            chain.AddRouteAlias(alias);
-
-            chain.As<ITracedModel>().StagedEvents.Last().ShouldEqual(new RouteAliasAdded(alias));
         }
 
         [Test]
@@ -490,16 +462,6 @@ namespace FubuMVC.Tests.Registration.Nodes
                 .ShouldNotBeNull().ShouldBeOfType<EndPointAuthorizor>();
         }
 
-        [Test]
-        public void adding_a_filter_logs()
-        {
-            var filter = MockRepository.GenerateMock<IBehaviorInvocationFilter>();
-
-            var chain = new BehaviorChain();
-            chain.AddFilter(filter);
-
-            chain.As<ITracedModel>().StagedEvents.OfType<FilterAdded>().Single().ShouldEqual(new FilterAdded(filter));
-        }
     }
 
     [TestFixture]

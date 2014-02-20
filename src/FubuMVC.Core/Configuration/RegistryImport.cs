@@ -1,6 +1,5 @@
 using FubuCore;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.Diagnostics;
 
 namespace FubuMVC.Core.Configuration
 {
@@ -8,17 +7,14 @@ namespace FubuMVC.Core.Configuration
     {
         public string Prefix { get; set; }
         public FubuRegistry Registry { get; set; }
-        public ProvenanceChain Provenance { get; set; }
 
-        public void ImportInto(BehaviorGraph parent, ConfigLog log)
+        public void ImportInto(BehaviorGraph parent)
         {
-            var childGraph = BehaviorGraphBuilder.Import(Registry, parent, log);
+            var childGraph = BehaviorGraphBuilder.Import(Registry, parent);
             parent.As<IChainImporter>().Import(childGraph, b => {
                 b.PrependToUrl(Prefix);
                 b.Origin = Registry.Name;
             });
-
-            log.Import(Registry.Config, Provenance);
         }
 
         public bool Equals(RegistryImport other)
