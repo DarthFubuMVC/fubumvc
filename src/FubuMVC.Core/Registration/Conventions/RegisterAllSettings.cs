@@ -1,12 +1,14 @@
-﻿using FubuMVC.Core.Registration.ObjectGraph;
+﻿using FubuCore;
+using FubuMVC.Core.Registration.ObjectGraph;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
+    [MarkedForTermination("this just shouldn't be necessary")]
     public class RegisterAllSettings : ServiceRegistry
     {
         public RegisterAllSettings(BehaviorGraph graph)
         {
-            graph.Settings.ForAllSettings((type, o) => SetServiceIfNone(type, ObjectDef.ForValue(o)));
+            graph.Settings.Register(graph.Services);
         }
     }
 

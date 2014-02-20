@@ -1,9 +1,11 @@
 using System;
+using System.Threading.Tasks;
 using FubuCore.Binding;
 using FubuCore.Configuration;
 using FubuCore.Util;
 using FubuCore;
 using FubuCore.Reflection;
+using FubuMVC.Core.Registration.ObjectGraph;
 
 namespace FubuMVC.Core.Registration
 {
@@ -31,29 +33,42 @@ namespace FubuMVC.Core.Registration
 
         public T Get<T>() where T : class
         {
+            return getTask<T>().Result;
+        }
+
+        private Task<T> getTask<T>()
+        {
+            return selectSettings<T>()[typeof (T)].As<Task<T>>();
+        }
+
+        private Cache<Type, object> selectSettings<T>()
+        {
             if (_parent != null && !HasExplicit<T>() && (_parent._settings.Has(typeof(T)) || typeof(T).HasAttribute<ApplicationLevelAttribute>()))
             {
-                return (T)_parent._settings[typeof(T)];
+                return _parent._settings;
             }
 
-            return (T) _settings[typeof (T)];
+            return _settings;
         }
 
         public void Alter<T>(Action<T> alteration) where T : class
         {
-            if (_parent != null && typeof(T).HasAttribute<ApplicationLevelAttribute>())
-            {
-                alteration(_parent.Get<T>());
-            }
-            else
-            {
-                alteration((T)_settings[typeof(T)]);
-            }
+            var settings = typeof (T).HasAttribute<ApplicationLevelAttribute>() && _parent != null
+                ? _parent._settings
+                : _settings;
+
+
+            var inner = settings[typeof (T)].As<Task<T>>();
+            settings[typeof (T)] = Task.Factory.StartNew(() => {
+                alteration(inner.Result);
+
+                return inner.Result;
+            });
         }
 
         public void Replace<T>(T settings) where T : class
         {
-            _settings[typeof (T)] = settings;
+            _settings[typeof(T)] = toTask(settings);
         }
 
         public bool HasExplicit<T>() 
@@ -61,21 +76,25 @@ namespace FubuMVC.Core.Registration
             return _settings.Has(typeof (T));
         }
 
-        public void ForAllSettings(Action<Type, object> callback)
-        {
-            _settings.Each(callback);
-        }
 
         public interface IDefaultMaker
         {
             object MakeDefault();
         }
 
+        private static Task<T> toTask<T>(T value)
+        {
+            var task = new TaskCompletionSource<T>();
+            task.SetResult(value);
+
+            return task.Task;
+        }
+
         public class DefaultMaker<T> : IDefaultMaker
         {
             public object MakeDefault()
             {
-                return default(T);
+                return toTask(default(T));
             }
         }
 
@@ -83,7 +102,35 @@ namespace FubuMVC.Core.Registration
         {
             public object MakeDefault()
             {
-                return SettingsProvider.Value.SettingsFor<T>();
+                return Task.Factory.StartNew(() => SettingsProvider.Value.SettingsFor<T>());
+            }
+        }
+
+        public void Register(ServiceGraph graph)
+        {
+            _settings.Each((t, o) => {
+                var registrar = typeof (Registrar<>).CloseAndBuildAs<IRegistrar>(o, t);
+                registrar.Register(graph);
+            });
+        }
+
+        public interface IRegistrar
+        {
+            void Register(ServiceGraph graph);
+        }
+
+        public class Registrar<T> : IRegistrar
+        {
+            private readonly Task<T> _task;
+
+            public Registrar(Task<T> task)
+            {
+                _task = task;
+            }
+
+            public void Register(ServiceGraph graph)
+            {
+                graph.SetServiceIfNone(typeof(T), ObjectDef.ForValue(_task.Result));
             }
         }
     }

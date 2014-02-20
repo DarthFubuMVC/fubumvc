@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using FubuMVC.Core.Registration;
 using FubuMVC.Tests.UI;
 using NUnit.Framework;
@@ -107,23 +108,6 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
-        public void visit_to_get_customizatinos()
-        {
-            var settings1 = new AppSettings();
-            var settings2 = new FakeSettings();
-
-            theSettings.Replace(settings1);
-            theSettings.Replace(settings2);
-
-            var visitor = MockRepository.GenerateMock<Action<Type, object>>();
-
-            theSettings.ForAllSettings(visitor);
-
-            visitor.AssertWasCalled(x => x.Invoke(typeof(AppSettings), settings1));
-            visitor.AssertWasCalled(x => x.Invoke(typeof(FakeSettings),settings2));
-        }
-
-        [Test]
         public void get_can_happily_create_the_default()
         {
             theSettings.Get<FakeSettings>().ShouldEqual(new FakeSettings());
@@ -142,7 +126,10 @@ namespace FubuMVC.Tests.Registration
         {
             var original = theSettings.Get<FakeSettings>();
 
-            theSettings.Alter<FakeSettings>(x => x.Name = "Max");
+            theSettings.Alter<FakeSettings>(x => {
+                Thread.Sleep(500);
+                x.Name = "Max";
+            });
 
             theSettings.Get<FakeSettings>().ShouldBeTheSameAs(original);
             theSettings.Get<FakeSettings>().Name.ShouldEqual("Max");
