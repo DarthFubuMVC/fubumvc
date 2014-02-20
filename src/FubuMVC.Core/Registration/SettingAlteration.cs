@@ -4,7 +4,7 @@ using FubuCore.Descriptions;
 namespace FubuMVC.Core.Registration
 {
     [ConfigurationType(ConfigurationType.Settings)]
-    public class SettingAlteration<T> : IConfigurationAction, DescribesItself
+    public class SettingAlteration<T> : IConfigurationAction, DescribesItself where T : class
     {
         private readonly Action<T> _alteration;
 

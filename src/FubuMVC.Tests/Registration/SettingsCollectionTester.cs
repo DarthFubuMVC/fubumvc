@@ -130,12 +130,6 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
-        public void get_can_happily_create_the_default_for_a_value_type()
-        {
-            theSettings.Get<ColorEnum>().ShouldEqual(default(ColorEnum));
-        }
-
-        [Test]
         public void can_completely_replace_the_settings()
         {
             theSettings.Replace(new FakeSettings{Name = "Lindsey", Hometown = "San Antonio"});

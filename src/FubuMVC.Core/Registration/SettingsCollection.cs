@@ -20,11 +20,6 @@ namespace FubuMVC.Core.Registration
 
         private static object buildDefault(Type type)
         {
-            if (type.IsValueType)
-            {
-                return typeof(DefaultMaker<>).CloseAndBuildAs<IDefaultMaker>(type).Default();
-            }
-
             if (type.IsConcreteWithDefaultCtor())
             {
                 var provider = new AppSettingsProvider(ObjectResolver.Basic());
@@ -34,7 +29,7 @@ namespace FubuMVC.Core.Registration
             throw new ArgumentOutOfRangeException("Can only build default values for concrete classes with a default constructor and value types");
         }
 
-        public T Get<T>()
+        public T Get<T>() where T : class
         {
             if (_parent != null && !HasExplicit<T>() && (_parent._settings.Has(typeof(T)) || typeof(T).HasAttribute<ApplicationLevelAttribute>()))
             {
@@ -44,7 +39,7 @@ namespace FubuMVC.Core.Registration
             return (T) _settings[typeof (T)];
         }
 
-        public void Alter<T>(Action<T> alteration)
+        public void Alter<T>(Action<T> alteration) where T : class
         {
             if (_parent != null && typeof(T).HasAttribute<ApplicationLevelAttribute>())
             {
@@ -56,27 +51,14 @@ namespace FubuMVC.Core.Registration
             }
         }
 
-        public void Replace<T>(T settings)
+        public void Replace<T>(T settings) where T : class
         {
             _settings[typeof (T)] = settings;
         }
 
-        public bool HasExplicit<T>()
+        public bool HasExplicit<T>() 
         {
             return _settings.Has(typeof (T));
-        }
-
-        public class DefaultMaker<T> : IDefaultMaker
-        {
-            public object Default()
-            {
-                return default(T);
-            }
-        }
-
-        public interface IDefaultMaker
-        {
-            object Default();
         }
 
         public void ForAllSettings(Action<Type, object> callback)

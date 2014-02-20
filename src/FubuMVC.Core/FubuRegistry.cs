@@ -156,7 +156,7 @@ namespace FubuMVC.Core
         /// <summary>
         /// Allows you to manipulate a settings object on <see cref="BehaviorGraph.Settings"/>.
         /// </summary>
-        public void AlterSettings<T>(Action<T> alteration) where T : new()
+        public void AlterSettings<T>(Action<T> alteration) where T : class, new()
         {
             Config.Add(new SettingAlteration<T>(alteration));
         }
@@ -166,7 +166,7 @@ namespace FubuMVC.Core
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="settings"></param>
-        public void ReplaceSettings<T>(T settings)
+        public void ReplaceSettings<T>(T settings) where T : class
         {
             Config.Add(new SettingReplacement<T>(settings));
         }
