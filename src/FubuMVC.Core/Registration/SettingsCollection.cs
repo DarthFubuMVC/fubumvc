@@ -9,6 +9,8 @@ namespace FubuMVC.Core.Registration
 {
     public class SettingsCollection
     {
+        private readonly static Lazy<ISettingsProvider> SettingsProvider = new Lazy<ISettingsProvider>(() => new AppSettingsProvider(ObjectResolver.Basic()));
+
         private readonly SettingsCollection _parent;
         private readonly Cache<Type, object> _settings = new Cache<Type, object>();
 
@@ -20,13 +22,11 @@ namespace FubuMVC.Core.Registration
 
         private static object buildDefault(Type type)
         {
-            if (type.IsConcreteWithDefaultCtor())
-            {
-                var provider = new AppSettingsProvider(ObjectResolver.Basic());
-                return provider.SettingsFor(type);
-            }
+            var templateType = type.IsConcreteWithDefaultCtor()
+                ? typeof (AppSettingMaker<>)
+                : typeof (DefaultMaker<>);
 
-            throw new ArgumentOutOfRangeException("Can only build default values for concrete classes with a default constructor and value types");
+            return templateType.CloseAndBuildAs<IDefaultMaker>(type).MakeDefault();
         }
 
         public T Get<T>() where T : class
@@ -65,5 +65,31 @@ namespace FubuMVC.Core.Registration
         {
             _settings.Each(callback);
         }
+
+        public interface IDefaultMaker
+        {
+            object MakeDefault();
+        }
+
+        public class DefaultMaker<T> : IDefaultMaker
+        {
+            public object MakeDefault()
+            {
+                return default(T);
+            }
+        }
+
+        public class AppSettingMaker<T> : IDefaultMaker where T : class, new()
+        {
+            public object MakeDefault()
+            {
+                return SettingsProvider.Value.SettingsFor<T>();
+            }
+        }
     }
+
+
+
+
+
 }
