@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Web.Routing;
 using Bottles;
 using Bottles.Services;
@@ -140,7 +141,8 @@ namespace FubuMVC.Core
             BottleFiles.ContentFolder = FubuMvcPackageFacility.FubuContentFolder;
             BottleFiles.PackagesFolder = FileSystem.Combine("bin", FubuMvcPackageFacility.FubuPackagesFolder);
 
-            IList<RouteBase> routes = null;
+
+            Task<IList<RouteBase>> routeTask = null;
 
             PackageRegistry.LoadPackages(x => {
                 x.Facility(_fubuFacility);
@@ -162,13 +164,19 @@ namespace FubuMVC.Core
                     // factory HAS to be spun up here.
                     factory = containerFacility.BuildFactory();
 
-                    routes = buildRoutes(factory, graph);
-                    routes.Each(r => RouteTable.Routes.Add(r));
-                    containerFacility.Register(typeof(FubuRouteTable), ObjectDef.ForValue(new FubuRouteTable{Routes = routes}));
+                    routeTask = Task.Factory.StartNew(() =>
+                    {
+                        var routes = buildRoutes(factory, graph);
+                        routes.Each(r => RouteTable.Routes.Add(r));
+
+                        return routes;
+                    });
 
                     return factory.GetAll<IActivator>();
                 });
             });
+
+            _facility.Value.Register(typeof(FubuRouteTable), ObjectDef.ForValue(new FubuRouteTable { Routes = routeTask.Result }));
 
             FubuMvcPackageFacility.Restarted = DateTime.Now;
 
@@ -176,7 +184,7 @@ namespace FubuMVC.Core
                 () => { throw new FubuException(0, FubuApplicationDescriber.WriteDescription()); });
 
 
-            var runtime = new FubuRuntime(factory, _facility.Value, routes);
+            var runtime = new FubuRuntime(factory, _facility.Value, routeTask.Result);
 
             _facility.Value.Register(typeof(FubuRuntime), ObjectDef.ForValue(runtime));
 
