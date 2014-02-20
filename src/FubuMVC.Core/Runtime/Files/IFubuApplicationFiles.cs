@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using FubuCore;
+using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.Runtime.Files
 {
@@ -7,6 +8,7 @@ namespace FubuMVC.Core.Runtime.Files
     /// Provides an abstraction to find files across the main application and all
     /// Bottles loaded into this application
     /// </summary>
+    [ApplicationLevel]
     public interface IFubuApplicationFiles
     {
         /// <summary>

@@ -34,9 +34,6 @@ namespace FubuMVC.Core.Registration
     {
         private readonly List<BehaviorChain> _behaviors = new List<BehaviorChain>();
 
-        private readonly Lazy<IFubuApplicationFiles> _files =
-            new Lazy<IFubuApplicationFiles>(() => new FubuApplicationFiles());
-
         private readonly List<IChainForwarder> _forwarders = new List<IChainForwarder>();
         private readonly ServiceGraph _services = new ServiceGraph();
 
@@ -54,6 +51,7 @@ namespace FubuMVC.Core.Registration
         {
             _settings = new SettingsCollection(null);
             _settings.Replace(SessionStateRequirement.RequiresSessionState);
+            _settings.Replace<IFubuApplicationFiles>(new FubuApplicationFiles());
 
             RouteIterator = new SortByRouteRankIterator(); // can override in a registry
 
@@ -70,7 +68,7 @@ namespace FubuMVC.Core.Registration
 
         public IFubuApplicationFiles Files
         {
-            get { return _files.Value; }
+            get { return _settings.Get<IFubuApplicationFiles>(); }
         }
 
         public IEnumerable<IChainForwarder> Forwarders

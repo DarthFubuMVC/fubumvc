@@ -13,7 +13,6 @@ namespace FubuMVC.Core.Configuration
         public SystemServicesPack()
         {
             For(ConfigurationType.Explicit);
-            Add<FileRegistration>();
 
             Services<ModelBindingServicesRegistry>();
             Services<SecurityServicesRegistry>();
@@ -22,14 +21,5 @@ namespace FubuMVC.Core.Configuration
             Services<CachingServiceRegistry>();
         }
 
-        [Title("Registers the IFubuApplicationFiles service")]
-        internal class FileRegistration : IConfigurationAction
-        {
-            public void Configure(BehaviorGraph graph)
-            {
-                graph.Services.Clear(typeof(IFubuApplicationFiles));
-                graph.Services.AddService(graph.Files);
-            }
-        }
     }
 }
