@@ -59,10 +59,12 @@ namespace FubuMVC.Core.Registration
 
 
             var inner = settings[typeof (T)].As<Task<T>>();
-            settings[typeof (T)] = Task.Factory.StartNew(() => {
-                alteration(inner.Result);
 
-                return inner.Result;
+
+            settings[typeof (T)] = inner.ContinueWith(t => {
+                alteration(t.Result);
+
+                return t.Result;
             });
         }
 
