@@ -73,6 +73,16 @@ namespace FubuMVC.Core.Registration
             _settings[typeof(T)] = settings.ToTask();
         }
 
+        public void Replace<T>(Task<T> source)
+        {
+            _settings[typeof (T)] = source;
+        }
+
+        public void Replace<T>(Func<T> source)
+        {
+            _settings[typeof (T)] = Task.Factory.StartNew(source);
+        }
+
         public bool HasExplicit<T>() 
         {
             return _settings.Has(typeof (T));

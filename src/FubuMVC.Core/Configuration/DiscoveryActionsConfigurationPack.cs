@@ -7,9 +7,6 @@ namespace FubuMVC.Core.Configuration
     {
         public DiscoveryActionsConfigurationPack()
         {
-            // Settings
-            Add<AccessorOverridesFinder>();
-
             For(ConfigurationType.Discovery);
 
             Add<PartialOnlyConvention>();

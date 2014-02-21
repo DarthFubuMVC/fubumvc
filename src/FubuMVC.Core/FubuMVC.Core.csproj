@@ -140,7 +140,6 @@
     <Compile Include="PolicyAttribute.cs" />
     <Compile Include="QueryStringAttribute.cs" />
     <Compile Include="ReflectionExtensions.cs" />
-    <Compile Include="Registration\AccessorOverridesFinder.cs" />
     <Compile Include="Registration\AccessorRulesExpression.cs" />
     <Compile Include="Registration\ApplicationLevelAttribute.cs" />
     <Compile Include="Registration\Conventions\CacheAttributePolicy.cs" />

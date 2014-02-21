@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration;
@@ -103,20 +104,42 @@ namespace FubuMVC.Core.Configuration
         {
             graph.ApplicationAssembly = registry.ApplicationAssembly;
 
-            var types = graph.ApplicationAssembly.GetExportedTypes().Where(x => x.HasAttribute<AutoImportAttribute>() && x.IsConcreteWithDefaultCtor()).ToArray();
-            types.Where(x => x.CanBeCastTo<IFubuRegistryExtension>()).Each(x => {
-                Activator.CreateInstance(x).As<IFubuRegistryExtension>().Configure(registry);
-            });
+            lookForAccessorOverrides(graph);
+
+            findAutoRegisteredConfigurationActions(registry, graph);
+
+            registry.Config.Add(new DiscoveryActionsConfigurationPack());
+        }
+
+        private static void findAutoRegisteredConfigurationActions(FubuRegistry registry, BehaviorGraph graph)
+        {
+            var types =
+                graph.ApplicationAssembly.GetExportedTypes()
+                    .Where(x => x.HasAttribute<AutoImportAttribute>() && x.IsConcreteWithDefaultCtor())
+                    .ToArray();
+            types.Where(x => x.CanBeCastTo<IFubuRegistryExtension>())
+                .Each(x => { Activator.CreateInstance(x).As<IFubuRegistryExtension>().Configure(registry); });
 
             types.Where(x => x.CanBeCastTo<IConfigurationAction>()).Each(x => {
                 var policy = Activator.CreateInstance(x).As<IConfigurationAction>();
                 registry.Policies.Add(policy);
             });
-            
-            
-            registry.Config.Add(new DiscoveryActionsConfigurationPack());
         }
 
+        private static void lookForAccessorOverrides(BehaviorGraph graph)
+        {
+            graph.Settings.Replace(() => {
+                var rules = new AccessorRules();
 
+                TypePool.AppDomainTypes()
+                    .TypesMatching(
+                        x => x.CanBeCastTo<IAccessorRulesRegistration>() && x.IsConcreteWithDefaultCtor() && !x.IsOpenGeneric())
+                    .
+                    Distinct().Select(x => { return Activator.CreateInstance(x).As<IAccessorRulesRegistration>(); })
+                    .Each(x => x.AddRules(rules));
+
+                return rules;
+            });
+        }
     }
 }

@@ -50,19 +50,6 @@ namespace FubuMVC.Tests
                 .ShouldBeTheSameAs(action);
         }
 
-        [Test]
-        public void add_configuration_pak()
-        {
-            var pack = new DiscoveryActionsConfigurationPack();
-            var graph = new ConfigGraph();
-
-            graph.Add(pack);
-
-
-            // Changed the access overrides to settings
-            graph.ActionsFor(ConfigurationType.Settings).Any().ShouldBeTrue();
-
-        }
 
         [Test]
         public void add_configuration_pack_has_to_be_idempotent()
