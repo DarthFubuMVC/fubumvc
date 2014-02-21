@@ -1,22 +1,20 @@
+using System.Linq;
 using FubuMVC.Core.Http;
 
 namespace AspNetApplication
 {
     public class RequestHeadersEndpoint
     {
-        private readonly IRequestHeaders _headers;
+        private readonly ICurrentHttpRequest _headers;
 
-        public RequestHeadersEndpoint(IRequestHeaders headers)
+        public RequestHeadersEndpoint(ICurrentHttpRequest headers)
         {
             _headers = headers;
         }
 
         public string get_header_Name(HeaderRequest request)
         {
-            string text = null;
-            _headers.Value<string>(request.Name, x => text = x);
-
-            return text;
+            return _headers.GetHeader(request.Name).FirstOrDefault();
         }
     }
 

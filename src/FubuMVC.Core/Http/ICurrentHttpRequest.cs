@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
+using FubuCore.Util;
 
 namespace FubuMVC.Core.Http
 {
@@ -113,22 +114,29 @@ namespace FubuMVC.Core.Http
             return TheHttpMethod;
         }
 
+        public readonly Cache<string, IList<string>> HeaderValues = new Cache<string, IList<string>>(name => new List<string>()); 
+
         public bool HasHeader(string key)
         {
-            return false;
+            return HeaderValues.Has(key);
         }
 
         public IEnumerable<string> GetHeader(string key)
         {
-            return new string[0];
+            return HeaderValues[key];
         }
 
         public IEnumerable<string> AllHeaderKeys()
         {
-            return new string[0];
+            return HeaderValues.GetAllKeys();
         }
 
         public NameValueCollection QueryString { get; private set; }
         public Stream Input { get; private set; }
+
+        public void AppendHeader(string key, string value)
+        {
+            HeaderValues[key].Add(value);
+        }
     }
 }

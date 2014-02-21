@@ -339,11 +339,9 @@
     <Compile Include="Http\HttpResponseHeaders.cs" />
     <Compile Include="Http\ICurrentChain.cs" />
     <Compile Include="Http\ICurrentHttpRequest.cs" />
-    <Compile Include="Http\IRequestHeaders.cs" />
     <Compile Include="Http\MimeTypeList.cs" />
     <Compile Include="Http\NulloHttpWriter.cs" />
     <Compile Include="Http\RequestDataSource.cs" />
-    <Compile Include="Http\RequestHeaders.cs" />
     <Compile Include="Packaging\ContentOnlyPackageInfo.cs" />
     <Compile Include="Registration\BehaviorAggregator.cs" />
     <Compile Include="Registration\Nodes\ActionCallBase.cs" />

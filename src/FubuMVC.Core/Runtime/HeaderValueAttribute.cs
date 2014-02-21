@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Net;
 using System.Reflection;
 using FubuCore.Binding;
@@ -21,10 +22,8 @@ namespace FubuMVC.Core.Runtime
 
         public override void Bind(PropertyInfo property, IBindingContext context)
         {
-            context.Service<IRequestHeaders>().Value<string>(_headerName, val =>
-            {
-                property.SetValue(context.Object, val, null);
-            });
+            var value = context.Service<ICurrentHttpRequest>().GetHeader(_headerName).FirstOrDefault();
+            property.SetValue(context.Object, value, null);
         }
     }
 }

@@ -189,7 +189,6 @@
     <Compile Include="SessionState\flashing_an_object.cs" />
     <Compile Include="SessionState\retrieving_an_existing_item_from_flash.cs" />
     <Compile Include="SessionState\retrieving_an_item_when_flash_is_empty.cs" />
-    <Compile Include="StubRequestHeaders.cs" />
     <Compile Include="Behaviors\AsyncContinueWithBehaviorTests.cs" />
     <Compile Include="Behaviors\BasicBehaviorTester.cs" />
     <Compile Include="Behaviors\Conditional\AlwaysTester.cs" />
@@ -221,7 +220,6 @@
     <Compile Include="Http\Headers\HttpHeaderValuesTester.cs" />
     <Compile Include="Http\HttpRequestHeadersTester.cs" />
     <Compile Include="Http\MimeTypeListTester.cs" />
-    <Compile Include="Http\RequestHeadersIntegratedTester.cs" />
     <Compile Include="Http\RouteDataValuesTester.cs" />
     <Compile Include="NewConneg\FormatterWriterTester.cs" />
     <Compile Include="NewConneg\FormatterReaderTester.cs" />

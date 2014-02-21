@@ -14,13 +14,6 @@ namespace FubuMVC.Tests.Http
                 typeof(TImplementation));
         }
 
-
-        [Test]
-        public void IRequestHeader_is_registered()
-        {
-            registeredTypeIs<IRequestHeaders, RequestHeaders>();
-        }
-
         [Test]
         public void standin_ClientConnectivity_is_used_as_the_default()
         {
