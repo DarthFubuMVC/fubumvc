@@ -11,32 +11,32 @@ namespace FubuMVC.OwinHost.Testing.Middleware.StaticFiles
     [TestFixture]
     public class when_writing_a_file
     {
-        private IHttpWriter theWriter;
+        private IHttpResponse theResponse;
         private FubuFile theFile;
 
         [SetUp]
         public void SetUp()
         {
-            theWriter = MockRepository.GenerateMock<IHttpWriter>();
+            theResponse = MockRepository.GenerateMock<IHttpResponse>();
 
             new FileSystem().WriteStringToFile("foo.txt", "some text");
             theFile = new FubuFile("foo.txt", "application");
 
-            new WriteFileContinuation(theWriter, theFile)
-                .Write(theWriter);
+            new WriteFileContinuation(theResponse, theFile)
+                .Write(theResponse);
         }
 
 
         private void assertHeaderValueWasWritten(string key, string value)
         {
-            theWriter.AssertWasCalled(x => x.AppendHeader(key, value));
+            theResponse.AssertWasCalled(x => x.AppendHeader(key, value));
         }
 
 
         [Test]
         public void should_write_ok_as_the_status_code()
         {
-            theWriter.AssertWasCalled(x => x.WriteResponseCode(HttpStatusCode.OK));
+            theResponse.AssertWasCalled(x => x.WriteResponseCode(HttpStatusCode.OK));
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace FubuMVC.OwinHost.Testing.Middleware.StaticFiles
         [Test]
         public void should_write_The_file_itself()
         {
-            theWriter.AssertWasCalled(x => x.WriteFile(theFile.Path));
+            theResponse.AssertWasCalled(x => x.WriteFile(theFile.Path));
         }
     }
 }

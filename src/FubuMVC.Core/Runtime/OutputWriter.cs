@@ -18,23 +18,23 @@ namespace FubuMVC.Core.Runtime
 
     public class OutputWriter : IOutputWriter
     {
-        private readonly IHttpWriter _writer;
+        private readonly IHttpResponse _response;
         private readonly IFileSystem _fileSystem;
         private readonly ILogger _logger;
         private readonly Stack<IOutputState> _outputStates = new Stack<IOutputState>(); 
 
-        public OutputWriter(IHttpWriter writer, IFileSystem fileSystem, ILogger logger)
+        public OutputWriter(IHttpResponse response, IFileSystem fileSystem, ILogger logger)
         {
-            _writer = writer;
+            _response = response;
             _fileSystem = fileSystem;
             _logger = logger;
 
             normalWriting();
         }
 
-        public virtual IHttpWriter Writer
+        public virtual IHttpResponse Response
         {
-            get { return _writer; }
+            get { return _response; }
         }
 
         IOutputState CurrentState
@@ -44,7 +44,7 @@ namespace FubuMVC.Core.Runtime
 
         private void normalWriting()
         {
-            var state = new NormalState(_writer, _fileSystem);
+            var state = new NormalState(_response, _fileSystem);
             _outputStates.Push(state);
         }
 
@@ -87,7 +87,7 @@ namespace FubuMVC.Core.Runtime
             // We're routing the replay thru IOutputWriter to 
             // make unit testing easier, I think it gives a cleaner
             // dependency graph, and it makes request tracing work.
-            output.Replay(Writer);
+            output.Replay(Response);
         }
 
         // Keep this virtual for testing
@@ -116,7 +116,7 @@ namespace FubuMVC.Core.Runtime
         {
             _logger.DebugMessage(() => new RedirectReport(url));
 
-            Writer.Redirect(url);
+            Response.Redirect(url);
         }
 
 
@@ -148,7 +148,7 @@ namespace FubuMVC.Core.Runtime
                 Status = status
             });
 
-            Writer.WriteResponseCode(status, description);
+            Response.WriteResponseCode(status, description);
         }
 
         public void Dispose()

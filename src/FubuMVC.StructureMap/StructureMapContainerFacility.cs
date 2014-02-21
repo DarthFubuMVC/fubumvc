@@ -140,7 +140,7 @@ namespace FubuMVC.StructureMap
         {
             var container = new Container(containerConfiguration);
 
-            container.Configure(x => x.For<IHttpWriter>().Use(new NulloHttpWriter()));
+            container.Configure(x => x.For<IHttpResponse>().Use(new NulloHttpResponse()));
 
             FubuApplication.For(() => new FubuRegistry()).StructureMap(container).Bootstrap();
 

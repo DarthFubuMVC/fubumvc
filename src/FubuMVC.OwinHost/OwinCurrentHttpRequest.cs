@@ -198,6 +198,14 @@ namespace FubuMVC.OwinHost
             
         }
 
+        public NameValueCollection Form
+        {
+            get
+            {
+                return _environment.Get<NameValueCollection>(OwinConstants.RequestFormKey);
+            }
+        }
+
         public Stream Input
         {
             get

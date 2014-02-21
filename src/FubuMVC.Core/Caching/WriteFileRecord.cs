@@ -8,9 +8,9 @@ namespace FubuMVC.Core.Caching
 {
     public class WriteFileRecord : IRecordedHttpOutput, DescribesItself
     {
-        private IList<Action<IHttpWriter>> _writes = new List<Action<IHttpWriter>>();
+        private IList<Action<IHttpResponse>> _writes = new List<Action<IHttpResponse>>();
 
-        private Action<IHttpWriter> write
+        private Action<IHttpResponse> write
         {
             set
             {
@@ -40,9 +40,9 @@ namespace FubuMVC.Core.Caching
         {
         }
 
-        public void Replay(IHttpWriter writer)
+        public void Replay(IHttpResponse response)
         {
-            _writes.Each(x => x(writer));
+            _writes.Each(x => x(response));
         }
 
         public void Describe(Description description)

@@ -1,16 +1,18 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Web;
 using FubuCore;
 using FubuMVC.Core.Http.Compression;
+using FubuMVC.Core.Http.Headers;
 
 namespace FubuMVC.Core.Http
 {
     /// <summary>
     /// Lowest level service to write to the Http output
     /// </summary>
-    public interface IHttpWriter
+    public interface IHttpResponse
     {
         /// <summary>
         /// Write a header value to the response
@@ -52,6 +54,30 @@ namespace FubuMVC.Core.Http
         void WriteResponseCode(HttpStatusCode status, string description = null);
 
         /// <summary>
+        /// The HTTP status code.  The default is 200
+        /// </summary>
+        int StatusCode { get; set; }
+
+        /// <summary>
+        /// The HTTP status description header
+        /// </summary>
+        string StatusDescription { get; set; }
+
+
+        /// <summary>
+        /// All response header values for the key
+        /// </summary>
+        /// <param name="headerKey"></param>
+        /// <returns></returns>
+        IEnumerable<string> HeaderValueFor(string headerKey);
+
+        /// <summary>
+        /// All appended Header values, per key and value
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<Header> AllHeaders();
+
+        /// <summary>
         /// Applies output encoding to the response.  Mostly used by FubuMVC's internal support for content compression
         /// </summary>
         /// <param name="encoding"></param>
@@ -71,7 +97,7 @@ namespace FubuMVC.Core.Http
     }
 
     // TODO -- flesh this out
-    public class RecordingHttpWriter : IHttpWriter
+    public class RecordingHttpResponse : IHttpResponse
     {
         private readonly StringWriter _writer = new StringWriter();
 
@@ -101,6 +127,19 @@ namespace FubuMVC.Core.Http
         }
 
         public void WriteResponseCode(HttpStatusCode status, string description = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int StatusCode { get; set; }
+        public string StatusDescription { get; set; }
+
+        public IEnumerable<string> HeaderValueFor(string headerKey)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Header> AllHeaders()
         {
             throw new NotImplementedException();
         }

@@ -8,46 +8,46 @@ namespace FubuMVC.Core.Runtime
 {
     public class NormalState : IOutputState
     {
-        private readonly IHttpWriter _writer;
+        private readonly IHttpResponse _response;
         private readonly IFileSystem _fileSystem;
 
-        public NormalState(IHttpWriter writer, IFileSystem fileSystem)
+        public NormalState(IHttpResponse response, IFileSystem fileSystem)
         {
-            _writer = writer;
+            _response = response;
             _fileSystem = fileSystem;
         }
 
         public void Write(string contentType, string renderedOutput)
         {
-            _writer.WriteContentType(contentType);
-            _writer.Write(renderedOutput);
+            _response.WriteContentType(contentType);
+            _response.Write(renderedOutput);
         }
 
         public void Write(string contentType, Action<Stream> action)
         {
-            _writer.WriteContentType(contentType);
-            _writer.Write(action);
+            _response.WriteContentType(contentType);
+            _response.Write(action);
         }
 
         public void AppendHeader(string header, string value)
         {
-            _writer.AppendHeader(header, value);
+            _response.AppendHeader(header, value);
         }
 
         public void WriteFile(string contentType, string localFilePath, string displayName)
         {
             var record = WriteFileRecord.Create(_fileSystem, localFilePath, contentType, displayName);
-            record.Replay(_writer);
+            record.Replay(_response);
         }
 
         public void Flush()
         {
-            _writer.Flush();
+            _response.Flush();
         }
 
         public void Write(string renderedOutput)
         {
-            _writer.Write(renderedOutput);
+            _response.Write(renderedOutput);
         }
     }
 }

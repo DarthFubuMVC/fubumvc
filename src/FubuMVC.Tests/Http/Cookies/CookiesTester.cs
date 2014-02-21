@@ -81,6 +81,7 @@ namespace FubuMVC.Tests.Http.Cookies
 			}
 
 		    public NameValueCollection QueryString { get; private set; }
+		    public NameValueCollection Form { get; private set; }
 		    public Stream Input { get; private set; }
 		    public bool IsClientConnected()
 		    {

@@ -12,7 +12,7 @@ namespace FubuMVC.OwinHost.Testing.Middleware.StaticFiles
         [Test]
         public void writes_the_status_code_and_reason()
         {
-            var writer = MockRepository.GenerateMock<IHttpWriter>();
+            var writer = MockRepository.GenerateMock<IHttpResponse>();
 
 
             var continuation = new WriteStatusCodeContinuation(writer, HttpStatusCode.Accepted, "it's all good");

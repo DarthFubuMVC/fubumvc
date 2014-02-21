@@ -19,12 +19,12 @@ namespace FubuMVC.Tests.Runtime
     [TestFixture]
     public class OutputWriterTester : InteractionContext<OutputWriter>
     {
-        private IHttpWriter theHttpWriter;
+        private IHttpResponse theHttpResponse;
         private RecordingLogger logs;
 
         protected override void beforeEach()
         {
-            theHttpWriter = MockFor<IHttpWriter>();
+            theHttpResponse = MockFor<IHttpResponse>();
 
             logs = RecordLogging();
         }
@@ -33,7 +33,7 @@ namespace FubuMVC.Tests.Runtime
         public void flush_delegates()
         {
             ClassUnderTest.Flush();
-            theHttpWriter.AssertWasCalled(x => x.Flush());
+            theHttpResponse.AssertWasCalled(x => x.Flush());
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace FubuMVC.Tests.Runtime
         {
             ClassUnderTest.RedirectToUrl("http://somewhere.com");
 
-            theHttpWriter.AssertWasCalled(x => x.Redirect("http://somewhere.com"));
+            theHttpResponse.AssertWasCalled(x => x.Redirect("http://somewhere.com"));
         }
 
         [Test]
@@ -57,8 +57,8 @@ namespace FubuMVC.Tests.Runtime
         {
             ClassUnderTest.Write("text/json", "{}");
 
-            theHttpWriter.AssertWasCalled(x => x.Write("{}"));
-            theHttpWriter.AssertWasCalled(x => x.WriteContentType("text/json"));
+            theHttpResponse.AssertWasCalled(x => x.Write("{}"));
+            theHttpResponse.AssertWasCalled(x => x.WriteContentType("text/json"));
         }
 
         [Test]
@@ -82,7 +82,7 @@ namespace FubuMVC.Tests.Runtime
         {
             ClassUnderTest.WriteResponseCode(HttpStatusCode.UseProxy);
 
-            theHttpWriter.AssertWasCalled(x => x.WriteResponseCode(HttpStatusCode.UseProxy));
+            theHttpResponse.AssertWasCalled(x => x.WriteResponseCode(HttpStatusCode.UseProxy));
         }
 
         [Test]
@@ -90,7 +90,7 @@ namespace FubuMVC.Tests.Runtime
         {
             const string description = "why u no make good request?";
             ClassUnderTest.WriteResponseCode(HttpStatusCode.BadRequest, description);
-            theHttpWriter.AssertWasCalled(x => x.WriteResponseCode(HttpStatusCode.BadRequest, description));
+            theHttpResponse.AssertWasCalled(x => x.WriteResponseCode(HttpStatusCode.BadRequest, description));
         }
 
         [Test]
@@ -99,8 +99,8 @@ namespace FubuMVC.Tests.Runtime
             Action<Stream> action = stream => { };
             ClassUnderTest.Write("text/json", action);
 
-            theHttpWriter.AssertWasCalled(x => x.WriteContentType("text/json"));
-            theHttpWriter.AssertWasCalled(x => x.Write(action));
+            theHttpResponse.AssertWasCalled(x => x.WriteContentType("text/json"));
+            theHttpResponse.AssertWasCalled(x => x.Write(action));
         }
 
         [Test]
@@ -108,7 +108,7 @@ namespace FubuMVC.Tests.Runtime
         {
             ClassUnderTest.AppendHeader("e-tag", "12345");
 
-            theHttpWriter.AssertWasCalled(x => x.AppendHeader("e-tag", "12345"));
+            theHttpResponse.AssertWasCalled(x => x.AppendHeader("e-tag", "12345"));
 
         }
 
@@ -242,8 +242,8 @@ namespace FubuMVC.Tests.Runtime
         [Test]
         public void should_not_have_written_directly_to_the_http_writer()
         {
-            MockFor<IHttpWriter>().AssertWasNotCalled(x => x.Write(theContent));
-            MockFor<IHttpWriter>().AssertWasNotCalled(x => x.WriteContentType(theContentType));
+            MockFor<IHttpResponse>().AssertWasNotCalled(x => x.Write(theContent));
+            MockFor<IHttpResponse>().AssertWasNotCalled(x => x.WriteContentType(theContentType));
         }
 
         [Test]
@@ -251,8 +251,8 @@ namespace FubuMVC.Tests.Runtime
         {
             ClassUnderTest.Write(theContentType, theContent);
 
-            MockFor<IHttpWriter>().AssertWasCalled(x => x.Write(theContent));
-            MockFor<IHttpWriter>().AssertWasCalled(x => x.WriteContentType(theContentType));
+            MockFor<IHttpResponse>().AssertWasCalled(x => x.Write(theContent));
+            MockFor<IHttpResponse>().AssertWasCalled(x => x.WriteContentType(theContentType));
         }
 
         [Test]
@@ -295,26 +295,26 @@ namespace FubuMVC.Tests.Runtime
         [Test]
         public void should_actually_you_know_write_the_file_itself()
         {
-            MockFor<IHttpWriter>().AssertWasCalled(x => x.WriteFile(theFilePath));
+            MockFor<IHttpResponse>().AssertWasCalled(x => x.WriteFile(theFilePath));
         }
 
         [Test]
         public void should_have_written_the_content_type()
         {
-            MockFor<IHttpWriter>().AssertWasCalled(x => x.WriteContentType(theContentType));
+            MockFor<IHttpResponse>().AssertWasCalled(x => x.WriteContentType(theContentType));
         }
 
         [Test]
         public void should_write_a_content_disposition_header_for_the_display()
         {
-            MockFor<IHttpWriter>().AssertWasCalled(
+            MockFor<IHttpResponse>().AssertWasCalled(
                 x => x.AppendHeader("Content-Disposition", "attachment; filename=\"The title\""));
         }
 
         [Test]
         public void should_write_header_for_content_length()
         {
-            MockFor<IHttpWriter>().AssertWasCalled(x => x.AppendHeader("Content-Length", "123"));
+            MockFor<IHttpResponse>().AssertWasCalled(x => x.AppendHeader("Content-Length", "123"));
         }
     }
 }

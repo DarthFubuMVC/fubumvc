@@ -18,13 +18,13 @@ namespace FubuMVC.OwinHost.Testing.Middleware.StaticFiles
         private OwinCurrentHttpRequest theRequest;
         private StubFubuApplicationFiles theFiles = new StubFubuApplicationFiles();
         private StaticFileMiddleware theMiddleware;
-        private OwinHttpWriter theWriter;
+        private OwinHttpResponse theResponse;
  
         [SetUp]
         public void SetUp()
         {
             theRequest = new OwinCurrentHttpRequest();
-            theWriter = new OwinHttpWriter(theRequest.Environment);
+            theResponse = new OwinHttpResponse(theRequest.Environment);
             theMiddleware = new StaticFileMiddleware(null, theFiles, new OwinSettings());
         }
 
@@ -51,7 +51,7 @@ namespace FubuMVC.OwinHost.Testing.Middleware.StaticFiles
                 theRequest.Environment.Add(OwinConstants.RequestPathKey, path);
             }
 
-            return theMiddleware.Invoke(theRequest, theWriter);
+            return theMiddleware.Invoke(theRequest, theResponse);
         }
 
         [Test]

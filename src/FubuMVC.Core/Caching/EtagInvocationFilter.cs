@@ -47,7 +47,7 @@ namespace FubuMVC.Core.Caching
 
             if (etag != currentEtag) return DoNext.Continue;
 
-            var writer = arguments.Get<IHttpWriter>();
+            var writer = arguments.Get<IHttpResponse>();
             writer.WriteResponseCode(HttpStatusCode.NotModified);
 
 

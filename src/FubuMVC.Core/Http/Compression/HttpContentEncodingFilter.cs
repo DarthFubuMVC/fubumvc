@@ -23,7 +23,7 @@ namespace FubuMVC.Core.Http.Compression
                 .Value(HttpRequestHeaders.AcceptEncoding, x =>
                 {
                     var encoding = _encoders.MatchFor(x.RawValue as string);
-                    var writer = arguments.Get<IHttpWriter>();
+                    var writer = arguments.Get<IHttpResponse>();
 
                     writer.AppendHeader(HttpRequestHeaders.ContentEncoding, encoding.MatchingEncoding.Value);
                     writer.UseEncoding(encoding);

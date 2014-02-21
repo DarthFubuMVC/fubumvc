@@ -89,6 +89,14 @@ namespace FubuMVC.Core.Http.AspNet
             }
         }
 
+        public NameValueCollection Form
+        {
+            get
+            {
+                return _request.Form;
+            }
+        }
+
         public Stream Input
         {
             get { return _request.InputStream; }

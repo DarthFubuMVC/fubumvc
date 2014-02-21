@@ -15,17 +15,17 @@ namespace FubuMVC.OwinHost.Middleware.StaticFiles
     {
         private readonly IFubuFile _file;
 
-        public WriteFileContinuation(IHttpWriter writer, IFubuFile file) : base(writer, DoNext.Stop)
+        public WriteFileContinuation(IHttpResponse response, IFubuFile file) : base(response, DoNext.Stop)
         {
             _file = file;
         }
 
-        public override void Write(IHttpWriter writer)
+        public override void Write(IHttpResponse response)
         {
-            writer.WriteFile(_file.Path);
+            response.WriteFile(_file.Path);
 
-            WriteFileHeadContinuation.WriteHeaders(writer, _file);
-            writer.WriteResponseCode(HttpStatusCode.OK);
+            WriteFileHeadContinuation.WriteHeaders(response, _file);
+            response.WriteResponseCode(HttpStatusCode.OK);
         }
 
         public IFubuFile File

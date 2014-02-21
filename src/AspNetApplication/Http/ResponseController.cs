@@ -11,9 +11,9 @@ namespace AspNetApplication.Http
     public class ResponseController
     {
         private readonly IOutputWriter _writer;
-        private readonly IResponse _response;
+        private readonly IHttpResponse _response;
 
-        public ResponseController(IOutputWriter writer, IResponse response)
+        public ResponseController(IOutputWriter writer, IHttpResponse response)
         {
             _writer = writer;
             _response = response;

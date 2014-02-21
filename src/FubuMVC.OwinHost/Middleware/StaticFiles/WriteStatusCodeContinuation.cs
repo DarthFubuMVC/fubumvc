@@ -9,16 +9,16 @@ namespace FubuMVC.OwinHost.Middleware.StaticFiles
         private readonly HttpStatusCode _status;
         private readonly string _reason;
 
-        public WriteStatusCodeContinuation(IHttpWriter writer, HttpStatusCode status, string reason)
-            : base(writer, DoNext.Stop)
+        public WriteStatusCodeContinuation(IHttpResponse response, HttpStatusCode status, string reason)
+            : base(response, DoNext.Stop)
         {
             _status = status;
             _reason = reason;
         }
 
-        public override void Write(IHttpWriter writer)
+        public override void Write(IHttpResponse response)
         {
-            writer.WriteResponseCode(_status, _reason);
+            response.WriteResponseCode(_status, _reason);
         }
 
         public HttpStatusCode Status

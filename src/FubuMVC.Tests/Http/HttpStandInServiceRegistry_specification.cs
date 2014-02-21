@@ -21,9 +21,9 @@ namespace FubuMVC.Tests.Http
         }
 
         [Test]
-        public void IResponse_is_nullo()
+        public void IOwinResponse_is_nullo()
         {
-            registeredTypeIs<IResponse, HttpStandInServiceRegistry.NulloResponse>();
+            registeredTypeIs<IHttpResponse, NulloHttpResponse>();
         }
 
     }

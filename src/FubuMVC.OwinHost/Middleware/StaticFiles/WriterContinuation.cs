@@ -6,18 +6,18 @@ namespace FubuMVC.OwinHost.Middleware.StaticFiles
 {
     public abstract class WriterContinuation : MiddlewareContinuation
     {
-        protected WriterContinuation(IHttpWriter writer, DoNext doNext)
+        protected WriterContinuation(IHttpResponse response, DoNext doNext)
         {
-            if (writer == null) throw new ArgumentNullException("writer");
+            if (response == null) throw new ArgumentNullException("response");
 
             DoNext = doNext;
 
             Action = () => {
-                Write(writer);
-                writer.Flush();
+                Write(response);
+                response.Flush();
             };
         }
 
-        public abstract void Write(IHttpWriter writer);
+        public abstract void Write(IHttpResponse response);
     }
 }

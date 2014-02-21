@@ -21,7 +21,7 @@ namespace FubuMVC.OwinHost.Middleware.StaticFiles
             _settings = settings;
         }
 
-        public override MiddlewareContinuation Invoke(ICurrentHttpRequest request, IHttpWriter writer)
+        public override MiddlewareContinuation Invoke(ICurrentHttpRequest request, IHttpResponse response)
         {
             if (request.IsNotHttpMethod("GET", "HEAD")) return MiddlewareContinuation.Continue();
 
@@ -35,30 +35,30 @@ namespace FubuMVC.OwinHost.Middleware.StaticFiles
 
             if (request.IsHead())
             {
-                return new WriteFileHeadContinuation(writer, file, HttpStatusCode.OK);
+                return new WriteFileHeadContinuation(response, file, HttpStatusCode.OK);
             }
 
             if (request.IfMatchHeaderDoesNotMatchEtag(file))
             {
-                return new WriteStatusCodeContinuation(writer, HttpStatusCode.PreconditionFailed, "If-Match test failed"); 
+                return new WriteStatusCodeContinuation(response, HttpStatusCode.PreconditionFailed, "If-Match test failed"); 
             }
 
             if (request.IfNoneMatchHeaderMatchesEtag(file))
             {
-                return new WriteFileHeadContinuation(writer, file, HttpStatusCode.NotModified);
+                return new WriteFileHeadContinuation(response, file, HttpStatusCode.NotModified);
             }
 
             if (request.IfModifiedSinceHeaderAndNotModified(file))
             {
-                return new WriteFileHeadContinuation(writer, file, HttpStatusCode.NotModified);
+                return new WriteFileHeadContinuation(response, file, HttpStatusCode.NotModified);
             }
 
             if (request.IfUnModifiedSinceHeaderAndModifiedSince(file))
             {
-                return new WriteStatusCodeContinuation(writer, HttpStatusCode.PreconditionFailed, "File has been modified");
+                return new WriteStatusCodeContinuation(response, HttpStatusCode.PreconditionFailed, "File has been modified");
             }
 
-            return new WriteFileContinuation(writer, file);
+            return new WriteFileContinuation(response, file);
         }
 
         

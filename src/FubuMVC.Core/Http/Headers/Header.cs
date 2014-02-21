@@ -35,9 +35,9 @@ namespace FubuMVC.Core.Http.Headers
             writer.AppendHeader(Name, Value);
         }
 
-        public void Replay(IHttpWriter writer)
+        public void Replay(IHttpResponse response)
         {
-            writer.AppendHeader(Name, Value);
+            response.AppendHeader(Name, Value);
         }
 
 

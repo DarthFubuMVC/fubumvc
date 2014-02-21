@@ -1,11 +1,13 @@
 using System.Linq;
 using FubuCore;
+using FubuCore.Binding;
 using FubuCore.Conversion;
 using FubuCore.Formatting;
 using FubuCore.Logging;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
@@ -26,6 +28,12 @@ namespace FubuMVC.Tests.Registration
         {
             BehaviorGraph.BuildEmptyGraph().Services.DefaultServiceFor<TService>().Type.ShouldEqual(
                 typeof (TImplementation));
+        }
+
+        [Test]
+        public void request_data_is_registered()
+        {
+            registeredTypeIs<IRequestData, FubuMvcRequestData>();
         }
 
         [Test]

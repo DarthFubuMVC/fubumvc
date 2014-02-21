@@ -11,17 +11,18 @@ using FubuCore;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Compression;
 using FubuMVC.Core;
+using FubuMVC.Core.Http.Headers;
 
 namespace FubuMVC.OwinHost
 {
     using SendFileFunc = Func<string, long, long?, CancellationToken, Task>;
 
-    public class OwinHttpWriter : IHttpWriter, IDisposable
+    public class OwinHttpResponse : IHttpResponse, IDisposable
     {
         private readonly IDictionary<string, object> _environment;
         private readonly Stream _output;
 
-        public OwinHttpWriter(IDictionary<string, object> environment)
+        public OwinHttpResponse(IDictionary<string, object> environment)
         {
             _environment = environment;
 
@@ -118,6 +119,44 @@ namespace FubuMVC.OwinHost
             _environment[OwinConstants.ResponseReasonPhraseKey] = description;
         }
 
+        public int StatusCode
+        {
+            get
+            {
+                return _environment.Get<int>(OwinConstants.ResponseStatusCodeKey);
+            }
+            set
+            {
+                _environment.Set<int>(OwinConstants.ResponseStatusCodeKey, value);
+            }
+        }
+
+        public string StatusDescription
+        {
+            get
+            {
+                return _environment.Get<string>(OwinConstants.ResponseReasonPhraseKey);
+            }
+            set
+            {
+                _environment.Set<string>(OwinConstants.ResponseReasonPhraseKey, value);
+            }
+        }
+
+        public IEnumerable<string> HeaderValueFor(string headerKey)
+        {
+            return _environment.Get<IDictionary<string, string[]>>(OwinConstants.ResponseHeadersKey).Get(headerKey);
+        }
+
+        public IEnumerable<Header> AllHeaders()
+        {
+            return
+                _environment.Get<IDictionary<string, string[]>>(OwinConstants.ResponseHeadersKey).SelectMany(pair =>
+                {
+                    return pair.Value.Select(x => new Header(pair.Key, x));
+                });
+        }
+
         public void UseEncoding(IHttpContentEncoding encoding)
         {
             // TODO -- Come back to this one. The integration tests can't be done until we do
@@ -143,6 +182,21 @@ namespace FubuMVC.OwinHost
         public void Dispose()
         {
             Flush();
+        }
+    }
+
+    public static class DictionaryExtensions
+    {
+        public static void Set<T>(this IDictionary<string, object> dict, string key, T value)
+        {
+            if (dict.ContainsKey(key))
+            {
+                dict[key] = value;
+            }
+            else
+            {
+                dict.Add(key, value);
+            }
         }
     }
 }

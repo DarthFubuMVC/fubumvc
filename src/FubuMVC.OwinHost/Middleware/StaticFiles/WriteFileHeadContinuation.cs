@@ -11,7 +11,7 @@ namespace FubuMVC.OwinHost.Middleware.StaticFiles
         private readonly IFubuFile _file;
         private readonly HttpStatusCode _status;
 
-        public WriteFileHeadContinuation(IHttpWriter writer, IFubuFile file, HttpStatusCode status) : base(writer, DoNext.Stop)
+        public WriteFileHeadContinuation(IHttpResponse response, IFubuFile file, HttpStatusCode status) : base(response, DoNext.Stop)
         {
             _file = file;
             _status = status;
@@ -27,29 +27,29 @@ namespace FubuMVC.OwinHost.Middleware.StaticFiles
             get { return _status; }
         }
 
-        public static void WriteHeaders(IHttpWriter writer, IFubuFile file)
+        public static void WriteHeaders(IHttpResponse response, IFubuFile file)
         {
             var mimeType = MimeType.MimeTypeByFileName(file.Path);
             if (mimeType != null)
             {
-                writer.AppendHeader(HttpResponseHeaders.ContentType, mimeType.Value);
+                response.AppendHeader(HttpResponseHeaders.ContentType, mimeType.Value);
             }
 
-            writer.AppendHeader(HttpResponseHeaders.LastModified, file.LastModified().ToString("r"));
-            writer.AppendHeader(HttpResponseHeaders.ETag, file.Etag().Quoted());
+            response.AppendHeader(HttpResponseHeaders.LastModified, file.LastModified().ToString("r"));
+            response.AppendHeader(HttpResponseHeaders.ETag, file.Etag().Quoted());
 
         }
 
-        public override void Write(IHttpWriter writer)
+        public override void Write(IHttpResponse response)
         {
-            WriteHeaders(writer, _file);
+            WriteHeaders(response, _file);
 
             if (_status == HttpStatusCode.OK)
             {
-                writer.AppendHeader(HttpResponseHeaders.ContentLength, _file.Length().ToString());
+                response.AppendHeader(HttpResponseHeaders.ContentLength, _file.Length().ToString());
             }
 
-            writer.WriteResponseCode(_status);
+            response.WriteResponseCode(_status);
         }
     }
 }

@@ -68,6 +68,12 @@ namespace FubuMVC.Core.Http
         NameValueCollection QueryString { get; }
 
         /// <summary>
+        /// Exposes the name/value form post data for 
+        /// the current HTTP request if it exists
+        /// </summary>
+        NameValueCollection Form { get; }
+
+        /// <summary>
         /// Read the body of the HTTP request as a Stream
         /// Note: you cannot reading the Stream and the Form
         /// is mutually exclusive within one request
@@ -138,6 +144,7 @@ namespace FubuMVC.Core.Http
         }
 
         public NameValueCollection QueryString { get; private set; }
+        public NameValueCollection Form { get; private set; }
         public Stream Input { get; private set; }
 
         public void AppendHeader(string key, string value)

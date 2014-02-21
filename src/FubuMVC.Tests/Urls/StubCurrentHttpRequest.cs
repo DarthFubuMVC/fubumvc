@@ -65,6 +65,7 @@ namespace FubuMVC.Tests.Urls
         }
 
         public NameValueCollection QueryString { get; private set; }
+        public NameValueCollection Form { get; private set; }
         public Stream Input { get; private set; }
         public bool IsClientConnected()
         {

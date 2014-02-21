@@ -15,9 +15,9 @@ namespace FubuMVC.Core.Caching
             _stream = stream;
         }
 
-        public void Replay(IHttpWriter writer)
+        public void Replay(IHttpResponse response)
         {
-            writer.Write(stream =>
+            response.Write(stream =>
             {
                 lock (_locker)
                 {

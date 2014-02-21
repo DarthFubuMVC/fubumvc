@@ -15,12 +15,10 @@ namespace FubuMVC.OwinHost
             var httpContextBase = new OwinHttpContext(environment);
             With<HttpContextBase>(httpContextBase);
 
-            With<IRequestData>(new OwinRequestData(routeData, environment, httpRequest));
+            With(routeData);
 
             With<ICurrentHttpRequest>(httpRequest);
-            With<IHttpWriter>(new OwinHttpWriter(environment));
-
-            With<IResponse>(new OwinResponse(environment));
+            With<IHttpResponse>(new OwinHttpResponse(environment));
 
             With(new OwinContext(environment));
         }

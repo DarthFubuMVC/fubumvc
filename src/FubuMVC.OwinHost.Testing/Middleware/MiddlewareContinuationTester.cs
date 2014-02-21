@@ -12,7 +12,6 @@ namespace FubuMVC.OwinHost.Testing.Middleware
     {
         private static IDictionary<string, object> theEnvironment;
 
-        private static bool innerWasCalled;
         private static Task theInnerTask = Task.Factory.StartNew(() => { });
         private Func<IDictionary<string, object>, Task> theInner = env => {
             env.ShouldBeTheSameAs(theEnvironment);
@@ -23,7 +22,6 @@ namespace FubuMVC.OwinHost.Testing.Middleware
         [SetUp]
         public void SetUp()
         {
-            innerWasCalled = false;
             theEnvironment = new Dictionary<string, object>();
         }
 

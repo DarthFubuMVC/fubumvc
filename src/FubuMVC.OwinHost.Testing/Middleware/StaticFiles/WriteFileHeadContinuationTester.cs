@@ -12,7 +12,7 @@ namespace FubuMVC.OwinHost.Testing.Middleware.StaticFiles
     public class WriteFileHeadContinuation_should_only_write_the_content_type_if_that_status_is_200
     {
         private FubuFile theFile;
-        private IHttpWriter theWriter;
+        private IHttpResponse theResponse;
 
         [SetUp]
         public void SetUp()
@@ -20,26 +20,26 @@ namespace FubuMVC.OwinHost.Testing.Middleware.StaticFiles
             new FileSystem().WriteStringToFile("foo.txt", "some text");
             theFile = new FubuFile("foo.txt", "application");
 
-            theWriter = MockRepository.GenerateMock<IHttpWriter>();
+            theResponse = MockRepository.GenerateMock<IHttpResponse>();
             
         }
 
         [Test]
         public void do_write_content_length_for_200()
         {
-            new WriteFileHeadContinuation(theWriter, theFile, HttpStatusCode.OK)
-                .Write(theWriter);
+            new WriteFileHeadContinuation(theResponse, theFile, HttpStatusCode.OK)
+                .Write(theResponse);
 
-            theWriter.AssertWasCalled(x => x.AppendHeader(HttpResponseHeaders.ContentLength, theFile.Length().ToString()));
+            theResponse.AssertWasCalled(x => x.AppendHeader(HttpResponseHeaders.ContentLength, theFile.Length().ToString()));
         }
 
         [Test]
         public void do_not_write_lenght_for_anything_but_200()
         {
-            new WriteFileHeadContinuation(theWriter, theFile, HttpStatusCode.SeeOther)
-                .Write(theWriter);
+            new WriteFileHeadContinuation(theResponse, theFile, HttpStatusCode.SeeOther)
+                .Write(theResponse);
 
-            theWriter.AssertWasNotCalled(x => x.AppendHeader(HttpResponseHeaders.ContentLength, theFile.Length().ToString()));
+            theResponse.AssertWasNotCalled(x => x.AppendHeader(HttpResponseHeaders.ContentLength, theFile.Length().ToString()));
         }
     }
 
@@ -48,7 +48,7 @@ namespace FubuMVC.OwinHost.Testing.Middleware.StaticFiles
     public class when_writing_the_file_headers
     {
         private FubuFile theFile;
-        private IHttpWriter theWriter;
+        private IHttpResponse theResponse;
 
         [SetUp]
         public void SetUp()
@@ -56,14 +56,14 @@ namespace FubuMVC.OwinHost.Testing.Middleware.StaticFiles
             new FileSystem().WriteStringToFile("foo.txt", "some text");
             theFile = new FubuFile("foo.txt", "application");
 
-            theWriter = MockRepository.GenerateMock<IHttpWriter>();
+            theResponse = MockRepository.GenerateMock<IHttpResponse>();
 
-            WriteFileHeadContinuation.WriteHeaders(theWriter, theFile);
+            WriteFileHeadContinuation.WriteHeaders(theResponse, theFile);
         }
 
         private void assertHeaderValueWasWritten(string key, string value)
         {
-            theWriter.AssertWasCalled(x => x.AppendHeader(key, value));
+            theResponse.AssertWasCalled(x => x.AppendHeader(key, value));
         }
 
         [Test]

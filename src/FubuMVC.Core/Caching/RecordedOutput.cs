@@ -67,9 +67,9 @@ namespace FubuMVC.Core.Caching
 
 
 
-        public void Replay(IHttpWriter writer)
+        public void Replay(IHttpResponse response)
         {
-            _outputs.Each(x => x.Replay(writer));
+            _outputs.Each(x => x.Replay(response));
         }
 
 

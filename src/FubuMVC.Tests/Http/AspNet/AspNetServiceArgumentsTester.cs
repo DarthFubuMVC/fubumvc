@@ -41,12 +41,6 @@ namespace FubuMVC.Tests.Http.AspNet
 
 
         [Test]
-        public void should_add_the_request_data()
-        {
-            theArguments.Get<IRequestData>().ShouldBeOfType<AspNetRequestData>();
-        }
-
-        [Test]
         public void should_register_the_http_context_base()
         {
             theArguments.Get<HttpContextBase>().ShouldBeTheSameAs(theHttpContext);
@@ -61,7 +55,7 @@ namespace FubuMVC.Tests.Http.AspNet
         [Test]
         public void should_register_an_HttpWriter()
         {
-            theArguments.Get<IHttpWriter>().ShouldBeOfType<AspNetHttpWriter>();
+            theArguments.Get<IHttpResponse>().ShouldBeOfType<AspNetHttpResponse>();
         }
     }
 }

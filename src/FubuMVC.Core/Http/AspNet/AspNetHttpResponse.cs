@@ -1,18 +1,21 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Web;
 using FubuCore;
 using FubuMVC.Core.Http.Compression;
+using FubuMVC.Core.Http.Headers;
 
 namespace FubuMVC.Core.Http.AspNet
 {
-    public class AspNetHttpWriter : IHttpWriter
+    public class AspNetHttpResponse : IHttpResponse
     {
         private readonly HttpResponseBase _response;
 
 
-        public AspNetHttpWriter(HttpResponseBase response)
+        public AspNetHttpResponse(HttpResponseBase response)
         {
             _response = response;
         }
@@ -46,6 +49,34 @@ namespace FubuMVC.Core.Http.AspNet
         {
             _response.StatusCode = (int) status;
             if (description.IsNotEmpty()) _response.StatusDescription = description;
+        }
+
+        public int StatusCode
+        {
+            get { return _response.StatusCode; }
+            set { _response.StatusCode = value; }
+        }
+
+        public string StatusDescription
+        {
+            get { return _response.StatusDescription; }
+            set { _response.StatusDescription = value; }
+        }
+
+        public IEnumerable<string> HeaderValueFor(HttpResponseHeader key)
+        {
+            return HeaderValueFor(HttpResponseHeaders.HeaderNameFor(key));
+        }
+
+        public IEnumerable<string> HeaderValueFor(string headerKey)
+        {
+            return new []{_response.Headers[headerKey]};
+        }
+
+        public IEnumerable<Header> AllHeaders()
+        {
+            var keys = _response.Headers.AllKeys;
+            return keys.Select(x => new Header(x, _response.Headers[x])).ToArray();
         }
 
         public void UseEncoding(IHttpContentEncoding encoding)

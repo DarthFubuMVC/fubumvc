@@ -5,10 +5,10 @@ namespace AspNetApplication
 {
     public class ResponseHeadersEndpoint
     {
-        private readonly IResponse _response;
+        private readonly IHttpResponse _response;
         private readonly IOutputWriter _writer;
 
-        public ResponseHeadersEndpoint(IResponse response, IOutputWriter writer)
+        public ResponseHeadersEndpoint(IHttpResponse response, IOutputWriter writer)
         {
             _response = response;
             _writer = writer;

@@ -90,9 +90,7 @@
     <Compile Include="OwinHttpContext.cs" />
     <Compile Include="OwinConstants.cs" />
     <Compile Include="OwinCurrentHttpRequest.cs" />
-    <Compile Include="OwinHttpWriter.cs" />
-    <Compile Include="OwinRequestData.cs" />
-    <Compile Include="OwinResponse.cs" />
+    <Compile Include="OwinHttpResponse.cs" />
     <Compile Include="OwinServiceArguments.cs" />
     <Compile Include="PortFinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

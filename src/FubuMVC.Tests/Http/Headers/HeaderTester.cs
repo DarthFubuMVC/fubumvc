@@ -14,7 +14,7 @@ namespace FubuMVC.Tests.Http.Headers
         {
             var header = new Header(HttpResponseHeader.Warning, "don't do it!");
 
-            var writer = MockRepository.GenerateMock<IHttpWriter>();
+            var writer = MockRepository.GenerateMock<IHttpResponse>();
 
             header.Replay(writer);
 

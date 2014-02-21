@@ -56,7 +56,7 @@ namespace FubuMVC.OwinHost.Testing
 
         public Task Invoke(IDictionary<string, object> environment)
         {
-            var writer = new OwinHttpWriter(environment);
+            var writer = new OwinHttpResponse(environment);
             writer.AppendHeader("James", "Bond");
 
             return _inner(environment);

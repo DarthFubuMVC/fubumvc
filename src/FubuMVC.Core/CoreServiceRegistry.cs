@@ -7,6 +7,7 @@ using FubuCore.Logging;
 using FubuCore.Reflection;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Compression;
 using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Core.Registration;
@@ -30,6 +31,7 @@ namespace FubuMVC.Core
     {
         public CoreServiceRegistry()
         {
+            SetServiceIfNone<IRequestData, FubuMvcRequestData>();
             SetServiceIfNone(typeof(AppReloaded), ObjectDef.ForValue(new AppReloaded()));
 
             var stringifier = new Stringifier();

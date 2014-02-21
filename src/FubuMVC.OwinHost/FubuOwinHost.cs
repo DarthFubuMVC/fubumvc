@@ -76,7 +76,7 @@ namespace FubuMVC.OwinHost
 
         private void write500(IDictionary<string, object> environment, Exception exception)
         {
-            using (var writer = new OwinHttpWriter(environment))
+            using (var writer = new OwinHttpResponse(environment))
             {
                 writer.WriteResponseCode(HttpStatusCode.InternalServerError);
                 writer.Write("FubuMVC has detected an exception\r\n");

@@ -11,7 +11,7 @@ namespace FubuMVC.OwinHost.Testing
     public class OwnHttpWriterTester
     {
         private IDictionary<string, object> environment;
-        private OwinHttpWriter writer;
+        private OwinHttpResponse response;
 
         [SetUp]
         protected void beforeEach()
@@ -19,14 +19,14 @@ namespace FubuMVC.OwinHost.Testing
             environment = new Dictionary<string, object>();
             environment.Add(OwinConstants.ResponseBodyKey, new MemoryStream());
 
-            writer = new OwinHttpWriter(environment);
+            response = new OwinHttpResponse(environment);
         }
 
         [Test]
         public void can_write_multiple_values_for_the_same_header()
         {
-            writer.AppendHeader("X-1", "A");
-            writer.AppendHeader("X-1", "B");
+            response.AppendHeader("X-1", "A");
+            response.AppendHeader("X-1", "B");
 
             var dictionary = environment.Get<IDictionary<string, string[]>>(OwinConstants.ResponseHeadersKey);
             dictionary
@@ -36,7 +36,7 @@ namespace FubuMVC.OwinHost.Testing
         [Test]
         public void should_set_response_code()
         {
-            writer.WriteResponseCode(HttpStatusCode.UseProxy);
+            response.WriteResponseCode(HttpStatusCode.UseProxy);
 
             environment[OwinConstants.ResponseStatusCodeKey].ShouldEqual(HttpStatusCode.UseProxy.As<int>());
         }
@@ -45,7 +45,7 @@ namespace FubuMVC.OwinHost.Testing
         public void should_set_response_code_and_description()
         {
             const string description = "why u no make good request?";
-            writer.WriteResponseCode(HttpStatusCode.BadRequest, description);
+            response.WriteResponseCode(HttpStatusCode.BadRequest, description);
             environment[OwinConstants.ResponseStatusCodeKey].ShouldEqual(HttpStatusCode.BadRequest.As<int>());
             environment[OwinConstants.ResponseReasonPhraseKey].ShouldEqual(description);
         }

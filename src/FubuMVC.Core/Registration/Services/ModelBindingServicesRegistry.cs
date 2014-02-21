@@ -19,7 +19,6 @@ namespace FubuMVC.Core.Registration.Services
             SetServiceIfNone<IObjectResolver, ObjectResolver>();
 
             // STrictly a standin for testing purposes
-            AddService<IRequestData>(new RequestData());
             SetServiceIfNone<IBindingContext, BindingContext>();
 
             AddService<IConverterFamily, AspNetObjectConversionFamily>();

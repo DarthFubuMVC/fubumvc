@@ -119,7 +119,6 @@
     <Compile Include="OwnResponseTester.cs" />
     <Compile Include="OwnHttpWriterTester.cs" />
     <Compile Include="FormRequestReaderTester.cs" />
-    <Compile Include="OwinAggregateDictionaryTester.cs" />
     <Compile Include="OwnCurrentHttpRequestTester.cs" />
     <Compile Include="passing_the_FubuMode_into_the_OWIN_host.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

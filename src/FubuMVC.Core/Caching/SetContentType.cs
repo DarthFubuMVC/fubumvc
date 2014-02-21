@@ -13,9 +13,9 @@ namespace FubuMVC.Core.Caching
             _contentType = contentType;
         }
 
-        public void Replay(IHttpWriter writer)
+        public void Replay(IHttpResponse response)
         {
-            writer.WriteContentType(_contentType);
+            response.WriteContentType(_contentType);
         }
 
         public bool Equals(SetContentType other)

@@ -28,7 +28,7 @@ namespace FubuMVC.StructureMap.Testing.Internals
             container = new Container(x =>
             {
                 x.For<IFileSystem>().Use<FileSystem>();
-                x.For<IHttpWriter>().Use(new NulloHttpWriter());
+                x.For<IHttpResponse>().Use(new NulloHttpResponse());
                 x.For<ICurrentChain>().Use(new CurrentChain(null, null));
                 x.For<ICurrentHttpRequest>().Use(new StandInCurrentHttpRequest(){
                    

@@ -157,7 +157,7 @@ namespace FubuMVC.Tests.Caching
 
     public class StubOutputWriter : OutputWriter
     {
-        public StubOutputWriter() : base(new NulloHttpWriter(), null, new RecordingLogger())
+        public StubOutputWriter() : base(new NulloHttpResponse(), null, new RecordingLogger())
         {
             Output = new RecordedOutput(null);
 

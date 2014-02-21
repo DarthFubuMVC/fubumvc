@@ -83,6 +83,7 @@ namespace FubuMVC.Tests.Runtime
         }
 
         public NameValueCollection QueryString { get; private set; }
+        public NameValueCollection Form { get; private set; }
 
         public Stream Input
         {

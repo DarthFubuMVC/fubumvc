@@ -14,9 +14,9 @@ namespace FubuMVC.Core.Caching
             _text = text;
         }
 
-        public void Replay(IHttpWriter writer)
+        public void Replay(IHttpResponse response)
         {
-            writer.Write(_text);
+            response.Write(_text);
         }
 
         public void WriteText(StringWriter writer)

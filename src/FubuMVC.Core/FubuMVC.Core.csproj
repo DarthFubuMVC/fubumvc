@@ -114,7 +114,6 @@
     <Compile Include="FubuPartialAttribute.cs" />
     <Compile Include="FubuRuntime.cs" />
     <Compile Include="HtmlEndpointAttribute.cs" />
-    <Compile Include="Http\AspNet\AspNetResponse.cs" />
     <Compile Include="Http\CommaTokenParser.cs" />
     <Compile Include="Http\Compression\ApplyContentCompression.cs" />
     <Compile Include="Http\Compression\DeflateHttpContentEncoding.cs" />
@@ -130,9 +129,9 @@
     <Compile Include="Http\Cookies\Segment.cs" />
     <Compile Include="Http\CurrentHttpRequestExtensions.cs" />
     <Compile Include="Http\EtagMatch.cs" />
+    <Compile Include="Http\FubuMvcRequestData.cs" />
     <Compile Include="Http\HeaderValueSource.cs" />
     <Compile Include="Http\IMimetypeCorrection.cs" />
-    <Compile Include="Http\IResponse.cs" />
     <Compile Include="IApplicationSource.cs" />
     <Compile Include="IContainerFacilityExpression.cs" />
     <Compile Include="ImageTag.cs" />
@@ -263,7 +262,6 @@
     <Compile Include="FubuModuleAttributePackageLoader.cs" />
     <Compile Include="Http\CurrentRequestFullUrlPropertyBinder.cs" />
     <Compile Include="Http\CurrentRequestRelativeUrlPropertyBinder.cs" />
-    <Compile Include="Http\AspNet\AspNetRequestData.cs" />
     <Compile Include="Http\AspNet\RequestPropertyValueSource.cs" />
     <Compile Include="Http\HttpStandinServiceRegistry.cs" />
     <Compile Include="Http\RequestDataExtensions.cs" />
@@ -320,7 +318,7 @@
     <Compile Include="SymmetricJsonAttribute.cs" />
     <Compile Include="TagAttribute.cs" />
     <Compile Include="UI\DisplayConversionRegistryActivator.cs" />
-    <Compile Include="Http\AspNet\AspNetHttpWriter.cs" />
+    <Compile Include="Http\AspNet\AspNetHttpResponse.cs" />
     <Compile Include="Http\AspNet\AspNetCurrentHttpRequest.cs" />
     <Compile Include="Http\AspNet\ASPNetObjectConversionFamily.cs" />
     <Compile Include="Http\AspNet\AspNetServiceArguments.cs" />
@@ -338,7 +336,7 @@
     <Compile Include="Http\ICurrentChain.cs" />
     <Compile Include="Http\ICurrentHttpRequest.cs" />
     <Compile Include="Http\MimeTypeList.cs" />
-    <Compile Include="Http\NulloHttpWriter.cs" />
+    <Compile Include="Http\NulloHttpResponse.cs" />
     <Compile Include="Http\RequestDataSource.cs" />
     <Compile Include="Packaging\ContentOnlyPackageInfo.cs" />
     <Compile Include="Registration\BehaviorAggregator.cs" />
@@ -439,7 +437,7 @@
     <Compile Include="Runtime\IBehaviorInvocationFilter.cs" />
     <Compile Include="Runtime\IBehaviorInvoker.cs" />
     <Compile Include="Runtime\IgnoredRoute.cs" />
-    <Compile Include="Http\IHttpWriter.cs" />
+    <Compile Include="Http\IHttpResponse.cs" />
     <Compile Include="Runtime\InMemoryOutputWriter.cs" />
     <Compile Include="Runtime\IOutputState.cs" />
     <Compile Include="Runtime\IPartialFactory.cs" />

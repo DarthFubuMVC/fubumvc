@@ -17,13 +17,13 @@ namespace FubuMVC.Tests.Caching
     [TestFixture]
     public class RecordedOutputTester
     {
-        private IHttpWriter theHttpWriter;
+        private IHttpResponse theHttpResponse;
         private RecordedOutput theRecordedOutput;
 
         [SetUp]
         public void SetUp()
         {
-            theHttpWriter = MockRepository.GenerateMock<IHttpWriter>();
+            theHttpResponse = MockRepository.GenerateMock<IHttpResponse>();
             theRecordedOutput = new RecordedOutput(new FileSystem());
         }
 
@@ -52,13 +52,13 @@ namespace FubuMVC.Tests.Caching
 
             addOutputs(output1, output2, output3, output4, output5);
         
-            theRecordedOutput.Replay(theHttpWriter);
+            theRecordedOutput.Replay(theHttpResponse);
 
-            output1.AssertWasCalled(x => x.Replay(theHttpWriter));
-            output2.AssertWasCalled(x => x.Replay(theHttpWriter));
-            output3.AssertWasCalled(x => x.Replay(theHttpWriter));
-            output4.AssertWasCalled(x => x.Replay(theHttpWriter));
-            output5.AssertWasCalled(x => x.Replay(theHttpWriter));
+            output1.AssertWasCalled(x => x.Replay(theHttpResponse));
+            output2.AssertWasCalled(x => x.Replay(theHttpResponse));
+            output3.AssertWasCalled(x => x.Replay(theHttpResponse));
+            output4.AssertWasCalled(x => x.Replay(theHttpResponse));
+            output5.AssertWasCalled(x => x.Replay(theHttpResponse));
         }
 
         [Test]
@@ -141,18 +141,18 @@ namespace FubuMVC.Tests.Caching
         public void SetContentType_replay_writes_the_content_type_to_the_HttpWriter()
         {
             var setContentType = new SetContentType("text/json");
-            setContentType.Replay(theHttpWriter);
+            setContentType.Replay(theHttpResponse);
 
-            theHttpWriter.AssertWasCalled(x => x.WriteContentType("text/json"));
+            theHttpResponse.AssertWasCalled(x => x.WriteContentType("text/json"));
         }
 
         [Test]
         public void WriteTextOutput_replay_writes_the_text_to_the_HttpWriter()
         {
             var writeText = new WriteTextOutput("something");
-            writeText.Replay(theHttpWriter);
+            writeText.Replay(theHttpResponse);
 
-            theHttpWriter.AssertWasCalled(x => x.Write("something"));
+            theHttpResponse.AssertWasCalled(x => x.Write("something"));
         }
 
         public void WriteTextOutput_writetext_writes_the_text_to_the_stringwriter()
@@ -173,7 +173,7 @@ namespace FubuMVC.Tests.Caching
 
             var writeStream = new WriteStream(stream);
 
-            var recordingWriter = new RecordingHttpWriter();
+            var recordingWriter = new RecordingHttpResponse();
 
             writeStream.Replay(recordingWriter);
 
@@ -187,13 +187,13 @@ namespace FubuMVC.Tests.Caching
 
             theRecordedOutput.WriteFile("text/plain", "text.txt", "This is cool");
 
-            theRecordedOutput.Replay(theHttpWriter);
+            theRecordedOutput.Replay(theHttpResponse);
 
-            theHttpWriter.AssertWasCalled(x => x.WriteContentType("text/plain"));
-            theHttpWriter.AssertWasCalled(x => x.AppendHeader(HttpResponseHeaders.ContentDisposition, "attachment; filename=\"This is cool\""));
-            theHttpWriter.AssertWasCalled(x => x.AppendHeader(HttpResponseHeaders.ContentLength, "9"));
+            theHttpResponse.AssertWasCalled(x => x.WriteContentType("text/plain"));
+            theHttpResponse.AssertWasCalled(x => x.AppendHeader(HttpResponseHeaders.ContentDisposition, "attachment; filename=\"This is cool\""));
+            theHttpResponse.AssertWasCalled(x => x.AppendHeader(HttpResponseHeaders.ContentLength, "9"));
 
-            theHttpWriter.AssertWasCalled(x => x.WriteFile("text.txt"));
+            theHttpResponse.AssertWasCalled(x => x.WriteFile("text.txt"));
         }
 
         private void addOutputs(params IRecordedHttpOutput[] outputs)
