@@ -73,6 +73,12 @@ namespace FubuMVC.Core.Http
         /// is mutually exclusive within one request
         /// </summary>
         Stream Input { get; }
+
+        /// <summary>
+        /// Is the client still connected to this request?
+        /// </summary>
+        /// <returns></returns>
+        bool IsClientConnected();
     }
 
     public class StandInCurrentHttpRequest : ICurrentHttpRequest
@@ -137,6 +143,11 @@ namespace FubuMVC.Core.Http
         public void AppendHeader(string key, string value)
         {
             HeaderValues[key].Add(value);
+        }
+
+        public bool IsClientConnected()
+        {
+            return true;
         }
     }
 }

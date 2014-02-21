@@ -81,7 +81,6 @@
     <Compile Include="Middleware\StaticFiles\WriteFileHeadContinuation.cs" />
     <Compile Include="Middleware\StaticFiles\WriterContinuation.cs" />
     <Compile Include="Middleware\StaticFiles\WriteStatusCodeContinuation.cs" />
-    <Compile Include="OwinClientConnectivity.cs" />
     <Compile Include="OwinContext.cs" />
     <Compile Include="OwinSettings.cs" />
     <Compile Include="Readers\IOwinRequestReader.cs" />

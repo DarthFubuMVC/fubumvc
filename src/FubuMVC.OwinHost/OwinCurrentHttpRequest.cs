@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
+using System.Threading;
 using System.Web;
 using FubuCore;
 using FubuMVC.Core.Http;
@@ -203,6 +204,12 @@ namespace FubuMVC.OwinHost
             {
                 return _environment.Get<Stream>(OwinConstants.RequestBodyKey);
             }
+        }
+
+        public bool IsClientConnected()
+        {
+            var cancellation = _environment.Get<CancellationToken>(OwinConstants.CallCancelledKey);
+            return cancellation == null ? false : !cancellation.IsCancellationRequested;
         }
     }
 

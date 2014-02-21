@@ -16,7 +16,6 @@ namespace FubuMVC.OwinHost
             With<HttpContextBase>(httpContextBase);
 
             With<IRequestData>(new OwinRequestData(routeData, environment, httpRequest));
-            With<IClientConnectivity>(new OwinClientConnectivity(environment));
 
             With<ICurrentHttpRequest>(httpRequest);
             With<IHttpWriter>(new OwinHttpWriter(environment));

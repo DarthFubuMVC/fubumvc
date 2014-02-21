@@ -88,6 +88,11 @@ namespace FubuMVC.Tests.Runtime
         {
             get { return _input; } }
 
+        public bool IsClientConnected()
+        {
+            throw new NotImplementedException();
+        }
+
 
         public void CopyOutputToInputForTesting(Stream outputStream)
         {

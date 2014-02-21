@@ -7,10 +7,10 @@ using NUnit.Framework;
 namespace FubuMVC.OwinHost.Testing
 {
     [TestFixture]
-    public class OwinClientConnectivityTester
+    public class OwinCurrentHttpRequest_ClientConnectivityTester
     {
         private CancellationToken theToken;
-        private OwinClientConnectivity theConnectivity;
+        private OwinCurrentHttpRequest theConnectivity;
         private CancellationTokenSource source;
 
         [SetUp]
@@ -24,7 +24,7 @@ namespace FubuMVC.OwinHost.Testing
 
             dictionary.Add(OwinConstants.CallCancelledKey, theToken);
 
-            theConnectivity = new OwinClientConnectivity(dictionary);
+            theConnectivity = new OwinCurrentHttpRequest(dictionary);
         }
 
         [Test]

@@ -15,12 +15,6 @@ namespace FubuMVC.Tests.Http
         }
 
         [Test]
-        public void standin_ClientConnectivity_is_used_as_the_default()
-        {
-            registeredTypeIs<IClientConnectivity, StandInClientConnectivity>();
-        }
-
-        [Test]
         public void standin_current_http_request_is_used_as_the_default()
         {
             registeredTypeIs<ICurrentHttpRequest, StandInCurrentHttpRequest>();

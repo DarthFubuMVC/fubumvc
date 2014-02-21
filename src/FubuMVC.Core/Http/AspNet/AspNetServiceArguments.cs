@@ -7,7 +7,7 @@ namespace FubuMVC.Core.Http.AspNet
     {
         public AspNetServiceArguments(RequestContext requestContext)
         {
-            var currentRequest = new AspNetCurrentHttpRequest(requestContext.HttpContext.Request);
+            var currentRequest = new AspNetCurrentHttpRequest(requestContext.HttpContext.Request, requestContext.HttpContext.Response);
 
             With<IRequestData>(new AspNetRequestData(requestContext, currentRequest));
             With(requestContext.HttpContext);
@@ -17,8 +17,6 @@ namespace FubuMVC.Core.Http.AspNet
             With<ICurrentHttpRequest>(currentRequest);
 
             With<IHttpWriter>(new AspNetHttpWriter(requestContext.HttpContext.Response));
-
-            With<IClientConnectivity>(new AspNetClientConnectivity(requestContext.HttpContext.Response));
 
             With<IResponse>(new AspNetResponse(requestContext.HttpContext.Response));
         }

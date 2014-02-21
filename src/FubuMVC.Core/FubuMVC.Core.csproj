@@ -226,8 +226,6 @@
     <Compile Include="Runtime\SetValueReport.cs" />
     <Compile Include="Security\NotAuthenticatedAttribute.cs" />
     <Compile Include="Configuration\SystemServicesPack.cs" />
-    <Compile Include="Http\AspNet\AspNetClientConnectivity.cs" />
-    <Compile Include="Http\IClientConnectivity.cs" />
     <Compile Include="Registration\Conventions\DefaultOutputPolicy.cs" />
     <Compile Include="Registration\EndpointActionSource.cs" />
     <Compile Include="Runtime\Conditionals\Always.cs" />

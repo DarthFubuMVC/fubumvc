@@ -1,12 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net;
 using FubuCore.Binding;
-using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Http
 {
@@ -17,7 +14,6 @@ namespace FubuMVC.Core.Http
             SetServiceIfNone<ICurrentHttpRequest, StandInCurrentHttpRequest>();
 
             SetServiceIfNone<IRequestData>(new RequestData());
-            SetServiceIfNone<IClientConnectivity, StandInClientConnectivity>();
 
             SetServiceIfNone<IHttpWriter, NulloHttpWriter>();
 

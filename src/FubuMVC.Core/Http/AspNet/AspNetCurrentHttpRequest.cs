@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
-using System.Net;
 using System.Web;
 using FubuCore;
 using System.Linq;
@@ -12,10 +11,12 @@ namespace FubuMVC.Core.Http.AspNet
     public class AspNetCurrentHttpRequest : ICurrentHttpRequest
     {
         private readonly HttpRequestBase _request;
+        private readonly HttpResponseBase _response;
 
-        public AspNetCurrentHttpRequest(HttpRequestBase request)
+        public AspNetCurrentHttpRequest(HttpRequestBase request, HttpResponseBase response)
         {
             _request = request;
+            _response = response;
         }
 
         public string RawUrl()
@@ -91,6 +92,11 @@ namespace FubuMVC.Core.Http.AspNet
         public Stream Input
         {
             get { return _request.InputStream; }
+        }
+
+        public bool IsClientConnected()
+        {
+            return _response.IsClientConnected;
         }
     }
 }

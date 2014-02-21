@@ -112,7 +112,7 @@
     <Compile Include="Middleware\StaticFiles\WriteFileContinuationTester.cs" />
     <Compile Include="Middleware\StaticFiles\WriteFileHeadContinuationTester.cs" />
     <Compile Include="Middleware\StaticFiles\WriteStatusCodeContinuationTester.cs" />
-    <Compile Include="OwinClientConnectivityTester.cs" />
+    <Compile Include="OwinCurrentHttpRequest_ClientConnectivityTester.cs" />
     <Compile Include="OwinCurrentHttpRequestTester.cs" />
     <Compile Include="OwinSettingsTester.cs" />
     <Compile Include="Owin_url_resolution_tester.cs" />

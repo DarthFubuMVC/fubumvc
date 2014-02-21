@@ -34,12 +34,6 @@ namespace FubuMVC.Tests.Http.AspNet
         }
 
         [Test]
-        public void should_have_the_client_connectivity()
-        {
-            theArguments.Get<IClientConnectivity>().ShouldBeOfType<AspNetClientConnectivity>();
-        }
-
-        [Test]
         public void registers_an_http_context_base()
         {
             theArguments.Get<HttpContextBase>().ShouldNotBeNull();
