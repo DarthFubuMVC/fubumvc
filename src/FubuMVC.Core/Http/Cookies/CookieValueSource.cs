@@ -48,7 +48,7 @@ namespace FubuMVC.Core.Http.Cookies
 
         public void WriteReport(IValueReport report)
         {
-            _cookies.Request.Where(x => x.Value.IsNotEmpty()).Each(x => {
+            _cookies.All.Where(x => x.Value.IsNotEmpty()).Each(x => {
                 report.Value(x.States.First().Name, x.Value);
             });
         }

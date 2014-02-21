@@ -3,6 +3,7 @@ using System.Collections.Specialized;
 using System.IO;
 using FubuCore.Binding.Values;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Cookies;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -87,6 +88,14 @@ namespace FubuMVC.Tests.Http.Cookies
 		    {
 		        throw new System.NotImplementedException();
 		    }
+
+            public ICookies Cookies
+            {
+                get
+                {
+                    return new Core.Http.Cookies.Cookies(this);
+                }
+            }
 		}
 	}
 }

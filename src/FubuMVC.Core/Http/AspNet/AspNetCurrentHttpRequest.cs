@@ -5,6 +5,7 @@ using System.IO;
 using System.Web;
 using FubuCore;
 using System.Linq;
+using FubuMVC.Core.Http.Cookies;
 
 namespace FubuMVC.Core.Http.AspNet
 {
@@ -105,6 +106,14 @@ namespace FubuMVC.Core.Http.AspNet
         public bool IsClientConnected()
         {
             return _response.IsClientConnected;
+        }
+
+        public ICookies Cookies
+        {
+            get
+            {
+                return new Cookies.Cookies(this);
+            }
         }
     }
 }

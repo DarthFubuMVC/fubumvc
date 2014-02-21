@@ -224,10 +224,10 @@ namespace FubuMVC.Core.Endpoints
         /// <param name="categoryOrHttpMethod"></param>
         /// <param name="acceptType"></param>
         /// <returns></returns>
-        public HttpResponse Get<T>(Expression<Action<T>> expression, string categoryOrHttpMethod = null, string acceptType = "*/*")
+        public HttpResponse Get<T>(Expression<Action<T>> expression, string categoryOrHttpMethod = null, string acceptType = "*/*", Action<HttpWebRequest> configure = null)
         {
             var url = _urls.UrlFor(expression, categoryOrHttpMethod).ToAbsoluteUrl(_baseUrl);
-            return Get(url, acceptType);
+            return Get(url, acceptType, configure:configure);
         }
 
         public HttpResponse GetByInput<T>(T model, string categoryOrHttpMethod = "GET", string acceptType = "*/*", Action<HttpWebRequest> configure = null, string acceptEncoding = null)

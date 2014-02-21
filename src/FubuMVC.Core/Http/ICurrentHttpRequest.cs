@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using FubuCore.Util;
+using FubuMVC.Core.Http.Cookies;
 
 namespace FubuMVC.Core.Http
 {
@@ -85,6 +86,11 @@ namespace FubuMVC.Core.Http
         /// </summary>
         /// <returns></returns>
         bool IsClientConnected();
+
+        /// <summary>
+        /// Access to the Request Cookies
+        /// </summary>
+        ICookies Cookies { get; }
     }
 
     public class StandInCurrentHttpRequest : ICurrentHttpRequest
@@ -155,6 +161,14 @@ namespace FubuMVC.Core.Http
         public bool IsClientConnected()
         {
             return true;
+        }
+
+        public ICookies Cookies
+        {
+            get
+            {
+                return new Cookies.Cookies(this);
+            }
         }
     }
 }

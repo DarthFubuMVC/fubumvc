@@ -7,6 +7,7 @@ using System.Web;
 using FubuCore;
 using FubuMVC.Core.Http;
 using System.Linq;
+using FubuMVC.Core.Http.Cookies;
 
 namespace FubuMVC.OwinHost
 {
@@ -22,6 +23,8 @@ namespace FubuMVC.OwinHost
             _environment.Add(OwinConstants.RequestHeadersKey, new Dictionary<string, string[]>());
             _querystring = new Lazy<NameValueCollection>(() => new NameValueCollection());
             _environment.Add(OwinConstants.ResponseBodyKey, new MemoryStream());
+
+            
         }
 
         public OwinCurrentHttpRequest(IDictionary<string, object> environment)
@@ -34,6 +37,8 @@ namespace FubuMVC.OwinHost
             _querystring = new Lazy<NameValueCollection>(() => {
                 return HttpUtility.ParseQueryString(environment.Get<string>(OwinConstants.RequestQueryStringKey));
             });
+
+            Cookies = new Cookies(this);
         }
 
         public IDictionary<string, object> Environment
@@ -218,6 +223,11 @@ namespace FubuMVC.OwinHost
         {
             var cancellation = _environment.Get<CancellationToken>(OwinConstants.CallCancelledKey);
             return cancellation == null ? false : !cancellation.IsCancellationRequested;
+        }
+
+        public ICookies Cookies
+        {
+            get; private set;
         }
     }
 

@@ -5,6 +5,7 @@ using System.IO;
 using FubuCore.Util;
 using FubuMVC.Core;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Cookies;
 
 namespace FubuMVC.Tests.Urls
 {
@@ -70,6 +71,14 @@ namespace FubuMVC.Tests.Urls
         public bool IsClientConnected()
         {
             throw new NotImplementedException();
+        }
+
+        public ICookies Cookies
+        {
+            get
+            {
+                return new Core.Http.Cookies.Cookies(this);
+            }
         }
     }
 }

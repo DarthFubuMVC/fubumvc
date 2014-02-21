@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Xml.Serialization;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Cookies;
 using HtmlTags;
 
 namespace FubuMVC.Tests.Runtime
@@ -15,7 +16,7 @@ namespace FubuMVC.Tests.Runtime
         public void XmlInputIs(object target)
         {
             var serializer = new XmlSerializer(target.GetType());
-            MemoryStream stream = new MemoryStream();
+            var stream = new MemoryStream();
             serializer.Serialize(stream, target);
             stream.Position = 0;
 
@@ -31,8 +32,8 @@ namespace FubuMVC.Tests.Runtime
 
         public void JsonInputIs(string json)
         {
-            MemoryStream stream = new MemoryStream();
-            StreamWriter writer = new StreamWriter(stream);
+            var stream = new MemoryStream();
+            var writer = new StreamWriter(stream);
             writer.Write(json);
             writer.Flush();
 
@@ -87,7 +88,8 @@ namespace FubuMVC.Tests.Runtime
 
         public Stream Input
         {
-            get { return _input; } }
+            get { return _input; }
+        }
 
         public bool IsClientConnected()
         {
@@ -99,6 +101,11 @@ namespace FubuMVC.Tests.Runtime
         {
             _input = outputStream;
             _input.Position = 0;
+        }
+
+        public ICookies Cookies
+        {
+            get { return new Cookies(this); }
         }
     }
 }

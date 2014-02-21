@@ -25,7 +25,7 @@ namespace FubuMVC.Core.Http.Cookies
         /// <summary>
         /// All the cookies in the http request
         /// </summary>
-        IEnumerable<Cookie> Request { get; }
+        IEnumerable<Cookie> All { get; }
     }
 
     public class Cookies : ICookies
@@ -59,7 +59,7 @@ namespace FubuMVC.Core.Http.Cookies
             return cookie.GetValue(name);
         }
 
-        public IEnumerable<Cookie> Request
+        public IEnumerable<Cookie> All
         {
             get { return _cookies.Value; }
         }
