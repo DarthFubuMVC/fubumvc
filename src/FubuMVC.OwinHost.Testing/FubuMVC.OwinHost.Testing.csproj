@@ -65,12 +65,6 @@
     <Reference Include="Owin">
       <HintPath>..\packages\Owin\lib\net40\Owin.dll</HintPath>
     </Reference>
-    <Reference Include="Owin.Extensions">
-      <HintPath>..\packages\Owin.Extensions\lib\net40\Owin.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="Owin.Types">
-      <HintPath>..\packages\Owin.Types\lib\net40\Owin.Types.dll</HintPath>
-    </Reference>
     <Reference Include="pnunit.framework">
       <HintPath>..\packages\NUnit\lib\pnunit.framework.dll</HintPath>
     </Reference>
