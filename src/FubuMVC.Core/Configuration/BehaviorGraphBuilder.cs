@@ -18,6 +18,7 @@ namespace FubuMVC.Core.Configuration
             var config = registry.Config;
 
             config.RunActions(ConfigurationType.Settings, graph);
+
             config.RunActions(ConfigurationType.Discovery, graph);
 
             config.Imports.Each(import => import.ImportInto(graph));

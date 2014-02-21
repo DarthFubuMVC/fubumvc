@@ -13,7 +13,7 @@ namespace FubuMVC.Core.Registration
     {
         public void Configure(BehaviorGraph graph)
         {
-            var rules = graph.Settings.Get<AccessorRules>();
+            var rules = new AccessorRules();
 
             TypePool.AppDomainTypes().TypesMatching(x => x.CanBeCastTo<IAccessorRulesRegistration>() && x.IsConcreteWithDefaultCtor() && !x.IsOpenGeneric()).
                   Distinct().Select(x => {

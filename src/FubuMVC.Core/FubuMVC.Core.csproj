@@ -143,6 +143,7 @@
     <Compile Include="Registration\AccessorOverridesFinder.cs" />
     <Compile Include="Registration\AccessorRulesExpression.cs" />
     <Compile Include="Registration\ApplicationLevelAttribute.cs" />
+    <Compile Include="Registration\ConfigurationItem.cs" />
     <Compile Include="Registration\Conventions\CacheAttributePolicy.cs" />
     <Compile Include="Registration\Conventions\CachedPartialConvention.cs" />
     <Compile Include="Http\Compression\ContentCompressionActions.cs" />

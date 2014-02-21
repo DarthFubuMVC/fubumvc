@@ -11,7 +11,7 @@ namespace FubuMVC.Core.Registration
 {
     public class SettingsCollection
     {
-        private readonly static Lazy<ISettingsProvider> SettingsProvider = new Lazy<ISettingsProvider>(() => new AppSettingsProvider(ObjectResolver.Basic()));
+        public readonly static Lazy<ISettingsProvider> SettingsProvider = new Lazy<ISettingsProvider>(() => new AppSettingsProvider(ObjectResolver.Basic()));
 
         private readonly SettingsCollection _parent;
         private readonly Cache<Type, object> _settings = new Cache<Type, object>();
@@ -68,7 +68,7 @@ namespace FubuMVC.Core.Registration
 
         public void Replace<T>(T settings) where T : class
         {
-            _settings[typeof(T)] = toTask(settings);
+            _settings[typeof(T)] = settings.ToTask();
         }
 
         public bool HasExplicit<T>() 
@@ -82,19 +82,11 @@ namespace FubuMVC.Core.Registration
             object MakeDefault();
         }
 
-        private static Task<T> toTask<T>(T value)
-        {
-            var task = new TaskCompletionSource<T>();
-            task.SetResult(value);
-
-            return task.Task;
-        }
-
         public class DefaultMaker<T> : IDefaultMaker
         {
             public object MakeDefault()
             {
-                return toTask(default(T));
+                return default(T).ToTask();
             }
         }
 
@@ -136,7 +128,16 @@ namespace FubuMVC.Core.Registration
     }
 
 
+    public static class TaskExtensions
+    {
+        public static Task<T> ToTask<T>(this T value)
+        {
+            var task = new TaskCompletionSource<T>();
+            task.SetResult(value);
 
+            return task.Task;
+        }
+    }
 
 
 }
