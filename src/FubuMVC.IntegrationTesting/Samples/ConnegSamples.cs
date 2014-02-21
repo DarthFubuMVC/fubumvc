@@ -40,10 +40,10 @@ namespace FubuMVC.IntegrationTesting.Samples
     [MimeType("special/format", "text/json")]
     public class SpecialContentMediaReader : IReader<InputMessage>
     {
-        private readonly IStreamingData _streaming;
+        private readonly ICurrentHttpRequest _streaming;
         private readonly ICurrentHttpRequest _httpRequest;
 
-        public SpecialContentMediaReader(IStreamingData streaming, ICurrentHttpRequest httpRequest)
+        public SpecialContentMediaReader(ICurrentHttpRequest streaming, ICurrentHttpRequest httpRequest)
         {
             _streaming = streaming;
             _httpRequest = httpRequest;
@@ -59,7 +59,7 @@ namespace FubuMVC.IntegrationTesting.Samples
 
         public InputMessage Read(string mimeType)
         {
-            // read the body of the http request from IStreamingData
+            // read the body of the http request from ICurrentHttpRequest
             // read header information and route information from
             // ICurrentHttpRequest
 

@@ -1,14 +1,13 @@
 using System.Runtime.Serialization.Json;
 using FubuMVC.Core.Http;
-using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Behaviors
 {
     public class DataContractJsonReader : IJsonReader
     {
-        private readonly IStreamingData _data;
+        private readonly ICurrentHttpRequest _data;
 
-        public DataContractJsonReader(IStreamingData data)
+        public DataContractJsonReader(ICurrentHttpRequest data)
         {
             _data = data;
         }

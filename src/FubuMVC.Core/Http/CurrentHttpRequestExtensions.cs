@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using FubuCore;
@@ -233,133 +234,37 @@ namespace FubuMVC.Core.Http
                 : EtagMatch.No;
 
         }
-    }
 
-    public enum EtagMatch
-    {
-        Yes,
-        No,
-        None
-    }
-
-    public class CommaTokenParser
-    {
-        private readonly List<string> _tokens = new List<string>();
-        private List<char> _characters;
-        private IMode _mode;
-
-        public CommaTokenParser()
+        /// <summary>
+        /// Helper function to read the response body as a string with the default content encoding
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static string InputText(this ICurrentHttpRequest data)
         {
-            _mode = new Searching(this);
+            var reader = new StreamReader(data.Input);
+            return reader.ReadToEnd();
         }
 
-        public void Read(char c)
+        /// <summary>
+        /// Checks whether or not there is any data in the request body
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static bool HasBodyData(this ICurrentHttpRequest data)
         {
-            _mode.Read(c);
+            return data.Input != null && data.Input.CanRead && data.Input.Length > 0;
         }
 
-        private void addChar(char c)
+        public static bool CouldBeJson(this ICurrentHttpRequest data)
         {
-            _characters.Add(c);
-        }
+            if (!data.HasBodyData()) return false;
 
-        public IEnumerable<string> Tokens
-        {
-            get
-            {
-                return _tokens;
-            }
-        }
+            var reader = new StreamReader(data.Input);
+            var firstCharacter = reader.Read();
+            data.Input.Position = 0;
 
-        private void startToken(IMode mode)
-        {
-            _mode = mode;
-            _characters = new List<char>();
-        }
-
-        private void endToken()
-        {
-            var @string = new string(_characters.ToArray());
-            _tokens.Add(@string);
-
-            _mode = new Searching(this);
-        }
-
-
-        public interface IMode
-        {
-            void Read(char c);
-        }
-
-        public class Searching : IMode
-        {
-            private readonly CommaTokenParser _parent;
-
-            public Searching(CommaTokenParser parent)
-            {
-                _parent = parent;
-            }
-
-            public void Read(char c)
-            {
-                if (c == ',') return;
-
-                if (c == '"')
-                {
-                    _parent.startToken(new InsideQuotedToken(_parent));
-                }
-                else
-                {
-                    var normalToken = new InsideNormalToken(_parent);
-                    _parent.startToken(normalToken);
-                    normalToken.Read(c);
-                }
-            }
-        }
-
-        public class InsideQuotedToken : IMode
-        {
-            private readonly CommaTokenParser _parent;
-
-            public InsideQuotedToken(CommaTokenParser parent)
-            {
-                _parent = parent;
-            }
-
-
-            public void Read(char c)
-            {
-                if (c == '"')
-                {
-                    _parent.endToken();
-                }
-                else
-                {
-                    _parent.addChar(c);
-                }
-            }
-        }
-
-        public class InsideNormalToken : IMode
-        {
-            private readonly CommaTokenParser _parent;
-
-            public InsideNormalToken(CommaTokenParser parent)
-            {
-                _parent = parent;
-            }
-
-            public void Read(char c)
-            {
-                if (c == ',')
-                {
-                    _parent.endToken();
-                }
-                else
-                {
-                    _parent.addChar(c);
-                }
-            }
+            return firstCharacter == '{';
         }
     }
 }

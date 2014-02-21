@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Xml.Serialization;
 using FubuMVC.Core.Http;
@@ -6,7 +8,7 @@ using HtmlTags;
 
 namespace FubuMVC.Tests.Runtime
 {
-    public class InMemoryStreamingData : IStreamingData
+    public class InMemoryStreamingData : ICurrentHttpRequest
     {
         private Stream _input;
 
@@ -40,7 +42,47 @@ namespace FubuMVC.Tests.Runtime
         }
 
 
+        public string RawUrl()
+        {
+            throw new NotImplementedException();
+        }
 
+        public string RelativeUrl()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string FullUrl()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string ToFullUrl(string url)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string HttpMethod()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool HasHeader(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<string> GetHeader(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<string> AllHeaderKeys()
+        {
+            throw new NotImplementedException();
+        }
+
+        public NameValueCollection QueryString { get; private set; }
 
         public Stream Input
         {

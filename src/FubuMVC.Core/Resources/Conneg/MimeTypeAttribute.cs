@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using FubuCore;
 using FubuCore.Reflection;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
+    [MarkedForTermination("Let's get rid of this when we collapse things down")]
     [AttributeUsage(AttributeTargets.Class)]
     public class MimeTypeAttribute : Attribute
     {

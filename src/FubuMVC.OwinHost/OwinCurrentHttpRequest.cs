@@ -196,6 +196,14 @@ namespace FubuMVC.OwinHost
             }
             
         }
+
+        public Stream Input
+        {
+            get
+            {
+                return _environment.Get<Stream>(OwinConstants.RequestBodyKey);
+            }
+        }
     }
 
 }

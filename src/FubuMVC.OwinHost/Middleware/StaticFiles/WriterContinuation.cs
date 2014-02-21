@@ -6,8 +6,6 @@ namespace FubuMVC.OwinHost.Middleware.StaticFiles
 {
     public abstract class WriterContinuation : MiddlewareContinuation
     {
-        private readonly DoNext _doNext;
-
         protected WriterContinuation(IHttpWriter writer, DoNext doNext)
         {
             if (writer == null) throw new ArgumentNullException("writer");

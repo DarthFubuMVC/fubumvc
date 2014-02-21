@@ -115,6 +115,7 @@
     <Compile Include="FubuRuntime.cs" />
     <Compile Include="HtmlEndpointAttribute.cs" />
     <Compile Include="Http\AspNet\AspNetResponse.cs" />
+    <Compile Include="Http\CommaTokenParser.cs" />
     <Compile Include="Http\Compression\ApplyContentCompression.cs" />
     <Compile Include="Http\Compression\DeflateHttpContentEncoding.cs" />
     <Compile Include="Http\Compression\DoNotCompressAttribute.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="Http\Cookies\ICookieValue.cs" />
     <Compile Include="Http\Cookies\Segment.cs" />
     <Compile Include="Http\CurrentHttpRequestExtensions.cs" />
+    <Compile Include="Http\EtagMatch.cs" />
     <Compile Include="Http\HeaderValueSource.cs" />
     <Compile Include="Http\IMimetypeCorrection.cs" />
     <Compile Include="Http\IResponse.cs" />
@@ -339,11 +341,9 @@
     <Compile Include="Http\ICurrentHttpRequest.cs" />
     <Compile Include="Http\IRequestHeaders.cs" />
     <Compile Include="Http\MimeTypeList.cs" />
-    <Compile Include="Http\AspNet\AspNetStreamingData.cs" />
     <Compile Include="Http\NulloHttpWriter.cs" />
     <Compile Include="Http\RequestDataSource.cs" />
     <Compile Include="Http\RequestHeaders.cs" />
-    <Compile Include="Http\StreamingDataExtensions.cs" />
     <Compile Include="Packaging\ContentOnlyPackageInfo.cs" />
     <Compile Include="Registration\BehaviorAggregator.cs" />
     <Compile Include="Registration\Nodes\ActionCallBase.cs" />
@@ -448,7 +448,6 @@
     <Compile Include="Runtime\IOutputState.cs" />
     <Compile Include="Runtime\IPartialFactory.cs" />
     <Compile Include="Runtime\ISessionState.cs" />
-    <Compile Include="Http\IStreamingData.cs" />
     <Compile Include="Runtime\IJsonWriter.cs" />
     <Compile Include="Runtime\NormalState.cs" />
     <Compile Include="Runtime\OutputWriterExtensions.cs" />

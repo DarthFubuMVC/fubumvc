@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.IO;
 
 namespace FubuMVC.Core.Http
 {
@@ -64,6 +65,13 @@ namespace FubuMVC.Core.Http
         /// the current Http request
         /// </summary>
         NameValueCollection QueryString { get; }
+
+        /// <summary>
+        /// Read the body of the HTTP request as a Stream
+        /// Note: you cannot reading the Stream and the Form
+        /// is mutually exclusive within one request
+        /// </summary>
+        Stream Input { get; }
     }
 
     public class StandInCurrentHttpRequest : ICurrentHttpRequest
@@ -76,6 +84,7 @@ namespace FubuMVC.Core.Http
 
         public StandInCurrentHttpRequest()
         {
+            Input = new MemoryStream();
             QueryString = new NameValueCollection();
         }
 
@@ -120,5 +129,6 @@ namespace FubuMVC.Core.Http
         }
 
         public NameValueCollection QueryString { get; private set; }
+        public Stream Input { get; private set; }
     }
 }

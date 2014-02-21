@@ -19,7 +19,6 @@ namespace FubuMVC.OwinHost
             With<IClientConnectivity>(new OwinClientConnectivity(environment));
 
             With<ICurrentHttpRequest>(httpRequest);
-            With<IStreamingData>(new OwinStreamingData(environment));
             With<IHttpWriter>(new OwinHttpWriter(environment));
 
             With<IResponse>(new OwinResponse(environment));

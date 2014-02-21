@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.IO;
 using FubuCore.Util;
 using FubuMVC.Core;
 using FubuMVC.Core.Http;
@@ -64,5 +65,6 @@ namespace FubuMVC.Tests.Urls
         }
 
         public NameValueCollection QueryString { get; private set; }
+        public Stream Input { get; private set; }
     }
 }

@@ -9,15 +9,15 @@ using FubuMVC.Core.Resources.Conneg;
 
 namespace FubuMVC.Core.Runtime.Formatters
 {
-    // See the StoryTeller tests for conneg
+    // See the integration tests for conneg
     [MimeType("text/xml", "application/xml")]
     [Title("Xml Serialization")]
     public class XmlFormatter : IFormatter
     {
-        private readonly IStreamingData _streaming;
+        private readonly ICurrentHttpRequest _streaming;
         private readonly IOutputWriter _writer;
 
-        public XmlFormatter(IStreamingData streaming, IOutputWriter writer)
+        public XmlFormatter(ICurrentHttpRequest streaming, IOutputWriter writer)
         {
             _streaming = streaming;
             _writer = writer;

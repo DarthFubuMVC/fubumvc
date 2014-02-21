@@ -55,7 +55,6 @@ namespace FubuMVC.Tests
 
             container = new Container(x =>
             {
-                x.For<IStreamingData>().Use(MockRepository.GenerateMock<IStreamingData>());
                 x.For<ICurrentChain>().Use(new CurrentChain(null, null));
                 x.For<ICurrentHttpRequest>().Use(new StubCurrentHttpRequest{
                     TheApplicationRoot = "http://server"

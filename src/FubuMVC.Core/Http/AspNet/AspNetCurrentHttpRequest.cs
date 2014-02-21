@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.IO;
 using System.Net;
 using System.Web;
 using FubuCore;
@@ -85,6 +86,11 @@ namespace FubuMVC.Core.Http.AspNet
             {
                 return _request.QueryString;
             }
+        }
+
+        public Stream Input
+        {
+            get { return _request.InputStream; }
         }
     }
 }

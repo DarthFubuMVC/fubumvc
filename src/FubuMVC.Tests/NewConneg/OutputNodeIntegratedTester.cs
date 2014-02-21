@@ -38,7 +38,7 @@ namespace FubuMVC.Tests.NewConneg
             container.Configure(x =>
             {
                 // Need a stand in value
-                x.For<IStreamingData>().Use(MockRepository.GenerateMock<IStreamingData>());
+                x.For<ICurrentHttpRequest>().Use(MockRepository.GenerateMock<ICurrentHttpRequest>());
             });
 
             var objectDef = node.As<IContainerModel>().ToObjectDef();

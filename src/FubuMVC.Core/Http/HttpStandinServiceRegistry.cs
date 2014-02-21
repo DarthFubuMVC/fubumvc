@@ -23,18 +23,10 @@ namespace FubuMVC.Core.Http
             SetServiceIfNone<IHttpWriter, NulloHttpWriter>();
 
             SetServiceIfNone<ICurrentChain>(new CurrentChain(null, null));
-            SetServiceIfNone<IStreamingData, NulloStreamingData>();
 
             SetServiceIfNone<IResponse, NulloResponse>();
         }
 
-        public class NulloStreamingData : IStreamingData
-        {
-            public Stream Input
-            {
-                get { return new MemoryStream(); }
-            }
-        }
 
         public class NulloResponse : IResponse
         {
