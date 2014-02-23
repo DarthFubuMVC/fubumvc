@@ -18,7 +18,7 @@ namespace TestPackage2
         }
     }
 
-    public class JsonSerializedMessage : JsonMessage
+    public class JsonSerializedMessage 
     {
         public string Name { get; set; }
     }

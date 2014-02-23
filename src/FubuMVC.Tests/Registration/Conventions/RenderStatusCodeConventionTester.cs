@@ -18,10 +18,7 @@ namespace FubuMVC.Tests.Registration.Conventions
 
 namespace RestfulStatusCodeServices
 {
-    // JsonMessage is just a marker interface
-    // FubuMVC doesn't yet support "conneg" -- but should
-    // We take pull requests!
-    public class InputMessage : JsonMessage
+    public class InputMessage 
     {
     }
 

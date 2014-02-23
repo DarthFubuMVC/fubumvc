@@ -151,7 +151,6 @@
     <Compile Include="Registration\Conventions\CachedPartialConventionTester.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteConventionBasedUrlPolicyTester.cs" />
     <Compile Include="Registration\Conventions\EndpointActionSourceTester.cs" />
-    <Compile Include="Registration\Conventions\JsonMessageInputConventionTester.cs" />
     <Compile Include="Registration\Conventions\RegisterAllSettingsTester.cs" />
     <Compile Include="Registration\Conventions\UrlPatternAttributeOnViewModelPolicyTester.cs" />
     <Compile Include="Registration\Conventions\VaryByPolicyTester.cs" />
@@ -322,7 +321,8 @@
     <Compile Include="FubuBootstrapperIntegrationTester.cs" />
     <Compile Include="FubuRegistryTester.cs" />
     <Compile Include="HtmlGenerationTestExtensions.cs" />
-    <Compile Include="Registration\BehaviorGraphTester.cs"></Compile>
+    <Compile Include="Registration\BehaviorGraphTester.cs">
+    </Compile>
     <Compile Include="Registration\Conventions\ActionSourceTester.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConventionTester.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteInputTypeBasedUrlPolicyTester.cs" />

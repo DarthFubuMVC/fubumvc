@@ -191,15 +191,15 @@ namespace FubuMVC.Tests.Registration.Conventions
         }
     }
 
-    public class Json1 : JsonMessage
+    public class Json1
     {
     }
 
-    public class Json2 : JsonMessage
+    public class Json2
     {
     }
 
-    public class Json3 : JsonMessage
+    public class Json3
     {
     }
 

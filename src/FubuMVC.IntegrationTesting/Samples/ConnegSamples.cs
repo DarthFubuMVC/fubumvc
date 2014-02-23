@@ -293,7 +293,7 @@ namespace FubuMVC.IntegrationTesting.Samples
     }
 
 
-    public class JsonInput : JsonMessage
+    public class JsonInput
     {
         
     }

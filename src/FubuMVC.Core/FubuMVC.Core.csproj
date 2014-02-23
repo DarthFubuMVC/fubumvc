@@ -136,7 +136,6 @@
     <Compile Include="IContainerFacilityExpression.cs" />
     <Compile Include="ImageTag.cs" />
     <Compile Include="JsonEndpointAttribute.cs" />
-    <Compile Include="JsonMessage.cs" />
     <Compile Include="Packaging\PackageService.cs" />
     <Compile Include="PolicyAttribute.cs" />
     <Compile Include="QueryStringAttribute.cs" />
@@ -396,7 +395,6 @@
     <Compile Include="Registration\Conventions\ContinuationHandlerConvention.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteInputTypeBasedUrlPolicy.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteMethodBasedUrlPolicy.cs" />
-    <Compile Include="Registration\Conventions\JsonMessageInputConvention.cs" />
     <Compile Include="Registration\Conventions\ReorderBehaviorsPolicy.cs" />
     <Compile Include="Registration\Conventions\RouteConstraintPolicy.cs" />
     <Compile Include="Registration\DSL\ModelsExpression.cs" />

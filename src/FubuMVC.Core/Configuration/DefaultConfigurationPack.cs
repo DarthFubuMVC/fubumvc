@@ -34,7 +34,6 @@ namespace FubuMVC.Core.Configuration
             Add<CacheAttributePolicy>();
 
             For(ConfigurationType.Conneg);
-            Add<JsonMessageInputConvention>();
             Add<AjaxContinuationPolicy>();
             Add<DictionaryOutputConvention>();
             Add<HtmlStringOutputPolicy>();

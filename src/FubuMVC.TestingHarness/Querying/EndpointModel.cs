@@ -4,7 +4,7 @@ using FubuMVC.Core;
 
 namespace FubuMVC.TestingHarness.Querying
 {
-    public class EndpointModel : JsonMessage
+    public class EndpointModel 
     {
         public EndpointToken[] AllEndpoints { get; set; }
 
