@@ -1,10 +1,8 @@
 using System;
 using System.Linq;
-using System.Net;
-using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
-using OutputNode = FubuMVC.Core.Resources.Conneg.OutputNode;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
@@ -28,10 +26,26 @@ namespace FubuMVC.Core.Resources.Conneg
             }
         }
 
-        public static void UseFormatter<T>(this BehaviorChain chain) where T : IFormatter
+        public static void UseJson(this BehaviorChain chain)
         {
-            chain.Input.AddFormatter<T>();
-            chain.Output.AddFormatter<T>();
+            if (chain.InputType() != null) chain.Input.AddFormatter<JsonFormatter>();
+            if (chain.HasResourceType()) chain.OutputJson();
+        }
+
+        public static void UseXml(this BehaviorChain chain)
+        {
+            if (chain.InputType() != null) chain.Input.AddFormatter<XmlFormatter>();
+            if (chain.HasResourceType()) chain.OutputXml();
+        }
+
+        public static void OutputJson(this BehaviorChain chain)
+        {
+            chain.Output.AddFormatter<JsonFormatter>();
+        }
+
+        public static void OutputXml(this BehaviorChain chain)
+        {
+            chain.Output.AddFormatter<XmlFormatter>();
         }
 
         public static void MakeSymmetricJson(this BehaviorChain chain)
@@ -40,14 +54,14 @@ namespace FubuMVC.Core.Resources.Conneg
             {
                 chain.Input.ClearAll();
                 chain.Input.AllowHttpFormPosts = false;
-                chain.Input.AddFormatter<JsonFormatter>();
             }
 
             if (chain.ResourceType() != null)
             {
                 chain.Output.ClearAll();
-                chain.Output.AddFormatter<JsonFormatter>();
             }
+
+            chain.UseJson();
         }
 
         public static void MakeAsymmetricJson(this BehaviorChain chain)
@@ -56,23 +70,44 @@ namespace FubuMVC.Core.Resources.Conneg
             {
                 chain.Input.ClearAll();
                 chain.Input.AllowHttpFormPosts = true;
-                chain.Input.AddFormatter<JsonFormatter>();
             }
 
             if (chain.ResourceType() != null)
             {
                 chain.Output.ClearAll();
-                chain.Output.AddFormatter<JsonFormatter>();
             }
+
+            chain.UseJson();
         }
 
+        public static bool WritesJson(this BehaviorChain chain)
+        {
+            return chain.Output.Writers.Any(x => x.Mimetypes.Contains(MimeType.Json.ToString()));
+        }
+
+        public static bool WritesXml(this BehaviorChain chain)
+        {
+            return chain.Output.Writers.Any(x => x.Mimetypes.Contains(MimeType.Xml.ToString()));
+        }
+
+        // TODO -- do something about matching on Mimetype maybe
+        public static bool ReadsJson(this BehaviorChain chain)
+        {
+            return chain.Input.Readers.Any(x => x.Mimetypes.Contains(MimeType.Json.ToString()));
+        }
+
+        public static bool ReadsXml(this BehaviorChain chain)
+        {
+            return chain.Input.Readers.Any(x => x.Mimetypes.Contains(MimeType.Xml.ToString()));
+        }
+
+        // TODO -- change this to key off of mimetype only
         public static bool IsAsymmetricJson(this BehaviorChain chain)
         {
-
             if (chain.ResourceType() != null)
             {
                 if (chain.Output.Writers.Count() != 1) return false;
-                if (!chain.Output.UsesFormatter<JsonFormatter>()) return false;
+                if (!chain.WritesJson()) return false;
             }
 
             if (chain.InputType() != null)
@@ -80,7 +115,7 @@ namespace FubuMVC.Core.Resources.Conneg
                 if (chain.Input.Readers.Count() != 2) return false;
                 if (!chain.Input.AllowHttpFormPosts) return false;
 
-                return chain.Input.UsesFormatter<JsonFormatter>();
+                return chain.ReadsJson();
             }
 
             return true;
@@ -99,15 +134,7 @@ namespace FubuMVC.Core.Resources.Conneg
             }
         }
 
-        public static void OutputJson(this BehaviorChain chain)
-        {
-            chain.Output.AddFormatter<JsonFormatter>();
-        }
 
-        public static void OutputXml(this BehaviorChain chain)
-        {
-            chain.Output.AddFormatter<XmlFormatter>();
-        }
 
         /// <summary>
         /// Sets up very basic content negotiation for an endpoint.
@@ -123,16 +150,15 @@ namespace FubuMVC.Core.Resources.Conneg
             {
                 chain.Input.ClearAll();
                 chain.Input.AllowHttpFormPosts = true;
-                chain.Input.AddFormatter<JsonFormatter>();
-                chain.Input.AddFormatter<XmlFormatter>();
             }
 
             if (chain.HasResourceType())
             {
                 chain.Output.ClearAll();
-                chain.Output.AddFormatter<JsonFormatter>();
-                chain.Output.AddFormatter<XmlFormatter>();
             }
+
+            chain.UseJson();
+            chain.UseXml();
         }
     }
 }

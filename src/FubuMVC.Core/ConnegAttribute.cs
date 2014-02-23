@@ -37,8 +37,9 @@ namespace FubuMVC.Core
             if (_formatters == FormatterOptions.All)
             {
                 chain.Input.AllowHttpFormPosts = true;
-                chain.UseFormatter<JsonFormatter>();
-                chain.UseFormatter<XmlFormatter>();
+
+                chain.UseJson();
+                chain.UseXml();
 
                 return;
             }
@@ -46,12 +47,12 @@ namespace FubuMVC.Core
 
             if ((_formatters & FormatterOptions.Json) != 0)
             {
-                chain.UseFormatter<JsonFormatter>();
+                chain.UseJson();
             }
 
             if ((_formatters & FormatterOptions.Xml) != 0)
             {
-                chain.UseFormatter<XmlFormatter>();
+                chain.UseXml();
             }
 
             if ((_formatters & FormatterOptions.Html) != 0)
