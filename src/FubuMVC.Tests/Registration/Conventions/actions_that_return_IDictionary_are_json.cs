@@ -1,6 +1,9 @@
 using System.Collections.Generic;
+using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Runtime;
 using NUnit.Framework;
 using FubuMVC.Core.Resources.Conneg;
 using FubuTestingSupport;
@@ -24,18 +27,13 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void methods_that_return_an_IDictionary_string_object_should_be_asymmetric_json()
         {
-            theGraph.BehaviorFor<MyController>(x => x.ReturnsJson(null)).IsAsymmetricJson().ShouldBeTrue();
+            theGraph.BehaviorFor<MyController>(x => x.ReturnsJson(null)).ShouldBeAsymmetricJson();
             var behaviorChain = theGraph.BehaviorFor<MyController>(x => x.ReturnOtherJson());
 
             behaviorChain.ResourceType().ShouldEqual(typeof (IDictionary<string, object>));
-            behaviorChain.IsAsymmetricJson().ShouldBeTrue();
+            behaviorChain.ShouldBeAsymmetricJson();
         }
 
-        [Test]
-        public void methods_that_do_not_return_idictionary_should_not_be_impacted()
-        {
-            theGraph.BehaviorFor<MyController>(x => x.NotJson()).IsAsymmetricJson().ShouldBeFalse();
-        }
 
         public class Input1{}
         public class MyController
@@ -53,6 +51,26 @@ namespace FubuMVC.Tests.Registration.Conventions
             public Input1 NotJson()
             {
                 return null;
+            }
+        }
+    }
+
+    public static class ConnegSpecifications
+    {
+        public static void ShouldBeAsymmetricJson(this BehaviorChain chain)
+        {
+            if (chain.ResourceType() != null)
+            {
+                chain.Output.Writers.SelectMany(x => x.Mimetypes)
+                    .OrderBy(x => x)
+                    .ShouldHaveTheSameElementsAs("application/json", "text/json");
+            }
+
+            if (chain.InputType() != null)
+            {
+                chain.Input.Readers.SelectMany(x => x.Mimetypes)
+                    .OrderBy(x => x)
+                    .ShouldHaveTheSameElementsAs("application/json", MimeType.HttpFormMimetype.ToString(), MimeType.MultipartMimetype.ToString(), "text/json");
             }
         }
     }

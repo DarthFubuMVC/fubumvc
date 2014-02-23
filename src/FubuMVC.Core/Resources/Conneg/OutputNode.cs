@@ -172,5 +172,10 @@ namespace FubuMVC.Core.Resources.Conneg
         {
             return Writers.Select(x => x.ToString()).Join(", ");
         }
+
+        public IEnumerable<string> MimeTypes()
+        {
+            return Writers.SelectMany(x => x.Mimetypes).Distinct();
+        } 
     }
 }

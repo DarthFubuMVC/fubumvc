@@ -82,44 +82,25 @@ namespace FubuMVC.Core.Resources.Conneg
 
         public static bool WritesJson(this BehaviorChain chain)
         {
-            return chain.Output.Writers.Any(x => x.Mimetypes.Contains(MimeType.Json.ToString()));
+            return chain.Output.MimeTypes().Contains(MimeType.Json.ToString());
         }
 
         public static bool WritesXml(this BehaviorChain chain)
         {
-            return chain.Output.Writers.Any(x => x.Mimetypes.Contains(MimeType.Xml.ToString()));
+            return chain.Output.MimeTypes().Contains(MimeType.Xml.ToString());
         }
 
         // TODO -- do something about matching on Mimetype maybe
         public static bool ReadsJson(this BehaviorChain chain)
         {
-            return chain.Input.Readers.Any(x => x.Mimetypes.Contains(MimeType.Json.ToString()));
+            return chain.Input.MimeTypes().Contains(MimeType.Json.ToString());
         }
 
         public static bool ReadsXml(this BehaviorChain chain)
         {
-            return chain.Input.Readers.Any(x => x.Mimetypes.Contains(MimeType.Xml.ToString()));
+            return chain.Input.MimeTypes().Contains(MimeType.Xml.ToString());
         }
 
-        // TODO -- change this to key off of mimetype only
-        public static bool IsAsymmetricJson(this BehaviorChain chain)
-        {
-            if (chain.ResourceType() != null)
-            {
-                if (chain.Output.Writers.Count() != 1) return false;
-                if (!chain.WritesJson()) return false;
-            }
-
-            if (chain.InputType() != null)
-            {
-                if (chain.Input.Readers.Count() != 2) return false;
-                if (!chain.Input.AllowHttpFormPosts) return false;
-
-                return chain.ReadsJson();
-            }
-
-            return true;
-        }
 
         public static void RemoveConneg(this BehaviorChain chain)
         {
