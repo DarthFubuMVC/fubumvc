@@ -13,13 +13,48 @@ namespace FubuMVC.Core.Resources.Conneg
     public class InputNode : BehaviorNode, IMayHaveInputType, DescribesItself
     {
         private readonly Type _inputType;
-        private readonly ReaderChain _readers = new ReaderChain();
+        private readonly ReaderChain _chain = new ReaderChain();
+        private readonly IList<IReader> _readers = new List<IReader>(); 
 
         public InputNode(Type inputType)
         {
             _inputType = inputType;
 
             AllowHttpFormPosts = true;
+        }
+
+        // TODO -- use ConnegSettings here
+        public IEnumerable<IReader> SelectReaders()
+        {
+            return _readers;
+        }
+
+        public void Add(IFormatter formatter)
+        {
+            var reader = typeof (FormatterReader<>).CloseAndBuildAs<IReader>(formatter, _inputType);
+            _readers.Add(reader);
+        }
+
+        public void Add(Type readerType)
+        {
+            if (!readerType.Closes(typeof (IReader<>)))
+            {
+                throw new ArgumentOutOfRangeException("readerType", "readerType must close IReader<T> where T is the input type for this chain");
+            }
+
+            var reader = readerType.CloseAndBuildAs<IReader>(_inputType);
+            _readers.Add(reader);
+        }
+
+        public void Add(IReader reader)
+        {
+            var readerType = typeof (IReader<>).MakeGenericType(_inputType);
+            if (!reader.GetType().CanBeCastTo(readerType))
+            {
+                throw new ArgumentOutOfRangeException("reader", "reader must be of type " + readerType.GetFullName());
+            }
+
+            _readers.Add(reader);
         }
 
         public override BehaviorCategory Category
@@ -43,7 +78,7 @@ namespace FubuMVC.Core.Resources.Conneg
 
         public ReaderChain Readers
         {
-            get { return _readers; }
+            get { return _chain; }
         }
 
         public bool AllowHttpFormPosts
@@ -107,7 +142,7 @@ namespace FubuMVC.Core.Resources.Conneg
 
         public bool UsesFormatter<T>()
         {
-            return _readers.OfType<ReadWithFormatter>().Any(x => x.FormatterType == typeof (T));
+            return _chain.OfType<ReadWithFormatter>().Any(x => x.FormatterType == typeof (T));
         }
 
         public Type InputType()
@@ -120,7 +155,7 @@ namespace FubuMVC.Core.Resources.Conneg
             description.ShortDescription =
                 "Performs content negotiation and model resolution from the request for the type " + InputType().Name;
 
-            description.AddList("Readers", _readers);
+            description.AddList("Readers", _chain);
         }
 
 

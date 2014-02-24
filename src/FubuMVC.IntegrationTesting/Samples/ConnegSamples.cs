@@ -65,6 +65,7 @@ namespace FubuMVC.IntegrationTesting.Samples
 
             return new InputMessage();
         }
+
     }
     // ENDSAMPLE
 

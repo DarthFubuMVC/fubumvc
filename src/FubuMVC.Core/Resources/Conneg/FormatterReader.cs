@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using FubuCore;
 using FubuCore.Binding;
@@ -38,6 +39,14 @@ namespace FubuMVC.Core.Resources.Conneg
             description.Title = "Reading with " + formatter.Title;
             description.Children["Formatter"] = formatter;
         }
+
+        public Type ModelType
+        {
+            get
+            {
+                return typeof(T);
+            }
+        }
     }
 
     public class FormatterReader<T> : IReader<T>, DescribesItself
@@ -68,6 +77,11 @@ namespace FubuMVC.Core.Resources.Conneg
             var formatter = Description.For(_formatter);
             description.Title = "Reading with " + formatter.Title;
             description.Children["Formatter"] = formatter;
+        }
+
+        public IFormatter Formatter
+        {
+            get { return _formatter; }
         }
     }
 }

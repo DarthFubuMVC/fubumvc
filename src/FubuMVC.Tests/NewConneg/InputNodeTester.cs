@@ -4,6 +4,7 @@ using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -162,6 +163,58 @@ namespace FubuMVC.Tests.NewConneg
             node.UsesFormatter<XmlFormatter>().ShouldBeTrue();
             node.UsesFormatter<JsonFormatter>().ShouldBeTrue();
         }
+
+        [Test]
+        public void add_reader_by_formatter()
+        {
+            var node = new InputNode(typeof(Address));
+            var formatter = new JsonSerializer();
+            node.Add(formatter);
+
+            node.SelectReaders().Single()
+                .ShouldBeOfType<FormatterReader<Address>>()
+                .Formatter.ShouldBeTheSameAs(formatter);
+
+        }
+
+        [Test]
+        public void add_reader_by_type()
+        {
+            var node = new InputNode(typeof(Address));
+            node.Add(typeof(GenericReader<>));
+
+            node.SelectReaders().Single()
+                .ShouldBeOfType<GenericReader<Address>>();
+        }
+
+        [Test]
+        public void add_reader_by_type_sad_path()
+        {
+            Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() => {
+                new InputNode(typeof(Address))
+                .Add(GetType());
+            });
+        }
+
+        [Test]
+        public void add_reader_by_instance_happy_path()
+        {
+            var node = new InputNode(typeof(InputTarget));
+            var reader = new SpecificReader();
+
+            node.Add(reader);
+
+            node.SelectReaders().Single().ShouldBeTheSameAs(reader);
+        }
+
+        [Test]
+        public void add_reader_by_instance_sad_path()
+        {
+            Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() => {
+                new InputNode(typeof(Address))
+                    .Add(new SpecificReader());
+            });
+        }
     }
 
 
@@ -186,6 +239,14 @@ namespace FubuMVC.Tests.NewConneg
         {
             throw new NotImplementedException();
         }
+
+        public Type ModelType
+        {
+            get
+            {
+                return typeof(InputTarget);
+            }
+        }
     }
 
     public class GenericReader<T> : IReader<T>
@@ -204,6 +265,14 @@ namespace FubuMVC.Tests.NewConneg
         {
             throw new NotImplementedException();
         }
+
+        public Type ModelType
+        {
+            get
+            {
+                return typeof(T);
+            }
+        }
     }
 
     public class FancyReader<T> : IReader<T>
@@ -217,6 +286,14 @@ namespace FubuMVC.Tests.NewConneg
         {
             get { yield return "fancy/Reader"; }
         }
+
+        public Type ModelType
+        {
+            get
+            {
+                return typeof(T);
+            }
+        }
     }
 
     public class FakeAddressReader : IReader<Address>
@@ -229,6 +306,14 @@ namespace FubuMVC.Tests.NewConneg
         public Address Read(string mimeType, IFubuRequestContext context)
         {
             throw new NotImplementedException();
+        }
+
+        public Type ModelType
+        {
+            get
+            {
+                return typeof(Address);
+            }
         }
     }
 }
