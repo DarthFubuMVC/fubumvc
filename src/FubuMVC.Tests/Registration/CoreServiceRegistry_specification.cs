@@ -31,6 +31,12 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void fubu_request_context_is_registered()
+        {
+            registeredTypeIs<IFubuRequestContext, FubuRequestContext>();
+        }
+
+        [Test]
         public void request_data_is_registered()
         {
             registeredTypeIs<IRequestData, FubuMvcRequestData>();

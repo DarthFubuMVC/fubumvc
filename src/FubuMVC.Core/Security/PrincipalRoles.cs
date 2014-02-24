@@ -13,7 +13,7 @@ namespace FubuMVC.Core.Security
         {
             get
             {
-                return _stubbedPrincipal ?? (HttpContext.Current == null ? Thread.CurrentPrincipal : HttpContext.Current.User);
+                return _stubbedPrincipal ?? (System.Web.HttpContext.Current == null ? Thread.CurrentPrincipal : System.Web.HttpContext.Current.User);
             }
 
             set { _stubbedPrincipal = value; }

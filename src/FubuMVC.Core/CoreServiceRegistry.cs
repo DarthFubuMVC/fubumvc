@@ -68,7 +68,7 @@ namespace FubuMVC.Core
 
 
 
-
+            SetServiceIfNone<IFubuRequestContext, FubuRequestContext>();
             SetServiceIfNone<IFileSystem, FileSystem>();
 
             SetServiceIfNone<IRoutePolicy, StandardRoutePolicy>();

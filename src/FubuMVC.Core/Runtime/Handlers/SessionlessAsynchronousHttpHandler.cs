@@ -19,7 +19,7 @@ namespace FubuMVC.Core.Runtime.Handlers
             _routeData = routeData;
         }
 
-        public void ProcessRequest(HttpContext context)
+        public void ProcessRequest(System.Web.HttpContext context)
         {
             throw new InvalidOperationException("Synchronous requests are not supported with this handler");
         }
@@ -29,7 +29,7 @@ namespace FubuMVC.Core.Runtime.Handlers
             get { return false; }
         }
 
-        public IAsyncResult BeginProcessRequest(HttpContext context, AsyncCallback cb, object extraData)
+        public IAsyncResult BeginProcessRequest(System.Web.HttpContext context, AsyncCallback cb, object extraData)
         {
             var taskCompletionSource = new TaskCompletionSource<object>();
             var requestCompletion = new RequestCompletion();

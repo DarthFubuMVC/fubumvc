@@ -136,6 +136,7 @@
     <Compile Include="IApplicationSource.cs" />
     <Compile Include="IContainerFacilityExpression.cs" />
     <Compile Include="ImageTag.cs" />
+    <Compile Include="IFubuRequestContext.cs" />
     <Compile Include="JsonEndpointAttribute.cs" />
     <Compile Include="Packaging\PackageService.cs" />
     <Compile Include="PolicyAttribute.cs" />

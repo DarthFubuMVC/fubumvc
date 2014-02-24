@@ -17,7 +17,7 @@ namespace FubuMVC.Core.Runtime.Handlers
             _routeData = routeData;
         }
 
-        public void ProcessRequest(HttpContext context)
+        public void ProcessRequest(System.Web.HttpContext context)
         {
             var requestCompletion = new RequestCompletion();
             requestCompletion.Start(() => _invoker.Invoke(_arguments, _routeData, requestCompletion));
