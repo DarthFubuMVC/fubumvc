@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Behaviors;
-using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Runtime.Conditionals;
 
 namespace FubuMVC.Core.Registration.Nodes
@@ -80,44 +79,5 @@ namespace FubuMVC.Core.Registration.Nodes
             return wrapper;
         }
 
-
-        /// <summary>
-        ///   Make the behavior *only* execute if the condition is met
-        /// </summary>
-        /// <param name = "condition"></param>
-        /// <param name="description"></param>
-        public void Condition(Func<bool> condition, string description = "Anonymous")
-        {
-            _conditionalDef = ConditionalObjectDef.For(condition);
-        }
-
-        /// <summary>
-        ///   Makes the behavior execute only if the condition against a service
-        ///   in the underlying IoC container is true
-        /// </summary>
-        /// <typeparam name = "T"></typeparam>
-        /// <param name = "condition"></param>
-        public void ConditionByService<T>(Func<T, bool> condition)
-        {
-            _conditionalDef = ConditionalObjectDef.ForService(condition);
-        }
-
-        /// <summary>
-        ///   Makes the behavior execute only if the condition against a model
-        ///   object pulled from IFubuRequest is true
-        /// </summary>
-        public void ConditionByModel<T>(Func<T, bool> filter) where T : class
-        {
-            _conditionalDef = ConditionalObjectDef.ForModel(filter);
-        }
-
-        /// <summary>
-        ///   Makes the behavior execute only if the custom IConditional evaluates
-        ///   true
-        /// </summary>
-        public void Condition<T>() where T : IConditional
-        {
-            _conditionalDef = ConditionalObjectDef.For<T>();
-        }
     }
 }

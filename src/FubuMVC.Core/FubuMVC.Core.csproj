@@ -73,6 +73,7 @@
     <Compile Include="ApplicationSettings.cs" />
     <Compile Include="AsymmetricJsonAttribute.cs" />
     <Compile Include="AutoImportAttribute.cs" />
+    <Compile Include="Behaviors\Conditional\ConditionalObjectDef.cs" />
     <Compile Include="Configuration\BehaviorGraphBuilder.cs" />
     <Compile Include="Behaviors\AsyncContinueWithBehavior.cs" />
     <Compile Include="Behaviors\Chrome\ChromeAttribute.cs" />
@@ -227,12 +228,8 @@
     <Compile Include="Registration\Conventions\DefaultOutputPolicy.cs" />
     <Compile Include="Registration\EndpointActionSource.cs" />
     <Compile Include="Runtime\Conditionals\Always.cs" />
-    <Compile Include="Behaviors\Conditional\ConditionalBehavior.cs" />
-    <Compile Include="Behaviors\Conditional\ConditionalBehaviorInvoker.cs" />
-    <Compile Include="Behaviors\Conditional\ConditionalObjectDef.cs" />
     <Compile Include="Runtime\Conditionals\ConditionalService.cs" />
     <Compile Include="Runtime\Conditionals\IConditional.cs" />
-    <Compile Include="Behaviors\Conditional\IConditionalBehavior.cs" />
     <Compile Include="Runtime\Conditionals\IConditionalService.cs" />
     <Compile Include="Runtime\Conditionals\IsAjaxRequest.cs" />
     <Compile Include="Runtime\Conditionals\IsNotAjaxRequest.cs" />

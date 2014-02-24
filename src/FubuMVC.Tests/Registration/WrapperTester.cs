@@ -30,8 +30,6 @@ namespace FubuMVC.Tests.Registration
         {
             _wrapper.BehaviorType.ShouldEqual(typeof (NulloBehavior));
 
-            _wrapper.Condition(() => true);
-
             _wrapper.BehaviorType.ShouldEqual(typeof(NulloBehavior));
         }
 
