@@ -82,14 +82,14 @@ namespace FubuMVC.Tests.Registration
 
     public class FakeJsonBehavior : IActionBehavior
     {
-        public FakeJsonBehavior(IJsonWriter writer, IFubuRequest request, IRequestData data)
+        public FakeJsonBehavior(IJsonSerializer writer, IFubuRequest request, IRequestData data)
         {
             Writer = writer;
             Request = request;
             Data = data;
         }
 
-        public IJsonWriter Writer { get; set; }
+        public IJsonSerializer Writer { get; set; }
         public IFubuRequest Request { get; set; }
         public IRequestData Data { get; set; }
         public void Invoke()

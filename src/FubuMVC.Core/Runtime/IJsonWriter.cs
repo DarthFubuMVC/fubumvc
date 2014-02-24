@@ -1,108 +1,62 @@
-﻿using FubuCore;
-using FubuCore.Binding;
-using HtmlTags;
+﻿using System.Web.Script.Serialization;
+using FubuMVC.Core.Http;
 
 namespace FubuMVC.Core.Runtime
 {
-    public interface IJsonWriter
+    public interface IJsonSerializer
     {
-        void Write(object output);
-        void Write(object output, string mimeType);
+        T Read<T>(IFubuRequestContext context);
+        void Write<T>(T resource, string mimeType, IFubuRequestContext context);
     }
 
-    public class JsonWriter : IJsonWriter
+    public class JsonSerializer : IJsonSerializer
     {
-        private readonly IOutputWriter _outputWriter;
-
-        public JsonWriter(IOutputWriter outputWriter)
+        public T Read<T>(IFubuRequestContext context)
         {
-            _outputWriter = outputWriter;
+            return new JavaScriptSerializer().Deserialize<T>(context.Request.InputText());
         }
 
-        public void Write(object output)
+        public virtual void Write<T>(T resource, string mimeType, IFubuRequestContext context)
         {
-            Write(output, MimeType.Json.ToString());
-        }
-
-        public void Write(object output, string mimeType)
-        {
-            _outputWriter.Write(mimeType, JsonUtil.ToJson(output));
+            var text = new JavaScriptSerializer().Serialize(resource);
+            context.Writer.Write(mimeType, text);
         }
     }
 
-
-    public class AjaxAwareJsonWriter : IJsonWriter
+    public class DataContractJsonSerializer : IJsonSerializer
     {
-        private readonly IOutputWriter _outputWriter;
-        private readonly IRequestData _requestData;
-
-        public AjaxAwareJsonWriter(IOutputWriter outputWriter, IRequestData requestData)
+        public T Read<T>(IFubuRequestContext context)
         {
-            _outputWriter = outputWriter;
-            _requestData = requestData;
+            var serializer = new System.Runtime.Serialization.Json.DataContractJsonSerializer(typeof (T));
+            return (T) serializer.ReadObject(context.Request.Input);
         }
 
-        public void Write(object output)
+        public void Write<T>(T resource, string mimeType, IFubuRequestContext context)
         {
-            string rawJsonOutput = JsonUtil.ToJson(output);
-            if (_requestData.IsAjaxRequest())
+            var serializer = new System.Runtime.Serialization.Json.DataContractJsonSerializer(typeof (T));
+
+            context.Writer.Write(mimeType, stream => { serializer.WriteObject(stream, resource); });
+        }
+    }
+
+
+    public class AjaxAwareJsonSerializer : JsonSerializer
+    {
+        public override void Write<T>(T resource, string mimeType, IFubuRequestContext context)
+        {
+            var rawJsonOutput = new JavaScriptSerializer().Serialize(resource);
+            if (context.Request.IsAjaxRequest())
             {
-                _outputWriter.Write(MimeType.Json.ToString(), rawJsonOutput);
+                context.Writer.Write(MimeType.Json.ToString(), rawJsonOutput);
             }
             else
             {
                 // For proper jquery.form plugin support of file uploads
                 // See the discussion on the File Uploads sample at http://malsup.com/jquery/form/#code-samples
-                string html = "<html><body><textarea rows=\"10\" cols=\"80\">" + rawJsonOutput +
-                    "</textarea></body></html>";
-                _outputWriter.Write(MimeType.Html.ToString(), html);
+                var html = "<html><body><textarea rows=\"10\" cols=\"80\">" + rawJsonOutput +
+                           "</textarea></body></html>";
+                context.Writer.Write(MimeType.Html.ToString(), html);
             }
         }
-
-        // TODO -- pull this out into Conneg as a different media writer
-        public void Write(object output, string mimeType)
-        {
-            Write(output);
-        }
     }
-
-    public class JsonpAwareWriter : IJsonWriter
-    {
-        private readonly IOutputWriter _outputWriter;
-        private readonly IRequestData _requestData;
-
-        public const string JsonPHttpRequest = "jsonp";
-
-        public JsonpAwareWriter(IOutputWriter outputWriter, IRequestData requestData)
-        {
-            _outputWriter = outputWriter;
-            _requestData = requestData;
-        }
-
-        public void Write(object output)
-        {
-            Write(output, MimeType.Json.ToString());
-        }
-
-        public void Write(object output, string mimeType)
-        {
-            var json = JsonUtil.ToJson(output);
-            var padding = GetJsonPadding(_requestData);
-
-            if (padding != null)
-            {
-                json = "{0}({1});".ToFormat(padding, json);
-            }
-
-            _outputWriter.Write(mimeType, json);
-        }
-
-        public static string GetJsonPadding(IRequestData requestInput)
-        {
-            string result = null;
-            requestInput.Value(JsonPHttpRequest, value => result = value.RawValue.ToString());
-            return result;
-        }
-    }
-
 }

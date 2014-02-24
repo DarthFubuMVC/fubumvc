@@ -44,7 +44,6 @@ namespace FubuMVC.Core
             SetServiceIfNone<IUrlRegistry, UrlRegistry>();
             SetServiceIfNone<IChainUrlResolver, ChainUrlResolver>();
             SetServiceIfNone<IUrlTemplatePattern, NulloUrlTemplate>();
-            SetServiceIfNone<IJsonWriter, JsonWriter>();
 
             SetServiceIfNone<IFlash, FlashProvider>();
             SetServiceIfNone<IRequestDataProvider, RequestDataProvider>();
@@ -61,8 +60,7 @@ namespace FubuMVC.Core
 
             SetServiceIfNone<ITypeDescriptorCache, TypeDescriptorCache>();
 
-
-            SetServiceIfNone<IJsonReader, JavaScriptJsonReader>();
+            SetServiceIfNone<IJsonSerializer, JsonSerializer>();
 
             SetServiceIfNone<ISessionState, SimpleSessionState>();
 

@@ -11,7 +11,7 @@ namespace FubuMVC.Core.Ajax
         // TODO -- pull in IJsonWriter once.
         public void Write(string mimeType, IFubuRequestContext context, T resource)
         {
-            context.Services.GetInstance<IJsonWriter>().Write(resource.ToDictionary(), mimeType);
+            context.Services.GetInstance<IJsonSerializer>().Write(resource.ToDictionary(), mimeType, context);
         }
 
         public IEnumerable<string> Mimetypes

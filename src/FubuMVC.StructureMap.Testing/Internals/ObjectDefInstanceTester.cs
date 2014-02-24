@@ -19,14 +19,14 @@ namespace FubuMVC.StructureMap.Testing.Internals
     {
         public class FakeJsonBehavior : IActionBehavior
         {
-            public FakeJsonBehavior(IJsonWriter writer, IFubuRequest request, IRequestData data) 
+            public FakeJsonBehavior(IJsonSerializer writer, IFubuRequest request, IRequestData data) 
             {
                 Writer = writer;
                 Request = request;
                 Data = data;
             }
 
-            public IJsonWriter Writer { get; set; }
+            public IJsonSerializer Writer { get; set; }
             public IFubuRequest Request { get; set; }
             public IRequestData Data { get; set; }
             public void Invoke()
@@ -48,9 +48,8 @@ namespace FubuMVC.StructureMap.Testing.Internals
 
             var def = new ObjectDef(typeof (FakeJsonBehavior));
             def.DependencyByValue(typeof (IFubuRequest), request);
-            var jsonWriter = def.DependencyByType(typeof (IJsonWriter), typeof (AjaxAwareJsonWriter));
-            jsonWriter.DependencyByType(typeof (IOutputWriter), typeof (OutputWriter));
-            jsonWriter.DependencyByType(typeof(IRequestData), typeof(InMemoryRequestData));
+            def.DependencyByType(typeof (IJsonSerializer), typeof (AjaxAwareJsonSerializer));
+
             def.DependencyByType(typeof (IRequestData), typeof (InMemoryRequestData));
 
             var container =
@@ -64,7 +63,7 @@ namespace FubuMVC.StructureMap.Testing.Internals
                 });
 
             var jsonBehavior = container.GetInstance<IActionBehavior>().ShouldBeOfType<FakeJsonBehavior>();
-            jsonBehavior.Writer.ShouldBeOfType<AjaxAwareJsonWriter>();
+            jsonBehavior.Writer.ShouldBeOfType<AjaxAwareJsonSerializer>();
             jsonBehavior.Request.ShouldBeTheSameAs(request);
         }
 

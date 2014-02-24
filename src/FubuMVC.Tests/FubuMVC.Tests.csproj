@@ -89,7 +89,6 @@
     <Compile Include="AjaxExtensionsTester.cs" />
     <Compile Include="Ajax\AjaxContinuationPolicyIntegratedTester.cs" />
     <Compile Include="Ajax\AjaxContinuationTester.cs" />
-    <Compile Include="Ajax\AjaxContinuationWriterTester.cs" />
     <Compile Include="ApplicationSettingsTester.cs" />
     <Compile Include="AutoImport_of_configuration_actions_and_extensions_Tester.cs" />
     <Compile Include="Behaviors\Chrome\ChromeAttributeTester.cs" />
@@ -256,7 +255,6 @@
     <Compile Include="FubuRegistryImportingTester.cs" />
     <Compile Include="Packaging\PackageManifestReaderIntegratedTester.cs" />
     <Compile Include="Packaging\ZipFilePackageLoaderTester.cs" />
-    <Compile Include="Runtime\Formatters\JsonFormatterTester.cs" />
     <Compile Include="Resources\PathBased\ResourcePathBinderTester.cs" />
     <Compile Include="Resources\PathBased\ResourcePathIntegratedUrlCreationTester.cs" />
     <Compile Include="Registration\attaching_behaviors_to_action_calls.cs" />
@@ -309,7 +307,6 @@
     <Compile Include="UrlExtensionsTester.cs" />
     <Compile Include="Behaviors\ActionInvokersTester.cs" />
     <Compile Include="Behaviors\DownloadFileBehaviorTester.cs" />
-    <Compile Include="Runtime\JsonWriterTester.cs" />
     <Compile Include="Behaviors\BehaviorTestContext.cs" />
     <Compile Include="Continuations\ContinuationHandlerTester.cs" />
     <Compile Include="Continuations\FubuContinuationTester.cs" />

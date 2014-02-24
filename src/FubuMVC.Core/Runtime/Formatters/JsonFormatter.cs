@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using FubuCore.Descriptions;
-using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Resources.Conneg;
 
 namespace FubuMVC.Core.Runtime.Formatters
@@ -10,23 +9,14 @@ namespace FubuMVC.Core.Runtime.Formatters
     [Title("Json Serialization")]
     public class JsonFormatter : IFormatter
     {
-        private readonly IJsonReader _reader;
-        private readonly IJsonWriter _writer;
-
-        public JsonFormatter(IJsonWriter writer, IJsonReader reader)
-        {
-            _writer = writer;
-            _reader = reader;
-        }
-
         public void Write<T>(IFubuRequestContext context, T target, string mimeType)
         {
-            _writer.Write(target, mimeType);
+            context.Services.GetInstance<IJsonSerializer>().Write(target, mimeType, context);
         }
 
         public T Read<T>(IFubuRequestContext context)
         {
-            return _reader.Read<T>();
+            return context.Services.GetInstance<IJsonSerializer>().Read<T>(context);
         }
 
         public IEnumerable<string> MatchingMimetypes
