@@ -8,17 +8,10 @@ namespace FubuMVC.Core.Resources.Conneg
 {
     public class ModelBindingReader<T> : IReader<T>, DescribesItself where T : class
     {
-        private readonly IFubuRequest _request;
-
-        public ModelBindingReader(IFubuRequest request)
-        {
-            _request = request;
-        }
-
         public T Read(string mimeType, IFubuRequestContext context)
         {
-            _request.Clear(typeof(T));
-            return _request.Get<T>();
+            context.Models.Clear(typeof(T));
+            return context.Models.Get<T>();
         }
 
         public IEnumerable<string> Mimetypes
