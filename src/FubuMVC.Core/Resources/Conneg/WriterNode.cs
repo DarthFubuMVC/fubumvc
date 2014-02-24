@@ -8,6 +8,7 @@ using FubuMVC.Core.Runtime.Conditionals;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
+    [MarkedForTermination]
     public abstract class WriterNode : Node<WriterNode, WriterChain>, IContainerModel, DescribesItself
     {
         private static readonly ObjectDef _always = ObjectDef.ForValue(Always.Flyweight);

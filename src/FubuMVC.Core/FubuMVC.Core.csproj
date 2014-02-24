@@ -190,6 +190,8 @@
     <Compile Include="Resources\Conneg\IResourceNotFoundHandler.cs" />
     <Compile Include="Resources\Conneg\DefaultResourceNotFoundHandler.cs" />
     <Compile Include="Resources\Etags\IHeadersCache.cs" />
+    <Compile Include="Runtime\AjaxAwareJsonSerializer.cs" />
+    <Compile Include="Runtime\DataContractJsonSerializer.cs" />
     <Compile Include="Runtime\ExceptionHandlingObserver.cs" />
     <Compile Include="Runtime\Files\ContentFolder.cs" />
     <Compile Include="Runtime\Files\FubuApplicationFiles.cs" />
@@ -201,6 +203,7 @@
     <Compile Include="Runtime\Handlers\AsynchronousHttpHandler.cs" />
     <Compile Include="Runtime\Handlers\AsynchronousHttpHandlerSource.cs" />
     <Compile Include="Runtime\Handlers\IHttpHandlerSource.cs" />
+    <Compile Include="Runtime\IJsonSerializer.cs" />
     <Compile Include="Runtime\InMemoryFubuRequest.cs" />
     <Compile Include="Runtime\RequestCompletion.cs" />
     <Compile Include="Runtime\Handlers\SessionlessAsynchronousHttpHandler.cs" />
@@ -432,7 +435,7 @@
     <Compile Include="Runtime\IOutputState.cs" />
     <Compile Include="Runtime\IPartialFactory.cs" />
     <Compile Include="Runtime\ISessionState.cs" />
-    <Compile Include="Runtime\IJsonWriter.cs" />
+    <Compile Include="Runtime\JsonSerializer.cs" />
     <Compile Include="Runtime\NormalState.cs" />
     <Compile Include="Runtime\OutputWriterExtensions.cs" />
     <Compile Include="Caching\RecordedOutput.cs" />

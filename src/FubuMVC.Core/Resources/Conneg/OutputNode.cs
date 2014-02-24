@@ -5,6 +5,7 @@ using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.Runtime.Formatters;
 
 namespace FubuMVC.Core.Resources.Conneg
@@ -13,6 +14,7 @@ namespace FubuMVC.Core.Resources.Conneg
     {
         private readonly WriterChain _chain = new WriterChain();
         private readonly Type _resourceType;
+        private readonly IList<IMedia> _media = new List<IMedia>(); 
 
         public OutputNode(Type resourceType)
         {
@@ -23,6 +25,52 @@ namespace FubuMVC.Core.Resources.Conneg
 
             _resourceType = resourceType;
         }
+
+        public void Add(IFormatter formatter, IConditional condition = null)
+        {
+            var writer = typeof (FormatterWriter<>).CloseAndBuildAs<object>(formatter, _resourceType);
+            addWriter(condition, writer);
+        }
+
+        private void addWriter(IConditional condition, object writer)
+        {
+            var mediaType = typeof(Media<>).MakeGenericType(_resourceType);
+            var media = Activator.CreateInstance(mediaType, writer, condition ?? Always.Flyweight).As<IMedia>();
+
+            _media.Add(media);
+        }
+
+        public void Add(Type mediaWriterType, IConditional condition = null)
+        {
+            if (!mediaWriterType.Closes(typeof (IMediaWriter<>)) || !mediaWriterType.IsConcreteWithDefaultCtor())
+            {
+                throw new ArgumentOutOfRangeException("mediaWriterType", "mediaWriterType must implement IMediaWriter<T> and have a default constructor");
+            }
+
+            var writerType = mediaWriterType.MakeGenericType(_resourceType);
+            var writer = Activator.CreateInstance(writerType);
+            
+            addWriter(condition, writer);
+        }
+
+        public void Add(object writer, IConditional condition = null)
+        {
+            var writerType = typeof(IMediaWriter<>).MakeGenericType(_resourceType);
+            if (!writerType.IsAssignableFrom(writer.GetType()))
+            {
+                throw new ArgumentOutOfRangeException("writer", "writer must implement " + writerType.GetFullName());
+            }
+
+            addWriter(condition, writer);
+        }
+
+
+
+        // TODO -- use ConnegSettings to determine this
+        public IEnumerable<IMedia> Media()
+        {
+            return _media;
+        } 
 
         public override BehaviorCategory Category
         {
