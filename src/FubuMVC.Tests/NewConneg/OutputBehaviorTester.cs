@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using FubuMVC.Core;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Resources.Conneg;
@@ -18,6 +19,8 @@ namespace FubuMVC.Tests.NewConneg
     {
         protected override void beforeEach()
         {
+            Services.Container.Configure(x => x.For<IFubuRequestContext>().Use<FubuRequestContext>());
+
             var headers1 = new HttpHeaderValues();
             headers1["a"] = "1";
             headers1["b"] = "2";
@@ -105,6 +108,7 @@ namespace FubuMVC.Tests.NewConneg
     {
         protected override void beforeEach()
         {
+            Services.Container.Configure(x => x.For<IFubuRequestContext>().Use<FubuRequestContext>());
             MockFor<IFubuRequest>().Stub(x => x.Get<OutputTarget>()).Return(null);
             
             
@@ -242,6 +246,7 @@ namespace FubuMVC.Tests.NewConneg
 
         protected override sealed void beforeEach()
         {
+            Services.Container.Configure(x => x.For<IFubuRequestContext>().Use<FubuRequestContext>());
             RecordLogging();
 
             theMedia = Services.CreateMockArrayFor<IMedia<OutputTarget>>(5);

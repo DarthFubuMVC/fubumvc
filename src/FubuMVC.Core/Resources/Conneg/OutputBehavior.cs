@@ -15,16 +15,14 @@ namespace FubuMVC.Core.Resources.Conneg
 {
     public class OutputBehavior<T> : BasicBehavior where T : class
     {
-        private readonly IFubuRequest _request;
-        private readonly IOutputWriter _writer;
+        private readonly IFubuRequestContext _context;
         private readonly IEnumerable<IMedia<T>> _media;
         private readonly ILogger _logger;
         private readonly IResourceNotFoundHandler _notFoundHandler;
 
-        public OutputBehavior(IFubuRequest request, IOutputWriter writer, IEnumerable<IMedia<T>> media, ILogger logger, IResourceNotFoundHandler notFoundHandler) : base(PartialBehavior.Executes)
+        public OutputBehavior(IFubuRequestContext context, IEnumerable<IMedia<T>> media, ILogger logger, IResourceNotFoundHandler notFoundHandler) : base(PartialBehavior.Executes)
         {
-            _request = request;
-            _writer = writer;
+            _context = context;
             _media = media;
             _logger = logger;
             _notFoundHandler = notFoundHandler;
@@ -40,10 +38,10 @@ namespace FubuMVC.Core.Resources.Conneg
         {
             // If the resource is NOT found, return 
             // invoke the 404 handler
-            var resource = _request.Get<T>();
+            var resource = _context.Models.Get<T>();
             if (resource == null)
             {
-                _writer.WriteResponseCode(HttpStatusCode.NotFound);
+                _context.Writer.WriteResponseCode(HttpStatusCode.NotFound);
                 _notFoundHandler.HandleResourceNotFound<T>();
 
                 return;
@@ -52,7 +50,7 @@ namespace FubuMVC.Core.Resources.Conneg
             // Resolve our CurrentMimeType object from the 
             // HTTP request that we use to represent
             // the mimetypes of the current request
-            var mimeTypes = _request.Get<CurrentMimeType>();
+            var mimeTypes = _context.Models.Get<CurrentMimeType>();
 
             // Select the appropriate media writer
             // based on the mimetype and other runtime
@@ -62,8 +60,8 @@ namespace FubuMVC.Core.Resources.Conneg
             if (media == null)
             {
                 // If no matching media can be found, write HTTP 406
-                _writer.WriteResponseCode(HttpStatusCode.NotAcceptable);
-                _writer.Write(MimeType.Text, "406:  Not acceptable");
+                _context.Writer.WriteResponseCode(HttpStatusCode.NotAcceptable);
+                _context.Writer.Write(MimeType.Text, "406:  Not acceptable");
             }
             else
             {
@@ -80,9 +78,9 @@ namespace FubuMVC.Core.Resources.Conneg
 
         public void WriteHeaders()
         {
-            _request.Find<IHaveHeaders>()
+            _context.Models.Find<IHaveHeaders>()
                 .SelectMany(x => x.Headers)
-                .Each(x => x.Write(_writer));
+                .Each(x => x.Write(_context.Writer));
         }
 
         public virtual IMedia<T> SelectMedia(CurrentMimeType mimeTypes)
