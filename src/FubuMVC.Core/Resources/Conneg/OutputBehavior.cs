@@ -67,7 +67,7 @@ namespace FubuMVC.Core.Resources.Conneg
             {
                 // Write the media based on a matching media type
                 var outputMimetype = mimeTypes.SelectFirstMatching(media.Mimetypes);
-                media.Write(outputMimetype, resource);
+                media.Write(outputMimetype, _context, resource);
             }
 
             // Write any output headers exposed by the IHaveHeaders
@@ -90,7 +90,7 @@ namespace FubuMVC.Core.Resources.Conneg
                 var candidates = _media.Where(x => x.Mimetypes.Contains(acceptType));
                 if (candidates.Any())
                 {
-                    var writer = candidates.FirstOrDefault(x => x.MatchesRequest());
+                    var writer = candidates.FirstOrDefault(x => x.MatchesRequest(_context));
                     if (writer != null)
                     {
                         _logger.DebugMessage(() => new WriterChoice(acceptType, writer, writer.Condition));
@@ -103,7 +103,7 @@ namespace FubuMVC.Core.Resources.Conneg
 
             if (mimeTypes.AcceptsAny())
             {
-                var media = _media.FirstOrDefault(x => x.MatchesRequest());
+                var media = _media.FirstOrDefault(x => x.MatchesRequest(_context));
                 _logger.DebugMessage(() => new WriterChoice(MimeType.Any.Value, media, media.Condition));
 
                 return media;

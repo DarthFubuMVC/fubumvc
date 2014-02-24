@@ -7,7 +7,7 @@ namespace FubuMVC.Core.Resources.Conneg
     {
         IEnumerable<string> Mimetypes { get; }
         IConditional Condition { get; }
-        void Write(string mimeType, T resource);
-        bool MatchesRequest();
+        void Write(string mimeType, IFubuRequestContext context, T resource);
+        bool MatchesRequest(IFubuRequestContext context);
     }
 }

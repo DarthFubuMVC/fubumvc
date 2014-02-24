@@ -35,14 +35,14 @@ namespace FubuMVC.Core.Resources.Conneg
             get { return _writer.Mimetypes; }
         }
 
-        public void Write(string mimeType, T resource)
+        public void Write(string mimeType, IFubuRequestContext context, T resource)
         {
-            _writer.Write(mimeType, resource);
+            _writer.Write(mimeType, context, resource);
         }
 
-        public bool MatchesRequest()
+        public bool MatchesRequest(IFubuRequestContext context)
         {
-            return _condition.ShouldExecute();
+            return _condition.ShouldExecute(context);
         }
 
         public IConditional Condition

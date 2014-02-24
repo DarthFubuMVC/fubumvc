@@ -9,7 +9,7 @@ namespace FubuMVC.Core.Runtime.Conditionals
         {
         }
 
-        public bool ShouldExecute()
+        public bool ShouldExecute(IFubuRequestContext context)
         {
             return true;
         }

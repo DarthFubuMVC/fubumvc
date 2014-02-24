@@ -2,6 +2,6 @@ namespace FubuMVC.Core.Runtime.Conditionals
 {
     public interface IConditional
     {
-        bool ShouldExecute();
+        bool ShouldExecute(IFubuRequestContext context);
     }
 }

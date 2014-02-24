@@ -92,7 +92,7 @@ namespace FubuMVC.IntegrationTesting.Samples
         // This signature is necessary because we are assuming
         // that some Writer's will be able to produce representations
         // for multiple mimetype's
-        public void Write(string mimeType, SomeResource resource)
+        public void Write(string mimeType, IFubuRequestContext context, SomeResource resource)
         {
             if (mimeType == "special/format")
             {
@@ -271,10 +271,6 @@ namespace FubuMVC.IntegrationTesting.Samples
         private static void addConditions(WriterNode node)
         {
             node.Condition<MyRuntimeCondition>();
-
-            node.ConditionByModel<SomeResource>(x => x.Color == "Red");
-
-            node.ConditionByService<Customer>(x => x.IsSpecial());
         }
 
         // IConditional services are resolved from the IoC
@@ -282,7 +278,7 @@ namespace FubuMVC.IntegrationTesting.Samples
         // in the constructor function
         public class MyRuntimeCondition : IConditional
         {
-            public bool ShouldExecute()
+            public bool ShouldExecute(IFubuRequestContext context)
             {
                 // apply your own runtime logic
                 return false;

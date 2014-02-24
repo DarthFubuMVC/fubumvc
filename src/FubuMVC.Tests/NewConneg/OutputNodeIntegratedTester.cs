@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using FubuCore;
 using FubuMVC.Core;
-using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
@@ -93,7 +92,7 @@ namespace FubuMVC.Tests.NewConneg
 
     public class SomeConditional : IConditional
     {
-        public bool ShouldExecute()
+        public bool ShouldExecute(IFubuRequestContext context)
         {
             return true;
         }
@@ -101,7 +100,7 @@ namespace FubuMVC.Tests.NewConneg
 
     public class FancyWriter<T> : IMediaWriter<T>
     {
-        public void Write(string mimeType, T resource)
+        public void Write(string mimeType, IFubuRequestContext context, T resource)
         {
             throw new NotImplementedException();
         }
@@ -114,7 +113,7 @@ namespace FubuMVC.Tests.NewConneg
 
     public class FakeAddressWriter : IMediaWriter<Address>
     {
-        public void Write(string mimeType, Address resource)
+        public void Write(string mimeType, IFubuRequestContext context, Address resource)
         {
             throw new NotImplementedException();
         }

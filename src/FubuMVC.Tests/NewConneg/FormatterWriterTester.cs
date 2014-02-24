@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.NewConneg
         {
             var address = new Address();
 
-            ClassUnderTest.Write("something", address);
+            ClassUnderTest.Write("something", new MockedFubuRequestContext(), address);
 
             MockFor<IFormatter>().AssertWasCalled(x => x.Write(address, "something"));
         }

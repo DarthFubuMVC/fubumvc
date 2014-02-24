@@ -11,17 +11,24 @@ namespace FubuMVC.Core.Runtime.Conditionals
             _condition = condition;
         }
 
-        public bool ShouldExecute()
+        public bool ShouldExecute(IFubuRequestContext context)
         {
             return _condition();
         }
     }
 
-    public class LambdaConditional<T> : LambdaConditional
+    public class LambdaConditional<T> : IConditional
     {
-        public LambdaConditional(T context, Func<T, bool> condition)
-            : base(() => condition(context))
+        private readonly Func<T, bool> _condition;
+
+        public LambdaConditional(Func<T, bool> condition)
         {
+            _condition = condition;
+        }
+
+        public bool ShouldExecute(IFubuRequestContext context)
+        {
+            return _condition(context.Services.GetInstance<T>());
         }
     }
 }

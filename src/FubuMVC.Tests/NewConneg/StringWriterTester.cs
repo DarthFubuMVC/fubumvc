@@ -20,8 +20,11 @@ namespace FubuMVC.Tests.NewConneg
         [Test]
         public void write()
         {
-            ClassUnderTest.Write(MimeType.Text.Value, "some text");
-            MockFor<IOutputWriter>().AssertWasCalled(x => x.Write(MimeType.Text.Value, "some text"));
+            var context = new MockedFubuRequestContext();
+            ClassUnderTest.Write(MimeType.Text.Value, context, "some text");
+            context.Writer.AssertWasCalled(x => x.Write(MimeType.Text.Value, "some text"));
         }
     }
+
+    
 }

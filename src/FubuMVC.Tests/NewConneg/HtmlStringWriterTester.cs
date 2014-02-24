@@ -1,4 +1,5 @@
 using System;
+using FubuMVC.Core;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
@@ -29,9 +30,11 @@ namespace FubuMVC.Tests.NewConneg
         [Test]
         public void writing_should_write_the_to_string_of_the_target()
         {
-            ClassUnderTest.Write(MimeType.Html.Value, theTag);
+            var context = new MockedFubuRequestContext(Services.Container);
 
-            MockFor<IOutputWriter>().AssertWasCalled(x => x.Write(MimeType.Html.Value, theTag.ToString()));
+            ClassUnderTest.Write(MimeType.Html.Value, context, theTag);
+
+            context.Writer.AssertWasCalled(x => x.Write(MimeType.Html.Value, theTag.ToString()));
         }
     }
 }

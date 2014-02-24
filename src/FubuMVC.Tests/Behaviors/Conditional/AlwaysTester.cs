@@ -1,4 +1,3 @@
-using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Runtime.Conditionals;
 using NUnit.Framework;
 using FubuTestingSupport;
@@ -11,7 +10,7 @@ namespace FubuMVC.Tests.Behaviors.Conditional
         [Test]
         public void should_execute_has_to_be_true()
         {
-            Always.Flyweight.ShouldExecute().ShouldBeTrue();
+            Always.Flyweight.ShouldExecute(null).ShouldBeTrue();
         }
     }
 }

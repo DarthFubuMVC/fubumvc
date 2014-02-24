@@ -82,7 +82,6 @@ namespace FubuMVC.Core
             AddService<IFormatter>(typeof(XmlFormatter));
             SetServiceIfNone<IResourceNotFoundHandler, DefaultResourceNotFoundHandler>();
 
-            SetServiceIfNone<IConditionalService, ConditionalService>();
 
             SetServiceIfNone<ILogger, Logger>();
             AddService<ILogModifier, LogRecordModifier>();

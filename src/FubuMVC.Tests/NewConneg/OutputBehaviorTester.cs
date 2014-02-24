@@ -8,6 +8,7 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuTestingSupport;
 using NUnit.Framework;
+using NUnit.Mocks;
 using Rhino.Mocks;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,6 +51,8 @@ namespace FubuMVC.Tests.NewConneg
     {
         protected override void theContextIs()
         {
+            Services.Inject<IFubuRequestContext>(new MockedFubuRequestContext(Services.Container));
+
             mediaMimetypesAre(0, MimeType.Css);
             mediaMimetypesAre(1, MimeType.Css);
             mediaMimetypesAre(2, MimeType.Css);
@@ -134,7 +137,9 @@ namespace FubuMVC.Tests.NewConneg
     {
         protected override void theContextIs()
         {
-            theMedia.Each(m => m.Stub(x => x.MatchesRequest()).Return(true));
+            Services.Inject<IFubuRequestContext>(new MockedFubuRequestContext(Services.Container));
+
+            theMedia.Each(m => m.Stub(x => x.MatchesRequest(MockFor<IFubuRequestContext>())).Return(true));
         }
 
         [Test]
@@ -183,7 +188,7 @@ namespace FubuMVC.Tests.NewConneg
 
         protected override void theContextIs()
         {
-
+            Services.Inject<IFubuRequestContext>(new MockedFubuRequestContext(Services.Container));
 
             theSelectedMedia = MockFor<IMedia<OutputTarget>>();
             Services.PartialMockTheClassUnderTest();
@@ -206,7 +211,7 @@ namespace FubuMVC.Tests.NewConneg
         [Test]
         public void should_use_the_selected_media()
         {
-            theSelectedMedia.AssertWasCalled(x => x.Write(theAcceptedMimetype, theTarget));
+            theSelectedMedia.AssertWasCalled(x => x.Write(theAcceptedMimetype, MockFor<IFubuRequestContext>(), theTarget));
         }
     }
 
@@ -233,7 +238,7 @@ namespace FubuMVC.Tests.NewConneg
         [Test]
         public void nothing_is_written_anywhere()
         {
-            theMedia.Each(media => media.AssertWasNotCalled(x => x.Write(null, null), x => x.IgnoreArguments()));
+            theMedia.Each(media => media.AssertWasNotCalled(x => x.Write(null, null, null), x => x.IgnoreArguments()));
         }
     }
 
@@ -288,12 +293,12 @@ namespace FubuMVC.Tests.NewConneg
 
         protected void mediaMatches(int index)
         {
-            theMedia[index].Stub(x => x.MatchesRequest()).Return(true);
+            theMedia[index].Stub(x => x.MatchesRequest(MockFor<IFubuRequestContext>())).Return(true);
         }
 
         protected void mediaDoesNotMatch(int index)
         {
-            theMedia[index].Stub(x => x.MatchesRequest()).Return(false);
+            theMedia[index].Stub(x => x.MatchesRequest(MockFor<IFubuRequestContext>())).Return(false);
         }
     }
 

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core;
-using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Resources.Conneg;
@@ -75,39 +74,6 @@ namespace FubuMVC.Tests.NewConneg
         }
 
         [Test]
-        public void replace_the_conditional_with_a_lambda()
-        {
-            theNode.Condition(() => false);
-
-            theNode.HasCondition().ShouldBeTrue();
-
-            theResultingObjectDef.FindDependencyDefinitionFor<IConditional>()
-                .Type.ShouldEqual(typeof (LambdaConditional));
-        }
-
-        [Test]
-        public void replace_the_conditional_with_a_service_lamda()
-        {
-            theNode.ConditionByService<ISomeService>(x => true);
-
-            theNode.HasCondition().ShouldBeTrue();
-
-            theResultingObjectDef.FindDependencyDefinitionFor<IConditional>()
-                .Type.ShouldEqual(typeof(LambdaConditional<ISomeService>));
-        }
-
-        [Test]
-        public void replace_the_conditional_with_a_model_lambda()
-        {
-            theNode.ConditionByModel<ISomeService>(x => true);
-
-            theNode.HasCondition().ShouldBeTrue();
-
-            theResultingObjectDef.FindDependencyDefinitionFor<IConditional>()
-                .Type.ShouldEqual(typeof(LambdaConditional<IFubuRequest>));
-        }
-
-        [Test]
         public void replace_condition_by_type()
         {
             theNode.Condition(typeof(FakeConditional));
@@ -142,7 +108,7 @@ namespace FubuMVC.Tests.NewConneg
     public interface ISomeService{}
     public class FakeConditional : IConditional
     {
-        public bool ShouldExecute()
+        public bool ShouldExecute(IFubuRequestContext context)
         {
             throw new NotImplementedException();
         }

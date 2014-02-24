@@ -151,13 +151,6 @@ namespace FubuMVC.Tests.Registration
                 .ShouldBeTheSameAs(graph.Files);
         }
 
-
-        [Test]
-        public void the_conditional_service_is_registered()
-        {
-            registeredTypeIs<IConditionalService, ConditionalService>();
-        }
-
         [Test]
         public void url_registry_is_registered()
         {

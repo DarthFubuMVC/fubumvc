@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.Ajax
 
 
 
-            ClassUnderTest.Write(MimeType.Json.Value, theContinuation);
+            ClassUnderTest.Write(MimeType.Json.Value, new MockedFubuRequestContext(Services.Container), theContinuation);
         }
 
         [Test]

@@ -143,6 +143,7 @@
     <Compile Include="Http\StandInCurrentHttpRequestTester.cs" />
     <Compile Include="Http\StreamExtensions.cs" />
     <Compile Include="Logging\ExceptionReportTester.cs" />
+    <Compile Include="MockedFubuRequestContext.cs" />
     <Compile Include="ReflectionExtensionsTester.cs" />
     <Compile Include="Registration\AccessOverridesFinderIntegratedTester.cs" />
     <Compile Include="Registration\ActionFilterTester.cs" />
@@ -191,8 +192,6 @@
     <Compile Include="Behaviors\AsyncContinueWithBehaviorTests.cs" />
     <Compile Include="Behaviors\BasicBehaviorTester.cs" />
     <Compile Include="Behaviors\Conditional\AlwaysTester.cs" />
-    <Compile Include="Behaviors\Conditional\ConditionalObjectDefTester.cs" />
-    <Compile Include="Behaviors\Conditional\ConditionalServiceTester.cs" />
     <Compile Include="Behaviors\InterceptExceptionBehaviorTester.cs" />
     <Compile Include="Behaviors\ITargetController.cs" />
     <Compile Include="Behaviors\RenderStatusCodeBehaviorTester.cs" />

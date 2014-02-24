@@ -4,7 +4,7 @@ namespace FubuMVC.Core.Resources.Conneg
 {
     public interface IMediaWriter<T>
     {
-        void Write(string mimeType, T resource);
+        void Write(string mimeType, IFubuRequestContext context, T resource);
         IEnumerable<string> Mimetypes { get; }
     }
 }

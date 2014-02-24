@@ -79,7 +79,7 @@ namespace FubuMVC.Tests.NewConneg
     [MimeType("text/xml", "text/json")]
     public class SpecificWriter : IMediaWriter<OutputTarget>
     {
-        public void Write(string mimeType, OutputTarget resource)
+        public void Write(string mimeType, IFubuRequestContext context, OutputTarget resource)
         {
             throw new NotImplementedException();
         }
@@ -92,7 +92,7 @@ namespace FubuMVC.Tests.NewConneg
 
     public class GenericWriter<T> : IMediaWriter<T>
     {
-        public void Write(string mimeType, T resource)
+        public void Write(string mimeType, IFubuRequestContext context, T resource)
         {
             throw new NotImplementedException();
         }

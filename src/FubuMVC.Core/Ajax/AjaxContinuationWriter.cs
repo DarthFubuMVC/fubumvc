@@ -8,16 +8,10 @@ namespace FubuMVC.Core.Ajax
     [Title("AjaxContinuationWriter")]
     public class AjaxContinuationWriter<T> : IMediaWriter<T> where T : AjaxContinuation
     {
-        private readonly IJsonWriter _writer;
-
-        public AjaxContinuationWriter(IJsonWriter writer)
+        // TODO -- pull in IJsonWriter once.
+        public void Write(string mimeType, IFubuRequestContext context, T resource)
         {
-            _writer = writer;
-        }
-
-        public void Write(string mimeType, T resource)
-        {
-            _writer.Write(resource.ToDictionary(), mimeType);
+            context.Services.GetInstance<IJsonWriter>().Write(resource.ToDictionary(), mimeType);
         }
 
         public IEnumerable<string> Mimetypes
