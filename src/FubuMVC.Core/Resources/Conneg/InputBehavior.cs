@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -13,15 +12,13 @@ namespace FubuMVC.Core.Resources.Conneg
 {
     public class InputBehavior<T> : BasicBehavior where T : class
     {
-        private readonly IOutputWriter _writer;
-        private readonly IFubuRequest _request;
+        private readonly IFubuRequestContext _context;
         private readonly IEnumerable<IReader<T>> _readers;
         private readonly ILogger _logger;
 
-        public InputBehavior(IOutputWriter writer, IFubuRequest request, IEnumerable<IReader<T>> readers, ILogger logger) : base(PartialBehavior.Executes)
+        public InputBehavior(IFubuRequestContext context, IEnumerable<IReader<T>> readers, ILogger logger) : base(PartialBehavior.Executes)
         {
-            _writer = writer;
-            _request = request;
+            _context = context;
             _readers = readers;
             _logger = logger;
         }
@@ -30,12 +27,12 @@ namespace FubuMVC.Core.Resources.Conneg
         protected override DoNext performInvoke()
         {
             // Might already be there from a different way
-            if (_request.Has<T>()) return DoNext.Continue;
+            if (_context.Models.Has<T>()) return DoNext.Continue;
 
             // Resolve our CurrentMimeType object from the 
             // HTTP request that we use to represent
             // the mimetypes of the current request
-            var mimeTypes = _request.Get<CurrentMimeType>();
+            var mimeTypes = _context.Models.Get<CurrentMimeType>();
 
             // Choose the first reader that says it
             // can read the mimetype from the 
@@ -54,8 +51,8 @@ namespace FubuMVC.Core.Resources.Conneg
             }
 
             // Use the selected reader
-            var target = reader.Read(mimeTypes.ContentType);
-            _request.Set(target);
+            var target = reader.Read(mimeTypes.ContentType, _context);
+            _context.Models.Set(target);
 
             return DoNext.Continue;
         }
@@ -63,8 +60,8 @@ namespace FubuMVC.Core.Resources.Conneg
 
         private void failWithInvalidMimeType()
         {
-            _writer.WriteResponseCode(HttpStatusCode.UnsupportedMediaType);
-            _writer.Write(MimeType.Text, "415:  Unsupported Media Type");
+            _context.Writer.WriteResponseCode(HttpStatusCode.UnsupportedMediaType);
+            _context.Writer.Write(MimeType.Text, "415:  Unsupported Media Type");
         }
 
         public IReader<T> ChooseReader(CurrentMimeType mimeTypes)

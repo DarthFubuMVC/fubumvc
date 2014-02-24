@@ -5,6 +5,6 @@ namespace FubuMVC.Core.Resources.Conneg
     public interface IReader<T>
     {
         IEnumerable<string> Mimetypes { get; }
-        T Read(string mimeType);
+        T Read(string mimeType, IFubuRequestContext context);
     }
 }

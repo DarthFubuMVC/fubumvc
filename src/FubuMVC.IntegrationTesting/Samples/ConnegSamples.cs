@@ -57,7 +57,7 @@ namespace FubuMVC.IntegrationTesting.Samples
             }
         }
 
-        public InputMessage Read(string mimeType)
+        public InputMessage Read(string mimeType, IFubuRequestContext context)
         {
             // read the body of the http request from ICurrentHttpRequest
             // read header information and route information from

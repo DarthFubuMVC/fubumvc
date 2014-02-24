@@ -20,7 +20,10 @@ namespace FubuMVC.Tests.Runtime.Formatters
         public void writes_with_the_correct_mimetype_passed_into_it()
         {
             var theAddress = new Address();
-            ClassUnderTest.Write(theAddress, "application/json");
+
+            var context = new MockedFubuRequestContext();
+
+            ClassUnderTest.Write(context, theAddress, "application/json");
             MockFor<IJsonWriter>().AssertWasCalled(x => x.Write(theAddress, "application/json"));
         }
     }

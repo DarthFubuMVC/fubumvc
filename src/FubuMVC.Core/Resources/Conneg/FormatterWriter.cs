@@ -17,7 +17,7 @@ namespace FubuMVC.Core.Resources.Conneg
 
         public void Write(string mimeType, IFubuRequestContext context, T resource)
         {
-            _formatter.Write(resource, mimeType);
+            _formatter.Write(context, resource, mimeType);
         }
 
         public IEnumerable<string> Mimetypes

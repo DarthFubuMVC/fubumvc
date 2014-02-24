@@ -12,7 +12,7 @@ namespace FubuMVC.Tests
     {
         public MockedFubuRequestContext(IContainer container)
             : base(
-                new StructureMapServiceLocator(container), new StandInCurrentHttpRequest(), container.GetInstance<IFubuRequest>(),
+                new StructureMapServiceLocator(container), container.GetInstance<ICurrentHttpRequest>(), container.GetInstance<IFubuRequest>(),
                 container.GetInstance<IOutputWriter>())
         {
             

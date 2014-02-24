@@ -1,4 +1,5 @@
 using System.Net;
+using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Resources.Conneg;
@@ -84,13 +85,15 @@ namespace FubuMVC.Tests.NewConneg
 
         protected override void beforeEach()
         {
+            Services.Inject<IFubuRequestContext>(new MockedFubuRequestContext(Services.Container));
+
             reader1 = readerFor("text/json", "application/json");
             reader2 = readerFor("text/xml");
             reader3 = readerFor("text/xml", "application/xml");
             reader4 = readerFor("text/html");
 
             theAddress = new Address();
-            reader4.Stub(x => x.Read("text/html")).Return(theAddress);
+            reader4.Stub(x => x.Read("text/html", MockFor<IFubuRequestContext>())).Return(theAddress);
 
             theInnerBehavior = MockFor<IActionBehavior>();
             ClassUnderTest.InsideBehavior = theInnerBehavior;
@@ -136,6 +139,8 @@ namespace FubuMVC.Tests.NewConneg
 
         protected override void beforeEach()
         {
+            Services.Inject<IFubuRequestContext>(new MockedFubuRequestContext(Services.Container));
+
             reader1 = readerFor("text/json", "application/json");
             reader2 = readerFor("text/xml");
             reader3 = readerFor("text/xml", "application/xml");

@@ -15,7 +15,7 @@ namespace FubuMVC.Core.Resources.Conneg
             _request = request;
         }
 
-        public T Read(string mimeType)
+        public T Read(string mimeType, IFubuRequestContext context)
         {
             _request.Clear(typeof(T));
             return _request.Get<T>();

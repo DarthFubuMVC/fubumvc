@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FubuMVC.Core;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime.Formatters;
@@ -176,7 +177,7 @@ namespace FubuMVC.Tests.NewConneg
             get { throw new NotImplementedException(); }
         }
 
-        public InputTarget Read(string mimeType)
+        public InputTarget Read(string mimeType, IFubuRequestContext context)
         {
             throw new NotImplementedException();
         }
@@ -194,7 +195,7 @@ namespace FubuMVC.Tests.NewConneg
             get { throw new NotImplementedException(); }
         }
 
-        public T Read(string mimeType)
+        public T Read(string mimeType, IFubuRequestContext context)
         {
             throw new NotImplementedException();
         }
@@ -207,7 +208,7 @@ namespace FubuMVC.Tests.NewConneg
 
     public class FancyReader<T> : IReader<T>
     {
-        public T Read(string mimeType)
+        public T Read(string mimeType, IFubuRequestContext context)
         {
             throw new NotImplementedException();
         }
@@ -225,7 +226,7 @@ namespace FubuMVC.Tests.NewConneg
             get { yield return "fake/address"; }
         }
 
-        public Address Read(string mimeType)
+        public Address Read(string mimeType, IFubuRequestContext context)
         {
             throw new NotImplementedException();
         }

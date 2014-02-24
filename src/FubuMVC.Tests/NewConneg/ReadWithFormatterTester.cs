@@ -59,12 +59,12 @@ namespace FubuMVC.Tests.NewConneg
             get { throw new NotImplementedException(); }
         }
 
-        public void Write<T>(T target, string mimeType)
+        public void Write<T>(IFubuRequestContext context, T target, string mimeType)
         {
             throw new NotImplementedException();
         }
 
-        public T Read<T>()
+        public T Read<T>(IFubuRequestContext context)
         {
             throw new NotImplementedException();
         }
@@ -77,12 +77,12 @@ namespace FubuMVC.Tests.NewConneg
             get { throw new NotImplementedException(); }
         }
 
-        public void Write<T>(T target, string mimeType)
+        public void Write<T>(IFubuRequestContext context, T target, string mimeType)
         {
             throw new NotImplementedException();
         }
 
-        public T Read<T>()
+        public T Read<T>(IFubuRequestContext context)
         {
             throw new NotImplementedException();
         }

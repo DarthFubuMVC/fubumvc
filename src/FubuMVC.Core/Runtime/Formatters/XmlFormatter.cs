@@ -14,19 +14,10 @@ namespace FubuMVC.Core.Runtime.Formatters
     [Title("Xml Serialization")]
     public class XmlFormatter : IFormatter
     {
-        private readonly ICurrentHttpRequest _streaming;
-        private readonly IOutputWriter _writer;
-
-        public XmlFormatter(ICurrentHttpRequest streaming, IOutputWriter writer)
-        {
-            _streaming = streaming;
-            _writer = writer;
-        }
-
-        public void Write<T>(T target, string mimeType)
+        public void Write<T>(IFubuRequestContext context, T target, string mimeType)
         {
             var serializer = new XmlSerializer(typeof (T));
-            _writer.Write(mimeType, stream =>
+            context.Writer.Write(mimeType, stream =>
             {
                 var xmlWriter = new XmlTextWriter(stream, Encoding.Unicode)
                 {
@@ -37,10 +28,10 @@ namespace FubuMVC.Core.Runtime.Formatters
             });
         }
 
-        public T Read<T>()
+        public T Read<T>(IFubuRequestContext context)
         {
             var serializer = new XmlSerializer(typeof (T));
-            var reader = new StreamReader(_streaming.Input, true);
+            var reader = new StreamReader(context.Request.Input, true);
 
             return (T) serializer.Deserialize(reader);
         }

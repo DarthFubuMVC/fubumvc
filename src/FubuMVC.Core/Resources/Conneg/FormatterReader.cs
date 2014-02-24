@@ -19,9 +19,9 @@ namespace FubuMVC.Core.Resources.Conneg
             _bindingContext = bindingContext;
         }
 
-        public T Read(string mimeType)
+        public T Read(string mimeType, IFubuRequestContext context)
         {
-            var model = _formatter.Read<T>();
+            var model = _formatter.Read<T>(context);
             _objectResolver.BindProperties(model, _bindingContext);
             return model;
         }

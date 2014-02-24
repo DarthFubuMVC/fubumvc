@@ -1,3 +1,4 @@
+using FubuMVC.Core;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
@@ -19,10 +20,15 @@ namespace FubuMVC.Tests.NewConneg
         public void read_just_forces_ifuburequest_to_read()
         {
             var address = new Address();
+
+            var context = new MockedFubuRequestContext(Services.Container);
+            Services.Inject<IFubuRequestContext>(context);
+
+
             MockFor<IFubuRequest>().Stub(x => x.Get<Address>())
                 .Return(address);
 
-            ClassUnderTest.Read("anything").ShouldBeTheSameAs(address);
+            ClassUnderTest.Read("anything", context).ShouldBeTheSameAs(address);
 
             MockFor<IFubuRequest>().Clear(typeof(Address));
         }

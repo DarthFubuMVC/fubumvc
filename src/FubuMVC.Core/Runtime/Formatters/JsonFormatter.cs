@@ -19,12 +19,12 @@ namespace FubuMVC.Core.Runtime.Formatters
             _reader = reader;
         }
 
-        public void Write<T>(T target, string mimeType)
+        public void Write<T>(IFubuRequestContext context, T target, string mimeType)
         {
             _writer.Write(target, mimeType);
         }
 
-        public T Read<T>()
+        public T Read<T>(IFubuRequestContext context)
         {
             return _reader.Read<T>();
         }

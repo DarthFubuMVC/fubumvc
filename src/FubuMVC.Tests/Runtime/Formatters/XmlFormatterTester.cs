@@ -1,7 +1,10 @@
+using FubuCore;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
 using FubuTestingSupport;
 using NUnit.Framework;
+using StructureMap;
 
 namespace FubuMVC.Tests.Runtime.Formatters
 {
@@ -11,14 +14,23 @@ namespace FubuMVC.Tests.Runtime.Formatters
         private InMemoryStreamingData streamingData;
         private XmlFormatter theFormatter;
         private InMemoryOutputWriter writer;
+        private MockedFubuRequestContext context;
 
         [SetUp]
         public void SetUp()
         {
             streamingData = new InMemoryStreamingData();
             writer = new InMemoryOutputWriter();
-            
-            theFormatter = new XmlFormatter(streamingData, writer);
+
+            var container = new Container(x => {
+                x.For<ICurrentHttpRequest>().Use(streamingData);
+                x.For<IOutputWriter>().Use(writer);
+                x.For<IFubuRequest>().Use(new InMemoryFubuRequest());
+            });
+
+            context = new MockedFubuRequestContext(container);
+
+            theFormatter = new XmlFormatter();
         }
 
         [Test]
@@ -31,7 +43,7 @@ namespace FubuMVC.Tests.Runtime.Formatters
 
             streamingData.XmlInputIs(xmlInput);
 
-            var xmlOutput = theFormatter.Read<XmlFormatterModel>();
+            var xmlOutput = theFormatter.Read<XmlFormatterModel>(context);
             xmlOutput.ShouldNotBeTheSameAs(xmlInput);
 
             xmlOutput.FirstName.ShouldEqual(xmlInput.FirstName);
@@ -47,11 +59,11 @@ namespace FubuMVC.Tests.Runtime.Formatters
                 LastName = "Miller"
             };
 
-            theFormatter.Write(xmlInput, "text/xml");
+            theFormatter.Write(context, xmlInput, "text/xml");
 
             streamingData.CopyOutputToInputForTesting(writer.OutputStream());
 
-            var xmlOutput = theFormatter.Read<XmlFormatterModel>();
+            var xmlOutput = theFormatter.Read<XmlFormatterModel>(context);
             xmlOutput.ShouldNotBeTheSameAs(xmlInput);
 
             xmlOutput.FirstName.ShouldEqual(xmlInput.FirstName);
