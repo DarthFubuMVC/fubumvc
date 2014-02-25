@@ -55,7 +55,7 @@ namespace FubuMVC.Core.Resources.Conneg
             // Select the appropriate media writer
             // based on the mimetype and other runtime
             // conditions
-            var media = SelectMedia(mimeTypes);
+            var media = SelectMedia(mimeTypes, _logger);
 
             if (media == null)
             {
@@ -83,7 +83,7 @@ namespace FubuMVC.Core.Resources.Conneg
                 .Each(x => x.Write(_context.Writer));
         }
 
-        public virtual IMedia<T> SelectMedia(CurrentMimeType mimeTypes)
+        public virtual IMedia<T> SelectMedia(CurrentMimeType mimeTypes, ILogger logger)
         {
             foreach (var acceptType in mimeTypes.AcceptTypes)
             {
@@ -93,18 +93,18 @@ namespace FubuMVC.Core.Resources.Conneg
                     var writer = candidates.FirstOrDefault(x => x.MatchesRequest(_context));
                     if (writer != null)
                     {
-                        _logger.DebugMessage(() => new WriterChoice(acceptType, writer, writer.Condition));
+                        logger.DebugMessage(() => new WriterChoice(acceptType, writer, writer.Condition));
                         return writer;
                     }
                     
-                    _logger.DebugMessage(() => NoWritersMatch.For(acceptType, candidates));
+                    logger.DebugMessage(() => NoWritersMatch.For(acceptType, candidates));
                 }
             }
 
             if (mimeTypes.AcceptsAny())
             {
                 var media = _media.FirstOrDefault(x => x.MatchesRequest(_context));
-                _logger.DebugMessage(() => new WriterChoice(MimeType.Any.Value, media, media.Condition));
+                logger.DebugMessage(() => new WriterChoice(MimeType.Any.Value, media, media.Condition));
 
                 return media;
             }

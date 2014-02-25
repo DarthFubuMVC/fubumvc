@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using FubuCore.Logging;
 using FubuMVC.Core;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Headers;
@@ -193,7 +194,7 @@ namespace FubuMVC.Tests.NewConneg
             theSelectedMedia = MockFor<IMedia<OutputTarget>>();
             Services.PartialMockTheClassUnderTest();
 
-            ClassUnderTest.Stub(x => x.SelectMedia(theCurrentMimeType)).Return(theSelectedMedia);
+            ClassUnderTest.Stub(x => x.SelectMedia(theCurrentMimeType, MockFor<ILogger>())).Return(theSelectedMedia);
 
             theAcceptedMimetype = "text/json";
             theSelectedMedia.Stub(x => x.Mimetypes).Return(new[]{theAcceptedMimetype});
@@ -224,7 +225,7 @@ namespace FubuMVC.Tests.NewConneg
         {
             Services.PartialMockTheClassUnderTest();
 
-            ClassUnderTest.Stub(x => x.SelectMedia(theCurrentMimeType)).Return(null);
+            ClassUnderTest.Stub(x => x.SelectMedia(theCurrentMimeType, MockFor<ILogger>())).Return(null);
 
             ClassUnderTest.Write();
         }
@@ -287,7 +288,7 @@ namespace FubuMVC.Tests.NewConneg
 
         protected void theSelectedMediaShouldBe(int index)
         {
-            ClassUnderTest.SelectMedia(theCurrentMimeType)
+            ClassUnderTest.SelectMedia(theCurrentMimeType, MockFor<ILogger>())
                 .ShouldBeTheSameAs(theMedia[index]);
         }
 
