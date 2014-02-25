@@ -6,34 +6,6 @@ using FubuCore;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
-    [MarkedForTermination]
-    public class FormatterWriter<T, TFormatter> : IMediaWriter<T>, DescribesItself where TFormatter : IFormatter
-    {
-        private readonly TFormatter _formatter;
-
-        public FormatterWriter(TFormatter formatter)
-        {
-            _formatter = formatter;
-        }
-
-        public void Write(string mimeType, IFubuRequestContext context, T resource)
-        {
-            _formatter.Write(context, resource, mimeType);
-        }
-
-        public IEnumerable<string> Mimetypes
-        {
-            get { return _formatter.MatchingMimetypes; }
-        }
-
-        public void Describe(Description description)
-        {
-            var formatterDescription = Description.For(_formatter);
-            description.Title = "Write with formatter '{0}'".ToFormat(formatterDescription.Title);
-            description.Children["Formatter"] = formatterDescription;
-        }
-    }
-
     public class FormatterWriter<T> : IMediaWriter<T>, DescribesItself 
     {
         private readonly IFormatter _formatter;

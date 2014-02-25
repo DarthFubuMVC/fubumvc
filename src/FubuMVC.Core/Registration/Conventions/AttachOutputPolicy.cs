@@ -13,7 +13,7 @@ namespace FubuMVC.Core.Registration.Conventions
         public void Configure(BehaviorGraph graph)
         {
             graph.Behaviors.Where(x => x.ResourceType() != null && x.ResourceType() != typeof(void) && 
-                !x.ResourceType().CanBeCastTo<FubuContinuation>() && x.Output.Writers.Any()).Each(x => x.AddToEnd(x.Output));
+                !x.ResourceType().CanBeCastTo<FubuContinuation>() && x.Output.Media().Any()).Each(x => x.AddToEnd(x.Output));
         }
     }
 }

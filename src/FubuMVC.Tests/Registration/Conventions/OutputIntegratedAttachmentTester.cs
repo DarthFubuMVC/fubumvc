@@ -7,6 +7,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
 using FubuMVC.Tests.Behaviors;
 using FubuTestingSupport;
@@ -58,7 +59,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             var behavior =
                 graph.BehaviorFor<JsonOutputAttachmentTesterController>(x => x.Stringify()).Calls.First().Next;
 
-            behavior.ShouldBeOfType<OutputNode>().Writers.Single().ShouldBeOfType<WriteString>();
+            behavior.ShouldBeOfType<OutputNode>().Writes(MimeType.Text).ShouldBeTrue();
         }
 
         [Test]
@@ -73,7 +74,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void methods_that_return_a_json_message_should_output_json()
         {
             var chain = chainFor(x => x.OutputJson1());
-            chain.Output.UsesFormatter<JsonFormatter>();
+            chain.Output.Writes(MimeType.Json);
 
             chainFor(x => x.OutputJson2()).Top.Any(x => x.GetType() == typeof (OutputNode)).ShouldBeTrue();
             chainFor(x => x.OutputJson3()).Top.Any(x => x.GetType() == typeof (OutputNode)).ShouldBeTrue();
@@ -189,6 +190,11 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             return new NotJson3();
         }
+    }
+
+    public class ViewModel1
+    {
+        
     }
 
     public class Json1

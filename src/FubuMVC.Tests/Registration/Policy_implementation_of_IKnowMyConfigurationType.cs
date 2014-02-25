@@ -30,13 +30,6 @@ namespace FubuMVC.Tests.Registration
             theConfigurationType().ShouldEqual(ConfigurationType.InjectNodes);
         }
 
-        [Test]
-        public void with_a_single_action_that_knows_itself()
-        {
-            thePolicy.Conneg.AcceptJson();
-
-            theConfigurationType().ShouldEqual(ConfigurationType.Conneg);
-        }
 
         [Test]
         public void if_multiple_actions_use_the_one_latest_in_the_cycle()
@@ -48,16 +41,6 @@ namespace FubuMVC.Tests.Registration
             theConfigurationType().ShouldEqual(ConfigurationType.Attachment);
         }
 
-
-        [Test]
-        public void if_multiple_actions_use_the_one_latest_in_the_cycle_2()
-        {
-            thePolicy.Conneg.AcceptJson();
-            thePolicy.ModifyBy(chain => { }, configurationType: ConfigurationType.Discovery);
-
-            // Conneg is after Discovery
-            theConfigurationType().ShouldEqual(ConfigurationType.Conneg);
-        }
 
         [Test]
         public void attribute_on_the_policy_wins()

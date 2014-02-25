@@ -260,7 +260,7 @@ namespace FubuMVC.Tests.Registration.Nodes
 
             chain.HasOutput().ShouldBeFalse();
 
-            chain.Output.AddFormatter<JsonFormatter>();
+            chain.Output.Add(new JsonSerializer());
 
             chain.HasOutput().ShouldBeTrue();
         }
@@ -624,41 +624,6 @@ namespace FubuMVC.Tests.Registration.Nodes
         }
     }
 
-    [TestFixture]
-    public class BehaviorChain_build_for_a_single_writer_node
-    {
-        #region Setup/Teardown
-
-        [SetUp]
-        public void SetUp()
-        {
-            theWriter = new WriteHtml(typeof (HtmlTag));
-            theChain = BehaviorChain.ForWriter(theWriter);
-        }
-
-        #endregion
-
-        private WriteHtml theWriter;
-        private BehaviorChain theChain;
-
-        [Test]
-        public void should_derive_its_resource_type_from_the_writer()
-        {
-            theChain.ResourceType().ShouldEqual(typeof (HtmlTag));
-        }
-
-        [Test]
-        public void the_chain_can_still_decipher_its_input_type()
-        {
-            theChain.InputType().ShouldEqual(typeof (HtmlTag));
-        }
-
-        [Test]
-        public void the_writer_should_be_attached_to_the_output_node()
-        {
-            theChain.Output.Writers.Single().ShouldBeTheSameAs(theWriter);
-        }
-    }
 
     public class FakeInputNode : BehaviorNode, IMayHaveInputType
     {

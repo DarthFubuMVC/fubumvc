@@ -50,6 +50,8 @@ namespace FubuMVC.Core.Resources.Conneg
             get { return _condition; }
         }
 
+
+
         private string debuggerDisplay()
         {
             return Writer.Mimetypes.Join(",");

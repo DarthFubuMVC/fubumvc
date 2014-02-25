@@ -7,7 +7,7 @@ using Rhino.Mocks;
 namespace FubuMVC.Tests.NewConneg
 {
     [TestFixture]
-    public class FormatterWriterTester : InteractionContext<FormatterWriter<Address, IFormatter>>
+    public class FormatterWriterTester : InteractionContext<FormatterWriter<Address>>
     {
         [Test]
         public void delegates_to_its_formatter_for_mimetypes()

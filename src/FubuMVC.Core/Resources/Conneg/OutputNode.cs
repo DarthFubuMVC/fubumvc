@@ -5,6 +5,7 @@ using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.Runtime.Formatters;
 
@@ -12,7 +13,6 @@ namespace FubuMVC.Core.Resources.Conneg
 {
     public class OutputNode : BehaviorNode, IMayHaveResourceType, DescribesItself
     {
-        private readonly WriterChain _chain = new WriterChain();
         private readonly Type _resourceType;
         private readonly IList<IMedia> _media = new List<IMedia>(); 
 
@@ -77,10 +77,6 @@ namespace FubuMVC.Core.Resources.Conneg
             get { return BehaviorCategory.Output; }
         }
 
-        public WriterChain Writers
-        {
-            get { return _chain; }
-        }
 
         public Type ResourceType
         {
@@ -116,7 +112,7 @@ namespace FubuMVC.Core.Resources.Conneg
             description.Title = "OutputNode";
             description.ShortDescription = "Render the output for resource " + ResourceType.Name;
 
-            description.AddList("Writers", Writers);
+            description.AddList("Media", _media);
         }
 
         #endregion
@@ -134,12 +130,13 @@ namespace FubuMVC.Core.Resources.Conneg
         {
             var def = new ObjectDef(typeof (OutputBehavior<>), _resourceType);
 
-            Type mediaType = typeof (IMedia<>).MakeGenericType(_resourceType);
-            Type enumerableType = typeof (IEnumerable<>).MakeGenericType(mediaType);
-            var dependency = new ListDependency(enumerableType);
-            dependency.AddRange(Writers.OfType<IContainerModel>().Select(x => x.ToObjectDef()));
 
-            def.Dependency(dependency);
+
+            
+            var collectionType = typeof (IMediaCollection<>).MakeGenericType(_resourceType);
+            var collection = typeof (MediaCollection<>).CloseAndBuildAs<object>(_media, _resourceType);
+
+            def.DependencyByValue(collectionType, collection);
 
             if (ResourceNotFound != null)
             {
@@ -149,81 +146,31 @@ namespace FubuMVC.Core.Resources.Conneg
             return def;
         }
 
-        public WriteWithFormatter AddFormatter<T>() where T : IFormatter
-        {
-            var formatter = new WriteWithFormatter(_resourceType, typeof (T));
-            WriterNode existing = Writers.FirstOrDefault(x => x.Equals(formatter));
-            if (existing != null)
-            {
-                return existing as WriteWithFormatter;
-            }
 
-
-            Writers.AddToEnd(formatter);
-
-            return formatter;
-        }
-
-        public Writer AddWriter<T>()
-        {
-            Type writerType = typeof (IMediaWriter<>).MakeGenericType(_resourceType);
-            if (!typeof (T).CanBeCastTo(writerType))
-            {
-                throw new ArgumentOutOfRangeException("{0} cannot be cast to {1}".ToFormat(typeof (T).FullName,
-                                                                                           writerType.FullName));
-            }
-
-            var writer = new Writer(typeof (T));
-
-            Writers.AddToEnd(writer);
-
-            return writer;
-        }
-
-        public WriteHtml AddHtml()
-        {
-            WriteHtml existing = Writers.OfType<WriteHtml>().FirstOrDefault();
-            if (existing != null)
-            {
-                return existing;
-            }
-
-            var write = new WriteHtml(_resourceType);
-            Writers.AddToEnd(write);
-
-            return write;
-        }
 
         public void ClearAll()
         {
-            Writers.SetTop(null);
-        }
-
-        public void JsonOnly()
-        {
-            ClearAll();
-            AddFormatter<JsonFormatter>();
-        }
-
-        public bool UsesFormatter<T>()
-        {
-            return Writers.OfType<WriteWithFormatter>().Any(x => x.FormatterType == typeof (T));
-        }
-
-        public void AddWriter(Type writerType)
-        {
-            var writer = new Writer(writerType, _resourceType);
-            Writers.AddToEnd(writer);
+            _media.Clear();
         }
 
         public override string ToString()
         {
-            return Writers.Select(x => x.ToString()).Join(", ");
+            return _media.Select(x => x.ToString()).Join(", ");
         }
 
         public IEnumerable<string> MimeTypes()
         {
-            return Writers.SelectMany(x => x.Mimetypes).Distinct();
-        } 
+            return _media.SelectMany(x => x.Mimetypes).Distinct();
+        }
+
+        public bool Writes(MimeType mimeType)
+        {
+            return MimeTypes().Contains(mimeType.ToString());
+        }
+
+        public bool Writes(string mimeType)
+        {
+            return MimeTypes().Contains(mimeType);
+        }
     }
 }

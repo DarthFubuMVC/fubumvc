@@ -112,7 +112,6 @@
     <Compile Include="FubuModuleAttribute.cs" />
     <Compile Include="FubuPartialAttribute.cs" />
     <Compile Include="FubuRuntime.cs" />
-    <Compile Include="HtmlEndpointAttribute.cs" />
     <Compile Include="Http\CommaTokenParser.cs" />
     <Compile Include="Http\Compression\ApplyContentCompression.cs" />
     <Compile Include="Http\Compression\DeflateHttpContentEncoding.cs" />
@@ -163,7 +162,7 @@
     <Compile Include="Registration\Policies\AddToEndExpression.cs" />
     <Compile Include="Registration\Policies\AndChainFilter.cs" />
     <Compile Include="Registration\Policies\AnyActionMatch.cs" />
-    <Compile Include="Registration\Policies\ConnegPolicies.cs" />
+    <Compile Include="Registration\Policies\ConnegExpression.cs" />
     <Compile Include="Registration\Policies\HttpMethodFilter.cs" />
     <Compile Include="Registration\Policies\IChainFilter.cs" />
     <Compile Include="Registration\Policies\IChainModification.cs" />
@@ -186,8 +185,13 @@
     <Compile Include="Registration\SettingAlteration.cs" />
     <Compile Include="Registration\SettingReplacement.cs" />
     <Compile Include="Registration\SettingsCollection.cs" />
+    <Compile Include="Resources\Conneg\IMediaCollection.cs" />
     <Compile Include="Resources\Conneg\IResourceNotFoundHandler.cs" />
     <Compile Include="Resources\Conneg\DefaultResourceNotFoundHandler.cs" />
+    <Compile Include="Resources\Conneg\MediaCollection.cs" />
+    <Compile Include="Resources\Conneg\NoMatchingWriter.cs" />
+    <Compile Include="Resources\Conneg\NoWritersMatch.cs" />
+    <Compile Include="Resources\Conneg\WriterChoice.cs" />
     <Compile Include="Resources\Etags\IHeadersCache.cs" />
     <Compile Include="Runtime\AjaxAwareJsonSerializer.cs" />
     <Compile Include="Runtime\DataContractJsonSerializer.cs" />
@@ -279,12 +283,6 @@
     <Compile Include="Resources\Conneg\ModelBindingReader.cs" />
     <Compile Include="Resources\Conneg\OutputBehavior.cs" />
     <Compile Include="Resources\Conneg\StringWriter.cs" />
-    <Compile Include="Resources\Conneg\WriteHtml.cs" />
-    <Compile Include="Resources\Conneg\Writer.cs" />
-    <Compile Include="Resources\Conneg\WriterChain.cs" />
-    <Compile Include="Resources\Conneg\WriterNode.cs" />
-    <Compile Include="Resources\Conneg\WriteString.cs" />
-    <Compile Include="Resources\Conneg\WriteWithFormatter.cs" />
     <Compile Include="Runtime\HeaderValueAttribute.cs" />
     <Compile Include="Registration\Services\ModelBindingServicesRegistry.cs" />
     <Compile Include="Registration\ActionMethodFilter.cs" />

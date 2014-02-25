@@ -30,7 +30,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
         [Test]
         public void action_marked_with_html_endpoint_should_be_written_as_html()
         {
-            endpoints.Get<StringController>(x => x.DifferentKindOfName())
+            endpoints.Get<StringController>(x => x.DifferentKindOfName(), acceptType:"text/html")
                 .ContentShouldBe(MimeType.Html, "different");
         }
 
@@ -41,12 +41,6 @@ namespace FubuMVC.IntegrationTesting.Conneg
                 .ContentShouldBe(MimeType.Text, "different");
         }
 
-        [Test]
-        public void action_that_returns_non_string_but_marked_as_html_endpoint()
-        {
-            endpoints.Get<StringController>(x => x.AsHtml())
-                .ContentShouldBe(MimeType.Html, new Something().ToString());
-        }
     }
 
 
@@ -62,13 +56,11 @@ namespace FubuMVC.IntegrationTesting.Conneg
             return "<h1>Hello</h1>";
         }
 
-        [HtmlEndpoint]
         public string DifferentKindOfName()
         {
             return "different";
         }
 
-        [HtmlEndpoint]
         public Something AsHtml()
         {
             return new Something();

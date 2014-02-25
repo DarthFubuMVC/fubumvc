@@ -3,6 +3,8 @@ using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Runtime;
+using FubuMVC.Tests.Ajax;
 using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
@@ -31,17 +33,20 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void action_that_returns_HtmlDocument_should_output_to_html()
         {
-            graph.BehaviorFor<TagController>(x => x.BuildDoc()).Outputs.First().ShouldBeOfType<OutputNode>()
-                .Writers.Single().ShouldBeOfType<WriteHtml>()
+            var outputNode = graph.BehaviorFor<TagController>(x => x.BuildDoc()).Outputs.First().ShouldBeOfType<OutputNode>();
+            outputNode
                 .ResourceType.ShouldEqual(typeof(HtmlDocument));
+
+            outputNode.Writes(MimeType.Html).ShouldBeTrue();
         }
 
         [Test]
         public void action_that_returns_HtmlTag_should_output_to_html()
         {
-            graph.BehaviorFor<TagController>(x => x.BuildTag()).Outputs.First().ShouldBeOfType<OutputNode>()
-                .Writers.Single().ShouldBeOfType<WriteHtml>()
-                .ResourceType.ShouldEqual(typeof(HtmlTag));
+            var outputNode =
+                graph.BehaviorFor<TagController>(x => x.BuildTag()).Outputs.First().ShouldBeOfType<OutputNode>();
+            outputNode.Writes(MimeType.Html).ShouldBeTrue();
+            outputNode.ResourceType.ShouldEqual(typeof(HtmlTag));
         }
     }
 

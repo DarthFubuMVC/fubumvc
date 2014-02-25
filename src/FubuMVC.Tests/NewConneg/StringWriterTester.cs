@@ -13,8 +13,8 @@ namespace FubuMVC.Tests.NewConneg
         [Test]
         public void mime_type_is_only_text()
         {
-            ClassUnderTest.Mimetypes.Single()
-                .ShouldEqual(MimeType.Text.Value);
+            ClassUnderTest.Mimetypes
+                .ShouldHaveTheSameElementsAs(MimeType.Text.Value, MimeType.Html.Value);
         }
 
         [Test]

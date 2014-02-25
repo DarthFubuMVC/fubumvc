@@ -5,6 +5,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.Runtime.Formatters;
 using FubuMVC.StructureMap;
@@ -28,10 +29,9 @@ namespace FubuMVC.Tests.NewConneg
         public void SetUp()
         {
             var node = new OutputNode(typeof (Address));
-            node.AddFormatter<JsonFormatter>();
-            node.AddFormatter<XmlFormatter>();
-            node.AddWriter<FakeAddressWriter>().Condition<SomeConditional>();
-            
+            node.Add(new JsonSerializer());
+            node.Add(new XmlFormatter());
+            node.Add(new FakeAddressWriter(), new SomeConditional());
 
             var container = StructureMapContainerFacility.GetBasicFubuContainer();
             container.Configure(x =>
@@ -64,7 +64,7 @@ namespace FubuMVC.Tests.NewConneg
         {
             theInputBehavior.Media.First()
                 .ShouldBeOfType<Media<Address>>()
-                .Writer.ShouldBeOfType<FormatterWriter<Address, JsonFormatter>>();
+                .Writer.ShouldBeOfType<FormatterWriter<Address>>();
 
         }
 
@@ -73,7 +73,7 @@ namespace FubuMVC.Tests.NewConneg
         {
             theInputBehavior.Media.ElementAt(1)
                .ShouldBeOfType<Media<Address>>()
-               .Writer.ShouldBeOfType<FormatterWriter<Address, XmlFormatter>>();
+               .Writer.ShouldBeOfType<FormatterWriter<Address>>();
 
         }
 

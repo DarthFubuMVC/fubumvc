@@ -182,59 +182,60 @@ namespace FubuMVC.Tests.NewConneg
 
 
     [TestFixture]
-    public class when_writing_and_a_media_can_be_found : OutputBehaviorContext
+    public class when_writing_and_a_media_can_be_found : InteractionContext<OutputBehavior<OutputTarget>>
     {
         private IMedia<OutputTarget> theSelectedMedia;
         private string theAcceptedMimetype;
         private MockedFubuRequestContext theContext;
+        private OutputTarget theTarget;
+        private CurrentMimeType theMimeType;
 
-        protected override void theContextIs()
+        protected override void beforeEach()
         {
             theContext = new MockedFubuRequestContext(Services.Container);
             Services.Inject<IFubuRequestContext>(theContext);
 
+            theTarget = new OutputTarget();
+
+            theMimeType = new CurrentMimeType("text/plain", "text/plain");
             theSelectedMedia = MockFor<IMedia<OutputTarget>>();
-            Services.PartialMockTheClassUnderTest();
+            theSelectedMedia.Stub(x => x.Mimetypes).Return(new[] {"text/plain"});
 
-            ClassUnderTest.Stub(x => x.SelectMedia(theCurrentMimeType, theContext)).Return(theSelectedMedia);
-
-            theAcceptedMimetype = "text/json";
-            theSelectedMedia.Stub(x => x.Mimetypes).Return(new[]{theAcceptedMimetype});
-            theCurrentMimeType.AcceptTypes = new MimeTypeList(theAcceptedMimetype);
-
-            // Pre-condition
-            theCurrentMimeType.SelectFirstMatching(theSelectedMedia.Mimetypes)
-                .ShouldEqual(theAcceptedMimetype);
-        
+            MockFor<IMediaCollection<OutputTarget>>().Stub(x => x.SelectMedia(theMimeType, theContext))
+                .Return(theSelectedMedia);
 
 
-            ClassUnderTest.Write();
+
+            ClassUnderTest.WriteResource(theMimeType, theTarget);
         }
 
         [Test]
         public void should_use_the_selected_media()
         {
-            theSelectedMedia.AssertWasCalled(x => x.Write(theAcceptedMimetype, MockFor<IFubuRequestContext>(), theTarget));
+            theSelectedMedia.AssertWasCalled(x => x.Write("text/plain", MockFor<IFubuRequestContext>(), theTarget));
         }
     }
 
 
 
     [TestFixture]
-    public class when_writing_and_no_matching_writer_can_be_found : OutputBehaviorContext
+    public class when_writing_and_no_matching_writer_can_be_found : InteractionContext<OutputBehavior<OutputTarget>>
     {
         private MockedFubuRequestContext theContext;
+        private OutputTarget theTarget;
+        private CurrentMimeType theMimeType;
 
-        protected override void theContextIs()
+        protected override void beforeEach()
         {
             theContext = new MockedFubuRequestContext(Services.Container);
             Services.Inject<IFubuRequestContext>(theContext);
 
-            Services.PartialMockTheClassUnderTest();
+            theTarget = new OutputTarget();
+            theMimeType = new CurrentMimeType("text/plain", "text/plain");
 
-            ClassUnderTest.Stub(x => x.SelectMedia(theCurrentMimeType, theContext)).Return(null);
+            MockFor<IMediaCollection<OutputTarget>>().Stub(x => x.SelectMedia(theMimeType, theContext)).Return(null);
 
-            ClassUnderTest.Write();
+            ClassUnderTest.WriteResource(theMimeType, theTarget);
         }
 
         [Test]
@@ -243,11 +244,6 @@ namespace FubuMVC.Tests.NewConneg
             MockFor<IOutputWriter>().AssertWasCalled(x => x.WriteResponseCode(HttpStatusCode.NotAcceptable));
         }
 
-        [Test]
-        public void nothing_is_written_anywhere()
-        {
-            theMedia.Each(media => media.AssertWasNotCalled(x => x.Write(null, null, null), x => x.IgnoreArguments()));
-        }
     }
 
     public abstract class OutputBehaviorContext : InteractionContext<OutputBehavior<OutputTarget>>
@@ -268,6 +264,8 @@ namespace FubuMVC.Tests.NewConneg
             {
                 media.Stub<IMedia<OutputTarget>, IConditional>(x => x.Condition).Return(Always.Flyweight);
             });
+
+            Services.Inject<IMediaCollection<OutputTarget>>(new MediaCollection<OutputTarget>(theMedia));
 
             theCurrentMimeType = new CurrentMimeType();
             theTarget = new OutputTarget();
@@ -295,7 +293,7 @@ namespace FubuMVC.Tests.NewConneg
 
         protected void theSelectedMediaShouldBe(int index)
         {
-            ClassUnderTest.SelectMedia(theCurrentMimeType, MockFor<IFubuRequestContext>())
+            MockFor<IMediaCollection<OutputTarget>>().SelectMedia(theCurrentMimeType, MockFor<IFubuRequestContext>())
                 .ShouldBeTheSameAs(theMedia[index]);
         }
 

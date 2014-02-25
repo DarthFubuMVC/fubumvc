@@ -163,7 +163,7 @@ namespace FubuMVC.IntegrationTesting.Samples
         public override void Alter(ActionCall call)
         {
             var outputNode = call.ParentChain().Output;
-            _types.Each(outputNode.AddWriter);
+            _types.Each(t => outputNode.Add(t));
         }
     }
     // ENDSAMPLE
@@ -222,15 +222,8 @@ namespace FubuMVC.IntegrationTesting.Samples
             // model binding, json, or xml in and json or xml out
             chain.ApplyConneg();
 
-            // Manipulate an existing writer
-            var writer = chain.Output.Writers.First();
-            manipulateWriter(writer);
-
             // Remove all writers
             chain.Output.ClearAll();
-
-            // Add the HtmlStringWriter
-            chain.Output.AddHtml();
 
             // Add basic Json output
             chain.OutputJson();
@@ -239,11 +232,6 @@ namespace FubuMVC.IntegrationTesting.Samples
             chain.OutputXml();
         }
 
-        private static void manipulateWriter(WriterNode writer)
-        {
-            writer.ReplaceWith(new WriteString());
-            writer.MoveToFront();
-        }
 
         // ENDSAMPLE
 
@@ -251,10 +239,9 @@ namespace FubuMVC.IntegrationTesting.Samples
         // This method is just an example of how you can add 
         // runtime conditions to an existing WriterNode
         // hanging off of BehaviorChain.Output.Writers
-        private static void addConditions(WriterNode node)
-        {
-            node.Condition<MyRuntimeCondition>();
-        }
+        
+
+        // TODO -- need to redo this
 
         // IConditional services are resolved from the IoC
         // container, so you can declare dependencies
@@ -341,12 +328,14 @@ namespace FubuMVC.IntegrationTesting.Samples
             // this policy applies
             Where.IsNotPartial().And.RespondsToHttpMethod("GET")
                 .And.ChainMatches(chain => chain.GetRoutePattern().Contains("foo"));
+            
+            // TODO -- going to have to change this below
 
             // Adds Json reading and writing to
             // the each chain that matches the Where filter
             // above
             ModifyBy(chain => {
-                chain.Output.AddFormatter<JsonFormatter>();
+                chain.Output.Add(new JsonSerializer());
                 chain.Input.Add(new JsonSerializer());
             });
         }

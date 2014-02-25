@@ -7,12 +7,16 @@ namespace FubuMVC.Core.Resources.Conneg
     {
         public void Write(string mimeType, IFubuRequestContext context, string resource)
         {
-            context.Writer.Write(MimeType.Text, resource);
+            context.Writer.Write(mimeType, resource);
         }
 
         public IEnumerable<string> Mimetypes
         {
-            get { yield return MimeType.Text.Value; }
+            get
+            {
+                yield return MimeType.Text.Value;
+                yield return MimeType.Html.Value;
+            }
         }
     }
 }

@@ -210,7 +210,7 @@ namespace FubuMVC.Core.Registration.Nodes
         public bool HasOutput()
         {
             return (Top == null ? false : Top.HasAnyOutputBehavior()) ||
-                   (_output.IsValueCreated && _output.Value.Writers.Any());
+                   (_output.IsValueCreated && _output.Value.Media().Any());
         }
 
         /// <summary>
@@ -362,15 +362,6 @@ namespace FubuMVC.Core.Registration.Nodes
                     throw new ApplicationException("wouldn't really happen but I wanted to force the Lazy to evaluate");
                 }
             }
-        }
-
-        public static BehaviorChain ForWriter(WriterNode node)
-        {
-            var chain = new BehaviorChain();
-            chain.ResourceType(node.ResourceType);
-            chain.Output.Writers.AddToEnd(node);
-
-            return chain;
         }
 
         public bool HasResourceType()

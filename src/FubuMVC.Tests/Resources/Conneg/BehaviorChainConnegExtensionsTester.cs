@@ -79,8 +79,8 @@ namespace FubuMVC.Tests.Resources.Conneg
             
 
             var outputNode = theChain.Output;
-            outputNode.Writers.ShouldHaveCount(1);
-            outputNode.UsesFormatter<JsonFormatter>().ShouldBeTrue();
+            outputNode.Media().ShouldHaveCount(1);
+            outputNode.Writes(MimeType.Json).ShouldBeTrue();
         }
 
         [Test]
@@ -95,8 +95,8 @@ namespace FubuMVC.Tests.Resources.Conneg
 
 
             var outputNode = theChain.Output;
-            outputNode.Writers.ShouldHaveCount(1);
-            outputNode.UsesFormatter<JsonFormatter>().ShouldBeTrue();
+            outputNode.Media().ShouldHaveCount(1);
+            outputNode.Writes(MimeType.Json).ShouldBeTrue();
         }
 
         [Test]
@@ -105,8 +105,8 @@ namespace FubuMVC.Tests.Resources.Conneg
             theChain.OutputJson();
 
             var outputNode = theChain.Output;
-            outputNode.Writers.ShouldHaveCount(1);
-            outputNode.UsesFormatter<JsonFormatter>().ShouldBeTrue();
+            outputNode.Media().ShouldHaveCount(1);
+            outputNode.Writes(MimeType.Json).ShouldBeTrue();
         }
 
         [Test]
@@ -115,8 +115,8 @@ namespace FubuMVC.Tests.Resources.Conneg
             theChain.OutputXml();
 
             var outputNode = theChain.Output;
-            outputNode.Writers.ShouldHaveCount(1);
-            outputNode.UsesFormatter<XmlFormatter>().ShouldBeTrue();
+            outputNode.Media().ShouldHaveCount(1);
+            outputNode.Writes(MimeType.Xml).ShouldBeTrue();
         }
 
         [Test]
@@ -125,7 +125,7 @@ namespace FubuMVC.Tests.Resources.Conneg
             theChain.RemoveConneg();
 
             theChain.HasReaders().ShouldBeFalse();
-            theChain.Output.Writers.Any().ShouldBeFalse();
+            theChain.Output.Media().Any().ShouldBeFalse();
         }
     }
 }

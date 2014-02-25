@@ -34,8 +34,8 @@ namespace FubuMVC.Tests.Registration.Conventions
 
             var chain = BehaviorGraph.BuildFrom(registry).BehaviorFor<SomeController>(x => x.Go(null));
 
-            chain.Output.UsesFormatter<JsonFormatter>();
-            chain.Output.UsesFormatter<XmlFormatter>();
+            chain.Output.Add(new JsonSerializer());
+            chain.Output.Add(new XmlFormatter());
 
             chain.Input.CanRead(MimeType.HttpFormMimetype).ShouldBeTrue();
             chain.Input.CanRead(MimeType.Json).ShouldBeTrue();

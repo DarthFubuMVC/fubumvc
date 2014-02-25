@@ -80,8 +80,8 @@ namespace FubuMVC.Tests.Registration.Conventions
             var theChain = theGraph.BehaviorFor<JsonController>(x => x.Asymmetric(null));
             var theOutput = theChain.Output;
 
-            theOutput.UsesFormatter<JsonFormatter>().ShouldBeTrue();
-            theOutput.Writers.Count().ShouldEqual(1);
+            theOutput.Writes(MimeType.Json).ShouldBeTrue();
+            theOutput.Media().Count().ShouldEqual(1);
         }
 
         [Test]
@@ -101,8 +101,8 @@ namespace FubuMVC.Tests.Registration.Conventions
             var theChain = theGraph.BehaviorFor<JsonController>(x => x.Symmetric(null));
             var theOutput = theChain.Output;
 
-            theOutput.UsesFormatter<JsonFormatter>().ShouldBeTrue();
-            theOutput.Writers.Count().ShouldEqual(1);
+            theOutput.Writes(MimeType.Json).ShouldBeTrue();
+            theOutput.Media().Count().ShouldEqual(1);
         }
     }
 }

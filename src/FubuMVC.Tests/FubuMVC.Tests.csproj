@@ -147,6 +147,7 @@
     <Compile Include="Registration\AccessOverridesFinderIntegratedTester.cs" />
     <Compile Include="Registration\ActionFilterTester.cs" />
     <Compile Include="Registration\Conventions\AttachOutputPolicyTester.cs" />
+    <Compile Include="Registration\Conventions\BehaviorGraphExtensions.cs" />
     <Compile Include="Registration\Conventions\CacheAttributePolicyTester.cs" />
     <Compile Include="Registration\Conventions\CachedPartialConventionTester.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteConventionBasedUrlPolicyTester.cs" />
@@ -156,7 +157,6 @@
     <Compile Include="Registration\Conventions\VaryByPolicyTester.cs" />
     <Compile Include="Registration\default_action_discovery.cs" />
     <Compile Include="Registration\FilterAttributeTester.cs" />
-    <Compile Include="Registration\Policies\AddWriterTester.cs" />
     <Compile Include="Registration\Policies\AndChainFilterTester.cs" />
     <Compile Include="Registration\Policies\HttpMethodFilterTester.cs" />
     <Compile Include="Registration\Policies\InputTypeIsTester.cs" />
@@ -218,18 +218,13 @@
     <Compile Include="NewConneg\InputNodeTester.cs" />
     <Compile Include="NewConneg\InputOutputNodePlacementIntegrationTester.cs" />
     <Compile Include="NewConneg\OutputNodeIntegratedTester.cs" />
-    <Compile Include="NewConneg\WriteWithFormatterTester.cs" />
     <Compile Include="NewConneg\InputBehaviorTester.cs" />
     <Compile Include="NewConneg\ModelBindingReaderTester.cs" />
     <Compile Include="NewConneg\StringWriterTester.cs" />
-    <Compile Include="NewConneg\WriteHtmlTester.cs" />
     <Compile Include="NewConneg\HtmlStringWriterTester.cs" />
     <Compile Include="NewConneg\MediaTester.cs" />
     <Compile Include="NewConneg\OutputBehaviorTester.cs" />
     <Compile Include="NewConneg\OutputNodeTester.cs" />
-    <Compile Include="NewConneg\WriterNodeTester.cs" />
-    <Compile Include="NewConneg\WriterTester.cs" />
-    <Compile Include="NewConneg\WriteStringTester.cs" />
     <Compile Include="Packaging\ContentOnlyPackageInfoTester.cs" />
     <Compile Include="Packaging\FileSystemVirtualPathProviderTester.cs" />
     <Compile Include="Registration\ActionMethodFilterTester.cs" />
@@ -237,7 +232,6 @@
     <Compile Include="Registration\Conventions\AsyncContinueWithHandlerConventionTester.cs" />
     <Compile Include="Registration\Conventions\DefaultConnegOutputIsAppliedToAnyEndpointWithoutAnyPriorOutputTester.cs" />
     <Compile Include="Registration\Conventions\JsonAttributeTesting.cs" />
-    <Compile Include="Registration\Conventions\MediaExpressionAndConnegAttachmentPolicyTester.cs" />
     <Compile Include="Registration\Conventions\PartialOnlyConventionTester.cs" />
     <Compile Include="Registration\Nodes\ActionCallBaseObjectDefCreationTester.cs" />
     <Compile Include="Registration\Querying\ChainSearchTester.cs" />

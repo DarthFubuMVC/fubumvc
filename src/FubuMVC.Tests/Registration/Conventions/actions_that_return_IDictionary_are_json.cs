@@ -61,14 +61,14 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             if (chain.ResourceType() != null)
             {
-                chain.Output.Writers.SelectMany(x => x.Mimetypes)
+                chain.Output.MimeTypes()
                     .OrderBy(x => x)
                     .ShouldHaveTheSameElementsAs("application/json", "text/json");
             }
 
             if (chain.InputType() != null)
             {
-                chain.Input.Readers.SelectMany(x => x.Mimetypes)
+                chain.Input.MimeTypes()
                     .OrderBy(x => x)
                     .ShouldHaveTheSameElementsAs("application/json", MimeType.HttpFormMimetype.ToString(), MimeType.MultipartMimetype.ToString(), "text/json");
             }

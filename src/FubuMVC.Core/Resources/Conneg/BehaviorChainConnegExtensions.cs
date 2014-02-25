@@ -41,12 +41,15 @@ namespace FubuMVC.Core.Resources.Conneg
 
         public static void OutputJson(this BehaviorChain chain)
         {
-            chain.Output.AddFormatter<JsonFormatter>();
+            // TODO -- this has to change
+            chain.Output.Add(new JsonSerializer());
+
         }
 
         public static void OutputXml(this BehaviorChain chain)
         {
-            chain.Output.AddFormatter<XmlFormatter>();
+            // TODO -- this has to change
+            chain.Output.Add(new XmlFormatter());
         }
 
         public static void MakeSymmetricJson(this BehaviorChain chain)
