@@ -35,9 +35,7 @@ namespace FubuMVC.IntegrationTesting.Samples
 
     }
 
-    // This attribute will NOT be necessary in FubuMVC 2.0, but is
-    // for FubuMVC 1.* to feed the configuration model
-    [MimeType("special/format", "text/json")]
+
     public class SpecialContentMediaReader : IReader<InputMessage>
     {
         public IEnumerable<string> Mimetypes
@@ -66,7 +64,6 @@ namespace FubuMVC.IntegrationTesting.Samples
         public string Color { get; set; }
     }
 
-    [MimeType("special/format", "text/json")]
     public class SpecialContentMediaWriter : IMediaWriter<SomeResource>
     {
         private readonly IOutputWriter _writer;

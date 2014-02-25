@@ -96,7 +96,6 @@ namespace FubuMVC.Tests.NewConneg
     {
     }
 
-    [MimeType("text/xml", "text/json")]
     public class SpecificReader : IReader<InputTarget>
     {
         public IEnumerable<string> Mimetypes

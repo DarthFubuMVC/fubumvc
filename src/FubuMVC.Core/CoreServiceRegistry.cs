@@ -74,10 +74,6 @@ namespace FubuMVC.Core
             SetServiceIfNone<IObjectConverter, ObjectConverter>();
 
             SetServiceIfNone<ISmartRequest, FubuSmartRequest>();
-
-
-            AddService<IFormatter>(typeof(JsonFormatter));
-            AddService<IFormatter>(typeof(XmlFormatter));
             SetServiceIfNone<IResourceNotFoundHandler, DefaultResourceNotFoundHandler>();
 
 

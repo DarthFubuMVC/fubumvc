@@ -279,7 +279,6 @@
     <Compile Include="Resources\Conneg\IMediaWriter.cs" />
     <Compile Include="Resources\Conneg\InputBehavior.cs" />
     <Compile Include="Resources\Conneg\Media.cs" />
-    <Compile Include="Resources\Conneg\MimeTypeAttribute.cs" />
     <Compile Include="Resources\Conneg\ModelBindingReader.cs" />
     <Compile Include="Resources\Conneg\OutputBehavior.cs" />
     <Compile Include="Resources\Conneg\StringWriter.cs" />
@@ -336,7 +335,6 @@
     <Compile Include="Resources\Etags\IETagGenerator.cs" />
     <Compile Include="Resources\Etags\ResourceHashAttribute.cs" />
     <Compile Include="Runtime\Formatters\IFormatter.cs" />
-    <Compile Include="Runtime\Formatters\JsonFormatter.cs" />
     <Compile Include="Resources\Conneg\MediaProcessingException.cs" />
     <Compile Include="Runtime\Formatters\XmlFormatter.cs" />
     <Compile Include="Caching\AspNetRuntimeCacheProvider.cs" />

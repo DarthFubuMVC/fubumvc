@@ -4,21 +4,17 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using FubuCore.Descriptions;
-using FubuMVC.Core.Http;
-using FubuMVC.Core.Resources.Conneg;
 
 namespace FubuMVC.Core.Runtime.Formatters
 {
     // See the integration tests for conneg
-    [MimeType("text/xml", "application/xml")]
     [Title("Xml Serialization")]
     public class XmlFormatter : IFormatter
     {
         public void Write<T>(IFubuRequestContext context, T target, string mimeType)
         {
             var serializer = new XmlSerializer(typeof (T));
-            context.Writer.Write(mimeType, stream =>
-            {
+            context.Writer.Write(mimeType, stream => {
                 var xmlWriter = new XmlTextWriter(stream, Encoding.Unicode)
                 {
                     Formatting = Formatting.None
