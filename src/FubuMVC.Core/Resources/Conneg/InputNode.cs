@@ -66,7 +66,11 @@ namespace FubuMVC.Core.Resources.Conneg
         protected override ObjectDef buildObjectDef()
         {
             var def = new ObjectDef(typeof (InputBehavior<>), _inputType);
-            def.DependencyByValue(this);
+
+            var collection = typeof (ReaderCollection<>).CloseAndBuildAs<object>(_readers, _inputType);
+            var collectionType = typeof (IReaderCollection<>).MakeGenericType(_inputType);
+
+            def.DependencyByValue(collectionType, collection);
 
             return def;
         }
@@ -116,6 +120,7 @@ namespace FubuMVC.Core.Resources.Conneg
 
             description.AddList("Readers", _readers);
         }
+
 
     }
 }

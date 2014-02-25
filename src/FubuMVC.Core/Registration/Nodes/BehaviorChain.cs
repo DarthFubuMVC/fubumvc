@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Resources.Conneg;
@@ -68,6 +69,25 @@ namespace FubuMVC.Core.Registration.Nodes
         public InputNode Input
         {
             get { return _input.Value; }
+        }
+
+
+        internal void InsertNodes()
+        {
+            if (HasResourceType() && !ResourceType().CanBeCastTo<FubuContinuation>())
+            {
+                AddToEnd(_output.Value);
+            }
+
+            if (Authorization.HasRules())
+            {
+                Prepend(Authorization);
+            }
+
+            if (InputType() != null)
+            {
+                Prepend(_input.Value);
+            }
         }
 
         /// <summary>

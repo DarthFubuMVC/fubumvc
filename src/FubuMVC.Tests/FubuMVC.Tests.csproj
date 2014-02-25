@@ -143,10 +143,10 @@
     <Compile Include="Http\StreamExtensions.cs" />
     <Compile Include="Logging\ExceptionReportTester.cs" />
     <Compile Include="MockedFubuRequestContext.cs" />
+    <Compile Include="NewConneg\ReaderCollectionTester.cs" />
     <Compile Include="ReflectionExtensionsTester.cs" />
     <Compile Include="Registration\AccessOverridesFinderIntegratedTester.cs" />
     <Compile Include="Registration\ActionFilterTester.cs" />
-    <Compile Include="Registration\Conventions\AttachOutputPolicyTester.cs" />
     <Compile Include="Registration\Conventions\BehaviorGraphExtensions.cs" />
     <Compile Include="Registration\Conventions\CacheAttributePolicyTester.cs" />
     <Compile Include="Registration\Conventions\CachedPartialConventionTester.cs" />

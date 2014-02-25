@@ -10,69 +10,7 @@ using Rhino.Mocks;
 
 namespace FubuMVC.Tests.NewConneg
 {
-    [TestFixture]
-    public class InputBehaviorTester : InteractionContext<InputBehavior<Address>>
-    {
-        private InputNode theInputNode;
 
-        protected override void beforeEach()
-        {
-            theInputNode = new InputNode(typeof(Address));
-            Services.Inject(theInputNode);
-        }
-
-        private IReader<Address> readerFor(params string[] mimeTypes)
-        {
-            var reader = Services.AddAdditionalMockFor<IReader<Address>>();
-            reader.Stub(x => x.Mimetypes).Return(mimeTypes);
-
-            theInputNode.Add(reader);
-
-            return reader;
-        }
-
-        [Test]
-        public void select_reader_simple()
-        {
-            var reader1 = readerFor("text/json", "application/json");
-            var reader2 = readerFor("text/xml");
-            var reader3 = readerFor("text/xml", "application/xml");
-            var reader4 = readerFor("text/html");
-
-            ClassUnderTest.ChooseReader(new CurrentMimeType("text/json", ""))
-                .ShouldBeTheSameAs(reader1);
-
-            ClassUnderTest.ChooseReader(new CurrentMimeType("text/html", ""))
-                .ShouldBeTheSameAs(reader4);
-
-            ClassUnderTest.ChooseReader(new CurrentMimeType("application/xml", ""))
-                .ShouldBeTheSameAs(reader3);
-
-            ClassUnderTest.ChooseReader(new CurrentMimeType("text/xml", ""))
-                .ShouldBeTheSameAs(reader2);
-        }
-
-        [Test]
-        public void select_reader_complex()
-        {
-            var reader1 = readerFor("text/json", "application/json");
-            var reader2 = readerFor("text/xml");
-            var reader3 = readerFor("text/xml", "application/xml");
-            var reader4 = readerFor("text/html");
-
-            ClassUnderTest.ChooseReader(new CurrentMimeType("text/json", ""))
-                .ShouldBeTheSameAs(reader1);
-
-
-
-            ClassUnderTest.ChooseReader(new CurrentMimeType("text/html", ""))
-                .ShouldBeTheSameAs(reader4);
-        }
-
-        // 415
-
-
-    }
 
     [TestFixture]
     public class when_executing_the_conneg_input_action_successfully : InteractionContext<InputBehavior<Address>>
@@ -84,14 +22,14 @@ namespace FubuMVC.Tests.NewConneg
         private CurrentMimeType theMimetypes;
         private Address theAddress;
         private IActionBehavior theInnerBehavior;
-        private InputNode theInputNode;
+        private ReaderCollection<Address> theReaders;
 
         private IReader<Address> readerFor(params string[] mimeTypes)
         {
             var reader = Services.AddAdditionalMockFor<IReader<Address>>();
             reader.Stub(x => x.Mimetypes).Return(mimeTypes);
 
-            theInputNode.Add(reader);
+            theReaders.Add(reader);
 
             return reader;
         }
@@ -99,8 +37,8 @@ namespace FubuMVC.Tests.NewConneg
         protected override void beforeEach()
         {
             Services.Inject<IFubuRequestContext>(new MockedFubuRequestContext(Services.Container));
-            theInputNode = new InputNode(typeof(Address));
-            Services.Inject(theInputNode);
+            theReaders = new ReaderCollection<Address>(new IReader<Address>[0]);
+            Services.Inject<IReaderCollection<Address>>(theReaders);
 
             reader1 = readerFor("text/json", "application/json");
             reader2 = readerFor("text/xml");

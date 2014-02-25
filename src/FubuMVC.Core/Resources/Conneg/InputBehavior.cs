@@ -12,9 +12,9 @@ namespace FubuMVC.Core.Resources.Conneg
     public class InputBehavior<T> : BasicBehavior where T : class
     {
         private readonly IFubuRequestContext _context;
-        private readonly InputNode _readers;
+        private readonly IReaderCollection<T> _readers;
 
-        public InputBehavior(IFubuRequestContext context, InputNode readers) : base(PartialBehavior.Executes)
+        public InputBehavior(IFubuRequestContext context, IReaderCollection<T> readers) : base(PartialBehavior.Executes)
         {
             _context = context;
             _readers = readers;
@@ -34,7 +34,7 @@ namespace FubuMVC.Core.Resources.Conneg
             // Choose the first reader that says it
             // can read the mimetype from the 
             // 'content-type' header in the request
-            var reader = ChooseReader(mimeTypes);
+            var reader = _readers.ChooseReader(mimeTypes, _context);
 
             _context.Logger.DebugMessage(() => new ReaderChoice(mimeTypes, reader));
 
@@ -60,12 +60,6 @@ namespace FubuMVC.Core.Resources.Conneg
         {
             _context.Writer.WriteResponseCode(HttpStatusCode.UnsupportedMediaType);
             _context.Writer.Write(MimeType.Text, "415:  Unsupported Media Type");
-        }
-
-        public IReader<T> ChooseReader(CurrentMimeType mimeTypes)
-        {
-            // TODO -- put more of this behavior into InputNode
-            return _readers.Readers.FirstOrDefault(x => x.Mimetypes.Contains(mimeTypes.ContentType)) as IReader<T>;
         }
     }
 

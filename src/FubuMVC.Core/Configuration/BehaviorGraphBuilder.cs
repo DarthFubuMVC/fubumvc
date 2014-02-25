@@ -65,6 +65,10 @@ namespace FubuMVC.Core.Configuration
             config.RunActions(ConfigurationType.InjectNodes, graph);
             config.RunActions(ConfigurationType.Conneg, graph);
             config.RunActions(ConfigurationType.Attachment, graph);
+
+            // apply the authorization, input, and output nodes
+            graph.Behaviors.Each(x => x.InsertNodes());
+
             config.RunActions(ConfigurationType.Navigation, graph);
             config.RunActions(ConfigurationType.ByNavigation, graph);
             config.RunActions(ConfigurationType.Reordering, graph);

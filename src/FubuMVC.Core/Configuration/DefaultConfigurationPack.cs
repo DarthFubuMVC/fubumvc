@@ -42,9 +42,6 @@ namespace FubuMVC.Core.Configuration
 
             For(ConfigurationType.Attachment);
             Add<DefaultOutputPolicy>();
-            Add<AttachAuthorizationPolicy>();
-            Add<AttachInputPolicy>();
-            Add<AttachOutputPolicy>();
 
             For(ConfigurationType.Reordering);
             Add<OutputBeforeAjaxContinuationPolicy>();

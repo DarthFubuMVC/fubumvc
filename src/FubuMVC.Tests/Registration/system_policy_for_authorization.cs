@@ -43,7 +43,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void do_attach_the_authorization_node_if_there_is_an_explicit_authorization_rule_for_a_chain()
         {
-            goChain.Top.ShouldBeTheSameAs(goChain.Authorization);
+            goChain.ShouldContain(goChain.Authorization);
         }
     }
 

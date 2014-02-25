@@ -186,11 +186,13 @@
     <Compile Include="Registration\SettingReplacement.cs" />
     <Compile Include="Registration\SettingsCollection.cs" />
     <Compile Include="Resources\Conneg\IMediaCollection.cs" />
+    <Compile Include="Resources\Conneg\IReaderCollection.cs" />
     <Compile Include="Resources\Conneg\IResourceNotFoundHandler.cs" />
     <Compile Include="Resources\Conneg\DefaultResourceNotFoundHandler.cs" />
     <Compile Include="Resources\Conneg\MediaCollection.cs" />
     <Compile Include="Resources\Conneg\NoMatchingWriter.cs" />
     <Compile Include="Resources\Conneg\NoWritersMatch.cs" />
+    <Compile Include="Resources\Conneg\ReaderCollection.cs" />
     <Compile Include="Resources\Conneg\WriterChoice.cs" />
     <Compile Include="Resources\Etags\IHeadersCache.cs" />
     <Compile Include="Runtime\AjaxAwareJsonSerializer.cs" />
@@ -263,8 +265,6 @@
     <Compile Include="Http\HttpStandinServiceRegistry.cs" />
     <Compile Include="Http\RequestDataExtensions.cs" />
     <Compile Include="Http\RouteDataValues.cs" />
-    <Compile Include="Registration\Conventions\AttachInputPolicy.cs" />
-    <Compile Include="Registration\Conventions\AttachOutputPolicy.cs" />
     <Compile Include="Registration\Conventions\HtmlTagOutputPolicy.cs" />
     <Compile Include="Registration\Nodes\Chain.cs" />
     <Compile Include="Registration\Nodes\Node.cs" />
@@ -434,7 +434,6 @@
     <Compile Include="Runtime\SetterBinder.cs" />
     <Compile Include="Runtime\UnknownExtensionException.cs" />
     <Compile Include="Security\AllowRole.cs" />
-    <Compile Include="Security\AttachAuthorizationPolicy.cs" />
     <Compile Include="Registration\ModifyChainAttribute.cs" />
     <Compile Include="Security\AuthorizationBehavior.cs" />
     <Compile Include="Security\AuthorizationNode.cs" />
