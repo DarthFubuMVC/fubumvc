@@ -61,12 +61,12 @@ namespace FubuMVC.Core.Registration.Nodes
             return Calls.Any(x => x.IsAsync);
         }
 
-        public OutputNode Output
+        public IOutputNode Output
         {
             get { return _output.Value; }
         }
 
-        public InputNode Input
+        public IInputNode Input
         {
             get { return _input.Value; }
         }
@@ -377,7 +377,7 @@ namespace FubuMVC.Core.Registration.Nodes
             if (!_output.IsValueCreated)
             {
                 _output = new Lazy<OutputNode>(() => new OutputNode(type));
-                if (Output.ResourceType != type)
+                if (_output.Value.ResourceType != type)
                 {
                     throw new ApplicationException("wouldn't really happen but I wanted to force the Lazy to evaluate");
                 }

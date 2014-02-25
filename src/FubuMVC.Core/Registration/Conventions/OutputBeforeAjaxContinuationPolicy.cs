@@ -21,18 +21,20 @@ namespace FubuMVC.Core.Registration.Conventions
             
         }
 
+        // TODO -- got to be a smarter way to do this.
         public static void Modify(BehaviorChain chain)
         {
             // Not everything is hard
-            chain.Output.Remove();
+            var output = chain.Output.As<BehaviorNode>();
+            output.Remove();
 
             if (chain.OfType<InputNode>().Any())
             {
-                chain.Input.AddAfter(chain.Output);
+                chain.Input.As<BehaviorNode>().AddAfter(output);
             }
             else
             {
-                chain.FirstCall().AddBefore(chain.Output);
+                chain.FirstCall().AddBefore(output);
             }
         }
     }

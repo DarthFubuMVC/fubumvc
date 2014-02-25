@@ -8,7 +8,7 @@ namespace FubuMVC.Core.Resources.Conneg
 {
     public static class BehaviorChainConnegExtensions
     {
-        public static void AlterConnegOutput(this BehaviorChain chain, Action<OutputNode> configure)
+        public static void AlterConnegOutput(this BehaviorChain chain, Action<IOutputNode> configure)
         {
             var node = chain.Output;
             if (node != null)
@@ -17,7 +17,7 @@ namespace FubuMVC.Core.Resources.Conneg
             }
         }
 
-        public static void AlterConnegInput(this BehaviorChain chain, Action<InputNode> configure)
+        public static void AlterConnegInput(this BehaviorChain chain, Action<IInputNode> configure)
         {
             var node = chain.Input;
             if (node != null)

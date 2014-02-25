@@ -34,28 +34,6 @@ namespace FubuMVC.Tests.NewConneg
             node.Readers.Any().ShouldBeFalse();
         }
 
-        [Test]
-        public void JsonOnly_from_scratch()
-        {
-            var node = new InputNode(typeof(Address));
-            node.JsonOnly();
-
-            node.Readers.ShouldHaveCount(1);
-            node.CanRead(MimeType.Json).ShouldBeTrue();
-        }
-
-        [Test]
-        public void JsonOnly_with_existing_stuff()
-        {
-            var node = new InputNode(typeof(Address));
-            node.Add(typeof(ModelBindingReader<>));
-            node.Add(new XmlFormatter());
-
-            node.JsonOnly();
-
-            node.Readers.ShouldHaveCount(1);
-            node.CanRead(MimeType.Json);
-        }
 
 
 

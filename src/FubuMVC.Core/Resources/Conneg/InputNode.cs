@@ -11,7 +11,59 @@ using FubuMVC.Core.Runtime.Formatters;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
-    public class InputNode : BehaviorNode, IMayHaveInputType, DescribesItself
+    public interface IInputNode
+    {
+        /// <summary>
+        /// All the explicitly registered readers
+        /// </summary>
+        IEnumerable<IReader> Readers { get; }
+
+        /// <summary>
+        /// The mimetypes that can be read
+        /// </summary>
+        IEnumerable<string> Mimetypes { get; }
+
+        /// <summary>
+        /// Explicitly add reader for an IFormatter
+        /// </summary>
+        /// <param name="formatter"></param>
+        void Add(IFormatter formatter);
+
+        /// <summary>
+        /// Explicitly add a reader by type.  Type must
+        /// be an open generic type that closes to IReader<T>
+        /// </summary>
+        /// <param name="readerType"></param>
+        void Add(Type readerType);
+
+        /// <summary>
+        /// Explicitly add an IReader.  Must implement IReader<T>
+        /// where T is the resource type of this chain
+        /// </summary>
+        /// <param name="reader"></param>
+        void Add(IReader reader);
+
+        /// <summary>
+        /// Remove all explicit readers
+        /// </summary>
+        void ClearAll();
+
+        /// <summary>
+        /// Is there a reader for this mimetype?
+        /// </summary>
+        /// <param name="mimeType"></param>
+        /// <returns></returns>
+        bool CanRead(MimeType mimeType);
+
+        /// <summary>
+        /// Is there a reader for this mimetype?
+        /// </summary>
+        /// <param name="mimeType"></param>
+        /// <returns></returns>
+        bool CanRead(string mimeType);
+    }
+
+    public class InputNode : BehaviorNode, IInputNode, IMayHaveInputType, DescribesItself
     {
         private readonly Type _inputType;
         private readonly IList<IReader> _readers = new List<IReader>(); 
@@ -21,7 +73,6 @@ namespace FubuMVC.Core.Resources.Conneg
             _inputType = inputType;
         }
 
-        // TODO -- use ConnegSettings here
         public IEnumerable<IReader> Readers
         {
             get
@@ -79,15 +130,6 @@ namespace FubuMVC.Core.Resources.Conneg
         public void ClearAll()
         {
             _readers.Clear();
-        }
-
-        public void JsonOnly()
-        {
-            ClearAll();
-
-            // TODO -- this will have to change
-            Add(new JsonSerializer());
-
         }
 
         public IEnumerable<string> Mimetypes

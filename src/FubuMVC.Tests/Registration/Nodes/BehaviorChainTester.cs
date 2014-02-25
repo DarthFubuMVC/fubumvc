@@ -562,7 +562,6 @@ namespace FubuMVC.Tests.Registration.Nodes
 
             theChain.ResourceType().ShouldEqual(typeof (int));
 
-            theChain.Output.ResourceType.ShouldEqual(typeof (int));
         }
 
         [Test]
@@ -574,7 +573,6 @@ namespace FubuMVC.Tests.Registration.Nodes
 
             theChain.ResourceType().ShouldEqual(typeof (int));
 
-            theChain.Output.ResourceType.ShouldEqual(typeof (int));
         }
 
         [Test]
@@ -606,14 +604,12 @@ namespace FubuMVC.Tests.Registration.Nodes
             theChain.ResourceType(typeof (DateTime));
 
             theChain.ResourceType().ShouldEqual(typeof (DateTime));
-            theChain.Output.ResourceType.ShouldEqual(typeof (DateTime));
 
             theChain.AddToEnd(strings);
             theChain.AddToEnd(ints);
             theChain.AddToEnd(none);
 
             theChain.ResourceType().ShouldEqual(typeof (DateTime));
-            theChain.Output.ResourceType.ShouldEqual(typeof (DateTime));
         }
     }
 

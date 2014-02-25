@@ -1,4 +1,5 @@
 using System.Linq;
+using FubuCore;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
@@ -32,7 +33,7 @@ namespace FubuMVC.Tests.Registration
             var chain = new BehaviorChain();
             var theAction = ActionCall.For<AjaxController>(x => x.get_success());
             chain.AddToEnd(theAction);
-            chain.AddToEnd(chain.Output);
+            chain.AddToEnd(chain.Output.As<OutputNode>());
 
             OutputBeforeAjaxContinuationPolicy.Modify(chain);
 
