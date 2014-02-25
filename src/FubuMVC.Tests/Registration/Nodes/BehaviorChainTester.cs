@@ -449,7 +449,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             var chain = new BehaviorChain();
             chain.AddToEnd(ActionCall.For<OneController>(x => x.Query(null)));
             chain.Authorization.AddRole("Role 1");
-            chain.Prepend(chain.Authorization);
+            chain.Prepend(chain.Authorization.As<AuthorizationNode>());
 
             var container = new Container();
             var facility = new StructureMapContainerFacility(container);

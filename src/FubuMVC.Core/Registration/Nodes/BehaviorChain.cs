@@ -29,10 +29,10 @@ namespace FubuMVC.Core.Registration.Nodes
         private readonly Lazy<InputNode> _input;
         private Lazy<OutputNode> _output;
         private IRouteDefinition _route;
+        private readonly Lazy<AuthorizationNode> _authorization = new Lazy<AuthorizationNode>(() => new AuthorizationNode()); 
 
         public BehaviorChain()
         {
-            Authorization = new AuthorizationNode();
             UrlCategory = new UrlCategory();
 
             _output = new Lazy<OutputNode>(() =>
@@ -79,9 +79,9 @@ namespace FubuMVC.Core.Registration.Nodes
                 AddToEnd(_output.Value);
             }
 
-            if (Authorization.HasRules())
+            if (_authorization.IsValueCreated && Authorization.HasRules())
             {
-                Prepend(Authorization);
+                Prepend(_authorization.Value);
             }
 
             if (InputType() != null)
@@ -180,7 +180,12 @@ namespace FubuMVC.Core.Registration.Nodes
         /// <summary>
         ///   Model of the authorization rules for this BehaviorChain
         /// </summary>
-        public AuthorizationNode Authorization { get; private set; }
+        public IAuthorizationNode Authorization {
+            get
+            {
+                return _authorization.Value;
+            }
+        }
 
         public int Rank
         {

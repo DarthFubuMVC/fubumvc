@@ -15,8 +15,62 @@ namespace FubuMVC.Core.Security
     }
 
     // TODO -- add ability to specify the authorization failure handling
+    public interface IAuthorizationNode
+    {
+        /// <summary>
+        /// Adds an authorization rule based on membership in a given role
+        /// on the principal
+        /// </summary>
+        /// <param name="roleName"></param>
+        /// <returns></returns>
+        AllowRole AddRole(string roleName);
+
+        /// <summary>
+        /// Adds an authorization rule of type IAuthorizationRule<TModel>
+        /// </summary>
+        /// <typeparam name="TModel"></typeparam>
+        /// <typeparam name="TRule"></typeparam>
+        /// <returns></returns>
+        ObjectDef AddPolicy<TModel, TRule>() where TRule : IAuthorizationRule<TModel> where TModel : class;
+
+        /// <summary>
+        /// List of all roles that have privileges to this BehaviorChain endpoint
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<string> AllowedRoles();
+
+        /// <summary>
+        /// Simple boolean test of whether or not this BehaviorChain has any
+        /// authorization rules
+        /// </summary>
+        /// <returns></returns>
+        bool HasRules();
+
+        /// <summary>
+        /// Adds the specified <see cref="IAuthorizationRule{T}"/>
+        /// </summary>
+        /// <param name="ruleType">Closed generic rule type</param>
+        /// <returns></returns>
+        ObjectDef AddRule(Type ruleType);
+
+        /// <summary>
+        /// Adds an authorization policy of the given policyType to this behavior chain
+        /// </summary>
+        /// <param name="policyType"></param>
+        /// <returns></returns>
+        ObjectDef AddPolicy(Type policyType);
+
+        /// <summary>
+        /// Adds an authorization policy to this behavior chain
+        /// </summary>
+        /// <param name="policy"></param>
+        void AddPolicy(IAuthorizationPolicy policy);
+
+        IEnumerable<ObjectDef> AllRules { get; }
+    }
+
     [Description("Authorization checks for this endpoint")]
-    public class AuthorizationNode : BehaviorNode, IAuthorizationRegistration
+    public class AuthorizationNode : BehaviorNode, IAuthorizationRegistration, IAuthorizationNode
     {
         private readonly IList<ObjectDef> _policies = new List<ObjectDef>();
 

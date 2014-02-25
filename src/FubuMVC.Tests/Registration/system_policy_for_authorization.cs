@@ -1,3 +1,4 @@
+using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
@@ -43,7 +44,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void do_attach_the_authorization_node_if_there_is_an_explicit_authorization_rule_for_a_chain()
         {
-            goChain.ShouldContain(goChain.Authorization);
+            goChain.ShouldContain(goChain.Authorization.As<AuthorizationNode>());
         }
     }
 
