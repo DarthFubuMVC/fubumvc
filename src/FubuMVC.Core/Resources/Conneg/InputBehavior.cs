@@ -1,12 +1,11 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using FubuCore;
 using FubuCore.Descriptions;
 using FubuCore.Logging;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
-using FubuCore;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
@@ -14,13 +13,11 @@ namespace FubuMVC.Core.Resources.Conneg
     {
         private readonly IFubuRequestContext _context;
         private readonly InputNode _readers;
-        private readonly ILogger _logger;
 
-        public InputBehavior(IFubuRequestContext context, InputNode readers, ILogger logger) : base(PartialBehavior.Executes)
+        public InputBehavior(IFubuRequestContext context, InputNode readers) : base(PartialBehavior.Executes)
         {
             _context = context;
             _readers = readers;
-            _logger = logger;
         }
 
         // SAMPLE: input-behavior-mechanics
@@ -39,7 +36,7 @@ namespace FubuMVC.Core.Resources.Conneg
             // 'content-type' header in the request
             var reader = ChooseReader(mimeTypes);
 
-            _logger.DebugMessage(() => new ReaderChoice(mimeTypes, reader));
+            _context.Logger.DebugMessage(() => new ReaderChoice(mimeTypes, reader));
 
             if (reader == null)
             {
@@ -56,6 +53,7 @@ namespace FubuMVC.Core.Resources.Conneg
 
             return DoNext.Continue;
         }
+
         // ENDSAMPLE
 
         private void failWithInvalidMimeType()
@@ -84,8 +82,8 @@ namespace FubuMVC.Core.Resources.Conneg
 
         public void Describe(Description description)
         {
-            description.Title = _reader == null 
-                ? "Unable to select a reader for content-type '{0}'".ToFormat(_mimeType.ContentType) 
+            description.Title = _reader == null
+                ? "Unable to select a reader for content-type '{0}'".ToFormat(_mimeType.ContentType)
                 : "Selected reader '{0}' for content-type '{1}'".ToFormat(_reader.Title, _mimeType.ContentType);
         }
     }

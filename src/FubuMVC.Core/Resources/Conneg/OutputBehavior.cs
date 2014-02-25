@@ -17,14 +17,12 @@ namespace FubuMVC.Core.Resources.Conneg
     {
         private readonly IFubuRequestContext _context;
         private readonly IEnumerable<IMedia<T>> _media;
-        private readonly ILogger _logger;
         private readonly IResourceNotFoundHandler _notFoundHandler;
 
-        public OutputBehavior(IFubuRequestContext context, IEnumerable<IMedia<T>> media, ILogger logger, IResourceNotFoundHandler notFoundHandler) : base(PartialBehavior.Executes)
+        public OutputBehavior(IFubuRequestContext context, IEnumerable<IMedia<T>> media, IResourceNotFoundHandler notFoundHandler) : base(PartialBehavior.Executes)
         {
             _context = context;
             _media = media;
-            _logger = logger;
             _notFoundHandler = notFoundHandler;
         }
 
@@ -55,7 +53,7 @@ namespace FubuMVC.Core.Resources.Conneg
             // Select the appropriate media writer
             // based on the mimetype and other runtime
             // conditions
-            var media = SelectMedia(mimeTypes, _logger);
+            var media = SelectMedia(mimeTypes, _context);
 
             if (media == null)
             {
@@ -83,7 +81,7 @@ namespace FubuMVC.Core.Resources.Conneg
                 .Each(x => x.Write(_context.Writer));
         }
 
-        public virtual IMedia<T> SelectMedia(CurrentMimeType mimeTypes, ILogger logger)
+        public virtual IMedia<T> SelectMedia(CurrentMimeType mimeTypes, IFubuRequestContext logger)
         {
             foreach (var acceptType in mimeTypes.AcceptTypes)
             {
@@ -93,18 +91,18 @@ namespace FubuMVC.Core.Resources.Conneg
                     var writer = candidates.FirstOrDefault(x => x.MatchesRequest(_context));
                     if (writer != null)
                     {
-                        logger.DebugMessage(() => new WriterChoice(acceptType, writer, writer.Condition));
+                        _context.Logger.DebugMessage(() => new WriterChoice(acceptType, writer, writer.Condition));
                         return writer;
                     }
-                    
-                    logger.DebugMessage(() => NoWritersMatch.For(acceptType, candidates));
+
+                    _context.Logger.DebugMessage(() => NoWritersMatch.For(acceptType, candidates));
                 }
             }
 
             if (mimeTypes.AcceptsAny())
             {
                 var media = _media.FirstOrDefault(x => x.MatchesRequest(_context));
-                logger.DebugMessage(() => new WriterChoice(MimeType.Any.Value, media, media.Condition));
+                _context.Logger.DebugMessage(() => new WriterChoice(MimeType.Any.Value, media, media.Condition));
 
                 return media;
             }

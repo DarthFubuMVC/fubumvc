@@ -186,15 +186,17 @@ namespace FubuMVC.Tests.NewConneg
     {
         private IMedia<OutputTarget> theSelectedMedia;
         private string theAcceptedMimetype;
+        private MockedFubuRequestContext theContext;
 
         protected override void theContextIs()
         {
-            Services.Inject<IFubuRequestContext>(new MockedFubuRequestContext(Services.Container));
+            theContext = new MockedFubuRequestContext(Services.Container);
+            Services.Inject<IFubuRequestContext>(theContext);
 
             theSelectedMedia = MockFor<IMedia<OutputTarget>>();
             Services.PartialMockTheClassUnderTest();
 
-            ClassUnderTest.Stub(x => x.SelectMedia(theCurrentMimeType, MockFor<ILogger>())).Return(theSelectedMedia);
+            ClassUnderTest.Stub(x => x.SelectMedia(theCurrentMimeType, theContext)).Return(theSelectedMedia);
 
             theAcceptedMimetype = "text/json";
             theSelectedMedia.Stub(x => x.Mimetypes).Return(new[]{theAcceptedMimetype});
@@ -221,11 +223,16 @@ namespace FubuMVC.Tests.NewConneg
     [TestFixture]
     public class when_writing_and_no_matching_writer_can_be_found : OutputBehaviorContext
     {
+        private MockedFubuRequestContext theContext;
+
         protected override void theContextIs()
         {
+            theContext = new MockedFubuRequestContext(Services.Container);
+            Services.Inject<IFubuRequestContext>(theContext);
+
             Services.PartialMockTheClassUnderTest();
 
-            ClassUnderTest.Stub(x => x.SelectMedia(theCurrentMimeType, MockFor<ILogger>())).Return(null);
+            ClassUnderTest.Stub(x => x.SelectMedia(theCurrentMimeType, theContext)).Return(null);
 
             ClassUnderTest.Write();
         }
@@ -288,7 +295,7 @@ namespace FubuMVC.Tests.NewConneg
 
         protected void theSelectedMediaShouldBe(int index)
         {
-            ClassUnderTest.SelectMedia(theCurrentMimeType, MockFor<ILogger>())
+            ClassUnderTest.SelectMedia(theCurrentMimeType, MockFor<IFubuRequestContext>())
                 .ShouldBeTheSameAs(theMedia[index]);
         }
 

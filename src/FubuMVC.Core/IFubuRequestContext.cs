@@ -11,6 +11,7 @@ namespace FubuMVC.Core
         ICurrentHttpRequest Request { get; }
         IFubuRequest Models { get; }
         IOutputWriter Writer { get; }
+        ILogger Logger { get; }
     }
 
     public class FubuRequestContext : IFubuRequestContext
