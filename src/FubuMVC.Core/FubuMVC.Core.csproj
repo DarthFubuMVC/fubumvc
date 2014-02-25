@@ -193,6 +193,7 @@
     <Compile Include="Resources\Conneg\NoMatchingWriter.cs" />
     <Compile Include="Resources\Conneg\NoWritersMatch.cs" />
     <Compile Include="Resources\Conneg\ReaderCollection.cs" />
+    <Compile Include="Resources\Conneg\Rules.cs" />
     <Compile Include="Resources\Conneg\WriterChoice.cs" />
     <Compile Include="Resources\Etags\IHeadersCache.cs" />
     <Compile Include="Runtime\AjaxAwareJsonSerializer.cs" />

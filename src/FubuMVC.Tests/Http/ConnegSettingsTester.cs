@@ -3,6 +3,7 @@ using FubuCore.Reflection;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Runtime.Formatters;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -84,6 +85,33 @@ namespace FubuMVC.Tests.Http
         {
             typeof(ConnegSettings).HasAttribute<ApplicationLevelAttribute>()
                 .ShouldBeTrue();
+        }
+
+        [Test]
+        public void the_default_formatters_are_json_then_xml()
+        {
+            new ConnegSettings().Formatters.Select(x => x.GetType())
+                .ShouldHaveTheSameElementsAs(typeof(JsonSerializer), typeof(XmlFormatter));
+        }
+
+        [Test]
+        public void find_formatter_by_mimetype()
+        {
+            new ConnegSettings().FormatterFor(MimeType.Json)
+                .ShouldBeOfType<JsonSerializer>();
+
+            new ConnegSettings().FormatterFor(MimeType.Xml)
+                .ShouldBeOfType<XmlFormatter>();
+        }
+
+        [Test]
+        public void add_formatter_places_it_first()
+        {
+            var settings = new ConnegSettings();
+            settings.AddFormatter(new AjaxAwareJsonSerializer());
+
+            settings.FormatterFor(MimeType.Json)
+                .ShouldBeOfType<AjaxAwareJsonSerializer>();
         }
     }
 }
