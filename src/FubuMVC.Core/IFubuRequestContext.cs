@@ -1,4 +1,5 @@
 ﻿using FubuCore;
+using FubuCore.Logging;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 
@@ -18,13 +19,15 @@ namespace FubuMVC.Core
         private readonly ICurrentHttpRequest _request;
         private readonly IFubuRequest _models;
         private readonly IOutputWriter _writer;
+        private readonly ILogger _logger;
 
-        public FubuRequestContext(IServiceLocator services, ICurrentHttpRequest request, IFubuRequest models, IOutputWriter writer)
+        public FubuRequestContext(IServiceLocator services, ICurrentHttpRequest request, IFubuRequest models, IOutputWriter writer, ILogger logger)
         {
             _services = services;
             _request = request;
             _models = models;
             _writer = writer;
+            _logger = logger;
         }
 
         public IServiceLocator Services
@@ -45,6 +48,11 @@ namespace FubuMVC.Core
         public IOutputWriter Writer
         {
             get { return _writer; }
+        }
+
+        public ILogger Logger
+        {
+            get { return _logger; }
         }
     }
 }

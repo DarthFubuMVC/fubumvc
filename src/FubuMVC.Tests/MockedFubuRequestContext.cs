@@ -1,4 +1,5 @@
 ﻿using FubuCore;
+using FubuCore.Logging;
 using FubuMVC.Core;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
@@ -13,12 +14,12 @@ namespace FubuMVC.Tests
         public MockedFubuRequestContext(IContainer container)
             : base(
                 new StructureMapServiceLocator(container), container.GetInstance<ICurrentHttpRequest>(), container.GetInstance<IFubuRequest>(),
-                container.GetInstance<IOutputWriter>())
+                container.GetInstance<IOutputWriter>(), new RecordingLogger())
         {
             
         }
 
-        public MockedFubuRequestContext() : base(new InMemoryServiceLocator(), new StandInCurrentHttpRequest(), new InMemoryFubuRequest(), MockRepository.GenerateMock<IOutputWriter>())
+        public MockedFubuRequestContext() : base(new InMemoryServiceLocator(), new StandInCurrentHttpRequest(), new InMemoryFubuRequest(), MockRepository.GenerateMock<IOutputWriter>(), new RecordingLogger())
         {
         }
     }
