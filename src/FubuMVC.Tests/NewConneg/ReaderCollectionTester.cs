@@ -12,15 +12,15 @@ namespace FubuMVC.Tests.NewConneg
     [TestFixture]
     public class ReaderCollectionTester
     {
-        private readonly IList<IReader<Address>> readers = new List<IReader<Address>>();
         private Lazy<ReaderCollection<Address>> _collection;
+        private InputNode theInput;
 
         [SetUp]
         public void SetUp()
         {
-            readers.Clear();
+            theInput = new InputNode(typeof (Address));
 
-            _collection = new Lazy<ReaderCollection<Address>>(() => new ReaderCollection<Address>(readers));
+            _collection = new Lazy<ReaderCollection<Address>>(() => new ReaderCollection<Address>(theInput));
         }
 
         private ReaderCollection<Address> ClassUnderTest
@@ -36,7 +36,7 @@ namespace FubuMVC.Tests.NewConneg
             var reader = MockRepository.GenerateMock<IReader<Address>>();
             reader.Stub(x => x.Mimetypes).Return(mimeTypes);
 
-            readers.Add(reader);
+            theInput.Add(reader);
 
             return reader;
         }

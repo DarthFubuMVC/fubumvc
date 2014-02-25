@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using FubuCore;
 using FubuCore.Descriptions;
@@ -11,12 +10,13 @@ using FubuMVC.Core.Runtime.Formatters;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
+
     public interface IInputNode
     {
         /// <summary>
-        /// All the explicitly registered readers
+        /// Returns 
         /// </summary>
-        IEnumerable<IReader> Readers { get; }
+        IEnumerable<IReader> Readers();
 
         /// <summary>
         /// The mimetypes that can be read
@@ -73,12 +73,16 @@ namespace FubuMVC.Core.Resources.Conneg
             _inputType = inputType;
         }
 
-        public IEnumerable<IReader> Readers
+        public IEnumerable<IReader> Readers()
         {
-            get
+            // TODO -- VERY TEMPORARY
+            if (!_readers.Any())
             {
-                return _readers;
+                Add(typeof(ModelBindingReader<>));
+                Add(new JsonSerializer());
             }
+
+            return _readers;
         }
 
         public void Add(IFormatter formatter)
@@ -118,7 +122,7 @@ namespace FubuMVC.Core.Resources.Conneg
         {
             var def = new ObjectDef(typeof (InputBehavior<>), _inputType);
 
-            var collection = typeof (ReaderCollection<>).CloseAndBuildAs<object>(_readers, _inputType);
+            var collection = typeof (ReaderCollection<>).CloseAndBuildAs<object>(this, _inputType);
             var collectionType = typeof (IReaderCollection<>).MakeGenericType(_inputType);
 
             def.DependencyByValue(collectionType, collection);
@@ -137,6 +141,14 @@ namespace FubuMVC.Core.Resources.Conneg
             get
             {
                 return _readers.SelectMany(x => x.Mimetypes);
+            }
+        }
+
+        public IEnumerable<IReader> Explicits
+        {
+            get
+            {
+                return _readers;
             }
         }
 

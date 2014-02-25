@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.Http;
@@ -7,28 +8,23 @@ namespace FubuMVC.Core.Resources.Conneg
 {
     public class MediaCollection<T> : IMediaCollection<T> where T : class
     {
-        private readonly IEnumerable<IMedia<T>> _media;
+        private readonly Lazy<IEnumerable<IMedia<T>>> _media; 
 
-        public MediaCollection(IEnumerable<IMedia<T>> media)
+        public MediaCollection(IOutputNode node)
         {
-            _media = media;
+            _media = new Lazy<IEnumerable<IMedia<T>>>(() => node.Media<T>().ToArray());
         }
-
-        public MediaCollection(IEnumerable<IMedia> media)
-        {
-            _media = media.OfType<IMedia<T>>().ToArray();
-        } 
 
         public IEnumerable<IMedia<T>> Media
         {
-            get { return _media; }
+            get { return _media.Value; }
         }
 
         public IMedia<T> SelectMedia(CurrentMimeType mimeTypes, IFubuRequestContext context)
         {
             foreach (var acceptType in mimeTypes.AcceptTypes)
             {
-                var candidates = _media.Where(x => x.Mimetypes.Contains(acceptType));
+                var candidates = Media.Where(x => x.Mimetypes.Contains(acceptType));
                 if (candidates.Any())
                 {
                     var writer = candidates.FirstOrDefault(x => x.MatchesRequest(context));
@@ -44,7 +40,7 @@ namespace FubuMVC.Core.Resources.Conneg
 
             if (mimeTypes.AcceptsAny())
             {
-                var media = _media.FirstOrDefault(x => x.MatchesRequest(context));
+                var media = Media.FirstOrDefault(x => x.MatchesRequest(context));
                 context.Logger.DebugMessage(() => new WriterChoice(MimeType.Any.Value, media, media.Condition));
 
                 return media;

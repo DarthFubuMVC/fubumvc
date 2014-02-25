@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.NewConneg
 
             node.ClearAll();
 
-            node.Readers.Any().ShouldBeFalse();
+            node.Explicits.Any().ShouldBeFalse();
         }
 
 
@@ -45,7 +45,7 @@ namespace FubuMVC.Tests.NewConneg
             var formatter = new JsonSerializer();
             node.Add(formatter);
 
-            node.Readers.Single()
+            node.Explicits.Single()
                 .ShouldBeOfType<FormatterReader<Address>>()
                 .Formatter.ShouldBeTheSameAs(formatter);
 
@@ -57,7 +57,7 @@ namespace FubuMVC.Tests.NewConneg
             var node = new InputNode(typeof(Address));
             node.Add(typeof(GenericReader<>));
 
-            node.Readers.Single()
+            node.Explicits.Single()
                 .ShouldBeOfType<GenericReader<Address>>();
         }
 
@@ -78,7 +78,7 @@ namespace FubuMVC.Tests.NewConneg
 
             node.Add(reader);
 
-            node.Readers.Single().ShouldBeTheSameAs(reader);
+            node.Explicits.Single().ShouldBeTheSameAs(reader);
         }
 
         [Test]

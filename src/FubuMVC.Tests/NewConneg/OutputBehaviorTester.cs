@@ -260,12 +260,15 @@ namespace FubuMVC.Tests.NewConneg
 
             theMedia = Services.CreateMockArrayFor<IMedia<OutputTarget>>(5);
 
+            var output = new OutputNode(typeof (OutputTarget));
+
             theMedia.Each(media =>
             {
-                media.Stub<IMedia<OutputTarget>, IConditional>(x => x.Condition).Return(Always.Flyweight);
+                media.Stub(x => x.Condition).Return(Always.Flyweight);
+                output.Add(media);
             });
 
-            Services.Inject<IMediaCollection<OutputTarget>>(new MediaCollection<OutputTarget>(theMedia));
+            Services.Inject<IMediaCollection<OutputTarget>>(new MediaCollection<OutputTarget>(output));
 
             theCurrentMimeType = new CurrentMimeType();
             theTarget = new OutputTarget();

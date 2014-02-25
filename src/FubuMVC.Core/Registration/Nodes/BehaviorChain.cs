@@ -362,7 +362,7 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public bool HasReaders()
         {
-            return _input.IsValueCreated && _input.Value.Readers.Any();
+            return _input.IsValueCreated && _input.Value.Readers().Any();
         }
 
         /// <summary>

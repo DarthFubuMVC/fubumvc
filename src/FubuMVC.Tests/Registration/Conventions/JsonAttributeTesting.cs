@@ -1,6 +1,8 @@
 using System.Linq;
+using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
 using FubuTestingSupport;
@@ -88,10 +90,10 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void symmetric_json_attribute_makes_the_input_json_only()
         {
             var theChain = theGraph.BehaviorFor<JsonController>(x => x.Symmetric(null));
-            var theInput = theChain.Input;
+            var theInput = theChain.Input.As<InputNode>();
             theInput.CanRead(MimeType.HttpFormMimetype).ShouldBeFalse();
 
-            theInput.Readers.Count().ShouldEqual(1);
+            theInput.Explicits.Count().ShouldEqual(1);
             theInput.CanRead(MimeType.Json).ShouldBeTrue();
         }
 

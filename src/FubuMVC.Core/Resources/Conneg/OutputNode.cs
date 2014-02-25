@@ -41,6 +41,10 @@ namespace FubuMVC.Core.Resources.Conneg
         /// <returns></returns>
         IEnumerable<IMedia> Media();
 
+        IEnumerable<IMedia<T>> Media<T>();
+            
+            
+            
         /// <summary>
         /// All the possible mimetypes for the explicitly added writers
         /// </summary>
@@ -111,6 +115,13 @@ namespace FubuMVC.Core.Resources.Conneg
 
         public void Add(object writer, IConditional condition = null)
         {
+            var mediaType = typeof (IMedia<>).MakeGenericType(_resourceType);
+            if (writer.GetType().CanBeCastTo(mediaType))
+            {
+                _media.Add(writer.As<IMedia>());
+                return;
+            }
+
             var writerType = typeof(IMediaWriter<>).MakeGenericType(_resourceType);
             if (!writerType.IsAssignableFrom(writer.GetType()))
             {
@@ -126,7 +137,12 @@ namespace FubuMVC.Core.Resources.Conneg
         public IEnumerable<IMedia> Media()
         {
             return _media;
-        } 
+        }
+
+        public IEnumerable<IMedia<T>> Media<T>()
+        {
+            return _media.OfType<IMedia<T>>();
+        }
 
         public override BehaviorCategory Category
         {
@@ -190,7 +206,7 @@ namespace FubuMVC.Core.Resources.Conneg
 
             
             var collectionType = typeof (IMediaCollection<>).MakeGenericType(_resourceType);
-            var collection = typeof (MediaCollection<>).CloseAndBuildAs<object>(_media, _resourceType);
+            var collection = typeof (MediaCollection<>).CloseAndBuildAs<object>(this, _resourceType);
 
             def.DependencyByValue(collectionType, collection);
 

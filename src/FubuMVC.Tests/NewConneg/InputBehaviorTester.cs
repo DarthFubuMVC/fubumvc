@@ -37,7 +37,7 @@ namespace FubuMVC.Tests.NewConneg
         protected override void beforeEach()
         {
             Services.Inject<IFubuRequestContext>(new MockedFubuRequestContext(Services.Container));
-            theReaders = new ReaderCollection<Address>(new IReader<Address>[0]);
+            theReaders = new ReaderCollection<Address>(new InputNode(typeof(Address)));
             Services.Inject<IReaderCollection<Address>>(theReaders);
 
             reader1 = readerFor("text/json", "application/json");
