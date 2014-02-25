@@ -117,11 +117,5 @@ namespace FubuMVC.Core.Resources.Conneg
             description.AddList("Readers", _readers);
         }
 
-
-        public IEnumerable<string> MimeTypes()
-        {
-            return Readers.SelectMany(x => x.Mimetypes).Distinct();
-        } 
-
     }
 }
