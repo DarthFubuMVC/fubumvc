@@ -40,15 +40,6 @@ namespace FubuMVC.IntegrationTesting.Samples
     [MimeType("special/format", "text/json")]
     public class SpecialContentMediaReader : IReader<InputMessage>
     {
-        private readonly ICurrentHttpRequest _streaming;
-        private readonly ICurrentHttpRequest _httpRequest;
-
-        public SpecialContentMediaReader(ICurrentHttpRequest streaming, ICurrentHttpRequest httpRequest)
-        {
-            _streaming = streaming;
-            _httpRequest = httpRequest;
-        }
-
         public IEnumerable<string> Mimetypes
         {
             get
@@ -192,9 +183,7 @@ namespace FubuMVC.IntegrationTesting.Samples
         {
             var inputNode = call.ParentChain().Input;
 
-            _types.Each(type => {
-                inputNode.Readers.AddToEnd(new Reader(type));
-            });
+            _types.Each(inputNode.Add);
         }
     }
     // ENDSAMPLE
@@ -210,25 +199,18 @@ namespace FubuMVC.IntegrationTesting.Samples
             chain.Input.ClearAll();
 
             // Accept 'application/x-www-form-urlencoded' with model binding
-            chain.Input.AllowHttpFormPosts = true;
+            chain.Input.Add(typeof(ModelBindingReader<>));
             
             // Add basic Json reading
-            chain.Input.AddFormatter<JsonFormatter>();
+            chain.Input.Add(new JsonSerializer());
 
             // Query whether or not the chain uses the basic Json reading
-            bool readsJson = chain.Input.UsesFormatter<JsonFormatter>();
+            bool readsJson = chain.Input.CanRead(MimeType.Json);
 
             // Add a completely custom Reader
-            var specialReader = chain.Input
-                .AddReader<SpecialContentMediaReader>();
+            chain.Input
+                .Add(new SpecialContentMediaReader());
 
-            // Reorder the special reader to move it to the first
-            // as the default
-            specialReader.MoveToFront();
-
-            // Add a new Reader as the last reader
-            chain.Input.Readers.AddToEnd(new ModelBind(chain.InputType()));
-            
             // Are there any Readers?
             chain.HasReaders();
 
@@ -365,7 +347,7 @@ namespace FubuMVC.IntegrationTesting.Samples
             // above
             ModifyBy(chain => {
                 chain.Output.AddFormatter<JsonFormatter>();
-                chain.Input.AddFormatter<JsonFormatter>();
+                chain.Input.Add(new JsonSerializer());
             });
         }
     }

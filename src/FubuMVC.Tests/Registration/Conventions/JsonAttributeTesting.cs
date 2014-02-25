@@ -1,6 +1,7 @@
 using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -69,8 +70,8 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             var theChain = theGraph.BehaviorFor<JsonController>(x => x.Asymmetric(null));
             var theInput = theChain.Input;
-            theInput.AllowHttpFormPosts.ShouldBeTrue();
-            theInput.UsesFormatter<JsonFormatter>().ShouldBeTrue();
+            theInput.CanRead(MimeType.HttpFormMimetype).ShouldBeTrue();
+            theInput.CanRead(MimeType.Json).ShouldBeTrue();
         }
 
         [Test]
@@ -88,10 +89,10 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             var theChain = theGraph.BehaviorFor<JsonController>(x => x.Symmetric(null));
             var theInput = theChain.Input;
-            theInput.AllowHttpFormPosts.ShouldBeFalse();
+            theInput.CanRead(MimeType.HttpFormMimetype).ShouldBeFalse();
 
             theInput.Readers.Count().ShouldEqual(1);
-            theInput.UsesFormatter<JsonFormatter>().ShouldBeTrue();
+            theInput.CanRead(MimeType.Json).ShouldBeTrue();
         }
 
         [Test]

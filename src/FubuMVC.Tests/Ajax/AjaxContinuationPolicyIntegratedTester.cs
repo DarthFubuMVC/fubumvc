@@ -6,6 +6,7 @@ using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -93,8 +94,8 @@ namespace FubuMVC.Tests.Ajax
         public void should_have_a_conneg_input_node_with_json_or_http_post_input()
         {
             var connegInput = chainFor(x => x.BasicContinuation(null)).Input;
-            connegInput.AllowHttpFormPosts.ShouldBeTrue();
-            connegInput.UsesFormatter<JsonFormatter>().ShouldBeTrue();
+            connegInput.CanRead(MimeType.HttpFormMimetype).ShouldBeTrue();
+            connegInput.CanRead(MimeType.Json).ShouldBeTrue();
         }
 
         [Test]

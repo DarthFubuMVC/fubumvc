@@ -199,18 +199,6 @@ namespace FubuMVC.Tests.Runtime
         }
 
         [Test]
-        public void must_be_a_description_on_all_reader_nodes()
-        {
-            IEnumerable<Type> types = typeof (FubuRequest).Assembly.GetExportedTypes()
-                .Where(x => x.IsConcreteTypeOf<ReaderNode>())
-                .Where(x => !Description.HasExplicitDescription(x));
-
-            types.Each(x => Debug.WriteLine(x.Name));
-
-            types.Any().ShouldBeFalse();
-        }
-
-        [Test]
         public void must_be_a_description_on_all_writer_nodes()
         {
             IEnumerable<Type> types = typeof (FubuRequest).Assembly.GetExportedTypes()
@@ -263,19 +251,6 @@ namespace FubuMVC.Tests.Runtime
         {
             IEnumerable<Type> types = typeof (FubuRequest).Assembly.GetExportedTypes()
                 .Where(x => x.IsConcreteTypeOf<LogRecord>())
-                .Where(x => !Description.HasExplicitDescription(x));
-
-            types.Each(x => Debug.WriteLine(x.Name));
-
-            types.Any().ShouldBeFalse();
-        }
-
-
-        [Test]
-        public void must_be_some_sort_of_description_on_every_ReaderNode_in_baseline_conneg()
-        {
-            IEnumerable<Type> types = typeof (FubuRequest).Assembly.GetExportedTypes()
-                .Where(x => x.IsConcreteTypeOf<ReaderNode>())
                 .Where(x => !Description.HasExplicitDescription(x));
 
             types.Each(x => Debug.WriteLine(x.Name));

@@ -83,5 +83,6 @@ namespace FubuMVC.Core.Resources.Conneg
         {
             get { return _formatter; }
         }
+
     }
 }

@@ -13,10 +13,20 @@ namespace FubuMVC.Tests.NewConneg
     [TestFixture]
     public class InputBehaviorTester : InteractionContext<InputBehavior<Address>>
     {
+        private InputNode theInputNode;
+
+        protected override void beforeEach()
+        {
+            theInputNode = new InputNode(typeof(Address));
+            Services.Inject(theInputNode);
+        }
+
         private IReader<Address> readerFor(params string[] mimeTypes)
         {
             var reader = Services.AddAdditionalMockFor<IReader<Address>>();
             reader.Stub(x => x.Mimetypes).Return(mimeTypes);
+
+            theInputNode.Add(reader);
 
             return reader;
         }
@@ -74,11 +84,14 @@ namespace FubuMVC.Tests.NewConneg
         private CurrentMimeType theMimetypes;
         private Address theAddress;
         private IActionBehavior theInnerBehavior;
+        private InputNode theInputNode;
 
         private IReader<Address> readerFor(params string[] mimeTypes)
         {
             var reader = Services.AddAdditionalMockFor<IReader<Address>>();
             reader.Stub(x => x.Mimetypes).Return(mimeTypes);
+
+            theInputNode.Add(reader);
 
             return reader;
         }
@@ -86,6 +99,8 @@ namespace FubuMVC.Tests.NewConneg
         protected override void beforeEach()
         {
             Services.Inject<IFubuRequestContext>(new MockedFubuRequestContext(Services.Container));
+            theInputNode = new InputNode(typeof(Address));
+            Services.Inject(theInputNode);
 
             reader1 = readerFor("text/json", "application/json");
             reader2 = readerFor("text/xml");

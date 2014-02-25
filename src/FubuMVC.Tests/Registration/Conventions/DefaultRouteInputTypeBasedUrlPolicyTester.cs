@@ -42,13 +42,6 @@ namespace FubuMVC.Tests.Registration.Conventions
             _policy.Matches(call).ShouldBeTrue();
         }
 
-        [Test]
-        public void should_not_match_the_action_call_if_the_input_type_is_different()
-        {
-            var otherMethod = ReflectionHelper.GetMethod<TestController>(c => c.SomeAction(0));
-            var call = new ActionCall(typeof (TestController), otherMethod);
-            _policy.Matches(call).ShouldBeFalse();
-        }
 
         [Test]
         public void should_throw_if_more_than_one_call_has_the_same_input_type()

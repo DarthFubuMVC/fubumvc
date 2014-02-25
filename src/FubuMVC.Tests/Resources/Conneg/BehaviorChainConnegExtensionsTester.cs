@@ -4,6 +4,7 @@ using System.Net;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -72,10 +73,10 @@ namespace FubuMVC.Tests.Resources.Conneg
             theChain.MakeAsymmetricJson();
             var inputNode = theChain.Input;
 
-            inputNode.AllowHttpFormPosts.ShouldBeTrue();
+            inputNode.CanRead(MimeType.HttpFormMimetype).ShouldBeTrue();
             inputNode.Readers.ShouldHaveCount(2);
-            inputNode.UsesFormatter<JsonFormatter>();
-
+            inputNode.CanRead(MimeType.Json).ShouldBeTrue();
+            
 
             var outputNode = theChain.Output;
             outputNode.Writers.ShouldHaveCount(1);
@@ -88,9 +89,9 @@ namespace FubuMVC.Tests.Resources.Conneg
             theChain.MakeSymmetricJson();
             var inputNode = theChain.Input;
 
-            inputNode.AllowHttpFormPosts.ShouldBeFalse();
+            inputNode.CanRead(MimeType.HttpFormMimetype).ShouldBeFalse();
             inputNode.Readers.ShouldHaveCount(1);
-            inputNode.UsesFormatter<JsonFormatter>();
+            inputNode.CanRead(MimeType.Json).ShouldBeTrue();
 
 
             var outputNode = theChain.Output;

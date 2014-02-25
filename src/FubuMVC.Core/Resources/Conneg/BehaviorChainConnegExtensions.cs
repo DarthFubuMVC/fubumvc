@@ -28,13 +28,14 @@ namespace FubuMVC.Core.Resources.Conneg
 
         public static void UseJson(this BehaviorChain chain)
         {
-            if (chain.InputType() != null) chain.Input.AddFormatter<JsonFormatter>();
+            // TODO -- this needs to change
+            if (chain.InputType() != null) chain.Input.Add(new JsonSerializer());
             if (chain.HasResourceType()) chain.OutputJson();
         }
 
         public static void UseXml(this BehaviorChain chain)
         {
-            if (chain.InputType() != null) chain.Input.AddFormatter<XmlFormatter>();
+            if (chain.InputType() != null) chain.Input.Add(new XmlFormatter());
             if (chain.HasResourceType()) chain.OutputXml();
         }
 
@@ -53,7 +54,6 @@ namespace FubuMVC.Core.Resources.Conneg
             if (chain.InputType() != null)
             {
                 chain.Input.ClearAll();
-                chain.Input.AllowHttpFormPosts = false;
             }
 
             if (chain.ResourceType() != null)
@@ -69,7 +69,7 @@ namespace FubuMVC.Core.Resources.Conneg
             if (chain.InputType() != null)
             {
                 chain.Input.ClearAll();
-                chain.Input.AllowHttpFormPosts = true;
+                chain.Input.Add(typeof(ModelBindingReader<>));
             }
 
             if (chain.ResourceType() != null)
@@ -93,12 +93,12 @@ namespace FubuMVC.Core.Resources.Conneg
         // TODO -- do something about matching on Mimetype maybe
         public static bool ReadsJson(this BehaviorChain chain)
         {
-            return chain.Input.MimeTypes().Contains(MimeType.Json.ToString());
+            return chain.Input.CanRead(MimeType.Json);
         }
 
         public static bool ReadsXml(this BehaviorChain chain)
         {
-            return chain.Input.MimeTypes().Contains(MimeType.Xml.ToString());
+            return chain.Input.CanRead(MimeType.Html);
         }
 
 
@@ -130,7 +130,7 @@ namespace FubuMVC.Core.Resources.Conneg
             if (chain.InputType() != null)
             {
                 chain.Input.ClearAll();
-                chain.Input.AllowHttpFormPosts = true;
+                chain.Input.Add(typeof(ModelBindingReader<>));
             }
 
             if (chain.HasResourceType())

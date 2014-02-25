@@ -13,10 +13,10 @@ namespace FubuMVC.Core.Resources.Conneg
     public class InputBehavior<T> : BasicBehavior where T : class
     {
         private readonly IFubuRequestContext _context;
-        private readonly IEnumerable<IReader<T>> _readers;
+        private readonly InputNode _readers;
         private readonly ILogger _logger;
 
-        public InputBehavior(IFubuRequestContext context, IEnumerable<IReader<T>> readers, ILogger logger) : base(PartialBehavior.Executes)
+        public InputBehavior(IFubuRequestContext context, InputNode readers, ILogger logger) : base(PartialBehavior.Executes)
         {
             _context = context;
             _readers = readers;
@@ -66,7 +66,8 @@ namespace FubuMVC.Core.Resources.Conneg
 
         public IReader<T> ChooseReader(CurrentMimeType mimeTypes)
         {
-            return _readers.FirstOrDefault(x => x.Mimetypes.Contains(mimeTypes.ContentType));
+            // TODO -- put more of this behavior into InputNode
+            return _readers.Readers.FirstOrDefault(x => x.Mimetypes.Contains(mimeTypes.ContentType)) as IReader<T>;
         }
     }
 

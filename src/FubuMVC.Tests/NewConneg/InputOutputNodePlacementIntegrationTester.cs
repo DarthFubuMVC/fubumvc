@@ -45,7 +45,7 @@ namespace FubuMVC.Tests.NewConneg
             return "hello";
         }
 
-        [AllowRole("some role"), Conneg]
+        [AllowRole("some role")]
         public PlacementPayload post_payload(PlacementPayload payload)
         {
             return payload;

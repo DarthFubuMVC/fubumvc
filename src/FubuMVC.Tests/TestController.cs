@@ -28,7 +28,7 @@ namespace FubuMVC.Tests
             };
         }
 
-        public TestOutputModel SomeAction(int not_used)
+        public TestOutputModel SomeOtherAction(NotUsedModel not_used)
         {
             return new TestOutputModel();
         }
@@ -54,6 +54,11 @@ namespace FubuMVC.Tests
         public void RedirectAction(TestInputModel value)
         {
         }
+    }
+
+    public class NotUsedModel
+    {
+        
     }
 
     public class TestInputModel

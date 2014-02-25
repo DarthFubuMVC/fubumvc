@@ -97,7 +97,6 @@
     <Compile Include="ConfigurationTypeAttribute.cs" />
     <Compile Include="Configuration\DefaultConfigurationPack.cs" />
     <Compile Include="Configuration\DiscoveryActionsConfigurationPack.cs" />
-    <Compile Include="ConnegAttribute.cs" />
     <Compile Include="DiagnosticsSettings.cs" />
     <Compile Include="Diagnostics\AboutEndpoint.cs" />
     <Compile Include="Diagnostics\DescriptionTags.cs" />
@@ -269,10 +268,6 @@
     <Compile Include="Resources\Conneg\InputNode.cs" />
     <Compile Include="Resources\Conneg\IReader.cs" />
     <Compile Include="Resources\Conneg\OutputNode.cs" />
-    <Compile Include="Resources\Conneg\Reader.cs" />
-    <Compile Include="Resources\Conneg\ReaderChain.cs" />
-    <Compile Include="Resources\Conneg\ReaderNode.cs" />
-    <Compile Include="Resources\Conneg\ReadWithFormatter.cs" />
     <Compile Include="Resources\Conneg\FormatterReader.cs" />
     <Compile Include="Resources\Conneg\FormatterWriter.cs" />
     <Compile Include="Resources\Conneg\HtmlStringWriter.cs" />
@@ -281,7 +276,6 @@
     <Compile Include="Resources\Conneg\InputBehavior.cs" />
     <Compile Include="Resources\Conneg\Media.cs" />
     <Compile Include="Resources\Conneg\MimeTypeAttribute.cs" />
-    <Compile Include="Resources\Conneg\ModelBind.cs" />
     <Compile Include="Resources\Conneg\ModelBindingReader.cs" />
     <Compile Include="Resources\Conneg\OutputBehavior.cs" />
     <Compile Include="Resources\Conneg\StringWriter.cs" />

@@ -26,13 +26,12 @@ namespace FubuMVC.Tests.NewConneg
         public void ClearAll()
         {
             var node = new InputNode(typeof (Address));
-            node.AddFormatter<JsonFormatter>();
-            node.AllowHttpFormPosts = true;
+            node.Add(new JsonSerializer());
+            node.Add(typeof(ModelBindingReader<>));
 
             node.ClearAll();
 
             node.Readers.Any().ShouldBeFalse();
-            node.AllowHttpFormPosts.ShouldBeFalse();
         }
 
         [Test]
@@ -42,127 +41,24 @@ namespace FubuMVC.Tests.NewConneg
             node.JsonOnly();
 
             node.Readers.ShouldHaveCount(1);
-            node.UsesFormatter<JsonFormatter>().ShouldBeTrue();
+            node.CanRead(MimeType.Json).ShouldBeTrue();
         }
 
         [Test]
         public void JsonOnly_with_existing_stuff()
         {
             var node = new InputNode(typeof(Address));
-            node.AllowHttpFormPosts = true;
-            node.UsesFormatter<XmlFormatter>();
+            node.Add(typeof(ModelBindingReader<>));
+            node.Add(new XmlFormatter());
 
             node.JsonOnly();
 
             node.Readers.ShouldHaveCount(1);
-            node.UsesFormatter<JsonFormatter>().ShouldBeTrue();
-        }
-
-        [Test]
-        public void add_formatter()
-        {
-            var node = new InputNode(typeof (Address));
-            node.AllowHttpFormPosts = false;
-            
-            node.AddFormatter<JsonFormatter>();
-
-            node.Readers.Single()
-                .ShouldEqual(new ReadWithFormatter(typeof (Address), typeof (JsonFormatter)));
-        }
-
-        [Test]
-        public void add_formatter_is_idempotent()
-        {
-            var node = new InputNode(typeof (Address));
-            node.AllowHttpFormPosts = false;
-
-            node.AddFormatter<JsonFormatter>();
-            node.AddFormatter<JsonFormatter>();
-            node.AddFormatter<JsonFormatter>();
-            node.AddFormatter<JsonFormatter>();
-            node.AddFormatter<JsonFormatter>();
-
-            node.Readers.Single()
-                .ShouldEqual(new ReadWithFormatter(typeof (Address), typeof (JsonFormatter)));
+            node.CanRead(MimeType.Json);
         }
 
 
-        [Test]
-        public void add_reader_happy_path()
-        {
-            var node = new InputNode(typeof (Address));
-            node.AllowHttpFormPosts = false;
 
-            var reader = node.AddReader<FakeAddressReader>();
-
-            node.Readers.Single().ShouldBeTheSameAs(reader);
-
-            reader.InputType.ShouldEqual(typeof (Address));
-            reader.ReaderType.ShouldEqual(typeof (FakeAddressReader));
-        }
-
-        [Test]
-        public void allow_http_form_post_is_idempotent()
-        {
-            var inputNode = new InputNode(typeof (Address));
-            inputNode.AllowHttpFormPosts = true;
-            inputNode.AllowHttpFormPosts = true;
-            inputNode.AllowHttpFormPosts = true;
-
-            inputNode.Readers.Single().ShouldBeOfType<ModelBind>();
-        }
-
-        [Test]
-        public void allow_http_form_posts_adds_the_model_bind_reader()
-        {
-            var inputNode = new InputNode(typeof (Address));
-            inputNode.AllowHttpFormPosts = false;
-
-            inputNode.Readers.Any().ShouldBeFalse();
-
-            inputNode.AllowHttpFormPosts = true;
-
-            inputNode.Readers.Single().ShouldBeOfType<ModelBind>()
-                .InputType.ShouldEqual(typeof (Address));
-        }
-
-        [Test]
-        public void setting_allow_http_form_post_to_false_removes_the_model_binding()
-        {
-            var inputNode = new InputNode(typeof (Address));
-            inputNode.AllowHttpFormPosts = true;
-
-            inputNode.AllowHttpFormPosts = false;
-
-            inputNode.Readers.Any().ShouldBeFalse();
-        }
-
-        [Test]
-        public void should_allow_form_posts_by_default()
-        {
-            var inputNode = new InputNode(typeof (Address));
-            inputNode.AllowHttpFormPosts
-                .ShouldBeTrue();
-        }
-
-        [Test]
-        public void uses_formatter()
-        {
-            var node = new InputNode(typeof(Address));
-        
-            node.UsesFormatter<XmlFormatter>().ShouldBeFalse();
-            node.UsesFormatter<JsonFormatter>().ShouldBeFalse();
-
-            node.AddFormatter<XmlFormatter>();
-
-            node.UsesFormatter<XmlFormatter>().ShouldBeTrue();
-            node.UsesFormatter<JsonFormatter>().ShouldBeFalse();
-
-            node.AddFormatter<JsonFormatter>();
-
-            node.UsesFormatter<XmlFormatter>().ShouldBeTrue();
-            node.UsesFormatter<JsonFormatter>().ShouldBeTrue();
-        }
 
         [Test]
         public void add_reader_by_formatter()
@@ -171,7 +67,7 @@ namespace FubuMVC.Tests.NewConneg
             var formatter = new JsonSerializer();
             node.Add(formatter);
 
-            node.SelectReaders().Single()
+            node.Readers.Single()
                 .ShouldBeOfType<FormatterReader<Address>>()
                 .Formatter.ShouldBeTheSameAs(formatter);
 
@@ -183,7 +79,7 @@ namespace FubuMVC.Tests.NewConneg
             var node = new InputNode(typeof(Address));
             node.Add(typeof(GenericReader<>));
 
-            node.SelectReaders().Single()
+            node.Readers.Single()
                 .ShouldBeOfType<GenericReader<Address>>();
         }
 
@@ -204,7 +100,7 @@ namespace FubuMVC.Tests.NewConneg
 
             node.Add(reader);
 
-            node.SelectReaders().Single().ShouldBeTheSameAs(reader);
+            node.Readers.Single().ShouldBeTheSameAs(reader);
         }
 
         [Test]

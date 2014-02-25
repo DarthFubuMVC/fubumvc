@@ -197,7 +197,6 @@
     <Compile Include="Caching\OuputCachingNodeTester.cs" />
     <Compile Include="Caching\OutputCachingBehaviorTester.cs" />
     <Compile Include="can_find_and_load_bottles_with_the_FubuModule_attribute.cs" />
-    <Compile Include="ConnegAttributeTester.cs" />
     <Compile Include="FakeHttpContext.cs" />
     <Compile Include="FubuApplicationTester.cs" />
     <Compile Include="FubuModeTester.cs" />
@@ -219,12 +218,9 @@
     <Compile Include="NewConneg\InputNodeTester.cs" />
     <Compile Include="NewConneg\InputOutputNodePlacementIntegrationTester.cs" />
     <Compile Include="NewConneg\OutputNodeIntegratedTester.cs" />
-    <Compile Include="NewConneg\ReaderTester.cs" />
     <Compile Include="NewConneg\WriteWithFormatterTester.cs" />
     <Compile Include="NewConneg\InputBehaviorTester.cs" />
-    <Compile Include="NewConneg\ReadWithFormatterTester.cs" />
     <Compile Include="NewConneg\ModelBindingReaderTester.cs" />
-    <Compile Include="NewConneg\ModelBindTester.cs" />
     <Compile Include="NewConneg\StringWriterTester.cs" />
     <Compile Include="NewConneg\WriteHtmlTester.cs" />
     <Compile Include="NewConneg\HtmlStringWriterTester.cs" />

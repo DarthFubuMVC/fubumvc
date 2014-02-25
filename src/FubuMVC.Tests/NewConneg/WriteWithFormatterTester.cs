@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration.Nodes;
@@ -35,13 +36,6 @@ namespace FubuMVC.Tests.NewConneg
                 .Type.ShouldEqual(typeof (FormatterWriter<Address, SomeFormatter>));
         }
 
-        [Test]
-        public void finds_mime_types_off_of_the_formatter_type()
-        {
-            var node = new WriteWithFormatter(typeof (Address), typeof (SomeFormatter));
-
-            node.Mimetypes.ShouldHaveTheSameElementsAs("text/html", "other/mimetype");
-        }
 
         [Test]
         public void if_a_formatter_type_does_not_expose_mimetypes_just_say_unknown()
@@ -50,4 +44,47 @@ namespace FubuMVC.Tests.NewConneg
                 .Mimetypes.ShouldHaveTheSameElementsAs("Unknown");
         }
     }
+
+    public class SomeFormatter : IFormatter
+    {
+        public IEnumerable<string> MatchingMimetypes
+        {
+            get
+            {
+                return new[] {"text/html", "other/mimetype"};
+            }
+        }
+
+        public void Write<T>(IFubuRequestContext context, T target, string mimeType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public T Read<T>(IFubuRequestContext context)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class UnknownFormatter : IFormatter
+    {
+        public IEnumerable<string> MatchingMimetypes
+        {
+            get
+            {
+                yield break;
+            }
+        }
+        public void Write<T>(IFubuRequestContext context, T target, string mimeType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public T Read<T>(IFubuRequestContext context)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+
 }

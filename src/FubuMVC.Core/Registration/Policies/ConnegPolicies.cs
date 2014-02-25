@@ -2,6 +2,7 @@
 using FubuCore.Descriptions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
 
 namespace FubuMVC.Core.Registration.Policies
@@ -110,7 +111,8 @@ namespace FubuMVC.Core.Registration.Policies
         {
             if (chain.InputType() == null) return;
 
-            chain.Input.AddFormatter<JsonFormatter>();
+            // TODO -- lets change this later
+            chain.Input.Add(new JsonSerializer());
         }
     }
 
@@ -122,7 +124,8 @@ namespace FubuMVC.Core.Registration.Policies
         {
             if (chain.InputType() == null) return;
 
-            chain.Input.AllowHttpFormPosts = true;
+            // TODO -- let's change this later
+            chain.Input.Add(typeof(ModelBindingReader<>));
         }
     }
 

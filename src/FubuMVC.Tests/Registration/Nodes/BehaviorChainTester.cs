@@ -240,7 +240,7 @@ namespace FubuMVC.Tests.Registration.Nodes
 
             chain.HasReaders().ShouldBeFalse();
 
-            chain.Input.AddFormatter<JsonFormatter>();
+            chain.Input.Add(new JsonSerializer());
 
             chain.HasReaders().ShouldBeTrue();
         }
