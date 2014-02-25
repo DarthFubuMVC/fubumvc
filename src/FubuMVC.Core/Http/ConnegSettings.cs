@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
 
@@ -10,6 +12,28 @@ namespace FubuMVC.Core.Http
     [ApplicationLevel]
     public class ConnegSettings
     {
+        public readonly ConnegRules Rules = new ConnegRules();
+
+        public ConnegSettings()
+        {
+            Rules.AddToEnd<SymmetricJson>();
+            Rules.AddToEnd<AsymmetricJson>();
+            Rules.AddToEnd<AjaxContinuations>();
+            Rules.AddToEnd<StringOutput>();
+            Rules.AddToEnd<HtmlTagsRule>();
+            Rules.AddToEnd<DefaultReadersAndWriters>();
+        }
+
+        public void ApplyRules(InputNode node)
+        {
+            Rules.Top.ApplyInputs(node, node.ParentChain(), this);
+        }
+
+        public void ApplyRules(OutputNode node)
+        {
+            Rules.Top.ApplyOutputs(node, node.ParentChain(), this);
+        }
+
         public readonly IList<ConnegQuerystring> QuerystringParameters =
             new List<ConnegQuerystring>
             {

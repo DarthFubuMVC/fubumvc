@@ -5,6 +5,7 @@ using FubuCore;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
+    [MarkedForTermination]
     public class HtmlTagOutputPolicy : Policy
     {
         public HtmlTagOutputPolicy()

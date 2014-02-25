@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
@@ -126,6 +127,7 @@ namespace FubuMVC.Core.Resources.Conneg
         /// Returns xml or json
         /// </summary>
         /// <param name="chain"></param>
+        [MarkedForTermination("Just unnecessary in the future")]
         public static void ApplyConneg(this BehaviorChain chain)
         {
             chain.RemoveConneg();

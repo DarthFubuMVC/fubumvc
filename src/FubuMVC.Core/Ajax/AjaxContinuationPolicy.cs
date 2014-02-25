@@ -1,7 +1,9 @@
+using FubuCore;
 using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.Ajax
 {
+    [MarkedForTermination]
     public class AjaxContinuationPolicy : Policy
     {
         public AjaxContinuationPolicy()
