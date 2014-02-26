@@ -131,7 +131,6 @@ namespace FubuMVC.Tests.Registration.Conventions
             return null;
         }
 
-        [JsonEndpoint]
         public ViewModel1 Decorated()
         {
             return null;

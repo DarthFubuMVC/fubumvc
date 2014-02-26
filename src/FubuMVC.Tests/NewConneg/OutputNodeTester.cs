@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.NewConneg
 
             node.ClearAll();
 
-            node.Media().Any().ShouldBeFalse();
+            node.Explicits.Any().ShouldBeFalse();
         }
 
 
@@ -70,7 +70,7 @@ namespace FubuMVC.Tests.NewConneg
             var theFormatter = new JsonSerializer();
             node.Add(theFormatter);
 
-            var media = node.Media().Single().ShouldBeOfType<Media<Address>>();
+            var media = node.Explicits.Single().ShouldBeOfType<Media<Address>>();
 
             media.Writer.ShouldBeOfType<FormatterWriter<Address>>()
                 .Formatter.ShouldBeTheSameAs(theFormatter);
@@ -87,7 +87,7 @@ namespace FubuMVC.Tests.NewConneg
             var condition = new IsAjaxRequest();
             node.Add(theFormatter, condition);
 
-            var media = node.Media().Single().ShouldBeOfType<Media<Address>>();
+            var media = node.Explicits.Single().ShouldBeOfType<Media<Address>>();
 
             media.Writer.ShouldBeOfType<FormatterWriter<Address>>()
                 .Formatter.ShouldBeTheSameAs(theFormatter);
@@ -101,7 +101,7 @@ namespace FubuMVC.Tests.NewConneg
         {
             var node = new OutputNode(typeof(Address)) {typeof (FooWriter<>)};
 
-            var media = node.Media().Single().ShouldBeOfType<Media<Address>>();
+            var media = node.Explicits.Single().ShouldBeOfType<Media<Address>>();
             media.Writer.ShouldBeOfType<FooWriter<Address>>();
             media.Condition.ShouldBeTheSameAs(Always.Flyweight);
         }
@@ -113,7 +113,7 @@ namespace FubuMVC.Tests.NewConneg
             var node = new OutputNode(typeof (Address));
             node.Add(typeof(FooWriter<>), condition);
 
-            var media = node.Media().Single().ShouldBeOfType<Media<Address>>();
+            var media = node.Explicits.Single().ShouldBeOfType<Media<Address>>();
             media.Writer.ShouldBeOfType<FooWriter<Address>>();
             media.Condition.ShouldBeTheSameAs(condition);
         }
@@ -134,7 +134,7 @@ namespace FubuMVC.Tests.NewConneg
             var node = new OutputNode(typeof (Address));
             node.Add(writer);
 
-            var media = node.Media().Single().ShouldBeOfType<Media<Address>>();
+            var media = node.Explicits.Single().ShouldBeOfType<Media<Address>>();
             media.Writer.ShouldBeTheSameAs(writer);
             media.Condition.ShouldBeTheSameAs(Always.Flyweight);
         }
@@ -147,7 +147,7 @@ namespace FubuMVC.Tests.NewConneg
             var node = new OutputNode(typeof(Address));
             node.Add(writer, condition);
 
-            var media = node.Media().Single().ShouldBeOfType<Media<Address>>();
+            var media = node.Explicits.Single().ShouldBeOfType<Media<Address>>();
             media.Writer.ShouldBeTheSameAs(writer);
             media.Condition.ShouldBeTheSameAs(condition);
         }

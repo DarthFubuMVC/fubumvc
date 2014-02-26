@@ -110,7 +110,7 @@ namespace FubuMVC.Tests.Bugs
     {
         public SubModule()
         {
-            Route(Guid.NewGuid().ToString()).Calls<SomeClassWithActions>(x => x.get_hello()).OutputToJson();
+            Route(Guid.NewGuid().ToString()).Calls<SomeClassWithActions>(x => x.get_hello());
         }
     }
 

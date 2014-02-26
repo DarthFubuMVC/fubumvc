@@ -23,7 +23,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
         [Test]
         public void action_that_returns_a_string_from_a_method_that_should_be_html()
         {
-            endpoints.Get<StringController>(x => x.SayHelloWithHtml())
+            endpoints.Get<StringController>(x => x.SayHelloWithHtml(), acceptType:"text/html")
                 .ContentShouldBe(MimeType.Html, "<h1>Hello</h1>");
         }
 

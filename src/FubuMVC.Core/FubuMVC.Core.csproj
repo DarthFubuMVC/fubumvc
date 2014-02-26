@@ -67,7 +67,6 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AjaxExtensions.cs" />
-    <Compile Include="Ajax\AjaxContinuationPolicy.cs" />
     <Compile Include="Ajax\AjaxContinuationWriter.cs" />
     <Compile Include="Ajax\AjaxError.cs" />
     <Compile Include="ApplicationSettings.cs" />
@@ -134,7 +133,6 @@
     <Compile Include="IContainerFacilityExpression.cs" />
     <Compile Include="ImageTag.cs" />
     <Compile Include="IFubuRequestContext.cs" />
-    <Compile Include="JsonEndpointAttribute.cs" />
     <Compile Include="Packaging\PackageService.cs" />
     <Compile Include="PolicyAttribute.cs" />
     <Compile Include="QueryStringAttribute.cs" />
@@ -163,7 +161,6 @@
     <Compile Include="Registration\Policies\AddToEndExpression.cs" />
     <Compile Include="Registration\Policies\AndChainFilter.cs" />
     <Compile Include="Registration\Policies\AnyActionMatch.cs" />
-    <Compile Include="Registration\Policies\ConnegExpression.cs" />
     <Compile Include="Registration\Policies\HttpMethodFilter.cs" />
     <Compile Include="Registration\Policies\IChainFilter.cs" />
     <Compile Include="Registration\Policies\IChainModification.cs" />
@@ -210,7 +207,6 @@
     <Compile Include="Runtime\Handlers\AsynchronousHttpHandler.cs" />
     <Compile Include="Runtime\Handlers\AsynchronousHttpHandlerSource.cs" />
     <Compile Include="Runtime\Handlers\IHttpHandlerSource.cs" />
-    <Compile Include="Runtime\IJsonSerializer.cs" />
     <Compile Include="Runtime\InMemoryFubuRequest.cs" />
     <Compile Include="Runtime\RequestCompletion.cs" />
     <Compile Include="Runtime\Handlers\SessionlessAsynchronousHttpHandler.cs" />
@@ -235,7 +231,6 @@
     <Compile Include="Runtime\SetValueReport.cs" />
     <Compile Include="Security\NotAuthenticatedAttribute.cs" />
     <Compile Include="Configuration\SystemServicesPack.cs" />
-    <Compile Include="Registration\Conventions\DefaultOutputPolicy.cs" />
     <Compile Include="Registration\EndpointActionSource.cs" />
     <Compile Include="Runtime\Conditionals\Always.cs" />
     <Compile Include="Runtime\Conditionals\IConditional.cs" />
@@ -267,7 +262,6 @@
     <Compile Include="Http\HttpStandinServiceRegistry.cs" />
     <Compile Include="Http\RequestDataExtensions.cs" />
     <Compile Include="Http\RouteDataValues.cs" />
-    <Compile Include="Registration\Conventions\HtmlTagOutputPolicy.cs" />
     <Compile Include="Registration\Nodes\Chain.cs" />
     <Compile Include="Registration\Nodes\Node.cs" />
     <Compile Include="Configuration\RegistryImport.cs" />
@@ -288,7 +282,6 @@
     <Compile Include="Registration\Services\ModelBindingServicesRegistry.cs" />
     <Compile Include="Registration\ActionMethodFilter.cs" />
     <Compile Include="Registration\ActionSource.cs" />
-    <Compile Include="Registration\Conventions\DictionaryOutputConvention.cs" />
     <Compile Include="Registration\Conventions\PartialOnlyConvention.cs" />
     <Compile Include="Registration\Nodes\IContainerModel.cs" />
     <Compile Include="Registration\Querying\ChainSearch.cs" />
@@ -330,7 +323,6 @@
     <Compile Include="Registration\Nodes\ActionCallBase.cs" />
     <Compile Include="Registration\Nodes\BehaviorNode.ObjectDef.cs" />
     <Compile Include="Registration\Nodes\Process.cs" />
-    <Compile Include="Resources\Conneg\BehaviorChainConnegExtensions.cs" />
     <Compile Include="Http\Headers\Header.cs" />
     <Compile Include="Resources\Etags\ETaggedRequest.cs" />
     <Compile Include="Resources\Etags\ETagTuple.cs" />
@@ -415,7 +407,6 @@
     <Compile Include="Registration\ServiceRegistry.cs" />
     <Compile Include="Registration\TypePool.cs" />
     <Compile Include="Registration\DSL\RouteConventionExpression.cs" />
-    <Compile Include="Registration\Conventions\StringOutputPolicy.cs" />
     <Compile Include="Runtime\BehaviorInvoker.cs" />
     <Compile Include="Runtime\FubuSmartRequest.cs" />
     <Compile Include="Runtime\FubuRequestTuple.cs" />

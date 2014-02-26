@@ -3,6 +3,7 @@ using System.Data;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
@@ -26,12 +27,12 @@ namespace FubuMVC.Core.Http
 
         public void ApplyRules(InputNode node)
         {
-            Rules.Top.ApplyInputs(node, node.ParentChain(), this);
+            Rules.Top.ApplyInputs(node, node.ParentChain() ?? new BehaviorChain(), this);
         }
 
         public void ApplyRules(OutputNode node)
         {
-            Rules.Top.ApplyOutputs(node, node.ParentChain(), this);
+            Rules.Top.ApplyOutputs(node, node.ParentChain() ?? new BehaviorChain(), this);
         }
 
         public readonly IList<ConnegQuerystring> QuerystringParameters =

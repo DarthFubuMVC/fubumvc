@@ -33,22 +33,22 @@ namespace FubuMVC.Tests
                 });
 
                 x.Route("area/sub/{Name}/{Age}")
-                    .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
+                    .Calls<TestController>(c => c.AnotherAction(null));
 
                 x.Route("area/sub2/prop")
-                    .Calls<TestController>(c => c.SomeAction(null)).OutputToJson();
+                    .Calls<TestController>(c => c.SomeAction(null));
 
                 x.Route("area/sub2/{Name}/{Age}")
-                    .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
+                    .Calls<TestController>(c => c.AnotherAction(null));
 
                 x.Route("area/sub2/{Name}")
-                    .Calls<TestController>(c => c.ThirdAction(null)).OutputToJson();
+                    .Calls<TestController>(c => c.ThirdAction(null));
 
                 x.Route("area/sub3/{Name}/{Age}")
-                    .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
+                    .Calls<TestController>(c => c.AnotherAction(null));
 
                 x.Route("area/sub4/some_pattern")
-                    .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
+                    .Calls<TestController>(c => c.AnotherAction(null));
             });
 
             

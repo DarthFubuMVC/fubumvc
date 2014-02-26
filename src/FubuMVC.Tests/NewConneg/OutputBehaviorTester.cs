@@ -152,7 +152,7 @@ namespace FubuMVC.Tests.NewConneg
             mediaMimetypesAre(3, MimeType.Bmp);
             mediaMimetypesAre(4, MimeType.Gif);
 
-            theCurrentMimeType.AcceptTypes = new MimeTypeList(MimeType.Xml, MimeType.Any);
+            theCurrentMimeType.AcceptTypes = new MimeTypeList(MimeType.Png, MimeType.Any);
 
             theSelectedMediaShouldBe(0);
         }

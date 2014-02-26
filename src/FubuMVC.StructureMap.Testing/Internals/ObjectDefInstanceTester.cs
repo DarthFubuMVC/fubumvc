@@ -8,6 +8,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Runtime.Formatters;
 using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
@@ -19,14 +20,14 @@ namespace FubuMVC.StructureMap.Testing.Internals
     {
         public class FakeJsonBehavior : IActionBehavior
         {
-            public FakeJsonBehavior(IJsonSerializer writer, IFubuRequest request, IRequestData data) 
+            public FakeJsonBehavior(IFormatter writer, IFubuRequest request, IRequestData data) 
             {
                 Writer = writer;
                 Request = request;
                 Data = data;
             }
 
-            public IJsonSerializer Writer { get; set; }
+            public IFormatter Writer { get; set; }
             public IFubuRequest Request { get; set; }
             public IRequestData Data { get; set; }
             public void Invoke()
@@ -48,7 +49,7 @@ namespace FubuMVC.StructureMap.Testing.Internals
 
             var def = new ObjectDef(typeof (FakeJsonBehavior));
             def.DependencyByValue(typeof (IFubuRequest), request);
-            def.DependencyByType(typeof (IJsonSerializer), typeof (AjaxAwareJsonSerializer));
+            def.DependencyByType(typeof (IFormatter), typeof (AjaxAwareJsonSerializer));
 
             def.DependencyByType(typeof (IRequestData), typeof (InMemoryRequestData));
 

@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using FubuMVC.Core.Runtime.Formatters;
 
 namespace FubuMVC.Core.Runtime
 {
     [Description("Json serialization with the DataContractJsonSerializer")]
-    public class DataContractJsonSerializer : IJsonSerializer
+    public class DataContractJsonSerializer : IFormatter
     {
         public T Read<T>(IFubuRequestContext context)
         {

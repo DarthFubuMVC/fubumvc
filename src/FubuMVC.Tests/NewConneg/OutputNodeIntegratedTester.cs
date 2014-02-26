@@ -53,13 +53,6 @@ namespace FubuMVC.Tests.NewConneg
         }
 
         [Test]
-        public void has_two_media()
-        {
-            theInputBehavior.Media.Count().ShouldEqual(3);
-        }
-
-
-        [Test]
         public void first_media_has_the_formatter()
         {
             theInputBehavior.Media.First()

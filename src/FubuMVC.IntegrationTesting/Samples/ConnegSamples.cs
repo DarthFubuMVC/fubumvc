@@ -127,21 +127,7 @@ namespace FubuMVC.IntegrationTesting.Samples
             // filter.  
             Where.ChainMatches(chain => true);
 
-            Conneg.AcceptJson();
-
-            Conneg.AllowHttpFormPosts();
-
-            Conneg.ApplyConneg();
-
-            Conneg.AddHtml();
-
-            Conneg.AddWriter(typeof(SpecialContentMediaWriter));
-
-            Conneg.ClearAllWriters();
-
-            Conneg.MakeAsymmetricJson();
-
-            Conneg.MakeSymmetricJson();
+            // TODO -- redo this.
         }
     }
     // ENDSAMPLE
@@ -214,19 +200,9 @@ namespace FubuMVC.IntegrationTesting.Samples
             // Is there any output?
             chain.HasOutput();
 
-
-            // Add the default Conneg policies to this chain
-            // model binding, json, or xml in and json or xml out
-            chain.ApplyConneg();
-
             // Remove all writers
             chain.Output.ClearAll();
 
-            // Add basic Json output
-            chain.OutputJson();
-
-            // Add basic Xml output
-            chain.OutputXml();
         }
 
 

@@ -231,12 +231,10 @@
     <Compile Include="Registration\Conventions\actions_that_return_IDictionary_are_json.cs" />
     <Compile Include="Registration\Conventions\AsyncContinueWithHandlerConventionTester.cs" />
     <Compile Include="Registration\Conventions\DefaultConnegOutputIsAppliedToAnyEndpointWithoutAnyPriorOutputTester.cs" />
-    <Compile Include="Registration\Conventions\JsonAttributeTesting.cs" />
     <Compile Include="Registration\Conventions\PartialOnlyConventionTester.cs" />
     <Compile Include="Registration\Nodes\ActionCallBaseObjectDefCreationTester.cs" />
     <Compile Include="Registration\Querying\ChainSearchTester.cs" />
     <Compile Include="Registration\ServiceGraphTester.cs" />
-    <Compile Include="Resources\Conneg\BehaviorChainConnegExtensionsTester.cs" />
     <Compile Include="Resources\Conneg\Conneg_Services_Registration_Tester.cs" />
     <Compile Include="Resources\Etags\ModelBindingETaggedRequestTester.cs" />
     <Compile Include="Runtime\Formatters\XmlFormatterTester.cs" />

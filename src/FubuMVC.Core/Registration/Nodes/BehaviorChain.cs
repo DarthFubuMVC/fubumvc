@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Continuations;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Resources.Conneg;
@@ -72,11 +73,14 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
 
-        internal void InsertNodes()
+        internal void InsertNodes(ConnegSettings settings)
         {
             if (HasResourceType() && !ResourceType().CanBeCastTo<FubuContinuation>())
             {
-                AddToEnd(_output.Value);
+                var outputNode = _output.Value;
+                outputNode.UseSettings(settings);
+
+                AddToEnd(outputNode);
             }
 
             if (_authorization.IsValueCreated && Authorization.HasRules())
@@ -86,6 +90,7 @@ namespace FubuMVC.Core.Registration.Nodes
 
             if (InputType() != null)
             {
+                _input.Value.UseSettings(settings);
                 Prepend(_input.Value);
             }
         }

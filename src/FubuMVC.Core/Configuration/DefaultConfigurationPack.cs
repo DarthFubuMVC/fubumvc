@@ -33,15 +33,6 @@ namespace FubuMVC.Core.Configuration
             Add<CachedPartialConvention>();
             Add<CacheAttributePolicy>();
 
-            For(ConfigurationType.Conneg);
-            Add<AjaxContinuationPolicy>();
-            Add<DictionaryOutputConvention>();
-            Add<HtmlStringOutputPolicy>();
-            Add<StringOutputPolicy>();
-            Add<HtmlTagOutputPolicy>();
-
-            For(ConfigurationType.Attachment);
-            Add<DefaultOutputPolicy>();
 
             For(ConfigurationType.Reordering);
             Add<OutputBeforeAjaxContinuationPolicy>();

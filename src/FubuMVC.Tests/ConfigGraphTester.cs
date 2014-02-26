@@ -46,7 +46,7 @@ namespace FubuMVC.Tests
 
             graph.Add(action);
 
-            graph.ActionsFor(ConfigurationType.Conneg).Single()
+            graph.ActionsFor(ConfigurationType.Discovery).Single()
                 .ShouldBeTheSameAs(action);
         }
 
@@ -75,7 +75,7 @@ namespace FubuMVC.Tests
 
     }
     
-    [ConfigurationType(ConfigurationType.Conneg)]
+    [ConfigurationType(ConfigurationType.Discovery)]
     public class DeterminateAciton : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)

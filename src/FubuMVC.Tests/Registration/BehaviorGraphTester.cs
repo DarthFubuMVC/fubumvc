@@ -304,13 +304,13 @@ namespace FubuMVC.Tests.Registration
             graph1 = BehaviorGraph.BuildFrom(x =>
             {
                 x.Route("method1/{Name}/{Age}")
-                    .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
+                    .Calls<TestController>(c => c.AnotherAction(null));
 
                 x.Route("method2/{Name}/{Age}")
-                    .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
+                    .Calls<TestController>(c => c.AnotherAction(null));
 
                 x.Route("method3/{Name}/{Age}")
-                    .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
+                    .Calls<TestController>(c => c.AnotherAction(null));
             });
 
             chain = new BehaviorChain();
@@ -319,7 +319,7 @@ namespace FubuMVC.Tests.Registration
             graph2 = BehaviorGraph.BuildFrom(x =>
             {
                 x.Route("/root/{Name}/{Age}")
-                    .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
+                    .Calls<TestController>(c => c.AnotherAction(null));
             });
 
             graph2.As<IChainImporter>().Import(graph1, b => b.PrependToUrl("area1"));

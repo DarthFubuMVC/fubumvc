@@ -146,7 +146,7 @@ namespace FubuMVC.Core.Resources.Conneg
     {
         protected override DoNext applyInputs(IInputNode node, BehaviorChain chain, ConnegSettings settings)
         {
-            if (chain.AnyActionHasAttribute<AsymmetricJsonAttribute>())
+            if (chain.AnyActionHasAttribute<AsymmetricJsonAttribute>() || chain.ResourceType().CanBeCastTo<IDictionary<string, object>>())
             {
                 node.Add(typeof(ModelBindingReader<>));
                 node.Add(settings.FormatterFor(MimeType.Json));

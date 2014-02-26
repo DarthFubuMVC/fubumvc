@@ -3,6 +3,7 @@ using FubuCore.Binding;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Runtime.Formatters;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -82,14 +83,14 @@ namespace FubuMVC.Tests.Registration
 
     public class FakeJsonBehavior : IActionBehavior
     {
-        public FakeJsonBehavior(IJsonSerializer writer, IFubuRequest request, IRequestData data)
+        public FakeJsonBehavior(IFormatter writer, IFubuRequest request, IRequestData data)
         {
             Writer = writer;
             Request = request;
             Data = data;
         }
 
-        public IJsonSerializer Writer { get; set; }
+        public IFormatter Writer { get; set; }
         public IFubuRequest Request { get; set; }
         public IRequestData Data { get; set; }
         public void Invoke()

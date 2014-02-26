@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuCore.Descriptions;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
@@ -66,23 +67,26 @@ namespace FubuMVC.Core.Resources.Conneg
     public class InputNode : BehaviorNode, IInputNode, IMayHaveInputType, DescribesItself
     {
         private readonly Type _inputType;
-        private readonly IList<IReader> _readers = new List<IReader>(); 
+        private readonly IList<IReader> _readers = new List<IReader>();
+        private ConnegSettings _settings;
+        private readonly Lazy<IEnumerable<IReader>> _allReaders; 
 
         public InputNode(Type inputType)
         {
             _inputType = inputType;
+
+            _allReaders = new Lazy<IEnumerable<IReader>>(() => {
+                var settings = _settings ?? new ConnegSettings();
+
+                settings.ApplyRules(this);
+
+                return _readers;
+            });
         }
 
         public IEnumerable<IReader> Readers()
         {
-            // TODO -- VERY TEMPORARY
-            if (!_readers.Any())
-            {
-                Add(typeof(ModelBindingReader<>));
-                Add(new JsonSerializer());
-            }
-
-            return _readers;
+            return _allReaders.Value;
         }
 
         public void Add(IFormatter formatter)
@@ -140,7 +144,7 @@ namespace FubuMVC.Core.Resources.Conneg
         {
             get
             {
-                return _readers.SelectMany(x => x.Mimetypes);
+                return _allReaders.Value.SelectMany(x => x.Mimetypes);
             }
         }
 
@@ -176,5 +180,9 @@ namespace FubuMVC.Core.Resources.Conneg
         }
 
 
+        public void UseSettings(ConnegSettings settings)
+        {
+            _settings = settings;
+        }
     }
 }

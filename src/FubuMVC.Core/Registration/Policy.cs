@@ -76,17 +76,6 @@ namespace FubuMVC.Core.Registration
         }
 
         /// <summary>
-        /// Configure content negotiation and media readers and writers for behavior chains matching this policy
-        /// </summary>
-        public ConnegExpression Conneg
-        {
-            get
-            {
-                return new ConnegExpression(this);
-            }
-        }
-
-        /// <summary>
         /// Add a modification to a BehaviorChain
         /// </summary>
         /// <param name="chainModification"></param>

@@ -2,11 +2,12 @@
 using System.ComponentModel;
 using System.Web.Script.Serialization;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Runtime.Formatters;
 
 namespace FubuMVC.Core.Runtime
 {
     [Description("Json serialization with the built in JavaScriptSerializer")]
-    public class JsonSerializer : IJsonSerializer
+    public class JsonSerializer : IFormatter
     {
         public T Read<T>(IFubuRequestContext context)
         {

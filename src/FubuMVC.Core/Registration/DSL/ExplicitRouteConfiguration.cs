@@ -67,10 +67,6 @@ namespace FubuMVC.Core.Registration.DSL
                 return this;
             }
 
-            public ChainedBehaviorExpression OutputToJson()
-            {
-                return AlterChain(x => x.MakeAsymmetricJson());
-            }
 
         }
     }

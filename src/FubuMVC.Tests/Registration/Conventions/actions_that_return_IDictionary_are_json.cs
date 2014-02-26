@@ -68,7 +68,8 @@ namespace FubuMVC.Tests.Registration.Conventions
 
             if (chain.InputType() != null)
             {
-                chain.Input.Mimetypes
+                var mimetypes = chain.Input.Mimetypes.ToArray();
+                mimetypes
                     .OrderBy(x => x)
                     .ShouldHaveTheSameElementsAs("application/json", MimeType.HttpFormMimetype.ToString(), MimeType.MultipartMimetype.ToString(), "text/json");
             }

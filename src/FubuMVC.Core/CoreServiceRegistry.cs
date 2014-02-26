@@ -60,8 +60,6 @@ namespace FubuMVC.Core
 
             SetServiceIfNone<ITypeDescriptorCache, TypeDescriptorCache>();
 
-            SetServiceIfNone<IJsonSerializer, JsonSerializer>();
-
             SetServiceIfNone<ISessionState, SimpleSessionState>();
 
 

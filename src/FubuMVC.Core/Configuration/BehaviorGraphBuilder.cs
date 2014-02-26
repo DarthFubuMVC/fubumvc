@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Reflection;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using System.Collections.Generic;
@@ -30,7 +31,6 @@ namespace FubuMVC.Core.Configuration
             config.RunActions(ConfigurationType.Attributes, graph);
             config.RunActions(ConfigurationType.ModifyRoutes, graph);
             config.RunActions(ConfigurationType.InjectNodes, graph);
-            config.RunActions(ConfigurationType.Conneg, graph);
 
             return graph;
         }
@@ -63,11 +63,10 @@ namespace FubuMVC.Core.Configuration
             config.RunActions(ConfigurationType.Attributes, graph);
             config.RunActions(ConfigurationType.ModifyRoutes, graph);
             config.RunActions(ConfigurationType.InjectNodes, graph);
-            config.RunActions(ConfigurationType.Conneg, graph);
             config.RunActions(ConfigurationType.Attachment, graph);
 
             // apply the authorization, input, and output nodes
-            graph.Behaviors.Each(x => x.InsertNodes());
+            graph.Behaviors.Each(x => x.InsertNodes(graph.Settings.Get<ConnegSettings>()));
 
             config.RunActions(ConfigurationType.Navigation, graph);
             config.RunActions(ConfigurationType.ByNavigation, graph);
@@ -93,7 +92,6 @@ namespace FubuMVC.Core.Configuration
                        ConfigurationType.Attributes,
                        ConfigurationType.ModifyRoutes,
                        ConfigurationType.InjectNodes,
-                       ConfigurationType.Conneg,
                        ConfigurationType.Attachment,
                        ConfigurationType.Navigation,
                        ConfigurationType.ByNavigation,

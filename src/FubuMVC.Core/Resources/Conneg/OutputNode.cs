@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuCore.Descriptions;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
@@ -74,7 +75,10 @@ namespace FubuMVC.Core.Resources.Conneg
     public class OutputNode : BehaviorNode, IMayHaveResourceType, DescribesItself, IOutputNode
     {
         private readonly Type _resourceType;
-        private readonly IList<IMedia> _media = new List<IMedia>(); 
+        private readonly IList<IMedia> _media = new List<IMedia>();
+        private ConnegSettings _settings;
+
+        private readonly Lazy<IEnumerable<IMedia>> _allMedia; 
 
         public OutputNode(Type resourceType)
         {
@@ -84,6 +88,14 @@ namespace FubuMVC.Core.Resources.Conneg
             }
 
             _resourceType = resourceType;
+
+            _allMedia = new Lazy<IEnumerable<IMedia>>(() => {
+                var settings = _settings ?? new ConnegSettings();
+
+                settings.ApplyRules(this);
+
+                return _media;
+            });
         }
 
         public void Add(IFormatter formatter, IConditional condition = null)
@@ -133,15 +145,22 @@ namespace FubuMVC.Core.Resources.Conneg
 
 
 
-        // TODO -- use ConnegSettings to determine this
         public IEnumerable<IMedia> Media()
         {
-            return _media;
+            return _allMedia.Value;
         }
+
+        public IEnumerable<IMedia> Explicits
+        {
+            get
+            {
+                return _media;
+            }
+        } 
 
         public IEnumerable<IMedia<T>> Media<T>()
         {
-            return _media.OfType<IMedia<T>>();
+            return Media().OfType<IMedia<T>>();
         }
 
         public override BehaviorCategory Category
@@ -232,7 +251,7 @@ namespace FubuMVC.Core.Resources.Conneg
 
         public IEnumerable<string> MimeTypes()
         {
-            return _media.SelectMany(x => x.Mimetypes).Distinct();
+            return _allMedia.Value.SelectMany(x => x.Mimetypes).Distinct();
         }
 
         public bool Writes(MimeType mimeType)
@@ -243,6 +262,11 @@ namespace FubuMVC.Core.Resources.Conneg
         public bool Writes(string mimeType)
         {
             return MimeTypes().Contains(mimeType);
+        }
+
+        public void UseSettings(ConnegSettings settings)
+        {
+            _settings = settings;
         }
     }
 }

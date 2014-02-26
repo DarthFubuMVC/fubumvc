@@ -1,7 +1,4 @@
 using System;
-using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Resources.Conneg;
 
 namespace FubuMVC.Core
 {
@@ -10,11 +7,7 @@ namespace FubuMVC.Core
     /// will only accept Json and output to Json
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-    public class SymmetricJsonAttribute : ModifyChainAttribute
+    public class SymmetricJsonAttribute : Attribute
     {
-        public override void Alter(ActionCall call)
-        {
-            call.ParentChain().MakeSymmetricJson();
-        }
     }
 }

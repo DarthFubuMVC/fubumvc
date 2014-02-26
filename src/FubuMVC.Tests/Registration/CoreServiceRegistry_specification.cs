@@ -31,12 +31,6 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
-        public void json_serializer_is_registered()
-        {
-            registeredTypeIs<IJsonSerializer, JsonSerializer>();
-        }
-
-        [Test]
         public void fubu_request_context_is_registered()
         {
             registeredTypeIs<IFubuRequestContext, FubuRequestContext>();

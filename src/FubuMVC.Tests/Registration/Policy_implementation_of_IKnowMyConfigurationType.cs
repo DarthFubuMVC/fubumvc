@@ -30,32 +30,7 @@ namespace FubuMVC.Tests.Registration
             theConfigurationType().ShouldEqual(ConfigurationType.InjectNodes);
         }
 
-
-        [Test]
-        public void if_multiple_actions_use_the_one_latest_in_the_cycle()
-        {
-            thePolicy.Conneg.AcceptJson();
-            thePolicy.ModifyBy(chain => { }, configurationType: ConfigurationType.Attachment);
-
-            // Attachement is after Conneg
-            theConfigurationType().ShouldEqual(ConfigurationType.Attachment);
-        }
-
-
-        [Test]
-        public void attribute_on_the_policy_wins()
-        {
-            new CustomPolicy().As<IKnowMyConfigurationType>().DetermineConfigurationType()
-                              .ShouldEqual(ConfigurationType.InjectNodes);
-        }
     }
 
-    [ConfigurationType(ConfigurationType.InjectNodes)]
-    public class CustomPolicy : Policy
-    {
-        public CustomPolicy()
-        {
-            Conneg.AcceptJson();
-        }
-    }
+
 }
