@@ -22,7 +22,7 @@ namespace FubuMVC.OwinHost.Testing
             FubuMode.Mode("ReallyRandom");
             FubuMode.Mode().ShouldEqual("ReallyRandom");
 
-            using (var server = FubuApplication.DefaultPolicies().StructureMap().RunEmbedded(autoFindPort: true))
+            using (var server = FubuApplication.DefaultPolicies().StructureMap().RunEmbedded(port: 0))
             {
                 server.Endpoints.Get<OwinAppModeEndpoint>(x => x.get_owin_mode())
                     .ReadAsText()

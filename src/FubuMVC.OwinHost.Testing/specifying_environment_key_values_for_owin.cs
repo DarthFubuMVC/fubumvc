@@ -16,7 +16,7 @@ namespace FubuMVC.OwinHost.Testing
             using (var server = FubuApplication
                 .For<OverriddenEnvironmentRegistry>()
                 .StructureMap()
-                .RunEmbedded(autoFindPort: true))
+                .RunEmbedded(port: 0))
             {
                 server.Endpoints.GetByInput(new KeyRequest {Key = "Foo"})
                     .ReadAsText().ShouldEqual("1");
