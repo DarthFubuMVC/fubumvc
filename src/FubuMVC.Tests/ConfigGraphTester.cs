@@ -51,28 +51,6 @@ namespace FubuMVC.Tests
         }
 
 
-        [Test]
-        public void add_configuration_pack_has_to_be_idempotent()
-        {
-            var pack = new DiscoveryActionsConfigurationPack();
-            var graph = new ConfigGraph(Assembly.GetExecutingAssembly());
-
-            graph.Add(pack);
-
-            var count = graph.ActionsFor(ConfigurationType.Explicit).Count();
-
-            graph.Add(new DiscoveryActionsConfigurationPack());
-            graph.Add(new DiscoveryActionsConfigurationPack());
-            graph.Add(new DiscoveryActionsConfigurationPack());
-            graph.Add(new DiscoveryActionsConfigurationPack());
-            graph.Add(new DiscoveryActionsConfigurationPack());
-
-
-            graph.ActionsFor(ConfigurationType.Explicit).Count()
-                .ShouldEqual(count);
-        }
-
-
     }
     
     [ConfigurationType(ConfigurationType.Explicit)]

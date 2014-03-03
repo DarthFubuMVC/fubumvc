@@ -74,13 +74,6 @@ namespace FubuMVC.Core
 
         #region IFubuRegistry Members
 
-        /// <summary>
-        ///   Expression builder for configuring the default <see cref = "UrlPolicy" />, the default route, as well as supplying custom <see cref = "IUrlPolicy" /> implementations.
-        /// </summary>
-        public RouteConventionExpression Routes
-        {
-            get { return new RouteConventionExpression(Config); }
-        }
 
         /// <summary>
         ///   Expression builder for configuring conventions that execute near the end of the build up of the <see cref = "BehaviorGraph" />.

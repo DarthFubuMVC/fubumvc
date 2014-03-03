@@ -113,8 +113,6 @@ namespace FubuMVC.Core.Configuration
            
 
             findAutoRegisteredConfigurationActions(registry, graph);
-
-            registry.Config.Add(new DiscoveryActionsConfigurationPack());
         }
 
         private static void findAutoRegisteredConfigurationActions(FubuRegistry registry, BehaviorGraph graph)

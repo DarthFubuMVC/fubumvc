@@ -37,10 +37,6 @@ namespace FubuMVC.Tests.Urls
         	registry.Actions.IncludeType<QueryStringTestController>();
         	registry.Actions.IncludeType<OnlyOneActionController>();
 
-            registry.Routes
-                .IgnoreControllerFolderName()
-                .IgnoreNamespaceForUrlFrom<UrlRegistryIntegrationTester>()
-                .IgnoreClassSuffix("Controller");
 
  
             registry.Configure(x =>

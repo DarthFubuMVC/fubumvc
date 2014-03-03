@@ -21,7 +21,6 @@ namespace FubuMVC.IntegrationTesting.Conneg
         {
             registry.Actions.IncludeType<JsonEndpoint>();
             registry.Actions.IncludeType<XmlEndpoint>();
-            registry.Routes.ConstrainToHttpMethod(call => true, "POST");
             registry.Services(r => r.AddService<IPropertyBinder, TheAnswerBinder>());
         }
 

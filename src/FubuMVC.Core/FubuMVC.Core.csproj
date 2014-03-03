@@ -95,7 +95,6 @@
     <Compile Include="ConfigurationType.cs" />
     <Compile Include="ConfigurationTypeAttribute.cs" />
     <Compile Include="Configuration\DefaultConfigurationPack.cs" />
-    <Compile Include="Configuration\DiscoveryActionsConfigurationPack.cs" />
     <Compile Include="DiagnosticsSettings.cs" />
     <Compile Include="Diagnostics\AboutDiagnostics.cs" />
     <Compile Include="Diagnostics\DescriptionTags.cs" />
@@ -398,9 +397,7 @@
     <Compile Include="Packaging\VirtualPaths\FileSystemVirtualPathProvider.cs" />
     <Compile Include="Packaging\PackageLoadingConfigurationExtensions.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConvention.cs" />
-    <Compile Include="Registration\Conventions\DefaultRouteMethodBasedUrlPolicy.cs" />
     <Compile Include="Registration\Conventions\ReorderBehaviorsPolicy.cs" />
-    <Compile Include="Registration\Conventions\RouteConstraintPolicy.cs" />
     <Compile Include="Registration\DSL\ModelsExpression.cs" />
     <Compile Include="Registration\DSL\PoliciesExpression.cs" />
     <Compile Include="Registration\Conventions\DownloadFileConvention.cs" />
@@ -415,11 +412,7 @@
     <Compile Include="Behaviors\OneInZeroOutActionInvoker.cs" />
     <Compile Include="Behaviors\ZeroInOneOutActionInvoker.cs" />
     <Compile Include="Bootstrapping\IContainerFacility.cs" />
-    <Compile Include="Registration\Conventions\IRouteInputPolicy.cs" />
     <Compile Include="Registration\Conventions\IUrlPolicy.cs" />
-    <Compile Include="Registration\Conventions\RouteDefinitionResolver.cs" />
-    <Compile Include="Registration\Conventions\RouteInputPolicy.cs" />
-    <Compile Include="Registration\Conventions\UrlPolicy.cs" />
     <Compile Include="Registration\DSL\TypeMethodPolicy.cs" />
     <Compile Include="Registration\IActionSource.cs" />
     <Compile Include="Registration\Nodes\ContinuationNode.cs" />
@@ -431,7 +424,6 @@
     <Compile Include="Registration\Querying\IChainResolver.cs" />
     <Compile Include="Registration\ServiceRegistry.cs" />
     <Compile Include="Registration\TypePool.cs" />
-    <Compile Include="Registration\DSL\RouteConventionExpression.cs" />
     <Compile Include="Runtime\BehaviorInvoker.cs" />
     <Compile Include="Runtime\FubuSmartRequest.cs" />
     <Compile Include="Runtime\FubuRequestTuple.cs" />
