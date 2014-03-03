@@ -10,6 +10,8 @@ using FubuMVC.Core.Resources.Conneg;
 
 namespace FubuMVC.Core.Registration.DSL
 {
+    [Obsolete]
+    [MarkedForTermination]
     [ConfigurationType(ConfigurationType.Explicit)]
     [Title("Explicit route definition")]
     public class ExplicitRouteConfiguration : IConfigurationAction

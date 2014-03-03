@@ -8,6 +8,7 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
@@ -597,6 +598,16 @@ namespace FubuMVC.Tests.Registration
 
             chain.Top.ShouldBeTheSameAs(actionCall);
         }
+
+        [Test]
+        public void applies_modify_chain_attributes_to_the_created_chain()
+        {
+            var actionCall = ActionCall.For<ControllerTarget>(x => x.get_wonky());
+            var chain = actionCall.BuildChain();
+
+            chain.IsWrappedBy(typeof(WonkyWrapper))
+                .ShouldBeTrue();
+        }
     }
 
     public class ValidActionWithOneMethod
@@ -712,6 +723,23 @@ namespace FubuMVC.Tests.Registration
         {
         }
 
+        [Wonky]
+        public string get_wonky()
+        {
+            return "I'm wonky";
+        }
+    }
 
+    public class WonkyAttribute : ModifyChainAttribute
+    {
+        public override void Alter(ActionCall call)
+        {
+            call.ParentChain().InsertFirst(Wrapper.For<WonkyWrapper>());
+        }
+    }
+
+    public class WonkyWrapper : WrappingBehavior
+    {
+        
     }
 }

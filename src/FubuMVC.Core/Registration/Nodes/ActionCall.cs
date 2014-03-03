@@ -141,6 +141,8 @@ namespace FubuMVC.Core.Registration.Nodes
 
             chain.AddToEnd(this);
 
+            ForAttributes<ModifyChainAttribute>(att => att.Alter(this));
+
             return chain;
         }
     }

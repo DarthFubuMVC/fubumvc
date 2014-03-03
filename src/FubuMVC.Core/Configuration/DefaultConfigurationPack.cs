@@ -12,7 +12,6 @@ namespace FubuMVC.Core.Configuration
         {
             For(ConfigurationType.Attributes);
             Add<UrlPatternAttributeOnViewModelPolicy>();
-            Add<ModifyChainAttributeConvention>();
 
             For(ConfigurationType.ModifyRoutes);
             Add<ResourcePathRoutePolicy>();
