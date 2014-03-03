@@ -104,10 +104,12 @@ namespace FubuMVC.Tests
 
         public class Action1
         {
+            [UrlPattern("a/m1")]
             public void M1()
             {
             }
 
+            [UrlPattern("a/m2")]
             public void M2()
             {
             }
@@ -115,10 +117,12 @@ namespace FubuMVC.Tests
 
         public class Action2
         {
+            [UrlPattern("b/m1")]
             public void M1()
             {
             }
 
+            [UrlPattern("b/m2")]
             public void M2()
             {
             }
@@ -134,8 +138,8 @@ namespace FubuMVC.Tests
         [Test]
         public void adds_chains_from_import_with_a_prefix()
         {
-            import.Route("a/m1").Calls<Action1>(x => x.M1());
-            import.Route("a/m2").Calls<Action1>(x => x.M2());
+            import.Actions.IncludeType<Action1>();
+
             parent.Import(import, "import");
 
             var graph = BehaviorGraph.BuildFrom(parent);
@@ -147,8 +151,7 @@ namespace FubuMVC.Tests
         [Test]
         public void adds_chains_from_import_without_prefix()
         {
-            import.Route("a/m1").Calls<Action1>(x => x.M1());
-            import.Route("a/m2").Calls<Action1>(x => x.M2());
+            import.Actions.IncludeType<Action1>();
             parent.Import(import, string.Empty);
 
             var graph = BehaviorGraph.BuildFrom(parent);
@@ -160,15 +163,13 @@ namespace FubuMVC.Tests
         [Test]
         public void apply_policy_to_import_only_applies_to_the_chains_in_the_imported_registry()
         {
-            import.Route("a/m1").Calls<Action1>(x => x.M1());
-            import.Route("a/m2").Calls<Action1>(x => x.M2());
+            import.Actions.IncludeType<Action1>();
 
             import.Policies.Add(policy => policy.Wrap.WithBehavior<Wrapper>());
 
             parent.Import(import, "import");
 
-            parent.Route("b/m1").Calls<Action2>(x => x.M1());
-            parent.Route("b/m2").Calls<Action2>(x => x.M2());
+            parent.Actions.IncludeType<Action2>();
 
             var graph = BehaviorGraph.BuildFrom(parent);
 
@@ -188,14 +189,12 @@ namespace FubuMVC.Tests
         [Test]
         public void apply_policy_to_parent_only_applies_to_the_chains_in_the_imported_registry_and_the_parent()
         {
-            import.Route("a/m1").Calls<Action1>(x => x.M1());
-            import.Route("a/m2").Calls<Action1>(x => x.M2());
+            import.Actions.IncludeType<Action1>();
 
 
             parent.Import(import, "import");
 
-            parent.Route("b/m1").Calls<Action2>(x => x.M1());
-            parent.Route("b/m2").Calls<Action2>(x => x.M2());
+            parent.Actions.IncludeType<Action2>();
 
             parent.Policies.Add(policy => policy.Wrap.WithBehavior<Wrapper>());
 

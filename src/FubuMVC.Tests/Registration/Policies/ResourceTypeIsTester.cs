@@ -42,7 +42,7 @@ namespace FubuMVC.Tests.Registration.Policies
 
     public class ResourceTypeEndpoints
     {
-        public void post_name(string input)
+        public void post_name(ResourceTypeModel input)
         {
             
         }

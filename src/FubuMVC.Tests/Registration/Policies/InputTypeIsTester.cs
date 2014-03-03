@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.Registration.Policies
         [Test]
         public void positive_case()
         {
-            new InputTypeIs<string>().Matches(chainFor(x => x.post_foo(null)))
+            new InputTypeIs<InputTypeModel>().Matches(chainFor(x => x.post_foo(null)))
                 .ShouldBeTrue();
         }
 
@@ -52,7 +52,7 @@ namespace FubuMVC.Tests.Registration.Policies
 
     public class InputTypeEndpoints
     {
-        public void post_foo(string name)
+        public void post_foo(InputTypeModel number)
         {
             
         }

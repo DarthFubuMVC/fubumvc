@@ -84,7 +84,7 @@ namespace FubuMVC.Core.Configuration
 
         private static void registerServices(ConfigGraph config, BehaviorGraph graph)
         {
-            config.Add(new RegisterAllSettings(graph));
+            graph.Settings.Register(graph.Services);
 
             config
                 .AllServiceRegistrations()

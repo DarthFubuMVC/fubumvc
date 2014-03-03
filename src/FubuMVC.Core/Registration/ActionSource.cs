@@ -26,10 +26,12 @@ namespace FubuMVC.Core.Registration
             int parameterCount = method.GetParameters() == null ? 0 : method.GetParameters().Length;
             if (parameterCount > 1) return false;
 
-
+            if (method.GetParameters().Any(x => x.ParameterType.IsSimple())) return false;
             
             bool hasOutput = method.ReturnType != typeof (void);
             if (hasOutput && !method.ReturnType.IsClass) return false;
+
+            
 
             if (hasOutput) return true;
 

@@ -58,10 +58,8 @@ namespace FubuMVC.Tests.Registration
                 Registry = registry1
             };
 
-            graph2 = BehaviorGraph.BuildFrom(x =>
-            {
-                x.Route("/root/{Name}/{Age}")
-                    .Calls<TestController>(c => c.AnotherAction(null));
+            graph2 = BehaviorGraph.BuildFrom(x => {
+                x.Actions.IncludeType<TestController>();
             });
 
             graph2.As<IChainImporter>().Import(theImport.BuildChains(graph2.Settings));

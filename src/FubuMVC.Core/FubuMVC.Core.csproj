@@ -177,7 +177,6 @@
     <Compile Include="Registration\Conventions\DefaultRouteConventionBasedUrlPolicy.cs" />
     <Compile Include="Registration\Conventions\DefaultUrlPolicy.cs" />
     <Compile Include="Registration\Conventions\OutputBeforeAjaxContinuationPolicy.cs" />
-    <Compile Include="Registration\Conventions\RegisterAllSettings.cs" />
     <Compile Include="Registration\Conventions\UrlPatternAttributeOnViewModelPolicy.cs" />
     <Compile Include="Registration\Conventions\UrlPolicies.cs" />
     <Compile Include="Registration\Conventions\VaryByModification.cs" />
@@ -480,7 +479,6 @@
     <Compile Include="Registration\Nodes\BehaviorNode.cs" />
     <Compile Include="Urls\Categories.cs" />
     <Compile Include="Registration\ObjectGraph\ConfiguredDependency.cs" />
-    <Compile Include="Registration\DSL\ExplicitRouteConfiguration.cs" />
     <Compile Include="FubuRegistry.cs" />
     <Compile Include="Registration\Routes\FuncBuilder.cs" />
     <Compile Include="Registration\Nodes\ActionCall.cs" />
