@@ -110,7 +110,6 @@
     <Compile Include="Ajax\AjaxContinuationProcessingTester.cs" />
     <Compile Include="Async\AsyncRouteIntegrationTester.cs" />
     <Compile Include="Authorization\end_to_end_authorization_tester.cs" />
-    <Compile Include="Autofac.cs" />
     <Compile Include="Auto_Katana_Hosting_Integration_Tester.cs" />
     <Compile Include="Caching\caching_tester.cs" />
     <Compile Include="can_register_and_use_OWIN_middleware_from_a_bottle.cs" />
@@ -148,13 +147,8 @@
     <Compile Include="SharedHarness.cs" />
     <Compile Include="SharedHarnessContext.cs" />
     <Compile Include="SelfHostHttpServerTester.cs" />
-    <Compile Include="Windsor.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FubuMVC.Autofac\FubuMVC.Autofac.csproj">
-      <Project>{3662e1ae-d402-43b5-8f81-0d9a04b6f434}</Project>
-      <Name>FubuMVC.Autofac</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
@@ -178,10 +172,6 @@
     <ProjectReference Include="..\FubuMVC.Tests\FubuMVC.Tests.csproj">
       <Project>{FEB91F9F-ECE2-480C-B39C-A44BBF1F7B01}</Project>
       <Name>FubuMVC.Tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.Windsor\FubuMVC.Windsor.csproj">
-      <Project>{3825ff35-1bf7-42b7-9ab4-43e07de73a06}</Project>
-      <Name>FubuMVC.Windsor</Name>
     </ProjectReference>
     <ProjectReference Include="..\OwinBottle\OwinBottle.csproj">
       <Project>{60b6139b-6bda-4860-a475-9675d47888f7}</Project>
@@ -290,8 +280,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent></PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -9,10 +9,6 @@
   <BottleName>FubuMVC.Docs</BottleName>
   <Nugets>
     <PublishedNuget>
-      <Name>FubuMVC.Autofac</Name>
-      <Description>Autofac bootstrapping for FubuMVC applications</Description>
-    </PublishedNuget>
-    <PublishedNuget>
       <Name>FubuMVC.Core</Name>
       <Description>FubuMVC.Core Library</Description>
     </PublishedNuget>
@@ -31,10 +27,6 @@
     <PublishedNuget>
       <Name>FubuMVC.TestingHarness</Name>
       <Description>Small library of classes to easily write integration tests against FubuMVC applications hosted by Kayak</Description>
-    </PublishedNuget>
-    <PublishedNuget>
-      <Name>FubuMVC.Windsor</Name>
-      <Description>Castle Windsor bootstrapping for FubuMVC applications</Description>
     </PublishedNuget>
   </Nugets>
   <Url>fubumvc</Url>
