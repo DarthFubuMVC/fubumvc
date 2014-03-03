@@ -185,7 +185,6 @@ namespace FubuMVC.Tests.NewConneg
     public class when_writing_and_a_media_can_be_found : InteractionContext<OutputBehavior<OutputTarget>>
     {
         private IMedia<OutputTarget> theSelectedMedia;
-        private string theAcceptedMimetype;
         private MockedFubuRequestContext theContext;
         private OutputTarget theTarget;
         private CurrentMimeType theMimeType;

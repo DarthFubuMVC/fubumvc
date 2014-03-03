@@ -136,6 +136,21 @@
     <Compile Include="Http\Compression\GZipEncodingTester.cs" />
     <Compile Include="Http\Compression\HttpContentEncodersTester.cs" />
     <Compile Include="Http\Compression\HttpContentEncodingFilterTester.cs" />
+    <Compile Include="Http\Owin\CurrentHttpRequestExtensions_integration_with_OWIN_Tester.cs" />
+    <Compile Include="Http\Owin\FormRequestReaderTester.cs" />
+    <Compile Include="Http\Owin\Middleware\MiddlewareContinuationTester.cs" />
+    <Compile Include="Http\Owin\Middleware\StaticFiles\AssetStaticFileRuleTester.cs" />
+    <Compile Include="Http\Owin\Middleware\StaticFiles\DenyConfigRuleTester.cs" />
+    <Compile Include="Http\Owin\Middleware\StaticFiles\StaticFileMiddlewareTester.cs" />
+    <Compile Include="Http\Owin\Middleware\StaticFiles\WriteFileContinuationTester.cs" />
+    <Compile Include="Http\Owin\Middleware\StaticFiles\WriteFileHeadContinuationTester.cs" />
+    <Compile Include="Http\Owin\Middleware\StaticFiles\WriteStatusCodeContinuationTester.cs" />
+    <Compile Include="Http\Owin\OwinCurrentHttpRequestTester.cs" />
+    <Compile Include="Http\Owin\OwinCurrentHttpRequest_ClientConnectivityTester.cs" />
+    <Compile Include="Http\Owin\OwinSettingsTester.cs" />
+    <Compile Include="Http\Owin\OwnCurrentHttpRequestTester.cs" />
+    <Compile Include="Http\Owin\OwnHttpWriterTester.cs" />
+    <Compile Include="Http\Owin\OwnResponseTester.cs" />
     <Compile Include="Http\StandInCurrentHttpRequestTester.cs" />
     <Compile Include="Http\StreamExtensions.cs" />
     <Compile Include="Logging\ExceptionReportTester.cs" />
@@ -297,7 +312,8 @@
     <Compile Include="FubuBootstrapperIntegrationTester.cs" />
     <Compile Include="FubuRegistryTester.cs" />
     <Compile Include="HtmlGenerationTestExtensions.cs" />
-    <Compile Include="Registration\BehaviorGraphTester.cs"></Compile>
+    <Compile Include="Registration\BehaviorGraphTester.cs">
+    </Compile>
     <Compile Include="Registration\Conventions\ActionSourceTester.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConventionTester.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteInputTypeBasedUrlPolicyTester.cs" />

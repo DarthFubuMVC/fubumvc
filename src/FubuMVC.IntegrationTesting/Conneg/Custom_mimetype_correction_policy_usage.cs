@@ -3,7 +3,6 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Katana;
-using FubuMVC.OwinHost;
 using FubuMVC.StructureMap;
 using NUnit.Framework;
 

@@ -43,6 +43,9 @@
     <Reference Include="HtmlTags">
       <HintPath>..\packages\HtmlTags\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin\lib\net40\Owin.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap\lib\StructureMap.dll</HintPath>
     </Reference>
@@ -126,6 +129,33 @@
     <Compile Include="Http\FubuMvcRequestData.cs" />
     <Compile Include="Http\HeaderValueSource.cs" />
     <Compile Include="Http\IMimetypeCorrection.cs" />
+    <Compile Include="Http\Owin\FubuOwinHost.cs" />
+    <Compile Include="Http\Owin\IAppBuilderConfiguration.cs" />
+    <Compile Include="Http\Owin\Middleware\FubuMvcOwinMiddleware.cs" />
+    <Compile Include="Http\Owin\Middleware\MiddlewareChain.cs" />
+    <Compile Include="Http\Owin\Middleware\MiddlewareContinuation.cs" />
+    <Compile Include="Http\Owin\Middleware\MiddlewareNode.cs" />
+    <Compile Include="Http\Owin\Middleware\StaticFiles\AssetStaticFileRule.cs" />
+    <Compile Include="Http\Owin\Middleware\StaticFiles\DenyConfigRule.cs" />
+    <Compile Include="Http\Owin\Middleware\StaticFiles\IStaticFileRule.cs" />
+    <Compile Include="Http\Owin\Middleware\StaticFiles\StaticFileMiddleware.cs" />
+    <Compile Include="Http\Owin\Middleware\StaticFiles\WriteFileContinuation.cs" />
+    <Compile Include="Http\Owin\Middleware\StaticFiles\WriteFileHeadContinuation.cs" />
+    <Compile Include="Http\Owin\Middleware\StaticFiles\WriterContinuation.cs" />
+    <Compile Include="Http\Owin\Middleware\StaticFiles\WriteStatusCodeContinuation.cs" />
+    <Compile Include="Http\Owin\OwinConstants.cs" />
+    <Compile Include="Http\Owin\OwinContext.cs" />
+    <Compile Include="Http\Owin\OwinCurrentHttpRequest.cs" />
+    <Compile Include="Http\Owin\OwinHttpContext.cs" />
+    <Compile Include="Http\Owin\OwinHttpRequest.cs" />
+    <Compile Include="Http\Owin\OwinHttpResponse.cs" />
+    <Compile Include="Http\Owin\OwinServiceArguments.cs" />
+    <Compile Include="Http\Owin\OwinSettings.cs" />
+    <Compile Include="PortFinder.cs" />
+    <Compile Include="Http\Owin\Readers\FormReader.cs" />
+    <Compile Include="Http\Owin\Readers\IOwinRequestReader.cs" />
+    <Compile Include="Http\Owin\Readers\MediaTypeReader.cs" />
+    <Compile Include="Http\Owin\Readers\OwinRequestReader.cs" />
     <Compile Include="IApplicationSource.cs" />
     <Compile Include="IContainerFacilityExpression.cs" />
     <Compile Include="ImageTag.cs" />

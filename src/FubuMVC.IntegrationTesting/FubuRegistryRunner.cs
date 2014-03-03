@@ -10,7 +10,6 @@ using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Runtime;
 using FubuMVC.IntegrationTesting.Querying;
 using FubuMVC.Katana;
-using FubuMVC.OwinHost;
 using FubuMVC.StructureMap;
 using FubuMVC.TestingHarness;
 using FubuTestingSupport;

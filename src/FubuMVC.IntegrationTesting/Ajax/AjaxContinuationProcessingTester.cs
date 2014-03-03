@@ -2,7 +2,6 @@ using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
-using FubuMVC.OwinHost;
 using FubuTestingSupport;
 using NUnit.Framework;
 using FubuMVC.StructureMap;

@@ -70,6 +70,9 @@
     <Reference Include="Owin">
       <HintPath>..\packages\Owin\lib\net40\Owin.dll</HintPath>
     </Reference>
+    <Reference Include="Owin.Extensions">
+      <HintPath>..\packages\Owin.Extensions\lib\net40\Owin.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="pnunit.framework">
       <HintPath>..\packages\NUnit\lib\pnunit.framework.dll</HintPath>
     </Reference>
@@ -118,6 +121,25 @@
     <Compile Include="Http\reading_and_writing_http_headers_and_responses_with_OWIN.cs" />
     <Compile Include="Issues\Issue313.cs" />
     <Compile Include="Http\compression_testing.cs" />
+    <Compile Include="Owin\binding_against_form_data.cs" />
+    <Compile Include="Owin\binding_against_querystring_values.cs" />
+    <Compile Include="Owin\binding_against_request_cookies.cs" />
+    <Compile Include="Owin\handling_501_responses.cs" />
+    <Compile Include="Owin\handling_async_routes.cs" />
+    <Compile Include="Owin\handling_a_404.cs" />
+    <Compile Include="Owin\Harness.cs" />
+    <Compile Include="Owin\Owin_url_resolution_tester.cs" />
+    <Compile Include="Owin\passing_the_FubuMode_into_the_OWIN_host.cs" />
+    <Compile Include="Owin\reading_and_writing_json_and_xml_thru_conneg.cs" />
+    <Compile Include="Owin\reading_querystring_values.cs" />
+    <Compile Include="Owin\reading_request_headers.cs" />
+    <Compile Include="Owin\reading_route_data.cs" />
+    <Compile Include="Owin\specifying_environment_key_values_for_owin.cs" />
+    <Compile Include="Owin\using_custom_middleware.cs" />
+    <Compile Include="Owin\writing_a_file_to_output.cs" />
+    <Compile Include="Owin\writing_a_non_default_status_code.cs" />
+    <Compile Include="Owin\writing_response_headers.cs" />
+    <Compile Include="Owin\writing_string_output.cs" />
     <Compile Include="Packaging\assembly_marked_as_FubuModule_is_added_as_a_package.cs" />
     <Compile Include="Packaging\invoking_endpoints_from_a_package.cs" />
     <Compile Include="Packaging\linking_and_unlinking_packages.cs" />
@@ -152,10 +174,6 @@
     <ProjectReference Include="..\FubuMVC.Katana\FubuMVC.Katana.csproj">
       <Project>{48BC51C2-B759-48DB-AAE1-F4686CD6D02A}</Project>
       <Name>FubuMVC.Katana</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.OwinHost\FubuMVC.OwinHost.csproj">
-      <Project>{EA10DF80-FD95-4172-BC18-DB0DFB279844}</Project>
-      <Name>FubuMVC.OwinHost</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
       <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
@@ -265,7 +283,13 @@
     <Content Include="content\styles\redmond\jquery.ui.theme.css" />
     <Content Include="content\styles\ui.multiselect.css" />
     <Content Include="Files\1.txt" />
+    <Content Include="ReadMe.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Sample.js" />
+    <Content Include="Test.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Tests\Packaging\Environment\Environment Runner captures errors from the Environment setup.xml" />
     <Content Include="Tests\Packaging\Environment\Execute Environment Happy Path.xml" />
     <Content Include="Tests\Packaging\Environment\Logging installer failures.xml" />

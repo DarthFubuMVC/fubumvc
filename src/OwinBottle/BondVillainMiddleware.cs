@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using FubuMVC.OwinHost;
+using FubuMVC.Core.Http.Owin;
 
 namespace OwinBottle
 {

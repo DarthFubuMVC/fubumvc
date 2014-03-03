@@ -2,7 +2,6 @@
 using System.Threading;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
-using FubuMVC.OwinHost;
 using FubuMVC.TestingHarness;
 using HtmlTags;
 using NUnit.Framework;

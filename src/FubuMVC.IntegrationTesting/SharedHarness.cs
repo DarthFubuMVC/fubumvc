@@ -9,7 +9,6 @@ using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.Katana;
-using FubuMVC.OwinHost;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
