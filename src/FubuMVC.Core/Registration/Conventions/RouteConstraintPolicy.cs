@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
+    [MarkedForTermination]
     public class RouteConstraintPolicy
     {
         private readonly IList<HttpMethodFilter> _httpMethodFilters = new List<HttpMethodFilter>();

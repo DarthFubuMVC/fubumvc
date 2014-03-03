@@ -1,6 +1,4 @@
 using System;
-using FubuCore;
-using FubuMVC.Core.Registration.Routes;
 
 namespace FubuMVC.Core
 {
@@ -26,8 +24,4 @@ namespace FubuMVC.Core
 
         public string DefaultValue { get; set; }
     }
-
-    // TODO -- change to a ModifyChainAttribute
-
-    // TODO -- this has to take place before routes
 }

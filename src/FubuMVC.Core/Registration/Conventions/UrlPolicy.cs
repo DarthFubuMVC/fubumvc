@@ -11,6 +11,7 @@ using FubuMVC.Core.Registration.Routes;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
+    [MarkedForTermination]
     [Title("Default route determination conventions")]
     public class UrlPolicy : IUrlPolicy
     {

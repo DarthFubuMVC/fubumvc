@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using FubuCore;
 using FubuCore.Reflection;
 using FubuCore.Util;
 using FubuMVC.Core.Registration.Nodes;
@@ -9,6 +10,7 @@ using FubuMVC.Core.Registration.Routes;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
+    [MarkedForTermination]
     public class RouteInputPolicy : IRouteInputPolicy
     {
         private readonly Alteration<IRouteDefinition, ActionCall> _inputBuilders;

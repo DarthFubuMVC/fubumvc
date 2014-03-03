@@ -163,6 +163,7 @@
     <Compile Include="Registration\Conventions\CacheAttributePolicyTester.cs" />
     <Compile Include="Registration\Conventions\CachedPartialConventionTester.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteConventionBasedUrlPolicyTester.cs" />
+    <Compile Include="Registration\Conventions\DefaultUrlPolicyTester.cs" />
     <Compile Include="Registration\Conventions\EndpointActionSourceTester.cs" />
     <Compile Include="Registration\Conventions\RegisterAllSettingsTester.cs" />
     <Compile Include="Registration\Conventions\UrlPatternAttributeOnViewModelPolicyTester.cs" />
