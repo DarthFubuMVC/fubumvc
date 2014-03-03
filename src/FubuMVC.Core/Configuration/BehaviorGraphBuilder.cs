@@ -46,12 +46,9 @@ namespace FubuMVC.Core.Configuration
 
             // Apply settings
             config.RunActions(ConfigurationType.Settings, graph);
-            config.Add(new RegisterAllSettings(graph));
 
-            config
-                .AllServiceRegistrations()
-                .OfType<IServiceRegistration>()
-                .Each(x => x.Apply(graph.Services));
+
+            
 
             var chainSources = config.Sources.Union(config.UniqueImports()).ToList();
             if (FubuMode.InDevelopment())
@@ -79,10 +76,22 @@ namespace FubuMVC.Core.Configuration
             config.RunActions(ConfigurationType.Reordering, graph);
             config.RunActions(ConfigurationType.Instrumentation, graph);
 
-
-            graph.Services.AddService(config);
+            registerServices(config, graph);
+            
 
             return graph;
+        }
+
+        private static void registerServices(ConfigGraph config, BehaviorGraph graph)
+        {
+            config.Add(new RegisterAllSettings(graph));
+
+            config
+                .AllServiceRegistrations()
+                .OfType<IServiceRegistration>()
+                .Each(x => x.Apply(graph.Services));
+
+            graph.Services.AddService(config);
         }
 
 
