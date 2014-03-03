@@ -1,7 +1,7 @@
 using System.Linq;
 using FubuMVC.Core.Registration.Nodes;
 
-namespace FubuMVC.TestingHarness.Querying
+namespace FubuMVC.IntegrationTesting.Querying
 {
     public class EndpointToken
     {

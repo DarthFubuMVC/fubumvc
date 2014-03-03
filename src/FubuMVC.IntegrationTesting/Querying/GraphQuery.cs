@@ -2,7 +2,7 @@ using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 
-namespace FubuMVC.TestingHarness.Querying
+namespace FubuMVC.IntegrationTesting.Querying
 {
     public class GraphQuery
     {

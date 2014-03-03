@@ -85,16 +85,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="CommandRunner.cs" />
-    <Compile Include="FubuRegistryRunner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Querying\ActionToken.cs" />
-    <Compile Include="Querying\AssemblyToken.cs" />
-    <Compile Include="Querying\EndpointModel.cs" />
-    <Compile Include="Querying\EndpointToken.cs" />
-    <Compile Include="Querying\GraphQuery.cs" />
-    <Compile Include="Querying\RemoteBehaviorGraph.cs" />
-    <Compile Include="Querying\TypeToken.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">

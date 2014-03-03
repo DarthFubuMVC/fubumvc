@@ -99,6 +99,7 @@
     <Compile Include="Caching\caching_tester.cs" />
     <Compile Include="can_register_and_use_OWIN_middleware_from_a_bottle.cs" />
     <Compile Include="Chrome\ChromeBehaviorIntegrationTester.cs" />
+    <Compile Include="CommandRunner.cs" />
     <Compile Include="Conneg\AjaxInputModelBindingIntegrationTester.cs" />
     <Compile Include="Conneg\Conneg_can_be_corrected_with_querystring_parameters_for_JSON_and_XML.cs" />
     <Compile Include="Conneg\Conneg_Can_Choose_Output_Media_Based_on_Mimetypes.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Continuations\redirects_with_the_get.cs" />
     <Compile Include="debugger.cs" />
     <Compile Include="EndpointServiceIntegratedSmokeTester.cs" />
+    <Compile Include="FubuRegistryRunner.cs" />
     <Compile Include="Http\partial_invocations.cs" />
     <Compile Include="Http\reading_and_writing_http_headers_and_responses_with_OWIN.cs" />
     <Compile Include="Issues\Issue313.cs" />
@@ -124,6 +126,13 @@
     <Compile Include="Packaging\reading_files_and_contents.cs" />
     <Compile Include="Packaging\unlinking_a_bottle_from_the_command_line.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Querying\ActionToken.cs" />
+    <Compile Include="Querying\AssemblyToken.cs" />
+    <Compile Include="Querying\EndpointModel.cs" />
+    <Compile Include="Querying\EndpointToken.cs" />
+    <Compile Include="Querying\GraphQuery.cs" />
+    <Compile Include="Querying\RemoteBehaviorGraph.cs" />
+    <Compile Include="Querying\TypeToken.cs" />
     <Compile Include="read_cookies_from_the_request.cs" />
     <Compile Include="StaticFiles\reading_static_file_content_with_katana.cs" />
     <Compile Include="Routing\end_to_end_route_alias_tester.cs" />
@@ -151,10 +160,6 @@
     <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
       <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
       <Name>FubuMVC.StructureMap</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.TestingHarness\FubuMVC.TestingHarness.csproj">
-      <Project>{C9C9A405-1164-44AB-9CB4-3639F0979BE9}</Project>
-      <Name>FubuMVC.TestingHarness</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Tests\FubuMVC.Tests.csproj">
       <Project>{FEB91F9F-ECE2-480C-B39C-A44BBF1F7B01}</Project>
@@ -267,7 +272,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent></PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

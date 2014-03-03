@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Threading;
 using System.Xml;
 using Bottles.Commands;
 using FubuCore;
@@ -9,17 +8,16 @@ using FubuMVC.Core;
 using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Urls;
+using FubuMVC.IntegrationTesting.Querying;
 using FubuMVC.Katana;
 using FubuMVC.OwinHost;
 using FubuMVC.StructureMap;
-using FubuMVC.TestingHarness.Querying;
+using FubuMVC.TestingHarness;
 using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
-using StructureMap.Source;
 
-namespace FubuMVC.TestingHarness
+namespace FubuMVC.IntegrationTesting
 {
     public abstract class FubuRegistryHarness
     {
@@ -302,5 +300,30 @@ namespace FubuMVC.TestingHarness
                 yield return name.Substring(name.IndexOf('_'));
             }
         }
+
+
+
+        public static HttpResponse EtagShouldBe(this HttpResponse response, string etag)
+        {
+            etag.Trim('"').ShouldEqual(etag);
+            return response;
+        }
+
+        public static DateTime? LastModified(this HttpResponse response)
+        {
+            var lastModifiedString = response.ResponseHeaderFor(HttpResponseHeader.LastModified);
+            return lastModifiedString.IsEmpty() ? (DateTime?)null : DateTime.ParseExact(lastModifiedString, "r", null);
+        }
+
+        public static HttpResponse LastModifiedShouldBe(this HttpResponse response, DateTime expected)
+        {
+            var lastModified = response.LastModified();
+            lastModified.HasValue.ShouldBeTrueBecause("No value for LastModified");
+            lastModified.ShouldEqual(expected);
+
+            return response;
+        }
+
+
     }
 }

@@ -1,8 +1,8 @@
 using AspNetApplication;
 using FubuMVC.Core.Runtime;
-using FubuMVC.TestingHarness;
-using NUnit.Framework;
+using FubuMVC.IntegrationTesting;
 using FubuTestingSupport;
+using NUnit.Framework;
 
 namespace FubuMVC.AspNetTesting
 {
@@ -12,7 +12,8 @@ namespace FubuMVC.AspNetTesting
         [Test]
         public void can_write_the_contents_of_a_file_to_the_output()
         {
-            var response = TestApplication.Endpoints.GetByInput(new FileInput{
+            var response = TestApplication.Endpoints.GetByInput(new FileInput
+            {
                 Name = "Test.txt"
             });
 

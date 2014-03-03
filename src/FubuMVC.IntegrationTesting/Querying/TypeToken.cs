@@ -1,6 +1,6 @@
 using System;
 
-namespace FubuMVC.TestingHarness.Querying
+namespace FubuMVC.IntegrationTesting.Querying
 {
     public class TypeToken
     {

@@ -1,7 +1,7 @@
-using FubuMVC.Core.Registration.Nodes;
 using FubuCore;
+using FubuMVC.Core.Registration.Nodes;
 
-namespace FubuMVC.TestingHarness.Querying
+namespace FubuMVC.IntegrationTesting.Querying
 {
     public class ActionToken
     {

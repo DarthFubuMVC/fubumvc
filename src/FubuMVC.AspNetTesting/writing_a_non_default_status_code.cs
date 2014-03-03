@@ -1,7 +1,6 @@
 using System.Net;
 using AspNetApplication;
-using FubuMVC.Core.Runtime;
-using FubuMVC.TestingHarness;
+using FubuMVC.IntegrationTesting;
 using NUnit.Framework;
 
 namespace FubuMVC.AspNetTesting
