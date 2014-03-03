@@ -59,6 +59,7 @@ namespace FubuMVC.Core.Registration
             _services.AddService<ITypeResolver>(TypeResolver);
         }
 
+        [MarkedForTermination("I think this will be unnecessary in 2.0")]
         public Assembly ApplicationAssembly { get; set; }
 
         public SettingsCollection Settings

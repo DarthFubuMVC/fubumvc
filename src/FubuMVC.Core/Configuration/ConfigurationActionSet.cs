@@ -63,22 +63,4 @@ namespace FubuMVC.Core.Configuration
         }
     }
 
-    public class ActionSourceConfigurationActionSet : ConfigurationActionSet
-    {
-        public ActionSourceConfigurationActionSet() : base(Core.ConfigurationType.Discovery)
-        {
-        }
-
-        public override void RunActions(BehaviorGraph graph)
-        {
-            if (!Actions.OfType<ActionSourceRunner>().Any())
-            {
-                new ActionSourceRunner(new EndpointActionSource()).Configure(graph);
-            }
-
-            
-
-            base.RunActions(graph);
-        }
-    }
 }

@@ -40,7 +40,7 @@ namespace FubuMVC.Tests
         }
 
 
-        [ConfigurationType(ConfigurationType.Discovery)]
+        [ConfigurationType(ConfigurationType.Explicit)]
         public class FakePolicy4 : IConfigurationAction
         {
             public void Configure(BehaviorGraph graph)
@@ -84,7 +84,7 @@ namespace FubuMVC.Tests
                 .ShouldEqual(ConfigurationType.Policy);
 
             ConfigGraph.DetermineConfigurationType(new FakePolicy4())
-                .ShouldEqual(ConfigurationType.Discovery);
+                .ShouldEqual(ConfigurationType.Explicit);
         }
 
         [Test]

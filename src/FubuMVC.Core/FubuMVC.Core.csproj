@@ -346,7 +346,6 @@
     <Compile Include="Http\NulloHttpResponse.cs" />
     <Compile Include="Http\RequestDataSource.cs" />
     <Compile Include="Packaging\ContentOnlyPackageInfo.cs" />
-    <Compile Include="Registration\BehaviorAggregator.cs" />
     <Compile Include="Registration\Nodes\ActionCallBase.cs" />
     <Compile Include="Registration\Nodes\BehaviorNode.ObjectDef.cs" />
     <Compile Include="Registration\Nodes\Process.cs" />

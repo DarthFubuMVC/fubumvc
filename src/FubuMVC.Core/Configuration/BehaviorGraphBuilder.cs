@@ -21,7 +21,7 @@ namespace FubuMVC.Core.Configuration
 
             config.RunActions(ConfigurationType.Settings, graph);
 
-            config.RunActions(ConfigurationType.Discovery, graph);
+            config.Sources.SelectMany(x => x.BuildChains(graph.Settings)).Each(chain => graph.AddChain(chain));
 
             config.Imports.Each(import => {
                 graph.As<IChainImporter>().Import(import.BuildChains(graph));
@@ -55,8 +55,8 @@ namespace FubuMVC.Core.Configuration
                 .OfType<IServiceRegistration>()
                 .Each(x => x.Apply(graph.Services));
 
-            
-            config.RunActions(ConfigurationType.Discovery, graph);
+
+            config.Sources.SelectMany(x => x.BuildChains(graph.Settings)).Each(chain => graph.AddChain(chain));
 
             config.UniqueImports().Each(import => {
                 graph.As<IChainImporter>().Import(import.BuildChains(graph));
@@ -90,7 +90,6 @@ namespace FubuMVC.Core.Configuration
             return new string[]
                    {
                        ConfigurationType.Settings,
-                       ConfigurationType.Discovery,
                        ConfigurationType.Explicit,
                        ConfigurationType.Policy,
                        ConfigurationType.Attributes,

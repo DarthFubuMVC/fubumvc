@@ -28,7 +28,7 @@ namespace FubuMVC.Core
     {
         private readonly IList<Type> _importedTypes = new List<Type>();
         private readonly Assembly _applicationAssembly;
-        private readonly ConfigGraph _config = new ConfigGraph();
+        private readonly ConfigGraph _config;
 
         public FubuRegistry()
         {
@@ -41,6 +41,8 @@ namespace FubuMVC.Core
             {
                 _applicationAssembly = type.Assembly;
             }
+
+            _config = new ConfigGraph(_applicationAssembly);
         }
 
         public FubuRegistry(Action<FubuRegistry> configure) : this()

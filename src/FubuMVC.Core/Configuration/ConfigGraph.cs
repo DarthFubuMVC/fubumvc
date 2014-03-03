@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Bottles;
 using FubuCore.Reflection;
 using FubuCore.Util;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.Configuration
@@ -13,15 +15,33 @@ namespace FubuMVC.Core.Configuration
     /// </summary>
     public class ConfigGraph
     {
+        private readonly Assembly _applicationAssembly;
+
         private readonly Cache<string, ConfigurationActionSet> _configurations
             = new Cache<string, ConfigurationActionSet>(x => new ConfigurationActionSet(x));
 
         private readonly IList<RegistryImport> _imports = new List<RegistryImport>();
         private readonly IList<ServiceRegistry> _services = new List<ServiceRegistry>();
 
-        public ConfigGraph()
+        private readonly ActionSourceAggregator _actionSourceAggregator;
+        private readonly IList<IChainSource> _sources = new List<IChainSource>(); 
+
+        public ConfigGraph(Assembly applicationAssembly)
         {
-            _configurations[ConfigurationType.Discovery] = new ActionSourceConfigurationActionSet();
+            _applicationAssembly = applicationAssembly;
+            _actionSourceAggregator = new ActionSourceAggregator(_applicationAssembly);
+
+            _sources.Add(_actionSourceAggregator);
+
+            if (FubuMode.InDevelopment())
+            {
+                Add(new RegisterAbout());
+            }
+        }
+
+        public Assembly ApplicationAssembly
+        {
+            get { return _applicationAssembly; }
         }
 
         public IEnumerable<RegistryImport> Imports
@@ -105,7 +125,10 @@ namespace FubuMVC.Core.Configuration
             _configurations[type].Fill(action); 
         }
 
-
+        public void Add(IChainSource source)
+        {
+            _sources.Add(source);
+        }
 
         public void Add(ServiceRegistry services)
         {
@@ -114,7 +137,7 @@ namespace FubuMVC.Core.Configuration
 
         public void Add(IActionSource source)
         {
-            Add(new ActionSourceRunner(source), ConfigurationType.Discovery);
+            _actionSourceAggregator.Add(source);
         }
 
         public void RegisterServices(ServiceGraph services)
@@ -151,18 +174,9 @@ namespace FubuMVC.Core.Configuration
             return null;
         }
 
-        /// <summary>
-        /// Honestly, this is 50% a HACK.  This just gives ConfigGraph a chance to apply the default endpoint action source
-        /// if the FubuRegistry doesn't already have any
-        /// </summary>
-        public void Seal()
+        public IEnumerable<IChainSource> Sources
         {
-            var actions = _configurations[ConfigurationType.Discovery].Actions;
-
-            if (!actions.Any(x => x is ActionSourceRunner))
-            {
-                Add(new EndpointActionSource());
-            }
+            get { return _sources; }
         }
     }
 }

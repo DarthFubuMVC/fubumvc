@@ -152,9 +152,6 @@ namespace FubuMVC.Core
                     // container facility has to be spun up here
                     var containerFacility = _facility.Value;
 
-                    // Need to do this to make the provenance for bottles come out right
-                    _registry.Value.Config.Seal();
-
                     applyFubuExtensionsFromPackages();
 
                     graph = buildBehaviorGraph();

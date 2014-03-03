@@ -7,7 +7,7 @@ namespace FubuMVC.Core.Configuration
     {
         public DiscoveryActionsConfigurationPack()
         {
-            For(ConfigurationType.Discovery);
+            For(ConfigurationType.Explicit);
 
             Add<PartialOnlyConvention>();
             Add<RouteDetermination>();

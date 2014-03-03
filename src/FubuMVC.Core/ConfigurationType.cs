@@ -6,7 +6,6 @@ namespace FubuMVC.Core
     public static class ConfigurationType
     {
         public const string Settings = "Settings";
-        public const string Discovery = "Discovery";
         public const string Explicit = "Explicit";
         public const string Policy = "Policy";
         public const string Reordering = "Reordering";

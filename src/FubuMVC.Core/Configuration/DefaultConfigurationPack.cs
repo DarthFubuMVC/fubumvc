@@ -1,11 +1,8 @@
-using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Caching;
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Resources.PathBased;
-using FubuMVC.Core.Security;
 
 namespace FubuMVC.Core.Configuration
 {
@@ -13,12 +10,6 @@ namespace FubuMVC.Core.Configuration
     {
         public DefaultConfigurationPack()
         {
-            For(ConfigurationType.Discovery);
-            if (FubuMode.InDevelopment())
-            {
-                Add<RegisterAbout>();
-            }
-
             For(ConfigurationType.Attributes);
             Add<UrlPatternAttributeOnViewModelPolicy>();
             Add<ModifyChainAttributeConvention>();
@@ -49,7 +40,5 @@ namespace FubuMVC.Core.Configuration
                 WhatMustBeAfter = node => node is OutputNode
             });
         }
-
-
     }
 }
