@@ -63,8 +63,6 @@ namespace FubuMVC.Core.Configuration
             // apply the authorization, input, and output nodes
             graph.Behaviors.Each(x => x.InsertNodes(graph.Settings.Get<ConnegSettings>()));
 
-            config.RunActions(ConfigurationType.Navigation, graph);
-            config.RunActions(ConfigurationType.ByNavigation, graph);
             config.RunActions(ConfigurationType.Reordering, graph);
             config.RunActions(ConfigurationType.Instrumentation, graph);
 
@@ -119,8 +117,6 @@ namespace FubuMVC.Core.Configuration
                        ConfigurationType.Attributes,
                        ConfigurationType.InjectNodes,
                        ConfigurationType.Attachment,
-                       ConfigurationType.Navigation,
-                       ConfigurationType.ByNavigation,
                        ConfigurationType.Reordering,
                        ConfigurationType.Instrumentation
                    };
