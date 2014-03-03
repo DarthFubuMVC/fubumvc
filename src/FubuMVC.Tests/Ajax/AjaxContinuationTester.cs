@@ -1,5 +1,5 @@
+using System.Reflection.Emit;
 using FubuCore;
-using FubuLocalization;
 using FubuMVC.Core.Ajax;
 using NUnit.Framework;
 using FubuTestingSupport;
@@ -90,8 +90,7 @@ namespace FubuMVC.Tests.Ajax
         [Test]
         public void ForMessage_via_StringToken()
         {
-            var token = StringToken.FromKeyString("key", "some message");
-
+            var token = new SomeMessage();
             var continuation = AjaxContinuation.ForMessage(token);
 
             continuation.Success.ShouldBeFalse();
@@ -109,6 +108,14 @@ namespace FubuMVC.Tests.Ajax
         {
             theContinuation["keyThatIsInData"] = "foo";
             theContinuation.HasData("keyThatIsInData").ShouldBeTrue();
+        }
+    }
+
+    public class SomeMessage
+    {
+        public override string ToString()
+        {
+            return "some message";
         }
     }
 }

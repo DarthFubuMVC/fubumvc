@@ -1,5 +1,4 @@
-﻿using FubuLocalization;
-using HtmlTags;
+﻿using HtmlTags;
 
 namespace FubuMVC.Core
 {
@@ -10,12 +9,6 @@ namespace FubuMVC.Core
             : base("img")
         {
             Attr("src", url);
-        }
-
-        public ImageTag AlternateText(StringToken token)
-        {
-            Attr("alt", token.ToString());
-            return this;
         }
 
         public ImageTag Width(int width)

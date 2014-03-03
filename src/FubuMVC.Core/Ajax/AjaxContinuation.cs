@@ -3,7 +3,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using FubuCore;
 using FubuCore.Util;
-using FubuLocalization;
 
 namespace FubuMVC.Core.Ajax
 {
@@ -68,7 +67,7 @@ namespace FubuMVC.Core.Ajax
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        public static AjaxContinuation ForMessage(StringToken message)
+        public static AjaxContinuation ForMessage(object message)
         {
             return ForMessage(message.ToString());
         }

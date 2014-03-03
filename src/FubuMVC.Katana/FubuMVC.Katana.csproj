@@ -37,9 +37,6 @@
     <Reference Include="FubuCore">
       <HintPath>..\packages\FubuCore\lib\FubuCore.dll</HintPath>
     </Reference>
-    <Reference Include="FubuLocalization">
-      <HintPath>..\packages\FubuLocalization\lib\FubuLocalization.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin">
       <HintPath>..\packages\Microsoft.Owin\lib\net40\Microsoft.Owin.dll</HintPath>
