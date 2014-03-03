@@ -1,5 +1,9 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Configuration
 {
@@ -8,13 +12,17 @@ namespace FubuMVC.Core.Configuration
         public string Prefix { get; set; }
         public FubuRegistry Registry { get; set; }
 
-        public void ImportInto(BehaviorGraph parent)
+        public IEnumerable<BehaviorChain> BuildChains(BehaviorGraph parent)
         {
             var childGraph = BehaviorGraphBuilder.Import(Registry, parent);
-            parent.As<IChainImporter>().Import(childGraph, b => {
-                b.PrependToUrl(Prefix);
-                b.Origin = Registry.Name;
-            });
+            if (Prefix.IsNotEmpty())
+            {
+                childGraph.Behaviors.Where(x => x.Route != null).Each(x => {
+                    x.Route.Prepend(Prefix);
+                });
+            }
+
+            return childGraph.Behaviors;
         }
 
         public bool Equals(RegistryImport other)

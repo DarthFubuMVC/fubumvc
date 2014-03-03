@@ -23,7 +23,9 @@ namespace FubuMVC.Core.Configuration
 
             config.RunActions(ConfigurationType.Discovery, graph);
 
-            config.Imports.Each(import => import.ImportInto(graph));
+            config.Imports.Each(import => {
+                graph.As<IChainImporter>().Import(import.BuildChains(graph));
+            });
 
             config.RunActions(ConfigurationType.Explicit, graph);
             config.RunActions(ConfigurationType.Policy, graph);
@@ -56,7 +58,9 @@ namespace FubuMVC.Core.Configuration
             
             config.RunActions(ConfigurationType.Discovery, graph);
 
-            config.UniqueImports().Each(import => import.ImportInto(graph));
+            config.UniqueImports().Each(import => {
+                graph.As<IChainImporter>().Import(import.BuildChains(graph));
+            });
 
             config.RunActions(ConfigurationType.Explicit, graph);
             config.RunActions(ConfigurationType.Policy, graph);

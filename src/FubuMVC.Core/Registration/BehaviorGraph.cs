@@ -23,7 +23,7 @@ namespace FubuMVC.Core.Registration
 
     public interface IChainImporter
     {
-        void Import(BehaviorGraph graph, Action<BehaviorChain> alternation);
+        void Import(IEnumerable<BehaviorChain> chains);
     }
 
 
@@ -103,12 +103,9 @@ namespace FubuMVC.Core.Registration
 
         #region IChainImporter Members
 
-        void IChainImporter.Import(BehaviorGraph graph, Action<BehaviorChain> alternation)
+        void IChainImporter.Import(IEnumerable<BehaviorChain> chains)
         {
-            graph.Behaviors.Each(b => {
-                AddChain(b);
-                alternation(b);
-            });
+            chains.Each(AddChain);
         }
 
         #endregion
@@ -292,7 +289,7 @@ namespace FubuMVC.Core.Registration
             _behaviors.Each(x => { Trace.WriteLine(x.FirstCall().Description.PadRight(70) + x.Route.Pattern); });
         }
 
-
+        [Obsolete("Wanna make this go away in 2.0")]
         public void AddChain(BehaviorChain chain)
         {
             _behaviors.Add(chain);

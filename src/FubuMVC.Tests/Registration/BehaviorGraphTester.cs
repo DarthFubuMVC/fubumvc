@@ -293,59 +293,6 @@ namespace FubuMVC.Tests.Registration
         }
     }
 
-    [TestFixture]
-    public class when_importing_urls
-    {
-        #region Setup/Teardown
-
-        [SetUp]
-        public void SetUp()
-        {
-            graph1 = BehaviorGraph.BuildFrom(x =>
-            {
-                x.Route("method1/{Name}/{Age}")
-                    .Calls<TestController>(c => c.AnotherAction(null));
-
-                x.Route("method2/{Name}/{Age}")
-                    .Calls<TestController>(c => c.AnotherAction(null));
-
-                x.Route("method3/{Name}/{Age}")
-                    .Calls<TestController>(c => c.AnotherAction(null));
-            });
-
-            chain = new BehaviorChain();
-            graph1.AddChain(chain);
-
-            graph2 = BehaviorGraph.BuildFrom(x =>
-            {
-                x.Route("/root/{Name}/{Age}")
-                    .Calls<TestController>(c => c.AnotherAction(null));
-            });
-
-            graph2.As<IChainImporter>().Import(graph1, b => b.PrependToUrl("area1"));
-        }
-
-        #endregion
-
-        private BehaviorGraph graph1;
-        private BehaviorGraph graph2;
-        private BehaviorChain chain;
-
-        [Test]
-        public void should_have_all_the_routes_from_the_imported_graph()
-        {
-            graph2.Routes.Any(x => x.Pattern == "area1/method1/{Name}/{Age}").ShouldBeTrue();
-            graph2.Routes.Any(x => x.Pattern == "area1/method2/{Name}/{Age}").ShouldBeTrue();
-            graph2.Routes.Any(x => x.Pattern == "area1/method3/{Name}/{Age}").ShouldBeTrue();
-        }
-
-        [Test]
-        public void should_have_imported_the_behavior_chains_without_routes()
-        {
-            graph2.Behaviors.Contains(chain).ShouldBeTrue();
-        }
-    }
-
 
     [TestFixture]
     public class when_merging_services
@@ -364,7 +311,7 @@ namespace FubuMVC.Tests.Registration
             graph1.Services.AddService(foo1);
             graph2.Services.AddService(foo2);
 
-            graph1.As<IChainImporter>().Import(graph2, b => b.PrependToUrl(string.Empty));
+            graph1.As<IChainImporter>().Import(graph2.Behaviors);
         }
 
         #endregion
