@@ -13,7 +13,6 @@
     <tags>web framework specification fubumvc</tags>
     <dependencies>
 	<dependency id="FubuMVC.Core"/>
-    	<dependency id="FubuMVC.OwinHost"/>
     </dependencies>
   </metadata>
   <files>
