@@ -28,27 +28,7 @@ namespace FubuMVC.Tests
         public void SetUp()
         {
             registry = new FubuRegistry(x => {
-                x.Actions.FindBy(o => {
-                    o.IncludeTypes(y => false);
-                });
-
-                x.Route("area/sub/{Name}/{Age}")
-                    .Calls<TestController>(c => c.AnotherAction(null));
-
-                x.Route("area/sub2/prop")
-                    .Calls<TestController>(c => c.SomeAction(null));
-
-                x.Route("area/sub2/{Name}/{Age}")
-                    .Calls<TestController>(c => c.AnotherAction(null));
-
-                x.Route("area/sub2/{Name}")
-                    .Calls<TestController>(c => c.ThirdAction(null));
-
-                x.Route("area/sub3/{Name}/{Age}")
-                    .Calls<TestController>(c => c.AnotherAction(null));
-
-                x.Route("area/sub4/some_pattern")
-                    .Calls<TestController>(c => c.AnotherAction(null));
+                x.Actions.IncludeType<TestController>();
             });
 
             
@@ -109,6 +89,55 @@ namespace FubuMVC.Tests
                 "area/sub/{Name}/{Age}",
                 "area/sub2/{Name}/{Age}",
                 "area/sub3/{Name}/{Age}");
+        }
+
+        public class TestController
+        {
+            [UrlPattern("area/sub2/prop")]
+            public TestOutputModel Index()
+            {
+                return new TestOutputModel();
+            }
+
+            [UrlPattern("area/sub/{Name}/{Age}")]
+            public TestOutputModel SomeAction(TestInputModel value)
+            {
+                return new TestOutputModel
+                {
+                    Prop1 = value.Prop1
+                };
+            }
+
+            [UrlPattern("area/sub4/some_pattern")]
+            public TestOutputModel SomeOtherAction(NotUsedModel not_used)
+            {
+                return new TestOutputModel();
+            }
+
+            [UrlPattern("area/sub2/{Name}/{Age}")]
+            public TestOutputModel2 AnotherAction(TestInputModel value)
+            {
+                return new TestOutputModel2
+                {
+                    Prop1 = value.Prop1,
+                    Name = value.Name,
+                    Age = value.Age
+                };
+            }
+
+            [UrlPattern("area/sub3/{Name}/{Age}")]
+            public TestOutputModel3 ThirdAction(TestInputModel value)
+            {
+                return new TestOutputModel3
+                {
+                    Prop1 = value.Prop1
+                };
+            }
+
+            [UrlPattern("area/sub2/{Name}")]
+            public void RedirectAction(TestInputModel value)
+            {
+            }
         }
     }
 }

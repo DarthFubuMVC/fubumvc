@@ -125,7 +125,7 @@ namespace FubuMVC.Core.Registration.Conventions
 
         public bool HasDefaultRoute()
         {
-            return _policies.Any(x => x is DefaultRouteMethodBasedUrlPolicy || x is DefaultRouteInputTypeBasedUrlPolicy);
+            return _policies.Any(x => x is DefaultRouteMethodBasedUrlPolicy);
         }
     }
 }

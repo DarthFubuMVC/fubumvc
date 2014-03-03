@@ -97,7 +97,7 @@
     <Compile Include="Configuration\DefaultConfigurationPack.cs" />
     <Compile Include="Configuration\DiscoveryActionsConfigurationPack.cs" />
     <Compile Include="DiagnosticsSettings.cs" />
-    <Compile Include="Diagnostics\AboutEndpoint.cs" />
+    <Compile Include="Diagnostics\AboutDiagnostics.cs" />
     <Compile Include="Diagnostics\DescriptionTags.cs" />
     <Compile Include="Diagnostics\RegisterAbout.cs" />
     <Compile Include="DoNotAutoImportAttribute.cs" />
@@ -180,6 +180,7 @@
     <Compile Include="Registration\Conventions\OutputBeforeAjaxContinuationPolicy.cs" />
     <Compile Include="Registration\Conventions\RegisterAllSettings.cs" />
     <Compile Include="Registration\Conventions\UrlPatternAttributeOnViewModelPolicy.cs" />
+    <Compile Include="Registration\Conventions\UrlPolicies.cs" />
     <Compile Include="Registration\Conventions\VaryByModification.cs" />
     <Compile Include="Registration\Conventions\CachingExpression.cs" />
     <Compile Include="Registration\DSL\AppliesToExpression.cs" />
@@ -376,13 +377,11 @@
     <Compile Include="Packaging\FubuMvcZipFilePackageLoader.cs" />
     <Compile Include="Resources\PathBased\ResourcePathBinder.cs" />
     <Compile Include="Resources\PathBased\ResourcePath.cs" />
-    <Compile Include="Resources\PathBased\ResourcePathRoutePolicy.cs" />
     <Compile Include="Registration\AddImplementationsServiceRegistrationConvention.cs" />
     <Compile Include="Registration\AssemblyScanner.cs" />
     <Compile Include="Registration\AssemblyScanningExtensions.cs" />
     <Compile Include="Registration\ConnectImplementationsServiceRegistrationConvention.cs" />
     <Compile Include="Registration\Conventions\MethodToUrlBuilder.cs" />
-    <Compile Include="Registration\Conventions\MissingRouteInputPolicy.cs" />
     <Compile Include="Registration\HandlerActionsSet.cs" />
     <Compile Include="Registration\IAssemblyScanner.cs" />
     <Compile Include="Registration\IServiceRegistrationConvention.cs" />
@@ -399,7 +398,6 @@
     <Compile Include="Packaging\VirtualPaths\FileSystemVirtualPathProvider.cs" />
     <Compile Include="Packaging\PackageLoadingConfigurationExtensions.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConvention.cs" />
-    <Compile Include="Registration\Conventions\DefaultRouteInputTypeBasedUrlPolicy.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteMethodBasedUrlPolicy.cs" />
     <Compile Include="Registration\Conventions\ReorderBehaviorsPolicy.cs" />
     <Compile Include="Registration\Conventions\RouteConstraintPolicy.cs" />

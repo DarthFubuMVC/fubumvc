@@ -32,11 +32,6 @@ namespace FubuMVC.Core.Configuration
             _actionSourceAggregator = new ActionSourceAggregator(_applicationAssembly);
 
             _sources.Add(_actionSourceAggregator);
-
-            if (FubuMode.InDevelopment())
-            {
-                Add(new RegisterAbout());
-            }
         }
 
         public Assembly ApplicationAssembly

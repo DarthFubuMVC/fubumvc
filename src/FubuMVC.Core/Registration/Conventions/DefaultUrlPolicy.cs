@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Web.Routing;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Nodes;
@@ -40,7 +41,7 @@ namespace FubuMVC.Core.Registration.Conventions
             {
                 if (call.InputType().CanBeCastTo<ResourcePath>())
                 {
-                    addResourcePathInputs(route);
+                    ResourcePath.AddResourcePathInputs(route);
                 }
                 else
                 {
@@ -61,23 +62,6 @@ namespace FubuMVC.Core.Registration.Conventions
             route.ApplyInputType(call.InputType());
         }
 
-        private static void addResourcePathInputs(RouteDefinition route)
-        {
-            route.Append(ResourcePath.UrlSuffix);
 
-
-            route.RegisterRouteCustomization(r => {
-                r.Defaults.Add("Part0", null);
-                r.Defaults.Add("Part1", null);
-                r.Defaults.Add("Part2", null);
-                r.Defaults.Add("Part3", null);
-                r.Defaults.Add("Part4", null);
-                r.Defaults.Add("Part5", null);
-                r.Defaults.Add("Part6", null);
-                r.Defaults.Add("Part7", null);
-                r.Defaults.Add("Part8", null);
-                r.Defaults.Add("Part9", null);
-            });
-        }
     }
 }

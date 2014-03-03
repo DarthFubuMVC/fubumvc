@@ -1,15 +1,31 @@
-using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
+using FubuMVC.Core.Resources.PathBased;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
-    public static class MethodToUrlBuilder
+    // TODO -- look at making this little monster faster.
+    [Description("The get_*, post_*, put_*, delete_* url convention")]
+    public class MethodToUrlBuilder : IUrlPolicy
     {
+        public bool Matches(ActionCall call)
+        {
+            return Matches(call.Method.Name);
+        }
+
+        public IRouteDefinition Build(ActionCall call)
+        {
+            var route = call.ToRouteDefinition();
+            Alter(route, call);
+
+            return route;
+        }
+
         public static bool Matches(string methodName)
         {
             return methodName.Contains("_");
@@ -18,16 +34,21 @@ namespace FubuMVC.Core.Registration.Conventions
         public static void Alter(IRouteDefinition route, ActionCall call)
         {
             var properties = call.HasInput
-                                 ? new TypeDescriptorCache().GetPropertiesFor(call.InputType()).Keys
-                                 : new string[0];
+                ? new TypeDescriptorCache().GetPropertiesFor(call.InputType()).Keys
+                : new string[0];
 
             Alter(route, call.Method.Name, properties);
 
             if (call.HasInput)
             {
                 route.ApplyInputType(call.InputType());
-            }
 
+                if (call.InputType().CanBeCastTo<ResourcePath>())
+                {
+
+                     ResourcePath.AddResourcePathInputs(route);
+                }
+            }
         }
 
         public static void Alter(IRouteDefinition route, string methodName, IEnumerable<string> properties)

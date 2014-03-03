@@ -104,59 +104,6 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
-        public void find_home_is_not_null()
-        {
-            var graph = BehaviorGraph.BuildFrom(x =>
-            {
-                x.Actions.IncludeClassesSuffixedWithController();
-
-                x.Routes.HomeIs<MyHomeController>(c => c.ThisIsHome());
-            });
-
-            graph.FindHomeChain().FirstCall().Method.Name.ShouldEqual("ThisIsHome");
-        }
-
-        [Test]
-        public void home_url()
-        {
-            var graph = BehaviorGraph.BuildFrom(x =>
-            {
-                x.Actions.IncludeClassesSuffixedWithController();
-
-                x.Routes.HomeIs<MyHomeController>(c => c.ThisIsHome());
-            });
-
-            graph.FindHomeChain().GetRoutePattern().ShouldEqual("");
-        }
-
-        [Test]
-        public void home_url_keeps_the_http_constraints()
-        {
-            var graph = BehaviorGraph.BuildFrom(x => {
-                x.Actions.IncludeType<MyHomeController>();
-
-                x.Routes.HomeIs<MyHomeController>(c => c.get_home());
-            });
-
-            graph.FindHomeChain().Route.AllowedHttpMethods.Single()
-                .ShouldEqual("GET");
-        }
-
-        [Test]
-        public void home_url_keeps_the_http_constraints_by_input_model()
-        {
-            var graph = BehaviorGraph.BuildFrom(x =>
-            {
-                x.Actions.IncludeType<MyHomeController>();
-
-                x.Routes.HomeIs<MyOtherRequestModel>();
-            });
-
-            graph.FindHomeChain().Route.AllowedHttpMethods.Single()
-                .ShouldEqual("GET");
-        }
-
-        [Test]
         public void find_home_is_not_set()
         {
             var graph = BehaviorGraph.BuildFrom(x =>
@@ -174,10 +121,9 @@ namespace FubuMVC.Tests.Registration
             {
                 x.Actions.IncludeClassesSuffixedWithController();
 
-                x.Routes.HomeIs<MyHomeController>(c => c.ThisIsHome());
             });
 
-            var chain = graph.FindHomeChain();
+            var chain = graph.BehaviorFor<MyHomeController>(x => x.ThisIsHome());
             graph.RemoveChain(chain);
 
             graph

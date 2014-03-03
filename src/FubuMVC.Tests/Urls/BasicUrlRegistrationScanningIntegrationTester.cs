@@ -156,8 +156,8 @@ namespace FubuMVC.Tests.Urls
         public void has_action_calls_for_actions_with_no_input_args()
         {
             registry.UrlFor<SpecialController>(x => x.NoArgMethod(), null).ShouldEqual(
-                "http://server/cool/fubumvc/tests/urls/special/noargmethod");
-            registry.UrlFor<SpecialController>(x => x.Index(), null).ShouldEqual("http://server/cool/fubumvc/tests/urls/special/index");
+                "http://server/cool/special/noargmethod");
+            registry.UrlFor<SpecialController>(x => x.Index(), null).ShouldEqual("http://server/cool/special/index");
         }
 
         [Test]
@@ -177,7 +177,7 @@ namespace FubuMVC.Tests.Urls
         [Test]
         public void get_templated_url_with_empty_guid()
         {
-            registry.TemplateFor(new ModelWithGuid()).ShouldEqual("http://server/cool/fubumvc/tests/urls/special/inputwithguid/${OtherGuid}/${Id}");
+            registry.TemplateFor(new ModelWithGuid()).ShouldEqual("http://server/cool/special/inputwithguid/${OtherGuid}/${Id}");
         }
 
         [Test]
@@ -188,7 +188,7 @@ namespace FubuMVC.Tests.Urls
             registry.TemplateFor(new ModelWithGuid()
                                  {
                                      OtherGuid = otherguid
-                                 }).ShouldEqual("http://server/cool/fubumvc/tests/urls/special/inputwithguid/" + otherguid.ToString() + "/${Id}");
+                                 }).ShouldEqual("http://server/cool/special/inputwithguid/" + otherguid.ToString() + "/${Id}");
         }
 
         [Test]

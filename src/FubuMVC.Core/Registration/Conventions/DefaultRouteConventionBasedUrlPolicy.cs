@@ -1,7 +1,6 @@
 ﻿using FubuCore.Descriptions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
-using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
@@ -13,7 +12,7 @@ namespace FubuMVC.Core.Registration.Conventions
 
         public bool Matches(ActionCall call)
         {
-            return call.Method.DeclaringType.Name == DefaultHomeControllerConvention && 
+            return call.Method.DeclaringType.Name == DefaultHomeControllerConvention &&
                    call.Method.Name == DefaultHomeMethodConvention;
         }
 

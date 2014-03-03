@@ -119,7 +119,6 @@
     <Compile Include="FubuRegistryRunner.cs" />
     <Compile Include="Http\partial_invocations.cs" />
     <Compile Include="Http\reading_and_writing_http_headers_and_responses_with_OWIN.cs" />
-    <Compile Include="Issues\Issue313.cs" />
     <Compile Include="Http\compression_testing.cs" />
     <Compile Include="Owin\binding_against_form_data.cs" />
     <Compile Include="Owin\binding_against_querystring_values.cs" />

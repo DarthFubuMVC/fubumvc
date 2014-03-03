@@ -32,7 +32,7 @@ namespace FubuMVC.IntegrationTesting
         {
             using (var server = FubuApplication.DefaultPolicies().StructureMap().RunEmbedded(port:PortFinder.FindPort(5500)))
             {
-                var description = server.Endpoints.Get<AboutEndpoint>(x => x.get__about()).ReadAsText();
+                var description = server.Endpoints.Get<AboutDiagnostics>(x => x.get__about()).ReadAsText();
                 description.ShouldContain("Assemblies");
                 Debug.WriteLine(description);
             }
@@ -48,16 +48,16 @@ namespace FubuMVC.IntegrationTesting
 
             using (var server = FubuApplication.DefaultPolicies().StructureMap().RunEmbedded(port: PortFinder.FindPort(5500)))
             {
-                ts1 = server.Endpoints.Get<AboutEndpoint>(x => x.get__loaded()).ReadAsText();
-                ts2 = server.Endpoints.Get<AboutEndpoint>(x => x.get__loaded()).ReadAsText();
+                ts1 = server.Endpoints.Get<AboutDiagnostics>(x => x.get__loaded()).ReadAsText();
+                ts2 = server.Endpoints.Get<AboutDiagnostics>(x => x.get__loaded()).ReadAsText();
             }
 
             Thread.Sleep(10000);
 
             using (var server = FubuApplication.DefaultPolicies().StructureMap().RunEmbedded(port: PortFinder.FindPort(5500)))
             {
-                ts3 = server.Endpoints.Get<AboutEndpoint>(x => x.get__loaded()).ReadAsText();
-                ts4 = server.Endpoints.Get<AboutEndpoint>(x => x.get__loaded()).ReadAsText();
+                ts3 = server.Endpoints.Get<AboutDiagnostics>(x => x.get__loaded()).ReadAsText();
+                ts4 = server.Endpoints.Get<AboutDiagnostics>(x => x.get__loaded()).ReadAsText();
             }
 
             ts1.ShouldEqual(ts2);

@@ -1,4 +1,5 @@
 using System;
+using System.Web.Routing;
 using FubuMVC.Core.Registration.Routes;
 
 namespace FubuMVC.Core.Resources.PathBased
@@ -24,6 +25,31 @@ namespace FubuMVC.Core.Resources.PathBased
         {
             var baseUrl = basePattern.Contains(UrlSuffix) ? basePattern.Replace(UrlSuffix, "") : basePattern;
             return (baseUrl.TrimEnd('/') + "/" + _path.TrimStart('/')).Trim('/');
+        }
+
+        public static void AddResourcePathInputs(IRouteDefinition route)
+        {
+            route.Append(UrlSuffix);
+
+
+            route.RegisterRouteCustomization(r =>
+            {
+                if (r.Defaults == null)
+                {
+                    r.Defaults = new RouteValueDictionary();
+                }
+
+                r.Defaults.Add("Part0", null);
+                r.Defaults.Add("Part1", null);
+                r.Defaults.Add("Part2", null);
+                r.Defaults.Add("Part3", null);
+                r.Defaults.Add("Part4", null);
+                r.Defaults.Add("Part5", null);
+                r.Defaults.Add("Part6", null);
+                r.Defaults.Add("Part7", null);
+                r.Defaults.Add("Part8", null);
+                r.Defaults.Add("Part9", null);
+            });
         }
     }
 }

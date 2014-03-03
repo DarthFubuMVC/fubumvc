@@ -111,8 +111,6 @@ namespace FubuMVC.Tests
     {
         public KayakRegistry()
         {
-            Routes.HomeIs<SayHelloController>(x => x.Hello());
-
             Actions.IncludeClassesSuffixedWithController();
         }
     }

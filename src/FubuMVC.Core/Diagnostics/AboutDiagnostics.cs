@@ -3,11 +3,11 @@ using HtmlTags;
 
 namespace FubuMVC.Core.Diagnostics
 {
-    public class AboutEndpoint
+    public class AboutDiagnostics
     {
         private readonly AppReloaded _reloaded;
 
-        public AboutEndpoint(AppReloaded reloaded)
+        public AboutDiagnostics(AppReloaded reloaded)
         {
             _reloaded = reloaded;
         }

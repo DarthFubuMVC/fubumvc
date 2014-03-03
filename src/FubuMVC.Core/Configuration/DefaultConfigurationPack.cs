@@ -13,10 +13,6 @@ namespace FubuMVC.Core.Configuration
             For(ConfigurationType.Attributes);
             Add<UrlPatternAttributeOnViewModelPolicy>();
 
-            For(ConfigurationType.ModifyRoutes);
-            Add<ResourcePathRoutePolicy>();
-            Add<MissingRouteInputPolicy>();
-
             For(ConfigurationType.InjectNodes);
             Add<ContinuationHandlerConvention>();
             Add<AsyncContinueWithHandlerConvention>();

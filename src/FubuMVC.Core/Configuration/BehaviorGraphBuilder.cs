@@ -2,10 +2,12 @@ using System;
 using System.Linq;
 using FubuCore;
 using FubuCore.Reflection;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using System.Collections.Generic;
+using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Configuration
 {
@@ -25,7 +27,6 @@ namespace FubuMVC.Core.Configuration
             config.RunActions(ConfigurationType.Policy, graph);
             config.RunActions(ConfigurationType.Reordering, graph);
             config.RunActions(ConfigurationType.Attributes, graph);
-            config.RunActions(ConfigurationType.ModifyRoutes, graph);
             config.RunActions(ConfigurationType.InjectNodes, graph);
 
             return graph;
@@ -52,13 +53,21 @@ namespace FubuMVC.Core.Configuration
                 .OfType<IServiceRegistration>()
                 .Each(x => x.Apply(graph.Services));
 
+            var chainSources = config.Sources.Union(config.UniqueImports()).ToList();
+            if (FubuMode.InDevelopment())
+            {
+                var aggregator = new ActionSourceAggregator(null);
+                aggregator.Add(new RegisterAbout());
+                
+                chainSources.Add(aggregator);
+            }
 
-            config.Sources.Union(config.UniqueImports()).SelectMany(x => x.BuildChains(graph.Settings)).Each(chain => graph.AddChain(chain));
+            
+            chainSources.SelectMany(x => x.BuildChains(graph.Settings)).ToArray().Each(chain => graph.AddChain(chain));
 
             config.RunActions(ConfigurationType.Explicit, graph);
             config.RunActions(ConfigurationType.Policy, graph);
             config.RunActions(ConfigurationType.Attributes, graph);
-            config.RunActions(ConfigurationType.ModifyRoutes, graph);
             config.RunActions(ConfigurationType.InjectNodes, graph);
             config.RunActions(ConfigurationType.Attachment, graph);
 
@@ -86,7 +95,6 @@ namespace FubuMVC.Core.Configuration
                        ConfigurationType.Explicit,
                        ConfigurationType.Policy,
                        ConfigurationType.Attributes,
-                       ConfigurationType.ModifyRoutes,
                        ConfigurationType.InjectNodes,
                        ConfigurationType.Attachment,
                        ConfigurationType.Navigation,

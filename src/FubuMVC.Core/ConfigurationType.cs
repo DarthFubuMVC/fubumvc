@@ -15,7 +15,6 @@ namespace FubuMVC.Core
         public const string ByNavigation = "ByNavigation";
 
         public const string Attributes = "Attributes";
-        public const string ModifyRoutes = "ModifyRoutes";
         public const string InjectNodes = "InjectNodes";
         public const string Attachment = "Attachment";
 

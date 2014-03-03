@@ -12,6 +12,7 @@ using FubuMVC.Core.Registration.Routes;
 
 namespace FubuMVC.Core.Registration.DSL
 {
+    [MarkedForTermination("kill almost all of this.  Heck, maybe kill all of it")]
     public class RouteConventionExpression
     {
         private readonly ConfigGraph _configuration;
@@ -147,18 +148,6 @@ namespace FubuMVC.Core.Registration.DSL
             return this;
         }
 
-        public RouteConventionExpression HomeIs<TController>(Expression<Action<TController>> controllerAction)
-        {
-            var method = ReflectionHelper.GetMethod(controllerAction);
-            alter(x => x.RegisterUrlPolicy(new DefaultRouteMethodBasedUrlPolicy(method), true));
-            return this;
-        }
-
-        public RouteConventionExpression HomeIs<TInputModel>()
-        {
-            alter(x => x.RegisterUrlPolicy(new DefaultRouteInputTypeBasedUrlPolicy(typeof (TInputModel)), true));
-            return this;
-        }
 
         #region Nested type: RouteMethodAlteration
 

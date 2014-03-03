@@ -318,12 +318,10 @@
     </Compile>
     <Compile Include="Registration\Conventions\ActionSourceTester.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConventionTester.cs" />
-    <Compile Include="Registration\Conventions\DefaultRouteInputTypeBasedUrlPolicyTester.cs" />
     <Compile Include="Registration\Conventions\CustomConventionIntegratedTester.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteMethodBasedUrlPolicyTester.cs" />
     <Compile Include="Registration\Conventions\DownloadFileConventionIntegratedTester.cs" />
     <Compile Include="Registration\Conventions\HtmlTagAndDocumentHandlerConventionTester.cs" />
-    <Compile Include="Registration\Conventions\IInputTypeRouteInputsModelTester.cs" />
     <Compile Include="Registration\Conventions\OutputIntegratedAttachmentTester.cs" />
     <Compile Include="Registration\Conventions\RouteConstraintPolicyTester.cs" />
     <Compile Include="Registration\Conventions\RouteDefinitionResolverTester.cs" />
