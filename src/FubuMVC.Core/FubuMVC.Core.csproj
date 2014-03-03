@@ -165,6 +165,7 @@
     <Compile Include="QueryStringAttribute.cs" />
     <Compile Include="ReflectionExtensions.cs" />
     <Compile Include="Registration\AccessorRulesExpression.cs" />
+    <Compile Include="Registration\ActionSourceAggregator.cs" />
     <Compile Include="Registration\ApplicationLevelAttribute.cs" />
     <Compile Include="Registration\Conventions\CacheAttributePolicy.cs" />
     <Compile Include="Registration\Conventions\CachedPartialConvention.cs" />
@@ -184,6 +185,7 @@
     <Compile Include="Registration\FilterAttribute.cs" />
     <Compile Include="Registration\IAccessorRulesExpression.cs" />
     <Compile Include="Registration\IAccessorRulesRegistration.cs" />
+    <Compile Include="Registration\IChainSource.cs" />
     <Compile Include="Registration\Nodes\BehaviorChainExtensions.cs" />
     <Compile Include="Registration\Policies\AddToEndExpression.cs" />
     <Compile Include="Registration\Policies\AndChainFilter.cs" />
@@ -309,7 +311,6 @@
     <Compile Include="Registration\Services\ModelBindingServicesRegistry.cs" />
     <Compile Include="Registration\ActionMethodFilter.cs" />
     <Compile Include="Registration\ActionSource.cs" />
-    <Compile Include="Registration\Conventions\PartialOnlyConvention.cs" />
     <Compile Include="Registration\Nodes\IContainerModel.cs" />
     <Compile Include="Registration\Querying\ChainSearch.cs" />
     <Compile Include="Registration\Conventions\AsyncContinueWithHandlerConvention.cs" />

@@ -132,5 +132,16 @@ namespace FubuMVC.Core.Registration.Nodes
                : new RouteDefinition(pattern);
         }
 
+        public BehaviorChain BuildChain()
+        {
+            var chain = new BehaviorChain
+            {
+                IsPartialOnly = (HasAttribute<FubuPartialAttribute>() || Method.Name.EndsWith("Partial"))
+            };
+
+            chain.AddToEnd(this);
+
+            return chain;
+        }
     }
 }

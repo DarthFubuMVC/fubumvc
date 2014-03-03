@@ -8,11 +8,8 @@ namespace FubuMVC.Core
     /// Explicitly marks an endpoint as "partial only"
     /// </summary>
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
-    public class FubuPartialAttribute : ModifyChainAttribute
+    public class FubuPartialAttribute : Attribute
     {
-        public override void Alter(ActionCall call)
-        {
-            call.ParentChain().IsPartialOnly = true;
-        }
+
     }
 }

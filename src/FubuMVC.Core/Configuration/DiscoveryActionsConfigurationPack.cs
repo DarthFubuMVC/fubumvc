@@ -9,7 +9,6 @@ namespace FubuMVC.Core.Configuration
         {
             For(ConfigurationType.Explicit);
 
-            Add<PartialOnlyConvention>();
             Add<RouteDetermination>();
         }
     }
