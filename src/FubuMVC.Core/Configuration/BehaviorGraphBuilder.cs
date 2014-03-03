@@ -35,6 +35,9 @@ namespace FubuMVC.Core.Configuration
         {
             var graph = new BehaviorGraph();
             startBehaviorGraph(registry, graph);
+
+            lookForAccessorOverrides(graph);
+
             var config = registry.Config;
 
             config.Add(new SystemServicesPack());
@@ -99,7 +102,7 @@ namespace FubuMVC.Core.Configuration
         {
             graph.ApplicationAssembly = registry.ApplicationAssembly;
 
-            lookForAccessorOverrides(graph);
+           
 
             findAutoRegisteredConfigurationActions(registry, graph);
 
