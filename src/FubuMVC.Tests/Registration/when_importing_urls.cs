@@ -64,7 +64,7 @@ namespace FubuMVC.Tests.Registration
                     .Calls<TestController>(c => c.AnotherAction(null));
             });
 
-            graph2.As<IChainImporter>().Import(theImport.BuildChains(graph2));
+            graph2.As<IChainImporter>().Import(theImport.BuildChains(graph2.Settings));
         }
 
         #endregion

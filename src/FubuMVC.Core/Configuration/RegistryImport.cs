@@ -7,17 +7,18 @@ using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Configuration
 {
-    public class RegistryImport
+    public class RegistryImport : IChainSource
     {
         public string Prefix { get; set; }
         public FubuRegistry Registry { get; set; }
 
-        public IEnumerable<BehaviorChain> BuildChains(BehaviorGraph parent)
+        public IEnumerable<BehaviorChain> BuildChains(SettingsCollection settings)
         {
-            var childGraph = BehaviorGraphBuilder.Import(Registry, parent);
+            var childGraph = BehaviorGraphBuilder.Import(Registry, settings);
             if (Prefix.IsNotEmpty())
             {
-                childGraph.Behaviors.Where(x => x.Route != null).Each(x => {
+                childGraph.Behaviors.Where(x => x.Route != null).Each(x =>
+                {
                     x.Route.Prepend(Prefix);
                 });
             }
@@ -47,6 +48,8 @@ namespace FubuMVC.Core.Configuration
                 return ((Prefix != null ? Prefix.GetHashCode() : 0) * 397) ^ (Registry.GetType() != null ? Registry.GetType().GetHashCode() : 0);
             }
         }
+
+
 
         public override string ToString()
         {

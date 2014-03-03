@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Http;
@@ -12,20 +11,15 @@ namespace FubuMVC.Core.Configuration
 {
     internal static class BehaviorGraphBuilder
     {
-        // Need to track the ConfigLog
-        public static BehaviorGraph Import(FubuRegistry registry, BehaviorGraph parent)
+        public static BehaviorGraph Import(FubuRegistry registry, SettingsCollection parentSettings)
         {
-            var graph = BehaviorGraph.ForChild(parent);
+            var graph = new BehaviorGraph(parentSettings);
             startBehaviorGraph(registry, graph);
             var config = registry.Config;
 
             config.RunActions(ConfigurationType.Settings, graph);
 
-            config.Sources.SelectMany(x => x.BuildChains(graph.Settings)).Each(chain => graph.AddChain(chain));
-
-            config.Imports.Each(import => {
-                graph.As<IChainImporter>().Import(import.BuildChains(graph));
-            });
+            config.Sources.Union(config.Imports).SelectMany(x => x.BuildChains(graph.Settings)).Each(chain => graph.AddChain(chain));
 
             config.RunActions(ConfigurationType.Explicit, graph);
             config.RunActions(ConfigurationType.Policy, graph);
@@ -56,11 +50,7 @@ namespace FubuMVC.Core.Configuration
                 .Each(x => x.Apply(graph.Services));
 
 
-            config.Sources.SelectMany(x => x.BuildChains(graph.Settings)).Each(chain => graph.AddChain(chain));
-
-            config.UniqueImports().Each(import => {
-                graph.As<IChainImporter>().Import(import.BuildChains(graph));
-            });
+            config.Sources.Union(config.UniqueImports()).SelectMany(x => x.BuildChains(graph.Settings)).Each(chain => graph.AddChain(chain));
 
             config.RunActions(ConfigurationType.Explicit, graph);
             config.RunActions(ConfigurationType.Policy, graph);
