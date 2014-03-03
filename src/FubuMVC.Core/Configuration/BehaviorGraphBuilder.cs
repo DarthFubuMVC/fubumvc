@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Diagnostics;
@@ -50,17 +51,8 @@ namespace FubuMVC.Core.Configuration
 
             
 
-            var chainSources = config.Sources.Union(config.UniqueImports()).ToList();
-            if (FubuMode.InDevelopment())
-            {
-                var aggregator = new ActionSourceAggregator(null);
-                aggregator.Add(new RegisterAbout());
-                
-                chainSources.Add(aggregator);
-            }
+            discoverChains(config, graph);
 
-            
-            chainSources.SelectMany(x => x.BuildChains(graph.Settings)).ToArray().Each(chain => graph.AddChain(chain));
 
             config.RunActions(ConfigurationType.Explicit, graph);
             config.RunActions(ConfigurationType.Policy, graph);
@@ -80,6 +72,27 @@ namespace FubuMVC.Core.Configuration
             
 
             return graph;
+        }
+
+        private static void discoverChains(ConfigGraph config, BehaviorGraph graph)
+        {
+            var chainSources = config.Sources.Union(config.UniqueImports()).ToList();
+            if (FubuMode.InDevelopment())
+            {
+                var aggregator = new ActionSourceAggregator(null);
+                aggregator.Add(new RegisterAbout());
+
+                chainSources.Add(aggregator);
+            }
+
+            var tasks =
+                chainSources.Select(
+                    x => {
+                        return
+                            Task.Factory.StartNew(() => { x.BuildChains(graph.Settings).Each(chain => graph.AddChain(chain)); });
+                    }).ToArray();
+
+            Task.WaitAll(tasks);
         }
 
         private static void registerServices(ConfigGraph config, BehaviorGraph graph)
