@@ -64,5 +64,7 @@ namespace FubuMVC.Core.Resources.Conneg
         /// Remove all existing writers
         /// </summary>
         void ClearAll();
+
+        Type ResourceType { get; }
     }
 }

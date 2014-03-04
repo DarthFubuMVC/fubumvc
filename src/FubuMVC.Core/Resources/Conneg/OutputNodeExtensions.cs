@@ -20,7 +20,7 @@ namespace FubuMVC.Core.Resources.Conneg
 
         public static void AddView(this IOutputNode node, IViewToken token, IConditional conditional)
         {
-            var writer = typeof (ViewWriter<>).CloseAndBuildAs<object>(token, token.ViewModel);
+            var writer = typeof (ViewWriter<>).CloseAndBuildAs<object>(token, node.ResourceType);
 
             node.Add(writer, conditional);
         }

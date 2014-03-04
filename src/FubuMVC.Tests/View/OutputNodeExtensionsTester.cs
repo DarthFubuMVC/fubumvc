@@ -1,8 +1,5 @@
 ﻿using System;
-using FubuCore;
 using FubuMVC.Core;
-using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.View;
@@ -16,48 +13,12 @@ namespace FubuMVC.Tests.View
     public class OutputNodeExtensionsTester
     {
 
-        [Test]
-        public void redo()
-        {
-            Assert.Fail("NWO");
-        }
-        /*
-        [Test]
-        public void add_view()
-        {
-            var node = new OutputNode(typeof(Address));
-            var viewToken = MockRepository.GenerateMock<IViewToken>();
-
-            var viewNode = node.AddView(viewToken);
-            node.Writers.ShouldContain(viewNode);
-
-            viewNode.View.ShouldBeTheSameAs(viewToken);
-        }
-
-        // Sometimes, ugly code just isn't worth the effort to fix it.
-        [Test]
-        public void add_view_with_condition()
-        {
-            var node = new OutputNode(typeof(Address));
-            var viewToken = MockRepository.GenerateMock<IViewToken>();
-            viewToken.Stub(x => x.ViewModel).Return(typeof(Address));
-            viewToken.Stub(x => x.ToViewFactoryObjectDef()).Return(
-                ObjectDef.ForValue(MockRepository.GenerateMock<IViewFactory>()));
-
-            var viewNode = node.AddView(viewToken, typeof(FakeConditional));
-
-            viewNode.As<IContainerModel>().ToObjectDef()
-                .FindDependencyDefinitionFor<IConditional>()
-                .Type
-                .ShouldEqual(typeof(FakeConditional));
-        }
-
 
         [Test]
         public void has_view_is_false_when_it_is_empty()
         {
             var node = new OutputNode(typeof(Address));
-            node.HasView(typeof(Always)).ShouldBeFalse();
+            node.HasView(Always.Flyweight).ShouldBeFalse();
         }
 
         [Test]
@@ -65,35 +26,35 @@ namespace FubuMVC.Tests.View
         {
             var node = new OutputNode(typeof(Address));
             var viewToken = MockRepository.GenerateMock<IViewToken>();
-            node.AddView(viewToken);
+            node.AddView(viewToken, null);
 
-            node.HasView(typeof(Always)).ShouldBeTrue();
+            node.HasView(Always.Flyweight).ShouldBeTrue();
         }
 
         [Test]
         public void has_view_negative_when_there_is_a_view_but_it_has_different_conditions()
         {
-            Type conditionType = typeof(FakeConditional);
+            var condition = new FakeConditional();
 
             var node = new OutputNode(typeof(Address));
             var viewToken = MockRepository.GenerateMock<IViewToken>();
-            node.AddView(viewToken, conditionType);
+            node.AddView(viewToken, condition);
 
-            node.HasView(typeof(Always)).ShouldBeFalse();
+            node.HasView(Always.Flyweight).ShouldBeFalse();
         }
 
         [Test]
         public void has_view_positive_with_different_conditional()
         {
-            Type conditionType = typeof(FakeConditional);
+            var condition = new FakeConditional();
 
             var node = new OutputNode(typeof(Address));
             var viewToken = MockRepository.GenerateMock<IViewToken>();
-            node.AddView(viewToken, conditionType);
+            node.AddView(viewToken, condition);
 
-            node.HasView(conditionType).ShouldBeTrue();
+            node.HasView(condition).ShouldBeTrue();
         }
-         * */
+       
 
         public class FakeConditional : IConditional
         {
@@ -142,7 +103,9 @@ namespace FubuMVC.Tests.View
 
         public enum ColorEnum
         {
-            red, blue, green
+            red,
+            blue,
+            green
         }
     }
 }
