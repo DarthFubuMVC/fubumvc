@@ -508,7 +508,6 @@
     <Compile Include="Urls\IUrlRegistry.cs" />
     <Compile Include="Security\IAuthenticationContext.cs" />
     <Compile Include="Security\ISecurityContext.cs" />
-    <Compile Include="View\ActionlessViewConvention.cs" />
     <Compile Include="View\Attachment\ActionInSameFolderAsViewReturnsViewModelType.cs" />
     <Compile Include="View\Attachment\ActionReturnsViewModelType.cs" />
     <Compile Include="View\Attachment\ActionWithSameNameAndFolderAsViewReturnsViewModelType.cs" />

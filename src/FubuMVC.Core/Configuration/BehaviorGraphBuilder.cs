@@ -9,6 +9,8 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using System.Collections.Generic;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.View;
+using FubuMVC.Core.View.Attachment;
 
 namespace FubuMVC.Core.Configuration
 {
@@ -37,9 +39,7 @@ namespace FubuMVC.Core.Configuration
             var graph = new BehaviorGraph();
             startBehaviorGraph(registry, graph);
 
-            var viewDiscovery = Task.Factory.StartNew(() => {
 
-            });
 
             lookForAccessorOverrides(graph);
 
@@ -51,11 +51,12 @@ namespace FubuMVC.Core.Configuration
             // Apply settings
             config.RunActions(ConfigurationType.Settings, graph);
 
-
+            var viewDiscovery = graph.Settings.Get<ViewEngines>().BuildViewBag(graph.Settings);
             
 
             discoverChains(config, graph);
-
+            var attacher = new ViewAttachmentWorker(viewDiscovery.Result, graph.Settings.Get<ViewAttachmentPolicy>());
+            attacher.Configure(graph);
 
             config.RunActions(ConfigurationType.Explicit, graph);
             config.RunActions(ConfigurationType.Policy, graph);

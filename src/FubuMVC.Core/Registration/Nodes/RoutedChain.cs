@@ -28,8 +28,6 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public RoutedChain(IRouteDefinition route, Type inputType) : this(route)
         {
-
-
             if (inputType != null) route.ApplyInputType(inputType);
         }
 

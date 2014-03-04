@@ -1,9 +1,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using FubuCore;
+using FubuCore.Reflection;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Runtime.Conditionals;
 
 namespace FubuMVC.Core.View.Attachment
 {
@@ -12,6 +16,7 @@ namespace FubuMVC.Core.View.Attachment
     {
         private readonly ViewBag _views;
         private readonly ViewAttachmentPolicy _policy;
+        private readonly IList<IViewToken> _attached = new List<IViewToken>(); 
 
         public ViewAttachmentWorker(ViewBag views, ViewAttachmentPolicy policy)
         {
@@ -19,11 +24,29 @@ namespace FubuMVC.Core.View.Attachment
             _policy = policy;
         }
 
-        public void Configure(IEnumerable<BehaviorChain> chains)
+        public void Configure(BehaviorGraph graph)
         {
             if (!_views.Views.Any()) return;
 
-            FindLastActions(chains).Each(attachToAction);
+            FindLastActions(graph.Behaviors).Each(attachToAction);
+
+            _views.Views.Where(x => x.ViewModel != null && !_attached.Contains(x)).Each(view => {
+                var chain = buildChainForView(view);
+                chain.Output.AddView(view, Always.Flyweight);
+
+                graph.AddChain(chain);
+            });
+        }
+
+        private BehaviorChain buildChainForView(IViewToken view)
+        {
+            if (view.ViewModel.HasAttribute<UrlPatternAttribute>())
+            {
+                var url = view.ViewModel.GetAttribute<UrlPatternAttribute>().Pattern;
+                return new RoutedChain(new RouteDefinition(url), view.ViewModel);
+            }
+
+            return BehaviorChain.ForResource(view.ViewModel);
         }
 
         private void attachToAction(ActionCall action)
@@ -46,6 +69,8 @@ namespace FubuMVC.Core.View.Attachment
                 if (count != 1) continue;
 
                 var token = viewTokens.Single().Resolve();
+
+                _attached.Add(token);
                 outputNode.AddView(token, viewProfile.Condition);
 
                 break;
@@ -67,27 +92,4 @@ namespace FubuMVC.Core.View.Attachment
         }
     }
 
-
-    [Policy]
-    [Description("View Attachment")]
-    public class ViewAttacher : IConfigurationAction
-    {
-        public void Configure(BehaviorGraph graph)
-        {
-            var views = graph.Settings.Get<ViewEngines>().BuildViewBag(graph.Settings);
-
-            Configure(graph, views.Result);
-        }
-
-        public void Configure(BehaviorGraph graph, ViewBag views)
-        {
-            var policy = graph.Settings.Get<ViewAttachmentPolicy>();
-
-            var worker = new ViewAttachmentWorker(views, policy);
-
-            worker.Configure(graph.Behaviors);
-        }
-
-
-    }
 }

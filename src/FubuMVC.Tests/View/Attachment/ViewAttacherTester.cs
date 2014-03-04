@@ -33,12 +33,11 @@ namespace FubuMVC.Tests.View.Attachment
             theChain.AddToEnd(theAction);
 
             thePolicy = new ViewAttachmentPolicy();
-            theAttacher = new ViewAttacher();
         }
 
         private List<IViewToken> theViews;
         private ActionCall theAction;
-        private ViewAttacher theAttacher;
+        private ViewAttachmentWorker theAttacher;
         private BehaviorChain theChain;
         private ViewAttachmentPolicy thePolicy;
 
@@ -69,7 +68,8 @@ namespace FubuMVC.Tests.View.Attachment
 
             graph.Settings.Replace(thePolicy);
 
-            theAttacher.Configure(graph, new ViewBag(theViews));
+            var worker = new ViewAttachmentWorker(new ViewBag(theViews), thePolicy);
+            worker.Configure(graph);
         }
 
 

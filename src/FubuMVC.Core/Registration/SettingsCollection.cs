@@ -33,10 +33,10 @@ namespace FubuMVC.Core.Registration
 
         public T Get<T>() where T : class
         {
-            return getTask<T>().Result;
+            return GetTask<T>().Result;
         }
 
-        private Task<T> getTask<T>()
+        public Task<T> GetTask<T>()
         {
             return selectSettings<T>()[typeof (T)].As<Task<T>>();
         }

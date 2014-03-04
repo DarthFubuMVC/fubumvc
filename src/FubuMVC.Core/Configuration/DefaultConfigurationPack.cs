@@ -2,9 +2,7 @@ using FubuMVC.Core.Caching;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
-using FubuMVC.Core.Resources.PathBased;
 using FubuMVC.Core.View;
-using FubuMVC.Core.View.Attachment;
 
 namespace FubuMVC.Core.Configuration
 {
@@ -13,8 +11,6 @@ namespace FubuMVC.Core.Configuration
         public DefaultConfigurationPack()
         {
             For(ConfigurationType.Policy);
-            Add<ViewAttacher>();
-            Add<ActionlessViewConvention>();
             Add<AutoImportModelNamespacesConvention>();
 
             For(ConfigurationType.InjectNodes);
@@ -22,7 +18,7 @@ namespace FubuMVC.Core.Configuration
             Add<AsyncContinueWithHandlerConvention>();
             Add<CachedPartialConvention>();
             Add<CacheAttributePolicy>();
-            
+
 
             For(ConfigurationType.Reordering);
             Add<OutputBeforeAjaxContinuationPolicy>();

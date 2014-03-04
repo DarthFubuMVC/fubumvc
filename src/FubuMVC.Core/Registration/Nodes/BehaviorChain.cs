@@ -341,5 +341,12 @@ namespace FubuMVC.Core.Registration.Nodes
             return IsTagged(categoryOrHttpMethod);
         }
 
+        public static BehaviorChain ForResource(Type resourceType)
+        {
+            var chain = new BehaviorChain();
+            chain._output = new Lazy<OutputNode>(() => new OutputNode(resourceType));
+
+            return chain;
+        }
     }
 }
