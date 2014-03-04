@@ -6,11 +6,11 @@ namespace FubuMVC.Core.Resources.Conneg
     public interface IMedia
     {
         IEnumerable<string> Mimetypes { get; }
+        IConditional Condition { get; }
     }
 
     public interface IMedia<in T> : IMedia
     {
-        IConditional Condition { get; }
         void Write(string mimeType, IFubuRequestContext context, T resource);
         bool MatchesRequest(IFubuRequestContext context);
     }

@@ -56,4 +56,5 @@ namespace FubuMVC.Core
             get { return _logger; }
         }
     }
+
 }
