@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.View
 {
+    [Description("Auto import view model namespaces into the views")]
     public class AutoImportModelNamespacesConvention : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)

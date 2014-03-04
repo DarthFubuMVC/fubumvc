@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
@@ -7,6 +8,7 @@ using FubuMVC.Core.Resources.Conneg;
 namespace FubuMVC.Core.View.Attachment
 {
     [Policy]
+    [Description("View Attachment")]
     public class ViewAttacher : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)

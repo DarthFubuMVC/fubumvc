@@ -3,6 +3,7 @@ using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Resources.PathBased;
+using FubuMVC.Core.View;
 
 namespace FubuMVC.Core.Configuration
 {
@@ -15,7 +16,7 @@ namespace FubuMVC.Core.Configuration
             Add<AsyncContinueWithHandlerConvention>();
             Add<CachedPartialConvention>();
             Add<CacheAttributePolicy>();
-
+            Add<AutoImportModelNamespacesConvention>();
 
             For(ConfigurationType.Reordering);
             Add<OutputBeforeAjaxContinuationPolicy>();

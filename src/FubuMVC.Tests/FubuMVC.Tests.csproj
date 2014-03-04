@@ -347,7 +347,6 @@
     <Compile Include="Urls\ChainUrlResolverTester.cs" />
     <Compile Include="Urls\StubCurrentHttpRequest.cs" />
     <Compile Include="Urls\UrlRegistryIntegrationTester.cs" />
-    <Compile Include="View\Attachment\ActionlessViewConventionTester.cs" />
     <Compile Include="View\Attachment\DefaultProfileTester.cs" />
     <Compile Include="View\Attachment\ProfileViewTokenTester.cs" />
     <Compile Include="View\Attachment\ViewAttacherTester.cs" />

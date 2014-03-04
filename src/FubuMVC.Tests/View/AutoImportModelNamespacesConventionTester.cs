@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core;
+﻿using FakeTestNamespaceForAutoImport;
+using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View;
 using FubuTestingSupport;
@@ -17,6 +18,7 @@ namespace FubuMVC.Tests.View
             _registry = new FubuRegistry();
             _registry.Policies.Add<AutoImportModelNamespacesConvention>();
             _registry.Actions.IncludeType<FakeController>();
+            _registry.Actions.IncludeType<FakeAction>();
         }
 
         [Test]
@@ -24,7 +26,7 @@ namespace FubuMVC.Tests.View
         {
             var graph = BehaviorGraph.BuildFrom(_registry);
             var commonViewNamespaces = graph.Settings.Get<CommonViewNamespaces>();
-            commonViewNamespaces.Namespaces.ShouldHaveTheSameElementsAs("FubuMVC.Core.View.Testing", "FakeTestNamespaceForAutoImport");
+            commonViewNamespaces.Namespaces.ShouldHaveTheSameElementsAs("FakeTestNamespaceForAutoImport", "FubuMVC.Tests.View");
         }
 
         [Test]
@@ -38,6 +40,28 @@ namespace FubuMVC.Tests.View
         }
     }
 
+    public class FakeAction
+    {
+        public FakeViewModel Execute(FakeInputModel input)
+        {
+            return new FakeViewModel();
+        }
+    }
+
+    public class FakeInputModel
+    {
+    }
+
+    public class FakeViewModel
+    {
+    }
+
+
+}
+
+
+namespace FakeTestNamespaceForAutoImport
+{
     public class FakeController
     {
         public FakeViewModel Execute(FakeInputModel input)

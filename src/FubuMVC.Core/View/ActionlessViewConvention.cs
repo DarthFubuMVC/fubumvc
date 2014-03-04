@@ -1,8 +1,10 @@
+using System.ComponentModel;
 using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.View
 {
     [Policy]
+    [Description("Actionless view discovery")]
     public class ActionlessViewConvention : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)
