@@ -26,7 +26,7 @@ namespace FubuMVC.Core.Registration.Querying
 
             _creators.OnMissing = type =>
             {
-                return behaviorGraph.Behaviors.SingleOrDefault(x => x.UrlCategory.Creates.Contains(type));
+                return behaviorGraph.Behaviors.OfType<RoutedChain>().SingleOrDefault(x => x.UrlCategory.Creates.Contains(type));
             };
         }
 
@@ -53,20 +53,7 @@ namespace FubuMVC.Core.Registration.Querying
 
                     candidates.Each(x =>
                     {
-                        // TODO -- BehaviorChain needs a Description or a better ToString()
-
-                        var description = "\n";
-                        if (x.Route != null)
-                        {
-                            description += x.Route.Pattern + "  ";
-                        }
-
-                        if (x.FirstCall() != null)
-                        {
-                            description += " -- " + x.FirstCall().Description;
-                        }
-
-                        message += description;
+                        message += "\n" + x;
                     });
 
                     return () =>
@@ -122,7 +109,7 @@ namespace FubuMVC.Core.Registration.Querying
 
         public void RootAt(string baseUrl)
         {
-            _behaviorGraph.Behaviors.Where(x => x.Route != null).Each(x => x.Route.RootUrlAt(baseUrl));
+            _behaviorGraph.Behaviors.OfType<RoutedChain>().Each(x => x.Route.RootUrlAt(baseUrl));
         }
 
         public IChainForwarder FindForwarder(object model, string category = null)

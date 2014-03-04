@@ -116,7 +116,7 @@ namespace FubuMVC.Tests.Registration.Nodes
         [Test]
         public void add_a_route_alias()
         {
-            var chain = new BehaviorChain();
+            var chain = new RoutedChain("something/else");
             var alias = new RouteDefinition("something/else");
 
             chain.AddRouteAlias(alias);
@@ -472,12 +472,12 @@ namespace FubuMVC.Tests.Registration.Nodes
         [SetUp]
         public void SetUp()
         {
-            theChain = new BehaviorChain();
+            theChain = new RoutedChain("something");
         }
 
         #endregion
 
-        private BehaviorChain theChain;
+        private RoutedChain theChain;
 
         [Test]
         public void negative_on_category()
@@ -499,7 +499,6 @@ namespace FubuMVC.Tests.Registration.Nodes
         public void postive_on_http_verb()
         {
             theChain.UrlCategory.Category = "something";
-            theChain.Route = new RouteDefinition("something");
             theChain.Route.AllowedHttpMethods.Add("POST");
             theChain.Route.AllowedHttpMethods.Add("GET");
 

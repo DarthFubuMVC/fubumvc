@@ -19,19 +19,11 @@ namespace FubuMVC.Tests.Http
         [SetUp]
         public void SetUp()
         {
-            theChain = new BehaviorChain(){
-                Route = new RouteDefinition("some/pattern/url")
-            };
+            theChain = new RoutedChain(new RouteDefinition("some/pattern/url"));
 
-            theSecondChain = new BehaviorChain()
-            {
-                Route = new RouteDefinition("some/other/pattern")
-            };
+            theSecondChain = new RoutedChain(new RouteDefinition("some/other/pattern"));
 
-            theThirdChain = new BehaviorChain()
-            {
-                Route = new RouteDefinition("yet/another/pattern")
-            };
+            theThirdChain = new RoutedChain(new RouteDefinition("yet/another/pattern"));
 
             theRouteData = new Dictionary<string, object>{
                 {"A", "1"},

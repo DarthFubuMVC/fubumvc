@@ -83,27 +83,6 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
-        public void description_writes_each_behavior_first_call_and_route_pattern()
-        {
-            var graph = BehaviorGraph.BuildFrom(x => {
-                x.Actions.IncludeType<OneController>();
-
-                x.Policies.Add(policy => {
-                    policy.Wrap.WithBehavior<WrappingBehavior2>();
-                    policy.Wrap.WithBehavior<WrappingBehavior>();
-                });
-
-            });
-
-            var listener = MockRepository.GenerateStub<TraceListener>();
-            Trace.Listeners.Add(listener);
-            graph.Describe();
-            graph.Behaviors.Each(
-                b => listener.AssertWasCalled(
-                    l => l.WriteLine(b.FirstCall().Description.PadRight(70) + b.Route.Pattern)));
-        }
-
-        [Test]
         public void find_home_is_not_set()
         {
             var graph = BehaviorGraph.BuildFrom(x =>
@@ -268,44 +247,6 @@ namespace FubuMVC.Tests.Registration
         private Foo foo2;
     }
 
-    [TestFixture]
-    public class when_adding_chains_by_action
-    {
-        [Test]
-        public void add_a_simple_closed_type()
-        {
-            var graph = new BehaviorGraph();
-            var chain = graph.AddActionFor("go/{Id}", typeof (Action1));
-
-            chain.FirstCall().HandlerType.ShouldEqual(typeof (Action1));
-            chain.FirstCall().Method.Name.ShouldEqual("Go");
-            chain.Route.Pattern.ShouldEqual("go/{Id}");
-            chain.Route.Input.ShouldBeOfType<RouteInput<ArgModel>>();
-
-            chain.Route.CreateUrlFromInput(new ArgModel{
-                Id = 5
-            }).ShouldEqual("go/5");
-
-            graph.Behaviors.Count().ShouldEqual(1);
-        }
-
-        [Test]
-        public void add_a_simple_open_type()
-        {
-            var graph = new BehaviorGraph();
-            var chain = graph.AddActionFor("go/{Id}", typeof (Action2<>), typeof (string));
-
-            chain.FirstCall().HandlerType.ShouldEqual(typeof (Action2<string>));
-            chain.FirstCall().Method.Name.ShouldEqual("Go");
-            chain.Route.Pattern.ShouldEqual("go/{Id}");
-            chain.Route.Input.ShouldBeOfType<RouteInput<ArgModel>>();
-            chain.Route.CreateUrlFromInput(new ArgModel{
-                Id = 5
-            }).ShouldEqual("go/5");
-
-            graph.Behaviors.Count().ShouldEqual(1);
-        }
-    }
 
     public class Action1
     {

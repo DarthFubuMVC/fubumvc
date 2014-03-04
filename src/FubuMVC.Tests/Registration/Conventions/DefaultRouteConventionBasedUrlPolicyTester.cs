@@ -1,4 +1,5 @@
 using System.Reflection;
+using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
@@ -30,7 +31,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                 r.Actions.IncludeType<HomeEndpoint>();
             });
 
-            graph.BehaviorFor<HomeEndpoint>(x => x.Index()).Route.Pattern.ShouldEqual("");
+            graph.BehaviorFor<HomeEndpoint>(x => x.Index()).As<RoutedChain>().Route.Pattern.ShouldEqual("");
         }
 
         [Test]

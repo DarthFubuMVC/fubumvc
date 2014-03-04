@@ -1,4 +1,5 @@
 using System;
+using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 
@@ -25,7 +26,7 @@ namespace FubuMVC.Core
 
         public override void Alter(ActionCall call)
         {
-            call.ParentChain().UrlCategory.Creates.Add(Type);
+            call.ParentChain().As<RoutedChain>().UrlCategory.Creates.Add(Type);
         }
     }
 }

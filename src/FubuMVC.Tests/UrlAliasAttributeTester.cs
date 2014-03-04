@@ -1,6 +1,8 @@
 using System;
+using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -27,7 +29,8 @@ namespace FubuMVC.Tests
             var route1 = new RouteDefinition("something/else");
             var route2 = new RouteDefinition("again/something/else");
 
-            var chain = theGraph.BehaviorFor<RouteAliasController>(x => x.get_something());
+            var chain = theGraph.BehaviorFor<RouteAliasController>(x => x.get_something())
+                .As<RoutedChain>();
             var routes = chain.AdditionalRoutes;
 
             routes.ShouldHaveCount(2);

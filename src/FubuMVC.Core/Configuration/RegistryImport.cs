@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
@@ -17,10 +16,7 @@ namespace FubuMVC.Core.Configuration
             var childGraph = BehaviorGraphBuilder.Import(Registry, settings);
             if (Prefix.IsNotEmpty())
             {
-                childGraph.Behaviors.Where(x => x.Route != null).Each(x =>
-                {
-                    x.Route.Prepend(Prefix);
-                });
+                childGraph.Behaviors.OfType<RoutedChain>().Each(x => { x.Route.Prepend(Prefix); });
             }
 
             return childGraph.Behaviors;
@@ -37,18 +33,18 @@ namespace FubuMVC.Core.Configuration
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof(RegistryImport)) return false;
-            return Equals((RegistryImport)obj);
+            if (obj.GetType() != typeof (RegistryImport)) return false;
+            return Equals((RegistryImport) obj);
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                return ((Prefix != null ? Prefix.GetHashCode() : 0) * 397) ^ (Registry.GetType() != null ? Registry.GetType().GetHashCode() : 0);
+                return ((Prefix != null ? Prefix.GetHashCode() : 0)*397) ^
+                       (Registry.GetType() != null ? Registry.GetType().GetHashCode() : 0);
             }
         }
-
 
 
         public override string ToString()

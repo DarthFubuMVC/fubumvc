@@ -177,7 +177,6 @@
     <Compile Include="Registration\Conventions\DefaultRouteConventionBasedUrlPolicy.cs" />
     <Compile Include="Registration\Conventions\DefaultUrlPolicy.cs" />
     <Compile Include="Registration\Conventions\OutputBeforeAjaxContinuationPolicy.cs" />
-    <Compile Include="Registration\Conventions\UrlPatternAttributeOnViewModelPolicy.cs" />
     <Compile Include="Registration\Conventions\UrlPolicies.cs" />
     <Compile Include="Registration\Conventions\VaryByModification.cs" />
     <Compile Include="Registration\Conventions\CachingExpression.cs" />
@@ -187,6 +186,7 @@
     <Compile Include="Registration\IAccessorRulesRegistration.cs" />
     <Compile Include="Registration\IChainSource.cs" />
     <Compile Include="Registration\Nodes\BehaviorChainExtensions.cs" />
+    <Compile Include="Registration\Nodes\RoutedChain.cs" />
     <Compile Include="Registration\Policies\AddToEndExpression.cs" />
     <Compile Include="Registration\Policies\AndChainFilter.cs" />
     <Compile Include="Registration\Policies\AnyActionMatch.cs" />

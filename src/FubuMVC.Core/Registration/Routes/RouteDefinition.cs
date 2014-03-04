@@ -7,6 +7,7 @@ using FubuCore;
 using FubuCore.Descriptions;
 using FubuCore.Util;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Resources.PathBased;
 
 namespace FubuMVC.Core.Registration.Routes
 {
@@ -78,6 +79,8 @@ namespace FubuMVC.Core.Registration.Routes
 
         public void ApplyInputType(Type inputType)
         {
+            if (inputType.CanBeCastTo<ResourcePath>()) return;
+
             Input = RouteBuilder.Build(inputType, Pattern).Input;
         }
 

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
@@ -24,12 +25,13 @@ namespace FubuMVC.Tests.Registration.Conventions
                 x.Actions.IncludeType<MethodAction>();
             });
 
-            theChain = graph.BehaviorFor<MethodAction>(x => x.Get_cases_from_Start_to_End(null));
+            theChain = graph.BehaviorFor<MethodAction>(x => x.Get_cases_from_Start_to_End(null))
+                .As<RoutedChain>();
         }
 
         #endregion
 
-        private BehaviorChain theChain;
+        private RoutedChain theChain;
 
         [Test]
         public void the_chain_has_the_http_method_constraint()

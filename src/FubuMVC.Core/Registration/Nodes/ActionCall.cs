@@ -5,6 +5,7 @@ using System.Reflection;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuCore.Reflection;
+using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Routes;
 
 namespace FubuMVC.Core.Registration.Nodes
@@ -132,18 +133,32 @@ namespace FubuMVC.Core.Registration.Nodes
                : new RouteDefinition(pattern);
         }
 
-        public BehaviorChain BuildChain()
+        public BehaviorChain BuildChain(UrlPolicies urlPolicies)
         {
-            var chain = new BehaviorChain
-            {
-                IsPartialOnly = (HasAttribute<FubuPartialAttribute>() || Method.Name.EndsWith("Partial"))
-            };
+            var chain = buildChain(urlPolicies);
 
             chain.AddToEnd(this);
 
             ForAttributes<ModifyChainAttribute>(att => att.Alter(this));
 
             return chain;
+        }
+
+        private BehaviorChain buildChain(UrlPolicies urlPolicies)
+        {
+            if (HasAttribute<FubuPartialAttribute>() || Method.Name.EndsWith("Partial"))
+            {
+                return new BehaviorChain
+                {
+                    IsPartialOnly = true
+                };
+            }
+            else
+            {
+                var route = urlPolicies.BuildRoute(this);
+
+                return new RoutedChain(route, InputType());
+            }
         }
     }
 }

@@ -12,7 +12,6 @@ namespace FubuMVC.Core
         public const string Instrumentation = "Instrumentation";
         public const string Services = "Services";
 
-        public const string Attributes = "Attributes";
         public const string InjectNodes = "InjectNodes";
         public const string Attachment = "Attachment";
 

@@ -10,9 +10,6 @@ namespace FubuMVC.Core.Configuration
     {
         public DefaultConfigurationPack()
         {
-            For(ConfigurationType.Attributes);
-            Add<UrlPatternAttributeOnViewModelPolicy>();
-
             For(ConfigurationType.InjectNodes);
             Add<ContinuationHandlerConvention>();
             Add<AsyncContinueWithHandlerConvention>();

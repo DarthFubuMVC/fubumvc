@@ -56,7 +56,7 @@ namespace FubuMVC.Tests.Registration.Querying
                 CategoryOrHttpMethod = null
             };
 
-            var chain1 = new BehaviorChain();
+            var chain1 = new RoutedChain("something");
             chain1.UrlCategory.Category = Categories.DEFAULT;
 
             var chains = new BehaviorChain[] { chain1, };
@@ -73,13 +73,13 @@ namespace FubuMVC.Tests.Registration.Querying
                 CategoryOrHttpMethod = null
             };
 
-            var chain1 = new BehaviorChain{
+            var chain1 = new RoutedChain(""){
                 UrlCategory ={
                     Category = null
                 }
             };
 
-            var chain2 = new BehaviorChain
+            var chain2 = new RoutedChain("")
             {
                 UrlCategory =
                 {
@@ -101,7 +101,7 @@ namespace FubuMVC.Tests.Registration.Querying
                 CategoryOrHttpMethod = null
             };
 
-            var chain1 = new BehaviorChain
+            var chain1 = new RoutedChain("")
             {
                 UrlCategory =
                 {
@@ -109,7 +109,7 @@ namespace FubuMVC.Tests.Registration.Querying
                 }
             };
 
-            var chain2 = new BehaviorChain
+            var chain2 = new RoutedChain("")
             {
                 UrlCategory =
                 {
@@ -131,7 +131,7 @@ namespace FubuMVC.Tests.Registration.Querying
                 CategoryOrHttpMethod = null
             };
 
-            var chain1 = new BehaviorChain
+            var chain1 = new RoutedChain("")
             {
                 UrlCategory =
                 {
@@ -139,7 +139,7 @@ namespace FubuMVC.Tests.Registration.Querying
                 }
             };
 
-            var chain2 = new BehaviorChain
+            var chain2 = new RoutedChain("")
             {
                 UrlCategory =
                 {
@@ -147,7 +147,7 @@ namespace FubuMVC.Tests.Registration.Querying
                 }
             };
 
-            var chain3 = new BehaviorChain
+            var chain3 = new RoutedChain("")
             {
                 UrlCategory =
                 {
@@ -169,7 +169,7 @@ namespace FubuMVC.Tests.Registration.Querying
                 CategoryOrHttpMethod = null
             };
 
-            var chain1 = new BehaviorChain
+            var chain1 = new RoutedChain("")
             {
                 UrlCategory =
                 {
@@ -177,7 +177,7 @@ namespace FubuMVC.Tests.Registration.Querying
                 }
             };
 
-            var chain2 = new BehaviorChain
+            var chain2 = new RoutedChain("")
             {
                 UrlCategory =
                 {
@@ -185,7 +185,7 @@ namespace FubuMVC.Tests.Registration.Querying
                 }
             };
 
-            var chain3 = new BehaviorChain
+            var chain3 = new RoutedChain("")
             {
                 UrlCategory =
                 {
@@ -207,7 +207,7 @@ namespace FubuMVC.Tests.Registration.Querying
                 CategoryOrHttpMethod = null
             };
 
-            var chain1 = new BehaviorChain
+            var chain1 = new RoutedChain("")
             {
                 UrlCategory =
                 {
@@ -215,7 +215,7 @@ namespace FubuMVC.Tests.Registration.Querying
                 }
             };
 
-            var chain2 = new BehaviorChain
+            var chain2 = new RoutedChain("")
             {
                 UrlCategory =
                 {
@@ -223,7 +223,7 @@ namespace FubuMVC.Tests.Registration.Querying
                 }
             };
 
-            var chain3 = new BehaviorChain
+            var chain3 = new RoutedChain("")
             {
                 UrlCategory =
                 {
@@ -245,7 +245,7 @@ namespace FubuMVC.Tests.Registration.Querying
                 CategoryOrHttpMethod = "something"
             };
 
-            var chain1 = new BehaviorChain
+            var chain1 = new RoutedChain("")
             {
                 UrlCategory =
                 {
@@ -253,7 +253,7 @@ namespace FubuMVC.Tests.Registration.Querying
                 }
             };
 
-            var chain2 = new BehaviorChain
+            var chain2 = new RoutedChain("")
             {
                 UrlCategory =
                 {
@@ -261,7 +261,7 @@ namespace FubuMVC.Tests.Registration.Querying
                 }
             };
 
-            var chain3 = new BehaviorChain
+            var chain3 = new RoutedChain("")
             {
                 UrlCategory =
                 {
@@ -283,9 +283,8 @@ namespace FubuMVC.Tests.Registration.Querying
                 CategoryOrHttpMethod = "POST"
             };
 
-            var chain1 = new BehaviorChain
+            var chain1 = new RoutedChain("whatever")
             {
-                Route = new RouteDefinition("whatever"),
                 UrlCategory =
                 {
                     Category = "something"
@@ -294,7 +293,7 @@ namespace FubuMVC.Tests.Registration.Querying
 
             chain1.Route.AllowedHttpMethods.Add("POST");
 
-            var chain2 = new BehaviorChain
+            var chain2 = new RoutedChain("")
             {
                 UrlCategory =
                 {
@@ -302,7 +301,7 @@ namespace FubuMVC.Tests.Registration.Querying
                 }
             };
 
-            var chain3 = new BehaviorChain
+            var chain3 = new RoutedChain("")
             {
                 UrlCategory =
                 {
@@ -324,7 +323,7 @@ namespace FubuMVC.Tests.Registration.Querying
                 CategoryOrHttpMethod = "something"
             };
 
-            var chain1 = new BehaviorChain
+            var chain1 = new RoutedChain("")
             {
                 UrlCategory =
                 {
@@ -332,7 +331,7 @@ namespace FubuMVC.Tests.Registration.Querying
                 }
             };
 
-            var chain2 = new BehaviorChain
+            var chain2 = new RoutedChain("")
             {
                 UrlCategory =
                 {
@@ -340,7 +339,7 @@ namespace FubuMVC.Tests.Registration.Querying
                 }
             };
 
-            var chain3 = new BehaviorChain
+            var chain3 = new RoutedChain("")
             {
                 UrlCategory =
                 {
@@ -365,7 +364,7 @@ namespace FubuMVC.Tests.Registration.Querying
 
 
 
-            var chain3 = new BehaviorChain
+            var chain3 = new RoutedChain("")
             {
                 UrlCategory =
                 {
@@ -388,7 +387,7 @@ namespace FubuMVC.Tests.Registration.Querying
             };
 
 
-            var chain3 = new BehaviorChain
+            var chain3 = new RoutedChain("")
             {
                 UrlCategory =
                 {

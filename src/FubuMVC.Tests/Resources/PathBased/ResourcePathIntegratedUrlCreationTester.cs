@@ -1,5 +1,7 @@
+using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.PathBased;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -40,7 +42,7 @@ namespace FubuMVC.Tests.Resources.PathBased
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<Controller1>();
 
-            BehaviorGraph.BuildFrom(registry).BehaviorFor<Controller1>(x => x.get_resource(null)).Route.CreateUrlFromInput(
+            BehaviorGraph.BuildFrom(registry).BehaviorFor<Controller1>(x => x.get_resource(null)).As<RoutedChain>().Route.CreateUrlFromInput(
                 new ResourcePath("something/else"))
                 .ShouldEqual("resource/something/else");
         }
@@ -54,10 +56,12 @@ namespace FubuMVC.Tests.Resources.PathBased
             var graph = BehaviorGraph.BuildFrom(registry);
 
             graph.BehaviorFor<Controller1>(x => x.get_resource(null))
+                .As<RoutedChain>()
                 .Route.Pattern.ShouldEqual(
                     "resource/{Part0}/{Part1}/{Part2}/{Part3}/{Part4}/{Part5}/{Part6}/{Part7}/{Part8}/{Part9}");
 
             graph.BehaviorFor<Controller1>(x => x.get_special(null))
+                .As<RoutedChain>()
                 .Route.Pattern.ShouldEqual(
                     "special/{Part0}/{Part1}/{Part2}/{Part3}/{Part4}/{Part5}/{Part6}/{Part7}/{Part8}/{Part9}");
 

@@ -27,9 +27,7 @@ namespace FubuMVC.Tests.Runtime
         public void SetUp()
         {
             theFactory = MockRepository.GenerateMock<IServiceFactory>();
-            theChain = new BehaviorChain(){
-                Route = new RouteDefinition("something")
-            };
+            theChain = new RoutedChain("something");
 
             theRouteData = new Dictionary<string, object>();
 

@@ -23,7 +23,7 @@ namespace FubuMVC.Core.Http
             _resourceHash = new Lazy<string>(() =>
             {
                 var dict = new Dictionary<string, string>{
-                    {"Pattern", top.Route.Pattern}
+                    {"Pattern", top.ToString()}
                 };
 
                 data.OrderBy(x => x.Key).Each(

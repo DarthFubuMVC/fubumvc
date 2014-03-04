@@ -1,4 +1,5 @@
 using System;
+using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 
@@ -22,7 +23,7 @@ namespace FubuMVC.Core
             var chain = call.ParentChain();
             var alias = call.BuildRouteForPattern(_pattern);
 
-            chain.AddRouteAlias(alias);
+            chain.As<RoutedChain>().AddRouteAlias(alias);
         }
     }
 }

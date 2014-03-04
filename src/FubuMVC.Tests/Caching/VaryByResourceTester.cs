@@ -16,33 +16,28 @@ namespace FubuMVC.Tests.Caching
         [Test]
         public void hash_values_when_the_chain_has_a_route_but_not_real_values()
         {
-            var chain = new BehaviorChain()
-            {
-                Route = new RouteDefinition("some/pattern/url")
-            };
+            var chain = new RoutedChain(new RouteDefinition("some/pattern/url"));
+        
 
             var currentChain = new CurrentChain(chain, new Dictionary<string, object>());
 
             var varyBy = new VaryByResource(currentChain);
 
             var values = varyBy.Values();
-            values.Select(x => "{0}={1}".ToFormat(x.Key, x.Value)).ShouldHaveTheSameElementsAs("chain=" + chain.UniqueId.ToString());
+            values.Select(x => "{0}={1}".ToFormat(x.Key, x.Value)).ShouldHaveTheSameElementsAs("chain=" + chain.GetRoutePattern());
         }
 
         [Test]
         public void hash_values_with_a_route_That_has_substitutions()
         {
-            var chain = new BehaviorChain()
-            {
-                Route = RouteBuilder.Build<Query>("some/pattern/url/{from}/{to}")
-            };
+            var chain = new RoutedChain(RouteBuilder.Build<Query>("some/pattern/url/{from}/{to}"));
 
             var currentChain = new CurrentChain(chain, new Dictionary<string, object>{{"from", 1}, {"to", 2}});
             var varyBy = new VaryByResource(currentChain);
 
             var values = varyBy.Values();
             values.Select(x => "{0}={1}".ToFormat(x.Key, x.Value))
-                .ShouldHaveTheSameElementsAs("chain=" + chain.UniqueId.ToString(), "from=1", "to=2");
+                .ShouldHaveTheSameElementsAs("chain=" + "some/pattern/url/{from}/{to}", "from=1", "to=2");
         }
 
         [Test]
@@ -50,9 +45,7 @@ namespace FubuMVC.Tests.Caching
         {
             var chain = new BehaviorChain()
             {
-                Route = RouteBuilder.Build<Query>("some/pattern/url/{from}/{to}"),
-                IsPartialOnly = true
-                
+
             };
 
             var currentChain = new CurrentChain(chain, new Dictionary<string, object> { { "from", 1 }, { "to", 2 } });
@@ -60,7 +53,7 @@ namespace FubuMVC.Tests.Caching
 
             var values = varyBy.Values();
             values.Select(x => "{0}={1}".ToFormat(x.Key, x.Value))
-                .ShouldHaveTheSameElementsAs("chain=" + chain.UniqueId.ToString());
+                .ShouldHaveTheSameElementsAs("chain=" + chain.ToString());
         }
 
         public class Query

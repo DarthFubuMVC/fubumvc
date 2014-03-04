@@ -291,28 +291,4 @@ namespace FubuMVC.IntegrationTesting.Samples
     }
     // ENDSAMPLE
 
-    // SAMPLE: conneg-add-json-to-views
-    public class AddJsonToViewsPolicy : Policy
-    {
-        public AddJsonToViewsPolicy()
-        {
-            // Assuming that you have *some* sort
-            // of restriction on when and where
-            // this policy applies
-            Where.IsNotPartial().And.RespondsToHttpMethod("GET")
-                .And.ChainMatches(chain => chain.GetRoutePattern().Contains("foo"));
-            
-            // TODO -- going to have to change this below
-
-            // Adds Json reading and writing to
-            // the each chain that matches the Where filter
-            // above
-            ModifyBy(chain => {
-                chain.Output.Add(new JsonSerializer());
-                chain.Input.Add(new JsonSerializer());
-            });
-        }
-    }
-    // ENDSAMPLE
-
 }

@@ -16,14 +16,14 @@ namespace FubuMVC.Core.Routing
         {
             var defaultSessionRequirement = graph.Settings.Get<SessionStateRequirement>();
             return graph
-                .Behaviors
+                .Behaviors.OfType<RoutedChain>()
                 .Where(x => x.Route != null)
                 .OrderBy(x => x.Route.Rank)
                 .SelectMany(x => BuildRoute(factory, defaultSessionRequirement, x))
                 .ToList();
         }
 
-        public IEnumerable<RouteBase> BuildRoute(IServiceFactory factory, SessionStateRequirement defaultSessionRequirement, BehaviorChain chain)
+        public IEnumerable<RouteBase> BuildRoute(IServiceFactory factory, SessionStateRequirement defaultSessionRequirement, RoutedChain chain)
         {
             yield return buildRoute(factory, defaultSessionRequirement, chain, chain.Route);
 

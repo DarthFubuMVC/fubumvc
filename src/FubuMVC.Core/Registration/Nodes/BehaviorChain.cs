@@ -8,10 +8,10 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.ObjectGraph;
-using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
+using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Registration.Nodes
 {
@@ -26,15 +26,13 @@ namespace FubuMVC.Core.Registration.Nodes
         public const string NoTracing = "NoTracing";
 
         private readonly IList<IBehaviorInvocationFilter> _filters = new List<IBehaviorInvocationFilter>();
-        private readonly IList<IRouteDefinition> _additionalRoutes = new List<IRouteDefinition>(); 
         private readonly Lazy<InputNode> _input;
         private Lazy<OutputNode> _output;
-        private IRouteDefinition _route;
         private readonly Lazy<AuthorizationNode> _authorization = new Lazy<AuthorizationNode>(() => new AuthorizationNode()); 
 
         public BehaviorChain()
         {
-            UrlCategory = new UrlCategory();
+            
 
             _output = new Lazy<OutputNode>(() =>
             {
@@ -146,41 +144,6 @@ namespace FubuMVC.Core.Registration.Nodes
         /// </summary>
         public bool IsPartialOnly { get; set; }
 
-        /// <summary>
-        ///   Models how the Route for this BehaviorChain will be generated
-        /// </summary>
-        public IRouteDefinition Route
-        {
-            get { return _route; }
-            set
-            {
-                _route = value;
-            }
-        }
-
-        /// <summary>
-        /// Collection of additional routes (aliases) that will be generated for this BehaviorChain.
-        /// </summary>
-        public IEnumerable<IRouteDefinition> AdditionalRoutes
-        {
-            get { return _additionalRoutes; }
-        }
-
-        /// <summary>
-        /// Adds the specified route as an additional route for this BehaviorChain to respond to.
-        /// </summary>
-        /// <param name="route"></param>
-        public void AddRouteAlias(IRouteDefinition route)
-        {
-            _additionalRoutes.Fill(route);
-        }
-
-        /// <summary>
-        ///   Categorizes this BehaviorChain for the IUrlRegistry and 
-        ///   IEndpointService UrlFor(***, category) methods
-        /// </summary>
-        public UrlCategory UrlCategory { get; private set; }
-
 
         /// <summary>
         ///   Model of the authorization rules for this BehaviorChain
@@ -192,9 +155,12 @@ namespace FubuMVC.Core.Registration.Nodes
             }
         }
 
-        public int Rank
+        public virtual string Category
         {
-            get { return IsPartialOnly || Route == null ? 0 : Route.Rank; }
+            get
+            {
+                return null;
+            }
         }
 
         ObjectDef IContainerModel.ToObjectDef()
@@ -211,28 +177,6 @@ namespace FubuMVC.Core.Registration.Nodes
             Authorization.As<IAuthorizationRegistration>().Register(Top.UniqueId, callback);
         }
 
-        public string GetRoutePattern()
-        {
-            if (Route == null) return null;
-
-            return Route.Pattern;
-        }
-
-        /// <summary>
-        ///   Does this chain match by either UrlCategory or by Http method?
-        /// </summary>
-        /// <param name = "categoryOrHttpMethod"></param>
-        /// <returns></returns>
-        public bool MatchesCategoryOrHttpMethod(string categoryOrHttpMethod)
-        {
-            if (UrlCategory.Category.IsNotEmpty() &&
-                UrlCategory.Category.Equals(categoryOrHttpMethod, StringComparison.OrdinalIgnoreCase)) return true;
-
-            if (Route == null) return false;
-
-            return Route.AllowedHttpMethods.Select(x => x.ToUpper()).Contains(categoryOrHttpMethod.ToUpper());
-        }
-
         /// <summary>
         ///   Tests whether or not this chain has any output nodes
         /// </summary>
@@ -242,20 +186,6 @@ namespace FubuMVC.Core.Registration.Nodes
             return (Top == null ? false : Top.HasAnyOutputBehavior()) ||
                    (_output.IsValueCreated && _output.Value.Media().Any());
         }
-
-        /// <summary>
-        ///   Prepends the prefix to the route definition
-        /// </summary>
-        /// <param name = "prefix"></param>
-        public void PrependToUrl(string prefix)
-        {
-            if (Route != null)
-            {
-                Route.Prepend(prefix);
-            }
-        }
-
-
 
 
         /// <summary>
@@ -346,17 +276,6 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public override string ToString()
         {
-            if (Route != null)
-            {
-                var description = Route.Pattern;
-                if (Route.AllowedHttpMethods.Any())
-                {
-                    description += " (" + Route.AllowedHttpMethods.Join(", ") + ")";
-                }
-
-                return description;
-            }
-
             if (Calls.Any())
             {
                 return Calls.Select(x => x.Description).Join(", ");
@@ -409,5 +328,18 @@ namespace FubuMVC.Core.Registration.Nodes
         {
             return Tags.Any(x => x.EqualsIgnoreCase(tag));
         }
+
+        /// <summary>
+        ///   Does this chain match by either UrlCategory or by Http method?
+        /// </summary>
+        /// <param name = "categoryOrHttpMethod"></param>
+        /// <returns></returns>
+        public virtual bool MatchesCategoryOrHttpMethod(string categoryOrHttpMethod)
+        {
+            if (categoryOrHttpMethod == Categories.DEFAULT) return true;
+
+            return IsTagged(categoryOrHttpMethod);
+        }
+
     }
 }

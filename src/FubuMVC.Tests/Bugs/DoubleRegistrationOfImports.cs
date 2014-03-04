@@ -1,7 +1,9 @@
 using System;
 using System.Diagnostics;
+using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Nodes;
 using NUnit.Framework;
 using System.Linq;
 using FubuTestingSupport;
@@ -48,7 +50,7 @@ namespace FubuMVC.Tests.Bugs
             });
 
             var actions = graph.Actions().Where(x => x.HandlerType == typeof (SomeClassWithActions));
-            actions.Each(x => Debug.WriteLine(x.Description + " at " + x.ParentChain().GetRoutePattern()));
+            actions.Each(x => Debug.WriteLine(x.Description + " at " + x.ParentChain().As<RoutedChain>().GetRoutePattern()));
 
 
             actions.ShouldHaveCount(1);
@@ -65,7 +67,7 @@ namespace FubuMVC.Tests.Bugs
             });
 
             var actions = graph.Actions().Where(x => x.HandlerType == typeof(SomeClassWithActions));
-            actions.Each(x => Debug.WriteLine(x.Description + " at " + x.ParentChain().GetRoutePattern()));
+            actions.Each(x => Debug.WriteLine(x.Description + " at " + x.ParentChain().As<RoutedChain>().GetRoutePattern()));
 
 
             actions.ShouldHaveCount(1);

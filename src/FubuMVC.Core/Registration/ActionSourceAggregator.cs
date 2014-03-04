@@ -25,23 +25,7 @@ namespace FubuMVC.Core.Registration
 
             var urlPolicies = settings.Get<UrlPolicies>();
 
-            return findChains(actions, urlPolicies).ToArray();
-        }
-
-        private static IEnumerable<BehaviorChain> findChains(IEnumerable<ActionCall> actions, UrlPolicies urlPolicies)
-        {
-            foreach (var action in actions)
-            {
-                // TODO -- will take in UrlPolicies later
-                var chain = action.BuildChain();
-
-                if (!chain.IsPartialOnly)
-                {
-                    chain.Route = urlPolicies.BuildRoute(action);
-                }
-
-                yield return chain;
-            }
+            return actions.Select(x => x.BuildChain(urlPolicies)).ToArray();
         }
 
         public void Add(IActionSource source)

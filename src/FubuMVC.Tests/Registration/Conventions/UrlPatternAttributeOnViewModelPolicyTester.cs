@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
@@ -22,14 +23,15 @@ namespace FubuMVC.Tests.Registration.Conventions
             var graph = BehaviorGraph.BuildFrom(x =>
             {
                 x.Configure(g => {
-                    var c = new BehaviorChain();
+                    var c = new RoutedChain(new RouteDefinition("foo/{Name}"), typeof(Foo));
                     c.AddToEnd(new OutputNode(typeof(Foo)));
 
                     g.AddChain(c);
                 });
             });
 
-            var chain = graph.Behaviors.First(x => x.ResourceType() == typeof (Foo));
+            var chain = graph.Behaviors.First(x => x.ResourceType() == typeof (Foo))
+                .As<RoutedChain>();
             chain.Route.Pattern.ShouldEqual("foo/{Name}");
 
             chain.Route.Input.ShouldBeOfType<RouteInput<Foo>>()

@@ -138,10 +138,14 @@ namespace FubuMVC.Core.Registration.Querying
                 var candidates = chains.Where(x => x.MatchesCategoryOrHttpMethod(Categories.DEFAULT));
                 if (candidates.Count() > 0) return candidates;
 
-                return chains.Where(x => x.UrlCategory.Category == null);
+                return chains.Where(x => x.Category.IsEmpty());
+            }
+            else
+            {
+                return chains.Where(x => x.MatchesCategoryOrHttpMethod(CategoryOrHttpMethod));
             }
 
-            return chains.Where(x => x.MatchesCategoryOrHttpMethod(CategoryOrHttpMethod));
+            
         }
     }
 }

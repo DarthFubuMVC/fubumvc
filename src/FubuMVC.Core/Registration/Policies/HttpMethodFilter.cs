@@ -1,8 +1,6 @@
-﻿using System;
-using FubuCore;
+﻿using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Registration.Nodes;
-using System.Linq;
 
 namespace FubuMVC.Core.Registration.Policies
 {
@@ -17,10 +15,8 @@ namespace FubuMVC.Core.Registration.Policies
 
         public bool Matches(BehaviorChain chain)
         {
-            if (chain.Route == null) return false;
-            if (chain.IsPartialOnly) return false;
-
-            return chain.Route.RespondsToMethod(_method);
+            var routed = chain as RoutedChain;
+            return routed == null ? false : routed.Route.RespondsToMethod(_method);
         }
 
         public void Describe(Description description)

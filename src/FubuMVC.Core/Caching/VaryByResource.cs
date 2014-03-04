@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Caching
 {
@@ -15,14 +16,12 @@ namespace FubuMVC.Core.Caching
 
         public void Apply(IDictionary<string, string> dictionary)
         {
-            dictionary.Add("chain", _currentChain.Current.UniqueId.ToString());
+            dictionary.Add("chain", _currentChain.Current.ToString());
 
-            if (!_currentChain.Current.IsPartialOnly && _currentChain.Current.Route != null)
+            // TODO -- do this w/ polymorphism
+            if (_currentChain.RouteData != null && _currentChain.Current is RoutedChain)
             {
-                if (_currentChain.Current.Route.Input != null && _currentChain.RouteData != null)
-                {
-                    _currentChain.RouteData.Each(pair => dictionary.Add(pair.Key, (pair.Value ?? string.Empty).ToString()));
-                }
+                _currentChain.RouteData.Each(pair => dictionary.Add(pair.Key, (pair.Value ?? string.Empty).ToString()));
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Nodes;
 using NUnit.Framework;
 using FubuCore;
 using FubuTestingSupport;
@@ -18,6 +19,7 @@ namespace FubuMVC.Tests.Bugs
             var graph = BehaviorGraph.BuildFrom(registry);
 
             graph.BehaviorFor<SomeRandomClass>(x => x.get_some_data())
+                .As<RoutedChain>()
                 .GetRoutePattern().ShouldStartWith("mypak");
         }
     }

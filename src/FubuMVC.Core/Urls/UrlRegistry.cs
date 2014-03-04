@@ -109,7 +109,7 @@ namespace FubuMVC.Core.Urls
         {
             var chain = resolver.FindUnique(model, categoryOrHttpMethod);
 
-            string url = _templateFunc(chain.Route.CreateTemplate(model, hash));
+            string url = _templateFunc(chain.As<RoutedChain>().Route.CreateTemplate(model, hash));
             return _httpRequest.ToFullUrl(url);
         }
 

@@ -1,6 +1,8 @@
-﻿using FubuMVC.Core;
+﻿using FubuCore;
+using FubuMVC.Core;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Katana;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
@@ -18,6 +20,7 @@ namespace FubuMVC.IntegrationTesting.Owin
             {
                 server.Services.GetInstance<BehaviorGraph>()
                     .BehaviorFor<ReadingQuerystringEndpoint>(x => x.get_querystring_Key(null))
+                    .As<RoutedChain>()
                     .GetRoutePattern().ShouldEqual("querystring/{Key}");
 
                 server.Endpoints.Get("querystring/Foo?Foo=Bar&A=1&B=2")

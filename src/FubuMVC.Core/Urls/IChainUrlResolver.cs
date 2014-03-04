@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core.Http;
+﻿using FubuCore;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 
@@ -25,13 +26,13 @@ namespace FubuMVC.Core.Urls
 
 		public string UrlFor(object model, BehaviorChain chain)
 		{
-			var url = chain.Route.CreateUrlFromInput(model);
+			var url = chain.As<RoutedChain>().Route.CreateUrlFromInput(model);
 			return _httpRequest.ToFullUrl(url);
 		}
 
 		public string UrlFor(BehaviorChain chain, RouteParameters parameters)
 		{
-			var url = chain.Route.Input.CreateUrlFromParameters(parameters);
+            var url = chain.As<RoutedChain>().Route.Input.CreateUrlFromParameters(parameters);
 
 			return _httpRequest.ToFullUrl(url);
 		}

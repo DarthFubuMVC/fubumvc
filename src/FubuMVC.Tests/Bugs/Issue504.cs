@@ -1,5 +1,7 @@
-﻿using FubuMVC.Core;
+﻿using FubuCore;
+using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Nodes;
 using NUnit.Framework;
 using FubuTestingSupport;
 
@@ -17,6 +19,7 @@ namespace FubuMVC.Tests.Bugs
             var graph = BehaviorGraph.BuildFrom(registry);
 
             graph.BehaviorFor<FooEndpointClass>(x => x.get_some_foo())
+                .As<RoutedChain>()
                  .GetRoutePattern().ShouldEqual("moar/some/foo");
         }
     }

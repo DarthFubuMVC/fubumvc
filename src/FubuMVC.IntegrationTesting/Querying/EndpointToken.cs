@@ -1,4 +1,5 @@
 using System.Linq;
+using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.IntegrationTesting.Querying
@@ -11,7 +12,7 @@ namespace FubuMVC.IntegrationTesting.Querying
 
         public EndpointToken(BehaviorChain chain)
         {
-            RoutePattern = chain.Route == null ? string.Empty : chain.Route.Pattern;
+            RoutePattern = chain is RoutedChain ? chain.As<RoutedChain>().GetRoutePattern() : string.Empty;
             Actions = chain.Calls.Select(x => new ActionToken(x)).ToArray();
         }
 

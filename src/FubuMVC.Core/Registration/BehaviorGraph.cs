@@ -83,7 +83,7 @@ namespace FubuMVC.Core.Registration
 
         public IEnumerable<IRouteDefinition> Routes
         {
-            get { return _behaviors.Select(x => x.Route).Where(x => x != null); }
+            get { return _behaviors.OfType<RoutedChain>().Select(x => x.Route); }
         }
 
         /// <summary>
@@ -191,13 +191,10 @@ namespace FubuMVC.Core.Registration
         /// <returns></returns>
         public BehaviorChain BehaviorFor(IRouteDefinition route)
         {
-            BehaviorChain chain = _behaviors.FirstOrDefault(x => x.Route == route);
+            var chain = _behaviors.OfType<RoutedChain>().FirstOrDefault(x => x.Route == route);
             if (chain == null)
             {
-                chain = new BehaviorChain
-                {
-                    Route = route
-                };
+                chain = new RoutedChain(route);
                 _behaviors.Fill(chain);
             }
 
@@ -279,7 +276,7 @@ namespace FubuMVC.Core.Registration
         /// </summary>
         public void Describe()
         {
-            _behaviors.Each(x => { Trace.WriteLine(x.FirstCall().Description.PadRight(70) + x.Route.Pattern); });
+            _behaviors.Each(x => Trace.WriteLine(x.ToString()));
         }
 
         [Obsolete("Wanna make this go away in 2.0")]
@@ -293,31 +290,6 @@ namespace FubuMVC.Core.Registration
             _behaviors.Remove(chain);
         }
 
-        /// <summary>
-        ///   Adds a BehaviorChain for the given url pattern and action type.
-        ///   Specify the "arguments" parameters if actionType is an open
-        ///   generic type
-        /// </summary>
-        /// <param name = "urlPattern"></param>
-        /// <param name = "actionType"></param>
-        /// <param name = "arguments"></param>
-        /// <returns></returns>
-        public BehaviorChain AddActionFor(string urlPattern, Type actionType, params Type[] arguments)
-        {
-            if (arguments.Any())
-            {
-                Type closedType = actionType.MakeGenericType(arguments);
-                return AddActionFor(urlPattern, closedType);
-            }
-
-            ActionCall action = ActionCall.For(actionType);
-            var chain = new BehaviorChain();
-            chain.AddToEnd(action);
-            chain.Route = action.BuildRouteForPattern(urlPattern);
-            AddChain(chain);
-
-            return chain;
-        }
 
         /// <summary>
         ///   Adds a new blank BehaviorChain to the BehaviorGraph
@@ -428,7 +400,7 @@ namespace FubuMVC.Core.Registration
 
         public BehaviorChain FindHomeChain()
         {
-            return Behaviors.FirstOrDefault(x => x.Route != null && x.Route.Pattern == string.Empty);
+            return Behaviors.OfType<RoutedChain>().FirstOrDefault(x => x.Route.Pattern == string.Empty);
         }
 
         public static BehaviorGraph BuildEmptyGraph()
@@ -444,7 +416,7 @@ namespace FubuMVC.Core.Registration
     {
         #region IRouteIterator Members
 
-        public IEnumerable<BehaviorChain> Over(IEnumerable<BehaviorChain> behaviors)
+        public IEnumerable<RoutedChain> Over(IEnumerable<RoutedChain> behaviors)
         {
             return behaviors.OrderBy(b => b.Rank);
         }
@@ -455,6 +427,6 @@ namespace FubuMVC.Core.Registration
 
     public interface IRouteIterator
     {
-        IEnumerable<BehaviorChain> Over(IEnumerable<BehaviorChain> behaviors);
+        IEnumerable<RoutedChain> Over(IEnumerable<RoutedChain> behaviors);
     }
 }
