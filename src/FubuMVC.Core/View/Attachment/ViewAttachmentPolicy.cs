@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.UI.WebControls.WebParts;
-using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime.Conditionals;
 
 namespace FubuMVC.Core.View.Attachment
@@ -33,29 +31,26 @@ namespace FubuMVC.Core.View.Attachment
 
         public IEnumerable<IViewsForActionFilter> ActiveFilters
         {
-            get
-            {
-                return Filters();
-            }
+            get { return Filters(); }
         }
 
-        internal IEnumerable<ProfileViewBag> Profiles(BehaviorGraph graph)
+        internal IEnumerable<ProfileViewBag> Profiles(ViewBag views)
         {
             if (_profiles.Any())
             {
                 foreach (var profile in _profiles)
                 {
-                    yield return new ProfileViewBag(profile, graph);
+                    yield return new ProfileViewBag(profile, views);
                 }
 
                 Func<IViewToken, bool> defaultFilter = x => !_defaultExcludes.Any(test => test(x));
                 var defaultProfile = new ViewProfile(Always.Flyweight, defaultFilter, x => x.Name());
 
-                yield return new ProfileViewBag(defaultProfile, graph);
+                yield return new ProfileViewBag(defaultProfile, views);
             }
             else
             {
-                yield return new ProfileViewBag(new DefaultProfile(), graph);
+                yield return new ProfileViewBag(new DefaultProfile(), views);
             }
         }
 
@@ -69,7 +64,7 @@ namespace FubuMVC.Core.View.Attachment
         /// <param name="nameCorrection"></param>
         /// <returns></returns>
         public IViewProfile Profile(IConditional condition, Func<IViewToken, bool> filter,
-                                       Func<IViewToken, string> nameCorrection)
+            Func<IViewToken, string> nameCorrection)
         {
             _defaultExcludes.Add(filter);
             var profile = new ViewProfile(condition, filter, nameCorrection);
@@ -89,10 +84,10 @@ namespace FubuMVC.Core.View.Attachment
 
         public class ProfileViewBag
         {
-            public ProfileViewBag(IViewProfile profile, BehaviorGraph graph)
+            public ProfileViewBag(IViewProfile profile, ViewBag views)
             {
                 Profile = profile;
-                Views = profile.Filter(graph.Settings.Get<ViewEngines>().Views);
+                Views = profile.Filter(views);
             }
 
             public ViewBag Views { get; private set; }
@@ -172,9 +167,8 @@ namespace FubuMVC.Core.View.Attachment
         /// <returns></returns>
         public void Profile<T>(string prefix) where T : IConditional, new()
         {
-            Func<IViewToken, string> naming = view =>
-            {
-                string name = view.Name();
+            Func<IViewToken, string> naming = view => {
+                var name = view.Name();
                 return name.Substring(prefix.Length);
             };
 
@@ -203,5 +197,4 @@ namespace FubuMVC.Core.View.Attachment
             _parent.AddPolicy(new ViewTokenPolicy(_filter, token => token.ProfileName = profileName, description));
         }
     }
-
 }

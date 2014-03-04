@@ -24,7 +24,8 @@ namespace FubuMVC.Tests.View.Attachment
                 x.ExcludeViews(v => v.Name().StartsWith("C"));
             });
 
-            var views = BehaviorGraph.BuildFrom(registry).Settings.Get<ViewEngines>().Views;
+            var settings = BehaviorGraph.BuildFrom(registry).Settings;
+            var views = settings.Get<ViewEngines>().BuildViewBag(settings);
 
             views.Views.OrderBy(x => x.Name()).Select(x => x.Name())
                 .ShouldHaveTheSameElementsAs("B1", "B2", "B3", "B4", "B5", "B6");

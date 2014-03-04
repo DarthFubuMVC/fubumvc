@@ -1,4 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using FubuCore;
+using HtmlTags;
 
 namespace FubuMVC.Core.View
 {
@@ -6,6 +10,15 @@ namespace FubuMVC.Core.View
     {
         private readonly IList<string> _namespaces = new List<string>();
         private readonly IList<string> _namespacesNotAutoImported = new List<string>();
+
+        public CommonViewNamespaces()
+        {
+            Add(typeof(VirtualPathUtility).Namespace); // System.Web
+            AddForType<string>(); // System
+            AddForType<FileSet>(); // FubuCore
+            AddForType<ParallelQuery>(); // System.Linq
+            AddForType<HtmlTag>(); // HtmlTags 
+        }
 
         public void AddForType<T>()
         {

@@ -11,28 +11,9 @@ namespace FubuMVC.Core.View
     {
         private readonly IList<Func<IViewToken, bool>> _excludes = new List<Func<IViewToken, bool>>();
         private readonly List<IViewFacility> _facilities = new List<IViewFacility>();
-        private readonly Lazy<ViewBag> _viewBag;
         private readonly IList<ViewTokenPolicy> _viewPolicies = new List<ViewTokenPolicy>();
-        private BehaviorGraph _graph;
 
-        public ViewEngines()
-        {
-            _viewBag = new Lazy<ViewBag>(buildViewBag);
-        }
 
-        // Testing constructor
-        public ViewEngines(IEnumerable<IViewToken> theViews)
-        {
-            _viewBag = new Lazy<ViewBag>(() => new ViewBag(theViews));
-        }
-
-        /// <summary>
-        /// All of the views found in this running application.
-        /// </summary>
-        public ViewBag Views
-        {
-            get { return _viewBag.Value; }
-        }
 
         /// <summary>
         /// All of the registered view engines in this application
@@ -40,11 +21,6 @@ namespace FubuMVC.Core.View
         public IEnumerable<IViewFacility> Facilities
         {
             get { return _facilities; }
-        }
-
-        internal void UseGraph(BehaviorGraph graph)
-        {
-            _graph = graph;
         }
 
         /// <summary>
@@ -68,7 +44,7 @@ namespace FubuMVC.Core.View
             return IfTheViewMatches(combined);
         }
 
-        private ViewBag buildViewBag()
+        public ViewBag BuildViewBag(SettingsCollection settings)
         {
             var views = new List<IViewToken>();
 
@@ -78,7 +54,7 @@ namespace FubuMVC.Core.View
             {
 
 
-                views.AddRange(facility.FindViews(_graph.Settings).Result);
+                views.AddRange(facility.FindViews(settings).Result);
             }
 
             _excludes.Each(views.RemoveAll);

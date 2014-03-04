@@ -67,10 +67,9 @@ namespace FubuMVC.Tests.View.Attachment
             var graph = new BehaviorGraph();
             graph.AddChain(theChain);
 
-            graph.Settings.Replace(new ViewEngines(theViews));
             graph.Settings.Replace(thePolicy);
 
-            theAttacher.Configure(graph);
+            theAttacher.Configure(graph, new ViewBag(theViews));
         }
 
 

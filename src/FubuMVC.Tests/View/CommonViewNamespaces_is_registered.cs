@@ -19,7 +19,6 @@ namespace FubuMVC.Tests.View
         public void is_registered()
         {
             var registry = new FubuRegistry();
-            registry.Import<ViewEnginesExtension>();
             registry.AlterSettings<CommonViewNamespaces>(x =>
             {
                 x.Add("Foo");

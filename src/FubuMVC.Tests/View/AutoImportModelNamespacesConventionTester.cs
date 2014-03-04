@@ -26,7 +26,8 @@ namespace FubuMVC.Tests.View
         {
             var graph = BehaviorGraph.BuildFrom(_registry);
             var commonViewNamespaces = graph.Settings.Get<CommonViewNamespaces>();
-            commonViewNamespaces.Namespaces.ShouldHaveTheSameElementsAs("FakeTestNamespaceForAutoImport", "FubuMVC.Tests.View");
+            commonViewNamespaces.Namespaces.ShouldContain("FakeTestNamespaceForAutoImport");
+            commonViewNamespaces.Namespaces.ShouldContain(typeof(FakeAction).Namespace);
         }
 
         [Test]
@@ -36,7 +37,8 @@ namespace FubuMVC.Tests.View
 
             var graph = BehaviorGraph.BuildFrom(_registry);
             var commonViewNamespaces = graph.Settings.Get<CommonViewNamespaces>();
-            commonViewNamespaces.Namespaces.ShouldHaveTheSameElementsAs("FakeTestNamespaceForAutoImport");
+            commonViewNamespaces.Namespaces.ShouldContain("FakeTestNamespaceForAutoImport");
+            commonViewNamespaces.Namespaces.ShouldNotContain(typeof(FakeAction).Namespace);
         }
     }
 
