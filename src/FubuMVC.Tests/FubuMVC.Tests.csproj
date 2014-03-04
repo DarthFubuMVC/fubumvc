@@ -347,6 +347,29 @@
     <Compile Include="Urls\ChainUrlResolverTester.cs" />
     <Compile Include="Urls\StubCurrentHttpRequest.cs" />
     <Compile Include="Urls\UrlRegistryIntegrationTester.cs" />
+    <Compile Include="View\Attachment\ActionlessViewConventionTester.cs" />
+    <Compile Include="View\Attachment\DefaultProfileTester.cs" />
+    <Compile Include="View\Attachment\ProfileViewTokenTester.cs" />
+    <Compile Include="View\Attachment\ViewAttacherTester.cs" />
+    <Compile Include="View\Attachment\ViewExclusionTester.cs" />
+    <Compile Include="View\Attachment\ViewTokenExtensionsTester.cs" />
+    <Compile Include="View\AutoImportModelNamespacesConventionTester.cs" />
+    <Compile Include="View\CommonViewNamespaces_is_registered.cs" />
+    <Compile Include="View\Default_ViewAttachment_Filters_Convention_Tester.cs" />
+    <Compile Include="View\FakeViews\Folder1\A.aspx.cs">
+      <DependentUpon>A.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\FakeViews\Folder1\ViewModel3.aspx.cs">
+      <DependentUpon>ViewModel3.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\FakeViews\ModelsAndControllers.cs" />
+    <Compile Include="View\must_be_a_description_on_imporant_things.cs" />
+    <Compile Include="View\OutputNodeExtensionsTester.cs" />
+    <Compile Include="View\SimplePage.cs" />
+    <Compile Include="View\ViewEnginesTester.cs" />
+    <Compile Include="View\ViewsForActionFiltersTester.cs" />
     <Compile Include="Web\Security\WebAuthenticationContextTester.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -384,6 +407,8 @@
     <Content Include="Runtime\Files\Data\d.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="View\FakeViews\Folder1\A.aspx" />
+    <Content Include="View\FakeViews\Folder1\ViewModel3.aspx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FubuMVC.Tests.dll.config">
@@ -396,6 +421,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Results\" />
+    <Folder Include="View\FakeViews\Folder1\Folder2\Folder3\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
