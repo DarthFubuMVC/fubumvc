@@ -59,21 +59,25 @@ namespace FubuMVC.Core.View.Model
         {
             templates.Each(t =>
             {
-                var bindRequest = new BindRequest<T>
-                {
-                    Target = t,
-                    Parsing = _parsings.ParsingFor(t),
-                    Types = _types,
-                    TemplateRegistry = templates,
-                    Logger = TemplateLogger.Default()
-                };
-
-                var binders = _binders.Where(x => x.CanBind(bindRequest));
-                var policies = _policies.Where(x => x.Matches(t));
-                
-                binders.Each(binder => binder.Bind(bindRequest));
-                policies.Each(policy => policy.Apply(t));
+                Compose(t);
             });
+        }
+
+        public void Compose(T t)
+        {
+            var bindRequest = new BindRequest<T>
+            {
+                Target = t,
+                Parsing = _parsings.ParsingFor(t),
+                Types = _types,
+                Logger = TemplateLogger.Default()
+            };
+
+            var binders = _binders.Where(x => x.CanBind(bindRequest));
+            var policies = _policies.Where(x => x.Matches(t));
+
+            binders.Each(binder => binder.Bind(bindRequest));
+            policies.Each(policy => policy.Apply(t));
         }
     }
 }

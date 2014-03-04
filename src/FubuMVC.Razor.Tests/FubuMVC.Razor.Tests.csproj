@@ -83,11 +83,9 @@
     </Compile>
     <Compile Include="RazorModel\LayoutAttacherTester.cs" />
     <Compile Include="Registration\ViewParserTester.cs" />
-    <Compile Include="Rendering\FubuPartialRenderingTester.cs" />
     <Compile Include="Rendering\FubuRazorViewTester.cs" />
     <Compile Include="Rendering\StubView.cs" />
     <Compile Include="Rendering\ViewModifierServiceTester.cs" />
-    <Compile Include="Rendering\ViewFactoryTester.cs" />
     <Compile Include="NamespacesImportedTester.cs" />
     <Compile Include="RazorModel\Binding\GenericParserTester.cs" />
     <Compile Include="RazorModel\Binding\GenericViewModelBinderTester.cs" />
@@ -102,7 +100,6 @@
     <Compile Include="RazorModel\TemplateExtensionsTester.cs" />
     <Compile Include="RazorModel\Binding\ViewModelBinderTester.cs" />
     <Compile Include="RazorViewFacilityTester.cs" />
-    <Compile Include="RazorViewTokenTester.cs" />
     <Compile Include="RazorEngineSettingsTester.cs" />
   </ItemGroup>
   <ItemGroup>

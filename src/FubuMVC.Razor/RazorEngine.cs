@@ -13,11 +13,10 @@ namespace FubuMVC.Razor
     public class RazorEngineRegistry : IFubuRegistryExtension
     {
         private readonly RazorParsings _parsings = new RazorParsings();
-        private readonly TemplateRegistry<IRazorTemplate> _templateRegistry = new TemplateRegistry<IRazorTemplate>();
 
         void IFubuRegistryExtension.Configure(FubuRegistry registry)
         {
-            registry.AlterSettings<ViewEngines>(x => x.AddFacility(new RazorViewFacility(_templateRegistry, _parsings)));
+            registry.AlterSettings<ViewEngines>(x => x.AddFacility(new RazorViewFacility(_parsings)));
 
             registry.Services(configureServices);
 
@@ -30,7 +29,6 @@ namespace FubuMVC.Razor
 
         private void configureServices(ServiceRegistry services)
         {
-            services.ReplaceService<ITemplateRegistry<IRazorTemplate>>(_templateRegistry);
             services.SetServiceIfNone<IRazorTemplateGenerator, RazorTemplateGenerator>();
             services.SetServiceIfNone<ITemplateCompiler, TemplateCompiler>();
             services.SetServiceIfNone<ITemplateFactory, TemplateFactoryCache>();
@@ -50,7 +48,6 @@ namespace FubuMVC.Razor
 
             services.SetServiceIfNone<IViewModifierService<IFubuRazorView>, ViewModifierService<IFubuRazorView>>();
 
-            services.FillType<IViewModifier<IFubuRazorView>, FubuPartialRendering>();
         }
     }
 

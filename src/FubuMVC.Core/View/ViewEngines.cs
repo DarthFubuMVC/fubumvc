@@ -46,10 +46,10 @@ namespace FubuMVC.Core.View
             return IfTheViewMatches(combined);
         }
 
-        public Task<ViewBag> BuildViewBag(SettingsCollection settings)
+        public Task<ViewBag> BuildViewBag(BehaviorGraph graph)
         {
             return Task.Factory.StartNew(() => {
-                var viewFinders = _facilities.Select(x => x.FindViews(settings)).ToArray();
+                var viewFinders = _facilities.Select(x => x.FindViews(graph)).ToArray();
 
                 var views = viewFinders.SelectMany(x => x.Result).ToList();
 
@@ -61,21 +61,6 @@ namespace FubuMVC.Core.View
             });
         }
 
-        private IEnumerable<Task<IEnumerable<IViewToken>>> viewSources(SettingsCollection settings)
-        {
-            foreach (IViewFacility facility in _facilities)
-            {
-                var findViews = facility.FindViews(settings);
-                yield return findViews.ContinueWith(task => {
-                    var list = task.Result.ToList();
-                    _excludes.Each(list.RemoveAll);
-
-                    _viewPolicies.Each(x => x.Alter(list));
-
-                    return list.As<IEnumerable<IViewToken>>();
-                });
-            }
-        } 
 
 
         /// <summary>

@@ -5,6 +5,7 @@ using System.Web.Razor.Generator;
 using System.Web.Razor.Parser;
 using FubuCore;
 using FubuCore.Util;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Razor.Core;

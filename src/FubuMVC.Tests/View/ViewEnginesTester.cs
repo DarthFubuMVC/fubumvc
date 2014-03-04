@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Rendering;
 using FubuTestingSupport;
@@ -87,7 +88,7 @@ namespace FubuMVC.Tests.View
 
         public class TestViewFacility : IViewFacility
         {
-            public Task<IEnumerable<IViewToken>> FindViews(SettingsCollection settings)
+            public Task<IEnumerable<IViewToken>> FindViews(BehaviorGraph graph)
             {
                 return Task.Factory.StartNew(() => {
                     return new IViewToken[]{new TestViewToken()} as IEnumerable<IViewToken>;

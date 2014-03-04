@@ -152,4 +152,6 @@ namespace FubuMVC.Razor.Tests.RazorModel
                 .Return(MockFor<IRazorTemplate>());            
         }
     }
+
+    public class ProductModel{}
 }

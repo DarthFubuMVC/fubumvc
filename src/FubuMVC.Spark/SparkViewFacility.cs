@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,13 +21,14 @@ namespace FubuMVC.Spark
             _parsings = parsings;
         }
 
-        public IEnumerable<IViewToken> FindViews(BehaviorGraph graph)
+        public Task<IEnumerable<IViewToken>> FindViews(BehaviorGraph graph)
         {
-            var sparkSettings = graph.Settings.Get<SparkEngineSettings>();
-            RegisterTemplates(graph.Files, sparkSettings);
-            ComposeTemplates(sparkSettings);
-
-            return FindTokens();
+            throw new NotImplementedException();
+//            var sparkSettings = graph.Settings.Get<SparkEngineSettings>();
+//            RegisterTemplates(graph.Files, sparkSettings);
+//            ComposeTemplates(sparkSettings);
+//
+//            return FindTokens();
         }
 
         public IEnumerable<IViewToken> FindTokens()
@@ -49,9 +51,5 @@ namespace FubuMVC.Spark
             composer.Compose(_templateRegistry);
         }
 
-        public Task<IEnumerable<IViewToken>> FindViews(SettingsCollection settings)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

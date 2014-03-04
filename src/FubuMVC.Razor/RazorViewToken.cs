@@ -1,6 +1,5 @@
 ﻿using System;
 using FubuCore;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Rendering;
@@ -9,24 +8,45 @@ using FubuMVC.Razor.Rendering;
 
 namespace FubuMVC.Razor
 {
-    [MarkedForTermination("use descriptor as is")]
     public class RazorViewToken : IViewToken
     {
         private readonly ViewDescriptor<IRazorTemplate> _descriptor;
+        private readonly ITemplateFactory _templateFactory;
 
-        public RazorViewToken(ViewDescriptor<IRazorTemplate> viewDescriptor)
+        public RazorViewToken(ViewDescriptor<IRazorTemplate> viewDescriptor, ITemplateFactory templateFactory)
         {
             _descriptor = viewDescriptor;
+            _templateFactory = templateFactory;
         }
 
         public IRenderableView GetView()
         {
-            throw new NotImplementedException();
+            return CreateInstance();
         }
 
         public IRenderableView GetPartialView()
         {
-            throw new NotImplementedException();
+            return CreateInstance(true);
+        }
+
+        private IFubuRazorView CreateInstance(bool partialOnly = false)
+        {
+            var currentDescriptor = _descriptor;
+            var returnTemplate = _templateFactory.GetView(currentDescriptor);
+            returnTemplate.OriginTemplate = _descriptor.Template;
+            var currentTemplate = returnTemplate;
+
+            while (currentDescriptor.Master != null && !partialOnly)
+            {
+                currentDescriptor = currentDescriptor.Master.Descriptor.As<ViewDescriptor<IRazorTemplate>>();
+
+                var layoutTemplate = _templateFactory.GetView(currentDescriptor);
+                layoutTemplate.OriginTemplate = returnTemplate.OriginTemplate;
+                currentTemplate.UseLayout(layoutTemplate);
+                currentTemplate = layoutTemplate;
+            }
+
+            return returnTemplate;
         }
 
         public string ProfileName { get; set; }

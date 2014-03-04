@@ -11,6 +11,6 @@ namespace FubuMVC.Core.View
     /// </summary>
     public interface IViewFacility
     {
-        Task<IEnumerable<IViewToken>> FindViews(SettingsCollection settings);
+        Task<IEnumerable<IViewToken>> FindViews(BehaviorGraph graph);
     }
 }

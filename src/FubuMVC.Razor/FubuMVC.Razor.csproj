@@ -78,8 +78,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rendering\FubuRazorView.cs" />
     <Compile Include="Rendering\IPartialRenderer.cs" />
-    <Compile Include="Rendering\ViewFactory.cs" />
-    <Compile Include="Rendering\ViewModifiers.cs" />
     <Compile Include="RazorEngine.cs" />
     <Compile Include="RazorModel\SpanExtensions.cs" />
     <Compile Include="RazorModel\RazorTemplateSelector.cs" />

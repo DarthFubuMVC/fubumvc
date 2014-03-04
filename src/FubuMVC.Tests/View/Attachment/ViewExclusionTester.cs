@@ -24,8 +24,8 @@ namespace FubuMVC.Tests.View.Attachment
                 x.ExcludeViews(v => v.Name().StartsWith("C"));
             });
 
-            var settings = BehaviorGraph.BuildFrom(registry).Settings;
-            var views = settings.Get<ViewEngines>().BuildViewBag(settings);
+            var graph = BehaviorGraph.BuildFrom(registry);
+            var views = graph.Settings.Get<ViewEngines>().BuildViewBag(graph);
 
             views.Result.Views.OrderBy(x => x.Name()).Select(x => x.Name())
                 .ShouldHaveTheSameElementsAs("B1", "B2", "B3", "B4", "B5", "B6");
@@ -34,7 +34,7 @@ namespace FubuMVC.Tests.View.Attachment
 
     public class FakeViewEngine1 : IViewFacility
     {
-        public Task<IEnumerable<IViewToken>> FindViews(SettingsCollection settings)
+        public Task<IEnumerable<IViewToken>> FindViews(BehaviorGraph graph)
         {
             return Task.Factory.StartNew(() => tokens());
         }
@@ -56,24 +56,23 @@ namespace FubuMVC.Tests.View.Attachment
 
     public class FakeViewEngine2 : IViewFacility
     {
-        public Task<IEnumerable<IViewToken>> FindViews(SettingsCollection settings)
+        public Task<IEnumerable<IViewToken>> FindViews(BehaviorGraph graph)
         {
             return Task.Factory.StartNew(() => tokens());
         }
 
         private static IEnumerable<IViewToken> tokens()
         {
-            yield return new FakeViewToken { ViewName = "A4" };
-            yield return new FakeViewToken { ViewName = "A5" };
-            yield return new FakeViewToken { ViewName = "A6" };
-            yield return new FakeViewToken { ViewName = "B4" };
-            yield return new FakeViewToken { ViewName = "B5" };
-            yield return new FakeViewToken { ViewName = "B6" };
-            yield return new FakeViewToken { ViewName = "C5" };
-            yield return new FakeViewToken { ViewName = "C6" };
-            yield return new FakeViewToken { ViewName = "C7" };
-            yield return new FakeViewToken { ViewName = "C8" };
+            yield return new FakeViewToken {ViewName = "A4"};
+            yield return new FakeViewToken {ViewName = "A5"};
+            yield return new FakeViewToken {ViewName = "A6"};
+            yield return new FakeViewToken {ViewName = "B4"};
+            yield return new FakeViewToken {ViewName = "B5"};
+            yield return new FakeViewToken {ViewName = "B6"};
+            yield return new FakeViewToken {ViewName = "C5"};
+            yield return new FakeViewToken {ViewName = "C6"};
+            yield return new FakeViewToken {ViewName = "C7"};
+            yield return new FakeViewToken {ViewName = "C8"};
         }
-
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Razor.RazorModel;
 using FubuTestingSupport;
@@ -46,7 +47,8 @@ namespace FubuMVC.Razor.Tests
         [Test]
         public void find_views_returns_view_tokens_from_items_with_a_view_model_only()
         {
-            var views = ClassUnderTest.FindTokens().ToList();
+            // If this tests breaks, look at pathing issues FIRST
+            var views = ClassUnderTest.FindViews(new BehaviorGraph()).Result.ToList();
 
             views.ShouldHaveCount(3);
             views.ShouldContain(x => x.ViewModel == typeof(ModelA));

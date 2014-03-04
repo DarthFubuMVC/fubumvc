@@ -51,7 +51,7 @@ namespace FubuMVC.Core.Configuration
             // Apply settings
             config.RunActions(ConfigurationType.Settings, graph);
 
-            var viewDiscovery = graph.Settings.Get<ViewEngines>().BuildViewBag(graph.Settings);
+            var viewDiscovery = graph.Settings.Get<ViewEngines>().BuildViewBag(graph);
             
 
             discoverChains(config, graph);

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FubuCore;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Razor.RazorModel;
@@ -11,48 +11,43 @@ namespace FubuMVC.Razor
 {
     public class RazorViewFacility : IViewFacility
     {
-        private readonly TemplateRegistry<IRazorTemplate> _templateRegistry;
         private readonly RazorParsings _razorParsings;
 
-        public RazorViewFacility(TemplateRegistry<IRazorTemplate> templateRegistry, RazorParsings razorParsings)
+        public RazorViewFacility(RazorParsings razorParsings)
         {
-            _templateRegistry = templateRegistry;
             _razorParsings = razorParsings;
         }
 
-        public IEnumerable<IViewToken> FindViews(BehaviorGraph graph)
+
+        public Task<IEnumerable<IViewToken>> FindViews(BehaviorGraph graph)
+        {
+            return Task.Factory.StartNew(() => findViews(graph));
+        }
+
+        private IEnumerable<IViewToken> findViews(BehaviorGraph graph)
         {
             var razorSettings = graph.Settings.Get<RazorEngineSettings>();
-            RegisterTemplates(graph.Files, razorSettings);
-            ComposeTemplates(razorSettings);
+            var namespaces = graph.Settings.Get<CommonViewNamespaces>();
 
-            return FindTokens();
-        }
-        
-        public IEnumerable<IViewToken> FindTokens()
-        {            
-            return _templateRegistry.DescriptorsWithViewModels<ViewDescriptor<IRazorTemplate>>()
-                .Select(x => new RazorViewToken(x));
-        } 
-
-        public void RegisterTemplates(IFubuApplicationFiles fubuFiles, RazorEngineSettings settings)
-        {
-            fubuFiles.FindFiles(settings.Search).Each(file => 
-                _templateRegistry.Register(new Template(file.Path, file.ProvenancePath, file.Provenance)));            
-        }
-
-        public void ComposeTemplates(RazorEngineSettings settings)
-        {
-            _templateRegistry.Each(_razorParsings.Parse);
+            var factory = new TemplateFactoryCache(namespaces, razorSettings, new TemplateCompiler(),
+                new RazorTemplateGenerator());
 
             var composer = new TemplateComposer<IRazorTemplate>(_razorParsings);
-            settings.Configure(composer);            
-            composer.Compose(_templateRegistry);
-        }
+            razorSettings.Configure(composer);
 
-        public Task<IEnumerable<IViewToken>> FindViews(SettingsCollection settings)
-        {
-            throw new System.NotImplementedException();
-        }
+            var templates = graph.Files.FindFiles(razorSettings.Search)
+                .Select(file => {
+                    var template = new Template(file.Path, file.ProvenancePath, file.Provenance);
+
+                    _razorParsings.Parse(template);
+                    composer.Compose(template);
+
+                    return template;
+                });
+
+
+            return templates.Select(x => new RazorViewToken(x.Descriptor.As<ViewDescriptor<IRazorTemplate>>(), factory));
+        } 
+
     }
 }

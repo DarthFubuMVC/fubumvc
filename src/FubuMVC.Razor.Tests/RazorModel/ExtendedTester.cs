@@ -112,12 +112,15 @@ namespace FubuMVC.Razor.Tests.RazorModel
                 current = layout;
             }
 
-            var modifier = new ViewModifierService<IFubuRazorView>(Enumerable.Empty<IViewModifier<IFubuRazorView>>());
-            var viewFactory = new ViewFactory(descriptor, _templateFactory, modifier);
-            var view = (IFubuRazorView)viewFactory.GetView();
-            view.ServiceLocator = _serviceLocator;
-            view.As<IRenderableView>().Render();
-            return view.Result.ToString();
+
+            throw new NotImplementedException("Move all of this to integration tests");
+
+//            var modifier = new ViewModifierService<IFubuRazorView>(Enumerable.Empty<IViewModifier<IFubuRazorView>>());
+//            var viewFactory = new ViewFactory(descriptor, _templateFactory);
+//            var view = (IFubuRazorView)viewFactory.GetView();
+//            view.ServiceLocator = _serviceLocator;
+//            view.As<IRenderableView>().Render();
+//            return view.Result.ToString();
         }
 
         [Test]

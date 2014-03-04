@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
@@ -7,6 +8,7 @@ using FubuCore.Util;
 namespace FubuMVC.Core.View.Model
 {
     // TODO: Reconsider this
+    [MarkedForTermination("Adds little value")]
     public class TemplateRegistry<T> : ITemplateRegistry<T> where T : ITemplateFile
     {
         private readonly Cache<string, T> _templates = new Cache<string, T>();
@@ -62,6 +64,7 @@ namespace FubuMVC.Core.View.Model
         }
     }
 
+    [Obsolete("Replace with the existing ViewBag")]
     public interface ITemplateRegistry<out T> : IEnumerable<T> where T : ITemplateFile
     {
         IEnumerable<T> ByNameUnderDirectories(string name, IEnumerable<string> directories);

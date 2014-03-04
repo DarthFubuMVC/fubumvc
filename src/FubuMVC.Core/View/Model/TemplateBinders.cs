@@ -12,7 +12,6 @@ namespace FubuMVC.Core.View.Model
         Parsing Parsing { get; }
 
         TypePool Types { get; }
-        ITemplateRegistry<T> TemplateRegistry { get; }
         ITemplateLogger Logger { get; }
     }
 
@@ -22,7 +21,6 @@ namespace FubuMVC.Core.View.Model
         public Parsing Parsing { get; set; }
         public TypePool Types { get; set; }
 
-        public ITemplateRegistry<T> TemplateRegistry { get; set; }
         public ITemplateLogger Logger { get; set; }
     }
 
