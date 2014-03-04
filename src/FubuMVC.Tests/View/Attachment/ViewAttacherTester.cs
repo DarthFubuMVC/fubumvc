@@ -5,9 +5,12 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Attachment;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -70,13 +73,7 @@ namespace FubuMVC.Tests.View.Attachment
             theAttacher.Configure(graph);
         }
 
-        [Test]
-        public void redo()
-        {
-            Assert.Fail("NWO");
-        }
 
-        /*
 
         [Test]
         public void attach_a_view_for_a_matching_filter_and_policy_simple()
@@ -86,36 +83,36 @@ namespace FubuMVC.Tests.View.Attachment
 
             afterAttaching();
 
-            var node = theChain.Output.Writers.Single().ShouldBeOfType<ViewNode>();
-            node.View.ShouldBeTheSameAs(theViews[1]);
-            node.ConditionType.ShouldEqual(typeof (Conditional1));
+            var node = theChain.Output.Media().Single(x => x.Writer is IViewWriter);
+            node.Writer.As<IViewWriter>().View.ShouldBeTheSameAs(theViews[1]);
+            node.Condition.ShouldBeOfType<Conditional1>();
         }
 
         [Test]
         public void attach_for_multiple_profiles_does_not_double_dip_for_views()
         {
-            theProfileMatches<Conditional1>(1, 2, 3, 4, 5);
+            var profile = theProfileMatches<Conditional1>(1, 2, 3, 4, 5);
             filterMatching(1, 2, 3);
             filterMatching(1);
             filterMatching(4, 5, 6); // 6 should catch in the default profile
 
             afterAttaching();
 
-            theChain.Output.HasView(typeof (Conditional1)).ShouldBeTrue();
-            theChain.Output.HasView(typeof (Always)).ShouldBeTrue();
+            theChain.Output.HasView(profile.Condition).ShouldBeTrue();
+            theChain.Output.HasView(Always.Flyweight).ShouldBeTrue();
 
-            theChain.Output.Writers.OfType<ViewNode>().Single(x => x.ConditionType == typeof (Conditional1)).View
+            theChain.Output.ViewFor(profile.Condition)
                 .ShouldBeTheSameAs(theViews[1]);
 
-            theChain.Output.Writers.OfType<ViewNode>().Single(x => x.ConditionType == typeof (Always)).View
+            theChain.Output.ViewFor(Always.Flyweight)
                 .ShouldBeTheSameAs(theViews[6]);
         }
 
         [Test]
         public void attach_for_multiple_profiles_does_not_double_dip_for_views_2()
         {
-            theProfileMatches<Conditional1>(1, 2, 3, 4, 5);
-            theProfileMatches<Conditional2>(6, 7, 8);
+            var profile1 = theProfileMatches<Conditional1>(1, 2, 3, 4, 5);
+            var profile2 = theProfileMatches<Conditional2>(6, 7, 8);
             filterMatching(1, 2, 3);
             filterMatching(1);
             filterMatching(4, 5, 6); // 6 should catch in the second profile
@@ -123,22 +120,23 @@ namespace FubuMVC.Tests.View.Attachment
 
             afterAttaching();
 
-            theChain.Output.HasView(typeof (Conditional1)).ShouldBeTrue();
-            theChain.Output.HasView(typeof (Conditional2)).ShouldBeTrue();
-            theChain.Output.HasView(typeof (Always)).ShouldBeFalse();
+            theChain.Output.HasView(profile1.Condition).ShouldBeTrue();
+            theChain.Output.HasView(profile2.Condition).ShouldBeTrue();
+            theChain.Output.HasView(Always.Flyweight).ShouldBeFalse();
 
-            theChain.Output.Writers.OfType<ViewNode>().Single(x => x.ConditionType == typeof (Conditional1)).View
+            theChain.Output.ViewFor(profile1.Condition)
                 .ShouldBeTheSameAs(theViews[1]);
 
-            theChain.Output.Writers.OfType<ViewNode>().Single(x => x.ConditionType == typeof (Conditional2)).View
+            theChain.Output.Media().Single(x => x.Condition == profile2.Condition).Writer
+                .As<IViewWriter>().View
                 .ShouldBeTheSameAs(theViews[6]);
         }
 
         [Test]
         public void attach_for_multiple_profiles_does_not_double_dip_for_views_3()
         {
-            theProfileMatches<Conditional1>(1, 2, 3, 4, 5);
-            theProfileMatches<Conditional2>(6, 7, 8);
+            var profile1 = theProfileMatches<Conditional1>(1, 2, 3, 4, 5);
+            var profile2 = theProfileMatches<Conditional2>(6, 7, 8);
             filterMatching(1, 2, 3);
             filterMatching(1);
             filterMatching(4, 5, 6); // 6 should catch in the second profile
@@ -146,17 +144,18 @@ namespace FubuMVC.Tests.View.Attachment
 
             afterAttaching();
 
-            theChain.Output.HasView(typeof (Conditional1)).ShouldBeTrue();
-            theChain.Output.HasView(typeof (Conditional2)).ShouldBeTrue();
-            theChain.Output.HasView(typeof (Always)).ShouldBeTrue();
+            theChain.Output.HasView(profile1.Condition).ShouldBeTrue();
+            theChain.Output.HasView(profile2.Condition).ShouldBeTrue();
+            theChain.Output.HasView(Always.Flyweight).ShouldBeTrue();
 
-            theChain.Output.Writers.OfType<ViewNode>().Single(x => x.ConditionType == typeof (Conditional1)).View
-                .ShouldBeTheSameAs(theViews[1]);
 
-            theChain.Output.Writers.OfType<ViewNode>().Single(x => x.ConditionType == typeof (Conditional2)).View
+            theChain.Output.ViewFor(profile1.Condition).ShouldBeTheSameAs(theViews[1]);
+
+            theChain.Output.Media().Single(x => x.Condition == profile2.Condition).Writer
+                .As<IViewWriter>().View
                 .ShouldBeTheSameAs(theViews[6]);
 
-            theChain.Output.Writers.OfType<ViewNode>().Single(x => x.ConditionType == typeof (Always)).View
+            theChain.Output.ViewFor(Always.Flyweight)
                 .ShouldBeTheSameAs(theViews[10]);
         }
 
@@ -166,9 +165,7 @@ namespace FubuMVC.Tests.View.Attachment
             filterMatching(1);
             afterAttaching();
 
-            var node = theChain.Output.Writers.Single().ShouldBeOfType<ViewNode>();
-            node.View.ShouldBeTheSameAs(theViews[1]);
-            node.ConditionType.ShouldEqual(typeof (Always));
+            theChain.Output.ViewFor(Always.Flyweight).ShouldBeTheSameAs(theViews[1]);
         }
 
         [Test]
@@ -178,31 +175,7 @@ namespace FubuMVC.Tests.View.Attachment
 
             afterAttaching();
 
-            theChain.Output.Writers.Any().ShouldBeFalse();
-        }
-
-        [Test]
-        public void create_the_log_files_for_default_only_matching()
-        {
-            IViewsForActionFilter filter1 = filterMatching(1, 2, 3);
-            IViewsForActionFilter filter2 = filterMatching(1, 2);
-            IViewsForActionFilter filter3 = filterMatching(2);
-
-            afterAttaching();
-
-            // going to create one log per profile
-            var log = theAction.As<ITracedModel>().StagedEvents.OfType<ViewAttachmentLog>().Single();
-            log.Profile.ConditionType.ShouldEqual(typeof (Always));
-            log.Profile.ShouldBeOfType<DefaultProfile>();
-
-            log.Logs.ElementAt(0).Filter.ShouldBeTheSameAs(filter1);
-            log.Logs.ElementAt(0).Views.ShouldHaveTheSameElementsAs(views(1, 2, 3));
-
-            log.Logs.ElementAt(1).Filter.ShouldBeTheSameAs(filter2);
-            log.Logs.ElementAt(1).Views.ShouldHaveTheSameElementsAs(views(1, 2));
-
-            log.Logs.ElementAt(2).Filter.ShouldBeTheSameAs(filter3);
-            log.Logs.ElementAt(2).Views.ShouldHaveTheSameElementsAs(views(2));
+            theChain.Output.Writes(MimeType.Html).ShouldBeFalse();
         }
 
 
@@ -212,17 +185,19 @@ namespace FubuMVC.Tests.View.Attachment
             var existingView = MockRepository.GenerateMock<IViewToken>();
             existingView.Stub(x => x.ViewModel).Return(typeof (GoModel));
 
-            theChain.Output.AddView(existingView, typeof (Conditional1));
+            var profile = theProfileMatches<Conditional1>(1);
 
-            theChain.Output.Writers.Count().ShouldEqual(1);
+            theChain.Output.AddView(existingView, profile.Condition);
+
+            theChain.Output.Media().Where(x => x.Mimetypes.Contains(MimeType.Html.Value)).Count().ShouldEqual(1);
 
             // There is a set of filters where it would match, see the test above
             filterMatching(1);
-            theProfileMatches<Conditional1>(1);
+            
 
             afterAttaching();
 
-            theChain.Output.Writers.Count().ShouldEqual(1);
+            theChain.Output.Media().Where(x => x.Mimetypes.Contains(MimeType.Html.Value)).Count().ShouldEqual(1);
         }
 
         [Test]
@@ -234,7 +209,7 @@ namespace FubuMVC.Tests.View.Attachment
 
             afterAttaching();
 
-            theChain.Output.Writers.Any().ShouldBeFalse();
+            theChain.Output.Media().Any(x => x.Mimetypes.Contains(MimeType.Html.Value)).ShouldBeFalse();
         }
 
         [Test]
@@ -246,9 +221,8 @@ namespace FubuMVC.Tests.View.Attachment
 
             afterAttaching();
 
-
-            var node = theChain.Output.Writers.Single().ShouldBeOfType<ViewNode>();
-            node.View.ShouldBeTheSameAs(theViews[2]);
+            theChain.Output.ViewFor(Always.Flyweight)
+                .ShouldBeTheSameAs(theViews[2]);
         }
 
         [Test]
@@ -262,10 +236,10 @@ namespace FubuMVC.Tests.View.Attachment
             afterAttaching();
 
 
-            var node = theChain.Output.Writers.Single().ShouldBeOfType<ViewNode>();
-            node.View.ShouldBeTheSameAs(theViews[2]);
+            theChain.Output.ViewFor(Always.Flyweight)
+                .ShouldBeTheSameAs(theViews[2]);
         }
-         * */
+        
     }
 
     public class Conditional1 : IConditional

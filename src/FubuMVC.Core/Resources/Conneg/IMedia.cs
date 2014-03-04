@@ -7,6 +7,8 @@ namespace FubuMVC.Core.Resources.Conneg
     {
         IEnumerable<string> Mimetypes { get; }
         IConditional Condition { get; }
+
+        object Writer { get; }
     }
 
     public interface IMedia<in T> : IMedia

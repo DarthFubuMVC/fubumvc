@@ -66,5 +66,6 @@ namespace FubuMVC.Core.Resources.Conneg
         void ClearAll();
 
         Type ResourceType { get; }
+        bool HasView(IConditional conditional);
     }
 }

@@ -524,7 +524,6 @@
     <Compile Include="View\Attachment\ViewTokenExtensions.cs" />
     <Compile Include="View\AutoImportModelNamespacesConvention.cs" />
     <Compile Include="View\CommonViewNamespaces.cs" />
-    <Compile Include="View\FubuRegistryViewExtensions.cs" />
     <Compile Include="View\IFubuView.cs" />
     <Compile Include="View\IViewFacility.cs" />
     <Compile Include="View\IViewToken.cs" />

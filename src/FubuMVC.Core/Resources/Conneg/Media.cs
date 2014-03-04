@@ -50,6 +50,10 @@ namespace FubuMVC.Core.Resources.Conneg
             get { return _condition; }
         }
 
+        object IMedia.Writer
+        {
+            get { return Writer; }
+        }
 
 
         private string debuggerDisplay()

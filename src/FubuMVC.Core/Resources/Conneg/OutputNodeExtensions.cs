@@ -8,10 +8,6 @@ namespace FubuMVC.Core.Resources.Conneg
 {
     public static class OutputNodeExtensions
     {
-        public static bool HasView(this IOutputNode node, IConditional conditional)
-        {
-            return node.Media().Any(x => x.Condition == conditional && x.Writes(MimeType.Html));
-        }
 
         public static bool Writes(this IMedia media, MimeType mimeType)
         {
@@ -23,6 +19,12 @@ namespace FubuMVC.Core.Resources.Conneg
             var writer = typeof (ViewWriter<>).CloseAndBuildAs<object>(token, node.ResourceType);
 
             node.Add(writer, conditional);
+        }
+
+        public static IViewToken ViewFor(this IOutputNode node, IConditional conditional)
+        {
+            var media = node.Media().Where(x => x.Writer is IViewWriter && x.Condition == conditional).FirstOrDefault();
+            return media == null ? null : media.Writer.As<IViewWriter>().View;
         }
     }
 }

@@ -10,13 +10,23 @@ using HtmlTags.Conventions;
 
 namespace FubuMVC.Core.View
 {
-    public class ViewWriter<T> : IMediaWriter<T>, DescribesItself where T : class
+    public interface IViewWriter
+    {
+        IViewToken View { get; }
+    }
+
+    public class ViewWriter<T> : IMediaWriter<T>, IViewWriter, DescribesItself where T : class
     {
         private readonly IViewToken _view;
 
         public ViewWriter(IViewToken view)
         {
             _view = view;
+        }
+
+        public IViewToken View
+        {
+            get { return _view; }
         }
 
         public void Write(string mimeType, IFubuRequestContext context, T resource)

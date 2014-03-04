@@ -108,6 +108,12 @@ namespace FubuMVC.Core.Resources.Conneg
             get { return BehaviorCategory.Output; }
         }
 
+        public bool HasView(IConditional conditional)
+        {
+            return _media.Any(x => x.Condition == conditional && x.Writes(MimeType.Html));
+        }
+
+
 
         public Type ResourceType
         {

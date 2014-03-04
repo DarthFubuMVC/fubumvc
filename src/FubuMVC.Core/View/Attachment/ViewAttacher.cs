@@ -16,7 +16,7 @@ namespace FubuMVC.Core.View.Attachment
             graph.Settings.Get<ViewEngines>().UseGraph(graph);
             var policy = graph.Settings.Get<ViewAttachmentPolicy>();
 
-            FindLastActions(graph).Where(x => x.OutputType() != null).Each(action => {
+            FindLastActions(graph).Each(action => {
                 policy.Profiles(graph).Each(x => {
                     Attach(policy, x.Profile, x.Views, action);
                 });
@@ -51,7 +51,7 @@ namespace FubuMVC.Core.View.Attachment
             foreach (var chain in graph.Behaviors)
             {
                 var last = chain.Calls.LastOrDefault();
-                if (last != null)
+                if (last != null && last.HasOutput)
                 {
                     yield return last;
                 }
