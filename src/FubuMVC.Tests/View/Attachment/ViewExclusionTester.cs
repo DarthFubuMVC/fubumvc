@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View;
@@ -32,24 +33,34 @@ namespace FubuMVC.Tests.View.Attachment
 
     public class FakeViewEngine1 : IViewFacility
     {
-        public IEnumerable<IViewToken> FindViews(BehaviorGraph graph)
+        public Task<IEnumerable<IViewToken>> FindViews(SettingsCollection settings)
         {
-            yield return new FakeViewToken{ViewName = "A1"};
-            yield return new FakeViewToken{ViewName = "A2"};
-            yield return new FakeViewToken{ViewName = "A3"};
-            yield return new FakeViewToken{ViewName = "B1"};
-            yield return new FakeViewToken{ViewName = "B2"};
-            yield return new FakeViewToken{ViewName = "B3"};
-            yield return new FakeViewToken{ViewName = "C1"};
-            yield return new FakeViewToken{ViewName = "C2"};
-            yield return new FakeViewToken{ViewName = "C3"};
-            yield return new FakeViewToken{ViewName = "C4"};
+            return Task.Factory.StartNew(() => tokens());
+        }
+
+        private static IEnumerable<IViewToken> tokens()
+        {
+            yield return new FakeViewToken {ViewName = "A1"};
+            yield return new FakeViewToken {ViewName = "A2"};
+            yield return new FakeViewToken {ViewName = "A3"};
+            yield return new FakeViewToken {ViewName = "B1"};
+            yield return new FakeViewToken {ViewName = "B2"};
+            yield return new FakeViewToken {ViewName = "B3"};
+            yield return new FakeViewToken {ViewName = "C1"};
+            yield return new FakeViewToken {ViewName = "C2"};
+            yield return new FakeViewToken {ViewName = "C3"};
+            yield return new FakeViewToken {ViewName = "C4"};
         }
     }
 
     public class FakeViewEngine2 : IViewFacility
     {
-        public IEnumerable<IViewToken> FindViews(BehaviorGraph graph)
+        public Task<IEnumerable<IViewToken>> FindViews(SettingsCollection settings)
+        {
+            return Task.Factory.StartNew(() => tokens());
+        }
+
+        private static IEnumerable<IViewToken> tokens()
         {
             yield return new FakeViewToken { ViewName = "A4" };
             yield return new FakeViewToken { ViewName = "A5" };
@@ -62,5 +73,6 @@ namespace FubuMVC.Tests.View.Attachment
             yield return new FakeViewToken { ViewName = "C7" };
             yield return new FakeViewToken { ViewName = "C8" };
         }
+
     }
 }

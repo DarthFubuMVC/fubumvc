@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
@@ -91,9 +92,12 @@ namespace FubuMVC.Tests.View
 
         public class TestViewFacility : IViewFacility
         {
-            public IEnumerable<IViewToken> FindViews(BehaviorGraph graph)
+            public Task<IEnumerable<IViewToken>> FindViews(SettingsCollection settings)
             {
-                yield return new TestViewToken();
+                return Task.Factory.StartNew(() => {
+                    return new IViewToken[]{new TestViewToken()} as IEnumerable<IViewToken>;
+                });
+
             }
 
             public BehaviorNode CreateViewNode(Type type) { return null; }

@@ -72,9 +72,13 @@ namespace FubuMVC.Core.View
         {
             var views = new List<IViewToken>();
 
+
+
             foreach (IViewFacility facility in _facilities)
             {
-                views.AddRange(facility.FindViews(_graph));
+
+
+                views.AddRange(facility.FindViews(_graph.Settings).Result);
             }
 
             _excludes.Each(views.RemoveAll);
