@@ -1,0 +1,47 @@
+<configuration>
+  <configSections>
+    <sectionGroup name="system.web.webPages.razor" type="System.Web.WebPages.Razor.Configuration.RazorWebSectionGroup, System.Web.WebPages.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35">
+      <section name="host" type="System.Web.WebPages.Razor.Configuration.HostSection, System.Web.WebPages.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" requirePermission="false" />
+      <section name="pages" type="System.Web.WebPages.Razor.Configuration.RazorPagesSection, System.Web.WebPages.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" requirePermission="false" />
+    </sectionGroup>
+  </configSections>
+  <system.web>
+    <compilation debug="true">
+      <assemblies>
+        <add assembly="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089" />
+        <add assembly="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+      </assemblies>
+    </compilation>
+    <pages validateRequest="false" controlRenderingCompatibilityVersion="3.5" clientIDMode="AutoID">
+      <namespaces>
+        <add namespace="FubuMVC.Core" />
+        <add namespace="FubuCore" />
+        <add namespace="FubuCore.Reflection" />
+        <add namespace="FubuLocalization" />
+		<add namespace="FubuMVC.ContentExtensions" />
+        <add namespace="FubuMVC.Core.UI" />
+		<add namespace="FubuMVC.Core.Assets" />
+        <add namespace="FubuMVC.Core.View" />
+		<add namespace="FubuMVC.Razor" />
+        <add namespace="HtmlTags" />
+      </namespaces>
+    </pages>
+  </system.web>
+  <system.web.webPages.razor>
+    <host factoryType="System.Web.Mvc.MvcWebRazorHostFactory, System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" />
+    <pages pageBaseType="FubuMVC.Razor.Rendering.FubuRazorView">
+      <namespaces>
+        <add namespace="FubuMVC.Core" />
+        <add namespace="FubuCore" />
+        <add namespace="FubuCore.Reflection" />
+        <add namespace="FubuLocalization" />
+		<add namespace="FubuMVC.ContentExtensions" />
+        <add namespace="FubuMVC.Core.UI" />
+		<add namespace="FubuMVC.Core.Assets" />
+        <add namespace="FubuMVC.Core.View" />
+		<add namespace="FubuMVC.Razor" />
+        <add namespace="HtmlTags" />
+      </namespaces>
+    </pages>
+  </system.web.webPages.razor>
+</configuration>

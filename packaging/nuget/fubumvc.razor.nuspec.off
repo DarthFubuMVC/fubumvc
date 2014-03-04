@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <id>FubuMVC.Razor</id>
+    <version>0.0.0</version>
+    <authors>Corey Kaylor, Alex Henning Johannessen, Jeremy D. Miller</authors>
+    <owners>Corey Kaylor, Alex Henning Johannessen, Jeremy D. Miller</owners>
+    <licenseUrl>https://github.com/DarthFubuMVC/fubumvc/raw/master/license.txt</licenseUrl>
+    <projectUrl>http://mvc.fubu-project.org/</projectUrl>
+    <iconUrl>https://github.com/DarthFubuMVC/fubu-collateral/raw/master/Icons/FubuMvc_256.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Support for using the Razor view engine within a FubuMVC application.</description>
+    <tags>fubumvc razor razorengine fubu</tags>
+    <dependencies>
+      <dependency id="FubuMVC.Core" version="2.0"/>
+	  <dependency id="Microsoft.AspNet.Razor" version="2.0.20715.0" />
+    </dependencies>
+	<frameworkAssemblies>
+		<frameworkAssembly assemblyName="System.Web.Mvc" />
+	</frameworkAssemblies>
+  </metadata>
+  <files>
+	<file src="web.config.transform" target="content" />
+    <file src="..\..\src\FubuMVC.Razor\bin\release\FubuMVC.Razor.*" target="lib\net40" />	
+    <file src="..\..\src\FubuMVC.Razor\**\*.cs" target="src" />	
+  </files>
+</package>
