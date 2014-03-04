@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View.Attachment;
@@ -44,25 +46,36 @@ namespace FubuMVC.Core.View
             return IfTheViewMatches(combined);
         }
 
-        public ViewBag BuildViewBag(SettingsCollection settings)
+        public Task<ViewBag> BuildViewBag(SettingsCollection settings)
         {
-            var views = new List<IViewToken>();
+            return Task.Factory.StartNew(() => {
+                var viewFinders = _facilities.Select(x => x.FindViews(settings)).ToArray();
 
+                var views = viewFinders.SelectMany(x => x.Result).ToList();
 
+                _excludes.Each(views.RemoveAll);
 
+                _viewPolicies.Each(x => x.Alter(views));
+
+                return new ViewBag(views);
+            });
+        }
+
+        private IEnumerable<Task<IEnumerable<IViewToken>>> viewSources(SettingsCollection settings)
+        {
             foreach (IViewFacility facility in _facilities)
             {
+                var findViews = facility.FindViews(settings);
+                yield return findViews.ContinueWith(task => {
+                    var list = task.Result.ToList();
+                    _excludes.Each(list.RemoveAll);
 
+                    _viewPolicies.Each(x => x.Alter(list));
 
-                views.AddRange(facility.FindViews(settings).Result);
+                    return list.As<IEnumerable<IViewToken>>();
+                });
             }
-
-            _excludes.Each(views.RemoveAll);
-
-            _viewPolicies.Each(x => x.Alter(views));
-
-            return new ViewBag(views);
-        }
+        } 
 
 
         /// <summary>

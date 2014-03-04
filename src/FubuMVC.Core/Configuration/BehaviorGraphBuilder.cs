@@ -37,6 +37,10 @@ namespace FubuMVC.Core.Configuration
             var graph = new BehaviorGraph();
             startBehaviorGraph(registry, graph);
 
+            var viewDiscovery = Task.Factory.StartNew(() => {
+
+            });
+
             lookForAccessorOverrides(graph);
 
             var config = registry.Config;

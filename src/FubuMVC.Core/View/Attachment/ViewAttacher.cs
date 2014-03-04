@@ -31,7 +31,7 @@ namespace FubuMVC.Core.View.Attachment
             _policy.Profiles(_views).Each(x => Attach(x.Profile, x.Views, action));
         }
 
-        public virtual void Attach(IViewProfile viewProfile, ViewBag bag, ActionCall action)
+        public void Attach(IViewProfile viewProfile, ViewBag bag, ActionCall action)
         {
             // No duplicate views!
             var outputNode = action.ParentChain().Output;
@@ -76,7 +76,7 @@ namespace FubuMVC.Core.View.Attachment
         {
             var views = graph.Settings.Get<ViewEngines>().BuildViewBag(graph.Settings);
 
-            Configure(graph, views);
+            Configure(graph, views.Result);
         }
 
         public void Configure(BehaviorGraph graph, ViewBag views)
