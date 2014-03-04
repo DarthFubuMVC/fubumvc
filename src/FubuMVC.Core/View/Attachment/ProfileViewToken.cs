@@ -40,11 +40,6 @@ namespace FubuMVC.Core.View.Attachment
             get { return _view.Namespace; }
         }
 
-        public ObjectDef ToViewFactoryObjectDef()
-        {
-            throw new NotSupportedException();
-        }
-
         public IRenderableView GetView()
         {
             throw new NotSupportedException();

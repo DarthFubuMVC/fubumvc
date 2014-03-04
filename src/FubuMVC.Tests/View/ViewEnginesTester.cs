@@ -37,11 +37,6 @@ namespace FubuMVC.Tests.View
 
         public class TestViewToken : IViewToken
         {
-            public ObjectDef ToViewFactoryObjectDef()
-            {
-                throw new NotImplementedException();
-            }
-
             public IRenderableView GetView()
             {
                 throw new NotImplementedException();

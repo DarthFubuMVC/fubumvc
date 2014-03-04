@@ -153,11 +153,6 @@ namespace FubuMVC.Tests.View
             return ViewName;
         }
 
-        public ObjectDef ToViewFactoryObjectDef()
-        {
-            throw new NotImplementedException();
-        }
-
         public IRenderableView GetView()
         {
             throw new NotImplementedException();

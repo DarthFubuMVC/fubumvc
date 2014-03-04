@@ -18,14 +18,6 @@ namespace FubuMVC.Razor
             _descriptor = viewDescriptor;
         }
 
-        public ObjectDef ToViewFactoryObjectDef()
-        {
-            var def = ObjectDef.ForType<ViewFactory>();
-            def.DependencyByValue(_descriptor);
-
-            return def;
-        }
-
         public string ProfileName { get; set; }
 
         public Type ViewType

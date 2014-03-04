@@ -18,16 +18,6 @@ namespace FubuMVC.Spark
             _descriptor = viewDescriptor;
         }
 
-        public ObjectDef ToViewFactoryObjectDef()
-        {
-            var def = ObjectDef.ForType<ViewFactory>();
-            def
-                .DependencyByType(typeof (IViewEntrySource), typeof (ViewEntrySource))
-                .DependencyByValue(_descriptor);
-
-            return def;
-        }
-
         public string ProfileName { get; set; }
 
         public Type ViewType
