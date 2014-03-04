@@ -2,6 +2,7 @@ using System;
 using FubuCore;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.View;
+using FubuMVC.Core.View.Rendering;
 using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.SparkModel;
 using Spark;
@@ -16,6 +17,16 @@ namespace FubuMVC.Spark
         public SparkViewToken(SparkDescriptor viewDescriptor)
         {
             _descriptor = viewDescriptor;
+        }
+
+        public IRenderableView GetView()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IRenderableView GetPartialView()
+        {
+            throw new NotImplementedException();
         }
 
         public string ProfileName { get; set; }

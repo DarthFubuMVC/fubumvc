@@ -5,7 +5,7 @@ using Spark;
 
 namespace FubuMVC.Spark.Rendering
 {
-    public class ViewFactory : IViewFactory
+    public class ViewFactory
     {
         private readonly IViewEntrySource _viewEntrySource;
         private readonly IViewModifierService<IFubuSparkView> _service;

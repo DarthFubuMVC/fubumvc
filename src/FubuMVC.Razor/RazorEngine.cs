@@ -17,7 +17,8 @@ namespace FubuMVC.Razor
 
         void IFubuRegistryExtension.Configure(FubuRegistry registry)
         {
-            registry.ViewFacility(new RazorViewFacility(_templateRegistry, _parsings));
+            registry.AlterSettings<ViewEngines>(x => x.AddFacility(new RazorViewFacility(_templateRegistry, _parsings)));
+
             registry.Services(configureServices);
 
             registry.AlterSettings<CommonViewNamespaces>(x =>
@@ -46,8 +47,6 @@ namespace FubuMVC.Razor
             services.FillType<ISharingAttacher<IRazorTemplate>, MasterAttacher<IRazorTemplate>>();
             services.FillType<ITemplateSelector<IRazorTemplate>, RazorTemplateSelector>();
             services.FillType<Bottles.IActivator, SharingAttacherActivator<IRazorTemplate>>();
-            services.FillType<IRenderStrategy, AjaxRenderStrategy>();
-            services.FillType<IRenderStrategy, DefaultRenderStrategy>();
 
             services.SetServiceIfNone<IViewModifierService<IFubuRazorView>, ViewModifierService<IFubuRazorView>>();
 

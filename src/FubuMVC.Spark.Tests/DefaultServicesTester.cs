@@ -142,30 +142,6 @@ namespace FubuMVC.Spark.Tests
         }
 
         [Test]
-        public void render_strategies()
-        {
-            countForServiceCheck<IRenderStrategy>(3);
-        }
-
-        [Test]
-        public void nested_render_strategy()
-        {
-            defaultServicesCheck<IRenderStrategy, NestedRenderStrategy>(0);
-        }
-
-        [Test]
-        public void ajax_render_strategy()
-        {
-            defaultServicesCheck<IRenderStrategy, AjaxRenderStrategy>(1);
-        }
-
-        [Test]
-        public void default_render_strategy()
-        {
-            defaultServicesCheck<IRenderStrategy, DefaultRenderStrategy>(2);
-        }
-
-        [Test]
         public void view_entry_provider_cache()
         {
             defaultServiceCheck<IViewEntryProviderCache, ViewEntryProviderCache>();

@@ -20,7 +20,8 @@ namespace FubuMVC.Spark
 
         void IFubuRegistryExtension.Configure(FubuRegistry registry)
         {
-            registry.ViewFacility(new SparkViewFacility(_templateRegistry, _parsings));
+            registry.AlterSettings<ViewEngines>(x => x.AddFacility(new SparkViewFacility(_templateRegistry, _parsings)));
+
             registry.Services(configureServices);
         }
 
@@ -52,10 +53,6 @@ namespace FubuMVC.Spark
             services.SetServiceIfNone<ITemplateDirectoryProvider<ITemplate>, TemplateDirectoryProvider<ITemplate>>();
             services.SetServiceIfNone<ISharedTemplateLocator, SharedTemplateLocator>();
             services.FillType<ISharedTemplateLocator<ITemplate>, SharedTemplateLocator>();
-
-            services.FillType<IRenderStrategy, NestedRenderStrategy>();
-            services.FillType<IRenderStrategy, AjaxRenderStrategy>();
-            services.FillType<IRenderStrategy, DefaultRenderStrategy>();
 
             services.FillType<ITemplateSelector<ITemplate>, SparkTemplateSelector>();
 

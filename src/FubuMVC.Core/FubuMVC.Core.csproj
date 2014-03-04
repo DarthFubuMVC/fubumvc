@@ -558,14 +558,8 @@
     <Compile Include="View\PartialExpressionExtensions.cs" />
     <Compile Include="View\Registration\GenericParser.cs" />
     <Compile Include="View\Rendering\IRenderableView.cs" />
-    <Compile Include="View\Rendering\IRenderAction.cs" />
-    <Compile Include="View\Rendering\IRenderStrategy.cs" />
-    <Compile Include="View\Rendering\IViewRenderer.cs" />
     <Compile Include="View\Rendering\NestedOutput.cs" />
-    <Compile Include="View\Rendering\RenderAction.cs" />
-    <Compile Include="View\Rendering\RenderStrategies.cs" />
     <Compile Include="View\Rendering\ViewModifiers.cs" />
-    <Compile Include="View\Rendering\ViewRenderer.cs" />
     <Compile Include="View\ViewEngines.cs" />
     <Compile Include="View\ViewWriter.cs" />
     <Compile Include="Web\Security\WebAuthenticationContext.cs" />

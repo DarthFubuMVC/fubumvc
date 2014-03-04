@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View;
@@ -47,6 +48,11 @@ namespace FubuMVC.Razor
             var composer = new TemplateComposer<IRazorTemplate>(_razorParsings);
             settings.Configure(composer);            
             composer.Compose(_templateRegistry);
+        }
+
+        public Task<IEnumerable<IViewToken>> FindViews(SettingsCollection settings)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

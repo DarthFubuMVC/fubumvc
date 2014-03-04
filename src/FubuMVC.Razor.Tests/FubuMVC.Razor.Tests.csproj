@@ -83,14 +83,10 @@
     </Compile>
     <Compile Include="RazorModel\LayoutAttacherTester.cs" />
     <Compile Include="Registration\ViewParserTester.cs" />
-    <Compile Include="Rendering\AjaxRenderStrategyTester.cs" />
     <Compile Include="Rendering\FubuPartialRenderingTester.cs" />
-    <Compile Include="Rendering\RenderActionTester.cs" />
-    <Compile Include="Rendering\DefaultRenderStrategyTester.cs" />
     <Compile Include="Rendering\FubuRazorViewTester.cs" />
     <Compile Include="Rendering\StubView.cs" />
     <Compile Include="Rendering\ViewModifierServiceTester.cs" />
-    <Compile Include="Rendering\ViewRendererTester.cs" />
     <Compile Include="Rendering\ViewFactoryTester.cs" />
     <Compile Include="NamespacesImportedTester.cs" />
     <Compile Include="RazorModel\Binding\GenericParserTester.cs" />
@@ -108,7 +104,6 @@
     <Compile Include="RazorViewFacilityTester.cs" />
     <Compile Include="RazorViewTokenTester.cs" />
     <Compile Include="RazorEngineSettingsTester.cs" />
-    <Compile Include="StubRequestHeaders.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">

@@ -3,6 +3,7 @@ using FubuCore;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Model;
+using FubuMVC.Core.View.Rendering;
 using FubuMVC.Razor.RazorModel;
 using FubuMVC.Razor.Rendering;
 
@@ -16,6 +17,16 @@ namespace FubuMVC.Razor
         public RazorViewToken(ViewDescriptor<IRazorTemplate> viewDescriptor)
         {
             _descriptor = viewDescriptor;
+        }
+
+        public IRenderableView GetView()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IRenderableView GetPartialView()
+        {
+            throw new NotImplementedException();
         }
 
         public string ProfileName { get; set; }

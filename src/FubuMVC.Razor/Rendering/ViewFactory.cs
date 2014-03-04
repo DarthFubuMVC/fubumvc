@@ -7,7 +7,7 @@ using FubuMVC.Razor.RazorModel;
 
 namespace FubuMVC.Razor.Rendering
 {
-    public class ViewFactory : IViewFactory
+    public class ViewFactory
     {
         private readonly ViewDescriptor<IRazorTemplate> _viewDescriptor;
         private readonly ITemplateFactory _templateFactory;
