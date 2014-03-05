@@ -61,6 +61,9 @@
     </Compile>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="PathExtensions.cs" />
+    <Compile Include="Rendering\FubuSparkViewDecorator.cs" />
+    <Compile Include="Rendering\FubuSparkViewExtensions.cs" />
+    <Compile Include="Rendering\IFubuSparkView.cs" />
     <Compile Include="Rendering\IHtmlEncoder.cs" />
     <Compile Include="Registration\ViewDescriptorHelper.cs" />
     <Compile Include="Rendering\ViewDefinition.cs" />

@@ -41,7 +41,7 @@ namespace FubuMVC.Core.View
                 view.Page.Get<ActiveProfile>().Push(_view.ProfileName);
             }
 
-            view.Render();
+            view.Render(context);
 
             if (_view.ProfileName.IsNotEmpty())
             {

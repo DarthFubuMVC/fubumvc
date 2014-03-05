@@ -3,6 +3,7 @@ using System.IO;
 using FubuCore;
 using FubuMVC.Core.View.Rendering;
 using FubuMVC.Spark.Rendering;
+using FubuMVC.Tests;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -52,7 +53,7 @@ namespace FubuMVC.Spark.Tests.Rendering
             view.Content.Add("bottom", writer3);
 
             view.Content.ShouldHaveCount(3);
-            view.Render();
+            view.Render(new MockedFubuRequestContext());
             view.Content.ShouldHaveCount(0);
 
             writer1.VerifyAllExpectations();

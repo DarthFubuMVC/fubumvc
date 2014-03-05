@@ -60,7 +60,6 @@ namespace FubuMVC.Spark
 
             services.SetServiceIfNone<IViewModifierService<IFubuSparkView>, ViewModifierService<IFubuSparkView>>();
 
-            services.FillType<IViewModifier<IFubuSparkView>, SiteResourceAttacher>();
             services.FillType<IViewModifier<IFubuSparkView>, ContentActivation>();
             services.FillType<IViewModifier<IFubuSparkView>, OnceTableActivation>();
             services.FillType<IViewModifier<IFubuSparkView>, OuterViewOutputActivator>();

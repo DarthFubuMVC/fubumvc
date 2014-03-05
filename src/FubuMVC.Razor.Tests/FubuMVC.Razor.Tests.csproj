@@ -96,7 +96,6 @@
     <Compile Include="RazorModel\TemplateComposerTester.cs" />
     <Compile Include="RazorModel\SharedTemplateLocatorTester.cs" />
     <Compile Include="RazorModel\TemplateRegistryTester.cs" />
-    <Compile Include="RazorModel\ExtendedTester.cs" />
     <Compile Include="RazorModel\TemplateExtensionsTester.cs" />
     <Compile Include="RazorModel\Binding\ViewModelBinderTester.cs" />
     <Compile Include="RazorEngineSettingsTester.cs" />

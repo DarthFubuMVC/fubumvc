@@ -89,7 +89,6 @@
     <Compile Include="Rendering\OuterViewOutputActivatorTester.cs" />
     <Compile Include="Rendering\FubuSparkViewTester.cs" />
     <Compile Include="Rendering\NestedOutputTester.cs" />
-    <Compile Include="Rendering\SiteResourceAttacherTester.cs" />
     <Compile Include="Rendering\ViewContentDisposerTester.cs" />
     <Compile Include="Rendering\ViewModifierServiceTester.cs" />
     <Compile Include="Rendering\ViewOutputTester.cs" />
@@ -134,6 +133,10 @@
     <ProjectReference Include="..\FubuMVC.Spark\FubuMVC.Spark.csproj">
       <Project>{9D6BF559-6461-4EAC-BB16-F976FF43E8DA}</Project>
       <Name>FubuMVC.Spark</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Tests\FubuMVC.Tests.csproj">
+      <Project>{FEB91F9F-ECE2-480C-B39C-A44BBF1F7B01}</Project>
+      <Name>FubuMVC.Tests</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

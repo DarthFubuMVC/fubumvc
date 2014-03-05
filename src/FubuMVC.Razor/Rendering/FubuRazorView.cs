@@ -9,6 +9,7 @@ using System.Web;
 using FubuCore;
 using FubuCore.CommandLine;
 using FubuCore.Util;
+using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
@@ -106,7 +107,7 @@ namespace FubuMVC.Razor.Rendering
             LayoutView.ExecuteLayout(this);
         }
 
-        void IRenderableView.Render()
+        void IRenderableView.Render(IFubuRequestContext context)
         {
             _renderAction();
             Get<IOutputWriter>().WriteHtml(this.As<IFubuRazorView>().Result);

@@ -154,12 +154,6 @@ namespace FubuMVC.Spark.Tests
         }
 
         [Test]
-        public void site_resource_attacher_view_modifier()
-        {
-            defaultServicesCheck<IViewModifier<IFubuSparkView>, SiteResourceAttacher>(0);
-        }
-
-        [Test]
         public void content_activation_view_modifier()
         {
             defaultServicesCheck<IViewModifier<IFubuSparkView>, ContentActivation>(1);

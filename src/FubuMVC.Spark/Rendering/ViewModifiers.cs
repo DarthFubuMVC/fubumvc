@@ -22,40 +22,6 @@ namespace FubuMVC.Spark.Rendering
         }
     }
 
-    public class SiteResourceAttacher : BasicViewModifier<IFubuSparkView>
-    {
-        private readonly ISparkViewEngine _engine;
-        private readonly IFubuRequest _request;
-
-        public SiteResourceAttacher(ISparkViewEngine engine, IFubuRequest request)
-        {
-            _engine = engine;
-            _request = request;
-        }
-
-        public override IFubuSparkView Modify(IFubuSparkView view)
-        {
-            return view.Modify(v => v.SiteResource = SiteResource);
-        }
-
-        public string SiteResource(string path)
-        {
-            var appPath = _request.Get<AppPath>().ApplicationPath;
-            var siteRoot = string.Empty;
-            if (appPath.IsNotEmpty() && !string.Equals(appPath, "/"))
-            {
-                siteRoot = "/{0}".ToFormat(appPath.Trim('/'));
-            }
-
-            return _engine.ResourcePathManager.GetResourcePath(siteRoot, path);
-        }
-
-        public class AppPath
-        {
-            public string ApplicationPath { get; set; }
-        }
-    }
-
 
     public class ContentActivation : BasicViewModifier<IFubuSparkView>
     {

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using FubuCore;
+using FubuMVC.Core;
 using FubuMVC.Core.Urls;
 using FubuMVC.Spark.Rendering;
 using FubuTestingSupport;
-
 using NUnit.Framework;
 using Rhino.Mocks;
 using Spark;
@@ -16,6 +16,7 @@ namespace FubuMVC.Spark.Tests.Rendering
     public class FubuSparkViewDecoratorTester : InteractionContext<FubuSparkViewDecorator>
     {
         private IFubuSparkView _view;
+
         protected override void beforeEach()
         {
             _view = MockFor<IFubuSparkView>();
@@ -60,7 +61,7 @@ namespace FubuMVC.Spark.Tests.Rendering
         [Test]
         public void once_table_is_forwarded_to_inner_view()
         {
-            var onceTable = new Dictionary<string, string> { { "once_key1", "once_value1" } };
+            var onceTable = new Dictionary<string, string> {{"once_key1", "once_value1"}};
             ClassUnderTest.OnceTable = onceTable;
             ClassUnderTest.OnceTable
                 .ShouldBeTheSameAs(_view.OnceTable)
@@ -70,7 +71,7 @@ namespace FubuMVC.Spark.Tests.Rendering
         [Test]
         public void globals_is_forwarded_to_inner_view()
         {
-            var globals = new Dictionary<string, object> { { "global_key1", "global_value1" } };
+            var globals = new Dictionary<string, object> {{"global_key1", "global_value1"}};
             ClassUnderTest.Globals = globals;
             ClassUnderTest.Globals
                 .ShouldBeTheSameAs(_view.Globals)
@@ -136,8 +137,8 @@ namespace FubuMVC.Spark.Tests.Rendering
         [Test]
         public void render_is_forwarded_to_inner_view()
         {
-            _view.Expect(x => x.Render());
-            ClassUnderTest.Render();
+            _view.Expect(x => x.Render(MockFor<IFubuRequestContext>()));
+            ClassUnderTest.Render(MockFor<IFubuRequestContext>());
             _view.VerifyAllExpectations();
         }
 
@@ -146,15 +147,17 @@ namespace FubuMVC.Spark.Tests.Rendering
         {
             var callStack = new List<string>();
 
-            ClassUnderTest.PreRender +=  x => callStack.Add("Pre Render1");
-            ClassUnderTest.PreRender +=  obj => callStack.Add("Pre Render2");
+            ClassUnderTest.PreRender += x => callStack.Add("Pre Render1");
+            ClassUnderTest.PreRender += obj => callStack.Add("Pre Render2");
             ClassUnderTest.PostRender += x => callStack.Add("Post Render1");
             ClassUnderTest.PostRender += x => callStack.Add("Post Render2");
-            _view.Stub(x => x.Render()).WhenCalled(x => callStack.Add("Render View"));
+            _view.Stub(x => x.Render(MockFor<IFubuRequestContext>())).WhenCalled(x => callStack.Add("Render View"));
 
-            ClassUnderTest.Render();
+            ClassUnderTest.Render(MockFor<IFubuRequestContext>());
 
-            callStack.ShouldHaveCount(5).Join("|").ShouldEqual("Pre Render1|Pre Render2|Render View|Post Render1|Post Render2");
+            callStack.ShouldHaveCount(5)
+                .Join("|")
+                .ShouldEqual("Pre Render1|Pre Render2|Render View|Post Render1|Post Render2");
         }
 
         [Test]
@@ -163,6 +166,5 @@ namespace FubuMVC.Spark.Tests.Rendering
             ClassUnderTest.CacheService = MockFor<ICacheService>();
             ClassUnderTest.CacheService.ShouldEqual(MockFor<ICacheService>()).ShouldEqual(_view.CacheService);
         }
-
     }
 }

@@ -2,7 +2,7 @@
 {
     public interface IRenderableView //: IFubuPage
     {
-        void Render();
+        void Render(IFubuRequestContext context);
 
         IFubuPage Page { get; } 
     }
