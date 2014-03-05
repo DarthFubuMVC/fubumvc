@@ -49,7 +49,6 @@ namespace FubuMVC.Razor
             services.FillType<ITemplateSelector<IRazorTemplate>, RazorTemplateSelector>();
             services.FillType<Bottles.IActivator, SharingAttacherActivator<IRazorTemplate>>();
 
-            services.SetServiceIfNone<IViewModifierService<IFubuRazorView>, ViewModifierService<IFubuRazorView>>();
 
         }
     }

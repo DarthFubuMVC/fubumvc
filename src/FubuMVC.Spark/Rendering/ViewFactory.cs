@@ -9,12 +9,10 @@ namespace FubuMVC.Spark.Rendering
     public class ViewFactory
     {
         private readonly SparkDescriptor _descriptor;
-        private readonly IViewModifierService<IFubuSparkView> _service;
 
-        public ViewFactory(SparkDescriptor descriptor, IViewModifierService<IFubuSparkView> service)
+        public ViewFactory(SparkDescriptor descriptor)
         {
             _descriptor = descriptor;
-            _service = service;
         }
 
         public IRenderableView GetView()
@@ -30,7 +28,6 @@ namespace FubuMVC.Spark.Rendering
         private IFubuSparkView getView(ISparkViewEntry entry)
         {
             var view = (IFubuSparkView)entry.CreateInstance();
-            view = _service.Modify(view);
             return view;
         }
 

@@ -85,7 +85,6 @@
     <Compile Include="Registration\ViewParserTester.cs" />
     <Compile Include="Rendering\FubuRazorViewTester.cs" />
     <Compile Include="Rendering\StubView.cs" />
-    <Compile Include="Rendering\ViewModifierServiceTester.cs" />
     <Compile Include="NamespacesImportedTester.cs" />
     <Compile Include="RazorModel\Binding\GenericParserTester.cs" />
     <Compile Include="RazorModel\Binding\GenericViewModelBinderTester.cs" />

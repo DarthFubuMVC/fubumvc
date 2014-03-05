@@ -140,18 +140,6 @@ namespace FubuMVC.Spark.Tests
         }
 
         [Test]
-        public void view_modifier_service()
-        {
-            defaultServiceCheck<IViewModifierService<IFubuSparkView>, ViewModifierService<IFubuSparkView>>();
-        }
-
-        [Test]
-        public void view_modifiers()
-        {
-            countForServiceCheck<IViewModifier<IFubuSparkView>>(7);
-        }
-
-        [Test]
         public void html_encoder()
         {
             defaultServiceCheck<IHtmlEncoder, DefaultHtmlEncoder>();
@@ -168,11 +156,6 @@ namespace FubuMVC.Spark.Tests
                 .ShouldNotBeNull().Type.ShouldEqual(typeof (TImplementation));
         }
 
-        private void defaultServiceCheck<TImplementation>()
-        {
-            _services.DefaultServiceFor<TImplementation>()
-                .ShouldNotBeNull().Value.ShouldNotBeNull();
-        }
 
         private void defaultServiceCheck<TService, TImplementation>()
         {

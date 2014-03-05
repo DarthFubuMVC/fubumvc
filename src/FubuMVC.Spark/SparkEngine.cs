@@ -58,7 +58,6 @@ namespace FubuMVC.Spark
 
             services.FillType<ITemplateSelector<ITemplate>, SparkTemplateSelector>();
 
-            services.SetServiceIfNone<IViewModifierService<IFubuSparkView>, ViewModifierService<IFubuSparkView>>();
 
             services.SetServiceIfNone<IHtmlEncoder, DefaultHtmlEncoder>();
 
