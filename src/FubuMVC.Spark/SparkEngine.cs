@@ -20,7 +20,9 @@ namespace FubuMVC.Spark
 
         void IFubuRegistryExtension.Configure(FubuRegistry registry)
         {
-            registry.AlterSettings<ViewEngines>(x => x.AddFacility(new SparkViewFacility(_templateRegistry, _parsings)));
+            var engine = new SparkViewEngine();
+
+            registry.AlterSettings<ViewEngines>(x => x.AddFacility(new SparkViewFacility(_templateRegistry, _parsings, engine)));
 
             registry.Services(configureServices);
         }
@@ -56,7 +58,6 @@ namespace FubuMVC.Spark
 
             services.FillType<ITemplateSelector<ITemplate>, SparkTemplateSelector>();
 
-            services.SetServiceIfNone<IViewEntryProviderCache, ViewEntryProviderCache>();
             services.SetServiceIfNone<IViewModifierService<IFubuSparkView>, ViewModifierService<IFubuSparkView>>();
 
             services.FillType<IViewModifier<IFubuSparkView>, SiteResourceAttacher>();

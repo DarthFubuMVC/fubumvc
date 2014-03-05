@@ -5,6 +5,7 @@ using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
+using Spark;
 
 namespace FubuMVC.Spark.Tests.SparkModel.Policies
 {
@@ -16,7 +17,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
         protected override void beforeEach()
         {
             _template = new StubTemplate{
-                Descriptor = new SparkDescriptor(_template)
+                Descriptor = new SparkDescriptor(_template, new SparkViewEngine())
             {
                 ViewModel = typeof(FooViewModel)
             },

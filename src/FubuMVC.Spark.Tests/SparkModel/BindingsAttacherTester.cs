@@ -6,6 +6,7 @@ using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
+using Spark;
 
 namespace FubuMVC.Spark.Tests.SparkModel
 {
@@ -19,7 +20,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         protected override void beforeEach()
         {
             _templates = new TemplateRegistry<ITemplate>();
-            _viewDescriptor = new SparkDescriptor(_template);
+            _viewDescriptor = new SparkDescriptor(_template, new SparkViewEngine());
             _template = new Template("/App/Views/Fubu.spark", "/App/Views", TemplateConstants.HostOrigin)
             {
                 Descriptor = _viewDescriptor                                

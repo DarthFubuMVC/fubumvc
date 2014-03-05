@@ -4,6 +4,7 @@ using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
 using NUnit.Framework;
+using Spark;
 
 namespace FubuMVC.Spark.Tests.SparkModel
 {
@@ -30,7 +31,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
             var view = _templates.Last();
             view.ViewPath = view.FilePath;
-            var descriptor = new SparkDescriptor(view);
+            var descriptor = new SparkDescriptor(view, new SparkViewEngine());
             _bindings.Each(descriptor.AddBinding);
             view.Descriptor = descriptor;
 

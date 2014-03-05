@@ -215,7 +215,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         public void binding_works_under_package_context()
         {
             var serieZ = _pak1TemplateRegistry.FirstByName("SerieZ");
-            serieZ.Descriptor = new SparkDescriptor(serieZ);
+            serieZ.Descriptor = new SparkDescriptor(serieZ, new SparkViewEngine());
             serieZ.Descriptor.As<SparkDescriptor>().AddBinding(_pak1TemplateRegistry.First(x => x.Name() == "bindings"));
             serieZ.Descriptor.As<SparkDescriptor>().AddBinding(_appTemplateRegistry.First(x => x.Name() == "bindings"));
             renderTemplate(serieZ).ShouldEqual("SerieZ Hi from Package1 Bye from Host");
@@ -225,7 +225,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         public void binding_works_under_host_context()
         {
             var macMini = _appTemplateRegistry.FirstByName("MacMini");
-            macMini.Descriptor = new SparkDescriptor(macMini);
+            macMini.Descriptor = new SparkDescriptor(macMini, new SparkViewEngine());
             macMini.Descriptor.As<SparkDescriptor>().AddBinding(_appTemplateRegistry.First(x => x.Name() == "bindings"));
             var content = renderTemplate(macMini);
             content.ShouldEqual(@"MacMini Hi from Host");

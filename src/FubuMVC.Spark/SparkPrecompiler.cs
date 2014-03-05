@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 using Bottles;
 using Bottles.Diagnostics;
 using FubuMVC.Core;
@@ -15,14 +16,12 @@ namespace FubuMVC.Spark
     public class SparkPrecompiler : IActivator
     {
         private readonly ISparkTemplateRegistry _templates;
-        private readonly IViewEntryProviderCache _providerCache;
         private readonly SparkEngineSettings _settings;
         private Action<IPackageLog> _activation;
 
-        public SparkPrecompiler(ISparkTemplateRegistry templates, IViewEntryProviderCache providerCache, SparkEngineSettings settings)
+        public SparkPrecompiler(ISparkTemplateRegistry templates, SparkEngineSettings settings)
         {
             _templates = templates;
-            _providerCache = providerCache;
             _settings = settings;
 
             UseActivation(p => Task.Factory.StartNew(() => Precompile(p)));
@@ -36,11 +35,7 @@ namespace FubuMVC.Spark
 
         public void Precompile(IPackageLog log)
         {
-            nonNativePartialDescriptors().Each( vd=> log.TrapErrors(() => {
-                var def = vd.ToViewDefinition();
-                _providerCache.GetViewEntry(def.ViewDescriptor);
-                _providerCache.GetViewEntry(def.PartialDescriptor);
-            }));
+            nonNativePartialDescriptors().Each( vd=> log.TrapErrors(vd.Precompile));
         }
 
         private IEnumerable<SparkDescriptor> nonNativePartialDescriptors()

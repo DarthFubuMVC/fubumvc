@@ -6,6 +6,7 @@ using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
+using Spark;
 
 namespace FubuMVC.Spark.Tests.SparkModel.Binding
 {
@@ -20,7 +21,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         protected override void beforeEach()
         {
             _template = new Template("", "", "");
-            _descriptor = new SparkDescriptor(_template);
+            _descriptor = new SparkDescriptor(_template, new SparkViewEngine());
             _template.Descriptor = _descriptor;
 
             _parsing = new Parsing

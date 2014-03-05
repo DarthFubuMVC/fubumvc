@@ -8,6 +8,7 @@ using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.SparkModel;
+using Spark;
 
 namespace FubuMVC.Spark
 {
@@ -15,18 +16,18 @@ namespace FubuMVC.Spark
     {
         private readonly SparkTemplateRegistry _templateRegistry;
         private readonly Parsings _parsings;
+        private readonly SparkViewEngine _engine;
 
-        public SparkViewFacility(SparkTemplateRegistry templateRegistry, Parsings parsings)
+        public SparkViewFacility(SparkTemplateRegistry templateRegistry, Parsings parsings, SparkViewEngine engine)
         {
             _templateRegistry = templateRegistry;
             _parsings = parsings;
+            _engine = engine;
         }
 
         public Task<IEnumerable<IViewToken>> FindViews(BehaviorGraph graph)
         {
-            return Task.Factory.StartNew(() => {
-                return findViews(graph);
-            });
+            return Task.Factory.StartNew(() => findViews(graph));
         }
 
 
@@ -42,6 +43,7 @@ namespace FubuMVC.Spark
             var templates = graph.Files.FindFiles(sparkSettings.Search)
                 .Select(file => {
                     var template = new Template(file.Path, file.ProvenancePath, file.Provenance);
+                    template.Descriptor = new SparkDescriptor(template, _engine);
 
 
                     composer.Compose(template);

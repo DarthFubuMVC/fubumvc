@@ -1,7 +1,9 @@
-﻿using Spark;
+﻿using FubuCore;
+using Spark;
 
 namespace FubuMVC.Spark.Rendering
 {
+    [MarkedForTermination("Silly thing doesn't really deserve to live.")]
     public class ViewDefinition
     {
         public ViewDefinition(SparkViewDescriptor viewDescriptor, SparkViewDescriptor partialDescriptor)

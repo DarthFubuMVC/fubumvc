@@ -4,6 +4,7 @@ using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
 using NUnit.Framework;
+using Spark;
 
 namespace FubuMVC.Spark.Tests
 {
@@ -19,7 +20,8 @@ namespace FubuMVC.Spark.Tests
             _template = new Template(Path.Combine(root, "Views", "Home", "Home.spark"), root,
                                      TemplateConstants.HostOrigin);
 
-            _descriptor = new SparkDescriptor(_template){
+            _descriptor = new SparkDescriptor(_template, new SparkViewEngine())
+            {
                 Namespace = String.Join(".", new[]{GetType().Name, "Views", "Home"}),
                 ViewModel = typeof (ProductModel)
             };

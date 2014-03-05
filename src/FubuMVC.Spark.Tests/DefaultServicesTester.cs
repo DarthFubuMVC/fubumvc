@@ -142,12 +142,6 @@ namespace FubuMVC.Spark.Tests
         }
 
         [Test]
-        public void view_entry_provider_cache()
-        {
-            defaultServiceCheck<IViewEntryProviderCache, ViewEntryProviderCache>();
-        }
-
-        [Test]
         public void view_modifier_service()
         {
             defaultServiceCheck<IViewModifierService<IFubuSparkView>, ViewModifierService<IFubuSparkView>>();

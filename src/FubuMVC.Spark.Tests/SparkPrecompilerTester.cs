@@ -23,12 +23,11 @@ namespace FubuMVC.Spark.Tests
 
             Services.Inject(theSettings);
 
-            var descriptor1 = new SparkDescriptor(new Template("a.spark", "root", "origin"));
-            var descriptor2 = new SparkDescriptor(new Template("b.spark", "root", "origin"));
-            var nativePartial = new SparkDescriptor(new Template("_Yeah.spark", "root", "origin"));
+            var descriptor1 = new SparkDescriptor(new Template("a.spark", "root", "origin"), new SparkViewEngine());
+            var descriptor2 = new SparkDescriptor(new Template("b.spark", "root", "origin"), new SparkViewEngine());
+            var nativePartial = new SparkDescriptor(new Template("_Yeah.spark", "root", "origin"), new SparkViewEngine());
 
             MockFor<ISparkTemplateRegistry>().Expect(x => x.ViewDescriptors()).Return(new[] {descriptor1, descriptor2, nativePartial});
-            MockFor<IViewEntryProviderCache>().Expect(x => x.GetViewEntry(Arg<SparkViewDescriptor>.Is.NotNull)).Repeat.Times(3);
         }
 
         [Test]
@@ -73,7 +72,6 @@ namespace FubuMVC.Spark.Tests
             ClassUnderTest.Precompile(new PackageLog());
 
             MockFor<ISparkTemplateRegistry>().VerifyAllExpectations();
-            MockFor<IViewEntryProviderCache>().VerifyAllExpectations();
         }
 
         [Test]

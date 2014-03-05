@@ -3,6 +3,7 @@ using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
+using Spark;
 
 namespace FubuMVC.Spark.Tests.SparkModel
 {
@@ -17,7 +18,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         protected override void beforeEach()
         {
             _template = new Template("b/a.spark", "b", "c");
-            _template.Descriptor = _viewDescriptor = new SparkDescriptor(_template)
+            _template.Descriptor = _viewDescriptor = new SparkDescriptor(_template, new SparkViewEngine())
             {
                 ViewModel = typeof (ProductModel)
             };

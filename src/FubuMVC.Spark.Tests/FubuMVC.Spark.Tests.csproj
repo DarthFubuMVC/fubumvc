@@ -91,7 +91,6 @@
     <Compile Include="Rendering\NestedOutputTester.cs" />
     <Compile Include="Rendering\SiteResourceAttacherTester.cs" />
     <Compile Include="Rendering\ViewContentDisposerTester.cs" />
-    <Compile Include="Rendering\ViewEntryProviderCacheTester.cs" />
     <Compile Include="Rendering\ViewModifierServiceTester.cs" />
     <Compile Include="Rendering\ViewEntrySourceTester.cs" />
     <Compile Include="Rendering\ViewFactoryTester.cs" />
@@ -101,7 +100,6 @@
     <Compile Include="SparkModel\Binding\GenericParserTester.cs" />
     <Compile Include="SparkModel\Binding\GenericViewModelBinderTester.cs" />
     <Compile Include="SparkModel\BindingsAttacherTester.cs" />
-    <Compile Include="SparkModel\Binding\ViewDescriptorBinderTester.cs" />
     <Compile Include="SparkModel\FubuBindingProviderTester.cs" />
     <Compile Include="SparkModel\FubuPartialProviderTester.cs" />
     <Compile Include="SparkModel\Policies\ViewPathPolicyTester.cs" />

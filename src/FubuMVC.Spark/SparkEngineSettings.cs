@@ -35,7 +35,6 @@ namespace FubuMVC.Spark
         private void defaultComposer()
         {
             Register(composer => composer
-                .AddBinder<ViewDescriptorBinder>()
                 .AddBinder<GenericViewModelBinder<ITemplate>>()
                 .AddBinder<ViewModelBinder<ITemplate>>()
                 .Apply<NamespacePolicy>()

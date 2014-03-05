@@ -23,20 +23,20 @@ namespace FubuMVC.Spark.Tests.Rendering
             template.Stub(x => x.ViewPath).Return("/Views/Home/index.spark");
             master.Stub(x => x.ViewPath).Return("/Views/Shared/appplication.spark");
 
-            var descriptor = new SparkDescriptor(template) { Master = master };
+            var descriptor = new SparkDescriptor(template, new SparkViewEngine()) { Master = master };
             var definition = descriptor.ToViewDefinition();
 
 
             _entry = MockRepository.GenerateMock<ISparkViewEntry>();
             _partialEntry = MockRepository.GenerateMock<ISparkViewEntry>();
 
-            var provider = MockFor<IViewEntryProviderCache>();
-            provider
-                .Stub(x => x.GetViewEntry(definition.ViewDescriptor))
-                .Return(_entry);
-            provider
-                .Stub(x => x.GetViewEntry(definition.PartialDescriptor))
-                .Return(_partialEntry);
+//            var provider = MockFor<IViewEntryProviderCache>();
+//            provider
+//                .Stub(x => x.GetViewEntry(definition.ViewDescriptor))
+//                .Return(_entry);
+//            provider
+//                .Stub(x => x.GetViewEntry(definition.PartialDescriptor))
+//                .Return(_partialEntry);
 
             
             Services.Inject(descriptor);

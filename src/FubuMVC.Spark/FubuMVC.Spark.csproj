@@ -64,7 +64,6 @@
     <Compile Include="Rendering\IHtmlEncoder.cs" />
     <Compile Include="Registration\ViewDescriptorHelper.cs" />
     <Compile Include="Rendering\ViewDefinition.cs" />
-    <Compile Include="Rendering\ViewEntryProviderCache.cs" />
     <Compile Include="SparkEngineSettings.cs" />
     <Compile Include="SparkModel\FubuPartialProvider.cs" />
     <Compile Include="SparkModel\SharingAttachers.cs" />
@@ -81,7 +80,6 @@
     <Compile Include="SparkModel\SharedTemplateLocator.cs" />
     <Compile Include="SparkModel\TemplateExtensions.cs" />
     <Compile Include="SparkModel\TemplateViewFolder.cs" />
-    <Compile Include="SparkModel\TemplateBinders.cs" />
     <Compile Include="SparkModel\Template.cs" />
     <Compile Include="SparkActivator.cs" />
     <Compile Include="SparkEngine.cs" />
