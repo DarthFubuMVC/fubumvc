@@ -71,7 +71,6 @@
     <Compile Include="SparkModel\FubuPartialProvider.cs" />
     <Compile Include="SparkModel\SharingAttachers.cs" />
     <Compile Include="SparkModel\FubuBindingProvider.cs" />
-    <Compile Include="Rendering\ViewFactory.cs" />
     <Compile Include="SparkModel\ChunkLoader.cs" />
     <Compile Include="SparkModel\SparkDescriptor.cs" />
     <Compile Include="SparkModel\SparkTemplateRegistry.cs" />

@@ -9,7 +9,6 @@ using Spark;
 
 namespace FubuMVC.Spark
 {
-    [MarkedForTermination("use descriptor as is")]
     public class SparkViewToken : IViewToken
     {
         private readonly SparkDescriptor _descriptor;
@@ -21,12 +20,12 @@ namespace FubuMVC.Spark
 
         public IRenderableView GetView()
         {
-            throw new NotImplementedException();
+            return _descriptor.ViewEntry.CreateInstance().As<IRenderableView>();
         }
 
         public IRenderableView GetPartialView()
         {
-            throw new NotImplementedException();
+            return _descriptor.PartialViewEntry.CreateInstance().As<IRenderableView>();
         }
 
         public string ProfileName { get; set; }
