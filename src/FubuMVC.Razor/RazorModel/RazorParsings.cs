@@ -5,7 +5,12 @@ using FubuMVC.Razor.Registration;
 
 namespace FubuMVC.Razor.RazorModel
 {
-    public class RazorParsings : IParsingRegistrations<IRazorTemplate>
+    public interface IRazorParsings : IParsingRegistrations<IRazorTemplate>
+    {
+        void Parse(IRazorTemplate template);
+    }
+
+    public class RazorParsings : IRazorParsings
     {
         private readonly Cache<string, Parsing> _parsings = new Cache<string, Parsing>();
         private readonly IViewParser _viewParser;

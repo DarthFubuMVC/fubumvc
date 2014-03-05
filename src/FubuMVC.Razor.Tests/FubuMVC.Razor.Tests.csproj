@@ -99,7 +99,6 @@
     <Compile Include="RazorModel\ExtendedTester.cs" />
     <Compile Include="RazorModel\TemplateExtensionsTester.cs" />
     <Compile Include="RazorModel\Binding\ViewModelBinderTester.cs" />
-    <Compile Include="RazorViewFacilityTester.cs" />
     <Compile Include="RazorEngineSettingsTester.cs" />
   </ItemGroup>
   <ItemGroup>

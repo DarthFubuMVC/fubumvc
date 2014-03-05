@@ -35,10 +35,15 @@ namespace FubuMVC.Razor.Tests
 
             useNamespaces.Namespaces.ShouldHaveTheSameElementsAs(new[]
             { 
-                typeof(RazorViewFacility).Namespace,
-                typeof(IPartialInvoker).Namespace,
-                "Foo",
-                "Bar",
+"System.Web",
+"System",
+"FubuCore",
+"System.Linq",
+"HtmlTags",
+"FubuMVC.Razor",
+"FubuMVC.Core.UI",
+"Foo",
+"Bar"
             });
         }
 
