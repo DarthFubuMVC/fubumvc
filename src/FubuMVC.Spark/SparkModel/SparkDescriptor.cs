@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using FubuMVC.Core.View.Model;
-using FubuMVC.Spark.Registration;
 using FubuMVC.Spark.Rendering;
 using Spark;
 
@@ -9,25 +8,20 @@ namespace FubuMVC.Spark.SparkModel
 {
     public class SparkDescriptor : ViewDescriptor<ITemplate>
     {
-        private readonly Lazy<ViewDefinition> _definition; 
+        private readonly Lazy<SparkViewDescriptor> _full; 
+        private readonly Lazy<SparkViewDescriptor> _partial; 
         private readonly IList<ITemplate> _bindings = new List<ITemplate>();
         private readonly WatchedSparkEntry _viewEntry;
         private readonly WatchedSparkEntry _partialViewEntry; 
         
         public SparkDescriptor(ITemplate template, ISparkViewEngine engine) : base(template)
         {
-            _definition = new Lazy<ViewDefinition>(this.ToViewDefinition);
-            _viewEntry = new WatchedSparkEntry(() => engine.CreateEntry(_definition.Value.ViewDescriptor));
-            _partialViewEntry = new WatchedSparkEntry(() => engine.CreateEntry(_definition.Value.PartialDescriptor));
+            _full = new Lazy<SparkViewDescriptor>(() => createSparkDescriptor(true));
+            _partial = new Lazy<SparkViewDescriptor>(() => createSparkDescriptor(false));
 
-        }
+            _viewEntry = new WatchedSparkEntry(() => engine.CreateEntry(_full.Value));
+            _partialViewEntry = new WatchedSparkEntry(() => engine.CreateEntry(_partial.Value));
 
-        public ViewDefinition Definition
-        {
-            get
-            {
-                return _definition.Value;
-            }
         }
 
         public void AddBinding(ITemplate template) { _bindings.Add(template); }
@@ -55,36 +49,32 @@ namespace FubuMVC.Spark.SparkModel
             _viewEntry.Precompile();
             _partialViewEntry.Precompile();
         }
-    }
 
-    public class WatchedSparkEntry
-    {
-        private readonly Func<ISparkViewEntry> _source;
-        private ISparkViewEntry _entry;
 
-        public WatchedSparkEntry(Func<ISparkViewEntry> source)
+
+
+        private SparkViewDescriptor createSparkDescriptor(bool useMaster)
         {
-            _source = source;
-        }
-
-        public void Precompile()
-        {
-            if (_entry == null)
+            var sparkDescriptor = new SparkViewDescriptor().AddTemplate(ViewPath);
+            if (useMaster && Master != null)
             {
-                _entry = _source();
+                appendMasterPage(sparkDescriptor, Master);
             }
+
+            return sparkDescriptor;
         }
 
-        public ISparkViewEntry Value
+        private static void appendMasterPage(SparkViewDescriptor descriptor, ITemplate template)
         {
-            get
+            if (template == null)
             {
-                if (_entry == null || !_entry.IsCurrent())
-                {
-                    _entry = _source();
-                }
-
-                return _entry;
+                return;
+            }
+            descriptor.AddTemplate(template.ViewPath);
+            var viewDescriptor = template.Descriptor as SparkDescriptor;
+            if (viewDescriptor != null)
+            {
+                appendMasterPage(descriptor, viewDescriptor.Master);
             }
         }
     }
