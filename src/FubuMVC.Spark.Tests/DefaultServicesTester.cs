@@ -207,18 +207,6 @@ namespace FubuMVC.Spark.Tests
             defaultServiceCheck<IHtmlEncoder, DefaultHtmlEncoder>();
         }
 
-        [Test]
-        public void default_view_definition_policy()
-        {
-            defaultServiceCheck<DefaultViewDefinitionPolicy>();
-        }
-
-        [Test]
-        public void view_definition_resolver()
-        {
-            defaultServiceCheck<IViewDefinitionResolver, ViewDefinitionResolver>();
-        }
-
         private void countForServiceCheck<TService>(int count)
         {
             _services.ServicesFor<TService>().ShouldHaveCount(count);

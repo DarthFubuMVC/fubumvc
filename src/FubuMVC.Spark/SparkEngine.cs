@@ -69,8 +69,6 @@ namespace FubuMVC.Spark
 
             services.SetServiceIfNone<IHtmlEncoder, DefaultHtmlEncoder>();
 
-            services.SetServiceIfNone(new DefaultViewDefinitionPolicy());
-            services.SetServiceIfNone<IViewDefinitionResolver, ViewDefinitionResolver>();
         }
     }
 }

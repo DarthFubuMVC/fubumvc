@@ -14,12 +14,10 @@ namespace FubuMVC.Spark.Rendering
     {
         private readonly IViewEntryProviderCache _provider;
         private readonly SparkDescriptor _descriptor;
-        private readonly IViewDefinitionResolver _resolver;
-        public ViewEntrySource(SparkDescriptor descriptor, IViewEntryProviderCache provider, IViewDefinitionResolver resolver)
+        public ViewEntrySource(SparkDescriptor descriptor, IViewEntryProviderCache provider)
         {
             _descriptor = descriptor;
             _provider = provider;
-            _resolver = resolver;
         }
 
         public ISparkViewEntry GetViewEntry()
@@ -34,7 +32,7 @@ namespace FubuMVC.Spark.Rendering
 
         private ISparkViewEntry getViewEntry(bool partial)
         {
-            var definition = _resolver.Resolve(_descriptor);
+            var definition = _descriptor.Definition;
             var sparkDescriptor = partial ? definition.PartialDescriptor : definition.ViewDescriptor;
             return _provider.GetViewEntry(sparkDescriptor);
         }

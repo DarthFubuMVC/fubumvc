@@ -82,7 +82,6 @@
     </Compile>
     <Compile Include="Rendering\ContentActivationTester.cs" />
     <Compile Include="Rendering\CacheAttacherTester.cs" />
-    <Compile Include="Rendering\DefaultViewDefinitionPolicyTester.cs" />
     <Compile Include="Rendering\FubuSparkViewDecoratorTester.cs" />
     <Compile Include="Rendering\NestedOutputActivationTester.cs" />
     <Compile Include="Rendering\NestedViewOutputActivatorTester.cs" />
@@ -92,7 +91,6 @@
     <Compile Include="Rendering\NestedOutputTester.cs" />
     <Compile Include="Rendering\SiteResourceAttacherTester.cs" />
     <Compile Include="Rendering\ViewContentDisposerTester.cs" />
-    <Compile Include="Rendering\ViewDefinitionResolverTester.cs" />
     <Compile Include="Rendering\ViewEntryProviderCacheTester.cs" />
     <Compile Include="Rendering\ViewModifierServiceTester.cs" />
     <Compile Include="Rendering\ViewEntrySourceTester.cs" />

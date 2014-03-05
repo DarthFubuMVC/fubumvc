@@ -6,6 +6,7 @@ using FubuMVC.Core.View.Model;
 
 namespace FubuMVC.Spark.SparkModel
 {
+    [MarkedForTermination("Duplication I'd like to see go away")]
     public interface ISparkTemplateRegistry : ITemplateRegistry<ITemplate>
     {
         IEnumerable<ITemplate> BindingsForView(string viewPath);

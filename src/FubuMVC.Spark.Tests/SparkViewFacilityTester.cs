@@ -30,10 +30,10 @@ namespace FubuMVC.Spark.Tests
             });
 
             var templates = _templateRegistry.ToList();
-            templates[0].Descriptor = new SparkDescriptor(templates[0]) { ViewModel = typeof(ModelA) };
-            templates[2].Descriptor = new SparkDescriptor(templates[2]) { ViewModel = typeof(ModelB) };
-            templates[4].Descriptor = new SparkDescriptor(templates[4]) { ViewModel = typeof(ModelC) };
-
+//            templates[0].Descriptor = new SparkDescriptor(templates[0]) { ViewModel = typeof(ModelA) };
+//            templates[2].Descriptor = new SparkDescriptor(templates[2]) { ViewModel = typeof(ModelB) };
+//            templates[4].Descriptor = new SparkDescriptor(templates[4]) { ViewModel = typeof(ModelC) };
+            throw new NotImplementedException();
             Services.Inject(_templateRegistry);
         }
 
@@ -44,12 +44,13 @@ namespace FubuMVC.Spark.Tests
         [Test]
         public void find_views_returns_view_tokens_from_items_with_a_view_model_only()
         {
-            var views = ClassUnderTest.FindTokens().ToList();
-
-            views.ShouldHaveCount(3);
-            views.ShouldContain(x => x.ViewModel == typeof(ModelA));
-            views.ShouldContain(x => x.ViewModel == typeof(ModelB));
-            views.ShouldContain(x => x.ViewModel == typeof(ModelC));
+            throw new NotImplementedException();
+//            var views = ClassUnderTest.FindTokens().ToList();
+//
+//            views.ShouldHaveCount(3);
+//            views.ShouldContain(x => x.ViewModel == typeof(ModelA));
+//            views.ShouldContain(x => x.ViewModel == typeof(ModelB));
+//            views.ShouldContain(x => x.ViewModel == typeof(ModelC));
         }
     }
 }

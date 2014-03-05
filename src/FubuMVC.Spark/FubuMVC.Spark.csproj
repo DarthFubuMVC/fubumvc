@@ -62,10 +62,8 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="PathExtensions.cs" />
     <Compile Include="Rendering\IHtmlEncoder.cs" />
-    <Compile Include="Rendering\ViewDefinitionPolicy.cs" />
     <Compile Include="Registration\ViewDescriptorHelper.cs" />
     <Compile Include="Rendering\ViewDefinition.cs" />
-    <Compile Include="Rendering\ViewDefinitionResolver.cs" />
     <Compile Include="Rendering\ViewEntryProviderCache.cs" />
     <Compile Include="SparkEngineSettings.cs" />
     <Compile Include="SparkModel\FubuPartialProvider.cs" />

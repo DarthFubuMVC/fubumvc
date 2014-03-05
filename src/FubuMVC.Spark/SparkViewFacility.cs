@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Threading.Tasks;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime.Files;
@@ -23,33 +24,34 @@ namespace FubuMVC.Spark
 
         public Task<IEnumerable<IViewToken>> FindViews(BehaviorGraph graph)
         {
-            throw new NotImplementedException();
-//            var sparkSettings = graph.Settings.Get<SparkEngineSettings>();
-//            RegisterTemplates(graph.Files, sparkSettings);
-//            ComposeTemplates(sparkSettings);
-//
-//            return FindTokens();
+            return Task.Factory.StartNew(() => {
+                return findViews(graph);
+            });
         }
 
-        public IEnumerable<IViewToken> FindTokens()
-        {            
-            return _templateRegistry.DescriptorsWithViewModels<SparkDescriptor>()
-                .Select(x => new SparkViewToken(x));
-        }
 
-        public void RegisterTemplates(IFubuApplicationFiles fubuFiles, SparkEngineSettings settings)
+
+        private IEnumerable<IViewToken> findViews(BehaviorGraph graph)
         {
-            fubuFiles.FindFiles(settings.Search).Each(file => 
-                _templateRegistry.Register(new Template(file.Path, file.ProvenancePath, file.Provenance)));            
-        }
+            var sparkSettings = graph.Settings.Get<SparkEngineSettings>();
 
-        public void ComposeTemplates(SparkEngineSettings settings)
-        {
             _templateRegistry.Each(_parsings.Process);         
-            var composer = new TemplateComposer<ITemplate>(_parsings);   
-            settings.Configure(composer);
-            composer.Compose(_templateRegistry);
-        }
+            var composer = new TemplateComposer<ITemplate>(_parsings); 
+            sparkSettings.Configure(composer);
+
+            var templates = graph.Files.FindFiles(sparkSettings.Search)
+                .Select(file => {
+                    var template = new Template(file.Path, file.ProvenancePath, file.Provenance);
+
+
+                    composer.Compose(template);
+
+                    return template;
+                });
+
+            return templates.Select(x => new SparkViewToken((SparkDescriptor) x.Descriptor));
+        } 
+
 
     }
 }

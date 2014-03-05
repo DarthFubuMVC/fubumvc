@@ -26,8 +26,6 @@ namespace FubuMVC.Spark.Tests.Rendering
             var descriptor = new SparkDescriptor(template) { Master = master };
             var definition = descriptor.ToViewDefinition();
 
-            var resolver = MockFor<IViewDefinitionResolver>();
-            resolver.Stub(x => x.Resolve(descriptor)).Return(definition);
 
             _entry = MockRepository.GenerateMock<ISparkViewEntry>();
             _partialEntry = MockRepository.GenerateMock<ISparkViewEntry>();
