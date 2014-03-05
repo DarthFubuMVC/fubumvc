@@ -3,8 +3,6 @@ using Bottles;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.View;
-using FubuMVC.Core.View.Attachment;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Model.Sharing;
 using FubuMVC.Core.View.Rendering;
@@ -151,30 +149,6 @@ namespace FubuMVC.Spark.Tests
         public void view_modifiers()
         {
             countForServiceCheck<IViewModifier<IFubuSparkView>>(7);
-        }
-
-        [Test]
-        public void outer_view_output_activator_view_modifier()
-        {
-            defaultServicesCheck<IViewModifier<IFubuSparkView>, OuterViewOutputActivator>(3);
-        }
-
-        [Test]
-        public void nested_view_output_activator_view_modifier()
-        {
-            defaultServicesCheck<IViewModifier<IFubuSparkView>, NestedViewOutputActivator>(4);
-        }
-
-        [Test]
-        public void view_content_disposer_view_modifier()
-        {
-            defaultServicesCheck<IViewModifier<IFubuSparkView>, ViewContentDisposer>(5);
-        }
-
-        [Test]
-        public void nested_output_activation_view_modifier()
-        {
-            defaultServicesCheck<IViewModifier<IFubuSparkView>, NestedOutputActivation>(6);
         }
 
         [Test]

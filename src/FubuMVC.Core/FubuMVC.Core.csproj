@@ -558,7 +558,6 @@
     <Compile Include="View\PartialExpressionExtensions.cs" />
     <Compile Include="View\Registration\GenericParser.cs" />
     <Compile Include="View\Rendering\IRenderableView.cs" />
-    <Compile Include="View\Rendering\NestedOutput.cs" />
     <Compile Include="View\Rendering\ViewModifiers.cs" />
     <Compile Include="View\ViewEngines.cs" />
     <Compile Include="View\ViewWriter.cs" />

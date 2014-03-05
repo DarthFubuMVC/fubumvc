@@ -80,6 +80,8 @@ namespace FubuMVC.Spark.Rendering
                 return context.Request.ToFullUrl(relative);
             };
 
+            CacheService = context.Services.GetInstance<ICacheService>();
+
             context.Writer.Write(MimeType.Html.Value, stream => {
                 var writer = new StreamWriter(stream);
 
