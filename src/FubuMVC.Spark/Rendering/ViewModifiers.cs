@@ -2,7 +2,6 @@
 using System.IO;
 using FubuCore;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View.Rendering;
 using Spark;
 
@@ -11,6 +10,7 @@ namespace FubuMVC.Spark.Rendering
     public class CacheAttacher : BasicViewModifier<IFubuSparkView>
     {
         private readonly ICacheService _cacheService;
+
         public CacheAttacher(ICacheService cacheService)
         {
             _cacheService = cacheService;
@@ -52,7 +52,7 @@ namespace FubuMVC.Spark.Rendering
 
         public class AppPath
         {
-            public string ApplicationPath { get; set; } 
+            public string ApplicationPath { get; set; }
         }
     }
 
@@ -60,6 +60,7 @@ namespace FubuMVC.Spark.Rendering
     public class ContentActivation : BasicViewModifier<IFubuSparkView>
     {
         private readonly Dictionary<string, TextWriter> _content;
+
         public ContentActivation()
         {
             _content = new Dictionary<string, TextWriter>();
@@ -89,6 +90,7 @@ namespace FubuMVC.Spark.Rendering
     public class ViewContentDisposer : IViewModifier<IFubuSparkView>
     {
         private readonly NestedOutput _nestedOutput;
+
         public ViewContentDisposer(NestedOutput nestedOutput)
         {
             _nestedOutput = nestedOutput;
@@ -106,7 +108,7 @@ namespace FubuMVC.Spark.Rendering
             // proactively dispose named content. pools spoolwriter pages. avoids finalizers.
             disposer.PostRender += x => x.Content.Values.Each(c => c.Close());
             disposer.PostRender += x => x.Content.Clear();
-            
+
             return disposer;
         }
     }
@@ -136,6 +138,7 @@ namespace FubuMVC.Spark.Rendering
     public class NestedViewOutputActivator : IViewModifier<IFubuSparkView>
     {
         private readonly NestedOutput _nestedOutput;
+
         public NestedViewOutputActivator(NestedOutput nestedOutput)
         {
             _nestedOutput = nestedOutput;
@@ -144,7 +147,7 @@ namespace FubuMVC.Spark.Rendering
         public bool Applies(IFubuSparkView view)
         {
             return view != null
-                && view.Output == null;
+                   && view.Output == null;
         }
 
         public IFubuSparkView Modify(IFubuSparkView view)
@@ -156,6 +159,7 @@ namespace FubuMVC.Spark.Rendering
     public class NestedOutputActivation : IViewModifier<IFubuSparkView>
     {
         private readonly NestedOutput _nestedOutput;
+
         public NestedOutputActivation(NestedOutput nestedOutput)
         {
             _nestedOutput = nestedOutput;
@@ -171,5 +175,4 @@ namespace FubuMVC.Spark.Rendering
             return view.Modify(v => _nestedOutput.SetWriter(() => v.Output));
         }
     }
-
 }

@@ -92,8 +92,6 @@
     <Compile Include="Rendering\SiteResourceAttacherTester.cs" />
     <Compile Include="Rendering\ViewContentDisposerTester.cs" />
     <Compile Include="Rendering\ViewModifierServiceTester.cs" />
-    <Compile Include="Rendering\ViewEntrySourceTester.cs" />
-    <Compile Include="Rendering\ViewFactoryTester.cs" />
     <Compile Include="Rendering\ViewOutputTester.cs" />
     <Compile Include="SparkActivatorTester.cs" />
     <Compile Include="DefaultServicesTester.cs" />

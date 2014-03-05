@@ -69,7 +69,6 @@
     <Compile Include="SparkModel\SharingAttachers.cs" />
     <Compile Include="SparkModel\FubuBindingProvider.cs" />
     <Compile Include="Rendering\ViewModifiers.cs" />
-    <Compile Include="Rendering\ViewEntrySource.cs" />
     <Compile Include="Rendering\ViewFactory.cs" />
     <Compile Include="Rendering\ViewOutput.cs" />
     <Compile Include="SparkModel\ChunkLoader.cs" />
