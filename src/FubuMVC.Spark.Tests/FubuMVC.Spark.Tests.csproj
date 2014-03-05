@@ -80,12 +80,10 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Rendering\ContentActivationTester.cs" />
     <Compile Include="Rendering\CacheAttacherTester.cs" />
     <Compile Include="Rendering\FubuSparkViewDecoratorTester.cs" />
     <Compile Include="Rendering\NestedOutputActivationTester.cs" />
     <Compile Include="Rendering\NestedViewOutputActivatorTester.cs" />
-    <Compile Include="Rendering\OnceTableActivationTester.cs" />
     <Compile Include="Rendering\OuterViewOutputActivatorTester.cs" />
     <Compile Include="Rendering\FubuSparkViewTester.cs" />
     <Compile Include="Rendering\NestedOutputTester.cs" />

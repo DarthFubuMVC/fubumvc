@@ -23,35 +23,6 @@ namespace FubuMVC.Spark.Rendering
     }
 
 
-    public class ContentActivation : BasicViewModifier<IFubuSparkView>
-    {
-        private readonly Dictionary<string, TextWriter> _content;
-
-        public ContentActivation()
-        {
-            _content = new Dictionary<string, TextWriter>();
-        }
-
-        public override IFubuSparkView Modify(IFubuSparkView view)
-        {
-            return view.Modify(v => v.Content = _content);
-        }
-    }
-
-    public class OnceTableActivation : BasicViewModifier<IFubuSparkView>
-    {
-        private readonly Dictionary<string, string> _once;
-
-        public OnceTableActivation()
-        {
-            _once = new Dictionary<string, string>();
-        }
-
-        public override IFubuSparkView Modify(IFubuSparkView view)
-        {
-            return view.Modify(v => v.OnceTable = _once);
-        }
-    }
 
     public class ViewContentDisposer : IViewModifier<IFubuSparkView>
     {

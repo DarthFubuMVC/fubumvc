@@ -23,7 +23,6 @@ namespace FubuMVC.Spark.Tests.Rendering
             _view.Stub(x => x.Content).PropertyBehavior();
             _view.Stub(x => x.OnceTable).PropertyBehavior();
             _view.Stub(x => x.Output).PropertyBehavior();
-            _view.Stub(x => x.SiteResource).PropertyBehavior();
             _view.Stub(x => x.Globals).PropertyBehavior();
             _view.Stub(x => x.ElementPrefix).PropertyBehavior();
             _view.Stub(x => x.GeneratedViewId).Return(Guid.NewGuid());
@@ -36,16 +35,6 @@ namespace FubuMVC.Spark.Tests.Rendering
         public void generatedviewid_is_forwarded_to_inner_view()
         {
             _view.GeneratedViewId.ShouldEqual(ClassUnderTest.GeneratedViewId);
-        }
-
-        [Test]
-        public void siteresource_is_forwarded_to_inner_view()
-        {
-            Func<string, string> siteResource = x => "";
-            ClassUnderTest.SiteResource = siteResource;
-            ClassUnderTest.SiteResource
-                .ShouldBeTheSameAs(_view.SiteResource)
-                .ShouldBeTheSameAs(siteResource);
         }
 
         [Test]

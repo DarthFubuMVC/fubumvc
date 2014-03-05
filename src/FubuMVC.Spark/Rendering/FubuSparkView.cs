@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Web;
 using System.Web.UI.WebControls;
 using FubuCore;
@@ -72,13 +73,22 @@ namespace FubuMVC.Spark.Rendering
             get { return this; }
         }
 
+
         public void Render(IFubuRequestContext context)
         {
+            SiteResource = relative => {
+                return context.Request.ToFullUrl(relative);
+            };
 
+            context.Writer.Write(MimeType.Html.Value, stream => {
+                var writer = new StreamWriter(stream);
 
+                Output = writer;
 
-            Render();
+                Render();
 
+                writer.Flush();
+            });
         }
     }
 

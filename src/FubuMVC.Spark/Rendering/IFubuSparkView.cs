@@ -17,6 +17,5 @@ namespace FubuMVC.Spark.Rendering
         Guid GeneratedViewId { get; }
 
         ICacheService CacheService { get; set; }
-        Func<string, string> SiteResource { get; set; }
     }
 }

@@ -154,18 +154,6 @@ namespace FubuMVC.Spark.Tests
         }
 
         [Test]
-        public void content_activation_view_modifier()
-        {
-            defaultServicesCheck<IViewModifier<IFubuSparkView>, ContentActivation>(1);
-        }
-
-        [Test]
-        public void once_table_activation_view_modifier()
-        {
-            defaultServicesCheck<IViewModifier<IFubuSparkView>, OnceTableActivation>(2);
-        }
-
-        [Test]
         public void outer_view_output_activator_view_modifier()
         {
             defaultServicesCheck<IViewModifier<IFubuSparkView>, OuterViewOutputActivator>(3);

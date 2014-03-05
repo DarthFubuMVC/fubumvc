@@ -46,12 +46,6 @@ namespace FubuMVC.Spark.Rendering
             set { _view.CacheService = value; }
         }
 
-        public Func<string, string> SiteResource
-        {
-            get { return _view.SiteResource; }
-            set { _view.SiteResource = value; }
-        }
-
         public Dictionary<string, TextWriter> Content
         {
             get { return _view.Content; }
