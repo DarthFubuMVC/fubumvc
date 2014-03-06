@@ -12,7 +12,6 @@ namespace FubuMVC.Core.View.Model
 
         // TODO -- tighten this up
 
-        // TODO -- hide this.
         Parsing Parsing { get; }
 
         string RelativePath();

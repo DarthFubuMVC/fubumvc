@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.View.Model;
 
@@ -11,15 +12,16 @@ namespace FubuMVC.Spark.SparkModel
 
     public class SharedTemplateLocator : SharedTemplateLocator<ISparkTemplate>, ISharedTemplateLocator
     {
-        public SharedTemplateLocator(ITemplateDirectoryProvider<ISparkTemplate> provider, ITemplateRegistry<ISparkTemplate> templates, ITemplateSelector<ISparkTemplate> templateSelector)
-            : base(provider, templates, templateSelector)
+        public SharedTemplateLocator(ITemplateDirectoryProvider<ISparkTemplate> provider, ITemplateRegistry<ISparkTemplate> templates)
+            : base(provider, templates)
         {
         }
 
         public IEnumerable<ISparkTemplate> LocateBindings(string bindingName, ISparkTemplate fromTemplate)
         {
-            return locateTemplates(bindingName, fromTemplate, false)
-                .Where(x => x.IsXml());
+            throw new NotImplementedException();
+//            return locateTemplates(bindingName, fromTemplate, false)
+//                .Where(x => x.IsXml());
         }
     }
 }

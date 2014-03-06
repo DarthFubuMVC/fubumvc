@@ -44,7 +44,6 @@ namespace FubuMVC.Razor
 
             services.FillType<ISharedTemplateLocator<RazorTemplate>, SharedTemplateLocator<RazorTemplate>>();
             services.FillType<ISharingAttacher<RazorTemplate>, MasterAttacher<RazorTemplate>>();
-            services.FillType<ITemplateSelector<RazorTemplate>, RazorTemplateSelector>();
             services.FillType<Bottles.IActivator, SharingAttacherActivator<RazorTemplate>>();
 
 

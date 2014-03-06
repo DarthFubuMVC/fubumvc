@@ -14,13 +14,11 @@ namespace FubuMVC.Core.View.Model
     {
         private readonly ITemplateDirectoryProvider<T> _provider;
         private readonly ITemplateRegistry<T> _templates;
-        private readonly ITemplateSelector<T> _templateSelector;
 
-        public SharedTemplateLocator(ITemplateDirectoryProvider<T> provider, ITemplateRegistry<T> templates, ITemplateSelector<T> templateSelector)
+        public SharedTemplateLocator(ITemplateDirectoryProvider<T> provider, ITemplateRegistry<T> templates)
         {
             _provider = provider;
             _templates = templates;
-            _templateSelector = templateSelector;
         }
 
         public T LocateMaster(string masterName, T fromTemplate)
@@ -36,7 +34,6 @@ namespace FubuMVC.Core.View.Model
         private T locate(string name, T fromTemplate)
         {
             return locateTemplates(name, fromTemplate, true)
-                .Where(x => _templateSelector.IsAppropriate(x))
                 .FirstOrDefault();
         }
 
@@ -50,8 +47,4 @@ namespace FubuMVC.Core.View.Model
         }
     }
 
-    public interface ITemplateSelector<T>
-    {
-        bool IsAppropriate(T template);
-    }
 }

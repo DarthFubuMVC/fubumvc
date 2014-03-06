@@ -49,7 +49,6 @@ namespace FubuMVC.Spark
             services.SetServiceIfNone<ISharedTemplateLocator, SharedTemplateLocator>();
             services.FillType<ISharedTemplateLocator<ISparkTemplate>, SharedTemplateLocator>();
 
-            services.FillType<ITemplateSelector<ISparkTemplate>, SparkTemplateSelector>();
 
 
             services.SetServiceIfNone<IHtmlEncoder, DefaultHtmlEncoder>();

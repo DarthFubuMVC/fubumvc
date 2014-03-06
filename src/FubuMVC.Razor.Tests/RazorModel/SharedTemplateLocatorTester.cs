@@ -40,8 +40,6 @@ namespace FubuMVC.Razor.Tests.RazorModel
             MockFor<ITemplateDirectoryProvider<RazorTemplate>>()
                 .Stub(x => x.SharedPathsOf(_template)).Return(_directories);
 
-            Container.Inject<ITemplateSelector<RazorTemplate>>(new RazorTemplateSelector());
-
             Container.Inject<ITemplateRegistry<RazorTemplate>>(_templates);
         }
 

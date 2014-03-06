@@ -137,5 +137,6 @@ namespace FubuMVC.Core.View.Model
 
         public abstract IRenderableView GetView();
         public abstract IRenderableView GetPartialView();
+
     }
 }
