@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using FubuCore;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.SparkModel;
@@ -31,7 +32,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
             _bindings = new[] { _templates[0], _templates[1], _templates[2] };
 
             var view = _templates.Last();
-            view.ViewPath = view.FilePath;
+            view.As<SparkTemplate>().ViewPath = view.FilePath;
             var descriptor = new SparkDescriptor(view, new SparkViewEngine());
             _bindings.Each(descriptor.AddBinding);
             view.Descriptor = descriptor;

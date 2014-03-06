@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using FubuCore;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Razor.RazorModel;
@@ -28,7 +29,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
 
 
             var view = _templates.Last();
-            view.ViewPath = view.FilePath;
+            view.As<RazorTemplate>().ViewPath = view.FilePath;
             var descriptor = new ViewDescriptor<IRazorTemplate>(view);
             view.Descriptor = descriptor;
 

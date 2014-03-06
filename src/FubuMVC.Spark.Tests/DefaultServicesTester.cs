@@ -40,7 +40,7 @@ namespace FubuMVC.Spark.Tests
         public void parsing_registration()
         {
             _services.DefaultServiceFor<IParsingRegistrations<ISparkTemplate>>()
-                .Value.ShouldBeOfType<Parsings>();
+                .Value.ShouldBeOfType<SparkParsings>();
         }
 
         [Test]

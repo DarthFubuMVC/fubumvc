@@ -15,7 +15,7 @@ namespace FubuMVC.Spark
 {
     public class SparkEngine : IFubuRegistryExtension
     {
-        private readonly Parsings _parsings = new Parsings();
+        private readonly SparkParsings _parsings = new SparkParsings();
         private readonly SparkTemplateRegistry _templateRegistry = new SparkTemplateRegistry();
 
         void IFubuRegistryExtension.Configure(FubuRegistry registry)

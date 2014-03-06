@@ -17,13 +17,13 @@ namespace FubuMVC.Spark.SparkModel
         }
     }
 
-    public class Parsings : IParsingRegistrations<ISparkTemplate>
+    public class SparkParsings : IParsingRegistrations<ISparkTemplate>
     {
         private readonly Cache<string, Parsing> _parsings = new Cache<string, Parsing>();
         private readonly IChunkLoader _chunkLoader;
 
-        public Parsings() : this(new ChunkLoader()){}
-        public Parsings(IChunkLoader chunkLoader)
+        public SparkParsings() : this(new ChunkLoader()){}
+        public SparkParsings(IChunkLoader chunkLoader)
         {
             _chunkLoader = chunkLoader;
         }

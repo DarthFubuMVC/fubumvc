@@ -15,10 +15,10 @@ namespace FubuMVC.Spark
     public class SparkViewFacility : IViewFacility
     {
         private readonly SparkTemplateRegistry _templateRegistry;
-        private readonly Parsings _parsings;
+        private readonly SparkParsings _parsings;
         private readonly SparkViewEngine _engine;
 
-        public SparkViewFacility(SparkTemplateRegistry templateRegistry, Parsings parsings, SparkViewEngine engine)
+        public SparkViewFacility(SparkTemplateRegistry templateRegistry, SparkParsings parsings, SparkViewEngine engine)
         {
             _templateRegistry = templateRegistry;
             _parsings = parsings;
