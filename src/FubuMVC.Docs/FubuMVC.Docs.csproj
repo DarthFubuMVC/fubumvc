@@ -58,7 +58,6 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="pak-WebContent.zip" />
     <None Include="30.runtime-services\1.fuburequest.spark" />
     <None Include="30.runtime-services\2.outputwriter.spark" />
     <None Include="30.runtime-services\index.spark" />

@@ -7,8 +7,6 @@ using Bottles;
 using Bottles.Diagnostics;
 using FubuMVC.Core;
 using FubuMVC.Core.View.Model;
-using FubuMVC.Spark.Registration;
-using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.SparkModel;
 
 namespace FubuMVC.Spark
