@@ -532,7 +532,6 @@
     <Compile Include="View\Model\ISharingAttacher.cs" />
     <Compile Include="View\Model\ITemplateFile.cs" />
     <Compile Include="View\Model\MasterAttacher.cs" />
-    <Compile Include="View\Model\Parsing.cs" />
     <Compile Include="View\Model\SharedPathBuilder.cs" />
     <Compile Include="View\Model\SharedTemplateLocator.cs" />
     <Compile Include="View\Model\SharingAttacherActivator.cs" />

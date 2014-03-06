@@ -32,7 +32,6 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
             _request = new BindRequest<ISparkTemplate>
             {
                 Target = _template,
-                Parsing = _parsing,
                 Types = typePool(),
                 Logger = MockFor<ITemplateLogger>()
             };

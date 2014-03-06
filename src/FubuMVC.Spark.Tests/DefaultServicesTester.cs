@@ -36,12 +36,6 @@ namespace FubuMVC.Spark.Tests
                 .Value.ShouldBeOfType<TemplateRegistry<ISparkTemplate>>();
         }
 
-        [Test]
-        public void parsing_registration()
-        {
-            _services.DefaultServiceFor<IParsingRegistrations<ISparkTemplate>>()
-                .Value.ShouldBeOfType<SparkParsings>();
-        }
 
         [Test]
         public void sharing_graph()

@@ -18,6 +18,8 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
 
         protected override void beforeEach()
         {
+            Assert.Fail("Just rewrite this");
+
             _template = new RazorTemplate("", "", "");
             _descriptor = new ViewDescriptor<IRazorTemplate>(_template);
             _template.Descriptor = _descriptor;
@@ -25,10 +27,6 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
             _request = new BindRequest<IRazorTemplate>
             {
                 Target = _template,
-                Parsing = new Parsing
-                {
-                    ViewModelType = "FubuMVC.Razor.Tests.RazorModel.Binding.Baz",
-                },
                 Types = typePool(),
                 Logger = MockFor<ITemplateLogger>()
             };
@@ -37,7 +35,6 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
         [Test]
         public void if_view_model_type_fullname_exists_in_different_assemblies_nothing_is_assigned()
         {
-            _request.Parsing.ViewModelType = typeof(Bar).FullName;
             ClassUnderTest.Bind(_request);
 
             _descriptor.Template.ViewModel.ShouldBeNull();
@@ -53,7 +50,6 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
         [Test]
         public void if_view_model_type_does_not_exist_nothing_is_assigned()
         {
-            _request.Parsing.ViewModelType = "x.y.jazz";
             ClassUnderTest.Bind(_request);
             _descriptor.Template.ViewModel.ShouldBeNull();
         }
@@ -61,7 +57,6 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
         [Test]
         public void if_view_model_type_is_generic_nothiudoes_not_exist_nothing_is_assigned()
         {
-            _request.Parsing.ViewModelType = "x.y.jazz";
             ClassUnderTest.Bind(_request);
             _descriptor.Template.ViewModel.ShouldBeNull();
         }
@@ -90,7 +85,6 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
         [Test]
         public void it_does_not_bind_generic_viewmodels()
         {
-            _request.Parsing.ViewModelType = "System.Collections.List<System.String>";
             ClassUnderTest.CanBind(_request).ShouldBeFalse();
         }
 

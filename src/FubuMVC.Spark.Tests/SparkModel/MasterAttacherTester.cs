@@ -37,7 +37,6 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 Logger = MockFor<ITemplateLogger>()
             };
 
-            MockFor<IParsingRegistrations<ISparkTemplate>>().Expect(x => x.ParsingFor(_template)).Return(_parsing);
         }
 
         [Test]

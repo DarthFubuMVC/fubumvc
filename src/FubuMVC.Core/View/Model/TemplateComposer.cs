@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FubuCore;
 using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.View.Model
@@ -15,13 +16,11 @@ namespace FubuMVC.Core.View.Model
         private readonly IList<ITemplateBinder<T>> _binders = new List<ITemplateBinder<T>>();
 
         private readonly TypePool _types; 
-        private readonly IParsingRegistrations<T> _parsings;
 
-        public TemplateComposer(IParsingRegistrations<T> parsings) : this(ViewTypePool.Default(), parsings) {}
-        public TemplateComposer(TypePool types, IParsingRegistrations<T> parsings)
+        public TemplateComposer() : this(ViewTypePool.Default()) {}
+        public TemplateComposer(TypePool types)
         {
             _types = types;
-            _parsings = parsings;
         }
 
         public TemplateComposer<T> AddBinder<TBinder>() where TBinder : ITemplateBinder<T>, new()
@@ -37,7 +36,7 @@ namespace FubuMVC.Core.View.Model
         }
 
 
-
+        [MarkedForTermination("We can kill this")]
         public void Compose(ITemplateRegistry<T> templates)
         {
             templates.Each(t =>
@@ -51,7 +50,6 @@ namespace FubuMVC.Core.View.Model
             var bindRequest = new BindRequest<T>
             {
                 Target = t,
-                Parsing = _parsings.ParsingFor(t),
                 Types = _types,
                 Logger = TemplateLogger.Default()
             };

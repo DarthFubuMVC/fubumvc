@@ -72,7 +72,6 @@
     <Compile Include="Rendering\TemplateHelper.cs" />
     <Compile Include="TemplateFactoryCache.cs" />
     <Compile Include="RazorEngineSettings.cs" />
-    <Compile Include="RazorModel\RazorParsings.cs" />
     <Compile Include="RazorViewExtensions.cs" />
     <Compile Include="Registration\ViewParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

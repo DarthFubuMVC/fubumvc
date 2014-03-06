@@ -6,7 +6,7 @@ using FubuMVC.Core.Runtime.Files;
 
 namespace FubuMVC.Core.View.Model
 {
-    public class Template : ITemplateFile
+    public abstract class Template : ITemplateFile
     {
         private static readonly Cache<string, string> _cache = new Cache<string, string>(getPrefix);
 
@@ -16,6 +16,7 @@ namespace FubuMVC.Core.View.Model
         }
 
         private ITemplateDescriptor _descriptor = new NulloDescriptor();
+        private Lazy<Parsing> _parsing;
 
         public Template(IFubuFile file)
             : this(file.Path, file.ProvenancePath, file.Provenance)
@@ -29,7 +30,16 @@ namespace FubuMVC.Core.View.Model
             Origin = origin;
 
             ViewPath = FileSystem.Combine(_cache[Origin], RelativePath());
+
+            _parsing = new Lazy<Parsing>(createParsing);
         }
+
+        public Parsing Parsing
+        {
+            get { return _parsing.Value; }
+        }
+
+        protected abstract Parsing createParsing();
 
         public string FilePath { get; set; }
         public string RootPath { get; set; }

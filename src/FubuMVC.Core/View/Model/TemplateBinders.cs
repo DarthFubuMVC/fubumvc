@@ -9,7 +9,6 @@ namespace FubuMVC.Core.View.Model
     public interface IBindRequest<T> where T : ITemplateFile
     {
         T Target { get; }
-        Parsing Parsing { get; }
 
         TypePool Types { get; }
         ITemplateLogger Logger { get; }
@@ -18,7 +17,6 @@ namespace FubuMVC.Core.View.Model
     public class BindRequest<T> : IBindRequest<T> where T : ITemplateFile
     {
         public T Target { get; set; }
-        public Parsing Parsing { get; set; }
         public TypePool Types { get; set; }
 
         public ITemplateLogger Logger { get; set; }
@@ -59,8 +57,8 @@ namespace FubuMVC.Core.View.Model
 
             return descriptor != null
                    && descriptor.Template.ViewModel == null
-                   && request.Parsing.ViewModelType.IsNotEmpty()
-                   && GenericParser.IsGeneric(request.Parsing.ViewModelType);
+                   && request.Target.Parsing.ViewModelType.IsNotEmpty()
+                   && GenericParser.IsGeneric(request.Target.Parsing.ViewModelType);
         }
 
         public void Bind(IBindRequest<T> request)
@@ -69,7 +67,7 @@ namespace FubuMVC.Core.View.Model
             var template = request.Target;
 
             var genericParser = new GenericParser(request.Types.Assemblies);
-            var viewModel = genericParser.Parse(request.Parsing.ViewModelType);
+            var viewModel = genericParser.Parse(request.Target.Parsing.ViewModelType);
 
             if (viewModel != null)
             {
@@ -91,8 +89,8 @@ namespace FubuMVC.Core.View.Model
 
             return descriptor != null
                    && descriptor.Template.ViewModel == null
-                   && request.Parsing.ViewModelType.IsNotEmpty()
-                   && GenericParser.IsGeneric(request.Parsing.ViewModelType) == false;
+                   && request.Target.Parsing.ViewModelType.IsNotEmpty()
+                   && GenericParser.IsGeneric(request.Target.Parsing.ViewModelType) == false;
         }
 
         public void Bind(IBindRequest<T> request)
@@ -101,7 +99,7 @@ namespace FubuMVC.Core.View.Model
             var template = request.Target;
             var descriptor = template.Descriptor.As<ViewDescriptor<T>>();
 
-            var types = request.Types.TypesWithFullName(request.Parsing.ViewModelType);
+            var types = request.Types.TypesWithFullName(request.Target.Parsing.ViewModelType);
             var typeCount = types.Count();
 
             if (typeCount == 1)
@@ -112,7 +110,7 @@ namespace FubuMVC.Core.View.Model
                 return;
             }
 
-            logger.Log(template, "Unable to set view model type : {0}", request.Parsing.ViewModelType);
+            logger.Log(template, "Unable to set view model type : {0}", request.Target.Parsing.ViewModelType);
 
             if (typeCount > 1)
             {

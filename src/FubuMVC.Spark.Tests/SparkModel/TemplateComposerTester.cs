@@ -39,8 +39,6 @@ namespace FubuMVC.Spark.Tests.SparkModel
             _template2 = new SparkTemplate("tmpl2.spark", "z", "o2");
             _templateRegistry = new TemplateRegistry<ISparkTemplate>(new[] {_template1, _template2});
 
-            var parsingRegistrations = MockFor<IParsingRegistrations<ISparkTemplate>>();
-            parsingRegistrations.Stub(x => x.ParsingFor(Arg<SparkTemplate>.Is.Anything)).Return(new Parsing());
 
             Services.Inject(_types);
             configurePolicies();

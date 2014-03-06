@@ -11,14 +11,6 @@ namespace FubuMVC.Razor
 {
     public class RazorViewFacility : IViewFacility
     {
-        private readonly RazorParsings _razorParsings;
-
-        public RazorViewFacility(RazorParsings razorParsings)
-        {
-            _razorParsings = razorParsings;
-        }
-
-
         public Task<IEnumerable<IViewToken>> FindViews(BehaviorGraph graph)
         {
             return Task.Factory.StartNew(() => findViews(graph));
@@ -32,14 +24,13 @@ namespace FubuMVC.Razor
             var factory = new TemplateFactoryCache(namespaces, razorSettings, new TemplateCompiler(),
                 new RazorTemplateGenerator());
 
-            var composer = new TemplateComposer<IRazorTemplate>(_razorParsings);
+            var composer = new TemplateComposer<IRazorTemplate>();
             razorSettings.Configure(composer);
 
             var templates = graph.Files.FindFiles(razorSettings.Search)
                 .Select(file => {
                     var template = new RazorTemplate(file);
 
-                    _razorParsings.Parse(template);
                     composer.Compose(template);
 
                     return template;

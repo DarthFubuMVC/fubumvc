@@ -15,14 +15,13 @@ namespace FubuMVC.Spark
 {
     public class SparkEngine : IFubuRegistryExtension
     {
-        private readonly SparkParsings _parsings = new SparkParsings();
         private readonly SparkTemplateRegistry _templateRegistry = new SparkTemplateRegistry();
 
         void IFubuRegistryExtension.Configure(FubuRegistry registry)
         {
             var engine = new SparkViewEngine();
 
-            registry.AlterSettings<ViewEngines>(x => x.AddFacility(new SparkViewFacility(_templateRegistry, _parsings, engine)));
+            registry.AlterSettings<ViewEngines>(x => x.AddFacility(new SparkViewFacility(engine)));
 
             registry.Services(configureServices);
         }
@@ -31,7 +30,6 @@ namespace FubuMVC.Spark
         {
             services.ReplaceService<ISparkTemplateRegistry>(_templateRegistry);
             services.ReplaceService<ITemplateRegistry<ISparkTemplate>>(_templateRegistry);
-            services.ReplaceService<IParsingRegistrations<ISparkTemplate>>(_parsings);
             
             var graph = new SharingGraph();
             services.SetServiceIfNone(graph);

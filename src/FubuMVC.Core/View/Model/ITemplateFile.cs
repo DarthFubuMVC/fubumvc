@@ -27,6 +27,7 @@ namespace FubuMVC.Core.View.Model
 
         string Namespace { get;  }
         Type ViewModel { get; set; }
+        Parsing Parsing { get; }
         string RelativePath();
         string DirectoryPath();
         string RelativeDirectoryPath();

@@ -38,6 +38,8 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
         public string Namespace { get; set; }
         public Type ViewModel { get; set; }
 
+        public Parsing Parsing { get; private set; }
+
         public string RelativePath()
         {
             throw new NotImplementedException();

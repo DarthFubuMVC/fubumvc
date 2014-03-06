@@ -37,7 +37,6 @@ namespace FubuMVC.Razor.Tests.RazorModel
                 Logger = MockFor<ITemplateLogger>()
             };
 
-            MockFor<IParsingRegistrations<IRazorTemplate>>().Expect(x => x.ParsingFor(_template)).Return(_parsing);
         }
 
         [Test]
