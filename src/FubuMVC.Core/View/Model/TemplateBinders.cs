@@ -28,26 +28,6 @@ namespace FubuMVC.Core.View.Model
         void Bind(IBindRequest<T> request);
     }
 
-    public class ViewDescriptorBinder<T> : ITemplateBinder<T> where T : ITemplateFile
-    {
-        private readonly ITemplateSelector<T> _templateSelector;
-
-        public ViewDescriptorBinder(ITemplateSelector<T> templateSelector)
-        {
-            _templateSelector = templateSelector;
-        }
-
-        public bool CanBind(IBindRequest<T> request)
-        {
-            var template = request.Target;
-            return !(template.Descriptor is ViewDescriptor<T>) && _templateSelector.IsAppropriate(template);
-        }
-
-        public void Bind(IBindRequest<T> request)
-        {
-            request.Target.Descriptor = new ViewDescriptor<T>(request.Target);
-        }
-    }
 
     public class GenericViewModelBinder<T> : ITemplateBinder<T> where T : ITemplateFile
     {

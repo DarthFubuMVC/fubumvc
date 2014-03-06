@@ -38,7 +38,6 @@ namespace FubuMVC.Razor
         private void defaultComposer()
         {
             Register(composer => composer
-                .AddBinder(new ViewDescriptorBinder<IRazorTemplate>(new RazorTemplateSelector()))
                 .AddBinder<GenericViewModelBinder<IRazorTemplate>>()
                 .AddBinder<ViewModelBinder<IRazorTemplate>>());
         }

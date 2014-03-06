@@ -88,7 +88,6 @@
     <Compile Include="NamespacesImportedTester.cs" />
     <Compile Include="RazorModel\Binding\GenericParserTester.cs" />
     <Compile Include="RazorModel\Binding\GenericViewModelBinderTester.cs" />
-    <Compile Include="RazorModel\Binding\ViewDescriptorBinderTester.cs" />
     <Compile Include="RazorModel\TemplateDirectoryProviderTester.cs" />
     <Compile Include="RazorModel\SharedPathBuilderTester.cs" />
     <Compile Include="RazorModel\TemplateComposerTester.cs" />
