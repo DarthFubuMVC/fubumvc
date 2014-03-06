@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Model.Sharing;
 using FubuMVC.Razor.RazorModel;
@@ -80,15 +81,15 @@ namespace FubuMVC.Razor.Tests.RazorModel
 
             _templates = new TemplateRegistry<IRazorTemplate>(new[]
             {
-                new RazorTemplate(FubuCore.FileSystem.Combine(_root, "Actions", "Home", "home.cshtml"), _root, TemplateConstants.HostOrigin), 
+                new RazorTemplate(FubuCore.FileSystem.Combine(_root, "Actions", "Home", "home.cshtml"), _root, ContentFolder.Application), 
                 new RazorTemplate(FubuCore.FileSystem.Combine(_pak1Root, "Actions", "Home", "home.cshtml"), _pak1Root, "Pak1"),
                 new RazorTemplate(FubuCore.FileSystem.Combine(_pak2Root, "Home", "home.cshtml"), _pak2Root, "Pak2")
             });
 
             _graph = new SharingGraph();
             _graph.Dependency("Pak1", "Pak2");
-            _graph.Dependency("Pak2", TemplateConstants.HostOrigin);
-            _graph.Dependency(TemplateConstants.HostOrigin, "Pak3");
+            _graph.Dependency("Pak2", ContentFolder.Application);
+            _graph.Dependency(ContentFolder.Application, "Pak3");
 
             Container.Inject<ISharedPathBuilder>(new SharedPathBuilder(new[] { Shared }));
             Container.Inject<ISharingGraph>(_graph);

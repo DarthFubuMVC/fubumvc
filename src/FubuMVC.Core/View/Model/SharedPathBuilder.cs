@@ -16,7 +16,7 @@ namespace FubuMVC.Core.View.Model
     {
         private readonly IEnumerable<string> _sharedFolderNames;
 
-        public SharedPathBuilder() : this(new[] { TemplateConstants.Shared }) {}
+        public SharedPathBuilder() : this(new[] { "Shared" }) {}
         public SharedPathBuilder(IEnumerable<string> sharedFolderNames)
         {
             _sharedFolderNames = sharedFolderNames;

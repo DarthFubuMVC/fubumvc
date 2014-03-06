@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FubuCore;
+using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Model.Sharing;
 using FubuMVC.Spark.SparkModel;
@@ -82,7 +83,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
             _templates = new TemplateRegistry<ISparkTemplate>(new[]
             {
-                new SparkTemplate(FileSystem.Combine(_root, "Actions", "Home", "home.spark"), _root, TemplateConstants.HostOrigin), 
+                new SparkTemplate(FileSystem.Combine(_root, "Actions", "Home", "home.spark"), _root, ContentFolder.Application), 
                 new SparkTemplate(FileSystem.Combine(_pak1Root, "Actions", "Home", "home.spark"), _pak1Root, "Pak1"),
                 new SparkTemplate(FileSystem.Combine(_pak2Root, "Home", "home.spark"), _pak2Root, "Pak2"),
                 new SparkTemplate(FileSystem.Combine(_pak2Root, "Home", Shared, "_test.spark"), _pak2Root, "Pak2"),
@@ -90,8 +91,8 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
             _graph = new SharingGraph();
             _graph.Dependency("Pak1", "Pak2");
-            _graph.Dependency("Pak2", TemplateConstants.HostOrigin);
-            _graph.Dependency(TemplateConstants.HostOrigin, "Pak3");
+            _graph.Dependency("Pak2", ContentFolder.Application);
+            _graph.Dependency(ContentFolder.Application, "Pak3");
 
             Container.Inject<ISharedPathBuilder>(new SharedPathBuilder(new []{Shared}));
             Container.Inject<ISharingGraph>(_graph);

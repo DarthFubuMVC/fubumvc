@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
@@ -21,12 +22,12 @@ namespace FubuMVC.Spark.Tests
             _root = AppDomain.CurrentDomain.BaseDirectory;
             _templateRegistry = new SparkTemplateRegistry(new[]
             {
-                new SparkTemplate(Path.Combine(_root, "Views", "Home", "ModelAView.spark"), _root, TemplateConstants.HostOrigin),
-                new SparkTemplate(Path.Combine(_root, "Views", "Home", "_partial1.spark"), _root, TemplateConstants.HostOrigin),
-                new SparkTemplate(Path.Combine(_root, "Views", "Home", "ModelBView.spark"), _root, TemplateConstants.HostOrigin),
-                new SparkTemplate(Path.Combine(_root, "Views", "Home", "_partial2.spark"), _root, TemplateConstants.HostOrigin),
-                new SparkTemplate(Path.Combine(_root, "Views", "Home", "ModelCView.spark"), _root, TemplateConstants.HostOrigin),
-                new SparkTemplate(Path.Combine(_root, "Views", "Home", "_partial3.spark"), _root, TemplateConstants.HostOrigin)
+                new SparkTemplate(Path.Combine(_root, "Views", "Home", "ModelAView.spark"), _root, ContentFolder.Application),
+                new SparkTemplate(Path.Combine(_root, "Views", "Home", "_partial1.spark"), _root, ContentFolder.Application),
+                new SparkTemplate(Path.Combine(_root, "Views", "Home", "ModelBView.spark"), _root, ContentFolder.Application),
+                new SparkTemplate(Path.Combine(_root, "Views", "Home", "_partial2.spark"), _root, ContentFolder.Application),
+                new SparkTemplate(Path.Combine(_root, "Views", "Home", "ModelCView.spark"), _root, ContentFolder.Application),
+                new SparkTemplate(Path.Combine(_root, "Views", "Home", "_partial3.spark"), _root, ContentFolder.Application)
             });
 
             var templates = _templateRegistry.ToList();

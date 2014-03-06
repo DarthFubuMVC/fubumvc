@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Bottles;
 using Bottles.Diagnostics;
 using FubuCore;
+using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Model.Sharing;
 using FubuMVC.Spark.SparkModel;
@@ -67,8 +68,8 @@ namespace FubuMVC.Spark.Tests.SparkModel.Sharing
             _activator.Diagnostics = fake;
             _activator.RegisterAppGlobal(_packageLog);
 
-            fake.CurrentProvenance.ShouldEqual(TemplateConstants.HostOrigin);
-            inner.AssertWasCalled(x => x.Global(TemplateConstants.HostOrigin));
+            fake.CurrentProvenance.ShouldEqual(ContentFolder.Application);
+            inner.AssertWasCalled(x => x.Global(ContentFolder.Application));
         }
 
         [Test]
@@ -82,7 +83,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Sharing
 
             _activator.CompileDependencies(packages, _packageLog);
 
-            _packageLog.AssertWasCalled(x => x.Trace("Compiling dependencies for [{0}]", "a, b, {0}".ToFormat(TemplateConstants.HostOrigin)));
+            _packageLog.AssertWasCalled(x => x.Trace("Compiling dependencies for [{0}]", "a, b, {0}".ToFormat(ContentFolder.Application)));
         }
 
         [Test]
@@ -97,7 +98,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Sharing
             _graph.Global("x");
             _activator.CompileDependencies(packages, _packageLog);
 
-            _graph.SharingsFor(TemplateConstants.HostOrigin).ShouldContain("x");
+            _graph.SharingsFor(ContentFolder.Application).ShouldContain("x");
         }
     }
 }

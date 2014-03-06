@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View.Model;
 using FubuCore;
 using FubuMVC.Spark.SparkModel;
@@ -21,7 +22,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         {
             _templates = new TemplateRegistry<ISparkTemplate>();
             _viewDescriptor = new SparkDescriptor(_template, new SparkViewEngine());
-            _template = new SparkTemplate("/App/Views/Fubu.spark", "/App/Views", TemplateConstants.HostOrigin)
+            _template = new SparkTemplate("/App/Views/Fubu.spark", "/App/Views", ContentFolder.Application)
             {
                 Descriptor = _viewDescriptor                                
             };

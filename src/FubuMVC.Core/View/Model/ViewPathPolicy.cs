@@ -1,5 +1,6 @@
 ﻿using FubuCore;
 using FubuCore.Util;
+using FubuMVC.Core.Runtime.Files;
 
 namespace FubuMVC.Core.View.Model
 {
@@ -23,7 +24,7 @@ namespace FubuMVC.Core.View.Model
 
         private static string getPrefix(string origin)
         {
-            return origin == TemplateConstants.HostOrigin ? string.Empty : "_{0}".ToFormat(origin);
+            return origin == ContentFolder.Application ? string.Empty : "_{0}".ToFormat(origin);
         }
     }
 }

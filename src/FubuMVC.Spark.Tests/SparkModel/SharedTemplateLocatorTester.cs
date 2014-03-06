@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
@@ -28,10 +29,10 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
             _templates = new TemplateRegistry<ISparkTemplate>(new[]
             {
-                new SparkTemplate(Path.Combine("App", "Shared", "application.spark"), "App", TemplateConstants.HostOrigin),
-                new SparkTemplate(Path.Combine("App", "Shared", "sitemaster.spark"), "App", TemplateConstants.HostOrigin),
-                new SparkTemplate(Path.Combine("App", "Views", "Shared", "application.spark"), "App", TemplateConstants.HostOrigin),
-                new SparkTemplate(Path.Combine("App", "Views", "Shared", "site.xml"), "App", TemplateConstants.HostOrigin)
+                new SparkTemplate(Path.Combine("App", "Shared", "application.spark"), "App", ContentFolder.Application),
+                new SparkTemplate(Path.Combine("App", "Shared", "sitemaster.spark"), "App", ContentFolder.Application),
+                new SparkTemplate(Path.Combine("App", "Views", "Shared", "application.spark"), "App", ContentFolder.Application),
+                new SparkTemplate(Path.Combine("App", "Views", "Shared", "site.xml"), "App", ContentFolder.Application)
             });
 
             Container.Inject<ITemplateSelector<ISparkTemplate>>(new SparkTemplateSelector());
@@ -84,13 +85,13 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
             _templates = new TemplateRegistry<ISparkTemplate>(new[]
             {
-                new SparkTemplate(Path.Combine("App", "bindings.xml"), "App",TemplateConstants.HostOrigin),
-                new SparkTemplate(Path.Combine("App", "Shared", "application.spark"), "App",TemplateConstants.HostOrigin),
-                new SparkTemplate(Path.Combine("App", "Shared", "bindings.xml"), "App",TemplateConstants.HostOrigin),
-                new SparkTemplate(Path.Combine("App", "Shared", "sitemaster.spark"), "App",TemplateConstants.HostOrigin),
-                new SparkTemplate(Path.Combine("App", "Views", "bindings.xml"), "App",TemplateConstants.HostOrigin),
-                new SparkTemplate(Path.Combine("App", "Views", "Shared", "application.spark"), "App",TemplateConstants.HostOrigin),
-                new SparkTemplate(Path.Combine("App", "Views", "Shared", "bindings.xml"), "App",TemplateConstants.HostOrigin)
+                new SparkTemplate(Path.Combine("App", "bindings.xml"), "App",ContentFolder.Application),
+                new SparkTemplate(Path.Combine("App", "Shared", "application.spark"), "App",ContentFolder.Application),
+                new SparkTemplate(Path.Combine("App", "Shared", "bindings.xml"), "App",ContentFolder.Application),
+                new SparkTemplate(Path.Combine("App", "Shared", "sitemaster.spark"), "App",ContentFolder.Application),
+                new SparkTemplate(Path.Combine("App", "Views", "bindings.xml"), "App",ContentFolder.Application),
+                new SparkTemplate(Path.Combine("App", "Views", "Shared", "application.spark"), "App",ContentFolder.Application),
+                new SparkTemplate(Path.Combine("App", "Views", "Shared", "bindings.xml"), "App",ContentFolder.Application)
             });
 
             MockFor<ITemplateDirectoryProvider<ISparkTemplate>>()

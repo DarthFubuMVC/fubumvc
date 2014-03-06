@@ -1,15 +1,22 @@
+using System.IO;
+using FubuCore;
 using FubuMVC.Core.Runtime.Files;
 
 namespace FubuMVC.Core.View.Model
 {
     public interface ITemplateFile
     {
-        string Origin { get; }
-        string FilePath { get; }
-        string RootPath { get; }
-
+        string FilePath { get; set; }
+        string RootPath { get; set; }
+        string Origin { get; set; }
         string ViewPath { get; set; }
         ITemplateDescriptor Descriptor { get; set; }
+        string RelativePath();
+        string DirectoryPath();
+        string RelativeDirectoryPath();
+        string Name();
+        bool FromHost();
+        bool IsPartial();
     }
 
     public class Template : ITemplateFile
@@ -43,6 +50,36 @@ namespace FubuMVC.Core.View.Model
         public override string ToString()
         {
             return FilePath;
+        }
+
+        public string RelativePath()
+        {
+            return FilePath.PathRelativeTo(RootPath);
+        }
+
+        public string DirectoryPath()
+        {
+            return Path.GetDirectoryName(FilePath);
+        }
+
+        public string RelativeDirectoryPath()
+        {
+            return DirectoryPath().PathRelativeTo(RootPath);
+        }
+
+        public string Name()
+        {
+            return Path.GetFileNameWithoutExtension(FilePath);
+        }
+
+        public bool FromHost()
+        {
+            return Origin == ContentFolder.Application;
+        }
+
+        public bool IsPartial()
+        {
+            return Path.GetFileName(FilePath).StartsWith("_");
         }
     }
 }

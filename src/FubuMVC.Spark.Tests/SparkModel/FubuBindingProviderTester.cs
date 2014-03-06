@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
@@ -25,7 +26,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
             var packageRoot = Path.Combine(appRoot, "App", "fubu-packages", "Package1", "WebContent");
             
             var binding1 = new SparkTemplate(Path.Combine(packageRoot, "Handlers", "Shared", "bindings.xml"), packageRoot, "Package1");
-            var binding2 = new SparkTemplate(Path.Combine(appRoot, "Shared", "bindings.xml"), appRoot, TemplateConstants.HostOrigin);
+            var binding2 = new SparkTemplate(Path.Combine(appRoot, "Shared", "bindings.xml"), appRoot, ContentFolder.Application);
             var viewPathPolicy = new ViewPathPolicy<ISparkTemplate>();
             viewPathPolicy.Apply(binding1);
             viewPathPolicy.Apply(binding2);

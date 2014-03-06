@@ -1,5 +1,6 @@
 ﻿using System;
 using FubuCore;
+using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
@@ -38,6 +39,36 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
             get;
             set;
         }
+
+        public string RelativePath()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string DirectoryPath()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string RelativeDirectoryPath()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string Name()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool FromHost()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsPartial()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     [TestFixture]
@@ -47,7 +78,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
         protected override void beforeEach()
         {
             _template = new StubTemplate{
-                Origin = TemplateConstants.HostOrigin,
+                Origin = ContentFolder.Application,
                 RootPath = "root",
                 FilePath = FileSystem.Combine("root", "view.spark")
             };

@@ -47,13 +47,13 @@ namespace FubuMVC.Spark.Tests.SparkModel
             _sharingGraph.Global("Global");
             _sharingGraph.CompileDependencies("Package1", "Package2");
 
-            new ContentFolder(TemplateConstants.HostOrigin, pathApp).FindFiles(sparkSet)
+            new ContentFolder(ContentFolder.Application, pathApp).FindFiles(sparkSet)
                 .Union(new ContentFolder("Package1", pathPackage1).FindFiles(sparkSet)
                 .Union(new ContentFolder("Package2", pathPackage2).FindFiles(sparkSet)
                 .Union(new ContentFolder("Global", globalPackage).FindFiles(sparkSet))))
                 .Each(x =>
                 {
-                    if (x.Provenance == TemplateConstants.HostOrigin && x.Path.StartsWith(pathPackage1)) return;
+                    if (x.Provenance == ContentFolder.Application && x.Path.StartsWith(pathPackage1)) return;
                     templateRegistry.Register(new SparkTemplate(x.Path, x.ProvenancePath, x.Provenance));
                 });
 

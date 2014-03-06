@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using FubuCore;
+using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
@@ -34,9 +35,9 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
             _pak1 = Path.Combine(_hostRoot, "Pak1");
             _pak2 = Path.Combine(_hostRoot, "Pak2");
 
-            _hostHomeView = new SparkTemplate(Path.Combine(_hostRoot, "Home", "Home.spark"), _hostRoot, TemplateConstants.HostOrigin);
-            _hostApplicationView = new SparkTemplate(Path.Combine(_hostRoot, "Shared", "application.spark"), _hostRoot, TemplateConstants.HostOrigin);
-            _hostFooterPartialView = new SparkTemplate(Path.Combine(_hostRoot, "Shared", "_footer.spark"), _hostRoot, TemplateConstants.HostOrigin);
+            _hostHomeView = new SparkTemplate(Path.Combine(_hostRoot, "Home", "Home.spark"), _hostRoot, ContentFolder.Application);
+            _hostApplicationView = new SparkTemplate(Path.Combine(_hostRoot, "Shared", "application.spark"), _hostRoot, ContentFolder.Application);
+            _hostFooterPartialView = new SparkTemplate(Path.Combine(_hostRoot, "Shared", "_footer.spark"), _hostRoot, ContentFolder.Application);
 
             _pak1HomeView = new SparkTemplate(Path.Combine(_pak1, "Home", "Home.spark"), _hostRoot, "Pak1");
             _pak1NamePartialView = new SparkTemplate(Path.Combine(_pak1, "Home", "_name.spark"), _hostRoot, "Pak1");

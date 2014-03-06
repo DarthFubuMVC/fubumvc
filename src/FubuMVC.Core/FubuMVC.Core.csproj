@@ -549,7 +549,6 @@
     <Compile Include="View\Model\TemplateBinders.cs" />
     <Compile Include="View\Model\TemplateComposer.cs" />
     <Compile Include="View\Model\TemplateDirectoryProvider.cs" />
-    <Compile Include="View\Model\TemplateExtensions.cs" />
     <Compile Include="View\Model\TemplateLogger.cs" />
     <Compile Include="View\Model\TemplatePolicies.cs" />
     <Compile Include="View\Model\TemplateRegistry.cs" />
