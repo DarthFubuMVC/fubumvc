@@ -1,4 +1,5 @@
 ﻿using System;
+using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View.Model;
 
 namespace FubuMVC.Razor.RazorModel
@@ -8,32 +9,22 @@ namespace FubuMVC.Razor.RazorModel
         Guid GeneratedViewId { get; }
     }
 
-    public class RazorTemplate : IRazorTemplate
+    public class RazorTemplate : Template, IRazorTemplate
     {
-        public RazorTemplate(string filePath, string root, string origin) : this()
+        private readonly Guid _generatedViewId = Guid.NewGuid();
+
+        public RazorTemplate(IFubuFile file) : base(file)
         {
-            FilePath = filePath;
-            RootPath = root;
-            Origin = origin;
         }
 
-        public RazorTemplate()
+        public RazorTemplate(string filePath, string rootPath, string origin) : base(filePath, rootPath, origin)
         {
-            GeneratedViewId = Guid.NewGuid();
-            Descriptor = new NulloDescriptor();
         }
 
-        public string FilePath { get; set; }
-        public string RootPath { get; set; }
-        public string Origin { get; set; }
-        public Guid GeneratedViewId { get; private set; }
-		
-        public string ViewPath { get; set; }
-        public ITemplateDescriptor Descriptor { get; set; }
-
-	    public override string ToString()
+        public Guid GeneratedViewId
         {
-            return FilePath;
+            get { return _generatedViewId; }
         }
+
     }
 }

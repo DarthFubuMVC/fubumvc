@@ -42,7 +42,7 @@ namespace FubuMVC.Spark
 
             var templates = graph.Files.FindFiles(sparkSettings.Search)
                 .Select(file => {
-                    var template = new SparkTemplate(file.Path, file.ProvenancePath, file.Provenance);
+                    var template = new SparkTemplate(file);
                     template.Descriptor = new SparkDescriptor(template, _engine);
 
 

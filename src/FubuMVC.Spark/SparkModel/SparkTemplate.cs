@@ -1,34 +1,19 @@
 ﻿using System.Linq;
 using FubuCore.Util;
+using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View.Model;
 
 namespace FubuMVC.Spark.SparkModel
 {
     public interface ISparkTemplate : ITemplateFile {}
-    public class SparkTemplate : ISparkTemplate
+    public class SparkTemplate : Template, ISparkTemplate
     {
-        public SparkTemplate(string filePath, string rootPath, string origin) : this()
+        public SparkTemplate(IFubuFile file) : base(file)
         {
-            FilePath = filePath;
-            RootPath = rootPath;
-            Origin = origin;
         }
 
-        public SparkTemplate()
+        public SparkTemplate(string filePath, string rootPath, string origin) : base(filePath, rootPath, origin)
         {
-            Descriptor = new NulloDescriptor();
-        }
-
-        public string FilePath { get; set; }
-        public string RootPath { get; set; }
-        public string Origin { get; set; }
-		
-        public string ViewPath { get; set; }
-        public ITemplateDescriptor Descriptor { get; set; }
-
-	    public override string ToString()
-        {
-            return FilePath;
         }
     }
 
