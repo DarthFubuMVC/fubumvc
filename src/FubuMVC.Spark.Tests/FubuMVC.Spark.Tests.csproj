@@ -84,8 +84,6 @@
     <Compile Include="Rendering\FubuSparkViewTester.cs" />
     <Compile Include="SparkActivatorTester.cs" />
     <Compile Include="DefaultServicesTester.cs" />
-    <Compile Include="SparkModel\Binding\GenericParserTester.cs" />
-    <Compile Include="SparkModel\Binding\GenericViewModelBinderTester.cs" />
     <Compile Include="SparkModel\BindingsAttacherTester.cs" />
     <Compile Include="SparkModel\FubuBindingProviderTester.cs" />
     <Compile Include="SparkModel\FubuPartialProviderTester.cs" />
@@ -100,7 +98,6 @@
     <Compile Include="SparkModel\Sharing\SparkDslReaderTester.cs" />
     <Compile Include="SparkModel\TemplateDirectoryProviderTester.cs" />
     <Compile Include="SparkModel\SharedPathBuilderTester.cs" />
-    <Compile Include="SparkModel\TemplateComposerTester.cs" />
     <Compile Include="SparkModel\SharedTemplateLocatorTester.cs" />
     <Compile Include="SparkModel\TemplateRegistryTester.cs" />
     <Compile Include="SparkModel\ExtendedTester.cs" />
@@ -108,7 +105,6 @@
     <Compile Include="SparkModel\TemplateExtensionsTester.cs" />
     <Compile Include="SparkModel\ChunkLoaderTester.cs" />
     <Compile Include="SparkModel\MasterAttacherTester.cs" />
-    <Compile Include="SparkModel\Binding\ViewModelBinderTester.cs" />
     <Compile Include="SparkPrecompilerTester.cs" />
     <Compile Include="SparkViewFacilityTester.cs" />
     <Compile Include="SparkViewTokenTester.cs" />

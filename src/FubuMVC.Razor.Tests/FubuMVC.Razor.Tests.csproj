@@ -86,15 +86,11 @@
     <Compile Include="Rendering\FubuRazorViewTester.cs" />
     <Compile Include="Rendering\StubView.cs" />
     <Compile Include="NamespacesImportedTester.cs" />
-    <Compile Include="RazorModel\Binding\GenericParserTester.cs" />
-    <Compile Include="RazorModel\Binding\GenericViewModelBinderTester.cs" />
     <Compile Include="RazorModel\TemplateDirectoryProviderTester.cs" />
     <Compile Include="RazorModel\SharedPathBuilderTester.cs" />
-    <Compile Include="RazorModel\TemplateComposerTester.cs" />
     <Compile Include="RazorModel\SharedTemplateLocatorTester.cs" />
     <Compile Include="RazorModel\TemplateRegistryTester.cs" />
     <Compile Include="RazorModel\TemplateExtensionsTester.cs" />
-    <Compile Include="RazorModel\Binding\ViewModelBinderTester.cs" />
     <Compile Include="RazorEngineSettingsTester.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -245,7 +241,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="RazorModel\Binding\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="Templates\App\fubu-packages\Package1\WebContent\Handlers\Models\SerieX.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -24,14 +24,9 @@ namespace FubuMVC.Razor
             var factory = new TemplateFactoryCache(namespaces, razorSettings, new TemplateCompiler(),
                 new RazorTemplateGenerator());
 
-            var composer = new TemplateComposer<IRazorTemplate>();
-            razorSettings.Configure(composer);
-
             var templates = graph.Files.FindFiles(razorSettings.Search)
                 .Select(file => {
                     var template = new RazorTemplate(file);
-
-                    composer.Compose(template);
 
                     return template;
                 });

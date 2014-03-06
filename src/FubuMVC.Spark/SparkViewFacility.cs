@@ -27,16 +27,11 @@ namespace FubuMVC.Spark
         {
             var sparkSettings = graph.Settings.Get<SparkEngineSettings>();
 
-            var composer = new TemplateComposer<ISparkTemplate>();
-            sparkSettings.Configure(composer);
 
             var templates = graph.Files.FindFiles(sparkSettings.Search)
                 .Select(file => {
                     var template = new SparkTemplate(file);
                     template.Descriptor = new SparkDescriptor(template, _engine);
-
-
-                    composer.Compose(template);
 
                     return template;
                 });

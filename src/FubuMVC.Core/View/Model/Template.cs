@@ -114,6 +114,14 @@ namespace FubuMVC.Core.View.Model
             return Namespace.IsEmpty() ? Name() : Namespace + "." + Name();
         }
 
-        
+        public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
+        {
+            if (IsPartial()) return;
+
+            var typeName = Parsing.ViewModelType;
+            if (typeName.IsEmpty()) return;
+
+            ViewModel = types.FindTypeByName(typeName, message => logger.Log(this, message));
+        }
     }
 }
