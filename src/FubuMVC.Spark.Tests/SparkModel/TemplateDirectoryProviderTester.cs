@@ -174,21 +174,12 @@ namespace FubuMVC.Spark.Tests.SparkModel
             ClassUnderTest.ReachablesOf(templateAt(0)).ShouldHaveTheSameElementsAs(expected);
         }
 
-        [Test]
-        public void can_get_shared_view_paths_for_origin()
-        {
-            var policy = new ViewPathPolicy<ISparkTemplate>();
-            _templates.Each(policy.Apply);
-            var origin = templateAt(1).Origin; //from pak1 which has dependency on pak2
-            var pak2SharedLocation = FileSystem.Combine("_Pak2","Home", Shared);
-            ClassUnderTest.SharedViewPathsForOrigin(origin).ShouldContain(pak2SharedLocation);
-        }
+
 
         private ISparkTemplate templateAt(int index)
         {
             return _templates.ElementAt(index);
         }
 
-        // TODO: More UT
     }
 }

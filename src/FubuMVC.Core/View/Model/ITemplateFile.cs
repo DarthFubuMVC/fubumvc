@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using FubuCore;
+using FubuCore.Util;
 using FubuMVC.Core.Runtime.Files;
 
 namespace FubuMVC.Core.View.Model
@@ -26,6 +27,13 @@ namespace FubuMVC.Core.View.Model
 
     public class Template : ITemplateFile
     {
+        private static readonly Cache<string, string> _cache = new Cache<string, string>(getPrefix);
+
+        private static string getPrefix(string origin)
+        {
+            return origin == ContentFolder.Application ? string.Empty : "_{0}".ToFormat(origin);
+        }
+
         private ITemplateDescriptor _descriptor = new NulloDescriptor();
 
         public Template(IFubuFile file)
@@ -38,6 +46,8 @@ namespace FubuMVC.Core.View.Model
             FilePath = filePath;
             RootPath = rootPath;
             Origin = origin;
+
+            ViewPath = FileSystem.Combine(_cache[Origin], RelativePath());
         }
 
         public string FilePath { get; set; }
@@ -99,6 +109,6 @@ namespace FubuMVC.Core.View.Model
             return Namespace.IsEmpty() ? Name() : Namespace + "." + Name();
         }
 
-
+        
     }
 }

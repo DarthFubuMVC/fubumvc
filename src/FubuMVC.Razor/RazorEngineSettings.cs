@@ -40,8 +40,7 @@ namespace FubuMVC.Razor
             Register(composer => composer
                 .AddBinder(new ViewDescriptorBinder<IRazorTemplate>(new RazorTemplateSelector()))
                 .AddBinder<GenericViewModelBinder<IRazorTemplate>>()
-                .AddBinder<ViewModelBinder<IRazorTemplate>>()
-                .Apply<ViewPathPolicy<IRazorTemplate>>());
+                .AddBinder<ViewModelBinder<IRazorTemplate>>());
         }
 
         public void Register(Action<TemplateComposer<IRazorTemplate>> alteration)

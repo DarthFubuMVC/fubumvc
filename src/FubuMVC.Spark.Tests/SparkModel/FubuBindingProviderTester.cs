@@ -27,9 +27,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
             
             var binding1 = new SparkTemplate(Path.Combine(packageRoot, "Handlers", "Shared", "bindings.xml"), packageRoot, "Package1");
             var binding2 = new SparkTemplate(Path.Combine(appRoot, "Shared", "bindings.xml"), appRoot, ContentFolder.Application);
-            var viewPathPolicy = new ViewPathPolicy<ISparkTemplate>();
-            viewPathPolicy.Apply(binding1);
-            viewPathPolicy.Apply(binding2);
+
 
             _viewFolder = MockFor<IViewFolder>();
             _viewFolder.Expect(x => x.GetViewSource(binding1.ViewPath)).Return(new FileSystemViewFile(binding1.FilePath));

@@ -89,7 +89,7 @@
     <Compile Include="SparkModel\BindingsAttacherTester.cs" />
     <Compile Include="SparkModel\FubuBindingProviderTester.cs" />
     <Compile Include="SparkModel\FubuPartialProviderTester.cs" />
-    <Compile Include="SparkModel\Policies\ViewPathPolicyTester.cs" />
+    <Compile Include="SparkModel\Policies\StubTemplate.cs" />
     <Compile Include="SparkModel\Sharing\DependencyRuleTester.cs" />
     <Compile Include="SparkModel\Sharing\GlobalDependencyTester.cs" />
     <Compile Include="SparkModel\Sharing\RecordingSharingRegistrationTester.cs" />

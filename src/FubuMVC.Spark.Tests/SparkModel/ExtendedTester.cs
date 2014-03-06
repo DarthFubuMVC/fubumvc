@@ -57,8 +57,6 @@ namespace FubuMVC.Spark.Tests.SparkModel
                     templateRegistry.Register(new SparkTemplate(x.Path, x.ProvenancePath, x.Provenance));
                 });
 
-            var viewPathPolicy = new ViewPathPolicy<ISparkTemplate>();
-            templateRegistry.Each(viewPathPolicy.Apply);
 
             _viewFolder = new TemplateViewFolder(templateRegistry);
             _templateDirectoryProvider = new TemplateDirectoryProvider<ISparkTemplate>(new SharedPathBuilder(), templateRegistry, _sharingGraph);

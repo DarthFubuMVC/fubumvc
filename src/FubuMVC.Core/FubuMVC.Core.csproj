@@ -552,7 +552,6 @@
     <Compile Include="View\Model\TemplateLogger.cs" />
     <Compile Include="View\Model\TemplatePolicies.cs" />
     <Compile Include="View\Model\TemplateRegistry.cs" />
-    <Compile Include="View\Model\ViewPathPolicy.cs" />
     <Compile Include="View\Model\ViewTypePool.cs" />
     <Compile Include="View\PartialExpressionExtensions.cs" />
     <Compile Include="View\Registration\GenericParser.cs" />

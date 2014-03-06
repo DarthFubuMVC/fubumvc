@@ -53,9 +53,6 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
                 _pak2HomeView, _pak2ApplicationView, _pak2ThemeView
             };
 
-            var viewPathPolicy = new ViewPathPolicy<ISparkTemplate>();
-            templates.Each(viewPathPolicy.Apply);
-
             _viewFolder = new TemplateViewFolder(new TemplateRegistry<ISparkTemplate>(templates));
         }
 

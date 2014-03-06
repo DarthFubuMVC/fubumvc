@@ -37,8 +37,7 @@ namespace FubuMVC.Spark
             Register(composer => composer
                 .AddBinder<GenericViewModelBinder<ISparkTemplate>>()
                 .AddBinder<ViewModelBinder<ISparkTemplate>>()
-                .Apply<NamespacePolicy>()
-                .Apply<ViewPathPolicy<ISparkTemplate>>());            
+                .Apply<NamespacePolicy>());            
         }
 
         public void Register(Action<TemplateComposer<ISparkTemplate>> alteration)
