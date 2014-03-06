@@ -70,7 +70,6 @@
     <Compile Include="SparkModel\SharingAttachers.cs" />
     <Compile Include="SparkModel\FubuBindingProvider.cs" />
     <Compile Include="SparkModel\ChunkLoader.cs" />
-    <Compile Include="SparkModel\SparkViewToken.cs" />
     <Compile Include="SparkModel\SparkTemplateSelector.cs" />
     <Compile Include="SparkModel\SharedTemplateLocator.cs" />
     <Compile Include="SparkModel\TemplateExtensions.cs" />

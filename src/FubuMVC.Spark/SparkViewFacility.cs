@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.SparkModel;
 using Spark;
 
@@ -17,21 +18,18 @@ namespace FubuMVC.Spark
             _engine = engine;
         }
 
-        public Task<IEnumerable<IViewToken>> FindViews(BehaviorGraph graph)
+        public Task<IEnumerable<ITemplateFile>> FindViews(BehaviorGraph graph)
         {
             return Task.Factory.StartNew(() => findViews(graph));
         }
 
-        private IEnumerable<IViewToken> findViews(BehaviorGraph graph)
+        private IEnumerable<ITemplateFile> findViews(BehaviorGraph graph)
         {
             var sparkSettings = graph.Settings.Get<SparkEngineSettings>();
 
 
             return graph.Files.FindFiles(sparkSettings.Search)
-                .Select(file => {
-                    var template = new SparkTemplate(file);
-                    return new SparkViewToken(template, _engine);
-                });
+                .Select(file => new SparkTemplate(file, _engine));
         }
     }
 }

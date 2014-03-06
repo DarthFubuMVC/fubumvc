@@ -1,6 +1,5 @@
 ﻿using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.SparkModel;
-using FubuMVC.Spark.Tests.FubuMVC.Spark.Tests.Views.Home;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -12,26 +11,27 @@ namespace FubuMVC.Spark.Tests.SparkModel
     public class MasterAttacherTester : InteractionContext<MasterAttacher<ISparkTemplate>>
     {
         private AttachRequest<ISparkTemplate> _request;
-        private SparkViewToken _viewToken;
+        private SparkTemplate _viewToken;
         private Parsing _parsing;
         private ISparkTemplate _template;
 
         protected override void beforeEach()
         {
-            _template = new SparkTemplate("b/a.spark", "b", "c");
-            _template.ViewModel = typeof (ProductModel);
-            _viewToken = new SparkViewToken(_template, new SparkViewEngine());
-            _parsing = new Parsing
-            {
-                Master = "application",
-                ViewModelType = _viewToken.Template.ViewModel.FullName
-            };
-
-            _request = new AttachRequest<ISparkTemplate>
-            {
-                Template = _template,
-                Logger = MockFor<ITemplateLogger>()
-            };
+            Assert.Fail("REDO");
+//            _template = new SparkTemplate("b/a.spark", "b", "c");
+//            _template.ViewModel = typeof (ProductModel);
+//            _viewToken = new SparkViewToken(_template, new SparkViewEngine());
+//            _parsing = new Parsing
+//            {
+//                Master = "application",
+//                ViewModelType = _viewToken.Template.ViewModel.FullName
+//            };
+//
+//            _request = new AttachRequest<ISparkTemplate>
+//            {
+//                Template = _template,
+//                Logger = MockFor<ITemplateLogger>()
+//            };
 
         }
 
@@ -51,7 +51,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         [Test]
         public void if_view_model_type_is_null_and_master_is_invalid_then_binder_is_not_applied_1()
         {
-            _viewToken.Template.ViewModel = null;            
+            //_viewToken.Template.ViewModel = null;            
             _parsing.Master = null;
 
             ClassUnderTest.CanAttach(_request).ShouldBeFalse();
@@ -60,7 +60,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         [Test]
         public void if_view_model_type_is_null_and_master_is_invalid_then_binder_is_not_applied_2()
         {
-            _viewToken.Template.ViewModel = null;
+            //_viewToken.Template.ViewModel = null;
             _parsing.Master = "";
 
             ClassUnderTest.CanAttach(_request).ShouldBeFalse();
@@ -69,7 +69,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         [Test]
         public void does_not_bind_partials()
         {
-            _request.Template = new SparkTemplate("b/_partial.spark", "b", "c");
+            //_request.Template = new SparkTemplate("b/_partial.spark", "b", "c");
             ClassUnderTest.CanAttach(_request).ShouldBeFalse();
         }
 

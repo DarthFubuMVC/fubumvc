@@ -10,12 +10,12 @@ namespace FubuMVC.Razor.RazorModel
 {
     public interface IRazorTemplateGenerator
     {
-        GeneratorResults GenerateCode(IRazorTemplate descriptor, string className, RazorEngineHost host);
+        GeneratorResults GenerateCode(RazorTemplate descriptor, string className, RazorEngineHost host);
     }
 
     public class RazorTemplateGenerator : IRazorTemplateGenerator
     {
-         public GeneratorResults GenerateCode(IRazorTemplate descriptor, string className, RazorEngineHost host)
+         public GeneratorResults GenerateCode(RazorTemplate descriptor, string className, RazorEngineHost host)
          {
              var engine = new RazorTemplateEngine(host);
              GeneratorResults results;

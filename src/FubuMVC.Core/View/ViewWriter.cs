@@ -5,6 +5,7 @@ using FubuCore.Descriptions;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Rendering;
 using HtmlTags.Conventions;
 
@@ -17,9 +18,9 @@ namespace FubuMVC.Core.View
 
     public class ViewWriter<T> : IMediaWriter<T>, IViewWriter, DescribesItself where T : class
     {
-        private readonly IViewToken _view;
+        private readonly ITemplateFile _view;
 
-        public ViewWriter(IViewToken view)
+        public ViewWriter(ITemplateFile view)
         {
             _view = view;
         }

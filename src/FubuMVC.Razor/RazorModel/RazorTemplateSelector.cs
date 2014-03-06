@@ -2,9 +2,9 @@
 
 namespace FubuMVC.Razor.RazorModel
 {
-    public class RazorTemplateSelector : ITemplateSelector<IRazorTemplate>
+    public class RazorTemplateSelector : ITemplateSelector<RazorTemplate>
     {
-        public bool IsAppropriate(IRazorTemplate template)
+        public bool IsAppropriate(RazorTemplate template)
         {
             return template.IsRazorView();
         }

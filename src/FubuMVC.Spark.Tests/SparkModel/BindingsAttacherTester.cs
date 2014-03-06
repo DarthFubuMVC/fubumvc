@@ -16,19 +16,22 @@ namespace FubuMVC.Spark.Tests.SparkModel
         private ISparkTemplate _template;
         private IAttachRequest<ISparkTemplate> _request;
         private TemplateRegistry<ISparkTemplate> _templates;
-        private SparkViewToken _viewViewToken;
+        private SparkTemplate _viewViewToken;
 
         protected override void beforeEach()
         {
             _templates = new TemplateRegistry<ISparkTemplate>();
-            _viewViewToken = new SparkViewToken(_template, new SparkViewEngine());
-            _template = new SparkTemplate("/App/Views/Fubu.spark", "/App/Views", ContentFolder.Application)
-            {
-            };
 
-            _templates.Register(_template);
-            Enumerable.Range(1, 5).Select(x => new SparkTemplate("{0}.spark".ToFormat(x), "b", "c"))
-                .Each(_templates.Register);
+            Assert.Fail("Redo");
+
+//            _viewViewToken = new SparkTemplate(_template, new SparkViewEngine());
+//            _template = new SparkTemplate("/App/Views/Fubu.spark", "/App/Views", ContentFolder.Application)
+//            {
+//            };
+//
+//            _templates.Register(_template);
+//            Enumerable.Range(1, 5).Select(x => new SparkTemplate("{0}.spark".ToFormat(x), "b", "c"))
+//                .Each(_templates.Register);
 
 
             _request = new AttachRequest<ISparkTemplate>

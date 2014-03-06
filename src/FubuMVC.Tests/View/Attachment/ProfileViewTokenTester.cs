@@ -28,13 +28,6 @@ namespace FubuMVC.Tests.View.Attachment
         }
 
         [Test]
-        public void view_type_delegates()
-        {
-            theInner.Stub(x => x.ViewType).Return(typeof (int));
-            theToken.ViewType.ShouldEqual(typeof (int));
-        }
-
-        [Test]
         public void view_model_delegates()
         {
             theInner.Stub(x => x.ViewModel).Return(typeof (string));

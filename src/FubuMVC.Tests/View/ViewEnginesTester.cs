@@ -37,7 +37,7 @@ namespace FubuMVC.Tests.View
         }
 
 
-        public class TestViewToken : IViewToken
+        public class TestViewToken : ITemplateFile
         {
             public IRenderableView GetView()
             {
@@ -50,15 +50,47 @@ namespace FubuMVC.Tests.View
             }
 
             public string ProfileName { get; set; }
+            public string FilePath { get; private set; }
+            public string RootPath { get; private set; }
+            public string Origin { get; private set; }
+            public string ViewPath { get; private set; }
+            public Parsing Parsing { get; private set; }
+            public string RelativePath()
+            {
+                throw new NotImplementedException();
+            }
+
+            public string DirectoryPath()
+            {
+                throw new NotImplementedException();
+            }
+
+            public string RelativeDirectoryPath()
+            {
+                throw new NotImplementedException();
+            }
+
+            public bool FromHost()
+            {
+                throw new NotImplementedException();
+            }
+
+            public bool IsPartial()
+            {
+                throw new NotImplementedException();
+            }
+
+            public string FullName()
+            {
+                throw new NotImplementedException();
+            }
+
             public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
             {
                 throw new NotImplementedException();
             }
 
-            public Type ViewType
-            {
-                get { throw new NotImplementedException(); }
-            }
+            public ITemplateFile Master { get; set; }
 
             public Type ViewModel
             {
@@ -93,10 +125,10 @@ namespace FubuMVC.Tests.View
 
         public class TestViewFacility : IViewFacility
         {
-            public Task<IEnumerable<IViewToken>> FindViews(BehaviorGraph graph)
+            public Task<IEnumerable<ITemplateFile>> FindViews(BehaviorGraph graph)
             {
                 return Task.Factory.StartNew(() => {
-                    return new IViewToken[]{new TestViewToken()} as IEnumerable<IViewToken>;
+                    return new ITemplateFile[]{new TestViewToken()} as IEnumerable<ITemplateFile>;
                 });
 
             }

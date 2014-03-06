@@ -34,7 +34,7 @@ namespace FubuMVC.Razor
             services.SetServiceIfNone<IRazorTemplateGenerator, RazorTemplateGenerator>();
             services.SetServiceIfNone<ITemplateCompiler, TemplateCompiler>();
             services.SetServiceIfNone<ITemplateFactory, TemplateFactoryCache>();
-            services.SetServiceIfNone<ITemplateDirectoryProvider<IRazorTemplate>, TemplateDirectoryProvider<IRazorTemplate>>();
+            services.SetServiceIfNone<ITemplateDirectoryProvider<RazorTemplate>, TemplateDirectoryProvider<RazorTemplate>>();
             services.SetServiceIfNone<ISharedPathBuilder>(new SharedPathBuilder());
             services.SetServiceIfNone<IPartialRenderer, PartialRenderer>();
 
@@ -42,10 +42,10 @@ namespace FubuMVC.Razor
             services.SetServiceIfNone(graph);
             services.SetServiceIfNone<ISharingGraph>(graph);
 
-            services.FillType<ISharedTemplateLocator<IRazorTemplate>, SharedTemplateLocator<IRazorTemplate>>();
-            services.FillType<ISharingAttacher<IRazorTemplate>, MasterAttacher<IRazorTemplate>>();
-            services.FillType<ITemplateSelector<IRazorTemplate>, RazorTemplateSelector>();
-            services.FillType<Bottles.IActivator, SharingAttacherActivator<IRazorTemplate>>();
+            services.FillType<ISharedTemplateLocator<RazorTemplate>, SharedTemplateLocator<RazorTemplate>>();
+            services.FillType<ISharingAttacher<RazorTemplate>, MasterAttacher<RazorTemplate>>();
+            services.FillType<ITemplateSelector<RazorTemplate>, RazorTemplateSelector>();
+            services.FillType<Bottles.IActivator, SharingAttacherActivator<RazorTemplate>>();
 
 
         }

@@ -56,19 +56,19 @@ namespace FubuMVC.Tests.View
 
         /*
     [TestFixture]
-    public class GenericViewModelBinderTester : InteractionContext<GenericViewModelBinder<IRazorTemplate>>
+    public class GenericViewModelBinderTester : InteractionContext<GenericViewModelBinder<RazorTemplate>>
     {
-        private BindRequest<IRazorTemplate> _request;
-        private IRazorTemplate _template;
-        private ViewDescriptor<IRazorTemplate> _descriptor;
+        private BindRequest<RazorTemplate> _request;
+        private RazorTemplate _template;
+        private ViewDescriptor<RazorTemplate> _descriptor;
 
         protected override void beforeEach()
         {
             _template = new RazorTemplate("", "", "");
-            _descriptor = new ViewDescriptor<IRazorTemplate>(_template);
+            _descriptor = new ViewDescriptor<RazorTemplate>(_template);
             _template.Descriptor = _descriptor;
 
-            _request = new BindRequest<IRazorTemplate>
+            _request = new BindRequest<RazorTemplate>
             {
                 Target = _template,
                 Types = typePool(),

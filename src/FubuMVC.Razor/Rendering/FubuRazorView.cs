@@ -92,7 +92,7 @@ namespace FubuMVC.Razor.Rendering
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string Layout { get; set; }
 
-        IRazorTemplate IFubuRazorView.OriginTemplate { get; set; }
+        RazorTemplate IFubuRazorView.OriginTemplate { get; set; }
 
         string IFubuPage.ElementPrefix { get; set; }
 
@@ -308,7 +308,7 @@ namespace FubuMVC.Razor.Rendering
         IFubuRazorView LayoutView { get; }
         void UseLayout(IFubuRazorView layout);
         void NoLayout();
-        IRazorTemplate OriginTemplate { get; set; }
+        RazorTemplate OriginTemplate { get; set; }
         string CurrentOutput { get; }
         void Execute();
         void ExecuteLayout(IFubuRazorView child);

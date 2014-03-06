@@ -3,6 +3,7 @@ using System.IO;
 using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core.Runtime.Files;
+using FubuMVC.Core.View.Rendering;
 
 namespace FubuMVC.Core.View.Model
 {
@@ -131,5 +132,10 @@ namespace FubuMVC.Core.View.Model
                 _master = value;
             }
         }
+
+        public string ProfileName { get; set; }
+
+        public abstract IRenderableView GetView();
+        public abstract IRenderableView GetPartialView();
     }
 }

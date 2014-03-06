@@ -100,10 +100,8 @@
     <Compile Include="SparkModel\SharedPathBuilderTester.cs" />
     <Compile Include="SparkModel\SharedTemplateLocatorTester.cs" />
     <Compile Include="SparkModel\ViewFolder\BasicTester.cs" />
-    <Compile Include="SparkModel\TemplateExtensionsTester.cs" />
     <Compile Include="SparkModel\ChunkLoaderTester.cs" />
     <Compile Include="SparkModel\MasterAttacherTester.cs" />
-    <Compile Include="SparkViewTokenTester.cs" />
     <Compile Include="SparkEngineSettingsTester.cs" />
   </ItemGroup>
   <ItemGroup>

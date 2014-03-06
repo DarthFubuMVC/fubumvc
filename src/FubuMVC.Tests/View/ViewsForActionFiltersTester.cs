@@ -24,7 +24,6 @@ namespace FubuMVC.Tests.View
             {
                 ViewName = "AAction",
                 Namespace = GetType().Namespace,
-                ViewType =  typeof(AAction),
                 ViewModel = typeof (ViewModel1)
             };
             var views = new List<IViewToken>
@@ -86,7 +85,6 @@ namespace FubuMVC.Tests.View
             {
                 ViewName = "A",
                 Namespace = GetType().Namespace,
-                ViewType = typeof(FakeViewToken),
                 ViewModel = typeof (ViewModel1)
             };
             var views = new List<IViewToken>
@@ -139,7 +137,7 @@ namespace FubuMVC.Tests.View
     }
 
 
-    public class FakeViewToken : BehaviorNode, IViewToken
+    public class FakeViewToken : BehaviorNode, ITemplateFile
     {
         public override BehaviorCategory Category { get { return BehaviorCategory.Output; } }
 
@@ -165,12 +163,47 @@ namespace FubuMVC.Tests.View
         }
 
         public string ProfileName { get; set; }
+        public string FilePath { get; private set; }
+        public string RootPath { get; private set; }
+        public string Origin { get; private set; }
+        public string ViewPath { get; private set; }
+        public Parsing Parsing { get; private set; }
+        public string RelativePath()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string DirectoryPath()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string RelativeDirectoryPath()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool FromHost()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsPartial()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string FullName()
+        {
+            throw new NotImplementedException();
+        }
+
         public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
         {
             throw new NotImplementedException();
         }
 
-        public Type ViewType { get; set;}
+        public ITemplateFile Master { get; set; }
 
         protected override ObjectDef buildObjectDef()
         {

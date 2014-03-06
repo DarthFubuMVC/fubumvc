@@ -16,7 +16,7 @@ namespace FubuMVC.Razor
 {
     public interface ITemplateFactory
     {
-        IFubuRazorView GetView(IRazorTemplate descriptor);
+        IFubuRazorView GetView(RazorTemplate descriptor);
     }
 
     public class TemplateFactoryCache : ITemplateFactory
@@ -24,12 +24,12 @@ namespace FubuMVC.Razor
         private readonly CommonViewNamespaces _commonViewNamespaces;
         private readonly RazorEngineSettings _razorEngineSettings;
         private readonly ITemplateCompiler _templateCompiler;
-        private readonly IRazorTemplateGenerator _templateGenerator;
+        private readonly RazorTemplateGenerator _templateGenerator;
         private readonly Cache<string, long> _lastModifiedCache;
         private readonly IDictionary<string, Type> _cache;
 
         public TemplateFactoryCache(CommonViewNamespaces commonViewNamespaces, 
-            RazorEngineSettings razorEngineSettings, ITemplateCompiler templateCompiler, IRazorTemplateGenerator templateGenerator)
+            RazorEngineSettings razorEngineSettings, ITemplateCompiler templateCompiler, RazorTemplateGenerator templateGenerator)
         {
             _commonViewNamespaces = commonViewNamespaces;
             _razorEngineSettings = razorEngineSettings;
@@ -39,7 +39,7 @@ namespace FubuMVC.Razor
             _lastModifiedCache = new Cache<string, long>(name => name.LastModified());
         }
 
-        public IFubuRazorView GetView(IRazorTemplate descriptor)
+        public IFubuRazorView GetView(RazorTemplate descriptor)
         {
             Type viewType;
             var filePath = descriptor.FilePath;
@@ -57,7 +57,7 @@ namespace FubuMVC.Razor
             return Activator.CreateInstance(viewType).As<IFubuRazorView>();
         }
 
-        private Type getViewType(IRazorTemplate descriptor)
+        private Type getViewType(RazorTemplate descriptor)
         {
             var className = ParserHelpers.SanitizeClassName(descriptor.ViewPath);
             var baseTemplateType = _razorEngineSettings.BaseTemplateType;

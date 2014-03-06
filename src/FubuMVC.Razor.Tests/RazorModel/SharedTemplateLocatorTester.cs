@@ -11,15 +11,15 @@ using Rhino.Mocks;
 namespace FubuMVC.Razor.Tests.RazorModel
 {
     [TestFixture]
-    public class SharedTemplateLocatorTester : InteractionContext<SharedTemplateLocator<IRazorTemplate>>
+    public class SharedTemplateLocatorTester : InteractionContext<SharedTemplateLocator<RazorTemplate>>
     {
-        private IRazorTemplate _template;
+        private RazorTemplate _template;
         private IList<string> _directories;
-        private TemplateRegistry<IRazorTemplate> _templates;
+        private TemplateRegistry<RazorTemplate> _templates;
 
         protected override void beforeEach()
         {
-            _template = MockFor<IRazorTemplate>();
+            _template = MockFor<RazorTemplate>();
             _directories = new List<string>
             {
                 Path.Combine("App", "Actions", "Shared"),
@@ -27,20 +27,22 @@ namespace FubuMVC.Razor.Tests.RazorModel
                 Path.Combine("App", "Shared")
             };
 
-            _templates = new TemplateRegistry<IRazorTemplate>(new[]
-            {
-                new RazorTemplate(Path.Combine("App", "Shared", "application.cshtml"), "App", ContentFolder.Application),
-                new RazorTemplate(Path.Combine("App", "Shared", "sitemaster.cshtml"), "App", ContentFolder.Application),
-                new RazorTemplate(Path.Combine("App", "Views", "Shared", "application.cshtml"), "App", ContentFolder.Application),
-                new RazorTemplate(Path.Combine("App", "Views", "Shared", "site.xml"), "App", ContentFolder.Application)
-            });
+            Assert.Fail("Redo test setup");
 
-            MockFor<ITemplateDirectoryProvider<IRazorTemplate>>()
+//            _templates = new TemplateRegistry<RazorTemplate>(new[]
+//            {
+//                new RazorTemplate(Path.Combine("App", "Shared", "application.cshtml"), "App", ContentFolder.Application),
+//                new RazorTemplate(Path.Combine("App", "Shared", "sitemaster.cshtml"), "App", ContentFolder.Application),
+//                new RazorTemplate(Path.Combine("App", "Views", "Shared", "application.cshtml"), "App", ContentFolder.Application),
+//                new RazorTemplate(Path.Combine("App", "Views", "Shared", "site.xml"), "App", ContentFolder.Application)
+//            });
+
+            MockFor<ITemplateDirectoryProvider<RazorTemplate>>()
                 .Stub(x => x.SharedPathsOf(_template)).Return(_directories);
 
-            Container.Inject<ITemplateSelector<IRazorTemplate>>(new RazorTemplateSelector());
+            Container.Inject<ITemplateSelector<RazorTemplate>>(new RazorTemplateSelector());
 
-            Container.Inject<ITemplateRegistry<IRazorTemplate>>(_templates);
+            Container.Inject<ITemplateRegistry<RazorTemplate>>(_templates);
         }
 
         [Test]

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View;
+using FubuMVC.Core.View.Model;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -34,12 +35,12 @@ namespace FubuMVC.Tests.View.Attachment
 
     public class FakeViewEngine1 : IViewFacility
     {
-        public Task<IEnumerable<IViewToken>> FindViews(BehaviorGraph graph)
+        public Task<IEnumerable<ITemplateFile>> FindViews(BehaviorGraph graph)
         {
             return Task.Factory.StartNew(() => tokens());
         }
 
-        private static IEnumerable<IViewToken> tokens()
+        private static IEnumerable<ITemplateFile> tokens()
         {
             yield return new FakeViewToken {ViewName = "A1"};
             yield return new FakeViewToken {ViewName = "A2"};
@@ -56,12 +57,12 @@ namespace FubuMVC.Tests.View.Attachment
 
     public class FakeViewEngine2 : IViewFacility
     {
-        public Task<IEnumerable<IViewToken>> FindViews(BehaviorGraph graph)
+        public Task<IEnumerable<ITemplateFile>> FindViews(BehaviorGraph graph)
         {
             return Task.Factory.StartNew(() => tokens());
         }
 
-        private static IEnumerable<IViewToken> tokens()
+        private static IEnumerable<ITemplateFile> tokens()
         {
             yield return new FakeViewToken {ViewName = "A4"};
             yield return new FakeViewToken {ViewName = "A5"};

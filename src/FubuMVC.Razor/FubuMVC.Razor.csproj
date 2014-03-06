@@ -83,7 +83,6 @@
     <Compile Include="RazorModel\RazorTemplate.cs" />
     <Compile Include="RazorModel\TemplateExtensions.cs" />
     <Compile Include="RazorViewFacility.cs" />
-    <Compile Include="RazorViewToken.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".package-manifest" />

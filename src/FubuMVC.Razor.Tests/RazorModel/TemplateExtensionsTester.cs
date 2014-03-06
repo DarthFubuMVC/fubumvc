@@ -10,9 +10,9 @@ namespace FubuMVC.Razor.Tests.RazorModel
     [TestFixture]
     public class TemplateExtensionsTester
     {
-        private readonly IRazorTemplate _bottomTemplate;
-        private readonly IRazorTemplate _middleTemplate;
-        private readonly IRazorTemplate _topTemplate;
+        private readonly RazorTemplate _bottomTemplate;
+        private readonly RazorTemplate _middleTemplate;
+        private readonly RazorTemplate _topTemplate;
 
         public TemplateExtensionsTester()
         {
@@ -21,10 +21,10 @@ namespace FubuMVC.Razor.Tests.RazorModel
             var bottomPath = Path.Combine(rootPath, "Finding", "Sherlock", "Homes.cshtml");
             var middlePath = Path.Combine(rootPath, "Dining", "Philosophers.cshtml");
             var topPath = Path.Combine(rootPath, "Livelock.cshtml");
-            
-            _bottomTemplate = new RazorTemplate(bottomPath, rootPath, "chuck");
-            _middleTemplate = new RazorTemplate(middlePath, rootPath, "chuck");
-            _topTemplate = new RazorTemplate(topPath, rootPath, "chuck");
+            Assert.Fail("Redo.  Maybe just in TemplateTester");
+//            _bottomTemplate = new RazorTemplate(bottomPath, rootPath, "chuck");
+//            _middleTemplate = new RazorTemplate(middlePath, rootPath, "chuck");
+//            _topTemplate = new RazorTemplate(topPath, rootPath, "chuck");
         }
 
         [Test]
@@ -64,7 +64,10 @@ namespace FubuMVC.Razor.Tests.RazorModel
         public void is_razor_view_returns_true_if_file_ends_with_dot_razor()
         {
 			_bottomTemplate.IsRazorView().ShouldBeTrue();
-			new RazorTemplate("bindings.xml", "", "").IsRazorView().ShouldBeFalse();
+			
+            Assert.Fail("Redo.");
+            
+            //new RazorTemplate("bindings.xml", "", "").IsRazorView().ShouldBeFalse();
         }
     }
 }

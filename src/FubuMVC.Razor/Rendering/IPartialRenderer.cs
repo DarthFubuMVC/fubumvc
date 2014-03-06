@@ -13,10 +13,10 @@ namespace FubuMVC.Razor.Rendering
 
     public class PartialRenderer : IPartialRenderer
     {
-        private readonly ISharedTemplateLocator<IRazorTemplate> _sharedTemplateLocator;
+        private readonly ISharedTemplateLocator<RazorTemplate> _sharedTemplateLocator;
         private readonly ITemplateFactory _templateFactory;
 
-        public PartialRenderer(ISharedTemplateLocator<IRazorTemplate> sharedTemplateLocator, ITemplateFactory templateFactory)
+        public PartialRenderer(ISharedTemplateLocator<RazorTemplate> sharedTemplateLocator, ITemplateFactory templateFactory)
         {
             _sharedTemplateLocator = sharedTemplateLocator;
             _templateFactory = templateFactory;
@@ -42,7 +42,7 @@ namespace FubuMVC.Razor.Rendering
         private IFubuRazorView getPartialView(IFubuRazorView view, string name)
         {
             var template = _sharedTemplateLocator.LocatePartial(name, view.OriginTemplate);
-            var partialView = _templateFactory.GetView(template.As<IRazorTemplate>());
+            var partialView = _templateFactory.GetView(template.As<RazorTemplate>());
             return partialView;
         }
     }

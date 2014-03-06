@@ -1,5 +1,6 @@
 ﻿using System;
 using FubuMVC.Core.View.Model;
+using FubuMVC.Core.View.Rendering;
 using FubuMVC.Spark.SparkModel;
 
 namespace FubuMVC.Spark.Tests.SparkModel.Policies
@@ -32,6 +33,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
 
         public string Namespace { get; set; }
         public Type ViewModel { get; set; }
+        public string ProfileName { get; set; }
 
         public Parsing Parsing { get; private set; }
 
@@ -81,5 +83,14 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
         }
 
         public ITemplateFile Master { get; set; }
+        public IRenderableView GetView()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IRenderableView GetPartialView()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
