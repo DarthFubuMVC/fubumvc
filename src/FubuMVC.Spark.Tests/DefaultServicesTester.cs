@@ -91,12 +91,6 @@ namespace FubuMVC.Spark.Tests
         }
 
         [Test]
-        public void precompiler_activator()
-        {
-            defaultServicesCheck<IActivator, SparkPrecompiler>(4);
-        }
-
-        [Test]
         public void sharing_attachers()
         {
             countForServiceCheck<ISharingAttacher<ISparkTemplate>>(2);

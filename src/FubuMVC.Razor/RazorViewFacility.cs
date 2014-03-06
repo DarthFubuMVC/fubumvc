@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View;
-using FubuMVC.Core.View.Model;
 using FubuMVC.Razor.RazorModel;
 
 namespace FubuMVC.Razor
@@ -24,16 +22,12 @@ namespace FubuMVC.Razor
             var factory = new TemplateFactoryCache(namespaces, razorSettings, new TemplateCompiler(),
                 new RazorTemplateGenerator());
 
-            var templates = graph.Files.FindFiles(razorSettings.Search)
+            return graph.Files.FindFiles(razorSettings.Search)
                 .Select(file => {
                     var template = new RazorTemplate(file);
-                    template.Descriptor = new ViewDescriptor<IRazorTemplate>(template);
 
-                    return template;
+                    return new RazorViewToken(template, factory);
                 });
-
-
-            return templates.Select(x => new RazorViewToken(x.Descriptor.As<ViewDescriptor<IRazorTemplate>>(), factory));
         } 
 
     }

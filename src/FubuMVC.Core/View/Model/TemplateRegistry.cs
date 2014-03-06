@@ -41,11 +41,9 @@ namespace FubuMVC.Core.View.Model
         }
 
         // TODO: UT
-        public IEnumerable<TDescriptor> DescriptorsWithViewModels<TDescriptor>() where TDescriptor : ViewDescriptor<T>
+        public IEnumerable<T> TemplatesWithViewModels()
         {
-            return this.Where(t => t.Descriptor is TDescriptor)
-                .Select(x => x.Descriptor.As<TDescriptor>())
-                .Where(x => x.Template.ViewModel != null);
+            return this.OfType<T>().Where(x => x.ViewModel != null);
         }
 
         public IEnumerable<T> FromHost()

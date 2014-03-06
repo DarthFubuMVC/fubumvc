@@ -17,17 +17,17 @@ namespace FubuMVC.Core.View.Model
 
         public bool CanAttach(IAttachRequest<T> request)
         {
-            var descriptor = request.Template.Descriptor as ViewDescriptor<T>;
+            var descriptor = request.Template;
             var parsing =request.Template.Parsing;
 
             return descriptor != null
                    && descriptor.Master == null
-                   && (descriptor.Template.ViewModel != null || parsing.Master.IsNotEmpty())
+                   && (descriptor.ViewModel != null || parsing.Master.IsNotEmpty())
                    && !request.Template.IsPartial()
                    && parsing.Master != string.Empty
-                   && (!descriptor.Template.Name().EqualsIgnoreCase(MasterName)
+                   && (!descriptor.Name().EqualsIgnoreCase(MasterName)
                        ||
-                       (descriptor.Template.Name().EqualsIgnoreCase(MasterName) && parsing.Master != null &&
+                       (descriptor.Name().EqualsIgnoreCase(MasterName) && parsing.Master != null &&
                         !parsing.Master.EqualsIgnoreCase(MasterName)));
         }
 
@@ -46,7 +46,7 @@ namespace FubuMVC.Core.View.Model
                 return;
             }
 
-            template.Descriptor.As<ViewDescriptor<T>>().Master = layout;
+            template.Master = layout;
             var found = "Master [{0}] found at {1}".ToFormat(layoutName, layout.FilePath);
             tracer.Log(template, found);
         }

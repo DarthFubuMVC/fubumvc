@@ -29,11 +29,6 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
             set;
         }
 
-        public ITemplateDescriptor Descriptor
-        {
-            get;
-            set;
-        }
 
         public string Namespace { get; set; }
         public Type ViewModel { get; set; }

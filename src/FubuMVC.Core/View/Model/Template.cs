@@ -15,7 +15,6 @@ namespace FubuMVC.Core.View.Model
             return origin == ContentFolder.Application ? string.Empty : "_{0}".ToFormat(origin);
         }
 
-        private ITemplateDescriptor _descriptor = new NulloDescriptor();
         private Lazy<Parsing> _parsing;
         private ITemplateFile _master;
 
@@ -47,12 +46,6 @@ namespace FubuMVC.Core.View.Model
         public string Origin { get; set; }
 
         public string ViewPath { get; set; }
-
-        public ITemplateDescriptor Descriptor
-        {
-            get { return _descriptor; }
-            set { _descriptor = value; }
-        }
 
         public override string ToString()
         {

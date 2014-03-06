@@ -42,7 +42,7 @@ namespace FubuMVC.Razor.Rendering
         private IFubuRazorView getPartialView(IFubuRazorView view, string name)
         {
             var template = _sharedTemplateLocator.LocatePartial(name, view.OriginTemplate);
-            var partialView = _templateFactory.GetView(template.Descriptor.As<ViewDescriptor<IRazorTemplate>>());
+            var partialView = _templateFactory.GetView(template.As<IRazorTemplate>());
             return partialView;
         }
     }

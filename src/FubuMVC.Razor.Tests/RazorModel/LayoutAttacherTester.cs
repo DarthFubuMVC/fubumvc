@@ -11,7 +11,6 @@ namespace FubuMVC.Razor.Tests.RazorModel
     public class LayoutAttacherTester : InteractionContext<MasterAttacher<IRazorTemplate>>
     {
         private AttachRequest<IRazorTemplate> _request;
-        private ViewDescriptor<IRazorTemplate> _viewDescriptor;
         private Parsing _parsing;
         private IRazorTemplate _template;
 
@@ -20,15 +19,11 @@ namespace FubuMVC.Razor.Tests.RazorModel
             _template = new RazorTemplate("b/a.cshtml", "b", "c");
             _template.ViewModel = typeof (ProductModel);
 
-            _template.Descriptor = _viewDescriptor = new ViewDescriptor<IRazorTemplate>(_template)
-            {
-                
-            };
             
             _parsing = new Parsing
             {
                 Master = "application",
-                ViewModelType = _viewDescriptor.Template.ViewModel.FullName
+                ViewModelType = _template.ViewModel.FullName
             };
 
             _request = new AttachRequest<IRazorTemplate>
@@ -52,17 +47,11 @@ namespace FubuMVC.Razor.Tests.RazorModel
             ClassUnderTest.CanAttach(_request).ShouldBeFalse();
         }
 
-        [Test]
-        public void if_descriptor_is_not_viewdescriptor_then_binder_is_not_applied()
-        {
-            _template.Descriptor = new NulloDescriptor();
-            ClassUnderTest.CanAttach(_request).ShouldBeFalse();
-        }
 
         [Test]
         public void if_view_model_type_is_null_and_master_is_invalid_then_binder_is_not_applied_1()
         {
-            _viewDescriptor.Template.ViewModel = null;            
+            _template.ViewModel = null;            
             _parsing.Master = null;
 
             ClassUnderTest.CanAttach(_request).ShouldBeFalse();
@@ -71,7 +60,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
         [Test]
         public void if_view_model_type_is_null_and_master_is_invalid_then_binder_is_not_applied_2()
         {
-            _viewDescriptor.Template.ViewModel = null;
+            _template.ViewModel = null;
             _parsing.Master = "";
 
             ClassUnderTest.CanAttach(_request).ShouldBeFalse();
@@ -80,7 +69,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
         [Test]
         public void if_master_is_already_set_binder_is_not_applied()
         {
-            _viewDescriptor.Master = MockFor<IRazorTemplate>();
+            _template.Master = MockFor<IRazorTemplate>();
             ClassUnderTest.CanAttach(_request).ShouldBeFalse();
         }
 
@@ -121,7 +110,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
         {
             master_is_found();
             ClassUnderTest.Attach(_request);
-            _viewDescriptor.Master.ShouldEqual(MockFor<IRazorTemplate>());
+            _template.Master.ShouldEqual(MockFor<IRazorTemplate>());
         }
 
         [Test]

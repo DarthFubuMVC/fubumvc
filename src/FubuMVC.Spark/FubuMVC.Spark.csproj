@@ -70,8 +70,7 @@
     <Compile Include="SparkModel\SharingAttachers.cs" />
     <Compile Include="SparkModel\FubuBindingProvider.cs" />
     <Compile Include="SparkModel\ChunkLoader.cs" />
-    <Compile Include="SparkModel\SparkDescriptor.cs" />
-    <Compile Include="SparkModel\SparkTemplateRegistry.cs" />
+    <Compile Include="SparkModel\SparkViewToken.cs" />
     <Compile Include="SparkModel\SparkTemplateSelector.cs" />
     <Compile Include="SparkModel\SharedTemplateLocator.cs" />
     <Compile Include="SparkModel\TemplateExtensions.cs" />
@@ -80,9 +79,7 @@
     <Compile Include="SparkActivator.cs" />
     <Compile Include="SparkEngine.cs" />
     <Compile Include="SparkModel\WatchedSparkEntry.cs" />
-    <Compile Include="SparkPrecompiler.cs" />
     <Compile Include="SparkViewFacility.cs" />
-    <Compile Include="SparkViewToken.cs" />
     <Compile Include="Rendering\FubuSparkView.cs" />
   </ItemGroup>
   <ItemGroup>

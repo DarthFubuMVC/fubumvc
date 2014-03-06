@@ -10,12 +10,12 @@ namespace FubuMVC.Razor
 {
     public class RazorViewToken : IViewToken
     {
-        private readonly ViewDescriptor<IRazorTemplate> _descriptor;
+        private readonly IRazorTemplate _template;
         private readonly ITemplateFactory _templateFactory;
 
-        public RazorViewToken(ViewDescriptor<IRazorTemplate> viewDescriptor, ITemplateFactory templateFactory)
+        public RazorViewToken(IRazorTemplate template, ITemplateFactory templateFactory)
         {
-            _descriptor = viewDescriptor;
+            _template = template;
             _templateFactory = templateFactory;
         }
 
@@ -31,14 +31,14 @@ namespace FubuMVC.Razor
 
         private IFubuRazorView CreateInstance(bool partialOnly = false)
         {
-            var currentDescriptor = _descriptor;
+            var currentDescriptor = _template;
             var returnTemplate = _templateFactory.GetView(currentDescriptor);
-            returnTemplate.OriginTemplate = _descriptor.Template;
+            returnTemplate.OriginTemplate = _template;
             var currentTemplate = returnTemplate;
 
             while (currentDescriptor.Master != null && !partialOnly)
             {
-                currentDescriptor = currentDescriptor.Master.Descriptor.As<ViewDescriptor<IRazorTemplate>>();
+                currentDescriptor = currentDescriptor.Master.As<IRazorTemplate>();
 
                 var layoutTemplate = _templateFactory.GetView(currentDescriptor);
                 layoutTemplate.OriginTemplate = returnTemplate.OriginTemplate;
@@ -58,12 +58,12 @@ namespace FubuMVC.Razor
 
         public Type ViewModel
         {
-            get { return _descriptor.Template.ViewModel; }
+            get { return _template.ViewModel; }
         }
 
         public string Name()
         {
-            return _descriptor.Template.Name();
+            return _template.Name();
         }
 
         public string Namespace
@@ -73,12 +73,12 @@ namespace FubuMVC.Razor
 
         public override string ToString()
         {
-            return _descriptor.Template.RelativePath();
+            return _template.RelativePath();
         }
 
         public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
         {
-            _descriptor.Template.AttachViewModels(types, logger);
+            _template.AttachViewModels(types, logger);
         }
     }
 }

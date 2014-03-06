@@ -24,22 +24,19 @@ namespace FubuMVC.Spark.Tests
 
             _template.ViewModel = typeof (ProductModel);
 
-            _descriptor = new SparkDescriptor(_template, new SparkViewEngine());
-            _template.Descriptor = _descriptor;
+            _token = new SparkViewToken(_template, new SparkViewEngine());
 
-            _token = new SparkViewToken(_descriptor);
         }
 
         #endregion
 
-        private SparkViewToken _token;
         private ISparkTemplate _template;
-        private SparkDescriptor _descriptor;
+        private SparkViewToken _token;
 
         [Test]
         public void folder_is_descriptor_namespace()
         {
-            _token.Namespace.ShouldEqual(_descriptor.Template.Namespace);
+            _token.Namespace.ShouldEqual(_token.Template.Namespace);
         }
 
         [Test]
@@ -51,7 +48,7 @@ namespace FubuMVC.Spark.Tests
         [Test]
         public void view_model_type_is_descriptor_view_model()
         {
-            _token.ViewModel.ShouldEqual(_descriptor.Template.ViewModel);
+            _token.ViewModel.ShouldEqual(_token.Template.ViewModel);
         }
     }
 

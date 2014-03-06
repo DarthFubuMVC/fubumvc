@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Web;
 using Bottles;
 using Bottles.Diagnostics;
@@ -15,15 +16,13 @@ namespace FubuMVC.Spark
 {
     public class SparkActivator : IActivator
     {
-        private readonly ISparkTemplateRegistry _templateRegistry;
         private readonly ISparkViewEngine _engine;
         private readonly CommonViewNamespaces _namespaces;
         readonly ITemplateDirectoryProvider<ISparkTemplate> _directoryProvider;
         private readonly SparkEngineSettings _settings;
 
-        public SparkActivator (ISparkTemplateRegistry templateRegistry, ISparkViewEngine engine, CommonViewNamespaces namespaces, ITemplateDirectoryProvider<ISparkTemplate> directoryProvider, SparkEngineSettings settings)
+        public SparkActivator (ISparkViewEngine engine, CommonViewNamespaces namespaces, ITemplateDirectoryProvider<ISparkTemplate> directoryProvider, SparkEngineSettings settings)
         {
-            _templateRegistry = templateRegistry;
             _engine = engine;
             _namespaces = namespaces;
             _directoryProvider = directoryProvider;
@@ -66,17 +65,19 @@ namespace FubuMVC.Spark
         {
             var engine = (SparkViewEngine) _engine;
 
-            engine.ViewFolder = new TemplateViewFolder(_templateRegistry);
-            log.Trace("Setting viewfolder [{0}] for view engine", _engine.ViewFolder.GetType().FullName);
-            
-            engine.DefaultPageBaseType = typeof(FubuSparkView).FullName;
-            log.Trace("Setting page base type [{0}] for views", _engine.DefaultPageBaseType);
+            throw new NotImplementedException();
 
-            engine.BindingProvider = new FubuBindingProvider(_templateRegistry);
-            log.Trace("Setting binding provider [{0}] for view engine", engine.BindingProvider.GetType().FullName);
-
-            engine.PartialProvider = new FubuPartialProvider(_directoryProvider);
-            log.Trace("Setting partial provider [{0}] for view engine", engine.PartialProvider.GetType().FullName);
+//            engine.ViewFolder = new TemplateViewFolder(_templateRegistry);
+//            log.Trace("Setting viewfolder [{0}] for view engine", _engine.ViewFolder.GetType().FullName);
+//            
+//            engine.DefaultPageBaseType = typeof(FubuSparkView).FullName;
+//            log.Trace("Setting page base type [{0}] for views", _engine.DefaultPageBaseType);
+//
+//            engine.BindingProvider = new FubuBindingProvider(_templateRegistry);
+//            log.Trace("Setting binding provider [{0}] for view engine", engine.BindingProvider.GetType().FullName);
+//
+//            engine.PartialProvider = new FubuPartialProvider(_directoryProvider);
+//            log.Trace("Setting partial provider [{0}] for view engine", engine.PartialProvider.GetType().FullName);
         }
     }
 }

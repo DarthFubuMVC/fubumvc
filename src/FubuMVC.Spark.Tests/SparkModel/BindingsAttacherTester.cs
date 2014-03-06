@@ -16,15 +16,14 @@ namespace FubuMVC.Spark.Tests.SparkModel
         private ISparkTemplate _template;
         private IAttachRequest<ISparkTemplate> _request;
         private TemplateRegistry<ISparkTemplate> _templates;
-        private SparkDescriptor _viewDescriptor;
+        private SparkViewToken _viewViewToken;
 
         protected override void beforeEach()
         {
             _templates = new TemplateRegistry<ISparkTemplate>();
-            _viewDescriptor = new SparkDescriptor(_template, new SparkViewEngine());
+            _viewViewToken = new SparkViewToken(_template, new SparkViewEngine());
             _template = new SparkTemplate("/App/Views/Fubu.spark", "/App/Views", ContentFolder.Application)
             {
-                Descriptor = _viewDescriptor                                
             };
 
             _templates.Register(_template);
@@ -56,21 +55,15 @@ namespace FubuMVC.Spark.Tests.SparkModel
         {
             ClassUnderTest.Attach(_request);
 
-            _viewDescriptor.Bindings.ShouldEqual(_templates);
+            _viewViewToken.Bindings.ShouldEqual(_templates);
             MockFor<ISharedTemplateLocator>().VerifyAllExpectations();
         }
 
-        [Test]
-        public void does_not_bind_templates_with_no_viewdescriptor()
-        {
-            _template.Descriptor = new NulloDescriptor();
-            ClassUnderTest.CanAttach(_request).ShouldBeFalse();
-        }
 
         [Test]
         public void does_not_attempt_add_bindings_if_prior_processed()
         {
-            _viewDescriptor.AddBinding(MockFor<ISparkTemplate>());
+            _viewViewToken.AddBinding(MockFor<ISparkTemplate>());
             ClassUnderTest.CanAttach(_request).ShouldBeFalse();
         }
 

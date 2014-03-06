@@ -527,7 +527,6 @@
     <Compile Include="View\IFubuView.cs" />
     <Compile Include="View\IViewFacility.cs" />
     <Compile Include="View\IViewToken.cs" />
-    <Compile Include="View\Model\Descriptors.cs" />
     <Compile Include="View\Model\IAttachRequest.cs" />
     <Compile Include="View\Model\ISharingAttacher.cs" />
     <Compile Include="View\Model\ITemplateFile.cs" />

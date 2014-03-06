@@ -99,14 +99,10 @@
     <Compile Include="SparkModel\TemplateDirectoryProviderTester.cs" />
     <Compile Include="SparkModel\SharedPathBuilderTester.cs" />
     <Compile Include="SparkModel\SharedTemplateLocatorTester.cs" />
-    <Compile Include="SparkModel\TemplateRegistryTester.cs" />
-    <Compile Include="SparkModel\ExtendedTester.cs" />
     <Compile Include="SparkModel\ViewFolder\BasicTester.cs" />
     <Compile Include="SparkModel\TemplateExtensionsTester.cs" />
     <Compile Include="SparkModel\ChunkLoaderTester.cs" />
     <Compile Include="SparkModel\MasterAttacherTester.cs" />
-    <Compile Include="SparkPrecompilerTester.cs" />
-    <Compile Include="SparkViewFacilityTester.cs" />
     <Compile Include="SparkViewTokenTester.cs" />
     <Compile Include="SparkEngineSettingsTester.cs" />
   </ItemGroup>

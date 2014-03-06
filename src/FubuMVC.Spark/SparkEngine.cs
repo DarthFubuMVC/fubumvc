@@ -15,7 +15,6 @@ namespace FubuMVC.Spark
 {
     public class SparkEngine : IFubuRegistryExtension
     {
-        private readonly SparkTemplateRegistry _templateRegistry = new SparkTemplateRegistry();
 
         void IFubuRegistryExtension.Configure(FubuRegistry registry)
         {
@@ -28,9 +27,6 @@ namespace FubuMVC.Spark
 
         private void configureServices(ServiceRegistry services)
         {
-            services.ReplaceService<ISparkTemplateRegistry>(_templateRegistry);
-            services.ReplaceService<ITemplateRegistry<ISparkTemplate>>(_templateRegistry);
-            
             var graph = new SharingGraph();
             services.SetServiceIfNone(graph);
             services.SetServiceIfNone<ISharingGraph>(graph);
@@ -44,7 +40,6 @@ namespace FubuMVC.Spark
             services.FillType<IActivator, SharingPolicyActivator>();
             services.FillType<IActivator, SharingAttacherActivator<ISparkTemplate>>();
             services.FillType<IActivator, SparkActivator>();
-            services.FillType<IActivator, SparkPrecompiler>();
 
             services.FillType<ISharingAttacher<ISparkTemplate>, MasterAttacher<ISparkTemplate>>();
             services.FillType<ISharingAttacher<ISparkTemplate>, BindingsAttacher>();

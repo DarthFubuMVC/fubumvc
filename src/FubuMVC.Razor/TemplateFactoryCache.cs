@@ -16,7 +16,7 @@ namespace FubuMVC.Razor
 {
     public interface ITemplateFactory
     {
-        IFubuRazorView GetView(ViewDescriptor<IRazorTemplate> descriptor);
+        IFubuRazorView GetView(IRazorTemplate descriptor);
     }
 
     public class TemplateFactoryCache : ITemplateFactory
@@ -39,10 +39,10 @@ namespace FubuMVC.Razor
             _lastModifiedCache = new Cache<string, long>(name => name.LastModified());
         }
 
-        public IFubuRazorView GetView(ViewDescriptor<IRazorTemplate> descriptor)
+        public IFubuRazorView GetView(IRazorTemplate descriptor)
         {
             Type viewType;
-            var filePath = descriptor.Template.FilePath;
+            var filePath = descriptor.FilePath;
             _cache.TryGetValue(filePath, out viewType);
             var lastModified = filePath.LastModified();
             if (viewType == null || (_lastModifiedCache[filePath] != lastModified))
@@ -57,13 +57,13 @@ namespace FubuMVC.Razor
             return Activator.CreateInstance(viewType).As<IFubuRazorView>();
         }
 
-        private Type getViewType(ViewDescriptor<IRazorTemplate> descriptor)
+        private Type getViewType(IRazorTemplate descriptor)
         {
-            var className = ParserHelpers.SanitizeClassName(descriptor.Template.ViewPath);
+            var className = ParserHelpers.SanitizeClassName(descriptor.ViewPath);
             var baseTemplateType = _razorEngineSettings.BaseTemplateType;
             var generatedClassContext = new GeneratedClassContext("Execute", "Write", "WriteLiteral", "WriteTo", "WriteLiteralTo",
                                                                   "FubuMVC.Razor.Rendering.TemplateHelper", "DefineSection");
-            var codeLanguage = RazorCodeLanguageFactory.Create(descriptor.Template.FilePath.FileExtension());
+            var codeLanguage = RazorCodeLanguageFactory.Create(descriptor.FilePath.FileExtension());
             var host = new RazorEngineHost(codeLanguage)
             {
                 DefaultBaseClass = baseTemplateType.FullName,

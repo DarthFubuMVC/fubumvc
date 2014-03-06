@@ -23,8 +23,6 @@ namespace FubuMVC.Core.View.Model
         string Origin { get; }
         string ViewPath { get; }
 
-        ITemplateDescriptor Descriptor { get; set; }
-
         string Namespace { get;  }
 
         // TODO -- tighten this up

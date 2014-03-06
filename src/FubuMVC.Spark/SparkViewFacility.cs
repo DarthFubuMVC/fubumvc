@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View;
-using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.SparkModel;
 using Spark;
 
@@ -28,15 +27,11 @@ namespace FubuMVC.Spark
             var sparkSettings = graph.Settings.Get<SparkEngineSettings>();
 
 
-            var templates = graph.Files.FindFiles(sparkSettings.Search)
+            return graph.Files.FindFiles(sparkSettings.Search)
                 .Select(file => {
                     var template = new SparkTemplate(file);
-                    template.Descriptor = new SparkDescriptor(template, _engine);
-
-                    return template;
+                    return new SparkViewToken(template, _engine);
                 });
-
-            return templates.Select(x => new SparkViewToken((SparkDescriptor) x.Descriptor));
         }
     }
 }
