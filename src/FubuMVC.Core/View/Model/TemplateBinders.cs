@@ -58,7 +58,7 @@ namespace FubuMVC.Core.View.Model
             var descriptor = request.Target.Descriptor as ViewDescriptor<T>;
 
             return descriptor != null
-                   && !descriptor.HasViewModel()
+                   && !descriptor.Template.HasViewModel()
                    && request.Parsing.ViewModelType.IsNotEmpty()
                    && GenericParser.IsGeneric(request.Parsing.ViewModelType);
         }
@@ -74,8 +74,8 @@ namespace FubuMVC.Core.View.Model
             if (viewModel != null)
             {
                 var descriptor = template.Descriptor.As<ViewDescriptor<T>>();
-                descriptor.ViewModel = viewModel;
-                logger.Log(template, "Generic view model type is : {0}", descriptor.ViewModel);
+                descriptor.Template.ViewModel = viewModel;
+                logger.Log(template, "Generic view model type is : {0}", descriptor.Template.ViewModel);
                 return;
             }
 
@@ -90,7 +90,7 @@ namespace FubuMVC.Core.View.Model
             var descriptor = request.Target.Descriptor as ViewDescriptor<T>;
 
             return descriptor != null
-                   && !descriptor.HasViewModel()
+                   && !descriptor.Template.HasViewModel()
                    && request.Parsing.ViewModelType.IsNotEmpty()
                    && GenericParser.IsGeneric(request.Parsing.ViewModelType) == false;
         }
@@ -106,8 +106,8 @@ namespace FubuMVC.Core.View.Model
 
             if (typeCount == 1)
             {
-                descriptor.ViewModel = types.First();
-                logger.Log(template, "View model type is : [{0}]", descriptor.ViewModel);
+                descriptor.Template.ViewModel = types.First();
+                logger.Log(template, "View model type is : [{0}]", descriptor.Template.ViewModel);
 
                 return;
             }

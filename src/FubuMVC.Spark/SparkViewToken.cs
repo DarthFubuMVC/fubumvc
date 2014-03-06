@@ -1,9 +1,7 @@
 using System;
 using FubuCore;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Rendering;
-using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.SparkModel;
 using Spark;
 
@@ -37,7 +35,7 @@ namespace FubuMVC.Spark
 
         public Type ViewModel
         {
-            get { return _descriptor.ViewModel; }
+            get { return _descriptor.Template.ViewModel; }
         }
 
         public string Name()
@@ -47,7 +45,7 @@ namespace FubuMVC.Spark
 
         public string Namespace
         {
-            get { return _descriptor.Namespace; }
+            get { return _descriptor.Template.Namespace; }
         }
 
         public override string ToString()

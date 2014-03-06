@@ -18,15 +18,16 @@ namespace FubuMVC.Spark.Tests.SparkModel
         protected override void beforeEach()
         {
             _template = new SparkTemplate("b/a.spark", "b", "c");
+            _template.ViewModel = typeof (ProductModel);
             _template.Descriptor = _viewDescriptor = new SparkDescriptor(_template, new SparkViewEngine())
             {
-                ViewModel = typeof (ProductModel)
+                
             };
             
             _parsing = new Parsing
             {
                 Master = "application",
-                ViewModelType = _viewDescriptor.ViewModel.FullName
+                ViewModelType = _viewDescriptor.Template.ViewModel.FullName
             };
 
             _request = new AttachRequest<ISparkTemplate>
@@ -61,7 +62,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         [Test]
         public void if_view_model_type_is_null_and_master_is_invalid_then_binder_is_not_applied_1()
         {
-            _viewDescriptor.ViewModel = null;            
+            _viewDescriptor.Template.ViewModel = null;            
             _parsing.Master = null;
 
             ClassUnderTest.CanAttach(_request).ShouldBeFalse();
@@ -70,7 +71,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         [Test]
         public void if_view_model_type_is_null_and_master_is_invalid_then_binder_is_not_applied_2()
         {
-            _viewDescriptor.ViewModel = null;
+            _viewDescriptor.Template.ViewModel = null;
             _parsing.Master = "";
 
             ClassUnderTest.CanAttach(_request).ShouldBeFalse();

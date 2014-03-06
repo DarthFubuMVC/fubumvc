@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using FubuMVC.Core.View.Model;
-using FubuMVC.Spark.Rendering;
 using Spark;
 
 namespace FubuMVC.Spark.SparkModel
 {
     public class SparkDescriptor : ViewDescriptor<ISparkTemplate>
     {
-        private readonly Lazy<SparkViewDescriptor> _full; 
-        private readonly Lazy<SparkViewDescriptor> _partial; 
+        private readonly Lazy<SparkViewDescriptor> _full;
+        private readonly Lazy<SparkViewDescriptor> _partial;
         private readonly IList<ISparkTemplate> _bindings = new List<ISparkTemplate>();
         private readonly WatchedSparkEntry _viewEntry;
-        private readonly WatchedSparkEntry _partialViewEntry; 
-        
+        private readonly WatchedSparkEntry _partialViewEntry;
+
         public SparkDescriptor(ISparkTemplate template, ISparkViewEngine engine) : base(template)
         {
             _full = new Lazy<SparkViewDescriptor>(() => createSparkDescriptor(true));
@@ -21,27 +20,27 @@ namespace FubuMVC.Spark.SparkModel
 
             _viewEntry = new WatchedSparkEntry(() => engine.CreateEntry(_full.Value));
             _partialViewEntry = new WatchedSparkEntry(() => engine.CreateEntry(_partial.Value));
-
         }
 
-        public void AddBinding(ISparkTemplate template) { _bindings.Add(template); }
-        public IEnumerable<ISparkTemplate> Bindings { get { return _bindings; } }
+        public void AddBinding(ISparkTemplate template)
+        {
+            _bindings.Add(template);
+        }
+
+        public IEnumerable<ISparkTemplate> Bindings
+        {
+            get { return _bindings; }
+        }
 
 
         public ISparkViewEntry ViewEntry
         {
-            get
-            {
-                return _viewEntry.Value;
-            }
+            get { return _viewEntry.Value; }
         }
 
         public ISparkViewEntry PartialViewEntry
         {
-            get
-            {
-                return _partialViewEntry.Value;
-            }
+            get { return _partialViewEntry.Value; }
         }
 
         public void Precompile()
@@ -49,8 +48,6 @@ namespace FubuMVC.Spark.SparkModel
             _viewEntry.Precompile();
             _partialViewEntry.Precompile();
         }
-
-
 
 
         private SparkViewDescriptor createSparkDescriptor(bool useMaster)

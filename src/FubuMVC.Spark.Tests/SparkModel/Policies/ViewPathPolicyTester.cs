@@ -40,6 +40,9 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
             set;
         }
 
+        public string Namespace { get; set; }
+        public Type ViewModel { get; set; }
+
         public string RelativePath()
         {
             throw new NotImplementedException();
@@ -66,6 +69,16 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
         }
 
         public bool IsPartial()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool HasViewModel()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string FullName()
         {
             throw new NotImplementedException();
         }

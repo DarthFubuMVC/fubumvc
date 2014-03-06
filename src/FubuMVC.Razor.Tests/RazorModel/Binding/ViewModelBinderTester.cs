@@ -40,14 +40,14 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
             _request.Parsing.ViewModelType = typeof(Bar).FullName;
             ClassUnderTest.Bind(_request);
 
-            _descriptor.ViewModel.ShouldBeNull();
+            _descriptor.Template.ViewModel.ShouldBeNull();
         }
 
         [Test]
         public void if_view_model_type_exists_it_is_assigned_on_item()
         {
             ClassUnderTest.Bind(_request);
-            _descriptor.ViewModel.ShouldEqual(typeof(Baz));
+            _descriptor.Template.ViewModel.ShouldEqual(typeof(Baz));
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
         {
             _request.Parsing.ViewModelType = "x.y.jazz";
             ClassUnderTest.Bind(_request);
-            _descriptor.ViewModel.ShouldBeNull();
+            _descriptor.Template.ViewModel.ShouldBeNull();
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
         {
             _request.Parsing.ViewModelType = "x.y.jazz";
             ClassUnderTest.Bind(_request);
-            _descriptor.ViewModel.ShouldBeNull();
+            _descriptor.Template.ViewModel.ShouldBeNull();
         }
 
         [Test]
@@ -76,7 +76,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
         [Test]
         public void it_does_not_bind_viewmodel_if_already_set()
         {
-            _descriptor.ViewModel = typeof(Baz);
+            _descriptor.Template.ViewModel = typeof(Baz);
             ClassUnderTest.CanBind(_request).ShouldBeFalse();
         }
 

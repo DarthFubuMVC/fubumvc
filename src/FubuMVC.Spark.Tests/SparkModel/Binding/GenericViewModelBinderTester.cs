@@ -44,14 +44,14 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
             _parsing.ViewModelType = "FubuMVC.Spark.Tests.SparkModel.Binding.DuplicatedGeneric<FubuMVC.Spark.Tests.SparkModel.Binding.Bar>";
             ClassUnderTest.Bind(_request);
 
-            _descriptor.ViewModel.ShouldBeNull();
+            _descriptor.Template.ViewModel.ShouldBeNull();
         }
 
         [Test]
         public void if_view_model_type_exists_it_is_assigned_on_item()
         {
             ClassUnderTest.Bind(_request);
-            _descriptor.ViewModel.ShouldEqual(typeof(Generic<Baz>));
+            _descriptor.Template.ViewModel.ShouldEqual(typeof(Generic<Baz>));
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         {
             _parsing.ViewModelType = "x.y.jazz<bar>";
             ClassUnderTest.Bind(_request);
-            _descriptor.ViewModel.ShouldBeNull();
+            _descriptor.Template.ViewModel.ShouldBeNull();
         }
 
         [Test]
@@ -91,7 +91,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         [Test]
         public void it_does_not_bind_viewmodel_if_already_set()
         {
-            _descriptor.ViewModel = typeof(Baz);
+            _descriptor.Template.ViewModel = typeof(Baz);
             ClassUnderTest.CanBind(_request).ShouldBeFalse();
         }
 

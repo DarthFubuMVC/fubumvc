@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using FubuCore;
 using FubuMVC.Core.Runtime.Files;
@@ -11,12 +12,16 @@ namespace FubuMVC.Core.View.Model
         string Origin { get; set; }
         string ViewPath { get; set; }
         ITemplateDescriptor Descriptor { get; set; }
+        string Namespace { get; set; }
+        Type ViewModel { get; set; }
         string RelativePath();
         string DirectoryPath();
         string RelativeDirectoryPath();
         string Name();
         bool FromHost();
         bool IsPartial();
+        bool HasViewModel();
+        string FullName();
     }
 
     public class Template : ITemplateFile
@@ -80,6 +85,18 @@ namespace FubuMVC.Core.View.Model
         public bool IsPartial()
         {
             return Path.GetFileName(FilePath).StartsWith("_");
+        }
+
+        public string Namespace { get; set; }
+        public Type ViewModel { get; set; }
+        public bool HasViewModel()
+        {
+            return ViewModel != null;
+        }
+
+        public string FullName()
+        {
+            return Namespace.IsEmpty() ? Name() : Namespace + "." + Name();
         }
 
 

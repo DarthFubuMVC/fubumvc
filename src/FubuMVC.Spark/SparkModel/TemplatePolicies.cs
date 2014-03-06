@@ -11,8 +11,8 @@ namespace FubuMVC.Spark.SparkModel
             var descriptor = template.Descriptor as SparkDescriptor;
 						
             return descriptor != null
-				&& descriptor.HasViewModel() 
-				&& descriptor.Namespace.IsEmpty();
+				&& descriptor.Template.HasViewModel() 
+				&& descriptor.Template.Namespace.IsEmpty();
         }
 
         public void Apply(ISparkTemplate template)
@@ -20,14 +20,14 @@ namespace FubuMVC.Spark.SparkModel
             var relativePath = template.RelativePath();
             var relativeNamespace = Path.GetDirectoryName(relativePath);
             var descriptor = template.Descriptor.As<SparkDescriptor>();
-            var nspace = descriptor.ViewModel.Assembly.GetName().Name;
+            var nspace = descriptor.Template.ViewModel.Assembly.GetName().Name;
 			
             if (relativeNamespace.IsNotEmpty())
             {
                 nspace += "." + relativeNamespace.Replace(Path.DirectorySeparatorChar, '.');
             }
 			
-            descriptor.Namespace = nspace;
+            descriptor.Template.Namespace = nspace;
         }
     }
 }

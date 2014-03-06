@@ -58,7 +58,7 @@ namespace FubuMVC.Razor
 
         public Type ViewModel
         {
-            get { return _descriptor.ViewModel; }
+            get { return _descriptor.Template.ViewModel; }
         }
 
         public string Name()

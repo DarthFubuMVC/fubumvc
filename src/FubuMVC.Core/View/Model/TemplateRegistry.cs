@@ -45,7 +45,7 @@ namespace FubuMVC.Core.View.Model
         {
             return this.Where(t => t.Descriptor is TDescriptor)
                 .Select(x => x.Descriptor.As<TDescriptor>())
-                .Where(x => x.HasViewModel());
+                .Where(x => x.Template.HasViewModel());
         }
 
         public IEnumerable<T> FromHost()
