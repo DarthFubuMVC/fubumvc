@@ -1,4 +1,5 @@
 using System;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Rendering;
 
 namespace FubuMVC.Core.View
@@ -21,5 +22,7 @@ namespace FubuMVC.Core.View
         IRenderableView GetPartialView();
 
         string ProfileName { get; set; }
+
+        void AttachViewModels(ViewTypePool types, ITemplateLogger logger);
     }
 }

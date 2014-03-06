@@ -75,5 +75,10 @@ namespace FubuMVC.Razor
         {
             return _descriptor.Template.RelativePath();
         }
+
+        public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
+        {
+            _descriptor.Template.AttachViewModels(types, logger);
+        }
     }
 }

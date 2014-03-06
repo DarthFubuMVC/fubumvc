@@ -1,6 +1,7 @@
 using System;
 using FubuCore;
 using FubuMVC.Core.View;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Rendering;
 using FubuMVC.Spark.SparkModel;
 using Spark;
@@ -27,6 +28,10 @@ namespace FubuMVC.Spark
         }
 
         public string ProfileName { get; set; }
+        public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
+        {
+            _descriptor.Template.AttachViewModels(types, logger);
+        }
 
         public Type ViewType
         {

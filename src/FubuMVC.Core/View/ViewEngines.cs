@@ -6,6 +6,7 @@ using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View.Attachment;
+using FubuMVC.Core.View.Model;
 
 namespace FubuMVC.Core.View
 {
@@ -56,6 +57,12 @@ namespace FubuMVC.Core.View
                 _excludes.Each(views.RemoveAll);
 
                 _viewPolicies.Each(x => x.Alter(views));
+
+                var logger = TemplateLogger.Default();
+                var types = new ViewTypePool();
+
+                // Attaching the view models
+                views.Each(x => x.AttachViewModels(types, logger));
 
                 return new ViewBag(views);
             });

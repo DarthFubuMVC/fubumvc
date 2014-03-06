@@ -79,5 +79,10 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
         {
             throw new NotImplementedException();
         }
+
+        public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

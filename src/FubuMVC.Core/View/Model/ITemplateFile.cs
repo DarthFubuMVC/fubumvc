@@ -37,5 +37,6 @@ namespace FubuMVC.Core.View.Model
         bool IsPartial();
 
         string FullName();
+        void AttachViewModels(ViewTypePool types, ITemplateLogger logger);
     }
 }

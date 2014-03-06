@@ -5,6 +5,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Attachment;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Rendering;
 using FubuMVC.Tests.View.FakeViews;
 using FubuMVC.Tests.View.SubNamesapce;
@@ -164,6 +165,10 @@ namespace FubuMVC.Tests.View
         }
 
         public string ProfileName { get; set; }
+        public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
+        {
+            throw new NotImplementedException();
+        }
 
         public Type ViewType { get; set;}
 

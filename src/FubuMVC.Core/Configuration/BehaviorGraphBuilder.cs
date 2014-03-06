@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FubuCore;
@@ -6,9 +7,6 @@ using FubuCore.Reflection;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.Conventions;
-using System.Collections.Generic;
-using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Attachment;
 
@@ -24,7 +22,9 @@ namespace FubuMVC.Core.Configuration
 
             config.RunActions(ConfigurationType.Settings, graph);
 
-            config.Sources.Union(config.Imports).SelectMany(x => x.BuildChains(graph.Settings)).Each(chain => graph.AddChain(chain));
+            config.Sources.Union(config.Imports)
+                .SelectMany(x => x.BuildChains(graph.Settings))
+                .Each(chain => graph.AddChain(chain));
 
             config.RunActions(ConfigurationType.Explicit, graph);
             config.RunActions(ConfigurationType.Policy, graph);
@@ -39,20 +39,16 @@ namespace FubuMVC.Core.Configuration
             var graph = new BehaviorGraph();
             startBehaviorGraph(registry, graph);
 
-
-
-            lookForAccessorOverrides(graph);
-
             var config = registry.Config;
-
-            config.Add(new SystemServicesPack());
-            config.Add(new DefaultConfigurationPack());
 
             // Apply settings
             config.RunActions(ConfigurationType.Settings, graph);
 
             var viewDiscovery = graph.Settings.Get<ViewEngines>().BuildViewBag(graph);
-            
+            lookForAccessorOverrides(graph);
+
+            config.Add(new SystemServicesPack());
+            config.Add(new DefaultConfigurationPack());
 
             discoverChains(config, graph);
             var attacher = new ViewAttachmentWorker(viewDiscovery.Result, graph.Settings.Get<ViewAttachmentPolicy>());
@@ -70,7 +66,7 @@ namespace FubuMVC.Core.Configuration
             config.RunActions(ConfigurationType.Instrumentation, graph);
 
             registerServices(config, graph);
-            
+
 
             return graph;
         }
@@ -90,7 +86,8 @@ namespace FubuMVC.Core.Configuration
                 chainSources.Select(
                     x => {
                         return
-                            Task.Factory.StartNew(() => { x.BuildChains(graph.Settings).Each(chain => graph.AddChain(chain)); });
+                            Task.Factory.StartNew(
+                                () => { x.BuildChains(graph.Settings).Each(chain => graph.AddChain(chain)); });
                     }).ToArray();
 
             Task.WaitAll(tasks);
@@ -113,24 +110,22 @@ namespace FubuMVC.Core.Configuration
         public static IEnumerable<string> ConfigurationOrder()
         {
             return new string[]
-                   {
-                       ConfigurationType.Settings,
-                       ConfigurationType.Explicit,
-                       ConfigurationType.Policy,
-                       ConfigurationType.InjectNodes,
-                       ConfigurationType.Attachment,
-                       ConfigurationType.Reordering,
-                       ConfigurationType.Instrumentation
-                   };
-        } 
+            {
+                ConfigurationType.Settings,
+                ConfigurationType.Explicit,
+                ConfigurationType.Policy,
+                ConfigurationType.InjectNodes,
+                ConfigurationType.Attachment,
+                ConfigurationType.Reordering,
+                ConfigurationType.Instrumentation
+            };
+        }
 
-        
 
         private static void startBehaviorGraph(FubuRegistry registry, BehaviorGraph graph)
         {
             graph.ApplicationAssembly = registry.ApplicationAssembly;
 
-           
 
             findAutoRegisteredConfigurationActions(registry, graph);
         }
@@ -157,7 +152,9 @@ namespace FubuMVC.Core.Configuration
 
                 TypePool.AppDomainTypes()
                     .TypesMatching(
-                        x => x.CanBeCastTo<IAccessorRulesRegistration>() && x.IsConcreteWithDefaultCtor() && !x.IsOpenGeneric())
+                        x =>
+                            x.CanBeCastTo<IAccessorRulesRegistration>() && x.IsConcreteWithDefaultCtor() &&
+                            !x.IsOpenGeneric())
                     .
                     Distinct().Select(x => { return Activator.CreateInstance(x).As<IAccessorRulesRegistration>(); })
                     .Each(x => x.AddRules(rules));

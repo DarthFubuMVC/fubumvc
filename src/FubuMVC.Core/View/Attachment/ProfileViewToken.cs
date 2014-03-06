@@ -1,5 +1,6 @@
 using System;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Rendering;
 
 namespace FubuMVC.Core.View.Attachment
@@ -51,5 +52,9 @@ namespace FubuMVC.Core.View.Attachment
         }
 
         public string ProfileName { get; set; }
+        public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
+        {
+            throw new NotSupportedException();
+        }
     }
 }

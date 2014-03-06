@@ -6,6 +6,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Rendering;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -49,6 +50,10 @@ namespace FubuMVC.Tests.View
             }
 
             public string ProfileName { get; set; }
+            public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
+            {
+                throw new NotImplementedException();
+            }
 
             public Type ViewType
             {
