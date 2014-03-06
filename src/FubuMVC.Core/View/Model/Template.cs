@@ -17,6 +17,7 @@ namespace FubuMVC.Core.View.Model
 
         private ITemplateDescriptor _descriptor = new NulloDescriptor();
         private Lazy<Parsing> _parsing;
+        private ITemplateFile _master;
 
         public Template(IFubuFile file)
             : this(file.Path, file.ProvenancePath, file.Provenance)
@@ -122,6 +123,20 @@ namespace FubuMVC.Core.View.Model
             if (typeName.IsEmpty()) return;
 
             ViewModel = types.FindTypeByName(typeName, message => logger.Log(this, message));
+        }
+
+        public ITemplateFile Master
+        {
+            get { return _master; }
+            set
+            {
+                if (value != null && value.GetType() != GetType())
+                {
+                    throw new ArgumentOutOfRangeException("value", "Mismatch in template types between {0} and {1}".ToFormat(value.GetType().FullName, GetType().FullName));
+                }
+                
+                _master = value;
+            }
         }
     }
 }

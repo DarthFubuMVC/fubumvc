@@ -84,5 +84,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
         {
             throw new NotImplementedException();
         }
+
+        public ITemplateFile Master { get; set; }
     }
 }

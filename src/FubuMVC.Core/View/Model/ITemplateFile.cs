@@ -26,8 +26,13 @@ namespace FubuMVC.Core.View.Model
         ITemplateDescriptor Descriptor { get; set; }
 
         string Namespace { get;  }
+
+        // TODO -- tighten this up
         Type ViewModel { get; set; }
+
+        // TODO -- hide this.
         Parsing Parsing { get; }
+
         string RelativePath();
         string DirectoryPath();
         string RelativeDirectoryPath();
@@ -37,6 +42,9 @@ namespace FubuMVC.Core.View.Model
         bool IsPartial();
 
         string FullName();
+
         void AttachViewModels(ViewTypePool types, ITemplateLogger logger);
+
+        ITemplateFile Master { get; set; }
     }
 }

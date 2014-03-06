@@ -27,6 +27,7 @@ namespace FubuMVC.Razor
             var templates = graph.Files.FindFiles(razorSettings.Search)
                 .Select(file => {
                     var template = new RazorTemplate(file);
+                    template.Descriptor = new ViewDescriptor<IRazorTemplate>(template);
 
                     return template;
                 });
