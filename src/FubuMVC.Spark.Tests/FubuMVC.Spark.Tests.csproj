@@ -105,7 +105,6 @@
     <Compile Include="SparkModel\TemplateRegistryTester.cs" />
     <Compile Include="SparkModel\ExtendedTester.cs" />
     <Compile Include="SparkModel\ViewFolder\BasicTester.cs" />
-    <Compile Include="SparkModel\Policies\NamespacePolicyTester.cs" />
     <Compile Include="SparkModel\TemplateExtensionsTester.cs" />
     <Compile Include="SparkModel\ChunkLoaderTester.cs" />
     <Compile Include="SparkModel\MasterAttacherTester.cs" />

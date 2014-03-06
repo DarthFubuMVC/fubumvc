@@ -27,5 +27,17 @@ namespace FubuMVC.Tests.View
         {
             Assert.Fail("Do.");
         }
+
+        [Test]
+        public void determine_namespace_at_the_root_of_the_assembly()
+        {
+            Assert.Fail("Do.");
+        }
+
+        [Test]
+        public void determine_namespace_when_you_are_not_at_the_root_of_the_assembly()
+        {
+            Assert.Fail("Do.");
+        }
     }
 }

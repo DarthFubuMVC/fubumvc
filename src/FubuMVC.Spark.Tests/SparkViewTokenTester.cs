@@ -3,6 +3,7 @@ using System.IO;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.SparkModel;
+using FubuMVC.Spark.Tests.FubuMVC.Spark.Tests.Views.Home;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Spark;
@@ -21,7 +22,6 @@ namespace FubuMVC.Spark.Tests
             _template = new SparkTemplate(Path.Combine(root, "Views", "Home", "Home.spark"), root,
                                      ContentFolder.Application);
 
-            _template.Namespace = String.Join(".", new[] {GetType().Name, "Views", "Home"});
             _template.ViewModel = typeof (ProductModel);
 
             _descriptor = new SparkDescriptor(_template, new SparkViewEngine());
@@ -55,7 +55,11 @@ namespace FubuMVC.Spark.Tests
         }
     }
 
-    public class ProductModel
+    namespace FubuMVC.Spark.Tests.Views.Home
     {
+        public class ProductModel
+        {
+        }
     }
+
 }

@@ -1,5 +1,6 @@
 ﻿using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.SparkModel;
+using FubuMVC.Spark.Tests.FubuMVC.Spark.Tests.Views.Home;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;

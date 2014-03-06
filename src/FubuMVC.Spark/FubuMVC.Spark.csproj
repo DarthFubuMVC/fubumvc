@@ -73,7 +73,6 @@
     <Compile Include="SparkModel\SparkDescriptor.cs" />
     <Compile Include="SparkModel\SparkTemplateRegistry.cs" />
     <Compile Include="SparkModel\SparkTemplateSelector.cs" />
-    <Compile Include="SparkModel\TemplatePolicies.cs" />
     <Compile Include="SparkModel\SharedTemplateLocator.cs" />
     <Compile Include="SparkModel\TemplateExtensions.cs" />
     <Compile Include="SparkModel\TemplateViewFolder.cs" />

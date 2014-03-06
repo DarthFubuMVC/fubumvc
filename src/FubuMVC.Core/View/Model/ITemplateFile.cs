@@ -13,7 +13,7 @@ namespace FubuMVC.Core.View.Model
         string Origin { get; set; }
         string ViewPath { get; set; }
         ITemplateDescriptor Descriptor { get; set; }
-        string Namespace { get; set; }
+        string Namespace { get;  }
         Type ViewModel { get; set; }
         string RelativePath();
         string DirectoryPath();
@@ -97,7 +97,24 @@ namespace FubuMVC.Core.View.Model
             return Path.GetFileName(FilePath).StartsWith("_");
         }
 
-        public string Namespace { get; set; }
+        public string Namespace
+        {
+            get
+            {
+                if (ViewModel == null) return string.Empty;
+
+                var nspace = ViewModel.Assembly.GetName().Name;
+                var relativePath = RelativePath();
+                var relativeNamespace = Path.GetDirectoryName(relativePath);
+
+                if (relativeNamespace.IsNotEmpty())
+                {
+                    nspace += "." + relativeNamespace.Replace(Path.DirectorySeparatorChar, '.');
+                }
+
+                return nspace;
+            }
+        }
         public Type ViewModel { get; set; }
         public bool HasViewModel()
         {
