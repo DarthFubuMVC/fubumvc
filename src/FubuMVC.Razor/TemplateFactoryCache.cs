@@ -59,7 +59,7 @@ namespace FubuMVC.Razor
 
         private Type getViewType(ViewDescriptor<IRazorTemplate> descriptor)
         {
-            var className = ParserHelpers.SanitizeClassName(descriptor.ViewPath);
+            var className = ParserHelpers.SanitizeClassName(descriptor.Template.ViewPath);
             var baseTemplateType = _razorEngineSettings.BaseTemplateType;
             var generatedClassContext = new GeneratedClassContext("Execute", "Write", "WriteLiteral", "WriteTo", "WriteLiteralTo",
                                                                   "FubuMVC.Razor.Rendering.TemplateHelper", "DefineSection");

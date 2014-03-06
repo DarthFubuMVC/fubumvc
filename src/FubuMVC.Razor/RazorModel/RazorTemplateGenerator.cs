@@ -22,12 +22,12 @@ namespace FubuMVC.Razor.RazorModel
              using (var fileStream = new FileStream(descriptor.Template.FilePath, FileMode.Open, FileAccess.Read))
              using (var reader = new StreamReader(fileStream))
              {
-                 results = engine.GenerateCode(reader, className, host.DefaultNamespace, descriptor.ViewPath);
+                 results = engine.GenerateCode(reader, className, host.DefaultNamespace, descriptor.Template.ViewPath);
              }
 
              if (!results.Success)
              {
-                 throw CreateExceptionFromParserError(results.ParserErrors.Last(), descriptor.Name());
+                 throw CreateExceptionFromParserError(results.ParserErrors.Last(), descriptor.Template.Name());
              }
              return results;
          }

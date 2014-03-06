@@ -63,7 +63,7 @@ namespace FubuMVC.Razor
 
         public string Name()
         {
-            return _descriptor.Name();
+            return _descriptor.Template.Name();
         }
 
         public string Namespace
@@ -73,7 +73,7 @@ namespace FubuMVC.Razor
 
         public override string ToString()
         {
-            return _descriptor.RelativePath();
+            return _descriptor.Template.RelativePath();
         }
     }
 }

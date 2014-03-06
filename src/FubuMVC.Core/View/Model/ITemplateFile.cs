@@ -81,5 +81,7 @@ namespace FubuMVC.Core.View.Model
         {
             return Path.GetFileName(FilePath).StartsWith("_");
         }
+
+
     }
 }

@@ -1,5 +1,4 @@
 ﻿using FubuCore;
-using System.IO;
 
 namespace FubuMVC.Core.View.Model
 {
@@ -24,12 +23,14 @@ namespace FubuMVC.Core.View.Model
             var parsing = _parsing.ParsingFor(request.Template);
 
             return descriptor != null
-                && descriptor.Master == null
-                && (descriptor.HasViewModel() || parsing.Master.IsNotEmpty())
-                && !request.Template.IsPartial()
-                && parsing.Master != string.Empty
-                && (!descriptor.Name().EqualsIgnoreCase(MasterName) 
-                    || (descriptor.Name().EqualsIgnoreCase(MasterName) && parsing.Master != null && !parsing.Master.EqualsIgnoreCase(MasterName)));
+                   && descriptor.Master == null
+                   && (descriptor.HasViewModel() || parsing.Master.IsNotEmpty())
+                   && !request.Template.IsPartial()
+                   && parsing.Master != string.Empty
+                   && (!descriptor.Template.Name().EqualsIgnoreCase(MasterName)
+                       ||
+                       (descriptor.Template.Name().EqualsIgnoreCase(MasterName) && parsing.Master != null &&
+                        !parsing.Master.EqualsIgnoreCase(MasterName)));
         }
 
         public void Attach(IAttachRequest<T> request)

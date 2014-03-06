@@ -55,7 +55,7 @@ namespace FubuMVC.Spark.SparkModel
 
         private SparkViewDescriptor createSparkDescriptor(bool useMaster)
         {
-            var sparkDescriptor = new SparkViewDescriptor().AddTemplate(ViewPath);
+            var sparkDescriptor = new SparkViewDescriptor().AddTemplate(Template.ViewPath);
             if (useMaster && Master != null)
             {
                 appendMasterPage(sparkDescriptor, Master);

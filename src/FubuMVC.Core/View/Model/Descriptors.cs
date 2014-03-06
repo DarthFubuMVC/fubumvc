@@ -23,14 +23,9 @@ namespace FubuMVC.Core.View.Model
 
         string ITemplateDescriptor.Name { get { return "View"; } }
 
-        public string Name() { return Template.Name(); }
-
         public T Template { get; set; }
         public T Master { get; set; }
         public string Namespace { get; set; }
-
-        public string ViewPath { get { return Template.ViewPath; } }
-        public string RelativePath() { return Template.RelativePath(); }
 
 
         public Type ViewModel { get; set; }
@@ -41,7 +36,7 @@ namespace FubuMVC.Core.View.Model
 
         public string FullName()
         {
-            return Namespace.IsEmpty() ? Name() : Namespace + "." + Name();
+            return Namespace.IsEmpty() ? Template.Name() : Namespace + "." + Template.Name();
         }
     }
 

@@ -42,7 +42,7 @@ namespace FubuMVC.Spark
 
         public string Name()
         {
-            return _descriptor.Name();
+            return _descriptor.Template.Name();
         }
 
         public string Namespace
@@ -52,7 +52,7 @@ namespace FubuMVC.Spark
 
         public override string ToString()
         {
-            return _descriptor.RelativePath();
+            return _descriptor.Template.RelativePath();
         }
     }
 }
