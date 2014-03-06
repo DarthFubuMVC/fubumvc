@@ -13,7 +13,6 @@ namespace FubuMVC.Core.View.Model
     public class TemplateComposer<T> : ITemplateComposer<T> where T : ITemplateFile
     {
         private readonly IList<ITemplateBinder<T>> _binders = new List<ITemplateBinder<T>>();
-        private readonly IList<ITemplatePolicy<T>> _policies = new List<ITemplatePolicy<T>>();
 
         private readonly TypePool _types; 
         private readonly IParsingRegistrations<T> _parsings;
@@ -36,24 +35,8 @@ namespace FubuMVC.Core.View.Model
             _binders.Add(binder);
             return this;
         }
-        public TemplateComposer<T> Apply(ITemplatePolicy<T> policy)
-        {
-            _policies.Add(policy);
-            return this;
-        }
 
-        public TemplateComposer<T> Apply<TPolicy>() where TPolicy : ITemplatePolicy<T>, new()
-        {
-            return Apply(new TPolicy());
-        }
 
-        public TemplateComposer<T> Apply<TPolicy>(Action<TPolicy> configure) where TPolicy : ITemplatePolicy<T>, new()
-        {
-            var policy = new TPolicy();
-            configure(policy);
-            Apply(policy);
-            return this;
-        }
 
         public void Compose(ITemplateRegistry<T> templates)
         {
@@ -74,10 +57,8 @@ namespace FubuMVC.Core.View.Model
             };
 
             var binders = _binders.Where(x => x.CanBind(bindRequest));
-            var policies = _policies.Where(x => x.Matches(t));
 
             binders.Each(binder => binder.Bind(bindRequest));
-            policies.Each(policy => policy.Apply(t));
         }
     }
 }

@@ -12,9 +12,6 @@ namespace FubuMVC.Spark.Tests.SparkModel
     [TestFixture]
     public class TemplateComposerTester : InteractionContext<TemplateComposer<ISparkTemplate>>
     {
-        private FakeTemplatePolicy _policy1;
-        private FakeTemplatePolicy _policy2;
-
         private FakeTemplateBinder _binder1;
         private FakeTemplateBinder _binder2;
 
@@ -52,7 +49,6 @@ namespace FubuMVC.Spark.Tests.SparkModel
             registerBindersAndPolicies();
 
             OtherTemplateBinder.Reset();
-            OtherTemplatePolicy.Reset();
         }
 
         private void configurePolicies()
@@ -60,14 +56,6 @@ namespace FubuMVC.Spark.Tests.SparkModel
             _policy1Templates = new List<ISparkTemplate>();
             _policy2Templates = new List<ISparkTemplate>();
 
-            _policy1 = new FakeTemplatePolicy();
-            _policy2 = new FakeTemplatePolicy();
-
-            _policy1.Filter += x => x == _template1;
-            _policy2.Filter += x => x == _template2;
-
-            _policy1.Action += _policy1Templates.Add;
-            _policy2.Action += _policy2Templates.Add;
         }
 
         private void configureBinders()
@@ -89,9 +77,6 @@ namespace FubuMVC.Spark.Tests.SparkModel
         {
             ClassUnderTest.AddBinder(_binder1);
             ClassUnderTest.AddBinder(_binder2);
-
-            ClassUnderTest.Apply(_policy1);
-            ClassUnderTest.Apply(_policy2);
         }
 
         [Test]
@@ -128,25 +113,6 @@ namespace FubuMVC.Spark.Tests.SparkModel
             OtherTemplateBinder.Invoked.ShouldBeTrue();
         }
 
-        [Test]
-        public void apply_register_the_policies_and_use_them_when_building_items()
-        {
-            var invoked1 = false;
-            var invoked2 = false;
-
-            var policy = new FakeTemplatePolicy();
-            policy.Action += x => invoked1 = true;
-
-            ClassUnderTest.Apply(policy);
-            ClassUnderTest.Apply<FakeTemplatePolicy>(p => p.Action += x => invoked2 = true);
-            ClassUnderTest.Apply<OtherTemplatePolicy>();
-
-            ClassUnderTest.Compose(_templateRegistry);
-
-            invoked1.ShouldBeTrue();
-            invoked2.ShouldBeTrue();
-            OtherTemplatePolicy.Invoked.ShouldBeTrue();
-        }
     }
 
     public class FakeTemplateBinder : ITemplateBinder<ISparkTemplate>
@@ -185,37 +151,5 @@ namespace FubuMVC.Spark.Tests.SparkModel
         public static bool Invoked { get; private set; }
     }
 
-    public class FakeTemplatePolicy : ITemplatePolicy<ISparkTemplate>
-    {
-        public FakeTemplatePolicy()
-        {
-            Filter = new CompositePredicate<ISparkTemplate>();
-            Action = new CompositeAction<ISparkTemplate>();
-        }
 
-        public CompositePredicate<ISparkTemplate> Filter { get; set; }
-        public CompositeAction<ISparkTemplate> Action { get; set; }
-        public bool Matches(ISparkTemplate template)
-        {
-            return Filter.MatchesAny(template);
-        }
-
-        public void Apply(ISparkTemplate template)
-        {
-            Action.Do(template);
-        }
-    }
-
-    public class OtherTemplatePolicy : FakeTemplatePolicy
-    {
-        public OtherTemplatePolicy()
-        {
-            Action += x => Invoked = true;
-        }
-        public static void Reset()
-        {
-            Invoked = false;
-        }
-        public static bool Invoked { get; private set; }
-    }
 }

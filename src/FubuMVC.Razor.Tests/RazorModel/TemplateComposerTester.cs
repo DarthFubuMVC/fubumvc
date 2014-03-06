@@ -16,8 +16,6 @@ namespace FubuMVC.Razor.Tests.RazorModel
     [TestFixture]
     public class TemplateComposerTester : InteractionContext<TemplateComposer<IRazorTemplate>>
     {
-        private FakeTemplatePolicy _policy1;
-        private FakeTemplatePolicy _policy2;
 
         private FakeTemplateBinder _binder1;
         private FakeTemplateBinder _binder2;
@@ -59,22 +57,12 @@ namespace FubuMVC.Razor.Tests.RazorModel
             registerBindersAndPolicies();
 
             OtherTemplateBinder.Reset();
-            OtherTemplatePolicy.Reset();
         }
 
         private void configurePolicies()
         {
             _policy1Templates = new List<IRazorTemplate>();
             _policy2Templates = new List<IRazorTemplate>();
-
-            _policy1 = new FakeTemplatePolicy();
-            _policy2 = new FakeTemplatePolicy();
-
-            _policy1.Filter += x => x == _template1;
-            _policy2.Filter += x => x == _template2;
-
-            _policy1.Action += _policy1Templates.Add;
-            _policy2.Action += _policy2Templates.Add;
         }
 
         private void configureBinders()
@@ -96,9 +84,6 @@ namespace FubuMVC.Razor.Tests.RazorModel
         {
             ClassUnderTest.AddBinder(_binder1);
             ClassUnderTest.AddBinder(_binder2);
-
-            ClassUnderTest.Apply(_policy1);
-            ClassUnderTest.Apply(_policy2);
         }
 
         [Test]
@@ -135,25 +120,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
             OtherTemplateBinder.Invoked.ShouldBeTrue();
         }
 
-        [Test]
-        public void apply_register_the_policies_and_use_them_when_building_items()
-        {
-            var invoked1 = false;
-            var invoked2 = false;
 
-            var policy = new FakeTemplatePolicy();
-            policy.Action += x => invoked1 = true;
-
-            ClassUnderTest.Apply(policy);
-            ClassUnderTest.Apply<FakeTemplatePolicy>(p => p.Action += x => invoked2 = true);
-            ClassUnderTest.Apply<OtherTemplatePolicy>();
-
-            ClassUnderTest.Compose(_templateRegistry);
-
-            invoked1.ShouldBeTrue();
-            invoked2.ShouldBeTrue();
-            OtherTemplatePolicy.Invoked.ShouldBeTrue();
-        }
     }
 
     public class FakeTemplateBinder : ITemplateBinder<IRazorTemplate>
@@ -192,37 +159,4 @@ namespace FubuMVC.Razor.Tests.RazorModel
         public static bool Invoked { get; private set; }
     }
 
-    public class FakeTemplatePolicy : ITemplatePolicy<IRazorTemplate>
-    {
-        public FakeTemplatePolicy()
-        {
-            Filter = new CompositePredicate<IRazorTemplate>();
-            Action = new CompositeAction<IRazorTemplate>();
-        }
-
-        public CompositePredicate<IRazorTemplate> Filter { get; set; }
-        public CompositeAction<IRazorTemplate> Action { get; set; }
-        public bool Matches(IRazorTemplate template)
-        {
-            return Filter.MatchesAny(template);
-        }
-
-        public void Apply(IRazorTemplate template)
-        {
-            Action.Do(template);
-        }
-    }
-
-    public class OtherTemplatePolicy : FakeTemplatePolicy
-    {
-        public OtherTemplatePolicy()
-        {
-            Action += x => Invoked = true;
-        }
-        public static void Reset()
-        {
-            Invoked = false;
-        }
-        public static bool Invoked { get; private set; }
-    }
 }
