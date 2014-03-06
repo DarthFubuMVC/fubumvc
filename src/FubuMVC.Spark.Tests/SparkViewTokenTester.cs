@@ -17,7 +17,7 @@ namespace FubuMVC.Spark.Tests
         public void SetUp()
         {
             var root = AppDomain.CurrentDomain.BaseDirectory;
-            _template = new Template(Path.Combine(root, "Views", "Home", "Home.spark"), root,
+            _template = new SparkTemplate(Path.Combine(root, "Views", "Home", "Home.spark"), root,
                                      TemplateConstants.HostOrigin);
 
             _descriptor = new SparkDescriptor(_template, new SparkViewEngine())
@@ -34,7 +34,7 @@ namespace FubuMVC.Spark.Tests
         #endregion
 
         private SparkViewToken _token;
-        private ITemplate _template;
+        private ISparkTemplate _template;
         private SparkDescriptor _descriptor;
 
         [Test]

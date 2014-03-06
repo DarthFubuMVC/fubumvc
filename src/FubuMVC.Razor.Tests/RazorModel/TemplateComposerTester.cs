@@ -42,8 +42,8 @@ namespace FubuMVC.Razor.Tests.RazorModel
 
         protected override void beforeEach()
         {
-            _template1 = new Template("tmpl1.cshtml", "x", "o1");
-            _template2 = new Template("tmpl2.cshtml", "z", "o2");
+            _template1 = new RazorTemplate("tmpl1.cshtml", "x", "o1");
+            _template2 = new RazorTemplate("tmpl2.cshtml", "z", "o2");
             _templateRegistry = new TemplateRegistry<IRazorTemplate>(new[] {_template1, _template2});
 
             var viewParser = MockFor<IViewParser>();

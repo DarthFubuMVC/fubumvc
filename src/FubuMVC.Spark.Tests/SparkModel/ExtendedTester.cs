@@ -24,11 +24,11 @@ namespace FubuMVC.Spark.Tests.SparkModel
         private readonly TemplateViewFolder _viewFolder;
         private readonly ISparkViewEngine _engine;
 
-        private readonly TemplateRegistry<ITemplate> _pak1TemplateRegistry;
-        private readonly TemplateRegistry<ITemplate> _pak2TemplateRegistry;
-        private readonly TemplateRegistry<ITemplate> _appTemplateRegistry;
-        private readonly TemplateRegistry<ITemplate> _globalTemplateRegistry;
-        private readonly TemplateDirectoryProvider<ITemplate> _templateDirectoryProvider;
+        private readonly TemplateRegistry<ISparkTemplate> _pak1TemplateRegistry;
+        private readonly TemplateRegistry<ISparkTemplate> _pak2TemplateRegistry;
+        private readonly TemplateRegistry<ISparkTemplate> _appTemplateRegistry;
+        private readonly TemplateRegistry<ISparkTemplate> _globalTemplateRegistry;
+        private readonly TemplateDirectoryProvider<ISparkTemplate> _templateDirectoryProvider;
         private readonly SharingGraph _sharingGraph;
 
         public ExtendedTester()
@@ -40,7 +40,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
             var pathPackage2 = Path.Combine(testRoot, "Package2");
             var globalPackage = Path.Combine(testRoot, "Global");
 
-            var templateRegistry = new TemplateRegistry<ITemplate>();
+            var templateRegistry = new TemplateRegistry<ISparkTemplate>();
             var sparkSet = new SparkEngineSettings().Search;
 
             _sharingGraph = new SharingGraph();
@@ -54,14 +54,14 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 .Each(x =>
                 {
                     if (x.Provenance == TemplateConstants.HostOrigin && x.Path.StartsWith(pathPackage1)) return;
-                    templateRegistry.Register(new Template(x.Path, x.ProvenancePath, x.Provenance));
+                    templateRegistry.Register(new SparkTemplate(x.Path, x.ProvenancePath, x.Provenance));
                 });
 
-            var viewPathPolicy = new ViewPathPolicy<ITemplate>();
+            var viewPathPolicy = new ViewPathPolicy<ISparkTemplate>();
             templateRegistry.Each(viewPathPolicy.Apply);
 
             _viewFolder = new TemplateViewFolder(templateRegistry);
-            _templateDirectoryProvider = new TemplateDirectoryProvider<ITemplate>(new SharedPathBuilder(), templateRegistry, _sharingGraph);
+            _templateDirectoryProvider = new TemplateDirectoryProvider<ISparkTemplate>(new SharedPathBuilder(), templateRegistry, _sharingGraph);
             _engine = new SparkViewEngine
             {
                 ViewFolder = _viewFolder,
@@ -69,10 +69,10 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 PartialProvider = new FubuPartialProvider(_templateDirectoryProvider)
             };
 
-            _pak1TemplateRegistry = new TemplateRegistry<ITemplate>(templateRegistry.ByOrigin(Package1));
-            _pak2TemplateRegistry = new TemplateRegistry<ITemplate>(templateRegistry.ByOrigin(Package2));
-            _appTemplateRegistry = new TemplateRegistry<ITemplate>(templateRegistry.FromHost());
-            _globalTemplateRegistry = new TemplateRegistry<ITemplate>(templateRegistry.ByOrigin(Global));
+            _pak1TemplateRegistry = new TemplateRegistry<ISparkTemplate>(templateRegistry.ByOrigin(Package1));
+            _pak2TemplateRegistry = new TemplateRegistry<ISparkTemplate>(templateRegistry.ByOrigin(Package2));
+            _appTemplateRegistry = new TemplateRegistry<ISparkTemplate>(templateRegistry.FromHost());
+            _globalTemplateRegistry = new TemplateRegistry<ISparkTemplate>(templateRegistry.ByOrigin(Global));
         }
 
         [Test]
@@ -231,7 +231,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
             content.ShouldEqual(@"MacMini Hi from Host");
         }
 
-        private string getViewSource(ITemplate template)
+        private string getViewSource(ISparkTemplate template)
         {
             var content = _viewFolder.GetViewSource(template.ViewPath);
             using (var stream = content.OpenViewStream())
@@ -243,9 +243,9 @@ namespace FubuMVC.Spark.Tests.SparkModel
             }
         }
 
-        private string renderTemplate(ITemplate template, params ITemplate[] templates)
+        private string renderTemplate(ISparkTemplate template, params ISparkTemplate[] templates)
         {
-            templates = templates ?? Enumerable.Empty<Template>().ToArray();
+            templates = templates ?? Enumerable.Empty<SparkTemplate>().ToArray();
             var descriptor = new SparkViewDescriptor();
             descriptor.AddTemplate(template.ViewPath);
             templates.Each(x => descriptor.AddTemplate(x.ViewPath));

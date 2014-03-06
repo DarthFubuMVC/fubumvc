@@ -10,7 +10,7 @@ using Rhino.Mocks;
 namespace FubuMVC.Spark.Tests.SparkModel
 {
     [TestFixture]
-    public class TemplateComposerTester : InteractionContext<TemplateComposer<ITemplate>>
+    public class TemplateComposerTester : InteractionContext<TemplateComposer<ISparkTemplate>>
     {
         private FakeTemplatePolicy _policy1;
         private FakeTemplatePolicy _policy2;
@@ -18,16 +18,16 @@ namespace FubuMVC.Spark.Tests.SparkModel
         private FakeTemplateBinder _binder1;
         private FakeTemplateBinder _binder2;
 
-        private ITemplate _template1;
-        private ITemplate _template2;
+        private ISparkTemplate _template1;
+        private ISparkTemplate _template2;
 
-        private IList<ITemplate> _policy1Templates;
-        private IList<ITemplate> _policy2Templates;
+        private IList<ISparkTemplate> _policy1Templates;
+        private IList<ISparkTemplate> _policy2Templates;
 
-        private IList<ITemplate> _binder1Templates;
-        private IList<ITemplate> _binder2Templates;
+        private IList<ISparkTemplate> _binder1Templates;
+        private IList<ISparkTemplate> _binder2Templates;
 
-        private ITemplateRegistry<ITemplate> _templateRegistry;
+        private ITemplateRegistry<ISparkTemplate> _templateRegistry;
         private readonly TypePool _types;
 
         public TemplateComposerTester()
@@ -38,12 +38,12 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
         protected override void beforeEach()
         {
-            _template1 = new Template("tmpl1.spark", "x", "o1");
-            _template2 = new Template("tmpl2.spark", "z", "o2");
-            _templateRegistry = new TemplateRegistry<ITemplate>(new[] {_template1, _template2});
+            _template1 = new SparkTemplate("tmpl1.spark", "x", "o1");
+            _template2 = new SparkTemplate("tmpl2.spark", "z", "o2");
+            _templateRegistry = new TemplateRegistry<ISparkTemplate>(new[] {_template1, _template2});
 
-            var parsingRegistrations = MockFor<IParsingRegistrations<ITemplate>>();
-            parsingRegistrations.Stub(x => x.ParsingFor(Arg<Template>.Is.Anything)).Return(new Parsing());
+            var parsingRegistrations = MockFor<IParsingRegistrations<ISparkTemplate>>();
+            parsingRegistrations.Stub(x => x.ParsingFor(Arg<SparkTemplate>.Is.Anything)).Return(new Parsing());
 
             Services.Inject(_types);
             configurePolicies();
@@ -57,8 +57,8 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
         private void configurePolicies()
         {
-            _policy1Templates = new List<ITemplate>();
-            _policy2Templates = new List<ITemplate>();
+            _policy1Templates = new List<ISparkTemplate>();
+            _policy2Templates = new List<ISparkTemplate>();
 
             _policy1 = new FakeTemplatePolicy();
             _policy2 = new FakeTemplatePolicy();
@@ -72,8 +72,8 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
         private void configureBinders()
         {
-            _binder1Templates = new List<ITemplate>();
-            _binder2Templates = new List<ITemplate>();
+            _binder1Templates = new List<ISparkTemplate>();
+            _binder2Templates = new List<ISparkTemplate>();
 
             _binder1 = new FakeTemplateBinder();
             _binder2 = new FakeTemplateBinder();
@@ -149,24 +149,24 @@ namespace FubuMVC.Spark.Tests.SparkModel
         }
     }
 
-    public class FakeTemplateBinder : ITemplateBinder<ITemplate>
+    public class FakeTemplateBinder : ITemplateBinder<ISparkTemplate>
     {
         public FakeTemplateBinder()
         {
-            Filter = new CompositePredicate<IBindRequest<ITemplate>>();
-            Action = new CompositeAction<IBindRequest<ITemplate>>();
+            Filter = new CompositePredicate<IBindRequest<ISparkTemplate>>();
+            Action = new CompositeAction<IBindRequest<ISparkTemplate>>();
         }
 
-        public CompositePredicate<IBindRequest<ITemplate>> Filter { get; set; }
-        public CompositeAction<IBindRequest<ITemplate>> Action { get; set; }
+        public CompositePredicate<IBindRequest<ISparkTemplate>> Filter { get; set; }
+        public CompositeAction<IBindRequest<ISparkTemplate>> Action { get; set; }
 
 
-        public bool CanBind(IBindRequest<ITemplate> request)
+        public bool CanBind(IBindRequest<ISparkTemplate> request)
         {
             return Filter.MatchesAny(request);
         }
 
-        public void Bind(IBindRequest<ITemplate> request)
+        public void Bind(IBindRequest<ISparkTemplate> request)
         {
             Action.Do(request);
         }
@@ -185,22 +185,22 @@ namespace FubuMVC.Spark.Tests.SparkModel
         public static bool Invoked { get; private set; }
     }
 
-    public class FakeTemplatePolicy : ITemplatePolicy<ITemplate>
+    public class FakeTemplatePolicy : ITemplatePolicy<ISparkTemplate>
     {
         public FakeTemplatePolicy()
         {
-            Filter = new CompositePredicate<ITemplate>();
-            Action = new CompositeAction<ITemplate>();
+            Filter = new CompositePredicate<ISparkTemplate>();
+            Action = new CompositeAction<ISparkTemplate>();
         }
 
-        public CompositePredicate<ITemplate> Filter { get; set; }
-        public CompositeAction<ITemplate> Action { get; set; }
-        public bool Matches(ITemplate template)
+        public CompositePredicate<ISparkTemplate> Filter { get; set; }
+        public CompositeAction<ISparkTemplate> Action { get; set; }
+        public bool Matches(ISparkTemplate template)
         {
             return Filter.MatchesAny(template);
         }
 
-        public void Apply(ITemplate template)
+        public void Apply(ISparkTemplate template)
         {
             Action.Do(template);
         }

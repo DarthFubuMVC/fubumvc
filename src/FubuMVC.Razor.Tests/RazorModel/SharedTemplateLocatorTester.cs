@@ -28,10 +28,10 @@ namespace FubuMVC.Razor.Tests.RazorModel
 
             _templates = new TemplateRegistry<IRazorTemplate>(new[]
             {
-                new Template(Path.Combine("App", "Shared", "application.cshtml"), "App", TemplateConstants.HostOrigin),
-                new Template(Path.Combine("App", "Shared", "sitemaster.cshtml"), "App", TemplateConstants.HostOrigin),
-                new Template(Path.Combine("App", "Views", "Shared", "application.cshtml"), "App", TemplateConstants.HostOrigin),
-                new Template(Path.Combine("App", "Views", "Shared", "site.xml"), "App", TemplateConstants.HostOrigin)
+                new RazorTemplate(Path.Combine("App", "Shared", "application.cshtml"), "App", TemplateConstants.HostOrigin),
+                new RazorTemplate(Path.Combine("App", "Shared", "sitemaster.cshtml"), "App", TemplateConstants.HostOrigin),
+                new RazorTemplate(Path.Combine("App", "Views", "Shared", "application.cshtml"), "App", TemplateConstants.HostOrigin),
+                new RazorTemplate(Path.Combine("App", "Views", "Shared", "site.xml"), "App", TemplateConstants.HostOrigin)
             });
 
             MockFor<ITemplateDirectoryProvider<IRazorTemplate>>()

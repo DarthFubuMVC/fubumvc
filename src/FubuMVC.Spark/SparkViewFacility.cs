@@ -37,12 +37,12 @@ namespace FubuMVC.Spark
             var sparkSettings = graph.Settings.Get<SparkEngineSettings>();
 
             _templateRegistry.Each(_parsings.Process);         
-            var composer = new TemplateComposer<ITemplate>(_parsings); 
+            var composer = new TemplateComposer<ISparkTemplate>(_parsings); 
             sparkSettings.Configure(composer);
 
             var templates = graph.Files.FindFiles(sparkSettings.Search)
                 .Select(file => {
-                    var template = new Template(file.Path, file.ProvenancePath, file.Provenance);
+                    var template = new SparkTemplate(file.Path, file.ProvenancePath, file.Provenance);
                     template.Descriptor = new SparkDescriptor(template, _engine);
 
 

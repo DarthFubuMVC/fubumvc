@@ -8,12 +8,12 @@ namespace FubuMVC.Spark.SparkModel
 {
     public class TemplateViewFolder : IViewFolder
     {
-        private readonly IEnumerable<ITemplate> _templates;
+        private readonly IEnumerable<ISparkTemplate> _templates;
         private readonly Cache<string, IList<string>> _listViews;
         private readonly Cache<string, bool> _hasView;
         private readonly Cache<string, FileSystemViewFile> _getViewSource;
 
-        public TemplateViewFolder(IEnumerable<ITemplate> templates)
+        public TemplateViewFolder(IEnumerable<ISparkTemplate> templates)
         {
             _templates = templates;
             _listViews = new Cache<string, IList<string>>(listViews);

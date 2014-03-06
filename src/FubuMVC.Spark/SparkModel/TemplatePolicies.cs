@@ -4,9 +4,9 @@ using FubuMVC.Core.View.Model;
 
 namespace FubuMVC.Spark.SparkModel
 {
-    public class NamespacePolicy : ITemplatePolicy<ITemplate>
+    public class NamespacePolicy : ITemplatePolicy<ISparkTemplate>
     {
-        public bool Matches(ITemplate template)
+        public bool Matches(ISparkTemplate template)
         {
             var descriptor = template.Descriptor as SparkDescriptor;
 						
@@ -15,7 +15,7 @@ namespace FubuMVC.Spark.SparkModel
 				&& descriptor.Namespace.IsEmpty();
         }
 
-        public void Apply(ITemplate template)
+        public void Apply(ISparkTemplate template)
         {
             var relativePath = template.RelativePath();
             var relativeNamespace = Path.GetDirectoryName(relativePath);

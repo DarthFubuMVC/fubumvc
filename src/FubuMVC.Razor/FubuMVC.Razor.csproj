@@ -81,7 +81,7 @@
     <Compile Include="RazorEngine.cs" />
     <Compile Include="RazorModel\SpanExtensions.cs" />
     <Compile Include="RazorModel\RazorTemplateSelector.cs" />
-    <Compile Include="RazorModel\Template.cs" />
+    <Compile Include="RazorModel\RazorTemplate.cs" />
     <Compile Include="RazorModel\TemplateExtensions.cs" />
     <Compile Include="RazorViewFacility.cs" />
     <Compile Include="RazorViewToken.cs" />

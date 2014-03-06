@@ -12,7 +12,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.Policies
         [Test]
         public void when_origin_is_host_prefix_is_emtpy()
         {
-            var item = new Template("", "", TemplateConstants.HostOrigin);
+            var item = new RazorTemplate("", "", TemplateConstants.HostOrigin);
             ClassUnderTest.Apply(item);
             item.ViewPath.ShouldBeEmpty();
         }
@@ -20,7 +20,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.Policies
         [Test]
         public void when_origin_is_not_host_prefix_is_not_emtpy()
         {
-            var item = new Template("", "", "Foo");
+            var item = new RazorTemplate("", "", "Foo");
             ClassUnderTest.Apply(item);
             item.ViewPath.ShouldNotBeEmpty();
         }
@@ -28,10 +28,10 @@ namespace FubuMVC.Razor.Tests.RazorModel.Policies
         [Test]
         public void the_items_of_the_same_origin_have_the_same_prefix()
         {
-            var baz1 = new Template("", "", "Baz");
-            var baz2 = new Template("", "", "Baz");
-            var bar1 = new Template("", "", "Bar");
-            var bar2 = new Template("", "", "Bar");
+            var baz1 = new RazorTemplate("", "", "Baz");
+            var baz2 = new RazorTemplate("", "", "Baz");
+            var bar1 = new RazorTemplate("", "", "Bar");
+            var bar2 = new RazorTemplate("", "", "Bar");
 
             new[] { baz1, baz2, bar1, bar2 }.Each(x => ClassUnderTest.Apply(x));
 
@@ -43,7 +43,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.Policies
 		[Test]
         public void it_matches_when_viewpath_is_empty()
         {
-            var item = new Template("", "", "Foo");
+            var item = new RazorTemplate("", "", "Foo");
 			ClassUnderTest.Matches(item).ShouldBeTrue();
             ClassUnderTest.Apply(item);
 			ClassUnderTest.Matches(item).ShouldBeFalse();

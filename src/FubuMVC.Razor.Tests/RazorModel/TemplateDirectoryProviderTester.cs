@@ -20,7 +20,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
         protected override void beforeEach()
         {
             _paths = new[] { "a", "b", "c" };
-            _template = new Template("filepath", "rootpath", "origin");
+            _template = new RazorTemplate("filepath", "rootpath", "origin");
 
             MockFor<ISharingGraph>()
                 .Stub(x => x.SharingsFor(Arg<string>.Is.Anything))
@@ -80,9 +80,9 @@ namespace FubuMVC.Razor.Tests.RazorModel
 
             _templates = new TemplateRegistry<IRazorTemplate>(new[]
             {
-                new Template(FubuCore.FileSystem.Combine(_root, "Actions", "Home", "home.cshtml"), _root, TemplateConstants.HostOrigin), 
-                new Template(FubuCore.FileSystem.Combine(_pak1Root, "Actions", "Home", "home.cshtml"), _pak1Root, "Pak1"),
-                new Template(FubuCore.FileSystem.Combine(_pak2Root, "Home", "home.cshtml"), _pak2Root, "Pak2")
+                new RazorTemplate(FubuCore.FileSystem.Combine(_root, "Actions", "Home", "home.cshtml"), _root, TemplateConstants.HostOrigin), 
+                new RazorTemplate(FubuCore.FileSystem.Combine(_pak1Root, "Actions", "Home", "home.cshtml"), _pak1Root, "Pak1"),
+                new RazorTemplate(FubuCore.FileSystem.Combine(_pak2Root, "Home", "home.cshtml"), _pak2Root, "Pak2")
             });
 
             _graph = new SharingGraph();

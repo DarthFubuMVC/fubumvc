@@ -18,7 +18,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
 
         protected override void beforeEach()
         {
-            _template = new Template("", "", "");
+            _template = new RazorTemplate("", "", "");
             _descriptor = new ViewDescriptor<IRazorTemplate>(_template);
             _template.Descriptor = _descriptor;
 
@@ -83,7 +83,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
         [Test]
         public void does_not_bind_partials()
         {
-            _request.Target = new Template("_partial.cshtml", "", "testing");
+            _request.Target = new RazorTemplate("_partial.cshtml", "", "testing");
             ClassUnderTest.CanBind(_request).ShouldBeFalse();
         }
 
@@ -99,7 +99,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
         {
             ClassUnderTest.Bind(_request);
             MockFor<ITemplateLogger>()
-                .AssertWasCalled(x => x.Log(Arg<Template>.Is.Same(_template), Arg<string>.Is.NotNull, Arg<object[]>.Is.NotNull));
+                .AssertWasCalled(x => x.Log(Arg<RazorTemplate>.Is.Same(_template), Arg<string>.Is.NotNull, Arg<object[]>.Is.NotNull));
         }
 
 

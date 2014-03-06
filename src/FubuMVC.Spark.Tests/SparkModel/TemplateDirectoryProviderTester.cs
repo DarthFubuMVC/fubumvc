@@ -14,15 +14,15 @@ namespace FubuMVC.Spark.Tests.SparkModel
 {
 
     [TestFixture]
-    public class template_directory_provider_without_sharings : InteractionContext<TemplateDirectoryProvider<ITemplate>>
+    public class template_directory_provider_without_sharings : InteractionContext<TemplateDirectoryProvider<ISparkTemplate>>
     {
-        private ITemplate _template;
+        private ISparkTemplate _template;
         private IEnumerable<string> _paths;
 
         protected override void beforeEach()
         {
             _paths = new[] {"a", "b", "c"};
-            _template = new Template("filepath", "rootpath", "origin");
+            _template = new SparkTemplate("filepath", "rootpath", "origin");
 
             MockFor<ISharingGraph>()
                 .Stub(x => x.SharingsFor(Arg<string>.Is.Anything))
@@ -64,14 +64,14 @@ namespace FubuMVC.Spark.Tests.SparkModel
         }
     }
 
-    public class template_directory_provider_with_sharings : InteractionContext<TemplateDirectoryProvider<ITemplate>>
+    public class template_directory_provider_with_sharings : InteractionContext<TemplateDirectoryProvider<ISparkTemplate>>
     {
         private const string Shared = "S";
         private string _root;
         private string _pak1Root;
         private string _pak2Root;
 
-        private TemplateRegistry<ITemplate> _templates;
+        private TemplateRegistry<ISparkTemplate> _templates;
         private SharingGraph _graph;
 
         protected override void beforeEach()
@@ -80,12 +80,12 @@ namespace FubuMVC.Spark.Tests.SparkModel
             _pak1Root = FileSystem.Combine(_root, "Packs", "Pak1");
             _pak2Root = FileSystem.Combine(_root, "Packs", "Pak2");
 
-            _templates = new TemplateRegistry<ITemplate>(new[]
+            _templates = new TemplateRegistry<ISparkTemplate>(new[]
             {
-                new Template(FileSystem.Combine(_root, "Actions", "Home", "home.spark"), _root, TemplateConstants.HostOrigin), 
-                new Template(FileSystem.Combine(_pak1Root, "Actions", "Home", "home.spark"), _pak1Root, "Pak1"),
-                new Template(FileSystem.Combine(_pak2Root, "Home", "home.spark"), _pak2Root, "Pak2"),
-                new Template(FileSystem.Combine(_pak2Root, "Home", Shared, "_test.spark"), _pak2Root, "Pak2"),
+                new SparkTemplate(FileSystem.Combine(_root, "Actions", "Home", "home.spark"), _root, TemplateConstants.HostOrigin), 
+                new SparkTemplate(FileSystem.Combine(_pak1Root, "Actions", "Home", "home.spark"), _pak1Root, "Pak1"),
+                new SparkTemplate(FileSystem.Combine(_pak2Root, "Home", "home.spark"), _pak2Root, "Pak2"),
+                new SparkTemplate(FileSystem.Combine(_pak2Root, "Home", Shared, "_test.spark"), _pak2Root, "Pak2"),
             });
 
             _graph = new SharingGraph();
@@ -95,7 +95,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
             Container.Inject<ISharedPathBuilder>(new SharedPathBuilder(new []{Shared}));
             Container.Inject<ISharingGraph>(_graph);
-            Container.Inject<ITemplateRegistry<ITemplate>>(_templates);
+            Container.Inject<ITemplateRegistry<ISparkTemplate>>(_templates);
         }
 
         [Test]
@@ -176,14 +176,14 @@ namespace FubuMVC.Spark.Tests.SparkModel
         [Test]
         public void can_get_shared_view_paths_for_origin()
         {
-            var policy = new ViewPathPolicy<ITemplate>();
+            var policy = new ViewPathPolicy<ISparkTemplate>();
             _templates.Each(policy.Apply);
             var origin = templateAt(1).Origin; //from pak1 which has dependency on pak2
             var pak2SharedLocation = FileSystem.Combine("_Pak2","Home", Shared);
             ClassUnderTest.SharedViewPathsForOrigin(origin).ShouldContain(pak2SharedLocation);
         }
 
-        private ITemplate templateAt(int index)
+        private ISparkTemplate templateAt(int index)
         {
             return _templates.ElementAt(index);
         }

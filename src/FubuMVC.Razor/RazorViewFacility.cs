@@ -37,7 +37,7 @@ namespace FubuMVC.Razor
 
             var templates = graph.Files.FindFiles(razorSettings.Search)
                 .Select(file => {
-                    var template = new Template(file.Path, file.ProvenancePath, file.Provenance);
+                    var template = new RazorTemplate(file.Path, file.ProvenancePath, file.Provenance);
 
                     _razorParsings.Parse(template);
                     composer.Compose(template);

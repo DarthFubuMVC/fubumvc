@@ -15,14 +15,14 @@ namespace FubuMVC.Razor.Tests.RazorModel
         {
             _templates = new List<IRazorTemplate>
             {
-                new Template("App/Shared/bindings.xml", "App", TemplateConstants.HostOrigin),
-                new Template("App/bindings.xml", "App", TemplateConstants.HostOrigin),
-                new Template("App/Views/binding.xml", "App", TemplateConstants.HostOrigin),
-                new Template("App/Actions/binding.xml", "App", TemplateConstants.HostOrigin),
-                new Template("App/Actions/Home/home.cshtml", "App", TemplateConstants.HostOrigin),
-                new Template("App/Packages1/Views/Home/home.cshtml", "App/Package1", "Package1"),
-                new Template("App/Packages1/Views/Products/list.cshtml", "App/Package1", "Package1"),
-                new Template("App/Views/Home/home.cshtml", "App", TemplateConstants.HostOrigin)
+                new RazorTemplate("App/Shared/bindings.xml", "App", TemplateConstants.HostOrigin),
+                new RazorTemplate("App/bindings.xml", "App", TemplateConstants.HostOrigin),
+                new RazorTemplate("App/Views/binding.xml", "App", TemplateConstants.HostOrigin),
+                new RazorTemplate("App/Actions/binding.xml", "App", TemplateConstants.HostOrigin),
+                new RazorTemplate("App/Actions/Home/home.cshtml", "App", TemplateConstants.HostOrigin),
+                new RazorTemplate("App/Packages1/Views/Home/home.cshtml", "App/Package1", "Package1"),
+                new RazorTemplate("App/Packages1/Views/Products/list.cshtml", "App/Package1", "Package1"),
+                new RazorTemplate("App/Views/Home/home.cshtml", "App", TemplateConstants.HostOrigin)
             };
 
 

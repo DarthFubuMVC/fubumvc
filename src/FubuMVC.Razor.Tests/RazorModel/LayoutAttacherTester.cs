@@ -17,7 +17,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
 
         protected override void beforeEach()
         {
-            _template = new Template("b/a.cshtml", "b", "c");
+            _template = new RazorTemplate("b/a.cshtml", "b", "c");
             _template.Descriptor = _viewDescriptor = new ViewDescriptor<IRazorTemplate>(_template)
             {
                 ViewModel = typeof (ProductModel)
@@ -86,7 +86,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
         [Test]
         public void does_not_bind_partials()
         {
-            _request.Template = new Template("b/_partial.cshtml", "b", "c");
+            _request.Template = new RazorTemplate("b/_partial.cshtml", "b", "c");
             ClassUnderTest.CanAttach(_request).ShouldBeFalse();
         }
 
@@ -134,7 +134,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
         [Test]
         public void if_template_is_default_master_and_layout_is_itself_then_attacher_is_not_applied()
         {
-            ((Template)_template).FilePath = "One/Shared/{0}.cshtml".ToFormat(_parsing.Master);
+            ((RazorTemplate)_template).FilePath = "One/Shared/{0}.cshtml".ToFormat(_parsing.Master);
             ClassUnderTest.CanAttach(_request).ShouldBeFalse();
         }
 

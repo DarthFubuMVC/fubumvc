@@ -11,20 +11,20 @@ namespace FubuMVC.Spark.Tests.SparkModel
     [TestFixture]
     public class TemplateRegistryTester : InteractionContext<SparkTemplateRegistry>
     {
-        private IList<ITemplate> _templates;
-        private ITemplate[] _bindings;
+        private IList<ISparkTemplate> _templates;
+        private ISparkTemplate[] _bindings;
         protected override void beforeEach()
         {
-            _templates = new List<ITemplate>
+            _templates = new List<ISparkTemplate>
             {
-                new Template("App/Shared/bindings.xml", "App", TemplateConstants.HostOrigin),
-                new Template("App/bindings.xml", "App", TemplateConstants.HostOrigin),
-                new Template("App/Views/binding.xml", "App", TemplateConstants.HostOrigin),
-                new Template("App/Actions/binding.xml", "App", TemplateConstants.HostOrigin),
-                new Template("App/Actions/Home/home.spark", "App", TemplateConstants.HostOrigin),
-                new Template("App/Packages1/Views/Home/home.spark", "App/Package1", "Package1"),
-                new Template("App/Packages1/Views/Products/list.spark", "App/Package1", "Package1"),
-                new Template("App/Views/Home/home.spark", "App", TemplateConstants.HostOrigin)
+                new SparkTemplate("App/Shared/bindings.xml", "App", TemplateConstants.HostOrigin),
+                new SparkTemplate("App/bindings.xml", "App", TemplateConstants.HostOrigin),
+                new SparkTemplate("App/Views/binding.xml", "App", TemplateConstants.HostOrigin),
+                new SparkTemplate("App/Actions/binding.xml", "App", TemplateConstants.HostOrigin),
+                new SparkTemplate("App/Actions/Home/home.spark", "App", TemplateConstants.HostOrigin),
+                new SparkTemplate("App/Packages1/Views/Home/home.spark", "App/Package1", "Package1"),
+                new SparkTemplate("App/Packages1/Views/Products/list.spark", "App/Package1", "Package1"),
+                new SparkTemplate("App/Views/Home/home.spark", "App", TemplateConstants.HostOrigin)
             };
 
             _bindings = new[] { _templates[0], _templates[1], _templates[2] };

@@ -17,7 +17,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
         {
             var request = new BindRequest<IRazorTemplate>
             {
-                Target = new Template("_partial.cshtml", "", "testing")
+                Target = new RazorTemplate("_partial.cshtml", "", "testing")
             };
 
             ClassUnderTest.CanBind(request).ShouldBeTrue();
@@ -28,7 +28,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
         {
             var request = new BindRequest<IRazorTemplate>
             {
-                Target = new Template("_partial.html", "", "testing")
+                Target = new RazorTemplate("_partial.html", "", "testing")
             };
 
             ClassUnderTest.CanBind(request).ShouldBeFalse();
@@ -39,7 +39,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
         {
             var request = new BindRequest<IRazorTemplate>
             {
-                Target = new Template("Fubu.cshtml", "", "testing")                
+                Target = new RazorTemplate("Fubu.cshtml", "", "testing")                
             };
 
             request.Target.Descriptor = new ViewDescriptor<IRazorTemplate>(request.Target);
@@ -52,7 +52,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
         {
             var request = new BindRequest<IRazorTemplate>
             {
-                Target = new Template("Fubu.cshtml", "", "testing")
+                Target = new RazorTemplate("Fubu.cshtml", "", "testing")
             };
 
             ClassUnderTest.CanBind(request).ShouldBeTrue();
@@ -63,7 +63,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
         {
             var request = new BindRequest<IRazorTemplate>
             {
-                Target = new Template("Fubu.cshtml", "", "testing"),
+                Target = new RazorTemplate("Fubu.cshtml", "", "testing"),
             };
 
             ClassUnderTest.Bind(request);

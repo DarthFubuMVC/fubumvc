@@ -32,14 +32,14 @@ namespace FubuMVC.Spark.Tests
         [Test]
         public void template_registry()
         {
-            _services.DefaultServiceFor<ITemplateRegistry<ITemplate>>()
-                .Value.ShouldBeOfType<TemplateRegistry<ITemplate>>();
+            _services.DefaultServiceFor<ITemplateRegistry<ISparkTemplate>>()
+                .Value.ShouldBeOfType<TemplateRegistry<ISparkTemplate>>();
         }
 
         [Test]
         public void parsing_registration()
         {
-            _services.DefaultServiceFor<IParsingRegistrations<ITemplate>>()
+            _services.DefaultServiceFor<IParsingRegistrations<ISparkTemplate>>()
                 .Value.ShouldBeOfType<Parsings>();
         }
 
@@ -87,7 +87,7 @@ namespace FubuMVC.Spark.Tests
         [Test]
         public void sharing_attacher_activator()
         {
-            defaultServicesCheck<IActivator, SharingAttacherActivator<ITemplate>>(2);
+            defaultServicesCheck<IActivator, SharingAttacherActivator<ISparkTemplate>>(2);
         }
 
         [Test]
@@ -105,19 +105,19 @@ namespace FubuMVC.Spark.Tests
         [Test]
         public void sharing_attachers()
         {
-            countForServiceCheck<ISharingAttacher<ITemplate>>(2);
+            countForServiceCheck<ISharingAttacher<ISparkTemplate>>(2);
         }
 
         [Test]
         public void master_attacher()
         {
-            defaultServicesCheck<ISharingAttacher<ITemplate>, MasterAttacher<ITemplate>>(0);
+            defaultServicesCheck<ISharingAttacher<ISparkTemplate>, MasterAttacher<ISparkTemplate>>(0);
         }
 
         [Test]
         public void bindings_attacher()
         {
-            defaultServicesCheck<ISharingAttacher<ITemplate>, BindingsAttacher>(1);
+            defaultServicesCheck<ISharingAttacher<ISparkTemplate>, BindingsAttacher>(1);
         }
 
         [Test]
@@ -130,7 +130,7 @@ namespace FubuMVC.Spark.Tests
         [Test]
         public void template_directory_provider()
         {
-            defaultServiceCheck<ITemplateDirectoryProvider<ITemplate>, TemplateDirectoryProvider<ITemplate>>();
+            defaultServiceCheck<ITemplateDirectoryProvider<ISparkTemplate>, TemplateDirectoryProvider<ISparkTemplate>>();
         }
 
         [Test]

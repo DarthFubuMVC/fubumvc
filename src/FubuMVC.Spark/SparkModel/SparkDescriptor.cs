@@ -6,15 +6,15 @@ using Spark;
 
 namespace FubuMVC.Spark.SparkModel
 {
-    public class SparkDescriptor : ViewDescriptor<ITemplate>
+    public class SparkDescriptor : ViewDescriptor<ISparkTemplate>
     {
         private readonly Lazy<SparkViewDescriptor> _full; 
         private readonly Lazy<SparkViewDescriptor> _partial; 
-        private readonly IList<ITemplate> _bindings = new List<ITemplate>();
+        private readonly IList<ISparkTemplate> _bindings = new List<ISparkTemplate>();
         private readonly WatchedSparkEntry _viewEntry;
         private readonly WatchedSparkEntry _partialViewEntry; 
         
-        public SparkDescriptor(ITemplate template, ISparkViewEngine engine) : base(template)
+        public SparkDescriptor(ISparkTemplate template, ISparkViewEngine engine) : base(template)
         {
             _full = new Lazy<SparkViewDescriptor>(() => createSparkDescriptor(true));
             _partial = new Lazy<SparkViewDescriptor>(() => createSparkDescriptor(false));
@@ -24,8 +24,8 @@ namespace FubuMVC.Spark.SparkModel
 
         }
 
-        public void AddBinding(ITemplate template) { _bindings.Add(template); }
-        public IEnumerable<ITemplate> Bindings { get { return _bindings; } }
+        public void AddBinding(ISparkTemplate template) { _bindings.Add(template); }
+        public IEnumerable<ISparkTemplate> Bindings { get { return _bindings; } }
 
 
         public ISparkViewEntry ViewEntry
@@ -64,7 +64,7 @@ namespace FubuMVC.Spark.SparkModel
             return sparkDescriptor;
         }
 
-        private static void appendMasterPage(SparkViewDescriptor descriptor, ITemplate template)
+        private static void appendMasterPage(SparkViewDescriptor descriptor, ISparkTemplate template)
         {
             if (template == null)
             {

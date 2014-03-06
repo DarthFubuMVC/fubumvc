@@ -8,16 +8,16 @@ namespace FubuMVC.Razor.RazorModel
         Guid GeneratedViewId { get; }
     }
 
-    public class Template : IRazorTemplate
+    public class RazorTemplate : IRazorTemplate
     {
-        public Template(string filePath, string root, string origin) : this()
+        public RazorTemplate(string filePath, string root, string origin) : this()
         {
             FilePath = filePath;
             RootPath = root;
             Origin = origin;
         }
 
-        public Template()
+        public RazorTemplate()
         {
             GeneratedViewId = Guid.NewGuid();
             Descriptor = new NulloDescriptor();

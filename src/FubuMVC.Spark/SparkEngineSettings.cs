@@ -11,7 +11,7 @@ namespace FubuMVC.Spark
 {
     public class SparkEngineSettings
     {
-        private CompositeAction<TemplateComposer<ITemplate>> _configurations = new CompositeAction<TemplateComposer<ITemplate>>();
+        private CompositeAction<TemplateComposer<ISparkTemplate>> _configurations = new CompositeAction<TemplateComposer<ISparkTemplate>>();
         private Func<bool> _precompileViews; 
 
         public SparkEngineSettings()
@@ -35,23 +35,23 @@ namespace FubuMVC.Spark
         private void defaultComposer()
         {
             Register(composer => composer
-                .AddBinder<GenericViewModelBinder<ITemplate>>()
-                .AddBinder<ViewModelBinder<ITemplate>>()
+                .AddBinder<GenericViewModelBinder<ISparkTemplate>>()
+                .AddBinder<ViewModelBinder<ISparkTemplate>>()
                 .Apply<NamespacePolicy>()
-                .Apply<ViewPathPolicy<ITemplate>>());            
+                .Apply<ViewPathPolicy<ISparkTemplate>>());            
         }
 
-        public void Register(Action<TemplateComposer<ITemplate>> alteration)
+        public void Register(Action<TemplateComposer<ISparkTemplate>> alteration)
         {
             _configurations += alteration;
         }
 
         public void ResetComposerConfiguration()
         {
-            _configurations = new CompositeAction<TemplateComposer<ITemplate>>();
+            _configurations = new CompositeAction<TemplateComposer<ISparkTemplate>>();
         }
 
-        public void Configure(TemplateComposer<ITemplate> composer)
+        public void Configure(TemplateComposer<ISparkTemplate> composer)
         {
             _configurations.Do(composer);
         }

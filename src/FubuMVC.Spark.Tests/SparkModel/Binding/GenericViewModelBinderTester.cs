@@ -11,16 +11,16 @@ using Spark;
 namespace FubuMVC.Spark.Tests.SparkModel.Binding
 {
     [TestFixture]
-    public class GenericViewModelBinderTester : InteractionContext<GenericViewModelBinder<ITemplate>>
+    public class GenericViewModelBinderTester : InteractionContext<GenericViewModelBinder<ISparkTemplate>>
     {
-        private BindRequest<ITemplate> _request;
+        private BindRequest<ISparkTemplate> _request;
         private Parsing _parsing;
-        private ITemplate _template;
+        private ISparkTemplate _template;
         private SparkDescriptor _descriptor;
 
         protected override void beforeEach()
         {
-            _template = new Template("", "", "");
+            _template = new SparkTemplate("", "", "");
             _descriptor = new SparkDescriptor(_template, new SparkViewEngine());
             _template.Descriptor = _descriptor;
 
@@ -29,7 +29,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
                 ViewModelType = "FubuMVC.Spark.Tests.SparkModel.Binding.Generic<FubuMVC.Spark.Tests.SparkModel.Binding.Baz>"                               
             };
 
-            _request = new BindRequest<ITemplate>
+            _request = new BindRequest<ISparkTemplate>
             {
                 Target = _template,
                 Parsing = _parsing,
@@ -68,7 +68,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
             _parsing.ViewModelType = "x.y.jazz<FubuMVC.Spark.Tests.SparkModel.Binding.Bar>";
             ClassUnderTest.Bind(_request);
             MockFor<ITemplateLogger>()
-                .AssertWasCalled(x => x.Log(Arg<Template>.Is.Same(_template), Arg<string>.Is.NotNull));
+                .AssertWasCalled(x => x.Log(Arg<SparkTemplate>.Is.Same(_template), Arg<string>.Is.NotNull));
         }
 
         [Test]
@@ -98,7 +98,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         [Test]
         public void does_not_bind_partials()
         {
-            _request.Target = new Template("_partial.spark", "", "testing");
+            _request.Target = new SparkTemplate("_partial.spark", "", "testing");
             ClassUnderTest.CanBind(_request).ShouldBeFalse();
         }
 
@@ -114,7 +114,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         {
             ClassUnderTest.Bind(_request);
             MockFor<ITemplateLogger>()
-                .AssertWasCalled(x => x.Log(Arg<Template>.Is.Same(_template), Arg<string>.Is.NotNull, Arg<object[]>.Is.NotNull));
+                .AssertWasCalled(x => x.Log(Arg<SparkTemplate>.Is.Same(_template), Arg<string>.Is.NotNull, Arg<object[]>.Is.NotNull));
         }
 
         private TypePool typePool()

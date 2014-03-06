@@ -10,8 +10,8 @@ namespace FubuMVC.Spark.Tests.SparkModel
     [TestFixture]
     public class ChunkLoaderTester : InteractionContext<ChunkLoader>
     {
-        private readonly ITemplate _template1 = new Template("r/t1/path1", "r/t1", "t1");
-        private readonly ITemplate _template2 = new Template("r/t2/path2", "r/t2", "t2");
+        private readonly ISparkTemplate _template1 = new SparkTemplate("r/t1/path1", "r/t1", "t1");
+        private readonly ISparkTemplate _template2 = new SparkTemplate("r/t2/path2", "r/t2", "t2");
 
         private string _lastRequestedRoot;
         private int _rootRequestCount;
@@ -56,9 +56,9 @@ namespace FubuMVC.Spark.Tests.SparkModel
     [TestFixture]
     public class ChunkLoaderExtensionsTester : InteractionContext<ChunkLoader>
     {
-        private readonly ITemplate _spark1 = new Template("root/spark1", "root", "origin");
-        private readonly ITemplate _spark2 = new Template("root/spark2", "root", "origin");
-        private readonly ITemplate _spark3 = new Template("root/spark3", "root", "origin");
+        private readonly ISparkTemplate _spark1 = new SparkTemplate("root/spark1", "root", "origin");
+        private readonly ISparkTemplate _spark2 = new SparkTemplate("root/spark2", "root", "origin");
+        private readonly ISparkTemplate _spark3 = new SparkTemplate("root/spark3", "root", "origin");
 
         protected override void beforeEach()
         {

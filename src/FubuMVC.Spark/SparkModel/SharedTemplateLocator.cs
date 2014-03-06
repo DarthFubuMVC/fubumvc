@@ -4,19 +4,19 @@ using FubuMVC.Core.View.Model;
 
 namespace FubuMVC.Spark.SparkModel
 {
-    public interface ISharedTemplateLocator : ISharedTemplateLocator<ITemplate>
+    public interface ISharedTemplateLocator : ISharedTemplateLocator<ISparkTemplate>
     {
-        IEnumerable<ITemplate> LocateBindings(string bindingName, ITemplate fromTemplate); 
+        IEnumerable<ISparkTemplate> LocateBindings(string bindingName, ISparkTemplate fromTemplate); 
     }
 
-    public class SharedTemplateLocator : SharedTemplateLocator<ITemplate>, ISharedTemplateLocator
+    public class SharedTemplateLocator : SharedTemplateLocator<ISparkTemplate>, ISharedTemplateLocator
     {
-        public SharedTemplateLocator(ITemplateDirectoryProvider<ITemplate> provider, ITemplateRegistry<ITemplate> templates, ITemplateSelector<ITemplate> templateSelector)
+        public SharedTemplateLocator(ITemplateDirectoryProvider<ISparkTemplate> provider, ITemplateRegistry<ISparkTemplate> templates, ITemplateSelector<ISparkTemplate> templateSelector)
             : base(provider, templates, templateSelector)
         {
         }
 
-        public IEnumerable<ITemplate> LocateBindings(string bindingName, ITemplate fromTemplate)
+        public IEnumerable<ISparkTemplate> LocateBindings(string bindingName, ISparkTemplate fromTemplate)
         {
             return locateTemplates(bindingName, fromTemplate, false)
                 .Where(x => x.IsXml());

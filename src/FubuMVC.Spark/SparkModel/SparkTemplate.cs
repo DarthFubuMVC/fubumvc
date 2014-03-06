@@ -4,17 +4,17 @@ using FubuMVC.Core.View.Model;
 
 namespace FubuMVC.Spark.SparkModel
 {
-    public interface ITemplate : ITemplateFile {}
-    public class Template : ITemplate
+    public interface ISparkTemplate : ITemplateFile {}
+    public class SparkTemplate : ISparkTemplate
     {
-        public Template(string filePath, string rootPath, string origin) : this()
+        public SparkTemplate(string filePath, string rootPath, string origin) : this()
         {
             FilePath = filePath;
             RootPath = rootPath;
             Origin = origin;
         }
 
-        public Template()
+        public SparkTemplate()
         {
             Descriptor = new NulloDescriptor();
         }
@@ -32,7 +32,7 @@ namespace FubuMVC.Spark.SparkModel
         }
     }
 
-    public class Parsings : IParsingRegistrations<ITemplate>
+    public class Parsings : IParsingRegistrations<ISparkTemplate>
     {
         private readonly Cache<string, Parsing> _parsings = new Cache<string, Parsing>();
         private readonly IChunkLoader _chunkLoader;
@@ -43,7 +43,7 @@ namespace FubuMVC.Spark.SparkModel
             _chunkLoader = chunkLoader;
         }
 
-        public void Process(ITemplate template)
+        public void Process(ISparkTemplate template)
         {
             var chunk = _chunkLoader.Load(template).ToList();
 
@@ -55,7 +55,7 @@ namespace FubuMVC.Spark.SparkModel
             };
         }
 
-        public Parsing ParsingFor(ITemplate template)
+        public Parsing ParsingFor(ISparkTemplate template)
         {
             return _parsings[template.FilePath];
         }

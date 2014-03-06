@@ -7,18 +7,18 @@ using FubuMVC.Core.View.Model;
 namespace FubuMVC.Spark.SparkModel
 {
     [MarkedForTermination("Duplication I'd like to see go away")]
-    public interface ISparkTemplateRegistry : ITemplateRegistry<ITemplate>
+    public interface ISparkTemplateRegistry : ITemplateRegistry<ISparkTemplate>
     {
-        IEnumerable<ITemplate> BindingsForView(string viewPath);
+        IEnumerable<ISparkTemplate> BindingsForView(string viewPath);
         IEnumerable<SparkDescriptor> ViewDescriptors();
     }
 
-    public class SparkTemplateRegistry : TemplateRegistry<ITemplate>, ISparkTemplateRegistry
+    public class SparkTemplateRegistry : TemplateRegistry<ISparkTemplate>, ISparkTemplateRegistry
     {
         public SparkTemplateRegistry() {}
-        public SparkTemplateRegistry(IEnumerable<ITemplate> templates) : base(templates) {}
+        public SparkTemplateRegistry(IEnumerable<ISparkTemplate> templates) : base(templates) {}
 
-        public IEnumerable<ITemplate> BindingsForView(string viewPath)
+        public IEnumerable<ISparkTemplate> BindingsForView(string viewPath)
         {
             return descriptors(t => t.ViewPath == viewPath)
                 .SelectMany(t => t.Bindings)
@@ -30,7 +30,7 @@ namespace FubuMVC.Spark.SparkModel
             return descriptors(t => t.IsSparkView()).ToList();
         }
 
-        private IEnumerable<SparkDescriptor> descriptors(Func<ITemplate, bool> selector)
+        private IEnumerable<SparkDescriptor> descriptors(Func<ISparkTemplate, bool> selector)
         {
             return this.Where(t => t.Descriptor is SparkDescriptor && selector(t))
                 .Select(t => t.Descriptor.As<SparkDescriptor>());

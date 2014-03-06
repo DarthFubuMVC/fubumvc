@@ -23,9 +23,9 @@ namespace FubuMVC.Spark.Tests
 
             Services.Inject(theSettings);
 
-            var descriptor1 = new SparkDescriptor(new Template("a.spark", "root", "origin"), new SparkViewEngine());
-            var descriptor2 = new SparkDescriptor(new Template("b.spark", "root", "origin"), new SparkViewEngine());
-            var nativePartial = new SparkDescriptor(new Template("_Yeah.spark", "root", "origin"), new SparkViewEngine());
+            var descriptor1 = new SparkDescriptor(new SparkTemplate("a.spark", "root", "origin"), new SparkViewEngine());
+            var descriptor2 = new SparkDescriptor(new SparkTemplate("b.spark", "root", "origin"), new SparkViewEngine());
+            var nativePartial = new SparkDescriptor(new SparkTemplate("_Yeah.spark", "root", "origin"), new SparkViewEngine());
 
             MockFor<ISparkTemplateRegistry>().Expect(x => x.ViewDescriptors()).Return(new[] {descriptor1, descriptor2, nativePartial});
         }

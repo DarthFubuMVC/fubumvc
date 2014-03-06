@@ -12,26 +12,26 @@ namespace FubuMVC.Spark.Tests.SparkModel
 {
     public class BindingsAttacherTester : InteractionContext<BindingsAttacher>
     {
-        private ITemplate _template;
-        private IAttachRequest<ITemplate> _request;
-        private TemplateRegistry<ITemplate> _templates;
+        private ISparkTemplate _template;
+        private IAttachRequest<ISparkTemplate> _request;
+        private TemplateRegistry<ISparkTemplate> _templates;
         private SparkDescriptor _viewDescriptor;
 
         protected override void beforeEach()
         {
-            _templates = new TemplateRegistry<ITemplate>();
+            _templates = new TemplateRegistry<ISparkTemplate>();
             _viewDescriptor = new SparkDescriptor(_template, new SparkViewEngine());
-            _template = new Template("/App/Views/Fubu.spark", "/App/Views", TemplateConstants.HostOrigin)
+            _template = new SparkTemplate("/App/Views/Fubu.spark", "/App/Views", TemplateConstants.HostOrigin)
             {
                 Descriptor = _viewDescriptor                                
             };
 
             _templates.Register(_template);
-            Enumerable.Range(1, 5).Select(x => new Template("{0}.spark".ToFormat(x), "b", "c"))
+            Enumerable.Range(1, 5).Select(x => new SparkTemplate("{0}.spark".ToFormat(x), "b", "c"))
                 .Each(_templates.Register);
 
 
-            _request = new AttachRequest<ITemplate>
+            _request = new AttachRequest<ISparkTemplate>
             {
                 Template = _template,
                 Logger = MockFor<ITemplateLogger>(),
@@ -41,7 +41,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 .Expect(x => x.LocateBindings(ClassUnderTest.BindingsName, _template))
                 .Return(_templates);
 
-            Container.Inject<ITemplateRegistry<ITemplate>>(_templates);
+            Container.Inject<ITemplateRegistry<ISparkTemplate>>(_templates);
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         [Test]
         public void does_not_attempt_add_bindings_if_prior_processed()
         {
-            _viewDescriptor.AddBinding(MockFor<ITemplate>());
+            _viewDescriptor.AddBinding(MockFor<ISparkTemplate>());
             ClassUnderTest.CanAttach(_request).ShouldBeFalse();
         }
 

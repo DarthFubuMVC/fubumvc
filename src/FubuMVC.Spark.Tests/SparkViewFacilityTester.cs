@@ -21,12 +21,12 @@ namespace FubuMVC.Spark.Tests
             _root = AppDomain.CurrentDomain.BaseDirectory;
             _templateRegistry = new SparkTemplateRegistry(new[]
             {
-                new Template(Path.Combine(_root, "Views", "Home", "ModelAView.spark"), _root, TemplateConstants.HostOrigin),
-                new Template(Path.Combine(_root, "Views", "Home", "_partial1.spark"), _root, TemplateConstants.HostOrigin),
-                new Template(Path.Combine(_root, "Views", "Home", "ModelBView.spark"), _root, TemplateConstants.HostOrigin),
-                new Template(Path.Combine(_root, "Views", "Home", "_partial2.spark"), _root, TemplateConstants.HostOrigin),
-                new Template(Path.Combine(_root, "Views", "Home", "ModelCView.spark"), _root, TemplateConstants.HostOrigin),
-                new Template(Path.Combine(_root, "Views", "Home", "_partial3.spark"), _root, TemplateConstants.HostOrigin)
+                new SparkTemplate(Path.Combine(_root, "Views", "Home", "ModelAView.spark"), _root, TemplateConstants.HostOrigin),
+                new SparkTemplate(Path.Combine(_root, "Views", "Home", "_partial1.spark"), _root, TemplateConstants.HostOrigin),
+                new SparkTemplate(Path.Combine(_root, "Views", "Home", "ModelBView.spark"), _root, TemplateConstants.HostOrigin),
+                new SparkTemplate(Path.Combine(_root, "Views", "Home", "_partial2.spark"), _root, TemplateConstants.HostOrigin),
+                new SparkTemplate(Path.Combine(_root, "Views", "Home", "ModelCView.spark"), _root, TemplateConstants.HostOrigin),
+                new SparkTemplate(Path.Combine(_root, "Views", "Home", "_partial3.spark"), _root, TemplateConstants.HostOrigin)
             });
 
             var templates = _templateRegistry.ToList();

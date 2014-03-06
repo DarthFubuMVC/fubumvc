@@ -8,16 +8,16 @@ using Spark;
 namespace FubuMVC.Spark.Tests.SparkModel
 {
     [TestFixture]
-    public class MasterAttacherTester : InteractionContext<MasterAttacher<ITemplate>>
+    public class MasterAttacherTester : InteractionContext<MasterAttacher<ISparkTemplate>>
     {
-        private AttachRequest<ITemplate> _request;
+        private AttachRequest<ISparkTemplate> _request;
         private SparkDescriptor _viewDescriptor;
         private Parsing _parsing;
-        private ITemplate _template;
+        private ISparkTemplate _template;
 
         protected override void beforeEach()
         {
-            _template = new Template("b/a.spark", "b", "c");
+            _template = new SparkTemplate("b/a.spark", "b", "c");
             _template.Descriptor = _viewDescriptor = new SparkDescriptor(_template, new SparkViewEngine())
             {
                 ViewModel = typeof (ProductModel)
@@ -29,13 +29,13 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 ViewModelType = _viewDescriptor.ViewModel.FullName
             };
 
-            _request = new AttachRequest<ITemplate>
+            _request = new AttachRequest<ISparkTemplate>
             {
                 Template = _template,
                 Logger = MockFor<ITemplateLogger>()
             };
 
-            MockFor<IParsingRegistrations<ITemplate>>().Expect(x => x.ParsingFor(_template)).Return(_parsing);
+            MockFor<IParsingRegistrations<ISparkTemplate>>().Expect(x => x.ParsingFor(_template)).Return(_parsing);
         }
 
         [Test]
@@ -79,14 +79,14 @@ namespace FubuMVC.Spark.Tests.SparkModel
         [Test]
         public void if_master_is_already_set_binder_is_not_applied()
         {
-            _viewDescriptor.Master = MockFor<ITemplate>();
+            _viewDescriptor.Master = MockFor<ISparkTemplate>();
             ClassUnderTest.CanAttach(_request).ShouldBeFalse();
         }
 
         [Test]
         public void does_not_bind_partials()
         {
-            _request.Template = new Template("b/_partial.spark", "b", "c");
+            _request.Template = new SparkTemplate("b/_partial.spark", "b", "c");
             ClassUnderTest.CanAttach(_request).ShouldBeFalse();
         }
 
@@ -96,7 +96,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
             _parsing.Master = null;
             ClassUnderTest.Attach(_request);
 
-            MockFor<ISharedTemplateLocator<ITemplate>>()
+            MockFor<ISharedTemplateLocator<ISparkTemplate>>()
                 .AssertWasCalled(x => x.LocateMaster(ClassUnderTest.MasterName, _template));
         }
 
@@ -104,7 +104,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         public void when_master_is_set_it_is_used_by_locator()
         {
             ClassUnderTest.Attach(_request);
-            MockFor<ISharedTemplateLocator<ITemplate>>()
+            MockFor<ISharedTemplateLocator<ISparkTemplate>>()
                 .AssertWasCalled(x => x.LocateMaster(_parsing.Master, _template));
         }
 
@@ -120,7 +120,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         {
             master_is_found();
             ClassUnderTest.Attach(_request);
-            _viewDescriptor.Master.ShouldEqual(MockFor<ITemplate>());
+            _viewDescriptor.Master.ShouldEqual(MockFor<ISparkTemplate>());
         }
 
         [Test]
@@ -134,7 +134,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         [Test]
         public void if_template_is_default_master_then_attacher_is_not_applied()
         {
-            ((Template)_template).FilePath = "b/" + _parsing.Master + ".cshtml";
+            ((SparkTemplate)_template).FilePath = "b/" + _parsing.Master + ".cshtml";
             ClassUnderTest.CanAttach(_request).ShouldBeFalse();
         }
 
@@ -142,14 +142,14 @@ namespace FubuMVC.Spark.Tests.SparkModel
         private void verify_log_contains(string snippet)
         {
             MockFor<ITemplateLogger>()
-                .AssertWasCalled(x => x.Log(Arg<ITemplate>.Is.Equal(_template), Arg<string>.Matches(s => s.Contains(snippet))));            
+                .AssertWasCalled(x => x.Log(Arg<ISparkTemplate>.Is.Equal(_template), Arg<string>.Matches(s => s.Contains(snippet))));            
         }
 
         private void master_is_found()
         {
-            MockFor<ISharedTemplateLocator<ITemplate>>()
+            MockFor<ISharedTemplateLocator<ISparkTemplate>>()
                 .Stub(x => x.LocateMaster(_parsing.Master, _template))
-                .Return(MockFor<ITemplate>());            
+                .Return(MockFor<ISparkTemplate>());            
         }
     }
 }

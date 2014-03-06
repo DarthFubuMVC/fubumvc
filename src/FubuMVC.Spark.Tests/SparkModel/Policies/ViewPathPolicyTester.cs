@@ -8,7 +8,7 @@ using Rhino.Mocks;
 
 namespace FubuMVC.Spark.Tests.SparkModel.Policies
 {
-    public class StubTemplate : ITemplate
+    public class StubTemplate : ISparkTemplate
     {
         public string Origin
         {
@@ -41,7 +41,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
     }
 
     [TestFixture]
-    public class ViewPathPolicyTester : InteractionContext<ViewPathPolicy<ITemplate>>
+    public class ViewPathPolicyTester : InteractionContext<ViewPathPolicy<ISparkTemplate>>
     {
         private StubTemplate _template;
         protected override void beforeEach()

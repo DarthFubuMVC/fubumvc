@@ -30,8 +30,8 @@ namespace FubuMVC.Spark
         private void configureServices(ServiceRegistry services)
         {
             services.ReplaceService<ISparkTemplateRegistry>(_templateRegistry);
-            services.ReplaceService<ITemplateRegistry<ITemplate>>(_templateRegistry);
-            services.ReplaceService<IParsingRegistrations<ITemplate>>(_parsings);
+            services.ReplaceService<ITemplateRegistry<ISparkTemplate>>(_templateRegistry);
+            services.ReplaceService<IParsingRegistrations<ISparkTemplate>>(_parsings);
             
             var graph = new SharingGraph();
             services.SetServiceIfNone(graph);
@@ -44,19 +44,19 @@ namespace FubuMVC.Spark
 
             services.FillType<IActivator, SharingConfigActivator>();
             services.FillType<IActivator, SharingPolicyActivator>();
-            services.FillType<IActivator, SharingAttacherActivator<ITemplate>>();
+            services.FillType<IActivator, SharingAttacherActivator<ISparkTemplate>>();
             services.FillType<IActivator, SparkActivator>();
             services.FillType<IActivator, SparkPrecompiler>();
 
-            services.FillType<ISharingAttacher<ITemplate>, MasterAttacher<ITemplate>>();
-            services.FillType<ISharingAttacher<ITemplate>, BindingsAttacher>();
+            services.FillType<ISharingAttacher<ISparkTemplate>, MasterAttacher<ISparkTemplate>>();
+            services.FillType<ISharingAttacher<ISparkTemplate>, BindingsAttacher>();
 
             services.SetServiceIfNone<ISharedPathBuilder>(new SharedPathBuilder());
-            services.SetServiceIfNone<ITemplateDirectoryProvider<ITemplate>, TemplateDirectoryProvider<ITemplate>>();
+            services.SetServiceIfNone<ITemplateDirectoryProvider<ISparkTemplate>, TemplateDirectoryProvider<ISparkTemplate>>();
             services.SetServiceIfNone<ISharedTemplateLocator, SharedTemplateLocator>();
-            services.FillType<ISharedTemplateLocator<ITemplate>, SharedTemplateLocator>();
+            services.FillType<ISharedTemplateLocator<ISparkTemplate>, SharedTemplateLocator>();
 
-            services.FillType<ITemplateSelector<ITemplate>, SparkTemplateSelector>();
+            services.FillType<ITemplateSelector<ISparkTemplate>, SparkTemplateSelector>();
 
 
             services.SetServiceIfNone<IHtmlEncoder, DefaultHtmlEncoder>();

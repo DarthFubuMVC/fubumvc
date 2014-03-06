@@ -10,9 +10,9 @@ namespace FubuMVC.Spark.Tests.SparkModel
     [TestFixture]
     public class TemplateExtensionsTester
     {
-        private readonly ITemplate _bottomTemplate;
-        private readonly ITemplate _middleTemplate;
-        private readonly ITemplate _topTemplate;
+        private readonly ISparkTemplate _bottomTemplate;
+        private readonly ISparkTemplate _middleTemplate;
+        private readonly ISparkTemplate _topTemplate;
 
         public TemplateExtensionsTester()
         {
@@ -22,9 +22,9 @@ namespace FubuMVC.Spark.Tests.SparkModel
             var middlePath = Path.Combine(rootPath, "Dining", "Philosophers.spark");
             var topPath = Path.Combine(rootPath, "Livelock.spark");
             
-            _bottomTemplate = new Template(bottomPath, rootPath, "chuck");
-            _middleTemplate = new Template(middlePath, rootPath, "chuck");
-            _topTemplate = new Template(topPath, rootPath, "chuck");
+            _bottomTemplate = new SparkTemplate(bottomPath, rootPath, "chuck");
+            _middleTemplate = new SparkTemplate(middlePath, rootPath, "chuck");
+            _topTemplate = new SparkTemplate(topPath, rootPath, "chuck");
         }
 
         [Test]
@@ -62,20 +62,20 @@ namespace FubuMVC.Spark.Tests.SparkModel
 		[Test]
         public void is_partial_returns_true_if_file_starts_with_underscore_and_ends_with_dot_spark()
         {
-			new Template("_Partial.spark", "", "").IsPartial().ShouldBeTrue();
+			new SparkTemplate("_Partial.spark", "", "").IsPartial().ShouldBeTrue();
         }
 		
 		[Test]
         public void is_spark_view_returns_true_if_file_ends_with_dot_spark()
         {
 			_bottomTemplate.IsSparkView().ShouldBeTrue();
-			new Template("bindings.xml", "", "").IsSparkView().ShouldBeFalse();
+			new SparkTemplate("bindings.xml", "", "").IsSparkView().ShouldBeFalse();
         }
 		
 		[Test]
         public void is_xml_returns_true_if_file_ends_with_xml()
         {
-			new Template("bindings.xml", "", "").IsXml().ShouldBeTrue();
+			new SparkTemplate("bindings.xml", "", "").IsXml().ShouldBeTrue();
         }
     }
 }

@@ -24,9 +24,9 @@ namespace FubuMVC.Spark.Tests.SparkModel
             var appRoot = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Templates");
             var packageRoot = Path.Combine(appRoot, "App", "fubu-packages", "Package1", "WebContent");
             
-            var binding1 = new Template(Path.Combine(packageRoot, "Handlers", "Shared", "bindings.xml"), packageRoot, "Package1");
-            var binding2 = new Template(Path.Combine(appRoot, "Shared", "bindings.xml"), appRoot, TemplateConstants.HostOrigin);
-            var viewPathPolicy = new ViewPathPolicy<ITemplate>();
+            var binding1 = new SparkTemplate(Path.Combine(packageRoot, "Handlers", "Shared", "bindings.xml"), packageRoot, "Package1");
+            var binding2 = new SparkTemplate(Path.Combine(appRoot, "Shared", "bindings.xml"), appRoot, TemplateConstants.HostOrigin);
+            var viewPathPolicy = new ViewPathPolicy<ISparkTemplate>();
             viewPathPolicy.Apply(binding1);
             viewPathPolicy.Apply(binding2);
 

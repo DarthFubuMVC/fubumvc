@@ -22,9 +22,9 @@ namespace FubuMVC.Razor.Tests.RazorModel
             var middlePath = Path.Combine(rootPath, "Dining", "Philosophers.cshtml");
             var topPath = Path.Combine(rootPath, "Livelock.cshtml");
             
-            _bottomTemplate = new Template(bottomPath, rootPath, "chuck");
-            _middleTemplate = new Template(middlePath, rootPath, "chuck");
-            _topTemplate = new Template(topPath, rootPath, "chuck");
+            _bottomTemplate = new RazorTemplate(bottomPath, rootPath, "chuck");
+            _middleTemplate = new RazorTemplate(middlePath, rootPath, "chuck");
+            _topTemplate = new RazorTemplate(topPath, rootPath, "chuck");
         }
 
         [Test]
@@ -64,7 +64,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
         public void is_razor_view_returns_true_if_file_ends_with_dot_razor()
         {
 			_bottomTemplate.IsRazorView().ShouldBeTrue();
-			new Template("bindings.xml", "", "").IsRazorView().ShouldBeFalse();
+			new RazorTemplate("bindings.xml", "", "").IsRazorView().ShouldBeFalse();
         }
     }
 }

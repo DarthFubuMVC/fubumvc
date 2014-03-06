@@ -8,11 +8,11 @@ namespace FubuMVC.Spark.SparkModel
 {
     public class FubuPartialProvider : IPartialProvider
     {
-        private readonly ITemplateDirectoryProvider<ITemplate> _directoryProvider;
+        private readonly ITemplateDirectoryProvider<ISparkTemplate> _directoryProvider;
         private readonly DefaultPartialProvider _defaultPartialProvider;
         private readonly Cache<string, IEnumerable<string>> _partialPathCache;
 
-        public FubuPartialProvider(ITemplateDirectoryProvider<ITemplate> directoryProvider)
+        public FubuPartialProvider(ITemplateDirectoryProvider<ISparkTemplate> directoryProvider)
         {
             _directoryProvider = directoryProvider;
             _defaultPartialProvider = new DefaultPartialProvider();
