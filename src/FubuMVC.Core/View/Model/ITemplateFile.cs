@@ -21,7 +21,6 @@ namespace FubuMVC.Core.View.Model
         string Name();
         bool FromHost();
         bool IsPartial();
-        bool HasViewModel();
         string FullName();
     }
 
@@ -115,11 +114,8 @@ namespace FubuMVC.Core.View.Model
                 return nspace;
             }
         }
+
         public Type ViewModel { get; set; }
-        public bool HasViewModel()
-        {
-            return ViewModel != null;
-        }
 
         public string FullName()
         {

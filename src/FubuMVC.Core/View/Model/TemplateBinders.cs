@@ -58,7 +58,7 @@ namespace FubuMVC.Core.View.Model
             var descriptor = request.Target.Descriptor as ViewDescriptor<T>;
 
             return descriptor != null
-                   && !descriptor.Template.HasViewModel()
+                   && descriptor.Template.ViewModel == null
                    && request.Parsing.ViewModelType.IsNotEmpty()
                    && GenericParser.IsGeneric(request.Parsing.ViewModelType);
         }
@@ -90,7 +90,7 @@ namespace FubuMVC.Core.View.Model
             var descriptor = request.Target.Descriptor as ViewDescriptor<T>;
 
             return descriptor != null
-                   && !descriptor.Template.HasViewModel()
+                   && descriptor.Template.ViewModel == null
                    && request.Parsing.ViewModelType.IsNotEmpty()
                    && GenericParser.IsGeneric(request.Parsing.ViewModelType) == false;
         }

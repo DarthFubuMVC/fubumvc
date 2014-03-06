@@ -24,7 +24,7 @@ namespace FubuMVC.Core.View.Model
 
             return descriptor != null
                    && descriptor.Master == null
-                   && (descriptor.Template.HasViewModel() || parsing.Master.IsNotEmpty())
+                   && (descriptor.Template.ViewModel != null || parsing.Master.IsNotEmpty())
                    && !request.Template.IsPartial()
                    && parsing.Master != string.Empty
                    && (!descriptor.Template.Name().EqualsIgnoreCase(MasterName)
