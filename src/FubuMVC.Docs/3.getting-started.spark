@@ -10,7 +10,7 @@ Make sure you have the [fubu][fubu] gem installed and open PowerShell in Adminis
 <Info>Administrator Mode is necessary for running the Katana web server</Info>
 
 <pre>
-fubu new MyProjectName --dot-net v4.5 --version VS2013 --options Razor
+fubu new MyProjectName --dot-net v4.5 --version VS2013 --options Spark
 </pre>
 
 <Info>
