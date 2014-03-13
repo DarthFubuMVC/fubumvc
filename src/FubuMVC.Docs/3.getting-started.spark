@@ -4,7 +4,35 @@
 <markdown>
 
 <Section title="Using 'fubu new'" id="fubu-new">
-TODO(fubu new)
+
+Make sure you have the [fubu][fubu] gem installed and open PowerShell in Administrator Mode.
+
+<Info>Administrator Mode is necessary for running the Katana web server</Info>
+
+<pre>
+fubu new MyProjectName --dot-net v4.5 --version VS2013 --options Spark
+</pre>
+
+<Info>
+The complete list of options is available in the 
+<a href="http://fubuworld.com/fubu/templating/new-solutions-and-code-trees/#new">
+	<code>fubu</code> docs
+</a>
+</Info>
+
+Text flies across the screen, cmd.exe opens, FubuMVC is bootstrapped and Visual Studio loads.
+Fantastic! Now we're ready to start the server.
+
+<pre>
+cd MyProjectName
+fubu run --directory src\MyProjectName
+</pre>
+
+The console reports the app's url (most likely `http://localhost:5500`). Load it up in a 
+browser to see your new website!
+
+[fubu]: http://fubuworld.com/fubu/
+
 </Section>
 
 <Section title="Quickstart Nugets" id="quickstart">
