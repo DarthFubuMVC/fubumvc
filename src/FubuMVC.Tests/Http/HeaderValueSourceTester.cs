@@ -1,5 +1,6 @@
 ﻿using FubuCore.Binding.Values;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Owin;
 using FubuMVC.Tests.Urls;
 using NUnit.Framework;
 using FubuTestingSupport;
@@ -11,13 +12,13 @@ namespace FubuMVC.Tests.Http
     [TestFixture]
     public class HeaderValueSourceTester
     {
-        private StubHttpRequest theRequest;
+        private OwinHttpRequest theRequest;
         private HeaderValueSource theSource;
 
         [SetUp]
         public void SetUp()
         {
-            theRequest = new StubHttpRequest();
+            theRequest = new OwinHttpRequest();
             theSource = new HeaderValueSource(theRequest);
         }
 
@@ -26,7 +27,7 @@ namespace FubuMVC.Tests.Http
         {
             theSource.Has("a").ShouldBeFalse();
 
-            theRequest.Headers["a"] = new string[]{"1"};
+            theRequest.Header("a", "1");
 
             theSource.Has("a").ShouldBeTrue();
         }
@@ -34,14 +35,15 @@ namespace FubuMVC.Tests.Http
         [Test]
         public void get_with_only_one_value()
         {
-            theRequest.Headers["a"] = new string[] { "1" };
+            theRequest.Header("a", "1");
             theSource.Get("a").ShouldEqual("1");
         }
 
         [Test]
         public void get_with_multiple_values()
         {
-            theRequest.Headers["a"] = new string[] { "1", "2", "3" };
+            theRequest.Header("a", "1", "2", "3");
+
             theSource.Get("a").ShouldEqual(new string[] { "1", "2", "3" });
         }
 
@@ -56,7 +58,7 @@ namespace FubuMVC.Tests.Http
         [Test]
         public void value_hit_with_only_one_value()
         {
-            theRequest.Headers["a"] = new string[] { "1" };
+            theRequest.Header("a", "1");
             theSource.Value("a", v => {
                 v.RawKey.ShouldEqual("a");
                 v.RawValue.ShouldEqual("1");
@@ -68,7 +70,7 @@ namespace FubuMVC.Tests.Http
         [Test]
         public void value_hit_with_only_multiple_values()
         {
-            theRequest.Headers["a"] = new string[] { "1", "2", "3" };
+            theRequest.Header("a", "1", "2", "3");
             theSource.Value("a", v =>
             {
                 v.RawKey.ShouldEqual("a");
@@ -80,9 +82,9 @@ namespace FubuMVC.Tests.Http
         [Test]
         public void report_smoke_test()
         {
-            theRequest.Headers["a"] = new string[] { "1", "2", "3" };
-            theRequest.Headers["b"] = new string[] { "4", "2", "3" };
-            theRequest.Headers["c"] = new string[] { "7", "2", "3" };
+            theRequest.Header("a", "1", "2", "3");
+            theRequest.Header("b", "4", "2", "3");
+            theRequest.Header("c", "7", "2", "3");
 
             var report = MockRepository.GenerateMock<IValueReport>();
             theSource.WriteReport(report);

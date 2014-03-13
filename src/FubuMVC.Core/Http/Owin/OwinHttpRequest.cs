@@ -5,12 +5,14 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Web;
+using System.Xml.Serialization;
 using FubuCore;
 using FubuMVC.Core.Http.Cookies;
+using HtmlTags;
 
 namespace FubuMVC.Core.Http.Owin
 {
-
+    // TODO -- OwinHttpRequest is too big.  Thin it down.  Extract some responsibilities
     public class OwinHttpRequest : IHttpRequest
     {
         public static OwinHttpRequest ForTesting()
@@ -18,6 +20,7 @@ namespace FubuMVC.Core.Http.Owin
             var request = new OwinHttpRequest();
             request.HttpMethod("GET");
             request.FullUrl("http://server");
+
 
             return request;
         }
@@ -31,20 +34,20 @@ namespace FubuMVC.Core.Http.Owin
             _environment.Add(OwinConstants.RequestHeadersKey, new Dictionary<string, string[]>());
             _querystring = new Lazy<NameValueCollection>(() => new NameValueCollection());
             _environment.Add(OwinConstants.ResponseBodyKey, new MemoryStream());
-
-            
         }
 
         public OwinHttpRequest(IDictionary<string, object> environment)
         {
             _environment = environment;
-            _headers = new Lazy<IDictionary<string, string[]>>(() => {
-                return environment.Get<IDictionary<string, string[]>>(OwinConstants.RequestHeadersKey);
-            });
+            _headers =
+                new Lazy<IDictionary<string, string[]>>(
+                    () => { return environment.Get<IDictionary<string, string[]>>(OwinConstants.RequestHeadersKey); });
 
-            _querystring = new Lazy<NameValueCollection>(() => {
-                return HttpUtility.ParseQueryString(environment.Get<string>(OwinConstants.RequestQueryStringKey));
-            });
+            _querystring =
+                new Lazy<NameValueCollection>(
+                    () => {
+                        return HttpUtility.ParseQueryString(environment.Get<string>(OwinConstants.RequestQueryStringKey));
+                    });
 
             Cookies = new Cookies.Cookies(this);
         }
@@ -57,7 +60,7 @@ namespace FubuMVC.Core.Http.Owin
         private T get<T>(string key)
         {
             object value;
-            return _environment.TryGetValue(key, out value) ? (T)value : default(T);
+            return _environment.TryGetValue(key, out value) ? (T) value : default(T);
         }
 
         private void append(string key, object o)
@@ -80,7 +83,8 @@ namespace FubuMVC.Core.Http.Owin
                 return get<string>(OwinConstants.RequestPathBaseKey) + get<string>(OwinConstants.RequestPathKey);
             }
 
-            return get<string>("owin.RequestPathBase") + get<string>("owin.RequestPath") + "?" + get<string>("owin.RequestQueryString");
+            return get<string>("owin.RequestPathBase") + get<string>("owin.RequestPath") + "?" +
+                   get<string>("owin.RequestQueryString");
         }
 
         public string RelativeUrl()
@@ -130,8 +134,8 @@ namespace FubuMVC.Core.Http.Owin
             var requestPathBase = get<string>(OwinConstants.RequestPathBaseKey);
 
             // default values, in absence of a host header
-            string host = "127.0.0.1";
-            int port = String.Equals(requestScheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase) ? 443 : 80;
+            var host = "127.0.0.1";
+            var port = String.Equals(requestScheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase) ? 443 : 80;
 
             // if a single host header is available
             string[] hostAndPort;
@@ -225,11 +229,7 @@ namespace FubuMVC.Core.Http.Owin
 
         public NameValueCollection QueryString
         {
-            get
-            {
-                return _querystring.Value;
-            }
-            
+            get { return _querystring.Value; }
         }
 
         public NameValueCollection Form
@@ -249,6 +249,11 @@ namespace FubuMVC.Core.Http.Owin
         {
             get
             {
+                if (!_environment.ContainsKey(OwinConstants.RequestBodyKey))
+                {
+                    _environment.Add(OwinConstants.RequestBodyKey, new MemoryStream());
+                }
+
                 return _environment.Get<Stream>(OwinConstants.RequestBodyKey);
             }
         }
@@ -259,13 +264,51 @@ namespace FubuMVC.Core.Http.Owin
             return cancellation == null ? false : !cancellation.IsCancellationRequested;
         }
 
-        public ICookies Cookies
+        public ICookies Cookies { get; private set; }
+
+
+        public HttpBody Body
         {
-            get; private set;
+            get { return new HttpBody(this); }
         }
 
+        public class HttpBody
+        {
+            private readonly OwinHttpRequest _parent;
 
+            public HttpBody(OwinHttpRequest parent)
+            {
+                _parent = parent;
+            }
 
+            public void XmlInputIs(object target)
+            {
+                var serializer = new XmlSerializer(target.GetType());
+                serializer.Serialize(_parent.Input, target);
+                _parent.Input.Position = 0;
+            }
+
+            public void JsonInputIs(object target)
+            {
+                var json = JsonUtil.ToJson(target);
+
+                JsonInputIs(json);
+            }
+
+            public void JsonInputIs(string json)
+            {
+                var writer = new StreamWriter(_parent.Input);
+                writer.Write(json);
+                writer.Flush();
+
+                _parent.Input.Position = 0;
+            }
+
+            public void ReplaceBody(Stream stream)
+            {
+                stream.Position = 0;
+                _parent.append(OwinConstants.RequestBodyKey, stream);
+            }
+        }
     }
-
 }

@@ -1,5 +1,6 @@
 using FubuCore;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
 using FubuTestingSupport;
@@ -11,7 +12,7 @@ namespace FubuMVC.Tests.Runtime.Formatters
     [TestFixture]
     public class XmlFormatterTester 
     {
-        private InMemoryStreamingData streamingData;
+        private OwinHttpRequest theRequest;
         private XmlFormatter theFormatter;
         private InMemoryOutputWriter writer;
         private MockedFubuRequestContext context;
@@ -19,11 +20,11 @@ namespace FubuMVC.Tests.Runtime.Formatters
         [SetUp]
         public void SetUp()
         {
-            streamingData = new InMemoryStreamingData();
+            theRequest = OwinHttpRequest.ForTesting();
             writer = new InMemoryOutputWriter();
 
             var container = new Container(x => {
-                x.For<IHttpRequest>().Use(streamingData);
+                x.For<IHttpRequest>().Use(theRequest);
                 x.For<IOutputWriter>().Use(writer);
                 x.For<IFubuRequest>().Use(new InMemoryFubuRequest());
             });
@@ -41,7 +42,7 @@ namespace FubuMVC.Tests.Runtime.Formatters
                 LastName = "Miller"
             };
 
-            streamingData.XmlInputIs(xmlInput);
+            theRequest.Body.XmlInputIs(xmlInput);
 
             var xmlOutput = theFormatter.Read<XmlFormatterModel>(context);
             xmlOutput.ShouldNotBeTheSameAs(xmlInput);
@@ -61,7 +62,7 @@ namespace FubuMVC.Tests.Runtime.Formatters
 
             theFormatter.Write(context, xmlInput, "text/xml");
 
-            streamingData.CopyOutputToInputForTesting(writer.OutputStream());
+            theRequest.Body.ReplaceBody(writer.OutputStream());
 
             var xmlOutput = theFormatter.Read<XmlFormatterModel>(context);
             xmlOutput.ShouldNotBeTheSameAs(xmlInput);

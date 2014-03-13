@@ -334,7 +334,6 @@
     <Compile Include="Registration\WrapperTester.cs" />
     <Compile Include="Registration\ObjectDefTester.cs" />
     <Compile Include="Registration\RouteDefinitionTester.cs" />
-    <Compile Include="Runtime\InMemoryStreamingData.cs" />
     <Compile Include="Runtime\FubuRequestTester.cs" />
     <Compile Include="Runtime\PartialFactoryTester.cs" />
     <Compile Include="SessionState\FlashProviderTester.cs" />
@@ -343,7 +342,6 @@
     <Compile Include="UrlStringExtensionsTester.cs" />
     <Compile Include="Urls\BasicUrlRegistrationScanningIntegrationTester.cs" />
     <Compile Include="Urls\ChainUrlResolverTester.cs" />
-    <Compile Include="Urls\StubHttpRequest.cs" />
     <Compile Include="Urls\UrlRegistryIntegrationTester.cs" />
     <Compile Include="View\Attachment\DefaultProfileTester.cs" />
     <Compile Include="View\Attachment\ProfileViewTokenTester.cs" />

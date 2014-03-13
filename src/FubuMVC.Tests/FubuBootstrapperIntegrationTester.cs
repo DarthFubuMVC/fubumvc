@@ -7,6 +7,7 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Handlers;
@@ -36,9 +37,7 @@ namespace FubuMVC.Tests
             container = new Container(x =>
             {
                 x.For<ICurrentChain>().Use(new CurrentChain(null, null));
-                x.For<IHttpRequest>().Use(new StubHttpRequest{
-                    TheApplicationRoot = "http://server"
-                });
+                x.For<IHttpRequest>().Use(OwinHttpRequest.ForTesting());
             });
 
             FubuMvcPackageFacility.PhysicalRootPath = AppDomain.CurrentDomain.BaseDirectory;

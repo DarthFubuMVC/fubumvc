@@ -1,5 +1,6 @@
 using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
@@ -29,7 +30,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                     
             });
 
-			var request = new StubHttpRequest { TheApplicationRoot = "http://server/app" };
+            var request = OwinHttpRequest.ForTesting().FullUrl("http://server/app");
 			var urlResolver = new ChainUrlResolver(request);
 
 			registry = new UrlRegistry(new ChainResolutionCache(new TypeResolver(), graph), urlResolver, new JQueryUrlTemplate(), request);
@@ -65,7 +66,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void finds_and_registers_url_for_new_methods()
         {
             registry.HasNewUrl(typeof(UrlNewTarget)).ShouldBeTrue();
-            registry.UrlForNew(typeof(UrlNewTarget)).ShouldEqual("http://server/app/urlcategory1/createnewtarget");
+            registry.UrlForNew(typeof(UrlNewTarget)).ShouldEqual("/urlcategory1/createnewtarget");
             
         }
 
