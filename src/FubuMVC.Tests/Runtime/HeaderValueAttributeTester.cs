@@ -1,6 +1,7 @@
 using System.Net;
 using FubuCore.Binding.InMemory;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -13,9 +14,9 @@ namespace FubuMVC.Tests.Runtime
         [Test]
         public void bind_by_header()
         {
-            var headers = new StandInHttpRequest();
-            headers.AppendHeader("Last-Event-ID", "something");
-            headers.AppendHeader(HttpResponseHeaders.Warning, "oh no!");
+            var headers = OwinHttpRequest.ForTesting();
+            headers.Header("Last-Event-ID", "something");
+            headers.Header(HttpResponseHeaders.Warning, "oh no!");
 
 
             var target = BindingScenario<HeaderValueTarget>.For(x => { x.Service<IHttpRequest>(headers); }).Model;

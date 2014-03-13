@@ -131,7 +131,6 @@
     <Compile Include="Http\Cookies\SegmentTester.cs" />
     <Compile Include="Http\CurrentHttpRequestExtensionsTester.cs" />
     <Compile Include="Http\HeaderValueSourceTester.cs" />
-    <Compile Include="Http\HttpStandInServiceRegistry_specification.cs" />
     <Compile Include="Http\Compression\ContentEncodingTester.cs" />
     <Compile Include="Http\Compression\GZipEncodingTester.cs" />
     <Compile Include="Http\Compression\HttpContentEncodersTester.cs" />
@@ -151,7 +150,6 @@
     <Compile Include="Http\Owin\OwnCurrentHttpRequestTester.cs" />
     <Compile Include="Http\Owin\OwnHttpWriterTester.cs" />
     <Compile Include="Http\Owin\OwnResponseTester.cs" />
-    <Compile Include="Http\StandInCurrentHttpRequestTester.cs" />
     <Compile Include="Http\StreamExtensions.cs" />
     <Compile Include="Logging\ExceptionReportTester.cs" />
     <Compile Include="MockedFubuRequestContext.cs" />

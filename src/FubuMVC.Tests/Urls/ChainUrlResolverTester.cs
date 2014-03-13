@@ -1,6 +1,7 @@
 ﻿using System;
 using FubuMVC.Core;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
@@ -13,7 +14,7 @@ namespace FubuMVC.Tests.Urls
 	[TestFixture]
 	public class ChainUrlResolverTester
 	{
-		private StandInHttpRequest theHttpRequest;
+		private OwinHttpRequest theHttpRequest;
 		private ChainUrlResolver theUrlResolver;
 
 		private BehaviorGraph theGraph;
@@ -23,7 +24,7 @@ namespace FubuMVC.Tests.Urls
 		[SetUp]
 		public void SetUp()
 		{
-			theHttpRequest = new StandInHttpRequest();
+            theHttpRequest = OwinHttpRequest.ForTesting();
 			UrlContext.Stub("http://server");
 
 			theUrlResolver = new ChainUrlResolver(theHttpRequest);
@@ -46,14 +47,14 @@ namespace FubuMVC.Tests.Urls
 		[Test]
 		public void resolve_a_url_without_route_params()
 		{
-			theUrlResolver.UrlFor(null, theSimpleChain).ShouldEqual("http://server/index");
+			theUrlResolver.UrlFor(null, theSimpleChain).ShouldEqual("/index");
 		}
 
 		[Test]
 		public void resolve_a_url_with_route_params_filled_by_input()
 		{
 			var input = new ChainUrlParams {Name = "Joel"};
-			theUrlResolver.UrlFor(input, theChainWithRouteParams).ShouldEqual("http://server/Joel");
+			theUrlResolver.UrlFor(input, theChainWithRouteParams).ShouldEqual("/Joel");
 		}
 
 		[Test]
@@ -62,7 +63,7 @@ namespace FubuMVC.Tests.Urls
 			var values = new RouteParameters();
 			values["Name"] = "Joel";
 
-			theUrlResolver.UrlFor(theChainWithRouteParams, values).ShouldEqual("http://server/Joel");
+			theUrlResolver.UrlFor(theChainWithRouteParams, values).ShouldEqual("/Joel");
 		}
 
 		public class ChainUrlResolverEndpoint

@@ -7,6 +7,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
@@ -140,7 +141,7 @@ namespace FubuMVC.StructureMap
         {
             var container = new Container(containerConfiguration);
 
-            container.Configure(x => x.For<IHttpResponse>().Use(new NulloHttpResponse()));
+            container.Configure(x => x.For<IHttpResponse>().Use(new OwinHttpResponse()));
 
             FubuApplication.For(() => new FubuRegistry()).StructureMap(container).Bootstrap();
 

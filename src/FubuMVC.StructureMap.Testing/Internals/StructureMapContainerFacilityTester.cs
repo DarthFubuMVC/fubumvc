@@ -7,6 +7,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
@@ -28,12 +29,9 @@ namespace FubuMVC.StructureMap.Testing.Internals
             container = new Container(x =>
             {
                 x.For<IFileSystem>().Use<FileSystem>();
-                x.For<IHttpResponse>().Use(new NulloHttpResponse());
+                x.For<IHttpResponse>().Use(new OwinHttpResponse());
                 x.For<ICurrentChain>().Use(new CurrentChain(null, null));
-                x.For<IHttpRequest>().Use(new StandInHttpRequest(){
-                   
-                    ApplicationRoot = "http://server"
-                });
+                x.For<IHttpRequest>().Use(OwinHttpRequest.ForTesting());
 
                 x.For<IResourceHash>().Use(MockRepository.GenerateMock<IResourceHash>());
             });

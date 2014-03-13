@@ -13,6 +13,15 @@ namespace FubuMVC.Core.Http.Owin
 
     public class OwinHttpRequest : IHttpRequest
     {
+        public static OwinHttpRequest ForTesting()
+        {
+            var request = new OwinHttpRequest();
+            request.HttpMethod("GET");
+            request.FullUrl("http://server");
+
+            return request;
+        }
+
         private readonly IDictionary<string, object> _environment;
         private readonly Lazy<IDictionary<string, string[]>> _headers;
         private readonly Lazy<NameValueCollection> _querystring;
@@ -77,6 +86,13 @@ namespace FubuMVC.Core.Http.Owin
         public string RelativeUrl()
         {
             return _environment.Get<string>(OwinConstants.RequestPathKey).TrimStart('/');
+        }
+
+        public OwinHttpRequest RelativeUrl(string url)
+        {
+            append(OwinConstants.RequestPathKey, url);
+
+            return this;
         }
 
         public OwinHttpRequest FullUrl(string url)
@@ -220,6 +236,11 @@ namespace FubuMVC.Core.Http.Owin
         {
             get
             {
+                if (!_environment.ContainsKey(OwinConstants.RequestFormKey))
+                {
+                    return new NameValueCollection();
+                }
+
                 return _environment.Get<NameValueCollection>(OwinConstants.RequestFormKey);
             }
         }

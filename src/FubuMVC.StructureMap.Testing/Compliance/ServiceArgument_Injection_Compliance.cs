@@ -1,6 +1,7 @@
 ﻿using FubuCore.Binding;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
 using NUnit.Framework;
@@ -15,7 +16,7 @@ namespace FubuMVC.StructureMap.Testing.Compliance
         [Test]
         public void can_inject_arguments_into_the_behavior_factory()
         {
-            var standInCurrentHttpRequest = new StandInHttpRequest();
+            var standInCurrentHttpRequest = OwinHttpRequest.ForTesting();
             var inMemoryFubuRequest = new InMemoryFubuRequest();
 
             var arguments = new ServiceArguments()

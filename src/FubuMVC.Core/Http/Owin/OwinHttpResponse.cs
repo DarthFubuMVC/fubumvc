@@ -17,6 +17,10 @@ namespace FubuMVC.Core.Http.Owin
         private readonly IDictionary<string, object> _environment;
         private readonly Stream _output;
 
+        public OwinHttpResponse() : this(new Dictionary<string, object>())
+        {
+        }
+
         public OwinHttpResponse(IDictionary<string, object> environment)
         {
             _environment = environment;

@@ -347,7 +347,6 @@
     <Compile Include="Http\ICurrentChain.cs" />
     <Compile Include="Http\IHttpRequest.cs" />
     <Compile Include="Http\MimeTypeList.cs" />
-    <Compile Include="Http\NulloHttpResponse.cs" />
     <Compile Include="Http\RequestDataSource.cs" />
     <Compile Include="Packaging\ContentOnlyPackageInfo.cs" />
     <Compile Include="Registration\Nodes\ActionCallBase.cs" />

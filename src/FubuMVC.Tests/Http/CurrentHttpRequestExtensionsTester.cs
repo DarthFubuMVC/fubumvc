@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Owin;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -9,50 +10,50 @@ namespace FubuMVC.Tests.Http
     [TestFixture]
     public class CurrentHttpRequestExtensionsTester
     {
-        private StandInHttpRequest theRequest;
+        private OwinHttpRequest theRequest;
 
         [SetUp]
         public void SetUp()
         {
-            theRequest = new StandInHttpRequest();
+            theRequest = new OwinHttpRequest();
         }
 
         [Test]
         public void is_get()
         {
-            theRequest.TheHttpMethod = "get";
+            theRequest.HttpMethod("get");
             theRequest.IsGet().ShouldBeTrue();
 
-            theRequest.TheHttpMethod = "GET";
+            theRequest.HttpMethod("GET");
             theRequest.IsGet().ShouldBeTrue();
 
-            theRequest.TheHttpMethod = "POST";
+            theRequest.HttpMethod("POST");
             theRequest.IsGet().ShouldBeFalse();
         }
 
         [Test]
         public void is_head()
         {
-            theRequest.TheHttpMethod = "head";
+            theRequest.HttpMethod("head");
             theRequest.IsHead().ShouldBeTrue();
 
-            theRequest.TheHttpMethod = "HEAD";
+            theRequest.HttpMethod("HEAD");
             theRequest.IsHead().ShouldBeTrue();
 
-            theRequest.TheHttpMethod = "POST";
+            theRequest.HttpMethod("POST");
             theRequest.IsHead().ShouldBeFalse();
         }
 
         [Test]
         public void is_post()
         {
-            theRequest.TheHttpMethod = "post";
+            theRequest.HttpMethod("post");
             theRequest.IsPost().ShouldBeTrue();
 
-            theRequest.TheHttpMethod = "POST";
+            theRequest.HttpMethod("POST");
             theRequest.IsPost().ShouldBeTrue();
 
-            theRequest.TheHttpMethod = "get";
+            theRequest.HttpMethod("get");
             theRequest.IsPost().ShouldBeFalse();
 
         }
@@ -60,28 +61,28 @@ namespace FubuMVC.Tests.Http
         [Test]
         public void is_put()
         {
-            theRequest.TheHttpMethod = "put";
+            theRequest.HttpMethod("put");
             theRequest.IsPut().ShouldBeTrue();
 
-            theRequest.TheHttpMethod = "PUT";
+            theRequest.HttpMethod("PUT");
             theRequest.IsPut().ShouldBeTrue();
 
-            theRequest.TheHttpMethod = "get";
+            theRequest.HttpMethod("get");
             theRequest.IsPut().ShouldBeFalse();
         }
 
         [Test]
         public void relative_url()
         {
-            theRequest.TheRelativeUrl = "";
+            theRequest.RelativeUrl("");
             theRequest.ToRelativeContentUrl("/foo")
                 .ShouldEqual("foo");
 
-            theRequest.TheRelativeUrl = "/bar";
+            theRequest.RelativeUrl("/bar");
             theRequest.ToRelativeContentUrl("/foo")
                 .ShouldEqual("../foo");
 
-            theRequest.TheRelativeUrl = "/bar";
+            theRequest.RelativeUrl("/bar");
             theRequest.ToRelativeContentUrl("/bar/1")
                 .ShouldEqual("1");
 

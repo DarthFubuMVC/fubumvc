@@ -1,4 +1,5 @@
 using System.Web.Routing;
+using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.Http
@@ -7,9 +8,9 @@ namespace FubuMVC.Core.Http
     {
         public HttpStandInServiceRegistry()
         {
-            SetServiceIfNone<IHttpRequest, StandInHttpRequest>();
+            SetServiceIfNone<IHttpRequest>(new OwinHttpRequest());
 
-            SetServiceIfNone<IHttpResponse, NulloHttpResponse>();
+            SetServiceIfNone<IHttpResponse>(new OwinHttpResponse());
 
             SetServiceIfNone<ICurrentChain>(new CurrentChain(null, null));
 

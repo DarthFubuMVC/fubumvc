@@ -6,6 +6,7 @@ using FubuCore.Dates;
 using FubuCore.Logging;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
@@ -57,7 +58,7 @@ namespace FubuMVC.StructureMap.Testing.Internals
                 new Container(x =>
                 {
                     x.For<IFileSystem>().Use<FileSystem>();
-                    x.For<IHttpResponse>().Use<NulloHttpResponse>();
+                    x.For<IHttpResponse>().Use<OwinHttpResponse>();
                     x.For<IActionBehavior>().Use(new ObjectDefInstance(def));
                     x.For<ILogger>().Use<Logger>();
                     x.For<ISystemTime>().Use(SystemTime.Default);
