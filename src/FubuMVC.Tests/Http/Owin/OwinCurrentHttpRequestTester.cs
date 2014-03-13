@@ -23,6 +23,15 @@ namespace FubuMVC.Tests.Http.Owin
         }
 
         [Test]
+        public void server_root_round_trip()
+        {
+            request.FullUrl("http://server/foo/bar");
+            request.FullUrl().ShouldEqual("http://server/foo/bar");
+
+            request.RelativeUrl().ShouldEqual("foo/bar");
+        }
+
+        [Test]
         public void has_negative()
         {
             request.HasHeader("a").ShouldBeFalse();

@@ -66,10 +66,11 @@ namespace FubuMVC.Core.Http.Owin
         public string RawUrl()
         {
             var queryString = get<string>(OwinConstants.RequestQueryStringKey);
-            if (string.IsNullOrEmpty(queryString))
+            if (queryString.IsEmpty())
             {
                 return get<string>(OwinConstants.RequestPathBaseKey) + get<string>(OwinConstants.RequestPathKey);
             }
+
             return get<string>("owin.RequestPathBase") + get<string>("owin.RequestPath") + "?" + get<string>("owin.RequestQueryString");
         }
 
@@ -77,6 +78,18 @@ namespace FubuMVC.Core.Http.Owin
         {
             return _environment.Get<string>(OwinConstants.RequestPathKey).TrimStart('/');
         }
+
+        public OwinCurrentHttpRequest FullUrl(string url)
+        {
+            var uri = new Uri(url);
+            append(OwinConstants.RequestSchemeKey, uri.Scheme);
+            append(OwinConstants.RequestPathBaseKey, string.Empty);
+            Header(HttpRequestHeaders.Host, uri.Host);
+            append(OwinConstants.RequestPathKey, uri.AbsolutePath);
+
+            return this;
+        }
+
 
         public string FullUrl()
         {
@@ -87,10 +100,11 @@ namespace FubuMVC.Core.Http.Owin
 
 
             var requestQueryString = get<string>(OwinConstants.RequestQueryStringKey);
-            if (!String.IsNullOrEmpty(requestQueryString))
+            if (requestQueryString.IsNotEmpty())
             {
                 uriBuilder.Query = requestQueryString;
             }
+
             return uriBuilder.Uri.ToString();
         }
 
@@ -228,6 +242,9 @@ namespace FubuMVC.Core.Http.Owin
         {
             get; private set;
         }
+
+
+
     }
 
 }
