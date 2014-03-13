@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.Runtime.Formatters
             writer = new InMemoryOutputWriter();
 
             var container = new Container(x => {
-                x.For<ICurrentHttpRequest>().Use(streamingData);
+                x.For<IHttpRequest>().Use(streamingData);
                 x.For<IOutputWriter>().Use(writer);
                 x.For<IFubuRequest>().Use(new InMemoryFubuRequest());
             });

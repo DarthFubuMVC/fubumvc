@@ -14,7 +14,7 @@ namespace FubuMVC.Tests.Http.Owin
         {
             var time = new DateTime(2014, 1, 30, 12, 5, 6);
 
-            new OwinCurrentHttpRequest()
+            new OwinHttpRequest()
                 .IfModifiedSince(time)
                 .IfModifiedSince()
                 .ShouldEqual(time.ToUniversalTime());
@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.Http.Owin
         {
             var time = new DateTime(2014, 1, 30, 12, 5, 6);
 
-            new OwinCurrentHttpRequest()
+            new OwinHttpRequest()
                 .IfUnModifiedSince(time)
                 .IfUnModifiedSince()
                 .ShouldEqual(time.ToUniversalTime());
@@ -34,7 +34,7 @@ namespace FubuMVC.Tests.Http.Owin
         [Test]
         public void if_match()
         {
-            new OwinCurrentHttpRequest().IfMatch("a,b, c")
+            new OwinHttpRequest().IfMatch("a,b, c")
                 .IfMatch()
                 .ShouldHaveTheSameElementsAs("a", "b", "c");
         }
@@ -42,7 +42,7 @@ namespace FubuMVC.Tests.Http.Owin
         [Test]
         public void if_none_match()
         {
-            new OwinCurrentHttpRequest().IfNoneMatch("a,b, c")
+            new OwinHttpRequest().IfNoneMatch("a,b, c")
                 .IfNoneMatch()
                 .ShouldHaveTheSameElementsAs("a", "b", "c");
         }
@@ -50,7 +50,7 @@ namespace FubuMVC.Tests.Http.Owin
         [Test]
         public void HttpMethodMatchesAny()
         {
-            var request = new OwinCurrentHttpRequest().HttpMethod("POST");
+            var request = new OwinHttpRequest().HttpMethod("POST");
 
             request.HttpMethodMatchesAny("get", "put").ShouldBeFalse();
             request.HttpMethodMatchesAny("get").ShouldBeFalse();

@@ -22,7 +22,7 @@ namespace FubuMVC.Core.Runtime
 
         public override void Bind(PropertyInfo property, IBindingContext context)
         {
-            var value = context.Service<ICurrentHttpRequest>().GetHeader(_headerName).FirstOrDefault();
+            var value = context.Service<IHttpRequest>().GetHeader(_headerName).FirstOrDefault();
             property.SetValue(context.Object, value, null);
         }
     }

@@ -16,7 +16,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
     [TestFixture]
     public class StaticFileMiddlewareTester
     {
-        private OwinCurrentHttpRequest theRequest;
+        private OwinHttpRequest theRequest;
         private StubFubuApplicationFiles theFiles = new StubFubuApplicationFiles();
         private StaticFileMiddleware theMiddleware;
         private OwinHttpResponse theResponse;
@@ -24,7 +24,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
         [SetUp]
         public void SetUp()
         {
-            theRequest = new OwinCurrentHttpRequest();
+            theRequest = new OwinHttpRequest();
             theResponse = new OwinHttpResponse(theRequest.Environment);
             theMiddleware = new StaticFileMiddleware(null, theFiles, new OwinSettings());
         }

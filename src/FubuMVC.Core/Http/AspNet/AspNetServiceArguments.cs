@@ -8,14 +8,14 @@ namespace FubuMVC.Core.Http.AspNet
     {
         public AspNetServiceArguments(RequestContext requestContext)
         {
-            var currentRequest = new AspNetCurrentHttpRequest(requestContext.HttpContext.Request, requestContext.HttpContext.Response);
+            var currentRequest = new AspNetHttpRequest(requestContext.HttpContext.Request, requestContext.HttpContext.Response);
 
             With(requestContext.RouteData);
             With(requestContext.HttpContext);
             //With(requestContext.HttpContext.Session);
 
             
-            With<ICurrentHttpRequest>(currentRequest);
+            With<IHttpRequest>(currentRequest);
 
             With<IHttpResponse>(new AspNetHttpResponse(requestContext.HttpContext.Response));
         }

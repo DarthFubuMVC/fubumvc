@@ -43,9 +43,9 @@ namespace FubuMVC.Core.Http
         {
             private readonly ConnegSettings _settings;
             private readonly ICurrentChain _currentChain;
-            private readonly ICurrentHttpRequest _request;
+            private readonly IHttpRequest _request;
 
-            public MimetypeContext(ConnegSettings settings, ICurrentChain currentChain, ICurrentHttpRequest request)
+            public MimetypeContext(ConnegSettings settings, ICurrentChain currentChain, IHttpRequest request)
             {
                 _settings = settings;
                 _currentChain = currentChain;

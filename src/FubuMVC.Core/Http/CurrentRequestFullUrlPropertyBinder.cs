@@ -11,7 +11,7 @@ namespace FubuMVC.Core.Http
     public class CurrentRequestFullUrlPropertyBinder : IPropertyBinder
     {
         private static readonly string PropertyName =
-            ReflectionHelper.GetMethod<ICurrentHttpRequest>(r => r.FullUrl()).Name;
+            ReflectionHelper.GetMethod<IHttpRequest>(r => r.FullUrl()).Name;
 
         public bool Matches(PropertyInfo property)
         {
@@ -21,7 +21,7 @@ namespace FubuMVC.Core.Http
 
         public void Bind(PropertyInfo property, IBindingContext context)
         {
-            var request = context.Service<ICurrentHttpRequest>();
+            var request = context.Service<IHttpRequest>();
             property.SetValue(context.Object, request.FullUrl(), null);
         }
     }

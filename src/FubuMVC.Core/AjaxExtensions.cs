@@ -64,7 +64,7 @@ namespace FubuMVC.Core
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public static bool IsAjaxRequest(this ICurrentHttpRequest request)
+        public static bool IsAjaxRequest(this IHttpRequest request)
         {
             var headers = request.GetHeader(XRequestedWithHeader);
             return headers.Any(x => x.EqualsIgnoreCase(XmlHttpRequestValue));

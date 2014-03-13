@@ -7,7 +7,7 @@ namespace FubuMVC.Core.Http
     {
         public HttpStandInServiceRegistry()
         {
-            SetServiceIfNone<ICurrentHttpRequest, StandInCurrentHttpRequest>();
+            SetServiceIfNone<IHttpRequest, StandInHttpRequest>();
 
             SetServiceIfNone<IHttpResponse, NulloHttpResponse>();
 

@@ -9,12 +9,12 @@ namespace FubuMVC.Tests.Http
     [TestFixture]
     public class CurrentHttpRequestExtensionsTester
     {
-        private StandInCurrentHttpRequest theRequest;
+        private StandInHttpRequest theRequest;
 
         [SetUp]
         public void SetUp()
         {
-            theRequest = new StandInCurrentHttpRequest();
+            theRequest = new StandInHttpRequest();
         }
 
         [Test]

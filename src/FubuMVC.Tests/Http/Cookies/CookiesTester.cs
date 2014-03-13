@@ -12,13 +12,13 @@ namespace FubuMVC.Tests.Http.Cookies
 	[TestFixture]
 	public class CookiesTester
 	{
-		private StubCurrentHttpRequest theRequest;
+		private StubHttpRequest theRequest;
 		private Core.Http.Cookies.Cookies theCookies;
 
 		[SetUp]
 		public void SetUp()
 		{
-			theRequest = new StubCurrentHttpRequest();
+			theRequest = new StubHttpRequest();
 			theCookies = new Core.Http.Cookies.Cookies(theRequest);
 		}
 
@@ -37,7 +37,7 @@ namespace FubuMVC.Tests.Http.Cookies
 			theCookies.Get("b").Value.ShouldEqual("456");
 		}
 
-		public class StubCurrentHttpRequest : ICurrentHttpRequest
+		public class StubHttpRequest : IHttpRequest
 		{
 			public string RawUrl()
 			{

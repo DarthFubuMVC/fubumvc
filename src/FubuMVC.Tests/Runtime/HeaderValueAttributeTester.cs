@@ -13,12 +13,12 @@ namespace FubuMVC.Tests.Runtime
         [Test]
         public void bind_by_header()
         {
-            var headers = new StandInCurrentHttpRequest();
+            var headers = new StandInHttpRequest();
             headers.AppendHeader("Last-Event-ID", "something");
             headers.AppendHeader(HttpResponseHeaders.Warning, "oh no!");
 
 
-            var target = BindingScenario<HeaderValueTarget>.For(x => { x.Service<ICurrentHttpRequest>(headers); }).Model;
+            var target = BindingScenario<HeaderValueTarget>.For(x => { x.Service<IHttpRequest>(headers); }).Model;
 
             target.LastEventId.ShouldEqual("something");
             target.Warning.ShouldEqual("oh no!");

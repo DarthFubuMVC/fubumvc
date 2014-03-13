@@ -33,12 +33,12 @@ namespace FubuMVC.Tests.Http
         [Test]
         public void should_populate_fullurl_from_current_http_request()
         {
-            var stubCurrentHttpRequest = new StubCurrentHttpRequest();
+            var stubCurrentHttpRequest = new StubHttpRequest();
             var model =
                 BindingScenario<FullUrlModel>.For(x =>
                                                           {
                                                               x.BindPropertyWith<CurrentRequestFullUrlPropertyBinder>(f => f.FullUrl);
-                                                              x.Service<ICurrentHttpRequest>(stubCurrentHttpRequest);
+                                                              x.Service<IHttpRequest>(stubCurrentHttpRequest);
                                                           })
                                                           .Model;
             model.FullUrl.ShouldEqual(stubCurrentHttpRequest.FullUrl());

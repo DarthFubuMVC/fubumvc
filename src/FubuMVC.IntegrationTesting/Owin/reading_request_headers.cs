@@ -33,9 +33,9 @@ namespace FubuMVC.IntegrationTesting.Owin
 
     public class RequestHeadersEndpoint
     {
-        private readonly ICurrentHttpRequest _headers;
+        private readonly IHttpRequest _headers;
 
-        public RequestHeadersEndpoint(ICurrentHttpRequest headers)
+        public RequestHeadersEndpoint(IHttpRequest headers)
         {
             _headers = headers;
         }

@@ -30,7 +30,7 @@ namespace FubuMVC.Tests.Caching
 
         private void setRequestIfNoneMatch(string etag)
         {
-            var request = theServiceArguments.Get<ICurrentHttpRequest>();
+            var request = theServiceArguments.Get<IHttpRequest>();
             request
                                .Stub(x => x.HasHeader(HttpRequestHeader.IfNoneMatch))
                                .Return(true);
@@ -54,7 +54,7 @@ namespace FubuMVC.Tests.Caching
 
             stash<IHttpResponse>();
             stash<ICurrentChain>();
-            stash<ICurrentHttpRequest>();
+            stash<IHttpRequest>();
 
             theCache = new HeadersCache();
 

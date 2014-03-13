@@ -36,7 +36,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
 
     public class AlwaysJson : IMimetypeCorrection
     {
-        public void Correct(CurrentMimeType mimeType, ICurrentHttpRequest request, BehaviorChain chain)
+        public void Correct(CurrentMimeType mimeType, IHttpRequest request, BehaviorChain chain)
         {
             mimeType.AcceptTypes = new MimeTypeList(MimeType.Json);
         }

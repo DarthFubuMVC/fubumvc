@@ -34,9 +34,9 @@ namespace FubuMVC.IntegrationTesting
 
     public class CookieReceiverEndpoint
     {
-        private readonly ICurrentHttpRequest _request;
+        private readonly IHttpRequest _request;
 
-        public CookieReceiverEndpoint(ICurrentHttpRequest request)
+        public CookieReceiverEndpoint(IHttpRequest request)
         {
             _request = request;
         }

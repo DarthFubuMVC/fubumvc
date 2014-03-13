@@ -20,12 +20,12 @@ namespace FubuMVC.Tests.Urls
     {
         private BehaviorGraph graph;
         private UrlRegistry urls;
-        private StubCurrentHttpRequest _theCurrentHttpRequest;
+        private StubHttpRequest _theHttpRequest;
 
         [SetUp]
         public void SetUp()
         {
-            _theCurrentHttpRequest = new StubCurrentHttpRequest{
+            _theHttpRequest = new StubHttpRequest{
                 TheApplicationRoot = "http://server/fubu"
             };
 
@@ -49,9 +49,9 @@ namespace FubuMVC.Tests.Urls
             graph = BehaviorGraph.BuildFrom(registry);
 
             var resolver = graph.Services.DefaultServiceFor<ITypeResolver>().Value;
-	        var urlResolver = new ChainUrlResolver(_theCurrentHttpRequest);
+	        var urlResolver = new ChainUrlResolver(_theHttpRequest);
 
-            urls = new UrlRegistry(new ChainResolutionCache((ITypeResolver) resolver, graph), urlResolver, new JQueryUrlTemplate(), _theCurrentHttpRequest);
+            urls = new UrlRegistry(new ChainResolutionCache((ITypeResolver) resolver, graph), urlResolver, new JQueryUrlTemplate(), _theHttpRequest);
         }
 
         [Test]

@@ -7,7 +7,7 @@ namespace FubuMVC.Core.Http
 {
     public class FubuMvcRequestData : RequestData
     {
-        public FubuMvcRequestData(ICurrentHttpRequest request, RouteData routeData)
+        public FubuMvcRequestData(IHttpRequest request, RouteData routeData)
         {
             AddValues(new RouteDataValues(routeData));
             AddValues("Querystring", new NamedKeyValues(request.QueryString));

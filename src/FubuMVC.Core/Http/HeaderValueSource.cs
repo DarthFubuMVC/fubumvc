@@ -8,9 +8,9 @@ namespace FubuMVC.Core.Http
 {
     public class HeaderValueSource : IValueSource
     {
-        private readonly ICurrentHttpRequest _request;
+        private readonly IHttpRequest _request;
 
-        public HeaderValueSource(ICurrentHttpRequest request)
+        public HeaderValueSource(IHttpRequest request)
         {
             _request = request;
             Provenance = RequestDataSource.Header.ToString();

@@ -9,7 +9,7 @@ namespace FubuMVC.Tests.Http.Owin
     public class OwinCurrentHttpRequestTester
     {
         private Dictionary<string, string[]> headers;
-        private OwinCurrentHttpRequest request;
+        private OwinHttpRequest request;
 
         [SetUp]
         public void SetUp()
@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Http.Owin
             var dict = new Dictionary<string, object>();
             dict.Add(OwinConstants.RequestHeadersKey, headers);
 
-            request = new OwinCurrentHttpRequest(dict);
+            request = new OwinHttpRequest(dict);
         }
 
         [Test]

@@ -10,7 +10,7 @@ namespace FubuMVC.Tests.Http.Owin
     public class OwinCurrentHttpRequest_ClientConnectivityTester
     {
         private CancellationToken theToken;
-        private OwinCurrentHttpRequest theConnectivity;
+        private OwinHttpRequest theConnectivity;
         private CancellationTokenSource source;
 
         [SetUp]
@@ -24,7 +24,7 @@ namespace FubuMVC.Tests.Http.Owin
 
             dictionary.Add(OwinConstants.CallCancelledKey, theToken);
 
-            theConnectivity = new OwinCurrentHttpRequest(dictionary);
+            theConnectivity = new OwinHttpRequest(dictionary);
         }
 
         [Test]

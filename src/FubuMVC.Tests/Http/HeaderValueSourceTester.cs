@@ -11,13 +11,13 @@ namespace FubuMVC.Tests.Http
     [TestFixture]
     public class HeaderValueSourceTester
     {
-        private StubCurrentHttpRequest theRequest;
+        private StubHttpRequest theRequest;
         private HeaderValueSource theSource;
 
         [SetUp]
         public void SetUp()
         {
-            theRequest = new StubCurrentHttpRequest();
+            theRequest = new StubHttpRequest();
             theSource = new HeaderValueSource(theRequest);
         }
 

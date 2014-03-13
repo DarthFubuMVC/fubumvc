@@ -32,7 +32,7 @@ namespace FubuMVC.Core.Http.Cookies
     {
         private readonly Lazy<IEnumerable<Cookie>> _cookies;
 
-        public Cookies(ICurrentHttpRequest request)
+        public Cookies(IHttpRequest request)
         {
             _cookies = new Lazy<IEnumerable<Cookie>>(() => 
 			{

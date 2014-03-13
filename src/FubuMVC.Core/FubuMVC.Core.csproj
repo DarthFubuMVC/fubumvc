@@ -145,9 +145,9 @@
     <Compile Include="Http\Owin\Middleware\StaticFiles\WriteStatusCodeContinuation.cs" />
     <Compile Include="Http\Owin\OwinConstants.cs" />
     <Compile Include="Http\Owin\OwinContext.cs" />
-    <Compile Include="Http\Owin\OwinCurrentHttpRequest.cs" />
-    <Compile Include="Http\Owin\OwinHttpContext.cs" />
     <Compile Include="Http\Owin\OwinHttpRequest.cs" />
+    <Compile Include="Http\Owin\OwinHttpContext.cs" />
+    <Compile Include="Http\Owin\AspNetHttpRequestAdapter.cs" />
     <Compile Include="Http\Owin\OwinHttpResponse.cs" />
     <Compile Include="Http\Owin\OwinServiceArguments.cs" />
     <Compile Include="Http\Owin\OwinSettings.cs" />
@@ -330,7 +330,7 @@
     <Compile Include="TagAttribute.cs" />
     <Compile Include="UI\DisplayConversionRegistryActivator.cs" />
     <Compile Include="Http\AspNet\AspNetHttpResponse.cs" />
-    <Compile Include="Http\AspNet\AspNetCurrentHttpRequest.cs" />
+    <Compile Include="Http\AspNet\AspNetHttpRequest.cs" />
     <Compile Include="Http\AspNet\ASPNetObjectConversionFamily.cs" />
     <Compile Include="Http\AspNet\AspNetServiceArguments.cs" />
     <Compile Include="Http\Cookies\Cookie.cs" />
@@ -345,7 +345,7 @@
     <Compile Include="Http\HttpRequestHeaders.cs" />
     <Compile Include="Http\HttpResponseHeaders.cs" />
     <Compile Include="Http\ICurrentChain.cs" />
-    <Compile Include="Http\ICurrentHttpRequest.cs" />
+    <Compile Include="Http\IHttpRequest.cs" />
     <Compile Include="Http\MimeTypeList.cs" />
     <Compile Include="Http\NulloHttpResponse.cs" />
     <Compile Include="Http\RequestDataSource.cs" />

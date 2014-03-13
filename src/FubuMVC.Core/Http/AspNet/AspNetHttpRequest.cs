@@ -9,12 +9,12 @@ using FubuMVC.Core.Http.Cookies;
 
 namespace FubuMVC.Core.Http.AspNet
 {
-    public class AspNetCurrentHttpRequest : ICurrentHttpRequest
+    public class AspNetHttpRequest : IHttpRequest
     {
         private readonly HttpRequestBase _request;
         private readonly HttpResponseBase _response;
 
-        public AspNetCurrentHttpRequest(HttpRequestBase request, HttpResponseBase response)
+        public AspNetHttpRequest(HttpRequestBase request, HttpResponseBase response)
         {
             _request = request;
             _response = response;

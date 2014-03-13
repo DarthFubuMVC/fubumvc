@@ -30,7 +30,7 @@ namespace FubuMVC.StructureMap.Testing.Internals
                 x.For<IFileSystem>().Use<FileSystem>();
                 x.For<IHttpResponse>().Use(new NulloHttpResponse());
                 x.For<ICurrentChain>().Use(new CurrentChain(null, null));
-                x.For<ICurrentHttpRequest>().Use(new StandInCurrentHttpRequest(){
+                x.For<IHttpRequest>().Use(new StandInHttpRequest(){
                    
                     ApplicationRoot = "http://server"
                 });

@@ -48,9 +48,9 @@ namespace FubuMVC.IntegrationTesting.Samples
 
         public InputMessage Read(string mimeType, IFubuRequestContext context)
         {
-            // read the body of the http request from ICurrentHttpRequest
+            // read the body of the http request from IHttpRequest
             // read header information and route information from
-            // ICurrentHttpRequest
+            // IHttpRequest
 
             return new InputMessage();
         }
@@ -254,10 +254,10 @@ namespace FubuMVC.IntegrationTesting.Samples
     // The actual custom behavior
     public class CorrectMimetypeForAjaxBehavior : WrappingBehavior
     {
-        private readonly ICurrentHttpRequest _httpRequest;
+        private readonly IHttpRequest _httpRequest;
         private readonly IFubuRequest _fubuRequest;
 
-        public CorrectMimetypeForAjaxBehavior(ICurrentHttpRequest httpRequest, IFubuRequest fubuRequest)
+        public CorrectMimetypeForAjaxBehavior(IHttpRequest httpRequest, IFubuRequest fubuRequest)
         {
             _httpRequest = httpRequest;
             _fubuRequest = fubuRequest;

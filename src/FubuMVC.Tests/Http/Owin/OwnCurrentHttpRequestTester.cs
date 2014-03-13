@@ -10,7 +10,7 @@ namespace FubuMVC.Tests.Http.Owin
     {
         private IDictionary<string, object> environment;
         private IDictionary<string, string[]> headers;
-        private OwinCurrentHttpRequest request;
+        private OwinHttpRequest request;
 
         [SetUp]
         public void SetUp()
@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.Http.Owin
             
             
             setHeader("Host", "localhost");
-            request = new OwinCurrentHttpRequest(environment);
+            request = new OwinHttpRequest(environment);
 
         }
 

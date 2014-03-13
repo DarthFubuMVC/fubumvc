@@ -10,7 +10,7 @@ using FubuMVC.Core.Http.Cookies;
 namespace FubuMVC.Tests.Urls
 {
 
-    public class StubCurrentHttpRequest : ICurrentHttpRequest
+    public class StubHttpRequest : IHttpRequest
     {
         public string TheRawUrl;
         public string TheRelativeUrl;
@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Urls
         public string TheHttpMethod = "GET";
         public string StubFullUrl = "http://server/";
 
-        public StubCurrentHttpRequest()
+        public StubHttpRequest()
         {
             QueryString = new NameValueCollection();
         }

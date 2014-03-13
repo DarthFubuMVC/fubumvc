@@ -17,9 +17,9 @@ namespace FubuMVC.Core.Urls
 
 	public class ChainUrlResolver : IChainUrlResolver
 	{
-		private readonly ICurrentHttpRequest _httpRequest;
+		private readonly IHttpRequest _httpRequest;
 
-		public ChainUrlResolver(ICurrentHttpRequest httpRequest)
+		public ChainUrlResolver(IHttpRequest httpRequest)
 		{
 			_httpRequest = httpRequest;
 		}

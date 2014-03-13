@@ -13,10 +13,10 @@ namespace FubuMVC.Core.Urls
     public class UrlRegistry : ChainInterrogator<string>, IUrlRegistry
     {
 	    private readonly IChainUrlResolver _urlResolver;
-	    private readonly ICurrentHttpRequest _httpRequest;
+	    private readonly IHttpRequest _httpRequest;
 	    private readonly Func<string, string> _templateFunc;
 
-        public UrlRegistry(IChainResolver resolver, IChainUrlResolver urlResolver, IUrlTemplatePattern templatePattern, ICurrentHttpRequest httpRequest)
+        public UrlRegistry(IChainResolver resolver, IChainUrlResolver urlResolver, IUrlTemplatePattern templatePattern, IHttpRequest httpRequest)
             : base(resolver)
         {
 	        _urlResolver = urlResolver;

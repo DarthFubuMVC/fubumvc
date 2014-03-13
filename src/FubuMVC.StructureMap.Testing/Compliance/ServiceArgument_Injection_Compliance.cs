@@ -15,11 +15,11 @@ namespace FubuMVC.StructureMap.Testing.Compliance
         [Test]
         public void can_inject_arguments_into_the_behavior_factory()
         {
-            var standInCurrentHttpRequest = new StandInCurrentHttpRequest();
+            var standInCurrentHttpRequest = new StandInHttpRequest();
             var inMemoryFubuRequest = new InMemoryFubuRequest();
 
             var arguments = new ServiceArguments()
-                .With<ICurrentHttpRequest>(standInCurrentHttpRequest)
+                .With<IHttpRequest>(standInCurrentHttpRequest)
                 .With<IFubuRequest>(inMemoryFubuRequest);
 
             var behavior = ContainerFacilitySource
@@ -33,16 +33,16 @@ namespace FubuMVC.StructureMap.Testing.Compliance
 
     public class GuyWhoNeedsRequest : IActionBehavior
     {
-        private readonly ICurrentHttpRequest _http;
+        private readonly IHttpRequest _http;
         private readonly IFubuRequest _request;
 
-        public GuyWhoNeedsRequest(ICurrentHttpRequest http, IFubuRequest request)
+        public GuyWhoNeedsRequest(IHttpRequest http, IFubuRequest request)
         {
             _http = http;
             _request = request;
         }
 
-        public ICurrentHttpRequest Http
+        public IHttpRequest Http
         {
             get { return _http; }
         }

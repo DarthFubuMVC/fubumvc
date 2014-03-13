@@ -13,13 +13,13 @@ namespace FubuMVC.Tests
     {
         public MockedFubuRequestContext(IContainer container)
             : base(
-                new StructureMapServiceLocator(container), container.GetInstance<ICurrentHttpRequest>(), container.GetInstance<IFubuRequest>(),
+                new StructureMapServiceLocator(container), container.GetInstance<IHttpRequest>(), container.GetInstance<IFubuRequest>(),
                 container.GetInstance<IOutputWriter>(), new RecordingLogger())
         {
             
         }
 
-        public MockedFubuRequestContext() : base(new InMemoryServiceLocator(), new StandInCurrentHttpRequest(), new InMemoryFubuRequest(), MockRepository.GenerateMock<IOutputWriter>(), new RecordingLogger())
+        public MockedFubuRequestContext() : base(new InMemoryServiceLocator(), new StandInHttpRequest(), new InMemoryFubuRequest(), MockRepository.GenerateMock<IOutputWriter>(), new RecordingLogger())
         {
         }
     }

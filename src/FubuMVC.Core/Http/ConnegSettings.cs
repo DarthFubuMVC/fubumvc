@@ -50,7 +50,7 @@ namespace FubuMVC.Core.Http
 
         public readonly IList<IMimetypeCorrection> Corrections = new List<IMimetypeCorrection>();
 
-        public void InterpretQuerystring(CurrentMimeType mimeType, ICurrentHttpRequest request)
+        public void InterpretQuerystring(CurrentMimeType mimeType, IHttpRequest request)
         {
             var corrected = QuerystringParameters.FirstValue(x => x.Determine(request.QueryString));
             if (corrected.IsNotEmpty())

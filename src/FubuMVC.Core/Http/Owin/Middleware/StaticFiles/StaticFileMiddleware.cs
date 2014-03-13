@@ -18,7 +18,7 @@ namespace FubuMVC.Core.Http.Owin.Middleware.StaticFiles
             _settings = settings;
         }
 
-        public override MiddlewareContinuation Invoke(ICurrentHttpRequest request, IHttpResponse response)
+        public override MiddlewareContinuation Invoke(IHttpRequest request, IHttpResponse response)
         {
             if (request.IsNotHttpMethod("GET", "HEAD")) return MiddlewareContinuation.Continue();
 
@@ -63,24 +63,24 @@ namespace FubuMVC.Core.Http.Owin.Middleware.StaticFiles
 
     public static class CurrentHttpRequestExtensions
     {
-        public static bool IfUnModifiedSinceHeaderAndModifiedSince(this ICurrentHttpRequest request, IFubuFile file)
+        public static bool IfUnModifiedSinceHeaderAndModifiedSince(this IHttpRequest request, IFubuFile file)
         {
             var ifUnModifiedSince = request.IfUnModifiedSince();
             return ifUnModifiedSince.HasValue && file.LastModified() > ifUnModifiedSince.Value;
         }
 
-        public static bool IfModifiedSinceHeaderAndNotModified(this ICurrentHttpRequest request, IFubuFile file)
+        public static bool IfModifiedSinceHeaderAndNotModified(this IHttpRequest request, IFubuFile file)
         {
             var ifModifiedSince = request.IfModifiedSince();
             return ifModifiedSince.HasValue && file.LastModified().ToUniversalTime() <= ifModifiedSince.Value;
         }
 
-        public static bool IfNoneMatchHeaderMatchesEtag(this ICurrentHttpRequest request, IFubuFile file)
+        public static bool IfNoneMatchHeaderMatchesEtag(this IHttpRequest request, IFubuFile file)
         {
             return request.IfNoneMatch().EtagMatches(file.Etag()) == EtagMatch.Yes;
         }
 
-        public static bool IfMatchHeaderDoesNotMatchEtag(this ICurrentHttpRequest request, IFubuFile file)
+        public static bool IfMatchHeaderDoesNotMatchEtag(this IHttpRequest request, IFubuFile file)
         {
             return request.IfMatch().EtagMatches(file.Etag()) == EtagMatch.No;
         }

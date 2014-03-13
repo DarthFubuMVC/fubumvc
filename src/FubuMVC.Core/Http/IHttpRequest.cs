@@ -7,7 +7,7 @@ using FubuMVC.Core.Http.Cookies;
 
 namespace FubuMVC.Core.Http
 {
-    public interface ICurrentHttpRequest
+    public interface IHttpRequest
     {
         /// <summary>
         ///   Full url of the request, never contains a trailing /
@@ -93,7 +93,7 @@ namespace FubuMVC.Core.Http
         ICookies Cookies { get; }
     }
 
-    public class StandInCurrentHttpRequest : ICurrentHttpRequest
+    public class StandInHttpRequest : IHttpRequest
     {
         public string TheRawUrl;
         public string TheRelativeUrl;
@@ -101,7 +101,7 @@ namespace FubuMVC.Core.Http
         public string TheHttpMethod = "GET";
         public string StubFullUrl = "http://server/";
 
-        public StandInCurrentHttpRequest()
+        public StandInHttpRequest()
         {
             Input = new MemoryStream();
             QueryString = new NameValueCollection();

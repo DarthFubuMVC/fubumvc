@@ -39,9 +39,9 @@ namespace FubuMVC.IntegrationTesting.Owin
 
     public class ReadingQuerystringEndpoint
     {
-        private readonly ICurrentHttpRequest _request;
+        private readonly IHttpRequest _request;
 
-        public ReadingQuerystringEndpoint(ICurrentHttpRequest request)
+        public ReadingQuerystringEndpoint(IHttpRequest request)
         {
             _request = request;
         }

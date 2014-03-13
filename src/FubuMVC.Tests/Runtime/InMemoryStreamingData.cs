@@ -9,7 +9,7 @@ using HtmlTags;
 
 namespace FubuMVC.Tests.Runtime
 {
-    public class InMemoryStreamingData : ICurrentHttpRequest
+    public class InMemoryStreamingData : IHttpRequest
     {
         private Stream _input;
 

@@ -9,14 +9,14 @@ namespace FubuMVC.Core.Http.Owin
     {
         public OwinServiceArguments(RouteData routeData, IDictionary<string, object> environment)
         {
-            var httpRequest = new OwinCurrentHttpRequest(environment);
+            var httpRequest = new OwinHttpRequest(environment);
 
             var httpContextBase = new OwinHttpContext(environment);
             With<HttpContextBase>(httpContextBase);
 
             With(routeData);
 
-            With<ICurrentHttpRequest>(httpRequest);
+            With<IHttpRequest>(httpRequest);
             With<IHttpResponse>(new OwinHttpResponse(environment));
 
             With(new OwinContext(environment));

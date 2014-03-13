@@ -32,7 +32,7 @@ namespace FubuMVC.Core.Caching
         {
             string etag = null;
 
-            var request = arguments.Get<ICurrentHttpRequest>();
+            var request = arguments.Get<IHttpRequest>();
             if (!request.HasHeader(HttpRequestHeader.IfNoneMatch)) return DoNext.Continue;
 
             etag = request.GetHeader(HttpRequestHeader.IfNoneMatch).FirstOrDefault();

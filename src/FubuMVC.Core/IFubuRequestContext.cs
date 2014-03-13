@@ -8,7 +8,7 @@ namespace FubuMVC.Core
     public interface IFubuRequestContext
     {
         IServiceLocator Services { get; }
-        ICurrentHttpRequest Request { get; }
+        IHttpRequest Request { get; }
         IFubuRequest Models { get; }
         IOutputWriter Writer { get; }
         ILogger Logger { get; }
@@ -17,12 +17,12 @@ namespace FubuMVC.Core
     public class FubuRequestContext : IFubuRequestContext
     {
         private readonly IServiceLocator _services;
-        private readonly ICurrentHttpRequest _request;
+        private readonly IHttpRequest _request;
         private readonly IFubuRequest _models;
         private readonly IOutputWriter _writer;
         private readonly ILogger _logger;
 
-        public FubuRequestContext(IServiceLocator services, ICurrentHttpRequest request, IFubuRequest models, IOutputWriter writer, ILogger logger)
+        public FubuRequestContext(IServiceLocator services, IHttpRequest request, IFubuRequest models, IOutputWriter writer, ILogger logger)
         {
             _services = services;
             _request = request;
@@ -36,7 +36,7 @@ namespace FubuMVC.Core
             get { return _services; }
         }
 
-        public ICurrentHttpRequest Request
+        public IHttpRequest Request
         {
             get { return _request; }
         }

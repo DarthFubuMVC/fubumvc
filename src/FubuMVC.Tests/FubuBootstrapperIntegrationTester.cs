@@ -36,7 +36,7 @@ namespace FubuMVC.Tests
             container = new Container(x =>
             {
                 x.For<ICurrentChain>().Use(new CurrentChain(null, null));
-                x.For<ICurrentHttpRequest>().Use(new StubCurrentHttpRequest{
+                x.For<IHttpRequest>().Use(new StubHttpRequest{
                     TheApplicationRoot = "http://server"
                 });
             });

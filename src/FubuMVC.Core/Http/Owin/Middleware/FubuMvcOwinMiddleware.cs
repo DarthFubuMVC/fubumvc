@@ -15,11 +15,11 @@ namespace FubuMVC.Core.Http.Owin.Middleware
 
         public Task Invoke(IDictionary<string, object> environment)
         {
-            var continuation = Invoke(new OwinCurrentHttpRequest(environment), new OwinHttpResponse(environment));
+            var continuation = Invoke(new OwinHttpRequest(environment), new OwinHttpResponse(environment));
 
             return continuation.ToTask(environment, _inner);
         }
 
-        public abstract MiddlewareContinuation Invoke(ICurrentHttpRequest request, IHttpResponse response);
+        public abstract MiddlewareContinuation Invoke(IHttpRequest request, IHttpResponse response);
     }
 }

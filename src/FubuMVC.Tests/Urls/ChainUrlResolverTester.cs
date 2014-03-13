@@ -13,7 +13,7 @@ namespace FubuMVC.Tests.Urls
 	[TestFixture]
 	public class ChainUrlResolverTester
 	{
-		private StandInCurrentHttpRequest theHttpRequest;
+		private StandInHttpRequest theHttpRequest;
 		private ChainUrlResolver theUrlResolver;
 
 		private BehaviorGraph theGraph;
@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.Urls
 		[SetUp]
 		public void SetUp()
 		{
-			theHttpRequest = new StandInCurrentHttpRequest();
+			theHttpRequest = new StandInHttpRequest();
 			UrlContext.Stub("http://server");
 
 			theUrlResolver = new ChainUrlResolver(theHttpRequest);

@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Urls
         {
             graph = BehaviorGraph.BuildFrom(x => x.Actions.IncludeClassesSuffixedWithController());
 
-	        var request = new StubCurrentHttpRequest {TheApplicationRoot = "http://server/cool"};
+	        var request = new StubHttpRequest {TheApplicationRoot = "http://server/cool"};
 	        var urlResolver = new ChainUrlResolver(request);
 
             registry = new UrlRegistry(new ChainResolutionCache(new TypeResolver(), graph), urlResolver, new JQueryUrlTemplate(), request);
