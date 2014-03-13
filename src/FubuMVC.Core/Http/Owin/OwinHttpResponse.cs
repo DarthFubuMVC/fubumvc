@@ -188,13 +188,32 @@ namespace FubuMVC.Core.Http.Owin
             Flush();
         }
 
-        // TEMP!!!
+        public HttpResponseBody Body
+        {
+            get
+            {
+                return new HttpResponseBody(_environment.Get<Stream>(OwinConstants.ResponseBodyKey));
+            }
+        }
+
+    }
+
+    public class HttpResponseBody
+    {
+        private readonly Stream _stream;
+
+        public HttpResponseBody(Stream stream)
+        {
+            _stream = stream;
+        }
+
         public string ReadAsText()
         {
-            var stream = _environment.Get<Stream>(OwinConstants.ResponseBodyKey);
-            stream.Position = 0;
-            return stream.ReadAllText();
+            _stream.Position = 0;
+            return _stream.ReadAllText();
         }
+
+
     }
 
     public static class DictionaryExtensions

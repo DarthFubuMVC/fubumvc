@@ -1,7 +1,9 @@
 ﻿using System;
 using FubuCore;
 using FubuMVC.Core.Http.Owin;
+using FubuMVC.Core.Http.Scenarios;
 using FubuMVC.Core.Packaging;
+using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Http.Hosting
 {
@@ -37,10 +39,28 @@ namespace FubuMVC.Core.Http.Hosting
 
             configuration(request);
 
+            return Send(request);
+        }
+
+        public OwinHttpResponse Send(OwinHttpRequest request)
+        {
             // TODO -- make the wait be configurable?
-             _host.Invoke(request.Environment).Wait(15.Seconds());
+            _host.Invoke(request.Environment).Wait(15.Seconds());
 
             return new OwinHttpResponse(request.Environment);
+        }
+
+        public OwinHttpResponse Scenario(Action<IScenario> configuration)
+        {
+            var request = OwinHttpRequest.ForTesting();
+            request.FullUrl(RootUrl);
+
+            using (var scenario = new Scenario(_runtime.Factory.Get<IUrlRegistry>(), request, Send))
+            {
+                configuration(scenario);
+
+                return scenario.Response;
+            }
         }
 
         void IDisposable.Dispose()

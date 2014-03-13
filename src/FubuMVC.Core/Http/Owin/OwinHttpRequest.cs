@@ -269,16 +269,16 @@ namespace FubuMVC.Core.Http.Owin
         public ICookies Cookies { get; private set; }
 
 
-        public HttpBody Body
+        public HttpRequestBody Body
         {
-            get { return new HttpBody(this); }
+            get { return new HttpRequestBody(this); }
         }
 
-        public class HttpBody
+        public class HttpRequestBody
         {
             private readonly OwinHttpRequest _parent;
 
-            public HttpBody(OwinHttpRequest parent)
+            public HttpRequestBody(OwinHttpRequest parent)
             {
                 _parent = parent;
             }

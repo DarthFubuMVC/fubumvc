@@ -39,12 +39,14 @@ namespace FubuMVC.Tests.View
                 "Foo",
                 "Bar",
                 "FubuMVC.Tests.Docs.Introduction.Overview",
+                "FubuMVC.Tests.Http.Hosting",
 "FubuMVC.Tests.Registration",
 "FubuMVC.Core.Continuations",
 "FubuMVC.Tests.Registration.Conventions",
 "FubuMVC.Core.Resources.PathBased",
 "FubuMVC.Tests.Registration.Policies",
-"FubuMVC.Tests.Urls"
+"FubuMVC.Tests.Urls",
+
             });
         }
     }
