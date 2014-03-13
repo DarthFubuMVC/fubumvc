@@ -17,7 +17,7 @@ namespace FubuMVC.Tests.View.Registration
         [SetUp]
         public void beforeEach()
         {
-            var duplicatedGenericExtraAssembly = generateAssembly("namespace FubuMVC.Razor.Tests.RazorModel.Binding{public class DuplicatedGeneric<T>{} public class Duplicated{} }");
+            var duplicatedGenericExtraAssembly = generateAssembly("namespace FubuMVC.Tests.View.Registration{public class DuplicatedGeneric<T>{} public class Duplicated{} }");
 
             ClassUnderTest = new GenericParser(new[] { typeof(Bar).Assembly, typeof(String).Assembly, duplicatedGenericExtraAssembly });
         }
@@ -42,7 +42,7 @@ namespace FubuMVC.Tests.View.Registration
         {
             ClassUnderTest = new GenericParser(new[] { typeof(String).Assembly });
 
-            const string typeName = "FubuMVC.Razor.Tests.RazorModel.Binding.Generic<FubuMVC.Razor.Tests.RazorModel.Binding.Baz>";
+            const string typeName = "FubuMVC.Tests.View.Registration.Generic<FubuMVC.Tests.View.Registration.Baz>";
 
             var type = ClassUnderTest.Parse(typeName);
 
@@ -54,7 +54,7 @@ namespace FubuMVC.Tests.View.Registration
         {
             ClassUnderTest = new GenericParser(new[] { typeof(Bar).Assembly });
 
-            const string typeName = "FubuMVC.Razor.Tests.RazorModel.Binding.Generic<FubuMVC.Razor.Tests.RazorModel.Binding.Baz, System.String>";
+            const string typeName = "FubuMVC.Tests.View.Registration.Generic<FubuMVC.Tests.View.Registration.Baz, System.String>";
 
             var type = ClassUnderTest.Parse(typeName);
 
@@ -64,7 +64,7 @@ namespace FubuMVC.Tests.View.Registration
         [Test]
         public void should_parse_a_single_generic_argument()
         {
-            const string typeName = "FubuMVC.Razor.Tests.RazorModel.Binding.Generic<FubuMVC.Razor.Tests.RazorModel.Binding.Baz>";
+            const string typeName = "FubuMVC.Tests.View.Registration.Generic<FubuMVC.Tests.View.Registration.Baz>";
 
             var type = ClassUnderTest.Parse(typeName);
 
@@ -74,7 +74,7 @@ namespace FubuMVC.Tests.View.Registration
         [Test]
         public void should_parse_a_mutiple_generic_arguments()
         {
-            const string typeName = "FubuMVC.Razor.Tests.RazorModel.Binding.Generic<FubuMVC.Razor.Tests.RazorModel.Binding.Baz, FubuMVC.Razor.Tests.RazorModel.Binding.Bar>";
+            const string typeName = "FubuMVC.Tests.View.Registration.Generic<FubuMVC.Tests.View.Registration.Baz, FubuMVC.Tests.View.Registration.Bar>";
 
             var type = ClassUnderTest.Parse(typeName);
 
@@ -84,7 +84,7 @@ namespace FubuMVC.Tests.View.Registration
         [Test]
         public void should_parse_a_mutiple_generic_arguments_across_different_assemblies()
         {
-            const string typeName = "FubuMVC.Razor.Tests.RazorModel.Binding.Generic<FubuMVC.Razor.Tests.RazorModel.Binding.Baz, System.String>";
+            const string typeName = "FubuMVC.Tests.View.Registration.Generic<FubuMVC.Tests.View.Registration.Baz, System.String>";
 
             var type = ClassUnderTest.Parse(typeName);
 
@@ -112,7 +112,7 @@ namespace FubuMVC.Tests.View.Registration
         [Test]
         public void finding_open_type_should_add_error_when_multiple_matching_types_are_found()
         {
-            var typeDefinition = new GenericTypeDefinition { OpenTypeName = "FubuMVC.Razor.Tests.RazorModel.Binding.DuplicatedGeneric`1", ArgumentTypeNames = new[] { "System.String" } };
+            var typeDefinition = new GenericTypeDefinition { OpenTypeName = "FubuMVC.Tests.View.Registration.DuplicatedGeneric`1", ArgumentTypeNames = new[] { "System.String" } };
 
             var result = ClassUnderTest.findOpenType(typeDefinition);
 
@@ -123,7 +123,7 @@ namespace FubuMVC.Tests.View.Registration
         [Test]
         public void finding_generic_arguments_should_add_error_when_no_matching_type_is_found()
         {
-            var typeDefinition = new GenericTypeDefinition { OpenTypeName = "FubuMVC.Razor.Tests.RazorModel.Binding.Generic`1", ArgumentTypeNames = new[] { "NOTFOUND" } };
+            var typeDefinition = new GenericTypeDefinition { OpenTypeName = "FubuMVC.Tests.View.Registration.Generic`1", ArgumentTypeNames = new[] { "NOTFOUND" } };
 
             var result = ClassUnderTest.findGenericArgumentTypes(typeDefinition);
 
@@ -134,7 +134,7 @@ namespace FubuMVC.Tests.View.Registration
         [Test]
         public void finding_generic_arguments_should_add_error_when_multiple_matching_types_are_found()
         {
-            var typeDefinition = new GenericTypeDefinition { OpenTypeName = "FubuMVC.Razor.Tests.RazorModel.Binding.Generic`1", ArgumentTypeNames = new[] { "FubuMVC.Razor.Tests.RazorModel.Binding.Duplicated" } };
+            var typeDefinition = new GenericTypeDefinition { OpenTypeName = "FubuMVC.Tests.View.Registration.Generic`1", ArgumentTypeNames = new[] { "FubuMVC.Tests.View.Registration.Duplicated" } };
 
             var result = ClassUnderTest.findGenericArgumentTypes(typeDefinition);
 
@@ -147,7 +147,7 @@ namespace FubuMVC.Tests.View.Registration
             var pool = new TypePool();
             pool.AddAssembly(GetType().Assembly);
 
-            var externalAssemblyDuplicatedType = generateType("namespace FubuMVC.Razor.Tests.RazorModel.Binding{public class DuplicatedGeneric<T>{}}", "FubuMVC.Razor.Tests.RazorModel.Binding.DuplicatedGeneric`1");
+            var externalAssemblyDuplicatedType = generateType("namespace FubuMVC.Tests.View.Registration{public class DuplicatedGeneric<T>{}}", "FubuMVC.Tests.View.Registration.DuplicatedGeneric`1");
 
             pool.AddType<Bar>();
             pool.AddType<Baz>();

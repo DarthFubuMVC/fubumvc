@@ -16,7 +16,7 @@ namespace FubuMVC.Core.View.Model
             return origin == ContentFolder.Application ? string.Empty : "_{0}".ToFormat(origin);
         }
 
-        private Lazy<Parsing> _parsing;
+        private readonly Lazy<Parsing> _parsing;
         private ITemplateFile _master;
 
         public Template(IFubuFile file)
@@ -78,7 +78,7 @@ namespace FubuMVC.Core.View.Model
             return Origin == ContentFolder.Application;
         }
 
-        public bool IsPartial()
+        public virtual bool IsPartial()
         {
             return Path.GetFileName(FilePath).StartsWith("_");
         }

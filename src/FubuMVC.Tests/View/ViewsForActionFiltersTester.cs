@@ -200,7 +200,6 @@ namespace FubuMVC.Tests.View
 
         public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
         {
-            throw new NotImplementedException();
         }
 
         public ITemplateFile Master { get; set; }

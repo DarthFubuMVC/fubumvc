@@ -365,7 +365,6 @@
     <Compile Include="View\OutputNodeExtensionsTester.cs" />
     <Compile Include="View\Registration\GenericParserTester.cs" />
     <Compile Include="View\SimplePage.cs" />
-    <Compile Include="View\TemplateTester.cs" />
     <Compile Include="View\ViewEnginesTester.cs" />
     <Compile Include="View\ViewsForActionFiltersTester.cs" />
     <Compile Include="Web\Security\WebAuthenticationContextTester.cs" />

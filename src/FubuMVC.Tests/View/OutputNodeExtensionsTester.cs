@@ -3,6 +3,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.View;
+using FubuMVC.Core.View.Model;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -25,7 +26,7 @@ namespace FubuMVC.Tests.View
         public void has_view_is_positive_with_always()
         {
             var node = new OutputNode(typeof(Address));
-            var viewToken = MockRepository.GenerateMock<IViewToken>();
+            var viewToken = MockRepository.GenerateMock<ITemplateFile>();
             node.AddView(viewToken, null);
 
             node.HasView(Always.Flyweight).ShouldBeTrue();
@@ -37,7 +38,7 @@ namespace FubuMVC.Tests.View
             var condition = new FakeConditional();
 
             var node = new OutputNode(typeof(Address));
-            var viewToken = MockRepository.GenerateMock<IViewToken>();
+            var viewToken = MockRepository.GenerateMock<ITemplateFile>();
             node.AddView(viewToken, condition);
 
             node.HasView(Always.Flyweight).ShouldBeFalse();
@@ -49,7 +50,7 @@ namespace FubuMVC.Tests.View
             var condition = new FakeConditional();
 
             var node = new OutputNode(typeof(Address));
-            var viewToken = MockRepository.GenerateMock<IViewToken>();
+            var viewToken = MockRepository.GenerateMock<ITemplateFile>();
             node.AddView(viewToken, condition);
 
             node.HasView(condition).ShouldBeTrue();

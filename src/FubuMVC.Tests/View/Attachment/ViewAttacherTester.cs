@@ -10,6 +10,7 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Attachment;
+using FubuMVC.Core.View.Model;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -25,7 +26,7 @@ namespace FubuMVC.Tests.View.Attachment
             theViews = new List<IViewToken>();
             for (int i = 0; i < 15; i++)
             {
-                theViews.Add(MockRepository.GenerateMock<IViewToken>());
+                theViews.Add(MockRepository.GenerateMock<ITemplateFile>());
             }
 
             theAction = ActionCall.For<GoController>(x => x.Go());
@@ -181,7 +182,7 @@ namespace FubuMVC.Tests.View.Attachment
         [Test]
         public void do_not_attach_anything_if_a_view_for_that_condition_already_exists()
         {
-            var existingView = MockRepository.GenerateMock<IViewToken>();
+            var existingView = MockRepository.GenerateMock<ITemplateFile>();
             existingView.Stub(x => x.ViewModel).Return(typeof (GoModel));
 
             var profile = theProfileMatches<Conditional1>(1);
