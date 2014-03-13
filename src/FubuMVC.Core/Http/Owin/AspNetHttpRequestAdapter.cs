@@ -16,7 +16,7 @@ namespace FubuMVC.Core.Http.Owin
 
         public override string PathInfo
         {
-            get { return _environment.Get<string>(OwinConstants.RequestPathKey).Substring(1); }
+            get { return _environment.Get<string>(OwinConstants.RequestPathKey).TrimStart('/'); }
         }
 
         public override string AppRelativeCurrentExecutionFilePath

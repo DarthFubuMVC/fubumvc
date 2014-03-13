@@ -135,6 +135,7 @@
     <Compile Include="Http\Compression\GZipEncodingTester.cs" />
     <Compile Include="Http\Compression\HttpContentEncodersTester.cs" />
     <Compile Include="Http\Compression\HttpContentEncodingFilterTester.cs" />
+    <Compile Include="Http\Hosting\InMemoryHostTester.cs" />
     <Compile Include="Http\Owin\CurrentHttpRequestExtensions_integration_with_OWIN_Tester.cs" />
     <Compile Include="Http\Owin\FormRequestReaderTester.cs" />
     <Compile Include="Http\Owin\Middleware\MiddlewareContinuationTester.cs" />

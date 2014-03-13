@@ -46,6 +46,8 @@ namespace FubuMVC.Core.Http.Owin
             _querystring =
                 new Lazy<NameValueCollection>(
                     () => {
+                        if (!environment.ContainsKey(OwinConstants.RequestQueryStringKey)) return new NameValueCollection();
+
                         return HttpUtility.ParseQueryString(environment.Get<string>(OwinConstants.RequestQueryStringKey));
                     });
 

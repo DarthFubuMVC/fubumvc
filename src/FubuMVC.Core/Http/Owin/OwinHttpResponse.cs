@@ -178,9 +178,22 @@ namespace FubuMVC.Core.Http.Owin
             owinOutput.Flush();
         }
 
+        public Stream Output
+        {
+            get { return _output; }
+        }
+
         public void Dispose()
         {
             Flush();
+        }
+
+        // TEMP!!!
+        public string ReadAsText()
+        {
+            var stream = _environment.Get<Stream>(OwinConstants.ResponseBodyKey);
+            stream.Position = 0;
+            return stream.ReadAllText();
         }
     }
 
@@ -198,4 +211,5 @@ namespace FubuMVC.Core.Http.Owin
             }
         }
     }
+
 }
