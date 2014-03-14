@@ -12,17 +12,19 @@ namespace FubuMVC.Core.View.Model
     // TODO -- optimize this!!!!!!
     public class ViewTypePool
     {
-        private static readonly Lazy<TypePool> _types = new Lazy<TypePool>(getTypes);
+        private readonly Assembly _applicationAssembly;
+        private readonly Lazy<TypePool> _types;
 
-        public static TypePool Default()
+        public ViewTypePool(Assembly applicationAssembly)
         {
-            return _types.Value;
+            _applicationAssembly = applicationAssembly;
+            _types = new Lazy<TypePool>(getTypes);
         }
 
-        private static TypePool getTypes()
+        private TypePool getTypes()
         {
             var types = new TypePool();
-            types.AddAssembly(TypePool.FindTheCallingAssembly());
+            types.AddAssembly(_applicationAssembly);
 
             var filter = new CompositeFilter<Assembly>();
             filter.Excludes.Add(a => a.IsDynamic);

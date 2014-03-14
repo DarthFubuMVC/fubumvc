@@ -31,20 +31,20 @@ namespace FubuMVC.Razor
 
         private void configureServices(ServiceRegistry services)
         {
-            services.SetServiceIfNone<IRazorTemplateGenerator, RazorTemplateGenerator>();
-            services.SetServiceIfNone<ITemplateCompiler, TemplateCompiler>();
-            services.SetServiceIfNone<ITemplateFactory, TemplateFactoryCache>();
-            services.SetServiceIfNone<ITemplateDirectoryProvider<RazorTemplate>, TemplateDirectoryProvider<RazorTemplate>>();
-            services.SetServiceIfNone<ISharedPathBuilder>(new SharedPathBuilder());
-            services.SetServiceIfNone<IPartialRenderer, PartialRenderer>();
+            //services.SetServiceIfNone<IRazorTemplateGenerator, RazorTemplateGenerator>();
+            //services.SetServiceIfNone<ITemplateCompiler, TemplateCompiler>();
+            //services.SetServiceIfNone<ITemplateFactory, TemplateFactoryCache>();
+            //services.SetServiceIfNone<ITemplateDirectoryProvider<RazorTemplate>, TemplateDirectoryProvider<RazorTemplate>>();
+            //services.SetServiceIfNone<ISharedPathBuilder>(new SharedPathBuilder());
+            //services.SetServiceIfNone<IPartialRenderer, PartialRenderer>();
 
-            var graph = new SharingGraph();
-            services.SetServiceIfNone(graph);
-            services.SetServiceIfNone<ISharingGraph>(graph);
+            //var graph = new SharingGraph();
+            //services.SetServiceIfNone(graph);
+            //services.SetServiceIfNone<ISharingGraph>(graph);
 
-            services.FillType<ISharedTemplateLocator<RazorTemplate>, SharedTemplateLocator<RazorTemplate>>();
-            services.FillType<ISharingAttacher<RazorTemplate>, MasterAttacher<RazorTemplate>>();
-            services.FillType<Bottles.IActivator, SharingAttacherActivator<RazorTemplate>>();
+            //services.FillType<ISharedTemplateLocator<RazorTemplate>, SharedTemplateLocator<RazorTemplate>>();
+            //services.FillType<ISharingAttacher<RazorTemplate>, MasterAttacher<RazorTemplate>>();
+            //services.FillType<Bottles.IActivator, SharingAttacherActivator<RazorTemplate>>();
 
 
         }

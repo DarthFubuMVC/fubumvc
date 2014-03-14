@@ -12,6 +12,7 @@ namespace FubuMVC.Core.Http.Hosting
         public static readonly string RootUrl = "http://memory";
         private readonly FubuRuntime _runtime;
         private readonly FubuOwinHost _host;
+        private IServiceLocator _services;
 
 
         public static InMemoryHost For<T>(string directory = null) where T : IApplicationSource, new()
@@ -30,6 +31,12 @@ namespace FubuMVC.Core.Http.Hosting
             _runtime = runtime;
 
             _host = new FubuOwinHost(runtime.Routes);
+            _services = _runtime.Factory.Get<IServiceLocator>();
+        }
+
+        public IServiceLocator Services
+        {
+            get { return _services; }
         }
 
         public OwinHttpResponse Send(Action<OwinHttpRequest> configuration)

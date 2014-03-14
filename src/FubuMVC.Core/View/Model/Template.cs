@@ -30,7 +30,7 @@ namespace FubuMVC.Core.View.Model
             RootPath = rootPath;
             Origin = origin;
 
-            ViewPath = FileSystem.Combine(_cache[Origin], RelativePath());
+            ViewPath = FileSystem.Combine(_cache[Origin], RelativePath()).Replace('\\', '/');
 
             _parsing = new Lazy<Parsing>(createParsing);
         }
@@ -55,9 +55,10 @@ namespace FubuMVC.Core.View.Model
 
         public string RelativePath()
         {
-            return FilePath.PathRelativeTo(RootPath);
+            return FilePath.PathRelativeTo(RootPath).Replace("\\", "/");
         }
 
+        // TODO -- try to get rid of this.
         public string DirectoryPath()
         {
             return Path.GetDirectoryName(FilePath);
@@ -78,6 +79,7 @@ namespace FubuMVC.Core.View.Model
             return Origin == ContentFolder.Application;
         }
 
+        // TODO -- get a UT on this.
         public virtual bool IsPartial()
         {
             return Path.GetFileName(FilePath).StartsWith("_");
@@ -109,6 +111,7 @@ namespace FubuMVC.Core.View.Model
             return Namespace.IsEmpty() ? Name() : Namespace + "." + Name();
         }
 
+        // Tested through integration tests
         public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
         {
             if (IsPartial()) return;

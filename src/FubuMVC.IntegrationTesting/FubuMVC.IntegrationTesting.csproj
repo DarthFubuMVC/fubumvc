@@ -164,6 +164,8 @@
     <Compile Include="SharedHarness.cs" />
     <Compile Include="SharedHarnessContext.cs" />
     <Compile Include="SelfHostHttpServerTester.cs" />
+    <Compile Include="Views\TemplateFileIntegrationTester.cs" />
+    <Compile Include="Views\ViewIntegrationContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
@@ -173,6 +175,10 @@
     <ProjectReference Include="..\FubuMVC.Katana\FubuMVC.Katana.csproj">
       <Project>{48BC51C2-B759-48DB-AAE1-F4686CD6D02A}</Project>
       <Name>FubuMVC.Katana</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Razor\FubuMVC.Razor.csproj">
+      <Project>{a88246a6-2a7a-4964-902e-a5a7fdaaa9d4}</Project>
+      <Name>FubuMVC.Razor</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
       <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
@@ -195,7 +201,9 @@
       <Name>TestPackage2</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Razor\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="FubuTestApplication.application.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -45,6 +45,8 @@ namespace FubuMVC.Core.Configuration
             config.RunActions(ConfigurationType.Settings, graph);
 
             var viewDiscovery = graph.Settings.Get<ViewEngines>().BuildViewBag(graph);
+            graph.Settings.Replace(viewDiscovery);
+
             lookForAccessorOverrides(graph);
 
             config.Add(new SystemServicesPack());
