@@ -72,33 +72,5 @@ namespace FubuMVC.Spark.Tests.SparkModel.Sharing
             inner.AssertWasCalled(x => x.Global(ContentFolder.Application));
         }
 
-        [Test]
-        public void compile_dependencies_logs_all_provenances()
-        {
-            var packages = new List<IPackageInfo>
-            {
-                new PackageInfo(new PackageManifest(){Name="a"}), 
-                new PackageInfo(new PackageManifest(){Name="b"})
-            };
-
-            _activator.CompileDependencies(packages, _packageLog);
-
-            _packageLog.AssertWasCalled(x => x.Trace("Compiling dependencies for [{0}]", "a, b, {0}".ToFormat(ContentFolder.Application)));
-        }
-
-        [Test]
-        public void compile_dependencies_implicit_adds_host_as_provenance()
-        {
-            var packages = new List<IPackageInfo>
-            {
-                new PackageInfo(new PackageManifest(){Name="a"}), 
-                new PackageInfo(new PackageManifest(){Name="b"})
-            };
-
-            _graph.Global("x");
-            _activator.CompileDependencies(packages, _packageLog);
-
-            _graph.SharingsFor(ContentFolder.Application).ShouldContain("x");
-        }
     }
 }

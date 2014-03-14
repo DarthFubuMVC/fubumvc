@@ -2,6 +2,7 @@ using FubuCore;
 
 namespace FubuMVC.Core.View.Model.Sharing
 {
+    [MarkedForTermination("Kill it hard.  Too complicated, not enough value.")]
     public class SharingRegistrationDiagnostics : ISharingRegistration
     {
         private string _provenance = string.Empty;

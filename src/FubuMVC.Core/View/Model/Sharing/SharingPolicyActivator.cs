@@ -27,7 +27,6 @@ namespace FubuMVC.Core.View.Model.Sharing
         {
             ApplyPolicies(log);
             RegisterAppGlobal(log);            
-            CompileDependencies(packages, log);
         }
 
         public void ApplyPolicies(IPackageLog log)
@@ -41,15 +40,6 @@ namespace FubuMVC.Core.View.Model.Sharing
 
                 p.Apply(log, Diagnostics);
             });            
-        }
-
-        public void CompileDependencies(IEnumerable<IPackageInfo> packages, IPackageLog log)
-        {
-            var provenances = packages.Select(p => p.Name).Union(new[] { ContentFolder.Application }).ToArray();
-            
-            log.Trace("Compiling dependencies for [{0}]", provenances.Join(", "));
-            
-            _graph.CompileDependencies(provenances);            
         }
 
         // I would rather have this as a ISharingPolicy, but don't know how to ensure it is applied last.

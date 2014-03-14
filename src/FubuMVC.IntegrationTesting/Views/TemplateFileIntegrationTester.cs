@@ -100,12 +100,25 @@ namespace FubuMVC.IntegrationTesting.Views
         }
 
 
+        [Test]
+        public void relative_path_of_bottle_files()
+        {
+            view3.RelativePath().ShouldEqual("View3.cshtml");
+            view4.RelativePath().ShouldEqual("Folder1/Folder2/View4.cshtml");
+        }
 
         [Test]
         public void relative_directory_path_of_application_file()
         {
             view1.RelativeDirectoryPath().ShouldEqual("");
             view2.RelativeDirectoryPath().ShouldEqual("Folder1");
+        }
+
+        [Test]
+        public void relative_directory_path_of_bottle_file()
+        {
+            view3.RelativeDirectoryPath().ShouldEqual("");
+            view4.RelativeDirectoryPath().ShouldEqual("Folder1/Folder2");
         }
 
         [Test]

@@ -88,10 +88,7 @@
     <Compile Include="SparkModel\FubuBindingProviderTester.cs" />
     <Compile Include="SparkModel\FubuPartialProviderTester.cs" />
     <Compile Include="SparkModel\Policies\StubTemplate.cs" />
-    <Compile Include="SparkModel\Sharing\DependencyRuleTester.cs" />
-    <Compile Include="SparkModel\Sharing\GlobalDependencyTester.cs" />
     <Compile Include="SparkModel\Sharing\RecordingSharingRegistrationTester.cs" />
-    <Compile Include="SparkModel\Sharing\SharingGraphTester.cs" />
     <Compile Include="SparkModel\Sharing\SharingPolicyActivatorTester.cs" />
     <Compile Include="SparkModel\Sharing\SharingRegistrationDiagnosticsTester.cs" />
     <Compile Include="SparkModel\Sharing\SharingConfigActivatorTester.cs" />

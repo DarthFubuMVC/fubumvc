@@ -11,6 +11,7 @@ namespace FubuMVC.Core.View.Model
     {
         private static readonly Cache<string, string> _cache = new Cache<string, string>(getPrefix);
 
+
         private static string getPrefix(string origin)
         {
             return origin == ContentFolder.Application ? string.Empty : "_{0}".ToFormat(origin);
@@ -33,6 +34,8 @@ namespace FubuMVC.Core.View.Model
             ViewPath = FileSystem.Combine(_cache[Origin], RelativePath()).Replace('\\', '/');
 
             _parsing = new Lazy<Parsing>(createParsing);
+
+            _relativeDirectoryPath = new Lazy<string>(() => DirectoryPath().PathRelativeTo(RootPath));
         }
 
         public Parsing Parsing
@@ -64,9 +67,11 @@ namespace FubuMVC.Core.View.Model
             return Path.GetDirectoryName(FilePath);
         }
 
+        private readonly Lazy<string> _relativeDirectoryPath;
+
         public string RelativeDirectoryPath()
         {
-            return DirectoryPath().PathRelativeTo(RootPath);
+            return _relativeDirectoryPath.Value;
         }
 
         public string Name()
@@ -129,9 +134,11 @@ namespace FubuMVC.Core.View.Model
             {
                 if (value != null && value.GetType() != GetType())
                 {
-                    throw new ArgumentOutOfRangeException("value", "Mismatch in template types between {0} and {1}".ToFormat(value.GetType().FullName, GetType().FullName));
+                    throw new ArgumentOutOfRangeException("value",
+                        "Mismatch in template types between {0} and {1}".ToFormat(value.GetType().FullName,
+                            GetType().FullName));
                 }
-                
+
                 _master = value;
             }
         }
@@ -140,6 +147,5 @@ namespace FubuMVC.Core.View.Model
 
         public abstract IRenderableView GetView();
         public abstract IRenderableView GetPartialView();
-
     }
 }

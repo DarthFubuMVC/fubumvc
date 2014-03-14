@@ -51,7 +51,6 @@ namespace FubuMVC.Spark.Tests.SparkModel.Sharing
             _activator.ReadConfig(new FubuFile("imports.view.config", "Pak2.Core"), _packageLog);
             _activator.ReadConfig(new FubuFile("exports.view.config", "Pak2.Core"), _packageLog);
             
-            _graph.CompileDependencies("Pak1", "Pak2.Core", "Pak2.Design", "Pak2.Bindings");
 
             _graph.SharingsFor("Pak1").ShouldHaveTheSameElementsAs("Pak2.Core");
             _graph.SharingsFor("Pak2.Core").ShouldHaveTheSameElementsAs("Pak2.Design", "Pak2.Bindings", "Pak1");
@@ -68,8 +67,6 @@ namespace FubuMVC.Spark.Tests.SparkModel.Sharing
 
             _fileSystem.WriteStringToFile("view.config", config.ToString());
             _activator.ReadConfig(new FubuFile("view.config", "Prov"), _packageLog);
-
-            _graph.CompileDependencies("Prov", "X", "Y", "M");
 
             _graph.SharingsFor("Prov").ShouldHaveTheSameElementsAs("X");
             _graph.SharingsFor("X").ShouldHaveCount(0);

@@ -313,7 +313,8 @@
     <Compile Include="FubuBootstrapperIntegrationTester.cs" />
     <Compile Include="FubuRegistryTester.cs" />
     <Compile Include="HtmlGenerationTestExtensions.cs" />
-    <Compile Include="Registration\BehaviorGraphTester.cs"></Compile>
+    <Compile Include="Registration\BehaviorGraphTester.cs">
+    </Compile>
     <Compile Include="Registration\Conventions\ActionSourceTester.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConventionTester.cs" />
     <Compile Include="Registration\Conventions\CustomConventionIntegratedTester.cs" />
@@ -360,6 +361,7 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="View\FakeViews\ModelsAndControllers.cs" />
+    <Compile Include="View\Model\Sharing\SharingGraphTester.cs" />
     <Compile Include="View\must_be_a_description_on_imporant_things.cs" />
     <Compile Include="View\OutputNodeExtensionsTester.cs" />
     <Compile Include="View\Registration\GenericParserTester.cs" />
