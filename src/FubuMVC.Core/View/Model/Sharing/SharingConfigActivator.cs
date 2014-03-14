@@ -7,6 +7,7 @@ using FubuMVC.Core.Runtime.Files;
 
 namespace FubuMVC.Core.View.Model.Sharing
 {
+    [MarkedForTermination]
     public class SharingConfigActivator : IActivator
     {
         private readonly SharingGraph _sharingGraph;

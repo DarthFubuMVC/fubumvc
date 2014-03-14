@@ -1,13 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
+using FubuCore;
 
 namespace FubuMVC.Core.View.Model.Sharing
 {
+    [MarkedForTermination]
     public interface ISharingGraph
     {
         IEnumerable<string> SharingsFor(string provenance);
     }
 
+    [MarkedForTermination]
     public class SharingGraph : ISharingRegistration, ISharingGraph
     {
         private readonly List<GlobalDependency> _globals = new List<GlobalDependency>();

@@ -2,10 +2,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Bottles;
 using Bottles.Diagnostics;
+using FubuCore;
 using FubuMVC.Core.Runtime.Files;
 
 namespace FubuMVC.Core.View.Model.Sharing
 {
+    [MarkedForTermination]
     public class SharingPolicyActivator : IActivator
     {
         private readonly SharingGraph _graph;
