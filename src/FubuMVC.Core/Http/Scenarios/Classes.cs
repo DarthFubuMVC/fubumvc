@@ -33,6 +33,7 @@ namespace FubuMVC.Core.Http.Scenarios
         //void ContentShouldBe(string mimeType, string content);
 
         void ContentShouldContain(string text);
+        void ContentShouldNotContain(string text);
     }
 
     public interface IUrlExpression
@@ -103,6 +104,16 @@ namespace FubuMVC.Core.Http.Scenarios
             }
         }
 
+        public void ContentShouldNotContain(string text)
+        {
+            if (_bodyText.Value.Contains(text))
+            {
+                _assertion.Add("The response body should not contain text \"{0}\"", text);
+
+                _assertion.Body = _bodyText.Value;
+            }
+        }
+
         void IUrlExpression.Action<T>(Expression<Action<T>> expression)
         {
             _request.RelativeUrl(_urls.UrlFor(expression, _request.HttpMethod()));
@@ -121,6 +132,8 @@ namespace FubuMVC.Core.Http.Scenarios
 
             _request.RelativeUrl(url);
         }
+
+
     }
 
     [Serializable]

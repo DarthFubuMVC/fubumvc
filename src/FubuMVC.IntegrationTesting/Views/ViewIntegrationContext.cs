@@ -84,7 +84,14 @@ namespace FubuMVC.IntegrationTesting.Views
             _bottles.Add(bottle);
         }
 
+        protected ContentStream RazorView(string name)
+        {
+            var stream = new ContentStream(_directory, name, ".cshtml");
 
+            _streams.Add(stream);
+
+            return stream;
+        }
 
 
         protected ContentStream RazorView<T>(string name)

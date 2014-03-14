@@ -114,6 +114,37 @@ namespace FubuMVC.Tests.Http.Hosting
 
             ex.Message.ShouldContain("The response body does not contain expected text \"wrong text\"");
         }
+
+        [Test]
+        public void using_scenario_with_ContentShouldNotContain_declaration_happy_path()
+        {
+            using (var host = FubuApplication.DefaultPolicies().StructureMap().RunInMemory())
+            {
+                host.Scenario(x =>
+                {
+                    x.Get.Input<MarkerInput>();
+                    x.ContentShouldNotContain("some random stuff");
+                });
+            }
+        }
+
+        [Test]
+        public void using_scenario_with_ContentShouldNotContain_declaration_sad_path()
+        {
+            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
+            {
+                using (var host = FubuApplication.DefaultPolicies().StructureMap().RunInMemory())
+                {
+                    host.Scenario(x =>
+                    {
+                        x.Get.Input<MarkerInput>();
+                        x.ContentShouldNotContain("just the marker");
+                    });
+                }
+            });
+
+            ex.Message.ShouldContain("The response body should not contain text \"just the marker\"");
+        }
     }
 
     public class InMemoryEndpoint
