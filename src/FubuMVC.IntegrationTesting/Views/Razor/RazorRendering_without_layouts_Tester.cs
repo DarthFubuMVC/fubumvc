@@ -10,28 +10,22 @@ namespace FubuMVC.IntegrationTesting.Views.Razor
             RazorView<HelloWorldRazorViewModel>("HelloWorld")
                 .WriteLine("<h1>@Model.Message</h1>")
                 .WriteLine("@this.Partial(new HelloRazorPartialInputModel())");
-
         }
 
         [Test]
         public void renders_a_simple_razor_view()
         {
-            Scenario(x => {
-                x.Get.Action<HelloRazorEndpoints>(e => e.get_razor_hello());
+            Scenario.Get.Action<HelloRazorEndpoints>(e => e.get_razor_hello());
 
-                x.ContentShouldContain("Hello World! FubuMVC + Razor");
-            });
+            Scenario.ContentShouldContain("Hello World! FubuMVC + Razor");
         }
 
         [Test]
         public void can_render_partials()
         {
-            Scenario(x =>
-            {
-                x.Get.Action<HelloRazorEndpoints>(e => e.get_razor_hello());
+            Scenario.Get.Action<HelloRazorEndpoints>(e => e.get_razor_hello());
 
-                x.ContentShouldContain("Hello from Partial");
-            }); 
+            Scenario.ContentShouldContain("Hello from Partial");
         }
     }
 
@@ -39,14 +33,13 @@ namespace FubuMVC.IntegrationTesting.Views.Razor
     {
         public HelloWorldRazorViewModel get_razor_hello()
         {
-            return new HelloWorldRazorViewModel { Message = "Hello World! FubuMVC + Razor" };
+            return new HelloWorldRazorViewModel {Message = "Hello World! FubuMVC + Razor"};
         }
 
         public HelloRazorPartialViewModel SayHelloPartial(HelloRazorPartialInputModel input)
         {
-            return new HelloRazorPartialViewModel { Message = "Hello from Partial" };
+            return new HelloRazorPartialViewModel {Message = "Hello from Partial"};
         }
-
     }
 
     public class HelloRazorPartialViewModel

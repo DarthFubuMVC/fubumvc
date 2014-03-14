@@ -164,7 +164,10 @@
     <Compile Include="SharedHarness.cs" />
     <Compile Include="SharedHarnessContext.cs" />
     <Compile Include="SelfHostHttpServerTester.cs" />
+    <Compile Include="Views\Razor\Context_is_usable.cs" />
+    <Compile Include="Views\Razor\Handles_null_properties.cs" />
     <Compile Include="Views\Razor\RazorRendering_without_layouts_Tester.cs" />
+    <Compile Include="Views\Razor\Razor_view_activation_tester.cs" />
     <Compile Include="Views\TemplateFileIntegrationTester.cs" />
     <Compile Include="Views\ViewIntegrationContext.cs" />
   </ItemGroup>
@@ -302,8 +305,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent></PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

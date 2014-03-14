@@ -59,15 +59,22 @@ namespace FubuMVC.Core.Http.Hosting
 
         public OwinHttpResponse Scenario(Action<IScenario> configuration)
         {
-            var request = OwinHttpRequest.ForTesting();
-            request.FullUrl(RootUrl);
-
-            using (var scenario = new Scenario(_runtime.Factory.Get<IUrlRegistry>(), request, Send))
+            var scenario = CreateScenario();
+            using (scenario)
             {
                 configuration(scenario);
 
                 return scenario.Response;
             }
+        }
+
+        public Scenario CreateScenario()
+        {
+            var request = OwinHttpRequest.ForTesting();
+            request.FullUrl(RootUrl);
+
+            var scenario = new Scenario(_runtime.Factory.Get<IUrlRegistry>(), request, Send);
+            return scenario;
         }
 
         void IDisposable.Dispose()

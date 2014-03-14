@@ -28,6 +28,7 @@ namespace FubuMVC.IntegrationTesting.Views
         private readonly IList<ContentStream> _streams = new List<ContentStream>();
         private InMemoryHost _host;
         private string _applicationDirectory;
+        protected Scenario Scenario;
 
         public ViewIntegrationContext()
         {
@@ -35,7 +36,7 @@ namespace FubuMVC.IntegrationTesting.Views
         }
 
         [TestFixtureSetUp]
-        public void SetUp()
+        public void FixtureSetUp()
         {
             fileSystem.DeleteDirectory(Folder);
             fileSystem.CreateDirectory(Folder);
@@ -59,9 +60,21 @@ namespace FubuMVC.IntegrationTesting.Views
         }
 
         [TestFixtureTearDown]
-        public void Teardown()
+        public void FixtureTeardown()
         {
             _host.SafeDispose();
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
+            Scenario = _host.CreateScenario();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            Scenario.As<IDisposable>().Dispose();
         }
 
         protected void InBottle(string name)
@@ -71,10 +84,8 @@ namespace FubuMVC.IntegrationTesting.Views
             _bottles.Add(bottle);
         }
 
-        public OwinHttpResponse Scenario(Action<IScenario> configuration)
-        {
-            return _host.Scenario(configuration);
-        }
+
+
 
         protected ContentStream RazorView<T>(string name)
         {
@@ -106,7 +117,7 @@ namespace FubuMVC.IntegrationTesting.Views
 
             public void Write(string text)
             {
-                _writer.WriteLine(text);
+                _writer.WriteLine(text.Replace("'", "\""));
             }
 
             public void DumpContents()
