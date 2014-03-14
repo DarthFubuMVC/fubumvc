@@ -98,9 +98,10 @@ namespace FubuMVC.IntegrationTesting.Views
                 _path = Path.Combine(folder, name + extension);
             }
 
-            public void WriteLine(string format, params object[] parameters)
+            public ContentStream WriteLine(string format, params object[] parameters)
             {
                 _writer.WriteLine(format, parameters);
+                return this;
             }
 
             public void Write(string text)
