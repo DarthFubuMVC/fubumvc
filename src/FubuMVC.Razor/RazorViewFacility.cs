@@ -1,32 +1,32 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FubuCore;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Razor.RazorModel;
 
 namespace FubuMVC.Razor
 {
-    public class RazorViewFacility : IViewFacility
+    public class RazorViewFacility : ViewFacility<RazorTemplate>
     {
-        // TODO -- eliminate this duplication
-        public Task<IEnumerable<ITemplateFile>> FindViews(BehaviorGraph graph)
+        public override Func<IFubuFile, RazorTemplate> CreateBuilder(SettingsCollection settings)
         {
-            return Task.Factory.StartNew(() => findViews(graph));
-        }
-
-        private IEnumerable<ITemplateFile> findViews(BehaviorGraph graph)
-        {
-            var razorSettings = graph.Settings.Get<RazorEngineSettings>();
-            var namespaces = graph.Settings.Get<CommonViewNamespaces>();
+            var razorSettings = settings.Get<RazorEngineSettings>();
+            var namespaces = settings.Get<CommonViewNamespaces>();
 
             var factory = new TemplateFactoryCache(namespaces, razorSettings, new TemplateCompiler(),
                 new RazorTemplateGenerator());
 
-            return graph.Files.FindFiles(razorSettings.Search)
-                .Select(file => new RazorTemplate(file, factory));
-        } 
+            return file => new RazorTemplate(file, factory);
+        }
 
+        public override FileSet FindMatching(SettingsCollection settings)
+        {
+            return settings.Get<RazorEngineSettings>().Search;
+        }
     }
 }

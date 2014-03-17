@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.ObjectGraph;
-using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Rendering;
@@ -25,6 +24,18 @@ namespace FubuMVC.Tests.View
             types.AddAssembly(GetType().Assembly);
 
             _runner = new ViewEngines();
+        }
+
+        [Test]
+        public void the_default_shared_folders_are_just_Shared()
+        {
+            _runner.SharedLayoutFolders.Single().ShouldEqual("Shared");
+        }
+
+        [Test]
+        public void the_default_application_layout_is_Application()
+        {
+            _runner.ApplicationLayoutName.ShouldEqual("Application");
         }
 
         [Test]
@@ -55,6 +66,7 @@ namespace FubuMVC.Tests.View
             public string Origin { get; private set; }
             public string ViewPath { get; private set; }
             public Parsing Parsing { get; private set; }
+
             public string RelativePath()
             {
                 throw new NotImplementedException();
@@ -127,13 +139,25 @@ namespace FubuMVC.Tests.View
         {
             public Task<IEnumerable<ITemplateFile>> FindViews(BehaviorGraph graph)
             {
-                return Task.Factory.StartNew(() => {
-                    return new ITemplateFile[]{new TestViewToken()} as IEnumerable<ITemplateFile>;
-                });
-
+                return
+                    Task.Factory.StartNew(
+                        () => { return new ITemplateFile[] {new TestViewToken()} as IEnumerable<ITemplateFile>; });
             }
 
-            public BehaviorNode CreateViewNode(Type type) { return null; }
+            public BehaviorNode CreateViewNode(Type type)
+            {
+                return null;
+            }
+
+            public void Fill(ViewEngines viewEngines, BehaviorGraph graph)
+            {
+                throw new NotImplementedException();
+            }
+
+            public IEnumerable<IViewToken> AllViews()
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

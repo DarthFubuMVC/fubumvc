@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View.Attachment;
@@ -11,11 +13,23 @@ namespace FubuMVC.Core.View
 {
     public class ViewEngines
     {
+        public static readonly IFileSystem FileSystem = new FileSystem();
+
         private readonly IList<Func<IViewToken, bool>> _excludes = new List<Func<IViewToken, bool>>();
         private readonly List<IViewFacility> _facilities = new List<IViewFacility>();
         private readonly IList<ViewTokenPolicy> _viewPolicies = new List<ViewTokenPolicy>();
 
+        /// <summary>
+        /// List of folder names that should be treated as shared layout folders of views.
+        /// Default is ["Shared"]
+        /// </summary>
+        public readonly IList<string> SharedLayoutFolders = new List<string>{"Shared"};
 
+        /// <summary>
+        /// The name of the default layout file for the application.
+        /// The default is "Application"
+        /// </summary>
+        public string ApplicationLayoutName = "Application";
 
         /// <summary>
         /// All of the registered view engines in this application
@@ -49,25 +63,37 @@ namespace FubuMVC.Core.View
         public Task<ViewBag> BuildViewBag(BehaviorGraph graph)
         {
             return Task.Factory.StartNew(() => {
-                var viewFinders = _facilities.Select(x => x.FindViews(graph)).ToArray();
+                var viewFinders = _facilities.Select(x => {
+                    return Task.Factory.StartNew(() => {
+                        x.Fill(this, graph);
+                        return x.AllViews();
+                    });
+                });
 
                 var views = viewFinders.SelectMany(x => x.Result).ToList();
-
-                _excludes.Each(views.RemoveAll);
-
                 _viewPolicies.Each(x => x.Alter(views));
-
+                
                 var logger = TemplateLogger.Default();
                 var types = new ViewTypePool(graph.ApplicationAssembly);
-
+                
                 // Attaching the view models
                 views.Each(x => x.AttachViewModels(types, logger));
-
+                
                 return new ViewBag(views);
             });
         }
 
+        // TODO -- UT this
+        public bool IsExcluded(IViewToken token)
+        {
+            return _excludes.Any(x => x(token));
+        }
 
+        // TODO -- UT this
+        public bool IsSharedFolder(string folder)
+        {
+            return SharedLayoutFolders.Contains(Path.GetDirectoryName(folder));
+        }
 
         /// <summary>
         /// Programmatically add a new view facility.  This method is generally called

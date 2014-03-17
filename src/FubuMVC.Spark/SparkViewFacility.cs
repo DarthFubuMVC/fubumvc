@@ -1,15 +1,14 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System;
+using FubuCore;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.View;
+using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.SparkModel;
 using Spark;
 
 namespace FubuMVC.Spark
 {
-    public class SparkViewFacility : IViewFacility
+    public class SparkViewFacility : ViewFacility<SparkTemplate>
     {
         private readonly SparkViewEngine _engine;
 
@@ -18,19 +17,14 @@ namespace FubuMVC.Spark
             _engine = engine;
         }
 
-        // TODO -- eliminate this duplication
-        public Task<IEnumerable<ITemplateFile>> FindViews(BehaviorGraph graph)
+        public override Func<IFubuFile, SparkTemplate> CreateBuilder(SettingsCollection settings)
         {
-            return Task.Factory.StartNew(() => findViews(graph));
+            return file => new SparkTemplate(file, _engine);
         }
 
-        private IEnumerable<ITemplateFile> findViews(BehaviorGraph graph)
+        public override FileSet FindMatching(SettingsCollection settings)
         {
-            var sparkSettings = graph.Settings.Get<SparkEngineSettings>();
-
-
-            return graph.Files.FindFiles(sparkSettings.Search)
-                .Select(file => new SparkTemplate(file, _engine));
+            return settings.Get<SparkEngineSettings>().Search;
         }
     }
 }

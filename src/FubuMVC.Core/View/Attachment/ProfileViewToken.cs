@@ -14,6 +14,11 @@ namespace FubuMVC.Core.View.Attachment
             _filteredName = filteredName;
         }
 
+        public string Origin
+        {
+            get { return _view.Origin; }
+        }
+
         public IViewToken View
         {
             get { return _view; }
@@ -27,6 +32,11 @@ namespace FubuMVC.Core.View.Attachment
         public string Name()
         {
             return _filteredName;
+        }
+
+        public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
+        {
+            _view.AttachViewModels(types, logger);
         }
 
         public string Namespace

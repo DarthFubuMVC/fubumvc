@@ -35,10 +35,7 @@ namespace FubuMVC.Tests.View.Attachment
 
     public class FakeViewEngine1 : IViewFacility
     {
-        public Task<IEnumerable<ITemplateFile>> FindViews(BehaviorGraph graph)
-        {
-            return Task.Factory.StartNew(() => tokens());
-        }
+        private List<ITemplateFile> _views;
 
         private static IEnumerable<ITemplateFile> tokens()
         {
@@ -53,14 +50,21 @@ namespace FubuMVC.Tests.View.Attachment
             yield return new FakeViewToken {ViewName = "C3"};
             yield return new FakeViewToken {ViewName = "C4"};
         }
+
+        public void Fill(ViewEngines viewEngines, BehaviorGraph graph)
+        {
+            _views = tokens().Where(x => !graph.Settings.Get<ViewEngines>().IsExcluded(x)).ToList();
+        }
+
+        public IEnumerable<IViewToken> AllViews()
+        {
+            return _views;
+        }
     }
 
     public class FakeViewEngine2 : IViewFacility
     {
-        public Task<IEnumerable<ITemplateFile>> FindViews(BehaviorGraph graph)
-        {
-            return Task.Factory.StartNew(() => tokens());
-        }
+        private List<ITemplateFile> _views;
 
         private static IEnumerable<ITemplateFile> tokens()
         {
@@ -74,6 +78,16 @@ namespace FubuMVC.Tests.View.Attachment
             yield return new FakeViewToken {ViewName = "C6"};
             yield return new FakeViewToken {ViewName = "C7"};
             yield return new FakeViewToken {ViewName = "C8"};
+        }
+
+        public void Fill(ViewEngines viewEngines, BehaviorGraph graph)
+        {
+            _views = tokens().Where(x => !graph.Settings.Get<ViewEngines>().IsExcluded(x)).ToList();
+        }
+
+        public IEnumerable<IViewToken> AllViews()
+        {
+            return _views;
         }
     }
 }

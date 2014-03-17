@@ -526,6 +526,7 @@
     <Compile Include="View\CommonViewNamespaces.cs" />
     <Compile Include="View\IFubuView.cs" />
     <Compile Include="View\IViewFacility.cs" />
+    <Compile Include="View\Model\BottleViews.cs" />
     <Compile Include="View\Model\ITemplateFile.cs" />
     <Compile Include="View\IViewToken.cs" />
     <Compile Include="View\Model\MasterAttacher.cs" />
@@ -533,7 +534,8 @@
     <Compile Include="View\Model\SharedTemplateLocator.cs" />
     <Compile Include="View\Model\Template.cs" />
     <Compile Include="View\Model\TemplateLogger.cs" />
-    <Compile Include="View\Model\ViewCollection.cs" />
+    <Compile Include="View\Model\ViewFacility.cs" />
+    <Compile Include="View\Model\ViewFolder.cs" />
     <Compile Include="View\Model\ViewTypePool.cs" />
     <Compile Include="View\PartialExpressionExtensions.cs" />
     <Compile Include="View\Registration\GenericParser.cs" />

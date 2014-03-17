@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.View.Model;
 
 namespace FubuMVC.Core.View
 {
@@ -12,6 +10,7 @@ namespace FubuMVC.Core.View
     /// </summary>
     public interface IViewFacility
     {
-        Task<IEnumerable<ITemplateFile>> FindViews(BehaviorGraph graph);
+        void Fill(ViewEngines viewEngines, BehaviorGraph graph);
+        IEnumerable<IViewToken> AllViews();
     }
 }

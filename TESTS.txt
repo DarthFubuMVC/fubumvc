@@ -1,4 +1,2 @@
 FubuMVC.Tests
 FubuMVC.StructureMap.Testing
-FubuMVC.Spark.Tests
-FubuMVC.Razor.Tests

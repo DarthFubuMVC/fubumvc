@@ -7,10 +7,7 @@ namespace FubuMVC.Core.View.Model
     {
         string FilePath { get;  }
         string RootPath { get; }
-        string Origin { get; }
         string ViewPath { get; }
-
-        // TODO -- tighten this up
 
         Parsing Parsing { get; }
 
@@ -22,8 +19,6 @@ namespace FubuMVC.Core.View.Model
         bool IsPartial();
 
         string FullName();
-
-        void AttachViewModels(ViewTypePool types, ITemplateLogger logger);
 
         ITemplateFile Master { get; set; }
 
