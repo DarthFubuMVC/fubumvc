@@ -43,5 +43,7 @@ namespace FubuMVC.IntegrationTesting.Views.LayoutAttachment
                 .FirstOrDefault(x => x.Name() == "View4")
                 .Master.ViewPath.ShouldEqual("Folder1/Folder2/Shared/Application.cshtml");
         }
+
+
     }
 }

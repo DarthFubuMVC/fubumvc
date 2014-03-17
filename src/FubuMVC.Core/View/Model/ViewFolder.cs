@@ -44,6 +44,11 @@ namespace FubuMVC.Core.View.Model
             var shared = FindInShared(viewName);
             if (shared == null && Parent != null)
             {
+                if (IsShared && Parent != null && Parent.Parent != null)
+                {
+                    return Parent.Parent.As<ITemplateFolder>().FindRecursivelyInShared(viewName);
+                }
+
                 return Parent.As<ITemplateFolder>().FindRecursivelyInShared(viewName);
             }
 
@@ -52,7 +57,7 @@ namespace FubuMVC.Core.View.Model
 
         ITemplateFolder ITemplateFolder.Parent
         {
-            get { return Parent; }
+            get { return IsShared ? Parent.Parent : Parent; }
         }
     }
 }

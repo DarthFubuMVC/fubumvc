@@ -529,7 +529,6 @@
     <Compile Include="View\Model\BottleViews.cs" />
     <Compile Include="View\Model\ITemplateFile.cs" />
     <Compile Include="View\IViewToken.cs" />
-    <Compile Include="View\Model\MasterAttacher.cs" />
     <Compile Include="View\Model\Parsing.cs" />
     <Compile Include="View\Model\SharedTemplateLocator.cs" />
     <Compile Include="View\Model\Template.cs" />

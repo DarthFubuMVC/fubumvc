@@ -38,5 +38,12 @@ namespace FubuMVC.IntegrationTesting.Views.LayoutAttachment
                 view.Master.ShouldBeTheSameAs(master);
             });
         }
+
+        [Test]
+        public void master_layout_itself_will_get_no_layout_in_this_case()
+        {
+            var master = Views.Templates<RazorTemplate>().FirstOrDefault(x => x.Name() == "Application");
+            master.Master.ShouldBeNull();
+        }
     }
 }

@@ -90,7 +90,6 @@
     <Compile Include="SparkModel\Policies\StubTemplate.cs" />
     <Compile Include="SparkModel\ViewFolder\BasicTester.cs" />
     <Compile Include="SparkModel\ChunkLoaderTester.cs" />
-    <Compile Include="SparkModel\MasterAttacherTester.cs" />
     <Compile Include="SparkEngineSettingsTester.cs" />
   </ItemGroup>
   <ItemGroup>

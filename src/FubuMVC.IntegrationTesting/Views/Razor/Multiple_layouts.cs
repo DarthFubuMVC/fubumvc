@@ -1,4 +1,7 @@
-﻿using NUnit.Framework;
+﻿using System.Linq;
+using FubuMVC.Razor.RazorModel;
+using FubuTestingSupport;
+using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Views.Razor
 {
@@ -27,6 +30,7 @@ namespace FubuMVC.IntegrationTesting.Views.Razor
 ");
 
             RazorView("Shared/Html").Write(@"
+@layout none
 <!DOCTYPE html>
 <html>
     <head>
@@ -48,6 +52,10 @@ namespace FubuMVC.IntegrationTesting.Views.Razor
         [Test]
         public void uses_layout_in_closest_shared_directory_when_found()
         {
+//            var view = Views.Templates<RazorTemplate>().FirstOrDefault(x => x.Name() == "Closest");
+//            view.Master.ViewPath.ShouldEqual("One/Shared/Application.cshtml");
+//            view.Master.Master.ShouldBeNull();
+
             Scenario.Get.Action<ClosestEndpoint>(x => x.get_razor_closest());
 
             Scenario.ContentShouldContain("<h1>Closest.cshtml</h1>");

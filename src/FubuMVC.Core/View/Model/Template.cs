@@ -35,7 +35,7 @@ namespace FubuMVC.Core.View.Model
 
             _parsing = new Lazy<Parsing>(createParsing);
 
-            _relativeDirectoryPath = new Lazy<string>(() => DirectoryPath().PathRelativeTo(RootPath));
+            _relativeDirectoryPath = new Lazy<string>(() => DirectoryPath().PathRelativeTo(RootPath).Replace('\\', '/'));
         }
 
         public Parsing Parsing
@@ -132,12 +132,16 @@ namespace FubuMVC.Core.View.Model
             get { return _master; }
             set
             {
+                if (value != null && ReferenceEquals(value, this)) return;
+
                 if (value != null && value.GetType() != GetType())
                 {
                     throw new ArgumentOutOfRangeException("value",
                         "Mismatch in template types between {0} and {1}".ToFormat(value.GetType().FullName,
                             GetType().FullName));
                 }
+
+
 
                 _master = value;
             }
@@ -151,11 +155,16 @@ namespace FubuMVC.Core.View.Model
         public void AttachLayouts(string defaultLayoutName, IViewFacility facility, ITemplateFolder folder)
         {
             if (IsPartial()) return;
+            if (Master != null) return;
 
             var layoutName = Parsing.Master.IsEmpty() ? defaultLayoutName : Parsing.Master;
 
             // TODO -- test this w/ an integration test. GH-697
             if (layoutName.EqualsIgnoreCase("none")) return;
+
+            if (layoutName == Name()) return;
+
+
 
             Master = folder.FindRecursivelyInShared(layoutName)
                 ?? facility.FindInShared(layoutName);
