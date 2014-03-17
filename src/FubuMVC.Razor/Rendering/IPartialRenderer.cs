@@ -1,7 +1,5 @@
 ﻿using System.Web;
-using FubuCore;
-using FubuMVC.Core.View.Model;
-using FubuMVC.Razor.RazorModel;
+using FubuMVC.Core.View;
 
 namespace FubuMVC.Razor.Rendering
 {
@@ -13,13 +11,11 @@ namespace FubuMVC.Razor.Rendering
 
     public class PartialRenderer : IPartialRenderer
     {
-        private readonly ISharedTemplateLocator<RazorTemplate> _sharedTemplateLocator;
-        private readonly ITemplateFactory _templateFactory;
+        private readonly ViewEngineSettings _views;
 
-        public PartialRenderer(ISharedTemplateLocator<RazorTemplate> sharedTemplateLocator, ITemplateFactory templateFactory)
+        public PartialRenderer(ViewEngineSettings views)
         {
-            _sharedTemplateLocator = sharedTemplateLocator;
-            _templateFactory = templateFactory;
+            _views = views;
         }
 
         public HtmlString Render(IFubuRazorView view, string name)
@@ -41,9 +37,8 @@ namespace FubuMVC.Razor.Rendering
 
         private IFubuRazorView getPartialView(IFubuRazorView view, string name)
         {
-            var template = _sharedTemplateLocator.LocatePartial(name, view.OriginTemplate);
-            var partialView = _templateFactory.GetView(template.As<RazorTemplate>());
-            return partialView;
+            var template = _views.FindPartial(view.OriginTemplate, name);
+            return template.GetPartialView() as IFubuRazorView;
         }
     }
 }

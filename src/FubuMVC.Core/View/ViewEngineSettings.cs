@@ -129,6 +129,13 @@ namespace FubuMVC.Core.View
         {
             _excludes.Add(filter);
         }
+
+        // TODO -- memoize this for non-crappy performance
+        public T FindPartial<T>(T template, string name) where T : class, ITemplateFile
+        {
+            var facility = _facilities.Single(x => x.TemplateType == typeof (T)).As<ViewFacility<T>>();
+            return facility.FindPartial(template, name);
+        }
     }
 
     /// <summary>

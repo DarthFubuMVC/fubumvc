@@ -8,7 +8,7 @@ using FubuMVC.Core.Runtime.Files;
 namespace FubuMVC.Core.View.Model
 {
     // Tested through integration tests only
-    public class BottleViews<T> where T : ITemplateFile
+    public class BottleViews<T> where T : class, ITemplateFile
     {
         private readonly ViewFacility<T> _facility;
         private readonly ContentFolder _content;

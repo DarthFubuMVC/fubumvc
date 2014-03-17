@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FubuMVC.Core;
@@ -67,6 +68,7 @@ namespace FubuMVC.Tests.View.Attachment
         }
 
         public ViewEngineSettings Settings { get; set; }
+        public Type TemplateType { get; private set; }
     }
 
     public class FakeViewEngine2 : IViewFacility
@@ -103,5 +105,6 @@ namespace FubuMVC.Tests.View.Attachment
         }
 
         public ViewEngineSettings Settings { get; set; }
+        public Type TemplateType { get; private set; }
     }
 }

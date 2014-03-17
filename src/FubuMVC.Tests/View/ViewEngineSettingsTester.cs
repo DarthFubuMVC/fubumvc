@@ -191,6 +191,7 @@ namespace FubuMVC.Tests.View
             }
 
             public ViewEngineSettings Settings { get; set; }
+            public Type TemplateType { get; private set; }
         }
     }
 }

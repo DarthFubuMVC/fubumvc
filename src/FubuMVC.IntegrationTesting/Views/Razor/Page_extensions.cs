@@ -34,7 +34,6 @@ namespace FubuMVC.IntegrationTesting.Views.Razor
             Scenario.ContentShouldContain("From controller");
             Scenario.ContentShouldContain("With model");
             Scenario.ContentShouldContain("Without model");
-            Scenario.ContentShouldContain("razor/page/extensions2\"></a>");
             Scenario.ContentShouldContain("<div id=\"null\" title=\"\"></div>");
         } 
     }

@@ -7,7 +7,7 @@ using FubuMVC.Core.Runtime.Files;
 
 namespace FubuMVC.Core.View.Model
 {
-    public abstract class ViewFacility<T> : IViewFacility where T : ITemplateFile
+    public abstract class ViewFacility<T> : IViewFacility where T : class,ITemplateFile
     {
         private readonly IList<BottleViews<T>> _bottles = new List<BottleViews<T>>();
         private List<T> _views;
@@ -37,6 +37,7 @@ namespace FubuMVC.Core.View.Model
         }
 
         public ViewEngineSettings Settings { get; set; }
+        public Type TemplateType { get { return typeof (T); } }
 
         public IEnumerable<BottleViews<T>> Bottles
         {
@@ -57,6 +58,27 @@ namespace FubuMVC.Core.View.Model
             }
 
             return null;
+        }
+
+        public T FindPartial(T template, string name)
+        {
+            var partialName = "_" + name;
+            T returnValue = null;
+
+            // first look in the same bottle.
+            var bottle = _bottles.FirstOrDefault(x => x.Provenance == template.Origin);
+            
+            if (bottle != null)
+            {
+                returnValue = bottle.AllViews().FirstOrDefault(x => x.Name() == partialName);
+            }
+
+            if (returnValue == null)
+            {
+                returnValue = AllViews().FirstOrDefault(x => x.Name() == partialName) as T;
+            }
+
+            return returnValue;
         }
     }
 }

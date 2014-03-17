@@ -10,7 +10,7 @@ namespace FubuMVC.Core.View.Model
         ITemplateFolder Parent { get; }
     }
 
-    public class ViewFolder<T> : ITemplateFolder where T : ITemplateFile
+    public class ViewFolder<T> : ITemplateFolder where T : class, ITemplateFile
     {
         private readonly string _name;
         public ViewFolder<T> Parent;

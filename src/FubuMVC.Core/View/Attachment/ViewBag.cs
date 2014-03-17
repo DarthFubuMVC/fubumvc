@@ -10,6 +10,7 @@ namespace FubuMVC.Core.View.Attachment
     /// <summary>
     /// Represent a collection of <see cref="IViewToken"/>s.
     /// </summary>
+    // TODO -- get rid of this and just fold it into ViewEngineSettings
     public class ViewBag
     {
         private readonly IEnumerable<IViewToken> _views;
@@ -39,6 +40,5 @@ namespace FubuMVC.Core.View.Attachment
         {
             return _views.OfType<T>();
         }
-
     }
 }

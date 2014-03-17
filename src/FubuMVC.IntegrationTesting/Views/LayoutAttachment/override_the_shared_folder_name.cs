@@ -39,7 +39,7 @@ namespace FubuMVC.IntegrationTesting.Views.LayoutAttachment
             var master = Views.Templates<RazorTemplate>().FirstOrDefault(x => x.Name() == "Application" && x.RelativePath() == "Layouts/Application.cshtml");
             master.ShouldNotBeNull();
 
-            Views.Templates<RazorTemplate>().Where(x => x != master).Each(view =>
+            Views.Templates<RazorTemplate>().Where(x => x != master && x.Name() != "Application").Each(view =>
             {
                 view.Master.ShouldBeTheSameAs(master);
             });

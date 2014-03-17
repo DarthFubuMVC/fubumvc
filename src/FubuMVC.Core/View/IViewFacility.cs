@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View.Model;
@@ -16,5 +17,8 @@ namespace FubuMVC.Core.View
 
         ITemplateFile FindInShared(string viewName);
         ViewEngineSettings Settings { get; set; }
+
+        Type TemplateType { get; }
+        
     }
 }
