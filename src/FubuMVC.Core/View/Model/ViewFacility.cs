@@ -16,18 +16,24 @@ namespace FubuMVC.Core.View.Model
 
         public abstract FileSet FindMatching(SettingsCollection settings);
 
-        public void Fill(ViewEngines viewEngines, BehaviorGraph graph)
+        public void Fill(ViewEngineSettings viewEngineSettings, BehaviorGraph graph)
         {
             var builder = CreateBuilder(graph.Settings);
             var match = FindMatching(graph.Settings);
 
+            // HAS TO BE SHALLOW
+            match.DeepSearch = false;
+
             graph.Files.AllFolders.Each(folder => {
-                var bottle = new BottleViews<T>(folder, builder, viewEngines, match);
+                var bottle = new BottleViews<T>(this, folder, builder, viewEngineSettings, match);
                 _bottles.Add(bottle);
             });
 
             _views = _bottles.SelectMany(x => x.AllViews()).ToList();
+
         }
+
+        public ViewEngineSettings Settings { get; set; }
 
         public IEnumerable<BottleViews<T>> Bottles
         {
@@ -37,7 +43,17 @@ namespace FubuMVC.Core.View.Model
         public IEnumerable<IViewToken> AllViews()
         {
             return _views.OfType<IViewToken>();
-        } 
+        }
 
+        public ITemplateFile FindInShared(string viewName)
+        {
+            foreach (var bottle in _bottles)
+            {
+                var view = bottle.FindInShared(viewName);
+                if (view != null) return view;
+            }
+
+            return null;
+        }
     }
 }

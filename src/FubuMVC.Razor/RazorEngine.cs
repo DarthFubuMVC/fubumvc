@@ -10,7 +10,7 @@ namespace FubuMVC.Razor
 
         void IFubuRegistryExtension.Configure(FubuRegistry registry)
         {
-            registry.AlterSettings<ViewEngines>(x => {
+            registry.AlterSettings<ViewEngineSettings>(x => {
                 var facility = new RazorViewFacility();
                 x.AddFacility(facility);
             });

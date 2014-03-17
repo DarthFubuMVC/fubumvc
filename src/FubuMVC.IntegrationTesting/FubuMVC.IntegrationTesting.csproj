@@ -164,6 +164,10 @@
     <Compile Include="SharedHarness.cs" />
     <Compile Include="SharedHarnessContext.cs" />
     <Compile Include="SelfHostHttpServerTester.cs" />
+    <Compile Include="Views\LayoutAttachment\Explicit_declaration_of_master_layout.cs" />
+    <Compile Include="Views\LayoutAttachment\Simple_attachment_of_application_layout.cs" />
+    <Compile Include="Views\LayoutAttachment\Use_layout_from_bottle_when_not_in_application.cs" />
+    <Compile Include="Views\LayoutAttachment\Use_named_layout_in_closest_shared_folder.cs" />
     <Compile Include="Views\Razor\Context_is_usable.cs" />
     <Compile Include="Views\Razor\Handles_null_properties.cs" />
     <Compile Include="Views\Razor\Layouts_with_Sections.cs" />
@@ -173,6 +177,7 @@
     <Compile Include="Views\Razor\Razor_view_activation_tester.cs" />
     <Compile Include="Views\Razor\Using_Helpers.cs" />
     <Compile Include="Views\TemplateFileIntegrationTester.cs" />
+    <Compile Include="Views\ViewFacility_FindInShared.cs" />
     <Compile Include="Views\ViewIntegrationContext.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -209,9 +214,7 @@
       <Name>TestPackage2</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Sharing\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="FubuTestApplication.application.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

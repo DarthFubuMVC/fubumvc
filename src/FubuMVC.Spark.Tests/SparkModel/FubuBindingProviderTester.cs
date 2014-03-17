@@ -9,6 +9,7 @@ using NUnit.Framework;
 using Rhino.Mocks;
 using Spark.Bindings;
 using Spark.FileSystem;
+using IViewFolder = Spark.FileSystem.IViewFolder;
 
 namespace FubuMVC.Spark.Tests.SparkModel
 {

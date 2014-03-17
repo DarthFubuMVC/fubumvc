@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.UI;
 using FubuCore.Util;
+using FubuMVC.Core.View.Model;
 
 namespace FubuMVC.Core.View.Attachment
 {
@@ -32,5 +34,10 @@ namespace FubuMVC.Core.View.Attachment
         }
 
         public IEnumerable<IViewToken> Views { get { return _views; } }
+
+        public IEnumerable<T> Templates<T>() where T : ITemplateFile
+        {
+            return _views.OfType<T>();
+        } 
     }
 }

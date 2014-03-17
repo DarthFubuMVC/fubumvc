@@ -28,5 +28,7 @@ namespace FubuMVC.Razor
         {
             return settings.Get<RazorEngineSettings>().Search;
         }
+
+        
     }
 }

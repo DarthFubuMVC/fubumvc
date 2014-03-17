@@ -18,7 +18,7 @@ namespace FubuMVC.Spark
         {
             var engine = new SparkViewEngine();
 
-            registry.AlterSettings<ViewEngines>(x => x.AddFacility(new SparkViewFacility(engine)));
+            registry.AlterSettings<ViewEngineSettings>(x => x.AddFacility(new SparkViewFacility(engine)));
 
             registry.Services(configureServices);
         }

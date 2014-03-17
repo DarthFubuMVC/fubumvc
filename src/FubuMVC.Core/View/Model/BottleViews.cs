@@ -1,46 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Runtime.Files;
 
 namespace FubuMVC.Core.View.Model
 {
+    // Tested through integration tests only
     public class BottleViews<T> where T : ITemplateFile
     {
+        private readonly ViewFacility<T> _facility;
         private readonly ContentFolder _content;
         private readonly Func<IFubuFile, T> _builder;
-        private readonly ViewEngines _viewEngines;
+        private readonly ViewEngineSettings _settings;
         private readonly FileSet _match;
-        private readonly IList<ViewFolder<T>> _folders = new List<ViewFolder<T>>(); 
+        private readonly IList<ViewFolder<T>> _folders = new List<ViewFolder<T>>();
+        private ViewFolder<T> _top;
 
-        public BottleViews(ContentFolder content, Func<IFubuFile, T> builder, ViewEngines viewEngines, FileSet match)
+        public BottleViews(ViewFacility<T> facility, ContentFolder content, Func<IFubuFile, T> builder, ViewEngineSettings settings, FileSet match)
         {
             if (match == null) throw new ArgumentNullException("match");
+            _facility = facility;
             _content = content;
             _builder = builder;
-            _viewEngines = viewEngines;
+            _settings = settings;
             _match = match;
 
-            buildFolder(content.Path);
+            _top = buildFolder(content.Path);
         }
 
 
         private ViewFolder<T> buildFolder(string path)
         {
-            var views = ViewEngines.FileSystem.FindFiles(path, _match).Select(x => new FubuFile(x, Provenance)
+            var views = ViewEngineSettings.FileSystem.FindFiles(path, _match).Select(x => new FubuFile(x, Provenance)
             {
-                ProvenancePath = StringExtensions.PathRelativeTo(x, _content.Path)
+                ProvenancePath = _content.Path
             })
-                .Select(_builder).Where(x => !_viewEngines.IsExcluded(x));
+                .Select(_builder).Where(x => !_settings.IsExcluded(x));
 
-            var folder = new ViewFolder<T> {IsShared = _viewEngines.IsSharedFolder(path)};
+            var folder = new ViewFolder<T>(_facility, Path.GetFileNameWithoutExtension(path)) {IsShared = _settings.IsSharedFolder(path)};
             folder.Views.AddRange(views);
 
             _folders.Add(folder);
 
 
-            ViewEngines.FileSystem.ChildDirectoriesFor(path).Each(child =>
+            ViewEngineSettings.FileSystem.ChildDirectoriesFor(path).Each(child =>
             {
                 var childFolder = buildFolder(child);
                 childFolder.Parent = folder;
@@ -63,7 +68,12 @@ namespace FubuMVC.Core.View.Model
         public IEnumerable<T> AllViews()
         {
             return _folders.SelectMany(x => x.Views);
-        } 
+        }
+
+        public T FindInShared(string viewName)
+        {
+            return _top.LayoutFolders.SelectMany(x => x.Views).FirstOrDefault(x => x.Name() == viewName);
+        }
 
     }
 }

@@ -11,8 +11,10 @@ using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Scenarios;
 using FubuMVC.Core.Packaging;
+using FubuMVC.Core.View;
 using FubuMVC.Core.View.Attachment;
 using FubuMVC.Core.View.Model;
+using FubuMVC.Razor;
 using FubuMVC.StructureMap;
 using NUnit.Framework;
 
@@ -160,6 +162,14 @@ namespace FubuMVC.IntegrationTesting.Views
             get
             {
                 return _host.Services.GetInstance<ViewBag>();
+            }
+        }
+
+        protected RazorViewFacility RazorViews
+        {
+            get
+            {
+                return _host.Services.GetInstance<ViewEngineSettings>().Facilities.OfType<RazorViewFacility>().Single();
             }
         }
 

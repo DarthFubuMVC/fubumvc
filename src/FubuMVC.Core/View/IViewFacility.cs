@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.View.Model;
 
 namespace FubuMVC.Core.View
 {
@@ -10,7 +11,10 @@ namespace FubuMVC.Core.View
     /// </summary>
     public interface IViewFacility
     {
-        void Fill(ViewEngines viewEngines, BehaviorGraph graph);
+        void Fill(ViewEngineSettings viewEngineSettings, BehaviorGraph graph);
         IEnumerable<IViewToken> AllViews();
+
+        ITemplateFile FindInShared(string viewName);
+        ViewEngineSettings Settings { get; set; }
     }
 }

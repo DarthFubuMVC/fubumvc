@@ -11,7 +11,7 @@ using FubuMVC.Core.View.Model;
 
 namespace FubuMVC.Core.View
 {
-    public class ViewEngines
+    public class ViewEngineSettings
     {
         public static readonly IFileSystem FileSystem = new FileSystem();
 
@@ -89,10 +89,9 @@ namespace FubuMVC.Core.View
             return _excludes.Any(x => x(token));
         }
 
-        // TODO -- UT this
         public bool IsSharedFolder(string folder)
         {
-            return SharedLayoutFolders.Contains(Path.GetDirectoryName(folder));
+            return SharedLayoutFolders.Contains(Path.GetFileNameWithoutExtension(folder));
         }
 
         /// <summary>
@@ -104,6 +103,8 @@ namespace FubuMVC.Core.View
         {
             Type typeOfFacility = facility.GetType();
             if (_facilities.Any(f => f.GetType() == typeOfFacility)) return;
+
+            facility.Settings = this;
 
             _facilities.Add(facility);
         }

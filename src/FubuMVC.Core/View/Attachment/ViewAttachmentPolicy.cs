@@ -178,10 +178,10 @@ namespace FubuMVC.Core.View.Attachment
 
     public class PageActivationExpression
     {
-        private readonly ViewEngines _parent;
+        private readonly ViewEngineSettings _parent;
         private readonly Func<IViewToken, bool> _filter;
 
-        public PageActivationExpression(ViewEngines parent, Func<IViewToken, bool> filter)
+        public PageActivationExpression(ViewEngineSettings parent, Func<IViewToken, bool> filter)
         {
             _parent = parent;
             _filter = filter;

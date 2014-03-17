@@ -13,9 +13,9 @@ using NUnit.Framework;
 namespace FubuMVC.Tests.View
 {
     [TestFixture]
-    public class ViewEnginesTester
+    public class ViewEngineSettingsTester
     {
-        private ViewEngines _runner;
+        private ViewEngineSettings _runner;
 
         [SetUp]
         public void Setup()
@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.View
             var types = new TypePool();
             types.AddAssembly(GetType().Assembly);
 
-            _runner = new ViewEngines();
+            _runner = new ViewEngineSettings();
         }
 
         [Test]
@@ -47,6 +47,27 @@ namespace FubuMVC.Tests.View
             _runner.Facilities.ShouldHaveCount(1);
         }
 
+        [Test]
+        public void default_logic_for_is_shared()
+        {
+            _runner.IsSharedFolder(@"foo/bar/Shared").ShouldBeTrue();
+            _runner.IsSharedFolder("Shared").ShouldBeTrue();
+
+            _runner.IsSharedFolder("Shared/Something").ShouldBeFalse();
+            _runner.IsSharedFolder("Foo/Bar").ShouldBeFalse();
+        }
+
+        [Test]
+        public void customize_is_shared_logic()
+        {
+            _runner.SharedLayoutFolders.Clear();
+            _runner.SharedLayoutFolders.Add("Layouts");
+            _runner.SharedLayoutFolders.Add("Layouts2");
+
+            _runner.IsSharedFolder("Shared").ShouldBeFalse();
+            _runner.IsSharedFolder("Layouts").ShouldBeTrue();
+            _runner.IsSharedFolder("Layouts2").ShouldBeTrue();
+        }
 
         public class TestViewToken : ITemplateFile
         {
@@ -149,7 +170,7 @@ namespace FubuMVC.Tests.View
                 return null;
             }
 
-            public void Fill(ViewEngines viewEngines, BehaviorGraph graph)
+            public void Fill(ViewEngineSettings viewEngineSettings, BehaviorGraph graph)
             {
                 throw new NotImplementedException();
             }
@@ -158,6 +179,13 @@ namespace FubuMVC.Tests.View
             {
                 throw new NotImplementedException();
             }
+
+            public ITemplateFile FindInShared(string viewName)
+            {
+                throw new NotImplementedException();
+            }
+
+            public ViewEngineSettings Settings { get; set; }
         }
     }
 }

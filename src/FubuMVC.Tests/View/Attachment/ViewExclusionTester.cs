@@ -17,7 +17,7 @@ namespace FubuMVC.Tests.View.Attachment
         public void do_not_use_the_excluded_views()
         {
             var registry = new FubuRegistry();
-            registry.AlterSettings<ViewEngines>(x => {
+            registry.AlterSettings<ViewEngineSettings>(x => {
                 x.AddFacility(new FakeViewEngine1());
                 x.AddFacility(new FakeViewEngine2());
 
@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.View.Attachment
             });
 
             var graph = BehaviorGraph.BuildFrom(registry);
-            var views = graph.Settings.Get<ViewEngines>().BuildViewBag(graph);
+            var views = graph.Settings.Get<ViewEngineSettings>().BuildViewBag(graph);
 
             views.Result.Views.OrderBy(x => x.Name()).Select(x => x.Name())
                 .ShouldHaveTheSameElementsAs("B1", "B2", "B3", "B4", "B5", "B6");
@@ -51,15 +51,22 @@ namespace FubuMVC.Tests.View.Attachment
             yield return new FakeViewToken {ViewName = "C4"};
         }
 
-        public void Fill(ViewEngines viewEngines, BehaviorGraph graph)
+        public void Fill(ViewEngineSettings viewEngineSettings, BehaviorGraph graph)
         {
-            _views = tokens().Where(x => !graph.Settings.Get<ViewEngines>().IsExcluded(x)).ToList();
+            _views = tokens().Where(x => !graph.Settings.Get<ViewEngineSettings>().IsExcluded(x)).ToList();
         }
 
         public IEnumerable<IViewToken> AllViews()
         {
             return _views;
         }
+
+        public ITemplateFile FindInShared(string viewName)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public ViewEngineSettings Settings { get; set; }
     }
 
     public class FakeViewEngine2 : IViewFacility
@@ -80,14 +87,21 @@ namespace FubuMVC.Tests.View.Attachment
             yield return new FakeViewToken {ViewName = "C8"};
         }
 
-        public void Fill(ViewEngines viewEngines, BehaviorGraph graph)
+        public void Fill(ViewEngineSettings viewEngineSettings, BehaviorGraph graph)
         {
-            _views = tokens().Where(x => !graph.Settings.Get<ViewEngines>().IsExcluded(x)).ToList();
+            _views = tokens().Where(x => !graph.Settings.Get<ViewEngineSettings>().IsExcluded(x)).ToList();
         }
 
         public IEnumerable<IViewToken> AllViews()
         {
             return _views;
         }
+
+        public ITemplateFile FindInShared(string viewName)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public ViewEngineSettings Settings { get; set; }
     }
 }
