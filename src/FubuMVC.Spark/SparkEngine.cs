@@ -25,10 +25,8 @@ namespace FubuMVC.Spark
 
         private void configureServices(ServiceRegistry services)
         {
-            services.SetServiceIfNone<ISparkViewEngine>(new SparkViewEngine());
+            // TODO -- this needs to change at some point
             services.SetServiceIfNone<ICacheService>(new DefaultCacheService(HttpRuntime.Cache));
-
-            services.FillType<IActivator, SparkActivator>();
 
             services.SetServiceIfNone<IHtmlEncoder, DefaultHtmlEncoder>();
 

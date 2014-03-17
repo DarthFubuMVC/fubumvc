@@ -13,15 +13,22 @@ namespace FubuMVC.Core.View.Model
     public class ViewFolder<T> : ITemplateFolder where T : class, ITemplateFile
     {
         private readonly string _name;
+        private readonly string _path;
         public ViewFolder<T> Parent;
         public readonly IList<ViewFolder<T>> LayoutFolders = new List<ViewFolder<T>>(); 
         public bool IsShared;
         public readonly IList<T> Views = new List<T>();
 
 
-        public ViewFolder(string name)
+        public ViewFolder(string path)
         {
-            _name = name;
+            _name = System.IO.Path.GetFileNameWithoutExtension(path);
+            _path = path;
+        }
+
+        public string Path
+        {
+            get { return _path; }
         }
 
         public string Name

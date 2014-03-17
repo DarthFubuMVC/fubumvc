@@ -179,6 +179,7 @@
     <Compile Include="Views\Razor\RazorRendering_without_layouts_Tester.cs" />
     <Compile Include="Views\Razor\Razor_view_activation_tester.cs" />
     <Compile Include="Views\Razor\Using_Helpers.cs" />
+    <Compile Include="Views\Spark\Simple_rendering.cs" />
     <Compile Include="Views\TemplateFileIntegrationTester.cs" />
     <Compile Include="Views\ViewFacility_FindInShared.cs" />
     <Compile Include="Views\ViewIntegrationContext.cs" />
@@ -195,6 +196,10 @@
     <ProjectReference Include="..\FubuMVC.Razor\FubuMVC.Razor.csproj">
       <Project>{a88246a6-2a7a-4964-902e-a5a7fdaaa9d4}</Project>
       <Name>FubuMVC.Razor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Spark\FubuMVC.Spark.csproj">
+      <Project>{9d6bf559-6461-4eac-bb16-f976ff43e8da}</Project>
+      <Name>FubuMVC.Spark</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
       <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>

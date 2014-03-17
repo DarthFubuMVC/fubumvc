@@ -15,6 +15,8 @@ namespace FubuMVC.Spark
             defaultSearch();
 
             _precompileViews = () => !FubuMode.InDevelopment();
+
+           
         }
 
         private void defaultSearch()

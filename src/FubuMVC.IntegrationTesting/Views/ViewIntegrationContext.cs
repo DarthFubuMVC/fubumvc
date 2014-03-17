@@ -123,7 +123,24 @@ namespace FubuMVC.IntegrationTesting.Views
             return stream;
         }
 
+        protected ContentStream SparkView<T>(string name)
+        {
+            var stream = new ContentStream(_directory, name, ".spark");
+            stream.WriteLine("<viewdata model=\"{0}\" />", typeof(T).FullName);
 
+            _streams.Add(stream);
+
+            return stream;
+        }
+
+        protected ContentStream SparkView(string name)
+        {
+            var stream = new ContentStream(_directory, name, ".spark");
+
+            _streams.Add(stream);
+
+            return stream;
+        }
 
         public class ContentStream
         {

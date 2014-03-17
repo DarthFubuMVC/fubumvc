@@ -39,7 +39,7 @@ namespace FubuMVC.Core.View.Model
             })
                 .Select(_builder).Where(x => !_settings.IsExcluded(x));
 
-            var folder = new ViewFolder<T>(Path.GetFileNameWithoutExtension(path)) {IsShared = _settings.IsSharedFolder(path)};
+            var folder = new ViewFolder<T>(path) {IsShared = _settings.IsSharedFolder(path)};
             folder.Views.AddRange(views);
 
             _folders.Add(folder);
@@ -80,5 +80,9 @@ namespace FubuMVC.Core.View.Model
             return _top.FindInShared(viewName);
         }
 
+        public IEnumerable<string> SharedPaths()
+        {
+            return _folders.Where(x => x.IsShared).Select(x => x.Path);
+        }
     }
 }

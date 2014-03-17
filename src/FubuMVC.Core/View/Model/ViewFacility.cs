@@ -16,7 +16,7 @@ namespace FubuMVC.Core.View.Model
 
         public abstract FileSet FindMatching(SettingsCollection settings);
 
-        public void Fill(ViewEngineSettings settings, BehaviorGraph graph)
+        public virtual void Fill(ViewEngineSettings settings, BehaviorGraph graph)
         {
             var builder = CreateBuilder(graph.Settings);
             var match = FindMatching(graph.Settings);
@@ -49,6 +49,11 @@ namespace FubuMVC.Core.View.Model
             return _views.OfType<IViewToken>();
         }
 
+        public IEnumerable<T> AllTemplates()
+        {
+            return _views;
+        } 
+
         public ITemplateFile FindInShared(string viewName)
         {
             foreach (var bottle in _bottles)
@@ -79,6 +84,11 @@ namespace FubuMVC.Core.View.Model
             }
 
             return returnValue;
+        }
+
+        public IEnumerable<string> SharedPaths()
+        {
+            return _bottles.SelectMany(x => x.SharedPaths()).ToArray();
         }
     }
 }

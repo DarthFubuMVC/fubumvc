@@ -42,13 +42,6 @@ namespace FubuMVC.Spark.Tests
         }
 
         [Test]
-        public void spark_activator()
-        {
-            defaultServicesCheck<IActivator, SparkActivator>(3);
-        }
-
-
-        [Test]
         public void html_encoder()
         {
             defaultServiceCheck<IHtmlEncoder, DefaultHtmlEncoder>();

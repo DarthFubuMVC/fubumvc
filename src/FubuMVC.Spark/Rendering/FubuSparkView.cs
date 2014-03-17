@@ -21,11 +21,6 @@ namespace FubuMVC.Spark.Rendering
         protected FubuSparkView()
         {
             _services.OnMissing = type => ServiceLocator.GetInstance(type);
-
-            SiteResource = s =>
-            {
-                throw new NotSupportedException("FubuMVC does not support the Spark SiteResource concept");
-            };
         }
 
         public IServiceLocator ServiceLocator { get; set; }
@@ -87,7 +82,7 @@ namespace FubuMVC.Spark.Rendering
 
                 Output = writer;
 
-                Render();
+                RenderView(writer);
 
                 writer.Flush();
             });
