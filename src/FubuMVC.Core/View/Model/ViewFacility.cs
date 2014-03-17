@@ -16,7 +16,7 @@ namespace FubuMVC.Core.View.Model
 
         public abstract FileSet FindMatching(SettingsCollection settings);
 
-        public void Fill(ViewEngineSettings viewEngineSettings, BehaviorGraph graph)
+        public void Fill(ViewEngineSettings settings, BehaviorGraph graph)
         {
             var builder = CreateBuilder(graph.Settings);
             var match = FindMatching(graph.Settings);
@@ -25,11 +25,14 @@ namespace FubuMVC.Core.View.Model
             match.DeepSearch = false;
 
             graph.Files.AllFolders.Each(folder => {
-                var bottle = new BottleViews<T>(this, folder, builder, viewEngineSettings, match);
+                var bottle = new BottleViews<T>(this, folder, builder, settings, match);
                 _bottles.Add(bottle);
             });
 
+            _bottles.Each(x => x.AttachLayouts(settings.ApplicationLayoutName));
+
             _views = _bottles.SelectMany(x => x.AllViews()).ToList();
+
 
         }
 

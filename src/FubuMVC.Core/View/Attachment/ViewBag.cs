@@ -38,6 +38,7 @@ namespace FubuMVC.Core.View.Attachment
         public IEnumerable<T> Templates<T>() where T : ITemplateFile
         {
             return _views.OfType<T>();
-        } 
+        }
+
     }
 }

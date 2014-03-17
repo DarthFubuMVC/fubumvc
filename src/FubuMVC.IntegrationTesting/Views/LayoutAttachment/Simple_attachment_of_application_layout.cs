@@ -37,8 +37,6 @@ namespace FubuMVC.IntegrationTesting.Views.LayoutAttachment
             Views.Templates<RazorTemplate>().Where(x => x != master).Each(view => {
                 view.Master.ShouldBeTheSameAs(master);
             });
-
-            Views.Templates<RazorTemplate>().Each(x => Debug.WriteLine(x.ViewPath));
         }
     }
 }

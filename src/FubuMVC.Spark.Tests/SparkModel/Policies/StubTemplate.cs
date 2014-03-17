@@ -1,4 +1,5 @@
 ﻿using System;
+using FubuMVC.Core.View;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Rendering;
 using FubuMVC.Spark.SparkModel;
@@ -89,6 +90,11 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
         }
 
         public IRenderableView GetPartialView()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AttachLayouts(string defaultLayoutName, IViewFacility facility, ITemplateFolder folder)
         {
             throw new NotImplementedException();
         }

@@ -24,5 +24,7 @@ namespace FubuMVC.Core.View.Model
 
         IRenderableView GetView();
         IRenderableView GetPartialView();
+
+        void AttachLayouts(string defaultLayoutName, IViewFacility facility, ITemplateFolder folder);
     }
 }

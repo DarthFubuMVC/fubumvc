@@ -11,7 +11,7 @@ namespace FubuMVC.Core.View
     /// </summary>
     public interface IViewFacility
     {
-        void Fill(ViewEngineSettings viewEngineSettings, BehaviorGraph graph);
+        void Fill(ViewEngineSettings settings, BehaviorGraph graph);
         IEnumerable<IViewToken> AllViews();
 
         ITemplateFile FindInShared(string viewName);

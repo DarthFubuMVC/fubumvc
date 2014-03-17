@@ -81,6 +81,11 @@ namespace FubuMVC.Tests.View
                 throw new NotImplementedException();
             }
 
+            public void AttachLayouts(string defaultLayoutName, IViewFacility facility, ITemplateFolder folder)
+            {
+                throw new NotImplementedException();
+            }
+
             public string ProfileName { get; set; }
             public string FilePath { get; private set; }
             public string RootPath { get; private set; }
@@ -170,7 +175,7 @@ namespace FubuMVC.Tests.View
                 return null;
             }
 
-            public void Fill(ViewEngineSettings viewEngineSettings, BehaviorGraph graph)
+            public void Fill(ViewEngineSettings settings, BehaviorGraph graph)
             {
                 throw new NotImplementedException();
             }

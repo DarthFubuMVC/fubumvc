@@ -51,7 +51,7 @@ namespace FubuMVC.Tests.View.Attachment
             yield return new FakeViewToken {ViewName = "C4"};
         }
 
-        public void Fill(ViewEngineSettings viewEngineSettings, BehaviorGraph graph)
+        public void Fill(ViewEngineSettings settings, BehaviorGraph graph)
         {
             _views = tokens().Where(x => !graph.Settings.Get<ViewEngineSettings>().IsExcluded(x)).ToList();
         }
@@ -87,7 +87,7 @@ namespace FubuMVC.Tests.View.Attachment
             yield return new FakeViewToken {ViewName = "C8"};
         }
 
-        public void Fill(ViewEngineSettings viewEngineSettings, BehaviorGraph graph)
+        public void Fill(ViewEngineSettings settings, BehaviorGraph graph)
         {
             _views = tokens().Where(x => !graph.Settings.Get<ViewEngineSettings>().IsExcluded(x)).ToList();
         }

@@ -162,6 +162,11 @@ namespace FubuMVC.Tests.View
             throw new NotImplementedException();
         }
 
+        public void AttachLayouts(string defaultLayoutName, IViewFacility facility, ITemplateFolder folder)
+        {
+            throw new NotImplementedException();
+        }
+
         public string ProfileName { get; set; }
         public string FilePath { get; private set; }
         public string RootPath { get; private set; }

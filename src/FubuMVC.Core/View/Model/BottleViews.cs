@@ -39,7 +39,7 @@ namespace FubuMVC.Core.View.Model
             })
                 .Select(_builder).Where(x => !_settings.IsExcluded(x));
 
-            var folder = new ViewFolder<T>(_facility, Path.GetFileNameWithoutExtension(path)) {IsShared = _settings.IsSharedFolder(path)};
+            var folder = new ViewFolder<T>(Path.GetFileNameWithoutExtension(path)) {IsShared = _settings.IsSharedFolder(path)};
             folder.Views.AddRange(views);
 
             _folders.Add(folder);
@@ -59,6 +59,11 @@ namespace FubuMVC.Core.View.Model
             return folder;
         }
 
+        public void AttachLayouts(string applicationLayoutName)
+        {
+            _folders.Each(x => x.AttachLayouts(applicationLayoutName, _facility));
+        }
+
 
         public string Provenance
         {
@@ -72,7 +77,7 @@ namespace FubuMVC.Core.View.Model
 
         public T FindInShared(string viewName)
         {
-            return _top.LayoutFolders.SelectMany(x => x.Views).FirstOrDefault(x => x.Name() == viewName);
+            return _top.FindInShared(viewName);
         }
 
     }

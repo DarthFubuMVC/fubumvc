@@ -147,5 +147,19 @@ namespace FubuMVC.Core.View.Model
 
         public abstract IRenderableView GetView();
         public abstract IRenderableView GetPartialView();
+
+        public void AttachLayouts(string defaultLayoutName, IViewFacility facility, ITemplateFolder folder)
+        {
+            if (IsPartial()) return;
+
+            var layoutName = Parsing.Master.IsEmpty() ? defaultLayoutName : Parsing.Master;
+
+            // TODO -- test this w/ an integration test. GH-697
+            if (layoutName.EqualsIgnoreCase("none")) return;
+
+            Master = folder.FindRecursivelyInShared(layoutName)
+                ?? facility.FindInShared(layoutName);
+
+        }
     }
 }

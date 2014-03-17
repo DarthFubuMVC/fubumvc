@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using FubuCore;
 
 namespace FubuMVC.Core.View.Model
 {
     public interface ITemplateFolder
     {
-        ITemplateFile FindInShared(string viewName);
+        ITemplateFile FindRecursivelyInShared(string viewName);
         ITemplateFolder Parent { get; }
     }
 
-    public class ViewFolder<T> where T : ITemplateFile
+    public class ViewFolder<T> : ITemplateFolder where T : ITemplateFile
     {
-        private readonly ViewFacility<T> _facility;
         private readonly string _name;
         public ViewFolder<T> Parent;
         public readonly IList<ViewFolder<T>> LayoutFolders = new List<ViewFolder<T>>(); 
@@ -18,15 +19,40 @@ namespace FubuMVC.Core.View.Model
         public readonly IList<T> Views = new List<T>();
 
 
-        public ViewFolder(ViewFacility<T> facility, string name)
+        public ViewFolder(string name)
         {
-            _facility = facility;
             _name = name;
         }
 
         public string Name
         {
             get { return _name; }
+        }
+
+        public void AttachLayouts(string defaultLayoutName, ViewFacility<T> facility)
+        {
+            Views.Each(x => x.AttachLayouts(defaultLayoutName, facility, this));
+        }
+
+        public T FindInShared(string viewName)
+        {
+            return LayoutFolders.SelectMany(x => x.Views).FirstOrDefault(x => x.Name() == viewName);
+        }
+
+        public ITemplateFile FindRecursivelyInShared(string viewName)
+        {
+            var shared = FindInShared(viewName);
+            if (shared == null && Parent != null)
+            {
+                return Parent.As<ITemplateFolder>().FindRecursivelyInShared(viewName);
+            }
+
+            return shared;
+        }
+
+        ITemplateFolder ITemplateFolder.Parent
+        {
+            get { return Parent; }
         }
     }
 }
