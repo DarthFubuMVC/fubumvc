@@ -18,6 +18,7 @@ namespace FubuMVC.Spark
             _engine = engine;
         }
 
+        // TODO -- eliminate this duplication
         public Task<IEnumerable<ITemplateFile>> FindViews(BehaviorGraph graph)
         {
             return Task.Factory.StartNew(() => findViews(graph));

@@ -28,13 +28,6 @@ namespace FubuMVC.Spark.Tests
         }
 
         [Test]
-        public void template_registry()
-        {
-            _services.DefaultServiceFor<ITemplateRegistry<ISparkTemplate>>()
-                .Value.ShouldBeOfType<TemplateRegistry<ISparkTemplate>>();
-        }
-
-        [Test]
         public void spark_view_engine_service()
         {
             _services.DefaultServiceFor<ISparkViewEngine>()

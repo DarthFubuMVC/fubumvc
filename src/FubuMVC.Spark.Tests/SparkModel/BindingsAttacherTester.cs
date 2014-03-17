@@ -14,12 +14,10 @@ namespace FubuMVC.Spark.Tests.SparkModel
     public class BindingsAttacherTester : InteractionContext<BindingsAttacher>
     {
         private ISparkTemplate _template;
-        private TemplateRegistry<ISparkTemplate> _templates;
         private SparkTemplate _viewViewToken;
 
         protected override void beforeEach()
         {
-            _templates = new TemplateRegistry<ISparkTemplate>();
 
             Assert.Fail("Redo");
 
@@ -34,7 +32,6 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
 
 
-            Container.Inject<ITemplateRegistry<ISparkTemplate>>(_templates);
         }
 
         [Test]
@@ -48,7 +45,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         {
             //ClassUnderTest.Attach(_request);
 
-            _viewViewToken.Bindings.ShouldEqual(_templates);
+            //_viewViewToken.Bindings.ShouldEqual(_templates);
             //MockFor<ISharedTemplateLocator>().VerifyAllExpectations();
         }
 
@@ -64,9 +61,9 @@ namespace FubuMVC.Spark.Tests.SparkModel
         public void logger_is_used()
         {
             //ClassUnderTest.Attach(_request); 
-            MockFor<ITemplateLogger>().AssertWasCalled(x => 
-                x.Log(Arg.Is(_template), Arg<string>.Is.Anything), 
-                x => x.Repeat.Times(_templates.Count()));
+//            MockFor<ITemplateLogger>().AssertWasCalled(x => 
+//                x.Log(Arg.Is(_template), Arg<string>.Is.Anything), 
+//                x => x.Repeat.Times(_templates.Count()));
         }
     }
 }

@@ -53,7 +53,8 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
                 _pak2HomeView, _pak2ApplicationView, _pak2ThemeView
             };
 
-            _viewFolder = new TemplateViewFolder(new TemplateRegistry<ISparkTemplate>(templates));
+            Assert.Fail("Redo.");
+            //_viewFolder = new TemplateViewFolder(new TemplateRegistry<ISparkTemplate>(templates));
         }
 
         [Test]
