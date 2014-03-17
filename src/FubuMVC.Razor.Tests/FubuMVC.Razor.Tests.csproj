@@ -81,12 +81,10 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="RazorModel\LayoutAttacherTester.cs" />
     <Compile Include="Registration\ViewParserTester.cs" />
     <Compile Include="Rendering\FubuRazorViewTester.cs" />
     <Compile Include="Rendering\StubView.cs" />
     <Compile Include="NamespacesImportedTester.cs" />
-    <Compile Include="RazorModel\TemplateExtensionsTester.cs" />
     <Compile Include="RazorEngineSettingsTester.cs" />
   </ItemGroup>
   <ItemGroup>
