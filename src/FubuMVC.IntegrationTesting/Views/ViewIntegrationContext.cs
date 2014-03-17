@@ -77,11 +77,28 @@ namespace FubuMVC.IntegrationTesting.Views
             Scenario.As<IDisposable>().Dispose();
         }
 
+        protected IServiceLocator Services
+        {
+            get
+            {
+                return _host.Services;
+            }
+        }
+
         protected void InBottle(string name)
         {
             _directory = Folder.AppendPath(name).ToFullPath();
             var bottle = new ContentOnlyPackageInfo(_directory, name);
             _bottles.Add(bottle);
+        }
+
+        protected ContentStream File(string name)
+        {
+            var stream = new ContentStream(_directory, name, "");
+
+            _streams.Add(stream);
+
+            return stream;
         }
 
         protected ContentStream RazorView(string name)

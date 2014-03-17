@@ -11,18 +11,19 @@ namespace FubuMVC.Spark.Tests.SparkModel
     [TestFixture]
     public class FubuPartialProviderTester : InteractionContext<FubuPartialProvider>
     {
-        private ITemplateDirectoryProvider<ISparkTemplate> _templateDirectoryProvider;
+        //private ITemplateDirectoryProvider<ISparkTemplate> _templateDirectoryProvider;
         private string _viewPath;
         private List<string> _sharedTemplates;
 
         protected override void beforeEach()
         {
-            _viewPath = FileSystem.Combine("_Package", "Handlers", "Models", "test.spark");// @"_Package\Handlers\Models\test.spark");
-            _templateDirectoryProvider = MockFor<ITemplateDirectoryProvider<ISparkTemplate>>();
-            _sharedTemplates = new List<string>();
-            _templateDirectoryProvider
-                .Expect(x => x.SharedViewPathsForOrigin("Package"))
-                .Return(_sharedTemplates);
+            Assert.Fail("Redo.  Probably as integration tests though.");
+//            _viewPath = FileSystem.Combine("_Package", "Handlers", "Models", "test.spark");// @"_Package\Handlers\Models\test.spark");
+//            _templateDirectoryProvider = MockFor<ITemplateDirectoryProvider<ISparkTemplate>>();
+//            _sharedTemplates = new List<string>();
+//            _templateDirectoryProvider
+//                .Expect(x => x.SharedViewPathsForOrigin("Package"))
+//                .Return(_sharedTemplates);
         }
 
         [Test]

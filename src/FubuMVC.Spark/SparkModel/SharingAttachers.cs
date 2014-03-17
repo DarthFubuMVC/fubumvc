@@ -6,20 +6,18 @@ using FubuMVC.Core.View.Model;
 
 namespace FubuMVC.Spark.SparkModel
 {
-    public class BindingsAttacher : ISharingAttacher<ISparkTemplate>
+    public class BindingsAttacher 
     {
-        private readonly ISharedTemplateLocator _templateLocator;
-
+ 
         private const string FallbackBindingsName = "bindings";
         public string BindingsName { get; set; }
 
-        public BindingsAttacher(ISharedTemplateLocator templateLocator)
+        public BindingsAttacher()
         {
-            _templateLocator = templateLocator;
             BindingsName = FallbackBindingsName;
         }
 
-        public bool CanAttach(IAttachRequest<ISparkTemplate> request)
+        public bool CanAttach()
         {
             throw new NotImplementedException();
 //            var descriptor = request.Template;
@@ -28,7 +26,7 @@ namespace FubuMVC.Spark.SparkModel
 //                && descriptor.Bindings.Count() == 0;
         }
 
-        public void Attach(IAttachRequest<ISparkTemplate> request)
+        public void Attach()
         {
             throw new NotImplementedException();
 //            var target = request.Template;

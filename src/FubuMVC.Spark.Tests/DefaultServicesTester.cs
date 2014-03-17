@@ -4,8 +4,6 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View.Model;
-using FubuMVC.Core.View.Model.Sharing;
-using FubuMVC.Core.View.Rendering;
 using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
@@ -36,15 +34,6 @@ namespace FubuMVC.Spark.Tests
                 .Value.ShouldBeOfType<TemplateRegistry<ISparkTemplate>>();
         }
 
-
-        [Test]
-        public void sharing_graph()
-        {
-            _services.DefaultServiceFor<SharingGraph>().ShouldNotBeNull()
-                .Value.ShouldNotBeNull()
-                .ShouldEqual(_services.DefaultServiceFor<ISharingGraph>().ShouldNotBeNull().Value);
-        }
-
         [Test]
         public void spark_view_engine_service()
         {
@@ -60,72 +49,11 @@ namespace FubuMVC.Spark.Tests
         }
 
         [Test]
-        public void sharing_logs_cache()
-        {
-            _services.DefaultServiceFor<SharingLogsCache>().ShouldNotBeNull()
-                .Value.ShouldNotBeNull().ShouldBeOfType<SharingLogsCache>();
-        }
-
-        [Test]
-        public void sharing_config_activator()
-        {
-            defaultServicesCheck<IActivator, SharingConfigActivator>(0);
-        }
-
-        [Test]
-        public void sharing_policy_activator()
-        {
-            defaultServicesCheck<IActivator, SharingPolicyActivator>(1);
-        }
-
-        [Test]
-        public void sharing_attacher_activator()
-        {
-            defaultServicesCheck<IActivator, SharingAttacherActivator<ISparkTemplate>>(2);
-        }
-
-        [Test]
         public void spark_activator()
         {
             defaultServicesCheck<IActivator, SparkActivator>(3);
         }
 
-        [Test]
-        public void sharing_attachers()
-        {
-            countForServiceCheck<ISharingAttacher<ISparkTemplate>>(2);
-        }
-
-        [Test]
-        public void master_attacher()
-        {
-            defaultServicesCheck<ISharingAttacher<ISparkTemplate>, MasterAttacher<ISparkTemplate>>(0);
-        }
-
-        [Test]
-        public void bindings_attacher()
-        {
-            defaultServicesCheck<ISharingAttacher<ISparkTemplate>, BindingsAttacher>(1);
-        }
-
-        [Test]
-        public void shared_path_builder()
-        {
-            _services.DefaultServiceFor<ISharedPathBuilder>()
-                .Value.ShouldBeOfType<SharedPathBuilder>();
-        }
-
-        [Test]
-        public void template_directory_provider()
-        {
-            defaultServiceCheck<ITemplateDirectoryProvider<ISparkTemplate>, TemplateDirectoryProvider<ISparkTemplate>>();
-        }
-
-        [Test]
-        public void shared_template_locator()
-        {
-            defaultServiceCheck<ISharedTemplateLocator, SharedTemplateLocator>();
-        }
 
         [Test]
         public void html_encoder()

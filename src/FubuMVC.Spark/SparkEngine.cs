@@ -4,8 +4,6 @@ using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Model;
-using FubuMVC.Core.View.Model.Sharing;
-using FubuMVC.Core.View.Rendering;
 using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.SparkModel;
 using Spark;
@@ -27,29 +25,10 @@ namespace FubuMVC.Spark
 
         private void configureServices(ServiceRegistry services)
         {
-            var graph = new SharingGraph();
-            services.SetServiceIfNone(graph);
-            services.SetServiceIfNone<ISharingGraph>(graph);
-
             services.SetServiceIfNone<ISparkViewEngine>(new SparkViewEngine());
             services.SetServiceIfNone<ICacheService>(new DefaultCacheService(HttpRuntime.Cache));
 
-            services.SetServiceIfNone(new SharingLogsCache());
-
-            services.FillType<IActivator, SharingConfigActivator>();
-            services.FillType<IActivator, SharingPolicyActivator>();
-            services.FillType<IActivator, SharingAttacherActivator<ISparkTemplate>>();
             services.FillType<IActivator, SparkActivator>();
-
-            services.FillType<ISharingAttacher<ISparkTemplate>, MasterAttacher<ISparkTemplate>>();
-            services.FillType<ISharingAttacher<ISparkTemplate>, BindingsAttacher>();
-
-            services.SetServiceIfNone<ISharedPathBuilder>(new SharedPathBuilder());
-            services.SetServiceIfNone<ITemplateDirectoryProvider<ISparkTemplate>, TemplateDirectoryProvider<ISparkTemplate>>();
-            services.SetServiceIfNone<ISharedTemplateLocator, SharedTemplateLocator>();
-            services.FillType<ISharedTemplateLocator<ISparkTemplate>, SharedTemplateLocator>();
-
-
 
             services.SetServiceIfNone<IHtmlEncoder, DefaultHtmlEncoder>();
 

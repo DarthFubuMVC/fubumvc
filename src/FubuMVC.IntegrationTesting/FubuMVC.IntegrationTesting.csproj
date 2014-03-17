@@ -209,7 +209,9 @@
       <Name>TestPackage2</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Sharing\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="FubuTestApplication.application.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

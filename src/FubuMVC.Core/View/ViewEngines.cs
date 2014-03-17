@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View.Attachment;

@@ -18,14 +18,12 @@ namespace FubuMVC.Spark
     {
         private readonly ISparkViewEngine _engine;
         private readonly CommonViewNamespaces _namespaces;
-        readonly ITemplateDirectoryProvider<ISparkTemplate> _directoryProvider;
         private readonly SparkEngineSettings _settings;
 
-        public SparkActivator (ISparkViewEngine engine, CommonViewNamespaces namespaces, ITemplateDirectoryProvider<ISparkTemplate> directoryProvider, SparkEngineSettings settings)
+        public SparkActivator (ISparkViewEngine engine, CommonViewNamespaces namespaces, SparkEngineSettings settings)
         {
             _engine = engine;
             _namespaces = namespaces;
-            _directoryProvider = directoryProvider;
             _settings = settings;
         }
 

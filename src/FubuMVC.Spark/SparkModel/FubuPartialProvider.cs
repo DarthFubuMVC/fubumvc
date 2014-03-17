@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Util;
@@ -8,13 +9,13 @@ namespace FubuMVC.Spark.SparkModel
 {
     public class FubuPartialProvider : IPartialProvider
     {
-        private readonly ITemplateDirectoryProvider<ISparkTemplate> _directoryProvider;
+        //private readonly ITemplateDirectoryProvider<ISparkTemplate> _directoryProvider;
         private readonly DefaultPartialProvider _defaultPartialProvider;
         private readonly Cache<string, IEnumerable<string>> _partialPathCache;
 
-        public FubuPartialProvider(ITemplateDirectoryProvider<ISparkTemplate> directoryProvider)
+        public FubuPartialProvider()
         {
-            _directoryProvider = directoryProvider;
+            //_directoryProvider = directoryProvider;
             _defaultPartialProvider = new DefaultPartialProvider();
             _partialPathCache = new Cache<string, IEnumerable<string>>(getPaths);
         }
@@ -26,10 +27,11 @@ namespace FubuMVC.Spark.SparkModel
 
         private IEnumerable<string> getPaths(string viewPath)
         {
-            var defaultPaths = _defaultPartialProvider.GetPaths(viewPath);
-            var origin = viewPath.GetOrigin();
-            var sharedPaths = _directoryProvider.SharedViewPathsForOrigin(origin);
-            return defaultPaths.Union(sharedPaths);
+            throw new NotImplementedException();
+//            var defaultPaths = _defaultPartialProvider.GetPaths(viewPath);
+//            var origin = viewPath.GetOrigin();
+//            var sharedPaths = _directoryProvider.SharedViewPathsForOrigin(origin);
+//            return defaultPaths.Union(sharedPaths);
         }
     }
 }

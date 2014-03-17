@@ -2,11 +2,6 @@
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.View;
-using FubuMVC.Core.View.Model;
-using FubuMVC.Core.View.Model.Sharing;
-using FubuMVC.Core.View.Rendering;
-using FubuMVC.Razor.Rendering;
-using FubuMVC.Razor.RazorModel;
 
 namespace FubuMVC.Razor
 {

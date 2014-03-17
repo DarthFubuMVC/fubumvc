@@ -361,7 +361,6 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="View\FakeViews\ModelsAndControllers.cs" />
-    <Compile Include="View\Model\Sharing\SharingGraphTester.cs" />
     <Compile Include="View\must_be_a_description_on_imporant_things.cs" />
     <Compile Include="View\OutputNodeExtensionsTester.cs" />
     <Compile Include="View\Registration\GenericParserTester.cs" />
@@ -420,6 +419,7 @@
   <ItemGroup>
     <Folder Include="Results\" />
     <Folder Include="View\FakeViews\Folder1\Folder2\Folder3\" />
+    <Folder Include="View\Model\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
