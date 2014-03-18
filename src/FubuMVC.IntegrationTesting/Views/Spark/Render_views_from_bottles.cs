@@ -16,9 +16,19 @@ I am in the main application layout");
             SparkView<BottleModel>("Bottle").Write(@"
 
 <p>I am from a bottle!</p>
-
+<SayHello />
 
 ");
+
+            File("Shared/bindings.xml").Write(@"
+
+<bindings>
+  <element name='SayHello'>'Hello'</element>
+</bindings>
+
+");
+
+
         }
 
         [Test]
@@ -28,6 +38,14 @@ I am in the main application layout");
 
             Scenario.ContentShouldContain("I am in the main application layout");
             Scenario.ContentShouldContain("<p>I am from a bottle!</p>");
+        }
+
+        [Test]
+        public void can_use_bindings_from_a_bottle_automatically()
+        {
+            Scenario.Get.Action<FromBottleEndpoint>(x => x.get_bottle_view());
+
+            Scenario.ContentShouldContain("Hello");
         }
     }
 
