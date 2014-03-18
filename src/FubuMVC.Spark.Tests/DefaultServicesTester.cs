@@ -27,12 +27,6 @@ namespace FubuMVC.Spark.Tests
             
         }
 
-        [Test]
-        public void spark_view_engine_service()
-        {
-            _services.DefaultServiceFor<ISparkViewEngine>()
-                .Value.ShouldBeOfType<SparkViewEngine>();
-        }
 
         [Test]
         public void cache_service()

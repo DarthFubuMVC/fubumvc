@@ -40,8 +40,8 @@ namespace FubuMVC.Razor.Tests
 "FubuCore",
 "System.Linq",
 "HtmlTags",
-"FubuMVC.Razor",
 "FubuMVC.Core.UI",
+"FubuMVC.Razor",
 "Foo",
 "Bar"
             });

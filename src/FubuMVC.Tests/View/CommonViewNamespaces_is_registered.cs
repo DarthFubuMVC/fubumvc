@@ -29,25 +29,14 @@ namespace FubuMVC.Tests.View
             var useNamespaces = graph.Services.DefaultServiceFor<CommonViewNamespaces>().Value.As<CommonViewNamespaces>();
             useNamespaces.Namespaces.Each(x => Debug.WriteLine(x));
 
-            useNamespaces.Namespaces.ShouldHaveTheSameElementsAs(new[]
-            { 
-                typeof(VirtualPathUtility).Namespace,
-                typeof(string).Namespace,
-                typeof(FileSet).Namespace,
-                typeof(ParallelQuery).Namespace,
-                typeof(HtmlTag).Namespace,
-                "Foo",
-                "Bar",
-                "FubuMVC.Tests.Docs.Introduction.Overview",
-                "FubuMVC.Tests.Http.Hosting",
-"FubuMVC.Tests.Registration",
-"FubuMVC.Core.Continuations",
-"FubuMVC.Tests.Registration.Conventions",
-"FubuMVC.Core.Resources.PathBased",
-"FubuMVC.Tests.Registration.Policies",
-"FubuMVC.Tests.Urls",
-
-            });
+            useNamespaces.Namespaces.ShouldContain(typeof(VirtualPathUtility).Namespace);
+            useNamespaces.Namespaces.ShouldContain(typeof(string).Namespace);
+            useNamespaces.Namespaces.ShouldContain(typeof(FileSet).Namespace);
+            useNamespaces.Namespaces.ShouldContain(typeof(ParallelQuery).Namespace);
+            useNamespaces.Namespaces.ShouldContain(typeof(HtmlTag).Namespace);
+            useNamespaces.Namespaces.ShouldContain("FubuMVC.Tests.Http.Hosting");
+            useNamespaces.Namespaces.ShouldContain("Foo");
+            useNamespaces.Namespaces.ShouldContain("Bar");
         }
     }
 }
