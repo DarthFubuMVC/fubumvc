@@ -1,11 +1,12 @@
 using System;
 using System.IO;
+using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Http;
 
 namespace FubuMVC.Core.Caching
 {
-    public class WriteStream : IRecordedHttpOutput, DescribesItself
+    public class WriteStream : IRecordedHttpOutput, IRecordedTextOutput, DescribesItself
     {
         private readonly MemoryStream _stream;
         private readonly object _locker = new object();
@@ -27,6 +28,13 @@ namespace FubuMVC.Core.Caching
             });
         }
 
+        public void WriteText(StringWriter writer)
+        {
+            _stream.Position = 0;
+            // TODO -- some day we're gonna get bitten by character encoding
+            writer.WriteLine(_stream.ReadAllText());
+        }
+
         public string ReadAll()
         {
             lock (_locker)
@@ -42,5 +50,7 @@ namespace FubuMVC.Core.Caching
             description.Title = "Write to stream";
             description.LongDescription = ReadAll();
         }
+
+
     }
 }

@@ -53,9 +53,9 @@ namespace FubuMVC.Spark
             _engine.PartialProvider = new FubuPartialProvider(this);
         }
 
-        private static void configureNamespaces(BehaviorGraph graph)
+        private void configureNamespaces(BehaviorGraph graph)
         {
-            var sparkSettings = graph.Settings.Get<SparkSettings>();
+            var sparkSettings = _engine.Settings.As<SparkSettings>();
             sparkSettings.SetAutomaticEncoding(true);
 
             sparkSettings.AddAssembly(typeof (HtmlTag).Assembly)

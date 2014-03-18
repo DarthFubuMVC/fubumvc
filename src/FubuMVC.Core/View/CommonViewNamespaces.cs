@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web;
 using FubuCore;
+using FubuMVC.Core.UI;
 using HtmlTags;
 
 namespace FubuMVC.Core.View
@@ -18,6 +19,7 @@ namespace FubuMVC.Core.View
             AddForType<FileSet>(); // FubuCore
             AddForType<ParallelQuery>(); // System.Linq
             AddForType<HtmlTag>(); // HtmlTags 
+            Add("FubuMVC.Core.UI");
         }
 
         public void AddForType<T>()
