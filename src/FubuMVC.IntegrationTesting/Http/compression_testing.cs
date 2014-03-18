@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Http
 {
-    [TestFixture, Ignore("This does NOT work with Web API.  I think it's an issue on there side")]
+    [TestFixture]
     public class compression_testing : FubuRegistryHarness
     {
         protected override void configure(FubuRegistry registry)

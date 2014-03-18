@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using FubuCore;
 using FubuCore.Util;
@@ -23,7 +25,7 @@ namespace FubuMVC.Spark.SparkModel
 
         public IList<string> ListViews(string path)
         {
-            return _listViews[path];
+            return _listViews[path ?? string.Empty];
         }
 
         public bool HasView(string path)
@@ -46,15 +48,17 @@ namespace FubuMVC.Spark.SparkModel
 
         private bool hasView(string path)
         {
-            return _templates.Any(x => x.ViewPath == path);
+            return _templates.Any(x => x.ViewPath == path.Replace('\\', '/'));
         }
 
         private FileSystemViewFile getViewSource(string path)
         {
-            return _templates
-				.Where(x => x.ViewPath == path)
+            var template = _templates
+				.Where(x => x.ViewPath == path.Replace('\\', '/') || x.FilePath == path || x.RelativeDirectoryPath() == path)
 				.Select(x => new FileSystemViewFile(x.FilePath))
-				.First();
+				.FirstOrDefault();
+
+            return template;
         }
     }
 }

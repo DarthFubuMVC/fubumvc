@@ -40,6 +40,7 @@ namespace FubuMVC.Core.View.Model
                 .Select(_builder).Where(x => !_settings.IsExcluded(x));
 
             var folder = new ViewFolder<T>(path) {IsShared = _settings.IsSharedFolder(path)};
+            folder.RelativePath = string.Empty;
             folder.Views.AddRange(views);
 
             _folders.Add(folder);
@@ -49,6 +50,7 @@ namespace FubuMVC.Core.View.Model
             {
                 var childFolder = buildFolder(child);
                 childFolder.Parent = folder;
+                childFolder.RelativePath = (folder.RelativePath + "/" + childFolder.Name).TrimStart('/');
 
                 if (childFolder.IsShared)
                 {
@@ -82,7 +84,7 @@ namespace FubuMVC.Core.View.Model
 
         public IEnumerable<string> SharedPaths()
         {
-            return _folders.Where(x => x.IsShared).Select(x => x.Path);
+            return _folders.Where(x => x.IsShared).Select(x => x.RelativePath);
         }
     }
 }

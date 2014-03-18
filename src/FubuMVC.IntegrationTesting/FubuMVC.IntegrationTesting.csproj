@@ -183,6 +183,7 @@
     <Compile Include="Views\Spark\Partials.cs" />
     <Compile Include="Views\Spark\Partials_do_not_get_layout.cs" />
     <Compile Include="Views\Spark\Simple_rendering.cs" />
+    <Compile Include="Views\Spark\Three_Pass_Rendering_And_Bindings.cs" />
     <Compile Include="Views\TemplateFileIntegrationTester.cs" />
     <Compile Include="Views\ViewFacility_FindInShared.cs" />
     <Compile Include="Views\ViewIntegrationContext.cs" />

@@ -141,6 +141,9 @@ namespace FubuMVC.Core.View.Model
                             GetType().FullName));
                 }
 
+                // This prevents Stackoverflow problems
+                if (value != null && value.Parsing.Master == Name()) return;
+
 
 
                 _master = value;

@@ -66,5 +66,7 @@ namespace FubuMVC.Core.View.Model
         {
             get { return IsShared ? Parent.Parent : Parent; }
         }
+
+        public string RelativePath { get; set; }
     }
 }

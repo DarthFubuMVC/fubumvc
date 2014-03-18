@@ -44,7 +44,7 @@ namespace FubuMVC.Spark
             base.Fill(settings, graph);
 
             var bindingTemplates = graph.Files
-                .FindFiles(FileSet.Shallow("bindings.xml"))
+                .FindFiles(FileSet.Shallow("Shared/bindings.xml"))
                 .Select(x => new SparkTemplate(x, _engine)).ToArray();
 
             _engine.ViewFolder = new TemplateViewFolder(AllTemplates());

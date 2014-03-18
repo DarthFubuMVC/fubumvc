@@ -162,6 +162,13 @@ namespace FubuMVC.Core.Http.Owin
         {
             if (Uri.IsWellFormedUriString(url, UriKind.Absolute)) return url;
 
+            if (url.StartsWith("~/"))
+            {
+                // TODO -- need to use the OwinRequestPathBase whatever in this case.  Not really important now, but might 
+                // be down the road.
+                return url.TrimStart('~');
+            }
+
             if (!url.StartsWith("/"))
             {
                 return "/" + url;
