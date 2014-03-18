@@ -13,16 +13,24 @@ using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.SparkModel;
 using HtmlTags;
 using Spark;
+using Spark.Caching;
 
 namespace FubuMVC.Spark
 {
     public class SparkViewFacility : ViewFacility<SparkTemplate>
     {
         private readonly SparkViewEngine _engine;
+        private readonly SparkSettings _sparkSettings;
 
-        public SparkViewFacility(SparkViewEngine engine)
+        public SparkViewFacility()
         {
-            _engine = engine;
+            _engine = new SparkViewEngine();
+            _sparkSettings = _engine.Settings.As<SparkSettings>();
+        }
+
+        protected override void addNamespacesForViews(CommonViewNamespaces namespaces)
+        {
+            
         }
 
         public override Func<IFubuFile, SparkTemplate> CreateBuilder(SettingsCollection settings)
@@ -55,10 +63,9 @@ namespace FubuMVC.Spark
 
         private void configureNamespaces(BehaviorGraph graph)
         {
-            var sparkSettings = _engine.Settings.As<SparkSettings>();
-            sparkSettings.SetAutomaticEncoding(true);
+            _sparkSettings.SetAutomaticEncoding(true);
 
-            sparkSettings.AddAssembly(typeof (HtmlTag).Assembly)
+            _sparkSettings.AddAssembly(typeof (HtmlTag).Assembly)
                 .AddAssembly(typeof (IPartialInvoker).Assembly)
                 .AddNamespace(typeof (IPartialInvoker).Namespace)
                 .AddNamespace(typeof (VirtualPathUtility).Namespace) // System.Web
@@ -66,10 +73,18 @@ namespace FubuMVC.Spark
                 .AddNamespace(typeof (HtmlTag).Namespace); // HtmlTags 
 
             var namespaces = graph.Settings.Get<CommonViewNamespaces>();
-            namespaces.Namespaces.Each(x => sparkSettings.AddNamespace(x));
+            namespaces.Namespaces.Each(x => _sparkSettings.AddNamespace(x));
 
             var engineSettings = graph.Settings.Get<SparkEngineSettings>();
-            engineSettings.UseNamespaces.Each(ns => sparkSettings.AddNamespace(ns));
+            engineSettings.UseNamespaces.Each(ns => _sparkSettings.AddNamespace(ns));
+        }
+
+        protected override void registerServices(ServiceRegistry services)
+        {
+            // TODO -- this needs to change at some point
+            services.SetServiceIfNone<ICacheService>(new DefaultCacheService(HttpRuntime.Cache));
+
+            services.SetServiceIfNone<IHtmlEncoder, DefaultHtmlEncoder>();
         }
     }
 }

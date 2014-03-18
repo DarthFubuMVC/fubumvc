@@ -76,7 +76,6 @@
     <Compile Include="SparkModel\TemplateExtensions.cs" />
     <Compile Include="SparkModel\TemplateViewFolder.cs" />
     <Compile Include="SparkModel\SparkTemplate.cs" />
-    <Compile Include="SparkEngine.cs" />
     <Compile Include="SparkModel\WatchedSparkEntry.cs" />
     <Compile Include="SparkViewFacility.cs" />
     <Compile Include="Rendering\FubuSparkView.cs" />

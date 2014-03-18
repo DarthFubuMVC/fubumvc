@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime.Files;
+using FubuMVC.Core.UI;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Razor.RazorModel;
+using FubuMVC.Razor.Rendering;
 
 namespace FubuMVC.Razor
 {
@@ -29,6 +31,15 @@ namespace FubuMVC.Razor
             return settings.Get<RazorEngineSettings>().Search;
         }
 
-        
+        protected override void registerServices(ServiceRegistry services)
+        {
+            services.SetServiceIfNone<IPartialRenderer, PartialRenderer>();
+        }
+
+        protected override void addNamespacesForViews(CommonViewNamespaces namespaces)
+        {
+            namespaces.AddForType<RazorViewFacility>(); // FubuMVC.Razor
+            namespaces.AddForType<IPartialInvoker>(); // FubuMVC.Core.UI
+        }
     }
 }

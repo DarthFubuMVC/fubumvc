@@ -7,7 +7,7 @@ using FubuMVC.Core.Runtime.Files;
 
 namespace FubuMVC.Core.View.Model
 {
-    public abstract class ViewFacility<T> : IViewFacility where T : class,ITemplateFile
+    public abstract class ViewFacility<T> : IViewFacility, IFubuRegistryExtension where T : class,ITemplateFile
     {
         private readonly IList<BottleViews<T>> _bottles = new List<BottleViews<T>>();
         private List<T> _views;
@@ -15,6 +15,18 @@ namespace FubuMVC.Core.View.Model
         public abstract Func<IFubuFile, T> CreateBuilder(SettingsCollection settings);
 
         public abstract FileSet FindMatching(SettingsCollection settings);
+
+        public void Configure(FubuRegistry registry)
+        {
+            registry.AlterSettings<ViewEngineSettings>(x => x.AddFacility(this));
+            registry.Services(registerServices);
+
+            registry.AlterSettings<CommonViewNamespaces>(addNamespacesForViews);
+        }
+
+        protected abstract void addNamespacesForViews(CommonViewNamespaces namespaces);
+
+        protected abstract void registerServices(ServiceRegistry services);
 
         public virtual void Fill(ViewEngineSettings settings, BehaviorGraph graph)
         {
