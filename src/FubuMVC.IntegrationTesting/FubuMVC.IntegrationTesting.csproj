@@ -184,6 +184,7 @@
     <Compile Include="Views\Spark\No_layout_with_use_none.cs" />
     <Compile Include="Views\Spark\Partials.cs" />
     <Compile Include="Views\Spark\Partials_do_not_get_layout.cs" />
+    <Compile Include="Views\Spark\Render_views_from_bottles.cs" />
     <Compile Include="Views\Spark\Simple_rendering.cs" />
     <Compile Include="Views\Spark\Three_Pass_Rendering_And_Bindings.cs" />
     <Compile Include="Views\TemplateFileIntegrationTester.cs" />
