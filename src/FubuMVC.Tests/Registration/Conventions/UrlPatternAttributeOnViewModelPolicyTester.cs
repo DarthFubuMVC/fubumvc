@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             var graph = BehaviorGraph.BuildFrom(x =>
             {
                 x.Configure(g => {
-                    var c = new RoutedChain(new RouteDefinition("foo/{Name}"), typeof(Foo));
+                    var c = new RoutedChain(new RouteDefinition("foo/{Name}"), typeof(Foo), typeof(Foo));
                     c.AddToEnd(new OutputNode(typeof(Foo)));
 
                     g.AddChain(c);

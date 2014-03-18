@@ -164,6 +164,7 @@
     <Compile Include="SharedHarness.cs" />
     <Compile Include="SharedHarnessContext.cs" />
     <Compile Include="SelfHostHttpServerTester.cs" />
+    <Compile Include="Views\Actionless_Views.cs" />
     <Compile Include="Views\LayoutAttachment\Explicit_declaration_of_master_layout.cs" />
     <Compile Include="Views\LayoutAttachment\override_the_default_layout_name.cs" />
     <Compile Include="Views\LayoutAttachment\override_the_shared_folder_name.cs" />

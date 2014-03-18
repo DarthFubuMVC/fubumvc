@@ -26,9 +26,17 @@ namespace FubuMVC.Core.Registration.Nodes
             Route = route;
         }
 
-        public RoutedChain(IRouteDefinition route, Type inputType) : this(route)
+        public RoutedChain(IRouteDefinition route, Type inputType, Type resourceType) : this(route)
         {
-            if (inputType != null) route.ApplyInputType(inputType);
+            if (inputType != null)
+            {
+                route.ApplyInputType(inputType);
+            }
+
+            if (resourceType != null)
+            {
+                ResourceType(resourceType);
+            }
         }
 
         /// <summary>

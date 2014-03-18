@@ -43,7 +43,7 @@ namespace FubuMVC.Core.View.Attachment
             if (view.ViewModel.HasAttribute<UrlPatternAttribute>())
             {
                 var url = view.ViewModel.GetAttribute<UrlPatternAttribute>().Pattern;
-                return new RoutedChain(new RouteDefinition(url), view.ViewModel);
+                return new RoutedChain(new RouteDefinition(url), view.ViewModel, view.ViewModel);
             }
 
             return BehaviorChain.ForResource(view.ViewModel);

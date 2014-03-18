@@ -157,7 +157,7 @@ namespace FubuMVC.Core.Registration.Nodes
             {
                 var route = urlPolicies.BuildRoute(this);
 
-                return new RoutedChain(route, InputType());
+                return new RoutedChain(route, InputType(), ResourceType());
             }
         }
     }
