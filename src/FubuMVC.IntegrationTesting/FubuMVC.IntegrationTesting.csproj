@@ -179,7 +179,9 @@
     <Compile Include="Views\Razor\RazorRendering_without_layouts_Tester.cs" />
     <Compile Include="Views\Razor\Razor_view_activation_tester.cs" />
     <Compile Include="Views\Razor\Using_Helpers.cs" />
+    <Compile Include="Views\Spark\Activation.cs" />
     <Compile Include="Views\Spark\Partials.cs" />
+    <Compile Include="Views\Spark\Partials_do_not_get_layout.cs" />
     <Compile Include="Views\Spark\Simple_rendering.cs" />
     <Compile Include="Views\TemplateFileIntegrationTester.cs" />
     <Compile Include="Views\ViewFacility_FindInShared.cs" />

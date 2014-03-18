@@ -160,7 +160,7 @@ namespace FubuMVC.IntegrationTesting.Views
 
             public void Write(string text)
             {
-                _writer.WriteLine(text.Replace("'", "\""));
+                _writer.WriteLine(text.Replace("'", "\"").TrimStart());
             }
 
             public void DumpContents()
