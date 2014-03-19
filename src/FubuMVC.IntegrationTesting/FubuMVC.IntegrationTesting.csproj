@@ -173,6 +173,7 @@
     <Compile Include="Views\LayoutAttachment\Use_layout_from_bottle_when_not_in_application.cs" />
     <Compile Include="Views\LayoutAttachment\Use_named_layout_in_closest_shared_folder.cs" />
     <Compile Include="Views\Razor\Context_is_usable.cs" />
+    <Compile Include="Views\Razor\Do_not_use_layout_if_view_is_being_rendered_as_partial.cs" />
     <Compile Include="Views\Razor\Handles_null_properties.cs" />
     <Compile Include="Views\Razor\Layouts_with_Sections.cs" />
     <Compile Include="Views\Razor\Multiple_layouts.cs" />
