@@ -22,7 +22,7 @@ namespace FubuMVC.Razor.Tests
         public void default_namespaces_are_set_including_anything_from_CommonViewNamespaces()
         {
             var registry = new FubuRegistry();
-            registry.Import<RazorEngineRegistry>();
+            registry.Import<RazorViewFacility>();
             registry.AlterSettings<CommonViewNamespaces>(x =>
             {
                 x.Add("Foo");

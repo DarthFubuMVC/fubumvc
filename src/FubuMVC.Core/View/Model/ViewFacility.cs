@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime.Files;
@@ -41,11 +42,19 @@ namespace FubuMVC.Core.View.Model
                 _bottles.Add(bottle);
             });
 
-            _bottles.Each(x => x.AttachLayouts(settings.ApplicationLayoutName));
+
+            LayoutAttachment = Task.Factory.StartNew(() => AttachLayouts(settings));
 
             _views = _bottles.SelectMany(x => x.AllViews()).ToList();
 
 
+        }
+
+        public Task LayoutAttachment { get; private set; }
+
+        public void AttachLayouts(ViewEngineSettings settings)
+        {
+            _bottles.Each(x => x.AttachLayouts(settings.ApplicationLayoutName));
         }
 
         public ViewEngineSettings Settings { get; set; }

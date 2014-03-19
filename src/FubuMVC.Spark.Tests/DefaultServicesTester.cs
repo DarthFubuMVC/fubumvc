@@ -14,7 +14,7 @@ using Spark.Caching;
 namespace FubuMVC.Spark.Tests
 {
     [TestFixture]
-    public class DefaultServicesTester : InteractionContext<SparkEngine>
+    public class DefaultServicesTester : InteractionContext<SparkViewFacility>
     {
         private ServiceGraph _services;
 

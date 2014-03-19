@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View.Model;
 
@@ -19,6 +20,7 @@ namespace FubuMVC.Core.View
         ViewEngineSettings Settings { get; set; }
 
         Type TemplateType { get; }
-        
+        Task LayoutAttachment { get; }
+
     }
 }

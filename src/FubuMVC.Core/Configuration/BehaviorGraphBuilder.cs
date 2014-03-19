@@ -69,6 +69,7 @@ namespace FubuMVC.Core.Configuration
 
             registerServices(config, graph);
 
+            Task.WaitAll(graph.Settings.Get<ViewEngineSettings>().Facilities.Select(x => x.LayoutAttachment).ToArray(), 10.Seconds());
 
             return graph;
         }

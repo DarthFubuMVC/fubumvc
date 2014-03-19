@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using FubuMVC.Core;
@@ -69,6 +70,15 @@ namespace FubuMVC.Tests.View.Attachment
 
         public ViewEngineSettings Settings { get; set; }
         public Type TemplateType { get; private set; }
+
+        public Task LayoutAttachment
+        {
+            get
+            {
+                return Task.Factory.StartNew(() => Debug.WriteLine("Hello from view engine 1"))
+                ;
+            }
+        }
     }
 
     public class FakeViewEngine2 : IViewFacility
@@ -106,5 +116,13 @@ namespace FubuMVC.Tests.View.Attachment
 
         public ViewEngineSettings Settings { get; set; }
         public Type TemplateType { get; private set; }
+        public Task LayoutAttachment
+        {
+            get
+            {
+                return Task.Factory.StartNew(() => Debug.WriteLine("Hello from view engine 2"))
+                ;
+            }
+        }
     }
 }
