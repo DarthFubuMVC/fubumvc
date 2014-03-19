@@ -161,7 +161,6 @@ namespace FubuMVC.Core.View.Model
 
             var layoutName = Parsing.Master.IsEmpty() ? defaultLayoutName : Parsing.Master;
 
-            // TODO -- test this w/ an integration test. GH-697
             if (layoutName.EqualsIgnoreCase("none")) return;
 
             if (layoutName == Name()) return;

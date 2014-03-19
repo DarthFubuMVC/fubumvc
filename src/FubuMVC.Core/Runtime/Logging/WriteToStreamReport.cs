@@ -1,10 +1,8 @@
-using System;
 using FubuCore.Descriptions;
 using FubuCore.Logging;
 
 namespace FubuMVC.Core.Runtime.Logging
 {
-    // TODO -- write out the stream contents?  GH-178
     public class WriteToStreamReport : LogRecord, IHaveContentType, DescribesItself
     {
         private readonly string _contentType;
