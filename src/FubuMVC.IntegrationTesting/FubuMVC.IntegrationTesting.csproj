@@ -183,6 +183,7 @@
     <Compile Include="Views\Razor\Razor_view_activation_tester.cs" />
     <Compile Include="Views\Razor\Using_Helpers.cs" />
     <Compile Include="Views\Spark\Activation.cs" />
+    <Compile Include="Views\Spark\Simple_rendering_with_precompilation.cs" />
     <Compile Include="Views\Spark\No_layout_with_use_none.cs" />
     <Compile Include="Views\Spark\Partials.cs" />
     <Compile Include="Views\Spark\Partials_do_not_get_layout.cs" />

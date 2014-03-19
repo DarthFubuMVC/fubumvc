@@ -62,7 +62,6 @@ namespace FubuMVC.Core.View.Model
             return FilePath.PathRelativeTo(RootPath).Replace("\\", "/");
         }
 
-        // TODO -- try to get rid of this.
         public string DirectoryPath()
         {
             return Path.GetDirectoryName(FilePath);
@@ -85,7 +84,6 @@ namespace FubuMVC.Core.View.Model
             return Origin == ContentFolder.Application;
         }
 
-        // TODO -- get a UT on this.
         public virtual bool IsPartial()
         {
             return Path.GetFileName(FilePath).StartsWith("_");

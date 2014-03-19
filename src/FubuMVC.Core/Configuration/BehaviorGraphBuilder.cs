@@ -45,6 +45,10 @@ namespace FubuMVC.Core.Configuration
             config.RunActions(ConfigurationType.Settings, graph);
 
             var viewDiscovery = graph.Settings.Get<ViewEngineSettings>().BuildViewBag(graph);
+            var layoutAttachmentTasks =
+                viewDiscovery.ContinueWith(
+                    t => graph.Settings.Get<ViewEngineSettings>().Facilities.Select(x => x.LayoutAttachment).ToArray());
+
             graph.Settings.Replace(viewDiscovery);
 
             lookForAccessorOverrides(graph);
@@ -69,7 +73,8 @@ namespace FubuMVC.Core.Configuration
 
             registerServices(config, graph);
 
-            Task.WaitAll(graph.Settings.Get<ViewEngineSettings>().Facilities.Select(x => x.LayoutAttachment).ToArray(), 10.Seconds());
+
+            Task.WaitAll(layoutAttachmentTasks.Result, 10.Seconds());
 
             return graph;
         }

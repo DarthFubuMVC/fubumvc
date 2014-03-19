@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Bottles;
+using Bottles.Diagnostics;
 using FubuCore;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View.Model;
@@ -59,8 +61,20 @@ namespace FubuMVC.Spark.SparkModel
 
         public void Precompile()
         {
-            _viewEntry.Precompile();
-            _partialViewEntry.Precompile();
+            try
+            {
+                _viewEntry.Precompile();
+                _partialViewEntry.Precompile();
+            }
+            catch (Exception e)
+            {
+                PackageRegistry.Diagnostics.LogFor(this).MarkFailure(e);
+            }
+        }
+
+        public override string ToString()
+        {
+            return "Spark Template File: " + FilePath;
         }
 
         public void AddBinding(ISparkTemplate template)
