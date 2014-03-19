@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core.Registration;
@@ -51,6 +52,10 @@ namespace FubuMVC.Core.View.Model
         }
 
         public Task LayoutAttachment { get; private set; }
+        public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
+        {
+            _bottles.Each(x => x.AttachViewModels(types, logger));
+        }
 
         public void AttachLayouts(ViewEngineSettings settings)
         {

@@ -78,7 +78,8 @@ namespace FubuMVC.Core.View
                 var types = new ViewTypePool(graph.ApplicationAssembly);
                 
                 // Attaching the view models
-                views.Each(x => x.AttachViewModels(types, logger));
+
+                _facilities.Each(x => x.AttachViewModels(types, logger));
                 
                 return new ViewBag(views);
             });

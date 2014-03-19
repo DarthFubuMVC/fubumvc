@@ -11,7 +11,7 @@ namespace FubuMVC.IntegrationTesting.Views
         {
             SparkView<ActionlessView1>("View1").WriteLine("I'm in view 1!");
             RazorView<ActionlessView2>("View2").WriteLine("I'm in view 2!");
-            RazorView<ActionlessView3>("View2").WriteLine("I'm in view 3!");
+            RazorView<ActionlessView3>("View3").WriteLine("I'm in view 3!");
 
             RazorView<ActionlessViewWithPartials>("HasPartials").Write(@"
 

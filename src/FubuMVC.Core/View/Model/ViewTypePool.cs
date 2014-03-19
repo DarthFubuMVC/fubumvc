@@ -5,11 +5,11 @@ using System.Reflection;
 using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View.Registration;
 
 namespace FubuMVC.Core.View.Model
 {
-    // TODO -- optimize this!!!!!!
     public class ViewTypePool
     {
         private readonly Assembly _applicationAssembly;
@@ -19,6 +19,11 @@ namespace FubuMVC.Core.View.Model
         {
             _applicationAssembly = applicationAssembly;
             _types = new Lazy<TypePool>(getTypes);
+        }
+
+        public Assembly ApplicationAssembly
+        {
+            get { return _applicationAssembly; }
         }
 
         private TypePool getTypes()
@@ -38,7 +43,7 @@ namespace FubuMVC.Core.View.Model
 
 
 
-        public Type FindTypeByName(string typeFullName, Action<string> log)
+        public Type FindTypeByName(string typeFullName, Assembly defaultAssembly, Action<string> log)
         {
             if (GenericParser.IsGeneric(typeFullName))
             {
@@ -46,11 +51,17 @@ namespace FubuMVC.Core.View.Model
                 return genericParser.Parse(typeFullName);
             }
 
-            return findClosedTypeByFullName(typeFullName, log);
+            return findClosedTypeByFullName(typeFullName, defaultAssembly, log);
         }
 
-        private Type findClosedTypeByFullName(string typeFullName, Action<string> log)
+        private Type findClosedTypeByFullName(string typeFullName, Assembly defaultAssembly, Action<string> log)
         {
+            var type = defaultAssembly.GetExportedTypes().FirstOrDefault(x => x.FullName == typeFullName);
+            if (type != null)
+            {
+                return type;
+            }
+
             var types = _types.Value.TypesWithFullName(typeFullName);
             var typeCount = types.Count();
 
@@ -68,6 +79,13 @@ namespace FubuMVC.Core.View.Model
             }
 
             return null;
+        }
+
+        public Assembly FindAssemblyByProvenance(string provenance)
+        {
+            if (provenance == ContentFolder.Application) return _applicationAssembly;
+
+            return _types.Value.Assemblies.FirstOrDefault(x => x.GetName().Name == provenance) ?? _applicationAssembly;
         }
     }
 }

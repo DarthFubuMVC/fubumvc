@@ -22,5 +22,6 @@ namespace FubuMVC.Core.View
         Type TemplateType { get; }
         Task LayoutAttachment { get; }
 
+        void AttachViewModels(ViewTypePool types, ITemplateLogger logger);
     }
 }

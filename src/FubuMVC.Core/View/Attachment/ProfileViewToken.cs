@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using FubuMVC.Core.View.Model;
 
 namespace FubuMVC.Core.View.Attachment
@@ -34,9 +35,9 @@ namespace FubuMVC.Core.View.Attachment
             return _filteredName;
         }
 
-        public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
+        public void AttachViewModels(Assembly defaultAssembly, ViewTypePool types, ITemplateLogger logger)
         {
-            _view.AttachViewModels(types, logger);
+            _view.AttachViewModels(defaultAssembly, types, logger);
         }
 
         public string Namespace

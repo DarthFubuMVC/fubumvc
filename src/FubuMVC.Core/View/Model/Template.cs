@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Reflection;
 using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core.Runtime.Files;
@@ -117,14 +118,14 @@ namespace FubuMVC.Core.View.Model
         }
 
         // Tested through integration tests
-        public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
+        public void AttachViewModels(Assembly defaultAssembly, ViewTypePool types, ITemplateLogger logger)
         {
             if (IsPartial()) return;
 
             var typeName = Parsing.ViewModelType;
             if (typeName.IsEmpty()) return;
 
-            ViewModel = types.FindTypeByName(typeName, message => logger.Log(this, message));
+            ViewModel = types.FindTypeByName(typeName, defaultAssembly, message => logger.Log(this, message));
         }
 
         public ITemplateFile Master

@@ -66,6 +66,11 @@ namespace FubuMVC.Core.View.Model
             _folders.Each(x => x.AttachLayouts(applicationLayoutName, _facility));
         }
 
+        public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
+        {
+            var assembly = types.FindAssemblyByProvenance(Provenance);
+            AllViews().Each(x => x.AttachViewModels(assembly, types, logger));
+        }
 
         public string Provenance
         {

@@ -79,6 +79,10 @@ namespace FubuMVC.Tests.View.Attachment
                 ;
             }
         }
+
+        public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
+        {
+        }
     }
 
     public class FakeViewEngine2 : IViewFacility
@@ -123,6 +127,10 @@ namespace FubuMVC.Tests.View.Attachment
                 return Task.Factory.StartNew(() => Debug.WriteLine("Hello from view engine 2"))
                 ;
             }
+        }
+
+        public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
+        {
         }
     }
 }

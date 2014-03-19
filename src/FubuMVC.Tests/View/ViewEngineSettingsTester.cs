@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
@@ -123,7 +124,7 @@ namespace FubuMVC.Tests.View
                 throw new NotImplementedException();
             }
 
-            public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
+            public void AttachViewModels(Assembly defaultAssembly, ViewTypePool types, ITemplateLogger logger)
             {
                 throw new NotImplementedException();
             }
@@ -193,6 +194,10 @@ namespace FubuMVC.Tests.View
             public ViewEngineSettings Settings { get; set; }
             public Type TemplateType { get; private set; }
             public Task LayoutAttachment { get; private set; }
+            public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

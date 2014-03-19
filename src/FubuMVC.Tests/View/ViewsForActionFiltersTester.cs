@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.View;
@@ -203,7 +204,7 @@ namespace FubuMVC.Tests.View
             throw new NotImplementedException();
         }
 
-        public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
+        public void AttachViewModels(Assembly defaultAssembly, ViewTypePool types, ITemplateLogger logger)
         {
         }
 

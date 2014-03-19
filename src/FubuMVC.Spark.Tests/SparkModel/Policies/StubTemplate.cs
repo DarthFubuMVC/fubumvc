@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Rendering;
@@ -78,7 +79,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
             throw new NotImplementedException();
         }
 
-        public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
+        public void AttachViewModels(Assembly defaultAssembly, ViewTypePool types, ITemplateLogger logger)
         {
             throw new NotImplementedException();
         }

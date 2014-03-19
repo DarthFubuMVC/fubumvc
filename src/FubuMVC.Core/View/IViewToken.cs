@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using FubuMVC.Core.View.Model;
 
 namespace FubuMVC.Core.View
@@ -14,6 +15,6 @@ namespace FubuMVC.Core.View
         /// </summary>
         string Origin { get; }
         string Name();
-        void AttachViewModels(ViewTypePool types, ITemplateLogger logger);
+        void AttachViewModels(Assembly defaultAssembly, ViewTypePool types, ITemplateLogger logger);
     }
 }
