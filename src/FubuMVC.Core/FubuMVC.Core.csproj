@@ -70,6 +70,7 @@
     <Compile Include="Ajax\AjaxContinuationWriter.cs" />
     <Compile Include="Ajax\AjaxError.cs" />
     <Compile Include="ApplicationSettings.cs" />
+    <Compile Include="Assets\AssetFilePageExtensions.cs" />
     <Compile Include="Assets\Classes.cs" />
     <Compile Include="AsymmetricJsonAttribute.cs" />
     <Compile Include="AutoImportAttribute.cs" />
@@ -463,6 +464,7 @@
     <Compile Include="Security\PrincipalRoles.cs" />
     <Compile Include="Routing\StandardRoutePolicy.cs" />
     <Compile Include="ServiceRegistryExtensions.cs" />
+    <Compile Include="UI\FubuHtmlDocument.cs" />
     <Compile Include="UI\IPartialInvoker.cs" />
     <Compile Include="UI\PartialInvoker.cs" />
     <Compile Include="Registration\Querying\ChainInterrogator.cs" />

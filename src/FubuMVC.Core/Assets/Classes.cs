@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -68,13 +66,13 @@ namespace FubuMVC.Core.Assets
             {
                 yield return mimetype;
             }
-        } 
+        }
     }
 
     public interface IAssetGraph
     {
         Asset FindAsset(string search);
-        IEnumerable<Asset> Assets { get; } 
+        IEnumerable<Asset> Assets { get; }
     }
 
     public class AssetGraph : IAssetGraph
@@ -90,7 +88,6 @@ namespace FubuMVC.Core.Assets
         public void Add(Asset asset)
         {
             _assets.Add(asset);
-            
         }
 
         public void Add(IEnumerable<Asset> assets)
@@ -121,10 +118,7 @@ namespace FubuMVC.Core.Assets
 
         public IEnumerable<Asset> Assets
         {
-            get
-            {
-                return _assets;
-            }
+            get { return _assets; }
         }
     }
 }

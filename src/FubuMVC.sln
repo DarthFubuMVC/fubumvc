@@ -48,6 +48,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Spark", "FubuMVC.Sp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Spark.Tests", "FubuMVC.Spark.Tests\FubuMVC.Spark.Tests.csproj", "{7F5C625C-603B-4D8B-97A8-BCBF6D8BC1FC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHarnessApp", "TestHarnessApp\TestHarnessApp.csproj", "{F6CAF85F-ED02-44F2-AE6B-08170DF1E13E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -346,6 +348,21 @@ Global
 		{7F5C625C-603B-4D8B-97A8-BCBF6D8BC1FC}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{7F5C625C-603B-4D8B-97A8-BCBF6D8BC1FC}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
 		{7F5C625C-603B-4D8B-97A8-BCBF6D8BC1FC}.Retail|x86.ActiveCfg = Release|Any CPU
+		{F6CAF85F-ED02-44F2-AE6B-08170DF1E13E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6CAF85F-ED02-44F2-AE6B-08170DF1E13E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6CAF85F-ED02-44F2-AE6B-08170DF1E13E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F6CAF85F-ED02-44F2-AE6B-08170DF1E13E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F6CAF85F-ED02-44F2-AE6B-08170DF1E13E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F6CAF85F-ED02-44F2-AE6B-08170DF1E13E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6CAF85F-ED02-44F2-AE6B-08170DF1E13E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6CAF85F-ED02-44F2-AE6B-08170DF1E13E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F6CAF85F-ED02-44F2-AE6B-08170DF1E13E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F6CAF85F-ED02-44F2-AE6B-08170DF1E13E}.Release|x86.ActiveCfg = Release|Any CPU
+		{F6CAF85F-ED02-44F2-AE6B-08170DF1E13E}.Retail|Any CPU.ActiveCfg = Release|Any CPU
+		{F6CAF85F-ED02-44F2-AE6B-08170DF1E13E}.Retail|Any CPU.Build.0 = Release|Any CPU
+		{F6CAF85F-ED02-44F2-AE6B-08170DF1E13E}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F6CAF85F-ED02-44F2-AE6B-08170DF1E13E}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
+		{F6CAF85F-ED02-44F2-AE6B-08170DF1E13E}.Retail|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
