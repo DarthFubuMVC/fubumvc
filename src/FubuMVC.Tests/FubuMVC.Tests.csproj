@@ -87,6 +87,7 @@
     <Compile Include="Ajax\AjaxContinuationPolicyIntegratedTester.cs" />
     <Compile Include="Ajax\AjaxContinuationTester.cs" />
     <Compile Include="ApplicationSettingsTester.cs" />
+    <Compile Include="Assets\AssetSettingsTester.cs" />
     <Compile Include="AutoImport_of_configuration_actions_and_extensions_Tester.cs" />
     <Compile Include="Behaviors\Chrome\ChromeAttributeTester.cs" />
     <Compile Include="Behaviors\Chrome\ChromeNodeTester.cs" />

@@ -29,7 +29,7 @@ namespace FubuMVC.IntegrationTesting.Views
         private readonly IList<ContentOnlyPackageInfo> _bottles = new List<ContentOnlyPackageInfo>();
         private readonly IList<ContentStream> _streams = new List<ContentStream>();
         private InMemoryHost _host;
-        private string _applicationDirectory;
+        private readonly string _applicationDirectory;
         protected Scenario Scenario;
 
         public ViewIntegrationContext()
@@ -142,33 +142,6 @@ namespace FubuMVC.IntegrationTesting.Views
             return stream;
         }
 
-        public class ContentStream
-        {
-            private readonly string _path;
-            private readonly StringWriter _writer = new StringWriter();
-
-            public ContentStream(string folder, string name, string extension)
-            {
-                _path = Path.Combine(folder, name + extension);
-            }
-
-            public ContentStream WriteLine(string format, params object[] parameters)
-            {
-                _writer.WriteLine(format, parameters);
-                return this;
-            }
-
-            public void Write(string text)
-            {
-                _writer.WriteLine(text.Replace("'", "\"").TrimStart());
-            }
-
-            public void DumpContents()
-            {
-                fileSystem.WriteStringToFile(_path, _writer.ToString());
-            }
-        }
-
         IEnumerable<IPackageInfo> IPackageLoader.Load(IPackageLog log)
         {
             return _bottles;
@@ -193,6 +166,33 @@ namespace FubuMVC.IntegrationTesting.Views
         protected ITemplateFile ViewForModel<T>()
         {
             return Views.ViewsFor(typeof (T)).OfType<ITemplateFile>().FirstOrDefault();
+        }
+    }
+
+    public class ContentStream
+    {
+        private readonly string _path;
+        private readonly StringWriter _writer = new StringWriter();
+
+        public ContentStream(string folder, string name, string extension)
+        {
+            _path = Path.Combine(folder, name + extension);
+        }
+
+        public ContentStream WriteLine(string format, params object[] parameters)
+        {
+            _writer.WriteLine(format, parameters);
+            return this;
+        }
+
+        public void Write(string text)
+        {
+            _writer.WriteLine(text.Replace("'", "\"").TrimStart());
+        }
+
+        public void DumpContents()
+        {
+            ViewIntegrationContext.fileSystem.WriteStringToFile(_path, _writer.ToString());
         }
     }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Reflection;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
@@ -34,6 +35,7 @@ namespace FubuMVC.Core.Configuration
             return graph;
         }
 
+        // TOOD -- clean this up a little bit
         public static BehaviorGraph Build(FubuRegistry registry)
         {
             var graph = new BehaviorGraph();
@@ -43,6 +45,9 @@ namespace FubuMVC.Core.Configuration
 
             // Apply settings
             config.RunActions(ConfigurationType.Settings, graph);
+
+            var assetDiscovery = graph.Settings.Get<AssetSettings>().Build(graph.Files)
+                .ContinueWith(t => graph.Services.AddService<IAssetGraph>(t.Result));
 
             var viewDiscovery = graph.Settings.Get<ViewEngineSettings>().BuildViewBag(graph);
             var layoutAttachmentTasks =
@@ -62,6 +67,8 @@ namespace FubuMVC.Core.Configuration
 
             config.RunActions(ConfigurationType.Explicit, graph);
             config.RunActions(ConfigurationType.Policy, graph);
+
+            // TODO -- try to eliminate these two
             config.RunActions(ConfigurationType.InjectNodes, graph);
             config.RunActions(ConfigurationType.Attachment, graph);
 
@@ -71,10 +78,12 @@ namespace FubuMVC.Core.Configuration
             config.RunActions(ConfigurationType.Reordering, graph);
             config.RunActions(ConfigurationType.Instrumentation, graph);
 
+            
             registerServices(config, graph);
 
-
+            // TODO -- do something better here.
             Task.WaitAll(layoutAttachmentTasks.Result, 10.Seconds());
+            assetDiscovery.Wait(10.Seconds());
 
             return graph;
         }
