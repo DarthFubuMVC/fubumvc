@@ -187,6 +187,11 @@ namespace FubuMVC.Core
         {
             _determineMode = new Lazy<string>(devTest);
         }
+
+        public static void SetUpForDevelopmentMode()
+        {
+            Mode(Development);
+        }
     }
 
         public class DoExpression

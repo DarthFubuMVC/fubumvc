@@ -16,6 +16,14 @@ namespace FubuMVC.Tests
         }
 
         [Test]
+        public void set_to_development_mode()
+        {
+            FubuMode.SetUpForDevelopmentMode();
+
+            FubuMode.InDevelopment().ShouldBeTrue();
+        }
+
+        [Test]
         public void DevMode_as_is_is_true()
         {
             FubuMode.Detector.SetMode("Development");

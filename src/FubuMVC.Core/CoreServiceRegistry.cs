@@ -5,6 +5,7 @@ using FubuCore.Dates;
 using FubuCore.Formatting;
 using FubuCore.Logging;
 using FubuCore.Reflection;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
@@ -92,6 +93,15 @@ namespace FubuMVC.Core
             SetServiceIfNone<IHttpContentEncoders, HttpContentEncoders>();
 
             SetServiceIfNone<ICookies, Cookies>();
+
+            if (FubuMode.InDevelopment())
+            {
+                SetServiceIfNone<IAssetTagBuilder, DevelopmentModeAssetTagBuilder>();
+            }
+            else
+            {
+                SetServiceIfNone<IAssetTagBuilder, AssetTagBuilder>();
+            }
         }
     }
 }

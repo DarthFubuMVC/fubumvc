@@ -6,6 +6,7 @@ using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Files;
+using HtmlTags;
 
 namespace FubuMVC.Core.Assets
 {
@@ -121,4 +122,67 @@ namespace FubuMVC.Core.Assets
             get { return _assets; }
         }
     }
+
+    public interface IAssetTagBuilder
+    {
+        IEnumerable<HtmlTag> BuildScriptTags(IEnumerable<string> scripts);
+        IEnumerable<HtmlTag> BuildStylesheetTags(IEnumerable<string> scripts);
+    }
+
+    public class DevelopmentModeAssetTagBuilder : IAssetTagBuilder
+    {
+        private readonly IAssetGraph _graph;
+        private AssetTagBuilder _inner;
+
+        public DevelopmentModeAssetTagBuilder(IAssetGraph graph)
+        {
+            _graph = graph;
+
+            _inner = new AssetTagBuilder(graph);
+        }
+
+        public IEnumerable<HtmlTag> BuildScriptTags(IEnumerable<string> scripts)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<HtmlTag> BuildStylesheetTags(IEnumerable<string> scripts)
+        {
+            throw new System.NotImplementedException();
+        }
+    }
+
+    public class AssetTagBuilder : IAssetTagBuilder
+    {
+        private readonly IAssetGraph _graph;
+
+        public AssetTagBuilder(IAssetGraph graph)
+        {
+            _graph = graph;
+        }
+
+        public IEnumerable<HtmlTag> BuildScriptTags(IEnumerable<string> scripts)
+        {
+            return scripts.Select(x => {
+                var asset = _graph.FindAsset(x);
+                var url = asset == null ? x : asset.Url;
+
+                return new ScriptTag(url);
+            });
+        }
+
+        
+
+        public IEnumerable<HtmlTag> BuildStylesheetTags(IEnumerable<string> stylesheets)
+        {
+            return stylesheets.Select(x =>
+            {
+                var asset = _graph.FindAsset(x);
+                var url = asset == null ? x : asset.Url;
+
+                return new StylesheetLinkTag(url);
+            });
+        }
+    }
+
 }

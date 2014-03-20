@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View;
 using HtmlTags;
@@ -45,20 +46,30 @@ namespace FubuMVC.Core.Assets
             return page.Image(assetName);
         }
 
-        /*
+        
 
         /// <summary>
-        /// Registers one or more scripts and their dependencies as required assets,
-        /// but does NOT write out any html tags.
-        /// Really just a call to page.Asset(), but left here for backwards compatibility
+        /// Writes out &lt;script&gt; tags for each script
         /// </summary>
         /// <param name="page"></param>
         /// <param name="scripts"></param>
         public static TagList Script(this IFubuPage page, params string[] scripts)
         {
-            throw new NotImplementedException();
-            //page.Asset(scripts);
+            return page.Get<IAssetTagBuilder>().BuildScriptTags(scripts).ToTagList();
         }
+
+
+        /// <summary>
+        /// Writes out &lt;link&gt; tags for each stylesheet
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="cssNames"></param>
+        public static TagList Css(this IFubuPage page, params string[] cssNames)
+        {
+            return page.Get<IAssetTagBuilder>().BuildStylesheetTags(cssNames).ToTagList();
+        }
+
+
 
         /// <summary>
         /// Registers one or more assets and their dependencies as required, but does
@@ -68,6 +79,8 @@ namespace FubuMVC.Core.Assets
         /// <param name="assets"></param>
         public static void Asset(this IFubuPage page, params string[] assets)
         {
+            
+
             throw new NotImplementedException();
             //page.Get<IAssetRequirements>().Require(assets);
         }
@@ -79,7 +92,8 @@ namespace FubuMVC.Core.Assets
         /// <param name="scripts"></param>
         public static void OptionalScript(this IFubuPage page, params string[] scripts)
         {
-            page.OptionalAsset(scripts);
+            throw new NotImplementedException();
+            //page.OptionalAsset(scripts);
         }
 
         /// <summary>
@@ -94,17 +108,6 @@ namespace FubuMVC.Core.Assets
             //page.Get<IAssetRequirements>().UseAssetIfExists(assets);
         }
 
-        /// <summary>
-        /// Registers one or more style assets and their dependencies as required assets,
-        /// but does NOT write out any html tags.
-        /// Really just a call to page.Asset(), but left here for backwards compatibility
-        /// </summary>
-        /// <param name="page"></param>
-        /// <param name="cssNames"></param>
-        public static void Css(this IFubuPage page, params string[] cssNames)
-        {
-            page.Asset(cssNames);
-        }
 
         /// <summary>
         /// Registers all the specified style assets, then writes html tags for *only*
@@ -190,8 +193,26 @@ namespace FubuMVC.Core.Assets
             //var correctedNames = page.Get<AssetGraph>().CorrectForAliases(names).ToArray();
             //return page.Get<IAssetTagWriter>().WriteTags(MimeType.Css, correctedNames);
         }
-         * 
-         * 
-         */
     }
+
+    public class ScriptTag : HtmlTag
+    {
+        public ScriptTag(string url) : base("script")
+        {
+            // http://stackoverflow.com/a/1288319/75194 
+            Attr("type", "text/javascript");
+            Attr("src", url);
+        }
+    }
+
+    public class StylesheetLinkTag : HtmlTag
+    {
+        public StylesheetLinkTag(string url) : base("link")
+        {
+            Attr("href", url);
+            Attr("rel", "stylesheet");
+            Attr("type", MimeType.Css.Value);
+        }
+    }
+
 }

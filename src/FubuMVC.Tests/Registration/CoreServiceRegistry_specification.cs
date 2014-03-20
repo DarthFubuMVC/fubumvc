@@ -5,14 +5,13 @@ using FubuCore.Conversion;
 using FubuCore.Formatting;
 using FubuCore.Logging;
 using FubuMVC.Core;
-using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.SessionState;
 using FubuMVC.Core.Urls;
@@ -28,6 +27,22 @@ namespace FubuMVC.Tests.Registration
         {
             BehaviorGraph.BuildEmptyGraph().Services.DefaultServiceFor<TService>().Type.ShouldEqual(
                 typeof (TImplementation));
+        }
+
+        [Test]
+        public void IAssetTagBuilder_is_registered_in_production_mode()
+        {
+            FubuMode.Reset();
+
+            registeredTypeIs<IAssetTagBuilder, AssetTagBuilder>();
+        }
+
+        [Test]
+        public void IAssetTagBuilder_is_registered_in_development_mode()
+        {
+            FubuMode.SetUpForDevelopmentMode();
+
+            registeredTypeIs<IAssetTagBuilder, DevelopmentModeAssetTagBuilder>();
         }
 
         [Test]
@@ -130,7 +145,6 @@ namespace FubuMVC.Tests.Registration
         }
 
 
-
         [Test]
         public void setter_binder_is_registered()
         {
@@ -151,11 +165,11 @@ namespace FubuMVC.Tests.Registration
             registeredTypeIs<IUrlRegistry, UrlRegistry>();
         }
 
-		[Test]
-		public void chain_url_resolver_is_registered()
-		{
-			registeredTypeIs<IChainUrlResolver, ChainUrlResolver>();
-		}
+        [Test]
+        public void chain_url_resolver_is_registered()
+        {
+            registeredTypeIs<IChainUrlResolver, ChainUrlResolver>();
+        }
 
         [Test]
         public void should_be_a_value_for_app_reloaded()

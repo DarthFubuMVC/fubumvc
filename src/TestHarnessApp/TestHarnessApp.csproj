@@ -92,7 +92,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\images\Firefly.jpg" />
+    <Content Include="Content\scripts\Go.js" />
+    <Content Include="Content\scripts\jquery-2.1.0.min.js" />
+    <Content Include="Content\styles\myStyles.css" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

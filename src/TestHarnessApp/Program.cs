@@ -41,7 +41,7 @@ namespace TestHarnessApp
         public FubuHtmlDocument Index()
         {
             _document.Title = "FubuMVC Demonstrator";
-
+            _document.Head.Append(_document.Css("myStyles.css"));
 
             _document.Add("h1").Text("FubuMVC Demonstrator");
 
@@ -51,6 +51,22 @@ namespace TestHarnessApp
             _document.Add("p").Text("There should be a picture of the Serenity right below me...");
             _document.Add(x => x.Image("Firefly.jpg"));
             _document.Add("p").Text("The url of the image above is '{0}'".ToFormat(_document.ImageUrl("Firefly.jpg")));
+
+            _document.Add("hr");
+            _document.Add("h1").Text("Stylesheets");
+
+            _document.Add("div")
+                .Text("This text should be green because of the .green class in myStyles.css")
+                .AddClass("green");
+
+            _document.Add("hr");
+            _document.Add("p").Text("If the script tags are working, you should see text right below me");
+
+            _document.Add("div").Id("script-div");
+
+            _document.Push("footer");
+
+            _document.Add(x => x.Script("jquery-2.1.0.min.js", "Go.js"));
 
             return _document;
         }
