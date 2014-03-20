@@ -1,4 +1,5 @@
-﻿using FubuCore;
+﻿using System.Net;
+using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Http.Scenarios;
@@ -98,6 +99,8 @@ namespace FubuMVC.Tests.Http.Hosting
             }
         }
 
+
+
         [Test]
         public void using_scenario_with_ContentShouldContain_declaration_sad_path()
         {
@@ -144,6 +147,36 @@ namespace FubuMVC.Tests.Http.Hosting
             });
 
             ex.Message.ShouldContain("The response body should not contain text \"just the marker\"");
+        }
+
+        [Test]
+        public void using_scenario_with_StatusCodeShouldBe_happy_path()
+        {
+            using (var host = FubuApplication.DefaultPolicies().StructureMap().RunInMemory())
+            {
+                host.Scenario(x =>
+                {
+                    x.Get.Input<MarkerInput>();
+                    x.StatusCodeShouldBe(HttpStatusCode.OK);
+                });
+            }
+        }
+
+        [Test]
+        public void using_scenario_with_StatusCodeShouldBe_sad_path()
+        {
+            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
+                using (var host = FubuApplication.DefaultPolicies().StructureMap().RunInMemory())
+                {
+                    host.Scenario(x =>
+                    {
+                        x.Get.Input<MarkerInput>();
+                        x.StatusCodeShouldBe(HttpStatusCode.InternalServerError);
+                    });
+                }
+            });
+
+            ex.Message.ShouldContain("Expected status code 500 (InternalServerError), but was 200");
         }
     }
 

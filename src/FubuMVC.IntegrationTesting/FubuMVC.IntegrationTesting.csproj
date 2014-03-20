@@ -101,6 +101,8 @@
     <Compile Include="Ajax\AjaxContinuationProcessingTester.cs" />
     <Compile Include="Assets\AssetIntegrationContext.cs" />
     <Compile Include="Assets\FindingAndResolving\Asset_graph_building_and_resolving_with_defaults.cs" />
+    <Compile Include="Assets\Tag_building_in_development_mode.cs" />
+    <Compile Include="Assets\Tag_building_in_production_mode.cs" />
     <Compile Include="Async\AsyncRouteIntegrationTester.cs" />
     <Compile Include="Authorization\end_to_end_authorization_tester.cs" />
     <Compile Include="Auto_Katana_Hosting_Integration_Tester.cs" />
@@ -337,7 +339,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent></PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

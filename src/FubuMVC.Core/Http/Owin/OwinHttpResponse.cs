@@ -26,6 +26,11 @@ namespace FubuMVC.Core.Http.Owin
             _environment = environment;
 
             _output = new MemoryStream();
+
+            if (!environment.ContainsKey(OwinConstants.ResponseStatusCodeKey))
+            {
+                StatusCode = 200;
+            }
         }
 
         public void AppendHeader(string key, string value)

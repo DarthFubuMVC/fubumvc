@@ -44,6 +44,7 @@ namespace FubuMVC.Core.Http.Owin
                 return Task.Factory.StartNew(() => { });
             }
 
+
             new OwinRequestReader().Read(environment);
 
             var arguments = new OwinServiceArguments(routeData, environment);

@@ -17,6 +17,7 @@ namespace FubuMVC.Core.Http.Owin
             With(routeData);
 
             With<IHttpRequest>(httpRequest);
+
             With<IHttpResponse>(new OwinHttpResponse(environment));
 
             With(new OwinContext(environment));

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net;
 using System.Runtime.Serialization;
 using System.Web.UI.WebControls;
 using FubuCore;
@@ -34,6 +35,7 @@ namespace FubuMVC.Core.Http.Scenarios
 
         void ContentShouldContain(string text);
         void ContentShouldNotContain(string text);
+        void StatusCodeShouldBe(HttpStatusCode httpStatusCode);
     }
 
     public interface IUrlExpression
@@ -134,6 +136,13 @@ namespace FubuMVC.Core.Http.Scenarios
         }
 
 
+        public void StatusCodeShouldBe(HttpStatusCode httpStatusCode)
+        {
+            if (_response.Value.StatusCode != (int)httpStatusCode)
+            {
+                _assertion.Add("Expected status code {0} ({1}), but was {2}", httpStatusCode.As<int>(), httpStatusCode, _response.Value.StatusCode);
+            }
+        }
     }
 
     [Serializable]
