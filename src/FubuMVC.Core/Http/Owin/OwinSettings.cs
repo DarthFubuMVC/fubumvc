@@ -61,7 +61,7 @@ namespace FubuMVC.Core.Http.Owin
         }
 
         public readonly IList<IStaticFileRule> StaticFileRules
-            = new List<IStaticFileRule> {new AssetStaticFileRule(), new DenyConfigRule()};
+            = new List<IStaticFileRule> {new DenyConfigRule()};
 
         public AuthorizationRight DetermineStaticFileRights(IFubuFile file)
         {

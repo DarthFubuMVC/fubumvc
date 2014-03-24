@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using FubuCore;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Owin.Middleware;
@@ -26,7 +27,10 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
         {
             theRequest = new OwinHttpRequest();
             theResponse = new OwinHttpResponse(theRequest.Environment);
-            theMiddleware = new StaticFileMiddleware(null, theFiles, new OwinSettings());
+            var owinSettings = new OwinSettings();
+            owinSettings.StaticFileRules.Add(new AssetSettings());
+
+            theMiddleware = new StaticFileMiddleware(null, theFiles, owinSettings);
         }
 
         private void fileDoesNotExist(string path)

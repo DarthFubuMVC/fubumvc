@@ -7,6 +7,7 @@ using FubuCore.Reflection;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Attachment;
@@ -46,7 +47,10 @@ namespace FubuMVC.Core.Configuration
             // Apply settings
             config.RunActions(ConfigurationType.Settings, graph);
 
-            var assetDiscovery = graph.Settings.Get<AssetSettings>().Build(graph.Files)
+            var assetSettings = graph.Settings.Get<AssetSettings>();
+            graph.Settings.Alter<OwinSettings>(x => x.StaticFileRules.Add(assetSettings));
+
+            var assetDiscovery = assetSettings.Build(graph.Files)
                 .ContinueWith(t => graph.Services.AddService<IAssetGraph>(t.Result));
 
             var viewDiscovery = graph.Settings.Get<ViewEngineSettings>().BuildViewBag(graph);

@@ -1,8 +1,11 @@
 ﻿using System.Linq;
+using FubuMVC.Core;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Security;
+using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -16,13 +19,26 @@ namespace FubuMVC.Tests.Http.Owin
         {
             new OwinSettings().StaticFileRules
                 .Select(x => x.GetType()).OrderBy(x => x.Name)
-                .ShouldHaveTheSameElementsAs(typeof(AssetStaticFileRule), typeof(DenyConfigRule));
+                .ShouldHaveTheSameElementsAs(typeof(DenyConfigRule));
+        }
+
+        [Test]
+        public void if_we_build_an_app_from_scratch_will_have_the_asset_settings_tied_in()
+        {
+            using (var runtime = FubuApplication.DefaultPolicies().StructureMap().Bootstrap())
+            {
+                runtime.Factory.Get<OwinSettings>().StaticFileRules.OfType<AssetSettings>()
+                    .ShouldHaveCount(1);
+            }
         }
 
         private AuthorizationRight forFile(string filename)
         {
             var file = new FubuFile(filename, null);
-            return new OwinSettings().DetermineStaticFileRights(file);
+            var owinSettings = new OwinSettings();
+            owinSettings.StaticFileRules.Add(new AssetSettings());
+
+            return owinSettings.DetermineStaticFileRights(file);
         }
 
         [Test]

@@ -140,7 +140,6 @@
     <Compile Include="Http\Owin\CurrentHttpRequestExtensions_integration_with_OWIN_Tester.cs" />
     <Compile Include="Http\Owin\FormRequestReaderTester.cs" />
     <Compile Include="Http\Owin\Middleware\MiddlewareContinuationTester.cs" />
-    <Compile Include="Http\Owin\Middleware\StaticFiles\AssetStaticFileRuleTester.cs" />
     <Compile Include="Http\Owin\Middleware\StaticFiles\DenyConfigRuleTester.cs" />
     <Compile Include="Http\Owin\Middleware\StaticFiles\StaticFileMiddlewareTester.cs" />
     <Compile Include="Http\Owin\Middleware\StaticFiles\WriteFileContinuationTester.cs" />

@@ -1,14 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using FubuCore;
+using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Files;
+using FubuMVC.Core.Security;
 
 namespace FubuMVC.Core.Assets
 {
-    public class AssetSettings
+    [Description("Allow read access to javascript, css, image, and html files")]
+    public class AssetSettings : IStaticFileRule
     {
         // This is tested through integration tests
         public Task<AssetGraph> Build(IFubuApplicationFiles files)
@@ -45,5 +49,22 @@ namespace FubuMVC.Core.Assets
         }
 
         public readonly NameValueCollection Aliases = new NameValueCollection();
+
+
+        AuthorizationRight IStaticFileRule.IsAllowed(IFubuFile file)
+        {
+            var mimetype = MimeType.MimeTypeByFileName(file.Path);
+            if (mimetype == null) return AuthorizationRight.None;
+
+            if (mimetype == MimeType.Javascript) return AuthorizationRight.Allow;
+
+            if (mimetype == MimeType.Css) return AuthorizationRight.Allow;
+
+            if (mimetype == MimeType.Html) return AuthorizationRight.Allow;
+
+            if (mimetype.Value.StartsWith("image/")) return AuthorizationRight.Allow;
+
+            return AuthorizationRight.None;
+        }
     }
 }
