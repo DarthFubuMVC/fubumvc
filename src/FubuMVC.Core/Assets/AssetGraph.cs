@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using FubuCore;
 using FubuCore.Util;
 
 namespace FubuMVC.Core.Assets
@@ -48,6 +50,17 @@ namespace FubuMVC.Core.Assets
         public IEnumerable<Asset> Assets
         {
             get { return _assets; }
+        }
+
+        public void StoreAlias(string alias, string filename)
+        {
+            var asset = findAsset(filename);
+            if (asset == null)
+            {
+                throw new ArgumentOutOfRangeException("filename","No asset file named '{0}' can be found".ToFormat(filename));
+            }
+
+            _searches[alias] = asset;
         }
     }
 }

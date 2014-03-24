@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 using FubuCore;
@@ -19,6 +20,7 @@ namespace FubuMVC.Core.Assets
 
                 graph.Add(files.FindFiles(search).Select(x => new Asset(x)));
 
+                Aliases.AllKeys.Each(alias => graph.StoreAlias(alias, Aliases[alias]));
 
                 return graph;
             });
@@ -41,5 +43,7 @@ namespace FubuMVC.Core.Assets
                 yield return mimetype;
             }
         }
+
+        public readonly NameValueCollection Aliases = new NameValueCollection();
     }
 }
