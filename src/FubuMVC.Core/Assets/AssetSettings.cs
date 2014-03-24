@@ -1,9 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using System.Web.Caching;
 using FubuCore;
+using FubuCore.Util;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Files;
@@ -14,6 +19,19 @@ namespace FubuMVC.Core.Assets
     [Description("Allow read access to javascript, css, image, and html files")]
     public class AssetSettings : IStaticFileRule
     {
+        public int MaxAgeInSeconds = 24 * 60 * 60;
+
+        public AssetSettings()
+        {
+            if (!FubuMode.InDevelopment())
+            {
+                var cacheHeader = "private, max-age={0}".ToFormat(MaxAgeInSeconds);
+                Headers[HttpResponseHeaders.CacheControl] = () => cacheHeader;
+                Headers[HttpResponseHeaders.Expires] = () => DateTime.UtcNow.AddSeconds(MaxAgeInSeconds).ToString("R");
+
+            }
+        }
+
         // This is tested through integration tests
         public Task<AssetGraph> Build(IFubuApplicationFiles files)
         {
@@ -66,5 +84,15 @@ namespace FubuMVC.Core.Assets
 
             return AuthorizationRight.None;
         }
+
+        public readonly IList<IStaticFileRule> StaticFileRules
+            = new List<IStaticFileRule> { new DenyConfigRule() };
+
+        public AuthorizationRight DetermineStaticFileRights(IFubuFile file)
+        {
+            return AuthorizationRight.Combine(StaticFileRules.UnionWith(this).Select(x => x.IsAllowed(file)));
+        }
+
+        public readonly Cache<string, Func<string>> Headers = new Cache<string, Func<string>>(); 
     }
 }

@@ -1,5 +1,9 @@
-﻿using FubuCore;
+﻿using System.Diagnostics;
+using System.Linq;
+using FubuCore;
+using FubuMVC.Core;
 using FubuMVC.Core.Assets;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Security;
@@ -58,6 +62,53 @@ namespace FubuMVC.Tests.Assets
         public void none_if_not_an_asset_file_or_html()
         {
             theRule.IsAllowed(new FubuFile("bar.txt", null)).ShouldEqual(AuthorizationRight.None);
+        }
+
+        [Test]
+        public void default_static_file_rules()
+        {
+            new AssetSettings().StaticFileRules
+                .Select(x => x.GetType()).OrderBy(x => x.Name)
+                .ShouldHaveTheSameElementsAs(typeof(DenyConfigRule));
+        }
+
+        private AuthorizationRight forFile(string filename)
+        {
+            var file = new FubuFile(filename, null);
+            var owinSettings = new AssetSettings();
+            owinSettings.StaticFileRules.Add(new AssetSettings());
+
+            return owinSettings.DetermineStaticFileRights(file);
+        }
+
+        [Test]
+        public void assert_static_rights()
+        {
+            forFile("foo.txt").ShouldEqual(AuthorizationRight.None);
+            forFile("foo.config").ShouldEqual(AuthorizationRight.Deny);
+            forFile("foo.jpg").ShouldEqual(AuthorizationRight.Allow);
+            forFile("foo.css").ShouldEqual(AuthorizationRight.Allow);
+            forFile("foo.bmp").ShouldEqual(AuthorizationRight.Allow);
+        }
+
+        [Test]
+        public void headers_in_production_mode()
+        {
+            FubuMode.Reset();
+
+            var settings = new AssetSettings();
+            settings.Headers.GetAllKeys().ShouldHaveTheSameElementsAs(HttpRequestHeaders.CacheControl, HttpRequestHeaders.Expires);
+
+            settings.Headers[HttpRequestHeaders.CacheControl]().ShouldEqual("private, max-age=86400");
+            settings.Headers[HttpRequestHeaders.Expires]().ShouldNotBeNull();
+        }
+
+        [Test]
+        public void no_headers_in_development_mode()
+        {
+            FubuMode.SetUpForDevelopmentMode();
+
+            new AssetSettings().Headers.GetAllKeys().Any().ShouldBeFalse();
         }
     }
 

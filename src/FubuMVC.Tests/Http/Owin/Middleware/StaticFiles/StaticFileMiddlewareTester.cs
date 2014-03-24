@@ -27,10 +27,9 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
         {
             theRequest = new OwinHttpRequest();
             theResponse = new OwinHttpResponse(theRequest.Environment);
-            var owinSettings = new OwinSettings();
-            owinSettings.StaticFileRules.Add(new AssetSettings());
 
-            theMiddleware = new StaticFileMiddleware(null, theFiles, owinSettings);
+
+            theMiddleware = new StaticFileMiddleware(null, theFiles, new AssetSettings());
         }
 
         private void fileDoesNotExist(string path)

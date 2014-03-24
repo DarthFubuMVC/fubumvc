@@ -60,12 +60,6 @@ namespace FubuMVC.Core.Http.Owin
             Middleware.AddToEnd(node);
         }
 
-        public readonly IList<IStaticFileRule> StaticFileRules
-            = new List<IStaticFileRule> {new DenyConfigRule()};
 
-        public AuthorizationRight DetermineStaticFileRights(IFubuFile file)
-        {
-            return AuthorizationRight.Combine(StaticFileRules.Select(x => x.IsAllowed(file)));
-        }
     }
 }

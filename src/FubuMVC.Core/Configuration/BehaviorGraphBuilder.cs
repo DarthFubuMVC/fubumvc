@@ -47,10 +47,8 @@ namespace FubuMVC.Core.Configuration
             // Apply settings
             config.RunActions(ConfigurationType.Settings, graph);
 
-            var assetSettings = graph.Settings.Get<AssetSettings>();
-            graph.Settings.Alter<OwinSettings>(x => x.StaticFileRules.Add(assetSettings));
 
-            var assetDiscovery = assetSettings.Build(graph.Files)
+            var assetDiscovery = graph.Settings.Get<AssetSettings>().Build(graph.Files)
                 .ContinueWith(t => graph.Services.AddService<IAssetGraph>(t.Result));
 
             var viewDiscovery = graph.Settings.Get<ViewEngineSettings>().BuildViewBag(graph);

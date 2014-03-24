@@ -8,6 +8,7 @@ using System.Web.Routing;
 using FubuCore;
 using FubuCore.CommandLine;
 using FubuMVC.Core;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
@@ -135,7 +136,9 @@ namespace FubuMVC.Katana
             parameters.Urls.Add("http://*:" + port); //for netsh http add urlacl
 
             // Adding the static middleware
-            settings.AddMiddleware<StaticFileMiddleware>(_services.GetInstance<IFubuApplicationFiles>(), settings);
+            // TODO -- need to generalize this so that it's not so tied to Katana.  Logic
+            // prolly shouldn't be here.
+            settings.AddMiddleware<StaticFileMiddleware>(_services.GetInstance<IFubuApplicationFiles>(), _services.GetInstance<AssetSettings>());
 
             if (physicalPath != null) FubuMvcPackageFacility.PhysicalRootPath = physicalPath;
             Action<IAppBuilder> startup = FubuOwinHost.ToStartup(settings, routes);

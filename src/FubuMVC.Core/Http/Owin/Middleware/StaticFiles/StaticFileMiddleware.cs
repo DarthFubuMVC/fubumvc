@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Security;
 
@@ -10,9 +11,9 @@ namespace FubuMVC.Core.Http.Owin.Middleware.StaticFiles
     public class StaticFileMiddleware : FubuMvcOwinMiddleware
     {
         private readonly IFubuApplicationFiles _files;
-        private readonly OwinSettings _settings;
+        private readonly AssetSettings _settings;
 
-        public StaticFileMiddleware(Func<IDictionary<string, object>, Task> inner, IFubuApplicationFiles files, OwinSettings settings) : base(inner)
+        public StaticFileMiddleware(Func<IDictionary<string, object>, Task> inner, IFubuApplicationFiles files, AssetSettings settings) : base(inner)
         {
             _files = files;
             _settings = settings;
@@ -54,6 +55,8 @@ namespace FubuMVC.Core.Http.Owin.Middleware.StaticFiles
             {
                 return new WriteStatusCodeContinuation(response, HttpStatusCode.PreconditionFailed, "File has been modified");
             }
+
+            // Write headers here.
 
             return new WriteFileContinuation(response, file);
         }
