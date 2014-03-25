@@ -23,16 +23,25 @@ namespace FubuMVC.Tests.Registration
     [TestFixture]
     public class CoreServiceRegistry_specification
     {
+        public CoreServiceRegistry_specification()
+        {
+            FubuMode.Reset();
+            _serviceGraph = BehaviorGraph.BuildEmptyGraph().Services;
+        }
+        
+
+        private readonly ServiceGraph _serviceGraph;
+
         private void registeredTypeIs<TService, TImplementation>()
         {
-            BehaviorGraph.BuildEmptyGraph().Services.DefaultServiceFor<TService>().Type.ShouldEqual(
+            _serviceGraph.DefaultServiceFor<TService>().Type.ShouldEqual(
                 typeof (TImplementation));
         }
 
         [Test]
         public void IAssetTagBuilder_is_registered_in_production_mode()
         {
-            FubuMode.Reset();
+            
 
             registeredTypeIs<IAssetTagBuilder, AssetTagBuilder>();
         }
@@ -42,7 +51,9 @@ namespace FubuMVC.Tests.Registration
         {
             FubuMode.SetUpForDevelopmentMode();
 
-            registeredTypeIs<IAssetTagBuilder, DevelopmentModeAssetTagBuilder>();
+            BehaviorGraph.BuildEmptyGraph().Services.DefaultServiceFor<IAssetTagBuilder>().Type.ShouldEqual(
+                typeof(DevelopmentModeAssetTagBuilder));
+
         }
 
         [Test]

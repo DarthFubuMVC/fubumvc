@@ -15,7 +15,7 @@ namespace FubuMVC.Tests.Urls
     {
         #region Setup/Teardown
 
-        [SetUp]
+        [TestFixtureSetUp]
         public void SetUp()
         {
             graph = BehaviorGraph.BuildFrom(x => x.Actions.IncludeClassesSuffixedWithController());

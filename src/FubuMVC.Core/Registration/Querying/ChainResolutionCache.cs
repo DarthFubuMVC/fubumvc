@@ -125,5 +125,10 @@ namespace FubuMVC.Core.Registration.Querying
         }
 
 
+        public void ClearAll()
+        {
+            _results.ClearAll();
+            _creators.ClearAll();
+        }
     }
 }

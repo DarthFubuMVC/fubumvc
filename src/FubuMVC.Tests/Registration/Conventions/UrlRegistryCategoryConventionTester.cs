@@ -17,16 +17,14 @@ namespace FubuMVC.Tests.Registration.Conventions
     {
         #region Setup/Teardown
 
-        [SetUp]
+        [TestFixtureSetUp]
         public void SetUp()
         {
 
-            graph = BehaviorGraph.BuildFrom(x =>
-            {
-                x.Actions.FindBy(source => {
-                   source.IncludeTypesNamed(n => n.StartsWith("UrlCategory"));
-                });
-                    
+            graph = BehaviorGraph.BuildFrom(x => {
+                x.Actions.IncludeType<UrlCategoryController1>();
+                x.Actions.IncludeType<UrlCategoryController2>();
+                x.Actions.IncludeType<UrlCategoryController3>();
                     
             });
 

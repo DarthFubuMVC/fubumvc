@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.Urls
 		private BehaviorChain theSimpleChain;
 		private BehaviorChain theChainWithRouteParams;
 
-		[SetUp]
+		[TestFixtureSetUp]
 		public void SetUp()
 		{
             theHttpRequest = OwinHttpRequest.ForTesting();

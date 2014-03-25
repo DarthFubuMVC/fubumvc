@@ -15,7 +15,7 @@ namespace FubuMVC.Tests.Registration.Conventions
     {
         private BehaviorGraph graph;
 
-        [SetUp]
+        [TestFixtureSetUp]
         public void SetUp()
         {
             var registry = new FubuRegistry();
@@ -25,7 +25,6 @@ namespace FubuMVC.Tests.Registration.Conventions
 
             graph.Behaviors.Count().ShouldBeGreaterThan(0);
 
-            graph.Behaviors.SelectMany(x => x.Calls).Each(x => Debug.WriteLine(x.Description));
         }
 
         [Test]

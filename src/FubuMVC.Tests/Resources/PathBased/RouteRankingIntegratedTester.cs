@@ -53,7 +53,7 @@ namespace FubuMVC.Tests.Resources.PathBased
 			public string Second { get; set; }
 		}
 
-		[SetUp]
+		[TestFixtureSetUp]
 		public void beforeAll()
 		{
 			var registry = new FubuRegistry();

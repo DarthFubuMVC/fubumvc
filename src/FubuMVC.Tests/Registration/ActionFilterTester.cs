@@ -12,7 +12,7 @@ namespace FubuMVC.Tests.Registration
     {
         private BehaviorGraph theGraph;
 
-        [SetUp]
+        [TestFixtureSetUp]
         public void SetUp()
         {
             theGraph = BehaviorGraph.BuildFrom(r => {

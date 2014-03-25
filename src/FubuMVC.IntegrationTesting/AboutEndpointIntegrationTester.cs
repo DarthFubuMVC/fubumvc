@@ -1,41 +1,42 @@
 ﻿using System.Diagnostics;
 using System.Threading;
+using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
-using FubuMVC.TestingHarness;
+using FubuMVC.Katana;
+using FubuMVC.StructureMap;
+using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
-using FubuTestingSupport;
-using FubuMVC.StructureMap;
-using StructureMap;
-using FubuMVC.Katana;
 
 namespace FubuMVC.IntegrationTesting
 {
     [TestFixture]
     public class AboutEndpointIntegrationTester
     {
-        [SetUp]
+        private EmbeddedFubuMvcServer server;
+
+        [TestFixtureSetUp]
         public void SetUp()
         {
             FubuMode.Mode(FubuMode.Development);
+
+            server = FubuApplication.DefaultPolicies().StructureMap().RunEmbedded(port: PortFinder.FindPort(5500));
         }
 
-        [TearDown]
+        [TestFixtureTearDown]
         public void TearDown()
         {
             FubuMode.Reset();
+            server.SafeDispose();
         }
 
         [Test]
         public void can_get_The_about_page_smoke_test()
         {
-            using (var server = FubuApplication.DefaultPolicies().StructureMap().RunEmbedded(port:PortFinder.FindPort(5500)))
-            {
-                var description = server.Endpoints.Get<AboutDiagnostics>(x => x.get__about()).ReadAsText();
-                description.ShouldContain("Assemblies");
-                Debug.WriteLine(description);
-            }
+            var description = server.Endpoints.Get<AboutDiagnostics>(x => x.get__about()).ReadAsText();
+            description.ShouldContain("Assemblies");
+            Debug.WriteLine(description);
         }
 
         [Test]
@@ -45,20 +46,11 @@ namespace FubuMVC.IntegrationTesting
             string ts2;
             string ts3;
             string ts4;
+            ts1 = server.Endpoints.Get<AboutDiagnostics>(x => x.get__loaded()).ReadAsText();
+            ts2 = server.Endpoints.Get<AboutDiagnostics>(x => x.get__loaded()).ReadAsText();
 
-            using (var server = FubuApplication.DefaultPolicies().StructureMap().RunEmbedded(port: PortFinder.FindPort(5500)))
-            {
-                ts1 = server.Endpoints.Get<AboutDiagnostics>(x => x.get__loaded()).ReadAsText();
-                ts2 = server.Endpoints.Get<AboutDiagnostics>(x => x.get__loaded()).ReadAsText();
-            }
-
-            Thread.Sleep(10000);
-
-            using (var server = FubuApplication.DefaultPolicies().StructureMap().RunEmbedded(port: PortFinder.FindPort(5500)))
-            {
-                ts3 = server.Endpoints.Get<AboutDiagnostics>(x => x.get__loaded()).ReadAsText();
-                ts4 = server.Endpoints.Get<AboutDiagnostics>(x => x.get__loaded()).ReadAsText();
-            }
+            ts3 = server.Endpoints.Get<AboutDiagnostics>(x => x.get__loaded()).ReadAsText();
+            ts4 = server.Endpoints.Get<AboutDiagnostics>(x => x.get__loaded()).ReadAsText();
 
             ts1.ShouldEqual(ts2);
 
@@ -87,7 +79,6 @@ namespace FubuMVC.IntegrationTesting
             FubuMode.Reset();
         }
     }
-
 
 
     public class ReloadingEndpoint

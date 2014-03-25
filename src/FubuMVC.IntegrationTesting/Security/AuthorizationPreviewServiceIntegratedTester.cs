@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Security.Principal;
 using System.Threading;
-using System.Web.Routing;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
@@ -12,7 +10,7 @@ using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
 
-namespace FubuMVC.Tests.Security
+namespace FubuMVC.IntegrationTesting.Security
 {
     [TestFixture]
     public class AuthorizationPreviewServiceIntegratedTester

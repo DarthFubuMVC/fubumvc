@@ -12,7 +12,7 @@ namespace FubuMVC.Tests.Registration
     {
         private BehaviorGraph theGraph;
 
-        [SetUp]
+        [TestFixtureSetUp]
         public void SetUp()
         {
             var registry = new FubuRegistry(x =>

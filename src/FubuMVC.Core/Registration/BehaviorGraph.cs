@@ -69,7 +69,7 @@ namespace FubuMVC.Core.Registration
             get { return _settings.Get<IFubuApplicationFiles>(); }
         }
 
-        public IEnumerable<IChainForwarder> Forwarders
+        public IList<IChainForwarder> Forwarders
         {
             get { return _forwarders; }
         }

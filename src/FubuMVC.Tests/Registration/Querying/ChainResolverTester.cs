@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core;
@@ -16,7 +19,7 @@ namespace FubuMVC.Tests.Registration.Querying
     {
         #region Setup/Teardown
 
-        [SetUp]
+        [TestFixtureSetUp]
         public void SetUp()
         {
             graph = BehaviorGraph.BuildFrom(x =>
@@ -28,6 +31,19 @@ namespace FubuMVC.Tests.Registration.Querying
             typeResolver.AddStrategy<ProxyDetector>();
 
             _resolutionCache = new ChainResolutionCache(typeResolver, graph);
+        }
+
+        [SetUp]
+        public void CleanUp()
+        {
+            graph.Behaviors.OfType<RoutedChain>().Each(x => {
+                x.UrlCategory.Category = null;
+                x.UrlCategory.Creates.Clear();
+            });
+
+            _resolutionCache.ClearAll();
+
+            graph.Forwarders.Clear();
         }
 
         #endregion
@@ -65,8 +81,9 @@ namespace FubuMVC.Tests.Registration.Querying
         [Test]
         public void find_by_input_model_and_category_fails_when_there_are_multiple_matching_chains()
         {
-            graph.BehaviorFor<ChainResolverController>(x => x.M2(null))
-                .As<RoutedChain>()
+            var routedChain = graph.BehaviorFor<ChainResolverController>(x => x.M2(null))
+                .As<RoutedChain>();
+            routedChain
                 .UrlCategory.Category = Categories.NEW;
 
             graph.BehaviorFor<ChainResolverController>(x => x.M3(null))
@@ -227,6 +244,8 @@ namespace FubuMVC.Tests.Registration.Querying
             _resolutionCache.FindCreatorOf(typeof (Entity1)).ShouldBeNull();
         }
     }
+
+
 
     public class InputModelThatDoesNotMatchAnyExistingBehaviors
     {

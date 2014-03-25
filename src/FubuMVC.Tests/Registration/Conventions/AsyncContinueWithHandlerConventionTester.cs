@@ -17,11 +17,10 @@ namespace FubuMVC.Tests.Registration.Conventions
     {
         private BehaviorGraph graph;
 
-        [SetUp]
+        [TestFixtureSetUp]
         public void SetUp()
         {
             graph = BehaviorGraph.BuildFrom(x => x.Actions.IncludeType<TestControllerForAsync>());
-            graph.Behaviors.SelectMany(x => x.Top).Each(x => Debug.WriteLine(x));
         }
 
         [Test]

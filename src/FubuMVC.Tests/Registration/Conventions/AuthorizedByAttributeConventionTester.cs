@@ -16,7 +16,7 @@ namespace FubuMVC.Tests.Registration.Conventions
     {
         private BehaviorGraph graph;
 
-        [SetUp]
+        [TestFixtureSetUp]
         public void SetUp()
         {
             var registry = new FubuRegistry();

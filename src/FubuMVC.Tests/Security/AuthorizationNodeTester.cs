@@ -5,6 +5,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Security;
 using FubuMVC.StructureMap;
+using FubuMVC.Tests.Urls;
 using FubuTestingSupport;
 using NUnit.Framework;
 using System.Linq;
@@ -172,6 +173,14 @@ namespace FubuMVC.Tests.Security
                 .ShouldBeOfType<EndPointAuthorizor>()
                 .Policies.Cast<AllowRole>().Select(x => x.Role)
                 .ShouldHaveTheSameElementsAs("RoleA", "RoleB", "RoleC");
+        }
+    }
+
+    public class UrlModelShouldStartWithJ : IAuthorizationRule<UrlModel>
+    {
+        public AuthorizationRight RightsFor(UrlModel model)
+        {
+            return model.Name.StartsWith("J") ? AuthorizationRight.Allow : AuthorizationRight.None;
         }
     }
 }

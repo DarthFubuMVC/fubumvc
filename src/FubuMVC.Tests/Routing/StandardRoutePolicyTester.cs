@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.Routing
         private IEnumerable<Route> _routes;
         private IServiceFactory theFactory;
 
-        [SetUp]
+        [TestFixtureSetUp]
         public void SetUp()
         {
             theFactory = MockRepository.GenerateMock<IServiceFactory>();

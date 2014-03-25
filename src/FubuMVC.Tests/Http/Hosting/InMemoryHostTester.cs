@@ -13,15 +13,25 @@ namespace FubuMVC.Tests.Http.Hosting
     [TestFixture]
     public class InMemoryHostTester
     {
+        private InMemoryHost host;
+
+        [TestFixtureSetUp]
+        public void SetUp()
+        {
+            host = newHost();
+        }
+
+        [TestFixtureTearDown]
+        public void TearDown()
+        {
+            host.SafeDispose();
+        }
+
         [Test]
         public void invoke_a_simple_string_endpoint()
         {
-            using (var host = newHost())
-            {
-                host.Send(r => r.RelativeUrl("memory/hello"))
-                    .Body.ReadAsText().ShouldEqual("hello from the in memory host");
-            }
-
+            host.Send(r => r.RelativeUrl("memory/hello"))
+                .Body.ReadAsText().ShouldEqual("hello from the in memory host");
         }
 
         private static InMemoryHost newHost()
@@ -32,93 +42,59 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void using_scenario_with_string_text_and_relative_url()
         {
-            using (var host = newHost())
-            {
-                host.Scenario(x => {
-                    x.Get.Url("memory/hello");
-                })
-                .Body.ReadAsText().ShouldEqual("hello from the in memory host");;
-
-            }
+            host.Scenario(x => { x.Get.Url("memory/hello"); })
+                .Body.ReadAsText().ShouldEqual("hello from the in memory host");
+            ;
         }
 
         [Test]
         public void using_scenario_with_controller_expression()
         {
-            using (var host = newHost())
-            {
-                host.Scenario(x =>
-                {
-                    x.Get.Action<InMemoryEndpoint>(e => e.get_memory_hello());
-                })
-                .Body.ReadAsText().ShouldEqual("hello from the in memory host"); ;
-
-            }
+            host.Scenario(x => { x.Get.Action<InMemoryEndpoint>(e => e.get_memory_hello()); })
+                .Body.ReadAsText().ShouldEqual("hello from the in memory host");
+            ;
         }
 
         [Test]
         public void using_scenario_with_input_model()
         {
-            using (var host = newHost())
-            {
-                host.Scenario(x =>
-                {
-                    x.Get.Input(new InMemoryInput{Color = "Red"});
-                })
-                .Body.ReadAsText().ShouldEqual("The color is Red"); ;
+            host.Scenario(x => { x.Get.Input(new InMemoryInput {Color = "Red"}); })
+                .Body.ReadAsText().ShouldEqual("The color is Red");
+            ;
 
 
-                host.Scenario(x =>
-                {
-                    x.Get.Input(new InMemoryInput { Color = "Orange" });
-                })
-                .Body.ReadAsText().ShouldEqual("The color is Orange"); ;
-
-            }
-
-
+            host.Scenario(x => { x.Get.Input(new InMemoryInput {Color = "Orange"}); })
+                .Body.ReadAsText().ShouldEqual("The color is Orange");
+            ;
         }
 
 
         [Test]
         public void using_scenario_with_input_model_as_marker()
         {
-            using (var host = newHost())
-            {
-                host.Scenario(x =>
-                {
-                    x.Get.Input<MarkerInput>();
-                })
-                .Body.ReadAsText().ShouldEqual("just the marker"); ;
-            }
+            host.Scenario(x => { x.Get.Input<MarkerInput>(); })
+                .Body.ReadAsText().ShouldEqual("just the marker");
+            ;
         }
 
         [Test]
         public void using_scenario_with_ContentShouldContain_declaration_happy_path()
         {
-            using (var host = newHost())
-            {
-                host.Scenario(x => {
-                    x.Get.Input<MarkerInput>();
-                    x.ContentShouldContain("just the marker");
-                });
-            }
+            host.Scenario(x => {
+                x.Get.Input<MarkerInput>();
+                x.ContentShouldContain("just the marker");
+            });
         }
-
 
 
         [Test]
         public void using_scenario_with_ContentShouldContain_declaration_sad_path()
         {
             var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
-                using (var host = newHost())
-                {
-                    host.Scenario(x =>
-                    {
-                        x.Get.Input<MarkerInput>();
-                        x.ContentShouldContain("wrong text");
-                    });
-                }
+                host.Scenario(x => {
+                    x.Get.Input<MarkerInput>();
+                    x.ContentShouldContain("wrong text");
+                });
             });
 
             ex.Message.ShouldContain("The response body does not contain expected text \"wrong text\"");
@@ -127,29 +103,20 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void using_scenario_with_ContentShouldNotContain_declaration_happy_path()
         {
-            using (var host = newHost())
-            {
-                host.Scenario(x =>
-                {
-                    x.Get.Input<MarkerInput>();
-                    x.ContentShouldNotContain("some random stuff");
-                });
-            }
+            host.Scenario(x => {
+                x.Get.Input<MarkerInput>();
+                x.ContentShouldNotContain("some random stuff");
+            });
         }
 
         [Test]
         public void using_scenario_with_ContentShouldNotContain_declaration_sad_path()
         {
-            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
-            {
-                using (var host = newHost())
-                {
-                    host.Scenario(x =>
-                    {
-                        x.Get.Input<MarkerInput>();
-                        x.ContentShouldNotContain("just the marker");
-                    });
-                }
+            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
+                host.Scenario(x => {
+                    x.Get.Input<MarkerInput>();
+                    x.ContentShouldNotContain("just the marker");
+                });
             });
 
             ex.Message.ShouldContain("The response body should not contain text \"just the marker\"");
@@ -158,28 +125,20 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void using_scenario_with_StatusCodeShouldBe_happy_path()
         {
-            using (var host = newHost())
-            {
-                host.Scenario(x =>
-                {
-                    x.Get.Input<MarkerInput>();
-                    x.StatusCodeShouldBe(HttpStatusCode.OK);
-                });
-            }
+            host.Scenario(x => {
+                x.Get.Input<MarkerInput>();
+                x.StatusCodeShouldBe(HttpStatusCode.OK);
+            });
         }
 
         [Test]
         public void using_scenario_with_StatusCodeShouldBe_sad_path()
         {
             var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
-                using (var host = newHost())
-                {
-                    host.Scenario(x =>
-                    {
-                        x.Get.Input<MarkerInput>();
-                        x.StatusCodeShouldBe(HttpStatusCode.InternalServerError);
-                    });
-                }
+                host.Scenario(x => {
+                    x.Get.Input<MarkerInput>();
+                    x.StatusCodeShouldBe(HttpStatusCode.InternalServerError);
+                });
             });
 
             ex.Message.ShouldContain("Expected status code 500 (InternalServerError), but was 200");
@@ -188,29 +147,22 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void single_header_value_is_positive()
         {
-            using (var host = newHost())
-            {
-                host.Scenario(x => {
-                    x.PostAsJson(new HeaderInput {Key = "Foo", Value1 = "Bar"});
-                    x.Header("Foo").ShouldHaveOneNonNullValue()
-                        .SingleValueShouldEqual("Bar");
-                    
-                });
-            }
+            host.Scenario(x => {
+                x.PostAsJson(new HeaderInput {Key = "Foo", Value1 = "Bar"});
+                x.Header("Foo").ShouldHaveOneNonNullValue()
+                    .SingleValueShouldEqual("Bar");
+            });
         }
 
         [Test]
         public void single_header_value_is_negative_with_the_wrong_value()
         {
             var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
-            using (var host = newHost())
-            {
                 host.Scenario(x => {
-                    x.PostAsJson(new HeaderInput { Key = "Foo", Value1 = "NotBar" });
+                    x.PostAsJson(new HeaderInput {Key = "Foo", Value1 = "NotBar"});
                     x.Header("Foo").ShouldHaveOneNonNullValue()
                         .SingleValueShouldEqual("Bar");
                 });
-            }
             });
 
             ex.Message.ShouldContain("Expected a single header value of 'Foo'='Bar', but the actual value was 'NotBar'");
@@ -219,67 +171,50 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void single_header_value_is_negative_with_the_too_many_values()
         {
-            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
-            {
-                using (var host = newHost())
-                {
-                    host.Scenario(x =>
-                    {
-                        x.PostAsJson(new HeaderInput { Key = "Foo", Value1 = "NotBar", Value2 = "AnotherBar"});
-                        x.Header("Foo").ShouldHaveOneNonNullValue()
-                            .SingleValueShouldEqual("Bar");
-                    });
-                }
+            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
+                host.Scenario(x => {
+                    x.PostAsJson(new HeaderInput {Key = "Foo", Value1 = "NotBar", Value2 = "AnotherBar"});
+                    x.Header("Foo").ShouldHaveOneNonNullValue()
+                        .SingleValueShouldEqual("Bar");
+                });
             });
 
-            ex.Message.ShouldContain("Expected a single header value of 'Foo'='Bar', but the actual values were 'NotBar', 'AnotherBar'");
+            ex.Message.ShouldContain(
+                "Expected a single header value of 'Foo'='Bar', but the actual values were 'NotBar', 'AnotherBar'");
         }
 
         [Test]
         public void single_header_value_is_negative_because_there_are_no_values()
         {
-            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
-            {
-                using (var host = newHost())
-                {
-                    host.Scenario(x =>
-                    {
-                        x.PostAsJson(new HeaderInput { Key = "Foo" });
-                        x.Header("Foo")
-                            .SingleValueShouldEqual("Bar");
-                    });
-                }
+            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
+                host.Scenario(x => {
+                    x.PostAsJson(new HeaderInput {Key = "Foo"});
+                    x.Header("Foo")
+                        .SingleValueShouldEqual("Bar");
+                });
             });
 
-            ex.Message.ShouldContain("Expected a single header value of 'Foo'='Bar', but no values were found on the response");
+            ex.Message.ShouldContain(
+                "Expected a single header value of 'Foo'='Bar', but no values were found on the response");
         }
 
         [Test]
         public void should_have_on_non_null_header_value_happy_path()
         {
-            using (var host = newHost())
-            {
-                host.Scenario(x =>
-                {
-                    x.PostAsJson(new HeaderInput { Key = "Foo", Value1 = "Anything"});
-                    x.Header("Foo").ShouldHaveOneNonNullValue();
-                });
-            }
+            host.Scenario(x => {
+                x.PostAsJson(new HeaderInput {Key = "Foo", Value1 = "Anything"});
+                x.Header("Foo").ShouldHaveOneNonNullValue();
+            });
         }
 
         [Test]
         public void should_have_one_non_null_value_sad_path()
         {
-            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
-            {
-                using (var host = newHost())
-                {
-                    host.Scenario(x =>
-                    {
-                        x.PostAsJson(new HeaderInput { Key = "Foo" });
-                        x.Header("Foo").ShouldHaveOneNonNullValue();
-                    });
-                }
+            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
+                host.Scenario(x => {
+                    x.PostAsJson(new HeaderInput {Key = "Foo"});
+                    x.Header("Foo").ShouldHaveOneNonNullValue();
+                });
             });
 
             ex.Message.ShouldContain("Expected a single header value of 'Foo', but no values were found on the response");
@@ -288,47 +223,34 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void should_have_on_non_null_value_sad_path_with_too_many_values()
         {
-            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
-            {
-                using (var host = newHost())
-                {
-                    host.Scenario(x =>
-                    {
-                        x.PostAsJson(new HeaderInput { Key = "Foo", Value1 = "Bar1", Value2 = "Bar2"});
-                        x.Header("Foo").ShouldHaveOneNonNullValue();
-                    });
-                }
+            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
+                host.Scenario(x => {
+                    x.PostAsJson(new HeaderInput {Key = "Foo", Value1 = "Bar1", Value2 = "Bar2"});
+                    x.Header("Foo").ShouldHaveOneNonNullValue();
+                });
             });
 
-            ex.Message.ShouldContain("Expected a single header value of 'Foo', but found multiple values on the response: 'Bar1', 'Bar2'");
+            ex.Message.ShouldContain(
+                "Expected a single header value of 'Foo', but found multiple values on the response: 'Bar1', 'Bar2'");
         }
 
         [Test]
         public void header_should_not_be_written_happy_path()
         {
-            using (var host = newHost())
-            {
-                host.Scenario(x =>
-                {
-                    x.PostAsJson(new HeaderInput { Key = "Foo" });
-                    x.Header("Foo").ShouldNotBeWritten();
-                });
-            }
+            host.Scenario(x => {
+                x.PostAsJson(new HeaderInput {Key = "Foo"});
+                x.Header("Foo").ShouldNotBeWritten();
+            });
         }
 
         [Test]
         public void header_should_not_be_written_sad_path_with_values()
         {
-            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
-            {
-                using (var host = newHost())
-                {
-                    host.Scenario(x =>
-                    {
-                        x.PostAsJson(new HeaderInput { Key = "Foo", Value1 = "Bar1", Value2 = "Bar2" });
-                        x.Header("Foo").ShouldNotBeWritten();
-                    });
-                }
+            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
+                host.Scenario(x => {
+                    x.PostAsJson(new HeaderInput {Key = "Foo", Value1 = "Bar1", Value2 = "Bar2"});
+                    x.Header("Foo").ShouldNotBeWritten();
+                });
             });
 
             ex.Message.ShouldContain("Expected no value for header 'Foo', but found values 'Bar1', 'Bar2'");
@@ -389,6 +311,5 @@ namespace FubuMVC.Tests.Http.Hosting
 
     public class MarkerInput
     {
-        
     }
 }

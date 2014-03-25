@@ -64,6 +64,8 @@ namespace FubuMVC.Core.Configuration
             config.Add(new DefaultConfigurationPack());
 
             discoverChains(config, graph);
+
+            viewDiscovery.Wait(5000);
             var attacher = new ViewAttachmentWorker(viewDiscovery.Result, graph.Settings.Get<ViewAttachmentPolicy>());
             attacher.Configure(graph);
 
