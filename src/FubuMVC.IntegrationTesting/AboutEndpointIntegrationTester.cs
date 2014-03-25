@@ -39,25 +39,6 @@ namespace FubuMVC.IntegrationTesting
             Debug.WriteLine(description);
         }
 
-        [Test]
-        public void can_get_the_reloaded_time_consistently()
-        {
-            string ts1;
-            string ts2;
-            string ts3;
-            string ts4;
-            ts1 = server.Endpoints.Get<AboutDiagnostics>(x => x.get__loaded()).ReadAsText();
-            ts2 = server.Endpoints.Get<AboutDiagnostics>(x => x.get__loaded()).ReadAsText();
-
-            ts3 = server.Endpoints.Get<AboutDiagnostics>(x => x.get__loaded()).ReadAsText();
-            ts4 = server.Endpoints.Get<AboutDiagnostics>(x => x.get__loaded()).ReadAsText();
-
-            ts1.ShouldEqual(ts2);
-
-            ts3.ShouldEqual(ts4);
-
-            ts1.ShouldNotEqual(ts3);
-        }
 
 
         [Test, Explicit]

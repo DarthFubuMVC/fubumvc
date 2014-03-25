@@ -35,11 +35,12 @@ namespace FubuMVC.Spark
 
         protected override void precompile(BehaviorGraph graph)
         {
-            var settings = graph.Settings.Get<SparkEngineSettings>();
-            if (settings.PrecompileViews)
-            {
-                AllTemplates().Each(x => x.Precompile());
-            }
+            graph.Settings.Alter<SparkEngineSettings>(spark => {
+                if (spark.PrecompileViews)
+                {
+                    AllTemplates().Each(x => x.Precompile());
+                }
+            });
         }
 
         public override Func<IFubuFile, SparkTemplate> CreateBuilder(SettingsCollection settings)

@@ -22,7 +22,7 @@ namespace FubuMVC.IntegrationTesting.Views
 {
     public class ViewIntegrationContext : IPackageLoader
     {
-        public static readonly string Folder = "Views";
+        public static readonly string Folder = "Views" + Guid.NewGuid();
         public static readonly IFileSystem fileSystem = new FileSystem();
         public static readonly string Application = "Application";
         private string _directory;

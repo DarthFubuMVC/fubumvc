@@ -17,7 +17,7 @@ namespace FubuMVC.IntegrationTesting.Assets
 {
     public class AssetIntegrationContext : IPackageLoader
     {
-        public static readonly string Folder = "Assets";
+        public static readonly string Folder = "Assets" + Guid.NewGuid();
         public static readonly IFileSystem fileSystem = new FileSystem();
         public static readonly string Application = "Application";
         private string _directory;

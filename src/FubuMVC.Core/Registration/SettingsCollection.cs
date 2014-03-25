@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using FubuCore.Binding;
 using FubuCore.Configuration;
+using FubuCore.Descriptions;
 using FubuCore.Util;
 using FubuCore;
 using FubuCore.Reflection;
@@ -33,7 +34,9 @@ namespace FubuMVC.Core.Registration
 
         public T Get<T>() where T : class
         {
-            return GetTask<T>().Result;
+            var task = GetTask<T>();
+            task.Wait(5000);
+            return task.Result;
         }
 
         public Task<T> GetTask<T>()
