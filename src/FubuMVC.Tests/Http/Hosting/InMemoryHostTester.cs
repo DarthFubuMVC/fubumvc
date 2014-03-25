@@ -303,7 +303,36 @@ namespace FubuMVC.Tests.Http.Hosting
             ex.Message.ShouldContain("Expected a single header value of 'Foo', but found multiple values on the response: 'Bar1', 'Bar2'");
         }
 
+        [Test]
+        public void header_should_not_be_written_happy_path()
+        {
+            using (var host = newHost())
+            {
+                host.Scenario(x =>
+                {
+                    x.PostAsJson(new HeaderInput { Key = "Foo" });
+                    x.Header("Foo").ShouldNotBeWritten();
+                });
+            }
+        }
 
+        [Test]
+        public void header_should_not_be_written_sad_path_with_values()
+        {
+            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
+            {
+                using (var host = newHost())
+                {
+                    host.Scenario(x =>
+                    {
+                        x.PostAsJson(new HeaderInput { Key = "Foo", Value1 = "Bar1", Value2 = "Bar2" });
+                        x.Header("Foo").ShouldNotBeWritten();
+                    });
+                }
+            });
+
+            ex.Message.ShouldContain("Expected no value for header 'Foo', but found values 'Bar1', 'Bar2'");
+        }
     }
 
     public class InMemoryEndpoint

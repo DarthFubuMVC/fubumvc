@@ -228,6 +228,16 @@ namespace FubuMVC.Core.Http.Scenarios
 
                 return this;
             }
+
+            public void ShouldNotBeWritten()
+            {
+                var values = _parent.Response.HeaderValueFor(_headerKey);
+                if (values.Any())
+                {
+                    var valueText = values.Select(x => "'" + x + "'").Join(", ");
+                    _parent._assertion.Add("Expected no value for header '{0}', but found values {1}", _headerKey, valueText);
+                }
+            }
         }
     }
 

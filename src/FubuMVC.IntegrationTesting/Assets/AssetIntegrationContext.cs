@@ -60,6 +60,7 @@ namespace FubuMVC.IntegrationTesting.Assets
         public void FixtureTeardown()
         {
             _host.SafeDispose();
+            fileSystem.DeleteDirectory(Folder);
         }
 
         [SetUp]

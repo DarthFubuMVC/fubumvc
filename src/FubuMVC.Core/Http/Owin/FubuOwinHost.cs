@@ -11,6 +11,8 @@ using Owin;
 
 namespace FubuMVC.Core.Http.Owin
 {
+    using AppFunc = Func<IDictionary<string, object>, Task>;
+
     public class FubuOwinHost
     {
         private readonly RouteCollection _routes;

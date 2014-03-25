@@ -22,7 +22,7 @@ namespace FubuMVC.IntegrationTesting.Assets
 
             Scenario.ContentShouldContain("var x = 0;");
 
-            Scenario.Header(HttpResponseHeaders.CacheControl).SingleValueShouldEqual("Foo");
+            Scenario.Header(HttpResponseHeaders.CacheControl).SingleValueShouldEqual("private, max-age=86400");
             Scenario.Header(HttpResponseHeaders.Expires).ShouldHaveOneNonNullValue();
         }
     }
