@@ -34,7 +34,7 @@ namespace FubuMVC.Core.Registration
         private readonly List<Assembly> _assemblies = new List<Assembly>();
         private readonly IList<Type> _types = new List<Type>();
         private bool _scanned;
-        private readonly IList<Func<IEnumerable<Assembly>>> _sources = new List<Func<IEnumerable<Assembly>>>();
+        //private readonly IList<Func<IEnumerable<Assembly>>> _sources = new List<Func<IEnumerable<Assembly>>>();
 
 
         /// <summary>
@@ -50,10 +50,10 @@ namespace FubuMVC.Core.Registration
         /// <summary>
         /// Register a function as a source of assemblies
         /// </summary>
-        public void AddSource(Func<IEnumerable<Assembly>> source)
-        {
-            _sources.Add(source);
-        }
+//        public void AddSource(Func<IEnumerable<Assembly>> source)
+//        {
+//            _sources.Add(source);
+//        }
 
         private IEnumerable<Type> types
         {
@@ -110,12 +110,7 @@ namespace FubuMVC.Core.Registration
         {
             get
             {
-                _assemblies.AddRange(_sources.SelectMany(x => x()));
-
-                foreach (var assembly in _assemblies.Distinct())
-                {
-                    yield return assembly;
-                }
+                return _assemblies;
             }
         }
 

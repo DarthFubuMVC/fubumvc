@@ -36,7 +36,8 @@ namespace FubuMVC.Core.View.Model
             filter.Excludes.Add(a => types.HasAssembly(a));
             filter.Includes += (t => true);
 
-            types.AddSource(() => AppDomain.CurrentDomain.GetAssemblies().Where(filter.MatchesAll));
+
+            types.AddAssemblies(AppDomain.CurrentDomain.GetAssemblies().Where(filter.MatchesAll));
 
             return types;
         }
