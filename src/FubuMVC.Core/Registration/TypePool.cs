@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Web.Caching;
 using Bottles;
 using FubuCore;
+using FubuCore.Util;
 
 namespace FubuMVC.Core.Registration
 {
@@ -14,15 +16,19 @@ namespace FubuMVC.Core.Registration
     /// </summary>
     public class TypePool
     {
+        private static readonly Lazy<TypePool> _appDomainTypes = new Lazy<TypePool>(() => {
+            var pool = new TypePool { IgnoreExportTypeFailures = true };
+            pool.AddAssemblies(AppDomain.CurrentDomain.GetAssemblies().Where(x => !x.IsDynamic));
+
+            return pool;
+        }); 
+
         /// <summary>
         /// All types in the AppDomain in non dynamic assemblies
         /// </summary>
         public static TypePool AppDomainTypes()
         {
-            var pool = new TypePool { IgnoreExportTypeFailures = true };
-            pool.AddAssemblies(AppDomain.CurrentDomain.GetAssemblies().Where(x => !x.IsDynamic));
-
-            return pool;
+            return _appDomainTypes.Value;
         }
 
         private readonly List<Assembly> _assemblies = new List<Assembly>();
@@ -94,22 +100,6 @@ namespace FubuMVC.Core.Registration
         public void AddAssembly(Assembly assembly)
         {
             _assemblies.Add(assembly);
-        }
-
-        /// <summary>
-        /// Adds a type to this pool if it has not already been added
-        /// </summary>
-        public void AddType(Type type)
-        {
-            _types.Fill(type);
-        }
-
-        /// <summary>
-        /// Adds a type to this pool if it has not already been added
-        /// </summary>
-        public void AddType<T>()
-        {
-            AddType(typeof (T));
         }
 
         /// <summary>

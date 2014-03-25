@@ -35,15 +35,6 @@ namespace FubuMVC.Core.Registration.DSL
         }
 
         /// <summary>
-        /// Include all assemblies known through packages
-        /// that come in as bottles
-        /// </summary>
-        public void ToAllPackageAssemblies()
-        {
-            configure  = pool => pool.AddSource(() => PackageRegistry.PackageAssemblies);
-        }
-
-        /// <summary>
         /// Include the calling assembly (i.e., the assembly of your code calling this method)
         /// </summary>
         public void ToThisAssembly()

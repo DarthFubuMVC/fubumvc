@@ -2,7 +2,6 @@ using System;
 using System.CodeDom.Compiler;
 using System.Linq;
 using System.Reflection;
-using FubuMVC.Core.Registration;
 using FubuMVC.Core.View.Registration;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -142,41 +141,6 @@ namespace FubuMVC.Tests.View.Registration
             ClassUnderTest.ParseErrors.First().ShouldContain("More than one generic argument types matching");
         }
 
-        private TypePool typePool()
-        {
-            var pool = new TypePool();
-            pool.AddAssembly(GetType().Assembly);
-
-            var externalAssemblyDuplicatedType = generateType("namespace FubuMVC.Tests.View.Registration{public class DuplicatedGeneric<T>{}}", "FubuMVC.Tests.View.Registration.DuplicatedGeneric`1");
-
-            pool.AddType<Bar>();
-            pool.AddType<Baz>();
-            pool.AddType<Generic<Baz>>();
-            pool.AddType<Generic<Bar>>();
-            pool.AddType<Generic<Baz, Bar>>();
-            pool.AddType<DuplicatedGeneric<Bar>>();
-            pool.AddSource(() => new[] { externalAssemblyDuplicatedType.Assembly, GetType().Assembly });
-            pool.AddType(externalAssemblyDuplicatedType);
-
-            return pool;
-        }
-
-        private static Type generateType(string source, string fullName)
-        {
-            var parms = new CompilerParameters
-            {
-                GenerateExecutable = false,
-                GenerateInMemory = true,
-                IncludeDebugInformation = false
-            };
-
-            var compiledAssembly = CodeDomProvider
-                .CreateProvider("CSharp")
-                .CompileAssemblyFromSource(parms, source)
-                .CompiledAssembly;
-
-            return compiledAssembly.GetType(fullName);
-        }
     }
 
     public class Bar{}

@@ -211,7 +211,6 @@
     <Compile Include="can_find_and_load_bottles_with_the_FubuModule_attribute.cs" />
     <Compile Include="FakeHttpContext.cs" />
     <Compile Include="FubuApplicationTester.cs" />
-    <Compile Include="FubuModeTester.cs" />
     <Compile Include="Http\AspNet\AspNetCurrentHttpRequestTester.cs" />
     <Compile Include="Http\AspNet\AspNetModelBindingTester.cs" />
     <Compile Include="Http\AspNet\AspNetServiceArgumentsTester.cs" />
@@ -278,7 +277,6 @@
     <Compile Include="Registration\RouteInputTester.cs" />
     <Compile Include="Registration\Scanning\AssemblyScannerTester.cs" />
     <Compile Include="Registration\system_policy_for_authorization.cs" />
-    <Compile Include="Registration\TypePoolTester.cs" />
     <Compile Include="Routing\StandardRoutePolicyTester.cs" />
     <Compile Include="Runtime\AspNetPassthroughConverterTester.cs" />
     <Compile Include="Runtime\BasicSessionTester.cs" />

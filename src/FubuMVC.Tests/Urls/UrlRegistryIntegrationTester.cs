@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.Urls
         private UrlRegistry urls;
         private OwinHttpRequest theHttpRequest;
 
-        [SetUp]
+        [TestFixtureSetUp]
         public void SetUp()
         {
             theHttpRequest = OwinHttpRequest.ForTesting();
@@ -185,12 +185,6 @@ namespace FubuMVC.Tests.Urls
             urls.UrlFor(new SubclassUrlModel()).ShouldEqual("/two/m4");
         }
 
-        [Test]
-        public void forward_without_a_category()
-        {
-            graph.Forward<Model4>(m => new Model3());
-            urls.UrlFor(new Model4()).ShouldEqual("/one/m5");
-        }
 
         [Test]
         public void forward_with_a_category()
@@ -236,6 +230,49 @@ namespace FubuMVC.Tests.Urls
         {
             urls.UrlFor<UrlModel>(new RouteParameters(), "different")
                 .ShouldEqual("/one/m4");
+        }
+    }
+
+    [TestFixture]
+    public class Forwarding_tests
+    {
+        private BehaviorGraph graph;
+        private UrlRegistry urls;
+        private OwinHttpRequest theHttpRequest;
+
+        [TestFixtureSetUp]
+        public void SetUp()
+        {
+            theHttpRequest = OwinHttpRequest.ForTesting();
+            theHttpRequest.FullUrl("http://server/fubu");
+
+
+            var registry = new FubuRegistry();
+            registry.Actions.IncludeType<OneController>();
+            registry.Actions.IncludeType<TwoController>();
+            registry.Actions.IncludeType<QueryStringTestController>();
+            registry.Actions.IncludeType<OnlyOneActionController>();
+
+
+            registry.Configure(x => { x.TypeResolver.AddStrategy<UrlModelForwarder>(); });
+
+            //registry.Routes.HomeIs<DefaultModel>();
+
+            graph = BehaviorGraph.BuildFrom(registry);
+
+            var resolver = graph.Services.DefaultServiceFor<ITypeResolver>().Value;
+            var urlResolver = new ChainUrlResolver(theHttpRequest);
+
+            urls = new UrlRegistry(new ChainResolutionCache((ITypeResolver)resolver, graph), urlResolver,
+                new JQueryUrlTemplate(), theHttpRequest);
+        }
+
+
+        [Test]
+        public void forward_without_a_category()
+        {
+            graph.Forward<Model4>(m => new Model3());
+            urls.UrlFor(new Model4()).ShouldEqual("/one/m5");
         }
     }
 
