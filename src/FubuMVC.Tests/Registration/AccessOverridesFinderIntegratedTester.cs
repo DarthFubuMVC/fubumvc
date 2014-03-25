@@ -43,7 +43,7 @@ namespace FubuMVC.Tests.Registration
                 .ShouldHaveTheSameElementsAs(new ColorRule("orange"));
         }
 
-        [Test]
+        [Test,Explicit]
         public void finds_overrides_from_package_assemblies_too()
         {
             var rules = theGraph.Settings.Get<AccessorRules>();
