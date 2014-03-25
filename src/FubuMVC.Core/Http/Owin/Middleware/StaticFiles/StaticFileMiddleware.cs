@@ -58,7 +58,7 @@ namespace FubuMVC.Core.Http.Owin.Middleware.StaticFiles
 
             // Write headers here.
 
-            return new WriteFileContinuation(response, file);
+            return new WriteFileContinuation(response, file, _settings);
         }
 
         

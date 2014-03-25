@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Runtime.Files;
 
 namespace FubuMVC.Core.Http.Owin.Middleware.StaticFiles
@@ -6,10 +7,12 @@ namespace FubuMVC.Core.Http.Owin.Middleware.StaticFiles
     public class WriteFileContinuation : WriterContinuation
     {
         private readonly IFubuFile _file;
+        private readonly AssetSettings _settings;
 
-        public WriteFileContinuation(IHttpResponse response, IFubuFile file) : base(response, DoNext.Stop)
+        public WriteFileContinuation(IHttpResponse response, IFubuFile file, AssetSettings settings) : base(response, DoNext.Stop)
         {
             _file = file;
+            _settings = settings;
         }
 
         public override void Write(IHttpResponse response)
@@ -17,6 +20,9 @@ namespace FubuMVC.Core.Http.Owin.Middleware.StaticFiles
             response.WriteFile(_file.Path);
 
             WriteFileHeadContinuation.WriteHeaders(response, _file);
+
+            _settings.Headers.Each((key, source) => response.AppendHeader(key, source()));
+
             response.WriteResponseCode(HttpStatusCode.OK);
         }
 

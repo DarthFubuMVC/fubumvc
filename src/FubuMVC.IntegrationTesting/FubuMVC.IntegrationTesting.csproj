@@ -100,6 +100,7 @@
     <Compile Include="AboutEndpointIntegrationTester.cs" />
     <Compile Include="Ajax\AjaxContinuationProcessingTester.cs" />
     <Compile Include="Assets\AssetIntegrationContext.cs" />
+    <Compile Include="Assets\asset_writing_in_production.cs" />
     <Compile Include="Assets\FindingAndResolving\aliasing_assets.cs" />
     <Compile Include="Assets\FindingAndResolving\Asset_graph_building_and_resolving_with_defaults.cs" />
     <Compile Include="Assets\Tag_building_in_development_mode.cs" />

@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using FubuCore;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
 using FubuMVC.Core.Runtime.Files;
@@ -22,7 +23,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
             new FileSystem().WriteStringToFile("foo.txt", "some text");
             theFile = new FubuFile("foo.txt", "application");
 
-            new WriteFileContinuation(theResponse, theFile)
+            new WriteFileContinuation(theResponse, theFile, new AssetSettings())
                 .Write(theResponse);
         }
 

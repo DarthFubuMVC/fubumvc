@@ -9,6 +9,7 @@ using System.Runtime.Serialization;
 using System.Web.UI.WebControls;
 using FubuCore;
 using FubuMVC.Core.Http.Owin;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Http.Scenarios
@@ -21,6 +22,8 @@ namespace FubuMVC.Core.Http.Scenarios
         IUrlExpression Delete { get; }
         IUrlExpression Post { get; }
         IUrlExpression Head { get; }
+
+        void PostAsJson<T>(T input) where T : class;
 
         OwinHttpRequest Request { get; }
         OwinHttpResponse Response { get; }
@@ -36,6 +39,7 @@ namespace FubuMVC.Core.Http.Scenarios
         void ContentShouldContain(string text);
         void ContentShouldNotContain(string text);
         void StatusCodeShouldBe(HttpStatusCode httpStatusCode);
+        Scenario.HeaderExpectations Header(string headerKey);
     }
 
     public interface IUrlExpression
@@ -77,8 +81,24 @@ namespace FubuMVC.Core.Http.Scenarios
         }
         public IUrlExpression Put { get; private set; }
         public IUrlExpression Delete { get; private set; }
-        public IUrlExpression Post { get; private set; }
+
+        public IUrlExpression Post
+        {
+            get
+            {
+                _request.HttpMethod("POST");
+                return this;
+            }
+        }
+
         public IUrlExpression Head { get; private set; }
+
+        public void PostAsJson<T>(T input) where T : class
+        {
+            Post.Input(input);
+            _request.Body.JsonInputIs(input);
+            _request.Header(HttpRequestHeaders.ContentType, MimeType.Json.Value);
+        }
 
         public OwinHttpRequest Request
         {
@@ -141,6 +161,72 @@ namespace FubuMVC.Core.Http.Scenarios
             if (_response.Value.StatusCode != (int)httpStatusCode)
             {
                 _assertion.Add("Expected status code {0} ({1}), but was {2}", httpStatusCode.As<int>(), httpStatusCode, _response.Value.StatusCode);
+            }
+        }
+
+        public HeaderExpectations Header(string headerKey)
+        {
+            return new HeaderExpectations(this, headerKey);
+        }
+
+        public class HeaderExpectations
+        {
+            private readonly Scenario _parent;
+            private readonly string _headerKey;
+
+            public HeaderExpectations(Scenario parent, string headerKey)
+            {
+                _parent = parent;
+                _headerKey = headerKey;
+            }
+
+            public HeaderExpectations SingleValueShouldEqual(string expected)
+            {
+                var values = _parent.Response.HeaderValueFor(_headerKey);
+                switch (values.Count())
+                {
+                    case 0:
+                        _parent._assertion.Add("Expected a single header value of '{0}'='{1}', but no values were found on the response", _headerKey, expected);
+                        break;
+
+                    case 1:
+                        var actual = values.Single();
+                        if (actual != expected)
+                        {
+                            _parent._assertion.Add("Expected a single header value of '{0}'='{1}', but the actual value was '{2}'", _headerKey, expected, actual);
+                        }
+                        break;
+
+                    default:
+                        var valueText = values.Select(x => "'" + x + "'").Join(", ");
+                        _parent._assertion.Add("Expected a single header value of '{0}'='{1}', but the actual values were {2}", _headerKey, expected, valueText);
+                        break;
+                }
+
+
+
+                return this;
+            }
+
+            public HeaderExpectations ShouldHaveOneNonNullValue()
+            {
+                var values = _parent.Response.HeaderValueFor(_headerKey);
+                switch (values.Count())
+                {
+                    case 0:
+                        _parent._assertion.Add("Expected a single header value of '{0}', but no values were found on the response", _headerKey);
+                        break;
+                    case 1:
+                        return this;
+
+                    default:
+                        var valueText = values.Select(x => "'" + x + "'").Join(", ");
+                        _parent._assertion.Add("Expected a single header value of '{0}', but found multiple values on the response: {1}", _headerKey, valueText);
+                        break;
+                }
+
+
+                return this;
             }
         }
     }

@@ -3,6 +3,7 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Http.Scenarios;
+using FubuMVC.Core.Runtime;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -15,7 +16,7 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void invoke_a_simple_string_endpoint()
         {
-            using (var host = FubuApplication.DefaultPolicies().StructureMap().RunInMemory())
+            using (var host = newHost())
             {
                 host.Send(r => r.RelativeUrl("memory/hello"))
                     .Body.ReadAsText().ShouldEqual("hello from the in memory host");
@@ -23,10 +24,15 @@ namespace FubuMVC.Tests.Http.Hosting
 
         }
 
+        private static InMemoryHost newHost()
+        {
+            return FubuApplication.DefaultPolicies().StructureMap().RunInMemory();
+        }
+
         [Test]
         public void using_scenario_with_string_text_and_relative_url()
         {
-            using (var host = FubuApplication.DefaultPolicies().StructureMap().RunInMemory())
+            using (var host = newHost())
             {
                 host.Scenario(x => {
                     x.Get.Url("memory/hello");
@@ -39,7 +45,7 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void using_scenario_with_controller_expression()
         {
-            using (var host = FubuApplication.DefaultPolicies().StructureMap().RunInMemory())
+            using (var host = newHost())
             {
                 host.Scenario(x =>
                 {
@@ -53,7 +59,7 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void using_scenario_with_input_model()
         {
-            using (var host = FubuApplication.DefaultPolicies().StructureMap().RunInMemory())
+            using (var host = newHost())
             {
                 host.Scenario(x =>
                 {
@@ -77,7 +83,7 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void using_scenario_with_input_model_as_marker()
         {
-            using (var host = FubuApplication.DefaultPolicies().StructureMap().RunInMemory())
+            using (var host = newHost())
             {
                 host.Scenario(x =>
                 {
@@ -90,7 +96,7 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void using_scenario_with_ContentShouldContain_declaration_happy_path()
         {
-            using (var host = FubuApplication.DefaultPolicies().StructureMap().RunInMemory())
+            using (var host = newHost())
             {
                 host.Scenario(x => {
                     x.Get.Input<MarkerInput>();
@@ -105,7 +111,7 @@ namespace FubuMVC.Tests.Http.Hosting
         public void using_scenario_with_ContentShouldContain_declaration_sad_path()
         {
             var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
-                using (var host = FubuApplication.DefaultPolicies().StructureMap().RunInMemory())
+                using (var host = newHost())
                 {
                     host.Scenario(x =>
                     {
@@ -121,7 +127,7 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void using_scenario_with_ContentShouldNotContain_declaration_happy_path()
         {
-            using (var host = FubuApplication.DefaultPolicies().StructureMap().RunInMemory())
+            using (var host = newHost())
             {
                 host.Scenario(x =>
                 {
@@ -136,7 +142,7 @@ namespace FubuMVC.Tests.Http.Hosting
         {
             var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
             {
-                using (var host = FubuApplication.DefaultPolicies().StructureMap().RunInMemory())
+                using (var host = newHost())
                 {
                     host.Scenario(x =>
                     {
@@ -152,7 +158,7 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void using_scenario_with_StatusCodeShouldBe_happy_path()
         {
-            using (var host = FubuApplication.DefaultPolicies().StructureMap().RunInMemory())
+            using (var host = newHost())
             {
                 host.Scenario(x =>
                 {
@@ -166,7 +172,7 @@ namespace FubuMVC.Tests.Http.Hosting
         public void using_scenario_with_StatusCodeShouldBe_sad_path()
         {
             var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
-                using (var host = FubuApplication.DefaultPolicies().StructureMap().RunInMemory())
+                using (var host = newHost())
                 {
                     host.Scenario(x =>
                     {
@@ -178,10 +184,152 @@ namespace FubuMVC.Tests.Http.Hosting
 
             ex.Message.ShouldContain("Expected status code 500 (InternalServerError), but was 200");
         }
+
+        [Test]
+        public void single_header_value_is_positive()
+        {
+            using (var host = newHost())
+            {
+                host.Scenario(x => {
+                    x.PostAsJson(new HeaderInput {Key = "Foo", Value1 = "Bar"});
+                    x.Header("Foo").ShouldHaveOneNonNullValue()
+                        .SingleValueShouldEqual("Bar");
+                    
+                });
+            }
+        }
+
+        [Test]
+        public void single_header_value_is_negative_with_the_wrong_value()
+        {
+            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
+            using (var host = newHost())
+            {
+                host.Scenario(x => {
+                    x.PostAsJson(new HeaderInput { Key = "Foo", Value1 = "NotBar" });
+                    x.Header("Foo").ShouldHaveOneNonNullValue()
+                        .SingleValueShouldEqual("Bar");
+                });
+            }
+            });
+
+            ex.Message.ShouldContain("Expected a single header value of 'Foo'='Bar', but the actual value was 'NotBar'");
+        }
+
+        [Test]
+        public void single_header_value_is_negative_with_the_too_many_values()
+        {
+            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
+            {
+                using (var host = newHost())
+                {
+                    host.Scenario(x =>
+                    {
+                        x.PostAsJson(new HeaderInput { Key = "Foo", Value1 = "NotBar", Value2 = "AnotherBar"});
+                        x.Header("Foo").ShouldHaveOneNonNullValue()
+                            .SingleValueShouldEqual("Bar");
+                    });
+                }
+            });
+
+            ex.Message.ShouldContain("Expected a single header value of 'Foo'='Bar', but the actual values were 'NotBar', 'AnotherBar'");
+        }
+
+        [Test]
+        public void single_header_value_is_negative_because_there_are_no_values()
+        {
+            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
+            {
+                using (var host = newHost())
+                {
+                    host.Scenario(x =>
+                    {
+                        x.PostAsJson(new HeaderInput { Key = "Foo" });
+                        x.Header("Foo")
+                            .SingleValueShouldEqual("Bar");
+                    });
+                }
+            });
+
+            ex.Message.ShouldContain("Expected a single header value of 'Foo'='Bar', but no values were found on the response");
+        }
+
+        [Test]
+        public void should_have_on_non_null_header_value_happy_path()
+        {
+            using (var host = newHost())
+            {
+                host.Scenario(x =>
+                {
+                    x.PostAsJson(new HeaderInput { Key = "Foo", Value1 = "Anything"});
+                    x.Header("Foo").ShouldHaveOneNonNullValue();
+                });
+            }
+        }
+
+        [Test]
+        public void should_have_one_non_null_value_sad_path()
+        {
+            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
+            {
+                using (var host = newHost())
+                {
+                    host.Scenario(x =>
+                    {
+                        x.PostAsJson(new HeaderInput { Key = "Foo" });
+                        x.Header("Foo").ShouldHaveOneNonNullValue();
+                    });
+                }
+            });
+
+            ex.Message.ShouldContain("Expected a single header value of 'Foo', but no values were found on the response");
+        }
+
+        [Test]
+        public void should_have_on_non_null_value_sad_path_with_too_many_values()
+        {
+            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
+            {
+                using (var host = newHost())
+                {
+                    host.Scenario(x =>
+                    {
+                        x.PostAsJson(new HeaderInput { Key = "Foo", Value1 = "Bar1", Value2 = "Bar2"});
+                        x.Header("Foo").ShouldHaveOneNonNullValue();
+                    });
+                }
+            });
+
+            ex.Message.ShouldContain("Expected a single header value of 'Foo', but found multiple values on the response: 'Bar1', 'Bar2'");
+        }
+
+
     }
 
     public class InMemoryEndpoint
     {
+        private readonly IOutputWriter _writer;
+
+        public InMemoryEndpoint(IOutputWriter writer)
+        {
+            _writer = writer;
+        }
+
+        public string post_header_values(HeaderInput input)
+        {
+            if (input.Value1.IsNotEmpty())
+            {
+                _writer.AppendHeader(input.Key, input.Value1);
+            }
+
+            if (input.Value2.IsNotEmpty())
+            {
+                _writer.AppendHeader(input.Key, input.Value2);
+            }
+
+            return "it's all good";
+        }
+
         public string get_memory_hello()
         {
             return "hello from the in memory host";
@@ -196,6 +344,13 @@ namespace FubuMVC.Tests.Http.Hosting
         {
             return "just the marker";
         }
+    }
+
+    public class HeaderInput
+    {
+        public string Key { get; set; }
+        public string Value1 { get; set; }
+        public string Value2 { get; set; }
     }
 
     public class InMemoryInput

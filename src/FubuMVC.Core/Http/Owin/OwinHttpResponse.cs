@@ -149,7 +149,7 @@ namespace FubuMVC.Core.Http.Owin
 
         public IEnumerable<string> HeaderValueFor(string headerKey)
         {
-            return _environment.Get<IDictionary<string, string[]>>(OwinConstants.ResponseHeadersKey).Get(headerKey);
+            return _environment.Get<IDictionary<string, string[]>>(OwinConstants.ResponseHeadersKey).Get(headerKey) ?? new string[0];
         }
 
         public IEnumerable<Header> AllHeaders()
