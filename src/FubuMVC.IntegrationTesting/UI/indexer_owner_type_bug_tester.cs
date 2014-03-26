@@ -47,7 +47,7 @@ namespace FubuMVC.IntegrationTesting.UI
             using (var server = FubuApplication
                 .DefaultPolicies()
                 .StructureMap(new Container())
-                .RunEmbedded())
+                .RunEmbeddedWithAutoPort())
             {
                 var response = server.Endpoints
                     .Get<IndexerOwnerEndpoint>(x => x.get_template_for_indexer());

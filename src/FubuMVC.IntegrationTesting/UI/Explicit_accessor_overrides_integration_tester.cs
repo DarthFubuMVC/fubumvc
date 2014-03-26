@@ -36,7 +36,7 @@ namespace FubuMVC.IntegrationTesting.UI
         [Test]
         public void override_the_display_for_the_default()
         {
-            using (var server = FubuApplication.For<TestRegistry>().StructureMap(new Container()).RunEmbedded())
+            using (var server = FubuApplication.For<TestRegistry>().StructureMap(new Container()).RunEmbeddedWithAutoPort())
             {
                 server.Endpoints.GetByInput(new OverrideRequest {Category = ElementConstants.Display})
                 .ReadAsText()     
@@ -47,7 +47,7 @@ namespace FubuMVC.IntegrationTesting.UI
         [Test]
         public void override_the_display_for_the_label()
         {
-            using (var server = FubuApplication.For<TestRegistry>().StructureMap(new Container()).RunEmbedded())
+            using (var server = FubuApplication.For<TestRegistry>().StructureMap(new Container()).RunEmbeddedWithAutoPort())
             {
                 server.Endpoints.GetByInput(new OverrideRequest { Category = ElementConstants.Label })
                 .ReadAsText()
@@ -58,7 +58,7 @@ namespace FubuMVC.IntegrationTesting.UI
         [Test]
         public void override_the_display_for_the_input()
         {
-            using (var server = FubuApplication.For<TestRegistry>().StructureMap(new Container()).RunEmbedded())
+            using (var server = FubuApplication.For<TestRegistry>().StructureMap(new Container()).RunEmbeddedWithAutoPort())
             {
                 server.Endpoints.GetByInput(new OverrideRequest { Category = ElementConstants.Editor })
                 .ReadAsText()
@@ -69,7 +69,7 @@ namespace FubuMVC.IntegrationTesting.UI
         [Test]
         public void override_display_by_profile()
         {
-            using (var server = FubuApplication.For<TestRegistry>().StructureMap(new Container()).RunEmbedded())
+            using (var server = FubuApplication.For<TestRegistry>().StructureMap(new Container()).RunEmbeddedWithAutoPort())
             {
                 server.Endpoints.GetByInput(new OverrideRequest { Category = ElementConstants.Display, Profile = "Green"})
                 .ReadAsText()

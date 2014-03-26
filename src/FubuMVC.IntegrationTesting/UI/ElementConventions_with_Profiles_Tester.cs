@@ -41,7 +41,7 @@ namespace FubuMVC.IntegrationTesting.UI
                 return doc.DisplayFor(x => x.Name);
             };
 
-            using (var server = FubuApplication.For<TestRegistry>().StructureMap(new Container()).RunEmbedded())
+            using (var server = FubuApplication.For<TestRegistry>().StructureMap(new Container()).RunEmbeddedWithAutoPort())
             {
                 server.Endpoints.Get<ProfiledEndpoint>(x => x.get_profiled_page()).ReadAsText()
                     .ShouldContain("<div class=\"foo\">Jeremy</div>");

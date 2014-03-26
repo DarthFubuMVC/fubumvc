@@ -20,7 +20,7 @@ namespace FubuMVC.IntegrationTesting.UI
         [Test]
         public void doughnut_caching()
         {
-            using (var server = FubuApplication.DefaultPolicies().StructureMap(new Container()).RunEmbedded())
+            using (var server = FubuApplication.DefaultPolicies().StructureMap(new Container()).RunEmbeddedWithAutoPort())
             {
                 var endpoints = server.Endpoints;
 

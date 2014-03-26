@@ -18,6 +18,7 @@ namespace FubuMVC.IntegrationTesting.UI
     [TestFixture]
     public class ShowEditExpressions_integration_Tester
     {
+        // TODO -- change all this to in memory host and scenarios
         public class TestRegistry : FubuRegistry
         {
             public TestRegistry()
@@ -34,7 +35,7 @@ namespace FubuMVC.IntegrationTesting.UI
         {
             var container = new Container();
             using (
-                EmbeddedFubuMvcServer server = FubuApplication.For<TestRegistry>().StructureMap(container).RunEmbedded()
+                EmbeddedFubuMvcServer server = FubuApplication.For<TestRegistry>().StructureMap(container).RunEmbeddedWithAutoPort()
                 )
             {
                 container.Inject<IFieldAccessRule>(new ShowEditFakePolicy {Logic = r => AccessRight.ReadOnly});
@@ -50,7 +51,7 @@ namespace FubuMVC.IntegrationTesting.UI
         {
             var container = new Container();
             using (
-                EmbeddedFubuMvcServer server = FubuApplication.For<TestRegistry>().StructureMap(container).RunEmbedded()
+                EmbeddedFubuMvcServer server = FubuApplication.For<TestRegistry>().StructureMap(container).RunEmbeddedWithAutoPort()
                 )
             {
                 container.Inject<IFieldAccessRule>(new ShowEditFakePolicy {Logic = r => AccessRight.None});
@@ -64,7 +65,7 @@ namespace FubuMVC.IntegrationTesting.UI
         {
             var container = new Container();
             using (
-                EmbeddedFubuMvcServer server = FubuApplication.For<TestRegistry>().StructureMap(container).RunEmbedded()
+                EmbeddedFubuMvcServer server = FubuApplication.For<TestRegistry>().StructureMap(container).RunEmbeddedWithAutoPort()
                 )
             {
                 container.Inject<IFieldAccessRule>(new ShowEditFakePolicy {Logic = r => AccessRight.All});
@@ -81,7 +82,7 @@ namespace FubuMVC.IntegrationTesting.UI
         {
             var container = new Container();
             using (
-                EmbeddedFubuMvcServer server = FubuApplication.For<TestRegistry>().StructureMap(container).RunEmbedded()
+                EmbeddedFubuMvcServer server = FubuApplication.For<TestRegistry>().StructureMap(container).RunEmbeddedWithAutoPort()
                 )
             {
                 container.Inject<IFieldAccessRule>(new ShowEditFakePolicy
@@ -99,7 +100,7 @@ namespace FubuMVC.IntegrationTesting.UI
         {
             var container = new Container();
             using (
-                EmbeddedFubuMvcServer server = FubuApplication.For<TestRegistry>().StructureMap(container).RunEmbedded()
+                EmbeddedFubuMvcServer server = FubuApplication.For<TestRegistry>().StructureMap(container).RunEmbeddedWithAutoPort()
                 )
             {
                 container.Inject<IFieldAccessRule>(new ShowEditFakePolicy {Logic = r => AccessRight.None});
@@ -113,7 +114,7 @@ namespace FubuMVC.IntegrationTesting.UI
         {
             var container = new Container();
             using (
-                EmbeddedFubuMvcServer server = FubuApplication.For<TestRegistry>().StructureMap(container).RunEmbedded()
+                EmbeddedFubuMvcServer server = FubuApplication.For<TestRegistry>().StructureMap(container).RunEmbeddedWithAutoPort()
                 )
             {
                 container.Inject<IFieldAccessRule>(new ShowEditFakePolicy {Logic = r => AccessRight.ReadOnly});
@@ -129,7 +130,7 @@ namespace FubuMVC.IntegrationTesting.UI
         {
             var container = new Container();
             using (
-                EmbeddedFubuMvcServer server = FubuApplication.For<TestRegistry>().StructureMap(container).RunEmbedded()
+                EmbeddedFubuMvcServer server = FubuApplication.For<TestRegistry>().StructureMap(container).RunEmbeddedWithAutoPort()
                 )
             {
                 container.Inject<IFieldAccessRule>(new ShowEditFakePolicy {Logic = r => AccessRight.All});
@@ -146,7 +147,7 @@ namespace FubuMVC.IntegrationTesting.UI
         {
             var container = new Container();
             using (
-                EmbeddedFubuMvcServer server = FubuApplication.For<TestRegistry>().StructureMap(container).RunEmbedded()
+                EmbeddedFubuMvcServer server = FubuApplication.For<TestRegistry>().StructureMap(container).RunEmbeddedWithAutoPort()
                 )
             {
                 container.Inject<IFieldAccessRule>(new ShowEditFakePolicy {Logic = r => AccessRight.All});
