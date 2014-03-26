@@ -17,8 +17,6 @@ using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Routing;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Runtime.Conditionals;
-using FubuMVC.Core.Runtime.Formatters;
 using FubuMVC.Core.SessionState;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.Urls;

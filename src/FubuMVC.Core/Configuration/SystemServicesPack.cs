@@ -5,6 +5,7 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Services;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Security;
+using FubuMVC.Core.UI;
 
 namespace FubuMVC.Core.Configuration
 {
@@ -19,6 +20,7 @@ namespace FubuMVC.Core.Configuration
             Services<HttpStandInServiceRegistry>();
             Services<CoreServiceRegistry>();
             Services<CachingServiceRegistry>();
+            Services<UIServiceRegistry>();
         }
 
     }

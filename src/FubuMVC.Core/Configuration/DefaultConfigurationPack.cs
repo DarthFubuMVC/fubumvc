@@ -2,6 +2,7 @@ using FubuMVC.Core.Caching;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.UI;
 using FubuMVC.Core.View;
 
 namespace FubuMVC.Core.Configuration
@@ -12,6 +13,7 @@ namespace FubuMVC.Core.Configuration
         {
             For(ConfigurationType.Policy);
             Add<AutoImportModelNamespacesConvention>();
+            Add<HtmlConventionActivation>();
 
             For(ConfigurationType.InjectNodes);
             Add<ContinuationHandlerConvention>();

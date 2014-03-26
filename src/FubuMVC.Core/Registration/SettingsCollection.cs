@@ -35,7 +35,7 @@ namespace FubuMVC.Core.Registration
         public T Get<T>() where T : class
         {
             var task = GetTask<T>();
-            task.Wait(5000);
+            task.Wait(10000);
             return task.Result;
         }
 
