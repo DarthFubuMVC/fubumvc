@@ -1,0 +1,22 @@
+﻿<viewdata model="FubuMVC.Diagnostics.Conventions.ConventionsViewModel" />
+<use master="" />
+
+
+<div class="container-fluid">
+	<div class="row-fluid">
+    
+		<div class="span3 well">
+      <p>This page visualizes all the policies and conventions that are active within this application.  This does not yet reflect policies that are applied locally to imports from Bottles</p>
+      
+      !{Model.TableOfContents}
+      
+		</div>
+
+		<div class="span9">
+      !{Model.Descriptions}
+		</div>
+
+
+	</div>
+
+</div>

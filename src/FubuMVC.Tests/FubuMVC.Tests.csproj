@@ -302,6 +302,7 @@
     <Compile Include="UI\Address.cs" />
     <Compile Include="UI\AuthorizationOnPageExtensionsTester.cs" />
     <Compile Include="UI\AuthorizedLinkExpressionsTester.cs" />
+    <Compile Include="UI\Bootstrap\Tags\DetailTableBuilderTester.cs" />
     <Compile Include="UI\configuring_conventions_by_profile.cs" />
     <Compile Include="UI\DefaultHtmlConventionTester.cs" />
     <Compile Include="UI\Elements\AccessorDefTester.cs" />

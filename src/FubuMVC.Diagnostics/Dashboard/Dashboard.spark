@@ -1,0 +1,50 @@
+<use master="" />
+
+﻿<use namespace="FubuMVC.Core.Assets" />
+<viewdata model="FubuMVC.Diagnostics.Dashboard.DashboardModel" />
+
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span3 well">
+      The FubuMVC diagnostics are organized into separate groups or subsystems.  You can select a different category of diagnostics from the links below or the dropdown menu at the top right of each page.
+      <br></br>
+      !{Model.Links}
+    </div>
+    <div class="span9">
+
+      <h2>Welcome to FubuMVC!</h2>
+      <h3 class="subheader">The MVC framework that gets out of your way</h3>
+      <p>You are viewing the Advanced Diagnostics package that provides detailed insight into the configuration of your application.</p>
+      <hr />
+      <h3>Getting started</h3>
+      <h4 class="subheader">Some tips on where to go from here</h4>
+      <ol>
+        <li>
+          <strong>
+            <a href="${this.Urls.UrlFor(new FubuMVC.Diagnostics.Endpoints.RoutesRequest())}"> Explore your application</a>
+          </strong>
+          <p>The endpoint explorer allows you to sort and filter through the routes, endpoints, and chains within your application. You can also drill into the details and visualize the behavior chain.</p>
+        </li>
+        <li>
+          <strong>
+            <a href="${this.Urls.UrlFor<FubuMVC.Diagnostics.Requests.RequestsFubuDiagnostics>(x => x.get_requests())}">Explore the request history</a>
+          </strong>
+          <p>The requests explorer allows you to see the most recent requests that have been recorded within your application. You can drill into the details of each request to visualize the various steps that were taken to issue the response.</p>
+        </li>
+        <li>
+          <strong>
+            <a href="http://fubuworld.com/fubumvc/">Browse the documentation</a>
+          </strong>
+          <p>Browse through our topics and read more about the our APIs.</p>
+        </li>
+        <li>
+          <strong>
+            <a href="https://groups.google.com/forum/#!forum/fubumvc-devel">If you're really stuck</a>
+          </strong>
+          <p>Visit our user group to learn how to get plugged into our vibrant community. You'll get your questions answered in no time.</p>
+        </li>
+      </ol>
+
+    </div>
+  </div>
+</div>

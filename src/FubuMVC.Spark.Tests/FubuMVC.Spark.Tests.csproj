@@ -85,7 +85,6 @@
     </Compile>
     <Compile Include="Rendering\FubuSparkViewDecoratorTester.cs" />
     <Compile Include="Rendering\FubuSparkViewTester.cs" />
-    <Compile Include="DefaultServicesTester.cs" />
     <Compile Include="SparkModel\Policies\StubTemplate.cs" />
     <Compile Include="SparkModel\ChunkLoaderTester.cs" />
     <Compile Include="SparkEngineSettingsTester.cs" />

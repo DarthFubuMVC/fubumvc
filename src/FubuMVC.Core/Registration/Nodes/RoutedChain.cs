@@ -42,7 +42,7 @@ namespace FubuMVC.Core.Registration.Nodes
         /// <summary>
         ///   Models how the Route for this BehaviorChain will be generated
         /// </summary>
-        public IRouteDefinition Route { get; private set; }
+        public IRouteDefinition Route { get; protected set; }
 
         /// <summary>
         /// Collection of additional routes (aliases) that will be generated for this BehaviorChain.

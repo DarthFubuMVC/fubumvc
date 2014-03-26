@@ -1,0 +1,169 @@
+﻿h2 {
+    line-height: inherit !important;
+}
+
+.container-fluid > .sidebar {
+    width: 280px;
+}
+
+.container-fluid > .content {
+    margin-left: 300px;
+}
+
+.container-fluid > .sidebar > .well > .form-stacked {
+    padding-left: 0;
+}
+
+footer
+{
+	margin-top: 20px;
+	padding-top: 8px;
+}
+
+#diagnostic-menu .nav > li > a
+{
+	padding-top: 18px !important;
+}
+
+#Content
+{
+	min-height: 600px;
+	top: 70px;
+}
+
+table.details th
+{
+	text-align:right;
+}
+
+table.details th span
+{
+	padding-right: 8px;
+}
+
+span.http-status-description
+{
+	margin-left: 8px;
+	font-style:italic;
+	font-weight: lighter;
+	font-size: smaller;
+}
+
+span.http-status-code
+{
+	font-weight: 700;
+}
+
+.duration-cell
+{
+	text-align: right;
+}
+
+.request-time
+{
+	text-align: right;
+}
+
+span.node-trace-duration
+{
+	float:right;
+	text-align:right;
+}
+
+#request-header
+{
+	padding-bottom: 10px;
+	padding-top: 10px;
+}
+
+a.external {
+    background: url(/_content/images/external.png) center right no-repeat;
+    padding-right: 13px;
+}
+
+.info-link
+{
+	font-size: small;
+}
+
+/* Description stuff */
+table.desc-properties th
+{
+	text-align: right;
+	padding-right: 8px;
+	width: auto;
+}
+
+table.desc-properties th, table.desc-properties td
+{
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+
+.desc-child-title b
+{
+	padding-right: 5px;
+	color: Orange;
+}
+
+.desc-child-body
+{
+	padding-left:3px;
+	border-left: thin solid orange;
+	
+	margin-left: 20px;
+	margin-bottom: 15px;
+	
+}
+
+.desc-list-name
+{
+	font-weight: bold;
+	
+}
+
+.desc-bullet-item-title
+{
+	color: Blue;
+	margin-left:20px;
+	font-style: italic;
+}
+
+.desc-bullet-item-body
+{
+	padding-left:3px;
+	border-left: thin solid blue;
+	
+	margin-left: 40px;
+	margin-bottom:15px;
+}
+
+span.exception
+{
+	color: Red;
+	font-weight: bold;
+	margin-left: 20px;
+}
+
+div.exception-report pre
+{
+	background-color: #FFFFAA !important;
+}
+
+li.exception div.node-trace-container
+{
+	color: Red;
+	font-weight: bold;
+}
+
+
+li.gray div.node-trace-container
+{
+	color: Gray;
+	text-decoration: line-through;
+}
+
+td.number {
+    text-align: right !important;
+}

@@ -341,6 +341,13 @@
     <Compile Include="SymmetricJsonAttribute.cs" />
     <Compile Include="TagAttribute.cs" />
     <Compile Include="UI\AuthorizationOnPageExtensions.cs" />
+    <Compile Include="UI\Bootstrap\Collapsibles\CollapsiblePartialExpression.cs" />
+    <Compile Include="UI\Bootstrap\Collapsibles\CollapsibleTag.cs" />
+    <Compile Include="UI\Bootstrap\Tags\DetailsTableTag.cs" />
+    <Compile Include="UI\Bootstrap\Tags\DetailTableBuilder.cs" />
+    <Compile Include="UI\Bootstrap\Tags\HtmlTagExtensions.cs" />
+    <Compile Include="UI\Bootstrap\Tags\OutlineTag.cs" />
+    <Compile Include="UI\Bootstrap\BootstrapPageExtensions.cs" />
     <Compile Include="UI\DefaultHtmlConventions.cs" />
     <Compile Include="UI\DisplayConversionRegistryActivator.cs" />
     <Compile Include="Http\AspNet\AspNetHttpResponse.cs" />

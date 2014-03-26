@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A1DEB080-5A9A-44B4-A10B-84DA9BD07AF5}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FubuMVC.Diagnostics</RootNamespace>
+    <AssemblyName>FubuMVC.Diagnostics</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Bottles">
+      <HintPath>..\packages\Bottles\lib\Bottles.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuCore">
+      <HintPath>..\packages\FubuCore\lib\FubuCore.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlTags">
+      <HintPath>..\packages\HtmlTags\lib\4.0\HtmlTags.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Spark">
+      <HintPath>..\packages\Spark\lib\NET40\Spark.dll</HintPath>
+    </Reference>
+    <Reference Include="structuremap">
+      <HintPath>..\packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\packages\structuremap\lib\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".package-manifest" />
+    <None Include="Chains\ChainVisualization.spark">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Chrome\Chrome.spark">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Content\Images\arrow-turn-000-left-icon.png" />
+    <Content Include="Content\Images\block.png" />
+    <Content Include="Content\Images\console-line.png" />
+    <Content Include="Content\Images\down-arrow.png" />
+    <Content Include="Content\Images\filter_wrap_left.gif" />
+    <Content Include="Content\Images\filter_wrap_right.gif" />
+    <Content Include="Content\Images\fubumvc.png" />
+    <Content Include="Content\Images\logo.png" />
+    <Content Include="Content\Images\pre_code_bg_blk.gif" />
+    <Content Include="Content\Scripts\diagnostics\json2.js" />
+    <Content Include="Content\Scripts\diagnostics\knockout-1.1.2.js" />
+    <Content Include="Content\Scripts\diagnostics\requestVisualization.js" />
+    <Content Include="Content\Scripts\diagnostics\routes.js" />
+    <Content Include="Content\Scripts\diagnostics\underscore-min.js" />
+    <Content Include="Content\Scripts\jquery-1.7.min.js" />
+    <Content Include="Content\Styles\chains\view.css" />
+    <Content Include="Content\Styles\diagnostics\bootstrap.overrides.css" />
+    <Content Include="Content\Styles\diagnostics\default.css" />
+    <Content Include="Content\Styles\diagnostics\html\preview.css" />
+    <Content Include="Content\Styles\diagnostics\html\selector.css" />
+    <Content Include="Content\Styles\diagnostics\master.css" />
+    <Content Include="Content\Styles\diagnostics\requests\view.css" />
+    <Content Include="Conventions\Conventions.spark">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Dashboard\Dashboard.spark">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="diagnostics.asset.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Endpoints\Endpoints.spark">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ModelBinding\ModelBindingGraph.spark">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Packaging\Packaging.spark" />
+    <None Include="Requests\Requests.spark">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Requests\RequestVisualization.spark">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="ripple.dependencies.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Shared\_global.spark">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Shared\Application.spark">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Shared\bindings.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Visualization\BehaviorNode.spark" />
+    <Content Include="web.config" />
+    <Content Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </Content>
+    <Content Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="BehaviorChainExtensions.cs" />
+    <Compile Include="Chains\ChainDetails.cs" />
+    <Compile Include="Chains\ChainFubuDiagnostics.cs" />
+    <Compile Include="Chains\ChainRequest.cs" />
+    <Compile Include="Chains\ChainVisualization.cs" />
+    <Compile Include="Chrome\DashboardChrome.cs" />
+    <Compile Include="Conventions\ConventionsFubuDiagnostics.cs" />
+    <Compile Include="Core\CoreExtensions.cs" />
+    <Compile Include="Core\Extensions\TagExtensions.cs" />
+    <Compile Include="Dashboard\DashboardFubuDiagnostics.cs" />
+    <Compile Include="Dashboard\DashboardModel.cs" />
+    <Compile Include="Dashboard\DashboardRequestModel.cs" />
+    <Compile Include="DiagnosticsException.cs" />
+    <Compile Include="DiagnosticsRegistration.cs" />
+    <Compile Include="DiagnosticsRegistry.cs" />
+    <Compile Include="Endpoints\EndpointExplorerFubuDiagnostics.cs" />
+    <Compile Include="Endpoints\EndpointExplorerModel.cs" />
+    <Compile Include="Endpoints\EndpointsTable.cs" />
+    <Compile Include="Endpoints\RouteQuery.cs" />
+    <Compile Include="Endpoints\RouteReport.cs" />
+    <Compile Include="FubuPageExtensions.cs" />
+    <Compile Include="Model\DiagnosticChain.cs" />
+    <Compile Include="Model\DiagnosticChainsPolicy.cs" />
+    <Compile Include="Model\DiagnosticGraph.cs" />
+    <Compile Include="Model\DiagnosticGroup.cs" />
+    <Compile Include="Model\FubuDiagnosticsConfiguration.cs" />
+    <Compile Include="Model\GroupEndpoint.cs" />
+    <Compile Include="Model\IDiagnosticContext.cs" />
+    <Compile Include="ModelBinding\ModelBindingFubuDiagnostics.cs" />
+    <Compile Include="NoDiagnosticsAttribute.cs" />
+    <Compile Include="Packaging\PackageDiagnosticsLogModel.cs" />
+    <Compile Include="Packaging\PackageDiagnosticsModel.cs" />
+    <Compile Include="Packaging\PackageDiagnosticsRequestModel.cs" />
+    <Compile Include="Packaging\PackageLogFubuDiagnostics.cs" />
+    <Compile Include="Requests\BehaviorChainTraceTag.cs" />
+    <Compile Include="Requests\BehaviorNodeTraceTag.cs" />
+    <Compile Include="Requests\HttpRequestVisualization.cs" />
+    <Compile Include="Requests\RequestDataFubuDiagnostics.cs" />
+    <Compile Include="Requests\RequestLinksTag.cs" />
+    <Compile Include="Requests\RequestLogDataOutlineTag.cs" />
+    <Compile Include="Requests\RequestsFubuDiagnostics.cs" />
+    <Compile Include="Requests\RequestStepTag.cs" />
+    <Compile Include="Requests\RequestTable.cs" />
+    <Compile Include="Requests\RequestVisualizationFubuDiagnostics.cs" />
+    <Compile Include="Requests\ResponseHeadersTag.cs" />
+    <Compile Include="Requests\TracingOutlineTag.cs" />
+    <Compile Include="Runtime\ApplyTracing.cs" />
+    <Compile Include="Runtime\BehaviorFinish.cs" />
+    <Compile Include="Runtime\BehaviorStart.cs" />
+    <Compile Include="Runtime\BehaviorTracerNode.cs" />
+    <Compile Include="Runtime\BindingHistory.cs" />
+    <Compile Include="Runtime\DebugDetector.cs" />
+    <Compile Include="Runtime\DiagnosticNode.cs" />
+    <Compile Include="Runtime\FubuDiagnosticsAttribute.cs" />
+    <Compile Include="Runtime\HttpStatus.cs" />
+    <Compile Include="Runtime\IDebugDetector.cs" />
+    <Compile Include="Runtime\IRequestHistoryCache.cs" />
+    <Compile Include="Runtime\IRequestTraceObserver.cs" />
+    <Compile Include="Runtime\ProductionModeTraceListener.cs" />
+    <Compile Include="Runtime\RequestHistoryCache.cs" />
+    <Compile Include="Runtime\RequestHistoryObserver.cs" />
+    <Compile Include="Runtime\RequestLog.cs" />
+    <Compile Include="Runtime\RequestStep.cs" />
+    <Compile Include="Runtime\RequestTraceListener.cs" />
+    <Compile Include="Runtime\TracedStep.cs" />
+    <Compile Include="Runtime\Tracing\BehaviorCorrelation.cs" />
+    <Compile Include="Runtime\Tracing\BehaviorTracer.cs" />
+    <Compile Include="Runtime\Tracing\DiagnosticBehavior.cs" />
+    <Compile Include="Runtime\Tracing\IRequestLogBuilder.cs" />
+    <Compile Include="Runtime\Tracing\IRequestTrace.cs" />
+    <Compile Include="Runtime\Tracing\RequestLogBuilder.cs" />
+    <Compile Include="Runtime\Tracing\RequestTrace.cs" />
+    <Compile Include="Shared\Tags\ControlGroupDivTag.cs" />
+    <Compile Include="Shared\TypeEndpoint.cs" />
+    <Compile Include="Visualization\BehaviorNodeViewModel.cs" />
+    <Compile Include="Visualization\DescriptionVisualizationPolicy.cs" />
+    <Compile Include="Visualization\DetailsTableBuilderExtensions.cs" />
+    <Compile Include="Visualization\IVisualizer.cs" />
+    <Compile Include="Visualization\VisualizationPageExtensions.cs" />
+    <Compile Include="Visualization\Visualizer.cs" />
+    <Compile Include="Visualization\Visualizers\BehaviorStartAndFinishEndpoints.cs" />
+    <Compile Include="Visualization\Visualizers\CommentTag.cs" />
+    <Compile Include="Visualization\Visualizers\ModelBindingLogEndpoint.cs" />
+    <Compile Include="Visualization\Visualizers\StringMessageEndpoint.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Runtime\Assets\" />
+    <Folder Include="Visualization\Visualizers\ConfigurationActions\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>11210</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ItemGroup>
+    <EmbeddedResource Include="pak-WebContent.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
+      <Project>{e18fd922-0e7a-49cd-b89f-473826077b9d}</Project>
+      <Name>FubuMVC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
+      <Project>{e18fd922-0e7a-49cd-b89f-473826077b9d}</Project>
+      <Name>FubuMVC.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+</Project>

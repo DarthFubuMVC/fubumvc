@@ -1,0 +1,158 @@
+#nodes
+{
+    width:100%;
+}
+
+#nodes li
+{
+    list-style-type: none;
+    margin-top:10px;
+    text-align:left;
+}
+
+#nodes li.with-children
+{
+    border-left:1px dotted #B6B6B6;
+}
+
+#nodes li .ui-button
+{
+    text-align:center;
+}
+
+li
+{
+    list-style-type: none;
+}
+
+.request-info
+{
+    float: left;
+    width: 50%;
+}
+
+.request-actions
+{
+    float: right;
+}
+
+ul.request-actions li
+{
+    list-style-type: none;
+}
+
+h2.request
+{
+    margin-bottom:0;
+}
+
+h4.request-identifier
+{
+    font-style:italic;
+}
+
+.console
+{
+    clear:left;
+    padding-bottom:5px;
+    margin-bottom:10px;
+    border-bottom:1px solid #B6B6B6;
+    white-space:normal;
+}
+
+.last .console, .log-viewer .console
+{
+    border-bottom:0;
+}
+
+.console .indicator
+{
+    font-weight:bold;
+    font-size:1.2em;
+    float:left;
+    margin-right:10px;
+}
+
+.console .message
+{
+    float: left;
+    margin-top: -2px;
+    width: 95%;
+    margin-right: -25px;
+}
+
+.console .message p
+{
+    margin-top:0;
+    margin-bottom:0;
+    overflow:hidden;
+}
+
+.console .message p.statement
+{
+    font-weight: bold;
+}
+
+.console .message p.msg-info
+{
+    color:#808080;
+    width:90%;
+}
+
+.cboth
+{
+    clear:both;
+}
+
+.ui-widget pre
+{
+    margin-bottom:5px;
+    border-top:1px solid #CCC;
+    border-right:1px solid #CCC;
+}
+
+.console .message ul
+{
+    width:100%;
+}
+
+.exception
+{
+    border: 1px dotted red; 
+}
+
+.exception pre
+{
+    width: auto;
+    background: #fcf0f0; 
+    color: #280b0b;
+}
+
+.behavior-details .message ul
+{
+    margin-top: 10px;
+}
+
+.behaviors .inner-behavior
+{
+    margin-bottom: 20px;
+}
+
+.chain-visualizer
+{
+    list-style-type: none;
+    margin: 0;
+    margin-top: 10px;
+}
+
+.chain-visualizer li
+{
+    margin-bottom: 1em;
+    text-align: center;
+}
+
+
+.chain-visualizer li.arrow
+{
+    margin-bottom: 0;
+}

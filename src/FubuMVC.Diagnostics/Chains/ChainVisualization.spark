@@ -1,0 +1,38 @@
+﻿<viewdata model="FubuMVC.Diagnostics.Chains.ChainVisualization" />
+<use master="" />
+<use namespace="FubuMVC.Diagnostics.Chains" />
+<use namespace="FubuMVC.TwitterBootstrap" />
+<use namespace="FubuMVC.Diagnostics.Visualization" />
+
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span3">
+			<div class="well sidebar-nav">
+        !{Model.BehaviorsOutline}
+      </div>
+		</div>
+
+		<div class="span9">
+			<div id="request-header" class="hero-unit">
+				<h2>Chain:  !{Model.Title}</h2>
+			</div>
+
+      <div class="chain-details">
+        !{Model.Details}
+        
+        
+      </div>
+
+      
+
+      <div class="node-visualization">
+        !{Model.RouteTag}
+        !{Model.BehaviorVisualization}
+      </div>
+		</div>
+
+
+	</div>
+
+</div>
+

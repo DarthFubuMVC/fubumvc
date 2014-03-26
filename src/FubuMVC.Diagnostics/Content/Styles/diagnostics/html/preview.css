@@ -1,0 +1,60 @@
+.property-list li
+{
+    list-style-type:none;
+    margin-left:-15px;
+}
+
+.property-list .example fieldset
+{
+    border:1px solid #666;
+    margin-left:25px;
+}
+
+.property-list .example pre.blk
+{
+}
+.example {
+    margin-top: 20px;
+}
+.example h4 {
+    font-size: 1.2em;
+    line-height: 24px;
+    padding-left: 5px;
+}
+.example h5 {
+    font-size: 1.0em;
+    line-height: 24px;
+    padding-left: 20px;
+    color: #777;
+}
+.example div {
+    margin-left: 20px;
+    border-left: 5px rgba(0, 0, 0, 0.60) solid;
+    padding-left: 15px;
+}
+.example label {
+    float: none;
+}
+.example pre {
+    margin-bottom:0px;
+    background: none;
+    border: none;
+    border-left: 5px rgba(0, 0, 0, 0.15) solid;
+    margin-left: 20px;
+}
+.example code {
+    background: none;
+}
+dl {
+    overflow: hidden;
+    float: right;
+    margin-top: -41px;
+}
+dl dt {
+    width: 85px;
+    float: left;
+    clear: both;
+}
+dl dd {
+    float: left;
+}

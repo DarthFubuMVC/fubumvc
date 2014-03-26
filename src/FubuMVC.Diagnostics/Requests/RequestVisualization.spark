@@ -1,0 +1,53 @@
+﻿<viewdata model="FubuMVC.Diagnostics.Requests.HttpRequestVisualization" />
+<use master="" />
+<use namespace="FubuMVC.Diagnostics.Requests" />
+<use namespace="System.Linq" />
+<use namespace="FubuMVC.TwitterBootstrap" />
+<use namespace="FubuMVC.Diagnostics.Visualization" />
+﻿<use namespace="FubuMVC.Core.Assets" />
+
+<Script src="diagnostics/requestVisualization.js" />
+
+<input type="hidden" id="chainUrl" value="!{Model.ChainUrl}"></input>
+
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span3">
+			<div class="well sidebar-nav">
+        !{Model.LinksTag}
+        <br></br>
+        !{Model.BehaviorSummary}
+        <br></br>
+        !{Model.RequestLogDataOutlineTag}
+        <br></br>
+        !{Model.TracingOutlineTag}
+      </div>
+		</div>
+
+		<div class="span9">
+			<div id="request-header" class="hero-unit">
+				<h2>!{Model.Log.HttpMethod} !{Model.Log.Endpoint}</h2>
+        <p>!{Model.Log.HttpStatus} at !{Model.Log.Time} (!{Model.Log.ExecutionTime} ms)</p>
+			</div>
+
+      <div>
+        <h3>Data</h3>
+        !{this.PartialFor(Model.Log.RequestData)}
+
+        !{Model.ResponseHeaderTag}
+        
+        <br></br>
+        <h3>Tracing</h3>
+
+        <div class="row-fluid">
+          !{this.Visualize(Model.Log.AllSteps())}
+        </div>
+      </div>
+		</div>
+
+
+	</div>
+
+</div>
+
+  !{this.Modal("routeModal").Label("Route/Chain Visualization").AddCloseButton("Close")}

@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{99A53042-2455-464F-A68E-00C401B177C0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FubuMVC.Diagnostics.Tests</RootNamespace>
+    <AssemblyName>FubuMVC.Diagnostics.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Bottles">
+      <HintPath>..\packages\Bottles\lib\Bottles.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuCore">
+      <HintPath>..\packages\FubuCore\lib\FubuCore.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuTestingSupport">
+      <HintPath>..\packages\FubuTestingSupport\lib\FubuTestingSupport.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlTags">
+      <HintPath>..\packages\HtmlTags\lib\4.0\HtmlTags.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin\lib\net40\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.HttpListener">
+      <HintPath>..\packages\Microsoft.Owin.Host.HttpListener\lib\net40\Microsoft.Owin.Host.HttpListener.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Hosting">
+      <HintPath>..\packages\Microsoft.Owin.Hosting\lib\net40\Microsoft.Owin.Hosting.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.mocks">
+      <HintPath>..\packages\NUnit\lib\nunit.mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="pnunit.framework">
+      <HintPath>..\packages\NUnit\lib\pnunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\packages\RhinoMocks\lib\net\Rhino.Mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="Spark">
+      <HintPath>..\packages\Spark\lib\NET40\Spark.dll</HintPath>
+    </Reference>
+    <Reference Include="structuremap">
+      <HintPath>..\packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\packages\structuremap\lib\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.AutoMocking">
+      <HintPath>..\packages\structuremap.automocking\lib\StructureMap.AutoMocking.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Chains\ChainVisualizationTester.cs" />
+    <Compile Include="debugging.cs" />
+    <Compile Include="DiagnosticSettings_TraceLevel_Registration_Tester.cs" />
+    <Compile Include="DiagnosticsExtensionTester.cs" />
+    <Compile Include="IntegrationTestHarness.cs" />
+    <Compile Include="InteractionContextExtensions.cs" />
+    <Compile Include="Model\DiagnosticChainTester.cs" />
+    <Compile Include="Model\DiagnosticContextTester.cs" />
+    <Compile Include="Model\DiagnosticGroupTester.cs" />
+    <Compile Include="Model\Diagnostic_Chain_Scanning_Integrated_Tester.cs" />
+    <Compile Include="Model\FakeFubuDiagnostics.cs" />
+    <Compile Include="Requests\BehaviorNodeTraceTagTester.cs" />
+    <Compile Include="Requests\HttpRequestVisualizationTester.cs" />
+    <Compile Include="Requests\RequestStepTester.cs" />
+    <Compile Include="Requests\RequestVisualizationEndpointTester.cs" />
+    <Compile Include="Requests\ResponseHeadersTagTester.cs" />
+    <Compile Include="Routes\RouteReportTester.cs" />
+    <Compile Include="Runtime\ApplyTracingIntegrationTesting.cs" />
+    <Compile Include="Runtime\BehaviorFinishTester.cs" />
+    <Compile Include="Runtime\BehaviorTracerNodeTester.cs" />
+    <Compile Include="Runtime\BehaviorTracerTester.cs" />
+    <Compile Include="Runtime\BehaviorTracer_and_DiagnosticBehavior_construction_testing.cs" />
+    <Compile Include="Runtime\DebugDetectorTester.cs" />
+    <Compile Include="Runtime\Diagnostic_tracing_attachment_filtering_Tester.cs" />
+    <Compile Include="Runtime\DiagnosticNodeTester.cs" />
+    <Compile Include="Runtime\DiagnosticsPackageTester.cs" />
+    <Compile Include="Runtime\DiagnosticsRegistryTester.cs" />
+    <Compile Include="Runtime\DiagnosticsSettingsTester.cs" />
+    <Compile Include="Runtime\RequestHistoryCacheTester.cs" />
+    <Compile Include="Runtime\RequestLogTester.cs" />
+    <Compile Include="Runtime\Tracing\RequestLogBuilderTester.cs" />
+    <Compile Include="Runtime\Tracing\RequestTraceListenerTester.cs" />
+    <Compile Include="Runtime\Tracing\DiagnosticBehaviorTester.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Runtime\Tracing\RequestTraceTester.cs" />
+    <Compile Include="Runtime\Tracing_is_not_applied_to_chains_that_are_tagged_no_tracing.cs" />
+    <Compile Include="Visualization\Visualizers\BehaviorStartAndFinishEndpointsTester.cs" />
+    <Compile Include="Visualization\Visualizers\ModelBindingLogEndpointTester.cs" />
+    <Compile Include="Visualization\VisualizerTester.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ripple.dependencies.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
+      <Project>{e18fd922-0e7a-49cd-b89f-473826077b9d}</Project>
+      <Name>FubuMVC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Diagnostics\FubuMVC.Diagnostics.csproj">
+      <Project>{A1DEB080-5A9A-44B4-A10B-84DA9BD07AF5}</Project>
+      <Name>FubuMVC.Diagnostics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Katana\FubuMVC.Katana.csproj">
+      <Project>{48bc51c2-b759-48db-aae1-f4686cd6d02a}</Project>
+      <Name>FubuMVC.Katana</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Spark\FubuMVC.Spark.csproj">
+      <Project>{9d6bf559-6461-4eac-bb16-f976ff43e8da}</Project>
+      <Name>FubuMVC.Spark</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
+      <Project>{abfea520-820c-4b77-9015-6a09e24252fa}</Project>
+      <Name>FubuMVC.StructureMap</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Tests\FubuMVC.Tests.csproj">
+      <Project>{FEB91F9F-ECE2-480C-B39C-A44BBF1F7B01}</Project>
+      <Name>FubuMVC.Tests</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Shared\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

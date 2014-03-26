@@ -1,0 +1,31 @@
+<use master="" />
+<viewdata model="FubuMVC.Diagnostics.Packaging.PackageDiagnosticsModel" />
+
+  <h2>Package Loading Log</h2>
+  <table class="grid">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Provenance</th>
+        <th>Timing</th>
+      </tr>
+    </thead>
+    <tbody>
+      <for each="var log in Model.Logs">
+        <tr>
+          <td>${log.Type}</td>
+          <td>${log.Description}</td>
+          <td>${log.Provenance}</td>
+          <td>${log.Timing}</td>
+        </tr>
+        <if condition="log.HasTraceText()">
+          <tr>
+            <td colspan="4">
+              <pre class="log failure?{!log.Success}">${log.FullTraceText}</pre>
+            </td>
+          </tr>
+        </if>
+      </for>
+    </tbody>
+  </table>
