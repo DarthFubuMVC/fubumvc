@@ -66,6 +66,8 @@ namespace FubuMVC.IntegrationTesting.Views.Spark
         [Test]
         public void three_pass_renders_correctly()
         {
+            
+
             Scenario.Get.Action<ThreePassEndpoint>(x => x.ThreePassSample(null));
 
             Scenario.ContentShouldContain("<html>");

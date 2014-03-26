@@ -75,7 +75,13 @@ namespace FubuMVC.IntegrationTesting.UI
 
     public class FormRequestEndpoint
     {
+        private readonly FubuHtmlDocument<FormTagModel> _document;
         public static Func<IFubuPage, HtmlTag> Source;
+
+        public FormRequestEndpoint(FubuHtmlDocument<FormTagModel> document)
+        {
+            _document = document;
+        }
 
         public static HtmlTag Build(IFubuPage page)
         {
@@ -85,9 +91,12 @@ namespace FubuMVC.IntegrationTesting.UI
 
         public static HtmlTag LastTag { get; set; }
 
-        public FormTagModel get_form_conventions()
+        public HtmlDocument get_form_conventions()
         {
-            return new FormTagModel();
+            LastTag = Source(_document);
+            _document.Add(LastTag);
+
+            return _document;
         }
 
         public AjaxContinuation post_update_target(PostedData data)

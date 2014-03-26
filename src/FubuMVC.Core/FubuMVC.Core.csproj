@@ -517,7 +517,7 @@
     <Compile Include="UI\FubuHtmlDocument.cs" />
     <Compile Include="UI\FubuPageExtensions.cs" />
     <Compile Include="UI\FubuPageFormExtensions.cs" />
-    <Compile Include="UI\HtmlConventionActivation.cs" />
+    <Compile Include="UI\HtmlConventionCollator.cs" />
     <Compile Include="UI\HtmlConventionRegistry.cs" />
     <Compile Include="UI\HtmlTagExtensions.cs" />
     <Compile Include="UI\IPartialInvoker.cs" />

@@ -1,4 +1,5 @@
-﻿using FubuMVC.IntegrationTesting.Views.Razor;
+﻿using System.Threading;
+using FubuMVC.IntegrationTesting.Views.Razor;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Views.Spark
@@ -21,6 +22,7 @@ namespace FubuMVC.IntegrationTesting.Views.Spark
         [Test]
         public void should_not_use_any_layout_if_layout_equals_none()
         {
+            Thread.Sleep(100); // this test has been very unreliable
             Scenario.Get.Action<NoLayoutEndpoint>(x => x.get_no_layout());
 
             Scenario.ContentShouldContain("<h1>Some stuff</h1>");

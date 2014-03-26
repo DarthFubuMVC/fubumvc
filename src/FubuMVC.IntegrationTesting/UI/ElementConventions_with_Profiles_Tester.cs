@@ -51,9 +51,16 @@ namespace FubuMVC.IntegrationTesting.UI
 
     public class ProfiledEndpoint
     {
-        public ProfiledViewModel get_profiled_page()
+        private readonly ProfiledViewModelDocument _document;
+
+        public ProfiledEndpoint(ProfiledViewModelDocument document)
         {
-            return new ProfiledViewModel();
+            _document = document;
+        }
+
+        public HtmlDocument get_profiled_page()
+        {
+            return _document;
         }
     }
 
@@ -68,6 +75,7 @@ namespace FubuMVC.IntegrationTesting.UI
 
         public ProfiledViewModelDocument(IServiceLocator services, IFubuRequest request) : base(services, request)
         {
+            Get<HtmlTags.Conventions.ActiveProfile>().Push("foo");
             HtmlTag tag = Builder(this);
             Add(tag);
         }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using Bottles;
 using Bottles.Diagnostics;
 using FubuCore;
@@ -46,6 +47,8 @@ namespace FubuMVC.IntegrationTesting.Views
             fileSystem.CreateDirectory(Folder.AppendPath(Application));
 
             _streams.Each(x => x.DumpContents());
+
+            Thread.Sleep(100); // let the file system cool off a bit first
 
             FubuMvcPackageFacility.PhysicalRootPath = _applicationDirectory;
 

@@ -1,28 +1,18 @@
-﻿using System.ComponentModel;
-using FubuCore.Descriptions;
-using FubuCore.Reflection;
-using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.ObjectGraph;
+﻿using FubuCore.Reflection;
 using FubuMVC.Core.UI.Elements;
 using HtmlTags.Conventions;
 
 namespace FubuMVC.Core.UI
 {
-    [Description("Compiles and activates the Html Conventions")]
-    [ConfigurationType(ConfigurationType.Policy)]
-    public class HtmlConventionActivation : IConfigurationAction
+    public class HtmlConventionCollator
     {
-        public void Configure(BehaviorGraph graph)
+        public static void BuildHtmlConventionLibrary(HtmlConventionLibrary library, AccessorRules rules)
         {
-            var rules = graph.Settings.Get<AccessorRules>();
-            var library = graph.Settings.Get<HtmlConventionLibrary>();
             library.Import(new DefaultHtmlConventions().Library);
 
             var visitor = new Visitor(rules);
 
             library.For<ElementRequest>().AcceptVisitor(visitor);
-
-            graph.Services.SetServiceIfNone(typeof(HtmlConventionLibrary), ObjectDef.ForValue(library));
         }
 
         public class Visitor : ITagLibraryVisitor<ElementRequest>

@@ -54,7 +54,7 @@ namespace FubuMVC.Tests.UI.Forms
         {
             page.Stub(x => x.Get<IHttpRequest>()).Return(OwinHttpRequest.ForTesting());
 
-            page.FormFor("some action").Attr("action").ShouldEqual("http://server/some action");
+            page.FormFor("some action").Attr("action").ShouldEqual("/some action");
         }
 
     }

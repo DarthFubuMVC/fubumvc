@@ -9,8 +9,10 @@ using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.UI;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Attachment;
+using HtmlTags.Conventions;
 
 namespace FubuMVC.Core.Configuration
 {
@@ -59,6 +61,13 @@ namespace FubuMVC.Core.Configuration
             graph.Settings.Replace(viewDiscovery);
 
             lookForAccessorOverrides(graph);
+            var htmlConventionCollation = graph.Settings.GetTask<AccessorRules>().ContinueWith(t => {
+                var library = graph.Settings.Get<HtmlConventionLibrary>();
+                HtmlConventionCollator.BuildHtmlConventionLibrary(library, t.Result);
+
+                graph.Services.Clear(typeof(HtmlConventionLibrary));
+                graph.Services.AddService(library);
+            });
 
             config.Add(new SystemServicesPack());
             config.Add(new DefaultConfigurationPack());
@@ -82,12 +91,13 @@ namespace FubuMVC.Core.Configuration
             config.RunActions(ConfigurationType.Reordering, graph);
             config.RunActions(ConfigurationType.Instrumentation, graph);
 
-            
+            htmlConventionCollation.Wait(10.Seconds());
             registerServices(config, graph);
 
             // TODO -- do something better here.
             Task.WaitAll(layoutAttachmentTasks.Result, 10.Seconds());
             assetDiscovery.Wait(10.Seconds());
+            
 
             return graph;
         }
