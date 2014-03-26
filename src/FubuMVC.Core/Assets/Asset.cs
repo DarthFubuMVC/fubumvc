@@ -11,6 +11,9 @@ namespace FubuMVC.Core.Assets
         public readonly MimeType MimeType;
         public readonly string Filename;
 
+        public string CdnUrl;
+        public string FallbackTest ;
+
         // For testing only!
         public Asset(string url)
         {

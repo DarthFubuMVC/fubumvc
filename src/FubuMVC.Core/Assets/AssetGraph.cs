@@ -6,6 +6,8 @@ using FubuCore.Util;
 
 namespace FubuMVC.Core.Assets
 {
+
+
     public class AssetGraph : IAssetGraph
     {
         private readonly IList<Asset> _assets = new List<Asset>();
@@ -24,6 +26,26 @@ namespace FubuMVC.Core.Assets
         public void Add(IEnumerable<Asset> assets)
         {
             _assets.AddRange(assets);
+        }
+
+        public Asset RegisterCdnAsset(CdnAsset cdn)
+        {
+            var file = cdn.File ?? new Uri(cdn.Url).Segments.Last();
+            var asset = _searches[file];
+            if (asset == null)
+            {
+                asset = new Asset(cdn.Url)
+                {
+
+                };
+                _assets.Add(asset);
+            }
+
+            asset.CdnUrl = cdn.Url;
+            asset.FallbackTest = cdn.Fallback;
+
+            return asset;
+
         }
 
         public Asset FindAsset(string search)

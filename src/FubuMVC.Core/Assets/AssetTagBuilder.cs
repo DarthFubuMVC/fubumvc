@@ -18,9 +18,8 @@ namespace FubuMVC.Core.Assets
         {
             return scripts.Select(x => {
                 var asset = _graph.FindAsset(x);
-                var url = asset == null ? x : asset.Url;
 
-                return new ScriptTag(url);
+                return new ScriptTag(asset, x);
             });
         }
 

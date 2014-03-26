@@ -14,6 +14,13 @@ using FubuMVC.Core.Security;
 
 namespace FubuMVC.Core.Assets
 {
+    public class CdnAsset
+    {
+        public string Url;
+        public string Fallback;
+        public string File;
+    }
+
     [Description("Allow read access to javascript, css, image, and html files")]
     public class AssetSettings : IStaticFileRule
     {
@@ -29,6 +36,8 @@ namespace FubuMVC.Core.Assets
             }
         }
 
+        public readonly IList<CdnAsset> CdnAssets = new List<CdnAsset>(); 
+
         // This is tested through integration tests
         public Task<AssetGraph> Build(IFubuApplicationFiles files)
         {
@@ -40,6 +49,8 @@ namespace FubuMVC.Core.Assets
                 graph.Add(files.FindFiles(search).Select(x => new Asset(x)));
 
                 Aliases.AllKeys.Each(alias => graph.StoreAlias(alias, Aliases[alias]));
+
+                CdnAssets.Each(x => graph.RegisterCdnAsset(x));
 
                 return graph;
             });

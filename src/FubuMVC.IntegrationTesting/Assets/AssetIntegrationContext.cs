@@ -96,11 +96,11 @@ namespace FubuMVC.IntegrationTesting.Assets
             return _bottles;
         }
 
-        public IAssetGraph Assets
+        public AssetGraph Assets
         {
             get
             {
-                return _host.Services.GetInstance<IAssetGraph>();
+                return _host.Services.GetInstance<IAssetGraph>().As<AssetGraph>();
             }
         }
     }

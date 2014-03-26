@@ -75,7 +75,7 @@ namespace FubuMVC.Core.Assets
         {
             var graph = page.Get<IAssetGraph>();
             var tags = scripts.Select(graph.FindAsset).Where(x => x != null)
-                .Select(x => new ScriptTag(x.Url)).ToArray();
+                .Select(x => new ScriptTag(x)).ToArray();
 
             return new TagList(tags);
 

@@ -18,7 +18,7 @@ namespace TestHarnessApp
     {
         static void Main(string[] args)
         {
-            using (var server = FubuApplication.DefaultPolicies().StructureMap().RunEmbeddedWithAutoPort())
+            using (var server = FubuApplication.For<TestHarnessRegistry>().StructureMap().RunEmbeddedWithAutoPort())
             {
                 Process.Start(server.BaseAddress);
 
@@ -26,6 +26,17 @@ namespace TestHarnessApp
                 Console.ReadLine();
             }
 
+        }
+    }
+
+    public class TestHarnessRegistry : FubuRegistry
+    {
+        public TestHarnessRegistry()
+        {
+            AlterSettings<AssetSettings>(x => {
+                x.CdnAssets.Add(new CdnAsset { Url = "http://code.jquery.com/all-wrong.js", Fallback = "typeof jQuery == 'undefined'", File = "jquery-2.1.0.min.js"});
+                //x.CdnAssets.Add(new CdnAsset { Url = "http://code.jquery.com/jquery-2.1.0.min.js", Fallback = "typeof jQuery == 'undefined'" });
+            });
         }
     }
 
