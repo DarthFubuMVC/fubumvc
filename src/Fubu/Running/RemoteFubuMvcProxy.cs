@@ -3,7 +3,6 @@ using Bottles;
 using Bottles.Services.Remote;
 using FubuCore;
 using FubuCore.Binding;
-using FubuLocalization;
 using FubuMVC.Core;
 using FubuMVC.Katana;
 
@@ -28,12 +27,9 @@ namespace Fubu.Running
                 x.RequireAssemblyContainingType<Owin.IAppBuilder>();
                 x.RequireAssemblyContainingType<IActivator>(); // Bottles
                 x.RequireAssemblyContainingType<IModelBinder>(); // FubuCore
-                x.RequireAssemblyContainingType<StringToken>(); // FubuLocalization
                 x.RequireAssemblyContainingType<FubuApplication>(); // FubuMVC.Core
                 x.RequireAssemblyContainingType<FubuCsProjFile.CodeFile>(); // FubuCsProjFile just to keep it from whining
 
-                x.RequireAssembly("Newtonsoft.Json");
-                x.RequireAssembly("FubuMVC.OwinHost");
                 x.RequireAssembly("Microsoft.Owin.Hosting");
                 x.RequireAssembly("Microsoft.Owin.Host.HttpListener");
                 x.RequireAssembly("Microsoft.Owin");

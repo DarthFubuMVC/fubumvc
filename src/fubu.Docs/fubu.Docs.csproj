@@ -50,6 +50,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup>
-  </ItemGroup>
+  <ItemGroup></ItemGroup>
 </Project>

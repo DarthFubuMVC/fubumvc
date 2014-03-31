@@ -18,7 +18,7 @@ namespace TestHarnessApp
     {
         static void Main(string[] args)
         {
-            using (var server = FubuApplication.For<TestHarnessRegistry>().StructureMap().RunEmbeddedWithAutoPort())
+            using (var server = new TestHarnessApplication().BuildApplication().RunEmbeddedWithAutoPort())
             {
                 Process.Start(server.BaseAddress);
 
@@ -26,6 +26,14 @@ namespace TestHarnessApp
                 Console.ReadLine();
             }
 
+        }
+    }
+
+    public class TestHarnessApplication : IApplicationSource
+    {
+        public FubuApplication BuildApplication()
+        {
+            return FubuApplication.For<TestHarnessRegistry>().StructureMap();
         }
     }
 
