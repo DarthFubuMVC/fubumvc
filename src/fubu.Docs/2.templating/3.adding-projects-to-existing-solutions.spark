@@ -1,0 +1,8 @@
+<!--Title: Adding Projects to Existing Solutions-->
+<!--Url: adding-projects-to-existing-solutions-->
+
+<Command app="fubu" command="add">
+The <code>fubu add</code> command creates new projects to an existing solution.  Run this command from the root directory of your code repository.
+
+At this point, all the project types for <code>add</code> are the same as <code>fubu new</code>.
+</Command>

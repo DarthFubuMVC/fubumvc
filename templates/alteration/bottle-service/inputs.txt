@@ -1,0 +1,2 @@
+%SERVICE_NAME%=%SHORT_NAME%,The service name
+%DISPLAY_NAME%=%SERVICE_NAME%,The displayed service name in the services control panel

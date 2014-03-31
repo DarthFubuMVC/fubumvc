@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<Test name="Add a new FubuMVC App" lifecycle="Regression">
+  <Templating>
+    <Execute command="new MyWebApp empty" />
+    <ForFolder isStep="True" folder="MyWebApp" />
+    <Execute isStep="True" command="add MyWebApp web-app" />
+    <RakeSucceeds isStep="True" folder="MyWebApp" />
+    <AllTheFilesShouldBe isStep="True">
+      <Rows>
+        <row isStep="True" expected="ripple.config" />
+        <row isStep="True" expected=".gitignore" />
+        <row isStep="True" expected="src/MyWebApp.sln" />
+        <row isStep="True" expected="src/CommonAssemblyInfo.cs" />
+        <row isStep="True" expected="VERSION.txt" />
+        <row isStep="True" expected="rakefile" />
+        <row isStep="True" expected="Gemfile" />
+        <row isStep="True" expected="src/MyWebApp/MyWebApp.csproj" />
+        <row isStep="True" expected="src/MyWebApp/HomeEndpoint.cs" />
+        <row isStep="True" expected="src/MyWebApp/ripple.dependencies.config" />
+        <row isStep="True" expected="src/MyWebApp/Global.asax" />
+        <row isStep="True" expected="src/MyWebApp/Global.asax.cs" />
+        <row isStep="True" expected="src/MyWebApp/MyWebAppApplication.cs" />
+        <row isStep="True" expected="src/MyWebApp/MyWebAppFubuRegistry.cs" />
+        <row isStep="True" expected="src/MyWebApp/MyWebAppRegistry.cs" />
+        <row isStep="True" expected="src/MyWebApp/Web.config" />
+        <row isStep="True" expected="src/MyWebApp/Properties/AssemblyInfo.cs" />
+        <row isStep="True" expected="src/MyWebApp.Testing/MyWebApp.Testing.csproj" />
+        <row isStep="True" expected="src/MyWebApp.Testing/ripple.dependencies.config" />
+        <row isStep="True" expected="src/MyWebApp.Testing/Standin.cs" />
+        <row isStep="True" expected="src/MyWebApp.Testing/Properties/AssemblyInfo.cs" />
+      </Rows>
+    </AllTheFilesShouldBe>
+  </Templating>
+</Test>

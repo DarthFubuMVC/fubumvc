@@ -1,0 +1,9 @@
+
+
+* StructureMap configuration is in the file %SHORT_NAME%Registry
+* StructureMap's default 'IFoo is Foo' conventions are configured for this project
+
+The FubuMVC application is defined in the %APPLICATION_SOURCE% class.  It's unlikely that you'll
+need to customize the application bootstrapping, but %APPLICATION_SOURCE% is where that would
+happen.  You will want to refer to this class later if you use multiple forms of hosting (ASP.Net, 
+Katana, or Serenity).

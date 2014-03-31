@@ -1,0 +1,4 @@
+Serenity Integration
+
+* You will need to change the class %SHORT_NAME%System to connect to
+  the real FubuMVC/FubuTransportation application

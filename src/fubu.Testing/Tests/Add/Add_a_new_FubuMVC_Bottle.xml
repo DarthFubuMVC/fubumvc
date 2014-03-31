@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<Test name="Add a new FubuMVC Bottle" lifecycle="Regression">
+  <Templating>
+    <Execute isStep="True" command="new MyWebBottle empty" />
+    <ForFolder folder="MyWebBottle" />
+    <Execute isStep="True" command="add MyWebBottle web-bottle" />
+    <RakeSucceeds isStep="True" folder="MyWebBottle" />
+    <AllTheFilesShouldBe isStep="True">
+      <Rows>
+        <row isStep="True" expected="ripple.config" />
+        <row isStep="True" expected=".gitignore" />
+        <row isStep="True" expected="src/MyWebBottle.sln" />
+        <row isStep="True" expected="src/CommonAssemblyInfo.cs" />
+        <row isStep="True" expected="VERSION.txt" />
+        <row isStep="True" expected="rakefile" />
+        <row isStep="True" expected="Gemfile" />
+        <row isStep="True" expected="src/MyWebBottle/MyWebBottle.csproj" />
+        <row isStep="True" expected="src/MyWebBottle/ripple.dependencies.config" />
+        <row isStep="True" expected="src/MyWebBottle/Properties/AssemblyInfo.cs" />
+        <row isStep="True" expected="src/MyWebBottle.Testing/MyWebBottle.Testing.csproj" />
+        <row isStep="True" expected="src/MyWebBottle.Testing/ripple.dependencies.config" />
+        <row isStep="True" expected="src/MyWebBottle.Testing/Standin.cs" />
+        <row isStep="True" expected="src/MyWebBottle.Testing/Properties/AssemblyInfo.cs" />
+        <row isStep="True" expected="src/MyWebBottle/BottleConfiguration.cs" />
+      </Rows>
+    </AllTheFilesShouldBe>
+  </Templating>
+</Test>

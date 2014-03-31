@@ -1,0 +1,6 @@
+<!--Title: Establishing a Text Editor-->
+<!--Url: establishing-a-text-editor-->
+
+<Command app="fubu" command="editor">
+Mostly for <ProjectLink name="FubuDocs" />, but possibly for other usages later, the <code>fubu editor</code> command stores an environment variable to your prefered text editor that will be used to open text files from fubu related tools.
+</Command>

@@ -1,0 +1,78 @@
+<!--Title: Using as a Development Server-->
+<!--Url: hosting-->
+
+
+<markdown>
+
+The <code>fubu run</code> command allows you to run <ProjectLink name="FubuMVC" /> or <ProjectLink name="FubuTransportation" /> applications hosted with <a href="http://katanaproject.codeplex.com">Katana</a>. 
+Even though you're most likely hosting your FubuMVC web applications on IIS, nginx, or Apache, the Katana based development server described here can provide a more efficient development experience.
+
+<Section title="How do I set it up?" id="setup">
+The <code>fubu run</code> hosting needs just two things:
+
+1. The root directory of your <ProjectLink name="FubuMVC" /> or <ProjectLink name="FubuTransportation" /> application project
+1. An <code>IApplicationSource</code> class to use to bootstrap your application (as described in the <ExternalTopicLink title="FubuMVC Bootstrapping" name="fubumvc/bootstrapping" /> docs)
+
+By default, <code>fubu run</code> assumes that you're running an application in the current directory, but you can specify the directory name with this usage:
+
+<pre>
+fubu run --directory src/MyApp
+</pre>
+
+The <code>--directory</code> flag can be either an absolute path or a relative path from the current directory.
+
+<code>fubu run</code> has some ability to automatically determine the <code>IApplicationSource</code> class following these rules:
+
+1. If there is only a single concrete <code>IApplicationSource</code> class in all of the assemblies in the application, use that one
+1. If there are multiple candidates, look for a single candidate in an assembly whose name matches the containing folder.  I.e., if you're running an application in a folder named "c:\code\application\src\MyApp", look for the "MyApp.dll" assembly.
+1. If there are still multiple candidates, the command line will list out all of the possible candidate classes and return without starting the application.
+
+You can specify the type name of the specific <code>IApplicationSource</code> class you want to use with the <code>--application</code> flag like this:
+
+<pre>
+fubu run --application TestingApplication
+</pre>
+
+Also check out the <ExternalTopicLink name="fuburake/fubu" title="FubuRake helpers" /> for running applications with rake and <code>fubu run</code>.
+
+</Section>
+
+<Section title="Recycling the Application and 'Watched' Mode" id="recycling">
+<code>fubu run</code> hosts the running application in a separate [AppDomain](http://msdn.microsoft.com/en-us/library/system.appdomain(v=vs.110).aspx) using [shadow copying](http://msdn.microsoft.com/en-us/library/ms404279(v=vs.110).aspx).
+The big advantage to this approach is that you're able to recompile your application even while the fubu hosting is running the application.  
+Out of the box, the <code>fubu run</code> hosting will tear down the existing <code>AppDomain</code> and create a new one whenever it detects changes
+to any binary file or the <code>web.config</code> file.
+
+Beyond that, if you use the _watched_ mode with the <code>--watched</code> flag, <code>fubu run</code> will launch a browser with [WebDriver](http://www.seleniumhq.org/projects/webdriver/) so that the hosting
+can refresh the current web page whenever content changes are detected in the running application.  In fullblown _watched_ mode, the fubu hosting is looking for these kinds of changes:
+
+1. _Content_ changes in views or assets that would cause a browser refresh
+1. _Application_ changes in *.config files that would necessitate restarting the application, but not the running <code>AppDomain</code>
+1. _AppDomain_ changes in binary files that would cause a completely new <code>AppDomain</code>
+
+The file matching logic for watching files (as of Dec. 2013) is:
+
+<pre>
+*.spark=Content
+*.dll=AppDomain
+*.exe=AppDomain
+*.script.config=Application
+*.asset.config=Application
+*.assets.config=Application
+*.cshtml=Content
+*.css=Content
+*.js=Content
+*.coffee=Content
+web.config=AppDomain
+*.config=Application
+</pre>
+   
+<Info>A future version of the fubu gem may make these rules configurable.</Info>
+   
+</Section>
+
+</markdown>
+
+<Command app="fubu" command="run">
+
+</Command>

@@ -1,0 +1,2 @@
+* The default '/' route calls the HomeEndpoint.Index() method.  
+* Change that method to eliminate these ugly textual instructions with something useful;)

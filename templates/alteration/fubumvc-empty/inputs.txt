@@ -1,0 +1,1 @@
+%FUBU_REGISTRY%=%SHORT_NAME%FubuRegistry,The name of the FubuRegistry class for the application

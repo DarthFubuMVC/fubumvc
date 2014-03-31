@@ -1,0 +1,12 @@
+﻿*.spark=Content
+*.dll=AppDomain
+*.exe=AppDomain
+*.script.config=Application
+*.asset.config=Application
+*.assets.config=Application
+*.cshtml=Content
+*.css=Content
+*.js=Content
+*.coffee=Content
+web.config=AppDomain
+*.config=Application

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <id>fubu</id>
+    <version>0.0.0</version>
+    <authors>Jeremy D. Miller, Josh Arnold, Chad Myers, Joshua Flanagan, et al.</authors>
+    <owners>Jeremy D. Miller</owners>
+    <licenseUrl>https://github.com/DarthFubuMVC/fubumvc/raw/master/license.txt</licenseUrl>
+    <projectUrl>http://fubu-project.org/</projectUrl>
+    <iconUrl>https://github.com/DarthFubuMVC/fubu-collateral/raw/master/Icons/FubuMVC_256.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Command line tools for FubuMVC development</description>
+    <tags>packaging areas slices</tags>
+    <dependencies>
+      <dependency id="FubuCore" version="0.9.9.149" />
+      <dependency id="FubuMVC.Katana" />
+      <dependency id="HtmlTags" />
+      <dependency id="Selenium.WebDriver" />
+      <dependency id="FubuCsProjFile" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\..\src\fubu\bin\release\fubu.exe" target="lib/net40" />
+    <file src="..\..\src\fubu\bin\release\fubu.exe" target="tools" />
+    <file src="..\..\src\fubu\bin\release\*.dll" target="tools" />
+    <file src="..\..\src\fubu\bin\release\*.txt" target="tools" />
+  </files>
+</package>

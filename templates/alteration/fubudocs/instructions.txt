@@ -1,0 +1,6 @@
+The project %PROJECT_NAME% is a _FubuDocs_ project for living documentation publishing.
+
+[Getting Started with FubuDocs](http://fubuworld.com/fubudocs/starting/)
+
+[FubuDocs documentation](http://fubuworld.com/fubudocs) on usage.
+

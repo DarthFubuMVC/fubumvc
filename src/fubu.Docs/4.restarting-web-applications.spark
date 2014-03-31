@@ -1,0 +1,14 @@
+<!--Title: Restarting Web Applications-->
+<!--Url: restarting-web-applications-->
+
+<Command app="fubu" command="restart">
+If you are running your application with IIS, <code>fubu run</code>, or any other server that would automatically refresh your application if the <code>web.config</code> file changes, you can use the <code>fubu restart</code> command to touch your configuration file to force an application restart on the local box.
+
+The usage is:
+
+<pre>
+fubu restart [path to the application]
+</pre>
+
+<Command>
+

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<Test name="Build a new empty service" lifecycle="Regression">
+  <Templating>
+    <Execute isStep="True" command="new MyService service --floating" />
+    <ForFolder isStep="True" folder="MyService" />
+    <RakeSucceeds isStep="True" folder="MyService" />
+    <AllTheFilesShouldBe isStep="True">
+      <Rows>
+        <row isStep="True" expected="ripple.config" />
+        <row isStep="True" expected=".gitignore" />
+        <row isStep="True" expected="src/MyService.sln" />
+        <row isStep="True" expected="src/CommonAssemblyInfo.cs" />
+        <row isStep="True" expected="VERSION.txt" />
+        <row isStep="True" expected="rakefile" />
+        <row isStep="True" expected="Gemfile" />
+        <row isStep="True" expected="src/MyService/MyService.csproj" />
+        <row isStep="True" expected="src/MyService/ripple.dependencies.config" />
+        <row isStep="True" expected="src/MyService/MyServiceLoader.cs" />
+        <row isStep="True" expected="src/MyService/Properties/AssemblyInfo.cs" />
+        <row isStep="True" expected="src/MyService.Testing/MyService.Testing.csproj" />
+        <row isStep="True" expected="src/MyService.Testing/ripple.dependencies.config" />
+        <row isStep="True" expected="src/MyService.Testing/Standin.cs" />
+        <row isStep="True" expected="src/MyService.Testing/Properties/AssemblyInfo.cs" />
+        <row isStep="True" expected="src/MyService/bottle-service.config" />
+      </Rows>
+    </AllTheFilesShouldBe>
+  </Templating>
+</Test>

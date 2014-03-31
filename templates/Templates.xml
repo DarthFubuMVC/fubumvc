@@ -1,0 +1,68 @@
+<templates>
+  <category type="new">
+    <project name="web-app" description="New FubuMVC application project" template="aspnet" alterations="fubumvc-empty, fubu-rake-tasks">
+      <selection name="ioc" description="IoC Container" >
+        <option name="structuremap" description="Use StructureMap for IoC" alterations="structuremap"/>
+      </selection>
+      <selection name="views" description="View Engine">
+        <option name="no-views" description="No view engine" alterations="no-views"/>
+        <option name="spark" description="Spark view engine" alterations="spark"/>
+        <option name="razor" description="Razor view engine" alterations="razor"/>
+      </selection>
+    </project>
+    <project name="web-bottle" description="New FubuMVC Bottle" template="baseline" alterations="fubumvc-bottle">
+      
+    </project>
+
+	
+	
+    <project name="library" description="Simple Class Library project" template="baseline" alterations="fubucore"></project>
+	  <project name="service" description="Windows Service using BottlesServiceRunner and TopShelf" template="baseline" alterations="bottle-service, empty-bottle-service">
+	
+	  </project>
+
+    <project name="transport-service" description="New FubuTransportation application" template="baseline" alterations="bottle-service, fubutransportation, fubu-rake-tasks" dotnet="v4.5">
+      <selection name="ioc" description="IoC Container" >
+        <option name="structuremap" description="Use StructureMap for IoC" alterations="ft-structuremap"/>
+      </selection>
+      <selection name="transport" description="Initial transport choice -- you can add additional transports later">
+        <option name="lq" description="LightningQueues transport" alterations="ft-lightningqueues"/>
+        <option name="in-memory" description="In Memory transport suitable for experimentation or light testing" alterations="ft-in-memory"/>
+      </selection>
+    </project>
+    
+    
+  </category>
+  <category type="add">
+    <project name="library" description="Simple Class Library project" template="baseline" alterations="fubucore"></project>
+    <project name="web-bottle" description="New FubuMVC Bottle" template="baseline" alterations="fubumvc-bottle"></project>
+
+    <project name="web-app" description="New FubuMVC application project" template="aspnet" alterations="fubumvc-empty, fubu-rake-tasks">
+      <selection name="ioc" description="IoC Container" >
+        <option name="structuremap" description="Use StructureMap for IoC" alterations="structuremap"/>
+      </selection>
+      <selection name="views" description="View Engine">
+        <option name="no-views" description="No view engine" alterations="no-views"/>
+        <option name="spark" description="Spark view engine" alterations="spark"/>
+        <option name="razor" description="Razor view engine" alterations="razor"/>
+      </selection>
+    </project>
+
+    <project name="service" description="Windows Service using BottlesServiceRunner and TopShelf" template="baseline" alterations="bottle-service, empty-bottle-service">
+
+    </project>
+
+    <project name="transport-service" description="New FubuTransportation application" template="baseline" alterations="bottle-service, fubutransportation, fubu-rake-tasks" dotnet="v4.5">
+      <selection name="ioc" description="IoC Container" >
+        <option name="structuremap" description="Use StructureMap for IoC" alterations="ft-structuremap"/>
+      </selection>
+      <selection name="transport" description="Initial transport choice -- you can add additional transports later">
+        <option name="lq" description="LightningQueues transport" alterations="ft-lightningqueues"/>
+        <option name="in-memory" description="In Memory transport suitable for experimentation or light testing" alterations="ft-in-memory"/>
+      </selection>
+    </project>
+	
+	<project name="fubudocs" description="New FubuDocs documentation project -- name must end with '.Docs'" template="baseline" alterations="fubudocs">
+	</project>
+  </category>
+</templates>

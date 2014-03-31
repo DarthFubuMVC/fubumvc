@@ -60,3 +60,6 @@ deployment
 fubu.cmd
 Gemfile.lock
 logs
+storyteller.cmd
+run_st.cmd
+.bundle

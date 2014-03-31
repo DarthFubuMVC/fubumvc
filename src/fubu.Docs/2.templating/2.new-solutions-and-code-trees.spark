@@ -1,0 +1,144 @@
+<!--Title: New Solutions and Code Trees-->
+<!--Url: new-solutions-and-code-trees-->
+
+<markdown>
+
+In all usages, the <code>fubu new</code> command will generate an <code>instructions.txt</code> file that will explain the
+items and files generated during templates.
+
+<Section title="Empty Solutions" id="empty">
+If none of the project templates match what you want or you only want to generate a new solution without any projects, just use this:
+
+<pre>
+fubu new MySolution empty
+</pre>
+</Section>
+
+<Section title="FubuMVC Applications" id="fubumvc-app">
+The default for <code>fubu new</code> is a brand new FubuMVC application, so the basic usage is just:
+
+<pre>
+fubu new MyApp
+</pre>
+
+The default choices will build out a new FubuMVC application that uses <ProjectLink name="StructureMap /> as the IoC container, 
+*no view engines*, and the VS.Net web server as your "F5" development server.  You will however, get rake tasks in your build
+script for running your new application with Katana hosting.
+
+See <TopicLink name="hosting" /> for more information.
+
+The rake tasks for your newly generated FubuMVC solution should be something like this:
+
+<pre>
+rake ci                # Target used for the CI server
+rake clean             # Prepares the working directory for a new build
+rake compile           # Compiles the solution src/MyApp.sln
+rake default           # **Default**, compiles and runs tests
+rake docs:bottle       # 'Bottles' up a single project in the solution with...
+rake docs:run          # Runs a documentation project hosted in FubuWorld
+rake docs:run_chrome   # Runs the documentation projects in this solution i...
+rake docs:run_firefox  # Runs the documentation projects in this solution i...
+rake docs:snippets     # Gathers up code snippets from the solution into th...
+rake myapp:alias       # Add the alias for src/MyApp
+rake myapp:chrome      # run the application with Katana hosting and 'watch...
+rake myapp:firefox     # run the application with Katana hosting and 'watch...
+rake myapp:restart     # touch the web.config file to force ASP.Net hosting...
+rake myapp:run         # run the application with Katana hosting
+rake ripple:history    # creates a history file for nuget dependencies
+rake ripple:package    # packages the nuget files from the nuspec files in ...
+rake ripple:restore    # Restores nuget package files and updates all float...
+rake ripple:update     # Updates nuget package files to the latest
+rake sln               # Open solution src/MyApp.sln
+rake unit_test         # Runs unit tests for MyApp.Testing
+rake version           # Update the version information for the build
+</pre>
+
+When you look in the code for the new <ProjectLink name="FubuMVC" /> application, you'll see these things:
+* An <code>IApplicationSource</code> class that specifies how your application is bootstrapped
+* A <code>FubuRegistry</code> class
+* A StructureMap Registry class
+* A class named <code>HomeEndpoint</code> that represents the root url or home page of your new application 
+* <code>Global.asax.cs</code> to bootstrap FubuMVC for ASP.Net hosting
+
+At this point, you should be able to simply press _F5_ and run the application with the home page coming up as text with instructions about how to get started with the code in your new application.
+</Section>
+
+<Section title="FubuMVC Application with the Spark View Engine" id="spark">
+
+Using the [Spark](http://sparkviewengine.com) view engine in the generation is done with the <code>--options</code> flag:
+
+<pre>
+fubu new MyApp --options spark
+</pre>
+
+This option will add several extra Nuget's for html conventions, using assets, and the Spark view engine support.
+The templating will also add a default project layout and some Spark bindings for common FubuMVC view helpers.  
+
+</Section>
+
+<Section title="FubuMVC Application with the Razor View Engine" id="razor">
+
+You can also generate a new FubuMVC application using the Razor view engine with this option usage:
+
+<pre>
+fubu new MyApp --options razor
+</pre>
+</Section>
+
+<Section title="FubuMVC Bottles" id="fubumvc-bottle">
+You can generate a new solution for an <ProjectLink name="FubuMVC" /> Bottle with this usage:
+
+<pre>
+fubu new MyFeatureBottle web-bottle
+</pre>
+
+This generation will add:
+* A <code>FubuPackageRegistry</code> -- TODO(link to the FubuMVC topic for this)
+* An implementation of <code>IFubuRegistryExtension</code> for global policies
+* Adds the <code>[FubuModule]</code> attribute to the assembly properties marking it as a Bottle
+
+</Section>
+
+<Section title="Simple Class Libraries" id="library">
+To generate a simple class library project, use:
+
+<pre>
+fubu new MyLibrary library
+</pre>
+
+The templating will generate a new project with a reference to <ProjectLink name="FubuCore" />, the idiomatic <code>CommonAssemblyInfo.cs</code> linked file,
+and a testing library.
+</Section>
+
+<Section title="FubuTransportation Service" id="ft-service">
+
+You generate a brand new <ProjectLink name="FubuTransportation" /> service with this usage:
+
+<pre>
+fubu new MyService transport-service
+</pre>
+
+This will generate a new project and test library that has a reference to FubuTransportation, FubuTransportation.LightningQueues, and BottleServiceRunner TODO(add the link!).
+You will also get rake tasks to install, uninstall, stop, and start the service as well as tasks to run the service in console mode in either TopShelf hosting or the <code>fubu run</code> command.
+
+<Info>We will be adding a new template for generating a FubuTransportation bottle soon</Info>
+
+</Section>
+
+
+<Section title="Bottle Service" id="bottle-service">
+
+If you wish to create a new Windows service hosted with TopShelf that is not using FubuTransportation, use the
+<code>bottle-service</code> template shown below:
+
+<pre>
+fubu new MyService bottle-service
+</pre>
+</Section>
+
+
+<Command app="fubu" command="new">
+
+</Command>
+
+</markdown>

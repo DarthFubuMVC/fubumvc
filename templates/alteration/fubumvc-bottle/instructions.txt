@@ -1,0 +1,5 @@
+* Endpoints for this bottle can be configured in %SHORT_NAME%Registry
+* Globally applied policies and services can be added in
+  %SHORT_NAME%Extensions
+* You may need to run 'rake compile' to build out the pak-*.zip files
+  before the code will compile

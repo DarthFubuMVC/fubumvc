@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<Test name="Add a new library project to an existing solution" lifecycle="Regression">
+  <Templating>
+    <Execute isStep="True" command="new MySolution empty" />
+    <ForFolder isStep="True" folder="MySolution" />
+    <Execute isStep="True" command="add MyLibrary library" />
+    <RakeSucceeds isStep="True" folder="MySolution" />
+    <AllTheFilesShouldBe isStep="True">
+      <Rows>
+        <row isStep="True" expected="ripple.config" />
+        <row isStep="True" expected=".gitignore" />
+        <row isStep="True" expected="src/MySolution.sln" />
+        <row isStep="True" expected="src/CommonAssemblyInfo.cs" />
+        <row isStep="True" expected="VERSION.txt" />
+        <row isStep="True" expected="rakefile" />
+        <row isStep="True" expected="Gemfile" />
+        <row isStep="True" expected="src/MyLibrary/MyLibrary.csproj" />
+        <row isStep="True" expected="src/MyLibrary/ripple.dependencies.config" />
+        <row isStep="True" expected="src/MyLibrary/Properties/AssemblyInfo.cs" />
+        <row isStep="True" expected="src/MyLibrary.Testing/MyLibrary.Testing.csproj" />
+        <row isStep="True" expected="src/MyLibrary.Testing/ripple.dependencies.config" />
+        <row isStep="True" expected="src/MyLibrary.Testing/Standin.cs" />
+        <row isStep="True" expected="src/MyLibrary.Testing/Properties/AssemblyInfo.cs" />
+      </Rows>
+    </AllTheFilesShouldBe>
+  </Templating>
+</Test>

@@ -1,0 +1,348 @@
+<?xml version="1.0"?>
+<CommandLineApplicationReport xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ApplicationName>fubu</ApplicationName>
+  <Commands>
+    <CommandReport>
+      <Name>dumpusages</Name>
+      <Description>DumpUsagesCommand</Description>
+      <Arguments>
+        <ArgumentReport>
+          <Name>applicationname</Name>
+          <Description>ApplicationName</Description>
+        </ArgumentReport>
+        <ArgumentReport>
+          <Name>location</Name>
+          <Description>Location</Description>
+        </ArgumentReport>
+      </Arguments>
+      <Flags />
+      <Usages>
+        <UsageReport>
+          <Description>DumpUsagesCommand</Description>
+          <Usage>fubu dumpusages &lt;applicationname&gt; &lt;location&gt;</Usage>
+        </UsageReport>
+      </Usages>
+    </CommandReport>
+    <CommandReport>
+      <Name>help</Name>
+      <Description>list all the available commands</Description>
+      <Arguments>
+        <ArgumentReport>
+          <Name>name</Name>
+          <Description>A command name</Description>
+        </ArgumentReport>
+      </Arguments>
+      <Flags />
+      <Usages>
+        <UsageReport>
+          <Description>List all the available commands</Description>
+          <Usage>fubu help &lt;name&gt;</Usage>
+        </UsageReport>
+        <UsageReport>
+          <Description>Show all the valid usages for a command</Description>
+          <Usage>fubu help </Usage>
+        </UsageReport>
+      </Usages>
+    </CommandReport>
+    <CommandReport>
+      <Name>editor</Name>
+      <Description>Choose or display the path to the editor that you wish fubu.exe to use when opening files</Description>
+      <Arguments>
+        <ArgumentReport>
+          <Name>path</Name>
+          <Description>Path to the replacement editor</Description>
+        </ArgumentReport>
+      </Arguments>
+      <Flags />
+      <Usages>
+        <UsageReport>
+          <Description>Choose or display the path to the editor that you wish fubu.exe to use when opening files</Description>
+          <Usage>fubu editor &lt;path&gt;</Usage>
+        </UsageReport>
+      </Usages>
+    </CommandReport>
+    <CommandReport>
+      <Name>add</Name>
+      <Description>Adds new projects to an existing solution</Description>
+      <Arguments>
+        <ArgumentReport>
+          <Name>projectname</Name>
+          <Description>The name of the new project</Description>
+        </ArgumentReport>
+        <ArgumentReport>
+          <Name>profile</Name>
+          <Description>Project profile.  Use the --list flag to see the valid options</Description>
+        </ArgumentReport>
+      </Arguments>
+      <Flags>
+        <FlagReport>
+          <UsageDescription>[-s, --solution &lt;solution&gt;]</UsageDescription>
+          <Description>Specify the solution file name if there is more than one in this code tree</Description>
+        </FlagReport>
+        <FlagReport>
+          <UsageDescription>[-s, --short-name &lt;shortname&gt;]</UsageDescription>
+          <Description>Used in many templates as a prefix for generted classes</Description>
+        </FlagReport>
+        <FlagReport>
+          <UsageDescription>[-n, --no-tests]</UsageDescription>
+          <Description>Do not generate a matching testing project.  Boo!</Description>
+        </FlagReport>
+        <FlagReport>
+          <UsageDescription>[-l, --list]</UsageDescription>
+          <Description>List all the possible project types and their valid options</Description>
+        </FlagReport>
+        <FlagReport>
+          <UsageDescription>[-o, --options [&lt;options1 options2 options3 ...&gt;]]</UsageDescription>
+          <Description>Extra options for the new application</Description>
+        </FlagReport>
+        <FlagReport>
+          <UsageDescription>[-d, --dot-net &lt;dotnet&gt;]</UsageDescription>
+          <Description>Specify the .Net version 'v4.0' or 'v4.5'</Description>
+        </FlagReport>
+      </Flags>
+      <Usages>
+        <UsageReport>
+          <Description>default</Description>
+          <Usage>fubu add &lt;projectname&gt; &lt;profile&gt; [-s, --solution &lt;solution&gt;] [-s, --short-name &lt;shortname&gt;] [-n, --no-tests] [-l, --list] [-o, --options [&lt;options1 options2 options3 ...&gt;]] [-d, --dot-net &lt;dotnet&gt;]</Usage>
+        </UsageReport>
+        <UsageReport>
+          <Description>list</Description>
+          <Usage>fubu add [-l, --list]</Usage>
+        </UsageReport>
+      </Usages>
+    </CommandReport>
+    <CommandReport>
+      <Name>enhance</Name>
+      <Description>Enhances an existing project by applying infrastructure templates to an existing project</Description>
+      <Arguments>
+        <ArgumentReport>
+          <Name>project</Name>
+          <Description>Name of the project to enhance</Description>
+        </ArgumentReport>
+        <ArgumentReport>
+          <Name>options</Name>
+          <Description>The options to apply</Description>
+        </ArgumentReport>
+      </Arguments>
+      <Flags>
+        <FlagReport>
+          <UsageDescription>[-l, --list]</UsageDescription>
+          <Description>List all the valid options</Description>
+        </FlagReport>
+      </Flags>
+      <Usages>
+        <UsageReport>
+          <Description>Enhances an existing project by applying infrastructure templates to an existing project</Description>
+          <Usage>fubu enhance &lt;project&gt; [&lt;options1 options2 options3 ...&gt;] [-l, --list]</Usage>
+        </UsageReport>
+      </Usages>
+    </CommandReport>
+    <CommandReport>
+      <Name>quickstart</Name>
+      <Description>Stand up a full FubuMVC application structure with the full idiomatic stack</Description>
+      <Arguments />
+      <Flags />
+      <Usages>
+        <UsageReport>
+          <Description>Stand up a full FubuMVC application structure with the full idiomatic stack</Description>
+          <Usage>fubu quickstart </Usage>
+        </UsageReport>
+      </Usages>
+    </CommandReport>
+    <CommandReport>
+      <Name>view</Name>
+      <Description>Creates and attaches a view model/view pair to the project in the current folder</Description>
+      <Arguments>
+        <ArgumentReport>
+          <Name>name</Name>
+          <Description>Name of the view and matching model without file extension</Description>
+        </ArgumentReport>
+      </Arguments>
+      <Flags>
+        <FlagReport>
+          <UsageDescription>[-u, --url &lt;ur&gt;]</UsageDescription>
+          <Description>If specified, will make this actionless view applied to the given url pattern</Description>
+        </FlagReport>
+        <FlagReport>
+          <UsageDescription>[-o, --open]</UsageDescription>
+          <Description>open the view model and view after generation</Description>
+        </FlagReport>
+      </Flags>
+      <Usages>
+        <UsageReport>
+          <Description>Creates and attaches a view model/view pair to the project in the current folder</Description>
+          <Usage>fubu view &lt;name&gt; [-u, --url &lt;ur&gt;] [-o, --open]</Usage>
+        </UsageReport>
+      </Usages>
+    </CommandReport>
+    <CommandReport>
+      <Name>mode</Name>
+      <Description>Reads and sets the 'FubuMode' environment variable</Description>
+      <Arguments />
+      <Flags>
+        <FlagReport>
+          <UsageDescription>[-m, --mode &lt;mode&gt;]</UsageDescription>
+          <Description>Named mode for modes other than Development</Description>
+        </FlagReport>
+        <FlagReport>
+          <UsageDescription>[-d, --dev]</UsageDescription>
+          <Description>Sets the environment variable to FubuMode=Development</Description>
+        </FlagReport>
+        <FlagReport>
+          <UsageDescription>[-c, --clear]</UsageDescription>
+          <Description>Clears the 'FubuMode' environment variable</Description>
+        </FlagReport>
+      </Flags>
+      <Usages>
+        <UsageReport>
+          <Description>Reads and sets the 'FubuMode' environment variable</Description>
+          <Usage>fubu mode [-m, --mode &lt;mode&gt;] [-d, --dev] [-c, --clear]</Usage>
+        </UsageReport>
+      </Usages>
+    </CommandReport>
+    <CommandReport>
+      <Name>new</Name>
+      <Description>Lays out and creates a new code tree with the idiomatic fubu project layout</Description>
+      <Arguments>
+        <ArgumentReport>
+          <Name>solutionname</Name>
+          <Description>Name of the solution and the root folder without an extension</Description>
+        </ArgumentReport>
+        <ArgumentReport>
+          <Name>profile</Name>
+          <Description>Project profile.  Use the --list flag to see the valid options</Description>
+        </ArgumentReport>
+      </Arguments>
+      <Flags>
+        <FlagReport>
+          <UsageDescription>[-l, --list]</UsageDescription>
+          <Description>List all the possible project types and their valid options</Description>
+        </FlagReport>
+        <FlagReport>
+          <UsageDescription>[-p, --preview]</UsageDescription>
+          <Description>Only list a preview of the template plan, but do not execute the plan</Description>
+        </FlagReport>
+        <FlagReport>
+          <UsageDescription>[-e, --edge]</UsageDescription>
+          <Description>Use edge nugets from the Fubu TeamCity feed.  Equivalent to --ripple Edge</Description>
+        </FlagReport>
+        <FlagReport>
+          <UsageDescription>[-f, --floating]</UsageDescription>
+          <Description>Use floating edge nugets from the Fubu TeamCity feed.  Equivalent to --ripple FloatingEdge</Description>
+        </FlagReport>
+        <FlagReport>
+          <UsageDescription>[-r, --ripple FloatingEdge|Edge|PublicOnly]</UsageDescription>
+          <Description>Choose a ripple configuration for only public Nuget feeds, including the Fubu TeamCity feed, or 'floating' on the Fubu edge</Description>
+        </FlagReport>
+        <FlagReport>
+          <UsageDescription>[-s, --short-name &lt;shortname&gt;]</UsageDescription>
+          <Description>Used in many templates as a prefix for generated classes</Description>
+        </FlagReport>
+        <FlagReport>
+          <UsageDescription>[-c, --clean]</UsageDescription>
+          <Description>Clean out any existing contents of the target folder before running the templates</Description>
+        </FlagReport>
+        <FlagReport>
+          <UsageDescription>[-n, --no-tests]</UsageDescription>
+          <Description>Do not generate a matching testing project.  Boo!</Description>
+        </FlagReport>
+        <FlagReport>
+          <UsageDescription>[-v, --version &lt;version&gt;]</UsageDescription>
+          <Description>Visual Studio version.  'VS2012' is the default. Options are 'VS2010', 'VS2012', or 'VS2013'</Description>
+        </FlagReport>
+        <FlagReport>
+          <UsageDescription>[-d, --dot-net &lt;dotnet&gt;]</UsageDescription>
+          <Description>Specify the .Net version 'v4.0' or 'v4.5'</Description>
+        </FlagReport>
+        <FlagReport>
+          <UsageDescription>[-i, --ignore]</UsageDescription>
+          <Description>Ignore the presence of existing files</Description>
+        </FlagReport>
+        <FlagReport>
+          <UsageDescription>[-o, --options [&lt;options1 options2 options3 ...&gt;]]</UsageDescription>
+          <Description>Extra options for the new application</Description>
+        </FlagReport>
+      </Flags>
+      <Usages>
+        <UsageReport>
+          <Description>default</Description>
+          <Usage>fubu new &lt;solutionname&gt; [-l, --list] [-p, --preview] [-e, --edge] [-f, --floating] [-r, --ripple FloatingEdge|Edge|PublicOnly] [-s, --short-name &lt;shortname&gt;] [-c, --clean] [-n, --no-tests] [-v, --version &lt;version&gt;] [-d, --dot-net &lt;dotnet&gt;] [-i, --ignore] [-o, --options [&lt;options1 options2 options3 ...&gt;]]</Usage>
+        </UsageReport>
+        <UsageReport>
+          <Description>profile</Description>
+          <Usage>fubu new &lt;solutionname&gt; &lt;profile&gt; [-l, --list] [-p, --preview] [-e, --edge] [-f, --floating] [-r, --ripple FloatingEdge|Edge|PublicOnly] [-s, --short-name &lt;shortname&gt;] [-c, --clean] [-n, --no-tests] [-v, --version &lt;version&gt;] [-d, --dot-net &lt;dotnet&gt;] [-i, --ignore] [-o, --options [&lt;options1 options2 options3 ...&gt;]]</Usage>
+        </UsageReport>
+        <UsageReport>
+          <Description>list</Description>
+          <Usage>fubu new [-l, --list]</Usage>
+        </UsageReport>
+      </Usages>
+    </CommandReport>
+    <CommandReport>
+      <Name>restart</Name>
+      <Description>Restarts a web application by 'touching' the web.config file</Description>
+      <Arguments>
+        <ArgumentReport>
+          <Name>appfolder</Name>
+          <Description>Physical folder (or valid alias) of the web application</Description>
+        </ArgumentReport>
+      </Arguments>
+      <Flags />
+      <Usages>
+        <UsageReport>
+          <Description>Restarts a web application by 'touching' the web.config file</Description>
+          <Usage>fubu restart &lt;appfolder&gt;</Usage>
+        </UsageReport>
+      </Usages>
+    </CommandReport>
+    <CommandReport>
+      <Name>run</Name>
+      <Description>Run a fubumvc application hosted in Katana</Description>
+      <Arguments />
+      <Flags>
+        <FlagReport>
+          <UsageDescription>[-b, --build &lt;build&gt;]</UsageDescription>
+          <Description>If you are running a class library, sets the preference for the profile to load.  As in bin/[BuildFlag].  Default is debug</Description>
+        </FlagReport>
+        <FlagReport>
+          <UsageDescription>[-p, --port &lt;port&gt;]</UsageDescription>
+          <Description>IP Port.  Default is 5500</Description>
+        </FlagReport>
+        <FlagReport>
+          <UsageDescription>[-a, --application &lt;application&gt;]</UsageDescription>
+          <Description>Specific name of an IApplicationSource class that builds this application</Description>
+        </FlagReport>
+        <FlagReport>
+          <UsageDescription>[-c, --config &lt;confi&gt;]</UsageDescription>
+          <Description>If set, overrides the name of the configuration file for the FubuMVC application AppDomain to use</Description>
+        </FlagReport>
+        <FlagReport>
+          <UsageDescription>[-d, --directory &lt;directory&gt;]</UsageDescription>
+          <Description>Overrides the directory that is the physical path of the running fubumvc application</Description>
+        </FlagReport>
+        <FlagReport>
+          <UsageDescription>[-o, --open]</UsageDescription>
+          <Description>Start the default browser to the home page of this application</Description>
+        </FlagReport>
+        <FlagReport>
+          <UsageDescription>[-w, --watched]</UsageDescription>
+          <Description>Open a 'watched' browser with WebDriver to refresh the page on content or application recycles</Description>
+        </FlagReport>
+        <FlagReport>
+          <UsageDescription>[-b, --browser Chrome|Firefox]</UsageDescription>
+          <Description>Browser to use in watched.  Default is Firefox because it's more stable. </Description>
+        </FlagReport>
+        <FlagReport>
+          <UsageDescription>[-p, --production-mode]</UsageDescription>
+          <Description>Unless this flag is set, the fubumvc application will run in Development mode</Description>
+        </FlagReport>
+      </Flags>
+      <Usages>
+        <UsageReport>
+          <Description>Run a fubumvc application hosted in Katana</Description>
+          <Usage>fubu run [-b, --build &lt;build&gt;] [-p, --port &lt;port&gt;] [-a, --application &lt;application&gt;] [-c, --config &lt;confi&gt;] [-d, --directory &lt;directory&gt;] [-o, --open] [-w, --watched] [-b, --browser Chrome|Firefox] [-p, --production-mode]</Usage>
+        </UsageReport>
+      </Usages>
+    </CommandReport>
+  </Commands>
+</CommandLineApplicationReport>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<ProjectRoot xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <TagLine>Command line tools for FubuMVC or FubuTransportation development</TagLine>
+  <Description>Command line goodness for creating, running, and editing FubuMVC or FubuTransportation applications</Description>
+  <Name>fubu</Name>
+  <TwitterHandle />
+  <GitHubPage>http://github.com/DarthFubuMVC/fubu</GitHubPage>
+  <UserGroupUrl>https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel</UserGroupUrl>
+  <BuildServerUrl>http://build.fubu-project.org/project.html?projectId=project38&amp;tab=projectOverview</BuildServerUrl>
+  <TeamCityBuildType>bt66</TeamCityBuildType>
+  <BottleName>fubu.Docs</BottleName>
+  <PluginTo />
+  <Nugets>
+    <PublishedNuget>
+      <Name>fubu</Name>
+      <Description>Command line tools for FubuMVC development</Description>
+    </PublishedNuget>
+  </Nugets>
+  <Url>fubu</Url>
+</ProjectRoot>

@@ -1,0 +1,32 @@
+﻿<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"   />
+        <Asset src="twitterbootstrap"/>
+        <use content="head" />
+        <Styles />
+    </head>
+    <body data-spy="scroll" data-target=".bs-docs-sidebar">
+        <div id="top-menu" class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="#">%SHORT_NAME%</a>
+
+                    <use content="navigation" />
+                </div>
+            </div>
+        </div>
+        <use content="masthead" />
+        <div id="Content" class="container" style="margin-top:50px">
+            <use content="main" />
+        </div>
+        <Scripts />
+        <footer class="footer">
+            <div class="container">
+                <use content="footer" />
+              <h4>Standard Footer Content Here</h4>
+            </div>
+        </footer>
+        
+    </body>
+</html>

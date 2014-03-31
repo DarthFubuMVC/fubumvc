@@ -1,0 +1,16 @@
+<!--Title: Enhancing Existing Projects-->
+<!--Url: enhancing-existing-projects-->
+
+<Command app="fubu" command="enhance">
+The <code>fubu enhance</code> command allows you to add named infrastructure features to existing projects.
+
+<pre>
+fubu enhance MyProject option1 option2
+</pre>
+
+Today, the only usable options are _serenity_ or _storyteller_ to add Serenity or Storyteller2 testing setup to an existing project.
+
+<Info>This command will get many more options for validation setup, authentication, and other options in later versions.</Info>
+
+</Command>
+

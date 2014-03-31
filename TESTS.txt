@@ -3,3 +3,4 @@ FubuMVC.StructureMap.Testing
 FubuMVC.Razor.Tests
 FubuMVC.Spark.Tests
 FubuMVC.Diagnostics.Tests
+fubu.Testing

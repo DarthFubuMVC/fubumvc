@@ -1,0 +1,4 @@
+* The home page is served by HomeEndpoint.Index()
+* HomeEndpoint.Index() could be eliminated if you choose
+  to use Home.cshtml as an 'actionless view'
+* Shared/Application.cshtml is the master layout for the application

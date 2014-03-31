@@ -1,0 +1,2 @@
+FubuMVC.StructureMap
+structuremap/2.6.3

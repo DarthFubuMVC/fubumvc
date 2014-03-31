@@ -1,0 +1,2 @@
+// Marks this assembly as a Bottle for FubuMVC/FubuTransportation apps
+[assembly: FubuMVC.Core.FubuModule]

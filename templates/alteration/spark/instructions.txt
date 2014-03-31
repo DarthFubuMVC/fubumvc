@@ -1,0 +1,5 @@
+* The home page is served by HomeEndpoint.Index()
+* HomeEndpoint.Index() could be eliminated if you choose
+  to use Home.Spark as an 'actionless view'
+* Shared/Application.spark is the master layout for the application
+* Do check out the available Spark bindings in Shared/bindings.xml

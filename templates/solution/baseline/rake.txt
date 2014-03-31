@@ -1,0 +1,15 @@
+require 'fuburake'
+
+@solution = FubuRake::Solution.new do |sln|
+	sln.compile = {
+		:solutionfile => '%SOLUTION_PATH%'
+	}
+				 
+	sln.assembly_info = {
+		:product_name => "%SOLUTION_NAME%",
+		:copyright => 'Copyright 2013. All rights reserved.'
+	}
+	
+	sln.ripple_enabled = true
+	sln.fubudocs_enabled = true
+end

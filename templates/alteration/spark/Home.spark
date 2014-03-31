@@ -1,0 +1,18 @@
+<viewdata model="%NAMESPACE%.HomeModel" />
+
+<content:header>
+
+</content:header>
+
+<content:main>
+
+<h4>Instructions</h4>
+<pre>
+%INSTRUCTIONS%
+</pre>
+</content:main>
+
+
+<content:footer>
+
+</content:footer>

@@ -1,0 +1,18 @@
+<!--Title: Project Item Generation-->
+<!--Url: project-item-generation-->
+
+<Info>This funtionality is very new and the signature is likely to change in later versions</Info>
+
+The thought is that this functionality migrates to a forthcoming <code>fubu generate</code> command with options for:
+
+<pre>
+fubu generate spark [name]
+
+fubu generate razor [name]
+</pre>
+
+<Command app="fubu" command="view">
+At the moment, <code>fubu view</code> only generates Spark views.  You need to call this command from the exact folder where you want the view file and matching input models and endpoint classes to be written.  This command will attach the new *.cs files to the *.csproj file in the root of the current project with the namespace derived from the folder names.
+
+</Command>
+

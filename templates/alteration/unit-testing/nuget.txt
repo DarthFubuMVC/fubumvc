@@ -1,0 +1,3 @@
+FubuTestingSupport
+structuremap/2.6.3
+structuremap.automocking/2.6.3

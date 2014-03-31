@@ -1,0 +1,27 @@
+<!--Title: Application Modes-->
+<!--Url: application-modes-->
+
+<Command app="fubu" command="mode">
+A handful of things in <ProjectLink name="FubuMVC" /> behave differently if the application is in _Development_ mode.  The <code>fubu mode</code> command gives you a quick way to change the <code>FubuMode</code> on your application box.
+
+To set your machine to development mode, use:
+
+<pre>
+fubu mode --dev
+</pre>
+
+To clear the FubuMode to nothing, use:
+
+<pre>
+fubu mode --clear
+</pre>
+
+To set the FubuMode to something different, use:
+
+<pre>
+fubu mode --mode [your custom mode]
+</pre>
+
+TODO(Link to FubuMode when that exists in the FubuMVC documentation)
+</Command>
+

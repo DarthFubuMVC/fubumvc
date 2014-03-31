@@ -1,0 +1,2 @@
+StructureMap/2.6.3
+FubuMVC.RavenDb/0.9.5.85

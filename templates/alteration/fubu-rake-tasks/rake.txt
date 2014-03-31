@@ -1,0 +1,1 @@
+FubuRake::MvcApp.new({:directory => '%PROJECT_FOLDER%', :name => '%RAKE_TASK_PREFIX%'})

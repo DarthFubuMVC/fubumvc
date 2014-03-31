@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<Test name="Add a new FubuTransportation service project" lifecycle="Regression">
+  <Templating>
+    <Execute command="new Consumers empty --floating" />
+    <ForFolder folder="Consumers" />
+    <Execute isStep="True" command="add Consumers transport-service" />
+    <RakeSucceeds isStep="True" folder="Consumers" />
+    <AllTheFilesShouldBe isStep="True">
+      <Rows>
+        <row isStep="True" expected="ripple.config" />
+        <row isStep="True" expected=".gitignore" />
+        <row isStep="True" expected="src/Consumers.sln" />
+        <row isStep="True" expected="src/CommonAssemblyInfo.cs" />
+        <row isStep="True" expected="VERSION.txt" />
+        <row isStep="True" expected="rakefile" />
+        <row isStep="True" expected="Gemfile" />
+        <row isStep="True" expected="src/Consumers/Consumers.csproj" />
+        <row isStep="True" expected="src/Consumers/ripple.dependencies.config" />
+        <row isStep="True" expected="src/Consumers/ConsumersApplication.cs" />
+        <row isStep="True" expected="src/Consumers/ConsumersRegistry.cs" />
+        <row isStep="True" expected="src/Consumers/Properties/AssemblyInfo.cs" />
+        <row isStep="True" expected="src/Consumers.Testing/Consumers.Testing.csproj" />
+        <row isStep="True" expected="src/Consumers.Testing/ripple.dependencies.config" />
+        <row isStep="True" expected="src/Consumers.Testing/Standin.cs" />
+        <row isStep="True" expected="src/Consumers.Testing/Properties/AssemblyInfo.cs" />
+        <row expected="src/Consumers/bottle-service.config" />
+        <row expected="src/Consumers/FubuTransportationSetup.cs" />
+      </Rows>
+    </AllTheFilesShouldBe>
+  </Templating>
+</Test>

@@ -1,0 +1,5 @@
+rake,>=10.0.3
+bundler,>=1.3.5
+fuburake,~>0.5
+ripple-cli,~>2.0
+fubudocs,~>0.9

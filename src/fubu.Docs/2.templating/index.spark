@@ -1,0 +1,37 @@
+<!--Title: Project and Solution Templating-->
+<!--Url: templating-->
+
+<Info>The project templating is very new and will be growing in choices soon.  See <a href="https://github.com/DarthFubuMVC/fubu/issues?state=open">the Fubu issue list</a> to see what's on the horizon.</Info>
+
+<markdown>
+
+
+
+Using the <ProjectLink name="FubuCsProjFile" /> library, the fubu tool provides the ability to quickly create all new code repositories and C# projects for common fubu community tools.
+*If* you're willing to just use our common codebase idioms and tooling choices for build automation, you can rapidly stand up all new code solutions with working
+build scripts, development servers, and test harnesses from a single command line command.
+
+The templating and generation will:
+
+1. Set up build scripts based on <ProjectLink name="FubuRake" /> and using <ProjectLink name="Ripple" /> for nuget dependency management
+1. Add appropriate file patterns to your <code>.gitignore</code> file.  Using Git is *not* mandatory.
+1. Build new Visual Studio.Net solution files
+1. Generate Visual Studio.Net project files and attach them to solution files
+1. Add code files
+1. Add Nuget references
+1. Add gem references for tools used from the build script
+1. Add miscellaneous files and folders
+
+<Info>We chose to build and use our own templating engine to gain the ability to make the templating both composable and reentrant.  Most of the existing alternatives seem to be "record and replay" tools that didn't give us this flexibility.  We do support Visual Studio.Net project templates as well though.</Info>
+
+<TableOfContents />
+
+</markdown>
+
+
+
+
+
+
+
+

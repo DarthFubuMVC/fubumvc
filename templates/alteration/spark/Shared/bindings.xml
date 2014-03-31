@@ -1,0 +1,21 @@
+﻿<?xml version="1.0"?>
+<bindings>
+	<element name="Stylesheet">#this.Asset('@href');</element>
+	<element name="Script">#this.Asset('@src');</element>
+	<element name="Asset">#this.Asset('@src');</element>
+	<element name="Scripts">this.WriteScriptTags()</element>
+	<element name="Styles">this.WriteCssTags()</element>
+	<element name="Image">this.ImageFor('@src')</element>
+	<element name="Partial">this.Partial&lt;@model&gt;()</element>
+
+	<element name="Edit">this.Edit(x => x.@name)</element>
+	<element name="Show">this.Show(x => x.@name)</element>
+	<element name="Input">this.InputFor(x => x.@name)</element>
+	<element name="Label">this.LabelFor(x => x.@name)</element>
+	<element name="Display">this.DisplayFor(x => x.@name)</element>
+
+	<element name="Form">
+		<start>this.FormFor&lt;@model&gt;()</start>
+		<end>this.EndForm()</end>
+	</element>
+</bindings>
