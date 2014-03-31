@@ -10,8 +10,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FubuApp</RootNamespace>
     <AssemblyName>FubuApp</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bottles">
@@ -37,13 +40,13 @@
     <Reference Include="FubuCore">
       <HintPath>..\packages\FubuCore\lib\FubuCore.dll</HintPath>
     </Reference>
-    <Reference Include="FubuLocalization">
-      <HintPath>..\packages\FubuLocalization\lib\FubuLocalization.dll</HintPath>
-    </Reference>
     <Reference Include="HtmlTags">
       <HintPath>..\packages\HtmlTags\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Spark">
+      <HintPath>..\packages\Spark\lib\NET40\Spark.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap\lib\StructureMap.dll</HintPath>
     </Reference>
@@ -51,12 +54,14 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoutesEndpoint.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -75,6 +80,10 @@
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{e18fd922-0e7a-49cd-b89f-473826077b9d}</Project>
       <Name>FubuMVC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Spark\FubuMVC.Spark.csproj">
+      <Project>{9d6bf559-6461-4eac-bb16-f976ff43e8da}</Project>
+      <Name>FubuMVC.Spark</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
       <Project>{abfea520-820c-4b77-9015-6a09e24252fa}</Project>

@@ -27,7 +27,7 @@ namespace Fubu.Running
                 x.RequireAssemblyContainingType<Owin.IAppBuilder>();
                 x.RequireAssemblyContainingType<IActivator>(); // Bottles
                 x.RequireAssemblyContainingType<IModelBinder>(); // FubuCore
-                x.RequireAssemblyContainingType<FubuApplication>(); // FubuMVC.Core
+                //x.RequireAssemblyContainingType<FubuApplication>(); // FubuMVC.Core
                 x.RequireAssemblyContainingType<FubuCsProjFile.CodeFile>(); // FubuCsProjFile just to keep it from whining
 
                 x.RequireAssembly("Microsoft.Owin.Hosting");

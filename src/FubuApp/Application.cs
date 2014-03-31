@@ -1,6 +1,7 @@
 ﻿using System;
 using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Packaging;
 using FubuMVC.StructureMap;
 using FubuMVC.StructureMap.Settings;
@@ -23,9 +24,11 @@ namespace FubuApp
             _settings = settings;
         }
 
-        public string Index()
+        public FubuContinuation Index()
         {
-            return "The Color in the config file is " + _settings.Color;
+            return FubuContinuation.RedirectTo<RoutesEndpoint>(x => x.get_all_routes());
+
+            //return "The Color in the config file is " + _settings.Color;
         }
 
         public string get_file()
