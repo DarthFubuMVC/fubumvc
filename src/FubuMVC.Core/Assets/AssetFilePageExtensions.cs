@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Web.UI;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.View;
 using HtmlTags;
 
@@ -16,6 +18,7 @@ namespace FubuMVC.Core.Assets
         public static ImageTag Image(this IFubuPage viewPage, string fileOrUrl)
         {
             string imageUrl = Uri.IsWellFormedUriString(fileOrUrl, UriKind.Absolute) ? fileOrUrl : viewPage.ImageUrl(fileOrUrl);
+
             return new ImageTag(imageUrl);
         }
 
@@ -74,8 +77,10 @@ namespace FubuMVC.Core.Assets
         public static TagList OptionalScript(this IFubuPage page, params string[] scripts)
         {
             var graph = page.Get<IAssetGraph>();
+            var request = page.Get<IHttpRequest>();
+
             var tags = scripts.Select(graph.FindAsset).Where(x => x != null)
-                .Select(x => new ScriptTag(x)).ToArray();
+                .Select(x => new ScriptTag(request.ToFullUrl,x)).ToArray();
 
             return new TagList(tags);
 
@@ -90,8 +95,9 @@ namespace FubuMVC.Core.Assets
         public static TagList OptionalCss(this IFubuPage page, params string[] stylesheets)
         {
             var graph = page.Get<IAssetGraph>();
+            var request = page.Get<IHttpRequest>();
             var tags = stylesheets.Select(graph.FindAsset).Where(x => x != null)
-                .Select(x => new StylesheetLinkTag(x.Url)).ToArray();
+                .Select(x => new StylesheetLinkTag(request.ToFullUrl(x.Url))).ToArray();
 
             return new TagList(tags);
         }

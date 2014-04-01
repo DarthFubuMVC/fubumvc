@@ -22,7 +22,7 @@ namespace FubuMVC.Diagnostics
         {
             registry.Policies.Add<ApplyTracing>();
 			registry.Policies.Add<DescriptionVisualizationPolicy>();
-            registry.Policies.Add<DiagnosticChainsPolicy>();
+            registry.Policies.ChainSource<DiagnosticChainsPolicy>();
             registry.Services<DiagnosticServiceRegistry>();
 
             registry.Configure(graph => {

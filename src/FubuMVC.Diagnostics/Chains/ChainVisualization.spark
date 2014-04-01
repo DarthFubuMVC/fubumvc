@@ -1,7 +1,6 @@
 ﻿<viewdata model="FubuMVC.Diagnostics.Chains.ChainVisualization" />
 <use master="" />
 <use namespace="FubuMVC.Diagnostics.Chains" />
-<use namespace="FubuMVC.TwitterBootstrap" />
 <use namespace="FubuMVC.Diagnostics.Visualization" />
 
 <div class="container-fluid">

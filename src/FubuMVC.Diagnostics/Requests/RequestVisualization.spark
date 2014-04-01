@@ -2,9 +2,10 @@
 <use master="" />
 <use namespace="FubuMVC.Diagnostics.Requests" />
 <use namespace="System.Linq" />
-<use namespace="FubuMVC.TwitterBootstrap" />
 <use namespace="FubuMVC.Diagnostics.Visualization" />
 ﻿<use namespace="FubuMVC.Core.Assets" />
+﻿<use namespace="FubuMVC.Core.UI.Bootstrap" />
+
 
 <Script src="diagnostics/requestVisualization.js" />
 

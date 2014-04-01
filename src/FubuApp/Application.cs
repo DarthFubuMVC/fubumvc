@@ -26,7 +26,7 @@ namespace FubuApp
 
         public FubuContinuation Index()
         {
-            return FubuContinuation.RedirectTo<RoutesEndpoint>(x => x.get_all_routes());
+            return FubuContinuation.RedirectTo("_fubu");
 
             //return "The Color in the config file is " + _settings.Color;
         }

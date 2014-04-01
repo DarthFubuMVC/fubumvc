@@ -27,9 +27,9 @@ namespace FubuMVC.IntegrationTesting.Assets
         {
             Scenario.Get.Action<TagBuildingEndpoint>(x => x.get_page_with_assets());
 
-            Scenario.ContentShouldContain("<link href=\"content/styles/styles1.css\" rel=\"stylesheet\" type=\"text/css\" />");
-            Scenario.ContentShouldContain("<script type=\"text/javascript\" src=\"content/scripts/script1.js\">");
-            Scenario.ContentShouldContain("<img src=\"content/images/image1.bmp\" />");
+            Scenario.ContentShouldContain("<link href=\"/content/styles/styles1.css\" rel=\"stylesheet\" type=\"text/css\" />");
+            Scenario.ContentShouldContain("<script type=\"text/javascript\" src=\"/content/scripts/script1.js\">");
+            Scenario.ContentShouldContain("<img src=\"/content/images/image1.bmp\" />");
 
             Scenario.StatusCodeShouldBe(HttpStatusCode.OK);
         }
@@ -39,10 +39,10 @@ namespace FubuMVC.IntegrationTesting.Assets
         {
             Scenario.Get.Action<TagBuildingEndpoint>(x => x.get_page_with_assets());
 
-            Scenario.ContentShouldContain("</script><script type=\"text/javascript\" src=\"nonexistent.js\"></script>");
-            Scenario.ContentShouldContain("<link href=\"nonexistent.css\" rel=\"stylesheet\" type=\"text/css\" />");
+            Scenario.ContentShouldContain("</script><script type=\"text/javascript\" src=\"/nonexistent.js\"></script>");
+            Scenario.ContentShouldContain("<link href=\"/nonexistent.css\" rel=\"stylesheet\" type=\"text/css\" />");
 
-            Scenario.ContentShouldContain("<img src=\"image2.bmp\" />");
+            Scenario.ContentShouldContain("<img src=\"/image2.bmp\" />");
         }
 
         [Test]
@@ -52,8 +52,8 @@ namespace FubuMVC.IntegrationTesting.Assets
             Scenario.StatusCodeShouldBe(HttpStatusCode.OK);
 
             // these exist and should be written out
-            Scenario.ContentShouldContain("<link href=\"content/styles/styles1.css\" rel=\"stylesheet\" type=\"text/css\" />");
-            Scenario.ContentShouldContain("<script type=\"text/javascript\" src=\"content/scripts/script1.js\">");
+            Scenario.ContentShouldContain("<link href=\"/content/styles/styles1.css\" rel=\"stylesheet\" type=\"text/css\" />");
+            Scenario.ContentShouldContain("<script type=\"text/javascript\" src=\"/content/scripts/script1.js\">");
 
             // these don't, so don't do anything with them
             Scenario.ContentShouldNotContain("</script><script type=\"text/javascript\" src=\"nonexistent.js\"></script>");

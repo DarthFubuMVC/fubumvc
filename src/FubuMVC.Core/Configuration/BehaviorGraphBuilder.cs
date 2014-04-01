@@ -18,16 +18,16 @@ namespace FubuMVC.Core.Configuration
 {
     internal static class BehaviorGraphBuilder
     {
-        public static BehaviorGraph Import(FubuRegistry registry, SettingsCollection parentSettings)
+        public static BehaviorGraph Import(FubuRegistry registry, BehaviorGraph parentGraph)
         {
-            var graph = new BehaviorGraph(parentSettings);
+            var graph = new BehaviorGraph(parentGraph.Settings);
             startBehaviorGraph(registry, graph);
             var config = registry.Config;
 
             config.RunActions(ConfigurationType.Settings, graph);
 
             config.Sources.Union(config.Imports)
-                .SelectMany(x => x.BuildChains(graph.Settings))
+                .SelectMany(x => x.BuildChains(graph))
                 .Each(chain => graph.AddChain(chain));
 
             config.RunActions(ConfigurationType.Explicit, graph);
@@ -118,7 +118,7 @@ namespace FubuMVC.Core.Configuration
                     x => {
                         return
                             Task.Factory.StartNew(
-                                () => { x.BuildChains(graph.Settings).Each(chain => graph.AddChain(chain)); });
+                                () => { x.BuildChains(graph).Each(chain => graph.AddChain(chain)); });
                     }).ToArray();
 
             Task.WaitAll(tasks);

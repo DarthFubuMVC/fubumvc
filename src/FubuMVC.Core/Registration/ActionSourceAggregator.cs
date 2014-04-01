@@ -16,14 +16,14 @@ namespace FubuMVC.Core.Registration
             _applicationAssembly = applicationAssembly;
         }
 
-        public IEnumerable<BehaviorChain> BuildChains(SettingsCollection settings)
+        public IEnumerable<BehaviorChain> BuildChains(BehaviorGraph graph)
         {
             var sources = _sources.Any() ? _sources : new IActionSource[] {new EndpointActionSource()};
 
             var actions = sources.SelectMany(x => x.FindActions(_applicationAssembly)).ToArray()
                 .Distinct();
 
-            var urlPolicies = settings.Get<UrlPolicies>();
+            var urlPolicies = graph.Settings.Get<UrlPolicies>();
 
             return actions.Select(x => x.BuildChain(urlPolicies)).ToArray();
         }

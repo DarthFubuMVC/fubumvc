@@ -4,7 +4,6 @@
 <use namespace="FubuMVC.Core.Assets" />
 <use namespace="FubuMVC.Diagnostics" />
 <use namespace="FubuMVC.Diagnostics.Dashboard" />
-<use namespace="FubuMVC.TwitterBootstrap" />
 <use namespace="FubuMVC.Diagnostics.Core.Extensions" />
 
 <!DOCTYPE html>
@@ -16,10 +15,8 @@
     <title>
       !{this.DiagnosticsTitle()} | FubuMVC Diagnostics
     </title>
-    #{this.Asset('twitterbootstrap');}
-    <Stylesheet href="diagnostics/default.css" />
+    !{this.Css('bootstrap.css', 'diagnostics/default.css')}
     <use content="head"/>
-    <Styles />
 </head>
 <body>
   <div id="diagnostic-menu" class="navbar navbar-fixed-top">
@@ -63,6 +60,7 @@
 			</dl>
 		</div>
 	</footer>
-<Scripts />
+
+  !{this.Script('jquery.js', 'bootstrap.js')}
 </body>
 </html>

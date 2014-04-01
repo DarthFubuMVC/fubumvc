@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
+using FubuMVC.Core.Http;
 using HtmlTags;
 
 namespace FubuMVC.Core.Assets
@@ -8,10 +10,12 @@ namespace FubuMVC.Core.Assets
     public class AssetTagBuilder : IAssetTagBuilder
     {
         private readonly IAssetGraph _graph;
+        private readonly IHttpRequest _request;
 
-        public AssetTagBuilder(IAssetGraph graph)
+        public AssetTagBuilder(IAssetGraph graph, IHttpRequest request)
         {
             _graph = graph;
+            _request = request;
         }
 
         public IEnumerable<HtmlTag> BuildScriptTags(IEnumerable<string> scripts)
@@ -19,7 +23,7 @@ namespace FubuMVC.Core.Assets
             return scripts.Select(x => {
                 var asset = _graph.FindAsset(x);
 
-                return new ScriptTag(asset, x);
+                return new ScriptTag(url => _request.ToFullUrl(url), asset, x);
             });
         }
 
@@ -32,14 +36,16 @@ namespace FubuMVC.Core.Assets
                 var asset = _graph.FindAsset(x);
                 var url = asset == null ? x : asset.Url;
 
-                return new StylesheetLinkTag(url);
+                return new StylesheetLinkTag(_request.ToFullUrl(url));
             });
         }
 
         public string FindImageUrl(string urlOrFilename)
         {
             var asset = _graph.FindAsset(urlOrFilename);
-            return asset == null ? urlOrFilename : asset.Url;
+            var relativeUrl = asset == null ? urlOrFilename : asset.Url;
+
+            return _request.ToFullUrl(relativeUrl);
         }
     }
 }

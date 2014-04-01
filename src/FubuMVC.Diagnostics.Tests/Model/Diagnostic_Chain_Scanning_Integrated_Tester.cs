@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Diagnostics.Model;
 using FubuMVC.StructureMap;
@@ -17,7 +20,13 @@ namespace FubuMVC.Diagnostics.Tests.Model
         [SetUp]
         public void SetUp()
         {
+            new FileSystem().DeleteDirectory("../../fubu-content");
+
+            FubuMvcPackageFacility.PhysicalRootPath = AppDomain.CurrentDomain.BaseDirectory.ToFullPath().ParentDirectory().ParentDirectory();
+
             theRuntime = FubuApplication.DefaultPolicies().StructureMap().Bootstrap();
+
+
         }
 
         [TearDown]

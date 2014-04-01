@@ -5,6 +5,6 @@ namespace FubuMVC.Core.Registration
 {
     public interface IChainSource
     {
-        IEnumerable<BehaviorChain> BuildChains(SettingsCollection settings);
+        IEnumerable<BehaviorChain> BuildChains(BehaviorGraph graph);
     }
 }

@@ -1,4 +1,5 @@
-﻿using FubuCore;
+﻿using System;
+using FubuCore;
 using FubuMVC.Core.Http.Scenarios;
 using HtmlTags;
 
@@ -6,7 +7,7 @@ namespace FubuMVC.Core.Assets
 {
     public class ScriptTag : HtmlTag
     {
-        public ScriptTag(Asset asset, string defaultUrl = null)
+        public ScriptTag(Func<string, string> toFullUrl, Asset asset, string defaultUrl = null)
             : base("script")
         {
             // http://stackoverflow.com/a/1288319/75194 
@@ -14,7 +15,7 @@ namespace FubuMVC.Core.Assets
 
             if (asset == null)
             {
-                Attr("src", defaultUrl);
+                Attr("src", toFullUrl(defaultUrl));
                 return;
             }
 
@@ -39,7 +40,7 @@ namespace FubuMVC.Core.Assets
                 url += "?Etag=" + asset.File.Etag();
             }
 
-            Attr("src", url);
+            Attr("src", toFullUrl(url));
         }
     }
 }

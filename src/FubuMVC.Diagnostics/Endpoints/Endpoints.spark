@@ -2,8 +2,8 @@
 <use master="" />
 <use namespace="FubuMVC.Diagnostics.Endpoints" />
 <use namespace="System.Linq" />
-<use namespace="FubuMVC.TwitterBootstrap" />
 ﻿<use namespace="FubuMVC.Core.Assets" />
+<use namespace="FubuMVC.Core.UI.Bootstrap" />
 
 <Script src="diagnostics/routes.js" />
 

@@ -2,12 +2,14 @@
 using System.Linq;
 using Bottles;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Diagnostics.Model
 {
-    public class DiagnosticChainsPolicy : IConfigurationAction
+    // START HERE!!!!!!
+    public class DiagnosticChainsPolicy : IChainSource
     {
-        public void Configure(BehaviorGraph graph)
+        public IEnumerable<BehaviorChain> BuildChains(BehaviorGraph graph)
         {
             var diagnosticGraph = new DiagnosticGraph();
             diagnosticGraph.Add(graph.ApplicationAssembly);
@@ -15,9 +17,9 @@ namespace FubuMVC.Diagnostics.Model
 
             PackageRegistry.PackageAssemblies.Each(diagnosticGraph.Add);
 
-            diagnosticGraph.Groups().SelectMany(x => x.Chains).Each(graph.AddChain);
-
             graph.Services.AddService(diagnosticGraph);
+
+            return diagnosticGraph.Groups().SelectMany(x => x.Chains);
         }
     }
 }

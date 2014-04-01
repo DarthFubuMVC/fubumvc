@@ -96,5 +96,15 @@ namespace FubuMVC.Core.Registration.DSL
 
             addStringConversions(conversions);
         }
+
+        public void ChainSource<T>() where T : IChainSource, new()
+        {
+            _configuration.Add(new T());
+        }
+
+        public void ChainSource(IChainSource source)
+        {
+            _configuration.Add(source);
+        }
     }
 }

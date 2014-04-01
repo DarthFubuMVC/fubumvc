@@ -11,9 +11,9 @@ namespace FubuMVC.Core.Configuration
         public string Prefix { get; set; }
         public FubuRegistry Registry { get; set; }
 
-        public IEnumerable<BehaviorChain> BuildChains(SettingsCollection settings)
+        public IEnumerable<BehaviorChain> BuildChains(BehaviorGraph graph)
         {
-            var childGraph = BehaviorGraphBuilder.Import(Registry, settings);
+            var childGraph = BehaviorGraphBuilder.Import(Registry, graph);
             if (Prefix.IsNotEmpty())
             {
                 childGraph.Behaviors.OfType<RoutedChain>().Each(x => { x.Route.Prepend(Prefix); });

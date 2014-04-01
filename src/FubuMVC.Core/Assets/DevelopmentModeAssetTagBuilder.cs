@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
+using FubuMVC.Core.Http;
 using HtmlTags;
 
 namespace FubuMVC.Core.Assets
@@ -10,11 +11,11 @@ namespace FubuMVC.Core.Assets
         private readonly IAssetGraph _graph;
         private AssetTagBuilder _inner;
 
-        public DevelopmentModeAssetTagBuilder(IAssetGraph graph)
+        public DevelopmentModeAssetTagBuilder(IAssetGraph graph, IHttpRequest request)
         {
             _graph = graph;
 
-            _inner = new AssetTagBuilder(graph);
+            _inner = new AssetTagBuilder(graph, request);
         }
 
         public IEnumerable<HtmlTag> BuildScriptTags(IEnumerable<string> scripts)
@@ -78,7 +79,7 @@ namespace FubuMVC.Core.Assets
                 throw new MissingAssetException("Requested image '{0}' cannot be found".ToFormat(urlOrFilename));
             }
 
-            return asset.Url;
+            return _inner.FindImageUrl(urlOrFilename);
         }
     }
 }

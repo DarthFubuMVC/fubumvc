@@ -12,4 +12,5 @@ namespace FubuMVC.Core.Registration
     {
         IEnumerable<ActionCall> FindActions(Assembly applicationAssembly);
     }
+
 }

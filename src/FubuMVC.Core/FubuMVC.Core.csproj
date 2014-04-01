@@ -343,6 +343,8 @@
     <Compile Include="UI\AuthorizationOnPageExtensions.cs" />
     <Compile Include="UI\Bootstrap\Collapsibles\CollapsiblePartialExpression.cs" />
     <Compile Include="UI\Bootstrap\Collapsibles\CollapsibleTag.cs" />
+    <Compile Include="UI\Bootstrap\Modals\ModalExpression.cs" />
+    <Compile Include="UI\Bootstrap\Modals\ModalTag.cs" />
     <Compile Include="UI\Bootstrap\Tags\DetailsTableTag.cs" />
     <Compile Include="UI\Bootstrap\Tags\DetailTableBuilder.cs" />
     <Compile Include="UI\Bootstrap\Tags\HtmlTagExtensions.cs" />

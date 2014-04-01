@@ -1,5 +1,6 @@
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.UI.Bootstrap.Collapsibles;
+using FubuMVC.Core.UI.Bootstrap.Modals;
 using FubuMVC.Core.View;
 
 namespace FubuMVC.Core.UI.Bootstrap
@@ -24,10 +25,10 @@ namespace FubuMVC.Core.UI.Bootstrap
             page.Asset("twitter/activate-collapsible.js");
             return new CollapsiblePartialExpression(() => page.PartialFor(model));
         }
-//
-//        public static ModalExpression Modal(this IFubuPage page, string id)
-//        {
-//            return new ModalExpression(page, id);
-//        }
+
+        public static ModalExpression Modal(this IFubuPage page, string id)
+        {
+            return new ModalExpression(page, id);
+        }
     }
 }

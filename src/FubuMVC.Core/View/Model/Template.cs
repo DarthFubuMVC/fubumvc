@@ -159,6 +159,8 @@ namespace FubuMVC.Core.View.Model
             if (IsPartial()) return;
             if (Master != null) return;
 
+            if (Parsing.Master == string.Empty) return;
+
             var layoutName = Parsing.Master.IsEmpty() ? defaultLayoutName : Parsing.Master;
 
             if (layoutName.EqualsIgnoreCase("none")) return;
