@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
 using FubuMVC.Core.Http;
@@ -12,6 +13,9 @@ namespace FubuMVC.Core.Assets
         private readonly IAssetGraph _graph;
         private readonly IHttpRequest _request;
 
+        private readonly Queue<Asset> _queuedScripts = new Queue<Asset>();
+        private readonly IList<Asset> _writtenScripts = new List<Asset>(); 
+
         public AssetTagBuilder(IAssetGraph graph, IHttpRequest request)
         {
             _graph = graph;
@@ -20,11 +24,33 @@ namespace FubuMVC.Core.Assets
 
         public IEnumerable<HtmlTag> BuildScriptTags(IEnumerable<string> scripts)
         {
-            return scripts.Select(x => {
+            Func<string, string> toFullUrl = url => _request.ToFullUrl(url);
+
+            while (_queuedScripts.Any())
+            {
+                var asset = _queuedScripts.Dequeue();
+                if (_writtenScripts.Contains(asset)) continue;
+
+                _writtenScripts.Add(asset);
+
+                yield return new ScriptTag(toFullUrl, asset);
+            }
+
+            foreach (var x in scripts)
+            {
                 var asset = _graph.FindAsset(x);
 
-                return new ScriptTag(url => _request.ToFullUrl(url), asset, x);
-            });
+                if (asset == null)
+                {
+                    yield return new ScriptTag(toFullUrl, null, x);
+                }
+                else if (!_writtenScripts.Contains(asset))
+                {
+                    _writtenScripts.Add(asset);
+                    yield return new ScriptTag(toFullUrl, asset, x);
+                }
+            }
+
         }
 
         
@@ -46,6 +72,14 @@ namespace FubuMVC.Core.Assets
             var relativeUrl = asset == null ? urlOrFilename : asset.Url;
 
             return _request.ToFullUrl(relativeUrl);
+        }
+
+        public void RequireScript(params string[] scripts)
+        {
+           scripts
+               .Select(x => _graph.FindAsset(x))
+               .Where(x => x != null && !_writtenScripts.Contains(x))
+               .Each(x => _queuedScripts.Enqueue(x));
         }
     }
 }

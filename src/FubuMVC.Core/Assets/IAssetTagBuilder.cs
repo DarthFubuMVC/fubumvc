@@ -8,5 +8,7 @@ namespace FubuMVC.Core.Assets
         IEnumerable<HtmlTag> BuildScriptTags(IEnumerable<string> scripts);
         IEnumerable<HtmlTag> BuildStylesheetTags(IEnumerable<string> scripts);
         string FindImageUrl(string urlOrFilename);
+
+        void RequireScript(params string[] scripts);
     }
 }

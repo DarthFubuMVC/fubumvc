@@ -9,7 +9,7 @@ namespace FubuMVC.Core.Assets
     public class DevelopmentModeAssetTagBuilder : IAssetTagBuilder
     {
         private readonly IAssetGraph _graph;
-        private AssetTagBuilder _inner;
+        private readonly AssetTagBuilder _inner;
 
         public DevelopmentModeAssetTagBuilder(IAssetGraph graph, IHttpRequest request)
         {
@@ -80,6 +80,11 @@ namespace FubuMVC.Core.Assets
             }
 
             return _inner.FindImageUrl(urlOrFilename);
+        }
+
+        public void RequireScript(params string[] scripts)
+        {
+            _inner.RequireScript(scripts);
         }
     }
 }

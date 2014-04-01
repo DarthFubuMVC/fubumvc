@@ -101,5 +101,17 @@ namespace FubuMVC.Core.Assets
 
             return new TagList(tags);
         }
+
+        /// <summary>
+        /// "Require" script assets to be written later.  Useful to register scripts in partial
+        /// views that need to be written by the master layout
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="scripts"></param>
+        public static void RequireScript(this IFubuPage page, params string[] scripts)
+        {
+            page.Get<IAssetTagBuilder>().RequireScript(scripts);
+        }
     }
+
 }

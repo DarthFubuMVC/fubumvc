@@ -85,6 +85,8 @@ namespace FubuMVC.IntegrationTesting.Assets
         }
 
 
+
+
         public HtmlDocument get_page_with_optional_assets()
         {
             _document.Head.Append(_document.OptionalCss("styles1.css", "nonexistent.css"));

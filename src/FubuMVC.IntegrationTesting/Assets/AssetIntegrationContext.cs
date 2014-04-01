@@ -96,6 +96,11 @@ namespace FubuMVC.IntegrationTesting.Assets
             return _bottles;
         }
 
+        public IAssetTagBuilder TagBuilder()
+        {
+            return _host.Services.GetInstance<IAssetTagBuilder>();
+        }
+
         public AssetGraph Assets
         {
             get
