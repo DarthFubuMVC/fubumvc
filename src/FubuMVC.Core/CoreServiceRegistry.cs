@@ -11,6 +11,7 @@ using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Compression;
 using FubuMVC.Core.Http.Cookies;
+using FubuMVC.Core.Projections;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Querying;
@@ -102,6 +103,14 @@ namespace FubuMVC.Core
             {
                 SetServiceIfNone<IAssetTagBuilder, AssetTagBuilder>();
             }
+
+            SetServiceIfNone(typeof(IValues<>), typeof(SimpleValues<>));
+            SetServiceIfNone(typeof(IValueSource<>), typeof(ValueSource<>));
+
+            SetServiceIfNone<IProjectionRunner, ProjectionRunner>();
+            SetServiceIfNone(typeof(IProjectionRunner<>), typeof(ProjectionRunner<>));
+            SetServiceIfNone<IProjectionRunner, ProjectionRunner>();
+            SetServiceIfNone(typeof(IProjectionRunner<>), typeof(ProjectionRunner<>));
         }
     }
 }
