@@ -251,6 +251,7 @@
     <Compile Include="Registration\SettingAlteration.cs" />
     <Compile Include="Registration\SettingReplacement.cs" />
     <Compile Include="Registration\SettingsCollection.cs" />
+    <Compile Include="Resources\Conneg\ConnegGraph.cs" />
     <Compile Include="Resources\Conneg\IMediaCollection.cs" />
     <Compile Include="Resources\Conneg\IOutputNode.cs" />
     <Compile Include="Resources\Conneg\IReaderCollection.cs" />

@@ -1,12 +1,19 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography;
+using FubuCore;
+using FubuCore.Descriptions;
 using FubuCore.Reflection;
+using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Runtime;
+using HtmlTags;
 
 namespace FubuMVC.Core.Projections
 {
-    public class Projection<T> : IProjection<T>
+    public class Projection<T> : IProjection<T>, IMediaWriter<T>, DescribesItself
     {
         private DisplayFormatting _formatting;
         private readonly IList<IProjection<T>> _values = new List<IProjection<T>>();
@@ -182,6 +189,27 @@ namespace FubuMVC.Core.Projections
         }
 
 
-        
+        void IMediaWriter<T>.Write(string mimeType, IFubuRequestContext request, T resource)
+        {
+            var node = new DictionaryMediaNode();
+            var context = new ProjectionContext<T>(request.Services, new SimpleValues<T>(resource));
+
+            write(context, node);
+
+            request.Writer.Write(mimeType, JsonUtil.ToJson(node.Values));
+        }
+
+        public virtual IEnumerable<string> Mimetypes
+        {
+            get
+            {
+                yield return MimeType.Json.Value;
+            }
+        }
+
+        public virtual void Describe(Description description)
+        {
+            description.Title = "Projection {0} for Type {1}".ToFormat(GetType().Name, typeof (T).Name);
+        }
     }
 }

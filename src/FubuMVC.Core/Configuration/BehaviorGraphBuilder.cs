@@ -187,7 +187,7 @@ namespace FubuMVC.Core.Configuration
                             x.CanBeCastTo<IAccessorRulesRegistration>() && x.IsConcreteWithDefaultCtor() &&
                             !x.IsOpenGeneric())
                     .
-                    Distinct().Select(x => { return Activator.CreateInstance(x).As<IAccessorRulesRegistration>(); })
+                    Distinct().Select(x => Activator.CreateInstance(x).As<IAccessorRulesRegistration>())
                     .Each(x => x.AddRules(rules));
 
                 return rules;

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using FubuCore.Reflection;
+using FubuMVC.Core.Resources.Conneg;
 
 namespace FubuMVC.Core.Projections
 {
