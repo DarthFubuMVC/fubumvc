@@ -67,6 +67,10 @@ namespace Fubu.Running
         [FlagAlias("production-mode")]
         public bool ProductionModeFlag { get; set; }
 
+        [Description("If selected, the run command will re-explode all the Bottle content and immediately exit")]
+        [FlagAlias("explode-only")]
+        public bool ExplodeOnlyFlag { get; set; }
+
         public string DetermineBinPath()
         {
             var buildPath = DirectoryFlag.AppendPath("bin", BuildFlag);

@@ -189,6 +189,7 @@
     <Compile Include="Resources\Conneg\ReaderChoiceTester.cs" />
     <Compile Include="Resources\PathBased\RouteRankingIntegratedTester.cs" />
     <Compile Include="Runtime\AsyncCoordinatorTester.cs" />
+    <Compile Include="Runtime\Conditionals\ConditionalServiceTester.cs" />
     <Compile Include="Runtime\Files\ContentFolderTester.cs" />
     <Compile Include="Runtime\Files\FubuApplicationFilesSmokeTester.cs" />
     <Compile Include="Runtime\Files\FubuFileTester.cs" />
@@ -357,7 +358,8 @@
     <Compile Include="FubuBootstrapperIntegrationTester.cs" />
     <Compile Include="FubuRegistryTester.cs" />
     <Compile Include="HtmlGenerationTestExtensions.cs" />
-    <Compile Include="Registration\BehaviorGraphTester.cs"></Compile>
+    <Compile Include="Registration\BehaviorGraphTester.cs">
+    </Compile>
     <Compile Include="Registration\Conventions\ActionSourceTester.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConventionTester.cs" />
     <Compile Include="Registration\Conventions\CustomConventionIntegratedTester.cs" />
