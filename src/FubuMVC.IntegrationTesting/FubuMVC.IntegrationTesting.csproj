@@ -106,6 +106,7 @@
     <Compile Include="Assets\FindingAndResolving\Adding_CDN_Assets.cs" />
     <Compile Include="Assets\FindingAndResolving\aliasing_assets.cs" />
     <Compile Include="Assets\FindingAndResolving\Asset_graph_building_and_resolving_with_defaults.cs" />
+    <Compile Include="Assets\JavascriptRouting.cs" />
     <Compile Include="Assets\Tag_building_in_development_mode.cs" />
     <Compile Include="Assets\Tag_building_in_production_mode.cs" />
     <Compile Include="Assets\Tag_building_with_required_scripts.cs" />

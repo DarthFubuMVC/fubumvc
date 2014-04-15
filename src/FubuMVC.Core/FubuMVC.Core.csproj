@@ -78,6 +78,10 @@
     <Compile Include="Assets\DevelopmentModeAssetTagBuilder.cs" />
     <Compile Include="Assets\IAssetGraph.cs" />
     <Compile Include="Assets\IAssetTagBuilder.cs" />
+    <Compile Include="Assets\JavascriptRouting\IJavascriptRouter.cs" />
+    <Compile Include="Assets\JavascriptRouting\JavascriptRoute.cs" />
+    <Compile Include="Assets\JavascriptRouting\JavascriptRouter.cs" />
+    <Compile Include="Assets\JavascriptRouting\JavascriptRouteWriter.cs" />
     <Compile Include="Assets\MissingAssetException.cs" />
     <Compile Include="Assets\ObsoleteAssetFilePageExtensions.cs" />
     <Compile Include="Assets\ScriptTag.cs" />

@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI;
+using FubuCore;
+using FubuMVC.Core.Assets.JavascriptRouting;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.View;
 using HtmlTags;
@@ -111,6 +114,21 @@ namespace FubuMVC.Core.Assets
         public static void RequireScript(this IFubuPage page, params string[] scripts)
         {
             page.Get<IAssetTagBuilder>().RequireScript(scripts);
+        }
+
+
+        public static HtmlTag JavascriptRoutes<T>(this IFubuPage page, string groupName)
+            where T : IJavascriptRouter, new()
+        {
+            var writer = page.Get<JavascriptRouteWriter>();
+            var dict = writer.Write(new T().Routes());
+
+            var tag = new HtmlTag("script").Attr("type", "text/javascript");
+            tag.Encoded(false);
+
+            tag.Text("\n{0} = {1};\n".ToFormat(groupName, JsonUtil.ToJson(dict)));
+
+            return tag;
         }
     }
 
