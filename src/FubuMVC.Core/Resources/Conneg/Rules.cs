@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FubuCore;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Http;
@@ -38,6 +39,25 @@ namespace FubuMVC.Core.Resources.Conneg
 
         protected virtual DoNext applyOutputs(IOutputNode node, BehaviorChain chain, ConnegSettings settings)
         {
+            return DoNext.Continue;
+        }
+    }
+
+    public class CustomReadersAndWriters : ConnegRule
+    {
+        protected override DoNext applyInputs(IInputNode node, BehaviorChain chain, ConnegSettings settings)
+        {
+            var graph = settings.Graph ?? new ConnegGraph();
+            graph.ReaderTypesFor(node.InputType()).Each(type => node.Add(Activator.CreateInstance(type).As<IReader>()));
+
+            return DoNext.Continue;
+        }
+
+        protected override DoNext applyOutputs(IOutputNode node, BehaviorChain chain, ConnegSettings settings)
+        {
+            var graph = settings.Graph ?? new ConnegGraph();
+            graph.WriterTypesFor(node.ResourceType).Each(type => node.Add(Activator.CreateInstance(type)));
+
             return DoNext.Continue;
         }
     }

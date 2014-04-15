@@ -12,7 +12,7 @@ using FubuMVC.Core.Runtime.Formatters;
 namespace FubuMVC.Core.Resources.Conneg
 {
 
-    public interface IInputNode
+    public interface IInputNode : IMayHaveInputType
     {
         /// <summary>
         /// Returns 
@@ -64,7 +64,7 @@ namespace FubuMVC.Core.Resources.Conneg
         bool CanRead(string mimeType);
     }
 
-    public class InputNode : BehaviorNode, IInputNode, IMayHaveInputType, DescribesItself
+    public class InputNode : BehaviorNode, IInputNode, DescribesItself
     {
         private readonly Type _inputType;
         private readonly IList<IReader> _readers = new List<IReader>();

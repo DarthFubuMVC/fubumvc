@@ -9,6 +9,7 @@ using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Attachment;
@@ -49,6 +50,7 @@ namespace FubuMVC.Core.Configuration
             // Apply settings
             config.RunActions(ConfigurationType.Settings, graph);
 
+            graph.Settings.Alter<ConnegSettings>(x => x.Graph = ConnegGraph.Build(graph.ApplicationAssembly));
 
             var assetDiscovery = graph.Settings.Get<AssetSettings>().Build(graph.Files)
                 .ContinueWith(t => graph.Services.AddService<IAssetGraph>(t.Result));

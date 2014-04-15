@@ -198,6 +198,16 @@ namespace FubuMVC.Core.Http.Owin
             return this;
         }
 
+        public OwinHttpRequest ContentType(string contentType)
+        {
+            return Header(HttpRequestHeaders.ContentType, contentType);
+        }
+
+        public OwinHttpRequest Accepts(string accepts)
+        {
+            return Header(HttpRequestHeaders.Accept, accepts);
+        }
+
         public OwinHttpRequest IfNoneMatch(string etag)
         {
             return Header(HttpRequestHeaders.IfNoneMatch, etag);

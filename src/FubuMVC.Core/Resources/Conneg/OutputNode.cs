@@ -27,6 +27,11 @@ namespace FubuMVC.Core.Resources.Conneg
                 throw new ArgumentOutOfRangeException("Void is not a valid resource type");
             }
 
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException("resourceType");
+            }
+
             _resourceType = resourceType;
 
             _allMedia = new Lazy<IEnumerable<IMedia>>(() => {

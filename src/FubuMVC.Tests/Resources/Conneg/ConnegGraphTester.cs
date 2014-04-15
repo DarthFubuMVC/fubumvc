@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Projections;
 using FubuMVC.Core.Resources.Conneg;
@@ -11,7 +12,7 @@ namespace FubuMVC.Tests.Resources.Conneg
     [TestFixture]
     public class ConnegGraphTester
     {
-        private readonly ConnegGraph graph = ConnegGraph.Build();
+        private readonly ConnegGraph graph = ConnegGraph.Build(Assembly.GetExecutingAssembly());
 
         [Test]
         public void build_conneg_graph_for_the_app_domain()

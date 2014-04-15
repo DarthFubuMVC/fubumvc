@@ -22,8 +22,11 @@ namespace FubuMVC.Core.Http
             Rules.AddToEnd<AjaxContinuations>();
             Rules.AddToEnd<StringOutput>();
             Rules.AddToEnd<HtmlTagsRule>();
+            Rules.AddToEnd<CustomReadersAndWriters>();
             Rules.AddToEnd<DefaultReadersAndWriters>();
         }
+
+        public ConnegGraph Graph { get; set; }
 
         public void ApplyRules(InputNode node)
         {

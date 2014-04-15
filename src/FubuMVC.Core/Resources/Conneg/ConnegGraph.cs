@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using Bottles;
 using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core.Registration;
@@ -13,11 +15,14 @@ namespace FubuMVC.Core.Resources.Conneg
         public readonly IList<Type> Writers = new List<Type>();
         public readonly IList<Type> Readers = new List<Type>();
 
-        public static ConnegGraph Build()
+        public static ConnegGraph Build(Assembly applicationAssembly)
         {
             var graph = new ConnegGraph();
 
-            TypePool typePool = TypePool.AppDomainTypes();
+            TypePool typePool = new TypePool();
+            typePool.AddAssembly(applicationAssembly);
+            typePool.AddAssemblies(PackageRegistry.PackageAssemblies);
+
             var writers = typePool
                 .TypesMatching(
                     x =>
@@ -42,16 +47,16 @@ namespace FubuMVC.Core.Resources.Conneg
 
         public IEnumerable<Type> ReaderTypesFor(Type inputType)
         {
-            return
-                Readers.Where(
-                    x => x.FindInterfaceThatCloses(typeof(IReader<>)).GetGenericArguments().Single() == inputType);
+            var matchingInterface = typeof (IReader<>).MakeGenericType(inputType);
+
+            return Readers.Where(x => x.CanBeCastTo(matchingInterface));
         }
 
         public IEnumerable<Type> WriterTypesFor(Type resourceType)
         {
-            return
-                Writers.Where(
-                    x => x.FindInterfaceThatCloses(typeof(IMediaWriter<>)).GetGenericArguments().Single() == resourceType);
+            var matchingInterface = typeof (IMediaWriter<>).MakeGenericType(resourceType);
+
+            return Writers.Where(x => x.CanBeCastTo(matchingInterface));
         }
     }
 }
