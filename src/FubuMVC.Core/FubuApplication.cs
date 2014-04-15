@@ -207,13 +207,12 @@ namespace FubuMVC.Core
             return graph;
         }
 
+        // Build route objects from route definitions on graph + add packaging routes
         private IList<RouteBase> buildRoutes(IServiceFactory factory, BehaviorGraph graph)
         {
             var routes = new List<RouteBase>();
 
-            // Build route objects from route definitions on graph + add packaging routes
-            // TODO -- make it possible to swap out the StandardRoutePolicy now
-            new StandardRoutePolicy().BuildRoutes(graph, factory).Each(routes.Add);
+            factory.Get<IRoutePolicy>().BuildRoutes(graph, factory).Each(routes.Add);
 
             return routes;
         }
