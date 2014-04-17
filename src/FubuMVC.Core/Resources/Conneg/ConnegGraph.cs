@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using Bottles;
 using FubuCore;
-using FubuCore.Util;
 using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.Resources.Conneg
@@ -15,14 +11,11 @@ namespace FubuMVC.Core.Resources.Conneg
         public readonly IList<Type> Writers = new List<Type>();
         public readonly IList<Type> Readers = new List<Type>();
 
-        public static ConnegGraph Build(Assembly applicationAssembly)
+        public static ConnegGraph Build(BehaviorGraph behaviorGraph)
         {
             var graph = new ConnegGraph();
 
-            TypePool typePool = new TypePool();
-            typePool.AddAssembly(applicationAssembly);
-            typePool.AddAssemblies(PackageRegistry.PackageAssemblies);
-
+            TypePool typePool = behaviorGraph.Types();
             var writers = typePool
                 .TypesMatching(
                     x =>
@@ -35,14 +28,13 @@ namespace FubuMVC.Core.Resources.Conneg
             var readers = typePool
                 .TypesMatching(
                     x =>
-                        x.Closes(typeof(IReader<>)) && x.IsConcreteWithDefaultCtor() &&
+                        x.Closes(typeof (IReader<>)) && x.IsConcreteWithDefaultCtor() &&
                         !x.IsOpenGeneric());
 
             graph.Readers.AddRange(readers);
 
 
             return graph;
-
         }
 
         public IEnumerable<Type> ReaderTypesFor(Type inputType)

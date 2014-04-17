@@ -4,10 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using Bottles;
 using FubuCore;
-using FubuCore.Descriptions;
 using FubuMVC.Core.Configuration;
-using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Querying;
@@ -56,8 +55,17 @@ namespace FubuMVC.Core.Registration
             _services.AddService<ITypeResolver>(TypeResolver);
         }
 
-        [MarkedForTermination("I think this will be unnecessary in 2.0")]
         public Assembly ApplicationAssembly { get; set; }
+
+        public TypePool Types()
+        {
+            var types = new TypePool();
+            if (ApplicationAssembly != null) types.AddAssembly(ApplicationAssembly);
+            types.AddAssemblies(PackageRegistry.PackageAssemblies);
+
+            return types;
+        }
+
 
         public SettingsCollection Settings
         {
@@ -218,9 +226,9 @@ namespace FubuMVC.Core.Registration
         /// <returns></returns>
         public IEnumerable<ActionCall> FirstActions()
         {
-            foreach (BehaviorChain chain in _behaviors)
+            foreach (var chain in _behaviors)
             {
-                ActionCall call = chain.FirstCall();
+                var call = chain.FirstCall();
                 if (call != null)
                 {
                     yield return call;
@@ -230,9 +238,9 @@ namespace FubuMVC.Core.Registration
 
         private IEnumerable<ActionCall> allActions()
         {
-            foreach (BehaviorChain chain in _behaviors)
+            foreach (var chain in _behaviors)
             {
-                foreach (ActionCall call in chain.Calls)
+                foreach (var call in chain.Calls)
                 {
                     yield return call;
                 }
@@ -248,7 +256,7 @@ namespace FubuMVC.Core.Registration
         /// <returns></returns>
         public BehaviorChain BehaviorFor<T>(Expression<Action<T>> expression)
         {
-            ActionCall call = ActionCall.For(expression);
+            var call = ActionCall.For(expression);
             return _behaviors.Where(x => x.Calls.Contains(call)).FirstOrDefault();
         }
 
@@ -261,11 +269,12 @@ namespace FubuMVC.Core.Registration
         /// <returns></returns>
         public BehaviorChain BehaviorFor<T>(Expression<Func<T, object>> expression)
         {
-            ActionCall call = ActionCall.For(expression);
+            var call = ActionCall.For(expression);
             var chains = _behaviors.Where(x => x.Calls.Contains(call));
             if (chains.Count() > 1)
             {
-                throw new FubuException(1020, "More than one behavior chain contains this ActionCall.  You will have to use a more specific search");
+                throw new FubuException(1020,
+                    "More than one behavior chain contains this ActionCall.  You will have to use a more specific search");
             }
 
             return chains.FirstOrDefault();
@@ -311,7 +320,7 @@ namespace FubuMVC.Core.Registration
         /// <returns></returns>
         public BehaviorChain BehaviorFor(Type inputType)
         {
-            IEnumerable<BehaviorChain> chains = Behaviors.Where(x => x.InputType() == inputType);
+            var chains = Behaviors.Where(x => x.InputType() == inputType);
             if (chains.Count() == 1)
             {
                 return chains.First();
@@ -320,11 +329,11 @@ namespace FubuMVC.Core.Registration
             if (chains.Count() == 0)
             {
                 throw new FubuException(2150, "Could not find any behavior chains for input type {0}",
-                                        inputType.AssemblyQualifiedName);
+                    inputType.AssemblyQualifiedName);
             }
 
             throw new FubuException(2151, "Found more than one behavior chain for input type {0}",
-                                    inputType.AssemblyQualifiedName);
+                inputType.AssemblyQualifiedName);
         }
 
         /// <summary>
@@ -359,7 +368,7 @@ namespace FubuMVC.Core.Registration
 
         private BehaviorChain BehaviorForActionCall(ActionCall call)
         {
-            BehaviorChain chain = Behaviors.FirstOrDefault(x => x.FirstCall().Equals(call));
+            var chain = Behaviors.FirstOrDefault(x => x.FirstCall().Equals(call));
 
             if (chain == null)
             {
@@ -381,7 +390,7 @@ namespace FubuMVC.Core.Registration
         /// </summary>
         public HandlerActionsSet ActionsForHandler(Type handlerType)
         {
-            IEnumerable<ActionCall> actions = FirstActions().Where(x => x.HandlerType == handlerType);
+            var actions = FirstActions().Where(x => x.HandlerType == handlerType);
             return new HandlerActionsSet(actions, handlerType);
         }
 
@@ -407,8 +416,6 @@ namespace FubuMVC.Core.Registration
         {
             return BuildFrom(new FubuRegistry());
         }
-
-
     }
 
 

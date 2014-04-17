@@ -1,3 +1,4 @@
+using System.Reflection;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core;
@@ -24,6 +25,9 @@ namespace FubuMVC.Diagnostics.Tests.Visualization
             registry.Actions.IncludeType<FakeEndpoint>();
 
             server = FubuApplication.For(registry).StructureMap(new Container())
+                .Packages(x => {
+                    x.Assembly(Assembly.GetExecutingAssembly());
+                })
                                         .RunEmbedded(".".ToFullPath());
 
         }

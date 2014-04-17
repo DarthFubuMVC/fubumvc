@@ -50,7 +50,7 @@ namespace FubuMVC.Core.Configuration
             // Apply settings
             config.RunActions(ConfigurationType.Settings, graph);
 
-            graph.Settings.Alter<ConnegSettings>(x => x.Graph = ConnegGraph.Build(graph.ApplicationAssembly));
+            graph.Settings.Alter<ConnegSettings>(x => x.Graph = ConnegGraph.Build(graph));
 
             var assetDiscovery = graph.Settings.Get<AssetSettings>().Build(graph.Files)
                 .ContinueWith(t => graph.Services.AddService<IAssetGraph>(t.Result));
@@ -183,7 +183,7 @@ namespace FubuMVC.Core.Configuration
             graph.Settings.Replace(() => {
                 var rules = new AccessorRules();
 
-                TypePool.AppDomainTypes()
+                graph.Types()
                     .TypesMatching(
                         x =>
                             x.CanBeCastTo<IAccessorRulesRegistration>() && x.IsConcreteWithDefaultCtor() &&

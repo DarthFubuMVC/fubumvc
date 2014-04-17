@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using FubuCore;
-using FubuCore.Util;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View.Registration;
@@ -12,34 +11,13 @@ namespace FubuMVC.Core.View.Model
 {
     public class ViewTypePool
     {
-        private readonly Assembly _applicationAssembly;
-        private readonly Lazy<TypePool> _types;
+        private readonly TypePool _types;
+        private readonly BehaviorGraph _graph;
 
-        public ViewTypePool(Assembly applicationAssembly)
+        public ViewTypePool(BehaviorGraph graph)
         {
-            _applicationAssembly = applicationAssembly;
-            _types = new Lazy<TypePool>(getTypes);
-        }
-
-        public Assembly ApplicationAssembly
-        {
-            get { return _applicationAssembly; }
-        }
-
-        private TypePool getTypes()
-        {
-            var types = new TypePool();
-            types.AddAssembly(_applicationAssembly);
-
-            var filter = new CompositeFilter<Assembly>();
-            filter.Excludes.Add(a => a.IsDynamic);
-            filter.Excludes.Add(a => types.HasAssembly(a));
-            filter.Includes += (t => true);
-
-
-            types.AddAssemblies(AppDomain.CurrentDomain.GetAssemblies().Where(filter.MatchesAll));
-
-            return types;
+            _graph = graph;
+            _types = graph.Types();
         }
 
 
@@ -48,7 +26,7 @@ namespace FubuMVC.Core.View.Model
         {
             if (GenericParser.IsGeneric(typeFullName))
             {
-                var genericParser = new GenericParser(_types.Value.Assemblies);
+                var genericParser = new GenericParser(_types.Assemblies);
                 return genericParser.Parse(typeFullName);
             }
 
@@ -63,7 +41,7 @@ namespace FubuMVC.Core.View.Model
                 return type;
             }
 
-            var types = _types.Value.TypesWithFullName(typeFullName);
+            var types = _types.TypesWithFullName(typeFullName);
             var typeCount = types.Count();
 
             if (typeCount == 1)
@@ -84,9 +62,9 @@ namespace FubuMVC.Core.View.Model
 
         public Assembly FindAssemblyByProvenance(string provenance)
         {
-            if (provenance == ContentFolder.Application) return _applicationAssembly;
+            if (provenance == ContentFolder.Application) return _graph.ApplicationAssembly;
 
-            return _types.Value.Assemblies.FirstOrDefault(x => x.GetName().Name == provenance) ?? _applicationAssembly;
+            return _types.Assemblies.FirstOrDefault(x => x.GetName().Name == provenance) ?? _graph.ApplicationAssembly;
         }
     }
 }

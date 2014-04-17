@@ -75,7 +75,7 @@ namespace FubuMVC.Core.View
                 _viewPolicies.Each(x => x.Alter(views));
                 
                 var logger = TemplateLogger.Default();
-                var types = new ViewTypePool(graph.ApplicationAssembly);
+                var types = new ViewTypePool(graph);
                 
                 // Attaching the view models
 
