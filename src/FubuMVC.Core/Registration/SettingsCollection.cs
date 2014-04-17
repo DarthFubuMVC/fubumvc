@@ -65,7 +65,14 @@ namespace FubuMVC.Core.Registration
 
 
             settings[typeof (T)] = inner.ContinueWith(t => {
-                alteration(t.Result);
+                try
+                {
+                    alteration(t.Result);
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Error while trying to process a Settings alteration on " + typeof(T).FullName, e);
+                }
 
                 return t.Result;
             });
