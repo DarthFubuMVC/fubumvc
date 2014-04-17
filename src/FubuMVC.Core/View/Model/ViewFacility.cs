@@ -12,7 +12,7 @@ namespace FubuMVC.Core.View.Model
     public abstract class ViewFacility<T> : IViewFacility, IFubuRegistryExtension where T : class,ITemplateFile
     {
         private readonly IList<BottleViews<T>> _bottles = new List<BottleViews<T>>();
-        private List<T> _views;
+        private List<T> _views = new List<T>();
 
         public abstract Func<IFubuFile, T> CreateBuilder(SettingsCollection settings);
 
