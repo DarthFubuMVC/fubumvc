@@ -61,5 +61,8 @@ fubu.cmd
 Gemfile.lock
 logs
 storyteller.cmd
+gems
+pkg
+lib
 run_st.cmd
 .bundle
