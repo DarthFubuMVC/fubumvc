@@ -8,7 +8,7 @@ require 'fuburake'
 				 
 	sln.assembly_info = {
 		:product_name => "FubuMVC",
-		:copyright => 'Copyright 2008-2013 Jeremy D. Miller, Joshua Arnold, Corey Kaylor, Joshua Flanagan, et al. All rights reserved.'
+		:copyright => 'Copyright 2008-2014 Jeremy D. Miller, Joshua Arnold, Corey Kaylor, Joshua Flanagan, et al. All rights reserved.'
 	}
 
 	sln.ripple_enabled = true
