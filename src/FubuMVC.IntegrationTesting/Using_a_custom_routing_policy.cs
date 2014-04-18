@@ -19,7 +19,7 @@ namespace FubuMVC.IntegrationTesting
             FakeRoutePolicy.IWasCalled = false;
 
             var registry = new FubuRegistry();
-            registry.Services(x => x.ReplaceService<IRoutePolicy, FakeRoutePolicy>());
+            registry.RoutePolicy<FakeRoutePolicy>();
 
             using (var runtime = FubuApplication.For(registry).StructureMap().Bootstrap())
             {

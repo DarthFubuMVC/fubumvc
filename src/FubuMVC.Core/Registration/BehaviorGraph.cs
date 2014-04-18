@@ -11,6 +11,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Registration.Routes;
+using FubuMVC.Core.Routing;
 using FubuMVC.Core.Runtime.Files;
 
 namespace FubuMVC.Core.Registration
@@ -37,6 +38,8 @@ namespace FubuMVC.Core.Registration
         private readonly ServiceGraph _services = new ServiceGraph();
 
         private readonly SettingsCollection _settings;
+
+        public IRoutePolicy RoutePolicy = new StandardRoutePolicy();
 
         public BehaviorGraph(SettingsCollection parent) : this()
         {

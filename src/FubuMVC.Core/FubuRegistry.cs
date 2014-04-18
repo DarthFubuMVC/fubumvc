@@ -7,6 +7,7 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Routing;
 
 namespace FubuMVC.Core
 {
@@ -224,6 +225,11 @@ namespace FubuMVC.Core
         internal Assembly ApplicationAssembly
         {
             get { return _applicationAssembly; }
+        }
+
+        public void RoutePolicy<T>() where T : IRoutePolicy, new()
+        {
+            Configure(x => x.RoutePolicy = new T());
         }
     }
 }

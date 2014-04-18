@@ -212,7 +212,7 @@ namespace FubuMVC.Core
         {
             var routes = new List<RouteBase>();
 
-            factory.Get<IRoutePolicy>().BuildRoutes(graph, factory).Each(routes.Add);
+            graph.RoutePolicy.BuildRoutes(graph, factory).Each(routes.Add);
 
             return routes;
         }
