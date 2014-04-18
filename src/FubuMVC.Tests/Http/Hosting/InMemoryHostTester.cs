@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Http.Hosting;
@@ -7,6 +8,7 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Http.Hosting
 {
@@ -37,6 +39,13 @@ namespace FubuMVC.Tests.Http.Hosting
         private static InMemoryHost newHost()
         {
             return FubuApplication.DefaultPolicies().StructureMap().RunInMemory();
+        }
+
+        private ScenarioAssertionException fails(Action<Scenario> configuration)
+        {
+            return Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
+                host.Scenario(configuration);
+            });
         }
 
         [Test]
@@ -254,6 +263,53 @@ namespace FubuMVC.Tests.Http.Hosting
             });
 
             ex.Message.ShouldContain("Expected no value for header 'Foo', but found values 'Bar1', 'Bar2'");
+        }
+
+        [Test]
+        public void exact_content_happy_path()
+        {
+            host.Scenario(x => {
+                x.Get.Action<InMemoryEndpoint>(_ => _.get_memory_hello());
+
+                x.ContentShouldBe("hello from the in memory host");
+            });
+        }
+
+        [Test]
+        public void exact_content_sad_path()
+        {
+            var e = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
+                host.Scenario(x =>
+                {
+                    x.Get.Action<InMemoryEndpoint>(_ => _.get_memory_hello());
+
+                    x.ContentShouldBe("the wrong content");
+                });
+            });
+
+            e.Message.ShouldContain("Expected the content to be 'the wrong content'");
+        }
+
+        [Test]
+        public void content_type_should_be_happy_path()
+        {
+            host.Scenario(_ => {
+                _.Get.Action<InMemoryEndpoint>(x => x.get_memory_hello());
+
+                _.ContentTypeShouldBe(MimeType.Text);
+            });
+        }
+
+        [Test]
+        public void content_type_sad_path()
+        {
+            var ex = fails(_ => {
+                _.Get.Action<InMemoryEndpoint>(x => x.get_memory_hello());
+
+                _.ContentTypeShouldBe("text/json");
+            });
+
+            ex.Message.ShouldContain("Expected a single header value of 'Content-Type'='text/json', but the actual value was 'text/plain'");
         }
     }
 

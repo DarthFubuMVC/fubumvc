@@ -1,38 +1,28 @@
 using System;
 using System.Net;
-using FubuMVC.Core;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.UI;
-using FubuMVC.Katana;
-using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
-using StructureMap;
 
 namespace FubuMVC.IntegrationTesting.UI
 {
-
     [TestFixture]
     public class doughnut_caching_tester
     {
         [Test]
         public void doughnut_caching()
         {
-            using (var server = FubuApplication.DefaultPolicies().StructureMap(new Container()).RunEmbeddedWithAutoPort())
-            {
-                var endpoints = server.Endpoints;
+            var text1 = TestHost.GetByAction<CachedEndpoints>(x => x.get_doughnut_cached()).Body.ReadAsText();
+            var text2 = TestHost.GetByAction<CachedEndpoints>(x => x.get_doughnut_cached()).Body.ReadAsText();
+            var text3 = TestHost.GetByAction<CachedEndpoints>(x => x.get_doughnut_cached()).Body.ReadAsText();
+            var text4 = TestHost.GetByAction<CachedEndpoints>(x => x.get_doughnut_cached()).Body.ReadAsText();
 
-                var text1 = endpoints.Get<CachedEndpoints>(x => x.get_doughnut_cached()).ReadAsText();
-                var text2 = endpoints.Get<CachedEndpoints>(x => x.get_doughnut_cached()).ReadAsText();
-                var text3 = endpoints.Get<CachedEndpoints>(x => x.get_doughnut_cached()).ReadAsText();
-                var text4 = endpoints.Get<CachedEndpoints>(x => x.get_doughnut_cached()).ReadAsText();
-
-                text1.ShouldEqual(text2);
-                text1.ShouldEqual(text3);
-                text1.ShouldEqual(text4);
-            }
+            text1.ShouldEqual(text2);
+            text1.ShouldEqual(text3);
+            text1.ShouldEqual(text4);
         }
     }
 
@@ -48,7 +38,6 @@ namespace FubuMVC.IntegrationTesting.UI
             _writer = writer;
             _partials = partials;
         }
-
 
 
         public HtmlDocument get_doughnut_cached()
@@ -80,7 +69,7 @@ namespace FubuMVC.IntegrationTesting.UI
         public string Name { get; set; }
     }
 
-    public class DateRequest{}
-
-
+    public class DateRequest
+    {
+    }
 }

@@ -48,7 +48,9 @@ namespace FubuMVC.Core.Http.Owin
                     () => {
                         if (!environment.ContainsKey(OwinConstants.RequestQueryStringKey)) return new NameValueCollection();
 
-                        return HttpUtility.ParseQueryString(environment.Get<string>(OwinConstants.RequestQueryStringKey));
+                        var values = HttpUtility.ParseQueryString(environment.Get<string>(OwinConstants.RequestQueryStringKey));
+
+                        return values;
                     });
 
             Cookies = new Cookies.Cookies(this);
@@ -96,7 +98,22 @@ namespace FubuMVC.Core.Http.Owin
 
         public OwinHttpRequest RelativeUrl(string url)
         {
-            append(OwinConstants.RequestPathKey, url);
+            var parts = url.Split('?');
+
+            append(OwinConstants.RequestPathKey, parts.First());
+
+            if (url.Contains("?"))
+            {
+                var querystring = parts.Last();
+                if (_environment.ContainsKey(OwinConstants.RequestQueryStringKey))
+                {
+                    _environment[OwinConstants.RequestQueryStringKey] = querystring;
+                }
+                else
+                {
+                    _environment.Add(OwinConstants.RequestQueryStringKey, querystring);
+                }
+            }
 
             return this;
         }

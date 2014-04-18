@@ -2,10 +2,6 @@
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration;
 using NUnit.Framework;
-using FubuMVC.StructureMap;
-using StructureMap;
-using FubuMVC.Katana;
-using FubuTestingSupport;
 
 namespace FubuMVC.IntegrationTesting.Continuations
 {
@@ -15,21 +11,21 @@ namespace FubuMVC.IntegrationTesting.Continuations
         [Test]
         public void transfer_in_a_partial()
         {
-            using (var server = FubuApplication.DefaultPolicies().StructureMap(new Container()).RunEmbedded(port:5510))
-            {
-                server.Endpoints.GetByInput(new FullInput {Redirect = false})
-                      .ReadAsText().ShouldEqual("original");
+            TestHost.Scenario(_ => {
+                _.Get.Input(new FullInput {Redirect = false});
+                _.ContentShouldBe("original");
+            });
 
-                server.Endpoints.GetByInput(new FullInput { Redirect = true })
-                    .ReadAsText().ShouldEqual("transferred");
-
-            }
+            TestHost.Scenario(_ => {
+                _.Get.Input(new FullInput {Redirect = true});
+                _.ContentShouldBe("transferred");
+            });
         }
     }
 
     public class PartialInput
     {
-        public bool Redirect { get; set; }    
+        public bool Redirect { get; set; }
     }
 
     public class FullInput
@@ -52,7 +48,7 @@ namespace FubuMVC.IntegrationTesting.Continuations
 
     public class PartialEndpoints
     {
-        [Filter(typeof(PartialFilter))]
+        [Filter(typeof (PartialFilter))]
         public FubuContinuation get_full_method_Redirect(FullInput input)
         {
             return FubuContinuation.TransferTo(new PartialInput {Redirect = input.Redirect});
@@ -70,6 +66,4 @@ namespace FubuMVC.IntegrationTesting.Continuations
             return "transferred";
         }
     }
-
-
 }

@@ -36,45 +36,43 @@ namespace FubuMVC.IntegrationTesting.UI
         [Test]
         public void override_the_display_for_the_default()
         {
-            using (var server = FubuApplication.For<TestRegistry>().StructureMap(new Container()).RunEmbeddedWithAutoPort())
-            {
-                server.Endpoints.GetByInput(new OverrideRequest {Category = ElementConstants.Display})
-                .ReadAsText()     
-                .ShouldEqual(new BlueBuilder().Build(null).ToString());
-            }
+            TestHost.Scenario<TestRegistry>(_ => {
+                _.Get.Input(new OverrideRequest { Category = ElementConstants.Display });
+
+                _.ContentShouldBe(new BlueBuilder().Build(null).ToString());
+            });
         }
 
         [Test]
         public void override_the_display_for_the_label()
         {
-            using (var server = FubuApplication.For<TestRegistry>().StructureMap(new Container()).RunEmbeddedWithAutoPort())
+            TestHost.Scenario<TestRegistry>(_ =>
             {
-                server.Endpoints.GetByInput(new OverrideRequest { Category = ElementConstants.Label })
-                .ReadAsText()
-                .ShouldEqual(new SimpleBuilder().Build(null).ToString());
-            }
+                _.Get.Input(new OverrideRequest { Category = ElementConstants.Label });
+
+                _.ContentShouldBe(new SimpleBuilder().Build(null).ToString());
+            });
         }
 
         [Test]
         public void override_the_display_for_the_input()
         {
-            using (var server = FubuApplication.For<TestRegistry>().StructureMap(new Container()).RunEmbeddedWithAutoPort())
+            TestHost.Scenario<TestRegistry>(_ =>
             {
-                server.Endpoints.GetByInput(new OverrideRequest { Category = ElementConstants.Editor })
-                .ReadAsText()
-                .ShouldEqual(new ComplexBuilder().Build(null).ToString());
-            }
+                _.Get.Input(new OverrideRequest { Category = ElementConstants.Editor });
+
+                _.ContentShouldBe(new ComplexBuilder().Build(null).ToString());
+            });
         }
 
         [Test]
         public void override_display_by_profile()
         {
-            using (var server = FubuApplication.For<TestRegistry>().StructureMap(new Container()).RunEmbeddedWithAutoPort())
-            {
-                server.Endpoints.GetByInput(new OverrideRequest { Category = ElementConstants.Display, Profile = "Green"})
-                .ReadAsText()
-                .ShouldEqual(new GreenBuilder().Build(null).ToString());
-            }
+            TestHost.Scenario<TestRegistry>(_ => {
+                _.Get.Input(new OverrideRequest { Category = ElementConstants.Display, Profile = "Green" });
+
+                _.ContentShouldBe(new GreenBuilder().Build(null).ToString());
+            });
         }
     }
 

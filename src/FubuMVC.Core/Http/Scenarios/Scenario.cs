@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
-using System.Runtime.Serialization;
 using System.Web.UI.WebControls;
 using FubuCore;
 using FubuMVC.Core.Http.Owin;
@@ -14,42 +12,7 @@ using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Http.Scenarios
 {
-    // TODO -- flush out a lot more of this
-    public interface IScenario : IDisposable
-    {
-        IUrlExpression Get { get; }
-        IUrlExpression Put { get; }
-        IUrlExpression Delete { get; }
-        IUrlExpression Post { get; }
-        IUrlExpression Head { get; }
-
-        void PostAsJson<T>(T input) where T : class;
-
-        OwinHttpRequest Request { get; }
-        OwinHttpResponse Response { get; }
-
-        //void StatusCodeShouldBe(HttpStatusCode code);
-        //void StatusDescriptionShouldBe(string text);
-        //void ShouldHaveHeader(HttpResponseHeader header);
-        //void ContentShouldBe(MimeType mimeType, string content);
-        //void ContentTypeShouldBe(MimeType mimeType);
-        //void LengthShouldBe(int length);
-        //void ContentShouldBe(string mimeType, string content);
-
-        void ContentShouldContain(string text);
-        void ContentShouldNotContain(string text);
-        void StatusCodeShouldBe(HttpStatusCode httpStatusCode);
-        Scenario.HeaderExpectations Header(string headerKey);
-    }
-
-    public interface IUrlExpression
-    {
-        void Action<T>(Expression<Action<T>> expression);
-        void Url(string relativeUrl);
-        void Input<T>(T input = null) where T : class;
-    }
-
-    public class Scenario : IScenario, IUrlExpression
+    public class Scenario : IUrlExpression, IDisposable
     {
         private readonly IUrlRegistry _urls;
         private readonly OwinHttpRequest _request;
@@ -131,6 +94,16 @@ namespace FubuMVC.Core.Http.Scenarios
             if (_bodyText.Value.Contains(text))
             {
                 _assertion.Add("The response body should not contain text \"{0}\"", text);
+
+                _assertion.Body = _bodyText.Value;
+            }
+        }
+
+        public void ContentShouldBe(string exactContent)
+        {
+            if (_bodyText.Value != exactContent)
+            {
+                _assertion.Add("Expected the content to be '{0}'", exactContent);
 
                 _assertion.Body = _bodyText.Value;
             }
@@ -239,54 +212,44 @@ namespace FubuMVC.Core.Http.Scenarios
                 }
             }
         }
-    }
 
-    [Serializable]
-    public class ScenarioAssertionException : Exception
-    {
-        private readonly IList<string> _messages = new List<string>();
 
-        public ScenarioAssertionException()
+        public void StatusCodeShouldBeOk()
         {
+            StatusCodeShouldBe(HttpStatusCode.OK);
         }
 
-        protected ScenarioAssertionException(SerializationInfo info, StreamingContext context) : base(info, context)
+        public void ContentTypeShouldBe(MimeType mimeType)
         {
+            ContentTypeShouldBe(mimeType.Value);
         }
 
-        public void Add(string format, params object[] parameters)
+        public void HeaderValueShouldBe(string header, string expected)
         {
-            _messages.Add(format.ToFormat(parameters));
-        }
-
-        public void AssertValid()
-        {
-            if (_messages.Any())
+            IEnumerable<string> values = Response.HeaderValueFor(HttpResponseHeaders.ContentType);
+            switch (values.Count())
             {
-                throw this;
+                case 0:
+                    _assertion.Add("There is no header value for '{0}'", header);
+                    break;
+
+                case 1:
+                    if (values.Single() != expected)
+                    {
+                        _assertion.Add("Single header value for '{0}', expected '{1} but was '{2}'", header, expected, values.Single());
+                    }
+                    break;
+
+                default:
+                    _assertion.Add("There were multiple values of header '{0}': '{1}'", header, values.Join(", "));
+                    break;
             }
         }
 
-        public override string Message
+
+        public void ContentTypeShouldBe(string mimeType)
         {
-            get
-            {
-                var writer = new StringWriter();
-                _messages.Each(x => writer.WriteLine(x));
-
-                if (Body.IsNotEmpty())
-                {
-                    writer.WriteLine();
-                    writer.WriteLine();
-                    writer.WriteLine("Actual body text was:");
-                    writer.WriteLine();
-                    writer.WriteLine(Body);
-                }
-
-                return writer.ToString();
-            }
+            Header(HttpResponseHeaders.ContentType).SingleValueShouldEqual(mimeType);
         }
-
-        public string Body { get; set; }
     }
 }

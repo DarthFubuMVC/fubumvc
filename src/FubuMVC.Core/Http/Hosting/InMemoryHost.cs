@@ -7,6 +7,7 @@ using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
 using FubuMVC.Core.Http.Scenarios;
 using FubuMVC.Core.Packaging;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Urls;
 
@@ -54,6 +55,14 @@ namespace FubuMVC.Core.Http.Hosting
             get { return _services; }
         }
 
+        public BehaviorGraph Behaviors
+        {
+            get
+            {
+                return _services.GetInstance<BehaviorGraph>();
+            }
+        }
+
         public OwinHttpResponse Send(Action<OwinHttpRequest> configuration)
         {
             var request = OwinHttpRequest.ForTesting();
@@ -72,7 +81,7 @@ namespace FubuMVC.Core.Http.Hosting
             return new OwinHttpResponse(request.Environment);
         }
 
-        public OwinHttpResponse Scenario(Action<IScenario> configuration)
+        public OwinHttpResponse Scenario(Action<Scenario> configuration)
         {
             var scenario = CreateScenario();
             using (scenario)

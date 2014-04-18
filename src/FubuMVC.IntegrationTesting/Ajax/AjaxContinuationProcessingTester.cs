@@ -1,3 +1,4 @@
+using System.Net;
 using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Behaviors;
@@ -13,46 +14,35 @@ namespace FubuMVC.IntegrationTesting.Ajax
     [TestFixture]
     public class AjaxContinuationProcessingTester
     {
-
-        public class TestRegistry : FubuRegistry
-        {
-            public TestRegistry()
-            {
-                Actions.IncludeType<AjaxController>();
-            }
-        }
-
         [Test]
         public void send_message_that_gets_through_the_first_behavior_and_is_handled_by_the_last()
         {
-            using (var server = FubuApplication.For<TestRegistry>().StructureMap(new Container()).RunEmbedded(port:PortFinder.FindPort(5500)))
-            {
-                var input = new CharacterInput
+            TestHost.Scenario(_ => {
+                _.PostAsJson(new CharacterInput
                 {
                     CharacterClass = "Ninja",
                     Race = "Troll"
-                };
+                });
 
-                server.Endpoints.PostJson(input).ReadAsText().ShouldEqual("{\"success\":true,\"refresh\":false}");
-            }
+                _.StatusCodeShouldBeOk();
+                _.ContentShouldBe("{\"success\":true,\"refresh\":false}");
+            });
+
         }
 
         [Test]
         public void send_message_that_gets_caught_by_validation_behavior()
         {
-            using (var server = FubuApplication.For<TestRegistry>().StructureMap(new Container()).RunEmbedded(port: PortFinder.FindPort(5500)))
-            {
-                var input = new CharacterInput
+            TestHost.Scenario(_ => {
+                _.PostAsJson(new CharacterInput
                 {
                     CharacterClass = "Paladin",
                     Race = "Ogre"
-                };
+                });
 
-                var text = server.Endpoints.PostJson(input).ReadAsText();
-
-                text.ShouldEqual("{\"success\":false,\"refresh\":false,\"errors\":[{\"category\":null,\"field\":\"Character\",\"label\":null,\"message\":\"Ogres cannot be Paladins!\"}]}");
-            }
-
+                _.StatusCodeShouldBeOk();
+                _.ContentShouldBe("{\"success\":false,\"refresh\":false,\"errors\":[{\"category\":null,\"field\":\"Character\",\"label\":null,\"message\":\"Ogres cannot be Paladins!\"}]}");
+            });
 
         }
     }
@@ -82,7 +72,7 @@ namespace FubuMVC.IntegrationTesting.Ajax
         }
     }
 
-    public class AjaxController
+    public class AjaxEndpoint
     {
         [WrapWith(typeof(CharacterValidator))]
         public AjaxContinuation post_save_character(CharacterInput input)

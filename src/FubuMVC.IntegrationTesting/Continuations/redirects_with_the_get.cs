@@ -1,5 +1,7 @@
-﻿using FubuMVC.Core;
+﻿using System.Net;
+using FubuMVC.Core;
 using FubuMVC.Core.Continuations;
+using FubuMVC.Core.Http;
 using FubuMVC.Katana;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
@@ -14,23 +16,25 @@ namespace FubuMVC.IntegrationTesting.Continuations
         [Test]
         public void the_FubuContinuation_Redirect_uses_GET_by_default()
         {
-            using (var server = FubuApplication.DefaultPolicies().StructureMap(new Container()).RunEmbedded(port: 5510))
-            {
-                server.Endpoints.Get<RedirectedEndpoint>(x => x.get_redirect())
-                      .ReadAsText().ShouldEqual("Right!");
+            TestHost.Scenario(_ => {
+                _.Get.Action<RedirectedEndpoint>(x => x.get_redirect());
 
-            }
+                _.StatusCodeShouldBe(HttpStatusCode.Redirect);
+                _.Header(HttpResponseHeaders.Location).SingleValueShouldEqual("/redirect/correct");
+                _.ContentShouldContain("The document has moved");
+            });
         }
 
         [Test]
         public void FubuContinuation_Redirect_honors_the_explicit_METHOD()
         {
-            using (var server = FubuApplication.DefaultPolicies().StructureMap(new Container()).RunEmbedded(port: 5510))
-            {
-                server.Endpoints.Get<RedirectedEndpoint>(x => x.get_redirect_explicit())
-                      .ReadAsText().ShouldNotEqual("Right!");
+            TestHost.Scenario(_ => {
+                _.Get.Action<RedirectedEndpoint>(x => x.get_redirect_explicit());
 
-            }
+                _.StatusCodeShouldBe(HttpStatusCode.Redirect);
+                _.Header(HttpResponseHeaders.Location).SingleValueShouldEqual("/redirect/wrong");
+                _.ContentShouldContain("The document has moved");
+            });
         }
     }
 

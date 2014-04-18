@@ -2,8 +2,6 @@
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Katana;
-using FubuMVC.StructureMap;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Conneg
@@ -14,11 +12,12 @@ namespace FubuMVC.IntegrationTesting.Conneg
         [Test]
         public void use_the_custom_mimetype_correction()
         {
-            using (var server = FubuApplication.For<RegistryWithCustomMimetypeCorrection>().StructureMap().RunEmbedded(port:PortFinder.FindPort(5502)))
-            {
-                server.Endpoints.GetByInput(new OverriddenResponse{Name="Foo"}, acceptType: "text/html")
-                    .ContentTypeShouldBe(MimeType.Json);
-            }
+            TestHost.Scenario<RegistryWithCustomMimetypeCorrection>(_ => {
+                _.Get.Input(new OverriddenResponse {Name = "Foo"});
+                _.Request.Accepts("text/html");
+
+                _.ContentTypeShouldBe(MimeType.Json);
+            });
         }
     }
 
@@ -26,13 +25,10 @@ namespace FubuMVC.IntegrationTesting.Conneg
     {
         public RegistryWithCustomMimetypeCorrection()
         {
-            AlterSettings<ConnegSettings>(x => {
-                x.Corrections.Add(new AlwaysJson());
-            });
+            AlterSettings<ConnegSettings>(x => { x.Corrections.Add(new AlwaysJson()); });
         }
     }
 
-    
 
     public class AlwaysJson : IMimetypeCorrection
     {

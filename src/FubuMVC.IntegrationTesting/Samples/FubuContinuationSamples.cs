@@ -3,6 +3,7 @@ using System.Net;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Continuations;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Katana;
@@ -59,39 +60,49 @@ namespace FubuMVC.IntegrationTesting.Samples
         public void try_out_continuations()
         {
             // SAMPLE: fubucontinuation-in-action
-            using (var server = FubuApplication
-                .DefaultPolicies()
-                .StructureMap()
-                .RunEmbedded(port: PortFinder.FindPort(5500)))
+
+            // Proceed as normal through the chain
+            TestHost.Scenario(_ => {
+                _.Get.Input(new Number { Value = 1 });
+                _.ContentShouldBe("The number is 1");
+            });
+
+            // 5 is special, "jump the tracks" and execute
+            // a different chain inline
+            TestHost.Scenario(_ =>
             {
-                // Proceed as normal through the chain
-                server.Endpoints.GetByInput(new Number {Value = 1})
-                    .ReadAsText().ShouldEqual("The number is 1");
+                _.Get.Input(new Number { Value = 5 });
+                _.ContentShouldBe("Five is a special number!");
+            });
 
-                // 5 is special, "jump the tracks" and execute
-                // a different chain inline
-                server.Endpoints.GetByInput(new Number {Value = 5})
-                    .ReadAsText().ShouldEqual("Five is a special number!");
+            // You are not authorized to specify a number greater
+            // than 10
+            TestHost.Scenario(_ =>
+            {
+                _.Get.Input(new Number { Value = 11 });
+                _.StatusCodeShouldBe(HttpStatusCode.Unauthorized);
+            });
 
-                // You are not authorized to specify a number greater
-                // than 10
-                server.Endpoints.GetByInput(new Number {Value = 11})
-                    .StatusCode
-                    .ShouldEqual(HttpStatusCode.Unauthorized);
+            // Negative numbers are invalid, so we'll redirect
+            // the user to another page instead
+            TestHost.Scenario(_ =>
+            {
+                _.Get.Input(new Number { Value = -1 });
+                _.Header(HttpResponseHeaders.Location).SingleValueShouldEqual("/invalid");
+                _.StatusCodeShouldBe(HttpStatusCode.Redirect);
+            });
 
-                // Negative numbers are invalid, so we'll redirect
-                // the user to another page instead
-                server.Endpoints.GetByInput(new Number {Value = -1})
-                    .ReadAsText().ShouldEqual("The number is invalid!");
 
-                // You can also redirect or transfer by the input model
-                // to the other chain
-                server.Endpoints.GetByInput(new Number {Value = 2})
-                    .ReadAsText().ShouldEqual("The doubled number is 4");
+            TestHost.Scenario(_ => {
+                _.Get.Input(new Number { Value = 2 });
+                _.ContentShouldBe("The doubled number is 4");
+            });
 
-                server.Endpoints.GetByInput(new Number {Value = 4})
-                    .ReadAsText().ShouldEqual("The doubled number is 8");
-            }
+            TestHost.Scenario(_ => {
+                _.Get.Input(new Number { Value = 4 });
+                _.Header(HttpResponseHeaders.Location).SingleValueShouldEqual("/doubled/8");
+                _.StatusCodeShouldBe(HttpStatusCode.Redirect);
+            });
             // ENDSAMPLE
         }
     }

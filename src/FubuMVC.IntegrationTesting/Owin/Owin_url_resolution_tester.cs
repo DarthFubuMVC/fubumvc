@@ -1,7 +1,4 @@
-﻿using FubuMVC.Core;
-using FubuMVC.Core.Urls;
-using FubuMVC.Katana;
-using FubuTestingSupport;
+﻿using FubuMVC.Core.Urls;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Owin
@@ -12,11 +9,11 @@ namespace FubuMVC.IntegrationTesting.Owin
         [Test]
         public void no_longer_puts_localhost_in_the_resolved_url()
         {
-            using (var server = EmbeddedFubuMvcServer.For<HarnessApplication>(port:PortFinder.FindPort(5510)))
-            {
-                server.Endpoints.Get<UrlEndpoints>(x => x.get_green())
-                   .ReadAsText().ShouldEqual("/green");
-            }
+            TestHost.Scenario(_ => {
+                _.Get.Action<UrlEndpoints>(x => x.get_green());
+
+                _.ContentShouldBe("/green");
+            });
         }
     }
 
@@ -28,7 +25,7 @@ namespace FubuMVC.IntegrationTesting.Owin
         {
             _urls = urls;
         }
-        
+
         public string get_green()
         {
             return _urls.UrlFor<UrlEndpoints>(x => x.get_green());

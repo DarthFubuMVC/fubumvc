@@ -1,21 +1,82 @@
 using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Xml;
+using System.Linq.Expressions;
+using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Endpoints;
-using FubuMVC.Core.Packaging;
-using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Urls;
+using FubuMVC.Core.Http.Hosting;
+using FubuMVC.Core.Http.Owin;
+using FubuMVC.Core.Http.Scenarios;
+using FubuMVC.Core.Registration;
 using FubuMVC.Katana;
 using FubuMVC.StructureMap;
-using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
 
 namespace FubuMVC.IntegrationTesting
 {
+    public static class TestHost
+    {
+        private static readonly Lazy<InMemoryHost> _host =
+            new Lazy<InMemoryHost>(() => { return FubuApplication.DefaultPolicies().StructureMap().RunInMemory(); });
+
+        public static void Scenario(Action<Scenario> configuration)
+        {
+            _host.Value.Scenario(configuration);
+        }
+
+        public static OwinHttpResponse GetByInput(object input)
+        {
+            OwinHttpResponse response = null;
+
+            Scenario(x => {
+                x.Get.Input(input);
+
+                response = x.Response;
+            });
+
+            return response;
+        }
+
+        public static OwinHttpResponse GetByAction<T>(Expression<Action<T>> expression)
+        {
+            OwinHttpResponse response = null;
+
+            Scenario(x =>
+            {
+                x.Get.Action(expression);
+
+                response = x.Response;
+            });
+
+            return response;
+        }
+
+        public static BehaviorGraph BehaviorGraph
+        {
+            get
+            {
+                return _host.Value.Behaviors;
+            }
+        }
+
+        public static void Scenario<T>(Action<Scenario> configuration) where T : FubuRegistry, new()
+        {
+            using (var host = FubuApplication.For<T>().StructureMap().RunInMemory())
+            {
+                host.Scenario(configuration);
+            }
+        }
+
+        public static void Shutdown()
+        {
+            if (_host.IsValueCreated)
+            {
+                _host.Value.SafeDispose();
+            }
+        }
+    }
+
     [SetUpFixture]
     public class HarnessBootstrapper
     {
@@ -23,6 +84,7 @@ namespace FubuMVC.IntegrationTesting
         public void TearDown()
         {
             SelfHostHarness.Shutdown();
+            TestHost.Shutdown();
         }
     }
 
@@ -86,8 +148,5 @@ namespace FubuMVC.IntegrationTesting
 
     public class HarnessRegistry : FubuRegistry
     {
-
     }
-
-
 }

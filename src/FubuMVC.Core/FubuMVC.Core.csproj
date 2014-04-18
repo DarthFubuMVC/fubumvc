@@ -166,7 +166,9 @@
     <Compile Include="Http\Owin\OwinHttpResponse.cs" />
     <Compile Include="Http\Owin\OwinServiceArguments.cs" />
     <Compile Include="Http\Owin\OwinSettings.cs" />
-    <Compile Include="Http\Scenarios\Classes.cs" />
+    <Compile Include="Http\Scenarios\Scenario.cs" />
+    <Compile Include="Http\Scenarios\IUrlExpression.cs" />
+    <Compile Include="Http\Scenarios\ScenarioAssertionException.cs" />
     <Compile Include="PortFinder.cs" />
     <Compile Include="Http\Owin\Readers\FormReader.cs" />
     <Compile Include="Http\Owin\Readers\IOwinRequestReader.cs" />

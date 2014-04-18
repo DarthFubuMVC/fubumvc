@@ -22,6 +22,7 @@ namespace FubuMVC.IntegrationTesting.Owin
             FubuMode.Mode("ReallyRandom");
             FubuMode.Mode().ShouldEqual("ReallyRandom");
 
+            // THIS HAS TO BE A KATANA TEST. 
             using (var server = FubuApplication.DefaultPolicies().StructureMap().RunEmbedded(port: 0))
             {
                 server.Endpoints.Get<OwinAppModeEndpoint>(x => x.get_owin_mode())

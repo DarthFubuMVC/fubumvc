@@ -16,22 +16,26 @@ namespace FubuMVC.IntegrationTesting.Owin
         [Test]
         public void read_querystring_values_from_current_request()
         {
-            using (var server = FubuApplication.DefaultPolicies().StructureMap().RunEmbeddedWithAutoPort())
-            {
-                server.Services.GetInstance<BehaviorGraph>()
-                    .BehaviorFor<ReadingQuerystringEndpoint>(x => x.get_querystring_Key(null))
+            TestHost.BehaviorGraph.BehaviorFor<ReadingQuerystringEndpoint>(x => x.get_querystring_Key(null))
                     .As<RoutedChain>()
                     .GetRoutePattern().ShouldEqual("querystring/{Key}");
 
-                server.Endpoints.Get("querystring/Foo?Foo=Bar&A=1&B=2")
-                    .ReadAsText().ShouldEqual("Bar");
+            TestHost.Scenario(_ => {
+                _.Get.Url("/querystring/Foo?Foo=Bar&A=1&B=2");
+                _.ContentShouldBe("Bar");
+            });
 
-                server.Endpoints.Get("querystring/A?Foo=Bar&A=1&B=2")
-                    .ReadAsText().ShouldEqual("1");
+            TestHost.Scenario(_ =>
+            {
+                _.Get.Url("/querystring/A?Foo=Bar&A=1&B=2");
+                _.ContentShouldBe("1");
+            });
 
-                server.Endpoints.Get("querystring/B?Foo=Bar&A=1&B=2")
-                    .ReadAsText().ShouldEqual("2");
-            }
+            TestHost.Scenario(_ =>
+            {
+                _.Get.Url("/querystring/B?Foo=Bar&A=1&B=2");
+                _.ContentShouldBe("2");
+            });
 
 
         }

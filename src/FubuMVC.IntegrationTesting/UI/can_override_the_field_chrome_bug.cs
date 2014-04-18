@@ -27,11 +27,11 @@ namespace FubuMVC.IntegrationTesting.UI
         [Test]
         public void field_chrome_is_not_the_default()
         {
-            using (var server = FubuApplication.For<TestRegistry>().StructureMap(new Container()).RunEmbeddedWithAutoPort())
-            {
-                server.Endpoints.GetByInput(new ShowModel { Name = "Jeremy" })
-                         .ToString().ShouldEqual("<tr><td><label for=\"Name\">Name</label></td><td><span id=\"Name\">Jeremy</span></td></tr>");
-            }
+            TestHost.Scenario<TestRegistry>(_ => {
+                _.Get.Input(new ShowModel { Name = "Jeremy" });
+
+                _.ContentShouldBe("<tr><td><label for=\"Name\">Name</label></td><td><span id=\"Name\">Jeremy</span></td></tr>");
+            });
         }
     }
 }
