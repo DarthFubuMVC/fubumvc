@@ -5,7 +5,6 @@ using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Katana;
 using FubuMVC.StructureMap;
-using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
 
@@ -34,11 +33,11 @@ namespace FubuMVC.IntegrationTesting
         [Test]
         public void can_get_The_about_page_smoke_test()
         {
-            var description = server.Endpoints.Get<AboutDiagnostics>(x => x.get__about()).ReadAsText();
-            description.ShouldContain("Assemblies");
-            Debug.WriteLine(description);
+            TestHost.Scenario(_ => {
+                _.Get.Action<AboutDiagnostics>(x => x.get__about());
+                _.ContentShouldContain("Assemblies");
+            });
         }
-
 
 
         [Test, Explicit]
