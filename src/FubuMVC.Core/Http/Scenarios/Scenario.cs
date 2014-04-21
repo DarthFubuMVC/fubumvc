@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
+using System.Text;
 using System.Web.UI.WebControls;
 using FubuCore;
+using FubuCore.Reflection;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
@@ -224,32 +227,33 @@ namespace FubuMVC.Core.Http.Scenarios
             ContentTypeShouldBe(mimeType.Value);
         }
 
-        public void HeaderValueShouldBe(string header, string expected)
-        {
-            IEnumerable<string> values = Response.HeaderValueFor(HttpResponseHeaders.ContentType);
-            switch (values.Count())
-            {
-                case 0:
-                    _assertion.Add("There is no header value for '{0}'", header);
-                    break;
 
-                case 1:
-                    if (values.Single() != expected)
-                    {
-                        _assertion.Add("Single header value for '{0}', expected '{1} but was '{2}'", header, expected, values.Single());
-                    }
-                    break;
-
-                default:
-                    _assertion.Add("There were multiple values of header '{0}': '{1}'", header, values.Join(", "));
-                    break;
-            }
-        }
 
 
         public void ContentTypeShouldBe(string mimeType)
         {
             Header(HttpResponseHeaders.ContentType).SingleValueShouldEqual(mimeType);
+        }
+
+        public void FormData<T>(T target, string method = "POST", string contentType = "application/x-www-form-urlencoded", string accept = "*/*") where T : class
+        {
+            var dictionary = new Dictionary<string, object>();
+            new TypeDescriptorCache().ForEachProperty(typeof(T), prop =>
+            {
+                var rawValue = prop.GetValue(target, null);
+                var httpValue = rawValue == null ? string.Empty : rawValue.ToString().UrlEncoded();
+
+                dictionary.Add(prop.Name, httpValue);
+            });
+
+            Request.HttpMethod(method);
+            Request.ContentType(contentType);
+
+            var data = dictionary.Select(x => "{0}={1}".ToFormat(x.Key, x.Value)).Join("&");
+            byte[] buffer = Encoding.Default.GetBytes(data);
+            Request.Input.Write(buffer, 0, buffer.Length);
+
+            this.As<IUrlExpression>().Input(target);
         }
     }
 }

@@ -96,6 +96,21 @@ namespace FubuMVC.Core.Http.Owin
             return _environment.Get<string>(OwinConstants.RequestPathKey).TrimStart('/');
         }
 
+        public void AppendCookie(Cookie cookie)
+        {
+            if (_headers.Value.ContainsKey(HttpRequestHeaders.Cookie))
+            {
+                _headers.Value[HttpRequestHeaders.Cookie][0] = _headers.Value[HttpRequestHeaders.Cookie][0] + "; " +
+                                                            cookie.ToString();
+            }
+            else
+            {
+                Header(HttpRequestHeaders.Cookie, cookie.ToString());
+            }
+
+            
+        }
+
         public OwinHttpRequest RelativeUrl(string url)
         {
             var parts = url.Split('?');

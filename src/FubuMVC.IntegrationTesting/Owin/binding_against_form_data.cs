@@ -1,3 +1,4 @@
+using FubuMVC.Tests.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -9,13 +10,17 @@ namespace FubuMVC.IntegrationTesting.Owin
         [Test]
         public void can_bind_to_form_post_data()
         {
-            var model = new FormInput{
+            var formInput = new FormInput
+            {
                 Color = "Orange",
                 Direction = "South"
             };
 
-            Harness.Endpoints.PostAsForm(model).ReadAsText()
-                .ShouldEqual(model.ToString());
+            TestHost.Scenario(_ => {
+                _.FormData(formInput);
+
+                _.ContentShouldBe(formInput.ToString());
+            });
         }
     }
 

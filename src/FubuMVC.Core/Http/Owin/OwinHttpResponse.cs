@@ -7,8 +7,11 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using FubuCore;
+using FubuCore.Util;
 using FubuMVC.Core.Http.Compression;
+using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Core.Http.Headers;
+using Cookie = FubuMVC.Core.Http.Cookies.Cookie;
 
 namespace FubuMVC.Core.Http.Owin
 {
@@ -201,6 +204,15 @@ namespace FubuMVC.Core.Http.Owin
             }
         }
 
+        public IEnumerable<Cookie> Cookies()
+        {
+            return HeaderValueFor(HttpResponseHeaders.SetCookie).Select(CookieParser.ToCookie);
+        }
+
+        public Cookie CookieFor(string name)
+        {
+            return Cookies().FirstOrDefault(x => x.Matches(name));
+        }
     }
 
     public class HttpResponseBody

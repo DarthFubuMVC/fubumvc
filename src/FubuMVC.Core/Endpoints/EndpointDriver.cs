@@ -27,6 +27,7 @@ namespace FubuMVC.Core.Endpoints
     /// Primarily used to "drive" a remote or embedded FubuMVC application in testing scenarios
     /// by issuing http requests and reading the corresponding response
     /// </summary>
+    [Obsolete("Getting replaced with the Scenario support in 2.0")]
     public class EndpointDriver
     {
         private readonly IUrlRegistry _urls;

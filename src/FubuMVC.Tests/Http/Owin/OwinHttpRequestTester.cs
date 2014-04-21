@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace FubuMVC.Tests.Http.Owin
 {
     [TestFixture]
-    public class OwinCurrentHttpRequestTester
+    public class OwinHttpRequestTester
     {
         private Dictionary<string, string[]> headers;
         private OwinHttpRequest request;

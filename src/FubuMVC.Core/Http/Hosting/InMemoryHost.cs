@@ -76,6 +76,7 @@ namespace FubuMVC.Core.Http.Hosting
         public OwinHttpResponse Send(OwinHttpRequest request)
         {
             // TODO -- make the wait be configurable?
+            request.Input.Position = 0;
             _middleware.Invoke(request.Environment).Wait(15.Seconds());
 
             return new OwinHttpResponse(request.Environment);

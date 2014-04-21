@@ -13,11 +13,11 @@ namespace FubuMVC.IntegrationTesting.Owin
         [Test]
         public void can_write_extension_headers()
         {
-            HarnessApplication.Run(endpoints => {
-                var response = endpoints.Get<ResponseHeadersEndpoint>(x => x.get_response_headers());
+            TestHost.Scenario(_ => {
+                _.Get.Action<ResponseHeadersEndpoint>(x => x.get_response_headers());
 
-                response.ResponseHeaderFor("x-1").ShouldEqual("a");
-                response.ResponseHeaderFor("x-2").ShouldEqual("b");
+                _.Header("x-1").SingleValueShouldEqual("a");
+                _.Header("x-2").SingleValueShouldEqual("b");
             });
         }
 
@@ -25,51 +25,54 @@ namespace FubuMVC.IntegrationTesting.Owin
         [Test]
         public void can_write_built_in_response_headers()
         {
-            HarnessApplication.Run(endpoints => {
-                Thread.Sleep(100); //mono ci build hack, maybe static state in Harness?
-                var response = endpoints.Get<ResponseHeadersEndpoint>(x => x.get_response_headers());
-                response.ResponseHeaderFor(HttpResponseHeaders.KeepAlive).ShouldEqual("True");
-                response.ResponseHeaderFor(HttpResponseHeaders.Server).ShouldStartWith("Server1");
+            TestHost.Scenario(_ => {
+                _.Get.Action<ResponseHeadersEndpoint>(x => x.get_response_headers());
+
+                _.Header(HttpResponseHeaders.KeepAlive).SingleValueShouldEqual("True");
+                _.Header(HttpResponseHeaders.Server).SingleValueShouldEqual("Server1");
+
             });
+
         }
 
         [Test]
         public void can_write_etag()
         {
-            HarnessApplication.Run(endpoints => {
-                var response = endpoints.Get<ResponseHeadersEndpoint>(x => x.get_etag());
+            TestHost.Scenario(_ => {
+                _.Get.Action<ResponseHeadersEndpoint>(x => x.get_etag());
 
-                response.ResponseHeaderFor(HttpResponseHeaders.ETag).ShouldEqual("123456");
+                _.Header(HttpResponseHeaders.ETag).SingleValueShouldEqual("123456");
             });
         }
 
         [Test]
         public void can_write_content_headers()
         {
-            HarnessApplication.Run(endpoints => {
-                var response = endpoints.Get<ResponseHeadersEndpoint>(x => x.get_content_headers());
+            TestHost.Scenario(_ => {
+                _.Get.Action<ResponseHeadersEndpoint>(x => x.get_content_headers());
 
-                response.ResponseHeaderFor(HttpResponseHeaders.ContentMd5).ShouldEqual("A");
-                response.ResponseHeaderFor(HttpResponseHeaders.ContentDisposition).ShouldEqual("B");
-                response.ResponseHeaderFor(HttpResponseHeaders.ContentLocation).ShouldEqual("C");
-                response.ResponseHeaderFor(HttpResponseHeaders.Allow).ShouldEqual("D");
-                response.ResponseHeaderFor(HttpResponseHeaders.ContentEncoding).ShouldEqual("UTF-16");
-                response.ResponseHeaderFor(HttpResponseHeaders.ContentLength).ShouldEqual("19");
-                response.ResponseHeaderFor(HttpResponseHeaders.ContentLanguage).ShouldEqual("jp-JP");
-                response.ResponseHeaderFor(HttpResponseHeaders.ContentRange).ShouldEqual("E");
-                response.ResponseHeaderFor(HttpResponseHeaders.Expires).ShouldEqual("5");
-                response.ResponseHeaderFor(HttpResponseHeaders.LastModified).ShouldEqual("12345");
+                _.Header(HttpResponseHeaders.ContentMd5).SingleValueShouldEqual("A");
+                _.Header(HttpResponseHeaders.ContentDisposition).SingleValueShouldEqual("B");
+                _.Header(HttpResponseHeaders.ContentLocation).SingleValueShouldEqual("C");
+                _.Header(HttpResponseHeaders.Allow).SingleValueShouldEqual("D");
+                _.Header(HttpResponseHeaders.ContentEncoding).SingleValueShouldEqual("UTF-16");
+                _.Header(HttpResponseHeaders.ContentLength).SingleValueShouldEqual("19");
+                _.Header(HttpResponseHeaders.ContentLanguage).SingleValueShouldEqual("jp-JP");
+                _.Header(HttpResponseHeaders.ContentRange).SingleValueShouldEqual("E");
+                _.Header(HttpResponseHeaders.Expires).SingleValueShouldEqual("5");
+                _.Header(HttpResponseHeaders.LastModified).SingleValueShouldEqual("12345");
             });
         }
 
         [Test]
         public void can_write_multiple_cookies()
         {
-            HarnessApplication.Run(endpoints => {
-                var response = endpoints.Get<ResponseHeadersEndpoint>(x => x.get_multiple_cookies());
+            TestHost.Scenario(_ => {
+                _.Get.Action<ResponseHeadersEndpoint>(x => x.get_multiple_cookies());
 
-                response.Cookies["Foo"].Value.ShouldEqual("1");
-                response.Cookies["Bar"].Value.ShouldEqual("2");
+                _.Response.CookieFor("Foo").Value.ShouldEqual("1");
+                _.Response.CookieFor("Foo").Value.ShouldEqual("1");
+                
             });
         }
     }

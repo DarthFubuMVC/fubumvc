@@ -146,7 +146,7 @@
     <Compile Include="Http\Owin\Middleware\StaticFiles\WriteFileContinuationTester.cs" />
     <Compile Include="Http\Owin\Middleware\StaticFiles\WriteFileHeadContinuationTester.cs" />
     <Compile Include="Http\Owin\Middleware\StaticFiles\WriteStatusCodeContinuationTester.cs" />
-    <Compile Include="Http\Owin\OwinCurrentHttpRequestTester.cs" />
+    <Compile Include="Http\Owin\OwinHttpRequestTester.cs" />
     <Compile Include="Http\Owin\OwinCurrentHttpRequest_ClientConnectivityTester.cs" />
     <Compile Include="Http\Owin\OwnCurrentHttpRequestTester.cs" />
     <Compile Include="Http\Owin\OwnHttpWriterTester.cs" />
