@@ -222,6 +222,7 @@
     <Compile Include="Registration\Conventions\OutputBeforeAjaxContinuationPolicy.cs" />
     <Compile Include="Registration\Conventions\UrlPolicies.cs" />
     <Compile Include="Registration\DSL\AppliesToExpression.cs" />
+    <Compile Include="Registration\DSL\PolicyAdderExpression.cs" />
     <Compile Include="Registration\FilterAttribute.cs" />
     <Compile Include="Registration\IAccessorRulesExpression.cs" />
     <Compile Include="Registration\IAccessorRulesRegistration.cs" />

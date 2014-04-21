@@ -26,6 +26,10 @@ namespace FubuMVC.Core.Configuration
         private readonly ActionSourceAggregator _actionSourceAggregator;
         private readonly IList<IChainSource> _sources = new List<IChainSource>(); 
 
+        public readonly IList<IConfigurationAction> Globals = new List<IConfigurationAction>(); 
+        public readonly IList<IConfigurationAction> Locals = new List<IConfigurationAction>(); 
+        public readonly IList<IConfigurationAction> Explicits = new List<IConfigurationAction>(); 
+
         public ConfigGraph(Assembly applicationAssembly)
         {
             _applicationAssembly = applicationAssembly;
