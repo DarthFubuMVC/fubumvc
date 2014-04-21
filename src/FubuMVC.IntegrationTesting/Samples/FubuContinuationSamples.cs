@@ -88,8 +88,8 @@ namespace FubuMVC.IntegrationTesting.Samples
             TestHost.Scenario(_ =>
             {
                 _.Get.Input(new Number { Value = -1 });
-                _.Header(HttpResponseHeaders.Location).SingleValueShouldEqual("/invalid");
                 _.StatusCodeShouldBe(HttpStatusCode.Redirect);
+                _.Header(HttpResponseHeaders.Location).SingleValueShouldEqual("/invalid");
             });
 
 
@@ -100,8 +100,8 @@ namespace FubuMVC.IntegrationTesting.Samples
 
             TestHost.Scenario(_ => {
                 _.Get.Input(new Number { Value = 4 });
-                _.Header(HttpResponseHeaders.Location).SingleValueShouldEqual("/doubled/8");
                 _.StatusCodeShouldBe(HttpStatusCode.Redirect);
+                _.Header(HttpResponseHeaders.Location).SingleValueShouldEqual("/doubled/8");
             });
             // ENDSAMPLE
         }

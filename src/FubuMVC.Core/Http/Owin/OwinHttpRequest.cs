@@ -366,7 +366,7 @@ namespace FubuMVC.Core.Http.Owin
 
         public void RewindData()
         {
-            if (Form.Count > 0)
+            if (_environment.ContainsKey(OwinConstants.RequestFormKey) && Form.Count > 0)
             {
                 var post = formData().Join("&");
                 var postBytes = Encoding.Default.GetBytes(post);

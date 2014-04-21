@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
 using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core.Http.Compression;
@@ -152,6 +153,11 @@ namespace FubuMVC.Core.Http.Owin
 
         public IEnumerable<string> HeaderValueFor(string headerKey)
         {
+            if (!_environment.ContainsKey(OwinConstants.ResponseHeadersKey))
+            {
+                return new string[0];
+            }
+
             return _environment.Get<IDictionary<string, string[]>>(OwinConstants.ResponseHeadersKey).Get(headerKey) ?? new string[0];
         }
 
@@ -226,11 +232,30 @@ namespace FubuMVC.Core.Http.Owin
 
         public string ReadAsText()
         {
-            _stream.Position = 0;
-            return _stream.ReadAllText();
+            return Read(s => s.ReadAllText());
         }
 
+        public T Read<T>(Func<Stream, T> read)
+        {
+            _stream.Position = 0;
+            return read(_stream);
+        }
 
+        public XmlDocument ReadAsXml()
+        {
+            Func<Stream, XmlDocument> read = s => {
+                var body = s.ReadAllText();
+
+                if (body.Contains("Error")) return null;
+
+                var document = new XmlDocument();
+                document.LoadXml(body);
+
+                return document;
+            };
+
+            return Read(read);
+        }
     }
 
     public static class DictionaryExtensions

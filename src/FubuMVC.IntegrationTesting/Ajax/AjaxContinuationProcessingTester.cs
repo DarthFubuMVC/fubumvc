@@ -18,7 +18,7 @@ namespace FubuMVC.IntegrationTesting.Ajax
         public void send_message_that_gets_through_the_first_behavior_and_is_handled_by_the_last()
         {
             TestHost.Scenario(_ => {
-                _.PostAsJson(new CharacterInput
+                _.JsonData(new CharacterInput
                 {
                     CharacterClass = "Ninja",
                     Race = "Troll"
@@ -34,7 +34,7 @@ namespace FubuMVC.IntegrationTesting.Ajax
         public void send_message_that_gets_caught_by_validation_behavior()
         {
             TestHost.Scenario(_ => {
-                _.PostAsJson(new CharacterInput
+                _.JsonData(new CharacterInput
                 {
                     CharacterClass = "Paladin",
                     Race = "Ogre"

@@ -109,9 +109,14 @@ namespace FubuMVC.IntegrationTesting.Conneg
         [Test]
         public void will_accept_xml_as_an_input()
         {
-            endpoints.PostXml(input, accept: "text/xml")
-                .StatusCodeShouldBe(HttpStatusCode.OK)
-                .ContentShouldBe("text/xml", expectedXml);
+            TestHost.Scenario(_ => {
+                _.XmlData(input);
+                _.Request.Accepts("text/xml");
+
+                _.ContentTypeShouldBe("text/xml");
+                _.ContentShouldBe(expectedXml);
+
+            });
         }
     }
 

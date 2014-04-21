@@ -157,7 +157,7 @@ namespace FubuMVC.Tests.Http.Hosting
         public void single_header_value_is_positive()
         {
             host.Scenario(x => {
-                x.PostAsJson(new HeaderInput {Key = "Foo", Value1 = "Bar"});
+                x.JsonData(new HeaderInput {Key = "Foo", Value1 = "Bar"});
                 x.Header("Foo").ShouldHaveOneNonNullValue()
                     .SingleValueShouldEqual("Bar");
             });
@@ -168,7 +168,7 @@ namespace FubuMVC.Tests.Http.Hosting
         {
             var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
                 host.Scenario(x => {
-                    x.PostAsJson(new HeaderInput {Key = "Foo", Value1 = "NotBar"});
+                    x.JsonData(new HeaderInput {Key = "Foo", Value1 = "NotBar"});
                     x.Header("Foo").ShouldHaveOneNonNullValue()
                         .SingleValueShouldEqual("Bar");
                 });
@@ -182,7 +182,7 @@ namespace FubuMVC.Tests.Http.Hosting
         {
             var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
                 host.Scenario(x => {
-                    x.PostAsJson(new HeaderInput {Key = "Foo", Value1 = "NotBar", Value2 = "AnotherBar"});
+                    x.JsonData(new HeaderInput {Key = "Foo", Value1 = "NotBar", Value2 = "AnotherBar"});
                     x.Header("Foo").ShouldHaveOneNonNullValue()
                         .SingleValueShouldEqual("Bar");
                 });
@@ -197,7 +197,7 @@ namespace FubuMVC.Tests.Http.Hosting
         {
             var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
                 host.Scenario(x => {
-                    x.PostAsJson(new HeaderInput {Key = "Foo"});
+                    x.JsonData(new HeaderInput {Key = "Foo"});
                     x.Header("Foo")
                         .SingleValueShouldEqual("Bar");
                 });
@@ -211,7 +211,7 @@ namespace FubuMVC.Tests.Http.Hosting
         public void should_have_on_non_null_header_value_happy_path()
         {
             host.Scenario(x => {
-                x.PostAsJson(new HeaderInput {Key = "Foo", Value1 = "Anything"});
+                x.JsonData(new HeaderInput {Key = "Foo", Value1 = "Anything"});
                 x.Header("Foo").ShouldHaveOneNonNullValue();
             });
         }
@@ -221,7 +221,7 @@ namespace FubuMVC.Tests.Http.Hosting
         {
             var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
                 host.Scenario(x => {
-                    x.PostAsJson(new HeaderInput {Key = "Foo"});
+                    x.JsonData(new HeaderInput {Key = "Foo"});
                     x.Header("Foo").ShouldHaveOneNonNullValue();
                 });
             });
@@ -234,7 +234,7 @@ namespace FubuMVC.Tests.Http.Hosting
         {
             var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
                 host.Scenario(x => {
-                    x.PostAsJson(new HeaderInput {Key = "Foo", Value1 = "Bar1", Value2 = "Bar2"});
+                    x.JsonData(new HeaderInput {Key = "Foo", Value1 = "Bar1", Value2 = "Bar2"});
                     x.Header("Foo").ShouldHaveOneNonNullValue();
                 });
             });
@@ -247,7 +247,7 @@ namespace FubuMVC.Tests.Http.Hosting
         public void header_should_not_be_written_happy_path()
         {
             host.Scenario(x => {
-                x.PostAsJson(new HeaderInput {Key = "Foo"});
+                x.JsonData(new HeaderInput {Key = "Foo"});
                 x.Header("Foo").ShouldNotBeWritten();
             });
         }
@@ -257,7 +257,7 @@ namespace FubuMVC.Tests.Http.Hosting
         {
             var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
                 host.Scenario(x => {
-                    x.PostAsJson(new HeaderInput {Key = "Foo", Value1 = "Bar1", Value2 = "Bar2"});
+                    x.JsonData(new HeaderInput {Key = "Foo", Value1 = "Bar1", Value2 = "Bar2"});
                     x.Header("Foo").ShouldNotBeWritten();
                 });
             });
@@ -311,6 +311,18 @@ namespace FubuMVC.Tests.Http.Hosting
 
             ex.Message.ShouldContain("Expected a single header value of 'Content-Type'='text/json', but the actual value was 'text/plain'");
         }
+
+        [Test]
+        public void happily_blows_up_on_an_unexpected_500()
+        {
+            var ex = fails(_ => {
+                _.Get.Action<InMemoryEndpoint>(x => x.get_wrong_status_code());
+
+            });
+
+            ex.Message.ShouldContain("Expected status code 200 (Ok), but was 500");
+            ex.Message.ShouldContain("the error text");
+        }
     }
 
     public class InMemoryEndpoint
@@ -320,6 +332,13 @@ namespace FubuMVC.Tests.Http.Hosting
         public InMemoryEndpoint(IOutputWriter writer)
         {
             _writer = writer;
+        }
+
+        public string get_wrong_status_code()
+        {
+            _writer.WriteResponseCode(HttpStatusCode.InternalServerError);
+
+            return "the error text";
         }
 
         public string post_header_values(HeaderInput input)

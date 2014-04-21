@@ -12,6 +12,7 @@ namespace FubuMVC.Core.Http.Owin.Readers
         public void Read(IDictionary<string, object> environment)
         {
             var form = new NameValueCollection();
+
             environment.Add(OwinConstants.RequestFormKey, form);
             var mediaType = environment.Get<string>(OwinConstants.MediaTypeKey);
             if (mediaType != MimeType.HttpFormMimetype && mediaType != MimeType.MultipartMimetype)  return; 

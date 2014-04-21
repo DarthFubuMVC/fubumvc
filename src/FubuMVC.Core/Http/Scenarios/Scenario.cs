@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using System.Net;
 using System.Text;
 using System.Web.UI.WebControls;
+using System.Xml.Serialization;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Http.Owin;
@@ -22,6 +23,8 @@ namespace FubuMVC.Core.Http.Scenarios
         private readonly Lazy<OwinHttpResponse> _response;
         private readonly Lazy<string> _bodyText;
         private readonly ScenarioAssertionException _assertion = new ScenarioAssertionException();
+        private int _expectedStatusCode = HttpStatusCode.OK.As<int>();
+        private string _expectedStatusReason = "Ok";
 
         void IDisposable.Dispose()
         {
@@ -32,7 +35,22 @@ namespace FubuMVC.Core.Http.Scenarios
         {
             _urls = urls;
             _request = request;
-            _response = new Lazy<OwinHttpResponse>(() => runner(request));
+            _response = new Lazy<OwinHttpResponse>(() => {
+                var response = runner(request);
+
+                var httpStatusCode = response.StatusCode;
+                if (httpStatusCode != _expectedStatusCode)
+                {
+                    _assertion.Add("Expected status code {0} ({1}), but was {2}", _expectedStatusCode, _expectedStatusReason, httpStatusCode);
+
+                    if (httpStatusCode >= 500)
+                    {
+                        _assertion.Body = response.Body.ReadAsText();
+                    }
+                }
+
+                return response;
+            });
 
             _bodyText = new Lazy<string>(() => _response.Value.Body.ReadAsText());
         }
@@ -59,12 +77,31 @@ namespace FubuMVC.Core.Http.Scenarios
 
         public IUrlExpression Head { get; private set; }
 
-        public void PostAsJson<T>(T input) where T : class
+        public void JsonData<T>(T input, string method = "POST", string contentType = "application/json") where T : class
         {
-            Post.Input(input);
+            _request.HttpMethod(method);
+            this.As<IUrlExpression>().Input(input);
             _request.Body.JsonInputIs(input);
-            _request.Header(HttpRequestHeaders.ContentType, MimeType.Json.Value);
+            _request.Header(HttpRequestHeaders.ContentType, contentType);
         }
+
+        public void XmlData<T>(T input, string method = "POST", string contentType = "application/xml") where T : class
+        {
+            var writer = new StringWriter();
+
+            var serializer = new XmlSerializer(typeof(T));
+            serializer.Serialize(writer, input);
+
+            var bytes = Encoding.Default.GetBytes(writer.ToString());
+
+            Request.Input.Write(bytes, 0, bytes.Length);
+
+            Request.HttpMethod(method);
+            Request.ContentType(contentType);
+
+            this.As<IUrlExpression>().Input(input);
+        }
+
 
         public OwinHttpRequest Request
         {
@@ -134,10 +171,8 @@ namespace FubuMVC.Core.Http.Scenarios
 
         public void StatusCodeShouldBe(HttpStatusCode httpStatusCode)
         {
-            if (_response.Value.StatusCode != (int)httpStatusCode)
-            {
-                _assertion.Add("Expected status code {0} ({1}), but was {2}", httpStatusCode.As<int>(), httpStatusCode, _response.Value.StatusCode);
-            }
+            _expectedStatusCode = (int) httpStatusCode;
+            _expectedStatusReason = httpStatusCode.ToString();
         }
 
         public HeaderExpectations Header(string headerKey)
