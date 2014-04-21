@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
+using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.UI.Bootstrap.Collapsibles;
 using FubuMVC.Core.UI.Bootstrap.Tags;
-using FubuMVC.Diagnostics.Runtime;
 
 namespace FubuMVC.Diagnostics.Requests
 {

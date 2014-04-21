@@ -4,13 +4,13 @@ using System.Web;
 using FubuCore.Descriptions;
 using FubuCore.Util;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.UI.Bootstrap.Collapsibles;
 using FubuMVC.Core.UI.Bootstrap.Tags;
 using FubuMVC.Diagnostics.Requests;
-using FubuMVC.Diagnostics.Runtime;
 using HtmlTags;
 
 namespace FubuMVC.Diagnostics.Visualization

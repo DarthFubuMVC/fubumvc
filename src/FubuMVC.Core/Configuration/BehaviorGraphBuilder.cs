@@ -6,6 +6,7 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Registration;
@@ -45,6 +46,8 @@ namespace FubuMVC.Core.Configuration
             startBehaviorGraph(registry, graph);
 
             var config = registry.Config;
+            
+            // TODO -- settings from the application must always win
 
             // Apply settings
             config.RunActions(ConfigurationType.Settings, graph);
@@ -86,7 +89,9 @@ namespace FubuMVC.Core.Configuration
             graph.Behaviors.Each(x => x.InsertNodes(graph.Settings.Get<ConnegSettings>()));
 
             config.RunActions(ConfigurationType.Reordering, graph);
-            config.RunActions(ConfigurationType.Instrumentation, graph);
+
+            // Apply the diagnostic tracing
+            new ApplyTracing().Configure(graph);
 
             htmlConventionCollation.Wait(10.Seconds());
             registerServices(config, graph);
@@ -142,8 +147,7 @@ namespace FubuMVC.Core.Configuration
                 ConfigurationType.Settings,
                 ConfigurationType.Explicit,
                 ConfigurationType.Policy,
-                ConfigurationType.Reordering,
-                ConfigurationType.Instrumentation
+                ConfigurationType.Reordering
             };
         }
 
@@ -163,7 +167,7 @@ namespace FubuMVC.Core.Configuration
                     .Where(x => x.HasAttribute<AutoImportAttribute>() && x.IsConcreteWithDefaultCtor())
                     .ToArray();
             types.Where(x => x.CanBeCastTo<IFubuRegistryExtension>())
-                .Each(x => { Activator.CreateInstance(x).As<IFubuRegistryExtension>().Configure(registry); });
+                .Each(x => Activator.CreateInstance(x).As<IFubuRegistryExtension>().Configure(registry));
 
             types.Where(x => x.CanBeCastTo<IConfigurationAction>()).Each(x => {
                 var policy = Activator.CreateInstance(x).As<IConfigurationAction>();

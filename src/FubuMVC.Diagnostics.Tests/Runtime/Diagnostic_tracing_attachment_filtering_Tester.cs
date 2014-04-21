@@ -1,11 +1,9 @@
-using FubuMVC.Core;
-using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Diagnostics.Endpoints;
-using FubuMVC.Diagnostics.Runtime;
-using NUnit.Framework;
 using System.Linq;
+using FubuMVC.Core.Diagnostics.Runtime;
+using FubuMVC.Core.Registration;
+using FubuMVC.Diagnostics.Endpoints;
 using FubuTestingSupport;
+using NUnit.Framework;
 
 namespace FubuMVC.Diagnostics.Tests.Runtime
 {

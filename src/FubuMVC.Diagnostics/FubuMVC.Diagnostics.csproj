@@ -4,7 +4,8 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion></ProductVersion>
+    <ProductVersion>
+    </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{A1DEB080-5A9A-44B4-A10B-84DA9BD07AF5}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
@@ -14,7 +15,8 @@
     <AssemblyName>FubuMVC.Diagnostics</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <UseIISExpress>false</UseIISExpress>
-    <FileUpgradeFlags></FileUpgradeFlags>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
     <OldToolsVersion>4.0</OldToolsVersion>
     <UpgradeBackupLocation />
     <IISExpressSSLPort />
@@ -181,7 +183,6 @@
     <Compile Include="Model\GroupEndpoint.cs" />
     <Compile Include="Model\IDiagnosticContext.cs" />
     <Compile Include="ModelBinding\ModelBindingFubuDiagnostics.cs" />
-    <Compile Include="NoDiagnosticsAttribute.cs" />
     <Compile Include="Packaging\PackageDiagnosticsLogModel.cs" />
     <Compile Include="Packaging\PackageDiagnosticsModel.cs" />
     <Compile Include="Packaging\PackageDiagnosticsRequestModel.cs" />
@@ -198,32 +199,6 @@
     <Compile Include="Requests\RequestVisualizationFubuDiagnostics.cs" />
     <Compile Include="Requests\ResponseHeadersTag.cs" />
     <Compile Include="Requests\TracingOutlineTag.cs" />
-    <Compile Include="Runtime\ApplyTracing.cs" />
-    <Compile Include="Runtime\BehaviorFinish.cs" />
-    <Compile Include="Runtime\BehaviorStart.cs" />
-    <Compile Include="Runtime\BehaviorTracerNode.cs" />
-    <Compile Include="Runtime\BindingHistory.cs" />
-    <Compile Include="Runtime\DebugDetector.cs" />
-    <Compile Include="Runtime\DiagnosticNode.cs" />
-    <Compile Include="Runtime\FubuDiagnosticsAttribute.cs" />
-    <Compile Include="Runtime\HttpStatus.cs" />
-    <Compile Include="Runtime\IDebugDetector.cs" />
-    <Compile Include="Runtime\IRequestHistoryCache.cs" />
-    <Compile Include="Runtime\IRequestTraceObserver.cs" />
-    <Compile Include="Runtime\ProductionModeTraceListener.cs" />
-    <Compile Include="Runtime\RequestHistoryCache.cs" />
-    <Compile Include="Runtime\RequestHistoryObserver.cs" />
-    <Compile Include="Runtime\RequestLog.cs" />
-    <Compile Include="Runtime\RequestStep.cs" />
-    <Compile Include="Runtime\RequestTraceListener.cs" />
-    <Compile Include="Runtime\TracedStep.cs" />
-    <Compile Include="Runtime\Tracing\BehaviorCorrelation.cs" />
-    <Compile Include="Runtime\Tracing\BehaviorTracer.cs" />
-    <Compile Include="Runtime\Tracing\DiagnosticBehavior.cs" />
-    <Compile Include="Runtime\Tracing\IRequestLogBuilder.cs" />
-    <Compile Include="Runtime\Tracing\IRequestTrace.cs" />
-    <Compile Include="Runtime\Tracing\RequestLogBuilder.cs" />
-    <Compile Include="Runtime\Tracing\RequestTrace.cs" />
     <Compile Include="Shared\Tags\ControlGroupDivTag.cs" />
     <Compile Include="Shared\TypeEndpoint.cs" />
     <Compile Include="Visualization\BehaviorNodeViewModel.cs" />
@@ -238,7 +213,6 @@
     <Compile Include="Visualization\Visualizers\StringMessageEndpoint.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Runtime\Assets\" />
     <Folder Include="Visualization\Visualizers\ConfigurationActions\" />
   </ItemGroup>
   <PropertyGroup>
@@ -254,10 +228,12 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>11210</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl></IISUrl>
+          <IISUrl>
+          </IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl></CustomServerUrl>
+          <CustomServerUrl>
+          </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

@@ -1,11 +1,11 @@
 using System;
-using FubuMVC.Core.Behaviors;
-using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Diagnostics.Runtime;
-using FubuMVC.Diagnostics.Runtime.Tracing;
-using NUnit.Framework;
-using FubuTestingSupport;
 using FubuCore;
+using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Diagnostics.Runtime;
+using FubuMVC.Core.Diagnostics.Runtime.Tracing;
+using FubuMVC.Core.Registration.Nodes;
+using FubuTestingSupport;
+using NUnit.Framework;
 
 namespace FubuMVC.Diagnostics.Tests.Runtime
 {

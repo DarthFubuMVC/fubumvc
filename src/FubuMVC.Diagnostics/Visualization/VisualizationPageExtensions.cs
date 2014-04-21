@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.UI.Bootstrap;
 using FubuMVC.Core.View;
-using FubuMVC.Diagnostics.Runtime;
 using HtmlTags;
 
 namespace FubuMVC.Diagnostics.Visualization

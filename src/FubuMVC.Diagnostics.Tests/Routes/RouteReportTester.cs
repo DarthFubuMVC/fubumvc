@@ -123,7 +123,7 @@ namespace FubuMVC.Diagnostics.Tests.Routes
         public void normal_route()
         {
 
-            theRoutedReport.Route.ShouldEqual("something");
+            theRoutedReport.Title.ShouldEqual("something");
         }
 
         [Test]

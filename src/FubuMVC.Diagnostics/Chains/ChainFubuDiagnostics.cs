@@ -131,7 +131,7 @@ namespace FubuMVC.Diagnostics.Chains
         private DetailsTableTag buildDetails(RouteReport report)
         {
             var builder = new DetailTableBuilder(_document);
-            builder.AddDetail("Route", report.Route);
+            builder.AddDetail("TitleDescription", report.Title);
             builder.AddDetail("Http Verbs", report.Constraints);
 
             builder.AddDetail("Url Category", report.UrlCategory);
@@ -156,7 +156,7 @@ namespace FubuMVC.Diagnostics.Chains
 
             if (chain is RoutedChain)
             {
-                AddNode("Route", ChainVisualization.RouteDescId);
+                AddNode("Title", ChainVisualization.RouteDescId);
             }
 
             chain.NonDiagnosticNodes().Each(x =>

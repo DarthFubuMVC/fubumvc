@@ -1,13 +1,12 @@
 using System;
 using System.Net;
 using FubuCore.Logging;
+using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Logging;
-using FubuMVC.Diagnostics.Runtime;
-using NUnit.Framework;
-using System.Linq;
 using FubuTestingSupport;
+using NUnit.Framework;
 
 namespace FubuMVC.Diagnostics.Tests.Runtime
 {

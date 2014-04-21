@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Urls;
-using FubuMVC.Diagnostics.Runtime;
 using HtmlTags;
 
 namespace FubuMVC.Diagnostics.Requests

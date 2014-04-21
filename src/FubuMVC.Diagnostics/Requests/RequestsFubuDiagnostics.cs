@@ -1,6 +1,6 @@
 using FubuCore.Descriptions;
+using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Urls;
-using FubuMVC.Diagnostics.Runtime;
 using HtmlTags;
 
 namespace FubuMVC.Diagnostics.Requests

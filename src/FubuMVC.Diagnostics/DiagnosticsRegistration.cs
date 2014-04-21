@@ -4,12 +4,12 @@ using FubuCore.Binding.InMemory;
 using FubuCore.Logging;
 using FubuMVC.Core;
 using FubuMVC.Core.Continuations;
+using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Diagnostics.Dashboard;
 using FubuMVC.Diagnostics.Model;
-using FubuMVC.Diagnostics.Runtime;
 using FubuMVC.Diagnostics.Visualization;
 
 namespace FubuMVC.Diagnostics
@@ -20,10 +20,13 @@ namespace FubuMVC.Diagnostics
 
         public void Configure(FubuRegistry registry)
         {
-            registry.Policies.Add<ApplyTracing>();
 			registry.Policies.Add<DescriptionVisualizationPolicy>();
             registry.Policies.ChainSource<DiagnosticChainsPolicy>();
             registry.Services<DiagnosticServiceRegistry>();
+
+            registry.AlterSettings<DiagnosticsSettings>(x => {
+                x.TraceLevel = TraceLevel.Verbose;
+            });
 
             registry.Configure(graph => {
                 var settings = graph.Settings.Get<DiagnosticsSettings>();
@@ -49,7 +52,6 @@ namespace FubuMVC.Diagnostics
         }
     }
 
-    [ConfigurationType(ConfigurationType.Instrumentation)]
     public class DefaultHome : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)

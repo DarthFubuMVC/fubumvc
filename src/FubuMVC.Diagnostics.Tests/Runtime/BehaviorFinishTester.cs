@@ -1,6 +1,6 @@
 using System;
-using FubuMVC.Diagnostics.Runtime;
-using FubuMVC.Diagnostics.Runtime.Tracing;
+using FubuMVC.Core.Diagnostics.Runtime;
+using FubuMVC.Core.Diagnostics.Runtime.Tracing;
 using FubuMVC.Diagnostics.Tests.Requests;
 using FubuTestingSupport;
 using NUnit.Framework;

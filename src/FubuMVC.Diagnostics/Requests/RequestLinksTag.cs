@@ -1,7 +1,7 @@
+using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.UI.Bootstrap.Tags;
 using FubuMVC.Core.Urls;
 using FubuMVC.Diagnostics.Chains;
-using FubuMVC.Diagnostics.Runtime;
 
 namespace FubuMVC.Diagnostics.Requests
 {

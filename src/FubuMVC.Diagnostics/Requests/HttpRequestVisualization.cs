@@ -1,9 +1,9 @@
 using System;
 using FubuMVC.Core.Continuations;
+using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Urls;
 using FubuMVC.Diagnostics.Chains;
-using FubuMVC.Diagnostics.Runtime;
 using HtmlTags;
 
 namespace FubuMVC.Diagnostics.Requests

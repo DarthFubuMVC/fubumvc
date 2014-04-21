@@ -26,39 +26,11 @@ namespace FubuMVC.Diagnostics.Chains
         public string Title
         {
             get {
-                return TitleForChain(Chain);
+                return Chain.Title();
             }
         }
 
-        public static string TitleForChain(BehaviorChain chain)
-        {
-            // TODO -- move this into BehaviorChain.  Duh.
 
-            var routed = chain as RoutedChain;
-
-            if (routed != null)
-            {
-                var title = routed.GetRoutePattern();
-                return title.IsEmpty() ? "(home)" : title;
-            }
-
-            if (chain.Calls.Any())
-            {
-                return chain.Calls.Select(x => x.Description).Join(", ");
-            }
-
-            if (chain.HasOutput() && chain.Output.Media().Any())
-            {
-                return chain.Output.Media().Select(x => Description.For(x.Writer).Title).Join(", ");
-            }
-
-            if (chain.InputType() != null)
-            {
-                return "Handler for " + chain.InputType().FullName;
-            }
-
-            return "BehaviorChain " + chain.UniqueId;
-        }
 
         public DetailsTableTag Details { get; set; }
         public FubuContinuation RedirectTo { get; set; }

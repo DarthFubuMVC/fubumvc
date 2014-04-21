@@ -1,13 +1,12 @@
+using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Diagnostics.Runtime;
+using FubuMVC.Core.Diagnostics.Runtime.Tracing;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.Routes;
-using FubuMVC.Diagnostics.Runtime;
-using FubuMVC.Diagnostics.Runtime.Tracing;
-using NUnit.Framework;
-using System.Linq;
 using FubuTestingSupport;
+using NUnit.Framework;
 
 namespace FubuMVC.Diagnostics.Tests.Runtime
 {
@@ -36,8 +35,8 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
 
             });
 
+            registry.AlterSettings<DiagnosticsSettings>(x => x.TraceLevel = TraceLevel.Verbose);
 
-            registry.Policies.Add<ApplyTracing>();
 
             BehaviorGraph.BuildFrom(registry);
         }
@@ -62,7 +61,6 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
             });
 
 
-            registry.Policies.Add<ApplyTracing>();
 
             var notTracedGraph = BehaviorGraph.BuildFrom(registry);
             notTracedGraph.Behaviors.SelectMany(x => x).Any(x => x is DiagnosticBehavior).ShouldBeFalse();

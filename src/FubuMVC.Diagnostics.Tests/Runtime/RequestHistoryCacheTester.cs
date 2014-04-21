@@ -1,8 +1,8 @@
-using FubuMVC.Core;
-using FubuMVC.Diagnostics.Runtime;
-using NUnit.Framework;
 using System.Linq;
+using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics.Runtime;
 using FubuTestingSupport;
+using NUnit.Framework;
 
 namespace FubuMVC.Diagnostics.Tests.Runtime
 {

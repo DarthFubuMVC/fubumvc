@@ -1,7 +1,7 @@
 using System.Linq;
+using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Http.Headers;
 using FubuMVC.Diagnostics.Requests;
-using FubuMVC.Diagnostics.Runtime;
 using NUnit.Framework;
 using FubuTestingSupport;
 

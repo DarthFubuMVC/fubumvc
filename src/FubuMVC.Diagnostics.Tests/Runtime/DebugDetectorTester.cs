@@ -1,5 +1,5 @@
 using FubuCore.Binding;
-using FubuMVC.Diagnostics.Runtime;
+using FubuMVC.Core.Diagnostics.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
 

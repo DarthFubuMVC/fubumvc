@@ -121,5 +121,11 @@ namespace FubuMVC.Core.Registration.Nodes
         {
             get { return UrlCategory == null ? null : UrlCategory.Category; }
         }
+
+        public override string Title()
+        {
+            var title = GetRoutePattern();
+            return title.IsEmpty() ? "(home)" : title;
+        }
     }
 }

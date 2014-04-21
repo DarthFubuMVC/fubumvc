@@ -1,9 +1,9 @@
 using System;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Diagnostics.Runtime;
-using NUnit.Framework;
 using FubuTestingSupport;
+using NUnit.Framework;
 
 namespace FubuMVC.Diagnostics.Tests.Runtime
 {

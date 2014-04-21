@@ -1,13 +1,13 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
+using FubuMVC.Core.Diagnostics.Runtime;
+using FubuMVC.Core.Diagnostics.Runtime.Tracing;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Headers;
-using FubuMVC.Diagnostics.Runtime;
-using FubuMVC.Diagnostics.Runtime.Tracing;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
-using System.Linq;
 
 namespace FubuMVC.Diagnostics.Tests.Runtime.Tracing
 {

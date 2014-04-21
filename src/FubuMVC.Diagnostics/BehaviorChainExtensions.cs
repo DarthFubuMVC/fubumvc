@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Diagnostics.Runtime;
 
 namespace FubuMVC.Diagnostics
 {

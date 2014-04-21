@@ -1,14 +1,11 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.UI.WebControls;
 using FubuCore.Logging;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Diagnostics.Runtime;
+using FubuMVC.Core.Diagnostics.Runtime.Tracing;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Runtime.Logging;
-using FubuMVC.Diagnostics.Runtime;
-using FubuMVC.Diagnostics.Runtime.Tracing;
 using FubuMVC.Diagnostics.Tests.Requests;
 using FubuTestingSupport;
 using NUnit.Framework;

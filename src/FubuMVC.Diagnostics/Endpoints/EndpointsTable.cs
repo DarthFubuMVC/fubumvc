@@ -25,7 +25,7 @@ namespace FubuMVC.Diagnostics.Endpoints
         {
             AddBodyRow(row => {
                 row.Cell().Add("a").Text("Details").Attr("href", report.DetailsUrl);
-                row.Cell(report.Route);
+                row.Cell(report.Title);
                 row.Cell(report.Constraints);
                 row.Cell(report.Action.Join(", "));
 

@@ -1,9 +1,9 @@
 using System;
 using System.Web;
 using FubuCore.Descriptions;
+using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Diagnostics.Requests;
-using FubuMVC.Diagnostics.Runtime;
 using HtmlTags;
 
 namespace FubuMVC.Diagnostics.Visualization

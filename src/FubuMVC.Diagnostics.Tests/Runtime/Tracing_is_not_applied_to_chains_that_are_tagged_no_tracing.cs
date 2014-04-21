@@ -1,9 +1,8 @@
 ﻿using System.Linq;
 using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Diagnostics.Runtime;
-using FubuMVC.Diagnostics.Runtime.Tracing;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;

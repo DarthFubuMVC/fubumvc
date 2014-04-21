@@ -25,8 +25,7 @@ namespace FubuMVC.Diagnostics.Conventions
                        ConfigurationType.Settings,
                        ConfigurationType.Explicit,
                        ConfigurationType.Policy,
-                       ConfigurationType.Reordering,
-                       ConfigurationType.Instrumentation
+                       ConfigurationType.Reordering
                    };
 
             var tag = new HtmlTag("ul");

@@ -1,12 +1,9 @@
+using System.Linq;
 using FubuCore.Logging;
-using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Runtime;
-using FubuMVC.Diagnostics.Runtime;
-using FubuMVC.Diagnostics.Runtime.Tracing;
 using FubuTestingSupport;
 using NUnit.Framework;
-using System.Linq;
 
 namespace FubuMVC.Diagnostics.Tests.Runtime
 {

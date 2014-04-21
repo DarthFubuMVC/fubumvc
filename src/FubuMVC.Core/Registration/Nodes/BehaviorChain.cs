@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Http;
@@ -349,6 +350,26 @@ namespace FubuMVC.Core.Registration.Nodes
             chain._output = new Lazy<OutputNode>(() => new OutputNode(resourceType));
 
             return chain;
+        }
+
+        public virtual string Title()
+        {
+            if (Calls.Any())
+            {
+                return Calls.Select(x => x.Description).Join(", ");
+            }
+
+            if (HasOutput() && Output.Media().Any())
+            {
+                return Output.Media().Select(x => Description.For(x.Writer).Title).Join(", ");
+            }
+
+            if (InputType() != null)
+            {
+                return "Handler for " + InputType().FullName;
+            }
+
+            return "BehaviorChain " + UniqueId;
         }
     }
 }

@@ -72,11 +72,11 @@ namespace FubuMVC.Diagnostics.Endpoints
             }
         }
 
-        public string Route
+        public string Title
         {
             get
             {
-                return ChainVisualization.TitleForChain(_chain);
+                return _chain.Title();
             }
         }
 

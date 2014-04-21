@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using FubuMVC.Core;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.UI;
@@ -12,6 +13,12 @@ namespace FubuMVC.IntegrationTesting.UI
     [TestFixture]
     public class doughnut_caching_tester
     {
+        [SetUp]
+        public void SetUp()
+        {
+            FubuMode.Reset();
+        }
+
         [Test]
         public void doughnut_caching()
         {

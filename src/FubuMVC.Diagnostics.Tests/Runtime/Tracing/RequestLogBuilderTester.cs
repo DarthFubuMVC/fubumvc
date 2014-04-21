@@ -1,16 +1,14 @@
 using System;
+using FubuCore;
 using FubuCore.Binding;
+using FubuMVC.Core.Diagnostics.Runtime;
+using FubuMVC.Core.Diagnostics.Runtime.Tracing;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Urls;
-using FubuMVC.Diagnostics.Chains;
-using FubuMVC.Diagnostics.Runtime;
-using FubuMVC.Diagnostics.Runtime.Tracing;
 using FubuTestingSupport;
 using NUnit.Framework;
-using FubuCore;
 using Rhino.Mocks;
 
 namespace FubuMVC.Diagnostics.Tests.Runtime.Tracing

@@ -1,7 +1,7 @@
 using FubuCore.Descriptions;
 using FubuCore.Logging;
+using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.UI.Bootstrap.Tags;
-using FubuMVC.Diagnostics.Runtime;
 using HtmlTags;
 
 namespace FubuMVC.Diagnostics.Visualization.Visualizers
