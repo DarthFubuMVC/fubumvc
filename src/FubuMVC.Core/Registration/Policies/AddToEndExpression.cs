@@ -24,7 +24,7 @@ namespace FubuMVC.Core.Registration.Policies
                 var node = source(chain);
 
                 chain.AddToEnd(node);
-            }, configurationType:ConfigurationType.InjectNodes);
+            });
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace FubuMVC.Core.Registration.Policies
         /// <typeparam name="T"></typeparam>
         public void NodeToEnd<T>() where T : BehaviorNode, new()
         {
-            _policy.ModifyBy(chain => chain.AddToEnd(new T()), configurationType: ConfigurationType.InjectNodes);
+            _policy.ModifyBy(chain => chain.AddToEnd(new T()));
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace FubuMVC.Core.Registration.Policies
         /// <typeparam name="T"></typeparam>
         public void BehaviorToEnd<T>() where T : IActionBehavior
         {
-            _policy.ModifyBy(chain => chain.AddToEnd(Process.For<T>()), configurationType: ConfigurationType.InjectNodes);
+            _policy.ModifyBy(chain => chain.AddToEnd(Process.For<T>()));
         }
     }
 }

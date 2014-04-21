@@ -88,13 +88,13 @@
     <Compile Include="Assets\StylesheetLinkTag.cs" />
     <Compile Include="AsymmetricJsonAttribute.cs" />
     <Compile Include="AutoImportAttribute.cs" />
+    <Compile Include="Caching\CacheAttribute.cs" />
     <Compile Include="Configuration\BehaviorGraphBuilder.cs" />
     <Compile Include="Behaviors\AsyncContinueWithBehavior.cs" />
     <Compile Include="Behaviors\Chrome\ChromeAttribute.cs" />
     <Compile Include="Behaviors\Chrome\ChromeBehavior.cs" />
     <Compile Include="Behaviors\Chrome\ChromeContent.cs" />
     <Compile Include="Behaviors\Chrome\ChromeNode.cs" />
-    <Compile Include="Caching\CacheAttribute.cs" />
     <Compile Include="Caching\CachingServiceRegistry.cs" />
     <Compile Include="Caching\EtagInvocationFilter.cs" />
     <Compile Include="Caching\IVaryBy.cs" />
@@ -211,8 +211,6 @@
     <Compile Include="Registration\AccessorRulesExpression.cs" />
     <Compile Include="Registration\ActionSourceAggregator.cs" />
     <Compile Include="Registration\ApplicationLevelAttribute.cs" />
-    <Compile Include="Registration\Conventions\CacheAttributePolicy.cs" />
-    <Compile Include="Registration\Conventions\CachedPartialConvention.cs" />
     <Compile Include="Http\Compression\ContentCompressionActions.cs" />
     <Compile Include="Http\Compression\ContentEncoding.cs" />
     <Compile Include="Http\Compression\GZipHttpContentEncoding.cs" />
@@ -223,14 +221,13 @@
     <Compile Include="Registration\Conventions\DefaultUrlPolicy.cs" />
     <Compile Include="Registration\Conventions\OutputBeforeAjaxContinuationPolicy.cs" />
     <Compile Include="Registration\Conventions\UrlPolicies.cs" />
-    <Compile Include="Registration\Conventions\VaryByModification.cs" />
-    <Compile Include="Registration\Conventions\CachingExpression.cs" />
     <Compile Include="Registration\DSL\AppliesToExpression.cs" />
     <Compile Include="Registration\FilterAttribute.cs" />
     <Compile Include="Registration\IAccessorRulesExpression.cs" />
     <Compile Include="Registration\IAccessorRulesRegistration.cs" />
     <Compile Include="Registration\IChainSource.cs" />
     <Compile Include="Registration\Nodes\BehaviorChainExtensions.cs" />
+    <Compile Include="Registration\Nodes\IModifiesChain.cs" />
     <Compile Include="Registration\Nodes\RoutedChain.cs" />
     <Compile Include="Registration\Policies\AddToEndExpression.cs" />
     <Compile Include="Registration\Policies\AndChainFilter.cs" />
@@ -369,7 +366,6 @@
     <Compile Include="Registration\ActionSource.cs" />
     <Compile Include="Registration\Nodes\IContainerModel.cs" />
     <Compile Include="Registration\Querying\ChainSearch.cs" />
-    <Compile Include="Registration\Conventions\AsyncContinueWithHandlerConvention.cs" />
     <Compile Include="Registration\Nodes\AsyncContinueWithNode.cs" />
     <Compile Include="Registration\ServiceGraph.cs" />
     <Compile Include="Registration\SingleTypeActionSource.cs" />
@@ -461,7 +457,6 @@
     <Compile Include="Packaging\VirtualPaths\FileSystemVirtualFile.cs" />
     <Compile Include="Packaging\VirtualPaths\FileSystemVirtualPathProvider.cs" />
     <Compile Include="Packaging\PackageLoadingConfigurationExtensions.cs" />
-    <Compile Include="Registration\Conventions\ContinuationHandlerConvention.cs" />
     <Compile Include="Registration\Conventions\ReorderBehaviorsPolicy.cs" />
     <Compile Include="Registration\DSL\ModelsExpression.cs" />
     <Compile Include="Registration\DSL\PoliciesExpression.cs" />

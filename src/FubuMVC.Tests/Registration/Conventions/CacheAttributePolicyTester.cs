@@ -37,10 +37,6 @@ namespace FubuMVC.Tests.Registration.Conventions
             var graph = BehaviorGraph.BuildFrom(x =>
             {
                 x.Actions.IncludeClassesSuffixedWithController(); // Just making it not use SomeEndpoint
-
-                x.Configure(g => {
-                    g.AddChainForWriter<CachedResource>(new CachedResourceWriter());
-                });
             });
 
             var chain2 = graph.Behaviors.Single(x => x.ResourceType() == typeof (CachedResource));
@@ -48,6 +44,14 @@ namespace FubuMVC.Tests.Registration.Conventions
             var node = chain2.OfType<OutputCachingNode>().Single();
 
             node.VaryByPolicies().Single().ShouldEqual(typeof(VaryByThreadCulture));
+        }
+    }
+
+    public class CachedResourceController
+    {
+        public CachedResource get_cached_resource()
+        {
+            return new CachedResource();
         }
     }
 

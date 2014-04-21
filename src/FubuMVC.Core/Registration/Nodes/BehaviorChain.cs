@@ -91,6 +91,8 @@ namespace FubuMVC.Core.Registration.Nodes
                 _input.Value.UseSettings(settings);
                 Prepend(_input.Value);
             }
+
+            this.OfType<IModifiesChain>().ToArray().Each(x => x.Modify(this));
         }
 
         /// <summary>

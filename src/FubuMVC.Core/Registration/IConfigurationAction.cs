@@ -1,6 +1,4 @@
 using System;
-using FubuMVC.Core.Registration.Nodes;
-using FubuCore;
 
 namespace FubuMVC.Core.Registration
 {
@@ -9,6 +7,7 @@ namespace FubuMVC.Core.Registration
         void Configure(BehaviorGraph graph);
     }
 
+    [Obsolete("Kill this!")]
     public interface IKnowMyConfigurationType
     {
         string DetermineConfigurationType();

@@ -18,17 +18,17 @@ namespace FubuMVC.Core.Registration.Policies
             _policy.ModifyBy(chain => {
                 BehaviorNode node = source(chain);
                 chain.InsertFirst(node);
-            }, description, ConfigurationType.InjectNodes);
+            }, description);
         }
 
         public void WithNode<T>() where T : BehaviorNode, new()
         {
-            _policy.ModifyBy(chain => chain.InsertFirst(new T()), "Wrap with node " + typeof(T).FullName, ConfigurationType.InjectNodes);
+            _policy.ModifyBy(chain => chain.InsertFirst(new T()), "Wrap with node " + typeof(T).FullName);
         }
 
         public void WithBehavior<T>() where T : IActionBehavior
         {
-            _policy.ModifyBy(chain => chain.InsertFirst(Wrapper.For<T>()),"Wrap with behavior " + typeof(T).FullName, ConfigurationType.InjectNodes);
+            _policy.ModifyBy(chain => chain.InsertFirst(Wrapper.For<T>()),"Wrap with behavior " + typeof(T).FullName);
         }
     }
 }

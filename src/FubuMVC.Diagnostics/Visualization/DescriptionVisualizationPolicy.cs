@@ -8,7 +8,7 @@ using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Diagnostics.Visualization
 {
-	public class DescriptionVisualizationPolicy : IConfigurationAction, DescribesItself, IKnowMyConfigurationType
+	public class DescriptionVisualizationPolicy : IConfigurationAction, DescribesItself
 	{
 		public void Configure(BehaviorGraph graph)
 		{
@@ -21,11 +21,6 @@ namespace FubuMVC.Diagnostics.Visualization
 		public void Describe(Description description)
 		{
 			description.ShortDescription = "Added the Diagnostics visualization for the Description";
-		}
-
-		public string DetermineConfigurationType()
-		{
-			return ConfigurationType.InjectNodes;
 		}
 	}
 

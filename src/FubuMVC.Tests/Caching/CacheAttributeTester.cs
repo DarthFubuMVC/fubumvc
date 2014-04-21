@@ -1,12 +1,12 @@
-using System;
+using System.Linq;
+using FubuCore;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
+using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
-using System.Linq;
-using FubuTestingSupport;
 
 namespace FubuMVC.Tests.Caching
 {
@@ -18,68 +18,43 @@ namespace FubuMVC.Tests.Caching
         {
             var att = new CacheAttribute();
 
-            att.VaryBy.ShouldBeNull();
+            att.VaryBy.Any().ShouldBeFalse();
         }
 
-        [Test]
+        [Test, Cache]
         public void alter_chain()
         {
-            var att = new CacheAttribute();
             var chain = new BehaviorChain();
             var call = ActionCall.For<CacheAttributeTester>(x => x.alter_chain());
             chain.AddToEnd(call);
 
-            att.Alter(call);
+            call.As<IModifiesChain>().Modify(chain);
 
             chain.OfType<OutputCachingNode>().Single()
                 .VaryByPolicies().Single().ShouldEqual(typeof (VaryByResource));
         }
 
-        [Test]
-        public void alter_chain_is_idempotent()
-        {
-            var att = new CacheAttribute();
-            var chain = new BehaviorChain();
-            var call = ActionCall.For<CacheAttributeTester>(x => x.alter_chain());
-            chain.AddToEnd(call);
-
-            att.Alter(call);
-            att.Alter(call);
-            att.Alter(call);
-            att.Alter(call);
-            att.Alter(call);
-
-            chain.OfType<OutputCachingNode>().Single()
-                .VaryByPolicies().Single().ShouldEqual(typeof(VaryByResource));
-        }
-
-        [Test]
+        [Test, Cache(typeof (VaryByResource), typeof (VaryByThreadCulture))]
         public void alter_chain_with_more_overridden_vary_by()
         {
-            var att = new CacheAttribute();
-            att.VaryBy = new Type[]{typeof(VaryByResource), typeof(VaryByThreadCulture)};
-
             var chain = new BehaviorChain();
-            var call = ActionCall.For<CacheAttributeTester>(x => x.alter_chain());
+            var call = ActionCall.For<CacheAttributeTester>(x => x.alter_chain_with_more_overridden_vary_by());
             chain.AddToEnd(call);
 
-            att.Alter(call);
+            call.As<IModifiesChain>().Modify(chain);
 
             chain.OfType<OutputCachingNode>().Single().VaryByPolicies()
-                .ShouldHaveTheSameElementsAs(typeof(VaryByResource), typeof(VaryByThreadCulture));
+                .ShouldHaveTheSameElementsAs(typeof (VaryByResource), typeof (VaryByThreadCulture));
         }
 
         [Test]
         public void integrated_test_of_configuring_output_cache()
         {
-            var graph = BehaviorGraph.BuildFrom(x =>
-            {
-                x.Actions.IncludeType<FakeEndpoint>();
-            });
+            var graph = BehaviorGraph.BuildFrom(x => { x.Actions.IncludeType<FakeEndpoint>(); });
 
             var chain = graph.BehaviorFor<FakeEndpoint>(x => x.get_this_one());
 
-            chain.OfType<OutputNode>().Single().Previous.ShouldBeOfType<OutputCachingNode>();
+            chain.OfType<OutputCachingNode>().Single().OfType<OutputNode>().Any().ShouldBeTrue();
         }
 
 

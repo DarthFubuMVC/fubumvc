@@ -34,7 +34,6 @@ namespace FubuMVC.Core.Configuration
             config.RunActions(ConfigurationType.Explicit, graph);
             config.RunActions(ConfigurationType.Policy, graph);
             config.RunActions(ConfigurationType.Reordering, graph);
-            config.RunActions(ConfigurationType.InjectNodes, graph);
 
             return graph;
         }
@@ -84,7 +83,6 @@ namespace FubuMVC.Core.Configuration
             config.RunActions(ConfigurationType.Policy, graph);
 
             // TODO -- try to eliminate these two
-            config.RunActions(ConfigurationType.InjectNodes, graph);
             config.RunActions(ConfigurationType.Attachment, graph);
 
             // apply the authorization, input, and output nodes
@@ -147,7 +145,6 @@ namespace FubuMVC.Core.Configuration
                 ConfigurationType.Settings,
                 ConfigurationType.Explicit,
                 ConfigurationType.Policy,
-                ConfigurationType.InjectNodes,
                 ConfigurationType.Attachment,
                 ConfigurationType.Reordering,
                 ConfigurationType.Instrumentation

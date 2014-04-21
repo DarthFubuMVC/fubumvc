@@ -25,7 +25,6 @@ namespace FubuMVC.Diagnostics.Conventions
                        ConfigurationType.Settings,
                        ConfigurationType.Explicit,
                        ConfigurationType.Policy,
-                       ConfigurationType.InjectNodes,
                        ConfigurationType.Attachment,
                        ConfigurationType.Reordering,
                        ConfigurationType.Instrumentation

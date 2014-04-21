@@ -5,13 +5,16 @@ using System.Reflection;
 using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Descriptions;
+using FubuCore.Reflection;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Caching;
+using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
 
 namespace FubuMVC.Core.Registration.Nodes
 {
-    public abstract class ActionCallBase : BehaviorNode, DescribesItself
+    public abstract class ActionCallBase : BehaviorNode, DescribesItself, IModifiesChain
     {
         private Lazy<ObjectDef> _handlerDependencies;
 
@@ -201,6 +204,59 @@ namespace FubuMVC.Core.Registration.Nodes
             {
                 description.Properties["Resource Type"] = ResourceType().FullName;
             }
+        }
+
+        public bool ShouldBeCached()
+        {
+            if (Method.Name.EndsWith("CachedPartial")) return true;
+            if (HasAttribute<CacheAttribute>()) return true;
+            if (OutputType() != null && OutputType().HasAttribute<CacheAttribute>()) return true;
+
+            return false;
+        }
+
+        public void Modify(BehaviorChain chain)
+        {
+            var outputType = OutputType();
+
+            if (ShouldBeCached())
+            {
+                var cachingNode = new OutputCachingNode();
+                AddBefore(cachingNode);
+
+                ForAttributes<CacheAttribute>(x => x.Alter(cachingNode));
+
+                if (outputType != null)
+                {
+                    outputType.ForAttribute<CacheAttribute>(att => att.Alter(cachingNode));
+                }
+            }
+
+            
+            if (outputType == null) return;
+
+            if (outputType.CanBeCastTo<FubuContinuation>() || outputType.CanBeCastTo<IRedirectable>())
+            {
+                AddAfter(new ContinuationNode());
+            }
+
+            if (IsAsync)
+            {
+                AddAfter(outputType == typeof(Task)
+                                  ? new AsyncContinueWithNode()
+                                  : new AsyncContinueWithNode(outputType));
+            }
+        }
+
+        public void ForAttributes<T>(Action<T> action) where T : Attribute
+        {
+            HandlerType.ForAttribute(action);
+            Method.ForAttribute(action);
+        }
+
+        public bool HasAttribute<T>() where T : Attribute
+        {
+            return HandlerType.HasAttribute<T>() || Method.HasAttribute<T>();
         }
     }
 }

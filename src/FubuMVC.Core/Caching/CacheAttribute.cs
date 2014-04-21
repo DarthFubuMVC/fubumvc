@@ -1,14 +1,17 @@
 using System;
-using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.Nodes;
 using System.Linq;
 
 namespace FubuMVC.Core.Caching
 {
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
-    public class CacheAttribute : ModifyChainAttribute
+    public class CacheAttribute : Attribute
     {
         private Type[] _varyBy;
+
+        public CacheAttribute(params Type[] varyBy)
+        {
+            _varyBy = varyBy;
+        }
 
         public Type[] VaryBy
         {
@@ -24,25 +27,11 @@ namespace FubuMVC.Core.Caching
             }
         }
 
-        public override void Alter(ActionCall call)
+        public void Alter(OutputCachingNode cachingNode)
         {
-            var chain = call.ParentChain();
-
-            Alter(chain);
-        }
-
-        public void Alter(BehaviorChain chain)
-        {
-            var node = chain.OfType<OutputCachingNode>().FirstOrDefault();
-            if (node == null)
+            if (_varyBy != null && _varyBy.Any())
             {
-                node = new OutputCachingNode();
-                chain.AddToEnd(node);
-            }
-
-            if (_varyBy != null)
-            {
-                node.ReplaceVaryByRules(_varyBy);
+                cachingNode.ReplaceVaryByRules(_varyBy);
             }
         }
     }

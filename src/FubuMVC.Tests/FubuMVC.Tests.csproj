@@ -178,7 +178,6 @@
     <Compile Include="Registration\Conventions\EndpointActionSourceTester.cs" />
     <Compile Include="Registration\Conventions\RegisterAllSettingsTester.cs" />
     <Compile Include="Registration\Conventions\UrlPatternAttributeOnViewModelPolicyTester.cs" />
-    <Compile Include="Registration\Conventions\VaryByPolicyTester.cs" />
     <Compile Include="Registration\default_action_discovery.cs" />
     <Compile Include="Registration\FilterAttributeTester.cs" />
     <Compile Include="Registration\Policies\AndChainFilterTester.cs" />
@@ -193,7 +192,6 @@
     <Compile Include="Registration\Policies\IsPartialTester.cs" />
     <Compile Include="Registration\Policies\ResourceTypeImplementsTester.cs" />
     <Compile Include="Registration\Policies\ResourceTypeIsTester.cs" />
-    <Compile Include="Registration\Policy_implementation_of_IKnowMyConfigurationType.cs" />
     <Compile Include="Registration\Registration\ModelBindingServiceRegistry_specification.cs" />
     <Compile Include="Registration\SettingsCollectionTester.cs" />
     <Compile Include="Registration\SettingsCollection_creates_with_the_app_setting_provider_Tester.cs" />

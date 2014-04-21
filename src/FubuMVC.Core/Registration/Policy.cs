@@ -144,18 +144,6 @@ namespace FubuMVC.Core.Registration
             }
         }
 
-        /// <summary>
-        /// Apply caching rules to matching chains
-        /// </summary>
-        public CachingExpression Caching
-        {
-            get
-            {
-                return new CachingExpression(this);
-            }
-        }
-
-
 
         public static string DetermineConfigurationType(IChainModification modification)
         {

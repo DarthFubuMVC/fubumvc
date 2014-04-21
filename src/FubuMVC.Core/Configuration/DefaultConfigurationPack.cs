@@ -13,12 +13,6 @@ namespace FubuMVC.Core.Configuration
             For(ConfigurationType.Policy);
             Add<AutoImportModelNamespacesConvention>();
 
-            For(ConfigurationType.InjectNodes);
-            Add<ContinuationHandlerConvention>();
-            Add<AsyncContinueWithHandlerConvention>();
-            Add<CachedPartialConvention>();
-            Add<CacheAttributePolicy>();
-
 
             For(ConfigurationType.Reordering);
             Add<OutputBeforeAjaxContinuationPolicy>();

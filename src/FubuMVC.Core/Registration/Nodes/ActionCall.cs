@@ -26,17 +26,6 @@ namespace FubuMVC.Core.Registration.Nodes
         public override BehaviorCategory Category { get { return BehaviorCategory.Call; } }
 
 
-        public void ForAttributes<T>(Action<T> action) where T : Attribute
-        {
-            HandlerType.ForAttribute(action);
-            Method.ForAttribute(action);
-        }
-
-        public bool HasAttribute<T>() where T : Attribute
-        {
-            return HandlerType.HasAttribute<T>() || Method.HasAttribute<T>();
-        }
-
         public static ActionCall For<T>(Expression<Action<T>> expression)
         {
             MethodInfo method = ReflectionHelper.GetMethod(expression);

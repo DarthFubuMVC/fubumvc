@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             var cacheNode = chain1.OfType<OutputCachingNode>().Single();
 
             cacheNode.ShouldNotBeNull();
-            cacheNode.Next.ShouldBeOfType<OutputNode>();
+            cacheNode.OfType<OutputNode>().Any().ShouldBeTrue();
         }
 
         public class CachedController
