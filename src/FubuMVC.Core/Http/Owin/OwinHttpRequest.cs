@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Web;
 using System.Xml.Serialization;
@@ -289,12 +290,13 @@ namespace FubuMVC.Core.Http.Owin
             {
                 if (!_environment.ContainsKey(OwinConstants.RequestFormKey))
                 {
-                    return new NameValueCollection();
+                    _environment.Add(OwinConstants.RequestFormKey, new NameValueCollection());
                 }
 
                 return _environment.Get<NameValueCollection>(OwinConstants.RequestFormKey);
             }
         }
+
 
         public Stream Input
         {
@@ -361,5 +363,31 @@ namespace FubuMVC.Core.Http.Owin
                 _parent.append(OwinConstants.RequestBodyKey, stream);
             }
         }
+
+        public void RewindData()
+        {
+            if (Form.Count > 0)
+            {
+                var post = formData().Join("&");
+                var postBytes = Encoding.Default.GetBytes(post);
+                Input.Write(postBytes, 0, postBytes.Length);
+
+                _environment.Remove(OwinConstants.RequestFormKey);
+            }
+
+            if (_environment.ContainsKey(OwinConstants.RequestBodyKey))
+            {
+                Input.Position = 0;
+            }
+        }
+
+        private IEnumerable<string> formData()
+        {
+            foreach (var key in Form.AllKeys)
+            {
+                yield return "{0}={1}".ToFormat(key, HttpUtility.HtmlEncode(Form[key]));
+            }
+        } 
+
     }
 }

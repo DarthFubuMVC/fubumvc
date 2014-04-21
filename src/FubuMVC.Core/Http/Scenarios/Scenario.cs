@@ -237,21 +237,17 @@ namespace FubuMVC.Core.Http.Scenarios
 
         public void FormData<T>(T target, string method = "POST", string contentType = "application/x-www-form-urlencoded", string accept = "*/*") where T : class
         {
-            var dictionary = new Dictionary<string, object>();
             new TypeDescriptorCache().ForEachProperty(typeof(T), prop =>
             {
                 var rawValue = prop.GetValue(target, null);
                 var httpValue = rawValue == null ? string.Empty : rawValue.ToString().UrlEncoded();
 
-                dictionary.Add(prop.Name, httpValue);
+                Request.Form[prop.Name] = httpValue;
+
             });
 
             Request.HttpMethod(method);
             Request.ContentType(contentType);
-
-            var data = dictionary.Select(x => "{0}={1}".ToFormat(x.Key, x.Value)).Join("&");
-            byte[] buffer = Encoding.Default.GetBytes(data);
-            Request.Input.Write(buffer, 0, buffer.Length);
 
             this.As<IUrlExpression>().Input(target);
         }

@@ -1,3 +1,4 @@
+using FubuMVC.Core.Runtime;
 using FubuMVC.Tests.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -18,6 +19,27 @@ namespace FubuMVC.IntegrationTesting.Owin
 
             TestHost.Scenario(_ => {
                 _.FormData(formInput);
+
+                _.ContentShouldBe(formInput.ToString());
+            });
+        }
+
+        // The following is really a test against Scenario
+        [Test]
+        public void can_bind_to_form_post_data_defined_explicitly()
+        {
+            var formInput = new FormInput
+            {
+                Color = "Orange",
+                Direction = "South"
+            };
+
+            TestHost.Scenario(_ => {
+                _.Post.Input(formInput);
+                _.Request.ContentType(MimeType.HttpFormMimetype);
+
+                _.Request.Form["Color"] = "Orange";
+                _.Request.Form["Direction"] = "South";
 
                 _.ContentShouldBe(formInput.ToString());
             });
