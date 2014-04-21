@@ -17,7 +17,7 @@ namespace FubuMVC.Core.Registration
     /// Class used to define BehaviorChain policies and conventions
     /// </summary>
     [CanBeMultiples]
-    public class Policy : IConfigurationAction, DescribesItself, IKnowMyConfigurationType
+    public class Policy : IConfigurationAction, DescribesItself
     {
         private readonly IList<IChainModification> _actions = new List<IChainModification>();
         private readonly IList<IChainFilter> _wheres = new List<IChainFilter>();
@@ -107,30 +107,6 @@ namespace FubuMVC.Core.Registration
         {
             description.AddList("Where", _wheres);
             description.AddList("Actions", _actions);
-        }
-
-        string IKnowMyConfigurationType.DetermineConfigurationType()
-        {
-            if (GetType().HasAttribute<ConfigurationTypeAttribute>())
-            {
-                return GetType().GetAttribute<ConfigurationTypeAttribute>().Type;
-            }
-
-            var types = _actions.Select(DetermineConfigurationType).Distinct().ToArray();
-
-            if (types.Count() == 1)
-            {
-                return types.Single();
-            }
-
-
-            foreach (var type in BehaviorGraphBuilder.ConfigurationOrder().Reverse())
-            {
-                if (types.Contains(type)) return type;
-            }
-
-            return ConfigurationType.Policy;
-
         }
 
         /// <summary>

@@ -7,6 +7,7 @@ namespace FubuMVC.Core
     /// of an IConfigurationAction in the BehaviorGraph construction cycle
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, Inherited = true)]
+    [Obsolete("Wanna get rid of this crap.  Horrible idea that was supposed to be temporary")]
     public class ConfigurationTypeAttribute : Attribute
     {
         private readonly string _type;

@@ -82,9 +82,6 @@ namespace FubuMVC.Core.Configuration
             config.RunActions(ConfigurationType.Explicit, graph);
             config.RunActions(ConfigurationType.Policy, graph);
 
-            // TODO -- try to eliminate these two
-            config.RunActions(ConfigurationType.Attachment, graph);
-
             // apply the authorization, input, and output nodes
             graph.Behaviors.Each(x => x.InsertNodes(graph.Settings.Get<ConnegSettings>()));
 
@@ -145,7 +142,6 @@ namespace FubuMVC.Core.Configuration
                 ConfigurationType.Settings,
                 ConfigurationType.Explicit,
                 ConfigurationType.Policy,
-                ConfigurationType.Attachment,
                 ConfigurationType.Reordering,
                 ConfigurationType.Instrumentation
             };

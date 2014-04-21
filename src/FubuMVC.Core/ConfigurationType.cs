@@ -12,8 +12,6 @@ namespace FubuMVC.Core
         public const string Instrumentation = "Instrumentation";
         public const string Services = "Services";
 
-        public const string Attachment = "Attachment";
-
         public const string Import = "Import";
 
     }

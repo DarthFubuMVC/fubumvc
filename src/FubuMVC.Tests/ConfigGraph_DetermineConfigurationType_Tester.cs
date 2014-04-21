@@ -49,24 +49,12 @@ namespace FubuMVC.Tests
             }
         }
 
-        public class FakePolicy5 : IConfigurationAction, IKnowMyConfigurationType
+        public class FakePolicy5 : IConfigurationAction
         {
             public void Configure(BehaviorGraph graph)
             {
                 
             }
-
-            string IKnowMyConfigurationType.DetermineConfigurationType()
-            {
-                return Core.ConfigurationType.Attachment;
-            }
-        }
-
-        [Test]
-        public void will_use_the_IKnowMyConfigurationType_if_it_exists()
-        {
-            ConfigGraph.DetermineConfigurationType(new FakePolicy5())
-                       .ShouldEqual(new FakePolicy5().As<IKnowMyConfigurationType>().DetermineConfigurationType());
         }
 
         [Test]

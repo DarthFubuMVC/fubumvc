@@ -6,10 +6,4 @@ namespace FubuMVC.Core.Registration
     {
         void Configure(BehaviorGraph graph);
     }
-
-    [Obsolete("Kill this!")]
-    public interface IKnowMyConfigurationType
-    {
-        string DetermineConfigurationType();
-    }
 }
