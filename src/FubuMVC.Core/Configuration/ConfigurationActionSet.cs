@@ -8,18 +8,7 @@ namespace FubuMVC.Core.Configuration
 {
     public class ConfigurationActionSet
     {
-        protected readonly IList<IConfigurationAction> _actions = new List<IConfigurationAction>();
-        private readonly string _configurationType;
-
-        public ConfigurationActionSet(string configurationType)
-        {
-            _configurationType = configurationType;
-        }
-
-        public string ConfigurationType
-        {
-            get { return _configurationType; }
-        }
+        private readonly IList<IConfigurationAction> _actions = new List<IConfigurationAction>();
 
         public IEnumerable<IConfigurationAction> Actions
         {

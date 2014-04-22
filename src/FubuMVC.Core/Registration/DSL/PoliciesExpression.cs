@@ -7,8 +7,11 @@ namespace FubuMVC.Core.Registration.DSL
 {
     public class PoliciesExpression : PolicyAdderExpression
     {
-        public PoliciesExpression(ConfigGraph configuration) : base(configuration)
+        private readonly ConfigGraph _graph;
+
+        public PoliciesExpression(ConfigGraph configuration) : base(configuration.Global)
         {
+            _graph = configuration;
         }
 
         public void StringConversions<T>() where T : DisplayConversionRegistry, new()
@@ -23,7 +26,7 @@ namespace FubuMVC.Core.Registration.DSL
         {
             var registry = new ServiceRegistry();
             registry.AddService(typeof (DisplayConversionRegistry), ObjectDef.ForValue(conversions));
-            Configuration.Add(registry);
+            _graph.Add(registry);
         }
 
         public void StringConversions(Action<DisplayConversionRegistry> configure)
@@ -32,6 +35,16 @@ namespace FubuMVC.Core.Registration.DSL
             configure(conversions);
 
             addStringConversions(conversions);
+        }
+
+        public void ChainSource<T>() where T : IChainSource, new()
+        {
+            _graph.Add(new T());
+        }
+
+        public void ChainSource(IChainSource source)
+        {
+            _graph.Add(source);
         }
     }
 }

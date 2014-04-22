@@ -5,12 +5,16 @@ using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Assets;
+using FubuMVC.Core.Caching;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Http;
-using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Conventions;
+using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.Services;
 using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Security;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Attachment;
@@ -26,15 +30,19 @@ namespace FubuMVC.Core.Configuration
             startBehaviorGraph(registry, graph);
             var config = registry.Config;
 
-            config.RunActions(ConfigurationType.Settings, graph);
+            config.Local.Settings.RunActions(graph);
 
             config.Sources.Union(config.Imports)
                 .SelectMany(x => x.BuildChains(graph))
                 .Each(chain => graph.AddChain(chain));
 
-            config.RunActions(ConfigurationType.Explicit, graph);
-            config.RunActions(ConfigurationType.Policy, graph);
-            config.RunActions(ConfigurationType.Reordering, graph);
+            // TODO -- clean this up
+            config.Local.Explicits.RunActions(graph);
+            config.Global.Explicits.RunActions(graph);
+            config.Local.Policies.RunActions(graph);
+            config.Global.Policies.RunActions(graph);
+            config.Local.Reordering.RunActions(graph);
+            config.Global.Reordering.RunActions(graph);
 
             return graph;
         }
@@ -46,13 +54,16 @@ namespace FubuMVC.Core.Configuration
             startBehaviorGraph(registry, graph);
 
             var config = registry.Config;
-            
+
             // TODO -- settings from the application must always win
 
             // Apply settings
-            config.RunActions(ConfigurationType.Settings, graph);
+            config.Local.Settings.RunActions(graph);
+            config.Global.Settings.RunActions(graph);
 
             graph.Settings.Alter<ConnegSettings>(x => x.Graph = ConnegGraph.Build(graph));
+
+            
 
             var assetDiscovery = graph.Settings.Get<AssetSettings>().Build(graph.Files)
                 .ContinueWith(t => graph.Services.AddService<IAssetGraph>(t.Result));
@@ -69,26 +80,47 @@ namespace FubuMVC.Core.Configuration
                 var library = graph.Settings.Get<HtmlConventionLibrary>();
                 HtmlConventionCollator.BuildHtmlConventionLibrary(library, t.Result);
 
-                graph.Services.Clear(typeof(HtmlConventionLibrary));
+                graph.Services.Clear(typeof (HtmlConventionLibrary));
                 graph.Services.AddService(library);
             });
 
-            config.Add(new SystemServicesPack());
-            config.Add(new DefaultConfigurationPack());
+
+            config.Add(new ModelBindingServicesRegistry());
+            config.Add(new SecurityServicesRegistry());
+            config.Add(new HttpStandInServiceRegistry());
+            config.Add(new CoreServiceRegistry());
+            config.Add(new CachingServiceRegistry());
+            config.Add(new UIServiceRegistry());
+
+            
+            // TODO -- gonna make this go away
+            config.Global.Reordering.Fill(new OutputBeforeAjaxContinuationPolicy());
+            config.Global.Reordering.Fill(new ReorderBehaviorsPolicy
+            {
+                CategoryMustBeBefore = BehaviorCategory.Authentication,
+                CategoryMustBeAfter = BehaviorCategory.Authorization
+            });
+            config.Global.Reordering.Fill(new ReorderBehaviorsPolicy().ThisNodeMustBeBefore<OutputCachingNode>().ThisNodeMustBeAfter<OutputNode>());
 
             discoverChains(config, graph);
+
+            new AutoImportModelNamespacesConvention().Configure(graph);
+
 
             viewDiscovery.Wait(5000);
             var attacher = new ViewAttachmentWorker(viewDiscovery.Result, graph.Settings.Get<ViewAttachmentPolicy>());
             attacher.Configure(graph);
 
-            config.RunActions(ConfigurationType.Explicit, graph);
-            config.RunActions(ConfigurationType.Policy, graph);
+            config.Local.Explicits.RunActions(graph);
+            config.Global.Explicits.RunActions(graph);
+            config.Local.Policies.RunActions(graph);
+            config.Global.Policies.RunActions(graph);
 
             // apply the authorization, input, and output nodes
             graph.Behaviors.Each(x => x.InsertNodes(graph.Settings.Get<ConnegSettings>()));
 
-            config.RunActions(ConfigurationType.Reordering, graph);
+            config.Local.Reordering.RunActions(graph);
+            config.Global.Reordering.RunActions(graph);
 
             // Apply the diagnostic tracing
             new ApplyTracing().Configure(graph);
@@ -99,7 +131,7 @@ namespace FubuMVC.Core.Configuration
             // TODO -- do something better here.
             Task.WaitAll(layoutAttachmentTasks.Result, 10.Seconds());
             assetDiscovery.Wait(10.Seconds());
-            
+
 
             return graph;
         }

@@ -43,7 +43,8 @@ namespace FubuMVC.Diagnostics.Tests.Model
         [Test]
         public void has_the_diagnostic_chains_from_the_application_assembly()
         {
-            var group = theRuntime.Factory.Get<DiagnosticGraph>()
+            var diagnosticGraph = theRuntime.Factory.Get<DiagnosticGraph>();
+            var group = diagnosticGraph
                 .FindGroup(Assembly.GetExecutingAssembly().GetName().Name);
 
             group.Links().Select(x => x.GetRoutePattern())
@@ -60,7 +61,7 @@ namespace FubuMVC.Diagnostics.Tests.Model
             var links = @group.Links().ToArray();
             links.Select(x => x.GetRoutePattern())
                 .Each(x => Debug.WriteLine(x))
-                .ShouldHaveTheSameElementsAs("_fubu/package/logs", "_fubu/conventions", "_fubu/endpoints", "_fubu/binding/all", "_fubu/requests");
+                .ShouldHaveTheSameElementsAs("_fubu/package/logs", "_fubu/endpoints", "_fubu/binding/all", "_fubu/requests");
         }
     }
 }

@@ -46,7 +46,7 @@ namespace FubuMVC.Core.View.Model
 
             LayoutAttachment = Task.Factory.StartNew(() => {
                 AttachLayouts(settings);
-                precompile(graph);
+                //precompile(graph);
             });
 
             _views = _bottles.SelectMany(x => x.AllViews()).ToList();

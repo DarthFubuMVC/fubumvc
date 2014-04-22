@@ -4,14 +4,11 @@ using System.Reflection;
 using FubuCore;
 using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.DSL;
-using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Routing;
 
 namespace FubuMVC.Core
 {
-
     /// <summary>
     ///   The <see cref = "FubuRegistry" /> class provides methods and grammars for configuring FubuMVC.
     ///   Using a <see cref = "FubuRegistry" /> subclass is the recommended way of configuring FubuMVC.
@@ -74,7 +71,6 @@ namespace FubuMVC.Core
         }
 
         #region IFubuRegistry Members
-
 
         /// <summary>
         ///   Expression builder for configuring conventions that execute near the end of the build up of the <see cref = "BehaviorGraph" />.
@@ -143,7 +139,7 @@ namespace FubuMVC.Core
         /// </summary>
         public void AlterSettings<T>(Action<T> alteration) where T : class, new()
         {
-            Config.Add(new SettingAlteration<T>(alteration));
+            Config.Global.Settings.Fill(new SettingAlteration<T>(alteration));
         }
 
         /// <summary>
@@ -153,7 +149,7 @@ namespace FubuMVC.Core
         /// <param name="settings"></param>
         public void ReplaceSettings<T>(T settings) where T : class
         {
-            Config.Add(new SettingReplacement<T>(settings));
+            Config.Global.Settings.Fill(new SettingReplacement<T>(settings));
         }
 
         /// <summary>
@@ -215,11 +211,10 @@ namespace FubuMVC.Core
 
         #endregion
 
-
         private void addExplicit(Action<BehaviorGraph> action)
         {
             var explicitAction = new LambdaConfigurationAction(action);
-            _config.Add(explicitAction, ConfigurationType.Explicit);
+            _config.Local.Explicits.Fill(explicitAction);
         }
 
         internal Assembly ApplicationAssembly

@@ -27,7 +27,7 @@ namespace FubuMVC.Tests.Registration.DSL
 
             registry.Policies.Reorder(policy => {
                 policy.ThisWrapperBeBefore<OPWrapper1>();
-                policy.WhatMustBeAfter = node => node.Category == BehaviorCategory.Authorization;
+                policy.CategoryMustBeAfter = BehaviorCategory.Authorization;
             });
 
             graph = BehaviorGraph.BuildFrom(registry);

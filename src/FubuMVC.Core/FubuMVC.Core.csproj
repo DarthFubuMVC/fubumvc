@@ -107,10 +107,8 @@
     <Compile Include="Behaviors\WrappingBehavior.cs" />
     <Compile Include="Configuration\ConfigGraph.cs" />
     <Compile Include="Configuration\ConfigurationActionSet.cs" />
-    <Compile Include="Configuration\ConfigurationPack.cs" />
     <Compile Include="ConfigurationType.cs" />
     <Compile Include="ConfigurationTypeAttribute.cs" />
-    <Compile Include="Configuration\DefaultConfigurationPack.cs" />
     <Compile Include="DiagnosticsSettings.cs" />
     <Compile Include="Diagnostics\AboutDiagnostics.cs" />
     <Compile Include="Diagnostics\DescriptionTags.cs" />
@@ -340,7 +338,6 @@
     <Compile Include="Runtime\PartialFactory.cs" />
     <Compile Include="Runtime\SetValueReport.cs" />
     <Compile Include="Security\NotAuthenticatedAttribute.cs" />
-    <Compile Include="Configuration\SystemServicesPack.cs" />
     <Compile Include="Registration\EndpointActionSource.cs" />
     <Compile Include="Runtime\Conditionals\Always.cs" />
     <Compile Include="Runtime\Conditionals\IConditional.cs" />

@@ -13,9 +13,9 @@ namespace FubuMVC.Core.Registration.DSL
 
     public class PolicyAdderExpression
     {
-        protected ConfigGraph Configuration;
+        protected PolicyGraph Configuration;
 
-        public PolicyAdderExpression(ConfigGraph configuration)
+        public PolicyAdderExpression(PolicyGraph configuration)
         {
             Configuration = configuration;
         }
@@ -31,7 +31,7 @@ namespace FubuMVC.Core.Registration.DSL
             var policy = new ReorderBehaviorsPolicy();
             configure(policy);
 
-            Configuration.Add(policy, ConfigurationType.Reordering);
+            Configuration.Reordering.Fill(policy);
 
             return this;
         }
@@ -41,40 +41,31 @@ namespace FubuMVC.Core.Registration.DSL
             return Add(new T());
         }
 
-        public PolicyAdderExpression Add<T>(Action<T> configure, string configurationType = ConfigurationType.Policy)
+        public PolicyAdderExpression Add<T>(Action<T> configure)
             where T : IConfigurationAction, new()
         {
             var action = new T();
             configure(action);
 
-            return Add(action, configurationType);
+            return Add(action);
         }
 
-        public PolicyAdderExpression Add(Action<Policy> configuration,
-            string configurationType = ConfigurationType.Policy)
+        public PolicyAdderExpression Add(Action<Policy> configuration)
         {
             var policy = new Policy();
             configuration(policy);
 
-            return Add(policy, configurationType);
+            return Add(policy);
         }
 
-        public PolicyAdderExpression Add(IConfigurationAction action,
-            string configurationType = ConfigurationType.Policy)
+        public PolicyAdderExpression Add(IConfigurationAction action)
         {
-            Configuration.Add(action, configurationType);
+            Configuration.Policies.Fill(action);
 
             return this;
         }
 
-        public void ChainSource<T>() where T : IChainSource, new()
-        {
-            Configuration.Add(new T());
-        }
 
-        public void ChainSource(IChainSource source)
-        {
-            Configuration.Add(source);
-        }
+
     }
 }

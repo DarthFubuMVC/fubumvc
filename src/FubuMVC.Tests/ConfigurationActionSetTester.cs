@@ -21,7 +21,7 @@ namespace FubuMVC.Tests
             var policy1 = new UniquePolicy();
             var policy2 = new UniquePolicy();
 
-            var actions = new ConfigurationActionSet("something");
+            var actions = new ConfigurationActionSet();
             actions.Fill(policy1);
 
             // policy2 should be treated as a duplicate of policy1
@@ -39,7 +39,7 @@ namespace FubuMVC.Tests
 
             policy1.ShouldEqual(policy2);
 
-            var actions = new ConfigurationActionSet("something");
+            var actions = new ConfigurationActionSet();
             actions.Fill(policy1);
 
             // policy2 should be treated as a duplicate of policy1
@@ -56,7 +56,7 @@ namespace FubuMVC.Tests
 
             policy1.ShouldNotEqual(policy2);
 
-            var actions = new ConfigurationActionSet("something");
+            var actions = new ConfigurationActionSet();
             actions.Fill(policy1);
 
             // policy2 should be treated as a duplicate of policy1

@@ -1,15 +1,19 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Bottles;
 using FubuCore.Reflection;
-using FubuCore.Util;
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.Configuration
 {
+    public class PolicyGraph
+    {
+        public readonly ConfigurationActionSet Policies = new ConfigurationActionSet();
+        public readonly ConfigurationActionSet Explicits = new ConfigurationActionSet();
+        public readonly ConfigurationActionSet Settings = new ConfigurationActionSet();
+        public readonly ConfigurationActionSet Reordering = new ConfigurationActionSet();
+    }
+
     /// <summary>
     /// Holds and tracks all the IConfigurationAction's used to construct the BehaviorGraph of an application
     /// </summary>
@@ -17,18 +21,14 @@ namespace FubuMVC.Core.Configuration
     {
         private readonly Assembly _applicationAssembly;
 
-        private readonly Cache<string, ConfigurationActionSet> _configurations
-            = new Cache<string, ConfigurationActionSet>(x => new ConfigurationActionSet(x));
-
         private readonly IList<RegistryImport> _imports = new List<RegistryImport>();
         private readonly IList<ServiceRegistry> _services = new List<ServiceRegistry>();
 
         private readonly ActionSourceAggregator _actionSourceAggregator;
-        private readonly IList<IChainSource> _sources = new List<IChainSource>(); 
+        private readonly IList<IChainSource> _sources = new List<IChainSource>();
 
-        public readonly IList<IConfigurationAction> Globals = new List<IConfigurationAction>(); 
-        public readonly IList<IConfigurationAction> Locals = new List<IConfigurationAction>(); 
-        public readonly IList<IConfigurationAction> Explicits = new List<IConfigurationAction>(); 
+        public readonly PolicyGraph Global = new PolicyGraph();
+        public readonly PolicyGraph Local = new PolicyGraph();
 
         public ConfigGraph(Assembly applicationAssembly)
         {
@@ -46,21 +46,6 @@ namespace FubuMVC.Core.Configuration
         public IEnumerable<RegistryImport> Imports
         {
             get { return _imports; }
-        }
-
-        public void RunActions(string configurationType, BehaviorGraph graph)
-        {
-            _configurations[configurationType].RunActions(graph);
-        }
-
-        public IEnumerable<IConfigurationAction> ActionsFor(string configurationType)
-        {
-            return _configurations[configurationType].Actions;
-        } 
-
-        public void Add(ConfigurationPack pack)
-        {
-            pack.WriteTo(this);
         }
 
         public void AddImport(RegistryImport import)
@@ -88,21 +73,21 @@ namespace FubuMVC.Core.Configuration
 
         public IEnumerable<RegistryImport> UniqueImports()
         {
-            List<RegistryImport> children = allChildrenImports().ToList();
+            var children = allChildrenImports().ToList();
 
             return _imports.Where(x => !children.Contains(x));
         }
 
         private IEnumerable<RegistryImport> allChildrenImports()
         {
-            foreach (RegistryImport import in _imports)
+            foreach (var import in _imports)
             {
-                foreach (RegistryImport action in import.Registry.Config._imports)
+                foreach (var action in import.Registry.Config._imports)
                 {
                     yield return action;
 
                     foreach (
-                        RegistryImport descendentAction in
+                        var descendentAction in
                             _imports.SelectMany(x => x.Registry.Config.allChildrenImports()))
                     {
                         yield return descendentAction;
@@ -111,18 +96,6 @@ namespace FubuMVC.Core.Configuration
             }
         }
 
-        public void Add(IConfigurationAction action, string configurationType = null)
-        {
-            string type = DetermineConfigurationType(action) ?? configurationType;
-            if (type == null)
-            {
-                throw new ArgumentOutOfRangeException(
-                    "No Type specified and unable to determine what the configuration type for " +
-                    action.GetType());
-            }
-
-            _configurations[type].Fill(action); 
-        }
 
         public void Add(IChainSource source)
         {
@@ -146,15 +119,15 @@ namespace FubuMVC.Core.Configuration
 
         public IEnumerable<ServiceRegistry> AllServiceRegistrations()
         {
-            foreach (RegistryImport import in UniqueImports())
+            foreach (var import in UniqueImports())
             {
-                foreach (ServiceRegistry log in import.Registry.Config.AllServiceRegistrations())
+                foreach (var log in import.Registry.Config.AllServiceRegistrations())
                 {
                     yield return log;
                 }
             }
 
-            foreach (ServiceRegistry registry in _services)
+            foreach (var registry in _services)
             {
                 yield return registry;
             }

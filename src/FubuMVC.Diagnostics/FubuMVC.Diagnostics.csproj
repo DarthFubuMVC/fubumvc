@@ -106,9 +106,6 @@
     <Content Include="Content\Styles\diagnostics\html\selector.css" />
     <Content Include="Content\Styles\diagnostics\master.css" />
     <Content Include="Content\Styles\diagnostics\requests\view.css" />
-    <Content Include="Conventions\Conventions.spark">
-      <SubType>Designer</SubType>
-    </Content>
     <None Include="Dashboard\Dashboard.spark">
       <SubType>Designer</SubType>
     </None>
@@ -160,7 +157,6 @@
     <Compile Include="Chains\ChainRequest.cs" />
     <Compile Include="Chains\ChainVisualization.cs" />
     <Compile Include="Chrome\DashboardChrome.cs" />
-    <Compile Include="Conventions\ConventionsFubuDiagnostics.cs" />
     <Compile Include="Core\CoreExtensions.cs" />
     <Compile Include="Core\Extensions\TagExtensions.cs" />
     <Compile Include="Dashboard\DashboardFubuDiagnostics.cs" />

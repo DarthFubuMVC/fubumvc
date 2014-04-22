@@ -28,7 +28,9 @@ namespace FubuMVC.Core.Registration.Policies
 
         public void WithBehavior<T>() where T : IActionBehavior
         {
-            _policy.ModifyBy(chain => chain.InsertFirst(Wrapper.For<T>()),"Wrap with behavior " + typeof(T).FullName);
+            _policy.ModifyBy(chain => {
+                chain.InsertFirst(Wrapper.For<T>());
+            },"Wrap with behavior " + typeof(T).FullName);
         }
     }
 }
