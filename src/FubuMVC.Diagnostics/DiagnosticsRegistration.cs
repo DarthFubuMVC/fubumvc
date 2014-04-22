@@ -48,7 +48,7 @@ namespace FubuMVC.Diagnostics
                 }
             });
 
-            registry.Policies.Local.Add<DefaultHome>();
+            registry.Policies.Global.Add<DefaultHome>();
         }
     }
 
