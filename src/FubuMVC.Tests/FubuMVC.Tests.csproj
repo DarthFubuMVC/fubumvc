@@ -167,6 +167,7 @@
     <Compile Include="ReflectionExtensionsTester.cs" />
     <Compile Include="Registration\AccessOverridesFinderIntegratedTester.cs" />
     <Compile Include="Registration\ActionFilterTester.cs" />
+    <Compile Include="Registration\Application_settings_alteration_wins_out_over_an_import.cs" />
     <Compile Include="Registration\Conventions\BehaviorGraphExtensions.cs" />
     <Compile Include="Registration\Conventions\CacheAttributePolicyTester.cs" />
     <Compile Include="Registration\Conventions\CachedPartialConventionTester.cs" />

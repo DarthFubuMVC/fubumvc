@@ -8,18 +8,33 @@ namespace FubuMVC.Core.Configuration
 {
     public class RegistryImport : IChainSource
     {
+        private BehaviorGraph _behaviorGraph;
         public string Prefix { get; set; }
         public FubuRegistry Registry { get; set; }
 
+        public void InitializeSettings(BehaviorGraph parentGraph)
+        {
+            _behaviorGraph = new BehaviorGraph(parentGraph.Settings)
+            {
+                ApplicationAssembly = Registry.ApplicationAssembly
+            };
+
+            Registry.Config.Imports.Each(x => x.InitializeSettings(parentGraph));
+            
+            Registry.Config.Settings.Each(x => x.Alter(_behaviorGraph.Settings));
+
+
+        }
+
         public IEnumerable<BehaviorChain> BuildChains(BehaviorGraph graph)
         {
-            var childGraph = BehaviorGraphBuilder.BuildLocal(Registry, graph);
+            Registry.Config.BuildLocal(_behaviorGraph);
             if (Prefix.IsNotEmpty())
             {
-                childGraph.Behaviors.OfType<RoutedChain>().Each(x => { x.Route.Prepend(Prefix); });
+                _behaviorGraph.Behaviors.OfType<RoutedChain>().Each(x => { x.Route.Prepend(Prefix); });
             }
 
-            return childGraph.Behaviors;
+            return _behaviorGraph.Behaviors;
         }
 
         public bool Equals(RegistryImport other)

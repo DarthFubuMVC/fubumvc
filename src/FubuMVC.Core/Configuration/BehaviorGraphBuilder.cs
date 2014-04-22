@@ -17,26 +17,6 @@ namespace FubuMVC.Core.Configuration
 {
     internal static class BehaviorGraphBuilder
     {
-        public static BehaviorGraph BuildLocal(FubuRegistry registry, BehaviorGraph parentGraph)
-        {
-            var graph = new BehaviorGraph(parentGraph.Settings)
-            {
-                ApplicationAssembly = registry.ApplicationAssembly
-            };
-
-            var config = registry.Config;
-
-            config.Local.Settings.RunActions(graph);
-
-            config.DiscoverChains(graph);
-
-            config.Local.Explicits.RunActions(graph);
-            config.Local.Policies.RunActions(graph);
-            config.Local.Reordering.RunActions(graph);
-
-            return graph;
-        }
-
 
 
         // TOOD -- clean this up a little bit
@@ -54,8 +34,9 @@ namespace FubuMVC.Core.Configuration
             // TODO -- settings from the application must always win
 
             // Apply settings
-            config.Local.Settings.RunActions(graph);
-            config.Global.Settings.RunActions(graph);
+
+            config.Imports.Each(x => x.InitializeSettings(graph));
+            config.Settings.Each(x => x.Alter(graph.Settings));
 
             graph.Settings.Alter<ConnegSettings>(x => x.Graph = ConnegGraph.Build(graph));
 

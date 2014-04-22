@@ -139,7 +139,7 @@ namespace FubuMVC.Core
         /// </summary>
         public void AlterSettings<T>(Action<T> alteration) where T : class, new()
         {
-            Config.Global.Settings.Fill(new SettingAlteration<T>(alteration));
+            Config.Settings.Fill(new SettingAlteration<T>(alteration));
         }
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace FubuMVC.Core
         /// <param name="settings"></param>
         public void ReplaceSettings<T>(T settings) where T : class
         {
-            Config.Global.Settings.Fill(new SettingReplacement<T>(settings));
+            Config.Settings.Fill(new SettingReplacement<T>(settings));
         }
 
         /// <summary>

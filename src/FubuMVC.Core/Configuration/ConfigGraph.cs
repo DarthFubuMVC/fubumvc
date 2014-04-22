@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using FubuCore.Reflection;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
@@ -19,7 +18,7 @@ namespace FubuMVC.Core.Configuration
     {
         public readonly ConfigurationActionSet Policies = new ConfigurationActionSet();
         public readonly ConfigurationActionSet Explicits = new ConfigurationActionSet();
-        public readonly ConfigurationActionSet Settings = new ConfigurationActionSet();
+        
         public readonly ConfigurationActionSet Reordering = new ConfigurationActionSet();
     }
 
@@ -38,6 +37,8 @@ namespace FubuMVC.Core.Configuration
 
         public readonly PolicyGraph Global = new PolicyGraph();
         public readonly PolicyGraph Local = new PolicyGraph();
+
+        public readonly IList<ISettingsAlteration> Settings = new List<ISettingsAlteration>();
 
         public ConfigGraph(Assembly applicationAssembly)
         {
@@ -201,6 +202,15 @@ namespace FubuMVC.Core.Configuration
                     }).ToArray();
 
             Task.WaitAll(tasks);
+        }
+
+        public void BuildLocal(BehaviorGraph graph)
+        {
+            DiscoverChains(graph);
+
+            Local.Explicits.RunActions(graph);
+            Local.Policies.RunActions(graph);
+            Local.Reordering.RunActions(graph);
         }
     }
 }

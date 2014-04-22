@@ -62,6 +62,7 @@ namespace FubuMVC.Tests.Registration
                 x.Actions.IncludeType<TestController>();
             });
 
+            theImport.InitializeSettings(graph2);
             graph2.As<IChainImporter>().Import(theImport.BuildChains(graph2));
         }
 
