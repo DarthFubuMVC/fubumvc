@@ -5,7 +5,6 @@ using StructureMap.Configuration.DSL;
 
 namespace FubuMVC.StructureMap.Settings
 {
-    [ConfigurationType(ConfigurationType.Policy)]
     public class SettingRegistration : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)

@@ -31,13 +31,6 @@ namespace FubuMVC.Tests.Registration.Conventions
         private BehaviorGraph graph;
 
         [Test]
-        public void should_be_classified_as_a_policy()
-        {
-            ConfigGraph.DetermineConfigurationType(new DownloadFileConvention())
-                .ShouldEqual(ConfigurationType.Policy);
-        }
-
-        [Test]
         public void should_apply_download_behavior_convention()
         {
             BehaviorNode behavior = graph.BehaviorFor<DownloadTestController>(x => x.Download()).Calls.First().Next;

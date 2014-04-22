@@ -35,8 +35,6 @@ namespace FubuMVC.Diagnostics.Tests.Model
             theRuntime.Dispose();
         }
 
-        private readonly BehaviorGraph theGraph = FubuApplication.DefaultPolicies()
-            .StructureMap().Bootstrap().Factory.Get<BehaviorGraph>();
 
         private FubuRuntime theRuntime;
 

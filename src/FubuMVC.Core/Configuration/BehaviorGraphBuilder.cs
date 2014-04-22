@@ -85,12 +85,12 @@ namespace FubuMVC.Core.Configuration
 
             discoverChains(config, graph);
 
-            var viewAttachmentTask = viewDiscovery.ContinueWith(t => {
+            viewDiscovery.ContinueWith(t => {
                 var attacher = new ViewAttachmentWorker(t.Result, graph.Settings.Get<ViewAttachmentPolicy>());
                 attacher.Configure(graph);
             }).ContinueWith(t => {
                 new AutoImportModelNamespacesConvention().Configure(graph);
-            });
+            }).Wait(10.Seconds());
 
             config.Local.Explicits.RunActions(graph);
             config.Global.Explicits.RunActions(graph);
@@ -106,7 +106,10 @@ namespace FubuMVC.Core.Configuration
             // Apply the diagnostic tracing
             new ApplyTracing().Configure(graph);
 
+            // TODO -- this is terrible. Do something to do the waits better
             htmlConventionCollation.Wait(10.Seconds());
+            //viewAttachmentTask.Wait(10.Seconds());
+
             config.RegisterServices(graph);
 
             // TODO -- do something better here.

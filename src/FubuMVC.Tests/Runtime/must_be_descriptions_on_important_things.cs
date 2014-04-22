@@ -29,19 +29,6 @@ namespace FubuMVC.Tests.Runtime
     [TestFixture]
     public class must_be_descriptions_on_important_things
     {
-        [Test]
-        public void all_concrete_types_of_IChainModification_must_also_implement_IKnowMyConfigurationType()
-        {
-            IEnumerable<Type> types = typeof (FubuRequest).Assembly.GetExportedTypes()
-                                                          .Where(x => x.IsConcreteTypeOf<IChainModification>())
-                                                          .Where(x => !x.Equals(typeof (LambdaChainModification)))
-                                                          .Where(x => !x.HasAttribute<ConfigurationTypeAttribute>());
-
-
-            types.Each(x => Debug.WriteLine(x.Name));
-
-            types.Any().ShouldBeFalse();
-        }
 
         [Test]
         public void must_be_a_description_on_all_IChainModification_types()

@@ -22,7 +22,6 @@ namespace FubuMVC.Core.Registration.Policies
 
         public string Title { get; set; }
         public string Description { get; set; }
-        public string ConfigurationType { get; set; }
 
         public void Modify(BehaviorChain chain)
         {

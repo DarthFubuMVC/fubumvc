@@ -8,7 +8,6 @@ using System.Linq;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
-    [ConfigurationType(ConfigurationType.Reordering)]
     [Title("Behavior Ordering Rule")]
     [CanBeMultiples]
     public class ReorderBehaviorsPolicy : IConfigurationAction

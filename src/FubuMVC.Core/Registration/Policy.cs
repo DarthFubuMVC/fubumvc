@@ -89,12 +89,11 @@ namespace FubuMVC.Core.Registration
         /// </summary>
         /// <param name="alteration"></param>
         /// <param name="description">Optional description for diagnostics</param>
-        public void ModifyBy(Action<BehaviorChain> alteration, string description = "User defined", string configurationType = ConfigurationType.Explicit)
+        public void ModifyBy(Action<BehaviorChain> alteration, string description = "User defined")
         {
             _actions.Add(new LambdaChainModification(alteration)
             {
-                Description = description,
-                ConfigurationType = configurationType
+                Description = description
             });
         }
 
@@ -120,21 +119,6 @@ namespace FubuMVC.Core.Registration
             }
         }
 
-
-        public static string DetermineConfigurationType(IChainModification modification)
-        {
-            string configurationType = null;
-
-            modification.GetType().ForAttribute<ConfigurationTypeAttribute>(att => configurationType = att.Type);
-
-            var lambda = modification as LambdaChainModification;
-            if (lambda != null)
-            {
-                configurationType = lambda.ConfigurationType;
-            }
-
-            return configurationType;
-        }
     }
 
 

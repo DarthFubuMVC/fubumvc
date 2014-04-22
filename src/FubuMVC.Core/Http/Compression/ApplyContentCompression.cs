@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.ComponentModel;
+using System.Linq;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Policies;
@@ -6,7 +7,7 @@ using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Http.Compression
 {
-    [ConfigurationType(ConfigurationType.Policy)]
+    [Description("Apply Content Compression")]
     public class ApplyContentCompression : IChainModification, DescribesItself
     {
         public readonly static HttpContentEncodingFilter DefaultFilter = new HttpContentEncodingFilter(new HttpContentEncoders(new IHttpContentEncoding[]{new GZipHttpContentEncoding(), new DeflateHttpContentEncoding()}));

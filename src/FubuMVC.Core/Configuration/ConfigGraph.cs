@@ -136,16 +136,6 @@ namespace FubuMVC.Core.Configuration
             }
         }
 
-        public static string DetermineConfigurationType(IConfigurationAction action)
-        {
-            if (action.GetType().HasAttribute<ConfigurationTypeAttribute>())
-            {
-                return action.GetType().GetAttribute<ConfigurationTypeAttribute>().Type;
-            }
-
-            return null;
-        }
-
         public IEnumerable<IChainSource> Sources
         {
             get { return _sources; }

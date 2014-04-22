@@ -2,7 +2,6 @@ using FubuCore.Descriptions;
 
 namespace FubuMVC.Core.Registration
 {
-    [ConfigurationType(ConfigurationType.Settings)]
     public class SettingReplacement<T> : IConfigurationAction, DescribesItself where T : class
     {
         private readonly T _settings;

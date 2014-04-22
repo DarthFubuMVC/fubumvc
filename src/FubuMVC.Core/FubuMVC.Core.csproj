@@ -106,8 +106,6 @@
     <Compile Include="Behaviors\WrappingBehavior.cs" />
     <Compile Include="Configuration\ConfigGraph.cs" />
     <Compile Include="Configuration\ConfigurationActionSet.cs" />
-    <Compile Include="ConfigurationType.cs" />
-    <Compile Include="ConfigurationTypeAttribute.cs" />
     <Compile Include="DiagnosticsSettings.cs" />
     <Compile Include="Diagnostics\AboutDiagnostics.cs" />
     <Compile Include="Diagnostics\DescriptionTags.cs" />
@@ -203,7 +201,6 @@
     <Compile Include="ImageTag.cs" />
     <Compile Include="IFubuRequestContext.cs" />
     <Compile Include="Packaging\PackageService.cs" />
-    <Compile Include="PolicyAttribute.cs" />
     <Compile Include="Projections\AccessorProjection.cs" />
     <Compile Include="Projections\ChildProjection.cs" />
     <Compile Include="Projections\DelegatingProjection.cs" />
