@@ -1,30 +1,22 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FubuCore;
-using FubuCore.Reflection;
 using FubuMVC.Core.Assets;
-using FubuMVC.Core.Caching;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.Conventions;
-using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.Services;
 using FubuMVC.Core.Resources.Conneg;
-using FubuMVC.Core.Security;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Attachment;
-using HtmlTags.Conventions;
 
 namespace FubuMVC.Core.Configuration
 {
     internal static class BehaviorGraphBuilder
     {
-        public static BehaviorGraph Import(FubuRegistry registry, BehaviorGraph parentGraph)
+        public static BehaviorGraph BuildLocal(FubuRegistry registry, BehaviorGraph parentGraph)
         {
             var graph = new BehaviorGraph(parentGraph.Settings)
             {
@@ -39,13 +31,9 @@ namespace FubuMVC.Core.Configuration
                 .SelectMany(x => x.BuildChains(graph))
                 .Each(chain => graph.AddChain(chain));
 
-            // TODO -- clean this up
             config.Local.Explicits.RunActions(graph);
-            config.Global.Explicits.RunActions(graph);
             config.Local.Policies.RunActions(graph);
-            config.Global.Policies.RunActions(graph);
             config.Local.Reordering.RunActions(graph);
-            config.Global.Reordering.RunActions(graph);
 
             return graph;
         }
@@ -66,7 +54,6 @@ namespace FubuMVC.Core.Configuration
             graph.Settings.Alter<ConnegSettings>(x => x.Graph = ConnegGraph.Build(graph));
 
 
-
             var assetDiscovery = AssetSettings.Build(graph);
 
             var viewDiscovery = graph.Settings.Get<ViewEngineSettings>().BuildViewBag(graph);
@@ -81,16 +68,12 @@ namespace FubuMVC.Core.Configuration
             var htmlConventionCollation = HtmlConventionCollator.BuildHtmlConventions(graph);
 
 
-
-
             discoverChains(config, graph);
 
             viewDiscovery.ContinueWith(t => {
                 var attacher = new ViewAttachmentWorker(t.Result, graph.Settings.Get<ViewAttachmentPolicy>());
                 attacher.Configure(graph);
-            }).ContinueWith(t => {
-                new AutoImportModelNamespacesConvention().Configure(graph);
-            }).Wait(10.Seconds());
+            }).ContinueWith(t => { new AutoImportModelNamespacesConvention().Configure(graph); }).Wait(10.Seconds());
 
             config.Local.Explicits.RunActions(graph);
             config.Global.Explicits.RunActions(graph);
@@ -141,6 +124,5 @@ namespace FubuMVC.Core.Configuration
 
             Task.WaitAll(tasks);
         }
-
     }
 }

@@ -13,7 +13,7 @@ namespace FubuMVC.Core.Configuration
 
         public IEnumerable<BehaviorChain> BuildChains(BehaviorGraph graph)
         {
-            var childGraph = BehaviorGraphBuilder.Import(Registry, graph);
+            var childGraph = BehaviorGraphBuilder.BuildLocal(Registry, graph);
             if (Prefix.IsNotEmpty())
             {
                 childGraph.Behaviors.OfType<RoutedChain>().Each(x => { x.Route.Prepend(Prefix); });

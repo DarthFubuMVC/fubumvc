@@ -63,7 +63,7 @@ namespace FubuMVC.Core.Configuration
             _imports.Add(import);
         }
 
-        // Tested through the FubuRegistry.Import()
+        // Tested through the FubuRegistry.BuildLocal()
         public bool HasImported(FubuRegistry registry)
         {
             if (_imports.Any(x => x.Registry.GetType() == registry.GetType()))
