@@ -7,6 +7,7 @@ using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.View;
@@ -27,9 +28,7 @@ namespace FubuMVC.Core.Configuration
 
             config.Local.Settings.RunActions(graph);
 
-            config.Sources.Union(config.Imports)
-                .SelectMany(x => x.BuildChains(graph))
-                .Each(chain => graph.AddChain(chain));
+            config.DiscoverChains(graph);
 
             config.Local.Explicits.RunActions(graph);
             config.Local.Policies.RunActions(graph);
@@ -38,12 +37,19 @@ namespace FubuMVC.Core.Configuration
             return graph;
         }
 
+
+
         // TOOD -- clean this up a little bit
         public static BehaviorGraph Build(FubuRegistry registry)
         {
             var graph = new BehaviorGraph {ApplicationAssembly = registry.ApplicationAssembly};
 
             var config = registry.Config;
+            if (FubuMode.InDevelopment())
+            {
+                graph.AddChain(RoutedChain.For<AboutDiagnostics>(x => x.get__about(), "_about"));
+                graph.AddChain(RoutedChain.For<AboutDiagnostics>(x => x.get__loaded(), "_loaded"));
+            }
 
             // TODO -- settings from the application must always win
 
@@ -68,7 +74,8 @@ namespace FubuMVC.Core.Configuration
             var htmlConventionCollation = HtmlConventionCollator.BuildHtmlConventions(graph);
 
 
-            discoverChains(config, graph);
+            config.DiscoverChains(graph);
+
 
             viewDiscovery.ContinueWith(t => {
                 var attacher = new ViewAttachmentWorker(t.Result, graph.Settings.Get<ViewAttachmentPolicy>());
@@ -103,26 +110,5 @@ namespace FubuMVC.Core.Configuration
             return graph;
         }
 
-        private static void discoverChains(ConfigGraph config, BehaviorGraph graph)
-        {
-            var chainSources = config.Sources.Union(config.UniqueImports()).ToList();
-            if (FubuMode.InDevelopment())
-            {
-                var aggregator = new ActionSourceAggregator(null);
-                aggregator.Add(new RegisterAbout());
-
-                chainSources.Add(aggregator);
-            }
-
-            var tasks =
-                chainSources.Select(
-                    x => {
-                        return
-                            Task.Factory.StartNew(
-                                () => { x.BuildChains(graph).Each(chain => graph.AddChain(chain)); });
-                    }).ToArray();
-
-            Task.WaitAll(tasks);
-        }
     }
 }

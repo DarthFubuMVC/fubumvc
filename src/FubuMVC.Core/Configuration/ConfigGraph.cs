@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using FubuCore.Reflection;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
@@ -183,6 +184,23 @@ namespace FubuMVC.Core.Configuration
             yield return new CoreServiceRegistry();
             yield return new CachingServiceRegistry();
             yield return new UIServiceRegistry();
-        } 
+        }
+
+        public void DiscoverChains(BehaviorGraph graph)
+        {
+            var chainSources = Sources.Union(UniqueImports()).ToList();
+
+
+            var tasks =
+                chainSources.Select(
+                    x =>
+                    {
+                        return
+                            Task.Factory.StartNew(
+                                () => { x.BuildChains(graph).Each(chain => graph.AddChain(chain)); });
+                    }).ToArray();
+
+            Task.WaitAll(tasks);
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using FubuCore;
 using FubuMVC.Core.Registration.Routes;
 
@@ -9,6 +10,21 @@ namespace FubuMVC.Core.Registration.Nodes
     public class RoutedChain : BehaviorChain
     {
         private readonly IList<IRouteDefinition> _additionalRoutes = new List<IRouteDefinition>();
+
+        /// <summary>
+        ///   Creates a new BehaviorChain for an action method
+        /// </summary>
+        /// <typeparam name = "T"></typeparam>
+        /// <param name = "expression"></param>
+        /// <returns></returns>
+        public static RoutedChain For<T>(Expression<Action<T>> expression, string url)
+        {
+            var call = ActionCall.For(expression);
+            var chain = new RoutedChain(new RouteDefinition(url), call.InputType(), call.ResourceType());
+            chain.AddToEnd(call);
+
+            return chain;
+        }
 
         public RoutedChain(string pattern) : this(new RouteDefinition(pattern))
         {
