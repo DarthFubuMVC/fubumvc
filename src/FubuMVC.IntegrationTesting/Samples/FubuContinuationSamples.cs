@@ -332,7 +332,7 @@ namespace FubuMVC.IntegrationTesting.Samples
     {
         public MyOfflineFubuRegistry()
         {
-            Policies.Add<OfflineFilterPolicy>();
+            Policies.Local.Add<OfflineFilterPolicy>();
         }
     }
 

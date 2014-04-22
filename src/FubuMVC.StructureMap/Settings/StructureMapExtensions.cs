@@ -6,7 +6,7 @@ namespace FubuMVC.StructureMap.Settings
     {
         public void Configure(FubuRegistry registry)
         {
-            registry.Policies.Add<SettingRegistration>();
+            registry.Policies.Global.Add<SettingRegistration>();
         }
     }
 }

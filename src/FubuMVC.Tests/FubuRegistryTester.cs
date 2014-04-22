@@ -21,12 +21,12 @@ namespace FubuMVC.Tests
 
             BehaviorGraph.BuildFrom(x =>
             {
-                x.Policies.Add<FakePolicy>();
-                x.Policies.Add<FakePolicy>();
-                x.Policies.Add<FakePolicy>();
-                x.Policies.Add<FakePolicy>();
-                x.Policies.Add<FakePolicy>();
-                x.Policies.Add<FakePolicy>();
+                x.Policies.Local.Add<FakePolicy>();
+                x.Policies.Local.Add<FakePolicy>();
+                x.Policies.Local.Add<FakePolicy>();
+                x.Policies.Local.Add<FakePolicy>();
+                x.Policies.Local.Add<FakePolicy>();
+                x.Policies.Local.Add<FakePolicy>();
             });
 
             FakePolicy.Count.ShouldEqual(1);

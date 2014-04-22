@@ -24,7 +24,7 @@ namespace AssemblyPackage
     {
         public void Configure(FubuRegistry registry)
         {
-            registry.Policies.Add(policy => {
+            registry.Policies.Local.Add(policy => {
                 policy.Where.LastActionMatches(call => call.HandlerType == typeof (AssemblyEndpoint));
                 policy.Wrap.WithBehavior<BehaviorFromAssemblyBottle>();
             });

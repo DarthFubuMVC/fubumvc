@@ -20,7 +20,7 @@ namespace FubuMVC.Diagnostics
 
         public void Configure(FubuRegistry registry)
         {
-			registry.Policies.Add<DescriptionVisualizationPolicy>();
+			registry.Policies.Local.Add<DescriptionVisualizationPolicy>();
             registry.Policies.ChainSource<DiagnosticChainsPolicy>();
             registry.Services<DiagnosticServiceRegistry>();
 
@@ -48,7 +48,7 @@ namespace FubuMVC.Diagnostics
                 }
             });
 
-            registry.Policies.Add<DefaultHome>();
+            registry.Policies.Local.Add<DefaultHome>();
         }
     }
 

@@ -21,11 +21,11 @@ namespace FubuMVC.Tests.Registration.DSL
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<OrderingPolicyController>();
 
-            registry.Policies.Add(policy => {
+            registry.Policies.Local.Add(policy => {
                 policy.Wrap.WithBehavior<OPWrapper1>();
             });
 
-            registry.Policies.Reorder(policy => {
+            registry.Policies.Local.Reorder(policy => {
                 policy.ThisWrapperBeBefore<OPWrapper1>();
                 policy.CategoryMustBeAfter = BehaviorCategory.Authorization;
             });
@@ -56,11 +56,11 @@ namespace FubuMVC.Tests.Registration.DSL
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<OrderingPolicyController>();
 
-            registry.Policies.Add(policy => {
+            registry.Policies.Local.Add(policy => {
                 policy.Wrap.WithBehavior<OPWrapper1>();
             });
 
-            registry.Policies.Reorder(x =>
+            registry.Policies.Local.Reorder(x =>
             {
                 x.ThisWrapperBeBefore<OPWrapper1>();
                 x.ThisNodeMustBeAfter<AuthorizationNode>();
@@ -88,7 +88,7 @@ namespace FubuMVC.Tests.Registration.DSL
         {
             FakePolicy.Count = 0;
             BehaviorGraph.BuildFrom(graph => 
-                graph.Policies.Add(new FakePolicy()));
+                graph.Policies.Local.Add(new FakePolicy()));
 
             FakePolicy.Count.ShouldEqual(1);
         }
@@ -102,7 +102,7 @@ namespace FubuMVC.Tests.Registration.DSL
         {
             FakePolicy.Count = 0;
             BehaviorGraph.BuildFrom(graph => 
-                graph.Policies.Add<FakePolicy>(x => x.NoOp()));
+                graph.Policies.Local.Add<FakePolicy>(x => x.NoOp()));
 
             FakePolicy.Count.ShouldEqual(1);
         }

@@ -5,13 +5,29 @@ using FubuMVC.Core.Registration.ObjectGraph;
 
 namespace FubuMVC.Core.Registration.DSL
 {
-    public class PoliciesExpression : PolicyAdderExpression
+    public class PoliciesExpression
     {
         private readonly ConfigGraph _graph;
 
-        public PoliciesExpression(ConfigGraph configuration) : base(configuration.Global)
+        public PoliciesExpression(ConfigGraph configuration) 
         {
             _graph = configuration;
+        }
+
+        public PolicyAdderExpression Global
+        {
+            get
+            {
+                return new PolicyAdderExpression(_graph.Global);
+            }
+        }
+
+        public PolicyAdderExpression Local
+        {
+            get
+            {
+                return new PolicyAdderExpression(_graph.Local);
+            }
         }
 
         public void StringConversions<T>() where T : DisplayConversionRegistry, new()

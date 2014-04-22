@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             {
                 x.Actions.IncludeType<JsonOutputAttachmentTesterController>();
 
-                x.Policies.Add<TestCustomConvention>();
+                x.Policies.Local.Add<TestCustomConvention>();
             });
         }
 

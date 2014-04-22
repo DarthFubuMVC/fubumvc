@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Http.Compression
             {
                 x.Actions.IncludeType<MixedCompressionController>();
 
-                x.Policies.Add(policy => policy.ContentCompression.Apply());
+                x.Policies.Local.Add(policy => policy.ContentCompression.Apply());
             });
 
             chainHasFilter<MixedCompressionController>(graph, x => x.get_compressed()).ShouldBeTrue();
@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.Http.Compression
             var graph = BehaviorGraph.BuildFrom(x =>
             {
                 x.Actions.IncludeType<NoCompressionController>();
-                x.Policies.Add(policy => policy.ContentCompression.Apply());
+                x.Policies.Local.Add(policy => policy.ContentCompression.Apply());
             });
 
             chainHasFilter<NoCompressionController>(graph, x => x.get_stuff()).ShouldBeFalse();
@@ -43,7 +43,7 @@ namespace FubuMVC.Tests.Http.Compression
             var graph = BehaviorGraph.BuildFrom(x =>
             {
                 x.Actions.IncludeType<MixedCompressionController>();
-                x.Policies.Add(policy => policy.ContentCompression.Apply());
+                x.Policies.Local.Add(policy => policy.ContentCompression.Apply());
             });
 
             chainHasFilter<MixedCompressionController>(graph, x => x.get_compressed()).ShouldBeTrue();

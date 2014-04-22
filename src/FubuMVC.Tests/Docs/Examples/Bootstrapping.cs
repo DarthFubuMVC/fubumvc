@@ -88,7 +88,7 @@ namespace FubuMVC.Tests.Docs.Examples
             Actions.IncludeClassesSuffixedWithController();
 
             // Registering a custom policy
-            Policies.Add<MyCustomPolicy>();
+            Policies.Local.Add<MyCustomPolicy>();
 
             // You *can* also declare IoC service
             // registrations in your FubuRegistry

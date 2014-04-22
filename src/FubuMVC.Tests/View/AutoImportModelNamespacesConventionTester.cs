@@ -16,7 +16,7 @@ namespace FubuMVC.Tests.View
         public void Setup()
         {
             _registry = new FubuRegistry();
-            _registry.Policies.Add<AutoImportModelNamespacesConvention>();
+            _registry.Policies.Local.Add<AutoImportModelNamespacesConvention>();
             _registry.Actions.IncludeType<FakeController>();
             _registry.Actions.IncludeType<FakeAction>();
         }

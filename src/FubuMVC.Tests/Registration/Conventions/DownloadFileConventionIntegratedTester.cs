@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             {
                 x.Actions.IncludeType<DownloadTestController>();
 
-                x.Policies.Add<DownloadFileConvention>();
+                x.Policies.Local.Add<DownloadFileConvention>();
             });
         }
 

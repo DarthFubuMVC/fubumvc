@@ -24,7 +24,7 @@ namespace FubuMVC.IntegrationTesting.Async
             var registry = new FubuRegistry(x =>
             {
                 x.Actions.IncludeType<AsyncAction>();
-                x.Policies.Add<EarlyReturnConvention>();
+                x.Policies.Local.Add<EarlyReturnConvention>();
             });
 
             _server = FubuApplication .For(registry)

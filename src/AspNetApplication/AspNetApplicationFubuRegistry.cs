@@ -10,7 +10,7 @@ namespace AspNetApplication
             Actions.IncludeClassesSuffixedWithController();
             Actions.IncludeClassesSuffixedWithEndpoint();
 
-            Policies.Add(x => {
+            Policies.Local.Add(x => {
                 x.Where.AnyActionMatches(call => call.HandlerType == typeof (CompressedContentController));
                 x.ContentCompression.Apply();
             });

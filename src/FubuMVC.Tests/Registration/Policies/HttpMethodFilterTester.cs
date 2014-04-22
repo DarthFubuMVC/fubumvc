@@ -79,7 +79,7 @@ namespace FubuMVC.Tests.Registration.Policies
         public void use_inside_policy()
         {
             var graph = BehaviorGraph.BuildFrom(x => {
-                x.Policies.Add(policy => {
+                x.Policies.Local.Add(policy => {
                     policy.Where.RespondsToHttpMethod("PUT", "POST", "DELETE");
                     policy.Wrap.WithNode<FakeNode>();
                 });

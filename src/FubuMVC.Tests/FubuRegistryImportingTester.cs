@@ -166,7 +166,7 @@ namespace FubuMVC.Tests
         {
             import.Actions.IncludeType<Action1>();
 
-            import.Policies.Add(policy => policy.Wrap.WithBehavior<Wrapper>());
+            import.Policies.Local.Add(policy => policy.Wrap.WithBehavior<Wrapper>());
 
             parent.Import(import, "import");
 
@@ -197,7 +197,7 @@ namespace FubuMVC.Tests
 
             parent.Actions.IncludeType<Action2>();
 
-            parent.Policies.Add(policy => policy.Wrap.WithBehavior<Wrapper>());
+            parent.Policies.Local.Add(policy => policy.Wrap.WithBehavior<Wrapper>());
 
             var graph = BehaviorGraph.BuildFrom(parent);
 
