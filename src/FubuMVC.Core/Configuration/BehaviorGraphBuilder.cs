@@ -63,10 +63,9 @@ namespace FubuMVC.Core.Configuration
 
             graph.Settings.Alter<ConnegSettings>(x => x.Graph = ConnegGraph.Build(graph));
 
-            
 
-            var assetDiscovery = graph.Settings.Get<AssetSettings>().Build(graph.Files)
-                .ContinueWith(t => graph.Services.AddService<IAssetGraph>(t.Result));
+
+            var assetDiscovery = AssetSettings.Build(graph);
 
             var viewDiscovery = graph.Settings.Get<ViewEngineSettings>().BuildViewBag(graph);
             var layoutAttachmentTasks =
@@ -75,14 +74,9 @@ namespace FubuMVC.Core.Configuration
 
             graph.Settings.Replace(viewDiscovery);
 
-            lookForAccessorOverrides(graph);
-            var htmlConventionCollation = graph.Settings.GetTask<AccessorRules>().ContinueWith(t => {
-                var library = graph.Settings.Get<HtmlConventionLibrary>();
-                HtmlConventionCollator.BuildHtmlConventionLibrary(library, t.Result);
+            AccessorRulesCompiler.Compile(graph);
 
-                graph.Services.Clear(typeof (HtmlConventionLibrary));
-                graph.Services.AddService(library);
-            });
+            var htmlConventionCollation = HtmlConventionCollator.BuildHtmlConventions(graph);
 
 
             config.Add(new ModelBindingServicesRegistry());
@@ -104,12 +98,12 @@ namespace FubuMVC.Core.Configuration
 
             discoverChains(config, graph);
 
-            new AutoImportModelNamespacesConvention().Configure(graph);
-
-
-            viewDiscovery.Wait(5000);
-            var attacher = new ViewAttachmentWorker(viewDiscovery.Result, graph.Settings.Get<ViewAttachmentPolicy>());
-            attacher.Configure(graph);
+            var viewAttachmentTask = viewDiscovery.ContinueWith(t => {
+                var attacher = new ViewAttachmentWorker(t.Result, graph.Settings.Get<ViewAttachmentPolicy>());
+                attacher.Configure(graph);
+            }).ContinueWith(t => {
+                new AutoImportModelNamespacesConvention().Configure(graph);
+            });
 
             config.Local.Explicits.RunActions(graph);
             config.Global.Explicits.RunActions(graph);
@@ -170,36 +164,5 @@ namespace FubuMVC.Core.Configuration
             graph.Services.AddService(config);
         }
 
-
-        // TODO -- try to eliminate the duplication from above
-        public static IEnumerable<string> ConfigurationOrder()
-        {
-            return new string[]
-            {
-                ConfigurationType.Settings,
-                ConfigurationType.Explicit,
-                ConfigurationType.Policy,
-                ConfigurationType.Reordering
-            };
-        }
-
-
-        private static void lookForAccessorOverrides(BehaviorGraph graph)
-        {
-            graph.Settings.Replace(() => {
-                var rules = new AccessorRules();
-
-                graph.Types()
-                    .TypesMatching(
-                        x =>
-                            x.CanBeCastTo<IAccessorRulesRegistration>() && x.IsConcreteWithDefaultCtor() &&
-                            !x.IsOpenGeneric())
-                    .
-                    Distinct().Select(x => Activator.CreateInstance(x).As<IAccessorRulesRegistration>())
-                    .Each(x => x.AddRules(rules));
-
-                return rules;
-            });
-        }
     }
 }

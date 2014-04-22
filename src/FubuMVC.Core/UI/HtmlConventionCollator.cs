@@ -1,4 +1,6 @@
-﻿using FubuCore.Reflection;
+﻿using System.Threading.Tasks;
+using FubuCore.Reflection;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.UI.Elements;
 using HtmlTags.Conventions;
 
@@ -35,6 +37,18 @@ namespace FubuMVC.Core.UI
                 var policy = new AccessorOverrideElementBuilderPolicy(_rules, _category, profile);
                 builders.InsertFirst(policy);
             }
+        }
+
+        public static Task BuildHtmlConventions(BehaviorGraph graph)
+        {
+            return graph.Settings.GetTask<AccessorRules>().ContinueWith(t =>
+            {
+                var library = graph.Settings.Get<HtmlConventionLibrary>();
+                BuildHtmlConventionLibrary(library, t.Result);
+
+                graph.Services.Clear(typeof(HtmlConventionLibrary));
+                graph.Services.AddService(library);
+            });
         }
     }
 }

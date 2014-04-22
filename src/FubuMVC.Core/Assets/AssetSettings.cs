@@ -8,6 +8,7 @@ using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Security;
@@ -39,21 +40,23 @@ namespace FubuMVC.Core.Assets
         public readonly IList<CdnAsset> CdnAssets = new List<CdnAsset>(); 
 
         // This is tested through integration tests
-        public Task<AssetGraph> Build(IFubuApplicationFiles files)
+        public static Task Build(BehaviorGraph behaviorGraph)
         {
-            return Task.Factory.StartNew(() => {
-                var graph = new AssetGraph();
+            return behaviorGraph.Settings.GetTask<AssetSettings>()
+                .ContinueWith(t => {
+                    var graph = new AssetGraph();
+                    var settings = t.Result;
 
-                var search = CreateAssetSearch();
+                    var search = settings.CreateAssetSearch();
 
-                graph.Add(files.FindFiles(search).Select(x => new Asset(x)));
+                    graph.Add(behaviorGraph.Files.FindFiles(search).Select(x => new Asset(x)));
 
-                Aliases.AllKeys.Each(alias => graph.StoreAlias(alias, Aliases[alias]));
+                    settings.Aliases.AllKeys.Each(alias => graph.StoreAlias(alias, settings.Aliases[alias]));
 
-                CdnAssets.Each(x => graph.RegisterCdnAsset(x));
+                    settings.CdnAssets.Each(x => graph.RegisterCdnAsset(x));
 
-                return graph;
-            });
+                    behaviorGraph.Services.AddService<IAssetGraph>(graph);
+                });
         }
 
         public FileSet CreateAssetSearch()
