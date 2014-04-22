@@ -3,10 +3,14 @@ using System.Linq;
 using System.Reflection;
 using FubuCore.Reflection;
 using FubuMVC.Core.Caching;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.Services;
 using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Security;
+using FubuMVC.Core.UI;
 
 namespace FubuMVC.Core.Configuration
 {
@@ -116,11 +120,6 @@ namespace FubuMVC.Core.Configuration
             _actionSourceAggregator.Add(source);
         }
 
-        public void RegisterServices(ServiceGraph services)
-        {
-            AllServiceRegistrations().OfType<IServiceRegistration>().Each(x => x.Apply(services));
-        }
-
         public IEnumerable<ServiceRegistry> AllServiceRegistrations()
         {
             foreach (var import in UniqueImports())
@@ -173,6 +172,27 @@ namespace FubuMVC.Core.Configuration
                 .ThisNodeMustBeBefore<OutputCachingNode>()
                 .ThisNodeMustBeAfter<OutputNode>();
 
+        }
+
+        public void RegisterServices(BehaviorGraph graph)
+        {
+            graph.Settings.Register(graph.Services);
+
+            AllServiceRegistrations().Union(DefaultServices())
+                .OfType<IServiceRegistration>()
+                .Each(x => x.Apply(graph.Services));
+
+            graph.Services.AddService(this);
+        }
+
+        public IEnumerable<ServiceRegistry> DefaultServices()
+        {
+            yield return new ModelBindingServicesRegistry();
+            yield return new SecurityServicesRegistry();
+            yield return new HttpStandInServiceRegistry();
+            yield return new CoreServiceRegistry();
+            yield return new CachingServiceRegistry();
+            yield return new UIServiceRegistry();
         } 
     }
 }

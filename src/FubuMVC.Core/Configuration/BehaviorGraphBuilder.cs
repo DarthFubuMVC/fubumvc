@@ -26,8 +26,11 @@ namespace FubuMVC.Core.Configuration
     {
         public static BehaviorGraph Import(FubuRegistry registry, BehaviorGraph parentGraph)
         {
-            var graph = new BehaviorGraph(parentGraph.Settings);
-            graph.ApplicationAssembly = registry.ApplicationAssembly;
+            var graph = new BehaviorGraph(parentGraph.Settings)
+            {
+                ApplicationAssembly = registry.ApplicationAssembly
+            };
+
             var config = registry.Config;
 
             config.Local.Settings.RunActions(graph);
@@ -50,8 +53,7 @@ namespace FubuMVC.Core.Configuration
         // TOOD -- clean this up a little bit
         public static BehaviorGraph Build(FubuRegistry registry)
         {
-            var graph = new BehaviorGraph();
-            graph.ApplicationAssembly = registry.ApplicationAssembly;
+            var graph = new BehaviorGraph {ApplicationAssembly = registry.ApplicationAssembly};
 
             var config = registry.Config;
 
@@ -79,12 +81,7 @@ namespace FubuMVC.Core.Configuration
             var htmlConventionCollation = HtmlConventionCollator.BuildHtmlConventions(graph);
 
 
-            config.Add(new ModelBindingServicesRegistry());
-            config.Add(new SecurityServicesRegistry());
-            config.Add(new HttpStandInServiceRegistry());
-            config.Add(new CoreServiceRegistry());
-            config.Add(new CachingServiceRegistry());
-            config.Add(new UIServiceRegistry());
+
 
             discoverChains(config, graph);
 
@@ -110,7 +107,7 @@ namespace FubuMVC.Core.Configuration
             new ApplyTracing().Configure(graph);
 
             htmlConventionCollation.Wait(10.Seconds());
-            registerServices(config, graph);
+            config.RegisterServices(graph);
 
             // TODO -- do something better here.
             Task.WaitAll(layoutAttachmentTasks.Result, 10.Seconds());
@@ -140,18 +137,6 @@ namespace FubuMVC.Core.Configuration
                     }).ToArray();
 
             Task.WaitAll(tasks);
-        }
-
-        private static void registerServices(ConfigGraph config, BehaviorGraph graph)
-        {
-            graph.Settings.Register(graph.Services);
-
-            config
-                .AllServiceRegistrations()
-                .OfType<IServiceRegistration>()
-                .Each(x => x.Apply(graph.Services));
-
-            graph.Services.AddService(config);
         }
 
     }
