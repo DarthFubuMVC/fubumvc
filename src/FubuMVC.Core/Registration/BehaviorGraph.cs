@@ -297,6 +297,11 @@ namespace FubuMVC.Core.Registration
             _behaviors.Add(chain);
         }
 
+        public void AddChains(IEnumerable<BehaviorChain> chains)
+        {
+            _behaviors.AddRange(chains);
+        }
+
         public void RemoveChain(BehaviorChain chain)
         {
             _behaviors.Remove(chain);

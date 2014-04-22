@@ -22,8 +22,6 @@ namespace FubuMVC.Core.Configuration
             Registry.Config.Imports.Each(x => x.InitializeSettings(parentGraph));
             
             Registry.Config.Settings.Each(x => x.Alter(_behaviorGraph.Settings));
-
-
         }
 
         public IEnumerable<BehaviorChain> BuildChains(BehaviorGraph graph)
@@ -31,7 +29,7 @@ namespace FubuMVC.Core.Configuration
             Registry.Config.BuildLocal(_behaviorGraph);
             if (Prefix.IsNotEmpty())
             {
-                _behaviorGraph.Behaviors.OfType<RoutedChain>().Each(x => { x.Route.Prepend(Prefix); });
+                _behaviorGraph.Behaviors.OfType<RoutedChain>().Each(x => x.Route.Prepend(Prefix));
             }
 
             return _behaviorGraph.Behaviors;

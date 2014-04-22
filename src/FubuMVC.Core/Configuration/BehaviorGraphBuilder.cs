@@ -31,14 +31,8 @@ namespace FubuMVC.Core.Configuration
                 graph.AddChain(RoutedChain.For<AboutDiagnostics>(x => x.get__loaded(), "_loaded"));
             }
 
-            // TODO -- settings from the application must always win
-
             // Apply settings
-
-            config.Imports.Each(x => x.InitializeSettings(graph));
-            config.Settings.Each(x => x.Alter(graph.Settings));
-
-            graph.Settings.Alter<ConnegSettings>(x => x.Graph = ConnegGraph.Build(graph));
+            applySettings(config, graph);
 
 
             var assetDiscovery = AssetSettings.Build(graph);
@@ -55,7 +49,7 @@ namespace FubuMVC.Core.Configuration
             var htmlConventionCollation = HtmlConventionCollator.BuildHtmlConventions(graph);
 
 
-            config.DiscoverChains(graph);
+            config.BuildLocal(graph);
 
 
             viewDiscovery.ContinueWith(t => {
@@ -63,33 +57,31 @@ namespace FubuMVC.Core.Configuration
                 attacher.Configure(graph);
             }).ContinueWith(t => { new AutoImportModelNamespacesConvention().Configure(graph); }).Wait(10.Seconds());
 
-            config.Local.Explicits.RunActions(graph);
             config.Global.Explicits.RunActions(graph);
-            config.Local.Policies.RunActions(graph);
             config.Global.Policies.RunActions(graph);
 
             // apply the authorization, input, and output nodes
             graph.Behaviors.Each(x => x.InsertNodes(graph.Settings.Get<ConnegSettings>()));
 
-            config.Local.Reordering.RunActions(graph);
             config.ApplyGlobalReorderings(graph);
 
             // Apply the diagnostic tracing
             new ApplyTracing().Configure(graph);
 
-            // TODO -- this is terrible. Do something to do the waits better
-            htmlConventionCollation.Wait(10.Seconds());
-            //viewAttachmentTask.Wait(10.Seconds());
-
-            config.RegisterServices(graph);
-
-            // TODO -- do something better here.
-            Task.WaitAll(layoutAttachmentTasks.Result, 10.Seconds());
-            assetDiscovery.Wait(10.Seconds());
+            // Wait until all the other threads are done.
+            var registration = htmlConventionCollation.ContinueWith(t => config.RegisterServices(graph));
+            Task.WaitAll(registration, layoutAttachmentTasks, assetDiscovery);
+            Task.WaitAll(layoutAttachmentTasks.Result);
 
 
             return graph;
         }
 
+        private static void applySettings(ConfigGraph config, BehaviorGraph graph)
+        {
+            config.Imports.Each(x => x.InitializeSettings(graph));
+            config.Settings.Each(x => x.Alter(graph.Settings));
+            graph.Settings.Alter<ConnegSettings>(x => x.Graph = ConnegGraph.Build(graph));
+        }
     }
 }

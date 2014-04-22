@@ -187,30 +187,36 @@ namespace FubuMVC.Core.Configuration
             yield return new UIServiceRegistry();
         }
 
-        public void DiscoverChains(BehaviorGraph graph)
-        {
-            var chainSources = Sources.Union(UniqueImports()).ToList();
-
-
-            var tasks =
-                chainSources.Select(
-                    x =>
-                    {
-                        return
-                            Task.Factory.StartNew(
-                                () => { x.BuildChains(graph).Each(chain => graph.AddChain(chain)); });
-                    }).ToArray();
-
-            Task.WaitAll(tasks);
-        }
-
         public void BuildLocal(BehaviorGraph graph)
         {
-            DiscoverChains(graph);
+            // Local policies will ONLY apply to chains built by this ConfigGraph,
+            // and not to chains that are built by imports
+
+            var imports = UniqueImports().Select(x => {
+                return Task.Factory.StartNew(() => {
+                    return x.BuildChains(graph);
+                });
+            }).ToArray();
+
+            var chainSources = Sources.Select(source => {
+                return Task.Factory.StartNew(() => {
+                    return source.BuildChains(graph);
+                });
+            }).ToArray();
+
+            Task.WaitAll(chainSources);
+
+            chainSources.Each(x => graph.AddChains(x.Result));
 
             Local.Explicits.RunActions(graph);
             Local.Policies.RunActions(graph);
             Local.Reordering.RunActions(graph);
+
+            Task.WaitAll(imports);
+
+            imports.Each(x => graph.AddChains(x.Result));
+
+
         }
     }
 }

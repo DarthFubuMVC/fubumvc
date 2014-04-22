@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.Registration.DSL
                 policy.Wrap.WithBehavior<OPWrapper1>();
             });
 
-            registry.Policies.Local.Reorder(policy => {
+            registry.Policies.Global.Reorder(policy => {
                 policy.ThisWrapperBeBefore<OPWrapper1>();
                 policy.CategoryMustBeAfter = BehaviorCategory.Authorization;
             });
@@ -60,7 +60,7 @@ namespace FubuMVC.Tests.Registration.DSL
                 policy.Wrap.WithBehavior<OPWrapper1>();
             });
 
-            registry.Policies.Local.Reorder(x =>
+            registry.Policies.Global.Reorder(x =>
             {
                 x.ThisWrapperBeBefore<OPWrapper1>();
                 x.ThisNodeMustBeAfter<AuthorizationNode>();
