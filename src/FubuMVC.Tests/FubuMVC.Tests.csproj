@@ -89,7 +89,6 @@
     <Compile Include="ApplicationSettingsTester.cs" />
     <Compile Include="Assets\AssetSettingsTester.cs" />
     <Compile Include="Assets\ScriptTagTester.cs" />
-    <Compile Include="AutoImport_of_configuration_actions_and_extensions_Tester.cs" />
     <Compile Include="Behaviors\Chrome\ChromeAttributeTester.cs" />
     <Compile Include="Behaviors\Chrome\ChromeNodeTester.cs" />
     <Compile Include="Bugs\DoubleRegistrationOfImports.cs" />
@@ -431,10 +430,6 @@
     <ProjectReference Include="..\AssemblyPackage\AssemblyPackage.csproj">
       <Project>{99DBA82A-E811-4DA0-983C-12E8317F8642}</Project>
       <Name>AssemblyPackage</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AutoImportTarget\AutoImportTarget.csproj">
-      <Project>{C63B4F81-360C-4218-96DF-CCB25F2071DB}</Project>
-      <Name>AutoImportTarget</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
       <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>

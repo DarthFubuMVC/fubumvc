@@ -87,7 +87,6 @@
     <Compile Include="Assets\ScriptTag.cs" />
     <Compile Include="Assets\StylesheetLinkTag.cs" />
     <Compile Include="AsymmetricJsonAttribute.cs" />
-    <Compile Include="AutoImportAttribute.cs" />
     <Compile Include="Caching\CacheAttribute.cs" />
     <Compile Include="Configuration\BehaviorGraphBuilder.cs" />
     <Compile Include="Behaviors\AsyncContinueWithBehavior.cs" />

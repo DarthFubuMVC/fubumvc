@@ -27,7 +27,7 @@ namespace FubuMVC.Core.Configuration
         public static BehaviorGraph Import(FubuRegistry registry, BehaviorGraph parentGraph)
         {
             var graph = new BehaviorGraph(parentGraph.Settings);
-            startBehaviorGraph(registry, graph);
+            graph.ApplicationAssembly = registry.ApplicationAssembly;
             var config = registry.Config;
 
             config.Local.Settings.RunActions(graph);
@@ -51,7 +51,7 @@ namespace FubuMVC.Core.Configuration
         public static BehaviorGraph Build(FubuRegistry registry)
         {
             var graph = new BehaviorGraph();
-            startBehaviorGraph(registry, graph);
+            graph.ApplicationAssembly = registry.ApplicationAssembly;
 
             var config = registry.Config;
 
@@ -183,29 +183,6 @@ namespace FubuMVC.Core.Configuration
             };
         }
 
-
-        private static void startBehaviorGraph(FubuRegistry registry, BehaviorGraph graph)
-        {
-            graph.ApplicationAssembly = registry.ApplicationAssembly;
-
-
-            findAutoRegisteredConfigurationActions(registry, graph);
-        }
-
-        private static void findAutoRegisteredConfigurationActions(FubuRegistry registry, BehaviorGraph graph)
-        {
-            var types =
-                graph.ApplicationAssembly.GetExportedTypes()
-                    .Where(x => x.HasAttribute<AutoImportAttribute>() && x.IsConcreteWithDefaultCtor())
-                    .ToArray();
-            types.Where(x => x.CanBeCastTo<IFubuRegistryExtension>())
-                .Each(x => Activator.CreateInstance(x).As<IFubuRegistryExtension>().Configure(registry));
-
-            types.Where(x => x.CanBeCastTo<IConfigurationAction>()).Each(x => {
-                var policy = Activator.CreateInstance(x).As<IConfigurationAction>();
-                registry.Policies.Add(policy);
-            });
-        }
 
         private static void lookForAccessorOverrides(BehaviorGraph graph)
         {
