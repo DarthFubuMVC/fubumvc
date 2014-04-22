@@ -86,16 +86,6 @@ namespace FubuMVC.Core.Configuration
             config.Add(new CachingServiceRegistry());
             config.Add(new UIServiceRegistry());
 
-            
-            // TODO -- gonna make this go away
-            config.Global.Reordering.Fill(new OutputBeforeAjaxContinuationPolicy());
-            config.Global.Reordering.Fill(new ReorderBehaviorsPolicy
-            {
-                CategoryMustBeBefore = BehaviorCategory.Authentication,
-                CategoryMustBeAfter = BehaviorCategory.Authorization
-            });
-            config.Global.Reordering.Fill(new ReorderBehaviorsPolicy().ThisNodeMustBeBefore<OutputCachingNode>().ThisNodeMustBeAfter<OutputNode>());
-
             discoverChains(config, graph);
 
             var viewAttachmentTask = viewDiscovery.ContinueWith(t => {
@@ -114,7 +104,7 @@ namespace FubuMVC.Core.Configuration
             graph.Behaviors.Each(x => x.InsertNodes(graph.Settings.Get<ConnegSettings>()));
 
             config.Local.Reordering.RunActions(graph);
-            config.Global.Reordering.RunActions(graph);
+            config.ApplyGlobalReorderings(graph);
 
             // Apply the diagnostic tracing
             new ApplyTracing().Configure(graph);

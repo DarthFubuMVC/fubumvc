@@ -2,7 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using FubuCore.Reflection;
+using FubuMVC.Core.Caching;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Conventions;
+using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Resources.Conneg;
 
 namespace FubuMVC.Core.Configuration
 {
@@ -147,5 +151,28 @@ namespace FubuMVC.Core.Configuration
         {
             get { return _sources; }
         }
+
+        public void ApplyGlobalReorderings(BehaviorGraph graph)
+        {
+            Global.Reordering.RunActions(graph);
+
+            GlobalReorderingRules().Each(x => x.Configure(graph));
+        }
+
+        public IEnumerable<IConfigurationAction> GlobalReorderingRules()
+        {
+            yield return new OutputBeforeAjaxContinuationPolicy();
+
+            yield return new ReorderBehaviorsPolicy
+            {
+                CategoryMustBeBefore = BehaviorCategory.Authentication,
+                CategoryMustBeAfter = BehaviorCategory.Authorization
+            };
+
+            yield return new ReorderBehaviorsPolicy()
+                .ThisNodeMustBeBefore<OutputCachingNode>()
+                .ThisNodeMustBeAfter<OutputNode>();
+
+        } 
     }
 }
