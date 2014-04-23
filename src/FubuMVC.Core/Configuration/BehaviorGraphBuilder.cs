@@ -25,8 +25,6 @@ namespace FubuMVC.Core.Configuration
             var graph = new BehaviorGraph {ApplicationAssembly = registry.ApplicationAssembly};
             var config = registry.Config;
 
-            
-
             applySettings(config, graph);
 
             var assetDiscovery = AssetSettings.Build(graph);

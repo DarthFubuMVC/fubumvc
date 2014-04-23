@@ -104,7 +104,6 @@
     <Compile Include="Caching\VaryByThreadCulture.cs" />
     <Compile Include="CanBeMultiplesAttribute.cs" />
     <Compile Include="Behaviors\WrappingBehavior.cs" />
-    <Compile Include="Configuration\BehaviorGraphConstructorCoordinator.cs" />
     <Compile Include="Configuration\ConfigGraph.cs" />
     <Compile Include="Configuration\ConfigurationActionSet.cs" />
     <Compile Include="DiagnosticsSettings.cs" />
