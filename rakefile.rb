@@ -19,7 +19,12 @@ require 'fuburake'
 	
 	sln.integration_test = ['FubuMVC.IntegrationTesting']
 	sln.ci_steps = [:integration_test, :archive_gem]
+	
+	sln.options[:nuget_publish_folder] = 'nupkgs'
+	sln.options[:nuget_publish_url] = 'https://www.myget.org/F/fubumvc-edge/'
 end
+
+add_dependency 'ripple:publish', :integration_test
 
 
 desc "Unit and Integration Tests"
@@ -52,6 +57,7 @@ task :create_gem => [:compile] do
 	cleanDirectory 'bin';	
 	cleanDirectory 'pkg'
 	
+	Dir.mkdir 'artifacts' unless Dir.exists?('artifacts')
 	Dir.mkdir 'bin' unless Dir.exists?('bin')
 	Dir.mkdir 'pkg' unless Dir.exists?('pkg')
 	

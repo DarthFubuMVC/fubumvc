@@ -7,6 +7,31 @@
   <BuildServerUrl>http://build.fubu-project.org/project.html?projectId=project3&amp;tab=projectOverview</BuildServerUrl>
   <TeamCityBuildType>bt3</TeamCityBuildType>
   <BottleName>FubuMVC.Docs</BottleName>
-  <Nugets />
+  <Nugets>
+    <PublishedNuget>
+      <Name>FubuMVC.Core</Name>
+      <Description>FubuMVC.Core Library</Description>
+    </PublishedNuget>
+    <PublishedNuget>
+      <Name>FubuMVC.Diagnostics</Name>
+      <Description>A complete look into what's going on inside your FubuMVC application. Once active, diagnostics will be found under /_fubu</Description>
+    </PublishedNuget>
+    <PublishedNuget>
+      <Name>FubuMVC.Katana</Name>
+      <Description>Run FubuMVC applications using Katana and OWIN</Description>
+    </PublishedNuget>
+    <PublishedNuget>
+      <Name>FubuMVC.Razor</Name>
+      <Description>Support for using the Razor view engine within a FubuMVC application.</Description>
+    </PublishedNuget>
+    <PublishedNuget>
+      <Name>FubuMVC.Spark</Name>
+      <Description>Support for using the Spark view engine within a FubuMVC application.</Description>
+    </PublishedNuget>
+    <PublishedNuget>
+      <Name>FubuMVC.StructureMap</Name>
+      <Description>StructureMap bootstrapping for FubuMVC applications</Description>
+    </PublishedNuget>
+  </Nugets>
   <Url>fubumvc</Url>
 </ProjectRoot>

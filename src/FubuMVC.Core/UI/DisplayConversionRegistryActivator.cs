@@ -5,6 +5,7 @@ using FubuCore.Formatting;
 
 namespace FubuMVC.Core.UI
 {
+    // TODO -- get rid of this maybe?  Bring into BehaviorGraphBuilder?
     public class DisplayConversionRegistryActivator : IActivator
     {
         private readonly IEnumerable<DisplayConversionRegistry> _registries;
