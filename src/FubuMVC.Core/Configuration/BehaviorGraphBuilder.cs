@@ -23,20 +23,13 @@ namespace FubuMVC.Core.Configuration
         public static BehaviorGraph Build(FubuRegistry registry)
         {
             var graph = new BehaviorGraph {ApplicationAssembly = registry.ApplicationAssembly};
-
             var config = registry.Config;
-            if (FubuMode.InDevelopment())
-            {
-                graph.AddChain(RoutedChain.For<AboutDiagnostics>(x => x.get__about(), "_about"));
-                graph.AddChain(RoutedChain.For<AboutDiagnostics>(x => x.get__loaded(), "_loaded"));
-            }
 
-            // Apply settings
+            
+
             applySettings(config, graph);
 
-
             var assetDiscovery = AssetSettings.Build(graph);
-
             var viewDiscovery = graph.Settings.Get<ViewEngineSettings>().BuildViewBag(graph);
             var layoutAttachmentTasks =
                 viewDiscovery.ContinueWith(
@@ -48,7 +41,7 @@ namespace FubuMVC.Core.Configuration
 
             var htmlConventionCollation = HtmlConventionCollator.BuildHtmlConventions(graph);
 
-
+            addBuiltInDiagnostics(graph);
             config.BuildLocal(graph);
 
 
@@ -57,16 +50,15 @@ namespace FubuMVC.Core.Configuration
                 attacher.Configure(graph);
             }).ContinueWith(t => { new AutoImportModelNamespacesConvention().Configure(graph); }).Wait(10.Seconds());
 
+
             config.Global.Explicits.RunActions(graph);
             config.Global.Policies.RunActions(graph);
 
-            // apply the authorization, input, and output nodes
-            graph.Behaviors.Each(x => x.InsertNodes(graph.Settings.Get<ConnegSettings>()));
+            insertConnegAndAuthorizationNodes(graph);
 
             config.ApplyGlobalReorderings(graph);
 
-            // Apply the diagnostic tracing
-            new ApplyTracing().Configure(graph);
+            applyTracing(graph);
 
             // Wait until all the other threads are done.
             var registration = htmlConventionCollation.ContinueWith(t => config.RegisterServices(graph));
@@ -75,6 +67,25 @@ namespace FubuMVC.Core.Configuration
 
 
             return graph;
+        }
+
+        private static void addBuiltInDiagnostics(BehaviorGraph graph)
+        {
+            if (FubuMode.InDevelopment())
+            {
+                graph.AddChain(RoutedChain.For<AboutDiagnostics>(x => x.get__about(), "_about"));
+                graph.AddChain(RoutedChain.For<AboutDiagnostics>(x => x.get__loaded(), "_loaded"));
+            }
+        }
+
+        private static void applyTracing(BehaviorGraph graph)
+        {
+            new ApplyTracing().Configure(graph);
+        }
+
+        private static void insertConnegAndAuthorizationNodes(BehaviorGraph graph)
+        {
+            graph.Behaviors.Each(x => x.InsertNodes(graph.Settings.Get<ConnegSettings>()));
         }
 
         private static void applySettings(ConfigGraph config, BehaviorGraph graph)

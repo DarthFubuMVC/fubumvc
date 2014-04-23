@@ -177,7 +177,7 @@ namespace FubuMVC.Core.Configuration
             graph.Services.AddService(this);
         }
 
-        public IEnumerable<ServiceRegistry> DefaultServices()
+        public static IEnumerable<ServiceRegistry> DefaultServices()
         {
             yield return new ModelBindingServicesRegistry();
             yield return new SecurityServicesRegistry();
