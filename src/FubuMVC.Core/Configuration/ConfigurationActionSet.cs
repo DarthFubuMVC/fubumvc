@@ -50,6 +50,11 @@ namespace FubuMVC.Core.Configuration
         {
             _actions.Each(x => x.Configure(graph));
         }
+
+        public void Import(ConfigurationActionSet others)
+        {
+            others._actions.Each(Fill);
+        }
     }
 
 }

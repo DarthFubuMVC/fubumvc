@@ -190,6 +190,7 @@
     <Compile Include="Registration\Policies\IsPartialTester.cs" />
     <Compile Include="Registration\Policies\ResourceTypeImplementsTester.cs" />
     <Compile Include="Registration\Policies\ResourceTypeIsTester.cs" />
+    <Compile Include="Registration\Registration\FubuPackageRegistry_Importing_Mechanics_Specs.cs" />
     <Compile Include="Registration\Registration\ModelBindingServiceRegistry_specification.cs" />
     <Compile Include="Registration\SettingsCollectionTester.cs" />
     <Compile Include="Registration\SettingsCollection_creates_with_the_app_setting_provider_Tester.cs" />

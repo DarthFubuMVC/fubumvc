@@ -1,15 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using FubuCore;
 using FubuCore.Descriptions;
-using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Http.Compression;
-using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Policies;
-using FubuCore.Reflection;
 
 namespace FubuMVC.Core.Registration
 {
@@ -27,7 +22,8 @@ namespace FubuMVC.Core.Registration
         /// </summary>
         public ChainPredicate Where
         {
-            get { 
+            get
+            {
                 var predicate = new ChainPredicate();
                 _wheres.Add(predicate);
 
@@ -35,7 +31,6 @@ namespace FubuMVC.Core.Registration
             }
         }
 
-        
 
         void IConfigurationAction.Configure(BehaviorGraph graph)
         {
@@ -49,10 +44,7 @@ namespace FubuMVC.Core.Registration
         /// </summary>
         public AddToEndExpression Add
         {
-            get
-            {
-                return new AddToEndExpression(this);
-            }
+            get { return new AddToEndExpression(this); }
         }
 
         /// <summary>
@@ -60,10 +52,7 @@ namespace FubuMVC.Core.Registration
         /// </summary>
         public WrapWithExpression Wrap
         {
-            get
-            {
-                return new WrapWithExpression(this);
-            }
+            get { return new WrapWithExpression(this); }
         }
 
         /// <summary>
@@ -113,13 +102,7 @@ namespace FubuMVC.Core.Registration
         /// </summary>
         public ContentCompressionActions ContentCompression
         {
-            get
-            {
-                return new ContentCompressionActions(this);
-            }
+            get { return new ContentCompressionActions(this); }
         }
-
     }
-
-
 }

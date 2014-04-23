@@ -178,18 +178,14 @@ namespace FubuMVC.Core
         {
             if (_importedTypes.Contains(typeof (T))) return;
 
+
+
             var extension = new T();
-            if (typeof (T).CanBeCastTo<FubuPackageRegistry>())
+
+            extension.Configure(this);
+
+            if (!typeof (T).CanBeCastTo<FubuPackageRegistry>())
             {
-                _config.AddImport(new RegistryImport
-                {
-                    Prefix = extension.As<FubuPackageRegistry>().UrlPrefix,
-                    Registry = extension.As<FubuRegistry>()
-                });
-            }
-            else
-            {
-                extension.Configure(this);
                 _importedTypes.Add(typeof (T));
             }
         }

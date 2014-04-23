@@ -218,5 +218,12 @@ namespace FubuMVC.Core.Configuration
 
 
         }
+
+        public void ImportGlobals(ConfigGraph config)
+        {
+            Global.Explicits.Import(config.Global.Explicits);
+            Global.Policies.Import(config.Global.Policies);
+            Global.Reordering.Import(config.Global.Reordering);
+        }
     }
 }

@@ -21,6 +21,8 @@
         void IFubuRegistryExtension.Configure(FubuRegistry registry)
         {
             registry.Import(this, UrlPrefix);
+
+            registry.Config.ImportGlobals(Config);
         }
     }
 }
