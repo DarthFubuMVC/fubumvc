@@ -32,6 +32,8 @@ namespace FubuMVC.Core
     {
         public CoreServiceRegistry()
         {
+            SetServiceIfNone<IRequestCompletion, RequestCompletion>();
+
             SetServiceIfNone<IRequestData, FubuMvcRequestData>();
             SetServiceIfNone(typeof(AppReloaded), ObjectDef.ForValue(new AppReloaded()));
 
