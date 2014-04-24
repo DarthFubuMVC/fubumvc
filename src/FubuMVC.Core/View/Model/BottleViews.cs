@@ -48,6 +48,11 @@ namespace FubuMVC.Core.View.Model
 
             ViewEngineSettings.FileSystem.ChildDirectoriesFor(path).Each(child =>
             {
+                if (child.TrimEnd('/').EndsWith("fubu-content"))
+                {
+                    return;
+                }
+
                 var childFolder = buildFolder(child);
                 childFolder.Parent = folder;
                 childFolder.RelativePath = (folder.RelativePath + "/" + childFolder.Name).TrimStart('/');
