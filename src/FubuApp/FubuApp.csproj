@@ -81,6 +81,10 @@
       <Project>{e18fd922-0e7a-49cd-b89f-473826077b9d}</Project>
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Diagnostics\FubuMVC.Diagnostics.csproj">
+      <Project>{a1deb080-5a9a-44b4-a10b-84da9bd07af5}</Project>
+      <Name>FubuMVC.Diagnostics</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Spark\FubuMVC.Spark.csproj">
       <Project>{9d6bf559-6461-4eac-bb16-f976ff43e8da}</Project>
       <Name>FubuMVC.Spark</Name>
