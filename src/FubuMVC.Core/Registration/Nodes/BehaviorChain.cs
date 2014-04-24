@@ -301,18 +301,10 @@ namespace FubuMVC.Core.Registration.Nodes
         /// <param name = "type"></param>
         public void ResourceType(Type type)
         {
-            if (_output.IsValueCreated && _output.Value.ResourceType != type)
+            _output = new Lazy<OutputNode>(() => new OutputNode(type));
+            if (_output.Value.ResourceType != type)
             {
-                throw new InvalidOperationException("The ResourceType is already set for this chain");
-            }
-
-            if (!_output.IsValueCreated)
-            {
-                _output = new Lazy<OutputNode>(() => new OutputNode(type));
-                if (_output.Value.ResourceType != type)
-                {
-                    throw new ApplicationException("wouldn't really happen but I wanted to force the Lazy to evaluate");
-                }
+                throw new ApplicationException("wouldn't really happen but I wanted to force the Lazy to evaluate");
             }
         }
 
