@@ -72,7 +72,7 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
 
-        protected virtual void InsertNodes(ConnegSettings settings)
+        internal protected virtual void InsertNodes(ConnegSettings settings)
         {
             if (HasResourceType() && !ResourceType().CanBeCastTo<FubuContinuation>())
             {
