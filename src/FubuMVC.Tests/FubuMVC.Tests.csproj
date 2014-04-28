@@ -153,6 +153,7 @@
     <Compile Include="MockedFubuRequestContext.cs" />
     <Compile Include="NewConneg\ReaderCollectionTester.cs" />
     <Compile Include="Projections\ChildProjectionTester.cs" />
+    <Compile Include="Projections\child_and_enumerable_children_sourced_by_services.cs" />
     <Compile Include="Projections\DelegatingProjectionTester.cs" />
     <Compile Include="Projections\DictionaryMediaNodeTester.cs" />
     <Compile Include="Projections\EnumerableProjectionIntegratedTester.cs" />

@@ -18,7 +18,8 @@ namespace FubuMVC.Core.Projections
         {
             var accessor = ReflectionHelper.GetAccessor(expression);
 
-            return new EnumerableProjection<TParent, TChild>{
+            return new EnumerableProjection<TParent, TChild>
+            {
                 ElementSource = c => c.ValueFor(accessor).As<IEnumerable<TChild>>(),
                 NodeName = accessor.Name,
                 Accessor = accessor
@@ -32,9 +33,9 @@ namespace FubuMVC.Core.Projections
             yield return Accessor;
         }
 
-        public void UseProjection<TProjection>() where TProjection : IProjection<TChild>
+        public void UseProjection<TProjection>() where TProjection : IProjection<TChild>, new()
         {
-            ProjectionSource = c => c.Service<TProjection>();
+            ProjectionSource = c => new TProjection();
         }
 
         public void DefineProjection(Action<Projection<TChild>> configure)

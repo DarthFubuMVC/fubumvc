@@ -3,6 +3,11 @@ using FubuCore.Reflection;
 
 namespace FubuMVC.Core.Projections
 {
+    /// <summary>
+    /// Used internally
+    /// </summary>
+    /// <typeparam name="TParent"></typeparam>
+    /// <typeparam name="T"></typeparam>
     public class ExternallyFormattedValueProjector<TParent, T> : ISingleValueProjection<TParent>
     {
         private readonly Accessor _accessor;
