@@ -52,9 +52,10 @@ namespace FubuMVC.Core
         /// 
         /// </summary>
         /// <param name="assembly">The primary assembly for this application used in type scanning conventions and policies</param>
-        public FubuRegistry(Assembly assembly) : this()
+        public FubuRegistry(Assembly assembly) 
         {
             _applicationAssembly = assembly;
+            _config = new ConfigGraph(_applicationAssembly);
         }
 
         internal ConfigGraph Config
