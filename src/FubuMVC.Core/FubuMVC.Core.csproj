@@ -574,6 +574,13 @@
     <Compile Include="UI\Elements\IElementNamingConvention.cs" />
     <Compile Include="UI\Elements\IElementTagOverride.cs" />
     <Compile Include="UI\Elements\TagRequestActivator.cs" />
+    <Compile Include="UI\Extensions\ContentExtensionGraph.cs" />
+    <Compile Include="UI\Extensions\ContentExtensions.cs" />
+    <Compile Include="UI\Extensions\ExtensionsExpression.cs" />
+    <Compile Include="UI\Extensions\ExtensionShelf.cs" />
+    <Compile Include="UI\Extensions\FilteredContentExtension.cs" />
+    <Compile Include="UI\Extensions\IContentExtension.cs" />
+    <Compile Include="UI\Extensions\LambdaExtension.cs" />
     <Compile Include="UI\Forms\DefinitionListFieldChrome.cs" />
     <Compile Include="UI\Forms\FormLineExpression.cs" />
     <Compile Include="UI\Forms\FormRequest.cs" />
