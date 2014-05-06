@@ -15,7 +15,7 @@ namespace FubuMVC.Core.Projections
 
         public void Write(IProjectionContext<TParent> context, IMediaNode node)
         {
-            var value = context.ValueFor(_accessor) as T;
+            var value = context.Values.ValueFor(_accessor) as T;
             if (value != null)
             {
                 value.Project(AttributeName, node);

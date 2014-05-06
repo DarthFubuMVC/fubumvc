@@ -159,7 +159,7 @@ namespace FubuMVC.Core
                     bakeBehaviorGraphIntoContainer(graph, containerFacility);
 
                     // factory HAS to be spun up here.
-                    factory = containerFacility.BuildFactory();
+                    factory = containerFacility.BuildFactory(graph);
 
                     routeTask = Task.Factory.StartNew(() =>
                     {

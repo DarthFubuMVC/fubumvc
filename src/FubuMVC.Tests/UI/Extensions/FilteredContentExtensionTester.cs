@@ -21,7 +21,8 @@ namespace FubuMVC.Tests.UI.Extensions
             theInnerExtensionObjects = new object[]{"<div/>", "<div />"};
             MockFor<IContentExtension<FilteredModel>>().Stub(x => x.GetExtensions(thePage)).Return(theInnerExtensionObjects);
 
-            theFilter = MockFor<Func<IFubuPage<FilteredModel>, bool>>();
+            theFilter = MockRepository.GenerateMock<Func<IFubuPage<FilteredModel>, bool>>();
+            Services.Inject(theFilter);
         }
 
         [Test]

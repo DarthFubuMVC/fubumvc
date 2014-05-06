@@ -22,7 +22,7 @@ namespace FubuMVC.Core.Projections
             : base(formatting)
         {
             _accessor = ReflectionHelper.GetAccessor(expression);
-            _source = c => c.ValueFor(_accessor) as TChild;
+            _source = c => c.Values.ValueFor(_accessor) as TChild;
             _name = _accessor.Name;
         }
 

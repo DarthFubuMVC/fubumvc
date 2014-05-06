@@ -45,7 +45,10 @@
       <HintPath>..\packages\HtmlTags\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap">
-      <HintPath>..\packages\structuremap\lib\StructureMap.dll</HintPath>
+      <HintPath>..\packages\structuremap\lib\net40\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.Net4">
+      <HintPath>..\packages\structuremap\lib\net40\StructureMap.Net4.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -70,10 +73,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingsScanner.cs" />
     <Compile Include="Settings\ConfigurationSettings.cs" />
-    <Compile Include="Settings\StructureMapExtensions.cs" />
-    <Compile Include="Settings\SettingRegistration.cs" />
     <Compile Include="Settings\SettingRegistry.cs" />
-    <Compile Include="SingletonSpinupActivator.cs" />
     <Compile Include="StructureMapContainerFacility.cs" />
     <Compile Include="StructureMapFubuRegistry.cs" />
     <Compile Include="StructureMapServiceLocator.cs" />

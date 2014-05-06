@@ -53,7 +53,7 @@ namespace FubuMVC.StructureMap
         public static ExplicitArguments ToExplicitArgs(this ServiceArguments arguments)
         {
             var explicits = new ExplicitArguments();
-            arguments.EachService(explicits.Set);
+            arguments.EachService((type, o) => explicits.Set(type, o));
 
             return explicits;
         }

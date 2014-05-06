@@ -1,8 +1,10 @@
 using System;
+using System.Linq.Expressions;
+using FubuCore;
 using FubuCore.Configuration;
-using StructureMap;
 using StructureMap.Configuration.DSL;
 using StructureMap.Graph;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.StructureMap
 {
@@ -27,7 +29,16 @@ namespace FubuMVC.StructureMap
         {
             if (!_filter(type)) return;
 
-            graph.For(type).LifecycleIs(InstanceScope.Singleton).Use(c => c.GetInstance<ISettingsProvider>().SettingsFor(type));
+            var instanceType = typeof(SettingsInstance<>).MakeGenericType(type);
+            var instance = Activator.CreateInstance(instanceType).As<Instance>();
+            graph.For(type).Add(instance).Singleton();
+        }
+    }
+
+    public class SettingsInstance<T> : LambdaInstance<T> where T : class, new()
+    {
+        public SettingsInstance() : base(c => c.GetInstance<ISettingsProvider>().SettingsFor<T>())
+        {
         }
     }
 }

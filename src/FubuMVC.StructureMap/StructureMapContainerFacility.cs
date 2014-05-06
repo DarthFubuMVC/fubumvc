@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Bottles;
-using Bottles.Environment;
+using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
@@ -11,11 +12,10 @@ using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
+using FubuMVC.StructureMap.Settings;
 using StructureMap;
 using StructureMap.Configuration.DSL;
 using StructureMap.Pipeline;
-using StructureMap.TypeRules;
-using FubuCore;
 
 namespace FubuMVC.StructureMap
 {
@@ -25,7 +25,6 @@ namespace FubuMVC.StructureMap
         private readonly Registry _registry;
 
 
-        private bool _initializeSingletonsToWorkAroundSMBug = true;
 
         public StructureMapContainerFacility(IContainer container)
         {
@@ -83,14 +82,15 @@ namespace FubuMVC.StructureMap
             return new NestedStructureMapContainerBehavior(_container, arguments, behaviorId);
         }
 
-        public IServiceFactory BuildFactory()
+        public IServiceFactory BuildFactory(BehaviorGraph graph)
         {
+            var settings = graph.Settings.Get<ConfigurationSettings>();
+            var settingRegistry = settings.BuildRegistry(graph);
+
+            
             _container.Configure(x => {
                 x.AddRegistry(_registry);
-                if (_initializeSingletonsToWorkAroundSMBug)
-                {
-                    x.For<IActivator>().Add<SingletonSpinupActivator>();
-                }
+                x.AddRegistry(settingRegistry);
             });
 
             _registration = (serviceType, def) =>
@@ -146,18 +146,6 @@ namespace FubuMVC.StructureMap
             FubuApplication.For(() => new FubuRegistry()).StructureMap(container).Bootstrap();
 
             return container;
-        }
-
-        /// <summary>
-        ///   Disable FubuMVC's protection for a known StructureMap nested container issue. 
-        ///   You will need to manually initialize any Singletons in Application_Start if they depend on instances scoped to a nested container.
-        ///   See <see cref = "http://github.com/structuremap/structuremap/issues#issue/3" />
-        /// </summary>
-        /// <returns></returns>
-        public StructureMapContainerFacility DoNotInitializeSingletons()
-        {
-            _initializeSingletonsToWorkAroundSMBug = false;
-            return this;
         }
 
         public void Dispose()

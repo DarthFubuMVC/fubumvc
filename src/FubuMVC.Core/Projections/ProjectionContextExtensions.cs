@@ -8,7 +8,7 @@ namespace FubuMVC.Core.Projections
     {
         public static string FormattedValueOf<T>(this IProjectionContext<T> context, Accessor accessor)
         {
-            return context.Formatter.GetDisplayForValue(accessor, context.ValueFor(accessor));
+            return context.Formatter.GetDisplayForValue(accessor, context.Values.ValueFor(accessor));
         }
 
         public static string FormattedValueOf<T>(this IProjectionContext<T> context, Expression<Func<T, object>> expression)

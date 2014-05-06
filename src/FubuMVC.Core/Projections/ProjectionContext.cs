@@ -34,14 +34,14 @@ namespace FubuMVC.Core.Projections
             _formatter = formatter;
         }
 
+        public IValues<T> Values
+        {
+            get { return _values; }
+        }
+
         public T Subject
         {
             get { return _values.Subject; }
-        }
-
-        public object ValueFor(Accessor accessor)
-        {
-            return _values.ValueFor(accessor);
         }
 
         public TService Service<TService>()

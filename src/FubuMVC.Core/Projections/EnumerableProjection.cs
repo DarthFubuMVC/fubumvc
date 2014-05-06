@@ -20,7 +20,7 @@ namespace FubuMVC.Core.Projections
 
             return new EnumerableProjection<TParent, TChild>
             {
-                ElementSource = c => c.ValueFor(accessor).As<IEnumerable<TChild>>(),
+                ElementSource = c => c.Values.ValueFor(accessor).As<IEnumerable<TChild>>(),
                 NodeName = accessor.Name,
                 Accessor = accessor
             };

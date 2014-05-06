@@ -62,7 +62,7 @@ namespace FubuMVC.StructureMap.Testing.Internals
             facility = new StructureMapContainerFacility(container);
             graph.As<IRegisterable>().Register(facility.Register);
 
-            factory = facility.BuildFactory();
+            factory = facility.BuildFactory(graph);
         }
 
         #endregion
@@ -123,7 +123,7 @@ namespace FubuMVC.StructureMap.Testing.Internals
                 Value = registry
             });
 
-            myFacility.BuildFactory();
+            myFacility.BuildFactory(new BehaviorGraph());
 
             myContainer.GetInstance<ITypeResolver>().ShouldBeTheSameAs(registry);
         }
@@ -146,7 +146,7 @@ namespace FubuMVC.StructureMap.Testing.Internals
         [Test]
         public void should_be_able_to_pull_all_of_the_route_behaviors_out_of_the_container()
         {
-            container.GetAllInstances<IActionBehavior>().Count.ShouldBeGreaterThan(3);
+            container.GetAllInstances<IActionBehavior>().Count().ShouldBeGreaterThan(3);
         }
 
         [Test]

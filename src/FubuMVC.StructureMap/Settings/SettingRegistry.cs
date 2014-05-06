@@ -1,6 +1,8 @@
 ﻿using System;
+using FubuCore;
 using FubuCore.Configuration;
 using StructureMap.Configuration.DSL;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.StructureMap.Settings
 {
@@ -14,12 +16,15 @@ namespace FubuMVC.StructureMap.Settings
 
         public void AddSettingType<T>() where T : class, new()
         {
-            ForSingletonOf<T>().Use(x => x.GetInstance<ISettingsProvider>().SettingsFor<T>());
+            ForSingletonOf<T>().UseInstance(new SettingsInstance<T>());
         }
 
         public void AddSettingType(Type type)
         {
-            For(type).Singleton().Use(c => c.GetInstance<ISettingsProvider>().SettingsFor(type));
+            var instanceType = typeof (SettingsInstance<>).MakeGenericType(type);
+            var instance = Activator.CreateInstance(instanceType).As<Instance>();
+
+            For(type).Singleton().Use(instance);
         }
     }
 }

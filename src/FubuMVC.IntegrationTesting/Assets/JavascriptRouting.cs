@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Diagnostics;
+using System.Net;
 using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Assets;
@@ -38,7 +39,7 @@ namespace FubuMVC.IntegrationTesting.Assets
 
                     x.StatusCodeShouldBe(HttpStatusCode.OK);
 
-
+                    Debug.WriteLine(x.Response.Body.ReadAsText());
                 });
             }
         }

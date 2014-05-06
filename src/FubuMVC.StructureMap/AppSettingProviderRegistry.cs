@@ -4,7 +4,7 @@ using FubuCore.Binding.InMemory;
 using FubuCore.Configuration;
 using FubuCore.Conversion;
 using FubuCore.Reflection;
-
+using FubuMVC.StructureMap;
 using StructureMap.Configuration.DSL;
 
 namespace FubuMVC.StructureMap

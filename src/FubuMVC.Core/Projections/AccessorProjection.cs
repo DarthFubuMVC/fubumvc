@@ -23,7 +23,7 @@ namespace FubuMVC.Core.Projections
             }
             else
             {
-                _inner = new SingleValueProjection<T>(_accessor.Name, c => c.ValueFor(_accessor));
+                _inner = new SingleValueProjection<T>(_accessor.Name, c => c.Values.ValueFor(_accessor));
             }
         }
 
@@ -94,7 +94,7 @@ namespace FubuMVC.Core.Projections
         {
             _inner = new SingleValueProjection<T>(_inner.AttributeName, context =>
             {
-                var raw = context.ValueFor(_accessor);
+                var raw = context.Values.ValueFor(_accessor);
                 if (raw == null)
                 {
                     return null;
@@ -129,7 +129,7 @@ namespace FubuMVC.Core.Projections
         {
             _inner = new SingleValueProjection<T>(_inner.AttributeName, context =>
             {
-                var raw = context.ValueFor(_accessor);
+                var raw = context.Values.ValueFor(_accessor);
                 if (raw == null)
                 {
                     return string.Empty;

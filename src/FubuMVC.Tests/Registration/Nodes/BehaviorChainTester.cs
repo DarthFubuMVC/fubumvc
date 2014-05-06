@@ -434,7 +434,7 @@ namespace FubuMVC.Tests.Registration.Nodes
 
             chain.As<IRegisterable>().Register(facility.Register);
 
-            facility.BuildFactory();
+            facility.BuildFactory(new BehaviorGraph());
 
             Debug.WriteLine(chain.UniqueId);
             Debug.WriteLine(container.WhatDoIHave());
@@ -456,7 +456,7 @@ namespace FubuMVC.Tests.Registration.Nodes
 
             chain.As<IRegisterable>().Register(facility.Register);
 
-            facility.BuildFactory();
+            facility.BuildFactory(new BehaviorGraph());
 
             container.GetInstance<IEndPointAuthorizor>(chain.UniqueId.ToString())
                 .ShouldNotBeNull().ShouldBeOfType<EndPointAuthorizor>();

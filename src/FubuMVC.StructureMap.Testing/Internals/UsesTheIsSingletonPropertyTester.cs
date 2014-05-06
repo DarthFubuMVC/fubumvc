@@ -3,6 +3,7 @@ using FubuMVC.Core;
 using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.StructureMap.Testing.Internals
 {
@@ -15,7 +16,7 @@ namespace FubuMVC.StructureMap.Testing.Internals
             var container = new Container();
             FubuApplication.For(new FubuRegistry()).StructureMap(container).Bootstrap();
 
-            container.Model.For<IClock>().Lifecycle.ShouldEqual("Singleton");
+            container.Model.For<IClock>().Lifecycle.ShouldBeOfType<SingletonLifecycle>();
         }
     }
 }

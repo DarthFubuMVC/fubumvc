@@ -1,6 +1,4 @@
-using System;
 using System.Net;
-using FubuCore.Logging;
 using FubuMVC.Core;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Headers;
@@ -9,7 +7,6 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuTestingSupport;
 using NUnit.Framework;
-using NUnit.Mocks;
 using Rhino.Mocks;
 using System.Collections.Generic;
 using System.Linq;

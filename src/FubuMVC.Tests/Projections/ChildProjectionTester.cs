@@ -59,8 +59,8 @@ namespace FubuMVC.Tests.Projections
 
             theProjection.Child(x => x.Child).WriteWith((c, n) =>
             {
-                n.SetAttribute("age", c.ValueFor(x => x.Age));
-                n.SetAttribute("name", c.ValueFor(x => x.Name));
+                n.SetAttribute("age", c.Values.ValueFor(x => x.Age));
+                n.SetAttribute("name", c.Values.ValueFor(x => x.Name));
             });
 
             var child = theDictionary.Child("Child");

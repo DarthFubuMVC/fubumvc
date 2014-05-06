@@ -1,23 +1,30 @@
+using System.Diagnostics;
 using FubuCore;
 using FubuCore.Formatting;
 using FubuCore.Reflection;
 using FubuMVC.Core.Projections;
 using FubuMVC.Core.Urls;
+using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
+using StructureMap.TypeRules;
 
 namespace FubuMVC.Tests.Projections
 {
     [TestFixture]
-    public class ProjectionContextTester : InteractionContext<ProjectionContext<ProjectionContextTester.ProjectionModel>> 
+    public class ProjectionContextTester : InteractionContext<ProjectionContext<ProjectionModel>> 
     {
+
+
+
         [Test]
         public void subject_delegates_to_the_inner_values()
         {
             var model = new ProjectionModel();
             MockFor<IValues<ProjectionModel>>().Stub(x => x.Subject).Return(model);
 
+            
 
             ClassUnderTest.Subject.ShouldBeTheSameAs(model);
         }
@@ -42,13 +49,44 @@ namespace FubuMVC.Tests.Projections
         }
 
         [Test]
+        public void try_the_casting_logic()
+        {
+            var contextType = typeof (ProjectionContext<ProjectionModel>);
+            var valuesType = typeof (IValues<ProjectionModel>);
+
+            var cInfo = contextType.GetTypeInfo();
+            var vInfo = valuesType.GetTypeInfo();
+            vInfo.IsAssignableFrom(cInfo).ShouldBeFalse();
+
+            Debug.WriteLine(cInfo);
+            Debug.WriteLine(vInfo);
+
+//                    public PluginFamily Build(Type type)
+//        {
+//            if (!type.GetTypeInfo().IsGenericType) return null;
+//
+//            var basicType = type.GetGenericTypeDefinition();
+//            if (!_graph.Families.Has(basicType))
+//            {
+//
+//                return _graph.Families.ToArray().FirstOrDefault(x => type.GetTypeInfo().IsAssignableFrom(x.PluginType.GetTypeInfo()));
+//            }
+//
+//            var basicFamily = _graph.Families[basicType];
+//            var templatedParameterTypes = type.GetGenericArguments();
+//
+//            return basicFamily.CreateTemplatedClone(templatedParameterTypes.ToArray());
+//        }
+        }
+
+        [Test]
         public void value_for_delegates_to_the_inner_values()
         {
             var accessor = ReflectionHelper.GetAccessor<ProjectionModel>(x => x.Name);
             MockFor<IValues<ProjectionModel>>().Stub(x => x.ValueFor(accessor))
                 .Return("Jeremy");
 
-            ClassUnderTest.ValueFor(accessor).ShouldEqual("Jeremy");
+            ClassUnderTest.Values.ValueFor(accessor).ShouldEqual("Jeremy");
         }
 
         [Test]
@@ -109,16 +147,16 @@ namespace FubuMVC.Tests.Projections
         }
 
 
-        public class ProjectionModel
-        {
-            public string Name { get; set; }
-        }
-
-        public class DifferentTarget
-        {
-            
-        }
     }
 
-    
+
+    public class ProjectionModel
+    {
+        public string Name { get; set; }
+    }
+
+    public class DifferentTarget
+    {
+
+    }
 }

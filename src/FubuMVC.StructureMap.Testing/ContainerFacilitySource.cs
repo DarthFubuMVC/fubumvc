@@ -3,6 +3,7 @@ using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Bootstrapping;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
 using FubuMVC.StructureMap.Testing.Compliance;
@@ -19,7 +20,7 @@ namespace FubuMVC.StructureMap.Testing
 
              // A ContainerFacility cannot be considered "ready" for business until BuildFactory() has been
              // called
-             return facility.BuildFactory();
+             return facility.BuildFactory(new BehaviorGraph());
          }
 
          public static IServiceLocator Services(Action<IContainerFacility> configure)
@@ -29,7 +30,7 @@ namespace FubuMVC.StructureMap.Testing
 
              // A ContainerFacility cannot be considered "ready" for business until BuildFactory() has been
              // called
-             return facility.BuildFactory().Get<IServiceLocator>();
+             return facility.BuildFactory(new BehaviorGraph()).Get<IServiceLocator>();
          }
 
          public static IActionBehavior BuildBehavior(ServiceArguments arguments,

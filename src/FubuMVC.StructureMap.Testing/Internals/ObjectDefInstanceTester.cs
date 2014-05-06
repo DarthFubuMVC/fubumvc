@@ -59,9 +59,9 @@ namespace FubuMVC.StructureMap.Testing.Internals
                 {
                     x.For<IFileSystem>().Use<FileSystem>();
                     x.For<IHttpResponse>().Use<OwinHttpResponse>();
-                    x.For<IActionBehavior>().Use(new ObjectDefInstance(def));
+                    x.For<IActionBehavior>().UseInstance(new ObjectDefInstance(def));
                     x.For<ILogger>().Use<Logger>();
-                    x.For<ISystemTime>().Use(SystemTime.Default);
+                    x.For<ISystemTime>().Use(SystemTime.Default());
                 });
 
             var jsonBehavior = container.GetInstance<IActionBehavior>().ShouldBeOfType<FakeJsonBehavior>();
@@ -79,7 +79,7 @@ namespace FubuMVC.StructureMap.Testing.Internals
             };
 
             var container =
-                new Container(x => { x.For<IActionBehavior>().Use(new ObjectDefInstance(def)); });
+                new Container(x => x.For<IActionBehavior>().UseInstance(new ObjectDefInstance(def)));
 
             container.GetInstance<IActionBehavior>().ShouldBeOfType<TestBehavior>();
         }

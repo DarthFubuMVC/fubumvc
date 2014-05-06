@@ -184,7 +184,7 @@ namespace FubuMVC.Core.Projections
                 {
                     _parent.Use(context =>
                     {
-                        var raw = context.ValueFor(_accessor);
+                        var raw = context.Values.ValueFor(_accessor);
                         if (raw == null)
                         {
                             return string.Empty;

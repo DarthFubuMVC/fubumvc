@@ -67,7 +67,7 @@ namespace FubuMVC.Diagnostics.Tests.Runtime.Tracing
             MockFor<IRequestLogBuilder>().Stub(x => x.BuildForCurrentRequest())
                 .Return(theLog);
 
-            _requestObserver = MockFor<IRequestTraceObserver>();
+            _requestObserver = Services.AddAdditionalMockFor<IRequestTraceObserver>();
 
             ClassUnderTest.Stopwatch.IsRunning.ShouldBeFalse();
 
@@ -123,7 +123,7 @@ namespace FubuMVC.Diagnostics.Tests.Runtime.Tracing
 
         protected override void beforeEach()
         {
-            _requestObserver = MockFor<IRequestTraceObserver>();
+            _requestObserver = Services.CreateMockArrayFor<IRequestTraceObserver>(1).Single();
 
             ClassUnderTest.Current = new RequestLog();
 

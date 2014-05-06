@@ -4,6 +4,7 @@ using StructureMap;
 using StructureMap.Configuration.DSL;
 using FubuTestingSupport;
 using System.Linq;
+using StructureMap.Graph;
 
 namespace FubuMVC.StructureMap.Testing.Internals
 {

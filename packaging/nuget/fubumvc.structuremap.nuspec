@@ -1,5 +1,5 @@
-<?xml version="1.0"?>
-<package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <id>FubuMVC.StructureMap</id>
     <version>0.0.0</version>
@@ -13,10 +13,10 @@
     <tags>web framework mvc fubumvc</tags>
     <dependencies>
       <dependency id="FubuMVC.Core" />
-      <dependency id="StructureMap" version="[2.6.3]" />
+      <dependency id="StructureMap" version="3.0.3.116" />
     </dependencies>
   </metadata>
-  <files>
+  <files xmlns="">
     <file src="..\..\src\FubuMVC.StructureMap\bin\release\FubuMVC.StructureMap.*" target="lib\net40" />
   </files>
 </package>

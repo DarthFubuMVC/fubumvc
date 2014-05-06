@@ -76,7 +76,9 @@ namespace FubuMVC.StructureMap.Testing.Settings
         [Test]
         public void do_not_override_a_setting_class_that_is_configured_inside_the_fubu_registry()
         {
-            registry.Services(x => x.ReplaceService(new BarSettings{Direction = "West"}));
+            registry.Services(x => {
+                x.ReplaceService(new BarSettings {Direction = "West"});
+            });
             registry.AlterSettings<ConfigurationSettings>(x =>
             {
                 x.IncludeAllClassesSuffixedBySetting().FromTheApplicationAssembly();

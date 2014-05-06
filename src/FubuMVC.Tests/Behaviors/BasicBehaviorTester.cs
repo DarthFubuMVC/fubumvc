@@ -12,7 +12,8 @@ namespace FubuMVC.Tests.Behaviors
 
         protected override void beforeEach()
         {
-            MockFor<PartialBehaviorProvider>().Expect(x => x()).Return(PartialBehavior.Ignored);
+            PartialBehaviorProvider provider = () => PartialBehavior.Ignored;
+            Container.Configure(x => x.For(typeof(PartialBehaviorProvider)).Use(provider));
 
             InnerBehavior = MockFor<IActionBehavior>();
             ClassUnderTest.InsideBehavior = InnerBehavior;
@@ -25,7 +26,9 @@ namespace FubuMVC.Tests.Behaviors
 
         protected override void beforeEach()
         {
-            MockFor<PartialBehaviorProvider>().Expect(x => x()).Return(PartialBehavior.Executes);
+            PartialBehaviorProvider provider = () => PartialBehavior.Executes;
+            Container.Configure(x => x.For(typeof(PartialBehaviorProvider)).Use(provider));
+
 
             InnerBehavior = MockFor<IActionBehavior>();
             ClassUnderTest.InsideBehavior = InnerBehavior;
@@ -110,6 +113,10 @@ namespace FubuMVC.Tests.Behaviors
         protected override void beforeEach()
         {
             base.beforeEach();
+
+            
+
+
             ClassUnderTest.InvokePartial();
         }
 

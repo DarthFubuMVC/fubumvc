@@ -3,7 +3,7 @@ using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Projections
 {
-    public interface IProjectionContext<T> : IValues<T>
+    public interface IProjectionContext<T>
     {
         /// <summary>
         /// Access to the underlying service locator of the running application
@@ -15,5 +15,8 @@ namespace FubuMVC.Core.Projections
         IDisplayFormatter Formatter { get; }
 
         IProjectionContext<TChild> ContextFor<TChild>(TChild child);
+
+        IValues<T> Values { get; }
+        T Subject { get; }
     }
 }
