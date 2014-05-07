@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Linq;
+using System.Reflection;
 using FubuMVC.Core;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -13,10 +14,11 @@ namespace FubuMVC.Tests
         {
             var assembly = Assembly.GetExecutingAssembly();
 
-            var types = FubuExtensionFinder.FindAllExtensionTypes(new Assembly[] {assembly});
+            var types = assembly.FindAllExtensions();
 
-            types.ShouldContain(typeof(GoodExtension));
-            types.ShouldNotContain(typeof(NotAutoExtension));
+            types.OfType<FubuExtensionFinder.Importer<GoodExtension>>().Any().ShouldBeTrue();
+            types.OfType<FubuExtensionFinder.Importer<NotAutoExtension>>().Any().ShouldBeFalse();
+
         }
     }
 

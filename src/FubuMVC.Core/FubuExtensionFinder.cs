@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Bottles;
 using Bottles.Diagnostics;
 using FubuCore;
 using FubuCore.Reflection;
-using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core
 {
@@ -14,40 +14,38 @@ namespace FubuMVC.Core
     /// </summary>
     public static class FubuExtensionFinder
     {
-        public static void ApplyExtensions(FubuRegistry registry, IEnumerable<Assembly> assemblies, IPackageLog packageLog)
+        public static IEnumerable<IImporter> FindAllExtensions(this Assembly assembly)
         {
-            FindAllExtensionTypes(assemblies).Select(type => typeof (Importer<>).CloseAndBuildAs<IImporter>(type)).Each(
-                x => x.Apply(registry, packageLog));
-        }
-
-        public static IEnumerable<Type> FindAllExtensionTypes(IEnumerable<Assembly> assemblies)
-        {
-            if (!assemblies.Any()) return new Type[0];
-
-            var pool = new TypePool {IgnoreExportTypeFailures = false};
-            pool.AddAssemblies(assemblies);
-
             // Yeah, it really does have to be this way
-            return pool.TypesMatching(
-                t =>
-                hasDefaultCtor(t) && t.GetInterfaces().Any(i => i.FullName == typeof (IFubuRegistryExtension).FullName) && !t.HasAttribute<DoNotAutoImportAttribute>());
+            var log = PackageRegistry.Diagnostics.LogFor(assembly);
+            return assembly.GetExportedTypes().Where(isExtension).Select(type => typeof(Importer<>).CloseAndBuildAs<IImporter>(log,type));
         }
 
-        private static bool hasDefaultCtor(Type type)
+        private static bool isExtension(Type type)
         {
-            return type.GetConstructor(new Type[0]) != null;
+            return type.CanBeCastTo<IFubuRegistryExtension>()
+                   && type.IsConcreteWithDefaultCtor()
+                   && !type.HasAttribute<DoNotAutoImportAttribute>();
         }
+
 
         public interface IImporter
         {
-            void Apply(FubuRegistry registry, IPackageLog packageLog);
+            void Apply(FubuRegistry registry);
         }
 
         public class Importer<T> : IImporter where T : IFubuRegistryExtension, new()
         {
-            public void Apply(FubuRegistry registry, IPackageLog packageLog)
+            private readonly IPackageLog _log;
+
+            public Importer(IPackageLog log)
             {
-                packageLog.Trace("Applying extension " + typeof(T).FullName);
+                _log = log;
+            }
+
+            public void Apply(FubuRegistry registry)
+            {
+                _log.Trace("Applying extension " + typeof(T).FullName);
                 registry.Import<T>();
             }
         }

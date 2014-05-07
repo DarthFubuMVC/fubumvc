@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Routing;
@@ -219,22 +220,15 @@ namespace FubuMVC.Core
 
         private void applyFubuExtensionsFromPackages()
         {
-            PackageRegistry.Diagnostics.EachLog((o, l) => {
-                if (o is IPackageInfo)
-                {
-                    var assemblies = l.FindChildren<Assembly>();
+            var importers = PackageRegistry.PackageAssemblies.Select(assem => {
+                return Task.Factory.StartNew(() => {
+                    return assem.FindAllExtensions();
+                });
+            }).ToArray();
 
-                    try
-                    {
-                        FubuExtensionFinder.ApplyExtensions(_registry.Value, assemblies, l);
-                    }
-                    catch (Exception e)
-                    {
-                        l.MarkFailure(e);
-                    }
+            Task.WaitAll(importers);
 
-                }
-            });
+            importers.SelectMany(x => x.Result).Each(x => x.Apply(_registry.Value));
         }
 
         /// <summary>
