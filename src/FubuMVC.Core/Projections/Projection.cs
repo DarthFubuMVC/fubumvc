@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Security.Cryptography;
+using FubuCore;
 using FubuCore.Descriptions;
 using FubuCore.Reflection;
 using FubuMVC.Core.Resources.Conneg;
@@ -12,10 +12,49 @@ using HtmlTags;
 
 namespace FubuMVC.Core.Projections
 {
+
+    public interface IAccessorNaming
+    {
+        string Name(Accessor accessor);
+    }
+
+    public class NormalNaming : IAccessorNaming
+    {
+        public string Name(Accessor accessor)
+        {
+            return accessor.Name;
+        }
+    }
+
+    public class CamelCaseNaming : IAccessorNaming
+    {
+        public string Name(Accessor accessor)
+        {
+            char[] text = accessor.Name.ToCharArray();
+            text[0] = CultureInfo.CurrentCulture.TextInfo.ToLower(text[0]);
+
+            return new string(text);
+        }
+    }
+
     public class Projection<T> : IProjection<T>, IMediaWriter<T>, DescribesItself
     {
         private DisplayFormatting _formatting;
         private readonly IList<IProjection<T>> _values = new List<IProjection<T>>();
+        private IAccessorNaming _naming = new NormalNaming();
+
+        public IAccessorNaming Naming
+        {
+            get
+            {
+                return _naming;
+            }
+            set
+            {
+                _naming = value ?? new NormalNaming();
+                _values.OfType<IAccessorProjection>().Each(x => x.ApplyNaming(_naming));
+            }
+        }
 
         /// <summary>
         /// Uses raw value formatting
@@ -75,12 +114,14 @@ namespace FubuMVC.Core.Projections
         /// <returns></returns>
         public AccessorProjection<T, TValue> Value<TValue>(Expression<Func<T, TValue>> expression)
         {
-            var value = new AccessorProjection<T, TValue>(ReflectionHelper.GetAccessor(expression));
+            var accessor = ReflectionHelper.GetAccessor(expression);
+            var value = new AccessorProjection<T, TValue>(accessor);
             if (_formatting == DisplayFormatting.UseDisplayFormatting)
             {
                 value.Formatted();
             }
 
+            value.Name(Naming.Name(accessor));
 
             _values.Add(value);
 
@@ -106,6 +147,8 @@ namespace FubuMVC.Core.Projections
         public ChildProjection<T, TChild> Child<TChild>(Expression<Func<T, TChild>> expression) where TChild : class
         {
             var child = new ChildProjection<T, TChild>(expression, _formatting);
+            child.As<IAccessorProjection>().ApplyNaming(_naming);
+
             _values.Add(child);
 
             return child;
@@ -182,15 +225,14 @@ namespace FubuMVC.Core.Projections
                 /// <param name="source"></param>
                 public void Use(Func<TValue, string> source)
                 {
-                    _parent.Use(context =>
-                    {
+                    _parent.Use(context => {
                         var raw = context.Values.ValueFor(_accessor);
                         if (raw == null)
                         {
                             return string.Empty;
                         }
 
-                        return source((TValue)raw);
+                        return source((TValue) raw);
                     });
                 }
             }
@@ -202,7 +244,8 @@ namespace FubuMVC.Core.Projections
             /// <typeparam name="TChild"></typeparam>
             /// <param name="source"></param>
             /// <returns></returns>
-            public ChildProjection<T, TChild> WriteChild<TChild>(Func<IProjectionContext<T>, TChild> source) where TChild : class
+            public ChildProjection<T, TChild> WriteChild<TChild>(Func<IProjectionContext<T>, TChild> source)
+                where TChild : class
             {
                 var child = new ChildProjection<T, TChild>(_attributeName, source, _parent._formatting);
                 _parent._values.Add(child);
@@ -217,7 +260,8 @@ namespace FubuMVC.Core.Projections
             /// <typeparam name="TElement"></typeparam>
             /// <param name="source"></param>
             /// <returns></returns>
-            public EnumerableExpression<TElement> WriteEnumerable<TElement>(Func<IProjectionContext<T>, IEnumerable<TElement>> source)
+            public EnumerableExpression<TElement> WriteEnumerable<TElement>(
+                Func<IProjectionContext<T>, IEnumerable<TElement>> source)
             {
                 var enumerable = new EnumerableProjection<T, TElement>
                 {
@@ -282,7 +326,8 @@ namespace FubuMVC.Core.Projections
             /// </summary>
             /// <typeparam name="TProjection"></typeparam>
             /// <returns></returns>
-            public EnumerableExpression<TChild> UseProjection<TProjection>() where TProjection : IProjection<TChild>, new()
+            public EnumerableExpression<TChild> UseProjection<TProjection>()
+                where TProjection : IProjection<TChild>, new()
             {
                 _enumerable.UseProjection<TProjection>();
                 return this;
@@ -307,16 +352,18 @@ namespace FubuMVC.Core.Projections
 
         public virtual IEnumerable<string> Mimetypes
         {
-            get
-            {
-                yield return MimeType.Json.Value;
-            }
+            get { yield return MimeType.Json.Value; }
         }
 
         void DescribesItself.Describe(Description description)
         {
             description.Title = GetType().Name;
             description.ShortDescription = "Projection of " + typeof (T).FullName;
+        }
+
+        public void CamelCaseAttributeNames()
+        {
+            Naming = new CamelCaseNaming();
         }
     }
 }

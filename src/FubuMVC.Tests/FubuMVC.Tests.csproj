@@ -155,6 +155,7 @@
     <Compile Include="Projections\DictionaryMediaNodeTester.cs" />
     <Compile Include="Projections\EnumerableProjectionIntegratedTester.cs" />
     <Compile Include="Projections\ExternallyFormattedValueProjectorTester.cs" />
+    <Compile Include="Projections\pascal_to_camel_casing_names_policy.cs" />
     <Compile Include="Projections\ProjectionContextTester.cs" />
     <Compile Include="Projections\ProjectionRunnerTester.cs" />
     <Compile Include="Projections\ProjectMyself_handling_in_an_accessor_projection.cs" />
@@ -373,7 +374,8 @@
     <Compile Include="FubuBootstrapperIntegrationTester.cs" />
     <Compile Include="FubuRegistryTester.cs" />
     <Compile Include="HtmlGenerationTestExtensions.cs" />
-    <Compile Include="Registration\BehaviorGraphTester.cs"></Compile>
+    <Compile Include="Registration\BehaviorGraphTester.cs">
+    </Compile>
     <Compile Include="Registration\Conventions\ActionSourceTester.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConventionTester.cs" />
     <Compile Include="Registration\Conventions\CustomConventionIntegratedTester.cs" />

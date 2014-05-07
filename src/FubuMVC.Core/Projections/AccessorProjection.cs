@@ -7,7 +7,12 @@ using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Projections
 {
-    public class AccessorProjection<T, TValue> : IProjection<T>
+    public interface IAccessorProjection
+    {
+        void ApplyNaming(IAccessorNaming naming);
+    }
+
+    public class AccessorProjection<T, TValue> : IProjection<T>, IAccessorProjection
     {
         private readonly Accessor _accessor;
         private ISingleValueProjection<T> _inner;
@@ -25,6 +30,11 @@ namespace FubuMVC.Core.Projections
             {
                 _inner = new SingleValueProjection<T>(_accessor.Name, c => c.Values.ValueFor(_accessor));
             }
+        }
+
+        void IAccessorProjection.ApplyNaming(IAccessorNaming naming)
+        {
+            _inner.AttributeName = naming.Name(_accessor);
         }
 
         /// <summary>

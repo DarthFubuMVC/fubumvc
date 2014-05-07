@@ -5,7 +5,7 @@ using FubuCore.Reflection;
 
 namespace FubuMVC.Core.Projections
 {
-    public class ChildProjection<TParent, TChild> : Projection<TChild>, IProjection<TParent> where TChild : class
+    public class ChildProjection<TParent, TChild> : Projection<TChild>, IProjection<TParent>, IAccessorProjection where TChild : class
     {
         private readonly Accessor _accessor;
         private string _name;
@@ -24,6 +24,12 @@ namespace FubuMVC.Core.Projections
             _accessor = ReflectionHelper.GetAccessor(expression);
             _source = c => c.Values.ValueFor(_accessor) as TChild;
             _name = _accessor.Name;
+        }
+
+        void IAccessorProjection.ApplyNaming(IAccessorNaming naming)
+        {
+            _name = naming.Name(_accessor);
+            Naming = naming;
         }
 
         /// <summary>
