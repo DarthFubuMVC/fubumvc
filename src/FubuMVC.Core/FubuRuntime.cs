@@ -7,6 +7,7 @@ using Bottles.Diagnostics;
 using FubuCore.Descriptions;
 using FubuCore.Logging;
 using FubuMVC.Core.Bootstrapping;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core
@@ -41,6 +42,14 @@ namespace FubuMVC.Core
         public IList<RouteBase> Routes
         {
             get { return _routes; }
+        }
+
+        public BehaviorGraph Behaviors
+        {
+            get
+            {
+                return Factory.Get<BehaviorGraph>();
+            }
         }
 
         public void Dispose()

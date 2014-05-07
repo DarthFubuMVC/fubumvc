@@ -154,11 +154,6 @@ namespace FubuMVC.Core.Configuration
         {
             yield return new OutputBeforeAjaxContinuationPolicy();
 
-            yield return new ReorderBehaviorsPolicy
-            {
-                CategoryMustBeBefore = BehaviorCategory.Authentication,
-                CategoryMustBeAfter = BehaviorCategory.Authorization
-            };
 
             yield return new ReorderBehaviorsPolicy()
                 .ThisNodeMustBeBefore<OutputCachingNode>()

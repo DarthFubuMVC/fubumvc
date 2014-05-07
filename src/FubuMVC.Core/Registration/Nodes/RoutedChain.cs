@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using FubuCore;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Routes;
 
 namespace FubuMVC.Core.Registration.Nodes
@@ -25,6 +26,8 @@ namespace FubuMVC.Core.Registration.Nodes
 
             return chain;
         }
+
+        public BehaviorNode Authentication { get; set; }
 
         public RoutedChain(string pattern) : this(new RouteDefinition(pattern))
         {
@@ -52,6 +55,15 @@ namespace FubuMVC.Core.Registration.Nodes
             if (resourceType != null)
             {
                 ResourceType(resourceType);
+            }
+        }
+
+        protected internal override void InsertNodes(ConnegSettings settings)
+        {
+            base.InsertNodes(settings);
+            if (Authentication != null)
+            {
+                InsertFirst(Authentication);
             }
         }
 
