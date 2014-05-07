@@ -172,7 +172,7 @@
     <Compile Include="Endpoints\RouteReport.cs" />
     <Compile Include="FubuPageExtensions.cs" />
     <Compile Include="Model\DiagnosticChain.cs" />
-    <Compile Include="Model\DiagnosticChainsPolicy.cs" />
+    <Compile Include="Model\DiagnosticChainsSource.cs" />
     <Compile Include="Model\DiagnosticGraph.cs" />
     <Compile Include="Model\DiagnosticGroup.cs" />
     <Compile Include="Model\FubuDiagnosticsConfiguration.cs" />

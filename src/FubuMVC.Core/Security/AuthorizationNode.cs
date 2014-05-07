@@ -43,6 +43,7 @@ namespace FubuMVC.Core.Security
 
         AuthorizationRight IsAuthorized(IFubuRequestContext context);
         IEnumerable<IAuthorizationPolicy> Policies { get; }
+        void AddPolicies(IEnumerable<IAuthorizationPolicy> authorizationPolicies);
     }
 
     [Description("Authorization checks for this endpoint")]
@@ -75,6 +76,11 @@ namespace FubuMVC.Core.Security
         public IEnumerable<IAuthorizationPolicy> Policies
         {
             get { return _policies; }
+        }
+
+        public void AddPolicies(IEnumerable<IAuthorizationPolicy> authorizationPolicies)
+        {
+            _policies.AddRange(authorizationPolicies);
         }
 
         /// <summary>

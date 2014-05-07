@@ -1,14 +1,48 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using FubuCore.Binding.InMemory;
 using FubuCore.Logging;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration;
+using FubuMVC.Diagnostics.Model;
 using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Diagnostics.Tests
 {
+    [TestFixture]
+    public class DiagnosticsSettings_apply_authorization_Tester
+    {
+        [Test]
+        public void authorization_rules_from_settings_are_applied()
+        {
+            BehaviorGraph authorizedGraph = BehaviorGraph.BuildFrom(r =>
+            {
+                r.Import<DiagnosticsRegistration>();
+                r.AlterSettings<DiagnosticsSettings>(x =>
+                {
+                    x.RestrictToRule("admin");
+                });
+            });
+
+            BehaviorGraph notAuthorizedGraph = BehaviorGraph.BuildFrom(r =>
+            {
+                r.Import<DiagnosticsRegistration>();
+//                r.AlterSettings<DiagnosticsSettings>(x =>
+//                {
+//                    x.RestrictToRule("admin");
+//                });
+            });
+
+            authorizedGraph.Behaviors.OfType<DiagnosticChain>()
+                .Each(x => x.Authorization.AllowedRoles().Single().ShouldEqual("admin"));
+
+            notAuthorizedGraph.Behaviors.OfType<DiagnosticChain>()
+                .Each(x => x.Authorization.HasRules().ShouldBeFalse());
+        }
+    }
+
     [TestFixture]
     public class DiagnosticSettings_TraceLevel_Registration_Tester
     {

@@ -1,4 +1,6 @@
-﻿using FubuMVC.Core;
+﻿using System.Linq;
+using FubuMVC.Core;
+using FubuMVC.Core.Security;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -18,6 +20,16 @@ namespace FubuMVC.Tests
         {
             new DiagnosticsSettings()
                 .MaxRequests.ShouldEqual(200);
+        }
+
+        [Test]
+        public void add_role()
+        {
+            var settings = new DiagnosticsSettings();
+            settings.RestrictToRule("admin");
+
+            settings.AuthorizationRights.Single().ShouldBeOfType<AllowRole>()
+                .Role.ShouldEqual("admin");
         }
 
         [Test]

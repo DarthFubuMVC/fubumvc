@@ -21,7 +21,7 @@ namespace FubuMVC.Diagnostics
         public void Configure(FubuRegistry registry)
         {
 			registry.Policies.Local.Add<DescriptionVisualizationPolicy>();
-            registry.Policies.ChainSource<DiagnosticChainsPolicy>();
+            registry.Policies.ChainSource<DiagnosticChainsSource>();
             registry.Services<DiagnosticServiceRegistry>();
 
             registry.AlterSettings<DiagnosticsSettings>(x => {

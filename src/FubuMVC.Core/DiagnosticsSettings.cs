@@ -1,4 +1,8 @@
-﻿using FubuMVC.Core.Registration;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using FubuMVC.Core.Registration;
+using FubuMVC.Core.Security;
 
 namespace FubuMVC.Core
 {
@@ -16,6 +20,13 @@ namespace FubuMVC.Core
                 _traceLevel = TraceLevel.Verbose;
             }
 
+        }
+
+        public readonly IList<IAuthorizationPolicy> AuthorizationRights = new List<IAuthorizationPolicy>();
+
+        public void RestrictToRule(string role)
+        {
+            AuthorizationRights.Add(new AllowRole(role));
         }
 
         public int MaxRequests { get; set; }
