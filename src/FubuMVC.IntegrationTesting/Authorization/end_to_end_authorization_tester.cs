@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using NUnit.Framework;
@@ -34,7 +35,7 @@ namespace FubuMVC.IntegrationTesting.Authorization
 
     public class AuthorizationCheckPolicy : IAuthorizationPolicy
     {
-        public AuthorizationRight RightsFor(IFubuRequest request)
+        public AuthorizationRight RightsFor(IFubuRequestContext request)
         {
             return AuthorizationCheck.IsAuthorized ? AuthorizationRight.Allow : AuthorizationRight.Deny;
         }

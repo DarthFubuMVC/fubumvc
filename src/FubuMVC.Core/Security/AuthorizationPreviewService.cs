@@ -1,47 +1,12 @@
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
-using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
-using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Security
 {
-
-    public interface IChainAuthorizor
-    {
-        AuthorizationRight Authorize(BehaviorChain chain, object model);
-    }
-
-    public class ChainAuthorizor : IChainAuthorizor
-    {
-        private readonly IFubuRequest _request;
-        private readonly IServiceLocator _services;
-        private readonly ITypeResolver _types;
-
-        public ChainAuthorizor(IFubuRequest request, IServiceLocator services, ITypeResolver types)
-        {
-            _request = request;
-            _services = services;
-            _types = types;
-        }
-
-
-        public AuthorizationRight Authorize(BehaviorChain chain, object model)
-        {
-            if (model != null)
-            {
-                _request.Set(_types.ResolveType(model), model);
-            }
-
-            var endpoint = _services.GetInstance<IEndPointAuthorizor>(chain.UniqueId.ToString());
-            return endpoint.IsAuthorized(_request);
-        }
-    }
-
     public class AuthorizationPreviewService : ChainInterrogator<AuthorizationRight>, IAuthorizationPreviewService
     {
         private readonly IChainAuthorizor _authorizor;
@@ -80,7 +45,7 @@ namespace FubuMVC.Core.Security
         {
             return forNew(entityType) == AuthorizationRight.Allow;
         }
-        
+
         public bool IsAuthorized(Type handlerType, MethodInfo method)
         {
             return For(handlerType, method) == AuthorizationRight.Allow;

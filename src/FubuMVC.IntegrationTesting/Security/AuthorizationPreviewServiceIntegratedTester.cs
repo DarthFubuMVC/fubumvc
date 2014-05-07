@@ -194,49 +194,11 @@ namespace FubuMVC.IntegrationTesting.Security
             service.IsAuthorized(new SubclassUrlModel()).ShouldBeFalse();
         }
 
-        [Test]
-        public void handles_forwarding_correctly_positive_case_2()
-        {
-            userHasRoles("a");
 
-            var service = withAuthorizationRules(graph =>
-            {
-                var authorizationNode = graph.BehaviorFor<TwoController>(x => x.M4(null)).Authorization;
-                authorizationNode.AddRole("a");
-                authorizationNode.AddPolicy<UrlModel, UrlModelShouldStartWithJ>();
-            });
 
-            service.IsAuthorized(new SubclassUrlModel(){
-                Name = "Jeremy"
-            }).ShouldBeTrue();
-        }
 
-        [Test]
-        public void handles_forwarding_correctly_negative_case_2()
-        {
-            userHasRoles("a");
-
-            var service = withAuthorizationRules(graph =>
-            {
-                var authorizationNode = graph.BehaviorFor<TwoController>(x => x.M4(null)).Authorization;
-                authorizationNode.AddRole("a");
-                authorizationNode.AddPolicy<UrlModel, UrlModelShouldStartWithJ>();
-            });
-
-            service.IsAuthorized(new SubclassUrlModel()
-            {
-                Name = "Sally"
-            }).ShouldBeTrue();
-        }
     }
 
-    public class UrlModelShouldStartWithJ : IAuthorizationRule<UrlModel>
-    {
-        public AuthorizationRight RightsFor(UrlModel model)
-        {
-            return model.Name.StartsWith("J") ? AuthorizationRight.Allow : AuthorizationRight.None;
-        }
-    }
 
 
 

@@ -14,6 +14,14 @@ namespace FubuMVC.Core
         ILogger Logger { get; }
     }
 
+    public static class FubuRequestContextExtensions
+    {
+        public static T Service<T>(this IFubuRequestContext context)
+        {
+            return context.Services.GetInstance<T>();
+        }
+    }
+
     public class FubuRequestContext : IFubuRequestContext
     {
         private readonly IServiceLocator _services;

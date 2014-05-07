@@ -132,26 +132,11 @@ namespace FubuMVC.Diagnostics.Endpoints
             get
             {
                 var authorization = _chain.OfType<AuthorizationNode>().FirstOrDefault();
-                if (authorization == null || !authorization.AllRules.Any()) yield break;
+                if (authorization == null || !authorization.Policies.Any()) yield break;
 
-                foreach (var objectDef in authorization.AllRules)
+                foreach (var policy in authorization.Policies)
                 {
-                    if (objectDef.Value != null)
-                    {
-                        yield return Description.For(objectDef.Value).Title;
-                    }
-                    else
-                    {
-                        // PUt on description
-                        if (objectDef.Type.HasAttribute<TitleAttribute>())
-                        {
-                            yield return objectDef.Type.GetAttribute<TitleAttribute>().Title;
-                        }
-                        else
-                        {
-                            yield return objectDef.Type.Name;
-                        }
-                    }
+                    yield return Description.For(policy).Title;
                 }
             }
         }

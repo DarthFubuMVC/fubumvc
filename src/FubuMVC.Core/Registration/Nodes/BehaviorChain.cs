@@ -177,7 +177,6 @@ namespace FubuMVC.Core.Registration.Nodes
 
 
             callback(typeof (IActionBehavior), objectDef);
-            Authorization.As<IAuthorizationRegistration>().Register(Top.UniqueId, callback);
         }
 
         /// <summary>

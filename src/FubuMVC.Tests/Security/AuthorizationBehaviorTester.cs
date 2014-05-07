@@ -1,3 +1,4 @@
+using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
@@ -12,10 +13,10 @@ namespace FubuMVC.Tests.Security
     {
         protected override void beforeEach()
         {
-            var request = MockFor<IFubuRequest>();
-            var policies = Services.CreateMockArrayFor<IAuthorizationPolicy>(3);
+            var request = MockFor<IFubuRequestContext>();
 
-            MockFor<IAuthorizationPolicyExecutor>().Stub(x => x.IsAuthorized(request, policies)).Return(AuthorizationRight.Allow);
+
+            MockFor<IAuthorizationNode>().Stub(x => x.IsAuthorized(request)).Return(AuthorizationRight.Allow);
             ClassUnderTest.InsideBehavior = MockFor<IActionBehavior>();
             ClassUnderTest.Invoke();
         }
@@ -38,10 +39,9 @@ namespace FubuMVC.Tests.Security
     {
         protected override void beforeEach()
         {
-            var request = MockFor<IFubuRequest>();
-            var policies = Services.CreateMockArrayFor<IAuthorizationPolicy>(3);
+            var request = MockFor<IFubuRequestContext>();
 
-            MockFor<IAuthorizationPolicyExecutor>().Stub(x => x.IsAuthorized(request, policies)).Return(AuthorizationRight.None);
+            MockFor<IAuthorizationNode>().Stub(x => x.IsAuthorized(request)).Return(AuthorizationRight.None);
 
             ClassUnderTest.InsideBehavior = MockFor<IActionBehavior>();
             ClassUnderTest.Invoke();
@@ -66,10 +66,9 @@ namespace FubuMVC.Tests.Security
     {
         protected override void beforeEach()
         {
-            var request = MockFor<IFubuRequest>();
-            var policies = Services.CreateMockArrayFor<IAuthorizationPolicy>(3);
+            var request = MockFor<IFubuRequestContext>();
 
-            MockFor<IAuthorizationPolicyExecutor>().Stub(x => x.IsAuthorized(request, policies)).Return(AuthorizationRight.Deny);
+            MockFor<IAuthorizationNode>().Stub(x => x.IsAuthorized(request)).Return(AuthorizationRight.Deny);
 
             ClassUnderTest.InsideBehavior = MockFor<IActionBehavior>();
             ClassUnderTest.Invoke();

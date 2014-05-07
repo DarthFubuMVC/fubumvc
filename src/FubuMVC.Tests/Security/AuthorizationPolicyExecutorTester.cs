@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core.Runtime;
+﻿using FubuMVC.Core;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Logging;
 using FubuMVC.Core.Security;
 using FubuTestingSupport;
@@ -16,7 +17,7 @@ namespace FubuMVC.Tests.Security
 
         protected override void beforeEach()
         {
-            var request = MockFor<IFubuRequest>();
+            var request = MockFor<IFubuRequestContext>();
 
             RecordLogging();
 

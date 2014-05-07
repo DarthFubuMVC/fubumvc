@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 
@@ -8,19 +9,12 @@ namespace FubuMVC.Tests.Docs.Topics.Authorization
     // SAMPLE: authorization-policy
     public class PurchasedProductPolicy : IAuthorizationPolicy
     {
-        readonly IRepository _repository;
-
-        public PurchasedProductPolicy(IRepository repository)
+        public AuthorizationRight RightsFor(IFubuRequestContext request)
         {
-            _repository = repository;
-        }
+            var customerId = request.Models.Get<Customer>().Id;
+            var productId = request.Models.Get<Product>().Id;
 
-        public AuthorizationRight RightsFor(IFubuRequest request)
-        {
-            var customerId = request.Get<Customer>().Id;
-            var productId = request.Get<Product>().Id;
-
-            var hasPurchasedProduct = _repository.Get<IPurchaseHistory>(customerId)
+            var hasPurchasedProduct = request.Service<IRepository>().Get<IPurchaseHistory>(customerId)
                 .Any(x => x.ContainsProduct(productId));
 
             return !hasPurchasedProduct ? AuthorizationRight.Deny : AuthorizationRight.Allow;

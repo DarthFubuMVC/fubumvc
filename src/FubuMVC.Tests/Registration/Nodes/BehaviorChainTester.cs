@@ -422,46 +422,6 @@ namespace FubuMVC.Tests.Registration.Nodes
         }
 
 
-        [Test]
-        public void should_not_register_an_endpoint_authorizor_if_there_are_no_authorization_roles()
-        {
-            var chain = new BehaviorChain();
-            chain.AddToEnd(ActionCall.For<OneController>(x => x.Query(null)));
-            //chain.Authorization.AddRole("Role 1");
-
-            var container = new Container();
-            var facility = new StructureMapContainerFacility(container);
-
-            chain.As<IRegisterable>().Register(facility.Register);
-
-            facility.BuildFactory(new BehaviorGraph());
-
-            Debug.WriteLine(chain.UniqueId);
-            Debug.WriteLine(container.WhatDoIHave());
-
-            container.GetInstance<IEndPointAuthorizor>(chain.UniqueId.ToString())
-                .ShouldBeOfType<NulloEndPointAuthorizor>();
-        }
-
-        [Test]
-        public void should_register_an_endpoint_authorizor_if_there_are_any_authorization_rules()
-        {
-            var chain = new BehaviorChain();
-            chain.AddToEnd(ActionCall.For<OneController>(x => x.Query(null)));
-            chain.Authorization.AddRole("Role 1");
-            chain.Prepend(chain.Authorization.As<AuthorizationNode>());
-
-            var container = new Container();
-            var facility = new StructureMapContainerFacility(container);
-
-            chain.As<IRegisterable>().Register(facility.Register);
-
-            facility.BuildFactory(new BehaviorGraph());
-
-            container.GetInstance<IEndPointAuthorizor>(chain.UniqueId.ToString())
-                .ShouldNotBeNull().ShouldBeOfType<EndPointAuthorizor>();
-        }
-
     }
 
     [TestFixture]

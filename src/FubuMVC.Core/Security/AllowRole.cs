@@ -37,7 +37,7 @@ namespace FubuMVC.Core.Security
             _role = role;
         }
 
-        public AuthorizationRight RightsFor(IFubuRequest request)
+        public AuthorizationRight RightsFor(IFubuRequestContext request)
         {
             return PrincipalRoles.IsInRole(_role) ? AuthorizationRight.Allow : AuthorizationRight.None;
         }

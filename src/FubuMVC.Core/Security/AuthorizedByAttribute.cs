@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
@@ -20,6 +21,7 @@ namespace FubuMVC.Core.Security
         public AuthorizedByAttribute(params Type[] types)
         {
             _types = types;
+
         }
 
         public Type[] Types
@@ -29,22 +31,25 @@ namespace FubuMVC.Core.Security
 
         public override void Alter(ActionCall call)
         {
-            var inputType = call.InputType();
+            var authorizationNode = call.ParentChain().Authorization;
+
             Types.Each(attType =>
             {
-                var ruleType = RuleTypeFor(inputType, attType);
-                call.ParentChain().Authorization.AddPolicy(ruleType);
+                if (attType.CanBeCastTo<IAuthorizationPolicy>() && attType.IsConcreteWithDefaultCtor())
+                {
+                    var policy = Activator.CreateInstance(attType).As<IAuthorizationPolicy>();
+                    authorizationNode.AddPolicy(policy);
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException("Type {0} is not a concrete type of {1} with a default ctor".ToFormat(attType.FullName, typeof(IAuthorizationPolicy).FullName));
+                }
             });
         }
 
         public static Type RuleTypeFor(Type inputType, Type attributeType)
         {
             if (attributeType.CanBeCastTo<IAuthorizationPolicy>()) return attributeType;
-
-            if (attributeType.Closes(typeof(IAuthorizationRule<>)))
-            {
-                return typeof(AuthorizationPolicy<,>).MakeGenericType(inputType, attributeType);
-            }
 
             throw new ArgumentOutOfRangeException("attributeType", "attributeType must implement either IAuthorizationPolicy or IAuthorizationRule<> for the input type");
         }

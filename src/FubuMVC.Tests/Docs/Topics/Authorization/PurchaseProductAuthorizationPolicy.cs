@@ -11,7 +11,7 @@ namespace FubuMVC.Tests.Docs.Topics.Authorization
       {
           graph.Actions()
               .Where(x => x.Method.Name.EndsWith("Review"))
-              .Each(x => x.ParentChain().Authorization.AddPolicy(typeof(PurchasedProductPolicy)));
+              .Each(x => x.ParentChain().Authorization.AddPolicy(new PurchasedProductPolicy()));
       }
   }
   // ENDSAMPLE

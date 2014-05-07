@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using FubuCore;
 using FubuCore.Descriptions;
 using FubuCore.Logging;
-using FubuMVC.Core.Runtime;
-using FubuCore;
 
 namespace FubuMVC.Core.Security
 {
     public interface IAuthorizationPolicyExecutor
     {
-        AuthorizationRight IsAuthorized(IFubuRequest request, IEnumerable<IAuthorizationPolicy> policies);
+        AuthorizationRight IsAuthorized(IFubuRequestContext context, IEnumerable<IAuthorizationPolicy> policies);
     }
 
     public class AuthorizationPolicyExecutor : IAuthorizationPolicyExecutor
@@ -22,24 +20,12 @@ namespace FubuMVC.Core.Security
             _logger = logger;
         }
 
-        public virtual AuthorizationRight IsAuthorized(IFubuRequest request, IEnumerable<IAuthorizationPolicy> policies)
-        {
-            return IsAuthorized(request, policies, null);
-        }
-
-        protected AuthorizationRight IsAuthorized(IFubuRequest request, IEnumerable<IAuthorizationPolicy> policies,
-                                                  Action<IAuthorizationPolicy, AuthorizationRight> rightsDiscoveryAction)
+        public virtual AuthorizationRight IsAuthorized(IFubuRequestContext context,
+            IEnumerable<IAuthorizationPolicy> policies)
         {
             // Check every authorization policy for this endpoint
-            var rights = policies.Select(policy =>
-            {
-                var policyRights = policy.RightsFor(request);
-
-
-                if (rightsDiscoveryAction != null)
-                {
-                    rightsDiscoveryAction(policy, policyRights);
-                }
+            var rights = policies.Select(policy => {
+                var policyRights = policy.RightsFor(context);
 
                 _logger.DebugMessage(() => new AuthorizationPolicyResult(policy, policyRights));
 
