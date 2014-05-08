@@ -1,6 +1,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
+using FubuCore.Dates;
+using FubuMVC.Core;
+using FubuMVC.StructureMap;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting
@@ -20,6 +24,15 @@ namespace FubuMVC.IntegrationTesting
         {
             var assembly = Assembly.Load("Serenity");
             assembly.GetExportedTypes().Each(x => Debug.WriteLine(x.FullName));
+        }
+
+        [Test]
+        public void try_to_create_ISystemTime()
+        {
+            using (var runtime = FubuApplication.DefaultPolicies().StructureMap().Bootstrap())
+            {
+                runtime.Factory.Get<ISystemTime>().ShouldBeOfType<SystemTime>();
+            }
         }
     }
 }

@@ -65,7 +65,7 @@ namespace FubuMVC.Core.Diagnostics.Runtime
             var nodes = chain.ToList();
             nodes.Each(x => new BehaviorTracerNode(x));
 
-            if (!chain.IsPartialOnly)
+            if (chain is RoutedChain)
             {
                 new DiagnosticNode(chain);
             }

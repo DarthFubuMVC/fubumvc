@@ -56,7 +56,7 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
         public void behavior_tracers_deeper()
         {
             var node = Wrapper.For<SimpleBehavior>();
-            var chain = new BehaviorChain();
+            var chain = new RoutedChain("foo");
             chain.AddToEnd(node);
             node.AddAfter(Wrapper.For<DifferentBehavior>());
 
