@@ -1,7 +1,9 @@
-﻿namespace FubuMVC.Core.Security
+﻿using FubuMVC.Core.Continuations;
+
+namespace FubuMVC.Core.Security
 {
     public interface IAuthorizationFailureHandler
     {
-        void Handle();
+        FubuContinuation Handle();
     }
 }

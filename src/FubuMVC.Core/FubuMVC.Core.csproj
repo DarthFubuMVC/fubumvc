@@ -109,6 +109,8 @@
     <Compile Include="Behaviors\WrappingBehavior.cs" />
     <Compile Include="Configuration\ConfigGraph.cs" />
     <Compile Include="Configuration\ConfigurationActionSet.cs" />
+    <Compile Include="Continuations\ContinuationProcessor.cs" />
+    <Compile Include="Continuations\IContinuationProcessor.cs" />
     <Compile Include="DiagnosticsSettings.cs" />
     <Compile Include="Diagnostics\AboutDiagnostics.cs" />
     <Compile Include="Diagnostics\DescriptionTags.cs" />

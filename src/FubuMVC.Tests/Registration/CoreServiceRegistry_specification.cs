@@ -6,6 +6,7 @@ using FubuCore.Formatting;
 using FubuCore.Logging;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets;
+using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Cookies;
@@ -37,6 +38,12 @@ namespace FubuMVC.Tests.Registration
         {
             _serviceGraph.DefaultServiceFor<TService>().Type.ShouldEqual(
                 typeof (TImplementation));
+        }
+
+        [Test]
+        public void continuation_processor_is_registered()
+        {
+            registeredTypeIs<IContinuationProcessor, ContinuationProcessor>();
         }
 
         [Test]

@@ -7,6 +7,7 @@ using FubuCore.Logging;
 using FubuCore.Reflection;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Compression;
@@ -54,7 +55,7 @@ namespace FubuMVC.Core
 
             SetServiceIfNone<IFubuRequest, FubuRequest>();
             SetServiceIfNone<IPartialFactory, PartialFactory>();
-
+            SetServiceIfNone<IContinuationProcessor, ContinuationProcessor>();
 
             SetServiceIfNone<IDisplayFormatter, DisplayFormatter>();
             SetServiceIfNone<IChainResolver, ChainResolutionCache>();

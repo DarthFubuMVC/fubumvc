@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Continuations;
 
 namespace FubuMVC.Core.Security
 {
-    public class AuthorizationBehavior : BasicBehavior
+    // Mostly tested through integration tests now
+    public class AuthorizationBehavior : WrappingBehavior
     {
         // More on this interface below
         private readonly IAuthorizationNode _authorization;
@@ -12,7 +14,7 @@ namespace FubuMVC.Core.Security
         private readonly IAuthorizationFailureHandler _failureHandler;
 
         public AuthorizationBehavior(IAuthorizationNode authorization, IFubuRequestContext context,
-            IAuthorizationFailureHandler failureHandler) : base(PartialBehavior.Executes)
+            IAuthorizationFailureHandler failureHandler)
         {
             _authorization = authorization;
             _context = context;
@@ -27,7 +29,7 @@ namespace FubuMVC.Core.Security
             }
         }
 
-        protected override DoNext performInvoke()
+        protected override void invoke(Action action)
         {
             var access = _authorization.IsAuthorized(_context);
 
@@ -35,13 +37,17 @@ namespace FubuMVC.Core.Security
             // chain (filters, controller actions, views, etc.)
             if (access == AuthorizationRight.Allow)
             {
-                return DoNext.Continue;
+                action();
+            }
+            else
+            {
+                // If authorization fails, hand off to the failure handler
+                // and stop the inner behaviors from executing
+                var continuation = _failureHandler.Handle();
+                _context.Service<IContinuationProcessor>().Continue(continuation, Inner); 
             }
 
-            // If authorization fails, hand off to the failure handler
-            // and stop the inner behaviors from executing
-            _failureHandler.Handle();
-            return DoNext.Stop;
+
         }
     }
 }

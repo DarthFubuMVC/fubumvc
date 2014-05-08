@@ -1,20 +1,13 @@
 ﻿using System.Net;
-using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Continuations;
 
 namespace FubuMVC.Core.Security
 {
     public class DefaultAuthorizationFailureHandler : IAuthorizationFailureHandler
     {
-        private readonly IOutputWriter _writer;
-
-        public DefaultAuthorizationFailureHandler(IOutputWriter writer)
+        public FubuContinuation Handle()
         {
-            _writer = writer;
-        }
-
-        public void Handle()
-        {
-            _writer.WriteResponseCode(HttpStatusCode.Forbidden);
+            return FubuContinuation.EndWithStatusCode(HttpStatusCode.Forbidden);
         }
     }
 }
