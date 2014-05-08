@@ -163,6 +163,11 @@ namespace FubuMVC.Core.Http.Owin
 
         public IEnumerable<Header> AllHeaders()
         {
+            if (!_environment.ContainsKey(OwinConstants.ResponseHeadersKey))
+            {
+                return Enumerable.Empty<Header>();
+            }
+
             return
                 _environment.Get<IDictionary<string, string[]>>(OwinConstants.ResponseHeadersKey).SelectMany(pair =>
                 {
