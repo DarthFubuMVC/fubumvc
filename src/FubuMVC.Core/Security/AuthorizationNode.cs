@@ -8,48 +8,11 @@ using System.Linq;
 
 namespace FubuMVC.Core.Security
 {
-
-    // TODO -- add ability to specify the authorization failure handling
-    public interface IAuthorizationNode
-    {
-        /// <summary>
-        /// Adds an authorization rule based on membership in a given role
-        /// on the principal
-        /// </summary>
-        /// <param name="roleName"></param>
-        /// <returns></returns>
-        AllowRole AddRole(string roleName);
-
-        /// <summary>
-        /// List of all roles that have privileges to this BehaviorChain endpoint
-        /// </summary>
-        /// <returns></returns>
-        IEnumerable<string> AllowedRoles();
-
-        /// <summary>
-        /// Simple boolean test of whether or not this BehaviorChain has any
-        /// authorization rules
-        /// </summary>
-        /// <returns></returns>
-        bool HasRules();
-
-
-        /// <summary>
-        /// Adds an authorization policy to this behavior chain
-        /// </summary>
-        /// <param name="policy"></param>
-        void AddPolicy(IAuthorizationPolicy policy);
-
-
-        AuthorizationRight IsAuthorized(IFubuRequestContext context);
-        IEnumerable<IAuthorizationPolicy> Policies { get; }
-        void AddPolicies(IEnumerable<IAuthorizationPolicy> authorizationPolicies);
-    }
-
     [Description("Authorization checks for this endpoint")]
     public class AuthorizationNode : BehaviorNode, IAuthorizationNode
     {
         private readonly IList<IAuthorizationPolicy> _policies = new List<IAuthorizationPolicy>();
+        private ObjectDef _failure;
 
         public override BehaviorCategory Category
         {
@@ -61,9 +24,32 @@ namespace FubuMVC.Core.Security
             var def = ObjectDef.ForType<AuthorizationBehavior>();
             def.DependencyByValue<IAuthorizationNode>(this);
 
-            // TODO -- add the failure handler too
+            if (_failure != null)
+            {
+                def.Dependency(typeof(IAuthorizationFailureHandler), _failure);
+            }
 
             return def;
+        }
+
+        public void FailureHandler<T>() where T : IAuthorizationFailureHandler
+        {
+            _failure = ObjectDef.ForType<T>();
+        }
+
+        public void FailureHandler(IAuthorizationFailureHandler handler)
+        {
+            _failure = ObjectDef.ForValue(handler);
+        }
+
+        public ObjectDef FailureHandler()
+        {
+            return _failure;
+        }
+
+        public void FailureHandler(Type handlerType)
+        {
+            _failure = new ObjectDef(handlerType);
         }
 
         public AuthorizationRight IsAuthorized(IFubuRequestContext context)

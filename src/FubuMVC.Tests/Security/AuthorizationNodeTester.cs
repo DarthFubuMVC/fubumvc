@@ -1,6 +1,7 @@
 using System;
 using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Security;
@@ -85,7 +86,49 @@ namespace FubuMVC.Tests.Security
             authorizationBehavior.Policies.ToArray()[2].ShouldBeOfType<AllowRole>().Role.ShouldEqual("RoleC");
         }
 
+
+        [Test]
+        public void use_no_custom_auth_failure_handler()
+        {
+            var node = new AuthorizationNode();
+            var def = node.As<IContainerModel>().ToObjectDef();
+
+            def.DependencyFor<IAuthorizationFailureHandler>().ShouldBeNull();
+        }
+
+        [Test]
+        public void use_custom_auth_failure_handler_by_type()
+        {
+            var node = new AuthorizationNode();
+            node.FailureHandler<FakeAuthHandler>();
+
+            var def = node.As<IContainerModel>().ToObjectDef();
+
+            def.DependencyFor<IAuthorizationFailureHandler>().ShouldBeOfType<ConfiguredDependency>()
+                .Definition.Type.ShouldEqual(typeof (FakeAuthHandler));
+        }
+
+        [Test]
+        public void use_custom_failure_handler_by_value()
+        {
+            var node = new AuthorizationNode();
+
+            var handler = new FakeAuthHandler();
+
+            node.FailureHandler(handler);
+
+            var def = node.As<IContainerModel>().ToObjectDef();
+
+            def.DependencyFor<IAuthorizationFailureHandler>().ShouldBeOfType<ConfiguredDependency>()
+                .Definition.Value.ShouldBeTheSameAs(handler);
+        }
     }
 
-
+    public class FakeAuthHandler : IAuthorizationFailureHandler
+    {
+        public FubuContinuation Handle()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

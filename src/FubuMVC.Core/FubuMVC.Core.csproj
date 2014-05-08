@@ -339,6 +339,7 @@
     <Compile Include="Runtime\PartialFactory.cs" />
     <Compile Include="Runtime\SetValueReport.cs" />
     <Compile Include="Security\ChainAuthorizor.cs" />
+    <Compile Include="Security\IAuthorizationNode.cs" />
     <Compile Include="Security\IChainAuthorizor.cs" />
     <Compile Include="Security\NotAuthenticatedAttribute.cs" />
     <Compile Include="Registration\EndpointActionSource.cs" />
