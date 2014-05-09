@@ -31,14 +31,19 @@ namespace FubuMVC.Core.Security
 
         public static AuthorizationRight Combine(IEnumerable<AuthorizationRight> rights)
         {
-            var authorizationRights = rights.ToArray();
+            AuthorizationRight answer = None;
 
-            if (!authorizationRights.Any())
+            foreach (var right in rights)
             {
-                return AuthorizationRight.None;
+                if (right == Deny) return right;
+
+                if (right.Precedence < answer.Precedence)
+                {
+                    answer = right;
+                }
             }
 
-            return authorizationRights.OrderBy(x => x.Precedence).First(); 
+            return answer;
         }
 
         public static AuthorizationRight CombineRights(params AuthorizationRight[] rights)
