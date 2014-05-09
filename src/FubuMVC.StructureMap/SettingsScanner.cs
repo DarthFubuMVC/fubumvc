@@ -37,7 +37,7 @@ namespace FubuMVC.StructureMap
 
     public class SettingsInstance<T> : LambdaInstance<T> where T : class, new()
     {
-        public SettingsInstance() : base(c => c.GetInstance<ISettingsProvider>().SettingsFor<T>())
+        public SettingsInstance() : base("Building {0} from application settings".ToFormat(typeof(T).FullName), c => c.GetInstance<ISettingsProvider>().SettingsFor<T>())
         {
         }
     }

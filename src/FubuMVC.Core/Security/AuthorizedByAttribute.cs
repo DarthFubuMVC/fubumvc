@@ -49,18 +49,7 @@ namespace FubuMVC.Core.Security
         {
             var authorizationNode = call.ParentChain().Authorization;
 
-            Types.Each(attType =>
-            {
-                if (attType.CanBeCastTo<IAuthorizationPolicy>() && attType.IsConcreteWithDefaultCtor())
-                {
-                    var policy = Activator.CreateInstance(attType).As<IAuthorizationPolicy>();
-                    authorizationNode.AddPolicy(policy);
-                }
-                else
-                {
-                    throw new ArgumentOutOfRangeException("Type {0} is not a concrete type of {1} with a default ctor".ToFormat(attType.FullName, typeof(IAuthorizationPolicy).FullName));
-                }
-            });
+            Types.Each(authorizationNode.Add);
         }
 
         public static Type RuleTypeFor(Type inputType, Type attributeType)

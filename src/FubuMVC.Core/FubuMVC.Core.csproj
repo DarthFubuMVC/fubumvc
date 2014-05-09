@@ -338,7 +338,12 @@
     <Compile Include="Runtime\PartialChainSwitcher.cs" />
     <Compile Include="Runtime\PartialFactory.cs" />
     <Compile Include="Runtime\SetValueReport.cs" />
+    <Compile Include="Security\AlwaysAllowPolicy.cs" />
+    <Compile Include="Security\AlwaysDenyPolicy.cs" />
+    <Compile Include="Security\AuthorizationCheckPolicy.cs" />
+    <Compile Include="Security\AuthorizationByService.cs" />
     <Compile Include="Security\ChainAuthorizor.cs" />
+    <Compile Include="Security\IAuthorizationCheck.cs" />
     <Compile Include="Security\IAuthorizationNode.cs" />
     <Compile Include="Security\IChainAuthorizor.cs" />
     <Compile Include="Security\NotAuthenticatedAttribute.cs" />

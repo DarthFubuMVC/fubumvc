@@ -42,5 +42,12 @@ namespace FubuMVC.Core.Security
         void FailureHandler(IAuthorizationFailureHandler handler);
         ObjectDef FailureHandler();
         void FailureHandler(Type handlerType);
+
+        /// <summary>
+        /// Add either an IAuthorizationPolicy or IAuthorizationCheck to 
+        /// this chain by concrete type
+        /// </summary>
+        /// <param name="type"></param>
+        void Add(Type type);
     }
 }

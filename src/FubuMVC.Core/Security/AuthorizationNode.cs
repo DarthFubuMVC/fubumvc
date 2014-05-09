@@ -96,6 +96,32 @@ namespace FubuMVC.Core.Security
         }
 
         /// <summary>
+        /// Add either an IAuthorizationPolicy or IAuthorizationCheck to 
+        /// this chain by concrete type
+        /// </summary>
+        /// <param name="type"></param>
+        public void Add(Type type)
+    {
+        if (type.CanBeCastTo<IAuthorizationPolicy>() && type.IsConcreteWithDefaultCtor())
+        {
+            var policy = Activator.CreateInstance(type).As<IAuthorizationPolicy>();
+            AddPolicy(policy);
+        }
+        else if (type.CanBeCastTo<IAuthorizationCheck>())
+        {
+            var policyType = typeof (AuthorizationCheckPolicy<>).MakeGenericType(type);
+            Add(policyType);
+        }
+        else
+        {
+            throw new ArgumentOutOfRangeException("Type {0} is not a concrete type of {1} with a default ctor or a type of {2}".ToFormat(type.FullName, typeof(IAuthorizationPolicy).FullName, typeof(IAuthorizationCheck)));
+            
+        }
+
+            
+    }
+
+        /// <summary>
         /// List of all roles that have privileges to this BehaviorChain endpoint
         /// </summary>
         /// <returns></returns>

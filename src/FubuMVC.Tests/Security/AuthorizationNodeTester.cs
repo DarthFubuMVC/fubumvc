@@ -122,6 +122,61 @@ namespace FubuMVC.Tests.Security
             def.DependencyFor<IAuthorizationFailureHandler>().ShouldBeOfType<ConfiguredDependency>()
                 .Definition.Value.ShouldBeTheSameAs(handler);
         }
+
+        [Test]
+        public void add_type_for_a_policy()
+        {
+            var node = new AuthorizationNode();
+            node.Add(typeof(AlwaysAllowPolicy));
+
+            node.Policies.Single().ShouldBeOfType<AlwaysAllowPolicy>();
+        }
+
+        [Test]
+        public void add_type_for_check()
+        {
+            var node = new AuthorizationNode();
+            node.Add(typeof(FakeAuthCheck));
+
+            node.Policies.Single().ShouldBeOfType<AuthorizationCheckPolicy<FakeAuthCheck>>();
+        }
+
+        [Test]
+        public void invalid_add_type()
+        {
+            Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() => {
+                new AuthorizationNode().Add(GetType());
+            });
+        }
+
+        [Test]
+        public void invalid_add_type_if_policy_type_has_args()
+        {
+            Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() =>
+            {
+                new AuthorizationNode().Add(typeof(PolicyWithArgs));
+            });
+        }
+    }
+
+    public class PolicyWithArgs : IAuthorizationPolicy
+    {
+        public PolicyWithArgs(int number)
+        {
+        }
+
+        public AuthorizationRight RightsFor(IFubuRequestContext request)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class FakeAuthCheck : IAuthorizationCheck
+    {
+        public AuthorizationRight Check()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class FakeAuthHandler : IAuthorizationFailureHandler
