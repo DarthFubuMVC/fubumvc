@@ -26,16 +26,9 @@ namespace FubuMVC.Diagnostics.Visualization
 
 	public class DescriptionWriter : IMediaWriter<Description>, DescribesItself
 	{
-		private readonly IVisualizer _visualizer;
-
-		public DescriptionWriter(IVisualizer visualizer)
-		{
-			_visualizer = visualizer;
-		}
-
 	    public void Write(string mimeType, IFubuRequestContext context, Description resource)
 	    {
-            var tag = _visualizer.VisualizeDescription(resource, false);
+            var tag = context.Service<IVisualizer>().VisualizeDescription(resource, false);
             context.Writer.WriteHtml(tag);
 	    }
 
