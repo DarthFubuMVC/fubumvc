@@ -92,6 +92,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="apply_authorization_rights_to_all_diagnostics_pages.cs" />
     <Compile Include="Chains\ChainVisualizationTester.cs" />
     <Compile Include="debugging.cs" />
     <Compile Include="DiagnosticSettings_TraceLevel_Registration_Tester.cs" />
