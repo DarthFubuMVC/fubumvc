@@ -8,21 +8,6 @@ using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Diagnostics.Visualization
 {
-	public class DescriptionVisualizationPolicy : IConfigurationAction, DescribesItself
-	{
-		public void Configure(BehaviorGraph graph)
-		{
-			graph
-				.Behaviors
-				.Where(x => x.ResourceType() == typeof (Description))
-				.Each(x => x.Output.Add(typeof(DescriptionWriter))); // TODO -- this might be wrong
-		}
-
-		public void Describe(Description description)
-		{
-			description.ShortDescription = "Added the Diagnostics visualization for the Description";
-		}
-	}
 
 	public class DescriptionWriter : IMediaWriter<Description>, DescribesItself
 	{
