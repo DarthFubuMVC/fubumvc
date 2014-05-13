@@ -11,6 +11,7 @@ namespace FubuMVC.Core.Registration
     /// Can be used to add one-off ActionFilter's to a single method or action class.
     /// Can only be used with classes that have exactly one public method
     /// </summary>
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true)]
     public class FilterAttribute : ModifyChainAttribute
     {
         private readonly Type _filterType;
