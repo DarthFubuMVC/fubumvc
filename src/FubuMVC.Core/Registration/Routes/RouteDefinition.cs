@@ -145,17 +145,12 @@ namespace FubuMVC.Core.Registration.Routes
 	    {
 		    get
 		    {
-		        if (Input == null)
-		        {
-		            return _pattern.ToCharArray().Where(x => x == '{').Count();
-		        }
+                if (Input != null && Input.InputType != null && Input.InputType.CanBeCastTo<IRankMeLast>())
+                {
+                    return int.MaxValue;
+                }
 
-			    if (Input.InputType.CanBeCastTo<IRankMeLast>())
-			    {
-				    return int.MaxValue;
-			    }
-
-			    return Input.Rank;
+		        return RouteBuilder.PatternRank(_pattern);
 		    }
 	    }
 

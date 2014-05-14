@@ -35,6 +35,14 @@ namespace FubuMVC.Tests.Registration
         {
             route.Pattern.ShouldEqual(thePattern);
         }
+
+        [Test]
+        public void rank()
+        {
+            RouteBuilder.PatternRank("{foo}/").ShouldEqual(1);
+            RouteBuilder.PatternRank("foo").ShouldEqual(0);
+            RouteBuilder.PatternRank("{foo}/to/{bar}").ShouldEqual(2);
+        }
     }
 
     [TestFixture]

@@ -9,6 +9,16 @@ namespace FubuMVC.Core.Registration.Routes
 {
     public class RouteBuilder
     {
+        const string propertyFindingPattern =
+            @"
+\{              # start variable
+\*?             # optional greedy token
+(?<varname>\w+) # capture 1 or more word characters as the variable name
+(:              # optional section beginning with a colon
+(?<default>\w+) # capture 1 or more word characters as the default value
+)?              # end optional section
+\}              # end variable";
+
         public static RouteDefinition Build<T>(string pattern)
         {
             var parent = new RouteDefinition(pattern);
@@ -68,15 +78,7 @@ namespace FubuMVC.Core.Registration.Routes
 
         private static void parse(string template, Action<string, string> callback)
         {
-            const string propertyFindingPattern =
-                @"
-\{              # start variable
-\*?             # optional greedy token
-(?<varname>\w+) # capture 1 or more word characters as the variable name
-(:              # optional section beginning with a colon
-(?<default>\w+) # capture 1 or more word characters as the default value
-)?              # end optional section
-\}              # end variable";
+
 
             foreach (
                 Match match in Regex.Matches(template, propertyFindingPattern, RegexOptions.IgnorePatternWhitespace))
@@ -84,6 +86,11 @@ namespace FubuMVC.Core.Registration.Routes
                 string defaultValue = match.Groups["default"].Success ? match.Groups["default"].Value : null;
                 callback(match.Groups["varname"].Value, defaultValue);
             }
+        }
+
+        public static int PatternRank(string pattern)
+        {
+            return Regex.Matches(pattern, propertyFindingPattern, RegexOptions.IgnorePatternWhitespace).Count;
         }
     }
 }
