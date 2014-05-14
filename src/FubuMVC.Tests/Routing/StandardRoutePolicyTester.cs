@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Routing;
+using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
@@ -115,6 +117,12 @@ namespace FubuMVC.Tests.Routing
             _routes.Any(x => x.Url.Equals("prefixed/a/m1", StringComparison.OrdinalIgnoreCase)).ShouldBeTrue();
         }
 
+        [Test]
+        public void orders_additional_routes_by_rank_as_well()
+        {
+            _routes.Last().Url.ShouldEqual("{Client}/");
+        }
+
         private BehaviorGraph setupActions()
         {          
             var registry = new FubuRegistry();
@@ -122,6 +130,15 @@ namespace FubuMVC.Tests.Routing
             registry.Actions.IncludeType<Action2>();
             registry.Actions.IncludeType<Action3>();
 
+            registry.Configure(x => {
+                var routeDefinition = new RouteDefinition("{Client}/");
+                routeDefinition.Input = MockRepository.GenerateMock<IRouteInput>();
+                routeDefinition.Input.Stub(_ => _.Rank).Return(5);
+
+                routeDefinition.Rank.ShouldEqual(5);
+
+                x.BehaviorFor<Action1>(_ => _.M1()).As<RoutedChain>().AddRouteAlias(routeDefinition);
+            });
 
             return BehaviorGraph.BuildFrom(registry);
         }
@@ -178,7 +195,13 @@ namespace FubuMVC.Tests.Routing
         {
             public void M1() { }
             public void M2() { }
+
+            [UrlPattern("")]
+            public void Home(){}
         }
+
+
+
         public class Action3
         {
             public Task<object> M1Async()

@@ -10,28 +10,45 @@ using FubuMVC.Core.Runtime.Handlers;
 
 namespace FubuMVC.Core.Routing
 {
+    
+
     public class StandardRoutePolicy : IRoutePolicy
     {
         public IList<RouteBase> BuildRoutes(BehaviorGraph graph, IServiceFactory factory)
         {
             var defaultSessionRequirement = graph.Settings.Get<SessionStateRequirement>();
-            return graph
+            var orderedEnumerable = graph
                 .Behaviors.OfType<RoutedChain>()
-                .Where(x => x.Route != null)
-                .OrderBy(x => x.Route.Rank)
-                .SelectMany(x => BuildRoute(factory, defaultSessionRequirement, x))
+                .SelectMany(toRoutes)
+                .OrderBy(x => x.Route.Rank);
+
+            return orderedEnumerable
+                .Select(x => buildRoute(factory, defaultSessionRequirement, x.Chain, x.Route))
                 .ToList();
         }
 
-        public IEnumerable<RouteBase> BuildRoute(IServiceFactory factory, SessionStateRequirement defaultSessionRequirement, RoutedChain chain)
+        public class ChainRoute
         {
-            yield return buildRoute(factory, defaultSessionRequirement, chain, chain.Route);
+            public RoutedChain Chain;
+            public IRouteDefinition Route;
 
-            foreach (var alias in chain.AdditionalRoutes)
+            public override string ToString()
             {
-                yield return buildRoute(factory, defaultSessionRequirement, chain, alias);
+                return string.Format("Chain: {0}, Route: {1}", Chain, Route.Pattern);
             }
         }
+
+
+        private IEnumerable<ChainRoute> toRoutes(RoutedChain chain)
+        {
+            yield return new ChainRoute {Chain = chain, Route = chain.Route};
+
+            foreach (var additionalRoute in chain.AdditionalRoutes)
+            {
+                yield return new ChainRoute {Chain = chain, Route = additionalRoute};
+            }
+        }
+
 
         private RouteBase buildRoute(IServiceFactory factory, SessionStateRequirement defaultSessionRequirement,
                                     BehaviorChain chain, IRouteDefinition routeDefinition)
