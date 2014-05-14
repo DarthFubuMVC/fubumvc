@@ -145,8 +145,10 @@ namespace FubuMVC.Core.Registration.Routes
 	    {
 		    get
 		    {
-			    if (Input == null)
-				    return 0;
+		        if (Input == null)
+		        {
+		            return _pattern.ToCharArray().Where(x => x == '{').Count();
+		        }
 
 			    if (Input.InputType.CanBeCastTo<IRankMeLast>())
 			    {

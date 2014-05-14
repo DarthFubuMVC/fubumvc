@@ -60,6 +60,13 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void can_calculate_rank_without_input_if_there_are_substitutions()
+        {
+            var route = new RouteDefinition("{Client}/foo");
+            route.Rank.ShouldEqual(1);
+        }
+
+        [Test]
         public void session_state_requirement_is_null_by_default_signifying_that_it_should_use_the_default()
         {
             new RouteDefinition("something").SessionStateRequirement.ShouldBeNull(); // this actually matters

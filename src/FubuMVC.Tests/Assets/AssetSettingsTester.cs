@@ -24,6 +24,16 @@ namespace FubuMVC.Tests.Assets
         }
 
         [Test]
+        public void add_exclusions()
+        {
+            var settings = new AssetSettings();
+            settings.Exclude("something.js");
+            settings.Exclude("node-content");
+
+            settings.CreateAssetSearch().Exclude.ShouldEqual("something.js;node-content");
+        }
+
+        [Test]
         public void can_write_javascript_files()
         {
             theRule.IsAllowed(new FubuFile("foo.js", null)).ShouldEqual(AuthorizationRight.Allow);

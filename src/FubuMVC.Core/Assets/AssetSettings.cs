@@ -59,11 +59,19 @@ namespace FubuMVC.Core.Assets
                 });
         }
 
+        public string Exclusions = null;
+
+        public void Exclude(string content)
+        {
+            Exclusions += string.Empty + ";" + content;
+            Exclusions = Exclusions.TrimStart(';');
+        }
+
         public FileSet CreateAssetSearch()
         {
             var extensions = assetMimeTypes().SelectMany(x => x.Extensions).Select(x => "*" + x).Join(";");
 
-            return FileSet.Deep(extensions);
+            return FileSet.Deep(extensions, Exclusions);
         }
 
         private IEnumerable<MimeType> assetMimeTypes()
