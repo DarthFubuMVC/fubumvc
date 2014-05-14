@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core;
@@ -116,6 +117,28 @@ namespace FubuMVC.Tests.Registration
             var graph = new BehaviorGraph();
             graph.Services.AddService<IRequestData, RequestData>();
             graph.Services.DefaultServiceFor<IRequestData>().Type.ShouldEqual(typeof (RequestData));
+        }
+
+        [Test]
+        public void explicit_version()
+        {
+            var graph = new BehaviorGraph();
+            graph.Version = "2.3";
+
+            graph.Version.ShouldEqual("2.3");
+        }
+
+        [Test]
+        public void derive_if_the_assembly_is_set()
+        {
+            var graph = new BehaviorGraph()
+            {
+                ApplicationAssembly = Assembly.GetExecutingAssembly()
+            };
+
+
+
+            graph.Version.ShouldEqual(Assembly.GetExecutingAssembly().GetName().Version);
         }
     }
 

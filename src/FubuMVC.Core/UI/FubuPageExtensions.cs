@@ -1,5 +1,6 @@
 using System;
 using System.Linq.Expressions;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.UI.Elements;
 using FubuMVC.Core.View;
 using HtmlTags;
@@ -10,7 +11,15 @@ namespace FubuMVC.Core.UI
 {
     public static class FubuPageExtensions
     {
+        public static bool InDevelopment(this IFubuPage page)
+        {
+            return FubuMode.InDevelopment();
+        }
 
+        public static string Version(this IFubuPage page)
+        {
+            return page.Get<BehaviorGraph>().Version;
+        }
 
         /// <summary>
         /// Generic html helper to create an authorization aware link.  Typically, you would only use

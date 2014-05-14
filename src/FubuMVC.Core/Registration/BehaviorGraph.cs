@@ -69,6 +69,20 @@ namespace FubuMVC.Core.Registration
             return types;
         }
 
+        private string _version;
+        public string Version
+        {
+            get
+            {
+                return _version.IsEmpty()
+                    ? (ApplicationAssembly == null ? string.Empty : ApplicationAssembly.GetName().Version.ToString()) : _version;
+            }
+            set
+            {
+                _version = value;
+            }
+        }
+
 
         public SettingsCollection Settings
         {
