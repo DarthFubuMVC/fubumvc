@@ -19,7 +19,6 @@ namespace FubuMVC.Diagnostics.Packaging
                     Type = BottlingDiagnostics.GetTypeName(target),
                     Description = target.ToString(),
                     Provenance = log.Provenance,
-                    Timing = log.TimeInMilliseconds.ToString(),
                     FullTraceText = log.FullTraceText(),
                     Success = log.Success
                 }));

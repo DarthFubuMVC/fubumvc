@@ -8,7 +8,6 @@
         <th>Type</th>
         <th>Description</th>
         <th>Provenance</th>
-        <th>Timing</th>
       </tr>
     </thead>
     <tbody>
@@ -17,7 +16,6 @@
           <td>${log.Type}</td>
           <td>${log.Description}</td>
           <td>${log.Provenance}</td>
-          <td>${log.Timing}</td>
         </tr>
         <if condition="log.HasTraceText()">
           <tr>

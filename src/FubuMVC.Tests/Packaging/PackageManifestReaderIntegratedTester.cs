@@ -58,7 +58,7 @@ namespace FubuMVC.Tests.Packaging
             // the reader is rooted at the folder location of the main app
             var package = reader.LoadFromFolder("../../../TestPackage1".ToFullPath());
 
-            var assemblyLoader = new AssemblyLoader(new BottlingDiagnostics(new LoggingSession()));
+            var assemblyLoader = new AssemblyLoader(new BottlingDiagnostics());
             assemblyLoader.AssemblyFileLoader = file => Assembly.Load(Path.GetFileNameWithoutExtension(file));
             assemblyLoader.LoadAssembliesFromPackage(package);
 
@@ -91,7 +91,7 @@ namespace FubuMVC.Tests.Packaging
 
             new FileSystem().PersistToFile(links, theApplicationDirectory, LinkManifest.FILE);
 
-            var assemblyLoader = new AssemblyLoader(new BottlingDiagnostics(new LoggingSession()));
+            var assemblyLoader = new AssemblyLoader(new BottlingDiagnostics());
             assemblyLoader.AssemblyFileLoader = file => Assembly.Load(Path.GetFileNameWithoutExtension(file));
 
             var package = linkedFolderReader.Load(new PackageLog()).Single();

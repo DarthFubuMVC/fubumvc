@@ -149,7 +149,7 @@ namespace FubuMVC.Core
                 x.Facility(_fubuFacility);
                 _packagingDirectives.Each(d => d(x));
 
-                x.Bootstrap(log => {
+                x.Bootstrap("FubuMVC Bootstrapping", log => {
                     // container facility has to be spun up here
                     var containerFacility = _facility.Value;
 
