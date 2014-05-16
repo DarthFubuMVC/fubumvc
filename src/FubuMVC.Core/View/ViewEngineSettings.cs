@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Bottles;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Registration;
@@ -63,9 +64,11 @@ namespace FubuMVC.Core.View
 
         public Task<ViewBag> BuildViewBag(BehaviorGraph graph)
         {
-            return Task.Factory.StartNew(() => {
-                var viewFinders = _facilities.Select(x => {
-                    return Task.Factory.StartNew(() => {
+            return PackageRegistry.Timer.RecordTask("Building the View Bag", () => {
+                var viewFinders = _facilities.Select(x =>
+                {
+                    return Task.Factory.StartNew(() =>
+                    {
                         x.Fill(this, graph);
                         return x.AllViews();
                     });
@@ -73,14 +76,14 @@ namespace FubuMVC.Core.View
 
                 var views = viewFinders.SelectMany(x => x.Result).ToList();
                 _viewPolicies.Each(x => x.Alter(views));
-                
+
                 var logger = TemplateLogger.Default();
                 var types = new ViewTypePool(graph);
-                
+
                 // Attaching the view models
 
                 _facilities.Each(x => x.AttachViewModels(types, logger));
-                
+
                 return new ViewBag(views);
             });
         }

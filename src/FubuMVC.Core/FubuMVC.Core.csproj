@@ -195,6 +195,7 @@
     <Compile Include="Http\Scenarios\IUrlExpression.cs" />
     <Compile Include="Http\Scenarios\ScenarioAssertionException.cs" />
     <Compile Include="NoDiagnosticsAttribute.cs" />
+    <Compile Include="PerfTimerExtensions.cs" />
     <Compile Include="PortFinder.cs" />
     <Compile Include="Http\Owin\Readers\FormReader.cs" />
     <Compile Include="Http\Owin\Readers\IOwinRequestReader.cs" />

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Routing;
 using Bottles;
@@ -15,7 +14,6 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
-using FubuMVC.Core.Routing;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core
@@ -153,30 +151,33 @@ namespace FubuMVC.Core
                     // container facility has to be spun up here
                     var containerFacility = _facility.Value;
 
-                    applyFubuExtensionsFromPackages();
+                    var perfTimer = PackageRegistry.Timer;
 
-                    graph = buildBehaviorGraph();
+                    perfTimer.Record("Applying IFubuRegistryExtension's", applyFubuExtensionsFromPackages);
 
-                    bakeBehaviorGraphIntoContainer(graph, containerFacility);
+                    graph = perfTimer.Record("Building the BehaviorGraph", () => buildBehaviorGraph());
+
+                    perfTimer.Record("Registering services into the IoC Container",
+                        () => bakeBehaviorGraphIntoContainer(graph, containerFacility));
 
                     // factory HAS to be spun up here.
-                    factory = containerFacility.BuildFactory(graph);
+                    factory = perfTimer.Record("Build the IServiceFactory",
+                        () => containerFacility.BuildFactory(graph));
 
-                    routeTask = Task.Factory.StartNew(() =>
-                    {
+                    routeTask = perfTimer.RecordTask("Building Routes", () => {
                         var routes = buildRoutes(factory, graph);
                         routes.Each(r => RouteTable.Routes.Add(r));
 
                         return routes;
                     });
 
-                    _facility.Value.Register(typeof(FubuRouteTable), ObjectDef.ForValue(new FubuRouteTable(routeTask)));
+
+                    _facility.Value.Register(typeof (FubuRouteTable), ObjectDef.ForValue(new FubuRouteTable(routeTask)));
 
                     return factory.GetAll<IActivator>();
                 });
             });
 
-            
 
             FubuMvcPackageFacility.Restarted = DateTime.Now;
 
@@ -186,7 +187,7 @@ namespace FubuMVC.Core
 
             var runtime = new FubuRuntime(factory, _facility.Value, routeTask.Result);
 
-            _facility.Value.Register(typeof(FubuRuntime), ObjectDef.ForValue(runtime));
+            _facility.Value.Register(typeof (FubuRuntime), ObjectDef.ForValue(runtime));
 
             return runtime;
         }
@@ -220,11 +221,12 @@ namespace FubuMVC.Core
 
         private void applyFubuExtensionsFromPackages()
         {
-            var importers = PackageRegistry.PackageAssemblies.Select(assem => {
-                return Task.Factory.StartNew(() => {
-                    return assem.FindAllExtensions();
-                });
-            }).ToArray();
+            var importers = PackageRegistry.PackageAssemblies.Select(
+                assem => {
+                    return Task.Factory.StartNew(() => {
+                        return assem.FindAllExtensions();
+                    });
+                }).ToArray();
 
             Task.WaitAll(importers);
 
@@ -243,6 +245,7 @@ namespace FubuMVC.Core
         }
     }
 
+
     public class FubuRouteTable
     {
         private readonly Task<IList<RouteBase>> _routeTask;
@@ -254,10 +257,7 @@ namespace FubuMVC.Core
 
         public IList<RouteBase> Routes
         {
-            get
-            {
-                return _routeTask.Result;
-            }
-        } 
+            get { return _routeTask.Result; }
+        }
     }
 }

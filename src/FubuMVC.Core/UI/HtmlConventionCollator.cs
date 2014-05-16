@@ -41,8 +41,7 @@ namespace FubuMVC.Core.UI
 
         public static Task BuildHtmlConventions(BehaviorGraph graph)
         {
-            return graph.Settings.GetTask<AccessorRules>().ContinueWith(t =>
-            {
+            return graph.Settings.GetTask<AccessorRules>().RecordContinuation("Gathering Html Conventions", t => {
                 var library = graph.Settings.Get<HtmlConventionLibrary>();
                 BuildHtmlConventionLibrary(library, t.Result);
 

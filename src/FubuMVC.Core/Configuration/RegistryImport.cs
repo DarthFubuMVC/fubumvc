@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Bottles;
 using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
@@ -26,13 +27,15 @@ namespace FubuMVC.Core.Configuration
 
         public IEnumerable<BehaviorChain> BuildChains(BehaviorGraph graph)
         {
-            Registry.Config.BuildLocal(_behaviorGraph);
-            if (Prefix.IsNotEmpty())
-            {
-                _behaviorGraph.Behaviors.OfType<RoutedChain>().Each(x => x.Route.Prepend(Prefix));
-            }
+            return PackageRegistry.Timer.Record("Building Imported Chains for " + Registry, () => {
+                Registry.Config.BuildLocal(_behaviorGraph);
+                if (Prefix.IsNotEmpty())
+                {
+                    _behaviorGraph.Behaviors.OfType<RoutedChain>().Each(x => x.Route.Prepend(Prefix));
+                }
 
-            return _behaviorGraph.Behaviors;
+                return _behaviorGraph.Behaviors;
+            });
         }
 
         public bool Equals(RegistryImport other)

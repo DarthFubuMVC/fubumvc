@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Bottles;
 using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core.Http;
@@ -43,7 +44,7 @@ namespace FubuMVC.Core.Assets
         public static Task Build(BehaviorGraph behaviorGraph)
         {
             return behaviorGraph.Settings.GetTask<AssetSettings>()
-                .ContinueWith(t => {
+                .RecordContinuation("Building the Asset Graph", t => {
                     var graph = new AssetGraph();
                     var settings = t.Result;
 

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Bottles;
 using FubuCore;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Diagnostics;
@@ -25,7 +26,7 @@ namespace FubuMVC.Core.Configuration
             var graph = new BehaviorGraph {ApplicationAssembly = registry.ApplicationAssembly};
             var config = registry.Config;
 
-            applySettings(config, graph);
+            PackageRegistry.Timer.Record("Applying Settings", () => applySettings(config, graph));
 
             var assetDiscovery = AssetSettings.Build(graph);
             var viewDiscovery = graph.Settings.Get<ViewEngineSettings>().BuildViewBag(graph);
@@ -40,23 +41,26 @@ namespace FubuMVC.Core.Configuration
             var htmlConventionCollation = HtmlConventionCollator.BuildHtmlConventions(graph);
 
             addBuiltInDiagnostics(graph);
-            config.BuildLocal(graph);
 
+            PackageRegistry.Timer.Record("Local Application BehaviorGraph", () => config.BuildLocal(graph));
 
-            viewDiscovery.ContinueWith(t => {
+            viewDiscovery.RecordContinuation("View Attachment",t =>
+            {
                 var attacher = new ViewAttachmentWorker(t.Result, graph.Settings.Get<ViewAttachmentPolicy>());
                 attacher.Configure(graph);
             }).ContinueWith(t => { new AutoImportModelNamespacesConvention().Configure(graph); }).Wait(10.Seconds());
 
 
-            config.Global.Explicits.RunActions(graph);
-            config.Global.Policies.RunActions(graph);
+            PackageRegistry.Timer.Record("Explicit Configuration", () => config.Global.Explicits.RunActions(graph));
+            PackageRegistry.Timer.Record("Global Policies", () => config.Global.Policies.RunActions(graph));
 
-            insertConnegAndAuthorizationNodes(graph);
+            PackageRegistry.Timer.Record("Inserting Conneg and Authorization Nodes",
+                () => insertConnegAndAuthorizationNodes(graph));
 
-            config.ApplyGlobalReorderings(graph);
+            PackageRegistry.Timer.Record("Applying Global Reorderings", () => config.ApplyGlobalReorderings(graph));
 
-            applyTracing(graph);
+
+            PackageRegistry.Timer.Record("Applying Tracing", () => applyTracing(graph));
 
             // Wait until all the other threads are done.
             var registration = htmlConventionCollation.ContinueWith(t => config.RegisterServices(graph));
