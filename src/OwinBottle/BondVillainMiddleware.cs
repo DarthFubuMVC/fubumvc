@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using FubuMVC.Core.Http.Owin;
+using FubuMVC.Core.Http.Owin.Middleware;
 
 namespace OwinBottle
 {
-    public class BondVillainMiddleware
+    public class BondVillainMiddleware : IOwinMiddleware
     {
         private readonly Func<IDictionary<string, object>, Task> _inner;
 

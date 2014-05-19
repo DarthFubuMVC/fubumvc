@@ -131,15 +131,14 @@ namespace FubuMVC.Core
 
             _fubuFacility = new FubuMvcPackageFacility();
 
-            IServiceFactory factory = null;
-            BehaviorGraph graph = null;
-
             // TODO -- I think Bottles probably needs to enforce a "tell me the paths"
             // step maybe
             PackageRegistry.GetApplicationDirectory = FubuMvcPackageFacility.GetApplicationPath;
             BottleFiles.ContentFolder = FubuMvcPackageFacility.FubuContentFolder;
             BottleFiles.PackagesFolder = FileSystem.Combine("bin", FubuMvcPackageFacility.FubuPackagesFolder);
 
+
+            FubuRuntime runtime = null;
 
             Task<IList<RouteBase>> routeTask = null;
 
@@ -155,13 +154,13 @@ namespace FubuMVC.Core
 
                     perfTimer.Record("Applying IFubuRegistryExtension's", applyFubuExtensionsFromPackages);
 
-                    graph = perfTimer.Record("Building the BehaviorGraph", () => buildBehaviorGraph());
+                    var graph = perfTimer.Record("Building the BehaviorGraph", () => buildBehaviorGraph());
 
                     perfTimer.Record("Registering services into the IoC Container",
                         () => bakeBehaviorGraphIntoContainer(graph, containerFacility));
 
                     // factory HAS to be spun up here.
-                    factory = perfTimer.Record("Build the IServiceFactory",
+                    var factory = perfTimer.Record("Build the IServiceFactory",
                         () => containerFacility.BuildFactory(graph));
 
                     routeTask = perfTimer.RecordTask("Building Routes", () => {
@@ -174,6 +173,10 @@ namespace FubuMVC.Core
 
                     _facility.Value.Register(typeof (FubuRouteTable), ObjectDef.ForValue(new FubuRouteTable(routeTask)));
 
+                    runtime = new FubuRuntime(factory, _facility.Value, routeTask.Result);
+
+                    _facility.Value.Register(typeof(FubuRuntime), ObjectDef.ForValue(runtime));
+
                     return factory.GetAll<IActivator>();
                 });
             });
@@ -185,9 +188,7 @@ namespace FubuMVC.Core
                 () => { throw new FubuException(0, FubuApplicationDescriber.WriteDescription()); });
 
 
-            var runtime = new FubuRuntime(factory, _facility.Value, routeTask.Result);
 
-            _facility.Value.Register(typeof (FubuRuntime), ObjectDef.ForValue(runtime));
 
             return runtime;
         }

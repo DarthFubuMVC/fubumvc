@@ -21,9 +21,8 @@ namespace FubuMVC.Core.Http.Hosting
 
         public static readonly string RootUrl = "http://memory";
         private readonly FubuRuntime _runtime;
-        private readonly FubuOwinHost _host;
         private readonly IServiceLocator _services;
-        private readonly StaticFileMiddleware _middleware;
+        private AppFunc _func;
 
 
         public static InMemoryHost For<T>(string directory = null) where T : IApplicationSource, new()
@@ -41,11 +40,7 @@ namespace FubuMVC.Core.Http.Hosting
         {
             _runtime = runtime;
 
-            // TODO -- this is an abomination.  Kill w/ the fix to GH-709
-            _host = new FubuOwinHost(runtime.Routes);
-            _middleware = new StaticFileMiddleware(_host.Invoke, _runtime.Factory.Get<IFubuApplicationFiles>(),
-                _runtime.Factory.Get<AssetSettings>());
-
+            _func = FubuOwinHost.ToAppFunc(runtime);
 
             _services = _runtime.Factory.Get<IServiceLocator>();
         }
@@ -77,7 +72,8 @@ namespace FubuMVC.Core.Http.Hosting
         {
             // TODO -- make the wait be configurable?
             request.RewindData();
-            _middleware.Invoke(request.Environment).Wait(15.Seconds());
+
+            _func(request.Environment).Wait(15.Seconds());
 
             return new OwinHttpResponse(request.Environment);
         }

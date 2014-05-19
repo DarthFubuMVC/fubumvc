@@ -143,6 +143,7 @@
     <Compile Include="Http\Owin\OwinHttpRequestTester.cs" />
     <Compile Include="Http\Owin\OwinCurrentHttpRequest_ClientConnectivityTester.cs" />
     <Compile Include="Http\Owin\OwinHttpResponseTester.cs" />
+    <Compile Include="Http\Owin\OwinSettingsTester.cs" />
     <Compile Include="Http\Owin\OwnCurrentHttpRequestTester.cs" />
     <Compile Include="Http\Owin\OwnHttpWriterTester.cs" />
     <Compile Include="Http\StreamExtensions.cs" />
@@ -377,7 +378,8 @@
     <Compile Include="FubuBootstrapperIntegrationTester.cs" />
     <Compile Include="FubuRegistryTester.cs" />
     <Compile Include="HtmlGenerationTestExtensions.cs" />
-    <Compile Include="Registration\BehaviorGraphTester.cs"></Compile>
+    <Compile Include="Registration\BehaviorGraphTester.cs">
+    </Compile>
     <Compile Include="Registration\Conventions\ActionSourceTester.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConventionTester.cs" />
     <Compile Include="Registration\Conventions\CustomConventionIntegratedTester.cs" />

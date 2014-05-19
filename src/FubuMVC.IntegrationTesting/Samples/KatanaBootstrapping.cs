@@ -81,8 +81,8 @@ namespace FubuMVC.IntegrationTesting.Samples
             // SAMPLE: katana-and-testing
             using (var server = EmbeddedFubuMvcServer.For<SimpleApplication>())
             {
-                // Access to the IServiceLocator for the running application
-                var resolver = server.Services.GetInstance<IObjectResolver>();
+                // Access to the IServiceFactory for the running application
+                var resolver = server.Services.Get<IObjectResolver>();
 
                 // Access to the EndpointDriver for the running application
                 server.Endpoints.Get<HelloEndpoint>(x => x.get_greeting())

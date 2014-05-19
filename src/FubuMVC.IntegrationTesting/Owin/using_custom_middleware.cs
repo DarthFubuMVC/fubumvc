@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using FubuMVC.Core;
 using FubuMVC.Core.Http.Owin;
+using FubuMVC.Core.Http.Owin.Middleware;
 using FubuMVC.Katana;
 using FubuMVC.StructureMap;
 using NUnit.Framework;
@@ -42,7 +43,7 @@ namespace FubuMVC.IntegrationTesting.Owin
     }
     
 
-    public class JamesBondMiddleware
+    public class JamesBondMiddleware : IOwinMiddleware
     {
         private readonly Func<IDictionary<string, object>, Task> _inner;
 

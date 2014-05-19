@@ -17,18 +17,15 @@ namespace FubuMVC.Core.Http.Owin
     {
         private readonly RouteCollection _routes;
 
-        public static Action<IAppBuilder> ToStartup(OwinSettings settings, IList<RouteBase> routes)
+        public static AppFunc ToAppFunc(FubuRuntime runtime, OwinSettings settings = null)
         {
-            return builder =>
-            {
-                settings.As<IAppBuilderConfiguration>()
-                    .Configure(builder);
-
-                var host = new FubuOwinHost(routes);
-                
-                builder.Use((object)(Func<object, object>)(ignored => (object) host), new object[0]);
-            };
+            settings = settings ?? runtime.Factory.Get<OwinSettings>();
+            var host = new FubuOwinHost(runtime.Routes);
+            AppFunc inner = host.Invoke;
+            AppFunc appFunc = settings.BuildAppFunc(inner, runtime.Factory);
+            return appFunc;
         }
+
 
         public FubuOwinHost(IEnumerable<RouteBase> routes)
         {

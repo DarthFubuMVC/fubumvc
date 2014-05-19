@@ -171,8 +171,8 @@
     <Compile Include="Http\Hosting\InMemoryHost.cs" />
     <Compile Include="Http\IMimetypeCorrection.cs" />
     <Compile Include="Http\Owin\FubuOwinHost.cs" />
-    <Compile Include="Http\Owin\IAppBuilderConfiguration.cs" />
     <Compile Include="Http\Owin\Middleware\FubuMvcOwinMiddleware.cs" />
+    <Compile Include="Http\Owin\Middleware\IOwinMiddleware.cs" />
     <Compile Include="Http\Owin\Middleware\MiddlewareChain.cs" />
     <Compile Include="Http\Owin\Middleware\MiddlewareContinuation.cs" />
     <Compile Include="Http\Owin\Middleware\MiddlewareNode.cs" />

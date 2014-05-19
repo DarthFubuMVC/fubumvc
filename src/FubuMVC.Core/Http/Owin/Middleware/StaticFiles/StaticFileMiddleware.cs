@@ -8,7 +8,7 @@ using FubuMVC.Core.Security;
 
 namespace FubuMVC.Core.Http.Owin.Middleware.StaticFiles
 {
-    public class StaticFileMiddleware : FubuMvcOwinMiddleware
+    public class StaticFileMiddleware : WrappingOwinMiddleware
     {
         private readonly IFubuApplicationFiles _files;
         private readonly AssetSettings _settings;

@@ -6,7 +6,6 @@ using FubuMVC.Core;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Runtime;
-using FubuMVC.TestingHarness;
 using FubuTestingSupport;
 using NUnit.Framework;
 

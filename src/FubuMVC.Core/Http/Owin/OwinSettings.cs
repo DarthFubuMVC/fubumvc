@@ -1,19 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using FubuCore;
+using System.Threading.Tasks;
 using FubuCore.Util;
 using FubuMVC.Core.Http.Owin.Middleware;
 using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Runtime.Files;
-using FubuMVC.Core.Security;
-using Owin;
+using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Http.Owin
 {
+    using AppFunc = Func<IDictionary<string, object>, Task>;
+
     [ApplicationLevel]
-    public class OwinSettings : IAppBuilderConfiguration
+    public class OwinSettings
     {
+        public OwinSettings()
+        {
+            AddMiddleware<StaticFileMiddleware>();
+        }
+
         /// <summary>
         /// Key value pairs to control or alter the behavior of the underlying host
         /// </summary>
@@ -25,32 +32,23 @@ namespace FubuMVC.Core.Http.Owin
         /// </summary>
         public readonly Cache<string, object> EnvironmentData = new Cache<string, object>();
 
-        void IAppBuilderConfiguration.Configure(IAppBuilder builder)
+        // Tested through integration tests
+        public AppFunc BuildAppFunc(AppFunc inner, IServiceFactory factory)
         {
-            EnvironmentData.Each((key, value) => {
-                if (builder.Properties.ContainsKey(key))
-                {
-                    builder.Properties[key] = value;
-                }
-                else
-                {
-                    builder.Properties.Add(key, value);
-                }
-            });
+            AppFunc func = inner;
+            Middleware.Reverse().Each(x => func = x.BuildAppFunc(func, factory));
 
-            
-
-            Middleware.OfType<IAppBuilderConfiguration>().ToArray().Each(x => x.Configure(builder));
+            return func;
         }
+
 
         public readonly MiddlewareChain Middleware = new MiddlewareChain();
 
-        public MiddlewareNode AddMiddleware<T>(params object[] args) where T : class
+
+        public MiddlewareNode<T> AddMiddleware<T>(BehaviorCategory category = BehaviorCategory.Process) where T : class, IOwinMiddleware
         {
-            var description = "{0} - {1}".ToFormat(typeof (T).FullName,
-                args.Select(x => (x ?? string.Empty).ToString()).Join(", "));
-            var node = new MiddlewareNode(x => x.Use(typeof (T), args)).Description(description);
-            Middleware.AddToEnd(node);
+            var node = new MiddlewareNode<T>();
+            AddMiddleware(node);
 
             return node;
         }
@@ -59,7 +57,5 @@ namespace FubuMVC.Core.Http.Owin
         {
             Middleware.AddToEnd(node);
         }
-
-
     }
 }

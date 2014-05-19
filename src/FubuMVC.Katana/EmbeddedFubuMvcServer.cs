@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Runtime.Serialization;
@@ -13,6 +14,7 @@ using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
 using FubuMVC.Core.Packaging;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Urls;
 using Microsoft.Owin.Hosting;
@@ -33,7 +35,7 @@ namespace FubuMVC.Katana
     {
         private IDisposable _server;
         private IUrlRegistry _urls;
-        private IServiceLocator _services;
+        private IServiceFactory _services;
         private EndpointDriver _endpoints;
         private string _baseAddress;
         private readonly FubuRuntime _runtime;
@@ -75,7 +77,7 @@ namespace FubuMVC.Katana
             }
 
             _runtime = runtime;
-            _services = _runtime.Factory.Get<IServiceLocator>();
+            _services = _runtime.Factory;
 
             // before anything else, make sure there is no server on the settings
             // We're doing this hokey-pokey to ensure that things don't get double 
@@ -91,14 +93,17 @@ namespace FubuMVC.Katana
             {
                 takeOverFromExistingServer(peer, settings);
             }
+
+            buildEndpointDriver(port);
         }
+
 
         private void startAllNew(FubuRuntime runtime, string physicalPath, int port)
         {
-            startServer(runtime.Factory.Get<OwinSettings>(), runtime.Routes, physicalPath, port);
+            startServer(runtime.Factory.Get<OwinSettings>(), physicalPath, port);
 
             _urls = _runtime.Factory.Get<IUrlRegistry>();
-            _services = _runtime.Factory.Get<IServiceLocator>();
+            _services = _runtime.Factory.Get<IServiceFactory>();
 
             buildEndpointDriver(port);
         }
@@ -121,32 +126,23 @@ namespace FubuMVC.Katana
             _endpoints = new EndpointDriver(_urls, _baseAddress);
         }
 
-        public EmbeddedFubuMvcServer(KatanaSettings settings, IUrlRegistry urls, IServiceLocator services, IList<RouteBase> routes)
-        {
-            _urls = urls;
-            _services = services;
 
-            startServer(services.GetInstance<OwinSettings>(), routes, AppDomain.CurrentDomain.BaseDirectory, settings.Port);
-            buildEndpointDriver(settings.Port);
-        }
 
-        private void startServer(OwinSettings settings, IList<RouteBase> routes, string physicalPath, int port)
+        private void startServer(OwinSettings settings, string physicalPath, int port)
         {
             var parameters = new StartOptions {Port = port};
             parameters.Urls.Add("http://*:" + port); //for netsh http add urlacl
 
-            // Adding the static middleware
-            // TODO -- need to generalize this so that it's not so tied to Katana.  Logic
-            // prolly shouldn't be here.
-            settings.AddMiddleware<StaticFileMiddleware>(_services.GetInstance<IFubuApplicationFiles>(), _services.GetInstance<AssetSettings>());
 
             if (physicalPath != null) FubuMvcPackageFacility.PhysicalRootPath = physicalPath;
-            Action<IAppBuilder> startup = FubuOwinHost.ToStartup(settings, routes);
 
             var context = new StartContext(parameters)
             {
-                Startup = startup,
+               App = FubuOwinHost.ToAppFunc(_runtime, settings),
             };
+
+            settings.EnvironmentData.ToDictionary().Each(pair => context.EnvironmentData.Add(pair));
+
 
             settings.EnvironmentData[OwinConstants.AppMode] = FubuMode.Mode().ToLower();
             context.EnvironmentData.AddRange(settings.EnvironmentData.ToDictionary());
@@ -185,7 +181,7 @@ namespace FubuMVC.Katana
             get { return _urls; }
         }
 
-        public IServiceLocator Services
+        public IServiceFactory Services
         {
             get { return _services; }
         }
