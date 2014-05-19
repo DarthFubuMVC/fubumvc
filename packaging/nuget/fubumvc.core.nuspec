@@ -15,7 +15,6 @@
       <dependency id="Bottles" version="3.0.0.595" />
       <dependency id="FubuCore" version="1.2.0.259" />
       <dependency id="HtmlTags" version="1.1.0.114" />
-      <dependency id="Owin" version="1.0" />
     </dependencies>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Web" />

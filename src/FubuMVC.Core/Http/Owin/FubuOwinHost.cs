@@ -7,7 +7,6 @@ using FubuCore;
 using FubuMVC.Core.Http.Owin.Readers;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Handlers;
-using Owin;
 
 namespace FubuMVC.Core.Http.Owin
 {
