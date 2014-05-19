@@ -9,6 +9,8 @@ namespace FubuMVC.Core.Runtime
     {
         IActionBehavior BuildBehavior(ServiceArguments arguments, Guid behaviorId);
 
+        T Build<T>(ServiceArguments arguments);
+
         T Get<T>();
         IEnumerable<T> GetAll<T>();
     }

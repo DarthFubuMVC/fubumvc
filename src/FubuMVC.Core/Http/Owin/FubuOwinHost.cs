@@ -25,7 +25,7 @@ namespace FubuMVC.Core.Http.Owin
                     .Configure(builder);
 
                 var host = new FubuOwinHost(routes);
-
+                
                 builder.Use((object)(Func<object, object>)(ignored => (object) host), new object[0]);
             };
         }

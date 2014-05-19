@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using FubuMVC.Core.Registration.Nodes;
 using Owin;
 
 namespace FubuMVC.Core.Http.Owin.Middleware
 {
+    using AppFunc = Func<IDictionary<string, object>, Task>;
+
     public class MiddlewareNode : Node<MiddlewareNode, MiddlewareChain>, IAppBuilderConfiguration
     {
         private readonly Action<IAppBuilder> _configuration;

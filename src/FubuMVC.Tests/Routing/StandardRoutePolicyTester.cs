@@ -151,6 +151,11 @@ namespace FubuMVC.Tests.Routing
                 return _behaviorIds.Contains(behaviorId) ? new ActionBehavior(behaviorId) : null;
             }
 
+            public T Build<T>(ServiceArguments arguments)
+            {
+                throw new NotImplementedException();
+            }
+
             public T Get<T>()
             {
                 throw new NotImplementedException();

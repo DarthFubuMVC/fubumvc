@@ -23,7 +23,7 @@ namespace FubuMVC.Core.Http.Hosting
         private readonly FubuRuntime _runtime;
         private readonly FubuOwinHost _host;
         private readonly IServiceLocator _services;
-        private StaticFileMiddleware _middleware;
+        private readonly StaticFileMiddleware _middleware;
 
 
         public static InMemoryHost For<T>(string directory = null) where T : IApplicationSource, new()

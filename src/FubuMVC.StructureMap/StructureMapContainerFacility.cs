@@ -82,6 +82,11 @@ namespace FubuMVC.StructureMap
             return new NestedStructureMapContainerBehavior(_container, arguments, behaviorId);
         }
 
+        public T Build<T>(ServiceArguments arguments)
+        {
+            return _container.GetInstance<T>(arguments.ToExplicitArgs());
+        }
+
         public IServiceFactory BuildFactory(BehaviorGraph graph)
         {
             var settings = graph.Settings.Get<ConfigurationSettings>();

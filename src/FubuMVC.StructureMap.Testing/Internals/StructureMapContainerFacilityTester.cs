@@ -163,5 +163,59 @@ namespace FubuMVC.StructureMap.Testing.Internals
             container.GetAllInstances<IModelBinder>().Any(x => x is StandardModelBinder).ShouldBeFalse();
         }
 
+        [Test]
+        public void build_by_explicit_arguments()
+        {
+            var hulk = new TheHulk();
+            var thor = new Thor();
+
+            var args = new ServiceArguments().With(hulk).With(thor);
+            var thing = facility.Build<ContainerThing>(args);
+
+            thing.Hulk.ShouldBeTheSameAs(hulk);
+            thing.Thor.ShouldBeTheSameAs(thor);
+        }
+
     }
+
+    public class ContainerThing
+    {
+        private readonly SpiderMan _spiderMan;
+        private readonly IronMan _ironMan;
+        private readonly TheHulk _hulk;
+        private readonly Thor _thor;
+
+        public ContainerThing(SpiderMan spiderMan, IronMan ironMan, TheHulk hulk, Thor thor)
+        {
+            _spiderMan = spiderMan;
+            _ironMan = ironMan;
+            _hulk = hulk;
+            _thor = thor;
+        }
+
+        public SpiderMan SpiderMan
+        {
+            get { return _spiderMan; }
+        }
+
+        public IronMan IronMan
+        {
+            get { return _ironMan; }
+        }
+
+        public TheHulk Hulk
+        {
+            get { return _hulk; }
+        }
+
+        public Thor Thor
+        {
+            get { return _thor; }
+        }
+    }
+
+    public class SpiderMan{}
+    public class IronMan{}
+    public class TheHulk{}
+    public class Thor{}
 }
