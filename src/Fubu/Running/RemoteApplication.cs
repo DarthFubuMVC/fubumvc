@@ -9,21 +9,39 @@ using Bottles.Services.Messaging;
 using Bottles.Services.Remote;
 using FubuCore;
 using FubuCore.CommandLine;
-using OpenQA.Selenium;
 
 namespace Fubu.Running
 {
+    public interface IBrowserDriver
+    {
+        void OpenBrowserTo(string url);
+        void RefreshPage();
+    }
+
+    public class BrowserDriver : IBrowserDriver
+    {
+        public void OpenBrowserTo(string url)
+        {
+            Process.Start(url);
+        }
+
+        public void RefreshPage()
+        {
+            Console.WriteLine("I should be refreshing now");
+        }
+    }
+
     public class RemoteApplication : IListener<ApplicationStarted>, IListener<InvalidApplication>, IApplicationObserver
     {
         public static readonly FileMatcher FileMatcher;
 
         private readonly ManualResetEvent _reset = new ManualResetEvent(false);
-        private IWebDriver _driver;
+        private readonly IBrowserDriver _driver = new BrowserDriver();
         private ApplicationRequest _input;
         private bool _opened;
         private RemoteFubuMvcProxy _proxy;
         private FubuMvcApplicationFileWatcher _watcher;
-        private Action<RemoteDomainExpression> _configuration;
+        private readonly Action<RemoteDomainExpression> _configuration;
 
         static RemoteApplication()
         {
@@ -51,7 +69,7 @@ namespace Fubu.Running
 
         public void RefreshContent()
         {
-            if (_driver != null) _driver.Navigate().Refresh();
+            _driver.RefreshPage();
         }
 
         public void RecycleAppDomain()
@@ -80,19 +98,6 @@ namespace Fubu.Running
             {
                 _opened = true;
                 Process.Start(message.HomeAddress);
-            }
-
-            if (_input.WatchedFlag)
-            {
-                if (_driver == null)
-                {
-                    _driver = _input.BuildBrowser();
-                    _driver.Navigate().GoToUrl(message.HomeAddress);
-                }
-                else
-                {
-                    _driver.Navigate().Refresh();
-                }
             }
 
             _watcher.StartWatching(_input.DirectoryFlag, message.BottleContentFolders);
@@ -144,11 +149,6 @@ namespace Fubu.Running
         public void Shutdown()
         {
             _watcher.StopWatching();
-            if (_driver != null)
-            {
-                _driver.Close();
-                _driver.SafeDispose();
-            }
             _proxy.SafeDispose();
         }
     }
