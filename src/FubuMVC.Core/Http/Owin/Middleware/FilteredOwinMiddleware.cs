@@ -4,11 +4,11 @@ using System.Threading.Tasks;
 
 namespace FubuMVC.Core.Http.Owin.Middleware
 {
-    public abstract class WrappingOwinMiddleware : IOwinMiddleware
+    public abstract class FilteredOwinMiddleware : IOwinMiddleware
     {
         private readonly Func<IDictionary<string, object>, Task> _inner;
 
-        protected WrappingOwinMiddleware(Func<IDictionary<string, object>, Task> inner)
+        protected FilteredOwinMiddleware(Func<IDictionary<string, object>, Task> inner)
         {
             _inner = inner;
         }

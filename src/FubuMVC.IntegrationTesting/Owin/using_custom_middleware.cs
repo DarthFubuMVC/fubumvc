@@ -6,10 +6,13 @@ using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Owin.Middleware;
 using FubuMVC.Katana;
 using FubuMVC.StructureMap;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Owin
 {
+    using AppFunc = Func<IDictionary<string, object>, Task>;
+
     [TestFixture]
     public class using_custom_middleware
     {
@@ -31,6 +34,55 @@ namespace FubuMVC.IntegrationTesting.Owin
                     .ShouldHaveHeaderValue("James", "Bond");
             }
         }
+
+        [Test]
+        public void use_anonymous_AppFunc_as_middleware()
+        {
+            AppFunc sillyHeader = dict => {
+                return Task.Factory.StartNew(() => {
+                    new OwinHttpResponse(dict).AppendHeader("silly", "string");
+                });
+            };
+
+            using (var server = serverFor(x => {
+                x.AddMiddleware(sillyHeader);
+            }))
+            {
+                server.Endpoints.Get<MiddleWareInterceptedEndpoint>(x => x.get_middleware_result())
+                    .ShouldHaveHeaderValue("silly", "string")
+                    .ReadAsText().ShouldContain("I'm okay");
+            }
+        }
+
+        [Test]
+        public void use_anonymous_wrapping_Func_AppFunc_AppFunc_as_middleware()
+        {
+            Func<AppFunc, AppFunc> middleware = inner => {
+                return dict => {
+                    var response = new OwinHttpResponse(dict);
+
+                    response.Write("1-");
+                    response.Flush();
+                    return inner(dict).ContinueWith(t => {
+                        response.Write("-2");
+                        response.Flush();
+                    });
+                };
+            };
+
+            using (var server = serverFor(x =>
+            {
+                x.AddMiddleware(middleware);
+            }))
+            {
+                server.Endpoints.Get<MiddleWareInterceptedEndpoint>(x => x.get_middleware_result())
+                    .ReadAsText().ShouldContain("1-I'm okay-2");
+            }
+
+
+        }
+
+
     }
 
 

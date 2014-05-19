@@ -19,7 +19,7 @@ namespace FubuMVC.Core.Http.Owin
     public class OwinHttpResponse : IHttpResponse, IDisposable
     {
         private readonly IDictionary<string, object> _environment;
-        private readonly Stream _output;
+        private Stream _output;
 
         public OwinHttpResponse() : this(new Dictionary<string, object>())
         {
@@ -195,6 +195,8 @@ namespace FubuMVC.Core.Http.Owin
             _output.CopyTo(owinOutput);
 
             owinOutput.Flush();
+
+            _output = new MemoryStream();
         }
 
         public Stream Output

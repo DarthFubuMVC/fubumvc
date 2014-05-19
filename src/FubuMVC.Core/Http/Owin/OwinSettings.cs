@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FubuCore.Descriptions;
 using FubuCore.Util;
 using FubuMVC.Core.Http.Owin.Middleware;
 using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
@@ -56,6 +57,60 @@ namespace FubuMVC.Core.Http.Owin
         public void AddMiddleware(MiddlewareNode node)
         {
             Middleware.AddToEnd(node);
+        }
+
+        public AnonymousMiddleware AddMiddleware(AppFunc appFunc)
+        {
+            Func<AppFunc, AppFunc> appFuncSource = inner => {
+                return dict => {
+                    return appFunc(dict).ContinueWith(t => inner.Invoke(dict));
+                };
+            };
+
+            return AddMiddleware(appFuncSource);
+        }
+
+        public AnonymousMiddleware AddMiddleware(Func<AppFunc, AppFunc> appFuncSource)
+        {
+            var node = new AnonymousMiddleware(appFuncSource);
+            AddMiddleware(node);
+
+            return node;
+        }
+    }
+
+    public class AnonymousMiddleware : MiddlewareNode
+    {
+        private readonly Func<AppFunc, AppFunc> _builder;
+        private string _description = "Anonymous Middleware";
+
+        public AnonymousMiddleware(Func<AppFunc, AppFunc> builder)
+        {
+            _builder = builder;
+        }
+
+        public override AppFunc BuildAppFunc(AppFunc inner, IServiceFactory factory)
+        {
+            return _builder(inner);
+        }
+
+        public string Description()
+        {
+            return _description;
+        }
+
+        public void Description(string description)
+        {
+            _description = description;
+        }
+
+        public override Description ToDescription()
+        {
+            return new Description
+            {
+                Title = _description,
+                ShortDescription = "Category: " + Category()
+            };
         }
     }
 }
