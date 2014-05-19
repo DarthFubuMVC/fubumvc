@@ -172,6 +172,7 @@
     <Compile Include="Http\Owin\Middleware\IOwinMiddleware.cs" />
     <Compile Include="Http\Owin\Middleware\MiddlewareChain.cs" />
     <Compile Include="Http\Owin\Middleware\MiddlewareContinuation.cs" />
+    <Compile Include="Http\Owin\Middleware\MiddlewareDeactivator.cs" />
     <Compile Include="Http\Owin\Middleware\MiddlewareNode.cs" />
     <Compile Include="Http\Owin\Middleware\StaticFiles\DenyConfigRule.cs" />
     <Compile Include="Http\Owin\Middleware\StaticFiles\IStaticFileRule.cs" />

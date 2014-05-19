@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Registration.Nodes;
@@ -30,7 +31,7 @@ namespace FubuMVC.Core.Http.Owin.Middleware
         public abstract Description ToDescription();
     }
 
-    public class MiddlewareNode<T> : MiddlewareNode where T : class, IOwinMiddleware
+    public class MiddlewareNode<T> : MiddlewareNode, IDisposable where T : class, IOwinMiddleware
     {
         // TODO -- add other service arguments
         public readonly ServiceArguments Arguments = new ServiceArguments();
@@ -46,6 +47,11 @@ namespace FubuMVC.Core.Http.Owin.Middleware
             return _middleware.Invoke;
         }
 
+        public T Middleware
+        {
+            get { return _middleware; }
+        }
+
         public override Description ToDescription()
         {
             if (_middleware == null)
@@ -57,6 +63,12 @@ namespace FubuMVC.Core.Http.Owin.Middleware
             }
 
             return Description.For(_middleware);
+        }
+
+        public void Dispose()
+        {
+            var disposable = _middleware as IDisposable;
+            disposable.CallIfNotNull(x => x.Dispose());
         }
     }
 }

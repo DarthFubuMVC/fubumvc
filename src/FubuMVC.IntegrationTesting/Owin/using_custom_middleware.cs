@@ -82,9 +82,46 @@ namespace FubuMVC.IntegrationTesting.Owin
 
         }
 
+        [Test]
+        public void disposes_any_disposable_middleware_on_shutdown()
+        {
+            MiddlewareNode<SpecialDisposableMiddleware> node = null;
+
+            using (var server = serverFor(x =>
+            {
+                node = x.AddMiddleware<SpecialDisposableMiddleware>();
+            }))
+            {
+                server.Endpoints.Get<MiddleWareInterceptedEndpoint>(x => x.get_middleware_result())
+                    .ReadAsText().ShouldContain("I'm okay");
+            }
+
+            node.Middleware.IWasDisposed.ShouldBeTrue();
+        }
+
 
     }
 
+    public class SpecialDisposableMiddleware : IOwinMiddleware, IDisposable
+    {
+        private readonly AppFunc _inner;
+        public bool IWasDisposed;
+
+        public SpecialDisposableMiddleware(AppFunc inner)
+        {
+            _inner = inner;
+        }
+
+        public Task Invoke(IDictionary<string, object> environment)
+        {
+            return _inner(environment);
+        }
+
+        public void Dispose()
+        {
+            IWasDisposed = true;
+        }
+    }
 
     public class MiddleWareInterceptedEndpoint
     {

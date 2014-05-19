@@ -1,3 +1,4 @@
+using Bottles;
 using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Conversion;
@@ -12,6 +13,7 @@ using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Compression;
 using FubuMVC.Core.Http.Cookies;
+using FubuMVC.Core.Http.Owin.Middleware;
 using FubuMVC.Core.Projections;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
@@ -33,6 +35,8 @@ namespace FubuMVC.Core
     {
         public CoreServiceRegistry()
         {
+            AddService<IDeactivator, MiddlewareDeactivator>();
+
             SetServiceIfNone<IRequestCompletion, RequestCompletion>();
 
             SetServiceIfNone<IRequestData, FubuMvcRequestData>();
