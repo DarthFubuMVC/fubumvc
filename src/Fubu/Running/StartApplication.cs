@@ -9,6 +9,7 @@ namespace Fubu.Running
         public string PhysicalPath { get; set; }
 
         public bool UseProductionMode { get; set; }
+        public string HtmlHeadInjectedText { get; set; }
 
         public override string ToString()
         {

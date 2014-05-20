@@ -20,6 +20,7 @@ namespace FubuMVC.Core.Http.Owin
         public OwinSettings()
         {
             AddMiddleware<StaticFileMiddleware>();
+            HtmlHeadInjectionMiddleware.ApplyInjection(this);
         }
 
         /// <summary>

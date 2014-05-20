@@ -5,6 +5,7 @@ using Bottles.Diagnostics;
 using Bottles.Services.Messaging;
 using FubuMVC.Core;
 using FubuCore;
+using FubuMVC.Core.Http.Owin.Middleware;
 
 namespace Fubu.Running
 {
@@ -44,6 +45,8 @@ namespace Fubu.Running
         public void Receive(StartApplication message)
         {
             Console.WriteLine("Trying to start application " + message);
+
+            PackageRegistry.Properties[HtmlHeadInjectionMiddleware.TEXT_PROPERTY] = message.HtmlHeadInjectedText;
 
             if (message.UseProductionMode)
             {
