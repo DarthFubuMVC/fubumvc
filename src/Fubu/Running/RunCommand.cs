@@ -13,9 +13,6 @@ namespace Fubu.Running
 
         public override bool Execute(ApplicationRequest input)
         {
-            // TODO -- TEMPORARY JUST TO PROVE THAT THE AUTO HEAD INJECTION WORKS
-            input.AutoRefreshWebSocketsAddress = "ws://foo";
-
             if (input.ExplodeOnlyFlag)
             {
                 var bottleFolder = input.DirectoryFlag.AppendPath(FubuMvcPackageFacility.FubuContentFolder);

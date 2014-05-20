@@ -64,6 +64,8 @@ namespace TestHarnessApp
 
             _document.Add("h1").Text("FubuMVC Demonstrator");
 
+            _document.Add("p").Text("Generated at " + DateTime.Now);
+
             _document.Add("hr");
             _document.Add("h2").Text("Images");
 

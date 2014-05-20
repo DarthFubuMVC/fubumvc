@@ -12,31 +12,12 @@ using FubuCore.CommandLine;
 
 namespace Fubu.Running
 {
-    public interface IBrowserDriver
-    {
-        void OpenBrowserTo(string url);
-        void RefreshPage();
-    }
-
-    public class BrowserDriver : IBrowserDriver
-    {
-        public void OpenBrowserTo(string url)
-        {
-            Process.Start(url);
-        }
-
-        public void RefreshPage()
-        {
-            Console.WriteLine("I should be refreshing now");
-        }
-    }
-
     public class RemoteApplication : IListener<ApplicationStarted>, IListener<InvalidApplication>, IApplicationObserver
     {
         public static readonly FileMatcher FileMatcher;
 
         private readonly ManualResetEvent _reset = new ManualResetEvent(false);
-        private readonly IBrowserDriver _driver = new BrowserDriver();
+        private readonly BrowserDriver _driver = new BrowserDriver();
         private ApplicationRequest _input;
         private bool _opened;
         private RemoteFubuMvcProxy _proxy;
@@ -81,12 +62,16 @@ namespace Fubu.Running
             }
 
             start();
+
+            _driver.RefreshPage();
         }
 
         public void RecycleApplication()
         {
             _watcher.StopWatching();
             _proxy.Recycle();
+
+            _driver.RefreshPage();
         }
 
         public void Receive(ApplicationStarted message)
@@ -94,10 +79,12 @@ namespace Fubu.Running
             Console.WriteLine("Started application {0} at url {1} at {2}", message.ApplicationName, message.HomeAddress,
                               message.Timestamp);
 
+
+
             if (_input.OpenFlag && !_opened)
             {
                 _opened = true;
-                Process.Start(message.HomeAddress);
+                _driver.OpenBrowserTo(message.HomeAddress);
             }
 
             _watcher.StartWatching(_input.DirectoryFlag, message.BottleContentFolders);
@@ -132,6 +119,12 @@ namespace Fubu.Running
         {
             _input = input;
 
+            if (_input.WatchedFlag)
+            {
+                _driver.StartWebSockets();
+                _input.AutoRefreshWebSocketsAddress = _driver.Port.ToString();
+            }
+
             _watcher = new FubuMvcApplicationFileWatcher(this, FileMatcher);
 
             start();
@@ -148,6 +141,7 @@ namespace Fubu.Running
 
         public void Shutdown()
         {
+            _driver.SafeDispose();
             _watcher.StopWatching();
             _proxy.SafeDispose();
         }

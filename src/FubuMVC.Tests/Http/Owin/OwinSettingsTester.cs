@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Web;
 using Bottles;
+using FubuMVC.Core;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Owin.Middleware;
 using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
@@ -35,6 +36,8 @@ namespace FubuMVC.Tests.Http.Owin
         [Test]
         public void create_with_html_head_injection()
         {
+            FubuMode.SetUpForDevelopmentMode();
+
             PackageRegistry.Properties[HtmlHeadInjectionMiddleware.TEXT_PROPERTY] =
                 new HtmlTag("script").Attr("foo", "bar").ToString();
 

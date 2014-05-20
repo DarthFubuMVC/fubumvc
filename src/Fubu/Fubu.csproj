@@ -40,6 +40,9 @@
     <Reference Include="Bottles">
       <HintPath>..\packages\Bottles\lib\Bottles.dll</HintPath>
     </Reference>
+    <Reference Include="Fleck">
+      <HintPath>..\packages\Fleck\lib\net40\Fleck.dll</HintPath>
+    </Reference>
     <Reference Include="FubuCore">
       <HintPath>..\packages\FubuCore\lib\FubuCore.dll</HintPath>
     </Reference>
@@ -98,9 +101,6 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="WebDriver">
-      <HintPath>..\packages\Selenium.WebDriver\lib\net40\WebDriver.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\CommonAssemblyInfo.cs">
@@ -139,6 +139,7 @@
     <Compile Include="Running\ApplicationStarted.cs" />
     <Compile Include="Running\ApplicationSourceFinder.cs" />
     <Compile Include="Running\ApplicationRequest.cs" />
+    <Compile Include="Running\BrowserDriver.cs" />
     <Compile Include="Running\EndsWithPatternMatch.cs" />
     <Compile Include="Running\ExactFileMatch.cs" />
     <Compile Include="Running\ExtensionMatch.cs" />

@@ -20,6 +20,12 @@ namespace Fubu.Running
         {
             set
             {
+                if (value.IsEmpty())
+                {
+                    HtmlHeadInjectedText = null;
+                    return;
+                }
+
                 var text = Assembly.GetExecutingAssembly().GetManifestResourceStream(GetType(), WebSocketsContent)
                     .ReadAllText();
 

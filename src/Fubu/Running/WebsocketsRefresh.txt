@@ -1,3 +1,18 @@
 ﻿<script language="javascript">
-alert('%WEB_SOCKET_ADDRESS%');
+        var start = function () {
+            var wsImpl = window.WebSocket || window.MozWebSocket;
+
+            // create a new websocket and connect
+            window.ws = new wsImpl('ws://localhost:%WEB_SOCKET_ADDRESS%');
+
+            // when data is comming from the server, this metod is called
+            ws.onmessage = function (evt) {
+                location.reload();
+            };
+
+        }
+
+		window.addEventListener('load', function(e){
+			start();
+		});
 </script>
