@@ -128,6 +128,7 @@
     <Compile Include="Running\FileMatcherTester.cs" />
     <Compile Include="Running\FubuMvcApplicationFileWatcherTester.cs" />
     <Compile Include="Running\RemoteFubuMvcBootstrapperTester.cs" />
+    <Compile Include="Running\StartApplicationTester.cs" />
     <Compile Include="usage_graph_smoke_tester.cs" />
   </ItemGroup>
   <ItemGroup>

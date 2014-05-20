@@ -1,0 +1,3 @@
+﻿<script language="javascript">
+alert('%WEB_SOCKET_ADDRESS%');
+</script>
