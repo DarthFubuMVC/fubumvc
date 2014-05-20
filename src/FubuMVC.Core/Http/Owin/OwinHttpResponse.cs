@@ -12,6 +12,7 @@ using FubuCore.Util;
 using FubuMVC.Core.Http.Compression;
 using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Core.Http.Headers;
+using FubuMVC.Core.Runtime;
 using Cookie = FubuMVC.Core.Http.Cookies.Cookie;
 
 namespace FubuMVC.Core.Http.Owin
@@ -19,7 +20,7 @@ namespace FubuMVC.Core.Http.Owin
     public class OwinHttpResponse : IHttpResponse, IDisposable
     {
         private readonly IDictionary<string, object> _environment;
-        private Stream _output;
+        private MemoryStream _output;
 
         public OwinHttpResponse() : this(new Dictionary<string, object>())
         {
@@ -189,14 +190,19 @@ namespace FubuMVC.Core.Http.Owin
         {
             if (_output.Length <= 0) return;
 
-            _output.Position = 0;
-
-            var owinOutput = _environment.Get<Stream>(OwinConstants.ResponseBodyKey);
-            _output.CopyTo(owinOutput);
-
-            owinOutput.Flush();
+            StreamContents(_output);
 
             _output = new MemoryStream();
+        }
+
+        public void StreamContents(MemoryStream recordedStream)
+        {
+            recordedStream.Position = 0;
+
+            var owinOutput = _environment.Get<Stream>(OwinConstants.ResponseBodyKey);
+            recordedStream.CopyTo(owinOutput);
+
+            recordedStream.Flush();
         }
 
         public Stream Output
@@ -226,6 +232,18 @@ namespace FubuMVC.Core.Http.Owin
         {
             return Cookies().FirstOrDefault(x => x.Matches(name));
         }
+
+        public string ContentType()
+        {
+            return HeaderValueFor(HttpResponseHeaders.ContentType).FirstOrDefault();
+        }
+
+        public bool ContentTypeMatches(MimeType mimeType)
+        {
+            return HeaderValueFor(HttpResponseHeaders.ContentType).Any(x => x.EqualsIgnoreCase(mimeType.Value));
+        }
+
+
     }
 
     public class HttpResponseBody

@@ -146,6 +146,7 @@
     <Compile Include="Owin\handling_async_routes.cs" />
     <Compile Include="Owin\handling_a_404.cs" />
     <Compile Include="Owin\Harness.cs" />
+    <Compile Include="Owin\Middleware\HtmlHeadInjectionMiddlewareTester.cs" />
     <Compile Include="Owin\Owin_url_resolution_tester.cs" />
     <Compile Include="Owin\passing_the_FubuMode_into_the_OWIN_host.cs" />
     <Compile Include="Owin\reading_and_writing_json_and_xml_thru_conneg.cs" />
