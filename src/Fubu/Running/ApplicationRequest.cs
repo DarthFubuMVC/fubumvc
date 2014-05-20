@@ -94,5 +94,8 @@ namespace Fubu.Running
 
             return new ChromeDriver();
         }
+
+        [IgnoreOnCommandLine]
+        public string AutoRefreshWebSocketsAddress { get; set; }
     }
 }

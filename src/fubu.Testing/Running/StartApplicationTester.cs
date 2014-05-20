@@ -11,7 +11,7 @@ namespace fubu.Testing.Running
         public void use_web_sockets_address_sets_the_injection_text()
         {
             var start = new StartApplication();
-            start.UseWebSocketsAddress("ws:foo");
+            start.AutoRefreshWebSocketsAddress = "ws:foo";
 
             start.HtmlHeadInjectedText.ShouldContain("ws:foo");
             start.HtmlHeadInjectedText.ShouldContain("<script");

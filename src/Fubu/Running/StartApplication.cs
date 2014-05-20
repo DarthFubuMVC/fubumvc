@@ -16,16 +16,15 @@ namespace Fubu.Running
         public bool UseProductionMode { get; set; }
         public string HtmlHeadInjectedText { get; set; }
 
-        public void UseWebSocketsAddress(string address)
+        public string AutoRefreshWebSocketsAddress
         {
-            Assembly.GetExecutingAssembly().GetManifestResourceNames().Each(x => {
-                Debug.WriteLine(x);
-            });
+            set
+            {
+                var text = Assembly.GetExecutingAssembly().GetManifestResourceStream(GetType(), WebSocketsContent)
+                    .ReadAllText();
 
-            var text = Assembly.GetExecutingAssembly().GetManifestResourceStream(GetType(),WebSocketsContent)
-                .ReadAllText();
-
-            HtmlHeadInjectedText = text.Replace("%WEB_SOCKET_ADDRESS%", address);
+                HtmlHeadInjectedText = text.Replace("%WEB_SOCKET_ADDRESS%", value);
+            }
         }
 
         public override string ToString()

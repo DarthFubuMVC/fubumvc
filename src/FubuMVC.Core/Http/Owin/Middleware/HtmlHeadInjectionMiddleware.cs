@@ -17,6 +17,8 @@ namespace FubuMVC.Core.Http.Owin.Middleware
 
         public static void ApplyInjection(OwinSettings settings)
         {
+            if (!FubuMode.InDevelopment()) return;
+
             var injectedContent = PackageRegistry.Properties[TEXT_PROPERTY];
             if (injectedContent.IsNotEmpty())
             {
