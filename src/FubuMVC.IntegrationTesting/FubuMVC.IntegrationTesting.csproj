@@ -198,6 +198,7 @@
     <Compile Include="UI\ShowEditExpressions_integration_Tester.cs" />
     <Compile Include="Using_a_custom_routing_policy.cs" />
     <Compile Include="Views\Actionless_Views.cs" />
+    <Compile Include="Auto_Import_Model_Namespaces.cs" />
     <Compile Include="Views\LayoutAttachment\Explicit_declaration_of_master_layout.cs" />
     <Compile Include="Views\LayoutAttachment\override_the_default_layout_name.cs" />
     <Compile Include="Views\LayoutAttachment\override_the_shared_folder_name.cs" />
@@ -205,6 +206,7 @@
     <Compile Include="Views\LayoutAttachment\Simple_attachment_of_application_layout.cs" />
     <Compile Include="Views\LayoutAttachment\Use_layout_from_bottle_when_not_in_application.cs" />
     <Compile Include="Views\LayoutAttachment\Use_named_layout_in_closest_shared_folder.cs" />
+    <Compile Include="Views\Razor\can_use_the_auto_imported_namespaces.cs" />
     <Compile Include="Views\Razor\Context_is_usable.cs" />
     <Compile Include="Views\Razor\Do_not_use_layout_if_view_is_being_rendered_as_partial.cs" />
     <Compile Include="Views\Razor\Handles_null_properties.cs" />
@@ -216,6 +218,7 @@
     <Compile Include="Views\Razor\Razor_view_activation_tester.cs" />
     <Compile Include="Views\Razor\Using_Helpers.cs" />
     <Compile Include="Views\Spark\Activation.cs" />
+    <Compile Include="Views\Spark\can_use_namespaces_from_common_view_namespaces.cs" />
     <Compile Include="Views\Spark\Simple_rendering_with_precompilation.cs" />
     <Compile Include="Views\Spark\No_layout_with_use_none.cs" />
     <Compile Include="Views\Spark\Partials.cs" />

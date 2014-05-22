@@ -48,7 +48,7 @@ namespace FubuMVC.Core.Configuration
             {
                 var attacher = new ViewAttachmentWorker(t.Result, graph.Settings.Get<ViewAttachmentPolicy>());
                 attacher.Configure(graph);
-            }).ContinueWith(t => { new AutoImportModelNamespacesConvention().Configure(graph); }).Wait(10.Seconds());
+            }).Wait(10.Seconds());
 
 
             PackageRegistry.Timer.Record("Explicit Configuration", () => config.Global.Explicits.RunActions(graph));
@@ -67,6 +67,7 @@ namespace FubuMVC.Core.Configuration
             Task.WaitAll(registration, layoutAttachmentTasks, assetDiscovery);
             Task.WaitAll(layoutAttachmentTasks.Result);
 
+            new AutoImportModelNamespacesConvention().Configure(graph);
 
             return graph;
         }

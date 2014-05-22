@@ -23,6 +23,9 @@ namespace FubuMVC.Core.View
                     AddImport(settings, () => a.OutputType().Namespace);
                 }
             });
+
+            var viewEngines = graph.Settings.Get<ViewEngineSettings>();
+            viewEngines.Facilities.Each(x => x.ReadSharedNamespaces(settings));
         }
 
         private void AddImport(CommonViewNamespaces commonViewNamespaces, Func<string> namespaceSelector)

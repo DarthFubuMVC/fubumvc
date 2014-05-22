@@ -41,5 +41,10 @@ namespace FubuMVC.Razor
             namespaces.AddForType<RazorViewFacility>(); // FubuMVC.Razor
             namespaces.AddForType<IPartialInvoker>(); // FubuMVC.Core.UI
         }
+
+        public override void ReadSharedNamespaces(CommonViewNamespaces namespaces)
+        {
+            // nothing
+        }
     }
 }

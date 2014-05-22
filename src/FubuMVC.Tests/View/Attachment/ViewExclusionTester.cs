@@ -83,6 +83,10 @@ namespace FubuMVC.Tests.View.Attachment
         public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
         {
         }
+
+        public void ReadSharedNamespaces(CommonViewNamespaces namespaces)
+        {
+        }
     }
 
     public class FakeViewEngine2 : IViewFacility
@@ -130,6 +134,10 @@ namespace FubuMVC.Tests.View.Attachment
         }
 
         public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
+        {
+        }
+
+        public void ReadSharedNamespaces(CommonViewNamespaces namespaces)
         {
         }
     }

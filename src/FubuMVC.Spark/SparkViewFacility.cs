@@ -82,11 +82,13 @@ namespace FubuMVC.Spark
                 .AddNamespace(typeof (SparkViewFacility).Namespace) // FubuMVC.Spark
                 .AddNamespace(typeof (HtmlTag).Namespace); // HtmlTags 
 
-            var namespaces = graph.Settings.Get<CommonViewNamespaces>();
-            namespaces.Namespaces.Each(x => _sparkSettings.AddNamespace(x));
-
             var engineSettings = graph.Settings.Get<SparkEngineSettings>();
             engineSettings.UseNamespaces.Each(ns => _sparkSettings.AddNamespace(ns));
+        }
+
+        public override void ReadSharedNamespaces(CommonViewNamespaces namespaces)
+        {
+            namespaces.Namespaces.Each(x => _sparkSettings.AddNamespace(x));
         }
 
         protected override void registerServices(ServiceRegistry services)

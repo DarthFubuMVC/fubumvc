@@ -65,6 +65,8 @@ namespace FubuMVC.Core.View.Model
             _bottles.Each(x => x.AttachViewModels(types, logger));
         }
 
+        public abstract void ReadSharedNamespaces(CommonViewNamespaces namespaces);
+
         public void AttachLayouts(ViewEngineSettings settings)
         {
             _bottles.Each(x => x.AttachLayouts(settings.ApplicationLayoutName));

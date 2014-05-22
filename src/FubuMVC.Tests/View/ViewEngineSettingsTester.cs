@@ -198,6 +198,11 @@ namespace FubuMVC.Tests.View
             {
                 throw new NotImplementedException();
             }
+
+            public void ReadSharedNamespaces(CommonViewNamespaces namespaces)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

@@ -23,5 +23,7 @@ namespace FubuMVC.Core.View
         Task LayoutAttachment { get; }
 
         void AttachViewModels(ViewTypePool types, ITemplateLogger logger);
+
+        void ReadSharedNamespaces(CommonViewNamespaces namespaces);
     }
 }
