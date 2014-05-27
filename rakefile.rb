@@ -72,7 +72,7 @@ task :create_gem => [:compile] do
 	spec = Gem::Specification.new do |s|
 	  s.platform    = Gem::Platform::RUBY
 	  s.name        = 'fubu'
-	  s.version     = @solution.options[:build_number]
+	  s.version     = @solution.options[:build_number] + '.alpha'
 	  s.files = Dir['bin/**/*']
 	  s.bindir = 'bin'
 	  s.executables << 'fubu'
