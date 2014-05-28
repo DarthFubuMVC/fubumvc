@@ -24,13 +24,20 @@ namespace FubuMVC.Tests.Assets
         }
 
         [Test]
+        public void exclusions_includes_node_modules()
+        {
+            var settings = new AssetSettings();
+            settings.Exclusions.ShouldStartWith("node_modules/*");
+        }
+
+        [Test]
         public void add_exclusions()
         {
             var settings = new AssetSettings();
             settings.Exclude("something.js");
             settings.Exclude("node-content");
 
-            settings.CreateAssetSearch().Exclude.ShouldEqual("something.js;node-content");
+            settings.CreateAssetSearch().Exclude.ShouldEqual("node_modules/*;something.js;node-content");
         }
 
         [Test]

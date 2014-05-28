@@ -36,6 +36,8 @@ namespace FubuMVC.Core.Assets
                 Headers[HttpResponseHeaders.CacheControl] = () => cacheHeader;
                 Headers[HttpResponseHeaders.Expires] = () => DateTime.UtcNow.AddSeconds(MaxAgeInSeconds).ToString("R");
             }
+
+            Exclude("node_modules/*");
         }
 
         public readonly IList<CdnAsset> CdnAssets = new List<CdnAsset>(); 
@@ -48,9 +50,9 @@ namespace FubuMVC.Core.Assets
                     var graph = new AssetGraph();
                     var settings = t.Result;
 
-                    var search = settings.CreateAssetSearch();
+                    var files = findAssetFiles(behaviorGraph, settings);
 
-                    graph.Add(behaviorGraph.Files.FindFiles(search).Select(x => new Asset(x)));
+                    graph.Add(files.Select(x => new Asset(x)));
 
                     settings.Aliases.AllKeys.Each(alias => graph.StoreAlias(alias, settings.Aliases[alias]));
 
@@ -60,7 +62,17 @@ namespace FubuMVC.Core.Assets
                 });
         }
 
+        
+
+        private static IEnumerable<IFubuFile> findAssetFiles(BehaviorGraph behaviorGraph, AssetSettings settings)
+        {
+            var search = settings.CreateAssetSearch();
+            var files = behaviorGraph.Files.FindFiles(search);
+            return files;
+        }
+
         public string Exclusions = null;
+
 
         public void Exclude(string content)
         {
