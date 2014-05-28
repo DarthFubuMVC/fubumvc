@@ -57,7 +57,7 @@ namespace FubuMVC.Core.Assets
         /// <param name="scripts"></param>
         public static TagList Script(this IFubuPage page, params string[] scripts)
         {
-            return page.Get<IAssetTagBuilder>().BuildScriptTags(scripts).ToTagList();
+            return page.Get<IAssetTagBuilder>().BuildScriptTags(scripts).ToArray().ToTagList();
         }
 
 
@@ -68,7 +68,7 @@ namespace FubuMVC.Core.Assets
         /// <param name="cssNames"></param>
         public static TagList Css(this IFubuPage page, params string[] cssNames)
         {
-            return page.Get<IAssetTagBuilder>().BuildStylesheetTags(cssNames).ToTagList();
+            return page.Get<IAssetTagBuilder>().BuildStylesheetTags(cssNames).ToArray().ToTagList();
         }
 
 
