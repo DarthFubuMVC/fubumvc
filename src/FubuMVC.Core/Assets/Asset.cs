@@ -30,5 +30,10 @@ namespace FubuMVC.Core.Assets
 
             Url = file.RelativePath.Replace("\\", "/").TrimStart('/');
         }
+
+        public override string ToString()
+        {
+            return string.Format("Filename: {0}, Url: {1}, MimeType: {2}", Filename, Url, MimeType.Value);
+        }
     }
 }

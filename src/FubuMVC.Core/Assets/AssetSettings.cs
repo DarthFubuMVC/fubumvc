@@ -27,7 +27,14 @@ namespace FubuMVC.Core.Assets
 
     public enum SearchMode
     {
+        /// <summary>
+        /// Use assets from any location in either the application or loaded Bottles
+        /// </summary>
         Anywhere,
+
+        /// <summary>
+        /// Limits the asset sourcing to the files under the PublicFolder/[Version] folder
+        /// </summary>
         PublicFolderOnly
     }
 
@@ -37,6 +44,9 @@ namespace FubuMVC.Core.Assets
     [Description("Allow read access to javascript, css, image, and html files")]
     public class AssetSettings : IStaticFileRule
     {
+        /// <summary>
+        /// The default maximum age in seconds to cache an asset in production mode. 1 day.
+        /// </summary>
         public int MaxAgeInSeconds = 24*60*60;
 
         public AssetSettings()
@@ -56,6 +66,9 @@ namespace FubuMVC.Core.Assets
 
         }
 
+        /// <summary>
+        /// Add assets that will be sourced by CDN
+        /// </summary>
         public readonly IList<CdnAsset> CdnAssets = new List<CdnAsset>(); 
 
         // This is tested through integration tests
@@ -78,7 +91,11 @@ namespace FubuMVC.Core.Assets
                 });
         }
 
-
+        /// <summary>
+        /// Used internally to determine the public folder if the mode is set to
+        /// PublicFolderOnly
+        /// </summary>
+        /// <returns></returns>
         public string DeterminePublicFolder()
         {
             var candidate = FubuMvcPackageFacility.GetApplicationPath().AppendPath(PublicFolder);
@@ -127,13 +144,21 @@ namespace FubuMVC.Core.Assets
 
         public string Exclusions = null;
 
-
+        /// <summary>
+        /// Exclude a file by name or an entire sub folder with the syntax '[folder]/*'
+        /// 'node_modules' is excluded by default
+        /// </summary>
+        /// <param name="content"></param>
         public void Exclude(string content)
         {
             Exclusions += string.Empty + ";" + content;
             Exclusions = Exclusions.TrimStart(';');
         }
 
+        /// <summary>
+        /// Used internally to build up the file search for assets
+        /// </summary>
+        /// <returns></returns>
         public FileSet CreateAssetSearch()
         {
             var extensions = assetMimeTypes().SelectMany(x => x.Extensions).Union(AllowableExtensions).Select(x => "*" + x).Join(";");
@@ -152,6 +177,9 @@ namespace FubuMVC.Core.Assets
             }
         }
 
+        /// <summary>
+        /// Add name aliases for assets like "jquery" = "jquery.1.18.min.js"
+        /// </summary>
         public readonly NameValueCollection Aliases = new NameValueCollection();
 
 
@@ -171,6 +199,10 @@ namespace FubuMVC.Core.Assets
             return AuthorizationRight.None;
         }
 
+        /// <summary>
+        /// Configure more allowable static files if you need to customize what
+        /// files are allowed to be served via http
+        /// </summary>
         public readonly IList<IStaticFileRule> StaticFileRules
             = new List<IStaticFileRule> {new DenyConfigRule()};
 
@@ -179,15 +211,30 @@ namespace FubuMVC.Core.Assets
             return AuthorizationRight.Combine(StaticFileRules.UnionWith(this).Select(x => x.IsAllowed(file)));
         }
 
+        /// <summary>
+        /// The Http headers to be written when serving up static files
+        /// </summary>
         public readonly Cache<string, Func<string>> Headers = new Cache<string, Func<string>>();
 
 
-
+        /// <summary>
+        /// Default is 'public'. Establishes the public folder if you are publishing all assets to one folder at build time
+        /// </summary>
         public string PublicFolder { get; set; }
+
+        /// <summary>
+        /// Defines the published version of the assets and uses this string to find the public asset folder. Is ignored if the [public]/[version] folder does not exist. Default is null.
+        /// </summary>
         public string Version { get; set; }
 
+        /// <summary>
+        /// Switch between serving assets from anywhere and assets from only the public folder. Default is Anywhere.
+        /// </summary>
         public SearchMode Mode { get; set; }
 
+        /// <summary>
+        /// Add additional file extensions as allowable assets
+        /// </summary>
         public IList<string> AllowableExtensions = new List<string>{".eot", ".ttf", ".woff"};
     }
 }
