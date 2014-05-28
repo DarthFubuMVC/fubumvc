@@ -1,10 +1,12 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
+using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Security;
 using FubuTestingSupport;
@@ -21,6 +23,24 @@ namespace FubuMVC.Tests.Assets
         public void SetUp()
         {
             theRule = new AssetSettings().As<IStaticFileRule>();
+        }
+
+        [Test]
+        public void public_folder_is_public()
+        {
+            new AssetSettings().PublicFolder.ShouldEqual("public");
+        }
+
+        [Test]
+        public void mode_is_anywhere_by_default()
+        {
+            new AssetSettings().Mode.ShouldEqual(SearchMode.Anywhere);
+        }
+
+        [Test]
+        public void version_should_be_null_by_default()
+        {
+            new AssetSettings().Version.ShouldBeNull();
         }
 
         [Test]
@@ -126,6 +146,60 @@ namespace FubuMVC.Tests.Assets
             FubuMode.SetUpForDevelopmentMode();
 
             new AssetSettings().Headers.GetAllKeys().Any().ShouldBeFalse();
+        }
+
+        [Test]
+        public void determine_the_public_folder_with_no_version()
+        {
+            new FileSystem().CreateDirectory(FubuMvcPackageFacility.GetApplicationPath().AppendPath("public").ToFullPath());
+
+            var settings = new AssetSettings
+            {
+                Version = null
+            };
+
+            settings.DeterminePublicFolder().ShouldEqual(FubuMvcPackageFacility.GetApplicationPath().AppendPath("public"));
+        }
+
+        [Test]
+        public void determine_the_public_folder_blows_up_when_the_folder_does_not_exist()
+        {
+
+            Exception<InvalidOperationException>.ShouldBeThrownBy(() => {
+                var settings = new AssetSettings
+                {
+                    PublicFolder = Guid.NewGuid().ToString()
+                };
+
+                settings.DeterminePublicFolder();
+            });
+        }
+
+        [Test]
+        public void determine_the_public_folder_with_a_non_null_but_nonexistent_version()
+        {
+            new FileSystem().CreateDirectory(FubuMvcPackageFacility.GetApplicationPath().AppendPath("public").ToFullPath());
+
+            var settings = new AssetSettings
+            {
+                Version = Guid.NewGuid().ToString()
+            };
+
+            settings.DeterminePublicFolder().ShouldEqual(FubuMvcPackageFacility.GetApplicationPath().AppendPath("public").ToFullPath());
+        }
+
+        [Test]
+        public void determine_the_public_folder_when_the_version_does_exist()
+        {
+            new FileSystem().CreateDirectory(FubuMvcPackageFacility.GetApplicationPath().AppendPath("public").ToFullPath());
+            new FileSystem().CreateDirectory(FubuMvcPackageFacility.GetApplicationPath().AppendPath("public", "1.0.1").ToFullPath());
+
+            var settings = new AssetSettings
+            {
+                Version = "1.0.1"
+            };
+
+            settings.DeterminePublicFolder().ShouldEqual(FubuMvcPackageFacility.GetApplicationPath().AppendPath("public", "1.0.1").ToFullPath());
         }
     }
 

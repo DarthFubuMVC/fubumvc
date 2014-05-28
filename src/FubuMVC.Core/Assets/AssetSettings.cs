@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Bottles;
@@ -9,6 +10,7 @@ using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
+using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Files;
@@ -22,6 +24,15 @@ namespace FubuMVC.Core.Assets
         public string Fallback;
         public string File;
     }
+
+    public enum SearchMode
+    {
+        Anywhere,
+        PublicFolderOnly
+    }
+
+    
+
 
     [Description("Allow read access to javascript, css, image, and html files")]
     public class AssetSettings : IStaticFileRule
@@ -38,6 +49,9 @@ namespace FubuMVC.Core.Assets
             }
 
             Exclude("node_modules/*");
+
+            Mode = SearchMode.Anywhere;
+            PublicFolder = "public";
         }
 
         public readonly IList<CdnAsset> CdnAssets = new List<CdnAsset>(); 
@@ -62,12 +76,36 @@ namespace FubuMVC.Core.Assets
                 });
         }
 
+
+        public string DeterminePublicFolder()
+        {
+            var candidate = FubuMvcPackageFacility.GetApplicationPath().AppendPath(PublicFolder);
+
+            if (Version.IsNotEmpty())
+            {
+                var versioned = candidate.AppendPath(Version);
+                if (Directory.Exists(versioned))
+                {
+                    candidate = versioned;
+                }
+            }
+
+            if (!Directory.Exists(candidate))
+            {
+                throw new InvalidOperationException("The designated public asset folder '{0}' cannot be found".ToFormat(candidate));
+            }
+
+            return candidate;
+        }
         
 
         private static IEnumerable<IFubuFile> findAssetFiles(BehaviorGraph behaviorGraph, AssetSettings settings)
         {
+
+
             var search = settings.CreateAssetSearch();
             var files = behaviorGraph.Files.FindFiles(search);
+
             return files;
         }
 
@@ -126,5 +164,12 @@ namespace FubuMVC.Core.Assets
         }
 
         public readonly Cache<string, Func<string>> Headers = new Cache<string, Func<string>>();
+
+
+
+        public string PublicFolder { get; set; }
+        public string Version { get; set; }
+
+        public SearchMode Mode { get; set; }
     }
 }
