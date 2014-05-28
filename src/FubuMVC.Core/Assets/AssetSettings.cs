@@ -97,16 +97,30 @@ namespace FubuMVC.Core.Assets
 
             return candidate;
         }
+
+        
         
 
         private static IEnumerable<IFubuFile> findAssetFiles(BehaviorGraph behaviorGraph, AssetSettings settings)
         {
-
-
             var search = settings.CreateAssetSearch();
-            var files = behaviorGraph.Files.FindFiles(search);
 
-            return files;
+            if (settings.Mode == SearchMode.PublicFolderOnly)
+            {
+                var publicFolder = settings.DeterminePublicFolder();
+                var appFolder = FubuMvcPackageFacility.GetApplicationPath();
+
+                return new FileSystem().FindFiles(publicFolder, search)
+                    .Select(x => {
+                        return new FubuFile(x, ContentFolder.Application)
+                        {
+                            RelativePath = x.PathRelativeTo(appFolder)
+                        };
+                    });
+            }
+
+
+            return behaviorGraph.Files.FindFiles(search);
         }
 
         public string Exclusions = null;

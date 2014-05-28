@@ -9,6 +9,7 @@ using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Security;
+using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -209,9 +210,9 @@ namespace FubuMVC.Tests.Assets
         private FileSet search = new AssetSettings().CreateAssetSearch();
 
         [Test]
-        public void exclude_should_be_null()
+        public void exclude_should_include_node_modules()
         {
-            search.Exclude.ShouldBeNull();
+            search.Exclude.ShouldEqual("node_modules/*");
         }
 
         [Test]
@@ -242,6 +243,40 @@ namespace FubuMVC.Tests.Assets
             search.Include.ShouldContain("*.jpeg");
         }
 
+        [Test]
+        public void find_files_for_public_folder_only()
+        {
+            var registry = new FubuRegistry();
+            registry.AlterSettings<AssetSettings>(x => {
+                x.Mode = SearchMode.PublicFolderOnly;
+            });
 
+            using (var runtime = FubuApplication.For(registry).StructureMap().Bootstrap())
+            {
+                var graph = runtime.Factory.Get<IAssetGraph>();
+                graph.Assets.OrderBy(x => x.Url).Select(x => x.Url)
+                    .ShouldHaveTheSameElementsAs("public/1.0.1/d.js", "public/1.0.1/e.js", "public/1.0.1/f.js", "public/javascript/a.js", "public/javascript/b.js", "public/javascript/c.js");
+
+            }
+        }
+
+        [Test]
+        public void find_files_for_public_folder_with_version()
+        {
+            var registry = new FubuRegistry();
+            registry.AlterSettings<AssetSettings>(x =>
+            {
+                x.Mode = SearchMode.PublicFolderOnly;
+                x.Version = "1.0.1";
+            });
+
+            using (var runtime = FubuApplication.For(registry).StructureMap().Bootstrap())
+            {
+                var graph = runtime.Factory.Get<IAssetGraph>();
+                graph.Assets.OrderBy(x => x.Url).Select(x => x.Url)
+                    .ShouldHaveTheSameElementsAs("public/1.0.1/d.js", "public/1.0.1/e.js", "public/1.0.1/f.js");
+
+            } 
+        }
     }
 }

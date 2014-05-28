@@ -453,6 +453,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="public\1.0.1\d.js" />
+    <Content Include="public\1.0.1\e.js" />
+    <Content Include="public\1.0.1\f.js" />
+    <Content Include="public\javascript\a.js" />
+    <Content Include="public\javascript\b.js" />
+    <Content Include="public\javascript\c.js" />
     <Content Include="Runtime\Files\Data\a.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
