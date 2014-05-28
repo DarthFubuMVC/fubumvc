@@ -63,7 +63,7 @@ namespace FubuMVC.Core.Runtime
 
         public void AddExtension(string extension)
         {
-            _extensions.Add(extension);
+            _extensions.Fill(extension);
         }
 
         public override string ToString()

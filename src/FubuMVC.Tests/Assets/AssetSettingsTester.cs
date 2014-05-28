@@ -202,6 +202,18 @@ namespace FubuMVC.Tests.Assets
 
             settings.DeterminePublicFolder().ShouldEqual(FubuMvcPackageFacility.GetApplicationPath().AppendPath("public", "1.0.1").ToFullPath());
         }
+
+        [Test]
+        public void default_allowable_mimetypes_includes_fonts()
+        {
+            var settings = new AssetSettings();
+            var search = settings.CreateAssetSearch();
+
+            search.Include.ShouldContain(".svg");
+            search.Include.ShouldContain(".eot");
+            search.Include.ShouldContain(".ttf");
+            search.Include.ShouldContain(".woff");
+        }
     }
 
     [TestFixture]

@@ -52,6 +52,8 @@ namespace FubuMVC.Core.Assets
 
             Mode = SearchMode.Anywhere;
             PublicFolder = "public";
+
+
         }
 
         public readonly IList<CdnAsset> CdnAssets = new List<CdnAsset>(); 
@@ -134,7 +136,7 @@ namespace FubuMVC.Core.Assets
 
         public FileSet CreateAssetSearch()
         {
-            var extensions = assetMimeTypes().SelectMany(x => x.Extensions).Select(x => "*" + x).Join(";");
+            var extensions = assetMimeTypes().SelectMany(x => x.Extensions).Union(AllowableExtensions).Select(x => "*" + x).Join(";");
 
             return FileSet.Deep(extensions, Exclusions);
         }
@@ -185,5 +187,7 @@ namespace FubuMVC.Core.Assets
         public string Version { get; set; }
 
         public SearchMode Mode { get; set; }
+
+        public IList<string> AllowableExtensions = new List<string>{".eot", ".ttf", ".woff"};
     }
 }
