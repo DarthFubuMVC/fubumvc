@@ -106,6 +106,7 @@
     <Compile Include="Assets\asset_writing_headers_are_configurable.cs" />
     <Compile Include="Assets\asset_writing_in_development.cs" />
     <Compile Include="Assets\asset_writing_in_production.cs" />
+    <Compile Include="Assets\determine_the_public_asset_folder.cs" />
     <Compile Include="Assets\FindingAndResolving\Adding_CDN_Assets.cs" />
     <Compile Include="Assets\FindingAndResolving\aliasing_assets.cs" />
     <Compile Include="Assets\FindingAndResolving\Asset_graph_building_and_resolving_with_defaults.cs" />
@@ -355,6 +356,12 @@
     <Content Include="content\styles\redmond\jquery.ui.theme.css" />
     <Content Include="content\styles\ui.multiselect.css" />
     <Content Include="Files\1.txt" />
+    <Content Include="public\1.0.1\d.js" />
+    <Content Include="public\1.0.1\e.js" />
+    <Content Include="public\1.0.1\f.js" />
+    <Content Include="public\javascript\a.js" />
+    <Content Include="public\javascript\b.js" />
+    <Content Include="public\javascript\c.js" />
     <Content Include="ReadMe.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -5,6 +5,7 @@ using System.Web.UI;
 using FubuCore;
 using FubuMVC.Core.Assets.JavascriptRouting;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Packaging;
 using FubuMVC.Core.View;
 using HtmlTags;
 
@@ -129,6 +130,21 @@ namespace FubuMVC.Core.Assets
             tag.Text("\n{0} = {1};\n".ToFormat(groupName, JsonUtil.ToJson(dict)));
 
             return tag;
+        }
+
+        public static string PublicAssetFolder(this IFubuPage page)
+        {
+            var settings = page.Get<AssetSettings>();
+            if (settings.PublicAssetFolder.IsEmpty())
+            {
+                var directory = settings.DeterminePublicFolder();
+                var relativePath = directory.PathRelativeTo(FubuMvcPackageFacility.GetApplicationPath())
+                    .Replace('\\', '/');
+
+                settings.PublicAssetFolder = page.Get<IHttpRequest>().ToFullUrl(relativePath);
+            }
+
+            return settings.PublicAssetFolder;
         }
     }
 

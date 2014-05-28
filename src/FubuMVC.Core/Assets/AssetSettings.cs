@@ -49,6 +49,8 @@ namespace FubuMVC.Core.Assets
         /// </summary>
         public int MaxAgeInSeconds = 24*60*60;
 
+
+
         public AssetSettings()
         {
             if (!FubuMode.InDevelopment())
@@ -63,8 +65,9 @@ namespace FubuMVC.Core.Assets
             Mode = SearchMode.Anywhere;
             PublicFolder = "public";
 
-
         }
+
+        internal string PublicAssetFolder ;
 
         /// <summary>
         /// Add assets that will be sourced by CDN
@@ -236,5 +239,7 @@ namespace FubuMVC.Core.Assets
         /// Add additional file extensions as allowable assets
         /// </summary>
         public IList<string> AllowableExtensions = new List<string>{".eot", ".ttf", ".woff"};
+
+
     }
 }
