@@ -139,6 +139,15 @@ namespace FubuMVC.Core.View
             var facility = _facilities.Single(x => x.TemplateType == typeof (T)).As<ViewFacility<T>>();
             return facility.FindPartial(template, name);
         }
+
+
+        private readonly string[] _ignoredFolders = new[] { "bin", "obj", "fubu-content", "node_modules" };
+        public bool FolderShouldBeIgnored(string folder)
+        {
+            var segment = folder.Replace('\\', '/').Trim('/').Split('/').Last();
+
+            return _ignoredFolders.Any(x => x.EqualsIgnoreCase(segment));
+        }
     }
 
     /// <summary>
@@ -175,5 +184,7 @@ namespace FubuMVC.Core.View
         {
             return string.Format("ViewTokenPolicy: {0}", _description);
         }
+
+
     }
 }

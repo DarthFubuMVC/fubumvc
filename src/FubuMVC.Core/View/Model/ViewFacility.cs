@@ -126,5 +126,7 @@ namespace FubuMVC.Core.View.Model
         {
             return _bottles.SelectMany(x => x.SharedPaths()).ToArray();
         }
+
+
     }
 }

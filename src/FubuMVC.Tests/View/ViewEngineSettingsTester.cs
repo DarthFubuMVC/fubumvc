@@ -70,6 +70,26 @@ namespace FubuMVC.Tests.View
             _runner.IsSharedFolder("Layouts2").ShouldBeTrue();
         }
 
+        [Test]
+        public void should_ignore_folders()
+        {
+            var settings = new ViewEngineSettings();
+            settings.FolderShouldBeIgnored("/foo/fubu-content/").ShouldBeTrue();
+            settings.FolderShouldBeIgnored("/foo/fubu-content").ShouldBeTrue();
+            settings.FolderShouldBeIgnored("fubu-content").ShouldBeTrue();
+            settings.FolderShouldBeIgnored("bin").ShouldBeTrue();
+            settings.FolderShouldBeIgnored("obj").ShouldBeTrue();
+            settings.FolderShouldBeIgnored("node_modules").ShouldBeTrue();
+            settings.FolderShouldBeIgnored("node_modules/").ShouldBeTrue();
+            settings.FolderShouldBeIgnored("/foo/node_modules/").ShouldBeTrue();
+            settings.FolderShouldBeIgnored("/foo/bar/node_modules/").ShouldBeTrue();
+
+            settings.FolderShouldBeIgnored("ok").ShouldBeFalse();
+            settings.FolderShouldBeIgnored("ok/").ShouldBeFalse();
+            settings.FolderShouldBeIgnored("/ok").ShouldBeFalse();
+            settings.FolderShouldBeIgnored("/ok/good/alright").ShouldBeFalse();
+        }
+
         public class TestViewToken : ITemplateFile
         {
             public IRenderableView GetView()
