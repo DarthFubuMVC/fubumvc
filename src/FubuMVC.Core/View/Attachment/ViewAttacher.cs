@@ -8,6 +8,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime.Conditionals;
+using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.View.Attachment
 {
@@ -43,7 +44,9 @@ namespace FubuMVC.Core.View.Attachment
             if (view.ViewModel.HasAttribute<UrlPatternAttribute>())
             {
                 var url = view.ViewModel.GetAttribute<UrlPatternAttribute>().Pattern;
-                return new RoutedChain(new RouteDefinition(url), view.ViewModel, view.ViewModel);
+                var chain = new RoutedChain(new RouteDefinition(url), view.ViewModel, view.ViewModel);
+                chain.UrlCategory.Category = Categories.VIEW;
+                return chain;
             }
 
             return BehaviorChain.ForResource(view.ViewModel);
