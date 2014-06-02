@@ -33,7 +33,7 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public BehaviorChain()
         {
-            
+            UrlCategory = new UrlCategory();
 
             _output = new Lazy<OutputNode>(() =>
             {
@@ -158,12 +158,16 @@ namespace FubuMVC.Core.Registration.Nodes
             }
         }
 
+        /// <summary>
+        ///   Categorizes this BehaviorChain for the IUrlRegistry and 
+        ///   IEndpointService UrlFor(***, category) methods
+        /// </summary>
+        public UrlCategory UrlCategory { get; private set; }
+
+
         public virtual string Category
         {
-            get
-            {
-                return null;
-            }
+            get { return UrlCategory == null ? null : UrlCategory.Category; }
         }
 
         ObjectDef IContainerModel.ToObjectDef()
@@ -331,6 +335,8 @@ namespace FubuMVC.Core.Registration.Nodes
         public virtual bool MatchesCategoryOrHttpMethod(string categoryOrHttpMethod)
         {
             if (categoryOrHttpMethod == Categories.DEFAULT) return true;
+
+            if (categoryOrHttpMethod.EqualsIgnoreCase(Category)) return true;
 
             return IsTagged(categoryOrHttpMethod);
         }

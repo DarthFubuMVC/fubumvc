@@ -1,5 +1,13 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using FubuMVC.Core;
+using FubuMVC.Core.Ajax;
+using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Querying;
+using FubuMVC.Core.Urls;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Views
@@ -22,6 +30,12 @@ I am in the view w/ partials
 ");
         }
 
+        [Test]
+        public void action_less_view_has_UrlCategory_for_VIEW()
+        {
+            BehaviorGraph.Behaviors.Single(x => typeof (ActionlessView1) == x.InputType())
+                .Category.ShouldEqual(Categories.VIEW);
+        }
 
         [Test]
         public void actionless_view_is_a_full_route_with_the_url_pattern_in_Spark()
@@ -40,8 +54,27 @@ I am in the view w/ partials
         }
 
         [Test]
+        public void can_resolve_actionless_views_from_partial_invoker_by_category()
+        {
+            BehaviorGraph.Behaviors.Where(x => x.InputType() == typeof (ActionlessView3))
+                .Each(x => Debug.WriteLine("Category is " + x.Category));
+
+            var chain = Services.GetInstance<IChainResolver>().Find(new ChainSearch
+            {
+                CategoryMode = CategorySearchMode.Relaxed,
+                CategoryOrHttpMethod = Categories.VIEW,
+                Type = typeof(ActionlessView3),
+                TypeMode = TypeSearchMode.Any
+            });
+
+            chain.ShouldNotBeNull();
+        }
+
+        [Test]
         public void can_use_actionless_views_as_partials_if_they_have_no_url_pattern()
         {
+
+
             Scenario.Get.Input<ActionlessViewWithPartials>();
 
             Scenario.ContentShouldContain("I am in the view w/ partials");
@@ -68,4 +101,13 @@ I am in the view w/ partials
     }
 
     public class ActionlessView3{}
+
+
+    public class ActionlessViewAjaxEndpoint
+    {
+        public AjaxContinuation get_alternative_for_actionless_view(ActionlessView3 input)
+        {
+            return AjaxContinuation.Successful();
+        }
+    }
 }

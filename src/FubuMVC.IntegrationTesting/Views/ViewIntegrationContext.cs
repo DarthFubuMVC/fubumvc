@@ -12,6 +12,7 @@ using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Scenarios;
 using FubuMVC.Core.Packaging;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Attachment;
 using FubuMVC.Core.View.Model;
@@ -88,6 +89,14 @@ namespace FubuMVC.IntegrationTesting.Views
             get
             {
                 return _host.Services;
+            }
+        }
+
+        protected BehaviorGraph BehaviorGraph
+        {
+            get
+            {
+                return Services.GetInstance<BehaviorGraph>();
             }
         }
 

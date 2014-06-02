@@ -25,7 +25,7 @@ namespace FubuMVC.Core.UI
             }
 
             page.Get<IFubuRequest>().Set(model);
-            return new HtmlString(InvokePartial<TInputModel>(page, null));
+            return new HtmlString(InvokePartial<TInputModel>(page, categoryOrHttpMethod));
         }
 
         public static string InvokePartial<TInputModel>(IFubuPage page, string prefix, string categoryOrHttpMethod = null) where TInputModel : class

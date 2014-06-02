@@ -33,7 +33,7 @@ namespace FubuMVC.Core.UI
         {
             var output = string.Empty;
             var input = _request.Get<T>();
-            if (_authorization.IsAuthorized(input))
+            if (_authorization.IsAuthorized(input, categoryOrHttpMethod))
             {
                 output = invokeWrapped(typeof(T), categoryOrHttpMethod);
             }

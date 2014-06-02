@@ -153,7 +153,7 @@ namespace FubuMVC.Tests.UI
             theAction = MockFor<IActionBehavior>();
 
             MockFor<IFubuRequest>().Stub(x => x.Get<PartialInputModel>()).Return(theInput);
-            MockFor<IAuthorizationPreviewService>().Expect(x => x.IsAuthorized(theInput)).Return(true);
+            MockFor<IAuthorizationPreviewService>().Expect(x => x.IsAuthorized(theInput, null)).Return(true);
 
 
             theChain = new BehaviorChain();
@@ -210,7 +210,7 @@ namespace FubuMVC.Tests.UI
             theAction = MockFor<IActionBehavior>();
 
             MockFor<IFubuRequest>().Stub(x => x.Get<PartialInputModel>()).Return(theInput);
-            MockFor<IAuthorizationPreviewService>().Expect(x => x.IsAuthorized(theInput)).Return(false);
+            MockFor<IAuthorizationPreviewService>().Expect(x => x.IsAuthorized(theInput, null)).Return(false);
 
             theChain = new BehaviorChain();
             MockFor<IChainResolver>().Stub(x => x.FindUniqueByType(typeof (PartialInputModel), Categories.VIEW)).Return(theChain);
@@ -317,7 +317,7 @@ namespace FubuMVC.Tests.UI
             theAction = MockFor<IActionBehavior>();
 
             MockFor<IFubuRequest>().Stub(x => x.Get<PartialInputModel>()).Return(theInput);
-            MockFor<IAuthorizationPreviewService>().Expect(x => x.IsAuthorized(theInput)).Return(true);
+            MockFor<IAuthorizationPreviewService>().Expect(x => x.IsAuthorized(theInput, "POST")).Return(true);
 
 
             theChain = new BehaviorChain();

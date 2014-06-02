@@ -41,7 +41,7 @@ namespace FubuMVC.Core.Registration.Nodes
                 throw new ArgumentNullException("route");
             }
 
-            UrlCategory = new UrlCategory();
+            
             Route = route;
         }
 
@@ -80,11 +80,7 @@ namespace FubuMVC.Core.Registration.Nodes
             get { return _additionalRoutes; }
         }
 
-        /// <summary>
-        ///   Categorizes this BehaviorChain for the IUrlRegistry and 
-        ///   IEndpointService UrlFor(***, category) methods
-        /// </summary>
-        public UrlCategory UrlCategory { get; private set; }
+
 
         public int Rank
         {
@@ -145,10 +141,6 @@ namespace FubuMVC.Core.Registration.Nodes
             return description;
         }
 
-        public override string Category
-        {
-            get { return UrlCategory == null ? null : UrlCategory.Category; }
-        }
 
         public override string Title()
         {

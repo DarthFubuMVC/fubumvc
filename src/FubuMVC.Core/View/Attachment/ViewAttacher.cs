@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -41,15 +42,20 @@ namespace FubuMVC.Core.View.Attachment
 
         private BehaviorChain buildChainForView(IViewToken view)
         {
+            BehaviorChain chain = null;
+
             if (view.ViewModel.HasAttribute<UrlPatternAttribute>())
             {
                 var url = view.ViewModel.GetAttribute<UrlPatternAttribute>().Pattern;
-                var chain = new RoutedChain(new RouteDefinition(url), view.ViewModel, view.ViewModel);
-                chain.UrlCategory.Category = Categories.VIEW;
-                return chain;
+                chain = new RoutedChain(new RouteDefinition(url), view.ViewModel, view.ViewModel);
+            }
+            else
+            {
+                chain = BehaviorChain.ForResource(view.ViewModel);
             }
 
-            return BehaviorChain.ForResource(view.ViewModel);
+            chain.UrlCategory.Category = Categories.VIEW;
+            return chain;
         }
 
         private void attachToAction(ActionCall action)
