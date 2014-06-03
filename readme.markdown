@@ -23,11 +23,6 @@ questions at all hours of the day/night.
 
 https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel
 
-## Show me some examples
-
-We have a working codebase that we're using for our documentation and screencasts. Take a look for an example of a barebones application:
-https://github.com/DarthFubuMVC/FubuInAction
-
 
   
   
