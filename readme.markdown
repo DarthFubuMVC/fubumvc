@@ -28,13 +28,7 @@ https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel
 We have a working codebase that we're using for our documentation and screencasts. Take a look for an example of a barebones application:
 https://github.com/DarthFubuMVC/FubuInAction
 
-## How do I get started?
 
-The *easiest* way to get up and going is to install our FubuMVC.QuickStart.Spark package:
-
-> Install-Package FubuMVC.QuickStart.Spark
-
-Simply hit F5 and you'll be up and running. Welcome to the world of FubuMVC!  
   
   
 #### Looking for our contribution guides? [We moved them](https://github.com/DarthFubuMVC/fubumvc/wiki/Contribution-Guide).
