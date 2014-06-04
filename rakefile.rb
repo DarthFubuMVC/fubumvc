@@ -94,6 +94,6 @@ task :create_gem => [:compile] do
 
     Gem::Package::build spec, true
 	
-	FileUtils.mv "fubu-#{@solution.options[:build_number]}.alpha.gem", "pkg/fubu-#{@solution.options[:build_number]}.gem"
+	FileUtils.mv "fubu-#{@solution.options[:build_number]}.alpha.gem", "pkg/fubu-#{@solution.options[:build_number]}.alpha.gem"
 	
 end
