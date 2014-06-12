@@ -70,13 +70,13 @@ namespace FubuMVC.Core.Registration.Conventions
 
             if (parts.Any())
             {
-                route.Append(parts.Join("/"));
+                route.Append(parts.Join("/").Replace('^', '_'));
             }
         }
 
         public static List<string> AddHttpConstraints(IRouteDefinition route, string methodName)
         {
-            var parts = methodName.Split('_').ToList();
+            var parts = methodName.Replace("___", "-").Replace("__", "_^").Split('_').ToList();
 
             var method = parts.First().ToUpper();
             if (RouteDefinition.VERBS.Contains(method))

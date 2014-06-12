@@ -190,5 +190,19 @@ namespace FubuMVC.Tests.Registration.Conventions
 
             theRoute.Pattern.ShouldEqual("path/folder1/folder2");
         }
+
+        [Test]
+        public void two_underscores_in_a_row_are_considered_to_be_an_underscore()
+        {
+            MethodToUrlBuilder.Alter(theRoute, "path_folder1__folder2", theProperties);
+            theRoute.Pattern.ShouldEqual("path/folder1/_folder2");
+        }
+
+        [Test]
+        public void three_underscores_in_a_row_are_a_dash()
+        {
+            MethodToUrlBuilder.Alter(theRoute, "path_folder1___folder2", theProperties);
+            theRoute.Pattern.ShouldEqual("path/folder1-folder2");
+        }
     }
 }
