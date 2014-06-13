@@ -8,6 +8,7 @@ using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Rendering;
 using Spark;
+using Spark.Compiler;
 
 namespace FubuMVC.Spark.SparkModel
 {
@@ -49,7 +50,24 @@ namespace FubuMVC.Spark.SparkModel
 
         protected override Parsing createParsing()
         {
-            var chunk = Loader.Load(this).ToList();
+            IEnumerable<Chunk> chunk = null;
+
+            try
+            {
+                chunk = Loader.Load(this).ToList();
+            }
+            catch (Exception)
+            {
+                try
+                {
+                    chunk = Loader.Load(this).ToList();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Failed while trying to parse template file " + FilePath, ex);
+                }
+            }
+
 
             return new Parsing
             {
