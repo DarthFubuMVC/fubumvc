@@ -199,6 +199,8 @@ namespace FubuMVC.Core.Assets
 
             if (mimetype.Value.StartsWith("image/")) return AuthorizationRight.Allow;
 
+            if (AllowableExtensions.Contains(Path.GetExtension(file.Path))) return AuthorizationRight.Allow;
+
             return AuthorizationRight.None;
         }
 
@@ -238,7 +240,7 @@ namespace FubuMVC.Core.Assets
         /// <summary>
         /// Add additional file extensions as allowable assets
         /// </summary>
-        public IList<string> AllowableExtensions = new List<string>{".eot", ".ttf", ".woff"};
+        public IList<string> AllowableExtensions = new List<string>{".eot", ".ttf", ".woff", ".svg"};
 
 
     }

@@ -106,6 +106,7 @@
     <Compile Include="Assets\asset_writing_headers_are_configurable.cs" />
     <Compile Include="Assets\asset_writing_in_development.cs" />
     <Compile Include="Assets\asset_writing_in_production.cs" />
+    <Compile Include="Assets\can_write_font_related_assets_Issue_764.cs" />
     <Compile Include="Assets\determine_the_public_asset_folder.cs" />
     <Compile Include="Assets\FindingAndResolving\Adding_CDN_Assets.cs" />
     <Compile Include="Assets\FindingAndResolving\aliasing_assets.cs" />
