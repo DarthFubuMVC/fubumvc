@@ -10,11 +10,11 @@ namespace FubuMVC.StructureMap.Testing.Compliance
         public void can_retrieve_a_concrete_class()
         {
             ContainerFacilitySource.New(x => { })
-                .Get<SomeSettings>().ShouldNotBeNull();
+                .Get<SomeGuy>().ShouldNotBeNull();
         }
     }
 
-    public class SomeSettings
+    public class SomeGuy
     {
         
     }

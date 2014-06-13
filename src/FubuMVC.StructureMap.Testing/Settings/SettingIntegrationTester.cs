@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 using FubuCore.Configuration;
 using FubuMVC.Core;
-using FubuMVC.StructureMap.Settings;
 using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
-using StructureMap.Configuration.DSL;
 
 namespace FubuMVC.StructureMap.Testing.Settings
 {
@@ -22,7 +19,11 @@ namespace FubuMVC.StructureMap.Testing.Settings
         {
             registry = new FubuRegistry();
             container = new Lazy<IContainer>(() => {
-                var c = new Container(x => x.For<ISettingsSource>().Add<FakeSettingsData>());
+                var c = new Container(x => {
+                    x.For<ISettingsProvider>().Use<SettingsProvider>();
+
+                    x.For<ISettingsSource>().Add<FakeSettingsData>();
+                });
 
                 FubuApplication.For(registry).StructureMap(c).Bootstrap();
 
@@ -32,19 +33,12 @@ namespace FubuMVC.StructureMap.Testing.Settings
 
         public FooSettings TheResultingSettings
         {
-            get
-            {
-                return container.Value.GetInstance<FooSettings>();
-            }
+            get { return container.Value.GetInstance<FooSettings>(); }
         }
 
         [Test]
         public void include_explicitly()
         {
-            registry.AlterSettings<ConfigurationSettings>(x => {
-                x.Include<FooSettings>();
-            });
-
             TheResultingSettings.Name.ShouldEqual("Max");
             TheResultingSettings.Age.ShouldEqual(9);
         }
@@ -52,10 +46,6 @@ namespace FubuMVC.StructureMap.Testing.Settings
         [Test]
         public void include_by_settings_convention_in_the_application_assembly()
         {
-            registry.AlterSettings<ConfigurationSettings>(x => {
-                x.IncludeAllClassesSuffixedBySetting().FromTheApplicationAssembly();
-            });
-
             container.Value.GetInstance<BarSettings>().Direction.ShouldEqual("North");
             TheResultingSettings.Name.ShouldEqual("Max");
             TheResultingSettings.Age.ShouldEqual(9);
@@ -64,10 +54,6 @@ namespace FubuMVC.StructureMap.Testing.Settings
         [Test]
         public void include_by_settings_convention_by_picking_the_assembly()
         {
-            registry.AlterSettings<ConfigurationSettings>(x => {
-                x.IncludeAllClassesSuffixedBySetting().FromAssembly(Assembly.GetExecutingAssembly());
-            });
-
             container.Value.GetInstance<BarSettings>().Direction.ShouldEqual("North");
             TheResultingSettings.Name.ShouldEqual("Max");
             TheResultingSettings.Age.ShouldEqual(9);
@@ -76,19 +62,12 @@ namespace FubuMVC.StructureMap.Testing.Settings
         [Test]
         public void do_not_override_a_setting_class_that_is_configured_inside_the_fubu_registry()
         {
-            registry.Services(x => {
-                x.ReplaceService(new BarSettings {Direction = "West"});
-            });
-            registry.AlterSettings<ConfigurationSettings>(x =>
-            {
-                x.IncludeAllClassesSuffixedBySetting().FromTheApplicationAssembly();
-            });
+            registry.Services(x => { x.ReplaceService(new BarSettings {Direction = "West"}); });
 
             container.Value.GetInstance<BarSettings>().Direction.ShouldEqual("West");
         }
     }
 
-    
 
     public class FooSettings
     {

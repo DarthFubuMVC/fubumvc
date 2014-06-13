@@ -4,6 +4,7 @@ using System.Diagnostics;
 using Bottles;
 using FubuCore;
 using FubuCore.Binding;
+using FubuCore.Configuration;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Bootstrapping;
@@ -89,13 +90,10 @@ namespace FubuMVC.StructureMap
 
         public IServiceFactory BuildFactory(BehaviorGraph graph)
         {
-            var settings = graph.Settings.Get<ConfigurationSettings>();
-            var settingRegistry = settings.BuildRegistry(graph);
-
-            
             _container.Configure(x => {
                 x.AddRegistry(_registry);
-                x.AddRegistry(settingRegistry);
+                x.Policies.OnMissingFamily<SettingPolicy>();
+                x.For<ISettingsProvider>().UseIfNone<AppSettingsProvider>();
             });
 
             _registration = (serviceType, def) =>
