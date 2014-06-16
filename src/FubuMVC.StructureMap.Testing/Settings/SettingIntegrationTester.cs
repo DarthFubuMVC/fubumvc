@@ -23,12 +23,14 @@ namespace FubuMVC.StructureMap.Testing.Settings
                     x.For<ISettingsProvider>().Use<SettingsProvider>();
 
                     x.For<ISettingsSource>().Add<FakeSettingsData>();
+                    x.For<ISettingsSource>().Add(new AppSettingsSettingSource(SettingCategory.core));
                 });
 
                 FubuApplication.For(registry).StructureMap(c).Bootstrap();
 
                 return c;
             });
+
         }
 
         public FooSettings TheResultingSettings

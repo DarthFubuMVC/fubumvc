@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core.View.Model;
 using Spark;
@@ -34,7 +35,27 @@ namespace FubuMVC.Spark.SparkModel
 
         public IEnumerable<Chunk> Load(ISparkTemplate template)
         {
-            return _loaders[template.RootPath].Load(template.RelativePath()).ToList();
+            try
+            {
+                var viewLoader = _loaders[template.RootPath];
+                var chunks = viewLoader.Load(template.RelativePath());
+                if (chunks == null)
+                {
+                    throw new Exception("Unable to parse file '{0}'".ToFormat(template.RelativePath()));
+                }
+
+                return chunks.ToList();
+            }
+            catch (Exception e)
+            {
+                if (e.Message.StartsWith("Unable to parse file")) throw;
+
+                throw new Exception("Unable to parse file '{0}'".ToFormat(template.RelativePath()), e);
+            }
+
+
+
+            
         }
 
         private ViewLoader defaultLoaderByRoot(string root)

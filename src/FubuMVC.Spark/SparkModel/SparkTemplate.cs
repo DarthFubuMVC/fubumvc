@@ -56,16 +56,9 @@ namespace FubuMVC.Spark.SparkModel
             {
                 chunk = Loader.Load(this).ToList();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                try
-                {
-                    chunk = Loader.Load(this).ToList();
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Failed while trying to parse template file " + FilePath, ex);
-                }
+                throw new Exception("Failed while trying to parse template file " + FilePath, ex);
             }
 
 

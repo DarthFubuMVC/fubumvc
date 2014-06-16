@@ -93,7 +93,6 @@ namespace FubuMVC.StructureMap
             _container.Configure(x => {
                 x.AddRegistry(_registry);
                 x.Policies.OnMissingFamily<SettingPolicy>();
-                x.For<ISettingsProvider>().UseIfNone<AppSettingsProvider>();
             });
 
             _registration = (serviceType, def) =>

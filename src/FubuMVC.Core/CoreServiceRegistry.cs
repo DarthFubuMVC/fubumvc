@@ -1,6 +1,7 @@
 using Bottles;
 using FubuCore;
 using FubuCore.Binding;
+using FubuCore.Configuration;
 using FubuCore.Conversion;
 using FubuCore.Dates;
 using FubuCore.Formatting;
@@ -117,6 +118,9 @@ namespace FubuMVC.Core
             SetServiceIfNone(typeof(IProjectionRunner<>), typeof(ProjectionRunner<>));
             SetServiceIfNone<IProjectionRunner, ProjectionRunner>();
             SetServiceIfNone(typeof(IProjectionRunner<>), typeof(ProjectionRunner<>));
+
+            SetServiceIfNone<ISettingsProvider, SettingsProvider>();
+            AddService<ISettingsSource>(new AppSettingsSettingSource(SettingCategory.environment));
         }
     }
 }
