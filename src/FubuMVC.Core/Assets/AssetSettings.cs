@@ -114,7 +114,7 @@ namespace FubuMVC.Core.Assets
 
             if (!Directory.Exists(candidate))
             {
-                throw new InvalidOperationException("The designated public asset folder '{0}' cannot be found".ToFormat(candidate));
+                Console.WriteLine("The designated public asset folder '{0}' cannot be found".ToFormat(candidate));
             }
 
             return candidate;

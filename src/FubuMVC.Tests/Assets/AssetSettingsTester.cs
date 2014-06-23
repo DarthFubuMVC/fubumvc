@@ -163,20 +163,6 @@ namespace FubuMVC.Tests.Assets
         }
 
         [Test]
-        public void determine_the_public_folder_blows_up_when_the_folder_does_not_exist()
-        {
-
-            Exception<InvalidOperationException>.ShouldBeThrownBy(() => {
-                var settings = new AssetSettings
-                {
-                    PublicFolder = Guid.NewGuid().ToString()
-                };
-
-                settings.DeterminePublicFolder();
-            });
-        }
-
-        [Test]
         public void determine_the_public_folder_with_a_non_null_but_nonexistent_version()
         {
             new FileSystem().CreateDirectory(FubuMvcPackageFacility.GetApplicationPath().AppendPath("public").ToFullPath());
