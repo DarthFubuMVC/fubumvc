@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Routing;
 using FubuCore;
 using FubuMVC.Core.Http;
@@ -80,7 +81,22 @@ namespace FubuMVC.Core.Assets.Templates
         public void WriteAll()
         {
             CleanAll();
-            throw new NotImplementedException();
+
+            var tasks = _settings.TemplateCultures
+                .Select(x => new CultureInfo(x))
+                .Select(writeCulture)
+                .ToArray();
+
+            Task.WaitAll(tasks);
+        }
+
+        private Task writeCulture(CultureInfo culture)
+        {
+            return Task.Factory.StartNew(() => {
+                SetCulture(culture);
+
+                _templates.Value.Each(x => x.Write(culture));
+            });
         }
 
         public void CleanAll()
@@ -98,6 +114,11 @@ namespace FubuMVC.Core.Assets.Templates
             }
 
             template.Write(cultureInfo);
+        }
+
+        public static void SetCulture(CultureInfo culture)
+        {
+            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = culture;
         }
 
         public class TemplateDef
@@ -143,7 +164,7 @@ namespace FubuMVC.Core.Assets.Templates
             public void Write(CultureInfo culture)
             {                
                 // Do this in a different way?
-                Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = culture;
+                SetCulture(culture);
 
                 var text = GenerateTextForCurrentThreadCulture();
 
@@ -151,6 +172,8 @@ namespace FubuMVC.Core.Assets.Templates
 
                 _parent._files.WriteStringToFile(path, text);
             }
+
+
 
             public string GenerateTextForCurrentThreadCulture()
             {

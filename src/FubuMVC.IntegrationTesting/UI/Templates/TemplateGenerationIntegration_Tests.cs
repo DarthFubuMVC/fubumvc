@@ -64,6 +64,8 @@ The culture is '!{Model.Culture}'
 
                 AlterSettings<AssetSettings>(x => {
                     x.TemplateDestination = "public/templates";
+                    x.TemplateCultures.Add("en-CA");
+                    x.TemplateCultures.Add("fr-FR");
                 });
             }
         }
@@ -149,6 +151,18 @@ The culture is '!{Model.Culture}'
 
             text.ShouldContain("The culture is \"en-CA\"");
             text.ShouldContain("Template1");
+        }
+
+        [Test]
+        public void write_all()
+        {
+            templates.WriteAll();
+
+            Files.FindFiles(templates.TemplateDirectory, FileSet.Deep("*.htm"))
+                .Select(x => x.PathRelativeTo(templates.TemplateDirectory).Replace('\\', '/'))
+                .OrderBy(x => x)
+                .ShouldHaveTheSameElementsAs("en-CA/Template1.htm", "en-CA/Template2.htm", "en-CA/Template3.htm", "en-US/Template1.htm", "en-US/Template2.htm", "en-US/Template3.htm", "fr-FR/Template1.htm", "fr-FR/Template2.htm", "fr-FR/Template3.htm");
+
         }
     }
 

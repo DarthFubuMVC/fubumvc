@@ -86,7 +86,7 @@
     <Compile Include="Assets\ObsoleteAssetFilePageExtensions.cs" />
     <Compile Include="Assets\ScriptTag.cs" />
     <Compile Include="Assets\StylesheetLinkTag.cs" />
-    <Compile Include="Assets\Templates\TemplateClasses.cs" />
+    <Compile Include="Assets\Templates\TemplateGraph.cs" />
     <Compile Include="AsymmetricJsonAttribute.cs" />
     <Compile Include="Caching\CacheAttribute.cs" />
     <Compile Include="Configuration\BehaviorGraphBuilder.cs" />
