@@ -3,6 +3,7 @@ using FubuCore.Binding.Values;
 using FubuMVC.Core;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Compression;
+using FubuMVC.Core.Http.Owin;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -26,11 +27,12 @@ namespace FubuMVC.Tests.Http.Compression
             theEncoding.Stub(x => x.MatchingEncoding).Return(ContentEncoding.GZip);
             MockFor<IHttpContentEncoders>().Stub(x => x.MatchFor(theAcceptedEncoding)).Return(theEncoding);
 
-            theHeaders = new KeyValues();
-            theHeaders[HttpRequestHeaders.AcceptEncoding] = theAcceptedEncoding;
-            var requestData = new RequestData(new FlatValueSource(theHeaders, RequestDataSource.Header.ToString()));
+            var request = new OwinHttpRequest();
+            request.Header(HttpRequestHeaders.AcceptEncoding, theAcceptedEncoding);
 
-            theArguments.Set(typeof(IRequestData), requestData);
+
+
+            theArguments.Set(typeof(IHttpRequest), request);
             theArguments.Set(typeof(IHttpResponse), MockFor<IHttpResponse>());
 
             ClassUnderTest.Filter(theArguments).ShouldEqual(DoNext.Continue);

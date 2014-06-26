@@ -15,21 +15,23 @@ namespace FubuMVC.Core.Http.Compression
 
         public DoNext Filter(ServiceArguments arguments)
         {
-            if (arguments.Has(typeof(Latch))) return DoNext.Stop;
+            if (arguments.Has(typeof (Latch))) return DoNext.Stop;
 
-            arguments
-                .Get<IRequestData>()
-                .ValuesFor(RequestDataSource.Header)
-                .Value(HttpRequestHeaders.AcceptEncoding, x =>
-                {
-                    var encoding = _encoders.MatchFor(x.RawValue as string);
-                    var writer = arguments.Get<IHttpResponse>();
 
-                    writer.AppendHeader(HttpRequestHeaders.ContentEncoding, encoding.MatchingEncoding.Value);
-                    writer.UseEncoding(encoding);
-                });
+            var request = arguments.Get<IHttpRequest>();
+            if (!request.HasHeader(HttpRequestHeaders.AcceptEncoding)) return DoNext.Continue;
 
-            arguments.Set(typeof(Latch), new Latch());
+            var acceptEncoding = request
+                .GetSingleHeader(HttpRequestHeaders.AcceptEncoding);
+
+
+            var encoding = _encoders.MatchFor(acceptEncoding);
+            var writer = arguments.Get<IHttpResponse>();
+            writer.AppendHeader(HttpRequestHeaders.ContentEncoding, encoding.MatchingEncoding.Value);
+
+            writer.UseEncoding(encoding);
+
+            arguments.Set(typeof (Latch), new Latch());
 
             return DoNext.Continue;
         }
@@ -40,5 +42,7 @@ namespace FubuMVC.Core.Http.Compression
         }
     }
 
-    public class Latch{}
+    public class Latch
+    {
+    }
 }
