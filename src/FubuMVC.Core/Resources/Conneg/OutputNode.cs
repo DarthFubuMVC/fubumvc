@@ -9,6 +9,7 @@ using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.Runtime.Formatters;
+using FubuMVC.Core.View;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
@@ -118,7 +119,15 @@ namespace FubuMVC.Core.Resources.Conneg
             return _media.Any(x => x.Condition == conditional && x.Writes(MimeType.Html));
         }
 
-
+        public IViewToken DefaultView()
+        {
+            return
+                _media.Where(x => x.Condition == Always.Flyweight)
+                    .Select(x => x.Writer)
+                    .OfType<IViewWriter>()
+                    .Select(x => x.View)
+                    .FirstOrDefault();
+        }
 
         public Type ResourceType
         {

@@ -1,37 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Runtime.Conditionals;
 using StructureMap.Util;
 
 namespace FubuMVC.Core.Assets.Templates
 {
     public class TemplateDef
     {
+        private readonly BehaviorChain _chain;
+        private readonly string _name;
+        private readonly string _file;
+
         public TemplateDef(BehaviorChain chain)
         {
+            _chain = chain;
+
+            var view = chain.Output.DefaultView();
+            if (view == null)
+            {
+                throw new NotImplementedException();
+            }
+            else
+            {
+                _name = Path.GetFileNameWithoutExtension(view.Name());
+                _file = view.FilePath;
+            }
+
         }
 
         public string Name
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { return _name; }
         }
 
         public string File
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { return _file; }
         }
     }
 
+    [Singleton]
     public class TemplateGraph
     {
         private readonly AssetSettings _settings;
@@ -63,7 +77,7 @@ namespace FubuMVC.Core.Assets.Templates
 
         public IEnumerable<TemplateDef> Templates()
         {
-            throw new NotImplementedException();
+            return _templates.Value;
         } 
     }
 }

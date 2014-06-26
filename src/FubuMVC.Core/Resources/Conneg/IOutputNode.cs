@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.Runtime.Formatters;
+using FubuMVC.Core.View;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
@@ -67,5 +68,8 @@ namespace FubuMVC.Core.Resources.Conneg
 
         Type ResourceType { get; }
         bool HasView(IConditional conditional);
+
+
+        IViewToken DefaultView();
     }
 }

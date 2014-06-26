@@ -198,6 +198,7 @@
     <Compile Include="UI\FubuPageExtensions_FullStack_Tester.cs" />
     <Compile Include="UI\indexer_owner_type_bug_tester.cs" />
     <Compile Include="UI\ShowEditExpressions_integration_Tester.cs" />
+    <Compile Include="UI\Templates\TemplateGenerationIntegration_Tests.cs" />
     <Compile Include="Using_a_custom_routing_policy.cs" />
     <Compile Include="Views\Actionless_Views.cs" />
     <Compile Include="Auto_Import_Model_Namespaces.cs" />

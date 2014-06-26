@@ -8,6 +8,7 @@ using FubuCore.Formatting;
 using FubuCore.Logging;
 using FubuCore.Reflection;
 using FubuMVC.Core.Assets;
+using FubuMVC.Core.Assets.Templates;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Diagnostics;
@@ -121,6 +122,8 @@ namespace FubuMVC.Core
 
             SetServiceIfNone<ISettingsProvider, SettingsProvider>();
             AddService<ISettingsSource>(new AppSettingsSettingSource(SettingCategory.environment));
+
+            ReplaceService<TemplateGraph, TemplateGraph>();
         }
     }
 }

@@ -6,6 +6,7 @@ using FubuCore.Formatting;
 using FubuCore.Logging;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets;
+using FubuMVC.Core.Assets.Templates;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
@@ -136,6 +137,13 @@ namespace FubuMVC.Tests.Registration
         {
             ServiceRegistry.ShouldBeSingleton(typeof (ChainResolutionCache)).ShouldBeTrue();
             registeredTypeIs<IChainResolver, ChainResolutionCache>();
+        }
+
+        [Test]
+        public void TemplateGraph_is_registered_as_a_singleton()
+        {
+            ServiceRegistry.ShouldBeSingleton(typeof(TemplateGraph)).ShouldBeTrue();
+            registeredTypeIs<TemplateGraph, TemplateGraph>();
         }
 
         [Test]

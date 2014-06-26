@@ -16,5 +16,7 @@ namespace FubuMVC.Core.View
         string Origin { get; }
         string Name();
         void AttachViewModels(Assembly defaultAssembly, ViewTypePool types, ITemplateLogger logger);
+
+        string FilePath { get; }
     }
 }

@@ -40,6 +40,14 @@ namespace FubuMVC.Core.View.Attachment
             _view.AttachViewModels(defaultAssembly, types, logger);
         }
 
+        public string FilePath
+        {
+            get
+            {
+                return _view.FilePath;
+            }
+        }
+
         public string Namespace
         {
             get { return _view.Namespace; }
