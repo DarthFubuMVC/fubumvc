@@ -151,8 +151,6 @@ namespace fubu.Testing.Generation
         [Test]
         public void does_not_write_the_url()
         {
-            theWrittenText().Each(x => Debug.WriteLine(x));
-
             theWrittenText().Any(x => x.Contains("[UrlPattern(\"foo/bar/model\")]"))
                 .ShouldBeTrue();
         }

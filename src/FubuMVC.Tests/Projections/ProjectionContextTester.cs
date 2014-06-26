@@ -58,8 +58,6 @@ namespace FubuMVC.Tests.Projections
             var vInfo = valuesType.GetTypeInfo();
             vInfo.IsAssignableFrom(cInfo).ShouldBeFalse();
 
-            Debug.WriteLine(cInfo);
-            Debug.WriteLine(vInfo);
 
 //                    public PluginFamily Build(Type type)
 //        {

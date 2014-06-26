@@ -56,9 +56,6 @@ I am in the view w/ partials
         [Test]
         public void can_resolve_actionless_views_from_partial_invoker_by_category()
         {
-            BehaviorGraph.Behaviors.Where(x => x.InputType() == typeof (ActionlessView3))
-                .Each(x => Debug.WriteLine("Category is " + x.Category));
-
             var chain = Services.GetInstance<IChainResolver>().Find(new ChainSearch
             {
                 CategoryMode = CategorySearchMode.Relaxed,

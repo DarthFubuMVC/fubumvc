@@ -56,7 +56,6 @@ link harness pak2
             var files = endpoints.Get<FileReaderEndpoint>(x => x.get_txt_files())
                 .ReadAsText().ReadLines();
 
-            files.Each(x => Debug.WriteLine(x));
 
             files.Any(x => x.Contains(FubuMvcPackageFacility.FubuContentFolder)).ShouldBeFalse();
 
@@ -109,13 +108,11 @@ link harness pak2
         {
             var relativePath = "Files/1.txt";
 
-            Debug.WriteLine("Looking for relative path:  " + relativePath);
 
             var file = _files.Find(relativePath);
 
             if (file == null)
             {
-                Debug.WriteLine("could not find the file");
                 throw new InvalidOleVariantTypeException();
             }
 

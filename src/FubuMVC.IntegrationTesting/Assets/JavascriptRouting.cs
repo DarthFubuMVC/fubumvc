@@ -39,7 +39,6 @@ namespace FubuMVC.IntegrationTesting.Assets
 
                     x.StatusCodeShouldBe(HttpStatusCode.OK);
 
-                    Debug.WriteLine(x.Response.Body.ReadAsText());
                 });
             }
         }

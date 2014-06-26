@@ -34,7 +34,6 @@ namespace FubuMVC.IntegrationTesting.Querying
             var client = new WebClient();
             var url = _applicationUrl + "/_fubu/imageurl/" + name.UrlEncode();
 
-            Debug.WriteLine("Querying " + url);
 
             return client.DownloadString(url);
         }

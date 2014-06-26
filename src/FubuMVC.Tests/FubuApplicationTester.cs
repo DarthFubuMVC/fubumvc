@@ -53,7 +53,7 @@ namespace FubuMVC.Tests
 
             var description = FubuApplicationDescriber.WriteDescription();
 
-            Debug.WriteLine(description);
+            Console.WriteLine(description);
 
         }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
@@ -16,14 +17,14 @@ namespace FubuMVC.IntegrationTesting
         public void try_to_load_asset_fixture()
         {
             var assembly = Assembly.Load("WebDriver");
-            assembly.GetExportedTypes().Each(x => Debug.WriteLine(x.FullName));
+            assembly.GetExportedTypes().Each(x => Console.WriteLine(x.FullName));
         }
 
         [Test]
         public void try_to_load_the_serenity_assembly()
         {
             var assembly = Assembly.Load("Serenity");
-            assembly.GetExportedTypes().Each(x => Debug.WriteLine(x.FullName));
+            assembly.GetExportedTypes().Each(x => Console.WriteLine(x.FullName));
         }
 
         [Test]

@@ -19,9 +19,6 @@ namespace FubuMVC.Tests.Registration.Conventions
             var actions = new EndpointActionSource().As<IActionSource>().FindActions(Assembly.GetExecutingAssembly());
 
             var matching = actions.Where(x => x.HandlerType == typeof(HomeEndpoint)).Select(x => x.Description);
-            matching.Each(x => Debug.WriteLine(x));
-
-
             matching
                 .ShouldHaveTheSameElementsAs("HomeEndpoint.Index() : HtmlDocument");
         }
@@ -32,8 +29,6 @@ namespace FubuMVC.Tests.Registration.Conventions
             var actions = new EndpointActionSource().As<IActionSource>().FindActions(Assembly.GetExecutingAssembly());
 
             var matching = actions.Where(x => x.HandlerType == typeof(WeirdEndPoint)).Select(x => x.Description);
-            matching.Each(x => Debug.WriteLine(x));
-
 
             matching
                 .ShouldHaveTheSameElementsAs("WeirdEndPoint.get_something() : String");

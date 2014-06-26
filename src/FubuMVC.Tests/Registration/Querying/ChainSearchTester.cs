@@ -432,7 +432,6 @@ namespace FubuMVC.Tests.Registration.Querying
                 TypeMode = TypeSearchMode.Any
             }.FindCandidatesByType(theGraph).SelectMany(x => x);
 
-            chains.Each(x => Debug.WriteLine(x.FirstCall().Description));
 
             chains.Single()
                 .FirstCall().Description.ShouldEqual("SingleActionController.DoSomething(InputModel model) : void");
@@ -441,7 +440,6 @@ namespace FubuMVC.Tests.Registration.Querying
         [Test]
         public void find_by_handler_type_only()
         {
-            theGraph.Actions().Each(x => Debug.WriteLine(x.Description));
 
             new ChainSearch{
                 TypeMode = TypeSearchMode.HandlerOnly,

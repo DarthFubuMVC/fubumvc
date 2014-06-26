@@ -75,7 +75,7 @@ namespace FubuMVC.Tests.View.Attachment
         {
             get
             {
-                return Task.Factory.StartNew(() => Debug.WriteLine("Hello from view engine 1"))
+                return Task.Factory.StartNew(() => Console.WriteLine("Hello from view engine 1"))
                 ;
             }
         }
@@ -128,7 +128,7 @@ namespace FubuMVC.Tests.View.Attachment
         {
             get
             {
-                return Task.Factory.StartNew(() => Debug.WriteLine("Hello from view engine 2"))
+                return Task.Factory.StartNew(() => Console.WriteLine("Hello from view engine 2"))
                 ;
             }
         }

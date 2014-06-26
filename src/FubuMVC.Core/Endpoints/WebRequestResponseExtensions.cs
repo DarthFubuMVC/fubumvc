@@ -37,7 +37,6 @@ namespace FubuMVC.Core.Endpoints
                 }
 
                 var errorResponse = new HttpResponse(e.Response.As<HttpWebResponse>());
-                Debug.WriteLine(errorResponse.ToString());
 
                 return errorResponse;
             }

@@ -40,14 +40,10 @@ namespace fubu.Testing.Fixtures
                     .ParentDirectory()
                     .AppendPath("Fubu", "bin", compile, "Fubu.exe");
 
-            Debug.WriteLine("The process path is " + _processPath);
-
-
             _original = Environment.CurrentDirectory;
 
             Environment.CurrentDirectory = _root;
 
-            Debug.WriteLine("The root directory is " + _root);
         }
 
         public override void TearDown()
@@ -76,7 +72,6 @@ namespace fubu.Testing.Fixtures
         public bool RakeSucceeds()
         {
             string workingDirectory = _root.AppendPath(_folder);
-            Debug.WriteLine("Trying to run the rake script at " + workingDirectory);
 
 
             var rake = new ProcessStartInfo

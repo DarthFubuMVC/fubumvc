@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.View
                 .Where(x => x.IsConcreteTypeOf<IViewsForActionFilter>())
                 .Where(x => !Description.HasExplicitDescription(x));
 
-            types.Each(x => Debug.WriteLine(x.Name));
+            types.Each(x => Console.WriteLine(x.Name));
 
             types.Any().ShouldBeFalse();
         }

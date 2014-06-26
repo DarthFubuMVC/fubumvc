@@ -28,7 +28,6 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
             urls = MockRepository.GenerateMock<IUrlRegistry>();
 
             graph.Behaviors.Any().ShouldBeTrue();
-            graph.Actions().Each(x => Debug.WriteLine(x.Description));
         }
 
         #endregion

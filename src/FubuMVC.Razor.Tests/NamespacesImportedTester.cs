@@ -31,7 +31,6 @@ namespace FubuMVC.Razor.Tests
 
             var graph = BehaviorGraph.BuildFrom(registry);
             var useNamespaces = graph.Services.DefaultServiceFor<CommonViewNamespaces>().Value.As<CommonViewNamespaces>();
-            useNamespaces.Namespaces.Each(x => Debug.WriteLine(x));
 
             useNamespaces.Namespaces.ShouldHaveTheSameElementsAs(new[]
             { 

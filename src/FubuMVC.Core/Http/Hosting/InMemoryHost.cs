@@ -17,12 +17,10 @@ namespace FubuMVC.Core.Http.Hosting
 
     public class InMemoryHost : IDisposable
     {
-        
-
         public static readonly string RootUrl = "http://memory";
         private readonly FubuRuntime _runtime;
         private readonly IServiceLocator _services;
-        private AppFunc _func;
+        private readonly AppFunc _func;
 
 
         public static InMemoryHost For<T>(string directory = null) where T : IApplicationSource, new()

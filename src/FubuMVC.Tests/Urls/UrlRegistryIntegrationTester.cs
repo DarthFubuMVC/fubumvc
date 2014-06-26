@@ -51,7 +51,6 @@ namespace FubuMVC.Tests.Urls
         [Test]
         public void find_by_handler_type_if_only_one_method()
         {
-            graph.Actions().Each(x => Debug.WriteLine(x.Description));
 
             urls.UrlFor<OnlyOneActionController>()
                 .ShouldEqual("/onlyoneaction/go");
@@ -131,7 +130,6 @@ namespace FubuMVC.Tests.Urls
         [Test]
         public void retrieve_a_url_by_action_negative_case()
         {
-            graph.Actions().Each(x => Debug.WriteLine(x.Description));
 
             Exception<FubuException>.ShouldBeThrownBy(() => { urls.UrlFor<RandomClass>(x => x.Ignored(), null); });
         }

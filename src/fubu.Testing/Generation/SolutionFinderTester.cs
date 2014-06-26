@@ -53,8 +53,6 @@ namespace fubu.Testing.Generation
         
             // find the multiples too
             var solutions = SolutionFinder.FindSolutions();
-            solutions.Each(x => Debug.WriteLine(x));
-
             solutions.ShouldHaveTheSameElementsAs(
                 "anything.sln", "else.sln");
         }

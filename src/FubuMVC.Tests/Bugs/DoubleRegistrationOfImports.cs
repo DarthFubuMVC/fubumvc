@@ -50,7 +50,6 @@ namespace FubuMVC.Tests.Bugs
             });
 
             var actions = graph.Actions().Where(x => x.HandlerType == typeof (SomeClassWithActions));
-            actions.Each(x => Debug.WriteLine(x.Description + " at " + x.ParentChain().As<RoutedChain>().GetRoutePattern()));
 
 
             actions.ShouldHaveCount(1);
@@ -67,7 +66,6 @@ namespace FubuMVC.Tests.Bugs
             });
 
             var actions = graph.Actions().Where(x => x.HandlerType == typeof(SomeClassWithActions));
-            actions.Each(x => Debug.WriteLine(x.Description + " at " + x.ParentChain().As<RoutedChain>().GetRoutePattern()));
 
 
             actions.ShouldHaveCount(1);

@@ -32,8 +32,6 @@ namespace FubuMVC.Tests
 
             PackageRegistry.PackageAssemblies.ShouldContain(assembly);
 
-            PackageRegistry.Packages.Each(x => Debug.WriteLine(x.Name));
-
 
             PackageRegistry.Packages.OfType<AssemblyPackageInfo>().Any(
                 x => x.Name == new AssemblyPackageInfo(assembly).Name)

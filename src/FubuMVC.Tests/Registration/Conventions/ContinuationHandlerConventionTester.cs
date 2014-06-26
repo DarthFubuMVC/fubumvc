@@ -24,7 +24,6 @@ namespace FubuMVC.Tests.Registration.Conventions
                 x.Actions.IncludeType<ContinuationHandlerController>();
             });
 
-            graph.Behaviors.SelectMany(x => x.Top).Each(x => Debug.WriteLine(x));
         }
 
         #endregion
