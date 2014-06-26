@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Views.LayoutAttachment
 {
-    [TestFixture]
+    [TestFixture, Explicit]
     public class Explicit_declaration_of_master_layout_spark : ViewIntegrationContext
     {
         public Explicit_declaration_of_master_layout_spark()
