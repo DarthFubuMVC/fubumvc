@@ -65,6 +65,8 @@ namespace FubuMVC.Core.Assets
             Mode = SearchMode.Anywhere;
             PublicFolder = "public";
 
+            TemplateDestination = "_templates";
+
         }
 
         internal string PublicAssetFolder ;
@@ -243,5 +245,15 @@ namespace FubuMVC.Core.Assets
         public IList<string> AllowableExtensions = new List<string>{".eot", ".ttf", ".woff", ".svg"};
 
 
+        /// <summary>
+        /// The path relative to the application where generated html templates should be 
+        /// written
+        /// </summary>
+        public string TemplateDestination { get; set; }
+
+        /// <summary>
+        /// Designate all the CultureInfo's for template generation. Default is ['en-US']
+        /// </summary>
+        public IList<string> TemplateCultures = new List<string>{"en-US"}; 
     }
 }

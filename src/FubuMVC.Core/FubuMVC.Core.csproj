@@ -86,6 +86,7 @@
     <Compile Include="Assets\ObsoleteAssetFilePageExtensions.cs" />
     <Compile Include="Assets\ScriptTag.cs" />
     <Compile Include="Assets\StylesheetLinkTag.cs" />
+    <Compile Include="Assets\Templates\TemplateClasses.cs" />
     <Compile Include="AsymmetricJsonAttribute.cs" />
     <Compile Include="Caching\CacheAttribute.cs" />
     <Compile Include="Configuration\BehaviorGraphBuilder.cs" />
@@ -411,6 +412,7 @@
     <Compile Include="SessionState\CookieFlashProvider.cs" />
     <Compile Include="SymmetricJsonAttribute.cs" />
     <Compile Include="TagAttribute.cs" />
+    <Compile Include="Template.cs" />
     <Compile Include="UI\AuthorizationOnPageExtensions.cs" />
     <Compile Include="UI\Bootstrap\Collapsibles\CollapsiblePartialExpression.cs" />
     <Compile Include="UI\Bootstrap\Collapsibles\CollapsibleTag.cs" />

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core;
@@ -107,7 +106,7 @@ namespace FubuMVC.Tests.Assets
         {
             new AssetSettings().StaticFileRules
                 .Select(x => x.GetType()).OrderBy(x => x.Name)
-                .ShouldHaveTheSameElementsAs(typeof(DenyConfigRule));
+                .ShouldHaveTheSameElementsAs(typeof (DenyConfigRule));
         }
 
         private AuthorizationRight forFile(string filename)
@@ -135,7 +134,8 @@ namespace FubuMVC.Tests.Assets
             FubuMode.Reset();
 
             var settings = new AssetSettings();
-            settings.Headers.GetAllKeys().ShouldHaveTheSameElementsAs(HttpRequestHeaders.CacheControl, HttpRequestHeaders.Expires);
+            settings.Headers.GetAllKeys()
+                .ShouldHaveTheSameElementsAs(HttpRequestHeaders.CacheControl, HttpRequestHeaders.Expires);
 
             settings.Headers[HttpRequestHeaders.CacheControl]().ShouldEqual("private, max-age=86400");
             settings.Headers[HttpRequestHeaders.Expires]().ShouldNotBeNull();
@@ -152,41 +152,48 @@ namespace FubuMVC.Tests.Assets
         [Test]
         public void determine_the_public_folder_with_no_version()
         {
-            new FileSystem().CreateDirectory(FubuMvcPackageFacility.GetApplicationPath().AppendPath("public").ToFullPath());
+            new FileSystem().CreateDirectory(
+                FubuMvcPackageFacility.GetApplicationPath().AppendPath("public").ToFullPath());
 
             var settings = new AssetSettings
             {
                 Version = null
             };
 
-            settings.DeterminePublicFolder().ShouldEqual(FubuMvcPackageFacility.GetApplicationPath().AppendPath("public"));
+            settings.DeterminePublicFolder()
+                .ShouldEqual(FubuMvcPackageFacility.GetApplicationPath().AppendPath("public"));
         }
 
         [Test]
         public void determine_the_public_folder_with_a_non_null_but_nonexistent_version()
         {
-            new FileSystem().CreateDirectory(FubuMvcPackageFacility.GetApplicationPath().AppendPath("public").ToFullPath());
+            new FileSystem().CreateDirectory(
+                FubuMvcPackageFacility.GetApplicationPath().AppendPath("public").ToFullPath());
 
             var settings = new AssetSettings
             {
                 Version = Guid.NewGuid().ToString()
             };
 
-            settings.DeterminePublicFolder().ShouldEqual(FubuMvcPackageFacility.GetApplicationPath().AppendPath("public").ToFullPath());
+            settings.DeterminePublicFolder()
+                .ShouldEqual(FubuMvcPackageFacility.GetApplicationPath().AppendPath("public").ToFullPath());
         }
 
         [Test]
         public void determine_the_public_folder_when_the_version_does_exist()
         {
-            new FileSystem().CreateDirectory(FubuMvcPackageFacility.GetApplicationPath().AppendPath("public").ToFullPath());
-            new FileSystem().CreateDirectory(FubuMvcPackageFacility.GetApplicationPath().AppendPath("public", "1.0.1").ToFullPath());
+            new FileSystem().CreateDirectory(
+                FubuMvcPackageFacility.GetApplicationPath().AppendPath("public").ToFullPath());
+            new FileSystem().CreateDirectory(
+                FubuMvcPackageFacility.GetApplicationPath().AppendPath("public", "1.0.1").ToFullPath());
 
             var settings = new AssetSettings
             {
                 Version = "1.0.1"
             };
 
-            settings.DeterminePublicFolder().ShouldEqual(FubuMvcPackageFacility.GetApplicationPath().AppendPath("public", "1.0.1").ToFullPath());
+            settings.DeterminePublicFolder()
+                .ShouldEqual(FubuMvcPackageFacility.GetApplicationPath().AppendPath("public", "1.0.1").ToFullPath());
         }
 
         [Test]
@@ -199,6 +206,18 @@ namespace FubuMVC.Tests.Assets
             search.Include.ShouldContain(".eot");
             search.Include.ShouldContain(".ttf");
             search.Include.ShouldContain(".woff");
+        }
+
+        [Test]
+        public void template_destination_by_default_should_be_underscore_templates()
+        {
+            new AssetSettings().TemplateDestination.ShouldEqual("_templates");
+        }
+
+        [Test]
+        public void the_default_cultures_for_templates_is_only_en_US_because_MURICA()
+        {
+            new AssetSettings().TemplateCultures.ShouldHaveTheSameElementsAs("en-US");
         }
     }
 
@@ -245,16 +264,14 @@ namespace FubuMVC.Tests.Assets
         public void find_files_for_public_folder_only()
         {
             var registry = new FubuRegistry();
-            registry.AlterSettings<AssetSettings>(x => {
-                x.Mode = SearchMode.PublicFolderOnly;
-            });
+            registry.AlterSettings<AssetSettings>(x => { x.Mode = SearchMode.PublicFolderOnly; });
 
             using (var runtime = FubuApplication.For(registry).StructureMap().Bootstrap())
             {
                 var graph = runtime.Factory.Get<IAssetGraph>();
                 graph.Assets.OrderBy(x => x.Url).Select(x => x.Url)
-                    .ShouldHaveTheSameElementsAs("public/1.0.1/d.js", "public/1.0.1/e.js", "public/1.0.1/f.js", "public/javascript/a.js", "public/javascript/b.js", "public/javascript/c.js");
-
+                    .ShouldHaveTheSameElementsAs("public/1.0.1/d.js", "public/1.0.1/e.js", "public/1.0.1/f.js",
+                        "public/javascript/a.js", "public/javascript/b.js", "public/javascript/c.js");
             }
         }
 
@@ -262,8 +279,7 @@ namespace FubuMVC.Tests.Assets
         public void find_files_for_public_folder_with_version()
         {
             var registry = new FubuRegistry();
-            registry.AlterSettings<AssetSettings>(x =>
-            {
+            registry.AlterSettings<AssetSettings>(x => {
                 x.Mode = SearchMode.PublicFolderOnly;
                 x.Version = "1.0.1";
             });
@@ -273,8 +289,7 @@ namespace FubuMVC.Tests.Assets
                 var graph = runtime.Factory.Get<IAssetGraph>();
                 graph.Assets.OrderBy(x => x.Url).Select(x => x.Url)
                     .ShouldHaveTheSameElementsAs("public/1.0.1/d.js", "public/1.0.1/e.js", "public/1.0.1/f.js");
-
-            } 
+            }
         }
     }
 }
