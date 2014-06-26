@@ -32,6 +32,16 @@ namespace Fubu.Running
             if (input.ExplodeOnlyFlag)
             {
                 ConsoleWriter.Write(ConsoleColor.Green, "Successfully exploded all the bottle content for the application at " + input.DirectoryFlag);
+            }
+
+            if (input.TemplatesFlag)
+            {
+                _application.GenerateTemplates();
+            }
+
+            if (!input.ShouldRunApp())
+            {
+                _application.Shutdown();
                 return true;
             }
 

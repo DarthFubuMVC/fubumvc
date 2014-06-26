@@ -50,11 +50,7 @@ namespace FubuApp
 
         public FubuApplication BuildApplication()
         {
-            //throw new NotImplementedException("You suck!");
-
-            var registry = new FubuRegistry();
-
-            return FubuApplication.For(registry).StructureMap(new Container());
+            return FubuApplication.DefaultPolicies().StructureMap();
         }
 
 

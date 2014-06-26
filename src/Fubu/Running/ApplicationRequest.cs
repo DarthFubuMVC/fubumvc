@@ -66,6 +66,16 @@ namespace Fubu.Running
         [FlagAlias("explode-only")]
         public bool ExplodeOnlyFlag { get; set; }
 
+        [Description("If selected, the run command will generate and write all the templates and immediately exit")]
+        public bool TemplatesFlag { get; set; }
+
+        public bool ShouldRunApp()
+        {
+            if (TemplatesFlag || ExplodeOnlyFlag) return false;
+
+            return true;
+        }
+
         public string DetermineBinPath()
         {
             var buildPath = DirectoryFlag.AppendPath("bin", BuildFlag);

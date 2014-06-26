@@ -184,13 +184,8 @@ namespace FubuMVC.Core.Assets.Templates
 
 
                 var services = new OwinServiceArguments(new RouteData(), request.Environment);
-
-
-                var behavior = _parent._services.BuildBehavior(services, _chain.UniqueId);
-
-                behavior.Invoke();
-
-                behavior.As<IDisposable>().Dispose();
+                var invoker = new BehaviorInvoker(_parent._services, _chain);
+                invoker.Invoke(services);
 
                 var response = new OwinHttpResponse(request.Environment);
 

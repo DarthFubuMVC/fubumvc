@@ -9,7 +9,7 @@ using FubuMVC.Core.Http.Owin.Middleware;
 
 namespace Fubu.Running
 {
-    public class RemoteFubuMvcBootstrapper : IBootstrapper, IActivator, IDeactivator, IListener<StartApplication>, IListener<RecycleApplication>
+    public class RemoteFubuMvcBootstrapper : IBootstrapper, IActivator, IDeactivator, IListener<StartApplication>, IListener<RecycleApplication>, IListener<GenerateTemplates>
     {
         private readonly IApplicationSourceFinder _typeFinder;
         private readonly IFubuMvcApplicationActivator _activator;
@@ -68,6 +68,11 @@ namespace Fubu.Running
         public void Receive(RecycleApplication message)
         {
             _activator.Recycle();
+        }
+
+        public void Receive(GenerateTemplates message)
+        {
+            _activator.GenerateTemplates();
         }
     }
 }

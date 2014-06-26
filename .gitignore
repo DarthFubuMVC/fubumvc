@@ -68,3 +68,4 @@ run_st.cmd
 .bundle
 src/fubu.Docs/snippets
 nupkgs
+src/FubuApp/_templates

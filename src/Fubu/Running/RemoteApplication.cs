@@ -145,5 +145,10 @@ namespace Fubu.Running
             _watcher.StopWatching();
             _proxy.SafeDispose();
         }
+
+        public void GenerateTemplates()
+        {
+            _proxy.GenerateTemplates();
+        }
     }
 }

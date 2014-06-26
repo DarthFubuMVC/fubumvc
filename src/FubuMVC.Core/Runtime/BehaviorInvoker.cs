@@ -37,7 +37,17 @@ namespace FubuMVC.Core.Runtime
                     disposable.Dispose();
                 }
             });
+
             behavior.Invoke();
+        }
+
+        public void Invoke(ServiceArguments arguments)
+        {
+            var completion = new RequestCompletion();
+
+            completion.SafeStart(() => {
+                Invoke(arguments, new Dictionary<string, object>(), completion);
+            });
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Bottles;
 using Bottles.Services.Messaging;
 using FubuCore;
+using FubuCsProjFile.Templating.Graph;
 using FubuMVC.Core;
 using FubuMVC.Katana;
 
@@ -70,6 +71,11 @@ namespace Fubu.Running
         {
             ShutDown();
             StartUp();
+        }
+
+        public void GenerateTemplates()
+        {
+            _server.Services.Get<FubuMVC.Core.Assets.Templates.TemplateGraph>().WriteAll();
         }
     }
 }
