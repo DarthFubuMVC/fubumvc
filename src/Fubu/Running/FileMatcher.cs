@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using FubuCore;
 using FubuCore.Util;
 using System.Linq;
+using FubuMVC.Core;
 
 namespace Fubu.Running
 {
@@ -11,29 +13,62 @@ namespace Fubu.Running
         FileChangeCategory CategoryFor(string file);
     }
 
+    public class AnywhereAssetFileMatcher : IFileMatch
+    {
+        private readonly string[] _extensions;
+
+        public AnywhereAssetFileMatcher(IEnumerable<string> extensions)
+        {
+            _extensions = extensions.Select(Path.GetExtension).ToArray();
+        }
+
+        public bool Matches(string file)
+        {
+            return _extensions.Contains(Path.GetExtension(file));
+        }
+
+        public FileChangeCategory Category
+        {
+            get
+            {
+                return FileChangeCategory.Content;
+            }
+        }
+    }
+
+    public class PublicFolderAssetFileMatcher : IFileMatch
+    {
+        private AnywhereAssetFileMatcher _inner;
+        private string _directory;
+
+        public PublicFolderAssetFileMatcher(string directory, IEnumerable<string> extensions)
+        {
+            _inner = new AnywhereAssetFileMatcher(extensions);
+            _directory = directory;
+        }
+
+        public bool Matches(string file)
+        {
+            return file.StartsWith(_directory) && _inner.Matches(file);
+        }
+
+        public FileChangeCategory Category
+        {
+            get
+            {
+                return FileChangeCategory.Content;
+                
+            }
+        }
+    }
+
     public class FileMatcher : IFileMatcher
     {
-        public static readonly string File = "file-patterns.txt";
-
         private readonly Cache<FileChangeCategory, IList<IFileMatch>> _matchers = new Cache<FileChangeCategory, IList<IFileMatch>>(x => new List<IFileMatch>());
         private readonly Cache<string, FileChangeCategory> _results;
 
-        public static FileMatcher ReadFromFile(string file)
-        {
-            var system = new FileSystem();
-            var matcher = new FileMatcher();
 
-            system.ReadTextFile(file, text => {
-                if (text.IsEmpty()) return;
-
-                var match = Build(text);
-                matcher.Add(match);
-            });
-
-            return matcher;
-        }
-
-        public FileMatcher()
+        public FileMatcher(FileWatcherManifest manifest)
         {
             _results = new Cache<string, FileChangeCategory>(file => {
                 if (matches(FileChangeCategory.AppDomain, file)) return FileChangeCategory.AppDomain;
@@ -42,10 +77,29 @@ namespace Fubu.Running
                 return FileChangeCategory.Nothing;
             });
 
+            if (manifest.PublicAssetFolder.IsEmpty())
+            {
+                Add(new AnywhereAssetFileMatcher(manifest.AssetExtensions));
+            }
+            else
+            {
+                Add(new PublicFolderAssetFileMatcher(manifest.PublicAssetFolder, manifest.AssetExtensions));
+            }
+
+            Add(new ExactFileMatch(FileChangeCategory.AppDomain, manifest.ConfigurationFile));
+
             Add(new BinFileMatch());
             Add(new ExactFileMatch(FileChangeCategory.AppDomain, "web.config"));
             Add(new ExtensionMatch(FileChangeCategory.AppDomain, "*.exe"));
             Add(new ExtensionMatch(FileChangeCategory.AppDomain, "*.dll"));
+
+            manifest.ContentMatches.Where(x => x.StartsWith("*."))
+                .Each(x => Add(new ExtensionMatch(FileChangeCategory.Content, x)));
+
+            manifest.ContentMatches.Where(x => !x.StartsWith("*."))
+                .Each(x => Add(new ExactFileMatch(FileChangeCategory.Content, x)));
+
+
         }
 
         public IEnumerable<IFileMatch> MatchersFor(FileChangeCategory category)
@@ -69,24 +123,5 @@ namespace Fubu.Running
             _matchers[match.Category].Add(match);
         }
 
-        public static IFileMatch Build(string text)
-        {
-            var parts = text.Split('=');
-            var category = Enum.Parse(typeof (FileChangeCategory), parts.Last(), true)
-                .As<FileChangeCategory>();
-            var pattern = parts.First();
-
-            if (!pattern.StartsWith("*"))
-            {
-                return new ExactFileMatch(category, pattern);
-            }
-            
-            if (pattern.Split('.').Count() > 2)
-            {
-                return new EndsWithPatternMatch(category, pattern);
-            }
-
-            return new ExtensionMatch(category, pattern);
-        }
     }
 }

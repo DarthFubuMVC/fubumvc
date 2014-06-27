@@ -1,14 +1,23 @@
-﻿namespace FubuMVC.Core
+﻿using System;
+using FubuMVC.Core.Assets;
+using FubuMVC.Core.Assets.Templates;
+
+namespace FubuMVC.Core
 {
     public class FileWatcherManifest
     {
-        public string ConfigurationFile { get; set; }
-        public string[] ContentMatches { get; set; }
+        public static FileWatcherManifest Build(AssetSettings settings, TemplateGraph templates)
+        {
+            throw new NotImplementedException();
+        }
 
-        public string PublicAssetFolder { get; set; }
+        public string ConfigurationFile =  AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
+        public string[] ContentMatches = new string[0];
 
-        public string[] AssetExtensions { get; set; }
+        public string PublicAssetFolder = string.Empty;
 
-        public string[] TemplateFiles { get; set; }
+        public string[] AssetExtensions  = new string[0];
+
+        public string[] TemplateFiles = new string[0];
     }
 }

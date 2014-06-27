@@ -9,13 +9,12 @@ using Bottles.Services.Messaging;
 using Bottles.Services.Remote;
 using FubuCore;
 using FubuCore.CommandLine;
+using FubuMVC.Core;
 
 namespace Fubu.Running
 {
     public class RemoteApplication : IListener<ApplicationStarted>, IListener<InvalidApplication>, IApplicationObserver
     {
-        public static readonly FileMatcher FileMatcher;
-
         private readonly ManualResetEvent _reset = new ManualResetEvent(false);
         private readonly BrowserDriver _driver = new BrowserDriver();
         private ApplicationRequest _input;
@@ -24,19 +23,6 @@ namespace Fubu.Running
         private FubuMvcApplicationFileWatcher _watcher;
         private readonly Action<RemoteDomainExpression> _configuration;
 
-        static RemoteApplication()
-        {
-            string location = Assembly.GetExecutingAssembly().Location;
-            string directory = Path.GetDirectoryName(location);
-            if (Directory.Exists(directory))
-            {
-                FileMatcher = FileMatcher.ReadFromFile(directory.AppendPath(FileMatcher.File));
-            }
-            else
-            {
-                FileMatcher = FileMatcher.ReadFromFile(FileMatcher.File);
-            }
-        }
 
         public RemoteApplication()
         {
@@ -125,7 +111,8 @@ namespace Fubu.Running
                 _input.AutoRefreshWebSocketsAddress = _driver.Port.ToString();
             }
 
-            _watcher = new FubuMvcApplicationFileWatcher(this, FileMatcher);
+            // TODO -- need to add the FileWatcherManifest before starting to do anything here.
+            _watcher = new FubuMvcApplicationFileWatcher(this, new FileMatcher(new FileWatcherManifest()));
 
             start();
         }

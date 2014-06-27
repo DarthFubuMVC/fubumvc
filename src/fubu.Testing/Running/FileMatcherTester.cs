@@ -1,5 +1,7 @@
-﻿using Fubu.Running;
+﻿using System;
+using Fubu.Running;
 using FubuCore;
+using FubuMVC.Core;
 using NUnit.Framework;
 using FubuTestingSupport;
 
@@ -13,7 +15,10 @@ namespace fubu.Testing.Running
         [SetUp]
         public void SetUp()
         {
-            theMatcher = new FileMatcher();
+            var manifest = new FileWatcherManifest();
+            manifest.ContentMatches = new string[]{"*.cshtml", "bindings.xml"};
+
+            theMatcher = new FileMatcher(manifest);
 
             theMatcher.Add(new EndsWithPatternMatch(FileChangeCategory.Application, "*.asset.config"));
             theMatcher.Add(new ExtensionMatch(FileChangeCategory.Content, "*.css"));
@@ -22,26 +27,25 @@ namespace fubu.Testing.Running
         }
 
         [Test]
-        public void read_matcher_from_file_if_the_file_does_not_exist()
+        public void changing_the_configuration_file_forces_an_appdomain_change()
         {
-            var matcher = FileMatcher.ReadFromFile("non-existent-file.txt");
-            matcher.ShouldNotBeNull();
+            theMatcher.CategoryFor(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile)
+                .ShouldEqual(FileChangeCategory.AppDomain);
         }
 
         [Test]
-        public void read_matcher_from_file()
+        public void uses_full_file_content_match_from_manifest()
         {
-            new FileSystem().WriteStringToFile(FileMatcher.File, @"
-*.spark=Application
-*.css=Content
-");
-
-
-            var matcher = FileMatcher.ReadFromFile(FileMatcher.File);
-
-            matcher.MatchersFor(FileChangeCategory.Content).ShouldContain(new ExtensionMatch(FileChangeCategory.Content, "*.css"));
-            matcher.MatchersFor(FileChangeCategory.Application).ShouldContain(new ExtensionMatch(FileChangeCategory.Application, "*.spark"));
+            theMatcher.CategoryFor("bindings.xml").ShouldEqual(FileChangeCategory.Content);
+            theMatcher.CategoryFor("bindings2.xml").ShouldEqual(FileChangeCategory.Nothing);
         }
+
+        [Test]
+        public void uses_extension_matching_on_content_from_the_manifest()
+        {
+            theMatcher.CategoryFor("foo.cshtml").ShouldEqual(FileChangeCategory.Content);
+        }
+
 
         [Test]
         public void always_return_app_domain_for_files_in_appdomain()
@@ -87,25 +91,39 @@ namespace fubu.Testing.Running
             theMatcher.CategoryFor("foo.txt").ShouldEqual(FileChangeCategory.Nothing);
         }
 
+
         [Test]
-        public void build_exact_match()
+        public void match_on_assets_from_anywhere()
         {
-            FileMatcher.Build("web.config=AppDomain")
-                       .ShouldEqual(new ExactFileMatch(FileChangeCategory.AppDomain, "web.config"));
+            var manifest = new FileWatcherManifest {AssetExtensions = new string[] {"*.css", "*.js", "*.weird"}};
+
+            var matcher = new FileMatcher(manifest);
+
+            matcher.CategoryFor("foo/bar.js").ShouldEqual(FileChangeCategory.Content);
+            matcher.CategoryFor("foo/bar.css").ShouldEqual(FileChangeCategory.Content);
+            matcher.CategoryFor("bar.css").ShouldEqual(FileChangeCategory.Content);
+            matcher.CategoryFor("foo.js").ShouldEqual(FileChangeCategory.Content);
+            matcher.CategoryFor("foo.weird").ShouldEqual(FileChangeCategory.Content);
+            matcher.CategoryFor("weird.foo").ShouldEqual(FileChangeCategory.Nothing);
         }
 
         [Test]
-        public void build_extension_match()
+        public void match_on_assets_from_public_folder()
         {
-            FileMatcher.Build("*.spark=Content")
-                       .ShouldEqual(new ExtensionMatch(FileChangeCategory.Content, "*.spark"));
-        }
+            var manifest = new FileWatcherManifest
+            {
+                AssetExtensions = new string[] { "*.css", "*.js", "*.weird" },
+                PublicAssetFolder = "public/v1"
+            };
 
-        [Test]
-        public void build_ends_with_match()
-        {
-            FileMatcher.Build("*.asset.config=Application")
-                       .ShouldEqual(new EndsWithPatternMatch(FileChangeCategory.Application, "*.asset.config"));
+            var matcher = new FileMatcher(manifest);
+
+            matcher.CategoryFor("public/v1/foo/bar.js").ShouldEqual(FileChangeCategory.Content);
+            matcher.CategoryFor("public/v1/foo/bar.css").ShouldEqual(FileChangeCategory.Content);
+            matcher.CategoryFor("bar.css").ShouldEqual(FileChangeCategory.Nothing);
+            matcher.CategoryFor("foo.js").ShouldEqual(FileChangeCategory.Nothing);
         }
     }
+
+
 }

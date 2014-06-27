@@ -137,6 +137,7 @@
     <Compile Include="usage_graph_smoke_tester.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="ripple.dependencies.config">
       <SubType>Designer</SubType>
     </None>
