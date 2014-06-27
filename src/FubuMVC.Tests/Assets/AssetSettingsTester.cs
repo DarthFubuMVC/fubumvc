@@ -225,9 +225,9 @@ namespace FubuMVC.Tests.Assets
         {
             var settings = new AssetSettings();
 
-            settings.ContentMatches.ShouldContain("*.htm");
-            settings.ContentMatches.ShouldContain("*.html");
-            settings.ContentMatches.ShouldContain("*.txt");
+            settings.ContentMatches.ShouldContain(".htm");
+            settings.ContentMatches.ShouldContain(".html");
+            settings.ContentMatches.ShouldContain(".txt");
         }
     }
 
@@ -300,6 +300,74 @@ namespace FubuMVC.Tests.Assets
                 graph.Assets.OrderBy(x => x.Url).Select(x => x.Url)
                     .ShouldHaveTheSameElementsAs("public/1.0.1/d.js", "public/1.0.1/e.js", "public/1.0.1/f.js");
             }
+        }
+    }
+
+    [TestFixture]
+    public class when_creating_a_file_watcher_manifest
+    {
+        [Test]
+        public void set_the_public_folder_if_in_that_mode()
+        {
+            var settings = new AssetSettings
+            {
+                Mode = SearchMode.PublicFolderOnly,
+                PublicFolder = "public"
+            };
+
+            var manifest = settings.CreateFileWatcherManifest();
+
+            manifest.PublicAssetFolder.ShouldEqual(
+                FubuMvcPackageFacility.GetApplicationPath().AppendPath("public").Replace('\\', '/'));
+
+        }
+
+        [Test]
+        public void no_public_folder_if_in_anywhere_mode()
+        {
+            var settings = new AssetSettings
+            {
+                Mode = SearchMode.Anywhere
+            };
+
+            settings.CreateFileWatcherManifest().PublicAssetFolder.ShouldBeEmpty();
+        }
+
+        [Test]
+        public void adds_content_extensions()
+        {
+            var settings = new AssetSettings();
+            settings.ContentMatches.Add(".foo");
+
+            var manifest = settings.CreateFileWatcherManifest();
+
+            manifest.ContentMatches.ShouldContain(".foo");
+            manifest.ContentMatches.ShouldContain(".htm");
+            manifest.ContentMatches.ShouldContain(".html");
+        }
+
+        [Test]
+        public void adds_all_the_default_asset_extensions()
+        {
+            var settings = new AssetSettings();
+            var manifest = settings.CreateFileWatcherManifest();
+
+            manifest.AssetExtensions.ShouldContain(".js");
+            manifest.AssetExtensions.ShouldContain(".css");
+            manifest.AssetExtensions.ShouldContain(".jpeg");
+            manifest.AssetExtensions.ShouldContain(".jpg");
+            manifest.AssetExtensions.ShouldContain(".bmp");
+        }
+
+        [Test]
+        public void adds_the_user_supplied_extensions()
+        {
+            var settings = new AssetSettings();
+            var manifest = settings.CreateFileWatcherManifest();
+
+            manifest.AssetExtensions.ShouldContain(".svg");
+            manifest.AssetExtensions.ShouldContain(".ttf");
+            manifest.AssetExtensions.ShouldContain(".eot");
         }
     }
 }

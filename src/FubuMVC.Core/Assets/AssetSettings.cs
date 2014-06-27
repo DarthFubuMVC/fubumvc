@@ -261,6 +261,29 @@ namespace FubuMVC.Core.Assets
         /// <summary>
         /// List of file patterns that should be considered to be content files
         /// </summary>
-        public readonly IList<string> ContentMatches = new List<string> { "*.txt", "*.htm", "*.html" };
+        public readonly IList<string> ContentMatches = new List<string> { ".txt", ".htm", ".html" };
+
+        public FileWatcherManifest CreateFileWatcherManifest()
+        {
+            var manifest = new FileWatcherManifest();
+
+            /*TODO
+             * - has public folder
+             * - does not have public folder
+             * - all content matches
+             */
+
+            if (Mode == SearchMode.PublicFolderOnly)
+            {
+                manifest.PublicAssetFolder = DeterminePublicFolder().Replace('\\', '/');
+            }
+
+            manifest.AssetExtensions =
+                assetMimeTypes().SelectMany(x => x.Extensions).Union(AllowableExtensions).ToArray();
+
+            manifest.ContentMatches = ContentMatches.ToArray();
+
+            return manifest;
+        }
     }
 }

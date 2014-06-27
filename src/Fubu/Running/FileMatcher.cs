@@ -38,8 +38,8 @@ namespace Fubu.Running
 
     public class PublicFolderAssetFileMatcher : IFileMatch
     {
-        private AnywhereAssetFileMatcher _inner;
-        private string _directory;
+        private readonly AnywhereAssetFileMatcher _inner;
+        private readonly string _directory;
 
         public PublicFolderAssetFileMatcher(string directory, IEnumerable<string> extensions)
         {
