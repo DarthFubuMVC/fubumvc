@@ -4,6 +4,8 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Web;
 using FubuCore;
+using FubuMVC.Core;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.UI;
@@ -26,6 +28,12 @@ namespace FubuMVC.Spark
         {
             _engine = new SparkViewEngine();
             _sparkSettings = _engine.Settings.As<SparkSettings>();
+        }
+
+        protected override void registerWatchSettings(AssetSettings settings)
+        {
+            settings.ContentMatches.Add("*.spark");
+            settings.ContentMatches.Add("bindings.xml");
         }
 
         protected override void addNamespacesForViews(CommonViewNamespaces namespaces)

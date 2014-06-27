@@ -254,6 +254,13 @@ namespace FubuMVC.Core.Assets
         /// <summary>
         /// Designate all the CultureInfo's for template generation. Default is ['en-US']
         /// </summary>
-        public IList<string> TemplateCultures = new List<string>{"en-US"}; 
+        public IList<string> TemplateCultures = new List<string>{"en-US"};
+
+
+
+        /// <summary>
+        /// List of file patterns that should be considered to be content files
+        /// </summary>
+        public readonly IList<string> ContentMatches = new List<string> { "*.txt", "*.htm", "*.html" };
     }
 }

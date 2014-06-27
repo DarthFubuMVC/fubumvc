@@ -219,6 +219,16 @@ namespace FubuMVC.Tests.Assets
         {
             new AssetSettings().TemplateCultures.ShouldHaveTheSameElementsAs("en-US");
         }
+
+        [Test]
+        public void default_content_files()
+        {
+            var settings = new AssetSettings();
+
+            settings.ContentMatches.ShouldContain("*.htm");
+            settings.ContentMatches.ShouldContain("*.html");
+            settings.ContentMatches.ShouldContain("*.txt");
+        }
     }
 
     [TestFixture]

@@ -145,6 +145,7 @@
     <Compile Include="Endpoints\HttpResponse.cs" />
     <Compile Include="Endpoints\WebRequestResponseExtensions.cs" />
     <Compile Include="Diagnostics\FubuApplicationDescriber.cs" />
+    <Compile Include="FileWatcherManifest.cs" />
     <Compile Include="FormatterOptions.cs" />
     <Compile Include="FubuModuleAttribute.cs" />
     <Compile Include="FubuPartialAttribute.cs" />

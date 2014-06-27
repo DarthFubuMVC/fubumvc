@@ -1,8 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using FubuCore;
+using FubuMVC.Core;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.UI;
@@ -34,6 +33,11 @@ namespace FubuMVC.Razor
         protected override void registerServices(ServiceRegistry services)
         {
             services.SetServiceIfNone<IPartialRenderer, PartialRenderer>();
+        }
+
+        protected override void registerWatchSettings(AssetSettings settings)
+        {
+            settings.ContentMatches.Add("*.cshtml");
         }
 
         protected override void addNamespacesForViews(CommonViewNamespaces namespaces)

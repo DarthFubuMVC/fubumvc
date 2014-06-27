@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Bottles;
 using FubuCore;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime.Files;
 
@@ -25,7 +26,11 @@ namespace FubuMVC.Core.View.Model
             registry.Services(registerServices);
 
             registry.AlterSettings<CommonViewNamespaces>(addNamespacesForViews);
+
+            registry.AlterSettings<AssetSettings>(registerWatchSettings);
         }
+
+        protected abstract void registerWatchSettings(AssetSettings settings);
 
         protected abstract void addNamespacesForViews(CommonViewNamespaces namespaces);
 
