@@ -1,4 +1,4 @@
-namespace Fubu.Running
+namespace FubuMVC.Core.Runtime
 {
     public interface IApplicationObserver
     {

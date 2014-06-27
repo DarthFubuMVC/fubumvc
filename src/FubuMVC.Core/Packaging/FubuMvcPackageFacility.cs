@@ -47,6 +47,19 @@ namespace FubuMVC.Core.Packaging
                    HostingEnvironment.ApplicationPhysicalPath ?? determineApplicationPathFromAppDomain();
         }
 
+        public static string FindBinPath()
+        {
+            var binPath = AppDomain.CurrentDomain.SetupInformation.PrivateBinPath;
+            if (binPath.IsNotEmpty())
+            {
+                return Path.IsPathRooted(binPath)
+                    ? binPath
+                    : AppDomain.CurrentDomain.SetupInformation.ApplicationBase.AppendPath(binPath);
+            }
+
+            return null;
+        }
+
         /// <summary>
         ///   These are the places that FubuMVC should look for packages
         /// </summary>

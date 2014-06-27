@@ -17,24 +17,17 @@ namespace FubuMVC.Core
     /// </summary>
     public class FubuModuleAttributePackageLoader : IPackageLoader
     {
+
+
         public IEnumerable<IPackageInfo> Load(IPackageLog log)
         {
             var list = new List<string> { AppDomain.CurrentDomain.SetupInformation.ApplicationBase };
 
-            string binPath = AppDomain.CurrentDomain.SetupInformation.PrivateBinPath;
+            var binPath = FubuMvcPackageFacility.FindBinPath();
             if (binPath.IsNotEmpty())
             {
-                if (Path.IsPathRooted(binPath))
-                {
-                    list.Add(binPath);
-                }
-                else
-                {
-                    list.Add(AppDomain.CurrentDomain.SetupInformation.ApplicationBase.AppendPath(binPath));
-                }
+                list.Add(binPath);
             }
-
-
 
             // This is a workaround for Self Hosted apps where the physical path is different than the AppDomain's original
             // path

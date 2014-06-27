@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using Bottles.Services.Messaging;
 using Bottles.Services.Remote;
 using FubuCore;
 using FubuCore.CommandLine;
 using FubuMVC.Core;
+using FubuMVC.Core.Runtime;
 
 namespace Fubu.Running
 {
@@ -20,7 +18,7 @@ namespace Fubu.Running
         private ApplicationRequest _input;
         private bool _opened;
         private RemoteFubuMvcProxy _proxy;
-        private FubuMvcApplicationFileWatcher _watcher;
+        private FileWatcherManifest _watcher;
         private readonly Action<RemoteDomainExpression> _configuration;
 
 
@@ -41,7 +39,7 @@ namespace Fubu.Running
 
         public void RecycleAppDomain()
         {
-            _watcher.StopWatching();
+            if (_watcher != null) _watcher.StopWatching();
             if (_proxy != null)
             {
                 _proxy.SafeDispose();
@@ -63,8 +61,7 @@ namespace Fubu.Running
         public void Receive(ApplicationStarted message)
         {
             Console.WriteLine("Started application {0} at url {1} at {2}", message.ApplicationName, message.HomeAddress,
-                              message.Timestamp);
-
+                message.Timestamp);
 
 
             if (_input.OpenFlag && !_opened)
@@ -73,7 +70,14 @@ namespace Fubu.Running
                 _driver.OpenBrowserTo(message.HomeAddress);
             }
 
-            _watcher.StartWatching(_input.DirectoryFlag, message.BottleContentFolders);
+            if (_watcher == null)
+            {
+                _watcher = message.Watcher;
+                _watcher.Watch(_input.WatchedFlag, this);
+            }
+
+            _watcher.StartWatching();
+
 
             _reset.Set();
         }
@@ -111,9 +115,6 @@ namespace Fubu.Running
                 _input.AutoRefreshWebSocketsAddress = _driver.Port.ToString();
             }
 
-            // TODO -- need to add the FileWatcherManifest before starting to do anything here.
-            _watcher = new FubuMvcApplicationFileWatcher(this, new FileMatcher(new FileWatcherManifest()));
-
             start();
         }
 
@@ -138,4 +139,6 @@ namespace Fubu.Running
             _proxy.GenerateTemplates();
         }
     }
+
+
 }

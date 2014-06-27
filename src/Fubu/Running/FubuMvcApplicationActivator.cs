@@ -5,6 +5,7 @@ using Bottles.Services.Messaging;
 using FubuCore;
 using FubuCsProjFile.Templating.Graph;
 using FubuMVC.Core;
+using FubuMVC.Core.Assets;
 using FubuMVC.Katana;
 
 namespace Fubu.Running
@@ -33,15 +34,12 @@ namespace Fubu.Running
                 var runtime = application.Bootstrap();
                 _server = new EmbeddedFubuMvcServer(runtime, _physicalPath, _port);
 
-                var list = new List<string>();
-                PackageRegistry.Packages.Each(pak => pak.ForFolder(BottleFiles.WebContentFolder, list.Add));
-
                 EventAggregator.SendMessage(new ApplicationStarted
                 {
                     ApplicationName = _applicationSource.GetType().Name,
                     HomeAddress = _server.BaseAddress,
                     Timestamp = DateTime.Now,
-                    BottleContentFolders = list.ToArray()
+                    Watcher = runtime.Factory.Get<AssetSettings>().CreateFileWatcherManifest()
                 });
             }
             catch (KatanaRightsException e)

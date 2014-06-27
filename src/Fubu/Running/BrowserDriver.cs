@@ -42,7 +42,6 @@ namespace Fubu.Running
 
         public void RefreshPage()
         {
-            Console.WriteLine("Triggering refresh");
             _sockets.Each(x => x.Send("REFRESH"));
         }
 
