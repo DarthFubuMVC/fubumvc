@@ -48,7 +48,20 @@ namespace FubuMVC.Core
                 observer.RecycleAppDomain();
             };
 
-            FileSystemEventHandler reload = (o, args) => observer.RefreshContent();
+            FileSystemEventHandler reload = (o, args) => {
+                var watcher = o.As<FileSystemWatcher>();
+
+                watcher.EnableRaisingEvents = false;
+
+                try
+                {
+                    observer.RefreshContent();
+                }
+                finally
+                {
+                    watcher.EnableRaisingEvents = true;
+                }
+            };
 
             add(BinPath, "*.dll").OnChangeOrCreation(appDomain);
             add(BinPath, "*.exe").OnChangeOrCreation(appDomain);
