@@ -96,63 +96,7 @@
         </div>
         <div class="col-xs-9 col-md-9 main" id="main-pane">
           <h1 class="page-header">Dashboard</h1>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
-          <p>Wha?</p>
+
         </div>
         
       </div>
@@ -163,7 +107,11 @@
 
 
     <Script src="diagnostics/bower_components/jquery/dist/jquery.min.js"/>
+    <Script src="diagnostics/bower_components/backbone/backbone.js"/>
+    <Script src="diagnostics/bower_components/lodash/dist/lodash.min.js"/>
     <Script src="diagnostics/bower_components/bootstrap/dist/js/bootstrap.min.js"/>
+    <Script src="diagnostics/fubu-diagnostics.js"/>
+    
   </body>
 </html>
 

@@ -125,6 +125,8 @@
     <None Include="Requests\RequestVisualization.spark">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="diagnostics\bootstrap.min.css" />
+    <Content Include="diagnostics\fubu-diagnostics.js" />
     <Content Include="ripple.dependencies.config">
       <SubType>Designer</SubType>
     </Content>
