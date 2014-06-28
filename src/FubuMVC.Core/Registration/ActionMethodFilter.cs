@@ -19,6 +19,8 @@ namespace FubuMVC.Core.Registration
             Excludes += method => method.IsSpecialName;
         }
 
+        public static ActionMethodFilter Flyweight = new ActionMethodFilter();
+
         public void IgnoreMethodsDeclaredBy<T>()
         {
             Excludes += x => x.DeclaringType == typeof (T);

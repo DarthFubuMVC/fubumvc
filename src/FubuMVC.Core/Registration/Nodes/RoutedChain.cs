@@ -87,6 +87,8 @@ namespace FubuMVC.Core.Registration.Nodes
             get { return IsPartialOnly || Route == null ? 0 : Route.Rank; }
         }
 
+        public string RouteName { get; set; }
+
         /// <summary>
         /// Adds the specified route as an additional route for this BehaviorChain to respond to.
         /// </summary>

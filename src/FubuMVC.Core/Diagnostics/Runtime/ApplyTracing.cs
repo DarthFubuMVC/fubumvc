@@ -3,8 +3,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using FubuCore;
-using FubuCore.Binding.InMemory;
-using FubuMVC.Core.Diagnostics.Runtime.Tracing;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Diagnostics;
@@ -69,24 +67,6 @@ namespace FubuMVC.Core.Diagnostics.Runtime
             {
                 new DiagnosticNode(chain);
             }
-        }
-    }
-
-    public class TracingServices : ServiceRegistry
-    {
-        public TracingServices()
-        {
-            ReplaceService<IDebugDetector, DebugDetector>();
-
-            // does no harm
-            ReplaceService<IBindingHistory, BindingHistory>();
-            SetServiceIfNone<IRequestHistoryCache, RequestHistoryCache>();
-
-            AddService<IRequestTraceObserver, RequestHistoryObserver>();
-
-
-            SetServiceIfNone<IRequestTrace, RequestTrace>();
-            SetServiceIfNone<IRequestLogBuilder, RequestLogBuilder>();
         }
     }
 }

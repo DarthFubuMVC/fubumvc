@@ -1,13 +1,11 @@
 using System.ComponentModel;
 using System.Linq;
 using FubuMVC.Core;
-using FubuMVC.Core.Behaviors.Chrome;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Urls;
-using FubuMVC.Diagnostics.Chrome;
 using HtmlTags;
 
 namespace FubuMVC.Diagnostics.Requests

@@ -1,6 +1,5 @@
 ﻿using FubuMVC.Core;
-using FubuMVC.Diagnostics.Dashboard;
-using FubuMVC.Diagnostics.Model;
+using FubuMVC.Diagnostics.Endpoints;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -15,8 +14,8 @@ namespace FubuMVC.Diagnostics.Tests
         {
             using (var runtime = FubuApplication.For<AuthorizedRegistry>().StructureMap().Bootstrap())
             {
-                runtime.Behaviors.BehaviorFor<GroupEndpoint>(x => x.Group(null)).Authorization.AllowedRoles().ShouldContain("admin");
-                runtime.Behaviors.BehaviorFor<DashboardFubuDiagnostics>(x => x.Index(null)).Authorization.AllowedRoles().ShouldContain("admin");
+                runtime.Behaviors.BehaviorFor<FubuDiagnosticsEndpoint>(x => x.get__fubu()).Authorization.AllowedRoles().ShouldContain("admin");
+                runtime.Behaviors.BehaviorFor<EndpointExplorerFubuDiagnostics>(x => x.get_endpoints(null)).Authorization.AllowedRoles().ShouldContain("admin");
             }
         }
     }

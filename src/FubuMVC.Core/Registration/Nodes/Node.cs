@@ -36,6 +36,11 @@ namespace FubuMVC.Core.Registration.Nodes
             get { return _next; }
             internal set
             {
+                if (ReferenceEquals(value, this))
+                {
+                    throw new InvalidOperationException("Cannot set Node.Next to itself unless you just like StackOverflowExceptions");
+                }
+
                 _next = value;
                 
                 if (value != null) value.Previous = this.As<T>();

@@ -156,12 +156,10 @@
     <Compile Include="Chains\ChainFubuDiagnostics.cs" />
     <Compile Include="Chains\ChainRequest.cs" />
     <Compile Include="Chains\ChainVisualization.cs" />
-    <Compile Include="Chrome\DashboardChrome.cs" />
+    <Compile Include="CoreDiagnosticsGroup.cs" />
     <Compile Include="Core\CoreExtensions.cs" />
     <Compile Include="Core\Extensions\TagExtensions.cs" />
-    <Compile Include="Dashboard\DashboardFubuDiagnostics.cs" />
-    <Compile Include="Dashboard\DashboardModel.cs" />
-    <Compile Include="Dashboard\DashboardRequestModel.cs" />
+    <Compile Include="DiagnosticChainsSource.cs" />
     <Compile Include="DiagnosticsException.cs" />
     <Compile Include="DiagnosticsRegistration.cs" />
     <Compile Include="DiagnosticsRegistry.cs" />
@@ -170,14 +168,7 @@
     <Compile Include="Endpoints\EndpointsTable.cs" />
     <Compile Include="Endpoints\RouteQuery.cs" />
     <Compile Include="Endpoints\RouteReport.cs" />
-    <Compile Include="FubuPageExtensions.cs" />
-    <Compile Include="Model\DiagnosticChain.cs" />
-    <Compile Include="Model\DiagnosticChainsSource.cs" />
-    <Compile Include="Model\DiagnosticGraph.cs" />
-    <Compile Include="Model\DiagnosticGroup.cs" />
-    <Compile Include="Model\FubuDiagnosticsConfiguration.cs" />
-    <Compile Include="Model\GroupEndpoint.cs" />
-    <Compile Include="Model\IDiagnosticContext.cs" />
+    <Compile Include="FubuDiagnosticsEndpoint.cs" />
     <Compile Include="ModelBinding\ModelBindingFubuDiagnostics.cs" />
     <Compile Include="Packaging\PackageDiagnosticsLogModel.cs" />
     <Compile Include="Packaging\PackageDiagnosticsModel.cs" />
@@ -209,6 +200,7 @@
     <Compile Include="Visualization\Visualizers\StringMessageEndpoint.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Model\" />
     <Folder Include="Visualization\Visualizers\ConfigurationActions\" />
   </ItemGroup>
   <PropertyGroup>

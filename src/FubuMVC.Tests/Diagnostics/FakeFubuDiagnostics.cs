@@ -1,4 +1,4 @@
-﻿namespace FubuMVC.Diagnostics.Tests.Model
+﻿namespace FubuMVC.Tests.Diagnostics
 {
     public class FakeFubuDiagnostics
     {

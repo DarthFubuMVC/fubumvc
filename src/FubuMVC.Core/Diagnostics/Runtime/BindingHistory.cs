@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using FubuCore.Binding.InMemory;
 using FubuCore.Binding.Logging;
 using FubuCore.Logging;
@@ -18,11 +17,5 @@ namespace FubuMVC.Core.Diagnostics.Runtime
         {
             _logger.DebugMessage(() => new ModelBindingLog{Report = report});
         }
-    }
-
-    [Description("Model Binding Log")]
-    public class ModelBindingLog : LogRecord
-    {
-        public BindingReport Report { get; set; }
     }
 }

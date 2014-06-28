@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Security;
 
@@ -44,6 +45,8 @@ namespace FubuMVC.Core
                 _traceLevel = level;
             }
         }
+
+        public IList<DiagnosticGroup> Groups = new List<DiagnosticGroup>();
     }
 
     public enum TraceLevel

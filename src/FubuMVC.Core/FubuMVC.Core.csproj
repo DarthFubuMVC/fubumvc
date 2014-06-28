@@ -111,7 +111,13 @@
     <Compile Include="Continuations\IContinuationProcessor.cs" />
     <Compile Include="DiagnosticsSettings.cs" />
     <Compile Include="Diagnostics\AboutDiagnostics.cs" />
-    <Compile Include="Diagnostics\DescriptionTags.cs" />
+    <Compile Include="Diagnostics\AppReloaded.cs" />
+    <Compile Include="Diagnostics\AutoReloadingTag.cs" />
+    <Compile Include="Diagnostics\ChildDescriptionTag.cs" />
+    <Compile Include="Diagnostics\DescriptionPropertyTag.cs" />
+    <Compile Include="Diagnostics\DescriptionBodyTag.cs" />
+    <Compile Include="Diagnostics\DiagnosticChain.cs" />
+    <Compile Include="Diagnostics\DiagnosticGroup.cs" />
     <Compile Include="Diagnostics\Runtime\ApplyTracing.cs" />
     <Compile Include="Diagnostics\Runtime\BehaviorFinish.cs" />
     <Compile Include="Diagnostics\Runtime\BehaviorStart.cs" />
@@ -124,6 +130,7 @@
     <Compile Include="Diagnostics\Runtime\IDebugDetector.cs" />
     <Compile Include="Diagnostics\Runtime\IRequestHistoryCache.cs" />
     <Compile Include="Diagnostics\Runtime\IRequestTraceObserver.cs" />
+    <Compile Include="Diagnostics\Runtime\ModelBindingLog.cs" />
     <Compile Include="Diagnostics\Runtime\ProductionModeTraceListener.cs" />
     <Compile Include="Diagnostics\Runtime\RequestHistoryCache.cs" />
     <Compile Include="Diagnostics\Runtime\RequestHistoryObserver.cs" />
@@ -131,11 +138,13 @@
     <Compile Include="Diagnostics\Runtime\RequestStep.cs" />
     <Compile Include="Diagnostics\Runtime\RequestTraceListener.cs" />
     <Compile Include="Diagnostics\Runtime\TracedStep.cs" />
+    <Compile Include="Diagnostics\Runtime\TracingServices.cs" />
     <Compile Include="Diagnostics\Runtime\Tracing\BehaviorCorrelation.cs" />
     <Compile Include="Diagnostics\Runtime\Tracing\BehaviorTracer.cs" />
     <Compile Include="Diagnostics\Runtime\Tracing\DiagnosticBehavior.cs" />
     <Compile Include="Diagnostics\Runtime\Tracing\IRequestLogBuilder.cs" />
     <Compile Include="Diagnostics\Runtime\Tracing\IRequestTrace.cs" />
+    <Compile Include="Diagnostics\Runtime\Tracing\NulloRequestLog.cs" />
     <Compile Include="Diagnostics\Runtime\Tracing\RequestLogBuilder.cs" />
     <Compile Include="Diagnostics\Runtime\Tracing\RequestTrace.cs" />
     <Compile Include="DoNotAutoImportAttribute.cs" />

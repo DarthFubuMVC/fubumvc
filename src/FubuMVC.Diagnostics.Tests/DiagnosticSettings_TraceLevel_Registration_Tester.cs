@@ -3,9 +3,9 @@ using System.Linq;
 using FubuCore.Binding.InMemory;
 using FubuCore.Logging;
 using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration;
-using FubuMVC.Diagnostics.Model;
 using FubuTestingSupport;
 using NUnit.Framework;
 

@@ -1,10 +1,10 @@
 using System.Linq;
 using System.Reflection;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
-using FubuMVC.Diagnostics.Model;
 
 namespace FubuMVC.Diagnostics.Endpoints
 {
