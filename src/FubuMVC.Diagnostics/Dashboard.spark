@@ -11,8 +11,7 @@
     <meta name="author" content="FubuMVC" />
     <title>FubuMVC Diagnostics</title>
     
-    <Stylesheet href="diagnostics/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
-    <Stylesheet href="diagnostics/bower_components/bootstrap/dist/css/bootstrap-theme.css"/>
+    <Stylesheet href="diagnostics/bootstrap.min.css"/>
   </head>
 
   <body>
@@ -26,7 +25,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Project name</a>
+          <a class="navbar-brand" href="#">
+            <img src="/Content/Images/fubumvc.png" style="margin-top:-10px"/>
+
+          </a>
+
+          
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -70,9 +74,89 @@
       </div>
     </div>
 
-    <div class="container">
+    <div class="container-fluid">
+      <div class="row">
 
-      <h1>This is the new advanced diagnostics</h1>
+
+        <div class="col-xs-3 col-md-3 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active">
+              <a href="#">Overview</a>
+            </li>
+            <li>
+              <a href="#">Reports</a>
+            </li>
+            <li>
+              <a href="#">Analytics</a>
+            </li>
+            <li>
+              <a href="#">Export</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-xs-9 col-md-9 main" id="main-pane">
+          <h1 class="page-header">Dashboard</h1>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+          <p>Wha?</p>
+        </div>
+        
+      </div>
+      
 
     </div>
 
