@@ -85,6 +85,7 @@
     <Compile Include="Ajax\AjaxContinuationTester.cs" />
     <Compile Include="ApplicationSettingsTester.cs" />
     <Compile Include="Assets\AssetSettingsTester.cs" />
+    <Compile Include="Assets\JavascriptRouterTester.cs" />
     <Compile Include="Assets\ScriptTagTester.cs" />
     <Compile Include="Behaviors\Chrome\ChromeAttributeTester.cs" />
     <Compile Include="Behaviors\Chrome\ChromeNodeTester.cs" />

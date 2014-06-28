@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using FubuCore;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
 
 namespace FubuMVC.Core.Assets.JavascriptRouting
@@ -14,6 +17,21 @@ namespace FubuMVC.Core.Assets.JavascriptRouting
         public IEnumerable<JavascriptRoute> Routes()
         {
             return _routes;
+        }
+
+        public void Add(RoutedChain chain)
+        {
+            if (chain.RouteName.IsEmpty()) throw new ArgumentOutOfRangeException("chain.RouteName");
+
+            var method = chain.Route.AllowedHttpMethods.FirstOrDefault();
+            if (method == null) throw new ArgumentOutOfRangeException("chain", "Must have at least one HTTP method constraint specified");
+        
+            _routes.Add(new JavascriptRoute
+            {
+                Finder = r => chain,
+                Method = method.ToUpper(),
+                Name = chain.RouteName
+            });
         }
 
         public ChainExpression Get(string name)
