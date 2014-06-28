@@ -64,10 +64,16 @@ namespace Fubu.Running
                 message.Timestamp);
 
 
-            if (_input.OpenFlag && !_opened)
+            if ((_input.OpenFlag || _input.UrlFlag.IsNotEmpty()) && !_opened)
             {
                 _opened = true;
-                _driver.OpenBrowserTo(message.HomeAddress);
+                var url = message.HomeAddress;
+                if (_input.UrlFlag.IsNotEmpty())
+                {
+                    url = url.TrimEnd('/') + '/' + _input.UrlFlag.TrimStart('/');
+                }
+
+                _driver.OpenBrowserTo(url);
             }
 
             if (_watcher == null)

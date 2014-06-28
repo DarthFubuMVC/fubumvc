@@ -106,7 +106,7 @@
     <Content Include="Content\Styles\diagnostics\html\selector.css" />
     <Content Include="Content\Styles\diagnostics\master.css" />
     <Content Include="Content\Styles\diagnostics\requests\view.css" />
-    <None Include="Dashboard\Dashboard.spark">
+    <None Include="Dashboard.spark">
       <SubType>Designer</SubType>
     </None>
     <Content Include="diagnostics.asset.config">
@@ -200,7 +200,6 @@
     <Compile Include="Visualization\Visualizers\StringMessageEndpoint.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Model\" />
     <Folder Include="Visualization\Visualizers\ConfigurationActions\" />
   </ItemGroup>
   <PropertyGroup>

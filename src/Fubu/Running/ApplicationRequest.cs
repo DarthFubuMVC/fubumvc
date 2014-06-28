@@ -95,5 +95,8 @@ namespace Fubu.Running
 
         [IgnoreOnCommandLine]
         public string AutoRefreshWebSocketsAddress { get; set; }
+
+        [Description("Set an optional relative url to open first")]
+        public string UrlFlag { get; set; }
     }
 }

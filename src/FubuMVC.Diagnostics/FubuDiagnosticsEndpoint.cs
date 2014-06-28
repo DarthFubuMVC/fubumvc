@@ -2,13 +2,13 @@
 {
     public class FubuDiagnosticsEndpoint
     {
-        public FubuDiagnosticsModel get__fubu()
+        public DashboardModel get__fubu()
         {
-            return new FubuDiagnosticsModel();
+            return new DashboardModel();
         } 
     }
 
-    public class FubuDiagnosticsModel
+    public class DashboardModel
     {
         
     }
