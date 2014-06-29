@@ -3,6 +3,18 @@
 var FubuDiagnostics = {
     start: function(navBar) {
 		this.navBar = navBar;
+
+		this.router = new Backbone.Router();
+
+		this.router.route('*actions', 'defaultRoute', function(){
+			alert('default route');
+		});
+		
+		_.each(this.sections, function(s){
+			s.addRoutes(this.router);
+		});
+		
+		Backbone.history.start();
     },
 
 	refreshNavigation: function(){
@@ -18,12 +30,19 @@ var FubuDiagnostics = {
 			views: [],
 			add: function(view){
 				this.views.push(view);
-				view.section = this;
+
+				view.url = '#' + this.key + '/' + view.key;
+				return this;
 			},
-			url: '#' + section.key
+			url: '#' + section.key,
+			addRoutes: function(router){
+				// nothing yet
+			}
 		});
 			
         this.lastSection = section;
+		
+		return section;
     },
     
     section: function(key) {
@@ -31,7 +50,7 @@ var FubuDiagnostics = {
     },
 
     addView: function(view) {
-		this.lastSection
+		this.lastSection.add(view);
     },
 
 	activeSection: {views: []},

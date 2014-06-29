@@ -66,7 +66,7 @@
           </ul>
         </div>
         <div class="col-xs-9 col-md-9 main">
-          <h1 class="page-header">Dashboard</h1>
+          <h1 class="page-header" id="main-heading">Dashboard</h1>
           <div id="main-pane">
             
           </div>
