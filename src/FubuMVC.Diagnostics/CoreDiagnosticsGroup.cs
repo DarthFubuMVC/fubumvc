@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using FubuMVC.Core;
-using FubuMVC.Core.Diagnostics;
+﻿using FubuMVC.Core.Diagnostics;
 using FubuMVC.Diagnostics.Endpoints;
 
 namespace FubuMVC.Diagnostics
@@ -10,6 +8,10 @@ namespace FubuMVC.Diagnostics
         public CoreDiagnosticsGroup() : base("core")
         {
             Endpoint<EndpointExplorerFubuDiagnostics>("fubumvc.endpoints", x => x.get_endpoints(null));
+
+            Stylesheets.Add("diagnostics/bootstrap.overrides.css");
+            Scripts.Add("diagnostics/core-diagnostics.js");
+            ReactFiles.Add("diagnostics/navigation-react.js");
         }
     }
 }

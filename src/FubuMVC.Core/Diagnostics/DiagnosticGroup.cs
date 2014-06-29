@@ -13,13 +13,16 @@ namespace FubuMVC.Core.Diagnostics
         }
 
         public string Url { get; set; }
+        public readonly IList<string> Stylesheets = new List<string>();
+        public readonly IList<string> Scripts = new List<string>();
+        public readonly IList<string> ReactFiles = new List<string>();
 
         void IFubuRegistryExtension.Configure(FubuRegistry registry)
         {
             registry.AlterSettings<DiagnosticsSettings>(x => x.Groups.Add(this));
         }
 
-        public IEnumerable<BehaviorChain> Chains()
+        public IEnumerable<DiagnosticChain> Chains()
         {
             return _chains;
         }

@@ -117,12 +117,9 @@ namespace FubuMVC.Core.Assets
             page.Get<IAssetTagBuilder>().RequireScript(scripts);
         }
 
-
-        public static HtmlTag JavascriptRoutes<T>(this IFubuPage page, string groupName)
-            where T : IJavascriptRouter, new()
+        public static HtmlTag WriteJavascriptRoutes(this JavascriptRouteWriter writer, string groupName, IJavascriptRouter router)
         {
-            var writer = page.Get<JavascriptRouteWriter>();
-            var dict = writer.Write(new T().Routes());
+            var dict = writer.Write(router.Routes());
 
             var tag = new HtmlTag("script").Attr("type", "text/javascript");
             tag.Encoded(false);
@@ -130,6 +127,15 @@ namespace FubuMVC.Core.Assets
             tag.Text("\n{0} = {1};\n".ToFormat(groupName, JsonUtil.ToJson(dict)));
 
             return tag;
+        }
+
+        public static HtmlTag JavascriptRoutes<T>(this IFubuPage page, string groupName)
+            where T : IJavascriptRouter, new()
+        {
+            var writer = page.Get<JavascriptRouteWriter>();
+            var router = new T();
+
+            return writer.WriteJavascriptRoutes(groupName, router);
         }
 
         public static string PublicAssetFolder(this IFubuPage page)

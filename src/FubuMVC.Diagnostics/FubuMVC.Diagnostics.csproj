@@ -100,7 +100,7 @@
     <Content Include="Content\Scripts\diagnostics\underscore-min.js" />
     <Content Include="Content\Scripts\jquery-1.7.min.js" />
     <Content Include="Content\Styles\chains\view.css" />
-    <Content Include="Content\Styles\diagnostics\bootstrap.overrides.css" />
+    <Content Include="diagnostics\bootstrap.overrides.css" />
     <Content Include="Content\Styles\diagnostics\default.css" />
     <Content Include="Content\Styles\diagnostics\html\preview.css" />
     <Content Include="Content\Styles\diagnostics\html\selector.css" />
@@ -126,7 +126,9 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="diagnostics\bootstrap.min.css" />
+    <Content Include="diagnostics\core-diagnostics.js" />
     <Content Include="diagnostics\fubu-diagnostics.js" />
+    <Content Include="diagnostics\navigation-react.js" />
     <Content Include="ripple.dependencies.config">
       <SubType>Designer</SubType>
     </Content>

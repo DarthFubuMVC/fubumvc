@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using FubuMVC.Core.Assets.JavascriptRouting;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Security;
@@ -8,7 +11,7 @@ using FubuMVC.Core.Security;
 namespace FubuMVC.Core
 {
     [ApplicationLevel]
-    public class DiagnosticsSettings
+    public class DiagnosticsSettings 
     {
         private TraceLevel? _traceLevel;
 
@@ -47,6 +50,34 @@ namespace FubuMVC.Core
         }
 
         public IList<DiagnosticGroup> Groups = new List<DiagnosticGroup>();
+
+        public DiagnosticJavascriptRoutes ToJavascriptRoutes()
+        {
+            var routes = new DiagnosticJavascriptRoutes();
+            Groups.SelectMany(x => x.Chains()).Each(routes.Add);
+
+            return routes;
+        }
+
+        public IEnumerable<string> Stylesheets()
+        {
+            return Groups.SelectMany(x => x.Stylesheets);
+        }
+
+        public IEnumerable<string> Scripts()
+        {
+            return Groups.SelectMany(x => x.Scripts);
+        }
+
+        public IEnumerable<string> ReactFiles()
+        {
+            return Groups.SelectMany(x => x.ReactFiles);
+        }
+    }
+
+    public class DiagnosticJavascriptRoutes : JavascriptRouter
+    {
+
     }
 
     public enum TraceLevel
