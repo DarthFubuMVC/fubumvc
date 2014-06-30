@@ -31,13 +31,23 @@ var FubuDiagnostics = {
 	},
 	
 
-    start: function(navBar, defaultScreen) {
+    start: function(navBar) {
 		this.navBar = navBar;
-		this.defaultScreen = defaultScreen;
+		this.defaultScreen = {
+			activate: function(){
+				$('#home-view').show();
+				$('main-pane').hide();
+			},
+			
+			deactivate: function(){
+				$('#home-view').hide();
+				$('main-pane').show();
+			}
+		};
 
 		var router = new Backbone.Router();
 		router.route('*actions', 'defaultRoute', function(){
-			FubuDiagnostics.showScreen(defaultScreen, {title: 'FubuMVC Diagnostics', description: 'Visualization and insight into a running FubuMVC application'}, {});
+			FubuDiagnostics.showScreen(FubuDiagnostics.defaultScreen, {title: 'Welcome to FubuMVC!', description: 'The .Net web framework that gets out of your way'}, {});
 		});
 		
 		

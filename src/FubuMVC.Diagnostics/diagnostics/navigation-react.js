@@ -91,7 +91,7 @@ var SectionLinks = React.createClass({
 
 FubuDiagnostics.components.SectionLinks = SectionLinks;
 
-FubuDiagnostics.components.AllLinks = React.createClass({
+AllLinks = React.createClass({
 	render: function(){
 		var items = FubuDiagnostics.sections.map(function(s, i){
 			var header = null;
@@ -99,7 +99,7 @@ FubuDiagnostics.components.AllLinks = React.createClass({
 				header = (
 					<h4>
 						<a href={s.anchor}>{s.title}</a>
-						<small className="small">{s.description}</small>
+						<small className="section-subtitle">{s.description}</small>
 					</h4>
 				);
 			}
@@ -107,7 +107,7 @@ FubuDiagnostics.components.AllLinks = React.createClass({
 				header = (
 					<h4>
 						<span>{s.title}</span>
-						<small className="small">{s.description}</small>
+						<small className="section-subtitle">{s.description}</small>
 					</h4>
 				);
 			}
@@ -130,8 +130,12 @@ FubuDiagnostics.components.AllLinks = React.createClass({
 	}
 });
 
-var screen = new ReactScreen(FubuDiagnostics.components.AllLinks);
-FubuDiagnostics.start(navBar, screen);
+React.renderComponent(
+  <AllLinks data={FubuDiagnostics} />,
+  document.getElementById('all-links')
+);
+
+FubuDiagnostics.start(navBar);
 
 
 

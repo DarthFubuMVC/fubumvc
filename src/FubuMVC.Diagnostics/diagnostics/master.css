@@ -211,3 +211,7 @@ footer p span {
     float: left;
     margin-right: 10px;
 }
+
+.section-subtitle {
+	margin-left: 10px !important;
+}
