@@ -14,39 +14,41 @@ function FubuDiagnosticsSection(section){
 	$.extend(section, {
 		views: [],
 		
+		anchor: '#' + section.key,
+		
 		add: function(view){
 			this.views.push(view);
+			view.url = this.key + '/' + view.key;
+			if (view.modifyUrl){
+				view.url = view.modifyUrl(url);
+			};
+			
+			view.anchor = '#' + view.url;
+			
 
-			view.url = '#' + this.key + '/' + view.key;
-			
-			if (view.addRoute == null){
-				view.addRoute = function(section, router){
-					router.route(this.url, section.key + '/' + this.key, function(){
-						// TODO - have this also send the route parameters
-						FubuDiagnostics.showScreen(this.screen, this);
-					});
-				}
-			}
-			
 			return this;
 		},
-		
-		url: '#' + section.key,
-		
+
 		addRoutes: function(router){
 			if (this.screen == null){
 				this.screen = new ReactScreen(FubuDiagnostics.components.SectionLinks, {section: this});
 			}
 
 			var section = this;
+			_.each(this.activeViews(), function(view){
+				var key = section.key + '/' + view.key;
+
+				router.route(view.url, key, function(){
+					// TODO - have this also send the route parameters
+					FubuDiagnostics.showScreen(view.screen, view, section);
+				});
+			});
 		
 			router.route(this.key, this.key, function(){
-				FubuDiagnostics.showScreen(section.screen, section);
+				FubuDiagnostics.showScreen(section.screen, section, section);
 			});
 			
-			_.each(this.activeViews(), function(view){
-				view.addRoute(section, router);
-			});
+
 		},
 		
 		activeViews: function(){
@@ -64,9 +66,10 @@ var FubuDiagnostics = {
 	
 	components: {},
 	
-	showScreen: function(screen, element){
+	showScreen: function(screen, element, section){
 		this.currentScreen.deactivate();
-
+		this.activeSection = section;
+		
 		var pane = document.getElementById('main-pane');
 
 		screen.activate(pane);
@@ -76,6 +79,13 @@ var FubuDiagnostics = {
 		// set title and description
 		$('#main-heading').html(element.title);
 		$('#main-description').html(element.description);
+		
+		this.refreshNavigation(section);
+	},
+	
+	refreshNavigation: function(section){
+		this.activeSection = section;
+		this.navBar.setProps(this);
 	},
 	
 
@@ -85,7 +95,7 @@ var FubuDiagnostics = {
 
 		var router = new Backbone.Router();
 		router.route('*actions', 'defaultRoute', function(){
-			FubuDiagnostics.showScreen(defaultScreen, {title: 'FubuMVC Diagnostics', description: 'Visualization and insight into a running FubuMVC application'});
+			FubuDiagnostics.showScreen(defaultScreen, {title: 'FubuMVC Diagnostics', description: 'Visualization and insight into a running FubuMVC application'}, {});
 		});
 		
 		
@@ -98,9 +108,7 @@ var FubuDiagnostics = {
 		Backbone.history.start();
     },
 
-	refreshNavigation: function(){
-		this.navBar.setProps(this);
-	},
+
 	
     sections: [],
         
@@ -124,5 +132,5 @@ var FubuDiagnostics = {
 		this.lastSection.add(view);
     },
 
-	activeSection: {views: []},
+	activeSection: {},
 };

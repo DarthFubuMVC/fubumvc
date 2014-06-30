@@ -7,7 +7,7 @@ var TopSectionMenu = React.createClass({
 	render: function(){
 		var sections = this.props.data.map(function(section, i){
 			return (
-				<li><a href={section.url} title={section.description}>{section.title}</a></li>
+				<li><a href={section.anchor} title={section.description}>{section.title}</a></li>
 			);
 		});
 	
@@ -29,9 +29,15 @@ var TopSectionMenu = React.createClass({
 
 var ActiveSectionMenu = React.createClass({
 	render: function(){
-		var items = this.data.views.map(function(view, i){
+		if (this.props.data.activeViews == null){
 			return (
-				<li><a href={view.url} title={view.description}>{section.title}</a></li>
+				<span></span>
+			);
+		}
+	
+		var items = this.props.data.activeViews().map(function(view, i){
+			return (
+				<li><a href={view.anchor} title={view.description}>{view.title}</a></li>
 			);
 		});
 		
@@ -46,8 +52,10 @@ var ActiveSectionMenu = React.createClass({
 var NavigationBar = React.createClass({
 	render: function(){
 		return (
+		<div>
 		  <ActiveSectionMenu data={this.props.data.activeSection} />,
 		  <TopSectionMenu data={this.props.data.sections} />
+		  </div>
 		);
 	}
 });
@@ -64,7 +72,7 @@ var SectionLinks = React.createClass({
 		var items = this.props.section.activeViews().map(function(view, i){
 			return (
 				<div>
-					<dt><a href={view.url}>{view.title}</a></dt>
+					<dt><a href={view.anchor}>{view.title}</a></dt>
 					<dd>{view.description}</dd>
 				</div>
 			);
@@ -90,7 +98,7 @@ FubuDiagnostics.components.AllLinks = React.createClass({
 			if (s.activeViews().length == 0){
 				header = (
 					<h4>
-						<a href={s.url}>{s.title}</a>
+						<a href={s.anchor}>{s.title}</a>
 						<small className="small">{s.description}</small>
 					</h4>
 				);
