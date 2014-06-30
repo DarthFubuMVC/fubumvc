@@ -7,25 +7,37 @@ FubuDiagnostics.addSection({
 .add({
 	title: 'Endpoints',
 	description: 'something about Endpoints',
-	key: 'endpoints'
+	key: 'endpoints',
+	screen: new TextScreen('Endpoints!')
 })
 .add({
 	title: 'Requests',
 	description: 'something about Requests',
-	key: 'requests'
+	key: 'requests',
+	screen: new TextScreen('Requests!')
 })
 .add({
 	title: 'Model Binding',
 	description: 'something about Model Binding',
-	key: 'model-binding'
+	key: 'model-binding',
+	screen: new TextScreen('Model Binding!')
 });
 
-
+function TextScreen(text){
+	this.activate = function(pane){
+		$(pane).html(text);
+	}
+	
+	this.deactivate = function(){
+		
+	}
+}
 
 FubuDiagnostics.addSection({
     title: 'StructureMap',
     description: 'Insight into the configuration and state of the application container',
-    key: 'structuremap'
+    key: 'structuremap',
+	screen: new TextScreen('StructureMap!')
 });
 
 
@@ -33,5 +45,6 @@ FubuDiagnostics.addSection({
 FubuDiagnostics.addSection({
     title: 'OWIN',
     description: 'OWIN Middleware Chain',
-    key: 'owin'
+    key: 'owin',
+	screen: new TextScreen('OWIN!')
 });

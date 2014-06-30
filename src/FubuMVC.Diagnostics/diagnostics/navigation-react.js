@@ -52,13 +52,78 @@ var NavigationBar = React.createClass({
 	}
 });
 
-
 var navBar = React.renderComponent(
   <NavigationBar data={FubuDiagnostics} />,
   document.getElementById('top-navbar')
 );
 
-FubuDiagnostics.start(navBar);
+
+
+var SectionLinks = React.createClass({
+	render: function(){
+		var items = this.props.section.activeViews().map(function(view, i){
+			return (
+				<div>
+					<dt><a href={view.url}>{view.title}</a></dt>
+					<dd>{view.description}</dd>
+				</div>
+			);
+		});
+	
+		return (
+
+			<dl className="dl-horizontal">
+				{items}
+			</dl>
+
+		);
+
+	}
+});
+
+FubuDiagnostics.components.SectionLinks = SectionLinks;
+
+FubuDiagnostics.components.AllLinks = React.createClass({
+	render: function(){
+		var items = FubuDiagnostics.sections.map(function(s, i){
+			var header = null;
+			if (s.activeViews().length == 0){
+				header = (
+					<h4>
+						<a href={s.url}>{s.title}</a>
+						<small className="small">{s.description}</small>
+					</h4>
+				);
+			}
+			else{
+				header = (
+					<h4>
+						<span>{s.title}</span>
+						<small className="small">{s.description}</small>
+					</h4>
+				);
+			}
+		
+			return (
+				<div>
+					{header}
+
+					<SectionLinks section={s} />
+					
+					<hr />
+				</div>
+			);
+		});
+		
+	
+		return (	
+			<div>{items}</div>
+		);
+	}
+});
+
+var screen = new ReactScreen(FubuDiagnostics.components.AllLinks);
+FubuDiagnostics.start(navBar, screen);
 
 
 
