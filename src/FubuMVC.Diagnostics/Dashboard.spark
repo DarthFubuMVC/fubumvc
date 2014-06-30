@@ -76,6 +76,8 @@
     <Script src="diagnostics/bower_components/bootstrap/dist/js/bootstrap.min.js"/>
     <Script src="diagnostics/bower_components/react/react.min.js" />
     <Script src="diagnostics/bower_components/react/JSXTransformer.js" />
+    <Script src="diagnostics/FubuDiagnosticsSection.js"/>
+    <Script src="diagnostics/screens.js"/>
     <Script src="diagnostics/fubu-diagnostics.js"/>
     !{Model.Router}
     !{Model.ScriptTags}
@@ -96,8 +98,6 @@
       
     </div>
     <div class="span9">
-
-      
 
       <h2>Welcome to FubuMVC!</h2>
       <h3 class="subheader">The MVC framework that gets out of your way</h3>
