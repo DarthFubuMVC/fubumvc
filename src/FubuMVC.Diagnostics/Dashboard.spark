@@ -102,12 +102,12 @@
 
       
       <div class="row" id="main-row">
-        <div class="col-xs-3 col-md-3 well">
+        <div class="col-xs-3 col-md-3 well" id="left-pane">
           !{Model.HtmlTags}
           
         </div>
 
-          <div class="col-xs-9 col-md-9 main">
+          <div class="col-xs-9 col-md-9 main" id="main-pane-holder">
 
 
           <div id="main-pane">

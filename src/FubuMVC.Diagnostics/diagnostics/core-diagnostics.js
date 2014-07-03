@@ -21,7 +21,16 @@ FubuDiagnostics.addSection({
 	description: 'something about Model Binding',
 	key: 'model-binding',
 	screen: new ServerScreen('ModelBinding:binding_all')
+})
+.add({
+	title: 'Package Loading',
+	description: 'something about Package Loading',
+	key: 'package-loading',
+	screen: new ServerScreen('PackageLog:package_logs')
 });
+
+
+
 
 function TextScreen(text){
 	this.activate = function(pane){

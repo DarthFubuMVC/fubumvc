@@ -11,8 +11,21 @@ var FubuDiagnostics = {
 	showScreen: function(screen, element, section){
 		$('#home-view').hide();
 		$('.left-content').hide();
-		$('#' + element.key).show(); // optional html content
+		var count = $('#' + element.key).show().length; // optional html content
 		                             // in the left pane
+		
+		if (count == 0){
+			$('#left-pane').hide();
+			$('#main-pane-holder')
+				.removeClass('col-xs-9 col-md-9')
+				.addClass('col-xs-12 col-md-12');
+		}
+		else {
+			$('#left-pane').show();
+			$('#main-pane-holder')
+				.removeClass('col-xs-12 col-md-12')
+				.addClass('col-xs-9 col-md-9');
+		}
 		
 		this.currentScreen.deactivate();
 		this.activeSection = section;
