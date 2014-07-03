@@ -71,7 +71,11 @@ namespace FubuMVC.Core.Http.Owin.Middleware
             var html = recordedStream.ReadAllText();
             var builder = new StringBuilder(html);
             var position = html.IndexOf("</head>", 0, StringComparison.OrdinalIgnoreCase);
-            builder.Insert(position, _options.Content(environment));
+
+            if (position >= 0)
+            {
+                builder.Insert(position, _options.Content(environment));
+            }
 
             response.Write(builder.ToString());
             response.Flush();

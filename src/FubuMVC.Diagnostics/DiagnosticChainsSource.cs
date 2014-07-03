@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using FubuMVC.Core;
+using Bottles;
+using FubuCore;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 
@@ -10,9 +11,30 @@ namespace FubuMVC.Diagnostics
     {
         public IEnumerable<BehaviorChain> BuildChains(BehaviorGraph graph)
         {
-            var settings = graph.Settings.Get<DiagnosticsSettings>();
+            foreach (var action in findActions())
+            {
+                if (action.Method.Name.StartsWith("Visualize"))
+                {
+                    var chain = new BehaviorChain();
+                    chain.AddToEnd(action);
+                    chain.IsPartialOnly = true;
+                    yield return chain;
+                }
+                else
+                {
+                    yield return new DiagnosticChain(action);
+                }
+            }
+        }
 
-            return settings.Groups.SelectMany(x => x.Chains()).ToArray();
+        private IEnumerable<ActionCall> findActions()
+        {
+            var source = new ActionSource();
+
+            PackageRegistry.PackageAssemblies.Each(a => source.Applies.ToAssembly(a));
+            source.IncludeTypesNamed(name => name.EndsWith("FubuDiagnostics"));
+
+            return source.As<IActionSource>().FindActions(null);
         }
     }
 }

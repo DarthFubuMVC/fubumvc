@@ -117,7 +117,6 @@
     <Compile Include="Diagnostics\DescriptionPropertyTag.cs" />
     <Compile Include="Diagnostics\DescriptionBodyTag.cs" />
     <Compile Include="Diagnostics\DiagnosticChain.cs" />
-    <Compile Include="Diagnostics\DiagnosticGroup.cs" />
     <Compile Include="Diagnostics\Runtime\ApplyTracing.cs" />
     <Compile Include="Diagnostics\Runtime\BehaviorFinish.cs" />
     <Compile Include="Diagnostics\Runtime\BehaviorStart.cs" />

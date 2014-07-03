@@ -5,5 +5,6 @@
     <alias name="pak1" folder="src/TestPackage1" />
     <alias name="pak2" folder="src/TestPackage2" />
     <alias name="fubumvc" folder="FubuMVC.Diagnostics" />
+    <alias name="fubumvc.structuremap" folder="src/FubuMVC.StructureMap" />
   </Aliases>
 </aliases>

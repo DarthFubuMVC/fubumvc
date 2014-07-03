@@ -7,31 +7,21 @@ using NUnit.Framework;
 
 namespace FubuMVC.Tests.Diagnostics
 {
-    public class FakeDiagnosticGroup : DiagnosticGroup
-    {
-        public FakeDiagnosticGroup() : base("fake")
-        {
-        }
-    }
 
     [TestFixture]
     public class DiagnosticChainTester
     {
-        private DiagnosticGroup theGroup = new FakeDiagnosticGroup();
-
-
-
         [Test]
         public void build_the_route()
         {
-            DiagnosticChain.For<FakeFubuDiagnostics>(theGroup, x => x.get_link())
+            DiagnosticChain.For<FakeFubuDiagnostics>(x => x.get_link())
                 .GetRoutePattern().ShouldEqual("_fubu/fake/link");
         }
 
         [Test]
         public void chain_includes_the_call()
         {
-            DiagnosticChain.For<FakeFubuDiagnostics>(theGroup, x => x.get_link())
+            DiagnosticChain.For<FakeFubuDiagnostics>(x => x.get_link())
                 .Last()
                 .ShouldBeOfType<ActionCall>()
                 .Description

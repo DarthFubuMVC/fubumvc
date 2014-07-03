@@ -49,36 +49,9 @@ namespace FubuMVC.Core
             }
         }
 
-        public IList<DiagnosticGroup> Groups = new List<DiagnosticGroup>();
-
-        public DiagnosticJavascriptRoutes ToJavascriptRoutes()
-        {
-            var routes = new DiagnosticJavascriptRoutes();
-            Groups.SelectMany(x => x.Chains()).Each(routes.Add);
-
-            return routes;
-        }
-
-        public IEnumerable<string> Stylesheets()
-        {
-            return Groups.SelectMany(x => x.Stylesheets);
-        }
-
-        public IEnumerable<string> Scripts()
-        {
-            return Groups.SelectMany(x => x.Scripts);
-        }
-
-        public IEnumerable<string> ReactFiles()
-        {
-            return Groups.SelectMany(x => x.ReactFiles);
-        }
     }
 
-    public class DiagnosticJavascriptRoutes : JavascriptRouter
-    {
 
-    }
 
     public enum TraceLevel
     {

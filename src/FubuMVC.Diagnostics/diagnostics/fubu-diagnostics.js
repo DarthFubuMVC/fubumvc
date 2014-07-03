@@ -85,4 +85,23 @@ var FubuDiagnostics = {
     },
 
 	activeSection: {},
+	
+	
+	cache: {},
+	
+	get: function(key, params, callback){
+		var route = this.routes[key];
+		var url = route.url;
+		_.each(route.params, function(param){
+			url = url.replace('{' + param + '}', params[param]);
+		});
+		
+		$.get(url, callback);
+	},
+	
+	// TODO -- add cached ability
+
 };
+
+
+

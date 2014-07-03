@@ -104,7 +104,7 @@
     <Content Include="Content\Styles\diagnostics\default.css" />
     <Content Include="Content\Styles\diagnostics\html\preview.css" />
     <Content Include="Content\Styles\diagnostics\html\selector.css" />
-    <Content Include="Content\Styles\diagnostics\master.css" />
+    <Content Include="diagnostics\master.css" />
     <Content Include="Content\Styles\diagnostics\requests\view.css" />
     <None Include="Dashboard.spark">
       <SubType>Designer</SubType>
@@ -128,7 +128,7 @@
     <Content Include="diagnostics\bootstrap.min.css" />
     <Content Include="diagnostics\core-diagnostics.js" />
     <Content Include="diagnostics\fubu-diagnostics.js" />
-    <Content Include="diagnostics\navigation-react.js" />
+    <None Include="diagnostics\navigation-react.jsx" />
     <Content Include="ripple.dependencies.config">
       <SubType>Designer</SubType>
     </Content>
@@ -160,7 +160,6 @@
     <Compile Include="Chains\ChainFubuDiagnostics.cs" />
     <Compile Include="Chains\ChainRequest.cs" />
     <Compile Include="Chains\ChainVisualization.cs" />
-    <Compile Include="CoreDiagnosticsGroup.cs" />
     <Compile Include="Core\CoreExtensions.cs" />
     <Compile Include="Core\Extensions\TagExtensions.cs" />
     <Compile Include="DiagnosticChainsSource.cs" />
@@ -200,7 +199,6 @@
     <Compile Include="Visualization\Visualizer.cs" />
     <Compile Include="Visualization\Visualizers\BehaviorStartAndFinishEndpoints.cs" />
     <Compile Include="Visualization\Visualizers\CommentTag.cs" />
-    <Compile Include="Visualization\Visualizers\ModelBindingLogEndpoint.cs" />
     <Compile Include="Visualization\Visualizers\StringMessageEndpoint.cs" />
   </ItemGroup>
   <ItemGroup>

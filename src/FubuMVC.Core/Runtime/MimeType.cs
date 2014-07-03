@@ -241,7 +241,7 @@ namespace FubuMVC.Core.Runtime
                 {".jpeg", "image/jpeg"},
                 {".jpg", "image/jpeg"},
                 {".js", "application/javascript"},
-                {".jsx", "text/jscript"},
+                {".jsx", "text/jsx"},
                 {".latex", "application/x-latex"},
                 {".lit", "application/x-ms-reader"},
                 {".lpk", "application/octet-stream"},

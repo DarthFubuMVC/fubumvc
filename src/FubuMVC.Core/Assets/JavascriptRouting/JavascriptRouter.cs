@@ -24,7 +24,7 @@ namespace FubuMVC.Core.Assets.JavascriptRouting
             if (chain.RouteName.IsEmpty()) throw new ArgumentOutOfRangeException("chain.RouteName");
 
             var method = chain.Route.AllowedHttpMethods.FirstOrDefault();
-            if (method == null) throw new ArgumentOutOfRangeException("chain", "Must have at least one HTTP method constraint specified");
+            if (method == null) throw new ArgumentOutOfRangeException("chain", "Must have at least one HTTP method constraint specified, url: " + chain.GetRoutePattern());
         
             _routes.Add(new JavascriptRoute
             {

@@ -8,4 +8,17 @@ function ReactScreen(component, data){
 	
 		React.renderComponent(this.component, pane);
 	};
+
+}
+
+function ServerScreen(route){
+	this.activate = function(pane){
+		FubuDiagnostics.get(route, {}, function(data){
+			$(pane).html(data);
+		});
+	}
+	
+	this.deactivate = function(){
+	
+	}
 }

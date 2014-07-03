@@ -1,7 +1,9 @@
 using FubuCore.Binding.InMemory;
 using FubuCore.Logging;
 using FubuMVC.Core;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Diagnostics.Runtime;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Diagnostics
 {
@@ -11,7 +13,11 @@ namespace FubuMVC.Diagnostics
 
         public void Configure(FubuRegistry registry)
         {
+            MimeType.New("text/jsx", ".jsx");
+
             registry.Services<DiagnosticServiceRegistry>();
+
+            registry.AlterSettings<AssetSettings>(x => x.AllowableExtensions.Add(".jsx"));
 
             registry.AlterSettings<DiagnosticsSettings>(x =>
             {

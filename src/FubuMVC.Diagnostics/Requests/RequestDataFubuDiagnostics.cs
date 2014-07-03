@@ -11,7 +11,7 @@ namespace FubuMVC.Diagnostics.Requests
 {
     public class RequestDataFubuDiagnostics
     {
-        public HtmlTag RequestDataPartial(ValueReport report)
+        public HtmlTag VisualizeValueReport(ValueReport report)
         {
             var tag = new HtmlTag("div").Id("request-data");
 

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Role>module</Role>
+  <Name>FubuMVC.StructureMap</Name>
+  <assembly>FubuMVC.StructureMap</assembly>
+  <ContentFileSet Include="*.*" Exclude="*.cs;bin/*;obj/*;*.csproj*;packages.config;repositories.config;pak-*.zip;*.sln;data/*;config/*">
+    <DeepSearch>true</DeepSearch>
+  </ContentFileSet>
+</package>

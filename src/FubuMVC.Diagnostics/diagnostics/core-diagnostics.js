@@ -20,7 +20,7 @@ FubuDiagnostics.addSection({
 	title: 'Model Binding',
 	description: 'something about Model Binding',
 	key: 'model-binding',
-	screen: new TextScreen('Model Binding!')
+	screen: new ServerScreen('fubumvc.modelbinding')
 });
 
 function TextScreen(text){
@@ -48,3 +48,6 @@ FubuDiagnostics.addSection({
     key: 'owin',
 	screen: new TextScreen('OWIN!')
 });
+
+
+

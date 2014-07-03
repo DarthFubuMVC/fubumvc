@@ -11,35 +11,41 @@ namespace FubuMVC.Core.Diagnostics
     {
         public const string DiagnosticsUrl = "_fubu";
 
-        public static IRouteDefinition BuildRoute(DiagnosticGroup group, ActionCall call)
+        public static IRouteDefinition BuildRoute(ActionCall call)
         {
+            var prefix = call.HandlerType.Name.Replace("FubuDiagnostics", "").ToLower();
+
             if (call.Method.Name == "Index")
             {
-                return new RouteDefinition("{0}/{1}".ToFormat(DiagnosticsUrl, group.Url).TrimEnd('/'));
+                return new RouteDefinition("{0}/{1}".ToFormat(DiagnosticsUrl, prefix).TrimEnd('/'));
             }
 
             var route = call.ToRouteDefinition();
             MethodToUrlBuilder.Alter(route, call);
-            route.Prepend(@group.Url);
+            route.Prepend(prefix);
             route.Prepend(DiagnosticsUrl);
 
             return route;
         }
 
-        public DiagnosticChain(DiagnosticGroup group, ActionCall call) : base(BuildRoute(group, call))
+        public DiagnosticChain(ActionCall call) : base(BuildRoute(call))
         {
             if (call.HasInput)
             {
                 Route.ApplyInputType(call.InputType());
             }
 
+            RouteName = call.HandlerType.Name.Replace("FubuDiagnostics", "") 
+                + ":" 
+                + call.Method.Name.Replace("get_", "").Replace("post_", "").Replace("{", "").Replace("}", "");
+
             AddToEnd(call);
         }
 
-        public static DiagnosticChain For<T>(DiagnosticGroup group, Expression<Action<T>> method)
+        public static DiagnosticChain For<T>(Expression<Action<T>> method)
         {
             var call = ActionCall.For(method);
-            return new DiagnosticChain(group, call);
+            return new DiagnosticChain(call);
         }
     }
 }
