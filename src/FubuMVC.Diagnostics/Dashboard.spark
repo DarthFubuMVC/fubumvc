@@ -13,6 +13,7 @@
     
     <Stylesheet href="diagnostics/bootstrap.min.css"/>
     <Stylesheet href="diagnostics/master.css"/>
+    <Stylesheet href="diagnostics/bootstrap.overrides.css"/>
     !{Model.StyleTags}
   </head>
 
@@ -49,58 +50,69 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-xs-12 col-md-12 main">
-          <h1>
-            <span id="main-heading"></span>
-            <small id="main-description"></small>
-          </h1>
+        <h1>
+          <span id="main-heading"></span>
+          <small id="main-description"></small>
+        </h1>
+          <div class="col-xs-12 col-md-12 main">
+      </div>
+      
+      <div class="row" id="home-view">
+
+        <div class="col-xs-6 col-md-6 main">
+          <h3>Getting Started</h3>
+          <p>You are viewing the Advanced Diagnostics package that provides detailed insight into the configuration and runtime of your application.</p>
+
+          <ol>
+            <li>
+              <strong>
+                <a href="#fubumvc/endpoints"> Explore your application</a>
+              </strong>
+              <p>The endpoint explorer allows you to sort and filter through the routes, endpoints, and chains within your application. You can also drill into the details and visualize the behavior chain.</p>
+            </li>
+            <li>
+              <strong>
+                <a href="#fubumvc/requests">Explore the request history</a>
+              </strong>
+              <p>The requests explorer allows you to see the most recent requests that have been recorded within your application. You can drill into the details of each request to visualize the various steps that were taken to issue the response.</p>
+            </li>
+            <li>
+              <strong>
+                <a href="http://fubuworld.com/fubumvc/">Browse the documentation</a>
+              </strong>
+              <p>Browse through our topics and read more about the our APIs.</p>
+            </li>
+            <li>
+              <strong>
+                <a href="https://groups.google.com/forum/#!forum/fubumvc-devel">If you're really stuck</a>
+              </strong>
+              <p>Visit our user group to learn how to get plugged into our vibrant community. You'll get your questions answered in no time.</p>
+            </li>
+          </ol>
+
+
+        </div>
+
+        <div class="col-xs-6 col-md-6 main" >
+          <h3>All Diagnostic Views</h3>
+          <div id="all-links"></div>
+        </div>
+      </div>
+
+
+      
+      <div class="row" id="main-row">
+        <div class="col-xs-3 col-md-3 well">
+          !{Model.HtmlTags}
+          
+        </div>
+
+          <div class="col-xs-9 col-md-9 main">
+
 
           <div id="main-pane">
             
           </div>
-
-
-          <div class="row" id="home-view">
-
-            <div class="col-xs-6 col-md-6 main">
-              <h3>Getting Started</h3>
-              <p>You are viewing the Advanced Diagnostics package that provides detailed insight into the configuration and runtime of your application.</p>
-
-              <ol>
-                <li>
-                  <strong>
-                    <a href="#fubumvc/endpoints"> Explore your application</a>
-                  </strong>
-                  <p>The endpoint explorer allows you to sort and filter through the routes, endpoints, and chains within your application. You can also drill into the details and visualize the behavior chain.</p>
-                </li>
-                <li>
-                  <strong>
-                    <a href="#fubumvc/requests">Explore the request history</a>
-                  </strong>
-                  <p>The requests explorer allows you to see the most recent requests that have been recorded within your application. You can drill into the details of each request to visualize the various steps that were taken to issue the response.</p>
-                </li>
-                <li>
-                  <strong>
-                    <a href="http://fubuworld.com/fubumvc/">Browse the documentation</a>
-                  </strong>
-                  <p>Browse through our topics and read more about the our APIs.</p>
-                </li>
-                <li>
-                  <strong>
-                    <a href="https://groups.google.com/forum/#!forum/fubumvc-devel">If you're really stuck</a>
-                  </strong>
-                  <p>Visit our user group to learn how to get plugged into our vibrant community. You'll get your questions answered in no time.</p>
-                </li>
-              </ol>
-
-
-            </div>
-
-            <div class="col-xs-6 col-md-6 main" >
-              <h3>All Diagnostic Views</h3>
-              <div id="all-links"></div>
-            </div>
-          </div>
-          
         </div>
 
 

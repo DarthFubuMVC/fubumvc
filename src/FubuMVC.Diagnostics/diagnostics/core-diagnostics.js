@@ -20,7 +20,7 @@ FubuDiagnostics.addSection({
 	title: 'Model Binding',
 	description: 'something about Model Binding',
 	key: 'model-binding',
-	screen: new ServerScreen('fubumvc.modelbinding')
+	screen: new ServerScreen('ModelBinding:binding_all')
 });
 
 function TextScreen(text){

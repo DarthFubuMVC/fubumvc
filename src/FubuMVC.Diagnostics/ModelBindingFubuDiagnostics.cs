@@ -7,10 +7,9 @@ using FubuCore.Descriptions;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.UI.Bootstrap.Collapsibles;
-using FubuMVC.Diagnostics.Visualization.Visualizers;
 using HtmlTags;
 
-namespace FubuMVC.Diagnostics.ModelBinding
+namespace FubuMVC.Diagnostics
 {
     public class ModelBindingFubuDiagnostics
     {

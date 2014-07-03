@@ -4,7 +4,6 @@ using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Diagnostics.ModelBinding;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;

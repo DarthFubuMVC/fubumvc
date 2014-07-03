@@ -9,6 +9,11 @@ var FubuDiagnostics = {
 	components: {},
 	
 	showScreen: function(screen, element, section){
+		$('#home-view').hide();
+		$('.left-content').hide();
+		$('#' + element.key).show(); // optional html content
+		                             // in the left pane
+		
 		this.currentScreen.deactivate();
 		this.activeSection = section;
 		
@@ -36,12 +41,12 @@ var FubuDiagnostics = {
 		this.defaultScreen = {
 			activate: function(){
 				$('#home-view').show();
-				$('main-pane').hide();
+				$('#main-row').hide();
 			},
 			
 			deactivate: function(){
 				$('#home-view').hide();
-				$('main-pane').show();
+				$('#main-row').show();
 			}
 		};
 

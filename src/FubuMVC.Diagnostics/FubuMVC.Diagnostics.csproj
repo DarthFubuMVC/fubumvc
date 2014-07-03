@@ -115,9 +115,6 @@
     <None Include="Endpoints\Endpoints.spark">
       <SubType>Designer</SubType>
     </None>
-    <None Include="ModelBinding\ModelBindingGraph.spark">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Packaging\Packaging.spark" />
     <None Include="Requests\Requests.spark">
       <SubType>Designer</SubType>
@@ -129,6 +126,7 @@
     <Content Include="diagnostics\core-diagnostics.js" />
     <Content Include="diagnostics\fubu-diagnostics.js" />
     <None Include="diagnostics\navigation-react.jsx" />
+    <Content Include="fubu-diagnostics\model-binding.html" />
     <Content Include="ripple.dependencies.config">
       <SubType>Designer</SubType>
     </Content>
@@ -172,7 +170,7 @@
     <Compile Include="Endpoints\RouteQuery.cs" />
     <Compile Include="Endpoints\RouteReport.cs" />
     <Compile Include="FubuDiagnosticsEndpoint.cs" />
-    <Compile Include="ModelBinding\ModelBindingFubuDiagnostics.cs" />
+    <Compile Include="ModelBindingFubuDiagnostics.cs" />
     <Compile Include="Packaging\PackageDiagnosticsLogModel.cs" />
     <Compile Include="Packaging\PackageDiagnosticsModel.cs" />
     <Compile Include="Packaging\PackageDiagnosticsRequestModel.cs" />

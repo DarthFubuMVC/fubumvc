@@ -1,12 +1,4 @@
-﻿<viewdata model="FubuMVC.Diagnostics.ModelBinding.ModelBindingExplorerViewModel" />
-<use master="" />
-
-
-<div class="container-fluid">
-	<div class="row-fluid">
-    
-		<div class="span3 well">
-      Model Binding in <a href="https://github.com/DarthFubuMVC/fubucore">FubuCore</a> is generally done by invoking the <code>IObjectResolver</code> service.  Model binding in FubuMVC can be heavily customized and extended by plugging in additional implementations of these finer-grained services to handle types, handle properties, and converting values in new ways:
+﻿      Model Binding in <a href="https://github.com/DarthFubuMVC/fubucore">FubuCore</a> is generally done by invoking the <code>IObjectResolver</code> service.  Model binding in FubuMVC can be heavily customized and extended by plugging in additional implementations of these finer-grained services to handle types, handle properties, and converting values in new ways:
       <br></br>
       <ol>
         <li>
@@ -21,14 +13,3 @@
 
       <p>These services can be directly plugged in via your application's IoC container or through the <code>FubuRegisty.Model.******</code> methods in your FubuRegistry class.  Do keep in mind that ordering is important.  If two or more model binders / property binders / converter families could handle a scenario, the first one will always be used. 
     </p>
-      
-		</div>
-
-		<div class="span9">
-      !{Model.ModelBindingGraphTag}
-		</div>
-
-
-	</div>
-
-</div>
