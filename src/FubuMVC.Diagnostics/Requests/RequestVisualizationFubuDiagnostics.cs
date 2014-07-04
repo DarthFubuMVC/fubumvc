@@ -37,7 +37,7 @@ namespace FubuMVC.Diagnostics.Requests
                 };
             }
 
-            BehaviorChain chain = _graph.Behaviors.FirstOrDefault(x => x.UniqueId == log.ChainId);
+            BehaviorChain chain = _graph.Behaviors.FirstOrDefault(x => x.GetHashCode() == log.Hash);
 
             return new HttpRequestVisualization(log, chain, _urls);
         }

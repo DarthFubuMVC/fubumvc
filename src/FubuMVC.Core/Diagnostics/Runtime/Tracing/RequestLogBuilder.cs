@@ -40,11 +40,9 @@ namespace FubuMVC.Core.Diagnostics.Runtime.Tracing
             var chainId = _currentChain.OriginatingChain == null ? Guid.Empty :
                 _currentChain.OriginatingChain.UniqueId;
             var log = new RequestLog{
-                ChainId    = chainId,
+                Hash    = chainId.GetHashCode(),
                 Time = _systemTime.UtcNow(),
-                RequestData = report,
-                //ChainUrl = _urls.UrlFor(new ChainRequest{Id = chainId}),
-                //DetailsUrl = _urls.UrlFor(new ChainDetailsRequest{Id = chainId})
+                RequestData = report
             };
 
             if (_currentChain.OriginatingChain is RoutedChain)

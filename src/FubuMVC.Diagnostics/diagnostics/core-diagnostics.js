@@ -5,12 +5,6 @@ FubuDiagnostics.addSection({
     key: 'fubumvc'
 })
 .add({
-	title: 'Endpoints',
-	description: 'something about Endpoints',
-	key: 'endpoints',
-	screen: new TextScreen('Endpoints!')
-})
-.add({
 	title: 'Requests',
 	description: 'something about Requests',
 	key: 'requests',

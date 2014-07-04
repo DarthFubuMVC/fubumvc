@@ -78,9 +78,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".package-manifest" />
-    <None Include="Chains\ChainVisualization.spark">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Chrome\Chrome.spark">
       <SubType>Designer</SubType>
     </None>
@@ -104,6 +101,7 @@
     <Content Include="Content\Styles\diagnostics\default.css" />
     <Content Include="Content\Styles\diagnostics\html\preview.css" />
     <Content Include="Content\Styles\diagnostics\html\selector.css" />
+    <Content Include="diagnostics\FubuDiagnosticsSection.js" />
     <Content Include="diagnostics\master.css" />
     <Content Include="Content\Styles\diagnostics\requests\view.css" />
     <None Include="Dashboard.spark">
@@ -126,6 +124,7 @@
     <Content Include="diagnostics\core-diagnostics.js" />
     <Content Include="diagnostics\fubu-diagnostics.js" />
     <None Include="diagnostics\navigation-react.jsx" />
+    <Content Include="diagnostics\screens.js" />
     <Content Include="fubu-diagnostics\model-binding.html" />
     <Content Include="ripple.dependencies.config">
       <SubType>Designer</SubType>
@@ -154,10 +153,7 @@
     </Compile>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="BehaviorChainExtensions.cs" />
-    <Compile Include="Chains\ChainDetails.cs" />
-    <Compile Include="Chains\ChainFubuDiagnostics.cs" />
-    <Compile Include="Chains\ChainRequest.cs" />
-    <Compile Include="Chains\ChainVisualization.cs" />
+    <Compile Include="ChainFubuDiagnostics.cs" />
     <Compile Include="Core\CoreExtensions.cs" />
     <Compile Include="Core\Extensions\TagExtensions.cs" />
     <Compile Include="DiagnosticChainsSource.cs" />
@@ -165,10 +161,8 @@
     <Compile Include="DiagnosticsRegistration.cs" />
     <Compile Include="DiagnosticsRegistry.cs" />
     <Compile Include="Endpoints\EndpointExplorerFubuDiagnostics.cs" />
-    <Compile Include="Endpoints\EndpointExplorerModel.cs" />
-    <Compile Include="Endpoints\EndpointsTable.cs" />
     <Compile Include="Endpoints\RouteQuery.cs" />
-    <Compile Include="Endpoints\RouteReport.cs" />
+    <Compile Include="Endpoints\EndpointReport.cs" />
     <Compile Include="FubuDiagnosticsEndpoint.cs" />
     <Compile Include="ModelBindingFubuDiagnostics.cs" />
     <Compile Include="Packaging\PackageDiagnosticsLogModel.cs" />

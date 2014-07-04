@@ -3,33 +3,55 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuCore.Descriptions;
-using FubuCore.Reflection;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
-using FubuMVC.Core.Urls;
-using FubuMVC.Diagnostics.Chains;
 
 namespace FubuMVC.Diagnostics.Endpoints
 {
-    public class RouteReport
+    public class EndpointReport
     {
-        public const string NoConstraints = "N/A";
+        public const string N_A = "N/A";
         private readonly BehaviorChain _chain;
-        private readonly string _summaryUrl;
-        private readonly string _detailsUrl;
 
-        public static RouteReport ForChain(BehaviorChain chain, IUrlRegistry urls)
+
+        public static EndpointReport ForChain(BehaviorChain chain)
         {
-            return new RouteReport(chain, urls.UrlFor(new ChainRequest{Id = chain.UniqueId}), urls.UrlFor(new ChainDetailsRequest{Id = chain.UniqueId}));
+            return new EndpointReport(chain);
         }
 
-        public RouteReport(BehaviorChain chain, string summaryUrl, string detailsUrl)
+        public EndpointReport(BehaviorChain chain)
         {
             _chain = chain;
-            _summaryUrl = summaryUrl;
-            _detailsUrl = detailsUrl;
+        }
+
+        public IDictionary<string, object> ToDictionary()
+        {
+            return new Dictionary<string, object>
+            {
+                {"title", Title},
+                {"constraints", Constraints.ToArray()},
+                {"actions", Action.ToArray()},
+                {"route", Route},
+                {"hash", _chain.GetHashCode()},
+                {"resource", ResourceType.ToDictionary()},
+                {"input", InputModel.ToDictionary()},
+                {"origin", Origin},
+                {"accepts", Accepts},
+                {"authorization", Authorization},
+                {"content-type", ContentType},
+                {"output", Output.ToArray()},
+                {"category", UrlCategory},
+                {"wrappers", Wrappers.ToArray()},
+                {"tags", _chain.Tags.ToArray()}
+            };
+        }
+
+        public string Route
+        {
+            get { return _chain is RoutedChain ? _chain.As<RoutedChain>().GetRoutePattern() : N_A; }
         }
 
         public Type ResourceType
@@ -39,11 +61,6 @@ namespace FubuMVC.Diagnostics.Endpoints
                 // TODO -- FubuContinuation does not count!
                 return _chain.ResourceType();
             }
-        }
-
-        public string DetailsUrl
-        {
-            get { return _detailsUrl; }
         }
 
         public Type InputModel
@@ -63,8 +80,7 @@ namespace FubuMVC.Diagnostics.Endpoints
                 var routedChain = _chain as RoutedChain;
 
 
-
-                if (routedChain == null) return NoConstraints;
+                if (routedChain == null) return N_A;
 
                 if (!routedChain.Route.AllowedHttpMethods.Any()) return "Any";
 
@@ -74,17 +90,15 @@ namespace FubuMVC.Diagnostics.Endpoints
 
         public string Title
         {
-            get
-            {
-                return _chain.Title();
-            }
+            get { return _chain.Title(); }
         }
+
 
         public IEnumerable<string> Output
         {
             get
             {
-                foreach (BehaviorNode node in _chain.Where(x => x.Category == BehaviorCategory.Output))
+                foreach (var node in _chain.Where(x => x.Category == BehaviorCategory.Output))
                 {
                     if (node is OutputNode)
                     {
@@ -121,7 +135,7 @@ namespace FubuMVC.Diagnostics.Endpoints
                 // TODO -- what about other types of nodes that can write?
                 // IHaveContentTypes ?????
                 var inputNode = _chain.OfType<InputNode>().FirstOrDefault();
-                if (inputNode == null) return new[]{MimeType.HttpFormMimetype};
+                if (inputNode == null) return new[] {MimeType.HttpFormMimetype};
 
                 return inputNode.Readers().SelectMany(x => x.Mimetypes).Distinct();
             }
@@ -148,11 +162,6 @@ namespace FubuMVC.Diagnostics.Endpoints
                 // TODO -- might be a pretty type opportunity
                 return _chain.OfType<Wrapper>().Select(x => x.BehaviorType.Name);
             }
-        }
-
-        public string SummaryUrl
-        {
-            get { return _summaryUrl; }
         }
 
         public string Origin

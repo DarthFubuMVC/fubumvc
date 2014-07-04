@@ -1,7 +1,6 @@
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.UI.Bootstrap.Tags;
 using FubuMVC.Core.Urls;
-using FubuMVC.Diagnostics.Chains;
 
 namespace FubuMVC.Diagnostics.Requests
 {
@@ -12,7 +11,7 @@ namespace FubuMVC.Diagnostics.Requests
             AddHeader("Chain Details");
 
             Add("li").Add("a").Id("chain-summary").Attr("href", "#").Text("View Summary");
-            Add("li").Add("span/a").Attr("href", urls.UrlFor(new ChainDetailsRequest{Id = log.ChainId})).Text("View Details").AddClass("external").Attr("target", "_blank");
+            Add("li").Add("span/a").Attr("href", urls.UrlFor(new ChainDetailsRequest{Hash = log.Hash})).Text("View Details").AddClass("external").Attr("target", "_blank");
         }
     }
 }

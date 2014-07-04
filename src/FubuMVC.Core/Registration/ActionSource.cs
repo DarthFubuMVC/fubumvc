@@ -29,6 +29,7 @@ namespace FubuMVC.Core.Registration
             if (method.GetParameters().Any(x => x.ParameterType.IsSimple())) return false;
             
             bool hasOutput = method.ReturnType != typeof (void);
+
             if (hasOutput && !method.ReturnType.IsClass) return false;
 
             

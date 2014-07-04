@@ -3,7 +3,6 @@ using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Urls;
-using FubuMVC.Diagnostics.Chains;
 using HtmlTags;
 
 namespace FubuMVC.Diagnostics.Requests
@@ -33,7 +32,7 @@ namespace FubuMVC.Diagnostics.Requests
         {
             get
             {
-                return _urls.UrlFor(new ChainRequest {Id = Log.ChainId});
+                return _urls.UrlFor(new ChainDetailsRequest {Hash = Log.Hash});
             }
         }
 

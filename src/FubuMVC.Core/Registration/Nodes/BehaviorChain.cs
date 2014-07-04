@@ -368,5 +368,10 @@ namespace FubuMVC.Core.Registration.Nodes
 
             return "BehaviorChain " + UniqueId;
         }
+
+        public override int GetHashCode()
+        {
+            return Title().GetHashCode();
+        }
     }
 }

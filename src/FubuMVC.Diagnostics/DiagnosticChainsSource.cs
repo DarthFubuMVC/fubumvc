@@ -18,6 +18,9 @@ namespace FubuMVC.Diagnostics
                     var chain = new BehaviorChain();
                     chain.AddToEnd(action);
                     chain.IsPartialOnly = true;
+
+                    chain.Tags.Add("Diagnostics");
+
                     yield return chain;
                 }
                 else

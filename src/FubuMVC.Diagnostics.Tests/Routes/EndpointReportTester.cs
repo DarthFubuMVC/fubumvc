@@ -5,7 +5,6 @@ using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
-using FubuMVC.Diagnostics.Chains;
 using FubuMVC.Diagnostics.Endpoints;
 using NUnit.Framework;
 using FubuTestingSupport;
@@ -14,13 +13,13 @@ using System.Linq;
 namespace FubuMVC.Diagnostics.Tests.Routes
 {
     [TestFixture]
-    public class RouteReportTester
+    public class EndpointReportTester
     {
-        private Lazy<RouteReport> _report;
+        private Lazy<EndpointReport> _report;
         private BehaviorChain theChain;
         private StubUrlRegistry theUrls;
         private RoutedChain theRoutedChain;
-        private Lazy<RouteReport> _routedReport;
+        private Lazy<EndpointReport> _routedReport;
 
         [SetUp]
         public void SetUp()
@@ -28,11 +27,11 @@ namespace FubuMVC.Diagnostics.Tests.Routes
             theChain = new BehaviorChain();
             theRoutedChain = new RoutedChain("something");
             theUrls = new StubUrlRegistry();
-            _report = new Lazy<RouteReport>(() => RouteReport.ForChain(theChain, theUrls));
-            _routedReport = new Lazy<RouteReport>(() => RouteReport.ForChain(theRoutedChain, theUrls));
+            _report = new Lazy<EndpointReport>(() => EndpointReport.ForChain(theChain));
+            _routedReport = new Lazy<EndpointReport>(() => EndpointReport.ForChain(theRoutedChain));
         }
 
-        private RouteReport theReport
+        private EndpointReport theReport
         {
             get
             {
@@ -40,7 +39,7 @@ namespace FubuMVC.Diagnostics.Tests.Routes
             }
         }
 
-        private RouteReport theRoutedReport
+        private EndpointReport theRoutedReport
         {
             get
             {
@@ -124,13 +123,6 @@ namespace FubuMVC.Diagnostics.Tests.Routes
         {
 
             theRoutedReport.Title.ShouldEqual("something");
-        }
-
-        [Test]
-        public void picks_up_the_chain_url()
-        {
-
-            theRoutedReport.SummaryUrl.ShouldEqual(theUrls.UrlFor(new ChainRequest{Id = theChain.UniqueId}));
         }
 
         [Test]

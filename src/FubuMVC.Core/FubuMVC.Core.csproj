@@ -146,6 +146,7 @@
     <Compile Include="Diagnostics\Runtime\Tracing\NulloRequestLog.cs" />
     <Compile Include="Diagnostics\Runtime\Tracing\RequestLogBuilder.cs" />
     <Compile Include="Diagnostics\Runtime\Tracing\RequestTrace.cs" />
+    <Compile Include="Diagnostics\TypeExtensions.cs" />
     <Compile Include="DoNotAutoImportAttribute.cs" />
     <Compile Include="Endpoints\EndpointDriver.cs" />
     <Compile Include="Endpoints\EndpointFormatting.cs" />

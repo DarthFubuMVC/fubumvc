@@ -94,7 +94,6 @@
   <ItemGroup>
     <Compile Include="apply_authorization_rights_to_all_diagnostics_pages.cs" />
     <Compile Include="Bootstrapping_Integration_Testing.cs" />
-    <Compile Include="Chains\ChainVisualizationTester.cs" />
     <Compile Include="debugging.cs" />
     <Compile Include="DiagnosticSettings_TraceLevel_Registration_Tester.cs" />
     <Compile Include="DiagnosticsExtensionTester.cs" />
@@ -105,7 +104,7 @@
     <Compile Include="Requests\RequestStepTester.cs" />
     <Compile Include="Requests\RequestVisualizationEndpointTester.cs" />
     <Compile Include="Requests\ResponseHeadersTagTester.cs" />
-    <Compile Include="Routes\RouteReportTester.cs" />
+    <Compile Include="Routes\EndpointReportTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Runtime\ApplyTracingIntegrationTesting.cs" />
     <Compile Include="Runtime\BehaviorFinishTester.cs" />

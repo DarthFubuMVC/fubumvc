@@ -1,3 +1,29 @@
+function FubuDiagnosticsView(view, section){
+	view.anchor = '#' + view.url;
+	
+	if (view.route != null && typeof view.route == 'string'){
+		view.route = FubuDiagnostics.routes[view.route];
+	}
+	
+	view.url = section.key + '/' + view.key;
+
+	if (view.route){
+		_.each(view.route.params, function(param, i){
+			view.url = view.url + '/:' + param;
+		});
+		
+	}
+	
+	view.anchor = '#' + view.url;
+	
+	view.hasParameters = function(){
+		if (view.route == null) return false;
+		
+		return view.route.params.length > 0;
+	}
+
+}
+
 function FubuDiagnosticsSection(section){
 	$.extend(section, {
 		views: [],
@@ -6,29 +32,32 @@ function FubuDiagnosticsSection(section){
 		
 		add: function(view){
 			this.views.push(view);
-			view.url = this.key + '/' + view.key;
-			if (view.modifyUrl){
-				view.url = view.modifyUrl(url);
-			};
-			
-			view.anchor = '#' + view.url;
-			
+			FubuDiagnosticsView(view, section);
 
 			return this;
 		},
 
 		addRoutes: function(router){
 			if (this.screen == null){
-				this.screen = new ReactScreen(FubuDiagnostics.components.SectionLinks, {section: this});
+				this.screen = new ReactScreen({
+					component: FubuDiagnostics.components.SectionLinks, 
+					subject: {section: this}
+				});
 			}
 
 			var section = this;
-			_.each(this.activeViews(), function(view){
+			_.each(this.views, function(view){
 				var key = section.key + '/' + view.key;
 
 				router.route(view.url, key, function(){
-					// TODO - have this also send the route parameters
-					FubuDiagnostics.showScreen(view.screen, view, section);
+					var params = {};
+					if (view.route){
+						for (var i = 0; i < view.route.params.length; i++){
+							params[view.route.params[i]] = arguments[i];
+						}
+					}
+
+					FubuDiagnostics.showScreen(view.screen, view, section, params);
 				});
 			});
 		
@@ -40,7 +69,9 @@ function FubuDiagnosticsSection(section){
 		},
 		
 		activeViews: function(){
-			return this.views;
+			return _.filter(this.views, function(v){
+				return !v.hasParameters();
+			});
 		},
 		
 		

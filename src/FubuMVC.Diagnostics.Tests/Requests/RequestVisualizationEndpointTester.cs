@@ -35,7 +35,7 @@ namespace FubuMVC.Diagnostics.Tests.Requests
             
             var request = new RequestLog();
             var actualLog = new RequestLog();
-            actualLog.ChainId = chain.UniqueId;
+            actualLog.Hash = chain.GetHashCode();
 
             MockFor<IRequestHistoryCache>().Stub(x => x.Find(request.Id)).Return(actualLog);
 

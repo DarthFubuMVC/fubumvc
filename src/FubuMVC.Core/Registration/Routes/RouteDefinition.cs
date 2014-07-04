@@ -6,6 +6,7 @@ using System.Web.Routing;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuCore.Util;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.PathBased;
 
@@ -57,6 +58,8 @@ namespace FubuMVC.Core.Registration.Routes
         public SessionStateRequirement SessionStateRequirement { get; set; }
 
         public string Category { get; set; }
+
+
 
         public virtual string CreateTemplate(object input, Func<object, object>[] hash)
         {
@@ -223,6 +226,40 @@ namespace FubuMVC.Core.Registration.Routes
             description.Properties["SessionStateRequirement"] = SessionStateRequirement == null
                                                                     ? "Default"
                                                                     : SessionStateRequirement.ToString();
+        }
+
+        public IDictionary<string, object> ToDictionary()
+        {
+            var dict = new Dictionary<string, object>
+            {
+                {"pattern", Pattern}, 
+                {"methods", AllowedHttpMethods.Any() ? AllowedHttpMethods.ToArray() : new []{"Any"}},
+                {"session", SessionStateRequirement == null
+                                                                    ? "Default"
+                                                                    : SessionStateRequirement.ToString()},
+                
+            };
+
+            if (Input != null)
+            {
+                var input = dict.AddChild("input");
+                input.Add("type", Input.InputType.ToDictionary());
+
+                var routeParameters = input.Child("route-parameters");
+                Input.RouteParameters.Each(x => {
+                    var child = routeParameters.AddChild(x.Name);
+                    child.Add("default", x.DefaultValue);
+                });
+
+                var queryParameters = input.Child("query-parameters");
+                Input.QueryParameters.Each(x =>
+                {
+                    var child = queryParameters.AddChild(x.Name);
+                    child.Add("default", x.DefaultValue);
+                });
+            }
+
+            return dict;
         }
 
         protected bool Equals(RouteDefinition other)

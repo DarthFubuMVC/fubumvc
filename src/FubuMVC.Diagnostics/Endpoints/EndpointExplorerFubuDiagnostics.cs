@@ -1,19 +1,14 @@
+using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Urls;
-using FubuMVC.Core.View;
 
 namespace FubuMVC.Diagnostics.Endpoints
 {
-    public class RoutesRequest{}
-
     public class EndpointExplorerFubuDiagnostics
     {
-        private static readonly string Namespace = Assembly.GetExecutingAssembly().GetName().Name;
-
         private readonly BehaviorGraph _graph;
         private readonly IUrlRegistry _urls;
 
@@ -23,38 +18,30 @@ namespace FubuMVC.Diagnostics.Endpoints
             _urls = urls;
         }
 
-        [System.ComponentModel.Description("Endpoints:Table of all the configured routes, partials, and handlers in a FubuMVC application")]
-        public EndpointExplorerModel get_endpoints(RoutesRequest request)
+        public EndpointList get_endpoints()
         {
-            var reports = _graph.Behaviors.Where(IsNotDiagnosticRoute).Select(x => RouteReport.ForChain(x, _urls)).OrderBy(x => x.Title);
-
-            return new EndpointExplorerModel
+            return new EndpointList
             {
-                EndpointsTable = new EndpointsTable(reports)
+                endpoints = _graph.Behaviors
+                    .Where(IsNotDiagnosticRoute)
+                    .Select(EndpointReport.ForChain)
+                    .OrderBy(x => x.Title)
+                    .Select(x => x.ToDictionary())
+                    .ToList()
             };
         }
 
         public static bool IsNotDiagnosticRoute(BehaviorChain chain)
         {
             if (chain is DiagnosticChain) return false;
-
-
-            if (chain.Calls.Any(x => x.HandlerType.Assembly == Assembly.GetExecutingAssembly()))
-            {
-                return false;
-            }
-
-            if (chain.Calls.Any(x => x.HasInput && x.InputType().Assembly == Assembly.GetExecutingAssembly()))
-            {
-                return false;
-            }
-
-            if (chain.HasOutput() && chain.ResourceType().Assembly == Assembly.GetExecutingAssembly())
-            {
-                return false;
-            }
+            if (chain.Tags.Contains("Diagnostics")) return false;
 
             return true;
         }
+    }
+
+    public class EndpointList
+    {
+        public IList<IDictionary<string, object>> endpoints;
     }
 }

@@ -20,7 +20,7 @@ namespace FubuMVC.Core.Diagnostics.Runtime
         }
 
         public Guid Id { get; private set; }
-        public Guid ChainId { get; set; }
+        public int Hash { get; set; }
 
         public double ExecutionTime { get; set; }
 

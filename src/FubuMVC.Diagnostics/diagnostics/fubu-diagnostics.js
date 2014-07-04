@@ -8,11 +8,13 @@ var FubuDiagnostics = {
 	
 	components: {},
 	
-	showScreen: function(screen, element, section){
+	showScreen: function(screen, element, section, params){
 		$('#home-view').hide();
 		$('.left-content').hide();
-		var count = $('#' + element.key).show().length; // optional html content
-		                             // in the left pane
+		
+		// optional html content
+		// in the left pane
+		var count = $('#' + element.key).show().length; 
 		
 		if (count == 0){
 			$('#left-pane').hide();
@@ -32,7 +34,7 @@ var FubuDiagnostics = {
 		
 		var pane = document.getElementById('main-pane');
 
-		screen.activate(pane);
+		screen.activate(pane, params);
 		
 		this.currentScreen = screen;
 		
@@ -95,7 +97,9 @@ var FubuDiagnostics = {
     },
     
     section: function(key) {
-        throw "I have not done this yet";
+        return _.find(this.sections, function(s){
+			return s.key == key;
+		});
     },
 
     addView: function(view) {
@@ -108,13 +112,19 @@ var FubuDiagnostics = {
 	cache: {},
 	
 	get: function(key, params, callback){
+		var url = this.toUrl(key, params);
+		
+		$.get(url, callback);
+	},
+	
+	toUrl: function(key, params){
 		var route = this.routes[key];
 		var url = route.url;
 		_.each(route.params, function(param){
 			url = url.replace('{' + param + '}', params[param]);
 		});
-		
-		$.get(url, callback);
+
+		return url;
 	},
 	
 	// TODO -- add cached ability
