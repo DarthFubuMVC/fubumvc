@@ -140,7 +140,7 @@ namespace FubuMVC.Core.Http.Cookies
                 builder.Append("expires=");
                 string displayedExpiration = Expires.Value.ToString("r", CultureInfo.InvariantCulture);
                 builder.Append(displayedExpiration);
-                builder.Append(", ");
+                builder.Append("; ");
             }
 
             if (MaxAge.HasValue)
