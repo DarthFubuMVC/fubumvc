@@ -191,6 +191,7 @@
     <Compile Include="Registration\Policies\IsPartialTester.cs" />
     <Compile Include="Registration\Policies\ResourceTypeImplementsTester.cs" />
     <Compile Include="Registration\Policies\ResourceTypeIsTester.cs" />
+    <Compile Include="Registration\Querying\ChainResoluationCacheRootAt.cs" />
     <Compile Include="Registration\Registration\FubuPackageRegistry_Importing_Mechanics_Specs.cs" />
     <Compile Include="Registration\Registration\ModelBindingServiceRegistry_specification.cs" />
     <Compile Include="Registration\SettingsCollectionTester.cs" />

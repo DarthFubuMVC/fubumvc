@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using FubuCore;
 using FubuCore.Reflection;
-using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
@@ -244,8 +242,6 @@ namespace FubuMVC.Tests.Registration.Querying
             _resolutionCache.FindCreatorOf(typeof (Entity1)).ShouldBeNull();
         }
     }
-
-
 
     public class InputModelThatDoesNotMatchAnyExistingBehaviors
     {
