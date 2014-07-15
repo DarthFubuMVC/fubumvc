@@ -36,6 +36,7 @@ namespace FubuMVC.Tests.Http.Cookies
             roundTrip("a=1; b=b1=1&b2=2; secure; httponly");
             roundTrip("a=1; b=b1=1&b2=2; secure");
             roundTrip("a=1; domain=http://cnn.com");
+            roundTrip("a=1; expires=Fri, 08 Aug 2014 22:30:58 GMT; path=/");
             roundTrip("a=1; max-age=5; domain=http://cnn.com");
             roundTrip("a=1; domain=http://cnn.com; path=foo");
             roundTrip("a=1; max-age=5; domain=http://cnn.com; path=foo; secure; httponly");
@@ -48,6 +49,9 @@ namespace FubuMVC.Tests.Http.Cookies
             cookie.Expires = DateTime.Today.AddHours(10);
 
             cookie.ToString().ShouldContain("expires=" + cookie.Expires.Value.ToString("r", CultureInfo.InvariantCulture));
+
+            cookie.Path = "/";
+            cookie.ToString().ShouldContain("expires=" + cookie.Expires.Value.ToString("r", CultureInfo.InvariantCulture) + ";");
         }
 
         [Test]

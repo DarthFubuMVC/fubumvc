@@ -101,7 +101,6 @@ namespace FubuMVC.Core.Registration.Querying
             return Find(ChainSearch.ByUniqueInputType(modelType, category));
         }
 
-
         public BehaviorChain FindCreatorOf(Type type)
         {
             return _creators[type];
@@ -109,7 +108,11 @@ namespace FubuMVC.Core.Registration.Querying
 
         public void RootAt(string baseUrl)
         {
-            _behaviorGraph.Behaviors.OfType<RoutedChain>().Each(x => x.Route.RootUrlAt(baseUrl));
+            _behaviorGraph.Behaviors.OfType<RoutedChain>().Each(x =>
+            {
+                x.Route.RootUrlAt(baseUrl);
+                x.AdditionalRoutes.Each(r => r.RootUrlAt(baseUrl));
+            });
         }
 
         public IChainForwarder FindForwarder(object model, string category = null)
@@ -123,7 +126,6 @@ namespace FubuMVC.Core.Registration.Querying
             var modelType = _typeResolver.ResolveType(model);
             return _behaviorGraph.Forwarders.SingleOrDefault(f => f.Category == category && f.InputType == modelType);
         }
-
 
         public void ClearAll()
         {
