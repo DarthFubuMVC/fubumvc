@@ -40,7 +40,7 @@ namespace FubuMVC.Core.Diagnostics.Runtime.Tracing
             var chainId = _currentChain.OriginatingChain == null ? Guid.Empty :
                 _currentChain.OriginatingChain.UniqueId;
             var log = new RequestLog{
-                Hash    = chainId.GetHashCode(),
+                Hash    = _currentChain.OriginatingChain.GetHashCode(),
                 Time = _systemTime.UtcNow(),
                 RequestData = report
             };

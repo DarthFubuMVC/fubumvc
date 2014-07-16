@@ -97,6 +97,7 @@
     </Compile>
     <Compile Include="GoHereController.cs" />
     <Compile Include="handling_501_responses.cs" />
+    <Compile Include="HomeEndpoint.cs" />
     <Compile Include="Http\ResponseController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FileUpload\FileUploadController.cs" />

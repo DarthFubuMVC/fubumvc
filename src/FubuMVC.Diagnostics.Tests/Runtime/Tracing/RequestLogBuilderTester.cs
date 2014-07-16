@@ -51,7 +51,7 @@ namespace FubuMVC.Diagnostics.Tests.Runtime.Tracing
         [Test]
         public void sets_the_behavior_id_from_the_originating_chain()
         {
-            theLog.Hash.ShouldEqual(theOriginatingChain.UniqueId);
+            theLog.Hash.ShouldEqual(theOriginatingChain.Title().GetHashCode());
         }
 
         [Test]
