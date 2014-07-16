@@ -50,24 +50,35 @@ namespace FubuMVC.Spark.SparkModel
 
         protected override Parsing createParsing()
         {
-            IEnumerable<Chunk> chunk = null;
-
             try
             {
-                chunk = Loader.Load(this).ToList();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Failed while trying to parse template file " + FilePath, ex);
-            }
+                IEnumerable<Chunk> chunk = null;
+
+                try
+                {
+                    // A retry here.
+                    chunk = Loader.Load(this) ?? Loader.Load(this);
+                }
+                catch (Exception)
+                {
+                    // Retry ONCE.
+                    chunk = Loader.Load(this);
+                }
+
+                chunk = chunk.ToList();
 
 
-            return new Parsing
+                return new Parsing
+                {
+                    Master = chunk.Master(),
+                    ViewModelType = chunk.ViewModel(),
+                    Namespaces = chunk.Namespaces()
+                };
+            }
+            catch (Exception e)
             {
-                Master = chunk.Master(),
-                ViewModelType = chunk.ViewModel(),
-                Namespaces = chunk.Namespaces()
-            };
+                throw new Exception("Failed while trying to parse template file " + FilePath, e);
+            }
         }
 
         public void Precompile()

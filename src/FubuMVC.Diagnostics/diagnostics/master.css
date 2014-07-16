@@ -215,3 +215,7 @@ footer p span {
 .section-subtitle {
 	margin-left: 10px !important;
 }
+
+table.details{
+	width: auto;
+}

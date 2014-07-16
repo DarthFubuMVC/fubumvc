@@ -57,7 +57,7 @@ FubuDiagnostics.section('fubumvc').add({
 var TypeDisplay = React.createClass({
 	render: function(){
 		return (
-			<span className="type-display" title={this.props.type.qualified-name}>{this.props.type.name}</span>
+			<span className="type-display" title={this.props.type['qualified-name']}>{this.props.type.name}</span>
 		);
 	}
 });
@@ -66,16 +66,43 @@ var TypeDisplay = React.createClass({
 
 function Cell(title, att, toCell){
 	this.title = title;
-	this.att = att;
 	this.toCell = toCell;
 	
 	if (this.toCell == null){
 		this.toCell = function(data){
 			return (
-				<td>{data[this.att]}</td>
+				<td>{data[att]}</td>
 			);
 		};
 	}
+	
+	this.applies = function(data){
+		return data[att] != null;
+	}
+	
+	this.shouldDisplay = function(data){
+		return data[att] != null;
+	}
+}
+
+function ArrayCell(title, att){
+	var toCell = function(data){
+		var display = _(data[att]).join(', ');
+
+		return (
+			<td>{display}</td>
+		);
+	};
+
+	var cell = new Cell(title, att, toCell);
+	
+	cell.shouldDisplay = function(data){
+		var actual = data[att];
+		
+		return actual != null && actual.length > 0;
+	}
+	
+	return cell;
 }
 
 function TypeCell(title, att){
@@ -83,23 +110,40 @@ function TypeCell(title, att){
 	
 	cell.toCell = function(data){
 		return (
-			<TypeDisplay type={data[att]} />
+			<td><TypeDisplay type={data[att]} /></td>
 		);
 	}
 	
-	cell.shouldDisplay = function(data){
-		return data[att] != null;
-	}
+
 	
 	return cell;
 }
 
 
+function toDetailRows(cells, data){
+	var activeCells = _.filter(cells, function(c, i){
+		return c.shouldDisplay(data);
+	});
+
+	return activeCells.map(function(cell, i){
+		var td = cell.toCell(data);
+		
+		return (
+			<tr><th>{cell.title}</th>{td}</tr>
+		);
+	});
+}
+
 
 var DetailsTable = React.createClass({
 	render: function(){
-		var rows = this.props.cells.map(function(cell, i){
-			var td = cell.toCell(this.props.data);
+		var data = this.props.data;
+		var activeCells = _.filter(this.props.cells, function(c, i){
+			return c.shouldDisplay(data);
+		});
+	
+		var rows = activeCells.map(function(cell, i){
+			var td = cell.toCell(data);
 			
 			return (
 				<tr><th>{cell.title}</th>{td}</tr>
@@ -108,12 +152,26 @@ var DetailsTable = React.createClass({
 	
 		return (
 			<table className="details table table-striped">
-				<tr><th colspan="2"><span className="details-section">{this.props.label}</span></th></tr>
+				<tbody>
 				{rows}
+				</tbody>
 			</table>
 		);
 	}
 });
+
+function toBehaviorRow(node){
+	return (
+		<tr>
+			<th>
+				<p>{node.title}</p>
+				<p><small className="small">Category: {node.category}</small></p>
+			</th>
+			<td dangerouslySetInnerHTML={{__html: node.details}} />	
+		</tr>
+	);
+}
+
 
 
 var EndpointDetails = React.createClass({
@@ -126,14 +184,39 @@ var EndpointDetails = React.createClass({
 			new Cell('Url Category', 'category'),
 			new Cell('Origin', 'origin'),
 			new TypeCell('Input Type', 'input'),
-			new TypeCell('Resource Type', 'resource')
+			new TypeCell('Resource Type', 'resource'),
+			new ArrayCell('Accepts', 'accepts'),
+			new ArrayCell('Content-Type', 'content-type'),
+			new ArrayCell('Tags', 'tags'),
 		
 		];
+		
+		var rows = toDetailRows(detailCells, this.props.data.details);
+		if (this.props.data.route != null){
+			var routeRow = (
+				<tr>
+					<th>Route: {this.props.data.details.route}</th>
+					<td dangerouslySetInnerHTML={{__html: this.props.data.route}} />	
+				</tr>
+			);
+		}
+
+		var behaviorHeader = (
+			<tr><td colSpan="2"><h4>Behaviors</h4></td></tr>
+		);
+		rows.push(behaviorHeader);
+	
+		this.props.data.nodes.forEach(function(node, i){
+			var row = toBehaviorRow(node);
+			rows.push(row);
+		});
 	
 		return (
-			<DetailsTable label="Details" 
-				cells={detailCells} 
-				data={this.props.data} />
+			<table className="details table table-striped">
+				<tbody>
+				{rows}
+				</tbody>
+			</table>
 		);
 	}
 });

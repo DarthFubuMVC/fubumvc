@@ -6,15 +6,14 @@ using System.Web.Routing;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuCore.Util;
-using FubuMVC.Core.Diagnostics;
-using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.PathBased;
 
 namespace FubuMVC.Core.Registration.Routes
 {
     public class RouteDefinition : IRouteDefinition, DescribesItself
     {
-        public static readonly IEnumerable<string> VERBS = new List<string>{
+        public static readonly IEnumerable<string> VERBS = new List<string>
+        {
             "POST",
             "GET",
             "PUT",
@@ -58,7 +57,6 @@ namespace FubuMVC.Core.Registration.Routes
         public SessionStateRequirement SessionStateRequirement { get; set; }
 
         public string Category { get; set; }
-
 
 
         public virtual string CreateTemplate(object input, Func<object, object>[] hash)
@@ -144,22 +142,25 @@ namespace FubuMVC.Core.Registration.Routes
             _pattern = newParts.Join("/");
         }
 
-	    public virtual int Rank
-	    {
-		    get
-		    {
+        public virtual int Rank
+        {
+            get
+            {
                 if (Input != null && Input.InputType != null && Input.InputType.CanBeCastTo<IRankMeLast>())
                 {
                     return int.MaxValue;
                 }
 
-		        return RouteBuilder.PatternRank(_pattern);
-		    }
-	    }
+                return RouteBuilder.PatternRank(_pattern);
+            }
+        }
 
         public Indexer<string, IRouteConstraint> Constraints
         {
-            get { return new Indexer<string, IRouteConstraint>(x => _constraints[x], (key, v) => _constraints[key] = v); }
+            get
+            {
+                return new Indexer<string, IRouteConstraint>(x => _constraints[x], (key, v) => _constraints[key] = v);
+            }
         }
 
         public void AddHttpMethodConstraint(string method)
@@ -224,49 +225,16 @@ namespace FubuMVC.Core.Registration.Routes
             description.Properties["Http Verbs"] = AllowedHttpMethods.Any() ? AllowedHttpMethods.Join(", ") : "Any";
 
             description.Properties["SessionStateRequirement"] = SessionStateRequirement == null
-                                                                    ? "Default"
-                                                                    : SessionStateRequirement.ToString();
+                ? "Default"
+                : SessionStateRequirement.ToString();
         }
 
-        public IDictionary<string, object> ToDictionary()
-        {
-            var dict = new Dictionary<string, object>
-            {
-                {"pattern", Pattern}, 
-                {"methods", AllowedHttpMethods.Any() ? AllowedHttpMethods.ToArray() : new []{"Any"}},
-                {"session", SessionStateRequirement == null
-                                                                    ? "Default"
-                                                                    : SessionStateRequirement.ToString()},
-                
-            };
-
-            if (Input != null)
-            {
-                var input = dict.AddChild("input");
-                input.Add("type", Input.InputType.ToDictionary());
-
-                var routeParameters = input.Child("route-parameters");
-                Input.RouteParameters.Each(x => {
-                    var child = routeParameters.AddChild(x.Name);
-                    child.Add("default", x.DefaultValue);
-                });
-
-                var queryParameters = input.Child("query-parameters");
-                Input.QueryParameters.Each(x =>
-                {
-                    var child = queryParameters.AddChild(x.Name);
-                    child.Add("default", x.DefaultValue);
-                });
-            }
-
-            return dict;
-        }
 
         protected bool Equals(RouteDefinition other)
         {
-            return string.Equals(_pattern, other._pattern, StringComparison.OrdinalIgnoreCase) 
-                && _constraints.SequenceEqual(other._constraints) 
-                && GetHttpMethodConstraints().SequenceEqual(other.GetHttpMethodConstraints());
+            return string.Equals(_pattern, other._pattern, StringComparison.OrdinalIgnoreCase)
+                   && _constraints.SequenceEqual(other._constraints)
+                   && GetHttpMethodConstraints().SequenceEqual(other.GetHttpMethodConstraints());
         }
 
         public override bool Equals(object obj)
@@ -281,7 +249,7 @@ namespace FubuMVC.Core.Registration.Routes
         {
             unchecked
             {
-                int hashCode = _constraints.GetHashCode();
+                var hashCode = _constraints.GetHashCode();
                 hashCode = (hashCode*397) ^ _httpMethods.GetHashCode();
                 hashCode = (hashCode*397) ^ _pattern.GetHashCode();
                 return hashCode;

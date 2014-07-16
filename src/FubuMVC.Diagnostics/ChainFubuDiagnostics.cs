@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
+using FubuCore.Descriptions;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Diagnostics.Endpoints;
@@ -35,10 +37,20 @@ namespace FubuMVC.Diagnostics
             if (chain is RoutedChain)
             {
                 var routed = chain.As<RoutedChain>();
-                dict.Add("route", routed.Route.ToDictionary());
+                var description = Description.For(routed.Route);
+
+
+                dict.Add("route", new DescriptionBodyTag(description).ToString());
             }
 
-            var nodes = chain.NonDiagnosticNodes().Select(x => _visualizer.Visualize(x).ToString()).ToArray();
+            var nodes = chain.NonDiagnosticNodes().Select(x => {
+                return new Dictionary<string, object>
+                {
+                    {"title", Description.For(x).Title},
+                    {"details", _visualizer.Visualize(x).ToString()},
+                    {"category", x.Category.ToString()}
+                };
+            });
 
             dict.Add("nodes", nodes);
 

@@ -14,7 +14,7 @@ namespace FubuMVC.Diagnostics.Visualization
 
         bool HasVisualizer(Type type);
         RequestStepTag VisualizeStep(RequestStep step);
-        HtmlTag VisualizeDescription(Description description, bool ellided = true);
+        HtmlTag VisualizeDescription(Description description);
 
         /// <summary>
         /// Creates and renders a visualization for the object.  Tries to find a partial

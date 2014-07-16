@@ -41,8 +41,6 @@ namespace FubuMVC.Core.Registration.Routes
         /// This is particularly useful when creating route aliases.
         /// </summary>
         string Category { get; set; }
-
-        IDictionary<string, object> ToDictionary();
     }
 
     public static class RouteDefinitionExtensions

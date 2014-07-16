@@ -29,10 +29,10 @@ namespace FubuMVC.Diagnostics.Endpoints
 
         public IDictionary<string, object> ToDictionary()
         {
-            return new Dictionary<string, object>
+            var dict = new Dictionary<string, object>
             {
                 {"title", Title},
-                {"constraints", Constraints.ToArray()},
+                {"constraints", Constraints},
                 {"actions", Action.ToArray()},
                 {"route", Route},
                 {"hash", _chain.GetHashCode()},
@@ -47,11 +47,23 @@ namespace FubuMVC.Diagnostics.Endpoints
                 {"wrappers", Wrappers.ToArray()},
                 {"tags", _chain.Tags.ToArray()}
             };
+
+
+            return dict;
         }
 
         public string Route
         {
-            get { return _chain is RoutedChain ? _chain.As<RoutedChain>().GetRoutePattern() : N_A; }
+            get
+            {
+                var route = _chain is RoutedChain ? _chain.As<RoutedChain>().GetRoutePattern() : N_A;
+                if (route.IsEmpty())
+                {
+                    route = "(home)";
+                }
+
+                return route;
+            }
         }
 
         public Type ResourceType
