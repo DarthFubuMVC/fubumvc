@@ -140,6 +140,7 @@
     !{Model.ScriptTags}
     
     <script src="/diagnostics/endpoints.jsx" type="text/jsx"/>
+    <script src="/diagnostics/requests.jsx" type="text/jsx"/>
     !{Model.ReactTags}
 	<script src="/diagnostics/navigation-react.jsx" type="text/jsx"/>
   </body>

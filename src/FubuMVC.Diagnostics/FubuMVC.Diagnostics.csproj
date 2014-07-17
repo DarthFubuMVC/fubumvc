@@ -114,9 +114,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Packaging\Packaging.spark" />
-    <None Include="Requests\Requests.spark">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Requests\RequestVisualization.spark">
       <SubType>Designer</SubType>
     </None>
@@ -125,6 +122,7 @@
     <Content Include="diagnostics\fubu-diagnostics.js" />
     <None Include="diagnostics\navigation-react.jsx" />
     <Content Include="diagnostics\screens.js" />
+    <Content Include="fubu-diagnostics\chain-details.html" />
     <Content Include="fubu-diagnostics\model-binding.html" />
     <Content Include="ripple.dependencies.config">
       <SubType>Designer</SubType>

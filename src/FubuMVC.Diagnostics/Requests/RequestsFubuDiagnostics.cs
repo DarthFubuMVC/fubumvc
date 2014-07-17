@@ -1,32 +1,24 @@
-using FubuCore.Descriptions;
+using System.Collections.Generic;
+using System.Linq;
 using FubuMVC.Core.Diagnostics.Runtime;
-using FubuMVC.Core.Urls;
-using HtmlTags;
 
 namespace FubuMVC.Diagnostics.Requests
 {
     public class RequestsFubuDiagnostics
     {
         private readonly IRequestHistoryCache _cache;
-        private readonly IUrlRegistry _urls;
 
-        public RequestsFubuDiagnostics(IRequestHistoryCache cache, IUrlRegistry urls)
+        public RequestsFubuDiagnostics(IRequestHistoryCache cache)
         {
             _cache = cache;
-            _urls = urls;
         }
 
-        [System.ComponentModel.Description("Requests:Request visualization for the most recent requests")]
-        public RequestsViewModel get_requests()
+        public Dictionary<string, object> get_requests()
         {
-            return new RequestsViewModel
+            return new Dictionary<string, object>
             {
-                Table = new RequestTable(_urls, _cache.RecentReports())
+                {"requests", _cache.RecentReports().Select(x => x.ToDictionary()).ToArray()}
             };
         }
-    }
-
-    public class RequestsViewModel{
-        public RequestTable Table { get; set; }
     }
 }

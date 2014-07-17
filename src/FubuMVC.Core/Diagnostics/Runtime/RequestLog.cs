@@ -29,6 +29,22 @@ namespace FubuMVC.Core.Diagnostics.Runtime
         public string HttpMethod { get; set; }
         public DateTime Time { get; set; }
 
+        public IDictionary<string, object> ToDictionary()
+        {
+            return new Dictionary<string, object>
+            {
+                {"time", LocalTime}, 
+                {"endpoint", Endpoint},
+                {"method", HttpMethod},
+                {"status", HttpStatus.Status},
+                {"description", HttpStatus.Description},
+                {"content-type", ContentType},
+                {"duration", ExecutionTime},
+                {"id", Id.ToString()},
+                {"hash", Hash}
+            };
+        } 
+
         public virtual void AddLog(double requestTimeInMilliseconds, object log)
         {
             _steps.Add(new RequestStep(requestTimeInMilliseconds, log));

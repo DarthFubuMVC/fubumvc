@@ -5,12 +5,6 @@ FubuDiagnostics.addSection({
     key: 'fubumvc'
 })
 .add({
-	title: 'Requests',
-	description: 'something about Requests',
-	key: 'requests',
-	screen: new TextScreen('Requests!')
-})
-.add({
 	title: 'Model Binding',
 	description: 'something about Model Binding',
 	key: 'model-binding',
