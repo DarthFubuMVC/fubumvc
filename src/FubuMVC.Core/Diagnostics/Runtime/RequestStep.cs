@@ -15,11 +15,6 @@ namespace FubuMVC.Core.Diagnostics.Runtime
         public object Log { get; private set; }
         public Guid Id { get; private set; }
 
-        public TracedStep<T> ToTracedStep<T>()
-        {
-            return new TracedStep<T>((T) Log, RequestTimeInMilliseconds);
-        }
-
         public bool Equals(RequestStep other)
         {
             if (ReferenceEquals(null, other)) return false;

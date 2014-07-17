@@ -56,7 +56,7 @@ namespace FubuMVC.Core.Diagnostics.Runtime
             {
                 HttpStatusReport report = null;
 
-                var log = _steps.Where(x => x.Log is HttpStatusReport).LastOrDefault();
+                var log = _steps.LastOrDefault(x => x.Log is HttpStatusReport);
                 if (log != null)
                 {
                     report = log.Log.As<HttpStatusReport>();
@@ -95,8 +95,6 @@ namespace FubuMVC.Core.Diagnostics.Runtime
 
         public IEnumerable<Header> ResponseHeaders { get; set; }
 
-        public ValueReport RequestData { get; set; }
-
         public IEnumerable<RequestStep> AllSteps()
         {
             return _steps;
@@ -105,12 +103,6 @@ namespace FubuMVC.Core.Diagnostics.Runtime
         public IEnumerable<T> AllLogsOfType<T>()
         {
             return _steps.Where(x => x.Log is T).Select(x => x.Log).OfType<T>();
-        }
-
-        public TracedStep<T> FindStep<T>(Func<T, bool> filter)
-        {
-            var step = _steps.Where(x => x.Log is T).FirstOrDefault(x => filter(x.Log.As<T>()));
-            return step == null ? null : step.ToTracedStep<T>();
         }
 
         public bool Equals(RequestLog other)

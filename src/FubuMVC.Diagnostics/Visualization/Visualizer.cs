@@ -57,10 +57,6 @@ namespace FubuMVC.Diagnostics.Visualization
             return VisualizeDescription(description);
         }
 
-        public RequestStepTag VisualizeStep(RequestStep step)
-        {
-            return new RequestStepTag(step, contentFor(step.Log).ToString());
-        }
 
         public bool HasVisualizer(Type type)
         {

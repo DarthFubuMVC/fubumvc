@@ -14,7 +14,7 @@ var RequestRow = React.createClass({
 				<td>{this.props.request.status}</td>
 				<td>{this.props.request.description}</td>
 				<td>{this.props.request['content-type']}</td>
-				<td>{this.props.request.duration}</td>
+				<td align="right">{this.props.request.duration}</td>
 			</tr>
 		);
 	}

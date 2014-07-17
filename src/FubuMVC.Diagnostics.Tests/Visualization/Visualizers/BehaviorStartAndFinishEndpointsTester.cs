@@ -1,8 +1,8 @@
 using System;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Diagnostics.Runtime.Tracing;
-using FubuMVC.Diagnostics.Tests.Requests;
 using FubuMVC.Diagnostics.Visualization.Visualizers;
+using FubuMVC.Tests.Registration;
 using NUnit.Framework;
 using System.Linq;
 using FubuTestingSupport;

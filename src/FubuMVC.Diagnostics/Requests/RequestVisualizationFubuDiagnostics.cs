@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Continuations;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
@@ -10,7 +12,6 @@ using HtmlTags;
 
 namespace FubuMVC.Diagnostics.Requests
 {
-    [Description("Request Visualization")]
     public class RequestVisualizationFubuDiagnostics
     {
         private readonly IRequestHistoryCache _cache;
@@ -24,31 +25,35 @@ namespace FubuMVC.Diagnostics.Requests
             _urls = urls;
         }
 
-        public HttpRequestVisualization get_request_details_Id(RequestLog request)
+        public Dictionary<string, object> get_request_details_Id(RequestLog query)
         {
-            RequestLog log = _cache.Find(request.Id);
+            var dict = new Dictionary<string, object>();
+
+            var log = _cache.Find(query.Id);
 
             if (log == null)
             {
-                return new HttpRequestVisualization(null, null, _urls)
-                {
-                    RedirectTo =
-                        FubuContinuation.RedirectTo<RequestVisualizationFubuDiagnostics>(x => x.get_requests_missing())
-                };
+                return dict;
             }
 
-            BehaviorChain chain = _graph.Behaviors.FirstOrDefault(x => x.GetHashCode() == log.Hash);
+            var request = log.ToDictionary();
+            dict.Add("request", request);
 
-            return new HttpRequestVisualization(log, chain, _urls);
+            // TODO -- get the request headers
+            
+
+            var responseHeaders = request.AddChild("response-headers");
+            log.ResponseHeaders.Each(x => responseHeaders.Add(x.Name, x.Value));
+
+            var chain = _graph.Behaviors.FirstOrDefault(x => x.GetHashCode() == log.Hash);
+            
+//            dict.Add("chain-trace", new BehaviorChainTraceTag(chain, log).ToString());
+//            dict.Add("response-headers", new ResponseHeadersTag(log).ToString());
+
+            //return new HttpRequestVisualization(log, chain, _urls);
+
+            return dict;
         }
 
-        [FubuPartial]
-        public HtmlTag get_requests_missing()
-        {
-            return new HtmlTag("p", p => {
-                p.Add("span").Text("This request is not longer in the request cache.  ");
-                p.Add("a").Text("Return to the Request Explorer").Attr("href", _urls.UrlFor<RequestsFubuDiagnostics>());
-            });
-        }
     }
 }

@@ -94,31 +94,6 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
             log.HttpStatus.Description.ShouldEqual("I didn't like this");
         }
 
-        [Test]
-        public void find_step_positive()
-        {
-            var log = new RequestLog();
-            log.AddLog(10, new Fake{Name = "Jeremy"});
-            log.AddLog(12, new Fake{Name = "Lindsey"});
-            log.AddLog(13, new Fake{Name = "Max"});
-            log.AddLog(15, new Fake{Name = "Shiner"});
-
-            var step = log.FindStep<Fake>(x => x.Name == "Shiner");
-            step.Log.Name.ShouldEqual("Shiner");
-            step.RequestTimeInMilliseconds.ShouldEqual(15);
-        }
-
-        [Test]
-        public void find_step_negative()
-        {
-            var log = new RequestLog();
-            log.AddLog(10, new Fake { Name = "Jeremy" });
-            log.AddLog(12, new Fake { Name = "Lindsey" });
-            log.AddLog(13, new Fake { Name = "Max" });
-            log.AddLog(15, new Fake { Name = "Shiner" });
-
-            log.FindStep<Fake>(x => x.Name == "Josh").ShouldBeNull();
-        }
 
         [Test]
         public void content_type_with_out_any_headers()

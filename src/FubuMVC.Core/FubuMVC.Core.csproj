@@ -136,7 +136,6 @@
     <Compile Include="Diagnostics\Runtime\RequestLog.cs" />
     <Compile Include="Diagnostics\Runtime\RequestStep.cs" />
     <Compile Include="Diagnostics\Runtime\RequestTraceListener.cs" />
-    <Compile Include="Diagnostics\Runtime\TracedStep.cs" />
     <Compile Include="Diagnostics\Runtime\TracingServices.cs" />
     <Compile Include="Diagnostics\Runtime\Tracing\BehaviorCorrelation.cs" />
     <Compile Include="Diagnostics\Runtime\Tracing\BehaviorTracer.cs" />

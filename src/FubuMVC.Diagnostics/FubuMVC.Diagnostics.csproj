@@ -114,9 +114,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Packaging\Packaging.spark" />
-    <None Include="Requests\RequestVisualization.spark">
-      <SubType>Designer</SubType>
-    </None>
     <Content Include="diagnostics\bootstrap.min.css" />
     <Content Include="diagnostics\core-diagnostics.js" />
     <Content Include="diagnostics\fubu-diagnostics.js" />
@@ -167,18 +164,9 @@
     <Compile Include="Packaging\PackageDiagnosticsModel.cs" />
     <Compile Include="Packaging\PackageDiagnosticsRequestModel.cs" />
     <Compile Include="Packaging\PackageLogFubuDiagnostics.cs" />
-    <Compile Include="Requests\BehaviorChainTraceTag.cs" />
-    <Compile Include="Requests\BehaviorNodeTraceTag.cs" />
-    <Compile Include="Requests\HttpRequestVisualization.cs" />
     <Compile Include="Requests\RequestDataFubuDiagnostics.cs" />
-    <Compile Include="Requests\RequestLinksTag.cs" />
-    <Compile Include="Requests\RequestLogDataOutlineTag.cs" />
     <Compile Include="Requests\RequestsFubuDiagnostics.cs" />
-    <Compile Include="Requests\RequestStepTag.cs" />
-    <Compile Include="Requests\RequestTable.cs" />
     <Compile Include="Requests\RequestVisualizationFubuDiagnostics.cs" />
-    <Compile Include="Requests\ResponseHeadersTag.cs" />
-    <Compile Include="Requests\TracingOutlineTag.cs" />
     <Compile Include="Shared\Tags\ControlGroupDivTag.cs" />
     <Compile Include="Shared\TypeEndpoint.cs" />
     <Compile Include="Visualization\BehaviorNodeViewModel.cs" />

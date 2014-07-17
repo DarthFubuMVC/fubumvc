@@ -20,5 +20,7 @@ namespace FubuMVC.Diagnostics.Requests
                 {"requests", _cache.RecentReports().Select(x => x.ToDictionary()).ToArray()}
             };
         }
+
+
     }
 }

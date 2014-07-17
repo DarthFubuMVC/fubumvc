@@ -42,11 +42,6 @@ namespace FubuMVC.Diagnostics.Tests.Runtime.Tracing
             theLog = ClassUnderTest.BuildForCurrentRequest();
         }
 
-        [Test]
-        public void writes_the_request_data_to_the_log()
-        {
-            MockFor<IRequestData>().AssertWasCalled(x => x.WriteReport(theLog.RequestData));
-        }
 
         [Test]
         public void sets_the_behavior_id_from_the_originating_chain()

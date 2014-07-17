@@ -34,13 +34,5 @@ namespace FubuMVC.Diagnostics.Visualization
             return builder.ToString();
         }
 
-        public static TagList Visualize(this IFubuPage page, IEnumerable<RequestStep> steps)
-        {
-            var visualizer = page.Get<IVisualizer>();
-
-            var tags = steps.Select(visualizer.VisualizeStep);
-
-            return new TagList(tags);
-        }
     }
 }

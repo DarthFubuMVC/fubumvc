@@ -1,9 +1,7 @@
 using System;
 using System.Web;
 using FubuCore.Descriptions;
-using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Diagnostics.Requests;
 using HtmlTags;
 
 namespace FubuMVC.Diagnostics.Visualization
@@ -13,7 +11,6 @@ namespace FubuMVC.Diagnostics.Visualization
         BehaviorNodeViewModel ToVisualizationSubject(BehaviorNode node);
 
         bool HasVisualizer(Type type);
-        RequestStepTag VisualizeStep(RequestStep step);
         HtmlTag VisualizeDescription(Description description);
 
         /// <summary>
