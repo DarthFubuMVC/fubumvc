@@ -150,7 +150,6 @@
     <Compile Include="Http\Owin\OwnCurrentHttpRequestTester.cs" />
     <Compile Include="Http\Owin\OwnHttpWriterTester.cs" />
     <Compile Include="Http\StreamExtensions.cs" />
-    <Compile Include="Logging\ExceptionReportTester.cs" />
     <Compile Include="MockedFubuRequestContext.cs" />
     <Compile Include="NewConneg\ReaderCollectionTester.cs" />
     <Compile Include="Projections\ChildProjectionTester.cs" />

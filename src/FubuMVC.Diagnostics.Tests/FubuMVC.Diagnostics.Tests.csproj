@@ -106,7 +106,6 @@
     <Compile Include="Runtime\BehaviorTracerNodeTester.cs" />
     <Compile Include="Runtime\BehaviorTracerTester.cs" />
     <Compile Include="Runtime\BehaviorTracer_and_DiagnosticBehavior_construction_testing.cs" />
-    <Compile Include="Runtime\DebugDetectorTester.cs" />
     <Compile Include="Runtime\DiagnosticNodeTester.cs" />
     <Compile Include="Runtime\DiagnosticsPackageTester.cs" />
     <Compile Include="Runtime\DiagnosticsRegistryTester.cs" />

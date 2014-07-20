@@ -29,28 +29,16 @@ namespace FubuMVC.Core.Diagnostics.Runtime
 
         public static bool ShouldApply(BehaviorChain chain)
         {
+            if (chain is DiagnosticChain) return false;
+            if (chain.Tags.Contains("Diagnostics")) return false;
+
             if (chain.IsTagged(BehaviorChain.NoTracing))
             {
                 return false;
             }
 
-            // So smelly, but I'm leaving it here.
-            if (chain.Calls.Any(x => x.HandlerType.Assembly.GetName().Name == "FubuMVC.Diagnostics"))
-            {
-                return false;
-            }
 
             if (chain.Calls.Any(x => x.HasAttribute<NoDiagnosticsAttribute>()))
-            {
-                return false;
-            }
-
-            if (chain.InputType() != null && chain.InputType().Assembly == DiagnosticAssembly)
-            {
-                return false;
-            }
-
-            if (chain.ResourceType() != null && chain.ResourceType().Assembly == DiagnosticAssembly)
             {
                 return false;
             }

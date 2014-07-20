@@ -164,9 +164,7 @@
     <Compile Include="Packaging\PackageDiagnosticsModel.cs" />
     <Compile Include="Packaging\PackageDiagnosticsRequestModel.cs" />
     <Compile Include="Packaging\PackageLogFubuDiagnostics.cs" />
-    <Compile Include="Requests\RequestDataFubuDiagnostics.cs" />
-    <Compile Include="Requests\RequestsFubuDiagnostics.cs" />
-    <Compile Include="Requests\RequestVisualizationFubuDiagnostics.cs" />
+    <Compile Include="RequestsFubuDiagnostics.cs" />
     <Compile Include="Shared\Tags\ControlGroupDivTag.cs" />
     <Compile Include="Shared\TypeEndpoint.cs" />
     <Compile Include="Visualization\BehaviorNodeViewModel.cs" />

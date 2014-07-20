@@ -1,16 +1,15 @@
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using FubuCore.Descriptions;
 using FubuCore.Util;
 using FubuMVC.Core.Diagnostics;
-using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.UI;
-using FubuMVC.Core.UI.Bootstrap.Collapsibles;
 using FubuMVC.Core.UI.Bootstrap.Tags;
-using FubuMVC.Diagnostics.Requests;
 using HtmlTags;
 
 namespace FubuMVC.Diagnostics.Visualization
@@ -25,7 +24,7 @@ namespace FubuMVC.Diagnostics.Visualization
         public Visualizer(BehaviorGraph graph, FubuHtmlDocument document)
         {
             _document = document;
-            _hasVisualizer = new Cache<Type, bool>(type => { return graph.Behaviors.Any(x => type == x.InputType()); });
+            _hasVisualizer = new Cache<Type, bool>(type => graph.Behaviors.Any(x => type == x.InputType()));
         }
 
         public BehaviorNodeViewModel ToVisualizationSubject(BehaviorNode node)
@@ -73,30 +72,25 @@ namespace FubuMVC.Diagnostics.Visualization
             return _glyphs[type];
         }
 
-        private object contentFor(object log)
-        {
-            if (_hasVisualizer[log.GetType()])
-            {
-                return _document.PartialFor(log);
-            }
-
-            var description = Description.For(log);
-            return VisualizeDescription(description);
-        }
 
         public HtmlTag VisualizeDescription(Description description)
         {
+            var titleTag = new HtmlTag("div", x => {
+                x.PrependGlyph(GlyphFor(description.TargetType));
+                x.Add("span").Text(description.Title);
+            });
+
             if (!description.HasMoreThanTitle())
             {
-                return new HtmlTag("div", x => {
-                    x.PrependGlyph(GlyphFor(description.TargetType));
-                    x.Add("span").Text(description.Title);
-                });
+                return titleTag;
             }
 
-            return new DescriptionBodyTag(description);
-        }
+            var tag = new HtmlTag("div");
+            tag.Append(titleTag);
+            tag.Append(new DescriptionBodyTag(description));
 
+            return tag;
+        }
     }
 
 

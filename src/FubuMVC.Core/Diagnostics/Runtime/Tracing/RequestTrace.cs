@@ -39,9 +39,17 @@ namespace FubuMVC.Core.Diagnostics.Runtime.Tracing
         {
             _stopwatch.Stop();
             Current.ExecutionTime = _stopwatch.ElapsedMilliseconds;
+
+            if (!Current.Failed)
+            {
+                Current.StatusCode = _response.StatusCode;
+                Current.StatusDescription = _response.StatusDescription;
+            }
+
             try
             {
                 Current.ResponseHeaders = _response.AllHeaders();
+
             }
             catch (Exception)
             {
@@ -92,6 +100,8 @@ namespace FubuMVC.Core.Diagnostics.Runtime.Tracing
         public void MarkAsFailedRequest()
         {
             Current.Failed = true;
+            Current.StatusCode = 500;
+            Current.StatusDescription = "Internal Server Error";
         }
 
         public RequestLog Current { get; set; }

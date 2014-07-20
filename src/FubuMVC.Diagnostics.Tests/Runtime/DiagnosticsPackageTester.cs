@@ -22,11 +22,6 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
 
         private BehaviorGraph graph;
 
-        [Test]
-        public void debug_detector_is_registered()
-        {
-            graph.Services.DefaultServiceFor<IDebugDetector>().Type.ShouldEqual(typeof (DebugDetector));
-        }
 
         [Test]
         public void adds_RequestTraceListener()

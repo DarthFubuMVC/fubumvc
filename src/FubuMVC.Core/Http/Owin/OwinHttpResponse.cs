@@ -144,7 +144,7 @@ namespace FubuMVC.Core.Http.Owin
         {
             get
             {
-                return _environment.Get<string>(OwinConstants.ResponseReasonPhraseKey);
+                return _environment.ContainsKey(OwinConstants.ResponseReasonPhraseKey) ? _environment.Get<string>(OwinConstants.ResponseReasonPhraseKey) : string.Empty;
             }
             set
             {

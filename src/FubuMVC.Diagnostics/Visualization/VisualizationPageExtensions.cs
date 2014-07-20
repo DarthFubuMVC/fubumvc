@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.UI.Bootstrap;
 using FubuMVC.Core.View;
@@ -16,10 +14,10 @@ namespace FubuMVC.Diagnostics.Visualization
             var visualizer = page.Get<Visualizer>(); // TODO -- change this
             var model = visualizer.ToVisualizationSubject(node);
 
-            var html = page.CollapsiblePartialFor<BehaviorNodeViewModel>(model).Title(model.Description.Title).ToString();
+            var html =
+                page.CollapsiblePartialFor<BehaviorNodeViewModel>(model).Title(model.Description.Title).ToString();
 
-            return new HtmlTag("a", a =>
-            {
+            return new HtmlTag("a", a => {
                 a.Attr("name", node.UniqueId.ToString());
                 a.Next = new LiteralTag(html);
             });
@@ -33,6 +31,5 @@ namespace FubuMVC.Diagnostics.Visualization
 
             return builder.ToString();
         }
-
     }
 }

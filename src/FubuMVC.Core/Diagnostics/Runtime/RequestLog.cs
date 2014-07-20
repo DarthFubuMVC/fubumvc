@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using FubuCore;
-using FubuCore.Binding.Values;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Headers;
-using FubuMVC.Core.Runtime.Logging;
+using StructureMap.Util;
 
 namespace FubuMVC.Core.Diagnostics.Runtime
 {
@@ -17,13 +17,16 @@ namespace FubuMVC.Core.Diagnostics.Runtime
         {
             Id = Guid.NewGuid();
             ResponseHeaders = Enumerable.Empty<Header>();
+
+            StatusCode = 200;
+            StatusDescription = "OK";
         }
 
         public Guid Id { get; private set; }
         public int Hash { get; set; }
 
         public double ExecutionTime { get; set; }
-
+        public string Querystring { get; set; }
 
         public string Endpoint { get; set; }
         public string HttpMethod { get; set; }
@@ -31,47 +34,32 @@ namespace FubuMVC.Core.Diagnostics.Runtime
 
         public IDictionary<string, object> ToDictionary()
         {
+            var endpoint = Endpoint;
+            if (endpoint.IsEmpty()) endpoint = "(home)";
+
             return new Dictionary<string, object>
             {
-                {"time", LocalTime}, 
-                {"endpoint", Endpoint},
+                {"time", LocalTime},
+                {"endpoint", endpoint},
                 {"method", HttpMethod},
-                {"status", HttpStatus.Status},
-                {"description", HttpStatus.Description},
+                {"status", StatusCode},
+                {"description", StatusDescription},
                 {"content-type", ContentType},
                 {"duration", ExecutionTime},
                 {"id", Id.ToString()},
                 {"hash", Hash}
             };
-        } 
+        }
 
         public virtual void AddLog(double requestTimeInMilliseconds, object log)
         {
             _steps.Add(new RequestStep(requestTimeInMilliseconds, log));
         }
 
-        public HttpStatus HttpStatus
-        {
-            get
-            {
-                HttpStatusReport report = null;
-
-                var log = _steps.LastOrDefault(x => x.Log is HttpStatusReport);
-                if (log != null)
-                {
-                    report = log.Log.As<HttpStatusReport>();
-                }
-                
-                return new HttpStatus(report, Failed);
-            }
-        }
 
         public string LocalTime
         {
-            get
-            {
-                return Time.ToLocalTime().ToLongTimeString();
-            }
+            get { return Time.ToLocalTime().ToLongTimeString(); }
         }
 
         public string ContentType
@@ -84,16 +72,21 @@ namespace FubuMVC.Core.Diagnostics.Runtime
                 }
 
                 var header = ResponseHeaders
-                    .FirstOrDefault(x => x.Name.Equals(HttpResponseHeaders.ContentType, StringComparison.InvariantCultureIgnoreCase));
+                    .FirstOrDefault(
+                        x => x.Name.Equals(HttpResponseHeaders.ContentType, StringComparison.InvariantCultureIgnoreCase));
 
                 return header == null ? "Unknown" : header.Value;
-
             }
         }
 
         public bool Failed { get; set; }
 
         public IEnumerable<Header> ResponseHeaders { get; set; }
+        public int StatusCode { get; set; }
+        public string StatusDescription { get; set; }
+        public IEnumerable<Header> RequestHeaders { get; set; }
+        public NameValueCollection FormData { get; set; }
+        public NameValueCollection QueryString { get; set; }
 
         public IEnumerable<RequestStep> AllSteps()
         {
@@ -130,4 +123,6 @@ namespace FubuMVC.Core.Diagnostics.Runtime
             return string.Format("Id: {0}", Id);
         }
     }
+
+
 }

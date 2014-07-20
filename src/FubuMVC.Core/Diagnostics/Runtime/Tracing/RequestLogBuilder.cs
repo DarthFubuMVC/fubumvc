@@ -1,8 +1,7 @@
-using System;
-using FubuCore.Binding;
-using FubuCore.Binding.Values;
+using System.Linq;
 using FubuCore.Dates;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Diagnostics.Runtime.Tracing
@@ -12,28 +11,28 @@ namespace FubuMVC.Core.Diagnostics.Runtime.Tracing
         private readonly ISystemTime _systemTime;
         private readonly IHttpRequest _request;
         private readonly ICurrentChain _currentChain;
-        private readonly IRequestData _requestData;
         private readonly DiagnosticsSettings _settings;
 
-        public RequestLogBuilder(ISystemTime systemTime, IHttpRequest request, ICurrentChain currentChain, IRequestData requestData, DiagnosticsSettings settings)
+        public RequestLogBuilder(ISystemTime systemTime, IHttpRequest request, ICurrentChain currentChain,
+            DiagnosticsSettings settings)
         {
             _systemTime = systemTime;
             _request = request;
             _currentChain = currentChain;
-            _requestData = requestData;
             _settings = settings;
         }
 
         public RequestLog BuildForCurrentRequest()
         {
-            var log = new RequestLog{
-                Hash    = _currentChain.OriginatingChain.GetHashCode(),
-                Time = _systemTime.UtcNow()
+            var log = new RequestLog
+            {
+                Hash = _currentChain.OriginatingChain.GetHashCode(),
+                Time = _systemTime.UtcNow(),
             };
 
             if (_settings.TraceLevel == TraceLevel.Verbose)
             {
-                // Get the request headers here
+                heavyTrace(log);
             }
 
             if (_currentChain.OriginatingChain is RoutedChain)
@@ -48,11 +47,19 @@ namespace FubuMVC.Core.Diagnostics.Runtime.Tracing
             }
             else
             {
-                log.Endpoint =_currentChain.OriginatingChain.Title();
+                log.Endpoint = _currentChain.OriginatingChain.Title();
                 log.HttpMethod = "n/a";
             }
 
             return log;
+        }
+
+        private void heavyTrace(RequestLog log)
+        {
+            log.RequestHeaders = _request.AllHeaderKeys().SelectMany(x => _request.GetHeader(x).Select(_ => new Header(x, _))).ToArray();
+
+            log.FormData = _request.Form;
+            log.QueryString = _request.QueryString;
         }
     }
 }

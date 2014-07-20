@@ -122,11 +122,8 @@
     <Compile Include="Diagnostics\Runtime\BehaviorStart.cs" />
     <Compile Include="Diagnostics\Runtime\BehaviorTracerNode.cs" />
     <Compile Include="Diagnostics\Runtime\BindingHistory.cs" />
-    <Compile Include="Diagnostics\Runtime\DebugDetector.cs" />
     <Compile Include="Diagnostics\Runtime\DiagnosticNode.cs" />
     <Compile Include="Diagnostics\Runtime\FubuDiagnosticsAttribute.cs" />
-    <Compile Include="Diagnostics\Runtime\HttpStatus.cs" />
-    <Compile Include="Diagnostics\Runtime\IDebugDetector.cs" />
     <Compile Include="Diagnostics\Runtime\IRequestHistoryCache.cs" />
     <Compile Include="Diagnostics\Runtime\IRequestTraceObserver.cs" />
     <Compile Include="Diagnostics\Runtime\ModelBindingLog.cs" />
@@ -335,7 +332,6 @@
     <Compile Include="Runtime\Handlers\SessionlessSynchronousHttpHandlerSource.cs" />
     <Compile Include="Runtime\Handlers\SynchronousFubuHttpHandler.cs" />
     <Compile Include="Runtime\Handlers\SynchronousHttpHandlerSource.cs" />
-    <Compile Include="Runtime\Logging\ExceptionReport.cs" />
     <Compile Include="Runtime\Logging\FileOutputReport.cs" />
     <Compile Include="Runtime\Logging\FinishedRecordingOutput.cs" />
     <Compile Include="Runtime\Logging\HttpStatusReport.cs" />

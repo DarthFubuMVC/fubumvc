@@ -1,26 +1,20 @@
 using System;
+using FubuCore.Logging;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Logging;
-using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Diagnostics.Runtime.Tracing
 {
     public class DiagnosticBehavior : WrappingBehavior
     {
-        private readonly IDebugDetector _detector;
         private readonly IRequestTrace _trace;
-        private readonly IOutputWriter _writer;
         private readonly IExceptionHandlingObserver _exceptionObserver;
-        private readonly IUrlRegistry _urls;
 
-        public DiagnosticBehavior(IRequestTrace trace, IDebugDetector detector, IOutputWriter writer, IExceptionHandlingObserver exceptionObserver, IUrlRegistry urls)
+        public DiagnosticBehavior(IRequestTrace trace, IExceptionHandlingObserver exceptionObserver)
         {
             _trace = trace;
-            _detector = detector;
-            _writer = writer;
             _exceptionObserver = exceptionObserver;
-            _urls = urls;
         }
 
         protected override void invoke(Action action)
@@ -46,11 +40,6 @@ namespace FubuMVC.Core.Diagnostics.Runtime.Tracing
             finally
             {
                 _trace.MarkFinished();
-
-                if (_detector.IsDebugCall())
-                {
-                    _writer.RedirectToUrl(_urls.UrlFor(_trace.Current));
-                }
             }
         }
     }

@@ -8,8 +8,6 @@ namespace FubuMVC.Core.Diagnostics.Runtime
     {
         public TracingServices()
         {
-            ReplaceService<IDebugDetector, DebugDetector>();
-
             // does no harm
             ReplaceService<IBindingHistory, BindingHistory>();
             SetServiceIfNone<IRequestHistoryCache, RequestHistoryCache>();

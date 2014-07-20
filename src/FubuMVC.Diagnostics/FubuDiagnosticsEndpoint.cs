@@ -14,6 +14,7 @@ using HtmlTags;
 
 namespace FubuMVC.Diagnostics
 {
+    [Tag("Diagnostics")]
     public class FubuDiagnosticsEndpoint
     {
         private readonly JavascriptRouteWriter _routeWriter;

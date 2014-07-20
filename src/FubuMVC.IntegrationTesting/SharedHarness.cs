@@ -1,5 +1,6 @@
 using System;
 using System.Linq.Expressions;
+using System.Threading;
 using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 using FubuCore;
 using FubuMVC.Core;
@@ -8,10 +9,12 @@ using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Scenarios;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Katana;
 using FubuMVC.StructureMap;
 using NUnit.Framework;
 using StructureMap;
+using Process = System.Diagnostics.Process;
 
 namespace FubuMVC.IntegrationTesting
 {
@@ -19,6 +22,8 @@ namespace FubuMVC.IntegrationTesting
     {
         private static readonly Lazy<InMemoryHost> _host =
             new Lazy<InMemoryHost>(() => { return FubuApplication.DefaultPolicies().StructureMap().RunInMemory(); });
+
+        public static ManualResetEvent Finish = new ManualResetEvent(false);
 
         public static void Scenario(Action<Scenario> configuration)
         {
@@ -148,5 +153,15 @@ namespace FubuMVC.IntegrationTesting
 
     public class HarnessRegistry : FubuRegistry
     {
+    }
+
+    public class QuitEndpoint
+    {
+        public string get_quit()
+        {
+            TestHost.Finish.Set();
+
+            return "Quitting";
+        }
     }
 }

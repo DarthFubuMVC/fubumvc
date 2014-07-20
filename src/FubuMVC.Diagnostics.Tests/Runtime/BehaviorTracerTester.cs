@@ -114,7 +114,6 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
             exception = new NotImplementedException();
             inner = MockFor<IActionBehavior>();
             inner.Expect(x => x.Invoke()).Throw(exception);
-            MockFor<IDebugDetector>().Stub(x => x.IsDebugCall()).Return(true);
 
             ClassUnderTest.Inner = inner;
 
@@ -170,7 +169,6 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
             exception = new NotImplementedException();
             inner = MockFor<IActionBehavior>();
             inner.Expect(x => x.Invoke()).Throw(exception);
-            MockFor<IDebugDetector>().Stub(x => x.IsDebugCall()).Return(false);
 
             ClassUnderTest.Inner = inner;
         }
@@ -210,62 +208,6 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
         }
     }
 
-    [TestFixture]
-    public class when_tracing_through_a_behavior_in_partial_invoke_that_throws_an_exception_during_a_debug_request :
-        InteractionContext<BehaviorTracer>
-    {
-        private IActionBehavior inner;
-        private NotImplementedException exception;
-        private RecordingRequestTrace logs;
-        private BehaviorCorrelation correlation;
-
-        protected override void beforeEach()
-        {
-            logs = new RecordingRequestTrace();
-            Services.Inject<IRequestTrace>(logs);
-
-            correlation = new BehaviorCorrelation(new FakeNode());
-            Services.Inject(correlation);
-            Services.Inject<IExceptionHandlingObserver>(new ExceptionHandlingObserver());
-
-            exception = new NotImplementedException();
-            inner = MockFor<IActionBehavior>();
-            inner.Expect(x => x.InvokePartial()).Throw(exception);
-            MockFor<IDebugDetector>().Stub(x => x.IsDebugCall()).Return(true);
-
-            ClassUnderTest.Inner = inner;
-
-            Exception<NotImplementedException>.ShouldBeThrownBy(() =>
-            {
-                ClassUnderTest.InvokePartial();
-            });
-        }
-
-        [Test]
-        public void should_invoke_the_inner_behavior()
-        {
-            inner.AssertWasCalled(x => x.InvokePartial());
-        }
-
-        [Test]
-        public void should_mark_the_debug_report_with_the_exception()
-        {
-            logs.Logs.OfType<BehaviorFinish>().Single()
-                .Exception.ExceptionType.ShouldEqual(exception.GetType().Name);
-        }
-
-        [Test]
-        public void should_mark_the_inner_behavior_as_complete_with_the_debug_report()
-        {
-            logs.Logs.Last().ShouldEqual(new BehaviorFinish(correlation));
-        }
-
-        [Test]
-        public void should_register_a_new_behavior_running()
-        {
-            logs.Logs.First().ShouldEqual(new BehaviorStart(correlation));
-        }
-    }
 
     [TestFixture]
     public class when_tracing_through_a_behavior_in_partial_invoke_that_throws_an_exception_during_a_non_debug_request :
@@ -286,7 +228,6 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
             exception = new NotImplementedException();
             inner = MockFor<IActionBehavior>();
             inner.Expect(x => x.InvokePartial()).Throw(exception);
-            MockFor<IDebugDetector>().Stub(x => x.IsDebugCall()).Return(false);
 
             ClassUnderTest.Inner = inner;
         }

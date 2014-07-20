@@ -1,4 +1,5 @@
 using System;
+using FubuCore.Logging;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Diagnostics.Runtime.Tracing;
@@ -70,31 +71,5 @@ namespace FubuMVC.Diagnostics.Tests.Runtime.Tracing
             theInnerBehavior.AssertWasCalled(x => x.InvokePartial());
         }
 
-        [Test]
-        public void when_invoking_and_not_in_debug_mode_do_not_write_the_debug_call()
-        {
-            MockFor<IDebugDetector>().Stub(x => x.IsDebugCall()).Return(false);
-
-            ClassUnderTest.Invoke();
-
-            MockFor<IOutputWriter>().AssertWasNotCalled(x => x.RedirectToUrl(null), x => x.IgnoreArguments());
-        }
-
-        [Test]
-        public void when_invoking_in_debug_mode_call_the_debug_call_handler_to_render_the_debug_screen()
-        {
-            MockFor<IDebugDetector>().Stub(x => x.IsDebugCall()).Return(true);
-
-            var log = new RequestLog();
-
-            var theSessionUrl = theUrls.UrlFor(log);
-            MockFor<IRequestTrace>().Stub(x => x.Current)
-                .Return(log);
-
-            ClassUnderTest.Invoke();
-
-            MockFor<IOutputWriter>().AssertWasCalled(x => x.RedirectToUrl(theSessionUrl));
-            
-        }
     }
 }

@@ -4,7 +4,11 @@ using Bottles.Services.Remote;
 using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core;
+using FubuMVC.Diagnostics;
 using FubuMVC.Katana;
+using FubuMVC.Spark.SparkModel;
+using HtmlTags;
+using Spark;
 
 namespace Fubu.Running
 {
@@ -27,8 +31,12 @@ namespace Fubu.Running
                 x.RequireAssemblyContainingType<Owin.IAppBuilder>();
                 x.RequireAssemblyContainingType<IActivator>(); // Bottles
                 x.RequireAssemblyContainingType<IModelBinder>(); // FubuCore
-                //x.RequireAssemblyContainingType<FubuApplication>(); // FubuMVC.Core
+                x.RequireAssemblyContainingType<FubuApplication>(AssemblyCopyMode.SemVerCompatible); // FubuMVC.Core
+                x.RequireAssemblyContainingType<HtmlTag>(AssemblyCopyMode.SemVerCompatible); // HtmlTags
                 x.RequireAssemblyContainingType<FubuCsProjFile.CodeFile>(); // FubuCsProjFile just to keep it from whining
+                x.RequireAssemblyContainingType<DiagnosticChainsSource>(AssemblyCopyMode.SemVerCompatible); 
+                x.RequireAssemblyContainingType<SparkViewEngine>(AssemblyCopyMode.SemVerCompatible);
+                x.RequireAssemblyContainingType<SparkTemplate>(AssemblyCopyMode.SemVerCompatible);
 
                 x.RequireAssembly("Microsoft.Owin.Hosting");
                 x.RequireAssembly("Microsoft.Owin.Host.HttpListener");
