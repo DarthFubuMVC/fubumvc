@@ -13,6 +13,7 @@ using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.Urls;
+using FubuMVC.Core.View;
 
 namespace FubuMVC.Core.Registration.Nodes
 {
@@ -351,9 +352,19 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public virtual string Title()
         {
+            var title = "Partial: ";
+
+
             if (Calls.Any())
             {
-                return Calls.Select(x => x.Description).Join(", ");
+                title += Calls.Select(x => x.Description).Join(", ");
+                return title;
+            }
+
+            if (Tags.Contains("ActionlessView"))
+            {
+                var views = Output.Media().Select(x => x.Writer).OfType<IViewWriter>().Select(x => Description.For(x.View).Title);
+                return "View(s): " + views.Join("");
             }
 
             if (HasOutput() && Output.Media().Any())

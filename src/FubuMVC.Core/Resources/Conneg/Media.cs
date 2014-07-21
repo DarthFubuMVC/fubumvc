@@ -25,6 +25,7 @@ namespace FubuMVC.Core.Resources.Conneg
         void DescribesItself.Describe(Description description)
         {
             description.Title = "Media Writer for " + typeof (T).Name;
+            description.ShortDescription = null;
             description.Properties["Mimetypes"] = Mimetypes.Join(", ");
             description.Children["Writer"] = Description.For(_writer);
             description.Children["Condition"] = Description.For(_condition);

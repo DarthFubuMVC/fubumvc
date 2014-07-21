@@ -26,6 +26,7 @@ namespace FubuMVC.Core.Resources.Conneg
         public void Describe(Description description)
         {
             description.Title = "Read {0} by model binding against the request data".ToFormat(typeof (T).Name);
+            description.ShortDescription = "Read {0} by model binding against the request data".ToFormat(typeof(T).Name);
         }
 
         public Type ModelType

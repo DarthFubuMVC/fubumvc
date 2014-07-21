@@ -78,9 +78,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".package-manifest" />
-    <None Include="Chrome\Chrome.spark">
-      <SubType>Designer</SubType>
-    </None>
     <Content Include="Content\Images\arrow-turn-000-left-icon.png" />
     <Content Include="Content\Images\block.png" />
     <Content Include="Content\Images\console-line.png" />
@@ -110,9 +107,6 @@
     <Content Include="diagnostics.asset.config">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Endpoints\Endpoints.spark">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Packaging\Packaging.spark" />
     <Content Include="diagnostics\bootstrap.min.css" />
     <Content Include="diagnostics\core-diagnostics.js" />
@@ -125,9 +119,6 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="Shared\_global.spark">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Shared\Application.spark">
       <SubType>Designer</SubType>
     </None>
     <Content Include="Shared\bindings.xml">
@@ -165,7 +156,6 @@
     <Compile Include="Packaging\PackageDiagnosticsRequestModel.cs" />
     <Compile Include="Packaging\PackageLogFubuDiagnostics.cs" />
     <Compile Include="RequestsFubuDiagnostics.cs" />
-    <Compile Include="Shared\Tags\ControlGroupDivTag.cs" />
     <Compile Include="Shared\TypeEndpoint.cs" />
     <Compile Include="Visualization\BehaviorNodeViewModel.cs" />
     <Compile Include="Visualization\DescriptionVisualizationPolicy.cs" />

@@ -28,6 +28,7 @@ namespace FubuMVC.Core.Resources.Conneg
         public void Describe(Description description)
         {
             var formatterDescription = Description.For(_formatter);
+            description.ShortDescription = null;
             description.Title = "Write with formatter '{0}'".ToFormat(formatterDescription.Title);
             description.Children["Formatter"] = formatterDescription;
         }

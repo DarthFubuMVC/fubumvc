@@ -43,6 +43,7 @@ namespace FubuMVC.Core.View.Attachment
         private BehaviorChain buildChainForView(IViewToken view)
         {
             BehaviorChain chain = null;
+            
 
             if (view.ViewModel.HasAttribute<UrlPatternAttribute>())
             {
@@ -54,6 +55,7 @@ namespace FubuMVC.Core.View.Attachment
                 chain = BehaviorChain.ForResource(view.ViewModel);
             }
 
+            chain.Tags.Add("ActionlessView");
             chain.UrlCategory.Category = Categories.VIEW;
             return chain;
         }

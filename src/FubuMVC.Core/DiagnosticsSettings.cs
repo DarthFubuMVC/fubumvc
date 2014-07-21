@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using FubuMVC.Core.Assets.JavascriptRouting;
-using FubuMVC.Core.Diagnostics;
+﻿using System.Collections.Generic;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Security;
 
 namespace FubuMVC.Core
 {
     [ApplicationLevel]
-    public class DiagnosticsSettings 
+    public class DiagnosticsSettings
     {
         private TraceLevel? _traceLevel;
 
@@ -23,7 +17,6 @@ namespace FubuMVC.Core
             {
                 _traceLevel = TraceLevel.Verbose;
             }
-
         }
 
         public readonly IList<IAuthorizationPolicy> AuthorizationRights = new List<IAuthorizationPolicy>();
@@ -35,7 +28,7 @@ namespace FubuMVC.Core
 
         public int MaxRequests { get; set; }
 
-        public TraceLevel TraceLevel    
+        public TraceLevel TraceLevel
         {
             get { return _traceLevel ?? TraceLevel.None; }
             set { _traceLevel = value; }
@@ -48,9 +41,7 @@ namespace FubuMVC.Core
                 _traceLevel = level;
             }
         }
-
     }
-
 
 
     public enum TraceLevel
@@ -58,6 +49,5 @@ namespace FubuMVC.Core
         Verbose,
         Production,
         None,
-
     }
 }

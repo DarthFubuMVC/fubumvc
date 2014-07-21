@@ -69,6 +69,8 @@ namespace FubuMVC.Core.View
         public void Describe(Description description)
         {
             description.Title = Description.For(_view).Title;
+            description.ShortDescription = null;
+            description.AddChild("View", _view);
         }
     }
 

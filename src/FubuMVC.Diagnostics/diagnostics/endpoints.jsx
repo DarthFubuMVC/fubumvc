@@ -9,7 +9,6 @@ var EndpointRow = React.createClass({
 				<td><a href={hash}>Details</a></td>
 				<td>{this.props.endpoint.title}</td>
 				<td>{this.props.endpoint.actions}</td>
-				<td>{this.props.endpoint.constraints}</td>
 			</tr>
 		);
 	}
@@ -30,7 +29,6 @@ var EndpointTable = React.createClass({
 						<th>View Details</th>
 						<th>Description</th>
 						<th>Action(s)</th>
-						<th>Http Method(s)</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -180,7 +178,6 @@ var EndpointDetails = React.createClass({
 	render: function(){
 		var detailCells = [
 			new Cell('Route', 'route'),
-			new Cell('Http Verbs', 'constraints'),
 			new Cell('Url Category', 'category'),
 			new Cell('Origin', 'origin'),
 			new TypeCell('Input Type', 'input'),

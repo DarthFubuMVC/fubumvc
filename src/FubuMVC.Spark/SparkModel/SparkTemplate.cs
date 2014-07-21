@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Bottles;
 using Bottles.Diagnostics;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Rendering;
@@ -14,7 +16,7 @@ namespace FubuMVC.Spark.SparkModel
 {
     public interface ISparkTemplate : ITemplateFile {}
 
-    public class SparkTemplate : Template, ISparkTemplate
+    public class SparkTemplate : Template, ISparkTemplate, DescribesItself
     {
         private static readonly ChunkLoader Loader = new ChunkLoader();
         private readonly Lazy<SparkViewDescriptor> _full;
@@ -97,6 +99,11 @@ namespace FubuMVC.Spark.SparkModel
         public override string ToString()
         {
             return "Spark Template File: " + FilePath;
+        }
+
+        public void Describe(Description description)
+        {
+            description.Title = RelativePath();
         }
 
         public void AddBinding(ISparkTemplate template)

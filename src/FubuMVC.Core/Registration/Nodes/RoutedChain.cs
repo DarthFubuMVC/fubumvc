@@ -146,8 +146,15 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public override string Title()
         {
-            var title = GetRoutePattern();
-            return title.IsEmpty() ? "(home)" : title;
+            var url = GetRoutePattern();
+            if (url.IsEmpty()) return "(home)";
+
+            if (Route.AllowedHttpMethods.Any())
+            {
+                return Route.AllowedHttpMethods.Select(x => x.ToUpper()).Join("|") + ": " + url;
+            }
+            
+            return url;
         }
     }
 }

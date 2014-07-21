@@ -160,7 +160,7 @@ namespace FubuMVC.Core.Resources.Conneg
 
         void DescribesItself.Describe(Description description)
         {
-            description.Title = "OutputNode";
+            description.Title = "Conneg Output";
             description.ShortDescription = "Render the output for resource " + ResourceType.Name;
 
             description.AddList("Media", _media);

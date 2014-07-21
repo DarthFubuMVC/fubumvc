@@ -34,6 +34,7 @@ namespace FubuMVC.Core.Resources.Conneg
         public void Describe(Description description)
         {
             var formatter = Description.For(_formatter);
+            description.ShortDescription = null;
             description.Title = "Reading with " + formatter.Title;
             description.Children["Formatter"] = formatter;
         }

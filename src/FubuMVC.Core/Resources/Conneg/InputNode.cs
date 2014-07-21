@@ -173,6 +173,7 @@ namespace FubuMVC.Core.Resources.Conneg
 
         void DescribesItself.Describe(Description description)
         {
+            description.Title = "Conneg Input";
             description.ShortDescription =
                 "Performs content negotiation and model resolution from the request for the type " + InputType().Name;
 
