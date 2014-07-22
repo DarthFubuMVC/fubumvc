@@ -14,6 +14,25 @@ function FubuDiagnosticsView(view, section){
 		
 	}
 	
+	if (view.applyRoutes == null){
+		view.applyRoutes = function(router, section){
+			var key = section.key + '/' + view.key;
+		
+			router.route(view.url, key, function(){
+				var params = {};
+				if (view.route){
+					for (var i = 0; i < view.route.params.length; i++){
+						params[view.route.params[i]] = arguments[i];
+					}
+				}
+
+				FubuDiagnostics.showScreen(view.screen, view, section, params);
+			});
+		}
+	}
+	
+
+	
 	view.anchor = '#' + view.url;
 	
 	view.hasParameters = function(){
@@ -47,18 +66,7 @@ function FubuDiagnosticsSection(section){
 
 			var section = this;
 			_.each(this.views, function(view){
-				var key = section.key + '/' + view.key;
-
-				router.route(view.url, key, function(){
-					var params = {};
-					if (view.route){
-						for (var i = 0; i < view.route.params.length; i++){
-							params[view.route.params[i]] = arguments[i];
-						}
-					}
-
-					FubuDiagnostics.showScreen(view.screen, view, section, params);
-				});
+				view.applyRoutes(router, section);
 			});
 		
 			router.route(this.key, this.key, function(){
