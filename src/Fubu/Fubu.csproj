@@ -110,6 +110,7 @@
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="EditCommand.cs" />
+    <Compile Include="ExplodeCommand.cs" />
     <Compile Include="Generation\AddCommand.cs" />
     <Compile Include="Generation\EnhanceCommand.cs" />
     <Compile Include="Generation\BundlerStep.cs" />
