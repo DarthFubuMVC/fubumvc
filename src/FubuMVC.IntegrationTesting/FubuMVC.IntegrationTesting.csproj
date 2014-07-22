@@ -141,6 +141,7 @@
     <Compile Include="Http\partial_invocations.cs" />
     <Compile Include="Http\reading_and_writing_http_headers_and_responses_with_OWIN.cs" />
     <Compile Include="Http\compression_testing.cs" />
+    <Compile Include="map_files_are_whitelisted.cs" />
     <Compile Include="Owin\binding_against_form_data.cs" />
     <Compile Include="Owin\binding_against_querystring_values.cs" />
     <Compile Include="Owin\binding_against_request_cookies.cs" />
@@ -379,6 +380,7 @@
     <Content Include="Tests\Packaging\Environment\Environment Runner captures errors from the Environment setup.xml" />
     <Content Include="Tests\Packaging\Environment\Execute Environment Happy Path.xml" />
     <Content Include="Tests\Packaging\Environment\Logging installer failures.xml" />
+    <None Include="test.map" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

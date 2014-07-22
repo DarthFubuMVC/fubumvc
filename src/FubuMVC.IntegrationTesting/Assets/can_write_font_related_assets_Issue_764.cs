@@ -49,5 +49,7 @@ namespace FubuMVC.IntegrationTesting.Assets
                 _.ContentTypeShouldBe("application/octet-stream");
             });
         }
+
+
     }
 }
