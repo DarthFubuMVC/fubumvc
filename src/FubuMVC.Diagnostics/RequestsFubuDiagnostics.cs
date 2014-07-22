@@ -4,15 +4,16 @@ using System.Linq;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuCore.Logging;
+using FubuCore.Util;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Diagnostics.Visualization;
 using HtmlTags;
-using StructureMap.Util;
 
-namespace FubuMVC.Diagnostics.Requests
+
+namespace FubuMVC.Diagnostics
 {
     public class RequestsFubuDiagnostics
     {
@@ -76,7 +77,7 @@ namespace FubuMVC.Diagnostics.Requests
         private IEnumerable<LogItem> buildLogs(RequestLog log)
         {
             var stack = new Stack<BehaviorNode>();
-            var titles = new LightweightCache<BehaviorNode, string>(node => Description.For(node).Title);
+            var titles = new Cache<BehaviorNode, string>(node => Description.For(node).Title);
 
             var steps = log.AllSteps().ToArray();
             foreach (var step in steps)
