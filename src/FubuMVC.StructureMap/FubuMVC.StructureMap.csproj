@@ -67,6 +67,14 @@
     <Compile Include="AppSettingProviderRegistry.cs" />
     <Compile Include="BootstrappingExtensions.cs" />
     <Compile Include="ContainerExtensions.cs" />
+    <Compile Include="Diagnostics\AssemblyDTO.cs" />
+    <Compile Include="Diagnostics\BuildPlanRequest.cs" />
+    <Compile Include="Diagnostics\InstanceDTO.cs" />
+    <Compile Include="Diagnostics\Namespace.cs" />
+    <Compile Include="Diagnostics\PluginTypeDTO.cs" />
+    <Compile Include="Diagnostics\SearchOption.cs" />
+    <Compile Include="Diagnostics\SearchOptions.cs" />
+    <Compile Include="Diagnostics\StructureMapExtensions.cs" />
     <Compile Include="IContainerExtension.cs" />
     <Compile Include="NestedStructureMapContainerBehavior.cs" />
     <Compile Include="ObjectDefInstance.cs" />
@@ -74,7 +82,7 @@
     <Compile Include="Settings\SettingPolicy.cs" />
     <Compile Include="SettingsScanner.cs" />
     <Compile Include="StructureMapContainerFacility.cs" />
-    <Compile Include="StructureMapFubuDiagnostics.cs" />
+    <Compile Include="Diagnostics\StructureMapFubuDiagnostics.cs" />
     <Compile Include="StructureMapFubuRegistry.cs" />
     <Compile Include="StructureMapServiceLocator.cs" />
   </ItemGroup>
@@ -92,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="fubu-diagnostics\structuremap.css" />
+    <Content Include="fubu-diagnostics\structuremap.html" />
     <Content Include="fubu-diagnostics\structuremap.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -5,6 +5,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.StructureMap;
+using FubuMVC.StructureMap.Diagnostics;
 using FubuTestingSupport;
 using NUnit.Framework;
 

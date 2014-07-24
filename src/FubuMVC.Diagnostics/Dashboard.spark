@@ -132,6 +132,7 @@
     <Script src="diagnostics/bower_components/bootstrap/dist/js/bootstrap.min.js"/>
     <Script src="diagnostics/bower_components/react/react.min.js" />
     <Script src="diagnostics/bower_components/react/JSXTransformer.js" />
+    <Script src="diagnostics/typeahead.bundle.min.js" />
     <Script src="diagnostics/FubuDiagnosticsSection.js"/>
     <Script src="diagnostics/screens.js"/>
     <Script src="diagnostics/fubu-diagnostics.js"/>

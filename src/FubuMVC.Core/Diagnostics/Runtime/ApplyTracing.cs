@@ -12,8 +12,6 @@ namespace FubuMVC.Core.Diagnostics.Runtime
     [Description("Applies the runtime tracing behaviors to each chain")]
     public class ApplyTracing : IConfigurationAction
     {
-        private static readonly Assembly DiagnosticAssembly = typeof(ApplyTracing).Assembly;
-
         public void Configure(BehaviorGraph graph)
         {
             // Do nothing
@@ -21,7 +19,7 @@ namespace FubuMVC.Core.Diagnostics.Runtime
 
             new TracingServices().As<IServiceRegistration>().Apply(graph.Services);
 
-            foreach (BehaviorChain chain in graph.Behaviors.Where(ShouldApply))
+            foreach (BehaviorChain chain in graph.Behaviors.Where(ShouldApply).ToArray())
             {
                 ApplyToChain(chain);
             }

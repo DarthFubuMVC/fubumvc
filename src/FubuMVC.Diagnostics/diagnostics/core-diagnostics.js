@@ -30,12 +30,7 @@ function TextScreen(text){
 	}
 }
 
-FubuDiagnostics.addSection({
-    title: 'StructureMap',
-    description: 'Insight into the configuration and state of the application container',
-    key: 'structuremap',
-	screen: new TextScreen('StructureMap!')
-});
+
 
 
 
