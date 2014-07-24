@@ -1,7 +1,7 @@
 ﻿/** @jsx React.DOM */
 var AssemblySummaryItem = React.createClass({
 	render: function(){
-		var url = '#structuremap/assembly/' + this.props.name;
+		var url = '#structuremap/search-results/Assembly/' + this.props.name;
 
 		return (
 		  <li className="list-group-item">
@@ -14,7 +14,7 @@ var AssemblySummaryItem = React.createClass({
 
 var NamespaceSummaryItem = React.createClass({
 	render: function(){
-	  var url = '#structuremap/namespace/' + this.props.name;
+	  var url = '#structuremap/search-results/Namespace/' + this.props.name;
 	
 	  return (
 		  <li className="list-group-item">
@@ -85,7 +85,7 @@ var SearchBox = React.createClass({
 		});
 		
 		$(element).on('typeahead:selected', function(jquery, option){
-			var url = 'structuremap/' + option.type + '/' + option.value;
+			var url = 'structuremap/search-results/' + option.type + '/' + option.value;
 			FubuDiagnostics.navigateTo(url);
 		});
 	},
@@ -122,6 +122,8 @@ var Summary = React.createClass({
 
 			<SearchBox />
 			
+			<hr />
+			
 			<ul className="list-group">
 				{items}
 			</ul>
@@ -131,13 +133,39 @@ var Summary = React.createClass({
 	}
 });
 
+var SearchResults = React.createClass({
+	render: function(){
+		return (
+			<div>These are the structuremap results</div>
+		);
+	}
+});
+
+
 FubuDiagnostics.addSection({
     title: 'StructureMap',
     description: 'Insight into the configuration and state of the application container',
     key: 'structuremap',
+
+})
+.add({
+	title: 'Summary',
+	description: 'Assemblies and Namespaces in the Container',
+	key: 'summary',
 	screen: new ReactScreen({
 		component: Summary,
 		route: 'StructureMap:summary'
+	})
+})
+.add({
+	title: 'StructureMap Search Results',
+	description: "Interactive version of StructureMap's WhatDoIHave()",
+	key: 'search-results',
+	route: 'StructureMap:search_Type_Value',
+	screen: new ReactScreen({
+		component: SearchResults,
+		route: 'StructureMap:search_Type_Value',
+		options: {}
 	})
 });
 

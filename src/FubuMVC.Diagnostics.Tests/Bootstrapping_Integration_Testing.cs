@@ -34,7 +34,7 @@ namespace FubuMVC.Diagnostics.Tests
         [Test]
         public void find_the_routes_and_chains_from_bottles()
         {
-            runtime.Behaviors.BehaviorFor<StructureMapFubuDiagnostics>(x => x.get_plugin_types())
+            runtime.Behaviors.BehaviorFor<StructureMapFubuDiagnostics>(x => x.get_search_options())
                 .ShouldNotBeNull();
 
             runtime.Behaviors.BehaviorFor<ModelBindingFubuDiagnostics>(x => x.get_binding_all())

@@ -38,11 +38,22 @@ namespace FubuMVC.StructureMap.Diagnostics
 
                 if (pluginType.Fallback != null) yield return pluginType.Fallback;
             }
-        } 
+        }
 
-        public string get_build_plan__PluginType_Id(BuildPlanRequest request)
+        public string get_search_Type_Value(StructureMapSearch search)
         {
-            return "whatever";
+            return "Type: {0}, Value: {1}".ToFormat(search.Type, search.Value);
+        }
+
+        public SearchResults get_build_plan__PluginType_Id(BuildPlanRequest request)
+        {
+            var results = new SearchResults
+            {
+                pluginTypes = new PluginTypeDTO[0]
+            };
+
+
+            return results;
         }
 
         public SearchOptions get_summary()
@@ -94,11 +105,16 @@ namespace FubuMVC.StructureMap.Diagnostics
             }
         } 
 
-        public IEnumerable<PluginTypeDTO> get_plugin_types()
-        {
-            throw new NotImplementedException();
-        } 
+    }
 
+    public class SearchResults
+    {
+        public PluginTypeDTO[] pluginTypes { get; set; }
+    }
 
+    public class StructureMapSearch
+    {
+        public string Type { get; set; }
+        public string Value { get; set; }
     }
 }
