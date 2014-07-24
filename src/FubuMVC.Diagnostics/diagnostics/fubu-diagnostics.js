@@ -50,6 +50,9 @@ var FubuDiagnostics = {
 		this.navBar.setProps(this);
 	},
 	
+	navigateTo: function(hash){
+		this.router.navigate(hash, {trigger: true, replace: true});
+	},
 
     start: function(navBar) {
 		this.navBar = navBar;
