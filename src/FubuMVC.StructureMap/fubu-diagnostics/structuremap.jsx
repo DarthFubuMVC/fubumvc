@@ -97,7 +97,7 @@ var SearchBox = React.createClass({
 
 	render: function(){
 		return (
-			<input type="search" name="search" ref="input" className="form-control typeahead" placeholder="Search the application container" />
+			<input type="search" name="search" ref="input" className="form-control typeahead structuremap-search" placeholder="Search the application container" />
 		);
 	}
 });
@@ -139,10 +139,11 @@ var Summary = React.createClass({
 var InstanceRow = React.createClass({
 	render: function(){
 		var url = '#structuremap/buildplan/' + this.props.key;
+		var familyUrl = '#structuremap/search-results/Plugin-Type/' + this.props.pluginType;
 	
 		return (
 			<tr>
-				<td>{this.props.pluginType}</td>
+				<td><a href={familyUrl}>{this.props.pluginType}</a></td>
 				<td><a href={url}>{this.props.name}</a></td>
 				<td>{this.props.lifecycle}</td>
 				<td>{this.props.returnedType}</td>

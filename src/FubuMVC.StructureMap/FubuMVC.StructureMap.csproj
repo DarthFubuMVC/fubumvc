@@ -100,7 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="fubu-diagnostics\structuremap.css" />
-    <Content Include="fubu-diagnostics\structuremap.html" />
+    <Content Include="fubu-diagnostics\summary.html" />
     <Content Include="fubu-diagnostics\structuremap.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

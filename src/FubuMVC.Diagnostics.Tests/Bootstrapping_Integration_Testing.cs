@@ -57,7 +57,7 @@ namespace FubuMVC.Diagnostics.Tests
             var routes = runtime.Factory.Get<DiagnosticJavascriptRoutes>();
             var names = routes.Routes().Select(x => x.Name).ToArray();
 
-            names.ShouldContain("StructureMap:plugin_types");
+            names.ShouldContain("StructureMap:summary");
             names.ShouldContain("Chain:chain_details_Hash");
             names.ShouldContain("Requests:requests");
         }

@@ -110,7 +110,7 @@ namespace FubuMVC.StructureMap.Diagnostics
         {
             var options = instances().ToArray();
             var pluginTypes = options.Select(x => x.PluginType).Distinct().ToArray();
-            var returnedTypes = options.Select(x => x.ReturnedType).Where(x => x != typeof (object)).ToArray();
+            var returnedTypes = options.Select(x => x.ReturnedType).Distinct().Where(x => x != typeof (object)).ToArray();
 
             var assemblies =
                 pluginTypes.Select(x => x.Assembly).Union(returnedTypes.Select(x => x.Assembly)).Distinct().ToArray();
