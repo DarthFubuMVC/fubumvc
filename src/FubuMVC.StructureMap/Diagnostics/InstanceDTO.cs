@@ -24,6 +24,8 @@ namespace FubuMVC.StructureMap.Diagnostics
             {
                 name = "(guid)";
             }
+
+            key = "{0}/{1}".ToFormat(model.PluginType.GetFullName(), model.Name);
         }
 
         public string name { get; set; }
@@ -32,5 +34,6 @@ namespace FubuMVC.StructureMap.Diagnostics
         public string description { get; set; }
         public bool hasBeenCreated { get; set; }
         public string pluginType { get; set; }
+        public string key { get; set; }
     }
 }

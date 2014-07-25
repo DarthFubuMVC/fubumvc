@@ -138,7 +138,7 @@ var Summary = React.createClass({
 
 var InstanceRow = React.createClass({
 	render: function(){
-		var url = '#structuremap/buildplan/' + this.props.pluginType + '/' + this.props.name;
+		var url = '#structuremap/buildplan/' + this.props.key;
 	
 		return (
 			<tr>
@@ -276,4 +276,11 @@ FubuDiagnostics.addSection({
 	description: "StructureMap's textual WhatDoIHave() diagnostics",
 	key: 'whatdoihave',
 	screen: new TextScreen('StructureMap:whatdoihave')
+})
+.add({
+	title: 'Build Plan',
+	description: 'How StructureMap will build this Instance',
+	key: 'buildplan',
+	route: 'StructureMap:build_plan_PluginType_Name',
+	screen: new TextScreen('StructureMap:build_plan_PluginType_Name')
 });

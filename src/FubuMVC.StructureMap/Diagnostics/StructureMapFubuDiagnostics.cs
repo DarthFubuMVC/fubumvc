@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using Bottles.Services.Remote;
 using FubuCore;
 using FubuMVC.Core.Runtime;
@@ -95,12 +96,15 @@ namespace FubuMVC.StructureMap.Diagnostics
             return _container.WhatDoIHave();
         }
 
-        public string get_build_plan__PluginType_Id(BuildPlanRequest request)
+        public string get_build_plan_PluginType_Name(BuildPlanRequest request)
         {
-            // type == plugin type, assembly, namespace, returned type
-
-            return "stuff";
+            var instance = instances().FirstOrDefault(x => x.Name.EqualsIgnoreCase(request.Name) && x.PluginType.GetFullName() == request.PluginType);
+            return instance == null
+                ? "Cannot find an Instance named '{0}' for PluginType {1}".ToFormat(request.Name, request.PluginType)
+                : instance.DescribeBuildPlan();
         }
+
+
 
         public SearchOptions get_summary()
         {

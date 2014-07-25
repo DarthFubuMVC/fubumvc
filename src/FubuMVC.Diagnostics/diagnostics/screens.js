@@ -57,6 +57,8 @@ function ServerScreen(route){
 }
 
 function TextScreen(route){
+	this.route = route;
+
 	this.activate = function(pane, params){
 		FubuDiagnostics.get(route, params, function(data){
 			$('<pre class="text-display"></pre>').html(data).appendTo(pane);
