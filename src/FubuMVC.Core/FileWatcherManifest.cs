@@ -79,15 +79,18 @@ namespace FubuMVC.Core
             if (PublicAssetFolder.IsNotEmpty())
             {
                 add(PublicAssetFolder, "*.js").OnChange(reload);
+                add(PublicAssetFolder, "*.jsx").OnChange(reload);
                 add(PublicAssetFolder, "*.css").OnChange(reload);
             }
             else
             {
                 add(ApplicationPath, "*.js").OnChange(reload);
+                add(ApplicationPath, "*.jsx").OnChange(reload);
                 add(ApplicationPath, "*.css").OnChange(reload);
 
                 LinkedFolders.Each(x => {
                     add(x, "*.js").OnChange(reload);
+                    add(x, "*.jsx").OnChange(reload);
                     add(x, "*.css").OnChange(reload);
                 });
             }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using FubuCore;
 
 namespace FubuMVC.StructureMap.Diagnostics
 {
@@ -30,7 +31,7 @@ namespace FubuMVC.StructureMap.Diagnostics
             return new SearchOption
             {
                 type = "Returned-Type",
-                value = returnedType.FullName,
+                value = returnedType.GetFullName(),
                 display = returnedType.Name
             };
         }
@@ -40,7 +41,7 @@ namespace FubuMVC.StructureMap.Diagnostics
             return new SearchOption
             {
                 type = "Plugin-Type",
-                value = pluginType.FullName,
+                value = pluginType.GetFullName(),
                 display = pluginType.Name
             };
         }

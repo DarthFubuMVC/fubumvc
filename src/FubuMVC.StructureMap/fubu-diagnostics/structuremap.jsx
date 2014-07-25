@@ -133,14 +133,117 @@ var Summary = React.createClass({
 	}
 });
 
-var SearchResults = React.createClass({
+
+
+
+var InstanceRow = React.createClass({
 	render: function(){
+		var url = '#structuremap/buildplan/' + this.props.pluginType + '/' + this.props.name;
+	
 		return (
-			<div>These are the structuremap results</div>
+			<tr>
+				<td>{this.props.pluginType}</td>
+				<td><a href={url}>{this.props.name}</a></td>
+				<td>{this.props.lifecycle}</td>
+				<td>{this.props.returnedType}</td>
+				<td>{this.props.description}</td>
+			</tr>		
 		);
 	}
 });
 
+var InstanceResults = React.createClass({
+	render: function(){
+		var items = this.props.instances.map(function(instance, i){
+			return InstanceRow(instance);
+		});
+		
+		return (
+			<table className="table table-striped">
+				<tr>
+					<th>Plugin Type</th>
+					<th>Name</th>
+					<th>Lifecycle</th>
+					<th>Returned Type</th>
+					<th>Description</th>
+				</tr>
+				{items}
+			</table>
+		);
+	}
+});
+
+
+function BuildPluginTypeData(pluginType){
+	var items = [];
+	
+	if (pluginType.defaultInstance){
+		items.push(pluginType.defaultInstance);
+	}
+	else{
+		items.push({
+			pluginType: pluginType.pluginType,
+			lifecycle: pluginType.lifecycle,
+			returnedType: '',
+			name: '',
+			description: ''
+		});
+	}
+	
+	items = items.concat(pluginType.others);
+	
+	if (pluginType.missingName){
+		pluginType.missingName.name = '(missing named instance)';
+		items.push(pluginType.missingName);
+	}
+	
+	if (pluginType.fallback){
+		pluginType.fallback.name = '(fallback)';
+		items.push(pluginType.fallback);
+	}
+	
+	for (var i = 1; i < items.length; i++){
+		items[i].pluginType = '';
+	}
+	
+	return items;
+}
+
+
+var SearchTitle = React.createClass({
+	render: function(){
+		var type = this.props.search.Type.replace('-', ' ');
+		
+		return (
+			<h3>Search Results: {type}/{this.props.search.Value}</h3>
+		);
+	}
+});
+
+
+
+var SearchResults = React.createClass({
+	render: function(){
+		var instances = [];
+	
+		if (this.props.data.search.Type == 'Returned-Type'){
+			instances = this.props.data.instances;
+		}
+		else{
+			instances = _.flatten(_.map(this.props.data.pluginTypes, BuildPluginTypeData));
+		}
+		
+		return (
+			<div>
+				<SearchBox />
+			
+				<SearchTitle search={this.props.data.search} />
+				<InstanceResults instances={instances} />
+			</div>
+		);
+
+	}
+});
 
 FubuDiagnostics.addSection({
     title: 'StructureMap',

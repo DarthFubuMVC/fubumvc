@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Bottles.Services.Remote;
 using FubuCore;
 using FubuMVC.Core.Runtime;
 using StructureMap;
@@ -8,6 +9,7 @@ using StructureMap.Query;
 
 namespace FubuMVC.StructureMap.Diagnostics
 {
+
     public class StructureMapFubuDiagnostics
     {
         private readonly IContainer _container;
@@ -22,7 +24,6 @@ namespace FubuMVC.StructureMap.Diagnostics
             {
                 _container = new Container();
             }
-
         }
 
         private IEnumerable<InstanceRef> instances()
@@ -40,20 +41,65 @@ namespace FubuMVC.StructureMap.Diagnostics
             }
         }
 
-        public string get_search_Type_Value(StructureMapSearch search)
-        {
-            return "Type: {0}, Value: {1}".ToFormat(search.Type, search.Value);
-        }
-
-        public SearchResults get_build_plan__PluginType_Id(BuildPlanRequest request)
+        public SearchResults get_search_Type_Value(StructureMapSearch search)
         {
             var results = new SearchResults
             {
-                pluginTypes = new PluginTypeDTO[0]
+                search = search,
+                pluginTypes = new PluginTypeDTO[0],
+                instances = new InstanceDTO[0]
             };
 
+            switch (search.Type)
+            {
+                case "Assembly":
+                    var assemblyName = search.Value.Replace(".dll", "");
+
+                    results.pluginTypes =
+                        _container.Model.PluginTypes.Where(x => x.PluginType.Assembly.GetName().Name == assemblyName)
+                            .Select(x => new PluginTypeDTO(x)).ToArray();
+
+                    break;
+
+                case "Plugin-Type":
+                    results.pluginTypes = _container.Model
+                        .PluginTypes.Where(x => x.PluginType.GetFullName() == search.Value)
+                        .Select(x => new PluginTypeDTO(x))
+                        .ToArray();
+
+
+                    break;
+
+                case "Namespace":
+                    results.pluginTypes = _container.Model
+                        .PluginTypes.Where(x => x.PluginType.Namespace == search.Value)
+                        .Select(x => new PluginTypeDTO(x))
+                        .ToArray();
+                    break;
+
+                case "Returned-Type":
+                    results.instances = instances().Where(x => x.ReturnedType.GetFullName() == search.Value)
+                        .Select(x => new InstanceDTO(x)).ToArray();
+
+                    break;
+
+                default:
+                    throw new NotImplementedException("DOES NOT COMPUTE");
+            }
 
             return results;
+        }
+
+        public string get_whatdoihave()
+        {
+            return _container.WhatDoIHave();
+        }
+
+        public string get_build_plan__PluginType_Id(BuildPlanRequest request)
+        {
+            // type == plugin type, assembly, namespace, returned type
+
+            return "stuff";
         }
 
         public SearchOptions get_summary()
@@ -62,11 +108,13 @@ namespace FubuMVC.StructureMap.Diagnostics
             var pluginTypes = options.Select(x => x.PluginType).Distinct().ToArray();
             var returnedTypes = options.Select(x => x.ReturnedType).Where(x => x != typeof (object)).ToArray();
 
-            var assemblies = pluginTypes.Select(x => x.Assembly).Union(returnedTypes.Select(x => x.Assembly)).Distinct().ToArray();
+            var assemblies =
+                pluginTypes.Select(x => x.Assembly).Union(returnedTypes.Select(x => x.Assembly)).Distinct().ToArray();
 
             return new SearchOptions
             {
-                assemblies = assemblies.OrderBy(x => x.GetName().Name).Select(assem => new AssemblyDTO(assem, options)).ToArray()
+                assemblies =
+                    assemblies.OrderBy(x => x.GetName().Name).Select(assem => new AssemblyDTO(assem, options)).ToArray()
             };
         }
 
@@ -79,9 +127,10 @@ namespace FubuMVC.StructureMap.Diagnostics
         {
             var options = instances().ToArray();
             var pluginTypes = options.Select(x => x.PluginType).Distinct().ToArray();
-            var returnedTypes = options.Select(x => x.ReturnedType).Where(x => x != typeof(object)).ToArray();
+            var returnedTypes = options.Select(x => x.ReturnedType).Where(x => x != typeof (object)).ToArray();
 
-            var assemblies = pluginTypes.Select(x => x.Assembly).Union(returnedTypes.Select(x => x.Assembly)).Distinct().ToArray();
+            var assemblies =
+                pluginTypes.Select(x => x.Assembly).Union(returnedTypes.Select(x => x.Assembly)).Distinct().ToArray();
 
             foreach (var assembly in assemblies)
             {
@@ -103,13 +152,14 @@ namespace FubuMVC.StructureMap.Diagnostics
             {
                 yield return SearchOption.ForNamespace(ns);
             }
-        } 
-
+        }
     }
 
     public class SearchResults
     {
         public PluginTypeDTO[] pluginTypes { get; set; }
+        public InstanceDTO[] instances { get; set; }
+        public StructureMapSearch search { get; set; }
     }
 
     public class StructureMapSearch
