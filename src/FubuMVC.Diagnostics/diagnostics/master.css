@@ -284,3 +284,9 @@ table.details{
 .tt-suggestion p {
   margin: 0;
 }
+
+pre.text-display{
+	overflow-x:scroll;
+	font-size: small;
+	position: absolute;
+}
