@@ -55,3 +55,15 @@ function ServerScreen(route){
 	
 	}
 }
+
+function TextScreen(route){
+	this.activate = function(pane, params){
+		FubuDiagnostics.get(route, params, function(data){
+			$('<pre class="text-area"></pre>').html(data).appendTo(pane);
+		});
+	}
+	
+	this.deactivate = function(){
+	
+	}
+}

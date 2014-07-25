@@ -270,5 +270,10 @@ FubuDiagnostics.addSection({
 		route: 'StructureMap:search_Type_Value',
 		options: {}
 	})
+})
+.add({
+	title: 'What do I have?',
+	description: "StructureMap's textual WhatDoIHave() diagnostics",
+	key: 'whatdoihave',
+	screen: new TextScreen('StructureMap:whatdoihave')
 });
-

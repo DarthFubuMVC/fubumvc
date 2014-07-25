@@ -20,19 +20,6 @@ FubuDiagnostics.addSection({
 
 
 
-function TextScreen(text){
-	this.activate = function(pane){
-		$(pane).html(text);
-	}
-	
-	this.deactivate = function(){
-		
-	}
-}
-
-
-
-
 
 FubuDiagnostics.addSection({
     title: 'OWIN',
