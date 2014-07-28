@@ -125,13 +125,13 @@
 
 
 
-    <Script src="diagnostics/bower_components/jquery/dist/jquery.min.js"/>
-    <Script src="diagnostics/bower_components/lodash/dist/lodash.min.js"/>
-    <Script src="diagnostics/bower_components/backbone/backbone.js"/>
+    <Script src="diagnostics/jquery.min.js"/>
+    <Script src="diagnostics/lodash.min.js"/>
+    <Script src="diagnostics/backbone.js"/>
     
-    <Script src="diagnostics/bower_components/bootstrap/dist/js/bootstrap.min.js"/>
-    <Script src="diagnostics/bower_components/react/react.min.js" />
-    <Script src="diagnostics/bower_components/react/JSXTransformer.js" />
+    <Script src="diagnostics/bootstrap.min.js"/>
+    <Script src="diagnostics/react.min.js" />
+    <Script src="diagnostics/JSXTransformer.js" />
     <Script src="diagnostics/typeahead.bundle.min.js" />
     <Script src="diagnostics/FubuDiagnosticsSection.js"/>
     <Script src="diagnostics/screens.js"/>
@@ -142,6 +142,8 @@
     
     <script src="/diagnostics/endpoints.jsx" type="text/jsx"/>
     <script src="/diagnostics/requests.jsx" type="text/jsx"/>
+    <script src="/diagnostics/appdomain.jsx" type="text/jsx"/>
+    <script src="/diagnostics/assets.jsx" type="text/jsx"/>
     !{Model.ReactTags}
 	<script src="/diagnostics/navigation-react.jsx" type="text/jsx"/>
   </body>

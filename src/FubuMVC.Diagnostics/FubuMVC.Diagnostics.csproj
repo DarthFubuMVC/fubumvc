@@ -104,6 +104,8 @@
     <Content Include="diagnostics.asset.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="diagnostics\appdomain.jsx" />
+    <Content Include="diagnostics\assets.jsx" />
     <None Include="Packaging\Packaging.spark" />
     <Content Include="diagnostics\bootstrap.min.css" />
     <Content Include="diagnostics\core-diagnostics.js" />
@@ -134,7 +136,9 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AppDomainFubuDiagnostics.cs" />
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="AssetFubuDiagnostics.cs" />
     <Compile Include="BehaviorChainExtensions.cs" />
     <Compile Include="ChainFubuDiagnostics.cs" />
     <Compile Include="Core\CoreExtensions.cs" />

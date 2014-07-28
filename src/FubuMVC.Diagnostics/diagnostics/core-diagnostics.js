@@ -21,12 +21,3 @@ FubuDiagnostics.addSection({
 
 
 
-FubuDiagnostics.addSection({
-    title: 'OWIN',
-    description: 'OWIN Middleware Chain',
-    key: 'owin',
-	screen: new TextScreen('OWIN!')
-});
-
-
-
