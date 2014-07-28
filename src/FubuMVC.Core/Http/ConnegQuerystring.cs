@@ -1,10 +1,11 @@
 ﻿using System.Collections.Specialized;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Http
 {
-    public class ConnegQuerystring
+    public class ConnegQuerystring : DescribesItself
     {
         public ConnegQuerystring(string key, string value, string mimetype)
         {
@@ -32,6 +33,11 @@ namespace FubuMVC.Core.Http
             return value != null && value.EqualsIgnoreCase(Value)
                 ? Mimetype
                 : null;
+        }
+
+        public void Describe(Description description)
+        {
+            description.ShortDescription = "?{0}={1} is '{2}'".ToFormat(Key, Value, Mimetype);
         }
     }
 }

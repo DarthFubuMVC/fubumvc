@@ -74,6 +74,7 @@
     <Compile Include="Diagnostics\PluginTypeDTO.cs" />
     <Compile Include="Diagnostics\SearchOption.cs" />
     <Compile Include="Diagnostics\SearchOptions.cs" />
+    <Compile Include="Diagnostics\SettingsFubuDiagnostics.cs" />
     <Compile Include="Diagnostics\StructureMapExtensions.cs" />
     <Compile Include="IContainerExtension.cs" />
     <Compile Include="NestedStructureMapContainerBehavior.cs" />
@@ -93,6 +94,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="fubu-diagnostics\settings.jsx" />
     <None Include="fubu-diagnostics\structuremap.jsx" />
     <None Include="ripple.dependencies.config">
       <SubType>Designer</SubType>

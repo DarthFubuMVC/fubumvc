@@ -1,8 +1,11 @@
-﻿using FubuMVC.Core.Registration;
+﻿using System;
+using FubuCore.Descriptions;
+using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Katana
 {
-    [ApplicationLevel]
+    [ApplicationLevel, Serializable]
+    [Title("Katana Auto Hosting Settings")]
     public class KatanaSettings
     {
         public KatanaSettings()

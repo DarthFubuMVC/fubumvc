@@ -15,12 +15,30 @@ namespace FubuMVC.Core.Http.Owin
     using AppFunc = Func<IDictionary<string, object>, Task>;
 
     [ApplicationLevel]
-    public class OwinSettings
+    public class OwinSettings : DescribesItself
     {
         public OwinSettings()
         {
             AddMiddleware<StaticFileMiddleware>();
             HtmlHeadInjectionMiddleware.ApplyInjection(this);
+        }
+
+        public void Describe(Description description)
+        {
+            description.Title = "OWIN Settings";
+            description.ShortDescription =
+                "Governs the attachment and ordering of OWIN middleware plus OWIN host properties";
+            Properties.Each(x => description.Properties[x.Key] = x.Value.ToString());
+
+            EnvironmentData.Each((key, value) => description.Properties[key] = value.ToString());
+
+            var middleware = new BulletList();
+            middleware.Name = "Middleware";
+            middleware.Label = "Middleware";
+
+            Middleware.Each(x => middleware.Children.Add(x.ToDescription()));
+
+            description.BulletLists.Add(middleware);
         }
 
         /// <summary>
@@ -78,6 +96,8 @@ namespace FubuMVC.Core.Http.Owin
 
             return node;
         }
+
+
     }
 
     public class AnonymousMiddleware : MiddlewareNode

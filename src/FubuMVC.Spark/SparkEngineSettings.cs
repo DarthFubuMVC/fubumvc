@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuMVC.Core;
 using Spark;
 
 namespace FubuMVC.Spark
 {
-    public class SparkEngineSettings
+    [Title("Spark Engine Properties")]
+    public class SparkEngineSettings : DescribesItself
     {
         private Func<bool> _precompileViews;
 
@@ -17,6 +19,14 @@ namespace FubuMVC.Spark
             _precompileViews = () => !FubuMode.InDevelopment();
 
            
+        }
+
+        public void Describe(Description description)
+        {
+            description.ShortDescription = "Governs the behavior of the Spark View Engine Integration";
+            description.Properties["Namespaces"] = UseNamespaces.Join(", ");
+            description.Properties["Search"] = Search.ToString();
+            description.Properties["Precompile"] = PrecompileViews.ToString();
         }
 
         private void defaultSearch()

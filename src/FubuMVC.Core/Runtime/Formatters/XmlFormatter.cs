@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Text;
 using System.Xml;
@@ -9,6 +10,7 @@ namespace FubuMVC.Core.Runtime.Formatters
 {
     // See the integration tests for conneg
     [Title("Xml Serialization")]
+    [Description("Wrapper around the built in XmlSerializer")]
     public class XmlFormatter : IFormatter
     {
         public void Write<T>(IFubuRequestContext context, T target, string mimeType)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
@@ -43,7 +44,7 @@ namespace FubuMVC.Core.Resources.Conneg
         }
     }
 
-    public class CustomReadersAndWriters : ConnegRule
+    public class CustomReadersAndWriters : ConnegRule, DescribesItself
     {
         protected override DoNext applyInputs(IInputNode node, BehaviorChain chain, ConnegSettings settings)
         {
@@ -60,9 +61,15 @@ namespace FubuMVC.Core.Resources.Conneg
 
             return DoNext.Continue;
         }
+
+        public void Describe(Description description)
+        {
+            description.ShortDescription =
+                "Applies any custom readers and writers found in the loaded assemblies to a chain based on the Input and Resource types";
+        }
     }
 
-    public class DefaultReadersAndWriters : ConnegRule
+    public class DefaultReadersAndWriters : ConnegRule, DescribesItself
     {
         protected override DoNext applyInputs(IInputNode node, BehaviorChain chain, ConnegSettings settings)
         {
@@ -80,9 +87,15 @@ namespace FubuMVC.Core.Resources.Conneg
 
             return DoNext.Continue;
         }
+
+        public void Describe(Description description)
+        {
+            description.ShortDescription =
+                "Accept Json, Xml, and HTTP form posts, writes Json or Xml with Json being the default in both cases";
+        }
     }
 
-    public class AjaxContinuations : ConnegRule
+    public class AjaxContinuations : ConnegRule, DescribesItself
     {
         protected override DoNext applyInputs(IInputNode node, BehaviorChain chain, ConnegSettings settings)
         {
@@ -102,11 +115,17 @@ namespace FubuMVC.Core.Resources.Conneg
 
             return DoNext.Stop;
         }
+
+        public void Describe(Description description)
+        {
+            description.ShortDescription =
+                "If any action returns AjaxContinuation or a subtype, accept Json or HTTP form posts and only output Json with the AjaxContinuationWriter";
+        }
     }
 
 
    
-    public class StringOutput : ConnegRule
+    public class StringOutput : ConnegRule, DescribesItself
     {
         protected override DoNext applyOutputs(IOutputNode node, BehaviorChain chain, ConnegSettings settings)
         {
@@ -119,9 +138,14 @@ namespace FubuMVC.Core.Resources.Conneg
 
             return base.applyOutputs(node, chain, settings);
         }
+
+        public void Describe(Description description)
+        {
+            description.ShortDescription = "If an action returns a .Net string, the chain will only render text/plain";
+        }
     }
 
-    public class HtmlTagsRule : ConnegRule
+    public class HtmlTagsRule : ConnegRule, DescribesItself
     {
         protected override DoNext applyOutputs(IOutputNode node, BehaviorChain chain, ConnegSettings settings)
         {
@@ -133,9 +157,16 @@ namespace FubuMVC.Core.Resources.Conneg
 
             return DoNext.Continue;
         }
+
+        public void Describe(Description description)
+        {
+            description.ShortDescription =
+                "If an action returns a model type that inherits from either HtmlTag or HtmlDocument, the chain will only output HTML";
+        }
     }
 
-    public class SymmetricJson : ConnegRule
+
+    public class SymmetricJson : ConnegRule, DescribesItself
     {
         protected override DoNext applyInputs(IInputNode node, BehaviorChain chain, ConnegSettings settings)
         {
@@ -160,9 +191,15 @@ namespace FubuMVC.Core.Resources.Conneg
 
             return DoNext.Continue;
         }
+
+        public void Describe(Description description)
+        {
+            description.ShortDescription =
+                "If an action is decorated with the [SymmetricJson] attribute, the chain will only read and write JSON with the registered Formatter for Json";
+        }
     }
 
-    public class AsymmetricJson : ConnegRule
+    public class AsymmetricJson : ConnegRule, DescribesItself
     {
         protected override DoNext applyInputs(IInputNode node, BehaviorChain chain, ConnegSettings settings)
         {
@@ -187,6 +224,12 @@ namespace FubuMVC.Core.Resources.Conneg
             }
 
             return DoNext.Continue;
+        }
+
+        public void Describe(Description description)
+        {
+            description.ShortDescription =
+                "If an action is decorated with the [AsymmetricJson] attribute, the chain will read JSON or use model binding for HTTP form posts, but always return Json";
         }
     }
 

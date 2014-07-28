@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Security;
 
 namespace FubuMVC.Core
 {
     [ApplicationLevel]
-    public class DiagnosticsSettings
+    [Title("Diagnostic Tracing and Authorization Configuration")]
+    public class DiagnosticsSettings : DescribesItself
     {
         private TraceLevel? _traceLevel;
 
@@ -40,6 +43,14 @@ namespace FubuMVC.Core
             {
                 _traceLevel = level;
             }
+        }
+
+        public void Describe(Description description)
+        {
+            description.ShortDescription = "Governs the behavior and verbosity of the runtime diagnostics";
+            description.Properties["Tracing Level"] = TraceLevel.ToString();
+            description.Properties["Maximum Number of Requests to Keep"] = MaxRequests.ToString();
+            description.AddList("Authorization Rules for Diagnostics", AuthorizationRights);
         }
     }
 

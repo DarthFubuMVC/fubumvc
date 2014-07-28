@@ -2,6 +2,7 @@
 using System.Data;
 using System.Linq;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
@@ -11,7 +12,7 @@ using FubuMVC.Core.Runtime.Formatters;
 namespace FubuMVC.Core.Http
 {
     [ApplicationLevel]
-    public class ConnegSettings
+    public class ConnegSettings : DescribesItself
     {
         public readonly ConnegRules Rules = new ConnegRules();
 
@@ -24,6 +25,25 @@ namespace FubuMVC.Core.Http
             Rules.AddToEnd<HtmlTagsRule>();
             Rules.AddToEnd<CustomReadersAndWriters>();
             Rules.AddToEnd<DefaultReadersAndWriters>();
+        }
+
+        void DescribesItself.Describe(Description _)
+        {
+            _.Title = "Content Negotiation Rules and Configuration";
+
+            if (Formatters.Any())
+            {
+                _.AddList("Formatters", Formatters);
+            }
+
+            _.AddList("Rules", Rules);
+            _.AddList("Conneg Querystring Rules", QuerystringParameters);
+
+            if (Corrections.Any())
+            {
+                _.AddList("Mimetype Corrections", Corrections);
+            }
+
         }
 
         public ConnegGraph Graph { get; set; }
@@ -76,5 +96,7 @@ namespace FubuMVC.Core.Http
         {
             Formatters.Insert(0, formatter);
         }
+
+
     }
 }

@@ -1,24 +1,19 @@
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.View.Attachment
 {
-
     public class ViewAttachmentWorker
     {
         private readonly ViewBag _views;
         private readonly ViewAttachmentPolicy _policy;
-        private readonly IList<IViewToken> _attached = new List<IViewToken>(); 
+        private readonly IList<IViewToken> _attached = new List<IViewToken>();
 
         public ViewAttachmentWorker(ViewBag views, ViewAttachmentPolicy policy)
         {
@@ -43,7 +38,7 @@ namespace FubuMVC.Core.View.Attachment
         private BehaviorChain buildChainForView(IViewToken view)
         {
             BehaviorChain chain = null;
-            
+
 
             if (view.ViewModel.HasAttribute<UrlPatternAttribute>())
             {
@@ -89,7 +84,6 @@ namespace FubuMVC.Core.View.Attachment
         }
 
 
-
         public static IEnumerable<ActionCall> FindLastActions(IEnumerable<BehaviorChain> chains)
         {
             foreach (var chain in chains)
@@ -102,5 +96,4 @@ namespace FubuMVC.Core.View.Attachment
             }
         }
     }
-
 }

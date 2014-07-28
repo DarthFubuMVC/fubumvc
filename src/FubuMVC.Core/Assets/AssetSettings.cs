@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Bottles;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuCore.Util;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
@@ -18,11 +19,17 @@ using FubuMVC.Core.Security;
 
 namespace FubuMVC.Core.Assets
 {
-    public class CdnAsset
+    public class CdnAsset : DescribesItself
     {
         public string Url;
         public string Fallback;
         public string File;
+        public void Describe(Description description)
+        {
+            description.Title = Url;
+            description.Properties["Fallback"] = Fallback;
+            description.Properties["File"] = File;
+        }
     }
 
     public enum SearchMode
@@ -42,7 +49,7 @@ namespace FubuMVC.Core.Assets
 
 
     [Description("Allow read access to javascript, css, image, and html files")]
-    public class AssetSettings : IStaticFileRule
+    public class AssetSettings : IStaticFileRule, DescribesItself
     {
         /// <summary>
         /// The default maximum age in seconds to cache an asset in production mode. 1 day.
@@ -284,6 +291,22 @@ namespace FubuMVC.Core.Assets
             manifest.ContentMatches = ContentMatches.ToArray();
 
             return manifest;
+        }
+
+        public void Describe(Description _)
+        {
+            _.ShortDescription =
+                "AssetSettings governs everything to do with client side assets, white listed content files, and the creation of server generated template exports";
+
+            _.Properties["Search Mode"] = Mode.ToString();
+            _.Properties["Version"] = Version;
+            _.Properties["Public Asset Folder"] = DeterminePublicFolder();
+            _.Properties["Excluded Files"] = Exclusions;
+            _.Properties["Whitelisted file extensions"] = AllowableExtensions.Join(", ");
+            _.Properties["File extensions considered to be content"] = ContentMatches.Join(", ");
+            _.Properties["Template Cultures"] = TemplateCultures.Join(", ");
+            _.Properties["Template Destination"] = TemplateDestination;
+            _.AddList("CDN Assets", CdnAssets);
         }
     }
 }

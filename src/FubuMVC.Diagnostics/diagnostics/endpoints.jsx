@@ -219,6 +219,8 @@ var EndpointDetails = React.createClass({
 });
 
 
+
+
 FubuDiagnostics.section('fubumvc').add({
 	title: 'Chain Details',
 	description: 'BehaviorChain Visualization',

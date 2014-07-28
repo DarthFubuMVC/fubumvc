@@ -12,13 +12,28 @@ using FubuMVC.Core.View.Model;
 
 namespace FubuMVC.Core.View
 {
-    public class ViewEngineSettings
+    [Title("View Engine Registration and Settings")]
+    public class ViewEngineSettings : DescribesItself
     {
         public static readonly IFileSystem FileSystem = new FileSystem();
 
         private readonly IList<Func<IViewToken, bool>> _excludes = new List<Func<IViewToken, bool>>();
         private readonly List<IViewFacility> _facilities = new List<IViewFacility>();
         private readonly IList<ViewTokenPolicy> _viewPolicies = new List<ViewTokenPolicy>();
+
+        public void Describe(Description description)
+        {
+            description.ShortDescription = "Registers active View Engines and governs the behavior of view attachment";
+
+            description.Properties["Shared Layout Folders"] = SharedLayoutFolders.Join(", ");
+            description.Properties["Application Layout Name"] = ApplicationLayoutName;
+
+            description.AddList("Facilities", _facilities);
+            if (_viewPolicies.Any())
+            {
+                description.AddList("Policies", _viewPolicies);
+            }
+        }
 
         /// <summary>
         /// List of folder names that should be treated as shared layout folders of views.
