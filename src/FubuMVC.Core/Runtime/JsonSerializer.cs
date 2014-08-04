@@ -11,12 +11,14 @@ namespace FubuMVC.Core.Runtime
     {
         public T Read<T>(IFubuRequestContext context)
         {
-            return new JavaScriptSerializer().Deserialize<T>(context.Request.InputText());
+            var serializer = new JavaScriptSerializer { MaxJsonLength = int.MaxValue };
+            return serializer.Deserialize<T>(context.Request.InputText());
         }
 
         public virtual void Write<T>(IFubuRequestContext context, T resource, string mimeType)
         {
-            var text = new JavaScriptSerializer().Serialize(resource);
+            var serializer = new JavaScriptSerializer { MaxJsonLength = int.MaxValue };
+            var text = serializer.Serialize(resource);
             context.Writer.Write(mimeType, text);
         }
 

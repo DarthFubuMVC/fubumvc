@@ -170,6 +170,7 @@
     <Compile Include="Packaging\reading_files_and_contents.cs" />
     <Compile Include="Packaging\unlinking_a_bottle_from_the_command_line.cs" />
     <Compile Include="performance_timing_smoke_tester.cs" />
+    <Compile Include="Projections\end_to_end_json_serialization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Querying\ActionToken.cs" />
     <Compile Include="Querying\AssemblyToken.cs" />

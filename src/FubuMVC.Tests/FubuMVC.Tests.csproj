@@ -158,6 +158,7 @@
     <Compile Include="Projections\DictionaryMediaNodeTester.cs" />
     <Compile Include="Projections\EnumerableProjectionIntegratedTester.cs" />
     <Compile Include="Projections\ExternallyFormattedValueProjectorTester.cs" />
+    <Compile Include="Projections\JsonSerializerTester.cs" />
     <Compile Include="Projections\pascal_to_camel_casing_names_policy.cs" />
     <Compile Include="Projections\ProjectionContextTester.cs" />
     <Compile Include="Projections\ProjectionRunnerTester.cs" />
