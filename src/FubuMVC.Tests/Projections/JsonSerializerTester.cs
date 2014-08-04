@@ -17,11 +17,8 @@ namespace FubuMVC.Tests.Projections
     {
         private JsonSerializer ClassUnderTest;
         private IFubuRequestContext theFubuRequestContext;
-        private IServiceLocator theServiceLocator;
         private IHttpRequest theHttpRequest;
-        private IFubuRequest theModels;
         private InMemoryOutputWriter theOutputWriter;
-        private ILogger theLogger;
 
         private JsonTestData GenerateJsonTestData(int numberOfGuids)
         {
@@ -41,17 +38,10 @@ namespace FubuMVC.Tests.Projections
         {
             ClassUnderTest = new JsonSerializer();
             theFubuRequestContext = MockRepository.GenerateMock<IFubuRequestContext>();
-            theServiceLocator = MockRepository.GenerateMock<IServiceLocator>();
             theHttpRequest = MockRepository.GenerateMock<IHttpRequest>();
-            theModels = MockRepository.GenerateMock<IFubuRequest>();
             theOutputWriter = new InMemoryOutputWriter();
-            theLogger = MockRepository.GenerateMock<ILogger>();
-
-            theFubuRequestContext.Stub(x => x.Services).Return(theServiceLocator);
             theFubuRequestContext.Stub(x => x.Request).Return(theHttpRequest);
-            theFubuRequestContext.Stub(x => x.Models).Return(theModels);
             theFubuRequestContext.Stub(x => x.Writer).Return(theOutputWriter);
-            theFubuRequestContext.Stub(x => x.Logger).Return(theLogger);
         }
 
         [Test]

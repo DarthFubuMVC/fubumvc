@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Projections;
 using FubuMVC.Core.Runtime;
+using FubuMVC.StructureMap;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Projections
@@ -10,10 +13,27 @@ namespace FubuMVC.IntegrationTesting.Projections
     [TestFixture]
     public class end_to_end_json_serialization
     {
+        private InMemoryHost _host;
+
+        [TestFixtureSetUp]
+        public void FixtureSetUp()
+        {
+            _host = FubuApplication
+                .For<JsonSerializationFubuRegistry>()
+                .StructureMap()
+                .RunInMemory();
+        }
+
+        [TestFixtureTearDown]
+        public void FixtureTearDown()
+        {
+            _host.SafeDispose();
+        }
+
         [Test]
         public void getting_large_json_data()
         {
-            TestHost.Scenario<JsonSerializationFubuRegistry>(x =>
+            _host.Scenario(x =>
             {
                 x.Get.Action<JsonSerializationEndpoint>(y => y.get_large());
                 x.Request.Accepts("application/json");
@@ -27,7 +47,7 @@ namespace FubuMVC.IntegrationTesting.Projections
         [Test]
         public void getting_small_json_data()
         {
-            TestHost.Scenario<JsonSerializationFubuRegistry>(x =>
+            _host.Scenario(x =>
             {
                 x.Get.Action<JsonSerializationEndpoint>(y => y.get_small());
                 x.Request.Accepts("application/json");
@@ -41,7 +61,7 @@ namespace FubuMVC.IntegrationTesting.Projections
         [Test]
         public void posting_large_json_data()
         {
-            TestHost.Scenario<JsonSerializationFubuRegistry>(x =>
+            _host.Scenario(x =>
             {
                 var guids = new List<Guid>();
                 for (var i = 0; i < 60000; i++)
@@ -64,7 +84,7 @@ namespace FubuMVC.IntegrationTesting.Projections
         [Test]
         public void posting_small_json_data()
         {
-            TestHost.Scenario<JsonSerializationFubuRegistry>(x =>
+            _host.Scenario(x =>
             {
                 var guids = new List<Guid>();
                 for (var i = 0; i < 10; i++)
