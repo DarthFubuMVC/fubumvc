@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.Runtime.Formatters;
@@ -67,9 +68,24 @@ namespace FubuMVC.Core.Resources.Conneg
         void ClearAll();
 
         Type ResourceType { get; }
+
+        /// <summary>
+        /// Use this if you want to override the handling for 
+        /// the resource not being found on a chain by chain
+        /// basis
+        /// </summary>
+        ObjectDef ResourceNotFound { get; set; }
+
         bool HasView(IConditional conditional);
 
 
         IViewToken DefaultView();
+
+        /// <summary>
+        /// Use the specified type T as the resource not found handler strategy
+        /// for only this chain
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        void UseForResourceNotFound<T>() where T : IResourceNotFoundHandler;
     }
 }
