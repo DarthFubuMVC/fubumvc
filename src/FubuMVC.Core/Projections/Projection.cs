@@ -128,6 +128,16 @@ namespace FubuMVC.Core.Projections
             return value;
         }
 
+        public AdaptiveAccessorProjection<T> AdaptiveValue(Expression<Func<T, object>> expression)
+        {
+            var accessor = ReflectionHelper.GetAccessor(expression);
+            var projection = new AdaptiveAccessorProjection<T>(accessor);
+
+            _values.Add(projection);
+
+            return projection;
+        }
+
         /// <summary>
         /// Mix in an existing Projection definition into this one
         /// </summary>

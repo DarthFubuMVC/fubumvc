@@ -213,6 +213,7 @@
     <Compile Include="IFubuRequestContext.cs" />
     <Compile Include="Packaging\PackageService.cs" />
     <Compile Include="Projections\AccessorProjection.cs" />
+    <Compile Include="Projections\AdaptiveAccessorProjection.cs" />
     <Compile Include="Projections\ChildProjection.cs" />
     <Compile Include="Projections\DelegatingProjection.cs" />
     <Compile Include="Projections\DictionaryMediaNode.cs" />
