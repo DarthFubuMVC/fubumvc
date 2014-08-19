@@ -72,6 +72,14 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void IAssetFinder_is_registered_as_a_singleton()
+        {
+            registeredTypeIs<IAssetFinder, AssetFinderCache>();
+            ServiceRegistry.ShouldBeSingleton(typeof(AssetFinderCache))
+                .ShouldBeTrue();
+        }
+
+        [Test]
         public void fubu_request_context_is_registered()
         {
             registeredTypeIs<IFubuRequestContext, FubuRequestContext>();

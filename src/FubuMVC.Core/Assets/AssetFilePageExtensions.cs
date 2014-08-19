@@ -80,10 +80,10 @@ namespace FubuMVC.Core.Assets
         /// <param name="scripts"></param>
         public static TagList OptionalScript(this IFubuPage page, params string[] scripts)
         {
-            var graph = page.Get<IAssetGraph>();
+            var finder = page.Get<IAssetFinder>();
             var request = page.Get<IHttpRequest>();
 
-            var tags = scripts.Select(graph.FindAsset).Where(x => x != null)
+            var tags = scripts.Select(finder.FindAsset).Where(x => x != null)
                 .Select(x => new ScriptTag(request.ToFullUrl,x)).ToArray();
 
             return new TagList(tags);
@@ -98,9 +98,9 @@ namespace FubuMVC.Core.Assets
         /// <param name="stylesheets"></param>
         public static TagList OptionalCss(this IFubuPage page, params string[] stylesheets)
         {
-            var graph = page.Get<IAssetGraph>();
+            var finder = page.Get<IAssetFinder>();
             var request = page.Get<IHttpRequest>();
-            var tags = stylesheets.Select(graph.FindAsset).Where(x => x != null)
+            var tags = stylesheets.Select(finder.FindAsset).Where(x => x != null)
                 .Select(x => new StylesheetLinkTag(request.ToFullUrl(x.Url))).ToArray();
 
             return new TagList(tags);

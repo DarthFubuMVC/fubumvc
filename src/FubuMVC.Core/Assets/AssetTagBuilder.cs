@@ -10,15 +10,15 @@ namespace FubuMVC.Core.Assets
     // Tested through integration tests
     public class AssetTagBuilder : IAssetTagBuilder
     {
-        private readonly IAssetGraph _graph;
+        private readonly IAssetFinder _finder;
         private readonly IHttpRequest _request;
 
         private readonly Queue<Asset> _queuedScripts = new Queue<Asset>();
         private readonly IList<Asset> _writtenScripts = new List<Asset>(); 
 
-        public AssetTagBuilder(IAssetGraph graph, IHttpRequest request)
+        public AssetTagBuilder(IAssetFinder finder, IHttpRequest request)
         {
-            _graph = graph;
+            _finder = finder;
             _request = request;
         }
 
@@ -38,7 +38,7 @@ namespace FubuMVC.Core.Assets
 
             foreach (var x in scripts)
             {
-                var asset = _graph.FindAsset(x);
+                var asset = _finder.FindAsset(x);
 
                 if (asset == null)
                 {
@@ -59,7 +59,7 @@ namespace FubuMVC.Core.Assets
         {
             return stylesheets.Select(x =>
             {
-                var asset = _graph.FindAsset(x);
+                var asset = _finder.FindAsset(x);
                 var url = asset == null ? x : asset.Url;
 
                 return new StylesheetLinkTag(_request.ToFullUrl(url));
@@ -68,7 +68,7 @@ namespace FubuMVC.Core.Assets
 
         public string FindImageUrl(string urlOrFilename)
         {
-            var asset = _graph.FindAsset(urlOrFilename);
+            var asset = _finder.FindAsset(urlOrFilename);
             var relativeUrl = asset == null ? urlOrFilename : asset.Url;
 
             return _request.ToFullUrl(relativeUrl);
@@ -77,7 +77,7 @@ namespace FubuMVC.Core.Assets
         public void RequireScript(params string[] scripts)
         {
            scripts
-               .Select(x => _graph.FindAsset(x))
+               .Select(x => _finder.FindAsset(x))
                .Where(x => x != null && !_writtenScripts.Contains(x))
                .Each(x => _queuedScripts.Enqueue(x));
         }

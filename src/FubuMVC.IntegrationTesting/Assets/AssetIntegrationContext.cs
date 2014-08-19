@@ -26,6 +26,7 @@ namespace FubuMVC.IntegrationTesting.Assets
         private InMemoryHost _host;
         private readonly string _applicationDirectory;
         protected Scenario Scenario;
+        private Lazy<AssetGraph> _allAssets; 
 
         public AssetIntegrationContext()
         {
@@ -48,6 +49,10 @@ namespace FubuMVC.IntegrationTesting.Assets
                 .Packages(x => x.Loader(this)).Bootstrap();
 
             _host = new InMemoryHost(runtime);
+
+            _allAssets = new Lazy<AssetGraph>(() => {
+                return runtime.Factory.Get<IAssetFinder>().FindAll();
+            });
         }
 
         private FubuRegistry determineRegistry()
@@ -73,6 +78,14 @@ namespace FubuMVC.IntegrationTesting.Assets
         public void TearDown()
         {
             Scenario.As<IDisposable>().Dispose();
+        }
+
+        public AssetGraph AllAssets
+        {
+            get
+            {
+                return _allAssets.Value;
+            }
         }
 
         protected void InBottle(string name)
@@ -101,11 +114,13 @@ namespace FubuMVC.IntegrationTesting.Assets
             return _host.Services.GetInstance<IAssetTagBuilder>();
         }
 
-        public AssetGraph Assets
+
+
+        public IAssetFinder Assets
         {
             get
             {
-                return _host.Services.GetInstance<IAssetGraph>().As<AssetGraph>();
+                return _host.Services.GetInstance<IAssetFinder>();
             }
         }
     }

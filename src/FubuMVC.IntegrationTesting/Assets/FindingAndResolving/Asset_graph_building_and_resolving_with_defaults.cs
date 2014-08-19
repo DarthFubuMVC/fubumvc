@@ -47,23 +47,23 @@ namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
         [Test]
         public void finds_js_files()
         {
-            Assets.Assets.Any(x => x.Url == "MyLib.js").ShouldBeTrue();
-            Assets.Assets.Any(x => x.Url == "bottle2.js").ShouldBeTrue();
+            AllAssets.Assets.Any(x => x.Url == "MyLib.js").ShouldBeTrue();
+            AllAssets.Assets.Any(x => x.Url == "bottle2.js").ShouldBeTrue();
         }
 
         [Test]
         public void finds_css_files()
         {
-            Assets.Assets.Any(x => x.Url == "Content/styles/MyStyles.css").ShouldBeTrue();
-            Assets.Assets.Any(x => x.Url == "BottleB.css").ShouldBeTrue();
+            AllAssets.Assets.Any(x => x.Url == "Content/styles/MyStyles.css").ShouldBeTrue();
+            AllAssets.Assets.Any(x => x.Url == "BottleB.css").ShouldBeTrue();
         }
 
         [Test]
         public void finds_image_files()
         {
-            Assets.Assets.Any(x => x.Url == "image.bmp").ShouldBeTrue();
-            Assets.Assets.Any(x => x.Url == "image.gif").ShouldBeTrue();
-            Assets.Assets.Any(x => x.Url == "image.jpg").ShouldBeTrue();
+            AllAssets.Assets.Any(x => x.Url == "image.bmp").ShouldBeTrue();
+            AllAssets.Assets.Any(x => x.Url == "image.gif").ShouldBeTrue();
+            AllAssets.Assets.Any(x => x.Url == "image.jpg").ShouldBeTrue();
             
         }
 

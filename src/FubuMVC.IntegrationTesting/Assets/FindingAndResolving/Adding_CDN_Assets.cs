@@ -29,7 +29,7 @@ namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
         public void cdn_registration_with_file_name()
         {
             var cdn = new CdnAsset { File = "fubar.1.2.js", Url = "http://server/fubar.js" };
-            var asset = Assets.RegisterCdnAsset(cdn);
+            var asset = AllAssets.RegisterCdnAsset(cdn);
 
             asset.Filename.ShouldEqual("fubar.1.2.js");
             asset.File.ShouldNotBeNull(); // just seeing that we match up on existing
@@ -47,7 +47,7 @@ namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
         [Test]
         public void add_cdn_that_does_not_match()
         {
-            var asset = Assets.RegisterCdnAsset(new CdnAsset { Url = "http://cdn.server.com/jquery.js" });
+            var asset = AllAssets.RegisterCdnAsset(new CdnAsset { Url = "http://cdn.server.com/jquery.js" });
             asset.CdnUrl.ShouldEqual("http://cdn.server.com/jquery.js");
             asset.FallbackTest.ShouldBeNull();
             asset.File.ShouldBeNull();
@@ -62,7 +62,7 @@ namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
                 Fallback ="something == null"
             };
 
-            var asset = Assets.RegisterCdnAsset(cdn);
+            var asset = AllAssets.RegisterCdnAsset(cdn);
             asset.File.ShouldNotBeNull();
             asset.FallbackTest.ShouldEqual("something == null");
             asset.CdnUrl.ShouldEqual("http://cdn.server.com/foo.js");

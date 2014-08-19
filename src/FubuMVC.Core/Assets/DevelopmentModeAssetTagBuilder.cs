@@ -8,14 +8,14 @@ namespace FubuMVC.Core.Assets
 {
     public class DevelopmentModeAssetTagBuilder : IAssetTagBuilder
     {
-        private readonly IAssetGraph _graph;
+        private readonly IAssetFinder _finder;
         private readonly AssetTagBuilder _inner;
 
-        public DevelopmentModeAssetTagBuilder(IAssetGraph graph, IHttpRequest request)
+        public DevelopmentModeAssetTagBuilder(IAssetFinder finder, IHttpRequest request)
         {
-            _graph = graph;
+            _finder = finder;
 
-            _inner = new AssetTagBuilder(graph, request);
+            _inner = new AssetTagBuilder(finder, request);
         }
 
         public IEnumerable<HtmlTag> BuildScriptTags(IEnumerable<string> scripts)
@@ -34,7 +34,7 @@ namespace FubuMVC.Core.Assets
         {
             return names.Select(x => new Result
             {
-                Asset = _graph.FindAsset(x),
+                Asset = _finder.FindAsset(x),
                 Name = x
             }).ToArray();
         }
@@ -73,7 +73,7 @@ namespace FubuMVC.Core.Assets
 
         public string FindImageUrl(string urlOrFilename)
         {
-            var asset = _graph.FindAsset(urlOrFilename);
+            var asset = _finder.FindAsset(urlOrFilename);
             if (asset == null)
             {
                 throw new MissingAssetException("Requested image '{0}' cannot be found".ToFormat(urlOrFilename));

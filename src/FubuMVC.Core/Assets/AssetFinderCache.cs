@@ -9,7 +9,13 @@ using FubuMVC.Core.Runtime.Files;
 
 namespace FubuMVC.Core.Assets
 {
-    public class AssetFinderCache
+    public interface IAssetFinder
+    {
+        Asset FindAsset(string search);
+        AssetGraph FindAll();
+    }
+
+    public class AssetFinderCache : IAssetFinder
     {
         private readonly AssetSettings _settings;
         private readonly IFubuApplicationFiles _files;
@@ -30,9 +36,11 @@ namespace FubuMVC.Core.Assets
         private Asset findAsset(string search)
         {
             search = search.TrimStart('/');
+            var alias = _settings.FileForAlias(search);
 
+            if (alias.IsNotEmpty()) search = alias;
             
-            var filename = _settings.FileForAlias(search) ?? Path.GetFileName(search);
+            var filename = Path.GetFileName(search);
             var cdn = _settings.FindCdnAsset(search);
 
             var files = findFiles(filename).ToArray();

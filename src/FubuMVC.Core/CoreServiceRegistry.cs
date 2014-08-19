@@ -124,6 +124,8 @@ namespace FubuMVC.Core
             AddService<ISettingsSource>(new AppSettingsSettingSource(SettingCategory.environment));
 
             ReplaceService<TemplateGraph, TemplateGraph>();
+
+            SetServiceIfNone<IAssetFinder, AssetFinderCache>();
         }
     }
 }

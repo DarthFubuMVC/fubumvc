@@ -8,9 +8,9 @@ namespace FubuMVC.Diagnostics
 {
     public class AssetFubuDiagnostics
     {
-        private readonly IAssetGraph _assets;
+        private readonly IAssetFinder _assets;
 
-        public AssetFubuDiagnostics(IAssetGraph assets)
+        public AssetFubuDiagnostics(IAssetFinder assets)
         {
             _assets = assets;
         }
@@ -25,7 +25,7 @@ namespace FubuMVC.Diagnostics
         {
             return new Dictionary<string, object>
             {
-                {"assets", _assets.Assets.Select(x => new AssetToken(x)).ToArray()}
+                {"assets", _assets.FindAll().Assets.Select(x => new AssetToken(x)).ToArray()}
             };
         }
     }

@@ -20,15 +20,16 @@ namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
         {
             public MyRegistry()
             {
-                AlterSettings<AssetSettings>(x => x.Aliases.Add("foo", "Foo.js"));
+                AlterSettings<AssetSettings>(x => {
+                    x.Aliases.Add("foo", "Foo.js");
+                    x.Aliases.Add("bar", "Foo.js");
+                });
             }
         }
 
         [Test]
         public void asset_graph_stores_aliases()
         {
-            Assets.As<AssetGraph>().StoreAlias("bar", "Foo.js");
-
             Assets.FindAsset("bar").Url.ShouldEqual("Folder1/Foo.js");
         }
 
@@ -36,7 +37,7 @@ namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
         public void alias_is_not_found_sad_path()
         {
             Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() => {
-                Assets.As<AssetGraph>().StoreAlias("bar", "nonexistent.js");
+                AllAssets.As<AssetGraph>().StoreAlias("bar", "nonexistent.js");
             }).Message.ShouldContain("No asset file named 'nonexistent.js' can be found");
         }
 
