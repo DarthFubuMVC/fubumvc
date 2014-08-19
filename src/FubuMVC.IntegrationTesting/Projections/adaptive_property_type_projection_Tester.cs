@@ -34,12 +34,11 @@ namespace FubuMVC.IntegrationTesting.Projections
         }
 
         [Test]
-        public void blows_up_with_helpful_message_if_projection_cannot_be_found()
+        public void projects_using_default_serialization_if_projection_cannot_be_found()
         {
             TestHost.Scenario(_ => {
                 _.Get.Action<MyAdaptiveEndpoint>(x => x.get_adaptive_projection_baz());
-                _.StatusCodeShouldBe(HttpStatusCode.InternalServerError);
-                _.ContentShouldContain("There is no projection available for type FubuMVC.IntegrationTesting.Projections.MyBaz");
+                _.ContentShouldBe("{\"subject\":{\"BazName\":\"Screamin Cheetah Wheelies\"},\"data\":\"some data\"}");
             });
         }
     }
@@ -90,7 +89,7 @@ namespace FubuMVC.IntegrationTesting.Projections
                 Data = "some data",
                 Subject = new MyBaz
                 {
-                    BazName = "Screamin' Cheetah Wheelies"
+                    BazName = "Screamin Cheetah Wheelies"
                 }
             };
         }
