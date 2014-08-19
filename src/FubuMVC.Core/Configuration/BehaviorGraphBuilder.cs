@@ -28,7 +28,6 @@ namespace FubuMVC.Core.Configuration
 
             PackageRegistry.Timer.Record("Applying Settings", () => applySettings(config, graph));
 
-            var assetDiscovery = AssetSettings.Build(graph);
             var viewDiscovery = graph.Settings.Get<ViewEngineSettings>().BuildViewBag(graph);
             var layoutAttachmentTasks =
                 viewDiscovery.ContinueWith(
@@ -64,7 +63,7 @@ namespace FubuMVC.Core.Configuration
 
             // Wait until all the other threads are done.
             var registration = htmlConventionCollation.ContinueWith(t => config.RegisterServices(graph));
-            Task.WaitAll(registration, layoutAttachmentTasks, assetDiscovery);
+            Task.WaitAll(registration, layoutAttachmentTasks);
             Task.WaitAll(layoutAttachmentTasks.Result);
 
             new AutoImportModelNamespacesConvention().Configure(graph);

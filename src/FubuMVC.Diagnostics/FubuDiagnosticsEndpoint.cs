@@ -19,11 +19,11 @@ namespace FubuMVC.Diagnostics
     {
         private readonly JavascriptRouteWriter _routeWriter;
         private readonly DiagnosticJavascriptRoutes _routes;
-        private readonly IAssetGraph _assets;
+        private readonly IAssetFinder _assets;
         private readonly IHttpRequest _request;
         private readonly IFubuApplicationFiles _files;
 
-        public FubuDiagnosticsEndpoint(JavascriptRouteWriter routeWriter, DiagnosticJavascriptRoutes routes, IAssetGraph assets, IHttpRequest request, IFubuApplicationFiles files)
+        public FubuDiagnosticsEndpoint(JavascriptRouteWriter routeWriter, DiagnosticJavascriptRoutes routes, IAssetFinder assets, IHttpRequest request, IFubuApplicationFiles files)
         {
             _routeWriter = routeWriter;
             _routes = routes;
@@ -34,7 +34,9 @@ namespace FubuMVC.Diagnostics
 
         private IEnumerable<Asset> findAssets(MimeType mimeType)
         {
-            return _assets.Assets.Where(x => x.MimeType == mimeType && x.Url.StartsWith("fubu-diagnostics/"));
+            var assets = _assets.FindAll();
+
+            return assets.Assets.Where(x => x.MimeType == mimeType && x.Url.StartsWith("fubu-diagnostics/"));
         } 
 
         public DashboardModel get__fubu()

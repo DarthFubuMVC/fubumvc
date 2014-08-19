@@ -278,7 +278,7 @@ namespace FubuMVC.Tests.Assets
 
             using (var runtime = FubuApplication.For(registry).StructureMap().Bootstrap())
             {
-                var graph = runtime.Factory.Get<IAssetGraph>();
+                var graph = runtime.Factory.Get<IAssetFinder>().FindAll();
                 graph.Assets.OrderBy(x => x.Url).Select(x => x.Url)
                     .ShouldHaveTheSameElementsAs("public/1.0.1/d.js", "public/1.0.1/e.js", "public/1.0.1/f.js",
                         "public/javascript/a.js", "public/javascript/b.js", "public/javascript/c.js");
@@ -296,7 +296,7 @@ namespace FubuMVC.Tests.Assets
 
             using (var runtime = FubuApplication.For(registry).StructureMap().Bootstrap())
             {
-                var graph = runtime.Factory.Get<IAssetGraph>();
+                var graph = runtime.Factory.Get<IAssetFinder>().FindAll();
                 graph.Assets.OrderBy(x => x.Url).Select(x => x.Url)
                     .ShouldHaveTheSameElementsAs("public/1.0.1/d.js", "public/1.0.1/e.js", "public/1.0.1/f.js");
             }

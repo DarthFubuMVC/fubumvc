@@ -88,25 +88,7 @@ namespace FubuMVC.Core.Assets
         /// </summary>
         public readonly IList<CdnAsset> CdnAssets = new List<CdnAsset>(); 
 
-        // This is tested through integration tests
-        public static Task Build(BehaviorGraph behaviorGraph)
-        {
-            return behaviorGraph.Settings.GetTask<AssetSettings>()
-                .RecordContinuation("Building the Asset Graph", t => {
-                    var graph = new AssetGraph();
-                    var settings = t.Result;
 
-                    var files = findAssetFiles(behaviorGraph, settings);
-
-                    graph.Add(files.Select(x => new Asset(x)));
-
-                    settings.Aliases.AllKeys.Each(alias => graph.StoreAlias(alias, settings.Aliases[alias]));
-
-                    settings.CdnAssets.Each(x => graph.RegisterCdnAsset(x));
-
-                    behaviorGraph.Services.AddService<IAssetGraph>(graph);
-                });
-        }
 
         /// <summary>
         /// Used internally to determine the public folder if the mode is set to
@@ -134,30 +116,6 @@ namespace FubuMVC.Core.Assets
             return candidate;
         }
 
-        
-        
-
-        private static IEnumerable<IFubuFile> findAssetFiles(BehaviorGraph behaviorGraph, AssetSettings settings)
-        {
-            var search = settings.CreateAssetSearch();
-
-            if (settings.Mode == SearchMode.PublicFolderOnly)
-            {
-                var publicFolder = settings.DeterminePublicFolder();
-                var appFolder = FubuMvcPackageFacility.GetApplicationPath();
-
-                return new FileSystem().FindFiles(publicFolder, search)
-                    .Select(x => {
-                        return new FubuFile(x, ContentFolder.Application)
-                        {
-                            RelativePath = x.PathRelativeTo(appFolder)
-                        };
-                    });
-            }
-
-
-            return behaviorGraph.Files.FindFiles(search);
-        }
 
         public string Exclusions = null;
 

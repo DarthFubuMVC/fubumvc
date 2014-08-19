@@ -6,7 +6,7 @@ using FubuCore.Util;
 
 namespace FubuMVC.Core.Assets
 {
-    public class AssetGraph : IAssetGraph
+    public class AssetGraph
     {
         private readonly IList<Asset> _assets = new List<Asset>();
         private readonly ConcurrentCache<string, Asset> _searches = new ConcurrentCache<string, Asset>();

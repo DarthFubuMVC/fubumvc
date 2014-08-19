@@ -77,7 +77,6 @@
     <Compile Include="Assets\AssetTagBuilder.cs" />
     <Compile Include="Assets\AssetFilePageExtensions.cs" />
     <Compile Include="Assets\DevelopmentModeAssetTagBuilder.cs" />
-    <Compile Include="Assets\IAssetGraph.cs" />
     <Compile Include="Assets\IAssetTagBuilder.cs" />
     <Compile Include="Assets\JavascriptRouting\IJavascriptRouter.cs" />
     <Compile Include="Assets\JavascriptRouting\JavascriptRoute.cs" />
