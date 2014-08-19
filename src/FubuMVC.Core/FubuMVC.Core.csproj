@@ -71,6 +71,7 @@
     <Compile Include="Ajax\AjaxError.cs" />
     <Compile Include="ApplicationSettings.cs" />
     <Compile Include="Assets\Asset.cs" />
+    <Compile Include="Assets\AssetFinderCache.cs" />
     <Compile Include="Assets\AssetGraph.cs" />
     <Compile Include="Assets\AssetSettings.cs" />
     <Compile Include="Assets\AssetTagBuilder.cs" />

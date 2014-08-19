@@ -30,6 +30,11 @@ namespace FubuMVC.Core.Assets
             description.Properties["Fallback"] = Fallback;
             description.Properties["File"] = File;
         }
+
+        public string Filename()
+        {
+            return File ?? new Uri(Url).Segments.Last();
+        }
     }
 
     public enum SearchMode
@@ -307,6 +312,19 @@ namespace FubuMVC.Core.Assets
             _.Properties["Template Cultures"] = TemplateCultures.Join(", ");
             _.Properties["Template Destination"] = TemplateDestination;
             _.AddList("CDN Assets", CdnAssets);
+        }
+
+        public string FileForAlias(string search)
+        {
+            if (Aliases.AllKeys.Contains(search)) return Aliases[search];
+
+            return null;
+        }
+
+        public CdnAsset FindCdnAsset(string search)
+        {
+            return CdnAssets.FirstOrDefault(x => x.File == search)
+                   ?? CdnAssets.FirstOrDefault(x => x.Filename() == search);
         }
     }
 }
