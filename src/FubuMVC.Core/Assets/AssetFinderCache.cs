@@ -20,12 +20,15 @@ namespace FubuMVC.Core.Assets
         private readonly AssetSettings _settings;
         private readonly IFubuApplicationFiles _files;
         private readonly ConcurrentCache<string, Asset> _searches = new ConcurrentCache<string, Asset>();
+        private readonly Lazy<AssetGraph> _graph; 
 
         public AssetFinderCache(AssetSettings settings, IFubuApplicationFiles files)
         {
             _settings = settings;
             _files = files;
             _searches.OnMissing = findAsset;
+
+            _graph = new Lazy<AssetGraph>(findAll);
         }
 
         public Asset FindAsset(string search)
@@ -101,6 +104,11 @@ namespace FubuMVC.Core.Assets
         } 
 
         public AssetGraph FindAll()
+        {
+            return _graph.Value;
+        }
+
+        private AssetGraph findAll()
         {
             var graph = new AssetGraph();
 
