@@ -4,7 +4,6 @@ using System.Linq;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Http;
-using FubuMVC.Core.Resources.Conneg;
 
 namespace FubuMVC.Core.Projections
 {
@@ -29,7 +28,7 @@ namespace FubuMVC.Core.Projections
 
             var childNode = node.AddChild(_name);
             var runner = typeof (ChildRunner<>).CloseAndBuildAs<IChildRunner>(value, value.GetType());
-            runner.Project(context, childNode);
+            runner.Project(context, childNode, node, _name);
 
         }
 
@@ -54,7 +53,7 @@ namespace FubuMVC.Core.Projections
 
     public interface IChildRunner
     {
-        void Project<T>(IProjectionContext<T> context, IMediaNode childNode);
+        void Project<T>(IProjectionContext<T> context, IMediaNode childNode, IMediaNode parentNode, string nodeName);
     }
 
     public class ChildRunner<TValue> : IChildRunner
@@ -66,23 +65,24 @@ namespace FubuMVC.Core.Projections
             _value = value;
         }
 
-        public void Project<T>(IProjectionContext<T> context, IMediaNode childNode)
+        public void Project<T>(IProjectionContext<T> context, IMediaNode childNode, IMediaNode parentNode, string nodeName)
         {
             var connegGraph = context.Service<ConnegSettings>().Graph;
             var projectionType = connegGraph.WriterTypesFor(typeof (TValue))
                 .FirstOrDefault(x => x.CanBeCastTo<IProjection<TValue>>() && x.IsConcreteWithDefaultCtor());
 
-
+            var childContext = context.ContextFor(_value);
 
             if (projectionType == null)
             {
-                throw new Exception("There is no projection available for type " + typeof(TValue).GetFullName());
+                parentNode.SetAttribute(nodeName, _value);
+            }
+            else
+            {
+                var projection = Activator.CreateInstance(projectionType).As<IProjection<TValue>>();
+                projection.Write(childContext, childNode);
             }
 
-            var projection = Activator.CreateInstance(projectionType).As<IProjection<TValue>>();
-
-            var childContext = context.ContextFor(_value);
-            projection.Write(childContext, childNode);
         }
     }
 }
