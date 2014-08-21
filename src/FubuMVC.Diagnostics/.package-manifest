@@ -3,4 +3,7 @@
   <Role>module</Role>
   <Name>FubuMVC.Diagnostics</Name>
   <assembly>FubuMVC.Diagnostics</assembly>
+  <ContentFileSet Include="*.*" Exclude="*.cs;bin/*;obj/*;*.csproj*;packages.config;repositories.config;pak-*.zip;*.sln;data/*;config/*">
+    <DeepSearch>true</DeepSearch>
+  </ContentFileSet>
 </package>
