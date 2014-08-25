@@ -94,7 +94,7 @@ namespace FubuMVC.Core.Assets
                     {
                         return new FubuFile(x, ContentFolder.Application)
                         {
-                            RelativePath = x.PathRelativeTo(appFolder)
+                            RelativePath = x.PathRelativeTo(appFolder).Replace('\\', '/')
                         };
                     });
             }
@@ -138,7 +138,7 @@ namespace FubuMVC.Core.Assets
                     {
                         return new FubuFile(x, ContentFolder.Application)
                         {
-                            RelativePath = x.PathRelativeTo(appFolder)
+                            RelativePath = x.PathRelativeTo(appFolder).Replace('\\', '/')
                         };
                     });
             }

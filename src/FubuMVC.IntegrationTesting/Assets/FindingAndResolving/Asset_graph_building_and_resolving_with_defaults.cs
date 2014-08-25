@@ -45,6 +45,13 @@ namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
         }
 
         [Test]
+        public void all_relative_paths_are_canonical()
+        {
+            AllAssets.Assets.All(x => !x.File.RelativePath.Contains('\\'))
+                .ShouldBeTrue();
+        }
+
+        [Test]
         public void finds_js_files()
         {
             AllAssets.Assets.Any(x => x.Url == "MyLib.js").ShouldBeTrue();
