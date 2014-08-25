@@ -36,7 +36,7 @@ namespace FubuMVC.Diagnostics
         {
             var assets = _assets.FindAll();
 
-            return assets.Assets.Where(x => x.MimeType == mimeType && x.Url.StartsWith("fubu-diagnostics/"));
+            return assets.Assets.Where(x => x.MimeType == mimeType && x.Url.Contains("fubu-diagnostics/"));
         } 
 
         public DashboardModel get__fubu()
