@@ -69,3 +69,4 @@ run_st.cmd
 src/fubu.Docs/snippets
 nupkgs
 src/FubuApp/_templates
+renamer.cs
