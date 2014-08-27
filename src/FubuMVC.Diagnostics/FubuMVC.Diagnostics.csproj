@@ -101,9 +101,6 @@
     <None Include="Dashboard.spark">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="diagnostics.asset.config">
-      <SubType>Designer</SubType>
-    </Content>
     <None Include="Packaging\Packaging.spark" />
     <Content Include="diagnostics\bootstrap.min.css" />
     <Content Include="diagnostics\core-diagnostics.js" />
@@ -153,7 +150,6 @@
     <Compile Include="Packaging\PackageDiagnosticsModel.cs" />
     <Compile Include="Packaging\PackageDiagnosticsRequestModel.cs" />
     <Compile Include="Packaging\PackageLogFubuDiagnostics.cs" />
-    <Compile Include="renamer.cs" />
     <Compile Include="RequestsFubuDiagnostics.cs" />
     <Compile Include="Shared\TypeEndpoint.cs" />
     <Compile Include="Visualization\BehaviorNodeViewModel.cs" />
