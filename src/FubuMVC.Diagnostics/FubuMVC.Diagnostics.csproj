@@ -104,13 +104,10 @@
     <Content Include="diagnostics.asset.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="diagnostics\appdomain.jsx" />
-    <Content Include="diagnostics\assets.jsx" />
     <None Include="Packaging\Packaging.spark" />
     <Content Include="diagnostics\bootstrap.min.css" />
     <Content Include="diagnostics\core-diagnostics.js" />
     <Content Include="diagnostics\fubu-diagnostics.js" />
-    <None Include="diagnostics\navigation-react.jsx" />
     <Content Include="diagnostics\screens.js" />
     <Content Include="fubu-diagnostics\chain-details.html" />
     <Content Include="fubu-diagnostics\model-binding.html" />
@@ -156,6 +153,7 @@
     <Compile Include="Packaging\PackageDiagnosticsModel.cs" />
     <Compile Include="Packaging\PackageDiagnosticsRequestModel.cs" />
     <Compile Include="Packaging\PackageLogFubuDiagnostics.cs" />
+    <Compile Include="renamer.cs" />
     <Compile Include="RequestsFubuDiagnostics.cs" />
     <Compile Include="Shared\TypeEndpoint.cs" />
     <Compile Include="Visualization\BehaviorNodeViewModel.cs" />

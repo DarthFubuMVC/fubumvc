@@ -53,12 +53,17 @@ namespace FubuMVC.Diagnostics
                 return tag;
             }).ToArray();
 
+            var allJS = findAssets(MimeType.Javascript).ToArray();
+            var javascript = allJS.Where(x => !x.Filename.Contains(".jsx."));
+            var react = allJS.Where(x => x.Filename.Contains(".jsx."));
+
+
             return new DashboardModel
             {
                 StyleTags = findAssets(MimeType.Css).Select(x => new StylesheetLinkTag(_request.ToFullUrl(x.Url))).ToArray().ToTagList(),
-                ScriptTags = findAssets(MimeType.Javascript).Select(x => new ScriptTag(_ => _request.ToFullUrl(_), x)).ToArray().ToTagList(),
+                ScriptTags = javascript.Select(x => new ScriptTag(_ => _request.ToFullUrl(_), x)).ToArray().ToTagList(),
                 Router = _routeWriter.WriteJavascriptRoutes("FubuDiagnostics.routes", _routes),
-                ReactTags = findAssets(MimeType.MimeTypeByValue("text/jsx")).Select(x => new ScriptTag(_ => _request.ToFullUrl(_), x).Attr("type", "text/jsx")).ToArray().ToTagList(),
+                ReactTags = react.Select(x => new ScriptTag(_ => _request.ToFullUrl(_), x).Attr("type", "text/jsx")).ToArray().ToTagList(),
                 HtmlTags = htmlTags.ToTagList()
             };
         }

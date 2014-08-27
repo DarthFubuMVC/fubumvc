@@ -140,12 +140,12 @@
     <Script src="diagnostics/core-diagnostics.js"/>
     !{Model.ScriptTags}
     
-    <script src="/diagnostics/endpoints.jsx" type="text/jsx"/>
-    <script src="/diagnostics/requests.jsx" type="text/jsx"/>
-    <script src="/diagnostics/appdomain.jsx" type="text/jsx"/>
-    <script src="/diagnostics/assets.jsx" type="text/jsx"/>
+    <script src="/diagnostics/endpoints.jsx.js" type="text/jsx"/>
+    <script src="/diagnostics/requests.jsx.js" type="text/jsx"/>
+    <script src="/diagnostics/appdomain.jsx.js" type="text/jsx"/>
+    <script src="/diagnostics/assets.jsx.js" type="text/jsx"/>
     !{Model.ReactTags}
-	<script src="/diagnostics/navigation-react.jsx" type="text/jsx"/>
+	<script src="/diagnostics/navigation-react.jsx.js" type="text/jsx"/>
   </body>
 </html>
 
