@@ -181,6 +181,7 @@ namespace FubuMVC.Core.Registration.Nodes
             if (Top == null)
             {
                 Console.WriteLine("Some how or another me, a fully formed BehaviorChain, has no BehaviorNode's, so I'm a just gonna punt on registering services");
+                return;
             }
 
             var objectDef = buildObjectDef();
