@@ -47,7 +47,7 @@ namespace FubuMVC.Core.Configuration
             {
                 var attacher = new ViewAttachmentWorker(t.Result, graph.Settings.Get<ViewAttachmentPolicy>());
                 attacher.Configure(graph);
-            }).Wait(10.Seconds());
+            }).Wait();
 
 
             PackageRegistry.Timer.Record("Explicit Configuration", () => config.Global.Explicits.RunActions(graph));
