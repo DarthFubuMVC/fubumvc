@@ -7,6 +7,7 @@ using Bottles;
 using Bottles.Services;
 using FubuCore;
 using FubuCore.Binding;
+using FubuCore.Reflection;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Diagnostics;
@@ -222,7 +223,8 @@ namespace FubuMVC.Core
 
         private void applyFubuExtensionsFromPackages()
         {
-            var importers = PackageRegistry.PackageAssemblies.Select(
+            // THIS IS NEW, ONLY ASSEMBLIES MARKED AS [FubuModule] will be scanned
+            var importers = PackageRegistry.PackageAssemblies.Where(a => a.HasAttribute<FubuModuleAttribute>()).Select(
                 assem => {
                     return Task.Factory.StartNew(() => {
                         return assem.FindAllExtensions();
