@@ -13,6 +13,12 @@ namespace FubuMVC.IntegrationTesting.Authorization
     [TestFixture]
     public class end_to_end_authorization_tester : SharedHarnessContext
     {
+        [TearDown]
+        public void TearDown()
+        {
+            SelfHostHarness.Server.Services.Get<SecuritySettings>().Reset();
+        }
+
         [Test]
         public void call_an_endpoint_that_is_not_authorized_and_get_the_403()
         {
@@ -20,6 +26,21 @@ namespace FubuMVC.IntegrationTesting.Authorization
 
             endpoints.Get<AuthorizedEndpoint>(x => x.get_authorized_text())
                      .StatusCodeShouldBe(HttpStatusCode.Forbidden);
+        }
+
+        [Test]
+        public void call_an_endpoint_that_is_authorized_with_authorization_disabled()
+        {
+            AuthorizationCheck.IsAuthorized = false;
+
+            SelfHostHarness.Host.Scenario(_ => {
+                _.Security.AuthorizationEnabled = false;
+                _.Get.Action<AuthorizedEndpoint>(x => x.get_authorized_text());
+
+                
+
+                _.StatusCodeShouldBeOk();
+            });
         }
 
         [Test]

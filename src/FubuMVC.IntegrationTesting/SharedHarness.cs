@@ -96,6 +96,7 @@ namespace FubuMVC.IntegrationTesting
     public static class SelfHostHarness
     {
         private static EmbeddedFubuMvcServer _server;
+        private static InMemoryHost _host;
 
         public static void Start()
         {
@@ -105,6 +106,26 @@ namespace FubuMVC.IntegrationTesting
         public static string GetRootDirectory()
         {
             return AppDomain.CurrentDomain.BaseDirectory.ParentDirectory().ParentDirectory();
+        }
+
+        public static EmbeddedFubuMvcServer Server
+        {
+            get
+            {
+                if (_server == null) Recycle();
+                
+                return _server;
+            }
+        }
+
+        public static InMemoryHost Host
+        {
+            get
+            {
+                if (_server == null) Recycle();
+                
+                return _host;
+            }
         }
 
         public static string Root
@@ -143,6 +164,7 @@ namespace FubuMVC.IntegrationTesting
             var runtime = bootstrapRuntime();
 
             _server = new EmbeddedFubuMvcServer(runtime, GetRootDirectory(), port);
+            _host = new InMemoryHost(runtime);
         }
 
         private static FubuRuntime bootstrapRuntime()

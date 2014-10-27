@@ -12,6 +12,7 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Security;
 using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Http.Scenarios
@@ -20,6 +21,7 @@ namespace FubuMVC.Core.Http.Scenarios
     {
         private readonly IUrlRegistry _urls;
         private readonly OwinHttpRequest _request;
+        private readonly SecuritySettings _security;
         private readonly Lazy<OwinHttpResponse> _response;
         private readonly Lazy<string> _bodyText;
         private readonly ScenarioAssertionException _assertion = new ScenarioAssertionException();
@@ -31,10 +33,11 @@ namespace FubuMVC.Core.Http.Scenarios
             _assertion.AssertValid();
         }
 
-        public Scenario(IUrlRegistry urls, OwinHttpRequest request, Func<OwinHttpRequest, OwinHttpResponse> runner)
+        public Scenario(IUrlRegistry urls, OwinHttpRequest request, Func<OwinHttpRequest, OwinHttpResponse> runner, SecuritySettings security)
         {
             _urls = urls;
             _request = request;
+            _security = security;
             _response = new Lazy<OwinHttpResponse>(() => {
                 var response = runner(request);
 
@@ -76,6 +79,11 @@ namespace FubuMVC.Core.Http.Scenarios
         }
 
         public IUrlExpression Head { get; private set; }
+
+        public SecuritySettings Security
+        {
+            get { return _security; }
+        }
 
         public void JsonData<T>(T input, string method = "POST", string contentType = "application/json") where T : class
         {

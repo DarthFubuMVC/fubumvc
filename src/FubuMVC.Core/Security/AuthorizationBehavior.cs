@@ -12,13 +12,14 @@ namespace FubuMVC.Core.Security
         private readonly IAuthorizationNode _authorization;
         private readonly IFubuRequestContext _context;
         private readonly IAuthorizationFailureHandler _failureHandler;
+        private readonly SecuritySettings _settings;
 
-        public AuthorizationBehavior(IAuthorizationNode authorization, IFubuRequestContext context,
-            IAuthorizationFailureHandler failureHandler)
+        public AuthorizationBehavior(IAuthorizationNode authorization, IFubuRequestContext context, IAuthorizationFailureHandler failureHandler, SecuritySettings settings)
         {
             _authorization = authorization;
             _context = context;
             _failureHandler = failureHandler;
+            _settings = settings;
         }
 
         public IEnumerable<IAuthorizationPolicy> Policies
@@ -31,6 +32,12 @@ namespace FubuMVC.Core.Security
 
         protected override void invoke(Action action)
         {
+            if (!_settings.AuthorizationEnabled)
+            {
+                action();
+                return;
+            }
+
             var access = _authorization.IsAuthorized(_context);
 
             // If authorized, continue to the next behavior in the 

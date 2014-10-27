@@ -416,6 +416,7 @@
     <Compile Include="Runtime\IExceptionHandler.cs" />
     <Compile Include="Runtime\IFubuRouteHandler.cs" />
     <Compile Include="Security\SecurityServicesRegistry.cs" />
+    <Compile Include="Security\SecuritySettings.cs" />
     <Compile Include="SessionState\CookieFlashProvider.cs" />
     <Compile Include="SymmetricJsonAttribute.cs" />
     <Compile Include="TagAttribute.cs" />

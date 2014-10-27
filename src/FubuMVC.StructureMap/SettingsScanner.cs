@@ -39,6 +39,7 @@ namespace FubuMVC.StructureMap
     {
         public SettingsInstance() : base("Building {0} from application settings".ToFormat(typeof(T).FullName), c => c.GetInstance<ISettingsProvider>().SettingsFor<T>())
         {
+            LifecycleIs<SingletonLifecycle>();
         }
     }
 }

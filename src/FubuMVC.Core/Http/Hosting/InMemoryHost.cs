@@ -9,6 +9,7 @@ using FubuMVC.Core.Http.Scenarios;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime.Files;
+using FubuMVC.Core.Security;
 using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Http.Hosting
@@ -92,7 +93,9 @@ namespace FubuMVC.Core.Http.Hosting
             var request = OwinHttpRequest.ForTesting();
             request.FullUrl(RootUrl);
 
-            var scenario = new Scenario(_runtime.Factory.Get<IUrlRegistry>(), request, Send);
+            var securitySettings = _services.GetInstance<SecuritySettings>();
+            securitySettings.Reset();
+            var scenario = new Scenario(_runtime.Factory.Get<IUrlRegistry>(), request, Send, securitySettings);
             return scenario;
         }
 
