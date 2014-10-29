@@ -90,6 +90,7 @@
     <Compile Include="IServiceFactory_Compliance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\SettingIntegrationTester.cs" />
+    <Compile Include="using_child_containers_for_isolated_overrides.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ripple.dependencies.config" />

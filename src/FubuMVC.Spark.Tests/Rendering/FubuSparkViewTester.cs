@@ -11,8 +11,21 @@ using Rhino.Mocks;
 
 namespace FubuMVC.Spark.Tests.Rendering
 {
+    public class MySparkView : FubuSparkView<PersonViewModel>
+    {
+        public override void Render()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Guid GeneratedViewId
+        {
+            get { throw new NotImplementedException(); }
+        }
+    }
+
     [TestFixture]
-    public class FubuSparkViewTester : InteractionContext<FubuSparkView<PersonViewModel>>
+    public class FubuSparkViewTester : InteractionContext<MySparkView>
     {
         private IServiceLocator _serviceLocator;
         private IUrlRegistry _urlRegistry;
