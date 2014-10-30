@@ -73,7 +73,7 @@ namespace FubuMVC.Diagnostics
     {
         public DiagnosticJavascriptRoutes(BehaviorGraph graph)
         {
-            graph.Behaviors.OfType<DiagnosticChain>().Each(Add);
+            graph.Behaviors.OfType<DiagnosticChain>().Where(x => x.Route.AllowedHttpMethods.Any()).Each(Add);
         }
     }
 
