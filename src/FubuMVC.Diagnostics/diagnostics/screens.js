@@ -33,7 +33,12 @@ function ReactScreen(config){
 		self.activate = function(pane, params){
 			self.pane = pane;
 		
-			FubuDiagnostics.get(config.route, params, function(data){
+			FubuDiagnostics.get(config.route, params, function (data) {
+			    if (typeof data == 'string') {
+			        data = JSON.parse(data);
+			    }
+
+
 				data = self.constructData(data);
 				self.buildComponent(pane, data);
 			});
