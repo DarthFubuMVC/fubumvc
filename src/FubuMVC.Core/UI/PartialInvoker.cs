@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FubuCore;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
@@ -54,6 +55,21 @@ namespace FubuMVC.Core.UI
                 output = invokeWrapped(requestType, categoryOrHttpMethod);
             }
             return output;
+        }
+
+        public string InvokeAsHtml(object model)
+        {
+            var current = _request.Get<CurrentMimeType>();
+            _request.Set(new CurrentMimeType(MimeType.HttpFormMimetype, MimeType.Html.Value));
+
+            try
+            {
+                return InvokeObject(model);
+            }
+            finally
+            {
+                _request.Set(current);
+            }
         }
 
         private string invokeWrapped(Type requestType, string categoryOrHttpMethod = null)

@@ -169,6 +169,7 @@
     <Compile Include="Packaging\link_assembly_bottle_marked_as_FubuModule_does_not_blow_chunks.cs" />
     <Compile Include="Packaging\reading_files_and_contents.cs" />
     <Compile Include="Packaging\unlinking_a_bottle_from_the_command_line.cs" />
+    <Compile Include="Partials\invoke_as_html_in_endpoint.cs" />
     <Compile Include="performance_timing_smoke_tester.cs" />
     <Compile Include="Projections\adaptive_property_type_projection_Tester.cs" />
     <Compile Include="Projections\end_to_end_json_serialization.cs" />
