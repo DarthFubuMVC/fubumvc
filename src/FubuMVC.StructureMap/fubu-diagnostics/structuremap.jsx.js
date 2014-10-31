@@ -49,6 +49,10 @@ function StructureMapSearch(){
 	self.findMatches = function(query, callback){
 		if (self.options == null){
 			FubuDiagnostics.get('StructureMap:search_options', {}, function(data){
+				if (typeof data == 'string'){
+					data = JSON.parse(data);
+				}
+			
 				self.options = data;
 				callback(self.find(query));
 			});
@@ -138,7 +142,7 @@ var Summary = React.createClass({
 
 var InstanceRow = React.createClass({
 	render: function(){
-		var url = '#structuremap/buildplan/' + this.props.key;
+		var url = '#structuremap/buildplan/' + this.props._key;
 		var familyUrl = '#structuremap/search-results/Plugin-Type/' + this.props.pluginType;
 	
 		return (
@@ -156,6 +160,7 @@ var InstanceRow = React.createClass({
 var InstanceResults = React.createClass({
 	render: function(){
 		var items = this.props.instances.map(function(instance, i){
+			instance._key = instance.key;
 			return InstanceRow(instance);
 		});
 		
