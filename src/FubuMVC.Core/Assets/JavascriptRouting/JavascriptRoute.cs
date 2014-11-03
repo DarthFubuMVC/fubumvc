@@ -13,7 +13,7 @@ namespace FubuMVC.Core.Assets.JavascriptRouting
         public string Method;
         public Func<IChainResolver, BehaviorChain> Finder;
 
-        public void WriteNode(IMediaNode node, IHttpRequest request, IChainResolver resolver)
+        public RoutedChain FindChain(IChainResolver resolver)
         {
             var chain = Finder(resolver) as RoutedChain;
 
@@ -21,12 +21,7 @@ namespace FubuMVC.Core.Assets.JavascriptRouting
             {
                 throw new Exception("Unable to find a routed chain for a Javascript route named " + Name);
             }
-
-            node.SetAttribute("name", Name);
-            node.SetAttribute("method", Method);
-            node.SetAttribute("url", request.ToFullUrl(chain.GetRoutePattern()));
-            if (chain.Route.Input != null)
-                node.SetAttribute("params", chain.Route.Input.RouteParameters.Select(x => x.Name).ToArray());
+            return chain;
         }
     }
 }

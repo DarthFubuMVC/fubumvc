@@ -8,6 +8,7 @@ using FubuCore.Formatting;
 using FubuCore.Logging;
 using FubuCore.Reflection;
 using FubuMVC.Core.Assets;
+using FubuMVC.Core.Assets.JavascriptRouting;
 using FubuMVC.Core.Assets.Templates;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Continuations;
@@ -111,6 +112,8 @@ namespace FubuMVC.Core
             {
                 SetServiceIfNone<IAssetTagBuilder, AssetTagBuilder>();
             }
+
+            SetServiceIfNone<IJavascriptRouteData, JavascriptRouteData>();
 
             SetServiceIfNone(typeof(IValues<>), typeof(SimpleValues<>));
             SetServiceIfNone(typeof(IValueSource<>), typeof(ValueSource<>));
