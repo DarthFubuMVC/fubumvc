@@ -61,7 +61,7 @@ namespace FubuMVC.Core.Http.Owin
             else
             {
                 AppendHeader(HttpResponseHeaders.ContentLength, fileInfo.Length.ToString(CultureInfo.InvariantCulture));
-                using (var fileStream = new FileStream(file, FileMode.Open))
+                using (var fileStream = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 {
                     Write(stream => fileStream.CopyTo(stream));
                 }
