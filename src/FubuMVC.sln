@@ -1,16 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Core", "FubuMVC.Core\FubuMVC.Core.csproj", "{E18FD922-0E7A-49CD-B89F-473826077B9D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Tests", "FubuMVC.Tests\FubuMVC.Tests.csproj", "{FEB91F9F-ECE2-480C-B39C-A44BBF1F7B01}"
-EndProject
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__Build_Utilities", "__Build_Utilities", "{7AC4D197-535A-4686-8E21-18257B2ADB3A}"
 	ProjectSection(SolutionItems) = preProject
 		..\packaging\nuget\fubumvc.nuspec = ..\packaging\nuget\fubumvc.nuspec
 		..\InstallGems.bat = ..\InstallGems.bat
 		..\rakefile.rb = ..\rakefile.rb
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{90ECB723-0F2C-40A1-9055-6B78675CF85E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ViewEngines", "ViewEngines", "{5600609A-D061-40E7-9CB2-92D3350EA31B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Core", "FubuMVC.Core\FubuMVC.Core.csproj", "{E18FD922-0E7A-49CD-B89F-473826077B9D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Tests", "FubuMVC.Tests\FubuMVC.Tests.csproj", "{FEB91F9F-ECE2-480C-B39C-A44BBF1F7B01}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.StructureMap", "FubuMVC.StructureMap\FubuMVC.StructureMap.csproj", "{ABFEA520-820C-4B77-9015-6A09E24252FA}"
 EndProject
@@ -19,8 +25,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPackage2", "TestPackage2\TestPackage2.csproj", "{290ECAD5-5086-4020-B137-C6AFA7C50874}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssemblyPackage", "AssemblyPackage\AssemblyPackage.csproj", "{99DBA82A-E811-4DA0-983C-12E8317F8642}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{90ECB723-0F2C-40A1-9055-6B78675CF85E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.IntegrationTesting", "FubuMVC.IntegrationTesting\FubuMVC.IntegrationTesting.csproj", "{022C7B24-4417-493F-9F70-E3F4035FBEDA}"
 EndProject
@@ -57,8 +61,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fubu.Testing", "fubu.Testing\fubu.Testing.csproj", "{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuApp", "FubuApp\FubuApp.csproj", "{8A284565-46C1-47ED-A44D-C4BF8384B9E2}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ViewEngines", "ViewEngines", "{5600609A-D061-40E7-9CB2-92D3350EA31B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fubu.Docs", "fubu.Docs\fubu.Docs.csproj", "{31845855-A4E7-411C-BA50-007BCD1816E0}"
 EndProject
@@ -455,9 +457,9 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{A88246A6-2A7A-4964-902E-A5A7FDAAA9D4} = {5600609A-D061-40E7-9CB2-92D3350EA31B}
 		{E046AC32-25C3-4A63-A5DB-FD9F0012F2F2} = {5600609A-D061-40E7-9CB2-92D3350EA31B}
 		{9D6BF559-6461-4EAC-BB16-F976FF43E8DA} = {5600609A-D061-40E7-9CB2-92D3350EA31B}
 		{7F5C625C-603B-4D8B-97A8-BCBF6D8BC1FC} = {5600609A-D061-40E7-9CB2-92D3350EA31B}
-		{A88246A6-2A7A-4964-902E-A5A7FDAAA9D4} = {5600609A-D061-40E7-9CB2-92D3350EA31B}
 	EndGlobalSection
 EndGlobal
