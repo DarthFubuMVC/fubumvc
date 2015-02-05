@@ -12,7 +12,7 @@ namespace FubuMVC.Core.Assets
     public static class AssetFilePageExtensions
     {
         /// <summary>
-        ///   Renders an HTML img tag to display the specified file from the application's image folder
+        ///   Creates an HTML img tag to display the specified file from the application's image folder
         /// </summary>
         /// <param name = "viewPage"></param>
         /// <param name = "fileOrUrl">The name of the image file, relative to the applications' image folder</param>
@@ -38,7 +38,7 @@ namespace FubuMVC.Core.Assets
         }
 
         /// <summary>
-        /// Writes an <image> tag for the named image using the url from the asset pipeline
+        /// Creates an <image> tag for the named image using the url from the asset pipeline
         /// *Same* functionality as Image()
         /// </summary>
         /// <param name="page"></param>
@@ -51,7 +51,7 @@ namespace FubuMVC.Core.Assets
 
 
         /// <summary>
-        /// Writes out &lt;script&gt; tags for each script
+        /// Creates &lt;script&gt; tags for each script
         /// </summary>
         /// <param name="page"></param>
         /// <param name="scripts"></param>
@@ -62,7 +62,7 @@ namespace FubuMVC.Core.Assets
 
 
         /// <summary>
-        /// Writes out &lt;link&gt; tags for each stylesheet
+        /// Creates &lt;link&gt; tags for each stylesheet
         /// </summary>
         /// <param name="page"></param>
         /// <param name="cssNames"></param>
@@ -73,7 +73,7 @@ namespace FubuMVC.Core.Assets
 
 
         /// <summary>
-        /// Writes out a script tag if the named scripts can be found.
+        /// Creates a script tag if the named scripts can be found.
         /// </summary>
         /// <param name="page"></param>
         /// <param name="scripts"></param>
@@ -91,7 +91,7 @@ namespace FubuMVC.Core.Assets
 
 
         /// <summary>
-        /// Writes out link tags for the named stylesheets if they exist
+        /// Creates link tags for the named stylesheets if they exist
         /// </summary>
         /// <param name="page"></param>
         /// <param name="stylesheets"></param>
