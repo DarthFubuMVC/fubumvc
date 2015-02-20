@@ -27,7 +27,15 @@ namespace FubuMVC.Core.Http.AspNet
 
         public string RelativeUrl()
         {
-            return _request.AppRelativeCurrentExecutionFilePath;
+            var url = _request.AppRelativeCurrentExecutionFilePath;
+            
+            var querystring = _request.Url.Query;
+            if (querystring.IsNotEmpty())
+            {
+                url += querystring;
+            }
+
+            return url;
         }
 
         public string FullUrl()

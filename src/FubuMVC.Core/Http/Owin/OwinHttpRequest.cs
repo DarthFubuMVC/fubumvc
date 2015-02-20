@@ -94,7 +94,15 @@ namespace FubuMVC.Core.Http.Owin
 
         public string RelativeUrl()
         {
-            return _environment.Get<string>(OwinConstants.RequestPathKey).TrimStart('/');
+            var url = _environment.Get<string>(OwinConstants.RequestPathKey).TrimStart('/');
+
+            var queryString = get<string>(OwinConstants.RequestQueryStringKey);
+            if (queryString.IsNotEmpty())
+            {
+                url = url + "?" + queryString;
+            }
+
+            return url;
         }
 
         public void AppendCookie(Cookie cookie)
@@ -136,11 +144,20 @@ namespace FubuMVC.Core.Http.Owin
 
         public OwinHttpRequest FullUrl(string url)
         {
-            var uri = new Uri(url);
+            var parts = url.Split('?');
+            var root = parts.First();
+
+            var uri = new Uri(root);
             append(OwinConstants.RequestSchemeKey, uri.Scheme);
             append(OwinConstants.RequestPathBaseKey, string.Empty);
             Header(HttpRequestHeaders.Host, uri.Host);
             append(OwinConstants.RequestPathKey, uri.AbsolutePath);
+
+            if (parts.Length == 2)
+            {
+                append(OwinConstants.RequestQueryStringKey, parts.Last());
+            }
+            
 
             return this;
         }

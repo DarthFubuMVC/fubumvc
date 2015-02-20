@@ -31,6 +31,16 @@ namespace FubuMVC.Tests.Http.Owin
             request.RelativeUrl().ShouldEqual("foo/bar");
         }
 
+
+        [Test]
+        public void server_root_round_trip_with_querystring()
+        {
+            request.FullUrl("http://server/foo/bar?foo=bar");
+            request.FullUrl().ShouldEqual("http://server/foo/bar?foo=bar");
+
+            request.RelativeUrl().ShouldEqual("foo/bar?foo=bar");
+        }
+
         [Test]
         public void has_negative()
         {
