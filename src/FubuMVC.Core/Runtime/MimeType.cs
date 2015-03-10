@@ -36,6 +36,7 @@ namespace FubuMVC.Core.Runtime
         public static readonly MimeType Any = New("*/*");
         public static readonly MimeType TrueTypeFont = New("application/octet-stream", ".ttf");
         public static readonly MimeType WebOpenFont = New("application/font-woff", ".woff");
+        public static readonly MimeType WebOpenFont2 = New("application/font-woff2", ".woff2");
         public static readonly MimeType EmbeddedOpenType = New("application/vnd.ms-fontobject", ".eot");
         public static readonly MimeType Svg = New("image/svg+xml", ".svg");
 
@@ -446,6 +447,7 @@ namespace FubuMVC.Core.Runtime
                 {".wmx", "video/x-ms-wmx"},
                 {".wmz", "application/x-ms-wmz"},
                 {".woff", "application/font-woff"},
+                {".woff2", "application/font-woff2"},
                 {".wps", "application/vnd.ms-works"},
                 {".wri", "application/x-mswrite"},
                 {".wrl", "x-world/x-vrml"},

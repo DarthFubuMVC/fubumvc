@@ -16,6 +16,16 @@ namespace FubuMVC.IntegrationTesting.Assets
         }
 
         [Test]
+        public void read_WOFF2_file()
+        {
+            TestHost.Scenario(_ => {
+                _.Get.Url("content/styles/fonts/woff2_font.woff2");
+                _.StatusCodeShouldBeOk();
+                _.ContentTypeShouldBe("application/font-woff2");
+            });
+        }
+
+        [Test]
         public void read_EOT_file()
         {
             TestHost.Scenario(_ =>
