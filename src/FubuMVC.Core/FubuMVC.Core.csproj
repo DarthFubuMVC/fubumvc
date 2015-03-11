@@ -340,6 +340,10 @@
     <Compile Include="Resources\Hypermedia\LinkExpression.cs" />
     <Compile Include="Resources\Hypermedia\LinkSource.cs" />
     <Compile Include="Resources\Hypermedia\LinksSource.cs" />
+    <Compile Include="Runtime\Aggregation\AggregateRequest.cs" />
+    <Compile Include="Runtime\Aggregation\Aggregator.cs" />
+    <Compile Include="Runtime\Aggregation\IAggregator.cs" />
+    <Compile Include="Runtime\Aggregation\IAggregatorSource.cs" />
     <Compile Include="Runtime\AjaxAwareJsonSerializer.cs" />
     <Compile Include="Runtime\Conditionals\IConditionalService.cs" />
     <Compile Include="Runtime\DataContractJsonSerializer.cs" />

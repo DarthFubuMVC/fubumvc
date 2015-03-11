@@ -104,6 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AboutEndpointIntegrationTester.cs" />
+    <Compile Include="Aggregation\aggregator_integration_tester.cs" />
     <Compile Include="Ajax\AjaxContinuationProcessingTester.cs" />
     <Compile Include="Assets\AssetIntegrationContext.cs" />
     <Compile Include="Assets\asset_writing_headers_are_configurable.cs" />

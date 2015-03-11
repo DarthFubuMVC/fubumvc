@@ -75,3 +75,5 @@ src/Specifications/local.config
 stresults.htm
 src/Specifications/phantomjs.exe.version
 node_modules
+UpgradeLog*.htm
+

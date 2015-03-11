@@ -26,6 +26,7 @@ using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Routing;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Runtime.Aggregation;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.SessionState;
 using FubuMVC.Core.UI;
@@ -42,6 +43,7 @@ namespace FubuMVC.Core
         {
             AddService<IDeactivator, MiddlewareDeactivator>();
 
+            SetServiceIfNone<IAggregator, Aggregator>();
             SetServiceIfNone<IRequestCompletion, RequestCompletion>();
 
             SetServiceIfNone<IRequestData, FubuMvcRequestData>();
