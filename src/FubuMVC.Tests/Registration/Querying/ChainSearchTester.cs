@@ -456,8 +456,7 @@ namespace FubuMVC.Tests.Registration.Querying
                                   Type = typeof(SimpleInputModel)
                               };
 
-            Debug.WriteLine(chainSearch);
-
+ 
 
             chainSearch.FindCandidatesByType(theGraph).Single().Select(x => x.FirstCall().Description)
             .ShouldHaveTheSameElementsAs("OneController.Query(SimpleInputModel model) : SimpleOutputModel", "TwoController.NotQuery(SimpleInputModel model) : SimpleOutputModel");

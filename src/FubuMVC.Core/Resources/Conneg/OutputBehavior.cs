@@ -9,21 +9,32 @@ using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
-    public class OutputBehavior<T> : BasicBehavior where T : class
+    public class OutputBehavior<T> : IActionBehavior where T : class
     {
         private readonly IFubuRequestContext _context;
         private readonly IMediaCollection<T> _media;
         private readonly IResourceNotFoundHandler _notFoundHandler;
 
-        public OutputBehavior(IFubuRequestContext context, IMediaCollection<T> media, IResourceNotFoundHandler notFoundHandler) : base(PartialBehavior.Executes)
+        public OutputBehavior(IFubuRequestContext context, IMediaCollection<T> media, IResourceNotFoundHandler notFoundHandler) 
         {
             _context = context;
             _media = media;
             _notFoundHandler = notFoundHandler;
         }
 
-        protected override void afterInsideBehavior()
+        public IActionBehavior InsideBehavior { get; set; }
+
+
+
+        public void Invoke()
         {
+            if (InsideBehavior != null) InsideBehavior.Invoke();
+            Write();
+        }
+
+        public void InvokePartial()
+        {
+            if (InsideBehavior != null) InsideBehavior.InvokePartial();
             Write();
         }
 

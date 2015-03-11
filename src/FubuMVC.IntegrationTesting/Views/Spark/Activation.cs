@@ -35,8 +35,6 @@ namespace FubuMVC.IntegrationTesting.Views.Spark
         [Test]
         public void the_services_and_model_are_attached_while_running_the_view()
         {
-            Views.Views.Each(x => Debug.WriteLine(x.ViewModel));
-
             Scenario.Get.Action<ActivationEndpoint>(x => x.get_model());
             Scenario.ContentShouldContain("the model is named Jeremy");
 
