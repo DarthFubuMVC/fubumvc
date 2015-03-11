@@ -4,6 +4,7 @@ using FubuCore;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
+using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.Urls;
@@ -75,8 +76,16 @@ namespace FubuMVC.Core.UI
 
         public void InvokeFast(BehaviorChain chain)
         {
-            var partial = _factory.BuildPartial(chain);
-
+            _request.Set(OutputPartialBehavior.None);
+            try
+            {
+                var partial = _factory.BuildPartial(chain);
+                partial.InvokePartial();
+            }
+            finally
+            {
+                _request.Set(OutputPartialBehavior.Write);
+            }
         }
 
         private string invokeWrapped(Type requestType, string categoryOrHttpMethod = null)

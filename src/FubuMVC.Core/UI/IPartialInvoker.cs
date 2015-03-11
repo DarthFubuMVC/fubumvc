@@ -9,6 +9,11 @@ namespace FubuMVC.Core.UI
 
         string InvokeAsHtml(object model);
 
+        /// <summary>
+        /// Invokes a partial request with the conneg output disabled for
+        /// the partial request
+        /// </summary>
+        /// <param name="chain"></param>
         void InvokeFast(BehaviorChain chain);
     }
 }
