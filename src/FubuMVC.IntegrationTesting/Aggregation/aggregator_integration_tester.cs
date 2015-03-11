@@ -67,6 +67,20 @@ namespace FubuMVC.IntegrationTesting.Aggregation
             });
         }
 
+
+        [Test]
+        public void can_still_call_a_data_action_independently()
+        {
+            TestHost.Scenario(_ =>
+            {
+                _.Get.Input(new AggregationEndpoint.Query1{Name = "Joe"});
+
+                var json = _.Response.Body.ReadAsText();
+
+                var resource = JsonUtil.Get<AggregationEndpoint.Resource1>(json);
+                resource.Name.ShouldEqual("Joe");
+            });
+        }
     }
 
     public class AggregationEndpoint
