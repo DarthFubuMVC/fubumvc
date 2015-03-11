@@ -100,6 +100,13 @@ namespace FubuMVC.IntegrationTesting.Aggregation
 
         public string[] get_aggregation()
         {
+            // The call to IAggregator.Fetch() will return an array
+            // of objects. My assumption now is that you'd do this in
+            // the main endpoint method, tack the data store data on
+            // to the view model sent to the main spark view, and
+            // render it to the view with a page helper there.
+            // This is so common now that I think we put a json variable
+            // helper into FubuMVC.Core. 
             return _aggregator.Fetch(_ =>
             {
                 // By an input query
