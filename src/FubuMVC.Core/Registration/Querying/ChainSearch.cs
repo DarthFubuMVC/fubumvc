@@ -118,6 +118,11 @@ namespace FubuMVC.Core.Registration.Querying
             {
                 yield return methodFilter(graph.Behaviors.Where(x => x.Calls.Any(c => c.HandlerType == Type)));
             }
+
+            if (TypeMode == TypeSearchMode.Any || TypeMode == TypeSearchMode.ResourceModelOnly)
+            {
+                yield return methodFilter(graph.Behaviors.Where(x => x.Calls.Any(c => c.ResourceType() == Type)));
+            }
         }
 
         public IEnumerable<BehaviorChain> FindForCategory(IEnumerable<BehaviorChain> chains)

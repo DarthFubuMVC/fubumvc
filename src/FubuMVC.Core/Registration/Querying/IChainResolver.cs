@@ -47,6 +47,7 @@ namespace FubuMVC.Core.Registration.Querying
     {
         Any,
         InputModelOnly,
-        HandlerOnly
+        HandlerOnly,
+        ResourceModelOnly
     }
 }

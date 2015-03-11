@@ -470,12 +470,34 @@ namespace FubuMVC.Tests.Registration.Querying
                 Type = typeof (SimpleInputModel)
             }.FindCandidatesByType(theGraph);
 
-            candidates.Count().ShouldEqual(2);
+            candidates.Count().ShouldEqual(3);
 
             candidates.First().Select(x => x.FirstCall().Description)
                 .ShouldHaveTheSameElementsAs("OneController.Query(SimpleInputModel model) : SimpleOutputModel", "TwoController.NotQuery(SimpleInputModel model) : SimpleOutputModel");
 
-            candidates.Last().Single().FirstCall().Description.ShouldEqual("SimpleInputModel.DoSomething(InputModel2 model) : void");
+        }
+
+        [Test]
+        public void find_by_any_looks_at_resource_model_first_then_handler_type_second()
+        {
+            var candidates = new ChainSearch
+            {
+                TypeMode = TypeSearchMode.ResourceModelOnly,
+                Type = typeof(SimpleOutputModel)
+            }.FindCandidatesByType(theGraph);
+
+            candidates.First().Select(x => x.FirstCall().Description)
+                .ShouldHaveTheSameElementsAs(
+                "OneController.Report() : SimpleOutputModel",
+                "OneController.Query(SimpleInputModel model) : SimpleOutputModel", 
+                "TwoController.Report() : SimpleOutputModel",
+                "TwoController.NotQuery(SimpleInputModel model) : SimpleOutputModel"
+                
+                
+                
+                );
+
+
         }
 
         [Test]
@@ -486,12 +508,12 @@ namespace FubuMVC.Tests.Registration.Querying
                 TypeMode = TypeSearchMode.Any,
                 Type = typeof(SimpleInputModel),
                 MethodName = "DoSomething"
-            }.FindCandidatesByType(theGraph);
+            }.FindCandidatesByType(theGraph).SelectMany(x => x);
+
+            candidates.Any(x => x.FirstCall().Description == "SimpleInputModel.DoSomething(InputModel2 model) : void")
+                .ShouldBeTrue();
 
 
-
-            candidates.First().Any().ShouldBeFalse();
-            candidates.Last().Single().FirstCall().Description.ShouldEqual("SimpleInputModel.DoSomething(InputModel2 model) : void");
         }
 
         [Test]
@@ -502,14 +524,14 @@ namespace FubuMVC.Tests.Registration.Querying
                 TypeMode = TypeSearchMode.Any,
                 Type = typeof(SimpleInputModel),
                 MethodName = "Query"
-            }.FindCandidatesByType(theGraph);
+            }.FindCandidatesByType(theGraph).SelectMany(x => x);
 
+            
 
-
-            candidates.First().Select(x => x.FirstCall().Description)
+            candidates.Select(x => x.FirstCall().Description)
                 .ShouldHaveTheSameElementsAs("OneController.Query(SimpleInputModel model) : SimpleOutputModel");
 
-            candidates.Last().Any().ShouldBeFalse();
+ 
         }
 
 
