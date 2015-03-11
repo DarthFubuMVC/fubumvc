@@ -9,16 +9,16 @@ using System.Linq;
 
 namespace FubuMVC.Core.Continuations
 {
-    public class ContinuationHandler : BasicBehavior, IContinuationDirector
+    public class ContinuationHandler : IActionBehavior, IContinuationDirector
     {
         private readonly IPartialFactory _factory;
         private readonly IChainResolver _resolver;
         private readonly IUrlRegistry _registry;
         private readonly IFubuRequest _request;
         private readonly IOutputWriter _writer;
+        private Action _invokeNext = () => { };
 
         public ContinuationHandler(IUrlRegistry registry, IOutputWriter writer, IFubuRequest request, IPartialFactory factory, IChainResolver resolver)
-            : base(PartialBehavior.Executes)
         {
             _registry = registry;
             _writer = writer;
@@ -27,10 +27,33 @@ namespace FubuMVC.Core.Continuations
             _resolver = resolver;
         }
 
+        public IActionBehavior InsideBehavior { get; set; }
 
         public void InvokeNextBehavior()
         {
-            if (InsideBehavior != null) InsideBehavior.Invoke();
+            _invokeNext();
+        }
+
+        public void Invoke()
+        {
+            if (InsideBehavior != null)
+            {
+                _invokeNext = () => InsideBehavior.Invoke();
+            }
+
+            var continuation = FindContinuation();
+            continuation.Process(this);
+        }
+
+        public void InvokePartial()
+        {
+            if (InsideBehavior != null)
+            {
+                _invokeNext = () => InsideBehavior.InvokePartial();
+            }
+
+            var continuation = FindContinuation();
+            continuation.Process(this);
         }
 
         public void RedirectTo(object input, string categoryOrHttpMethod = null)
@@ -73,12 +96,7 @@ namespace FubuMVC.Core.Continuations
             _writer.WriteResponseCode(code);
         }
 
-        protected override DoNext performInvoke()
-        {
-            var continuation = FindContinuation();
-            continuation.Process(this);
-            return DoNext.Stop;
-        }
+
 
         public FubuContinuation FindContinuation()
         {

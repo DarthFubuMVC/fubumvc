@@ -26,13 +26,6 @@ namespace FubuMVC.Tests.Continuations
             ClassUnderTest.InsideBehavior = MockFor<IActionBehavior>();
         }
 
-        [Test]
-        public void invoke_next_behavior()
-        {
-            ClassUnderTest.InvokeNextBehavior();
-
-            MockFor<IActionBehavior>().AssertWasCalled(x => x.Invoke());
-        }
 
         [Test]
         public void redirect_with_string_assumes_that_it_is_a_url()
@@ -203,20 +196,6 @@ namespace FubuMVC.Tests.Continuations
     }
 
 
-    [TestFixture]
-    public class when_invoking_the_next_behavior : ContinuationHandlerContext
-    {
-        protected override void theContextIs()
-        {
-            ProcessContinuation(FubuContinuation.NextBehavior());
-        }
-
-        [Test]
-        public void should_invoke_the_inside_behavior()
-        {
-            theInsideBehavior.AssertWasCalled(x => x.Invoke());
-        }
-    }
 
 
     [TestFixture]
