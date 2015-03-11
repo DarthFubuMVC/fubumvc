@@ -9,6 +9,14 @@ using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
+    public class OutputPartialBehavior
+    {
+        public static readonly OutputPartialBehavior Write = new OutputPartialBehavior();
+        public static readonly OutputPartialBehavior None = new OutputPartialBehavior();
+
+        private OutputPartialBehavior() { }
+    }
+
     public class OutputBehavior<T> : IActionBehavior where T : class
     {
         private readonly IFubuRequestContext _context;
@@ -35,11 +43,22 @@ namespace FubuMVC.Core.Resources.Conneg
         public void InvokePartial()
         {
             if (InsideBehavior != null) InsideBehavior.InvokePartial();
-            Write();
+
+            if (shouldWriteInPartial())
+            {
+                Write();
+            }
+        }
+
+        private bool shouldWriteInPartial()
+        {
+            if (!_context.Models.Has<OutputPartialBehavior>()) return true;
+
+            return _context.Models.Get<OutputPartialBehavior>() == OutputPartialBehavior.Write;
         }
 
         // SAMPLE: output-behavior-mechanics
-        public void Write()
+        public virtual void Write()
         {
             // If the resource is NOT found, return 
             // invoke the 404 handler

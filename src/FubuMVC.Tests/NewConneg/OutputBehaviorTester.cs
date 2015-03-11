@@ -242,6 +242,53 @@ namespace FubuMVC.Tests.NewConneg
 
     }
 
+    [TestFixture]
+    public class output_behavior_in_partials : OutputBehaviorContext
+    {
+        protected override void theContextIs()
+        {
+            Services.PartialMockTheClassUnderTest();
+        }
+
+        [Test]
+        public void if_no_output_partial_behavior_in_the_request_invoke()
+        {
+            MockFor<IFubuRequest>().Stub(x => x.Has<OutputPartialBehavior>()).Return(false);
+
+            ClassUnderTest.Expect(x => x.Write());
+
+            ClassUnderTest.InvokePartial();
+
+            ClassUnderTest.VerifyAllExpectations();
+        }
+
+        [Test]
+        public void if_output_partial_is_write_invoke()
+        {
+            MockFor<IFubuRequest>().Stub(x => x.Has<OutputPartialBehavior>()).Return(true);
+            MockFor<IFubuRequest>().Stub(x => x.Get<OutputPartialBehavior>()).Return(OutputPartialBehavior.Write);
+
+            ClassUnderTest.Expect(x => x.Write());
+
+            ClassUnderTest.InvokePartial();
+
+            ClassUnderTest.VerifyAllExpectations();
+        }
+
+        [Test]
+        public void if_output_partial_is_none_do_not_invoke()
+        {
+            MockFor<IFubuRequest>().Stub(x => x.Has<OutputPartialBehavior>()).Return(true);
+            MockFor<IFubuRequest>().Stub(x => x.Get<OutputPartialBehavior>()).Return(OutputPartialBehavior.None);
+
+            ClassUnderTest.Expect(x => x.Write()).Repeat.Never();
+
+            ClassUnderTest.InvokePartial();
+
+            ClassUnderTest.VerifyAllExpectations();
+        }
+    }
+
     public abstract class OutputBehaviorContext : InteractionContext<OutputBehavior<OutputTarget>>
     {
         protected IMedia<OutputTarget>[] theMedia;

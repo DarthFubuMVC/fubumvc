@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using FubuCore;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
@@ -70,6 +71,12 @@ namespace FubuMVC.Core.UI
             {
                 _request.Set(current);
             }
+        }
+
+        public void InvokeFast(BehaviorChain chain)
+        {
+            var partial = _factory.BuildPartial(chain);
+
         }
 
         private string invokeWrapped(Type requestType, string categoryOrHttpMethod = null)

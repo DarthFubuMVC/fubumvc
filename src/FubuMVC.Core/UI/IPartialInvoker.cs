@@ -1,4 +1,6 @@
-﻿namespace FubuMVC.Core.UI
+﻿using FubuMVC.Core.Registration.Nodes;
+
+namespace FubuMVC.Core.UI
 {
     public interface IPartialInvoker
     {
@@ -6,5 +8,7 @@
         string InvokeObject(object model, bool withModelBinding = false, string categoryOrHttpMethod = null);
 
         string InvokeAsHtml(object model);
+
+        void InvokeFast(BehaviorChain chain);
     }
 }
