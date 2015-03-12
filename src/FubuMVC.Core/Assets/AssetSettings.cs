@@ -59,7 +59,7 @@ namespace FubuMVC.Core.Assets
         /// <summary>
         /// The default maximum age in seconds to cache an asset in production mode. 1 day.
         /// </summary>
-        public int MaxAgeInSeconds = 24*60*60;
+        public static readonly int MaxAgeInSeconds = 24*60*60;
 
 
 

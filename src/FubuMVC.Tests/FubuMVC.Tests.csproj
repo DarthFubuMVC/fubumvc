@@ -104,6 +104,7 @@
     <Compile Include="ConfigurationActionSetTester.cs" />
     <Compile Include="deactivators_are_called_in_fuburuntime_dispose.cs" />
     <Compile Include="DiagnosticsSettingsTester.cs" />
+    <Compile Include="Diagnostics\Assets\DiagnosticAssetsTester.cs" />
     <Compile Include="Diagnostics\DiagnosticChainTester.cs" />
     <Compile Include="Diagnostics\FakeFubuDiagnostics.cs" />
     <Compile Include="Docs\Examples\Bootstrapping.cs" />

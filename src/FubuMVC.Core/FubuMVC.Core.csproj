@@ -112,6 +112,7 @@
     <Compile Include="DiagnosticsSettings.cs" />
     <Compile Include="Diagnostics\AboutDiagnostics.cs" />
     <Compile Include="Diagnostics\AppReloaded.cs" />
+    <Compile Include="Diagnostics\Assets\DiagnosticAssets.cs" />
     <Compile Include="Diagnostics\AutoReloadingTag.cs" />
     <Compile Include="Diagnostics\ChildDescriptionTag.cs" />
     <Compile Include="Diagnostics\DescriptionPropertyTag.cs" />
@@ -715,6 +716,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Behaviors\Conditional\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Diagnostics\Assets\bootstrap.min.css" />
+    <EmbeddedResource Include="Diagnostics\Assets\bootstrap.overrides.css" />
+    <EmbeddedResource Include="Diagnostics\Assets\master.css" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
