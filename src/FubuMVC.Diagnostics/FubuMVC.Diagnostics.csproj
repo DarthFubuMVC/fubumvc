@@ -126,14 +126,13 @@
     <Compile Include="ChainFubuDiagnostics.cs" />
     <Compile Include="Core\CoreExtensions.cs" />
     <Compile Include="Core\Extensions\TagExtensions.cs" />
-    <Compile Include="DiagnosticChainsSource.cs" />
     <Compile Include="DiagnosticsException.cs" />
     <Compile Include="DiagnosticsRegistration.cs" />
     <Compile Include="DiagnosticsRegistry.cs" />
     <Compile Include="Endpoints\EndpointExplorerFubuDiagnostics.cs" />
     <Compile Include="Endpoints\RouteQuery.cs" />
     <Compile Include="Endpoints\EndpointReport.cs" />
-    <Compile Include="FubuDiagnosticsEndpoint.cs" />
+    <Compile Include="IndexFubuDiagnostics.cs" />
     <Compile Include="ModelBindingFubuDiagnostics.cs" />
     <Compile Include="Packaging\PackageDiagnosticsLogModel.cs" />
     <Compile Include="Packaging\PackageDiagnosticsModel.cs" />
@@ -155,25 +154,7 @@
     <Folder Include="Visualization\Visualizers\ConfigurationActions\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ProjectExtensions>
-    <VisualStudio>
-      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
-        <WebProjectProperties>
-          <UseIIS>False</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>52088</DevelopmentServerPort>
-          <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
-          <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
-          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
-        </WebProjectProperties>
-      </FlavorProperties>
-    </VisualStudio>
-  </ProjectExtensions>
+  <ProjectExtensions />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

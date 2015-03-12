@@ -34,7 +34,7 @@ namespace FubuMVC.IntegrationTesting
         public void can_get_The_about_page_smoke_test()
         {
             TestHost.Scenario(_ => {
-                _.Get.Action<AboutFubuDiagnostics>(x => x.get__about());
+                _.Get.Action<AboutFubuDiagnostics>(x => x.get_about());
                 _.ContentShouldContain("Assemblies");
             });
         }

@@ -14,7 +14,7 @@ namespace FubuMVC.Diagnostics.Tests
         {
             using (var runtime = FubuApplication.For<AuthorizedRegistry>().StructureMap().Bootstrap())
             {
-                runtime.Behaviors.BehaviorFor<FubuDiagnosticsEndpoint>(x => x.get__fubu()).Authorization.AllowedRoles().ShouldContain("admin");
+                runtime.Behaviors.BehaviorFor<IndexFubuDiagnostics>(x => x.get__fubu()).Authorization.AllowedRoles().ShouldContain("admin");
                 runtime.Behaviors.BehaviorFor<EndpointExplorerFubuDiagnostics>(x => x.get_endpoints()).Authorization.AllowedRoles().ShouldContain("admin");
             }
         }

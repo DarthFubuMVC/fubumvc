@@ -9,12 +9,12 @@ namespace FubuMVC.Core.Diagnostics
             _reloaded = reloaded;
         }
 
-        public string get__about()
+        public string get_about()
         {
             return FubuApplicationDescriber.WriteDescription();
         }
 
-        public string get__loaded()
+        public string get_loaded()
         {
             return _reloaded.Timestamp.ToString();
         }

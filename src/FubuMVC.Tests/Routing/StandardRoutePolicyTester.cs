@@ -124,7 +124,9 @@ namespace FubuMVC.Tests.Routing
         }
 
         private BehaviorGraph setupActions()
-        {          
+        {
+            FubuMode.Mode("");
+
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<Action1>();
             registry.Actions.IncludeType<Action2>();

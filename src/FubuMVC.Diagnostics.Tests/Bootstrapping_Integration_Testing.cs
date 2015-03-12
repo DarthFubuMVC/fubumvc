@@ -22,7 +22,7 @@ namespace FubuMVC.Diagnostics.Tests
         {
             runtime = FubuApplication.DefaultPolicies().StructureMap().Bootstrap();
 
-            model = runtime.Factory.Get<FubuDiagnosticsEndpoint>().get__fubu();
+            model = runtime.Factory.Get<IndexFubuDiagnostics>().get__fubu();
         }
 
         [TestFixtureTearDown]

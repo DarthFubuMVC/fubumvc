@@ -118,6 +118,7 @@
     <Compile Include="Diagnostics\DescriptionPropertyTag.cs" />
     <Compile Include="Diagnostics\DescriptionBodyTag.cs" />
     <Compile Include="Diagnostics\DiagnosticChain.cs" />
+    <Compile Include="Diagnostics\DiagnosticChainsSource.cs" />
     <Compile Include="Diagnostics\FubuDiagnosticsEndpoint.cs" />
     <Compile Include="Diagnostics\Runtime\ApplyTracing.cs" />
     <Compile Include="Diagnostics\Runtime\BehaviorFinish.cs" />

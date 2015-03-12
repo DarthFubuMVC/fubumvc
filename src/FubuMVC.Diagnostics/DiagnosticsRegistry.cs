@@ -3,6 +3,7 @@ using System.Linq;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Continuations;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Diagnostics.Visualization;
@@ -15,11 +16,6 @@ namespace FubuMVC.Diagnostics
 
         public DiagnosticsRegistry()
         {
-            Actions.IncludeType<FubuDiagnosticsEndpoint>();
-            Policies.ChainSource<DiagnosticChainsSource>();
-
-            Policies.Local.Add<DiagnosticAuthorizationPolicy>();
-
             Policies.Global.Add<DefaultHome>();
         }
     }
@@ -44,7 +40,7 @@ namespace FubuMVC.Diagnostics
 
         public FubuContinuation GoToDiagnostics()
         {
-            return FubuContinuation.RedirectTo<FubuDiagnosticsEndpoint>(x => x.get__fubu());
+            return FubuContinuation.RedirectTo<IndexFubuDiagnostics>(x => x.get__fubu());
         }
     }
 
@@ -58,15 +54,6 @@ namespace FubuMVC.Diagnostics
         }
     }
 
-    public class DiagnosticAuthorizationPolicy : IConfigurationAction
-    {
-        public void Configure(BehaviorGraph graph)
-        {
-            var settings = graph.Settings.Get<DiagnosticsSettings>();
-
-            graph.Behaviors.Each(x => x.Authorization.AddPolicies(settings.AuthorizationRights));
-        }
-    }
 
     
 }

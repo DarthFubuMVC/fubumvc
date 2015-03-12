@@ -21,7 +21,8 @@ namespace FubuMVC.Tests
             FubuMode.Reset();
 
             var graph = BehaviorGraph.BuildEmptyGraph();
-            graph.BehaviorFor<AboutFubuDiagnostics>(x => x.get__about())
+
+            graph.BehaviorFor<AboutFubuDiagnostics>(x => x.get_about())
                 .ShouldBeNull();
         }
 
@@ -31,7 +32,7 @@ namespace FubuMVC.Tests
             FubuMode.Mode(FubuMode.Development);
 
             var graph = BehaviorGraph.BuildEmptyGraph();
-            graph.BehaviorFor<AboutFubuDiagnostics>(x => x.get__about())
+            graph.BehaviorFor<AboutFubuDiagnostics>(x => x.get_about())
                 .ShouldNotBeNull();
         }
     }

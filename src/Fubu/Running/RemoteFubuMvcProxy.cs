@@ -4,6 +4,7 @@ using Bottles.Services.Remote;
 using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Diagnostics;
 using FubuMVC.Katana;
 using FubuMVC.Spark.SparkModel;

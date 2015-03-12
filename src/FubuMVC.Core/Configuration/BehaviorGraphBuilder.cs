@@ -73,10 +73,15 @@ namespace FubuMVC.Core.Configuration
 
         private static void addBuiltInDiagnostics(BehaviorGraph graph)
         {
-            if (FubuMode.InDevelopment())
+            var settings = graph.Settings.Get<DiagnosticsSettings>();
+            if (FubuMode.InDevelopment() || settings.TraceLevel != TraceLevel.None)
             {
-                graph.AddChain(RoutedChain.For<AboutFubuDiagnostics>(x => x.get__about(), "_about"));
-                graph.AddChain(RoutedChain.For<AboutFubuDiagnostics>(x => x.get__loaded(), "_loaded"));
+                var chains = new DiagnosticChainsSource().BuildChains(graph).ToArray();
+
+                // Apply authorization rules to the diagnostic chains
+                chains.Each(x => x.Authorization.AddPolicies(settings.AuthorizationRights));
+
+                graph.AddChains(chains);
             }
         }
 
