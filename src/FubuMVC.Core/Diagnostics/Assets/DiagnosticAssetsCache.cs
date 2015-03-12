@@ -14,13 +14,19 @@ using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Diagnostics.Assets
 {
+    public interface IDiagnosticAssets
+    {
+        EmbeddedFile For(string name);
+        void AddAssembly(Assembly assembly);
+    }
+
     [ReflectionPermission(SecurityAction.Assert)]
-    public class DiagnosticAssets
+    public class DiagnosticAssetsCache : IDiagnosticAssets
     {
         private readonly IList<EmbeddedFile> _files = new List<EmbeddedFile>();
         private readonly Cache<string, EmbeddedFile> _searches;
 
-        public DiagnosticAssets()
+        public DiagnosticAssetsCache()
         {
             AddAssembly(Assembly.GetExecutingAssembly());
 

@@ -11,22 +11,22 @@ namespace FubuMVC.Tests.Diagnostics.Assets
     [TestFixture]
     public class DiagnosticAssetsTester
     {
-        private DiagnosticAssets theAssets;
+        private DiagnosticAssetsCache theAssets;
 
         [SetUp]
         public void SetUp()
         {
-            theAssets = new DiagnosticAssets();
+            theAssets = new DiagnosticAssetsCache();
         }
 
         [Test]
         public void is_diagnostic_asset()
         {
-            DiagnosticAssets.IsDiagnosticAsset("foo").ShouldBeFalse();
-            DiagnosticAssets.IsDiagnosticAsset("diagnostics.foo.js").ShouldBeTrue();
-            DiagnosticAssets.IsDiagnosticAsset("Diagnostics.foo.js").ShouldBeTrue();
-            DiagnosticAssets.IsDiagnosticAsset("folder.Diagnostics.foo.js").ShouldBeTrue();
-            DiagnosticAssets.IsDiagnosticAsset("folder.diagnostics.foo.js").ShouldBeTrue();
+            DiagnosticAssetsCache.IsDiagnosticAsset("foo").ShouldBeFalse();
+            DiagnosticAssetsCache.IsDiagnosticAsset("diagnostics.foo.js").ShouldBeTrue();
+            DiagnosticAssetsCache.IsDiagnosticAsset("Diagnostics.foo.js").ShouldBeTrue();
+            DiagnosticAssetsCache.IsDiagnosticAsset("folder.Diagnostics.foo.js").ShouldBeTrue();
+            DiagnosticAssetsCache.IsDiagnosticAsset("folder.diagnostics.foo.js").ShouldBeTrue();
         }
 
         [Test]

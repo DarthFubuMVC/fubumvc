@@ -13,6 +13,7 @@ using FubuMVC.Core.Assets.Templates;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Diagnostics.Assets;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Compression;
 using FubuMVC.Core.Http.Cookies;
@@ -44,6 +45,8 @@ namespace FubuMVC.Core
 
             SetServiceIfNone<IRequestData, FubuMvcRequestData>();
             SetServiceIfNone(typeof(AppReloaded), ObjectDef.ForValue(new AppReloaded()));
+
+            SetServiceIfNone<IDiagnosticAssets, DiagnosticAssetsCache>();
 
             var stringifier = new Stringifier();
             SetServiceIfNone(stringifier);

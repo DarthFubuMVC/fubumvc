@@ -112,12 +112,13 @@
     <Compile Include="DiagnosticsSettings.cs" />
     <Compile Include="Diagnostics\AboutDiagnostics.cs" />
     <Compile Include="Diagnostics\AppReloaded.cs" />
-    <Compile Include="Diagnostics\Assets\DiagnosticAssets.cs" />
+    <Compile Include="Diagnostics\Assets\DiagnosticAssetsCache.cs" />
     <Compile Include="Diagnostics\AutoReloadingTag.cs" />
     <Compile Include="Diagnostics\ChildDescriptionTag.cs" />
     <Compile Include="Diagnostics\DescriptionPropertyTag.cs" />
     <Compile Include="Diagnostics\DescriptionBodyTag.cs" />
     <Compile Include="Diagnostics\DiagnosticChain.cs" />
+    <Compile Include="Diagnostics\FubuDiagnosticsEndpoint.cs" />
     <Compile Include="Diagnostics\Runtime\ApplyTracing.cs" />
     <Compile Include="Diagnostics\Runtime\BehaviorFinish.cs" />
     <Compile Include="Diagnostics\Runtime\BehaviorStart.cs" />

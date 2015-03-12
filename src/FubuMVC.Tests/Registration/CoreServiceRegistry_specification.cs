@@ -9,6 +9,7 @@ using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Templates;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Diagnostics.Assets;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Core.Registration;
@@ -76,6 +77,14 @@ namespace FubuMVC.Tests.Registration
         {
             registeredTypeIs<IAssetFinder, AssetFinderCache>();
             ServiceRegistry.ShouldBeSingleton(typeof(AssetFinderCache))
+                .ShouldBeTrue();
+        }
+
+        [Test]
+        public void DiagnosticAssets_is_registered_as_a_singleton()
+        {
+            registeredTypeIs<IDiagnosticAssets,DiagnosticAssetsCache>();
+            ServiceRegistry.ShouldBeSingleton(typeof(DiagnosticAssetsCache))
                 .ShouldBeTrue();
         }
 
