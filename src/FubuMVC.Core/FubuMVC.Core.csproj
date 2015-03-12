@@ -110,7 +110,7 @@
     <Compile Include="Continuations\ContinuationProcessor.cs" />
     <Compile Include="Continuations\IContinuationProcessor.cs" />
     <Compile Include="DiagnosticsSettings.cs" />
-    <Compile Include="Diagnostics\AboutDiagnostics.cs" />
+    <Compile Include="Diagnostics\AboutFubuDiagnostics.cs" />
     <Compile Include="Diagnostics\AppReloaded.cs" />
     <Compile Include="Diagnostics\Assets\DiagnosticAssetsCache.cs" />
     <Compile Include="Diagnostics\AutoReloadingTag.cs" />

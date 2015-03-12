@@ -75,8 +75,8 @@ namespace FubuMVC.Core.Configuration
         {
             if (FubuMode.InDevelopment())
             {
-                graph.AddChain(RoutedChain.For<AboutDiagnostics>(x => x.get__about(), "_about"));
-                graph.AddChain(RoutedChain.For<AboutDiagnostics>(x => x.get__loaded(), "_loaded"));
+                graph.AddChain(RoutedChain.For<AboutFubuDiagnostics>(x => x.get__about(), "_about"));
+                graph.AddChain(RoutedChain.For<AboutFubuDiagnostics>(x => x.get__loaded(), "_loaded"));
             }
         }
 
