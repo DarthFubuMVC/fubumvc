@@ -25,10 +25,13 @@ namespace FubuMVC.Core.Diagnostics
 
         public HtmlDocument get__fubu()
         {
-            return new HtmlDocument
+            var document = new HtmlDocument
             {
                 Title = "FubuMVC Diagnostics"
             };
+
+
+            return document;
         }
 
         public void get__fubu_asset_Version_Name(DiagnosticAssetRequest request)

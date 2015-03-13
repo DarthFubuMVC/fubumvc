@@ -135,6 +135,7 @@
     <Compile Include="Continuations\can_use_continuations_on_a_partial.cs" />
     <Compile Include="Continuations\redirects_with_the_get.cs" />
     <Compile Include="debugger.cs" />
+    <Compile Include="Diagnostics\can_bring_up_the_diagnostics_home_page.cs" />
     <Compile Include="Diagnostics\serving_up_embedded_diagnostic_assets.cs" />
     <Compile Include="Diagnostics\VisualizerTester.cs" />
     <Compile Include="EndpointServiceIntegratedSmokeTester.cs" />
