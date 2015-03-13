@@ -37,6 +37,7 @@ namespace FubuMVC.Core.Diagnostics
             source.Applies.ToAssemblyContainingType<IActionBehavior>();
             PackageRegistry.PackageAssemblies.Each(a => source.Applies.ToAssembly(a));
             source.IncludeTypesNamed(name => name.EndsWith("FubuDiagnostics"));
+            source.IncludeTypes(type => type == typeof(FubuDiagnosticsEndpoint));
 
             return source.As<IActionSource>().FindActions(null);
         }

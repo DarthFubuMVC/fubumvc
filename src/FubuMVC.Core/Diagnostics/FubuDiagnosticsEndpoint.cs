@@ -1,11 +1,15 @@
-﻿using FubuMVC.Core.Diagnostics.Assets;
+﻿using System.Collections.Generic;
+using System.Linq;
+using FubuMVC.Core.Assets.JavascriptRouting;
+using FubuMVC.Core.Diagnostics.Assets;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Registration;
 using HtmlTags;
 
 namespace FubuMVC.Core.Diagnostics
 {
 
-
+    [Tag("Diagnostics")]
     public class FubuDiagnosticsEndpoint
     {
         private readonly IHttpRequest _request;
@@ -38,5 +42,13 @@ namespace FubuMVC.Core.Diagnostics
     {
         public string Version { get; set; }
         public string Name { get; set; }
+    }
+
+    public class DiagnosticJavascriptRoutes : JavascriptRouter
+    {
+        public DiagnosticJavascriptRoutes(BehaviorGraph graph)
+        {
+            graph.Behaviors.OfType<DiagnosticChain>().Where(x => x.Route.AllowedHttpMethods.Any()).Each(Add);
+        }
     }
 }

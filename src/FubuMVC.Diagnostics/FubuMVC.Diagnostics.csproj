@@ -118,7 +118,6 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="DiagnosticsException.cs" />
     <Compile Include="DiagnosticsRegistry.cs" />
     <Compile Include="IndexFubuDiagnostics.cs" />
   </ItemGroup>

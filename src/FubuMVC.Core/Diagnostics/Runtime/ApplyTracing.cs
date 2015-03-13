@@ -15,7 +15,7 @@ namespace FubuMVC.Core.Diagnostics.Runtime
         public void Configure(BehaviorGraph graph)
         {
             // Do nothing
-            if (graph.Settings.Get<DiagnosticsSettings>().TraceLevel == TraceLevel.None) return;
+            if (graph.Settings.Get<DiagnosticsSettings>().TraceLevel == TraceLevel.None && !FubuMode.InDevelopment()) return;
 
             new TracingServices().As<IServiceRegistration>().Apply(graph.Services);
 

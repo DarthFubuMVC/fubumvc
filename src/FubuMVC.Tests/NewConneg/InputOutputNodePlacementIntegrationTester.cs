@@ -16,6 +16,8 @@ namespace FubuMVC.Tests.NewConneg
         [SetUp]
         public void SetUp()
         {
+            FubuMode.Reset();
+
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<PlacementController>();
 

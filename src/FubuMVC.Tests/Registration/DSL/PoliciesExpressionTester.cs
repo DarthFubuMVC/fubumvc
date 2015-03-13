@@ -18,6 +18,8 @@ namespace FubuMVC.Tests.Registration.DSL
         [SetUp]
         public void SetUp()
         {
+            FubuMode.Reset();
+
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<OrderingPolicyController>();
 
@@ -53,6 +55,8 @@ namespace FubuMVC.Tests.Registration.DSL
         [SetUp]
         public void SetUp()
         {
+            FubuMode.Reset();
+
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<OrderingPolicyController>();
 

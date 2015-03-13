@@ -104,9 +104,33 @@
     <Compile Include="ConfigurationActionSetTester.cs" />
     <Compile Include="deactivators_are_called_in_fuburuntime_dispose.cs" />
     <Compile Include="DiagnosticsSettingsTester.cs" />
+    <Compile Include="Diagnostics\apply_authorization_rights_to_all_diagnostics_pages.cs" />
     <Compile Include="Diagnostics\Assets\DiagnosticAssetsTester.cs" />
+    <Compile Include="Diagnostics\Bootstrapping_Integration_Testing.cs" />
     <Compile Include="Diagnostics\DiagnosticChainTester.cs" />
+    <Compile Include="Diagnostics\DiagnosticSettings_TraceLevel_Registration_Tester.cs" />
     <Compile Include="Diagnostics\FakeFubuDiagnostics.cs" />
+    <Compile Include="Diagnostics\InteractionContextExtensions.cs" />
+    <Compile Include="Diagnostics\Routes\EndpointReportTester.cs" />
+    <Compile Include="Diagnostics\Runtime\ApplyTracingIntegrationTesting.cs" />
+    <Compile Include="Diagnostics\Runtime\BehaviorFinishTester.cs" />
+    <Compile Include="Diagnostics\Runtime\BehaviorTracerNodeTester.cs" />
+    <Compile Include="Diagnostics\Runtime\BehaviorTracerTester.cs" />
+    <Compile Include="Diagnostics\Runtime\BehaviorTracer_and_DiagnosticBehavior_construction_testing.cs" />
+    <Compile Include="Diagnostics\Runtime\DiagnosticNodeTester.cs" />
+    <Compile Include="Diagnostics\Runtime\DiagnosticsPackageTester.cs" />
+    <Compile Include="Diagnostics\Runtime\DiagnosticsRegistryTester.cs" />
+    <Compile Include="Diagnostics\Runtime\DiagnosticsSettingsTester.cs" />
+    <Compile Include="Diagnostics\Runtime\Diagnostic_tracing_attachment_filtering_Tester.cs" />
+    <Compile Include="Diagnostics\Runtime\RequestHistoryCacheTester.cs" />
+    <Compile Include="Diagnostics\Runtime\RequestLogTester.cs" />
+    <Compile Include="Diagnostics\Runtime\Tracing\DiagnosticBehaviorTester.cs" />
+    <Compile Include="Diagnostics\Runtime\Tracing\RequestLogBuilderTester.cs" />
+    <Compile Include="Diagnostics\Runtime\Tracing\RequestTraceListenerTester.cs" />
+    <Compile Include="Diagnostics\Runtime\Tracing\RequestTraceTester.cs" />
+    <Compile Include="Diagnostics\Runtime\Tracing_is_not_applied_to_chains_that_are_tagged_no_tracing.cs" />
+    <Compile Include="Diagnostics\Visualization\Visualizers\BehaviorStartAndFinishEndpointsTester.cs" />
+    <Compile Include="Diagnostics\Visualization\Visualizers\ModelBindingLogEndpointTester.cs" />
     <Compile Include="Docs\Examples\Bootstrapping.cs" />
     <Compile Include="Docs\Examples\ConfiguringBottles.cs" />
     <Compile Include="Docs\Introduction\Overview\HomeEndpoint.cs" />
@@ -491,6 +515,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Diagnostics\Shared\" />
     <Folder Include="Results\" />
     <Folder Include="View\FakeViews\Folder1\Folder2\Folder3\" />
     <Folder Include="View\Model\" />
