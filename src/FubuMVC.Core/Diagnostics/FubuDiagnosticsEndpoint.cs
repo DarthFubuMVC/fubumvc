@@ -16,6 +16,8 @@ namespace FubuMVC.Core.Diagnostics
         private readonly IHttpResponse _response;
         private readonly IDiagnosticAssets _assets;
 
+        private static readonly string[] _styles = new[] {"bootstrap.min.css", "master.css", "bootstrap.overrides.css"};
+
         public FubuDiagnosticsEndpoint(IHttpRequest request, IHttpResponse response, IDiagnosticAssets assets)
         {
             _request = request;
@@ -30,8 +32,22 @@ namespace FubuMVC.Core.Diagnostics
                 Title = "FubuMVC Diagnostics"
             };
 
+            writeStyles(document);
+
+            var foot = new HtmlTag("foot");
+            document.Body.Next = foot;
+
 
             return document;
+        }
+
+        private void writeStyles(HtmlDocument document)
+        {
+            _styles.Each(name =>
+            {
+                var file = _assets.For(name);
+                document.Head.Append(file.ToStyleTag());
+            });
         }
 
         public void get__fubu_asset_Version_Name(DiagnosticAssetRequest request)
