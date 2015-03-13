@@ -11,6 +11,7 @@ using FubuCore.Util;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
+using HtmlTags;
 
 namespace FubuMVC.Core.Diagnostics.Assets
 {
@@ -90,12 +91,11 @@ namespace FubuMVC.Core.Diagnostics.Assets
             response.WriteContentType(ContentType.Value);
             response.WriteResponseCode(HttpStatusCode.OK);
 
-            if (!FubuMode.InDevelopment())
-            {
-                response.AppendHeader(HttpResponseHeaders.CacheControl, _cacheHeader);
-                var expiresKey = DateTime.UtcNow.AddSeconds(AssetSettings.MaxAgeInSeconds).ToString("R");
-                response.AppendHeader(HttpResponseHeaders.Expires, expiresKey);
-            }
+            response.AppendHeader(HttpResponseHeaders.CacheControl, _cacheHeader);
+            var expiresKey = DateTime.UtcNow.AddSeconds(AssetSettings.MaxAgeInSeconds).ToString("R");
+            response.AppendHeader(HttpResponseHeaders.Expires, expiresKey);
+
+            response.Write(stream => stream.Write(Contents(), 0, Contents().Length));
         }
 
 

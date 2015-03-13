@@ -13,6 +13,12 @@ namespace FubuMVC.Core.Diagnostics
 
         public static IRouteDefinition BuildRoute(ActionCall call)
         {
+            // I hate this.
+            if (call.HandlerType == typeof (FubuDiagnosticsEndpoint))
+            {
+                return buildStandardRoute(call);
+            }
+
             var prefix = call.HandlerType.Name.Replace("FubuDiagnostics", "").ToLower();
 
             if (call.Method.Name == "Index")
@@ -25,6 +31,13 @@ namespace FubuMVC.Core.Diagnostics
             route.Prepend(prefix);
             route.Prepend(DiagnosticsUrl);
 
+            return route;
+        }
+
+        private static IRouteDefinition buildStandardRoute(ActionCall call)
+        {
+            var route = call.ToRouteDefinition();
+            MethodToUrlBuilder.Alter(route, call);
             return route;
         }
 

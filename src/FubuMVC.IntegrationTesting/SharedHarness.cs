@@ -21,7 +21,12 @@ namespace FubuMVC.IntegrationTesting
     public static class TestHost
     {
         private static readonly Lazy<InMemoryHost> _host =
-            new Lazy<InMemoryHost>(() => { return FubuApplication.DefaultPolicies().StructureMap().RunInMemory(); });
+            new Lazy<InMemoryHost>(() =>
+            {
+                var registry = new FubuRegistry();
+                registry.AlterSettings<DiagnosticsSettings>(x => x.TraceLevel = TraceLevel.Verbose);
+                return FubuApplication.For(registry).StructureMap().RunInMemory();
+            });
 
         public static ManualResetEvent Finish = new ManualResetEvent(false);
 

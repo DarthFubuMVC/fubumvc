@@ -31,7 +31,7 @@ namespace FubuMVC.Core.Diagnostics
             };
         }
 
-        public void get___fubu_asset_Version_Name(DiagnosticAssetRequest request)
+        public void get__fubu_asset_Version_Name(DiagnosticAssetRequest request)
         {
             var file = _assets.For(request.Name);
             file.Write(_response);
