@@ -1,11 +1,11 @@
 using System;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Diagnostics.Endpoints;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
-using FubuMVC.Diagnostics.Endpoints;
 using NUnit.Framework;
 using FubuTestingSupport;
 using System.Linq;

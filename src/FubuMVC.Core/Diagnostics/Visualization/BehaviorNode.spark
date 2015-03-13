@@ -1,0 +1,4 @@
+﻿<use master="" />
+<viewdata model="FubuMVC.Diagnostics.Visualization.BehaviorNodeViewModel" />
+
+!{Model.VisualizationHtml}

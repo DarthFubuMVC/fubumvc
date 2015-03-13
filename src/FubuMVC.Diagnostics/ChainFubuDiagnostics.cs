@@ -3,10 +3,10 @@ using System.Linq;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Diagnostics.Endpoints;
+using FubuMVC.Core.Diagnostics.Visualization;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Diagnostics.Endpoints;
-using FubuMVC.Diagnostics.Visualization;
 
 namespace FubuMVC.Diagnostics
 {

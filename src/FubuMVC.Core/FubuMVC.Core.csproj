@@ -114,11 +114,15 @@
     <Compile Include="Diagnostics\AppReloaded.cs" />
     <Compile Include="Diagnostics\Assets\DiagnosticAssetsCache.cs" />
     <Compile Include="Diagnostics\AutoReloadingTag.cs" />
+    <Compile Include="Diagnostics\BehaviorChainExtensions.cs" />
+    <Compile Include="Diagnostics\ChainFubuDiagnostics.cs" />
     <Compile Include="Diagnostics\ChildDescriptionTag.cs" />
     <Compile Include="Diagnostics\DescriptionPropertyTag.cs" />
     <Compile Include="Diagnostics\DescriptionBodyTag.cs" />
     <Compile Include="Diagnostics\DiagnosticChain.cs" />
     <Compile Include="Diagnostics\DiagnosticChainsSource.cs" />
+    <Compile Include="Diagnostics\Endpoints\EndpointExplorerFubuDiagnostics.cs" />
+    <Compile Include="Diagnostics\Endpoints\EndpointReport.cs" />
     <Compile Include="Diagnostics\FubuDiagnosticsEndpoint.cs" />
     <Compile Include="Diagnostics\Runtime\ApplyTracing.cs" />
     <Compile Include="Diagnostics\Runtime\BehaviorFinish.cs" />
@@ -145,7 +149,17 @@
     <Compile Include="Diagnostics\Runtime\Tracing\NulloRequestLog.cs" />
     <Compile Include="Diagnostics\Runtime\Tracing\RequestLogBuilder.cs" />
     <Compile Include="Diagnostics\Runtime\Tracing\RequestTrace.cs" />
+    <Compile Include="Diagnostics\TypeFubuDiagnostics.cs" />
     <Compile Include="Diagnostics\TypeExtensions.cs" />
+    <Compile Include="Diagnostics\Visualization\BehaviorNodeViewModel.cs" />
+    <Compile Include="Diagnostics\Visualization\DescriptionVisualizationPolicy.cs" />
+    <Compile Include="Diagnostics\Visualization\DetailsTableBuilderExtensions.cs" />
+    <Compile Include="Diagnostics\Visualization\IVisualizer.cs" />
+    <Compile Include="Diagnostics\Visualization\VisualizationPageExtensions.cs" />
+    <Compile Include="Diagnostics\Visualization\Visualizer.cs" />
+    <Compile Include="Diagnostics\Visualization\Visualizers\BehaviorStartAndFinishEndpoints.cs" />
+    <Compile Include="Diagnostics\Visualization\Visualizers\CommentTag.cs" />
+    <Compile Include="Diagnostics\Visualization\Visualizers\StringMessageEndpoint.cs" />
     <Compile Include="DoNotAutoImportAttribute.cs" />
     <Compile Include="Endpoints\EndpointDriver.cs" />
     <Compile Include="Endpoints\EndpointFormatting.cs" />
@@ -712,6 +726,7 @@
     <Compile Include="WrapWithAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Diagnostics\Visualization\BehaviorNode.spark" />
     <None Include="ripple.dependencies.config">
       <SubType>Designer</SubType>
     </None>

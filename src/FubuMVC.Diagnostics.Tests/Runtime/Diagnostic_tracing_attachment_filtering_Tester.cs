@@ -1,7 +1,7 @@
 using System.Linq;
+using FubuMVC.Core.Diagnostics.Endpoints;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration;
-using FubuMVC.Diagnostics.Endpoints;
 using FubuTestingSupport;
 using NUnit.Framework;
 

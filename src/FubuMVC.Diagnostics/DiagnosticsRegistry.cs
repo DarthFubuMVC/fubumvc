@@ -4,9 +4,9 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Diagnostics.Visualization;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Diagnostics.Visualization;
 
 namespace FubuMVC.Diagnostics
 {

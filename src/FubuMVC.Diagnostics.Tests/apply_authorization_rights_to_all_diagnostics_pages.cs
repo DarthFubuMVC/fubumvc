@@ -1,5 +1,5 @@
 ﻿using FubuMVC.Core;
-using FubuMVC.Diagnostics.Endpoints;
+using FubuMVC.Core.Diagnostics.Endpoints;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;

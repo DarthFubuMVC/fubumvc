@@ -82,6 +82,8 @@ namespace FubuMVC.Core.Configuration
                 chains.Each(x => x.Authorization.AddPolicies(settings.AuthorizationRights));
 
                 graph.AddChains(chains);
+
+
             }
         }
 

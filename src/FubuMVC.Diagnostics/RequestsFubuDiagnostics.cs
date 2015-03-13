@@ -7,9 +7,9 @@ using FubuCore.Logging;
 using FubuCore.Util;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Runtime;
+using FubuMVC.Core.Diagnostics.Visualization;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Diagnostics.Visualization;
 using HtmlTags;
 
 

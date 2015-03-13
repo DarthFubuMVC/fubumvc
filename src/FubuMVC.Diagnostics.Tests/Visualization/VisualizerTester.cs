@@ -2,7 +2,7 @@ using System.Reflection;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core;
-using FubuMVC.Diagnostics.Visualization;
+using FubuMVC.Core.Diagnostics.Visualization;
 using NUnit.Framework;
 using FubuMVC.StructureMap;
 using StructureMap;

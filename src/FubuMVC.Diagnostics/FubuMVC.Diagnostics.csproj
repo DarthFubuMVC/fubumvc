@@ -106,7 +106,6 @@
     <Content Include="Shared\bindings.xml">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Visualization\BehaviorNode.spark" />
     <Content Include="web.config" />
     <Content Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
@@ -122,16 +121,10 @@
     <Compile Include="AppDomainFubuDiagnostics.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="AssetFubuDiagnostics.cs" />
-    <Compile Include="BehaviorChainExtensions.cs" />
     <Compile Include="ChainFubuDiagnostics.cs" />
-    <Compile Include="Core\CoreExtensions.cs" />
-    <Compile Include="Core\Extensions\TagExtensions.cs" />
     <Compile Include="DiagnosticsException.cs" />
     <Compile Include="DiagnosticsRegistration.cs" />
     <Compile Include="DiagnosticsRegistry.cs" />
-    <Compile Include="Endpoints\EndpointExplorerFubuDiagnostics.cs" />
-    <Compile Include="Endpoints\RouteQuery.cs" />
-    <Compile Include="Endpoints\EndpointReport.cs" />
     <Compile Include="IndexFubuDiagnostics.cs" />
     <Compile Include="ModelBindingFubuDiagnostics.cs" />
     <Compile Include="Packaging\PackageDiagnosticsLogModel.cs" />
@@ -139,20 +132,8 @@
     <Compile Include="Packaging\PackageDiagnosticsRequestModel.cs" />
     <Compile Include="Packaging\PackageLogFubuDiagnostics.cs" />
     <Compile Include="RequestsFubuDiagnostics.cs" />
-    <Compile Include="Shared\TypeEndpoint.cs" />
-    <Compile Include="Visualization\BehaviorNodeViewModel.cs" />
-    <Compile Include="Visualization\DescriptionVisualizationPolicy.cs" />
-    <Compile Include="Visualization\DetailsTableBuilderExtensions.cs" />
-    <Compile Include="Visualization\IVisualizer.cs" />
-    <Compile Include="Visualization\VisualizationPageExtensions.cs" />
-    <Compile Include="Visualization\Visualizer.cs" />
-    <Compile Include="Visualization\Visualizers\BehaviorStartAndFinishEndpoints.cs" />
-    <Compile Include="Visualization\Visualizers\CommentTag.cs" />
-    <Compile Include="Visualization\Visualizers\StringMessageEndpoint.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Visualization\Visualizers\ConfigurationActions\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
