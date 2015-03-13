@@ -244,10 +244,6 @@
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.Diagnostics\FubuMVC.Diagnostics.csproj">
-      <Project>{a1deb080-5a9a-44b4-a10b-84da9bd07af5}</Project>
-      <Name>FubuMVC.Diagnostics</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Katana\FubuMVC.Katana.csproj">
       <Project>{48BC51C2-B759-48DB-AAE1-F4686CD6D02A}</Project>
       <Name>FubuMVC.Katana</Name>
