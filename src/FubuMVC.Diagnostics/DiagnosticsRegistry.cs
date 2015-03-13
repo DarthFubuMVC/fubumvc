@@ -44,16 +44,6 @@ namespace FubuMVC.Diagnostics
         }
     }
 
-    public class DiagnosticServiceRegistry : ServiceRegistry
-    {
-        public DiagnosticServiceRegistry()
-        {
-            SetServiceIfNone<IVisualizer, Visualizer>();
-
-            
-        }
-    }
-
 
     
 }

@@ -28,6 +28,8 @@ namespace FubuMVC.Tests.NewConneg
         [TestFixtureSetUp]
         public void SetUp()
         {
+            FubuMode.Reset();
+
             var node = new OutputNode(typeof (Address));
             node.Add(new JsonSerializer());
             node.Add(new XmlFormatter());

@@ -15,6 +15,8 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
         [Test]
         public void not_applied_when_no_tracing_tag_is_on_the_chain()
         {
+            FubuMode.SetUpForDevelopmentMode();
+
             using (var runtime = FubuApplication.DefaultPolicies().StructureMap().Bootstrap())
             {
                 var graph = runtime.Factory.Get<BehaviorGraph>();

@@ -1,6 +1,7 @@
 using System;
 using FubuCore;
 using FubuCore.Binding;
+using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Diagnostics.Runtime.Tracing;
 using FubuMVC.Core.Http;
@@ -22,6 +23,8 @@ namespace FubuMVC.Diagnostics.Tests.Runtime.Tracing
 
         protected override void beforeEach()
         {
+            FubuMode.Reset();
+
             MockFor<IHttpRequest>().Stub(x => x.RelativeUrl())
                 .Return("the relative url");
 

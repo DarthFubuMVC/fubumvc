@@ -19,6 +19,8 @@ namespace FubuMVC.Tests.Registration.Registration
         [SetUp]
         public void SetUp()
         {
+            FubuMode.Reset();
+
             _runtime = FubuApplication.For<ApplicationRegistry>().StructureMap().Bootstrap();
             behaviors = _runtime.Factory.Get<BehaviorGraph>();
 

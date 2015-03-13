@@ -10,6 +10,7 @@ using FubuMVC.Core.Urls;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
+using TraceLevel = FubuMVC.Core.TraceLevel;
 
 namespace FubuMVC.Diagnostics.Tests.Runtime
 {
@@ -22,7 +23,7 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
         public void SetUp()
         {
             var registry = new FubuRegistry();
-            registry.Import<DiagnosticsRegistration>();
+            registry.AlterSettings<DiagnosticsSettings>(x => x.TraceLevel = TraceLevel.Verbose);
 
             graph = BehaviorGraph.BuildFrom(registry);
             urls = MockRepository.GenerateMock<IUrlRegistry>();

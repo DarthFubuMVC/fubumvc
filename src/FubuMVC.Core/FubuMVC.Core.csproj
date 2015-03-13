@@ -111,7 +111,9 @@
     <Compile Include="Continuations\IContinuationProcessor.cs" />
     <Compile Include="DiagnosticsSettings.cs" />
     <Compile Include="Diagnostics\AboutFubuDiagnostics.cs" />
+    <Compile Include="Diagnostics\AppDomainFubuDiagnostics.cs" />
     <Compile Include="Diagnostics\AppReloaded.cs" />
+    <Compile Include="Diagnostics\AssetFubuDiagnostics.cs" />
     <Compile Include="Diagnostics\Assets\DiagnosticAssetsCache.cs" />
     <Compile Include="Diagnostics\AutoReloadingTag.cs" />
     <Compile Include="Diagnostics\BehaviorChainExtensions.cs" />
@@ -124,6 +126,12 @@
     <Compile Include="Diagnostics\Endpoints\EndpointExplorerFubuDiagnostics.cs" />
     <Compile Include="Diagnostics\Endpoints\EndpointReport.cs" />
     <Compile Include="Diagnostics\FubuDiagnosticsEndpoint.cs" />
+    <Compile Include="Diagnostics\ModelBindingFubuDiagnostics.cs" />
+    <Compile Include="Diagnostics\Packaging\PackageDiagnosticsLogModel.cs" />
+    <Compile Include="Diagnostics\Packaging\PackageDiagnosticsModel.cs" />
+    <Compile Include="Diagnostics\Packaging\PackageDiagnosticsRequestModel.cs" />
+    <Compile Include="Diagnostics\Packaging\PackageLogFubuDiagnostics.cs" />
+    <Compile Include="Diagnostics\RequestsFubuDiagnostics.cs" />
     <Compile Include="Diagnostics\Runtime\ApplyTracing.cs" />
     <Compile Include="Diagnostics\Runtime\BehaviorFinish.cs" />
     <Compile Include="Diagnostics\Runtime\BehaviorStart.cs" />
@@ -726,6 +734,7 @@
     <Compile Include="WrapWithAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Diagnostics\Packaging\Packaging.spark" />
     <None Include="Diagnostics\Visualization\BehaviorNode.spark" />
     <None Include="ripple.dependencies.config">
       <SubType>Designer</SubType>

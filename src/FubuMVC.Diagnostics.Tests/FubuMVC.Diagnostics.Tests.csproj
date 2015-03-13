@@ -96,7 +96,6 @@
     <Compile Include="Bootstrapping_Integration_Testing.cs" />
     <Compile Include="debugging.cs" />
     <Compile Include="DiagnosticSettings_TraceLevel_Registration_Tester.cs" />
-    <Compile Include="DiagnosticsExtensionTester.cs" />
     <Compile Include="IntegrationTestHarness.cs" />
     <Compile Include="InteractionContextExtensions.cs" />
     <Compile Include="Routes\EndpointReportTester.cs" />

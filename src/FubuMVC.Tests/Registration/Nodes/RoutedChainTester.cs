@@ -16,6 +16,8 @@ namespace FubuMVC.Tests.Registration.Nodes
         [Test]
         public void adds_the_authentication_node_if_it_exists()
         {
+            FubuMode.Reset();
+
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<AuthenticatedEndpoint>();
             registry.Configure(graph => {

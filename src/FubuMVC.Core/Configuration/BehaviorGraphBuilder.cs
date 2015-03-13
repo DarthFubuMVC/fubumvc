@@ -3,6 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Bottles;
 using FubuCore;
+using FubuCore.Binding.InMemory;
+using FubuCore.Logging;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Runtime;
@@ -85,6 +87,23 @@ namespace FubuMVC.Core.Configuration
 
 
             }
+
+
+            if (FubuMode.InDevelopment() || settings.TraceLevel == TraceLevel.Verbose)
+            {
+                graph.Services.Clear(typeof(IBindingLogger));
+                graph.Services.AddService<IBindingLogger, RecordingBindingLogger>();
+
+                graph.Services.Clear(typeof(IBindingHistory));
+                graph.Services.AddService<IBindingHistory, BindingHistory>();
+
+                graph.Services.AddService<ILogListener, RequestTraceListener>();
+            }
+            else if (settings.TraceLevel == TraceLevel.Production)
+            {
+                graph.Services.AddService<ILogListener, ProductionModeTraceListener>();
+            }
+
         }
 
         private static void applyTracing(BehaviorGraph graph)

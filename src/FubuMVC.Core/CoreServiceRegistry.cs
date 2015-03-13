@@ -14,6 +14,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Assets;
+using FubuMVC.Core.Diagnostics.Visualization;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Compression;
 using FubuMVC.Core.Http.Cookies;
@@ -130,6 +131,8 @@ namespace FubuMVC.Core
             AddService<ISettingsSource>(new AppSettingsSettingSource(SettingCategory.environment));
 
             ReplaceService<TemplateGraph, TemplateGraph>();
+
+            SetServiceIfNone<IVisualizer, Visualizer>();
 
             SetServiceIfNone<IAssetFinder, AssetFinderCache>();
         }

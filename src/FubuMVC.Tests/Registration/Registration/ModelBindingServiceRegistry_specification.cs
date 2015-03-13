@@ -1,5 +1,6 @@
 using FubuCore.Binding;
 using FubuCore.Binding.InMemory;
+using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
@@ -12,6 +13,7 @@ namespace FubuMVC.Tests.Registration.Registration
     {
         private void registeredTypeIs<TService, TImplementation>()
         {
+            FubuMode.Reset();
             BehaviorGraph.BuildEmptyGraph().Services.DefaultServiceFor<TService>().Type.ShouldEqual(
                 typeof(TImplementation));
         }

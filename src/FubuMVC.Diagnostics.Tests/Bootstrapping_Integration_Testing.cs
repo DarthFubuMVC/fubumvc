@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.StructureMap;
 using FubuMVC.StructureMap.Diagnostics;
@@ -20,6 +21,7 @@ namespace FubuMVC.Diagnostics.Tests
         [TestFixtureSetUp]
         public void SetUp()
         {
+            FubuMode.SetUpForDevelopmentMode();
             runtime = FubuApplication.DefaultPolicies().StructureMap().Bootstrap();
 
             model = runtime.Factory.Get<IndexFubuDiagnostics>().get__fubu();
@@ -62,23 +64,6 @@ namespace FubuMVC.Diagnostics.Tests
             names.ShouldContain("Requests:requests");
         }
 
-        [Test]
-        public void build_styles()
-        {
-            model.StyleTags.ToString()
-                .ShouldContain("<link href=\"/fubu-diagnostics/structuremap.css\" rel=\"stylesheet\" type=\"text/css\" />");
-        }
 
-        [Test]
-        public void build_scripts()
-        {
-            model.ScriptTags.ToString().ShouldContain("<script type=\"text/javascript\" src=\"/fubu-diagnostics/structuremap.js\"></script>");
-        }
-
-        [Test, Explicit("not reliable in CI, but works fine otherwise. Not gonna worry about it")]
-        public void build_rsx_files()
-        {
-            model.ReactTags.ToString().ShouldContain("<script type=\"text/jsx\" src=\"/fubu-diagnostics/structuremap.jsx\"></script>");
-        }
     }
 }

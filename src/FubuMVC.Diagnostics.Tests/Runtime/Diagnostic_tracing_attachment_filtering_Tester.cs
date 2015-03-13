@@ -1,4 +1,5 @@
 using System.Linq;
+using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Endpoints;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration;
@@ -15,14 +16,14 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
         [SetUp]
         public void setup()
         {
+            FubuMode.SetUpForDevelopmentMode();
             theGraph = BehaviorGraph.BuildFrom(x =>
             {
                 x.Actions.IncludeType<SomeEndpoints>();
                 x.Actions.IncludeType<OtherEndpoints>();
                 x.Actions.IncludeType<EndpointExplorerFubuDiagnostics>();
 
-                //x.Actions.IncludeType<EndpointExplorerFubuDiagnostics>();
-                x.Import<DiagnosticsRegistration>();
+                
             });
         }
 

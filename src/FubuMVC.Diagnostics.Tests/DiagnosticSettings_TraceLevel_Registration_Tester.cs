@@ -19,16 +19,19 @@ namespace FubuMVC.Diagnostics.Tests
         {
             BehaviorGraph authorizedGraph = BehaviorGraph.BuildFrom(r =>
             {
-                r.Import<DiagnosticsRegistration>();
                 r.AlterSettings<DiagnosticsSettings>(x =>
                 {
+                    x.TraceLevel = TraceLevel.Verbose;
                     x.RestrictToRule("admin");
                 });
             });
 
             BehaviorGraph notAuthorizedGraph = BehaviorGraph.BuildFrom(r =>
             {
-                r.Import<DiagnosticsRegistration>();
+                  r.AlterSettings<DiagnosticsSettings>(x =>
+                  {
+                      x.TraceLevel = TraceLevel.Verbose;
+                  });
 //                r.AlterSettings<DiagnosticsSettings>(x =>
 //                {
 //                    x.RestrictToRule("admin");
@@ -46,32 +49,40 @@ namespace FubuMVC.Diagnostics.Tests
     [TestFixture]
     public class DiagnosticSettings_TraceLevel_Registration_Tester
     {
-        BehaviorGraph verboseGraph = BehaviorGraph.BuildFrom(r =>
-        {
-            r.Import<DiagnosticsRegistration>();
-            r.AlterSettings<DiagnosticsSettings>(x =>
-            {
-                x.TraceLevel = TraceLevel.Verbose;
-            });
-        });
+        private BehaviorGraph verboseGraph;
+        private BehaviorGraph productionGraph;
+        private BehaviorGraph noneGraph;
 
-        BehaviorGraph productionGraph = BehaviorGraph.BuildFrom(r =>
+        [TestFixtureSetUp]
+        public void SetUp()
         {
-            r.Import<DiagnosticsRegistration>();
-            r.AlterSettings<DiagnosticsSettings>(x =>
+            FubuMode.Reset();
+            verboseGraph = BehaviorGraph.BuildFrom(r =>
             {
-                x.TraceLevel = TraceLevel.Production;
+                r.AlterSettings<DiagnosticsSettings>(x =>
+                {
+                    x.TraceLevel = TraceLevel.Verbose;
+                });
             });
-        });
 
-        BehaviorGraph noneGraph = BehaviorGraph.BuildFrom(r =>
-        {
-            r.Import<DiagnosticsRegistration>();
-            r.AlterSettings<DiagnosticsSettings>(x =>
+            productionGraph = BehaviorGraph.BuildFrom(r =>
             {
-                x.TraceLevel = TraceLevel.None;
+                r.AlterSettings<DiagnosticsSettings>(x =>
+                {
+                    x.TraceLevel = TraceLevel.Production;
+                });
             });
-        });
+
+            noneGraph = BehaviorGraph.BuildFrom(r =>
+            {
+                r.AlterSettings<DiagnosticsSettings>(x =>
+                {
+                    x.TraceLevel = TraceLevel.None;
+                });
+            });
+        }
+
+
 
         [Test]
         public void RequestTraceListener_is_added_if_verbose()

@@ -1,5 +1,6 @@
 using System.Linq;
 using FubuCore.Logging;
+using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration;
 using FubuTestingSupport;
@@ -15,7 +16,8 @@ namespace FubuMVC.Diagnostics.Tests.Runtime
         [SetUp]
         public void SetUp()
         {
-            graph = BehaviorGraph.BuildFrom(x => x.Import<DiagnosticsRegistration>());
+            FubuMode.SetUpForDevelopmentMode();
+            graph = BehaviorGraph.BuildEmptyGraph();
         }
 
         #endregion

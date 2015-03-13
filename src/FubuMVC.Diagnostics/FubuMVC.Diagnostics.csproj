@@ -90,7 +90,6 @@
     <None Include="Dashboard.spark">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Packaging\Packaging.spark" />
     <Content Include="diagnostics\bootstrap.min.css" />
     <Content Include="diagnostics\core-diagnostics.js" />
     <Content Include="diagnostics\fubu-diagnostics.js" />
@@ -118,20 +117,10 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="AppDomainFubuDiagnostics.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="AssetFubuDiagnostics.cs" />
-    <Compile Include="ChainFubuDiagnostics.cs" />
     <Compile Include="DiagnosticsException.cs" />
-    <Compile Include="DiagnosticsRegistration.cs" />
     <Compile Include="DiagnosticsRegistry.cs" />
     <Compile Include="IndexFubuDiagnostics.cs" />
-    <Compile Include="ModelBindingFubuDiagnostics.cs" />
-    <Compile Include="Packaging\PackageDiagnosticsLogModel.cs" />
-    <Compile Include="Packaging\PackageDiagnosticsModel.cs" />
-    <Compile Include="Packaging\PackageDiagnosticsRequestModel.cs" />
-    <Compile Include="Packaging\PackageLogFubuDiagnostics.cs" />
-    <Compile Include="RequestsFubuDiagnostics.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

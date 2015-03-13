@@ -5,6 +5,7 @@ using FubuCore.Binding;
 using FubuCore.Binding.Logging;
 using FubuCore.Descriptions;
 using FubuCore.Reflection;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.UI.Bootstrap.Collapsibles;
 using NUnit.Framework;
