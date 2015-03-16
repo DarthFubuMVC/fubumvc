@@ -24,7 +24,7 @@ namespace FubuMVC.Core.Diagnostics
         {
             var dict = new Dictionary<string, object>();
 
-            var chain = _graph.Behaviors.FirstOrDefault(x => x.GetHashCode() == request.Hash);
+            var chain = _graph.Behaviors.FirstOrDefault(x => x.Title().GetHashCode() == request.Hash);
             if (chain == null)
             {
                 dict.Add("not-found", true);

@@ -19,7 +19,6 @@ _.assign(FubuDiagnostics, {
     // TODO -- cache if there are no params?
     get: function (key, params, callback) {
         var url = this.toUrl(key, params);
-
         $.get(url, callback);
     },
 
@@ -27,7 +26,7 @@ _.assign(FubuDiagnostics, {
         var route = this.routes[key];
         var url = route.url;
         _.each(route.params, function (param) {
-            url = url.replace('{' + param + '}', params[param]);
+            url = url.replace('{' + param.Name + '}', params[param.Name]);
         });
 
         return url;
@@ -86,6 +85,7 @@ FubuDiagnostics.addSection({
 });
 
 require('./endpoint-explorer');
+require('./chain-details');
 
 /*
 .add({

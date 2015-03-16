@@ -17,7 +17,17 @@ var App = React.createClass({
   mixins: [Router.State],
 
   getHandlerKey: function () {
-    return 1;
+    var childDepth = 1; // assuming App is top-level route
+    var key = this.getRoutes()[childDepth].name;
+    var id = this.getParams().id;
+    if (id) { key += id; }
+
+    var mode = this.getParams().Hash;
+    if (mode){
+    	key += ':' + mode;
+    }
+
+    return key;
   },
 
 	render: function(){

@@ -35,8 +35,7 @@ class FubuDiagnosticsView {
 			throw new Error("You need to either specify a React in view.component or pass in a render() function");
 		}
 
-		this.route = (<Route name={routeName} path={this.url} handler={component}/>);
-		
+
 		if (view.route){
 			var route = FubuDiagnostics.routes[view.route];
 			if (route.params.length > 0){
@@ -46,6 +45,9 @@ class FubuDiagnosticsView {
 				});
 			}
 		}
+
+		this.route = (<Route name={routeName} path={this.url} handler={component}/>);
+		
 
 	}
 }

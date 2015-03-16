@@ -14,7 +14,6 @@ namespace FubuMVC.Core.Diagnostics
     public class FubuDiagnosticsEndpoint
     {
         private readonly IAssetTagBuilder _tags;
-        private readonly IHttpRequest _request;
         private readonly IHttpResponse _response;
         private readonly IDiagnosticAssets _assets;
         private readonly JavascriptRouteWriter _routeWriter;
@@ -25,14 +24,12 @@ namespace FubuMVC.Core.Diagnostics
 
         public FubuDiagnosticsEndpoint(
             IAssetTagBuilder tags, 
-            IHttpRequest request, 
             IHttpResponse response,
             IDiagnosticAssets assets, 
             JavascriptRouteWriter routeWriter, 
             DiagnosticJavascriptRoutes routes)
         {
             _tags = tags;
-            _request = request;
             _response = response;
             _assets = assets;
             _routeWriter = routeWriter;
