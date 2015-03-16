@@ -86,6 +86,8 @@ FubuDiagnostics.addSection({
 
 require('./endpoint-explorer');
 require('./chain-details');
+require('./request-table.jsx');
+require('./request-details.jsx');
 
 /*
 .add({
