@@ -8,7 +8,7 @@ var Route = Router.Route, DefaultRoute = Router.DefaultRoute,
   Link=Router.Link, RouteHandler = Router.RouteHandler;
 
 var Header = require('./header');
-
+var Dashboard = require('./dashboard');
 
 
 var App = React.createClass({
@@ -19,12 +19,16 @@ var App = React.createClass({
   },
 
 	render: function(){
+		style = {
+			paddingLeft: '25px'
+		}
+	
 		return (
-			<div className="container">
+			<div className="container-fluid">
 				<div className="row">
 					<Header />
 				</div>
-				<div className="row">
+				<div className="row"  style={style}>
 					<RouteHandler key={this.getHandlerKey()}/>
 				</div>
 			</div>
@@ -32,11 +36,7 @@ var App = React.createClass({
 	}
 });
 
-var Dashboard = React.createClass({
-	render: function(){
-		return (<h1>The Dashboard</h1>);
-	}
-});
+
 
 var routes = (
   <Route name="app" path="/" handler={App}>
