@@ -8,9 +8,15 @@ var Router = require('react-router'); // or var Router = ReactRouter; in browser
 var Route = Router.Route, DefaultRoute = Router.DefaultRoute,
   Link=Router.Link, RouteHandler = Router.RouteHandler;
 
+
+
+var FubuDiagnosticsSection = require('./fubu-diagnostics-section');
+
+
 _.assign(FubuDiagnostics, {
     cache: {},
 
+    // TODO -- cache if there are no params?
     get: function (key, params, callback) {
         var url = this.toUrl(key, params);
 
@@ -27,7 +33,18 @@ _.assign(FubuDiagnostics, {
         return url;
     },
 
-    // TODO -- add cached ability
+    sections: [],
+
+    addSection: function(data){
+		var section = new FubuDiagnosticsSection(data);
+		this.sections.push(section);
+
+		return section;
+	},
+
+	section: function(key){
+		return _.find(this.sections, s => s.key == key);
+	}
 });
 
 
@@ -52,15 +69,6 @@ var TextScreen = React.createClass({
 	}
 });
 
-var FubuDiagnosticsSection = require('./fubu-diagnostics-section');
-
-FubuDiagnostics.sections = [];
-FubuDiagnostics.addSection = function(data){
-	var section = new FubuDiagnosticsSection(data);
-	this.sections.push(section);
-
-	return section;
-}
 
 require('./appdomain');
 require('./assets');
@@ -76,6 +84,8 @@ FubuDiagnostics.addSection({
 	key: 'model-binding',
 	component: require('./model-binding')
 });
+
+require('./endpoint-explorer');
 
 /*
 .add({
