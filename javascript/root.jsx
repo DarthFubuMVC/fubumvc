@@ -8,28 +8,31 @@ var Router = require('react-router'); // or var Router = ReactRouter; in browser
 var Route = Router.Route, DefaultRoute = Router.DefaultRoute,
   Link=Router.Link, RouteHandler = Router.RouteHandler;
 
-FubuDiagnostics.HtmlScreen = React.createClass({
-	getInitialState: function(){
-		return {
-			html: 'Loading...'
-		}
-	},
+_.assign(FubuDiagnostics, {
+    cache: {},
 
-	componentDidMount: function(){
-		// TODO -- add parameters into this someday
-		FubuDiagnostics.get(this.props.route, {}, data => {
-			this.setState({html: data});
-		});
-	},
+    get: function (key, params, callback) {
+        var url = this.toUrl(key, params);
 
-	render: function(){
-		return (
-			<div dangerouslySetInnerHTML={this.state.html}></div>
-		);
-	}
+        $.get(url, callback);
+    },
+
+    toUrl: function (key, params) {
+        var route = this.routes[key];
+        var url = route.url;
+        _.each(route.params, function (param) {
+            url = url.replace('{' + param + '}', params[param]);
+        });
+
+        return url;
+    },
+
+    // TODO -- add cached ability
 });
 
-FubuDiagnostics.TextScreen = React.createClass({
+
+
+var TextScreen = React.createClass({
 	getInitialState: function(){
 		return {
 			text: 'Loading...'
@@ -64,7 +67,21 @@ FubuDiagnostics.addSection({
     title: 'FubuMVC',
     description: 'Core Diagnostics for FubuMVC Applications',
     key: 'fubumvc'
+}).add({
+	title: 'Model Binding',
+	description: 'something about Model Binding',
+	key: 'model-binding',
+	component: require('./model-binding')
 });
+
+/*
+.add({
+	title: 'Package Loading',
+	description: 'something about Package Loading',
+	key: 'package-loading',
+	component: (<HtmlScreen route="PackageLog:package_logs"/> )
+});
+*/
 
 
 

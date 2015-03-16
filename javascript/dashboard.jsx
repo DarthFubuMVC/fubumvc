@@ -4,28 +4,7 @@ var React = require('react');
 var {Grid, Col, Row} = require('react-bootstrap');
 
 
-var SectionLinks = React.createClass({
-	render: function(){
-		var items = this.props.section.activeViews().map(view => {
-			return (
-				<div>
-					<dt><a href={view.anchor}>{view.title}</a></dt>
-					<dd>{view.description}</dd>
-				</div>
-			);
-		});
-	
-		return (
-
-			<dl className="dl-horizontal">
-				{items}
-			</dl>
-
-		);
-
-	}
-});
-
+var SectionLinks = require('./section-links');
 
 AllLinks = React.createClass({
 	render: function(){

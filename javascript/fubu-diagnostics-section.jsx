@@ -7,15 +7,35 @@ var Router = require('react-router'); // or var Router = ReactRouter; in browser
 var Route = Router.Route, DefaultRoute = Router.DefaultRoute,
   Link=Router.Link, RouteHandler = Router.RouteHandler;
 
+var SectionLinks = require('./section-links');
+
+
 class FubuDiagnosticsView {
 	constructor(view, section){
 		this.url = section.key + '/' + view.key;
 		this.key = view.key;
+
+		var routeName = section.key + ':' + view.key;
+
+		
 		this.anchor = '#' + this.url;
 		this.hasParameters = false;
-		this.component = view.component;
 		this.description = view.description;
 		this.title = view.title;
+
+
+		var component = view.component;
+		if (view.hasOwnProperty('render')){
+			component = React.createClass({
+				render: view.render
+			});
+		}
+
+		if (!component){
+			throw new Error("You need to either specify a React in view.component or pass in a render() function");
+		}
+
+		this.route = (<Route name={routeName} path={this.url} handler={component}/>);
 		
 		if (view.route){
 			var route = FubuDiagnostics.routes[view.route];
@@ -26,6 +46,7 @@ class FubuDiagnosticsView {
 				});
 			}
 		}
+
 	}
 }
 
@@ -40,8 +61,11 @@ class FubuDiagnosticsSection {
 		this.anchor = '#' + this.key;
 	}
 	
-	add(view){
-		this.views.push(new FubuDiagnosticsView(view, this));
+	add(data){
+		var view = new FubuDiagnosticsView(data, this);
+		this.views.push(view);
+
+		return this;
 	}
 	
 	activeViews(){
@@ -49,8 +73,7 @@ class FubuDiagnosticsSection {
 	}
 	
 	toRoutes(){
-		var handler = (<SectionLinks section={this}/>);
-		return [ ( <Route key={this.key} path={this.key} handler={handler}/> ) ];
+		return this.views.map(view => view.route);
 	}
 }
 

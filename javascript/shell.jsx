@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 var React = require('react');
-
+var _ = require('lodash');
 
 var Router = require('react-router'); // or var Router = ReactRouter; in browsers
 var Route = Router.Route, DefaultRoute = Router.DefaultRoute,
@@ -26,7 +26,7 @@ var App = React.createClass({
 		}
 	
 		return (
-			<Grid>
+			<Grid fluid={true}>
 				<Row>
 					<Header />
 				</Row>
@@ -40,15 +40,20 @@ var App = React.createClass({
 
 
 
-var routes = (
-  <Route name="app" path="/" handler={App}>
-    <DefaultRoute handler={Dashboard}/>
-  </Route>
-);
+
 
 
 module.exports = {
 	start: function(){
+		var sectionRoutes = _.flatten(FubuDiagnostics.sections.map(section => section.toRoutes()));
+
+		var routes = (
+		  <Route name="app" path="/" handler={App}>
+		    <DefaultRoute handler={Dashboard}/>
+		    {sectionRoutes}
+		  </Route>
+		);
+
 		Router.run(routes, function (Handler) {
 		  React.render(<Handler/>, document.body);
 		});
