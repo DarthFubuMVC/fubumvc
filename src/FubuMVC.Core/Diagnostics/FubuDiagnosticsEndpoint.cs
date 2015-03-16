@@ -20,7 +20,7 @@ namespace FubuMVC.Core.Diagnostics
         private readonly JavascriptRouteWriter _routeWriter;
         private readonly DiagnosticJavascriptRoutes _routes;
 
-        private static readonly string[] _styles = new[] {"bootstrap.min.css", "bootstrap.overrides.css"};
+        private static readonly string[] _styles = new[] {"bootstrap.min.css", "master.css", "bootstrap.overrides.css"};
         private static readonly string[] _scripts = new[] {"root.js"};
 
         public FubuDiagnosticsEndpoint(

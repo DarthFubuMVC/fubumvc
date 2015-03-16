@@ -1,7 +1,7 @@
 
 module.exports = {
   entry: {
-    "root": './javascript/root.js',
+    "root": './javascript/root.jsx',
   },
   output: {
     path: __dirname + '/src/TestHarnessApp/fubu-diagnostics',

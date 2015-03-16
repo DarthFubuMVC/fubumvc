@@ -9,6 +9,8 @@ var Route = Router.Route, DefaultRoute = Router.DefaultRoute,
 
 var Header = require('./header');
 var Dashboard = require('./dashboard');
+var {Grid, Col, Row} = require('react-bootstrap');
+
 
 
 var App = React.createClass({
@@ -24,14 +26,14 @@ var App = React.createClass({
 		}
 	
 		return (
-			<div className="container-fluid">
-				<div className="row">
+			<Grid>
+				<Row>
 					<Header />
-				</div>
-				<div className="row"  style={style}>
+				</Row>
+				<Row  style={style}>
 					<RouteHandler key={this.getHandlerKey()}/>
-				</div>
-			</div>
+				</Row>
+			</Grid>
 		);
 	}
 });

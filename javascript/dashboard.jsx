@@ -4,6 +4,69 @@ var React = require('react');
 var {Grid, Col, Row} = require('react-bootstrap');
 
 
+var SectionLinks = React.createClass({
+	render: function(){
+		var items = this.props.section.activeViews().map(view => {
+			return (
+				<div>
+					<dt><a href={view.anchor}>{view.title}</a></dt>
+					<dd>{view.description}</dd>
+				</div>
+			);
+		});
+	
+		return (
+
+			<dl className="dl-horizontal">
+				{items}
+			</dl>
+
+		);
+
+	}
+});
+
+
+AllLinks = React.createClass({
+	render: function(){
+		var items = FubuDiagnostics.sections.map(s => {
+			var header = null;
+			if (s.activeViews().length == 0){
+				header = (
+					<h4>
+						<a href={s.anchor}>{s.title}</a>
+						<small className="section-subtitle">{s.description}</small>
+					</h4>
+				);
+			}
+			else{
+				header = (
+					<h4>
+						<span>{s.title}</span>
+						<small className="section-subtitle">{s.description}</small>
+					</h4>
+				);
+			}
+		
+			return (
+				<div>
+					{header}
+
+					<SectionLinks section={s} />
+					
+					<hr />
+				</div>
+			);
+		});
+		
+	
+		return (	
+			<div>{items}</div>
+		);
+	}
+});
+
+
 var Dashboard = React.createClass({
 	render: function(){
 		return (
@@ -42,7 +105,7 @@ var Dashboard = React.createClass({
 				</Col>
 				
 				<Col xs={6} md={6}>
-				
+					<AllLinks />
 				</Col>
 			
 			
