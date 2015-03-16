@@ -3,7 +3,6 @@ using System.Linq;
 using System.Net.Mime;
 using System.Reflection;
 using System.Security.Permissions;
-using System.Web.Caching;
 using FubuCore;
 using FubuCore.Util;
 
@@ -49,7 +48,7 @@ namespace FubuMVC.Core.Diagnostics.Assets
         public static bool IsDiagnosticAsset(string path)
         {
             var parts = path.Split('.');
-            return parts.Any(x => x.EqualsIgnoreCase("diagnostics"));
+            return parts.Any(x => x.EqualsIgnoreCase("fubu_diagnostics"));
         }
     }
 }

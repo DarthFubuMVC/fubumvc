@@ -745,9 +745,12 @@
     <Folder Include="Behaviors\Conditional\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Diagnostics\Assets\bootstrap.min.css" />
-    <EmbeddedResource Include="Diagnostics\Assets\bootstrap.overrides.css" />
-    <EmbeddedResource Include="Diagnostics\Assets\master.css" />
+    <EmbeddedResource Include="fubu-diagnostics\bootstrap.min.css" />
+    <EmbeddedResource Include="fubu-diagnostics\bootstrap.overrides.css" />
+    <EmbeddedResource Include="fubu-diagnostics\master.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="fubu-diagnostics\root.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

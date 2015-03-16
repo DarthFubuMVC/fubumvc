@@ -1,0 +1,17 @@
+{
+  "name": "fubumvc.diagnostics",
+  "version": "0.0.1",
+  "description": "Executable Specification authoring and running",
+  "dependencies": {
+    "react": "^0.12.2"
+  },
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack -w"
+  },
+  "devDependencies": {
+    "babel-core": "^4.7.12",
+    "babel-loader": "^4.1.0",
+    "react-bootstrap": "^0.16.1"
+  }
+}
