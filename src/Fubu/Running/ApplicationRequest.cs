@@ -22,6 +22,7 @@ namespace Fubu.Running
             PortFlag = 5500;
             DirectoryFlag = Environment.CurrentDirectory;
             BuildFlag = "Debug";
+            ModeFlag = "Development";
         }
 
         [Description(
@@ -59,8 +60,8 @@ namespace Fubu.Running
         public bool WatchedFlag { get; set; }
 
         [Description("Unless this flag is set, the fubumvc application will run in Development mode")]
-        [FlagAlias("production-mode")]
-        public bool ProductionModeFlag { get; set; }
+        [FlagAlias("mode")]
+        public string ModeFlag { get; set; }
 
         [Description("If selected, the run command will re-explode all the Bottle content and immediately exit")]
         [FlagAlias("explode-only")]

@@ -73,7 +73,7 @@ namespace Fubu.Running
                 ApplicationName = _request.ApplicationFlag,
                 PhysicalPath = _request.DirectoryFlag,
                 PortNumber = PortFinder.FindPort(_request.PortFlag),
-                UseProductionMode = _request.ProductionModeFlag,
+                Mode = _request.ModeFlag,
                 AutoRefreshWebSocketsAddress = _request.AutoRefreshWebSocketsAddress
             });
         

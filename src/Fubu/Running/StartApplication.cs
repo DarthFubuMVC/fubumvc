@@ -13,7 +13,7 @@ namespace Fubu.Running
         public int PortNumber { get; set; }
         public string PhysicalPath { get; set; }
 
-        public bool UseProductionMode { get; set; }
+        public string Mode { get; set; }
         public string HtmlHeadInjectedText { get; set; }
 
         public string AutoRefreshWebSocketsAddress

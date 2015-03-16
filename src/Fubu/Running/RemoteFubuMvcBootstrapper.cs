@@ -48,16 +48,12 @@ namespace Fubu.Running
 
             PackageRegistry.Properties[HtmlHeadInjectionMiddleware.TEXT_PROPERTY] = message.HtmlHeadInjectedText;
 
-            if (message.UseProductionMode)
+            if (message.Mode.IsNotEmpty())
             {
-                Console.WriteLine("FubuMode = Production");
-                FubuMode.Reset();
+                FubuMode.Mode(message.Mode);
             }
-            else
-            {
-                Console.WriteLine("FubuMode = Development");
-                FubuMode.Mode(FubuMode.Development);
-            }
+
+            Console.WriteLine("FubuMode = " + FubuMode.Mode());
 
             var chooser = new ApplicationSourceChooser(_typeFinder, _messaging);
             chooser.Find(message, applicationType => {
