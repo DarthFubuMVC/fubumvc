@@ -63,6 +63,7 @@ FubuDiagnostics.addSection = function(data){
 }
 
 require('./appdomain');
+require('./assets');
 
 
 FubuDiagnostics.addSection({    
