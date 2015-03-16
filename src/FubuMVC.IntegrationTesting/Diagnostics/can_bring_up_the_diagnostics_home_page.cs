@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using FubuMVC.Core;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Diagnostics
@@ -7,8 +8,22 @@ namespace FubuMVC.IntegrationTesting.Diagnostics
     public class can_bring_up_the_diagnostics_home_page
     {
         [Test]
-        public void get_the_200()
+        public void get_the_200_in_normal_mode()
         {
+            FubuMode.Reset();
+
+            TestHost.Scenario(_ =>
+            {
+                _.Get.Url("_fubu");
+                _.StatusCodeShouldBeOk();
+            });
+        }
+
+        [Test]
+        public void get_the_200_in_diagnostics_mode()
+        {
+            FubuMode.Mode("diagnostics");
+
             TestHost.Scenario(_ =>
             {
                 _.Get.Url("_fubu");

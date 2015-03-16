@@ -1,0 +1,29 @@
+{
+  "name": "react-loader",
+  "description": "React component that displays a spinner via spin.js until your component is loaded",
+  "version": "1.2.0",
+  "main": "lib/react-loader.js",
+  "keywords": [
+    "react",
+    "component",
+    "react-component",
+    "loader",
+    "spinner",
+    "spin",
+    "spinjs",
+    "spin.js"
+  ],
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "dependencies": {
+    "spin.js": "2.x"
+  },
+  "authors": [
+    "Matt Huggins <mhuggins@quickleft.com>"
+  ],
+  "homepage": "https://github.com/quickleft/react-loader",
+  "license": "MIT"
+}

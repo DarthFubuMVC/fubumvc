@@ -69,5 +69,10 @@ namespace FubuMVC.Core.Diagnostics.Assets
         {
             return new StylesheetLinkTag(Url);
         }
+
+        public HtmlTag ToScriptTag()
+        {
+            return new HtmlTag("script").Attr("language", "javascript").Attr("src", Url);
+        }
     }
 }

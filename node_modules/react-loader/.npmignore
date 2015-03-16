@@ -1,0 +1,4 @@
+/bower_components
+/node_modules
+/lib/.module-cache
+/test/bundle.js

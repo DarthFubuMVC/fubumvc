@@ -17,15 +17,16 @@ namespace FubuMVC.Core.Http.Owin.Middleware
 
         public static void ApplyInjection(OwinSettings settings)
         {
-            if (!FubuMode.InDevelopment()) return;
-
-            var injectedContent = PackageRegistry.Properties[TEXT_PROPERTY];
-            if (injectedContent.IsNotEmpty())
+            if (FubuMode.InDevelopment() || FubuMode.Mode().EqualsIgnoreCase("diagnostics"))
             {
-                settings.AddMiddleware<HtmlHeadInjectionMiddleware>().Arguments.With(new InjectionOptions
+                var injectedContent = PackageRegistry.Properties[TEXT_PROPERTY];
+                if (injectedContent.IsNotEmpty())
                 {
-                    Content = _ => injectedContent
-                });
+                    settings.AddMiddleware<HtmlHeadInjectionMiddleware>().Arguments.With(new InjectionOptions
+                    {
+                        Content = _ => injectedContent
+                    });
+                }
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.JavascriptRouting;
 using FubuMVC.Core.Diagnostics.Assets;
 using FubuMVC.Core.Http;
@@ -12,17 +13,30 @@ namespace FubuMVC.Core.Diagnostics
     [Tag("Diagnostics")]
     public class FubuDiagnosticsEndpoint
     {
+        private readonly IAssetTagBuilder _tags;
         private readonly IHttpRequest _request;
         private readonly IHttpResponse _response;
         private readonly IDiagnosticAssets _assets;
+        private readonly JavascriptRouteWriter _routeWriter;
+        private readonly DiagnosticJavascriptRoutes _routes;
 
-        private static readonly string[] _styles = new[] {"bootstrap.min.css", "master.css", "bootstrap.overrides.css"};
+        private static readonly string[] _styles = new[] {"bootstrap.min.css", "bootstrap.overrides.css"};
+        private static readonly string[] _scripts = new[] {"root.js"};
 
-        public FubuDiagnosticsEndpoint(IHttpRequest request, IHttpResponse response, IDiagnosticAssets assets)
+        public FubuDiagnosticsEndpoint(
+            IAssetTagBuilder tags, 
+            IHttpRequest request, 
+            IHttpResponse response,
+            IDiagnosticAssets assets, 
+            JavascriptRouteWriter routeWriter, 
+            DiagnosticJavascriptRoutes routes)
         {
+            _tags = tags;
             _request = request;
             _response = response;
             _assets = assets;
+            _routeWriter = routeWriter;
+            _routes = routes;
         }
 
         public HtmlDocument get__fubu()
@@ -36,9 +50,35 @@ namespace FubuMVC.Core.Diagnostics
 
             var foot = new HtmlTag("foot");
             document.Body.Next = foot;
+            writeScripts(foot);
+
+
 
 
             return document;
+        }
+
+        private void writeScripts(HtmlTag foot)
+        {
+            // Do this regardless
+            foot.Append(_assets.For("FubuDiagnostics.js").ToScriptTag());
+
+            var routeData = _routeWriter.WriteJavascriptRoutes("FubuDiagnostics.routes", _routes);
+            foot.Append(routeData);
+
+            if (FubuMode.Mode() == "diagnostics")
+            {
+                var links = _tags.BuildScriptTags(_scripts.Select(x => "fubu-diagnostics/" + x));
+                links.Each(x => foot.Append(x));
+            }
+            else
+            {
+                _scripts.Each(name =>
+                {
+                    var file = _assets.For(name);
+                    foot.Append(file.ToScriptTag());
+                });
+            }
         }
 
         private void writeStyles(HtmlDocument document)

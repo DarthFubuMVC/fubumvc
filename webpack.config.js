@@ -1,15 +1,14 @@
 
 module.exports = {
   entry: {
-    "root": ['./javascript/root.js'],
+    "root": './javascript/root.js',
   },
   output: {
-    path: __dirname + '/src/FubuMVC.Core/fubu-diagnostics',
+    path: __dirname + '/src/TestHarnessApp/fubu-diagnostics',
+    //path: __dirname + '/src/FubuMVC.Core/fubu-diagnostics',
     filename: "[name].js",
     publicPath: '/client/public/javascript/',
-    pathinfo: true,
-	libraryTarget: 'var',
-	library: 'FubuDiagnostics'
+    pathinfo: true
   },
   resolve: {
     // Allow to omit extensions when requiring these files

@@ -41,6 +41,11 @@ namespace TestHarnessApp
     {
         public TestHarnessRegistry()
         {
+            AlterSettings<DiagnosticsSettings>(x =>
+            {
+                x.TraceLevel = TraceLevel.Verbose;
+            });
+
             AlterSettings<AssetSettings>(x => {
                 x.CdnAssets.Add(new CdnAsset { Url = "http://code.jquery.com/all-wrong.js", Fallback = "typeof jQuery == 'undefined'", File = "jquery-2.1.0.min.js"});
                 //x.CdnAssets.Add(new CdnAsset { Url = "http://code.jquery.com/jquery-2.1.0.min.js", Fallback = "typeof jQuery == 'undefined'" });

@@ -12,6 +12,9 @@
   "devDependencies": {
     "babel-core": "^4.7.12",
     "babel-loader": "^4.1.0",
-    "react-bootstrap": "^0.16.1"
+    "jsx-loader": "^0.12.2",
+    "react-bootstrap": "^0.16.1",
+    "react-loader": "^1.2.0",
+    "webpack": "^1.7.3"
   }
 }
