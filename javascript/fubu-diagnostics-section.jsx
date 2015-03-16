@@ -59,6 +59,8 @@ class FubuDiagnosticsSection {
 		this.url = '/' + this.key;
 		this.views = [];
 		this.anchor = '#' + this.key;
+
+		this.component = section.component;
 	}
 	
 	add(data){
@@ -73,6 +75,10 @@ class FubuDiagnosticsSection {
 	}
 	
 	toRoutes(){
+		if (this.component){
+			return [(<Route name={this.key} path={this.url} handler={this.component} />)];
+		}
+
 		return this.views.map(view => view.route);
 	}
 }

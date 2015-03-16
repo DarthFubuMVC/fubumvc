@@ -62,6 +62,8 @@ FubuDiagnostics.addSection = function(data){
 	return section;
 }
 
+require('./appdomain');
+
 
 FubuDiagnostics.addSection({    
     title: 'FubuMVC',
