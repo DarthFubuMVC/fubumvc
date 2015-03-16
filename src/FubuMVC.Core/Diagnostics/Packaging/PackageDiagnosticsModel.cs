@@ -6,9 +6,9 @@ namespace FubuMVC.Core.Diagnostics.Packaging
     {
         public PackageDiagnosticsModel()
         {
-            Logs = new List<PackageDiagnosticsLogModel>();
+            logs = new List<PackageDiagnosticsLogModel>();
         }
 
-        public IEnumerable<PackageDiagnosticsLogModel> Logs { get; set; }
+        public IEnumerable<PackageDiagnosticsLogModel> logs { get; set; }
     }
 }

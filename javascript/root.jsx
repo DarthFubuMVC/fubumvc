@@ -88,15 +88,8 @@ require('./endpoint-explorer');
 require('./chain-details');
 require('./request-table.jsx');
 require('./request-details.jsx');
+require('./packaging');
 
-/*
-.add({
-	title: 'Package Loading',
-	description: 'something about Package Loading',
-	key: 'package-loading',
-	component: (<HtmlScreen route="PackageLog:package_logs"/> )
-});
-*/
 
 
 

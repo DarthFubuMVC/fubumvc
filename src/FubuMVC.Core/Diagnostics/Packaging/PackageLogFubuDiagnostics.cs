@@ -24,7 +24,7 @@ namespace FubuMVC.Core.Diagnostics.Packaging
                 }));
 
             return new PackageDiagnosticsModel{
-                Logs = logs
+                logs = logs
             };
         }
     }
