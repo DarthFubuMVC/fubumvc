@@ -36,6 +36,10 @@ var Header = React.createClass({
 			<div>
 				<Navbar inverse={true} id="top-nav">
 					<Nav>
+						<img src="/_fubu/icon" style={{marginTop: "5px", marginRight: '20px'}}/> 
+					</Nav>
+					<Nav>
+						
 						<a className="navbar-brand" href="#/">FubuMVC Diagnostics</a>
 						{sectionLinks}
 					</Nav>

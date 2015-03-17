@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.JavascriptRouting;
@@ -92,7 +93,15 @@ namespace FubuMVC.Core.Diagnostics
             var file = _assets.For(request.Name);
             file.Write(_response);
         }
+
+        public void get__fubu_icon(Standin standin)
+        {
+            var file = _assets.For("fubumvc.png");
+            file.Write(_response);
+        }
     }
+
+    public class Standin { }
 
     public class DiagnosticAssetRequest
     {
@@ -105,6 +114,8 @@ namespace FubuMVC.Core.Diagnostics
         public DiagnosticJavascriptRoutes(BehaviorGraph graph)
         {
             graph.Behaviors.OfType<DiagnosticChain>().Where(x => x.Route.AllowedHttpMethods.Any()).Each(Add);
+
+            Get("icon").Action<FubuDiagnosticsEndpoint>(x => x.get__fubu_icon(null));
         }
     }
 }
