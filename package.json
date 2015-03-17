@@ -2,7 +2,7 @@
   "name": "fubumvc.diagnostics",
   "version": "0.0.1",
   "description": "Executable Specification authoring and running",
-  "dependencies": {
+  "peerDependencies": {
     "react": "^0.12.2"
   },
   "scripts": {

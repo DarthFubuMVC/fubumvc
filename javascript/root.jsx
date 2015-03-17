@@ -46,7 +46,8 @@ _.assign(FubuDiagnostics, {
 	},
 
 	TextScreen: require('./text-screen'),
-	HtmlScreen: require('./html-screen')
+	HtmlScreen: require('./html-screen'),
+	React: React
 });
 
 
@@ -72,9 +73,6 @@ require('./chain-details');
 require('./request-table.jsx');
 require('./request-details.jsx');
 require('./packaging');
-
-// TEMP
-require('./settings');
 
 
 

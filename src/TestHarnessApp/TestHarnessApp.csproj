@@ -105,6 +105,10 @@
     <Content Include="Content\scripts\Go.js" />
     <Content Include="Content\scripts\jquery-2.1.0.min.js" />
     <Content Include="Content\styles\myStyles.css" />
+    <Content Include="fubu-diagnostics\jquery.min.js" />
+    <Content Include="fubu-diagnostics\root.js" />
+    <Content Include="fubu-diagnostics\structuremap.js" />
+    <Content Include="fubu-diagnostics\typeahead.bundle.min.js" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
