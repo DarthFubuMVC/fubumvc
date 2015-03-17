@@ -73,7 +73,7 @@ var RequestTable = React.createClass({
 
 FubuDiagnostics.section('fubumvc').add({
 	title: 'Requests',
-	description: 'something about Requests',
+	description: 'A history of the most recent requests handled by this application',
 	key: 'requests',
 	component: RequestTable
 });

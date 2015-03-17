@@ -8,13 +8,17 @@ var SectionLinks = require('./section-links');
 
 AllLinks = React.createClass({
 	render: function(){
+		var style = {
+			marginLeft: '10px'
+		}
+
 		var items = FubuDiagnostics.sections.map(s => {
 			var header = null;
 			if (s.activeViews().length == 0){
 				header = (
 					<h4>
 						<a href={s.anchor}>{s.title}</a>
-						<small className="section-subtitle">{s.description}</small>
+						<small style={style}>{s.description}</small>
 					</h4>
 				);
 			}
@@ -22,7 +26,7 @@ AllLinks = React.createClass({
 				header = (
 					<h4>
 						<span>{s.title}</span>
-						<small className="section-subtitle">{s.description}</small>
+						<small style={style}>{s.description}</small>
 					</h4>
 				);
 			}

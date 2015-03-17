@@ -10,6 +10,25 @@ var Route = Router.Route, DefaultRoute = Router.DefaultRoute,
 var SectionLinks = require('./section-links');
 
 
+var ActiveSectionView = React.createClass({
+	mixins: [ Router.State ],
+
+	render: function(){
+		var path = this.getPathname();
+		var sectionKey = path.split('/')[1];
+		var activeSection = FubuDiagnostics.section(sectionKey);
+
+
+
+		return (
+			<div style={{marginLeft: '300px'}}>
+				<h2>{activeSection.title} <small>{activeSection.description}</small></h2>
+				<SectionLinks section={activeSection} />
+			</div>
+		);
+	}
+});
+
 class FubuDiagnosticsView {
 	constructor(view, section){
 		this.url = section.key + '/' + view.key;
@@ -17,7 +36,6 @@ class FubuDiagnosticsView {
 
 		var routeName = section.key + ':' + view.key;
 
-		
 		this.anchor = '#' + this.url;
 		this.hasParameters = false;
 		this.description = view.description;
@@ -62,7 +80,7 @@ class FubuDiagnosticsSection {
 		this.views = [];
 		this.anchor = '#' + this.key;
 
-		this.component = section.component;
+		this.component = section.component || ActiveSectionView;
 	}
 	
 	add(data){

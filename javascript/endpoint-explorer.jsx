@@ -61,7 +61,7 @@ var EndpointTable = React.createClass({
 
 FubuDiagnostics.section('fubumvc').add({
 	title: 'Endpoints',
-	description: 'something about Endpoints',
+	description: 'All the configured endpoint routes, partials, and message handlers in this application',
 	key: 'endpoints',
 	component: EndpointTable
 });

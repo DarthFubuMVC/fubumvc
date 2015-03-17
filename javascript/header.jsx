@@ -37,8 +37,6 @@ var Header = React.createClass({
 				<Navbar inverse={true} id="top-nav">
 					<Nav>
 						<a className="navbar-brand" href="#/">FubuMVC Diagnostics</a>
-
-				        <NavItem eventKey="4" href="#/">Application Name Here?</NavItem>
 						{sectionLinks}
 					</Nav>
 					<Nav right={true}>

@@ -9,7 +9,7 @@ var SectionLinks = React.createClass({
 			return (
 				<div>
 					<dt><a href={view.anchor}>{view.title}</a></dt>
-					<dd>{view.description}</dd>
+					<dd> {view.description}</dd>
 				</div>
 			);
 		});

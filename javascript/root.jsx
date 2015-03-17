@@ -79,7 +79,7 @@ FubuDiagnostics.addSection({
     key: 'fubumvc'
 }).add({
 	title: 'Model Binding',
-	description: 'something about Model Binding',
+	description: 'All the configured model binding converters, property binders, and custom model binders',
 	key: 'model-binding',
 	component: require('./model-binding')
 });
