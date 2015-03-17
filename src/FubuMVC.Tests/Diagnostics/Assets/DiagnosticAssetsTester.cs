@@ -20,16 +20,6 @@ namespace FubuMVC.Tests.Diagnostics.Assets
         }
 
         [Test]
-        public void is_diagnostic_asset()
-        {
-            DiagnosticAssetsCache.IsDiagnosticAsset("foo").ShouldBeFalse();
-            DiagnosticAssetsCache.IsDiagnosticAsset("diagnostics.foo.js").ShouldBeTrue();
-            DiagnosticAssetsCache.IsDiagnosticAsset("Diagnostics.foo.js").ShouldBeTrue();
-            DiagnosticAssetsCache.IsDiagnosticAsset("folder.Diagnostics.foo.js").ShouldBeTrue();
-            DiagnosticAssetsCache.IsDiagnosticAsset("folder.diagnostics.foo.js").ShouldBeTrue();
-        }
-
-        [Test]
         public void reads_embedded_diagnostic_files_for_an_assembly()
         {
             theAssets.For("bootstrap.min.css").ShouldNotBeNull();

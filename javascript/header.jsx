@@ -2,14 +2,8 @@
 
 var React = require('react');
 
-var rb = require('react-bootstrap');
-var Navbar = rb.Navbar;
-var Nav = rb.Nav;
-var DropdownButton = rb.DropdownButton;
-var MenuItem = rb.MenuItem;
-var NavItem = rb.NavItem;
+var {Navbar, Nav, DropdownButton, MenuItem, NavItem} = require('react-bootstrap');
 var Router = require('react-router');
-
 
 var Header = React.createClass({
 	mixins: [ Router.State ],

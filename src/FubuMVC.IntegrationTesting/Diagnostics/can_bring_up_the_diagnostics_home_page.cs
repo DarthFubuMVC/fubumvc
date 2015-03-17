@@ -19,16 +19,6 @@ namespace FubuMVC.IntegrationTesting.Diagnostics
             });
         }
 
-        [Test]
-        public void get_the_200_in_diagnostics_mode()
-        {
-            FubuMode.Mode("diagnostics");
 
-            TestHost.Scenario(_ =>
-            {
-                _.Get.Url("_fubu");
-                _.StatusCodeShouldBeOk();
-            });
-        }
     }
 }
