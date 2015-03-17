@@ -73,6 +73,8 @@ require('./request-table.jsx');
 require('./request-details.jsx');
 require('./packaging');
 
+// TEMP
+require('./settings');
 
 
 

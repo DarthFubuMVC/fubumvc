@@ -95,8 +95,6 @@ class FubuDiagnosticsSection {
 	}
 	
 	toRoutes(){
-
-
 		var routes = this.views.map(view => view.route);
 		if (this.component){
 			var sectionRoute = (<Route name={this.key} path={this.url} handler={this.component} />);
