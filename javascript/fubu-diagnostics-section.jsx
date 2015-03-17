@@ -95,11 +95,15 @@ class FubuDiagnosticsSection {
 	}
 	
 	toRoutes(){
+
+
+		var routes = this.views.map(view => view.route);
 		if (this.component){
-			return [(<Route name={this.key} path={this.url} handler={this.component} />)];
+			var sectionRoute = (<Route name={this.key} path={this.url} handler={this.component} />);
+			routes.push(sectionRoute);
 		}
 
-		return this.views.map(view => view.route);
+		return routes;
 	}
 }
 

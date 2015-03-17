@@ -2,6 +2,7 @@
 module.exports = {
   entry: {
     "root": './javascript/root.jsx',
+    "structuremap": './javascript/structuremap.jsx'
   },
   output: {
     path: __dirname + '/src/TestHarnessApp/fubu-diagnostics',
@@ -21,5 +22,11 @@ module.exports = {
       { test: /\.js$/, exclude: /(node_modules)|(-data\.js$)/, loader: "babel"}
     ]
   },
+  externals: {
+      // require("jquery") is external and available
+      //  on the global var jQuery
+      "jquery": "jQuery"
+  },
+
   devtool: 'eval'
 }

@@ -21,7 +21,7 @@ namespace FubuMVC.Core.Diagnostics
         private readonly DiagnosticJavascriptRoutes _routes;
 
         private static readonly string[] _styles = new[] {"bootstrap.min.css", "master.css", "bootstrap.overrides.css"};
-        private static readonly string[] _scripts = new[] {"root.js"};
+        private static readonly string[] _scripts = new[] { "jquery.min.js", "typeahead.bundle.min.js", "root.js" };
 
         public FubuDiagnosticsEndpoint(
             IAssetTagBuilder tags, 

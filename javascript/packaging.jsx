@@ -26,7 +26,7 @@ var Packaging = React.createClass({
 			return (<p>Loading...</p>);
 		}
 
-		var rows = this.state.Logs.map(log => {
+		var rows = this.state.logs.map(log => {
 			var row = (
 		        <tr>
 		          <td>{log.Type}</td>

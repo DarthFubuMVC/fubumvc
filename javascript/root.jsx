@@ -43,30 +43,13 @@ _.assign(FubuDiagnostics, {
 
 	section: function(key){
 		return _.find(this.sections, s => s.key == key);
-	}
+	},
+
+	TextScreen: require('./text-screen'),
+	HtmlScreen: require('./html-screen')
 });
 
 
-
-var TextScreen = React.createClass({
-	getInitialState: function(){
-		return {
-			text: 'Loading...'
-		}
-	},
-
-	componentDidMount: function(){
-		FubuDiagnostics.get(route, {}, data => {
-			this.setState({text: data});
-		});
-	},
-
-	render: function(){
-		return (
-			<pre>{this.state.text}</pre>
-		);
-	}
-});
 
 
 require('./appdomain');
