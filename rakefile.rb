@@ -14,9 +14,7 @@ require 'fuburake'
 	sln.ripple_enabled = true
 	sln.fubudocs_enabled = false
 	sln.bottles_enabled = false # has to be all special in FubuMVC because of the zip package testing
-	
-	sln.assembly_bottle 'FubuMVC.StructureMap'
-	
+
 	sln.integration_test = ['FubuMVC.IntegrationTesting']
 	sln.ci_steps = [:integration_test, :archive_gem]
 	

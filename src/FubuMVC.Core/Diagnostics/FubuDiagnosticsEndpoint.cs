@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.JavascriptRouting;
 using FubuMVC.Core.Diagnostics.Assets;
@@ -21,7 +22,7 @@ namespace FubuMVC.Core.Diagnostics
         private readonly DiagnosticJavascriptRoutes _routes;
 
         private static readonly string[] _styles = new[] {"bootstrap.min.css", "master.css", "bootstrap.overrides.css"};
-        private static readonly string[] _scripts = new[] { "jquery.min.js", "typeahead.bundle.min.js", "root.js", "structuremap.js" };
+        private static readonly string[] _scripts = new[] { "jquery.min.js", "typeahead.bundle.min.js", "root.js" };
 
         public FubuDiagnosticsEndpoint(
             IAssetTagBuilder tags, 
@@ -64,9 +65,12 @@ namespace FubuMVC.Core.Diagnostics
             var routeData = _routeWriter.WriteJavascriptRoutes("FubuDiagnostics.routes", _routes);
             foot.Append(routeData);
 
+            var extensionFiles = _assets.JavascriptFiles().Where(x => x.AssemblyName != "FubuMVC.Core");
+
             if (FubuMode.Mode() == "diagnostics")
             {
-                var links = _tags.BuildScriptTags(_scripts.Select(x => "fubu-diagnostics/" + x));
+                var names = _scripts.Union(extensionFiles.Select(x => x.Name));
+                var links = _tags.BuildScriptTags(names.Select(x => "fubu-diagnostics/" + x));
                 links.Each(x => foot.Append(x));
             }
             else
@@ -76,6 +80,8 @@ namespace FubuMVC.Core.Diagnostics
                     var file = _assets.For(name);
                     foot.Append(file.ToScriptTag());
                 });
+
+                extensionFiles.Each(file => foot.Append(file.ToScriptTag()));
             }
         }
 
@@ -91,6 +97,12 @@ namespace FubuMVC.Core.Diagnostics
         public void get__fubu_asset_Version_Name(DiagnosticAssetRequest request)
         {
             var file = _assets.For(request.Name);
+            if (file == null)
+            {
+                _response.StatusCode = (int) HttpStatusCode.NotFound;
+                return;
+            }
+
             file.Write(_response);
         }
 

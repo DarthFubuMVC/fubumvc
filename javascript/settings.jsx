@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 
-var React = require('react');
+var React = FubuDiagnostics.React;
 var Router = require('react-router');
 
 var SettingsTable = React.createClass({

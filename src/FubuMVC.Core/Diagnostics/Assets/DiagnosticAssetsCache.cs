@@ -3,8 +3,10 @@ using System.Linq;
 using System.Net.Mime;
 using System.Reflection;
 using System.Security.Permissions;
+using Bottles;
 using FubuCore;
 using FubuCore.Util;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Diagnostics.Assets
 {
@@ -12,6 +14,7 @@ namespace FubuMVC.Core.Diagnostics.Assets
     {
         EmbeddedFile For(string name);
         void AddAssembly(Assembly assembly);
+        IEnumerable<EmbeddedFile> JavascriptFiles();
     }
 
     [ReflectionPermission(SecurityAction.Assert)]
@@ -23,12 +26,18 @@ namespace FubuMVC.Core.Diagnostics.Assets
         public DiagnosticAssetsCache()
         {
             AddAssembly(Assembly.GetExecutingAssembly());
+            PackageRegistry.PackageAssemblies.Each(AddAssembly);
 
             _searches = new Cache<string, EmbeddedFile>(name =>
             {
                 return _files.FirstOrDefault(x => x.Matches(name));
             });
         }
+
+        public IEnumerable<EmbeddedFile> JavascriptFiles()
+        {
+            return _files.Where(x => x.ContentType == MimeType.Javascript);
+        } 
 
         public EmbeddedFile For(string name)
         {

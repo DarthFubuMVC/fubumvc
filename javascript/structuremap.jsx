@@ -3,7 +3,6 @@
 var React = FubuDiagnostics.React;
 var Router = require('react-router');
 
-
 require('./settings');
 var Summary = require('./structuremap-summary');
 var WhatDoIHave = require('./structuremap-whatdoihave');

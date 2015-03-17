@@ -11,23 +11,15 @@ var Header = require('./header');
 var Dashboard = require('./dashboard');
 var {Grid, Col, Row} = require('react-bootstrap');
 
-
+var count = 0;
 
 var App = React.createClass({
   mixins: [Router.State],
 
   getHandlerKey: function () {
-    var childDepth = 1; // assuming App is top-level route
-    var key = this.getRoutes()[childDepth].name;
-    var id = this.getParams().id;
-    if (id) { key += id; }
+  	count++;
 
-    var mode = this.getParams().Hash;
-    if (mode){
-    	key += ':' + mode;
-    }
-
-    return key;
+  	return count;
   },
 
 	render: function(){

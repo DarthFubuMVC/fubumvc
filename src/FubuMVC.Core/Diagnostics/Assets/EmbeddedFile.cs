@@ -20,6 +20,7 @@ namespace FubuMVC.Core.Diagnostics.Assets
             Name = resource;
             ContentType = MimeType.MimeTypeByFileName(Name);
 
+            AssemblyName = assembly.GetName().Name;
 
             _contents = new Lazy<byte[]>(() =>
             {
@@ -29,6 +30,8 @@ namespace FubuMVC.Core.Diagnostics.Assets
 
             Version = assembly.GetName().Version.ToString();
         }
+
+        public string AssemblyName { get; private set; }
 
         public bool Matches(string file)
         {
@@ -73,6 +76,11 @@ namespace FubuMVC.Core.Diagnostics.Assets
         public HtmlTag ToScriptTag()
         {
             return new HtmlTag("script").Attr("language", "javascript").Attr("src", Url);
+        }
+
+        public override string ToString()
+        {
+            return string.Format("EmbeddedFile: {0}", Url);
         }
     }
 }
