@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{900A0419-3579-4DAE-85BE-71A3E4B34239}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Serenity</RootNamespace>
+    <AssemblyName>Serenity</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Bottles">
+      <HintPath>..\packages\Bottles\lib\Bottles.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core\lib\net40-client\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuCore">
+      <HintPath>..\packages\FubuCore\lib\FubuCore.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlTags">
+      <HintPath>..\packages\HtmlTags\lib\4.0\HtmlTags.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\FubuMVC.Katana\lib\net40\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.HttpListener">
+      <HintPath>..\packages\FubuMVC.Katana\lib\net40\Microsoft.Owin.Host.HttpListener.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Hosting">
+      <HintPath>..\packages\FubuMVC.Katana\lib\net40\Microsoft.Owin.Hosting.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Selenium.WebDriverBackedSelenium">
+      <HintPath>..\packages\Selenium.WebDriverBackedSelenium\lib\net40\Selenium.WebDriverBackedSelenium.dll</HintPath>
+    </Reference>
+    <Reference Include="StoryTeller">
+      <HintPath>..\packages\Storyteller2\lib\net40\StoryTeller.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\packages\structuremap\lib\net40\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.Net4">
+      <HintPath>..\packages\structuremap\lib\net40\StructureMap.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="ThoughtWorks.Selenium.Core">
+      <HintPath>..\packages\Selenium.RC\lib\net40\ThoughtWorks.Selenium.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="WebDriver">
+      <HintPath>..\packages\Selenium.WebDriver\lib\net40\WebDriver.dll</HintPath>
+    </Reference>
+    <Reference Include="WebDriver.Support">
+      <HintPath>..\packages\Selenium.Support\lib\net40\WebDriver.Support.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="ApplicationUnderTest.cs" />
+    <Compile Include="BrowserLifecycle.cs" />
+    <Compile Include="BrowserType.cs" />
+    <Compile Include="ChromeBrowser.cs" />
+    <Compile Include="FirefoxBrowser.cs" />
+    <Compile Include="Fixtures\DateTimeExtensions.cs" />
+    <Compile Include="Fixtures\Grammars\CheckValueGrammar.cs" />
+    <Compile Include="Fixtures\Grammars\ClickGrammar.cs" />
+    <Compile Include="Fixtures\Grammars\EnterValueGrammar.cs" />
+    <Compile Include="Fixtures\Grammars\GestureConfig.cs" />
+    <Compile Include="Fixtures\Grammars\SimpleElementGesture.cs" />
+    <Compile Include="Fixtures\Handlers\BasicMatchingHandler.cs" />
+    <Compile Include="Fixtures\Handlers\CheckboxHandler.cs" />
+    <Compile Include="Fixtures\Handlers\DefaultElementHandler.cs" />
+    <Compile Include="Fixtures\Handlers\ElementHandlers.cs" />
+    <Compile Include="Fixtures\Handlers\ElementHandlerWrapper.cs" />
+    <Compile Include="Fixtures\Handlers\IElementHandler.cs" />
+    <Compile Include="Fixtures\Handlers\IMatchingHandler.cs" />
+    <Compile Include="Fixtures\Handlers\SelectElementHandler.cs" />
+    <Compile Include="Fixtures\Handlers\TextAreaElementHandler.cs" />
+    <Compile Include="Fixtures\Handlers\TextboxElementHandler.cs" />
+    <Compile Include="Fixtures\ScreenFixture.cs" />
+    <Compile Include="Fixtures\WebDriverExtensions.cs" />
+    <Compile Include="WebDriver\EmbeddedDrivers\ChromeEmbeddedDriver.cs" />
+    <Compile Include="WebDriver\EmbeddedDrivers\EmbeddedBrowserLifecycle.cs" />
+    <Compile Include="WebDriver\EmbeddedDrivers\EmbeddedDriverExtractor.cs" />
+    <Compile Include="WebDriver\EmbeddedDrivers\IEmbeddedDriver.cs" />
+    <Compile Include="WebDriver\EmbeddedDrivers\IEmbeddedDriverExtractor.cs" />
+    <Compile Include="WebDriver\EmbeddedDrivers\PhantomEmbeddedDriver.cs" />
+    <Compile Include="WebDriver\JavaScriptBuilders\DefaultJavaScriptBuilder.cs" />
+    <Compile Include="WebDriver\JavaScriptBuilders\IJavaScriptBuilder.cs" />
+    <Compile Include="WebDriver\ISearchContextToJavaScriptExecutor.cs" />
+    <Compile Include="WebDriver\JavaScript.cs" />
+    <Compile Include="WebDriver\By.cs" />
+    <Compile Include="WebDriver\JavaScriptBuilders\WebElementJavaScriptBuilder.cs" />
+    <Compile Include="WebDriver\JavaScriptBy.cs" />
+    <Compile Include="WebDriver\JavaScriptExtensionMethods.cs" />
+    <Compile Include="WebDriver\JavaScriptStringExtensions.cs" />
+    <Compile Include="WebDriver\JQuery.cs" />
+    <Compile Include="WebDriver\JavaScriptBuilders\NullObjectJavaScriptBuilder.cs" />
+    <Compile Include="WebDriver\SearchContextToJavaScriptExecutor.cs" />
+    <Compile Include="FubuMvcContext.cs" />
+    <Compile Include="FubuMvcSystem.cs" />
+    <Compile Include="IApplicationUnderTest.cs" />
+    <Compile Include="IBrowserLifecycle.cs" />
+    <Compile Include="IBrowserSessionInitializer.cs" />
+    <Compile Include="InternetExplorerBrowser.cs" />
+    <Compile Include="ISerenityHosting.cs" />
+    <Compile Include="ISubSystem.cs" />
+    <Compile Include="Kill.cs" />
+    <Compile Include="NavigationDriver.cs" />
+    <Compile Include="PhantomBrowser.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RemoteSubSystem.cs" />
+    <Compile Include="Retry.cs" />
+    <Compile Include="SerenityEnvironment.cs" />
+    <Compile Include="StoryTeller\StoryTellerCommand.cs" />
+    <Compile Include="Wait.cs" />
+    <Compile Include="WebDriverSettings.cs" />
+    <Compile Include="WebDriver\JavaScriptBuilders\StringJavaScriptBuilder.cs" />
+    <Compile Include="WebElementExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\lib\chromedriver.exe">
+      <Link>WebDriver\EmbeddedDrivers\chromedriver.exe</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\lib\phantomjs.exe">
+      <Link>WebDriver\EmbeddedDrivers\phantomjs.exe</Link>
+    </EmbeddedResource>
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\jquery.ui.accordion.css" />
+    <Content Include="Content\themes\base\jquery.ui.all.css" />
+    <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
+    <Content Include="Content\themes\base\jquery.ui.base.css" />
+    <Content Include="Content\themes\base\jquery.ui.button.css" />
+    <Content Include="Content\themes\base\jquery.ui.core.css" />
+    <Content Include="Content\themes\base\jquery.ui.datepicker.css" />
+    <Content Include="Content\themes\base\jquery.ui.dialog.css" />
+    <Content Include="Content\themes\base\jquery.ui.progressbar.css" />
+    <Content Include="Content\themes\base\jquery.ui.resizable.css" />
+    <Content Include="Content\themes\base\jquery.ui.selectable.css" />
+    <Content Include="Content\themes\base\jquery.ui.slider.css" />
+    <Content Include="Content\themes\base\jquery.ui.tabs.css" />
+    <Content Include="Content\themes\base\jquery.ui.theme.css" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\minified\jquery.ui.accordion.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.all.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.autocomplete.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.base.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.button.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.core.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.datepicker.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.dialog.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.progressbar.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.resizable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.selectable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Content\themes\base\minified\jquery-ui.min.css" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ItemGroup>
+    <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
+      <Project>{e18fd922-0e7a-49cd-b89f-473826077b9d}</Project>
+      <Name>FubuMVC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Katana\FubuMVC.Katana.csproj">
+      <Project>{48bc51c2-b759-48db-aae1-f4686cd6d02a}</Project>
+      <Name>FubuMVC.Katana</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
+      <Project>{abfea520-820c-4b77-9015-6a09e24252fa}</Project>
+      <Name>FubuMVC.StructureMap</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

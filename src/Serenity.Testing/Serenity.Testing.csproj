@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5E69E72A-B92F-47BE-B7F7-6E6A926EC90F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Serenity.Testing</RootNamespace>
+    <AssemblyName>Serenity.Testing</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Bottles">
+      <HintPath>..\packages\Bottles\lib\Bottles.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core\lib\net40-client\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuCore">
+      <HintPath>..\packages\FubuCore\lib\FubuCore.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuTestingSupport">
+      <HintPath>..\packages\FubuTestingSupport\lib\FubuTestingSupport.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlTags">
+      <HintPath>..\packages\HtmlTags\lib\4.0\HtmlTags.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\packages\DotNetZip\lib\net20\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\FubuMVC.Katana\lib\net40\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.HttpListener">
+      <HintPath>..\packages\FubuMVC.Katana\lib\net40\Microsoft.Owin.Host.HttpListener.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Hosting">
+      <HintPath>..\packages\FubuMVC.Katana\lib\net40\Microsoft.Owin.Hosting.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="pnunit.framework">
+      <HintPath>..\packages\NUnit\lib\pnunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\packages\RhinoMocks\lib\net\Rhino.Mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="Selenium.WebDriverBackedSelenium">
+      <HintPath>..\packages\Selenium.WebDriverBackedSelenium\lib\net40\Selenium.WebDriverBackedSelenium.dll</HintPath>
+    </Reference>
+    <Reference Include="StoryTeller">
+      <HintPath>..\packages\Storyteller2\lib\net40\StoryTeller.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\packages\structuremap\lib\net40\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.AutoMocking">
+      <HintPath>..\packages\structuremap.automocking\lib\net40\StructureMap.AutoMocking.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.Net4">
+      <HintPath>..\packages\structuremap\lib\net40\StructureMap.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http">
+      <HintPath>..\packages\Microsoft.Net.Http\lib\net40\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+      <HintPath>..\packages\Microsoft.Net.Http\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Http">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.SelfHost">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.SelfHost\lib\net40\System.Web.Http.SelfHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="ThoughtWorks.Selenium.Core">
+      <HintPath>..\packages\Selenium.RC\lib\net40\ThoughtWorks.Selenium.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="WebDriver">
+      <HintPath>..\packages\Selenium.WebDriver\lib\net40\WebDriver.dll</HintPath>
+    </Reference>
+    <Reference Include="WebDriver.Support">
+      <HintPath>..\packages\Selenium.Support\lib\net40\WebDriver.Support.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BrowserForTesting.cs" />
+    <Compile Include="BrowserType_selection_tester.cs" />
+    <Compile Include="FakeSystem\SampleSystem.cs" />
+    <Compile Include="Fixtures\BrowserIsAtTester.cs" />
+    <Compile Include="Fixtures\Handlers\ElementHandlerWrapperTester.cs" />
+    <Compile Include="Fixtures\Handlers\TextboxElementHandlerTester.cs" />
+    <Compile Include="WebDriver\Benchmarks\WebDriverBenchmarkFiveElementTests.cs" />
+    <Compile Include="WebDriver\Benchmarks\WebDriverBenchmarkGetAttributeTests.cs" />
+    <Compile Include="WebDriver\ByJQueryConfigureSample.cs" />
+    <Compile Include="WebDriver\ByJQuerySamples.cs" />
+    <Compile Include="WebDriver\ByJqueryTester.cs" />
+    <Compile Include="WebDriver\EmbeddedDrivers\EmbeddedDriverExtractorTester.cs" />
+    <Compile Include="WebDriver\JavaScriptBuilders\DefaultJavaScriptBuilderTester.cs" />
+    <Compile Include="WebDriver\JavaScriptBuilders\NullObjectJavaScriptBuilderTester.cs" />
+    <Compile Include="WebDriver\JavaScriptBuilders\StringJavaScriptBuildertTester.cs" />
+    <Compile Include="WebDriver\JavaScriptBuilders\WebElementJavaScriptBuilderTester.cs" />
+    <Compile Include="WebDriver\JavascriptReferenceErrorTests.cs" />
+    <Compile Include="WebDriver\JavaScriptTester.cs" />
+    <Compile Include="WebDriver\JavaScriptByFindTester.cs" />
+    <Compile Include="Fixtures\Grammars\CheckValueGrammarTester.cs" />
+    <Compile Include="Fixtures\Grammars\ClickGrammerTester.cs" />
+    <Compile Include="Fixtures\Grammars\EnterValueGrammarTester.cs" />
+    <Compile Include="FakeSystem\IntegratedTester.cs" />
+    <Compile Include="Fixtures\Handlers\CheckboxHandlerTester.cs" />
+    <Compile Include="Fixtures\Handlers\TextAreaElementHandlerTester.cs" />
+    <Compile Include="Fixtures\ScreenFixtureCommonGrammarsTester.cs" />
+    <Compile Include="Fixtures\Handlers\SelectElementHandlerTester.cs" />
+    <Compile Include="Fixtures\ScreenFixtureTester.cs" />
+    <Compile Include="FubuMvcSystemTester.cs" />
+    <Compile Include="MessageWatching_over_remote_AppDomain_integration_tester.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WaitTester.cs" />
+    <Compile Include="WebDriverSettingsTester.cs" />
+    <Compile Include="WebDriver\JQueryTester.cs" />
+    <Compile Include="WebDriver\SearchContextToJavaScriptExecutorTester.cs" />
+    <Compile Include="WebDriver\Benchmarks\WebDriverBenchmarkBase.cs" />
+    <Compile Include="WebDriver\Benchmarks\WebDriverBenchmarkOneElementTests.cs" />
+    <Compile Include="WebDriver\WebDriverExtensionsTester.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
+      <Project>{e18fd922-0e7a-49cd-b89f-473826077b9d}</Project>
+      <Name>FubuMVC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Katana\FubuMVC.Katana.csproj">
+      <Project>{48bc51c2-b759-48db-aae1-f4686cd6d02a}</Project>
+      <Name>FubuMVC.Katana</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
+      <Project>{abfea520-820c-4b77-9015-6a09e24252fa}</Project>
+      <Name>FubuMVC.StructureMap</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KayakTestApplication\KayakTestApplication.csproj">
+      <Project>{68CC89AB-EE8B-4B2D-9BA0-8B0FBF460446}</Project>
+      <Name>KayakTestApplication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RemoteService\RemoteService.csproj">
+      <Project>{F8186EC7-237A-4C24-AA48-1CFCDD099A8D}</Project>
+      <Name>RemoteService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Serenity\Serenity.csproj">
+      <Project>{900A0419-3579-4DAE-85BE-71A3E4B34239}</Project>
+      <Name>Serenity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Serenity.Testing.dll.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="content\scripts\Player.js" />
+    <Content Include="content\scripts\Song.js" />
+    <Content Include="content\scripts\specs\PlayerSpec.js" />
+    <Content Include="HTMLPage1.htm" />
+    <Content Include="jasmine.txt" />
+    <None Include="jquery-2.0.3.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

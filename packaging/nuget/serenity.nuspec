@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <id>Serenity</id>
+    <version>0.0.0</version>
+    <authors>Jeremy D. Miller</authors>
+    <owners>Jeremy D. Miller</owners>
+    <licenseUrl>https://github.com/DarthFubuMVC/fubumvc/raw/master/license.txt</licenseUrl>
+    <projectUrl>http://mvc.fubu-project.org/</projectUrl>
+    <iconUrl>https://github.com/DarthFubuMVC/fubu-collateral/raw/master/Icons/FubuMvc_256.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Giving you piece of mind by making it easy to integrate both Storyteller and Jasmine testing into your FubuMVC applications</description>
+    <tags>web framework specification fubumvc</tags>
+    <dependencies>
+      <dependency id="FubuMVC.Core" version="2.0.0.1770" />
+      <dependency id="FubuMVC.Katana" version="2.0.0.1770" />
+      <dependency id="Storyteller2" version="2.0.0.29" />
+      <dependency id="Selenium.RC" version="2.21.0" />
+      <dependency id="Selenium.Support" version="2.31.2" />
+      <dependency id="Selenium.WebDriver" version="2.31.2" />
+      <dependency id="Selenium.WebDriverBackedSelenium" version="2.31.2" />
+    </dependencies>
+  </metadata>
+  <files xmlns="">
+    <file src="..\..\src\SerenityRunner\bin\release\Serenity.dll" target="lib\net40" />
+    <file src="..\..\src\SerenityRunner\bin\release\*.dll" target="tools" />
+    <file src="..\..\src\SerenityRunner\bin\release\SerenityRunner.exe.config" target="tools" />
+    <file src="..\..\src\SerenityRunner\bin\release\SerenityRunner.exe" target="tools" />
+    <file src="..\..\src\SerenityRunner\bin\release\Newtonsoft.Json.*" target="tools" />
+  </files>
+</package>
