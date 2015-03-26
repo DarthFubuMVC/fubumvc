@@ -1,104 +1,32 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Reflection;
 using System.Threading.Tasks;
+using FubuCore;
 using FubuCore.Conversion;
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.UI;
-using HtmlTags;
-
-using NUnit.Framework;
 using FubuMVC.StructureMap;
+using FubuTestingSupport;
+using HtmlTags;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using Rhino.Mocks;
 using Serenity.Fixtures;
-using StoryTeller.Domain;
-using StoryTeller.Engine;
-using StoryTeller.Execution;
+using StoryTeller;
 using StructureMap;
-using FubuCore;
-using Serenity.Testing.Fixtures;
-using FubuTestingSupport;
-using System.Linq;
 
 namespace Serenity.Testing.FakeSystem
 {
     [TestFixture, Explicit]
     public class IntegratedTester
     {
-        private ITestRunner theRunner;
-
-        [TestFixtureSetUp]
-        public void SetUp()
-        {
-            theRunner = TestRunner.ForSystem<FakeSerenitySystem>();
-        }
-
-        [TestFixtureTearDown]
-        public void TearDown()
-        {
-            theRunner.Dispose();
-        }
-		
-        [Test]
-        public void run_simple_test()
-        {
-            var test = new Test("Try it");
-            test.Add(Section.For<NameScreenFixture>().WithStep("GoTo", "name:Jeremy"));
-			
-			var testResult = theRunner.RunTest(new TestExecutionRequest(test, new TestStopConditions()));
-			//var testResult = TestRunnerExtensions.RunTest(theRunner, test);
-			testResult.Counts.ShouldEqual(0, 0, 0, 0);
-			//testResult.Counts.ShouldEqual(1, 0, 0, 0); 
-        }
-
-        [Test]
-        public void run_more_complicated_test_positive()
-        {
-            var test = new Test("Try it");
-            var section = Section.For<NameScreenFixture>()
-                .WithStep("GoTo", "name:Jeremy")
-                .WithStep("CheckName", "Name:Jeremy");
-            test.Add(section);
-			
-			var testResult = theRunner.RunTest(new TestExecutionRequest(test, new TestStopConditions()));
-            //var testResult = theRunner.RunTest(test);
-			testResult.Counts.ShouldEqual(1, 0, 0, 0);
-            //testResult.Counts.ShouldEqual(1, 0, 0, 0); 
-        }
-
-
-        [Test,Explicit]
-        public void run_more_complicated_test_negative()
-        {
-            var test = new Test("Try it");
-            var section = Section.For<NameScreenFixture>()
-                .WithStep("GoTo", "name:Jeremy")
-                .WithStep("CheckName", "Name:Max");
-            test.Add(section);
-
-			var testResult = theRunner.RunTest(new TestExecutionRequest(test, new TestStopConditions()));
-            //var testResult = theRunner.RunTest(test);
-			testResult.Counts.ShouldEqual(0, 1, 0, 0);
-            //testResult.Counts.ShouldEqual(0, 1, 0, 0);
-        }
-
-        [Test]
-        public void convert_with_custom_converter()
-        {
-            var context = new FakeSerenitySystem().CreateContext();
-            context.BindingRegistry.Converters.AllConverterFamilies.OfType<RandomTypeConverter>()
-                .Any().ShouldBeTrue();
-        }
-
         [Test]
         public void register_a_custom_after_navigation()
         {
             var context = new FakeSerenitySystem().CreateContext();
             context.Services.GetInstance<IApplicationUnderTest>()
-                   .Navigation.AfterNavigation.ShouldBeOfType<FakeAfterNavigation>();
+                .Navigation.AfterNavigation.ShouldBeOfType<FakeAfterNavigation>();
         }
 
         [Test]
@@ -107,16 +35,13 @@ namespace Serenity.Testing.FakeSystem
             var system = new FakeSerenitySystem();
             system.CreateContext().ShouldNotBeNull();
             system.TheContainer.ShouldNotBeNull();
-            
         }
 
         [Test]
         public void calls_subsystem_start_on_each()
         {
             var system = new FakeSerenitySystem();
-            system.SubSystems.Each(x => {
-                x.AssertWasCalled(o => o.Start());
-            });
+            system.SubSystems.Each(x => { x.AssertWasCalled(o => o.Start()); });
         }
 
         [Test]
@@ -126,21 +51,12 @@ namespace Serenity.Testing.FakeSystem
             system.CreateContext();
 
             system.Application.ShouldNotBeNull();
-        
+
             system.Dispose();
 
-            system.SubSystems.Each(x =>
-            {
-                x.AssertWasCalled(o => o.Stop());
-            });
+            system.SubSystems.Each(x => { x.AssertWasCalled(o => o.Stop()); });
         }
 
-        [TestFixtureTearDown]
-        public void Teardown()
-        {
-			theRunner.SafeDispose();
-            //theRunner.SafeDispose();
-        }
     }
 
     public class FakeSerenitySystem : FubuMvcSystem<FakeSerenitySource>
@@ -151,7 +67,6 @@ namespace Serenity.Testing.FakeSystem
 
         public FakeSerenitySystem()
         {
-            AddConverter<RandomTypeConverter>();
             AfterNavigation = new FakeAfterNavigation();
 
             OnStartup<IContainer>(c => TheContainer = c);
@@ -164,14 +79,13 @@ namespace Serenity.Testing.FakeSystem
         public ISubSystem MockedSubSystem()
         {
             var system = MockRepository.GenerateMock<ISubSystem>();
-            system.Stub(x => x.Start()).Return(Task.Factory.StartNew(() => {}));
-            system.Stub(x => x.Stop()).Return(Task.Factory.StartNew(() => {}));
+            system.Stub(x => x.Start()).Return(Task.Factory.StartNew(() => { }));
+            system.Stub(x => x.Stop()).Return(Task.Factory.StartNew(() => { }));
 
             return system;
         }
     }
 
-   
 
     public class FakeAfterNavigation : IAfterNavigation
     {
@@ -194,26 +108,13 @@ namespace Serenity.Testing.FakeSystem
         public string Name { get; set; }
     }
 
-    public class NameScreenFixture : ScreenFixture
-    {
-
-        [FormatAs("Go to name {name}")]
-        public void GoTo(string name)
-        {
-            // Add to ScreenFixture
-            var driver = new NavigationDriver(Application);
-            driver.NavigateTo(new TextModel{Name = name});
-        }
-    }
 
 
     public class FakeSerenitySource : IApplicationSource
     {
         public FubuApplication BuildApplication()
         {
-			return BootstrappingExtensions.StructureMap(
-            	FubuApplication.For<FakeSerenityRegistry>()
-                , new Container());
+            return FubuApplication.For<FakeSerenityRegistry>().StructureMap(new Container());
         }
     }
 
@@ -227,7 +128,7 @@ namespace Serenity.Testing.FakeSystem
 
     public class TextModel
     {
-        public string Name { get; set;}
+        public string Name { get; set; }
     }
 
     public class FakeSerenityActions
@@ -241,7 +142,8 @@ namespace Serenity.Testing.FakeSystem
 
         public HtmlDocument get_person_Name(TextModel model)
         {
-            var document = new FubuHtmlDocument<TextModel>(_services, new InMemoryFubuRequest()){
+            var document = new FubuHtmlDocument<TextModel>(_services, new InMemoryFubuRequest())
+            {
                 Model = model
             };
 

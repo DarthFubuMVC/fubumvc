@@ -1,7 +1,7 @@
 ﻿using FubuMVC.Core;
 using FubuTestingSupport;
 using NUnit.Framework;
-using StoryTeller.Workspace;
+using StoryTeller;
 
 namespace Serenity.Testing
 {
@@ -20,7 +20,7 @@ namespace Serenity.Testing
         [Test]
         public void use_profile_if_it_exists()
         {
-            Project.Current = new Project{Profile = BrowserType.Phantom.ToString()};
+            Project.CurrentProject = new Project{Profile = BrowserType.Phantom.ToString()};
 
             theSystem.ChooseBrowserType().ShouldEqual(BrowserType.Phantom);
         }
@@ -28,7 +28,7 @@ namespace Serenity.Testing
         [Test]
         public void use_the_project_default_if_it_exists_and_no_profile()
         {
-            Project.Current = new Project{Profile = null};
+            Project.CurrentProject = new Project{Profile = null};
             WebDriverSettings.Current.Browser = BrowserType.Chrome;
 
             theSystem.DefaultBrowser = BrowserType.IE;
@@ -39,7 +39,7 @@ namespace Serenity.Testing
         [Test]
         public void fall_back_to_the_webdriver_settings_current_if_no_profile_or_default()
         {
-            Project.Current = new Project { Profile = null };
+            Project.CurrentProject = new Project { Profile = null };
             WebDriverSettings.Current.Browser = BrowserType.Chrome;
 
             theSystem.DefaultBrowser = null;

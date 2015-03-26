@@ -4,52 +4,32 @@ using System.Linq;
 using System.Threading.Tasks;
 using Bottles.Services.Messaging.Tracking;
 using Bottles.Services.Remote;
-using FubuCore.Binding;
+using FubuCore;
 using FubuCore.CommandLine;
-using FubuCore.Conversion;
 using FubuCore.Util;
 using FubuMVC.Core;
 using FubuMVC.Core.Packaging;
-using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
-using HtmlTags;
 using Serenity.Fixtures.Handlers;
 using StoryTeller;
+using StoryTeller.Conversion;
 using StoryTeller.Engine;
-using FubuCore;
-using StoryTeller.Workspace;
 using StructureMap;
 
 namespace Serenity
 {
-    public interface IContextualInfoProvider
-    {
-        void Reset();
-        IEnumerable<HtmlTag> GenerateReports();
-    }
-
     public interface IRemoteSubsystems
     {
         RemoteSubSystem RemoteSubSystemFor(string name);
         IEnumerable<RemoteSubSystem> RemoteSubSystems { get; }
     }
 
-    public interface IFubuMvcSystem
-    {
-        BindingRegistry Binding { get; }
-        IApplicationUnderTest Application { get; }
-        IEnumerable<IContextualInfoProvider> ContextualProviders { get; }
-    }
 
-    public class FubuMvcSystem : ISystem, ISubSystem, IRemoteSubsystems, IFubuMvcSystem
+    public class FubuMvcSystem : ISystem, ISubSystem, IRemoteSubsystems
     {
         private readonly ApplicationSettings _settings;
         private readonly Func<FubuRuntime> _runtimeSource;
-        private BindingRegistry _binding;
         private bool? _externalHosting;
-
-        // TODO -- this reoccurs so often that we might as well put something in FubuCore for it
-        private readonly IList<Action<BindingRegistry>> _bindingRegistrations = new List<Action<BindingRegistry>>();
 
         private readonly IList<Action<IApplicationUnderTest>> _applicationAlterations =
             new List<Action<IApplicationUnderTest>>();
@@ -71,7 +51,21 @@ namespace Serenity
         private readonly Cache<string, RemoteSubSystem> _remoteSubSystems = new Cache<string, RemoteSubSystem>();
         private ISerenityHosting _hosting;
         protected IApplicationUnderTest _application;
-        private IEnumerable<IContextualInfoProvider> _contextualProviders;
+
+        public IEnumerable<IConversionProvider> ConversionProviders()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task Warmup()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task ISystem.Recycle()
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// *IF* your underlying container is StructureMap, this is a convenience method
@@ -165,42 +159,7 @@ namespace Serenity
             set { _applicationAlterations.Add(aut => aut.Navigation.AfterNavigation = value); }
         }
 
-        /// <summary>
-        /// Be aware that this will ONLY work with StructureMap as the underlying container
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        public void AddContextualProvider<T>() where T : IContextualInfoProvider
-        {
-            ModifyContainer(x => x.For<IContextualInfoProvider>().Add<T>());
-        }
 
-        /// <summary>
-        /// Be aware that this will ONLY work with StructureMap as the underlying container
-        /// </summary>
-        public void AddContextualProvider(IContextualInfoProvider provider)
-        {
-            ModifyContainer(x => x.For<IContextualInfoProvider>().Add(provider));
-        }
-
-        /// <summary>
-        /// Add a new converter strategy to customize how Storyteller will convert a string
-        /// into a type
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        public void AddConverter<T>() where T : IObjectConverterFamily, new()
-        {
-            AddConverter(new T());
-        }
-
-        /// <summary>
-        /// Add a new converter strategy to customize how Storyteller will convert a string
-        /// into a type
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        public void AddConverter(IObjectConverterFamily family)
-        {
-            _bindingRegistrations.Add(registry => registry.Converters.RegisterConverterFamily(family));
-        }
 
         /// <summary>
         /// Add an element handler to the ElementHandlers collection for driving
@@ -223,10 +182,10 @@ namespace Serenity
 
         public BrowserType ChooseBrowserType()
         {
-            if (Project.Current != null && Project.Current.Profile.IsNotEmpty())
+            if (Project.CurrentProfile.IsNotEmpty())
             {
-                BrowserType profileType = BrowserType.IE;
-                if (BrowserType.TryParse(Project.Current.Profile, true, out profileType))
+                var profileType = BrowserType.IE;
+                if (Enum.TryParse(Project.CurrentProfile, true, out profileType))
                 {
                     return profileType;
                 }
@@ -235,13 +194,6 @@ namespace Serenity
             if (DefaultBrowser != null) return DefaultBrowser.Value;
 
             return WebDriverSettings.Current.Browser;
-        }
-
-        // TODO -- like to make this go away
-        [Obsolete("This method should not NEED to be used.  Please favor the OnStartup registrations instead")]
-        protected virtual void configureApplication(IApplicationUnderTest application, BindingRegistry binding)
-        {
-
         }
 
         public void Dispose()
@@ -257,7 +209,8 @@ namespace Serenity
             if (!succeeded)
             {
                 // TODO: Replace with a logger
-                ConsoleWriter.Write(ConsoleColor.Yellow, "WARNING: Failed to stop FubuMvcSystem and/or registered subsystems");
+                ConsoleWriter.Write(ConsoleColor.Yellow,
+                    "WARNING: Failed to stop FubuMvcSystem and/or registered subsystems");
             }
         }
 
@@ -305,13 +258,6 @@ namespace Serenity
 
                 _application = _hosting.Start(_settings, _runtime, browserLifecycle);
                 _applicationAlterations.Each(x => x(_application));
-
-                _binding = _application.Services.GetInstance<BindingRegistry>();
-                _bindingRegistrations.Each(x => x(_binding));
-
-                configureApplication(_application, _binding);
-
-                _contextualProviders = _runtime.Factory.GetAll<IContextualInfoProvider>();
 
                 _runtime.Facility.Register(typeof (IApplicationUnderTest), ObjectDef.ForValue(_application));
                 _runtime.Facility.Register(typeof (IRemoteSubsystems), ObjectDef.ForValue(this));
@@ -380,16 +326,6 @@ namespace Serenity
         {
             get { return _settings; }
         }
-
-        BindingRegistry IFubuMvcSystem.Binding
-        {
-            get { return _binding; }
-        }
-
-        public virtual IEnumerable<IContextualInfoProvider> ContextualProviders
-        {
-            get { return _contextualProviders; }
-        }
     }
 
     public class FubuMvcSystem<T> : FubuMvcSystem where T : IApplicationSource, new()
@@ -426,10 +362,10 @@ namespace Serenity
         {
             if (physicalPath.IsEmpty())
             {
-                var sourceFolder = AppDomain.CurrentDomain.BaseDirectory.ParentDirectory().ParentDirectory().ParentDirectory();
-                physicalPath = sourceFolder.AppendPath(parallelDirectory ?? typeof(T).Assembly.GetName().Name);
+                var sourceFolder =
+                    AppDomain.CurrentDomain.BaseDirectory.ParentDirectory().ParentDirectory().ParentDirectory();
+                physicalPath = sourceFolder.AppendPath(parallelDirectory ?? typeof (T).Assembly.GetName().Name);
             }
-
 
 
             return new ApplicationSettings

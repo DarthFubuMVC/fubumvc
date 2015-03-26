@@ -9,18 +9,13 @@ using FubuMVC.Core.Urls;
 using OpenQA.Selenium;
 using StoryTeller;
 using StoryTeller.Engine;
+using StoryTeller.Grammars;
 
 namespace Serenity.Fixtures
 {
     public class ScreenFixture : Fixture
     {
         private IApplicationUnderTest _application;
-
-
-        protected IApplicationUnderTest Application
-        {
-            get { return _application; }
-        }
 
         protected NavigationDriver Navigation
         {
@@ -37,9 +32,9 @@ namespace Serenity.Fixtures
             get { return _application.Driver; }
         }
 
-        public override sealed void SetUp(ITestContext context)
+        public override sealed void SetUp()
         {
-            _application = context.Retrieve<IApplicationUnderTest>();
+            _application = Context.Service<IApplicationUnderTest>();
 
             beforeRunning();
         }
@@ -59,7 +54,7 @@ namespace Serenity.Fixtures
             label = label ?? by.ToString().Replace("By.", "");
 
 
-            return Do(label, () => Driver.FindElement(by).Click());
+            return Do(label, c => Driver.FindElement(by).Click());
         }
 
         // TODO -- UT this some how
@@ -69,7 +64,7 @@ namespace Serenity.Fixtures
         {
             string command = buildJQuerySearch(css, id, className, tagName);
 
-            return Do(template, () => { Retry.Twice(() => Driver.InjectJavascript(command)); });
+            return Do(template, c => { Retry.Twice(() => Driver.InjectJavascript(command)); });
         }
 
         private static string buildJQuerySearch(string css, string id, string className, string tagName)
@@ -161,9 +156,7 @@ namespace Serenity.Fixtures
 
         protected IGrammar BrowserIsAt(Func<IUrlRegistry, string> toUrl, string title)
         {
-            return new FactGrammar(() =>
-                IsUrlMatch(Application.Driver.Url, toUrl(Application.Urls)),
-                title);
+            return new FactGrammar(title, c => IsUrlMatch(Driver.Url, toUrl(_application.Urls)));
         }
 
         protected static bool IsUrlMatch(string browserUrl, string url)

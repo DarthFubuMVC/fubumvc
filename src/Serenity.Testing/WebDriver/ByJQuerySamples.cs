@@ -1,5 +1,6 @@
 ﻿using Serenity.Fixtures;
 using Serenity.WebDriver;
+using StoryTeller;
 using StoryTeller.Engine;
 
 namespace Serenity.Testing.WebDriver

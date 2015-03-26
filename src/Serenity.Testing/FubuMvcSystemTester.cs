@@ -55,22 +55,6 @@ namespace Serenity.Testing
         }
 
         [Test]
-        public void works_with_the_contextual_providers()
-        {
-            using (var system = new FubuMvcSystem<TargetApplication>())
-            {
-                system.ModifyContainer(x => {
-                    x.For<IContextualInfoProvider>().Add(new FakeContextualProvider("red", "green"));
-                    x.For<IContextualInfoProvider>().Add(new FakeContextualProvider("blue", "orange"));
-                });
-
-                system.CreateContext().As<IResultsExtension>()
-                    .Tags().Select(x => x.Text())
-                    .ShouldHaveTheSameElementsAs("red", "green", "blue", "orange");
-            }
-        }
-
-        [Test]
         public void uses_explicit_physical_path_if_if_exists()
         {
             using (var system = new FubuMvcSystem<TargetApplication>(physicalPath: "c:\\foo"))
@@ -121,24 +105,7 @@ namespace Serenity.Testing
         }
     }
 
-    public class FakeContextualProvider : IContextualInfoProvider
-    {
-        private readonly string[] _colors;
 
-        public FakeContextualProvider(params string[] colors)
-        {
-            _colors = colors;
-        }
-
-        public void Reset()
-        {
-        }
-
-        public IEnumerable<HtmlTag> GenerateReports()
-        {
-            return _colors.Select(x => new HtmlTag("span").Text(x));
-        }
-    }
 
     public class TargetApplication : IApplicationSource
     {

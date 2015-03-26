@@ -1,22 +1,22 @@
 using OpenQA.Selenium;
-using StoryTeller.Engine;
+using StoryTeller.Equivalence;
 
 namespace Serenity.Fixtures.Handlers
 {
     public class BasicMatchingHandler : IMatchingHandler
     {
         private readonly IElementHandler _inner;
-        private readonly ITestContext _context;
+        private static readonly EquivalenceChecker checker = new EquivalenceChecker(); 
 
-        public BasicMatchingHandler(IElementHandler inner, ITestContext context)
+        public BasicMatchingHandler(IElementHandler inner)
         {
             _inner = inner;
-            _context = context;
         }
 
         public bool MatchesData(IWebElement element, object expected)
         {
-            return _context.Matches(expected, _inner.GetData(null, element));
+            var actual = _inner.GetData(null, element);
+            return checker.IsEqual(expected, actual);
         }
     }
 }
