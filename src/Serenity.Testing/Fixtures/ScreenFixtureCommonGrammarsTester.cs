@@ -42,7 +42,7 @@ namespace Serenity.Testing.Fixtures
         }
 
         [SetUp]
-        public void SetUp()
+        public void BeforeTesting()
         {
             new FileSystem().DeleteFile("screenfixture.htm");
 
