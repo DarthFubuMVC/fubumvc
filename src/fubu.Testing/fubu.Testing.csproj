@@ -37,9 +37,6 @@
     <Reference Include="FubuCore">
       <HintPath>..\packages\FubuCore\lib\FubuCore.dll</HintPath>
     </Reference>
-    <Reference Include="FubuCsProjFile">
-      <HintPath>..\packages\FubuCsProjFile\lib\net40\FubuCsProjFile.dll</HintPath>
-    </Reference>
     <Reference Include="FubuLocalization">
       <HintPath>..\packages\FubuLocalization\lib\FubuLocalization.dll</HintPath>
     </Reference>
@@ -106,17 +103,6 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Generation\AddCommand_and_AddInput_Tester.cs" />
-    <Compile Include="Generation\GenerationContext.cs" />
-    <Compile Include="Generation\MvcBuilderTester.cs" />
-    <Compile Include="Generation\NewCommandInputTester.cs" />
-    <Compile Include="Generation\NewCommandTester.cs" />
-    <Compile Include="Generation\ProjectFinderTester.cs" />
-    <Compile Include="Generation\SolutionFinderTester.cs" />
-    <Compile Include="Generation\TemplatePlanExtensions.cs" />
-    <Compile Include="Generation\Templates\FileTemplateTester.cs" />
-    <Compile Include="Generation\TemplatingTester.cs" />
-    <Compile Include="Generation\ViewModelBuilderTester.cs" />
     <Compile Include="ModeCommandTester.cs" />
     <Compile Include="ProcessFactoryTester.cs" />
     <Compile Include="ProcessWrapperTester.cs" />
@@ -135,9 +121,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Packages\" />
-    <Folder Include="Tests\Add\" />
-    <Folder Include="Tests\Enhance\" />
-    <Folder Include="Tests\New\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuApp\FubuApp.csproj">

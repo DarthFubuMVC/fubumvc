@@ -34,7 +34,6 @@ namespace Fubu.Running
                 x.RequireAssemblyContainingType<IModelBinder>(); // FubuCore
                 x.RequireAssemblyContainingType<FubuApplication>(AssemblyCopyMode.SemVerCompatible); // FubuMVC.Core
                 x.RequireAssemblyContainingType<HtmlTag>(AssemblyCopyMode.SemVerCompatible); // HtmlTags
-                x.RequireAssemblyContainingType<FubuCsProjFile.CodeFile>(); // FubuCsProjFile just to keep it from whining
                 x.RequireAssemblyContainingType<DiagnosticChainsSource>(AssemblyCopyMode.SemVerCompatible); 
                 x.RequireAssemblyContainingType<SparkViewEngine>(AssemblyCopyMode.SemVerCompatible);
                 x.RequireAssemblyContainingType<SparkTemplate>(AssemblyCopyMode.SemVerCompatible);
