@@ -297,13 +297,8 @@ namespace Serenity
         {
             return Task.Factory.StartNew(() =>
             {
-                var settings = StoryTellerEnvironment.Get<SerenityEnvironment>();
-                WebDriverSettings.Import(settings);
-
                 FubuMvcPackageFacility.PhysicalRootPath = _settings.PhysicalPath;
                 _runtime = _runtimeSource();
-
-                var graph = _runtime.Factory.Get<BehaviorGraph>();
 
                 var browserLifecycle = WebDriverSettings.GetBrowserLifecyle(ChooseBrowserType());
                 SetupApplicationHost();

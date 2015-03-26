@@ -150,7 +150,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RemoteSubSystem.cs" />
     <Compile Include="Retry.cs" />
-    <Compile Include="SerenityEnvironment.cs" />
     <Compile Include="Wait.cs" />
     <Compile Include="WebDriverSettings.cs" />
     <Compile Include="WebDriver\JavaScriptBuilders\StringJavaScriptBuilder.cs" />

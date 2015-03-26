@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using FubuCore;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -11,13 +12,9 @@ namespace Serenity.Testing.WebDriver.EmbeddedDrivers
     [TestFixture(typeof(PhantomEmbeddedDriver))]
     public class EmbeddedDriverExtractorTester<TEmbeddedDriver> : InteractionContext<EmbeddedDriverExtractor<TEmbeddedDriver>> where TEmbeddedDriver : IEmbeddedDriver, new()
     {
-        private const string WorkingDir = "c:/test-dir";
+        private readonly string WorkingDir = AppDomain.CurrentDomain.BaseDirectory;
         private readonly IEmbeddedDriver _embeddedDriver = new TEmbeddedDriver();
 
-        protected override void beforeEach()
-        {
-            Services.Container.Inject(new SerenityEnvironment{WorkingDir = WorkingDir});
-        }
 
         [Test]
         public void VersionDeclarationFilePathInWorkingDirectory()

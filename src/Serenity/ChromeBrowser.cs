@@ -1,8 +1,8 @@
+using System;
 using FubuCore;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using Serenity.WebDriver.EmbeddedDrivers;
-using StoryTeller;
 
 namespace Serenity
 {
@@ -17,10 +17,10 @@ namespace Serenity
         protected override IWebDriver constructDriver()
         {
             var fileSystem = new FileSystem();
-            var settings = StoryTellerEnvironment.Get<SerenityEnvironment>();
 
-            return fileSystem.FileExists(settings.WorkingDir, File)
-                ? new ChromeDriver(settings.WorkingDir)
+            var workingDir = AppDomain.CurrentDomain.BaseDirectory;
+            return fileSystem.FileExists(workingDir, File)
+                ? new ChromeDriver(workingDir)
                 : new ChromeDriver();
         }
 

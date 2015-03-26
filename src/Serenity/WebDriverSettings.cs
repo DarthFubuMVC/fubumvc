@@ -53,9 +53,5 @@ namespace Serenity
             }
         }
 
-        public static void Import(SerenityEnvironment settings)
-        {
-            Current.Browser = settings.Browser;
-        }
     }
 }

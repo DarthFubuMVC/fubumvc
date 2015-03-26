@@ -13,12 +13,12 @@ namespace Serenity.WebDriver.EmbeddedDrivers
 
         public string PathToDriver { get; private set; }
 
-        public EmbeddedDriverExtractor(SerenityEnvironment environment, IFileSystem fileSystem)
+        public EmbeddedDriverExtractor(IFileSystem fileSystem)
         {
             _fileSystem = fileSystem;
             _embeddedDriver = new TEmbeddedDriver();
 
-            PathToDriver = Path.Combine(environment.WorkingDir, _embeddedDriver.ExtractedFileName);
+            PathToDriver = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _embeddedDriver.ExtractedFileName);
             PathToVersionDeclarationFile = PathToDriver + ".version";
         }
 

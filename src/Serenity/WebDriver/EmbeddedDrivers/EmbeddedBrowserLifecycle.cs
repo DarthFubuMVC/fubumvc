@@ -10,8 +10,7 @@ namespace Serenity.WebDriver.EmbeddedDrivers
 
         protected EmbeddedBrowserLifecycle()
         {
-            var settings = StoryTellerEnvironment.Get<SerenityEnvironment>();
-            _extractor = new EmbeddedDriverExtractor<TEmbeddedDriver>(settings, new FileSystem());
+            _extractor = new EmbeddedDriverExtractor<TEmbeddedDriver>(new FileSystem());
         }
 
         protected override IWebDriver buildDriver()

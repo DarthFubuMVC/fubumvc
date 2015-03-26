@@ -16,14 +16,6 @@ namespace Serenity
 
         protected override IWebDriver constructDriver()
         {
-            var fileSystem = new FileSystem();
-            var settings = StoryTellerEnvironment.Get<SerenityEnvironment>();
-
-            if (fileSystem.FileExists(settings.WorkingDir, File))
-            {
-                return new PhantomJSDriver(settings.WorkingDir);
-            }
-
             return new PhantomJSDriver(AppDomain.CurrentDomain.BaseDirectory);
         }
 
