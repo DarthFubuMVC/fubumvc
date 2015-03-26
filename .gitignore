@@ -63,7 +63,6 @@ logs
 storyteller.cmd
 gems
 pkg
-lib
 run_st.cmd
 .bundle
 src/fubu.Docs/snippets
