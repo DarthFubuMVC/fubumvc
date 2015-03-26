@@ -141,15 +141,11 @@
     <Compile Include="WebDriver\JavascriptReferenceErrorTests.cs" />
     <Compile Include="WebDriver\JavaScriptTester.cs" />
     <Compile Include="WebDriver\JavaScriptByFindTester.cs" />
-    <Compile Include="Fixtures\Grammars\CheckValueGrammarTester.cs" />
-    <Compile Include="Fixtures\Grammars\ClickGrammerTester.cs" />
-    <Compile Include="Fixtures\Grammars\EnterValueGrammarTester.cs" />
     <Compile Include="FakeSystem\IntegratedTester.cs" />
     <Compile Include="Fixtures\Handlers\CheckboxHandlerTester.cs" />
     <Compile Include="Fixtures\Handlers\TextAreaElementHandlerTester.cs" />
     <Compile Include="Fixtures\ScreenFixtureCommonGrammarsTester.cs" />
     <Compile Include="Fixtures\Handlers\SelectElementHandlerTester.cs" />
-    <Compile Include="Fixtures\ScreenFixtureTester.cs" />
     <Compile Include="FubuMvcSystemTester.cs" />
     <Compile Include="MessageWatching_over_remote_AppDomain_integration_tester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

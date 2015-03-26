@@ -194,12 +194,8 @@ namespace Serenity.Testing.FakeSystem
         public string Name { get; set; }
     }
 
-    public class NameScreenFixture : ScreenFixture<TextModel>
+    public class NameScreenFixture : ScreenFixture
     {
-        public NameScreenFixture()
-        {
-            EditableElement(x => x.Name);
-        }
 
         [FormatAs("Go to name {name}")]
         public void GoTo(string name)

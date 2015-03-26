@@ -101,11 +101,6 @@
     <Compile Include="ChromeBrowser.cs" />
     <Compile Include="FirefoxBrowser.cs" />
     <Compile Include="Fixtures\DateTimeExtensions.cs" />
-    <Compile Include="Fixtures\Grammars\CheckValueGrammar.cs" />
-    <Compile Include="Fixtures\Grammars\ClickGrammar.cs" />
-    <Compile Include="Fixtures\Grammars\EnterValueGrammar.cs" />
-    <Compile Include="Fixtures\Grammars\GestureConfig.cs" />
-    <Compile Include="Fixtures\Grammars\SimpleElementGesture.cs" />
     <Compile Include="Fixtures\Handlers\BasicMatchingHandler.cs" />
     <Compile Include="Fixtures\Handlers\CheckboxHandler.cs" />
     <Compile Include="Fixtures\Handlers\DefaultElementHandler.cs" />

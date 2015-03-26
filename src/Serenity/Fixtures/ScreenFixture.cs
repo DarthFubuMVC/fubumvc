@@ -1,43 +1,21 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using FubuCore;
-using FubuCore.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Urls;
 using OpenQA.Selenium;
-using Serenity.Fixtures.Grammars;
 using StoryTeller;
-using StoryTeller.Assertions;
 using StoryTeller.Engine;
 
 namespace Serenity.Fixtures
 {
     public class ScreenFixture : Fixture
     {
-        private readonly Stack<ISearchContext> _searchContexts = new Stack<ISearchContext>();
         private IApplicationUnderTest _application;
 
-        protected ScreenFixture()
-        {
-        }
-
-        protected ISearchContext SearchContext
-        {
-            get
-            {
-                if (_searchContexts.Count == 0)
-                {
-                    _searchContexts.Push(_application.Driver);
-                }
-
-                return _searchContexts.Peek();
-            }
-        }
 
         protected IApplicationUnderTest Application
         {
@@ -71,7 +49,7 @@ namespace Serenity.Fixtures
         }
 
         protected IGrammar Click(By selector = null, string id = null, string css = null, string name = null,
-                                 string label = null, string template = null)
+            string label = null, string template = null)
         {
             var by = selector ?? id.ById() ?? css.ByCss() ?? name.ByName();
 
@@ -80,26 +58,18 @@ namespace Serenity.Fixtures
 
             label = label ?? by.ToString().Replace("By.", "");
 
-            var config = new GestureConfig{
-                Template = template ?? "Click " + label,
-                Description = "Click " + label,
-                Finder = () => SearchContext.FindElement(by),
-                FinderDescription = by.ToString()
-            };
 
-            return new ClickGrammar(config);
+            return Do(label, () => Driver.FindElement(by).Click());
         }
 
         // TODO -- UT this some how
         // TODO -- Convert to use Serenity.WebDriver.JavaScript
-        protected IGrammar JQueryClick(string template, string id = null, string className = null, string css = null, string tagName = null)
+        protected IGrammar JQueryClick(string template, string id = null, string className = null, string css = null,
+            string tagName = null)
         {
             string command = buildJQuerySearch(css, id, className, tagName);
 
-            return Do(template, () =>
-            {
-                Retry.Twice(() => Driver.InjectJavascript(command));
-            });
+            return Do(template, () => { Retry.Twice(() => Driver.InjectJavascript(command)); });
         }
 
         private static string buildJQuerySearch(string css, string id, string className, string tagName)
@@ -124,34 +94,19 @@ namespace Serenity.Fixtures
             return "$('{0}').click();".ToFormat(search);
         }
 
-        protected void ClickWithJQuery(string id = null, string className = null, string css = null, string tagName = null)
+        protected void ClickWithJQuery(string id = null, string className = null, string css = null,
+            string tagName = null)
         {
             string command = buildJQuerySearch(css, id, className, tagName);
 
             Retry.Twice(() => Driver.InjectJavascript(command));
         }
 
-        protected void PushElementContext(ISearchContext context)
-        {
-            _searchContexts.Push(context);
-        }
-
-        protected void PushElementContext(By selector)
-        {
-            var element = SearchContext.FindElement(selector);
-            StoryTellerAssert.Fail(element == null, () => "Unable to find element with " + selector);
-
-            PushElementContext(element);
-        }
 
         protected void waitForElement(By elementSearch, int millisecondPolling = 500, int timeoutInMilliseconds = 5000)
         {
-            SearchContext.WaitForElement(elementSearch, timeout: TimeSpan.FromMilliseconds(timeoutInMilliseconds), pollingInterval: TimeSpan.FromMilliseconds(millisecondPolling));
-        }
-        
-        protected void PopElementContext()
-        {
-            _searchContexts.Pop();
+            Driver.WaitForElement(elementSearch, TimeSpan.FromMilliseconds(timeoutInMilliseconds),
+                TimeSpan.FromMilliseconds(millisecondPolling));
         }
 
         protected string GetData(IWebElement element)
@@ -161,18 +116,18 @@ namespace Serenity.Fixtures
 
         protected string GetData(By finder)
         {
-            var element = SearchContext.FindElement(finder);
-            return SearchContext.GetData(element);
+            var element = Driver.FindElement(finder);
+            return Driver.GetData(element);
         }
 
         protected void SetData(IWebElement element, string data)
         {
-            SearchContext.SetData(element, data);
+            Driver.SetData(element, data);
         }
 
         protected void SetData(By finder, string data)
         {
-            var element = SearchContext.FindElement(finder);
+            var element = Driver.FindElement(finder);
             SetData(element, data);
         }
 
@@ -221,88 +176,5 @@ namespace Serenity.Fixtures
             }
             return browserUri.AbsolutePath.StartsWith(searchUri.AbsolutePath, StringComparison.CurrentCultureIgnoreCase);
         }
-    }
-
-    public class ScreenFixture<T> : ScreenFixture
-    {
-        protected void enterValue(Expression<Func<T, object>> expression, string value)
-        {
-            // TODO -- use the field naming convention?
-            var name = expression.ToAccessor().Name;
-            SetData(By.Name(name), value);
-        }
-
-        protected string readValue(Expression<Func<T, object>> expression)
-        {
-            var name = expression.ToAccessor().Name;
-            return GetData(By.Name(name));
-        }
-
-        private GestureConfig getGesture(Expression<Func<T, object>> expression, string label = null, string key = null)
-        {
-            // TODO -- later on, use the naming convention from fubu instead of pretending
-            // that this rule is always true
-            var config = GestureForProperty(expression);
-            if (key.IsNotEmpty())
-            {
-                config.CellName = key;
-            }
-
-            config.Label = label ?? expression.ToAccessor().Name;
-
-            return config;
-        }
-
-
-        protected IGrammar EnterScreenValue(Expression<Func<T, object>> expression, string label = null,
-                                            string key = null)
-        {
-            var config = getGesture(expression, label, key);
-
-            config.Template = "Enter {" + config.CellName + "} for " + config.Label;
-            config.Description = "Enter data for property " + FubuCore.Reflection.ReflectionExtensions.ToAccessor(expression).Name;
-
-            return new EnterValueGrammar(config);
-        }
-
-        protected IGrammar CheckScreenValue(Expression<Func<T, object>> expression, string label = null,
-                                            string key = null)
-        {
-            var config = getGesture(expression, label, key);
-
-            config.Template = "The text of " + config.Label + " should be {" + config.CellName + "}";
-            config.Description = "Check data for property " + FubuCore.Reflection.ReflectionExtensions.ToAccessor(expression).Name;
-
-            return new CheckValueGrammar(config);
-        }
-
-
-        protected GestureConfig GestureForProperty(Expression<Func<T, object>> expression)
-        {
-            return GestureConfig.ByProperty(() => SearchContext, expression);
-        }
-
-        protected void EditableElement(Expression<Func<T, object>> expression, string label = null)
-        {
-            var accessor = expression.ToAccessor();
-            var name = accessor.Name;
-
-            this["Check" + name] = CheckScreenValue(expression, label);
-            this["Enter" + name] = EnterScreenValue(expression, label);
-        }
-
-        protected void EditableElementsForAllImmediateProperties()
-        {
-			typeof (T)
-			    .GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(x => x.CanRead && x.CanWrite).Each(prop =>
-			    {
-			        var accessor = new SingleProperty(prop);
-			        var expression = accessor.ToExpression<T>();
-
-			        EditableElement(expression);
-			    });
-        }
-
-        //public void EditableElements(params)
     }
 }
