@@ -1,4 +1,5 @@
 using FubuCore;
+using StoryTeller;
 using StoryTeller.Engine;
 
 namespace Serenity
@@ -19,6 +20,11 @@ namespace Serenity
         public IServiceLocator Services
         {
             get { return _system.Application.Services; }
+        }
+
+        public void AfterExecution(ISpecContext context)
+        {
+            // Nothing yet, but will be the logging
         }
     }
 }
