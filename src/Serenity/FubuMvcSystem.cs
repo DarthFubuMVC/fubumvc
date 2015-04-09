@@ -14,6 +14,7 @@ using Serenity.Fixtures.Handlers;
 using StoryTeller;
 using StoryTeller.Conversion;
 using StoryTeller.Engine;
+using StoryTeller.Equivalence;
 using StructureMap;
 
 namespace Serenity
@@ -36,6 +37,8 @@ namespace Serenity
 
         private readonly IList<ISubSystem> _subSystems = new List<ISubSystem>();
 
+        private readonly CellHandling CellHandling = new CellHandling(new EquivalenceChecker(), new Conversions());
+
         public FubuMvcSystem(ApplicationSettings settings, Func<FubuRuntime> runtimeSource)
         {
             _settings = settings;
@@ -51,21 +54,6 @@ namespace Serenity
         private readonly Cache<string, RemoteSubSystem> _remoteSubSystems = new Cache<string, RemoteSubSystem>();
         private ISerenityHosting _hosting;
         protected IApplicationUnderTest _application;
-
-        public IEnumerable<IConversionProvider> ConversionProviders()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task Warmup()
-        {
-            throw new NotImplementedException();
-        }
-
-        Task ISystem.Recycle()
-        {
-            throw new NotImplementedException();
-        }
 
         /// <summary>
         /// *IF* your underlying container is StructureMap, this is a convenience method
@@ -226,6 +214,11 @@ namespace Serenity
             _contextCreationActions.Each(x => x());
 
             return context;
+        }
+
+        public CellHandling Start()
+        {
+            return CellHandling;
         }
 
         protected virtual void startAll()
