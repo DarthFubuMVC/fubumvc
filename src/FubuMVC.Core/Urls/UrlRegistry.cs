@@ -21,7 +21,7 @@ namespace FubuMVC.Core.Urls
         {
 	        _urlResolver = urlResolver;
 	        _httpRequest = httpRequest;
-	        _templateFunc = (s) => { return s.Replace("{", templatePattern.Start).Replace("}", templatePattern.End); };
+	        _templateFunc = (s) => s.Replace("{", templatePattern.Start).Replace("}", templatePattern.End);
         }
 
         public string UrlFor<TInput>(string categoryOrHttpMethod = null) where TInput : class

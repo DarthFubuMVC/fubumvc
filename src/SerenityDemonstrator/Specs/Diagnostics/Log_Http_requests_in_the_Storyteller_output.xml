@@ -1,0 +1,8 @@
+<Spec id="4a77d799-2649-4a9c-8744-b476155abd6e" maxRetries="0" tags="" lifecycle="Acceptance" name="Log Http requests in the Storyteller output">
+  <ColorEndpoint id="469eb761-e099-412f-a876-f0c7354d1b96">
+    <FetchBlue />
+    <FetchGreen />
+    <FetchColor color="yellow" text="yellow" />
+    <FetchColor color="purple" text="purple" />
+  </ColorEndpoint>
+</Spec>

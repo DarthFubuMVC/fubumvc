@@ -9,5 +9,6 @@ namespace FubuMVC.Core.Diagnostics.Runtime
         IEnumerable<RequestLog> RecentReports();
 
         RequestLog Find(Guid id);
+        void Clear();
     }
 }

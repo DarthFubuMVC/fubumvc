@@ -34,5 +34,14 @@ namespace FubuMVC.Core.Diagnostics.Runtime
         {
             return _reports.FirstOrDefault(x => x.Id == id);
         }
+
+        public void Clear()
+        {
+            while (_reports.Count > 0)
+            {
+                RequestLog _;
+                _reports.TryDequeue(out _);
+            }
+        }
     }
 }

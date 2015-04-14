@@ -23,7 +23,12 @@ namespace FubuMVC.Core.Http.Owin.Middleware.StaticFiles
         {
             if (request.IsNotHttpMethod("GET", "HEAD")) return MiddlewareContinuation.Continue();
 
-            var file = _files.Find(request.RelativeUrl());
+            var relativeUrl = request.RelativeUrl();
+
+            // Gets around what I *think* is a Katana bug 
+            if (relativeUrl.StartsWith("http:/")) return MiddlewareContinuation.Continue();
+
+            var file = _files.Find(relativeUrl);
             if (file == null) return MiddlewareContinuation.Continue();
 
             if (_settings.DetermineStaticFileRights(file) != AuthorizationRight.Allow)

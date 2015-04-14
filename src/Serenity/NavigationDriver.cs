@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
+using FubuCore;
 using FubuMVC.Core.Endpoints;
+using FubuMVC.Core.Http.Owin;
 using OpenQA.Selenium;
 
 namespace Serenity
@@ -54,8 +56,22 @@ namespace Serenity
             NavigateToUrl(url);
         }
 
+        private string correctUrl(string url)
+        {
+            if (Uri.IsWellFormedUriString(url, UriKind.Absolute)) return url;
+
+            if (url.StartsWith("~/"))
+            {
+                url = url.TrimStart('~');
+            }
+
+            return _application.RootUrl.AppendUrl(url);
+        }
+
         public void NavigateToUrl(string url)
         {
+            url = correctUrl(url);
+
             Debug.WriteLine("Navigating to " + url);
             _application.Driver.Navigate().GoToUrl(url);
 

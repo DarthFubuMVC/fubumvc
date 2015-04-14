@@ -8,6 +8,7 @@ using FubuCore;
 using FubuCore.CommandLine;
 using FubuCore.Util;
 using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration.ObjectGraph;
 using Serenity.Fixtures.Handlers;
@@ -209,6 +210,8 @@ namespace Serenity
                 startAll();
             }
 
+            _application.Services.GetInstance<IRequestHistoryCache>().Clear();
+
             var context = new FubuMvcContext(this);
 
             _contextCreationActions.Each(x => x());
@@ -223,6 +226,7 @@ namespace Serenity
 
         protected virtual void startAll()
         {
+            FubuMode.SetUpForDevelopmentMode();
             Task.WaitAll(_subSystems.Select(x => x.Start()).ToArray());
         }
 

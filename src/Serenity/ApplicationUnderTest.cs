@@ -50,12 +50,7 @@ namespace Serenity
 
             _container = new Lazy<IServiceFactory>(factorySource);
 
-            _urls = new Lazy<IUrlRegistry>(() =>
-            {
-                var urls = _container.Value.Get<IUrlRegistry>();
-                urls.As<UrlRegistry>().RootAt(_rootUrl);
-                return urls;
-            });
+            _urls = new Lazy<IUrlRegistry>(() => _container.Value.Get<IUrlRegistry>());
 
             _navigation = new Lazy<NavigationDriver>(() => new NavigationDriver(this));
 

@@ -58,6 +58,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteService", "RemoteServ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KayakTestApplication", "KayakTestApplication\KayakTestApplication.csproj", "{68CC89AB-EE8B-4B2D-9BA0-8B0FBF460446}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerenityDemonstrator", "SerenityDemonstrator\SerenityDemonstrator.csproj", "{6820385C-0843-4DB0-B694-F9169646350E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -401,6 +403,21 @@ Global
 		{68CC89AB-EE8B-4B2D-9BA0-8B0FBF460446}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{68CC89AB-EE8B-4B2D-9BA0-8B0FBF460446}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
 		{68CC89AB-EE8B-4B2D-9BA0-8B0FBF460446}.Retail|x86.ActiveCfg = Release|Any CPU
+		{6820385C-0843-4DB0-B694-F9169646350E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6820385C-0843-4DB0-B694-F9169646350E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6820385C-0843-4DB0-B694-F9169646350E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{6820385C-0843-4DB0-B694-F9169646350E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{6820385C-0843-4DB0-B694-F9169646350E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6820385C-0843-4DB0-B694-F9169646350E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6820385C-0843-4DB0-B694-F9169646350E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6820385C-0843-4DB0-B694-F9169646350E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6820385C-0843-4DB0-B694-F9169646350E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{6820385C-0843-4DB0-B694-F9169646350E}.Release|x86.ActiveCfg = Release|Any CPU
+		{6820385C-0843-4DB0-B694-F9169646350E}.Retail|Any CPU.ActiveCfg = Release|Any CPU
+		{6820385C-0843-4DB0-B694-F9169646350E}.Retail|Any CPU.Build.0 = Release|Any CPU
+		{6820385C-0843-4DB0-B694-F9169646350E}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6820385C-0843-4DB0-B694-F9169646350E}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
+		{6820385C-0843-4DB0-B694-F9169646350E}.Retail|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -416,5 +433,6 @@ Global
 		{7F5C625C-603B-4D8B-97A8-BCBF6D8BC1FC} = {5600609A-D061-40E7-9CB2-92D3350EA31B}
 		{F8186EC7-237A-4C24-AA48-1CFCDD099A8D} = {DE130877-DDCB-425C-9C20-BF1B73D4191D}
 		{68CC89AB-EE8B-4B2D-9BA0-8B0FBF460446} = {DE130877-DDCB-425C-9C20-BF1B73D4191D}
+		{6820385C-0843-4DB0-B694-F9169646350E} = {DE130877-DDCB-425C-9C20-BF1B73D4191D}
 	EndGlobalSection
 EndGlobal
