@@ -21,11 +21,4 @@
       <dependency id="Selenium.WebDriverBackedSelenium" version="2.31.2" />
     </dependencies>
   </metadata>
-  <files xmlns="">
-    <file src="..\..\src\SerenityRunner\bin\release\Serenity.dll" target="lib\net40" />
-    <file src="..\..\src\SerenityRunner\bin\release\*.dll" target="tools" />
-    <file src="..\..\src\SerenityRunner\bin\release\SerenityRunner.exe.config" target="tools" />
-    <file src="..\..\src\SerenityRunner\bin\release\SerenityRunner.exe" target="tools" />
-    <file src="..\..\src\SerenityRunner\bin\release\Newtonsoft.Json.*" target="tools" />
-  </files>
 </package>
