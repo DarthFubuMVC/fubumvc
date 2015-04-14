@@ -42,7 +42,7 @@ namespace Serenity
 
 
 
-        public HtmlTag ToHtml()
+        public string ToHtml()
         {
             var table = new TableTag();
             table.AddClass("table");
@@ -74,7 +74,7 @@ namespace Serenity
 
 
 
-            return table;
+            return table.ToString();
         }
 
         public string Title
