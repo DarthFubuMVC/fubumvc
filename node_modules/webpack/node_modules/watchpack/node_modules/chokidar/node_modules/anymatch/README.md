@@ -79,6 +79,13 @@ Change Log
 ----------
 [See release notes page on GitHub](https://github.com/es128/anymatch/releases)
 
+NOTE: As of v1.2.0, anymatch uses [micromatch](https://github.com/jonschlinkert/micromatch)
+for glob pattern matching. The glob matching behavior should be functionally
+equivalent to the commonly used [minimatch](https://github.com/isaacs/minimatch)
+library (aside from some fixed bugs and greater performance), so a major
+version bump wasn't merited. Issues with glob pattern matching should be
+reported directly to the [micromatch issue tracker](https://github.com/jonschlinkert/micromatch/issues).
+
 License
 -------
 [ISC](https://raw.github.com/es128/anymatch/master/LICENSE)

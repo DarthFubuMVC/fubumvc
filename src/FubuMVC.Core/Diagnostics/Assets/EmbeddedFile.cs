@@ -68,14 +68,14 @@ namespace FubuMVC.Core.Diagnostics.Assets
             get { return "_fubu/asset/{0}/{1}".ToFormat(Version, Name); }
         }
 
-        public HtmlTag ToStyleTag()
+        public HtmlTag ToStyleTag(IHttpRequest request)
         {
-            return new StylesheetLinkTag(Url);
+            return new StylesheetLinkTag(request.ToFullUrl(Url));
         }
 
-        public HtmlTag ToScriptTag()
+        public HtmlTag ToScriptTag(IHttpRequest request)
         {
-            return new HtmlTag("script").Attr("language", "javascript").Attr("src", Url);
+            return new HtmlTag("script").Attr("language", "javascript").Attr("src", request.ToFullUrl(Url));
         }
 
         public override string ToString()

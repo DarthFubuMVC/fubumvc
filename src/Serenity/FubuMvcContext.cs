@@ -29,17 +29,24 @@ namespace Serenity
             get { return _system.Application.Services; }
         }
 
-        public void AfterExecution(ISpecContext context)
+        public virtual void AfterExecution(ISpecContext context)
         {
-            var reporter = context.Reporting.ReporterFor<RequestReporter>();
+            var reporter = new RequestReporter(_system);
             reporter.Append(Services.GetInstance<IRequestHistoryCache>().RecentReports().ToArray());
+
+            context.Reporting.Log(reporter);
         }
     }
 
     public class RequestReporter : IReporter
     {
+        private readonly FubuMvcSystem _system;
         private readonly List<RequestLog> _logs = new List<RequestLog>();
 
+        public RequestReporter(FubuMvcSystem system)
+        {
+            _system = system;
+        }
 
 
         public string ToHtml()
@@ -59,11 +66,11 @@ namespace Serenity
 
             _logs.Each(log =>
             {
-                var url = "/_fubu#/fubumvc/request-details/" + log.Id;
+                var url = _system.Application.RootUrl.TrimEnd('/') +  "/_fubu/#/fubumvc/request-details/" + log.Id;
 
                 table.AddBodyRow(row =>
                 {
-                    row.Cell().Add("a").Text("Details").Attr("href", url);
+                    row.Cell().Add("a").Text("Details").Attr("href", url).Attr("target", "_blank");
                     row.Cell(log.ExecutionTime.ToString()).Attr("align", "right");
                     row.Cell(log.HttpMethod);
                     row.Cell(log.Endpoint);

@@ -9,6 +9,7 @@ function read(root, filter, files, prefix) {
   filter = filter || noDotFiles
 
   var dir = path.join(root, prefix)
+  if (!fs.existsSync(dir)) return
   if (fs.statSync(dir).isDirectory())
     fs.readdirSync(dir)
     .filter(filter)
@@ -24,3 +25,4 @@ function read(root, filter, files, prefix) {
 function noDotFiles(x) {
   return x[0] !== '.'
 }
+

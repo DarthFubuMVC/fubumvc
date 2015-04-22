@@ -20,6 +20,7 @@ namespace FubuMVC.Core.Diagnostics
         private readonly IDiagnosticAssets _assets;
         private readonly JavascriptRouteWriter _routeWriter;
         private readonly DiagnosticJavascriptRoutes _routes;
+        private readonly IHttpRequest _request;
 
         private static readonly string[] _styles = new[] {"bootstrap.min.css", "master.css", "bootstrap.overrides.css"};
         private static readonly string[] _scripts = new[] { "jquery.min.js", "typeahead.bundle.min.js", "root.js" };
@@ -29,13 +30,17 @@ namespace FubuMVC.Core.Diagnostics
             IHttpResponse response,
             IDiagnosticAssets assets, 
             JavascriptRouteWriter routeWriter, 
-            DiagnosticJavascriptRoutes routes)
+            DiagnosticJavascriptRoutes routes,
+            IHttpRequest request)
         {
             _tags = tags;
             _response = response;
             _assets = assets;
             _routeWriter = routeWriter;
             _routes = routes;
+            _request = request;
+
+            
         }
 
         public HtmlDocument get__fubu()
@@ -60,7 +65,7 @@ namespace FubuMVC.Core.Diagnostics
         private void writeScripts(HtmlTag foot)
         {
             // Do this regardless
-            foot.Append(_assets.For("FubuDiagnostics.js").ToScriptTag());
+            foot.Append(_assets.For("FubuDiagnostics.js").ToScriptTag(_request));
 
             var routeData = _routeWriter.WriteJavascriptRoutes("FubuDiagnostics.routes", _routes);
             foot.Append(routeData);
@@ -78,10 +83,10 @@ namespace FubuMVC.Core.Diagnostics
                 _scripts.Each(name =>
                 {
                     var file = _assets.For(name);
-                    foot.Append(file.ToScriptTag());
+                    foot.Append(file.ToScriptTag(_request));
                 });
 
-                extensionFiles.Each(file => foot.Append(file.ToScriptTag()));
+                extensionFiles.Each(file => foot.Append(file.ToScriptTag(_request)));
             }
         }
 
@@ -90,7 +95,7 @@ namespace FubuMVC.Core.Diagnostics
             _styles.Each(name =>
             {
                 var file = _assets.For(name);
-                document.Head.Append(file.ToStyleTag());
+                document.Head.Append(file.ToStyleTag(_request));
             });
         }
 
