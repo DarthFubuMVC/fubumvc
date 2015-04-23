@@ -12,8 +12,8 @@
     <description>Giving you piece of mind by making it easy to integrate both Storyteller and Jasmine testing into your FubuMVC applications</description>
     <tags>web framework specification fubumvc</tags>
     <dependencies>
-      <dependency id="FubuMVC.Core" version="2.0" />
-      <dependency id="FubuMVC.Katana" version="2.0" />
+      <dependency id="FubuMVC.Core" version="2.1" />
+      <dependency id="FubuMVC.Katana" version="2.1" />
       <dependency id="Storyteller" version="3.0.0" />
       <dependency id="Selenium.RC" version="2.21.0" />
       <dependency id="Selenium.Support" version="2.31.2" />
@@ -21,4 +21,7 @@
       <dependency id="Selenium.WebDriverBackedSelenium" version="2.31.2" />
     </dependencies>
   </metadata>
+  <files xmlns="">
+    <file src="..\..\src\Serenity\bin\release\Serenity.*" target="lib\net45" />
+  </files>
 </package>
