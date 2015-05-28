@@ -15,7 +15,7 @@ require 'fuburake'
 	sln.fubudocs_enabled = false
 	sln.bottles_enabled = false # has to be all special in FubuMVC because of the zip package testing
 
-	sln.integration_test = ['FubuMVC.IntegrationTesting', 'Serenity.Testing']
+	sln.integration_test = ['FubuMVC.IntegrationTesting', 'Serenity.Testing', 'FubuMVC.Authentication.IntegrationTesting']
 	sln.ci_steps = [:integration_test, :archive_gem]
 	
 	sln.options[:nuget_publish_folder] = 'nupkgs'

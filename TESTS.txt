@@ -4,3 +4,4 @@ FubuMVC.Razor.Tests
 FubuMVC.Spark.Tests
 fubu.Testing
 FubuPersistence.Tests
+FubuMVC.Authentication.Tests
