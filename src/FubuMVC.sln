@@ -70,6 +70,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Authentication.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Authentication.IntegrationTesting", "FubuMVC.Authentication.IntegrationTesting\FubuMVC.Authentication.IntegrationTesting.csproj", "{997ED7D1-6FD7-4583-A64A-A332FB8095C5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.PersistedMembership", "FubuMVC.PersistedMembership\FubuMVC.PersistedMembership.csproj", "{89C78A78-4C10-4C34-94AD-80C89F8C6606}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.PersistedMembership.Testing", "FubuMVC.PersistedMembership.Testing\FubuMVC.PersistedMembership.Testing.csproj", "{D320FB44-9A73-446E-80ED-5CA4C9C2838A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -488,6 +492,36 @@ Global
 		{997ED7D1-6FD7-4583-A64A-A332FB8095C5}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{997ED7D1-6FD7-4583-A64A-A332FB8095C5}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
 		{997ED7D1-6FD7-4583-A64A-A332FB8095C5}.Retail|x86.ActiveCfg = Release|Any CPU
+		{89C78A78-4C10-4C34-94AD-80C89F8C6606}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89C78A78-4C10-4C34-94AD-80C89F8C6606}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89C78A78-4C10-4C34-94AD-80C89F8C6606}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{89C78A78-4C10-4C34-94AD-80C89F8C6606}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{89C78A78-4C10-4C34-94AD-80C89F8C6606}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{89C78A78-4C10-4C34-94AD-80C89F8C6606}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89C78A78-4C10-4C34-94AD-80C89F8C6606}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89C78A78-4C10-4C34-94AD-80C89F8C6606}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{89C78A78-4C10-4C34-94AD-80C89F8C6606}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{89C78A78-4C10-4C34-94AD-80C89F8C6606}.Release|x86.ActiveCfg = Release|Any CPU
+		{89C78A78-4C10-4C34-94AD-80C89F8C6606}.Retail|Any CPU.ActiveCfg = Release|Any CPU
+		{89C78A78-4C10-4C34-94AD-80C89F8C6606}.Retail|Any CPU.Build.0 = Release|Any CPU
+		{89C78A78-4C10-4C34-94AD-80C89F8C6606}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{89C78A78-4C10-4C34-94AD-80C89F8C6606}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
+		{89C78A78-4C10-4C34-94AD-80C89F8C6606}.Retail|x86.ActiveCfg = Release|Any CPU
+		{D320FB44-9A73-446E-80ED-5CA4C9C2838A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D320FB44-9A73-446E-80ED-5CA4C9C2838A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D320FB44-9A73-446E-80ED-5CA4C9C2838A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D320FB44-9A73-446E-80ED-5CA4C9C2838A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D320FB44-9A73-446E-80ED-5CA4C9C2838A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D320FB44-9A73-446E-80ED-5CA4C9C2838A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D320FB44-9A73-446E-80ED-5CA4C9C2838A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D320FB44-9A73-446E-80ED-5CA4C9C2838A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D320FB44-9A73-446E-80ED-5CA4C9C2838A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D320FB44-9A73-446E-80ED-5CA4C9C2838A}.Release|x86.ActiveCfg = Release|Any CPU
+		{D320FB44-9A73-446E-80ED-5CA4C9C2838A}.Retail|Any CPU.ActiveCfg = Release|Any CPU
+		{D320FB44-9A73-446E-80ED-5CA4C9C2838A}.Retail|Any CPU.Build.0 = Release|Any CPU
+		{D320FB44-9A73-446E-80ED-5CA4C9C2838A}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D320FB44-9A73-446E-80ED-5CA4C9C2838A}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
+		{D320FB44-9A73-446E-80ED-5CA4C9C2838A}.Retail|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -507,5 +541,7 @@ Global
 		{B889AF6B-2744-4370-842A-04026D1370B5} = {696AFFAB-BFDA-4ECF-80D4-3C1E1186711D}
 		{3E04D7BF-BA4A-4799-93EA-494597D55B5F} = {696AFFAB-BFDA-4ECF-80D4-3C1E1186711D}
 		{997ED7D1-6FD7-4583-A64A-A332FB8095C5} = {696AFFAB-BFDA-4ECF-80D4-3C1E1186711D}
+		{89C78A78-4C10-4C34-94AD-80C89F8C6606} = {696AFFAB-BFDA-4ECF-80D4-3C1E1186711D}
+		{D320FB44-9A73-446E-80ED-5CA4C9C2838A} = {696AFFAB-BFDA-4ECF-80D4-3C1E1186711D}
 	EndGlobalSection
 EndGlobal
