@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<Test name="Login successfully to a different page than home" lifecycle="Regression">
+  <Model>
+    <UsersAre isStep="True">
+      <table>
+        <row isStep="True" UserName="jeremy" Password="jasper" />
+      </table>
+    </UsersAre>
+  </Model>
+  <OtherScreen>
+    <GoToDifferentPage isStep="True" name="jeremy" />
+    <IsOnTheLoginScreen isStep="True" />
+    <Login isStep="True" user="jeremy" password="jasper" />
+    <IsNotOnTheLoginScreen isStep="True" />
+    <ShouldBeOnTheDifferentPage isStep="True" name="jeremy" />
+  </OtherScreen>
+</Test>

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<Test name="Lockout Logic" lifecycle="Acceptance">
+  <LockedOutLogic>
+    <Logic isStep="True">
+      <table>
+        <row isStep="True" NumberOfTries="1" MaximumNumberOfFailedAttempts="3" CoolingOffPeriod="60" CurrentLockedOutTime="NONE" LockedOutUntil="NONE" IsLockedOut="false" />
+        <row isStep="True" NumberOfTries="2" MaximumNumberOfFailedAttempts="3" CoolingOffPeriod="60" CurrentLockedOutTime="NONE" LockedOutUntil="NONE" IsLockedOut="false" />
+        <row isStep="True" NumberOfTries="3" MaximumNumberOfFailedAttempts="3" CoolingOffPeriod="60" CurrentLockedOutTime="NONE" LockedOutUntil="NOW+60" IsLockedOut="true" />
+        <row isStep="True" NumberOfTries="0" MaximumNumberOfFailedAttempts="3" CoolingOffPeriod="60" CurrentLockedOutTime="NOW+1" LockedOutUntil="NOW+1" IsLockedOut="true" />
+        <row isStep="True" NumberOfTries="0" MaximumNumberOfFailedAttempts="3" CoolingOffPeriod="60" CurrentLockedOutTime="NOW-1" LockedOutUntil="NONE" IsLockedOut="false" />
+        <row isStep="True" NumberOfTries="5" MaximumNumberOfFailedAttempts="6" CoolingOffPeriod="60" CurrentLockedOutTime="NONE" LockedOutUntil="NONE" IsLockedOut="false" />
+      </table>
+    </Logic>
+  </LockedOutLogic>
+</Test>

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<Test name="No messages on the initial attempt at logging in" lifecycle="Regression">
+  <LoginScreen>
+    <OpenLoginScreen isStep="True" />
+    <NoMessageIsShown isStep="True" />
+  </LoginScreen>
+</Test>

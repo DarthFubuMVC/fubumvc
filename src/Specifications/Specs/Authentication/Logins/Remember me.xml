@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<Test name="Remember me" lifecycle="Acceptance">
+  <Comment><![CDATA[This test is unreliable because of the cookie state.  Despite my efforts at cleaning up the existing cookie state, this test is only trustworthy after recycling the environment.]]></Comment>
+  <LoginScreen>
+    <RecycleTheBrowser isStep="True" />
+    <OpenLoginScreen isStep="True" />
+    <CheckRememberMe isStep="True" />
+    <Login isStep="True" user="jeremy" password="jasper" />
+    <Logout isStep="True" />
+    <OpenLoginScreen isStep="True" />
+    <CheckUserName isStep="True" UserName="jeremy" />
+    <CheckRememberMe isStep="True" />
+    <Login isStep="True" user="logistics" password="L0gistics!" />
+    <Logout isStep="True" />
+    <CheckUserName isStep="True" UserName="logistics" />
+  </LoginScreen>
+</Test>

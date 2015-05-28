@@ -8,7 +8,6 @@ using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Urls;
 using OpenQA.Selenium;
 using StoryTeller;
-using StoryTeller.Engine;
 using StoryTeller.Grammars;
 
 namespace Serenity.Fixtures

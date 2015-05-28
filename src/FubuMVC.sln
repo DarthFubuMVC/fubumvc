@@ -76,6 +76,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.PersistedMembership
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Authentication.Serenity", "FubuMVC.Authentication.Serenity\FubuMVC.Authentication.Serenity.csproj", "{2CC7DB30-C1BF-4EA5-8D2E-793915D378D6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Specifications", "Specifications\Specifications.csproj", "{5AE1DB5E-924E-45FA-A6A6-417119B95001}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -539,6 +541,21 @@ Global
 		{2CC7DB30-C1BF-4EA5-8D2E-793915D378D6}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{2CC7DB30-C1BF-4EA5-8D2E-793915D378D6}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
 		{2CC7DB30-C1BF-4EA5-8D2E-793915D378D6}.Retail|x86.ActiveCfg = Release|Any CPU
+		{5AE1DB5E-924E-45FA-A6A6-417119B95001}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AE1DB5E-924E-45FA-A6A6-417119B95001}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AE1DB5E-924E-45FA-A6A6-417119B95001}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{5AE1DB5E-924E-45FA-A6A6-417119B95001}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{5AE1DB5E-924E-45FA-A6A6-417119B95001}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5AE1DB5E-924E-45FA-A6A6-417119B95001}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AE1DB5E-924E-45FA-A6A6-417119B95001}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AE1DB5E-924E-45FA-A6A6-417119B95001}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{5AE1DB5E-924E-45FA-A6A6-417119B95001}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{5AE1DB5E-924E-45FA-A6A6-417119B95001}.Release|x86.ActiveCfg = Release|Any CPU
+		{5AE1DB5E-924E-45FA-A6A6-417119B95001}.Retail|Any CPU.ActiveCfg = Release|Any CPU
+		{5AE1DB5E-924E-45FA-A6A6-417119B95001}.Retail|Any CPU.Build.0 = Release|Any CPU
+		{5AE1DB5E-924E-45FA-A6A6-417119B95001}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{5AE1DB5E-924E-45FA-A6A6-417119B95001}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
+		{5AE1DB5E-924E-45FA-A6A6-417119B95001}.Retail|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

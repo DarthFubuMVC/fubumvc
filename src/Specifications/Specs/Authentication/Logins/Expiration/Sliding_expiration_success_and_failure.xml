@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<Test name="Sliding expiration success and failure" lifecycle="Regression">
+  <Model>
+    <UsersAre isStep="True">
+      <table>
+        <row isStep="True" UserName="jeremy" Password="jasper" />
+      </table>
+    </UsersAre>
+    <SetAuthenticationSettings isStep="True" ExpireInMinutes="60" SlidingExpiration="True" MaximumNumberOfFailedAttempts="3" CooloffPeriodInMinutes="60" />
+  </Model>
+  <LoginScreen>
+    <OpenLoginScreen isStep="True" />
+    <Login isStep="True" user="jeremy" password="jasper" />
+    <IsNotOnTheLoginScreen isStep="True" />
+    <Comment><![CDATA[Well within the expiration time, go to the login screen again]]></Comment>
+    <AfterMinutes isStep="True" number="30" />
+    <TryToGoHome isStep="True" />
+    <ShouldBeOnTheHomePage isStep="True" />
+    <AfterMinutes isStep="True" number="59" />
+    <TryToGoHome isStep="True" />
+    <ShouldBeOnTheHomePage isStep="True" />
+    <Comment><![CDATA[Now, be idle for longer than the expiration time and try to refresh the home page.  You should be redirected to the login screen]]></Comment>
+    <AfterMinutes isStep="True" number="61" />
+    <TryToGoHome isStep="True" />
+    <IsOnTheLoginScreen isStep="True" />
+  </LoginScreen>
+</Test>

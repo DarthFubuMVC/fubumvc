@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<Test name="Logging out redirects to the login page" lifecycle="Regression">
+  <LoginScreen>
+    <Comment><![CDATA[First, we're going to logout to make sure we're clean.  Loggin out should direct us to the login screen]]></Comment>
+    <Logout isStep="True" />
+    <IsOnTheLoginScreen isStep="True" />
+  </LoginScreen>
+</Test>

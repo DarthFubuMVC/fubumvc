@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<Test name="Cannot access the home page after logging out" lifecycle="Regression">
+  <LoginScreen>
+    <Comment><![CDATA[You should not be able to access anything but the login screen after logging out]]></Comment>
+    <Logout isStep="True" />
+    <TryToGoHome isStep="True" />
+    <IsOnTheLoginScreen isStep="True" />
+  </LoginScreen>
+</Test>

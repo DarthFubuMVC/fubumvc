@@ -52,6 +52,9 @@
     <Reference Include="FubuLocalization">
       <HintPath>..\packages\FubuLocalization\lib\FubuLocalization.dll</HintPath>
     </Reference>
+    <Reference Include="FubuMVC.Core">
+      <HintPath>..\packages\FubuMVC.Core\lib\net40\FubuMVC.Core.dll</HintPath>
+    </Reference>
     <Reference Include="GeoAPI">
       <HintPath>..\packages\RavenDB.Database\lib\net45\GeoAPI.dll</HintPath>
     </Reference>

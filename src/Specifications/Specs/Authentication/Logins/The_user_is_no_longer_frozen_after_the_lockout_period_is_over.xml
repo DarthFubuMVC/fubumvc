@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<Test name="The user is no longer frozen after the lockout period is over" lifecycle="Acceptance">
+  <Model>
+    <SetAuthenticationSettings isStep="True" ExpireInMinutes="180" SlidingExpiration="True" MaximumNumberOfFailedAttempts="2" CooloffPeriodInMinutes="60" />
+    <UsersAre isStep="True">
+      <table>
+        <row isStep="True" UserName="bob" Password="pace" />
+      </table>
+    </UsersAre>
+  </Model>
+  <LoginScreen>
+    <OpenLoginScreen isStep="True" />
+    <Login isStep="True" user="bob" password="wrong" />
+    <Login isStep="True" user="bob" password="wrong" />
+    <TheLockedOutMessageShouldBeDisplayed />
+    <Comment><![CDATA[If the user is no longer locked out, we should no longer see the locked out message when we first open the screen]]></Comment>
+    <ReopenTheLoginScreen isStep="True" number="70" />
+    <NoMessageIsShown isStep="True" />
+    <Login isStep="True" user="bob" password="pace" />
+    <IsNotOnTheLoginScreen isStep="True" />
+  </LoginScreen>
+</Test>
