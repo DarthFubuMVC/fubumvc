@@ -64,16 +64,6 @@ namespace Serenity.Testing
         }
 
         [Test]
-        public void use_default_physical_path_if_none_given()
-        {
-            using (var system = new FubuMvcSystem<KayakApplication>())
-            {
-                // assembly name
-                system.Settings.PhysicalPath.ShouldEndWith("KayakTestApplication");
-            }
-        }
-
-        [Test]
         public void parallel_path()
         {
             using (var system = new FubuMvcSystem<KayakApplication>(parallelDirectory: "foo"))

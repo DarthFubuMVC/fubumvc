@@ -46,15 +46,6 @@
     <Reference Include="FubuLocalization">
       <HintPath>..\packages\FubuLocalization\lib\FubuLocalization.dll</HintPath>
     </Reference>
-    <Reference Include="FubuMVC.Core">
-      <HintPath>..\packages\FubuMVC.Core\lib\net40\FubuMVC.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="FubuMVC.Katana">
-      <HintPath>..\packages\FubuMVC.Katana\lib\net40\FubuMVC.Katana.dll</HintPath>
-    </Reference>
-    <Reference Include="FubuMVC.StructureMap">
-      <HintPath>..\packages\FubuMVC.StructureMap\lib\net40\FubuMVC.StructureMap.dll</HintPath>
-    </Reference>
     <Reference Include="FubuTestingSupport">
       <HintPath>..\packages\FubuTestingSupport\lib\FubuTestingSupport.dll</HintPath>
     </Reference>
@@ -140,6 +131,7 @@
     <Compile Include="Fixtures\BrowserIsAtTester.cs" />
     <Compile Include="Fixtures\Handlers\ElementHandlerWrapperTester.cs" />
     <Compile Include="Fixtures\Handlers\TextboxElementHandlerTester.cs" />
+    <Compile Include="KayakApplication.cs" />
     <Compile Include="NavigationDriverTester.cs" />
     <Compile Include="WebDriver\Benchmarks\WebDriverBenchmarkFiveElementTests.cs" />
     <Compile Include="WebDriver\Benchmarks\WebDriverBenchmarkGetAttributeTests.cs" />
@@ -178,13 +170,13 @@
       <Project>{48bc51c2-b759-48db-aae1-f4686cd6d02a}</Project>
       <Name>FubuMVC.Katana</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Spark\FubuMVC.Spark.csproj">
+      <Project>{9d6bf559-6461-4eac-bb16-f976ff43e8da}</Project>
+      <Name>FubuMVC.Spark</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
       <Project>{abfea520-820c-4b77-9015-6a09e24252fa}</Project>
       <Name>FubuMVC.StructureMap</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\KayakTestApplication\KayakTestApplication.csproj">
-      <Project>{68CC89AB-EE8B-4B2D-9BA0-8B0FBF460446}</Project>
-      <Name>KayakTestApplication</Name>
     </ProjectReference>
     <ProjectReference Include="..\RemoteService\RemoteService.csproj">
       <Project>{F8186EC7-237A-4C24-AA48-1CFCDD099A8D}</Project>
@@ -196,6 +188,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="get_say_Name.spark" />
     <None Include="Serenity.Testing.dll.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
