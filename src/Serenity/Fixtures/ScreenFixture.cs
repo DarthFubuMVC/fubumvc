@@ -32,6 +32,21 @@ namespace Serenity.Fixtures
             get { return _application.Driver; }
         }
 
+        protected IBrowserLifecycle Browser
+        {
+            get { return _application.Browser; }
+        }
+
+        protected string RootUrl
+        {
+            get { return _application.RootUrl; }
+        }
+
+        protected IUrlRegistry Urls
+        {
+            get { return _application.Urls; }
+        }
+
         public override sealed void SetUp()
         {
             _application = Context.Service<IApplicationUnderTest>();
