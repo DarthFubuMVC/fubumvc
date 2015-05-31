@@ -15,6 +15,11 @@ namespace FubuMVC.Core.Http.Cookies
 
         public static CookieState Parse(string name, string text)
         {
+            if (text.IsEmpty())
+            {
+                return new CookieState(name, "NONE");
+            }
+
             var values = HttpUtility.ParseQueryString(text);
             if (values.Count == 1 && values.AllKeys.Single().IsEmpty())
             {

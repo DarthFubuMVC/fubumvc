@@ -24,9 +24,8 @@ namespace Serenity.Testing.Fixtures
         {
             var lifecycle = BrowserForTesting.Use<TBrowser>();
 
-            var services = new InMemoryServiceLocator();
-
-            Context = new SpecContext(null, new Timings(), new NulloResultObserver(), new StopConditions(), services);
+            var simpleExecutionContext = new SimpleExecutionContext();
+            Context = new SpecContext(null, new Timings(), new NulloResultObserver(), new StopConditions(), simpleExecutionContext);
             
 
             var applicationUnderTest = new StubbedApplicationUnderTest
@@ -36,7 +35,7 @@ namespace Serenity.Testing.Fixtures
 
             applicationUnderTest.Driver.Manage().Timeouts().SetScriptTimeout(TimeSpan.FromMilliseconds(1000));
 
-            services.Add<IApplicationUnderTest>(applicationUnderTest);
+            simpleExecutionContext.Register<IApplicationUnderTest>(applicationUnderTest);
 
             SetUp();
         }

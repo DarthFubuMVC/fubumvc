@@ -26,7 +26,7 @@ namespace FubuMVC.Tests
         public void add_role()
         {
             var settings = new DiagnosticsSettings();
-            settings.RestrictToRule("admin");
+            settings.RestrictToRole("admin");
 
             settings.AuthorizationRights.Single().ShouldBeOfType<AllowRole>()
                 .Role.ShouldEqual("admin");

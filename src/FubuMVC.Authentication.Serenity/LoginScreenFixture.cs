@@ -69,7 +69,7 @@ namespace FubuMVC.Authentication.Serenity
         }
 
         [FormatAs("The displayed user name should be {UserName}")]
-        public string CheckUserName(string UserName)
+        public string CheckUserName()
         {
             return Driver.FindElement(By.Name("UserName")).Text;
         }
@@ -102,8 +102,12 @@ namespace FubuMVC.Authentication.Serenity
         {
             string url = Urls.UrlFor(new LoginRequest(), "GET");
             string actualUrl = Driver.Url.Split('?').First();
+            if (new Uri(actualUrl).IsAbsoluteUri)
+            {
+                actualUrl = new Uri(actualUrl).LocalPath;
+            }
 
-            return actualUrl.Equals(url);
+            return actualUrl.EqualsIgnoreCase(url);
         }
 
         [FormatAs("Should have moved off the login screen")]

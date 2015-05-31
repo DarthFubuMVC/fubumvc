@@ -1,5 +1,7 @@
 ﻿using FubuCore.Binding;
+using FubuMVC.Authentication;
 using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.PersistedMembership;
 using FubuMVC.StructureMap;
 using Serenity;
@@ -11,7 +13,7 @@ namespace Specifications
     {
         public FubuApplication BuildApplication()
         {
-            return FubuApplication.For<StorytellerFubuRegistry>().StructureMap(new Container());
+            return FubuApplication.For<StorytellerFubuRegistry>().StructureMap();
         }
     }
 
@@ -20,7 +22,14 @@ namespace Specifications
         public StorytellerFubuRegistry()
         {
             Import<PersistedMembership<User>>();
+
+            AlterSettings<AuthenticationSettings>(x =>
+            {
+                x.ExcludeChains.ChainMatches(c => c is DiagnosticChain);
+            });
         }
     }
+
+    public class SpecificationSystem : FubuMvcSystem<AuthenticationStorytellerApplication> { }
 
 }

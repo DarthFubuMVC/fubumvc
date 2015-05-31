@@ -46,10 +46,8 @@ namespace Specifications.Fixtures
         private IGrammar setter(Expression<Func<AuthenticationSettings, object>> property)
         {
             var accessor = property.ToAccessor();
-            var grammar = new SetPropertyGrammar(accessor)
-            {
-                DefaultValue = accessor.GetValue(new AuthenticationSettings()).ToString()
-            };
+            var grammar = new SetPropertyGrammar(accessor.InnerProperty);
+            grammar.CellModifications.DefaultValue(accessor.GetValue(new AuthenticationSettings()).ToString());
 
             return grammar;
         }

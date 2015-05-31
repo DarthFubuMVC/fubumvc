@@ -1,4 +1,5 @@
-﻿using FubuCore;
+﻿using System.Linq;
+using FubuCore;
 using FubuMVC.Authentication.Serenity;
 using StoryTeller;
 
@@ -6,6 +7,11 @@ namespace Specifications.Fixtures
 {
     public class OtherScreenFixture : LoginScreenFixture
     {
+        public OtherScreenFixture()
+        {
+            Title = "Login Screen with a Different Page";
+        }
+
         [FormatAs("Go to a different page for {name}")]
         public void GoToDifferentPage(string name)
         {
@@ -13,10 +19,10 @@ namespace Specifications.Fixtures
         }
 
         [FormatAs("Should be on the different page for {name}")]
-        public bool ShouldBeOnTheDifferentPage(string name)
+        public string ShouldBeOnTheDifferentPage()
         {
-            var url = Urls.UrlFor(new DifferentInput {Name = name});
-            return Browser.Driver.Url.EqualsIgnoreCase(url);
+            var currentUrl = Browser.Driver.Url;
+            return currentUrl.Split('/').Last();
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Serenity.Testing
             {
                 using (var context = system.CreateContext())
                 {
-                    context.Services.GetInstance<IRemoteSubsystems>()
+                    context.GetService<IRemoteSubsystems>()
                         .ShouldBeTheSameAs(system);
                 }
             }
@@ -49,7 +49,7 @@ namespace Serenity.Testing
             {
                 system.ModifyContainer(x => x.For<IColor>().Use<Green>());
 
-                system.CreateContext().Services.GetInstance<IColor>()
+                system.CreateContext().GetService<IColor>()
                     .ShouldBeOfType<Green>();
             }
         }
@@ -80,16 +80,16 @@ namespace Serenity.Testing
             {
                 using (var context = system.CreateContext())
                 {
-                    context.Services.GetInstance<IApplicationUnderTest>().ShouldNotBeNull();
+                    context.GetService<IApplicationUnderTest>().ShouldNotBeNull();
                     system.Recycle();
-                    context.Services.GetInstance<IApplicationUnderTest>().ShouldNotBeNull();
+                    context.GetService<IApplicationUnderTest>().ShouldNotBeNull();
                 }
 
                 using (var context = system.CreateContext())
                 {
-                    context.Services.GetInstance<IApplicationUnderTest>().ShouldNotBeNull();
+                    context.GetService<IApplicationUnderTest>().ShouldNotBeNull();
                     system.Recycle();
-                    context.Services.GetInstance<IApplicationUnderTest>().ShouldNotBeNull();
+                    context.GetService<IApplicationUnderTest>().ShouldNotBeNull();
                 }
             }
         }

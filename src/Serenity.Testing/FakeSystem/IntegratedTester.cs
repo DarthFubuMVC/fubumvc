@@ -25,7 +25,7 @@ namespace Serenity.Testing.FakeSystem
         public void register_a_custom_after_navigation()
         {
             var context = new FakeSerenitySystem().CreateContext();
-            context.Services.GetInstance<IApplicationUnderTest>()
+            context.GetService<IApplicationUnderTest>()
                 .Navigation.AfterNavigation.ShouldBeOfType<FakeAfterNavigation>();
         }
 

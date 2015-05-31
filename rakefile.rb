@@ -16,7 +16,7 @@ require 'fuburake'
 	sln.bottles_enabled = false # has to be all special in FubuMVC because of the zip package testing
 
 	sln.integration_test = ['FubuMVC.IntegrationTesting', 'Serenity.Testing', 'FubuMVC.Authentication.IntegrationTesting', 'FubuMVC.PersistedMembership.Testing']
-	sln.ci_steps = [:integration_test, :archive_gem]
+	sln.ci_steps = [:integration_test, :storyteller, :archive_gem]
 	
 	sln.options[:nuget_publish_folder] = 'nupkgs'
 	sln.options[:nuget_publish_url] = 'https://www.myget.org/F/fubumvc-edge/'
@@ -42,6 +42,16 @@ end
 desc "Moves the gem to the archive folder"
 task :archive_gem => [:create_gem] do
 	copyOutputFiles "pkg", "*.gem", "artifacts"
+end
+
+desc "Run the storyteller specifications"
+task :storyteller => [:compile] do
+	sh "src/packages/Storyteller/tools/st.exe run src/Specifications"
+end
+
+desc "Run the storyteller specifications"
+task :open_st => [:compile] do
+	sh "src/packages/Storyteller/tools/st.exe open src/Specifications"
 end
 
 desc "Outputs the command line usage"

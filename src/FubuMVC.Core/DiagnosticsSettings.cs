@@ -24,7 +24,7 @@ namespace FubuMVC.Core
 
         public readonly IList<IAuthorizationPolicy> AuthorizationRights = new List<IAuthorizationPolicy>();
 
-        public void RestrictToRule(string role)
+        public void RestrictToRole(string role)
         {
             AuthorizationRights.Add(new AllowRole(role));
         }

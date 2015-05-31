@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.Diagnostics
     {
         public AuthorizedRegistry()
         {
-            AlterSettings<DiagnosticsSettings>(x => x.RestrictToRule("admin"));
+            AlterSettings<DiagnosticsSettings>(x => x.RestrictToRole("admin"));
         }
     }
 }

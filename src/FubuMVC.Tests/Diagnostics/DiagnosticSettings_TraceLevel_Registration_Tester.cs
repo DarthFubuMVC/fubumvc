@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.Diagnostics
                 r.AlterSettings<DiagnosticsSettings>(x =>
                 {
                     x.TraceLevel = TraceLevel.Verbose;
-                    x.RestrictToRule("admin");
+                    x.RestrictToRole("admin");
                 });
             });
 

@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Principal;
 using FubuCore;
 using FubuMVC.Core.Diagnostics.Runtime;
 using HtmlTags;
@@ -29,6 +27,11 @@ namespace Serenity
             get { return _system.Application.Services; }
         }
 
+        public T GetService<T>()
+        {
+            return _system.Application.Services.GetInstance<T>();
+        }
+
         public virtual void AfterExecution(ISpecContext context)
         {
             var reporter = new RequestReporter(_system);
@@ -38,7 +41,7 @@ namespace Serenity
         }
     }
 
-    public class RequestReporter : IReporter
+    public class RequestReporter : Report
     {
         private readonly FubuMvcSystem _system;
         private readonly List<RequestLog> _logs = new List<RequestLog>();
@@ -66,7 +69,7 @@ namespace Serenity
 
             _logs.Each(log =>
             {
-                var url = _system.Application.RootUrl.TrimEnd('/') +  "/_fubu/#/fubumvc/request-details/" + log.Id;
+                var url = _system.Application.RootUrl.TrimEnd('/') + "/_fubu/#/fubumvc/request-details/" + log.Id;
 
                 table.AddBodyRow(row =>
                 {
@@ -80,14 +83,12 @@ namespace Serenity
             });
 
 
-
             return table.ToString();
         }
 
         public string Title
         {
             get { return "FubuMVC Requests During the Specification Execution"; }
-            
         }
 
         public void Append(RequestLog[] requests)

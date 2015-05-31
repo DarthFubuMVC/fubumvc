@@ -69,3 +69,8 @@ src/fubu.Docs/snippets
 nupkgs
 src/FubuApp/_templates
 renamer.cs
+src/Specifications/Raven
+src/data
+src/Specifications/local.config
+stresults.htm
+src/Specifications/phantomjs.exe.version
