@@ -55,9 +55,6 @@
     <Reference Include="StoryTeller">
       <HintPath>..\packages\Storyteller\lib\net45\StoryTeller.dll</HintPath>
     </Reference>
-    <Reference Include="StoryTeller, Version=3.0.0.156, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>Z:\code\Storyteller\src\StoryTeller\bin\Debug\StoryTeller.dll</HintPath>
-    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap\lib\net40\StructureMap.dll</HintPath>
     </Reference>
