@@ -1,12 +1,18 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using FubuCore;
+using FubuCore.Reflection;
+using FubuLocalization;
 using FubuMVC.Core;
 using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Urls;
 using OpenQA.Selenium;
+using Serenity.Fixtures.Grammars;
 using StoryTeller;
 using StoryTeller.Grammars;
 
@@ -15,6 +21,38 @@ namespace Serenity.Fixtures
     public class ScreenFixture : Fixture
     {
         private IApplicationUnderTest _application;
+        private readonly Stack<ISearchContext> _searchContexts = new Stack<ISearchContext>();
+
+        protected ISearchContext SearchContext
+        {
+            get
+            {
+                if (_searchContexts.Count == 0)
+                {
+                    return Driver;
+                }
+
+                return _searchContexts.Peek();
+            }
+        }
+
+        protected void PushElementContext(ISearchContext context)
+        {
+            _searchContexts.Push(context);
+        }
+
+        protected void PushElementContext(By selector)
+        {
+            var element = SearchContext.FindElement(selector);
+            StoryTellerAssert.Fail(element == null, () => "Unable to find element with " + selector);
+
+            PushElementContext(element);
+        }
+
+        protected void PopElementContext()
+        {
+            if (_searchContexts.Any()) _searchContexts.Pop();
+        }
 
         protected NavigationDriver Navigation
         {
@@ -26,7 +64,7 @@ namespace Serenity.Fixtures
             get { return _application.Endpoints(); }
         }
 
-        protected IWebDriver Driver
+        protected internal IWebDriver Driver
         {
             get { return _application.Driver; }
         }
@@ -49,6 +87,7 @@ namespace Serenity.Fixtures
         public override sealed void SetUp()
         {
             _application = Context.Service<IApplicationUnderTest>();
+            _searchContexts.Clear();
 
             beforeRunning();
         }
@@ -68,7 +107,7 @@ namespace Serenity.Fixtures
             label = label ?? by.ToString().Replace("By.", "");
 
 
-            return Do(label, c => Driver.FindElement(by).Click());
+            return Do(label, c => SearchContext.FindElement(by).Click());
         }
 
         // TODO -- UT this some how
@@ -114,29 +153,29 @@ namespace Serenity.Fixtures
 
         protected void waitForElement(By elementSearch, int millisecondPolling = 500, int timeoutInMilliseconds = 5000)
         {
-            Driver.WaitForElement(elementSearch, TimeSpan.FromMilliseconds(timeoutInMilliseconds),
+            SearchContext.WaitForElement(elementSearch, TimeSpan.FromMilliseconds(timeoutInMilliseconds),
                 TimeSpan.FromMilliseconds(millisecondPolling));
         }
 
         protected string GetData(IWebElement element)
         {
-            return Driver.GetData(element);
+            return SearchContext.GetData(element);
         }
 
         protected string GetData(By finder)
         {
-            var element = Driver.FindElement(finder);
-            return Driver.GetData(element);
+            var element = SearchContext.FindElement(finder);
+            return SearchContext.GetData(element);
         }
 
         protected void SetData(IWebElement element, string data)
         {
-            Driver.SetData(element, data);
+            SearchContext.SetData(element, data);
         }
 
         protected void SetData(By finder, string data)
         {
-            var element = Driver.FindElement(finder);
+            var element = SearchContext.FindElement(finder);
             SetData(element, data);
         }
 
@@ -183,5 +222,85 @@ namespace Serenity.Fixtures
             }
             return browserUri.AbsolutePath.StartsWith(searchUri.AbsolutePath, StringComparison.CurrentCultureIgnoreCase);
         }
+    }
+
+    public class ScreenFixture<T> : ScreenFixture
+    {
+        protected void enterValue(Expression<Func<T, object>> expression, string value)
+        {
+            // TODO -- use the field naming convention?
+            var name = expression.ToAccessor().Name;
+            SetData(By.Name(name), value);
+        }
+
+        protected string readValue(Expression<Func<T, object>> expression)
+        {
+            var name = expression.ToAccessor().Name;
+            return GetData(By.Name(name));
+        }
+
+        private GestureConfig getGesture(Expression<Func<T, object>> expression, string label = null, string key = null)
+        {
+            // TODO -- later on, use the naming convention from fubu instead of pretending
+            // that this rule is always true
+            var config = GestureForProperty(expression);
+            if (key.IsNotEmpty())
+            {
+                config.CellName = key;
+            }
+
+            return config;
+        }
+
+
+        protected IGrammar EnterScreenValue(Expression<Func<T, object>> expression, string label = null,
+                                            string key = null)
+        {
+            var config = getGesture(expression, label, key);
+
+            config.Template = "Enter {" + config.CellName + "} for " + label ?? config.CellName;
+            config.Description = "Enter data for property " + expression.ToAccessor().Name;
+
+            return new EnterValueGrammar(this, config);
+        }
+
+        protected IGrammar CheckScreenValue(Expression<Func<T, object>> expression, string label = null,
+                                            string key = null)
+        {
+            var config = getGesture(expression, label, key);
+
+            config.Template = "The text of " + (label ?? config.CellName) + " should be {" + config.CellName + "}";
+            config.Description = "Check data for property " + expression.ToAccessor().Name;
+
+            return new CheckValueGrammar(this, config);
+        }
+
+
+        protected GestureConfig GestureForProperty(Expression<Func<T, object>> expression)
+        {
+            return GestureConfig.ByProperty(expression);
+        }
+
+        protected void EditableElement(Expression<Func<T, object>> expression, string label = null)
+        {
+            var accessor = expression.ToAccessor();
+            var name = accessor.Name;
+
+            this["Check" + name] = CheckScreenValue(expression, label);
+            this["Enter" + name] = EnterScreenValue(expression, label);
+        }
+
+        protected void EditableElementsForAllImmediateProperties()
+        {
+            typeof(T)
+                .GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(x => x.CanRead && x.CanWrite).Each(prop =>
+                {
+                    var accessor = new SingleProperty(prop);
+                    var expression = accessor.ToExpression<T>();
+
+                    EditableElement(expression);
+                });
+        }
+
     }
 }
