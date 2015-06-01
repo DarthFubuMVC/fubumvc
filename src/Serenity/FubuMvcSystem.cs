@@ -323,6 +323,12 @@ namespace Serenity
         {
             get { return _settings; }
         }
+
+        // TODO -- remove this when both FT and FubuMVC are merged together
+        public virtual void ApplyLogging(ISpecContext context)
+        {
+            // nothing
+        }
     }
 
     public class FubuMvcSystem<T> : FubuMvcSystem where T : IApplicationSource, new()

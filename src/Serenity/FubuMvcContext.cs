@@ -12,7 +12,6 @@ namespace Serenity
     public class FubuMvcContext : IExecutionContext
     {
         private readonly FubuMvcSystem _system;
-        private readonly IList<Report> _reports = new List<Report>(); 
 
         public FubuMvcContext(FubuMvcSystem system)
         {
@@ -33,18 +32,14 @@ namespace Serenity
             return _system.Application.Services.GetInstance<T>();
         }
 
-        public void AddReport(Report report)
-        {
-            _reports.Add(report);   
-        }
-
         public virtual void AfterExecution(ISpecContext context)
         {
             var reporter = new RequestReporter(_system);
             reporter.Append(Services.GetInstance<IRequestHistoryCache>().RecentReports().ToArray());
 
             context.Reporting.Log(reporter);
-            _reports.Each(x => context.Reporting.Log(x));
+
+            _system.ApplyLogging(context);
         }
     }
 
