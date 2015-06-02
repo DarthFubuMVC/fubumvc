@@ -365,8 +365,10 @@ namespace Serenity
         {
             if (physicalPath.IsEmpty())
             {
+                // Storyteller now puts the AppDomain at the project root just like .Net does naturally
+                // for web projects. So only go up one to get to the /src directory
                 var sourceFolder =
-                    AppDomain.CurrentDomain.BaseDirectory.ParentDirectory().ParentDirectory().ParentDirectory();
+                    AppDomain.CurrentDomain.BaseDirectory.ParentDirectory();
                 physicalPath = sourceFolder.AppendPath(parallelDirectory ?? typeof (T).Assembly.GetName().Name);
             }
 
