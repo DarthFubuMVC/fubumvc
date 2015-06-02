@@ -38,7 +38,7 @@ namespace Serenity
 
         private readonly IList<ISubSystem> _subSystems = new List<ISubSystem>();
 
-        private readonly CellHandling CellHandling = new CellHandling(new EquivalenceChecker(), new Conversions());
+        public readonly CellHandling CellHandling = new CellHandling(new EquivalenceChecker(), new Conversions());
 
         public FubuMvcSystem(ApplicationSettings settings, Func<FubuRuntime> runtimeSource)
         {
