@@ -7,6 +7,7 @@ using FubuCore;
 using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Http.Owin;
 using OpenQA.Selenium;
+using StoryTeller;
 
 namespace Serenity
 {
@@ -73,9 +74,18 @@ namespace Serenity
             url = correctUrl(url);
 
             Debug.WriteLine("Navigating to " + url);
-            _application.Driver.Navigate().GoToUrl(url);
+            var driver = _application.Driver;
+            driver.Navigate().GoToUrl(url);
 
-            _afterNavigation.AfterNavigation(_application.Driver, url);
+
+            if (driver.Title == "Exception!")
+            {
+                var element = driver.FindElement(By.Id("error"));
+                StoryTellerAssert.Fail(element == null ? driver.PageSource : element.Text);
+            }
+
+
+            _afterNavigation.AfterNavigation(driver, url);
         }
 
         public void NavigateTo<T>(Expression<Action<T>> expression)

@@ -258,7 +258,7 @@ namespace Serenity.Fixtures
         {
             var config = getGesture(expression, label, key);
 
-            config.Template = "Enter {" + config.CellName + "} for " + label ?? config.CellName;
+            config.Template = "Enter {" + config.CellName + "} for " + config.CellName;
             config.Description = "Enter data for property " + expression.ToAccessor().Name;
 
             return new EnterValueGrammar(this, config);
