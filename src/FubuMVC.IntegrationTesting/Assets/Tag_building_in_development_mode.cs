@@ -29,7 +29,7 @@ namespace FubuMVC.IntegrationTesting.Assets
             Scenario.Get.Action<MissingAssetsEndpoint>(x => x.get_missing_image());
 
             Scenario.StatusCodeShouldBe(HttpStatusCode.InternalServerError);
-            Scenario.ContentShouldContain("Requested image 'missing_image.bmp' cannot be found");
+            Scenario.ContentShouldContain("Requested image 'missing_image.bmp' cannot be found".HtmlEncode());
         }
 
         [Test]
@@ -38,7 +38,7 @@ namespace FubuMVC.IntegrationTesting.Assets
             Scenario.Get.Action<MissingAssetsEndpoint>(x => x.get_missing_script());
 
             Scenario.StatusCodeShouldBe(HttpStatusCode.InternalServerError);
-            Scenario.ContentShouldContain("Requested script(s) 'nonexistent.js', 'random.js' cannot be found");
+            Scenario.ContentShouldContain("Requested script(s) 'nonexistent.js', 'random.js' cannot be found".HtmlEncode());
         }
 
         [Test]
@@ -47,7 +47,7 @@ namespace FubuMVC.IntegrationTesting.Assets
             Scenario.Get.Action<MissingAssetsEndpoint>(x => x.get_missing_stylesheet());
 
             Scenario.StatusCodeShouldBe(HttpStatusCode.InternalServerError);
-            Scenario.ContentShouldContain("Requested stylesheets(s) 'nonexistent.css', 'weird.css' cannot be found");
+            Scenario.ContentShouldContain("Requested stylesheets(s) 'nonexistent.css', 'weird.css' cannot be found".HtmlEncode());
         }
     }
 
