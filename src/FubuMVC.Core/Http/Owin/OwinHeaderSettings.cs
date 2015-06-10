@@ -6,6 +6,11 @@ namespace FubuMVC.Core.Http.Owin
     {
         private readonly IList<string> _singularHeaders = new List<string>();
 
+        public OwinHeaderSettings()
+        {
+            DoNotAllowMultipleValues(HttpRequestHeaders.ContentLength);
+        }
+
         public void DoNotAllowMultipleValues(string key)
         {
             _singularHeaders.Add(key);

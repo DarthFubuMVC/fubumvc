@@ -8,7 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using FubuCore;
-using FubuCore.Util;
 using FubuMVC.Core.Http.Compression;
 using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Core.Http.Headers;
@@ -19,6 +18,7 @@ namespace FubuMVC.Core.Http.Owin
 {
     public class OwinHttpResponse : IHttpResponse, IDisposable
     {
+        private readonly OwinHeaderSettings _headerSettings;
         private readonly IDictionary<string, object> _environment;
         private MemoryStream _output;
 
@@ -36,6 +36,10 @@ namespace FubuMVC.Core.Http.Owin
             {
                 StatusCode = 200;
             }
+
+            _headerSettings = environment.ContainsKey(OwinConstants.HeaderSettings)
+                ? environment.Get<OwinHeaderSettings>(OwinConstants.HeaderSettings)
+                : new OwinHeaderSettings();
         }
 
         public void AppendHeader(string key, string value)
@@ -46,6 +50,13 @@ namespace FubuMVC.Core.Http.Owin
             }
 
             var headers = _environment.Get<IDictionary<string, string[]>>(OwinConstants.ResponseHeadersKey);
+            if (!_headerSettings.AllowMultiple(key))
+            {
+                headers.Remove(key);
+                headers.Add(key, new[] { value });
+                return;
+            }
+
             headers.AppendValue(key, value);
         }
 

@@ -41,11 +41,12 @@
         public const string KeepAliveHeader = "Keep-Alive";
         public const string ConnectionHeader = "Connection";
         public const string HostHeader = "Host";
-        
+
         //Fubu specific keys until owin has equivalents
         public const string MediaTypeKey = "fubu.MediaType";
         public const string RequestFormKey = "fubu.RequestForm";
 
         public const string AppMode = "host.AppMode";
+        public const string HeaderSettings = "fubu.headerSettings";
     }
 }

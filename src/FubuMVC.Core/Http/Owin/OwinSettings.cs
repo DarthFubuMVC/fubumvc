@@ -21,6 +21,8 @@ namespace FubuMVC.Core.Http.Owin
         {
             AddMiddleware<StaticFileMiddleware>();
             HtmlHeadInjectionMiddleware.ApplyInjection(this);
+
+            EnvironmentData.Fill(OwinConstants.HeaderSettings, Headers);
         }
 
         public void Describe(Description description)
@@ -46,6 +48,10 @@ namespace FubuMVC.Core.Http.Owin
         /// </summary>
         public readonly IDictionary<string, object> Properties = new Dictionary<string, object>();
 
+        /// <summary>
+        /// Provides granular control over the headers that are written by the host
+        /// </summary>
+        public readonly OwinHeaderSettings Headers = new OwinHeaderSettings();
 
         /// <summary>
         /// A list of keys and their associated values that will be injected by the host into each OWIN request environment.

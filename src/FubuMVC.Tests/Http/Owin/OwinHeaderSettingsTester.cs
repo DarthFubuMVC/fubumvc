@@ -28,5 +28,11 @@ namespace FubuMVC.Tests.Http.Owin
             theSettings.DoNotAllowMultipleValues(HttpRequestHeaders.ContentType);
             theSettings.AllowMultiple(HttpRequestHeaders.ContentType).ShouldBeFalse();
         }
+
+        [Test] // Keeps NOWIN happy
+        public void allow_multiple_defaults_to_false_for_content_length()
+        {
+            theSettings.AllowMultiple(HttpRequestHeaders.ContentLength).ShouldBeFalse();
+        }
     }
 }
