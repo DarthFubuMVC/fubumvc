@@ -10,8 +10,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Fubu</RootNamespace>
     <AssemblyName>Fubu</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile></TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -54,13 +55,13 @@
     <Reference Include="Microsoft.Build.Engine" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin">
-      <HintPath>..\packages\Microsoft.Owin\lib\net40\Microsoft.Owin.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Owin\lib\net45\Microsoft.Owin.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin.Host.HttpListener">
-      <HintPath>..\packages\Microsoft.Owin.Host.HttpListener\lib\net40\Microsoft.Owin.Host.HttpListener.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Owin.Host.HttpListener\lib\net45\Microsoft.Owin.Host.HttpListener.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin.Hosting">
-      <HintPath>..\packages\Microsoft.Owin.Hosting\lib\net40\Microsoft.Owin.Hosting.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Owin.Hosting\lib\net45\Microsoft.Owin.Hosting.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json\lib\net40\Newtonsoft.Json.dll</HintPath>
@@ -90,12 +91,6 @@
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
       <HintPath>..\packages\Microsoft.Net.Http\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime">
-      <HintPath>..\packages\Microsoft.Bcl\lib\net40\System.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading.Tasks">
-      <HintPath>..\packages\Microsoft.Bcl\lib\net40\System.Threading.Tasks.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
