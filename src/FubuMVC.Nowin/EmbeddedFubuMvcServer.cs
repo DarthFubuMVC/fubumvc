@@ -1,33 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net;
-using System.Reflection;
-using System.Runtime.Serialization;
-using System.Web.Routing;
 using FubuCore;
-using FubuCore.CommandLine;
 using FubuMVC.Core;
-using FubuMVC.Core.Assets;
 using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Http.Owin;
-using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Urls;
-using Microsoft.Owin.Hosting;
-using Microsoft.Owin.Hosting.Builder;
-using Microsoft.Owin.Hosting.Engine;
-using Microsoft.Owin.Hosting.Loader;
-using Microsoft.Owin.Hosting.ServerFactory;
-using Microsoft.Owin.Hosting.Services;
-using Microsoft.Owin.Hosting.Tracing;
-using Microsoft.Owin.Logging;
+using Microsoft.Owin.Builder;
+using Nowin;
 using Owin;
 
-namespace FubuMVC.Katana
+namespace FubuMVC.Nowin
 {
     /// <summary>
     /// Embeds and runs a FubuMVC application in a normal process using the Web API self host libraries
@@ -83,7 +68,7 @@ namespace FubuMVC.Katana
             // before anything else, make sure there is no server on the settings
             // We're doing this hokey-pokey to ensure that things don't get double
             // disposed
-            var settings = runtime.Factory.Get<KatanaSettings>();
+            var settings = runtime.Factory.Get<NowinSettings>();
             var peer = settings.EmbeddedServer;
 
             if (peer == null)
@@ -110,7 +95,7 @@ namespace FubuMVC.Katana
             buildEndpointDriver(port);
         }
 
-        private void takeOverFromExistingServer(EmbeddedFubuMvcServer peer, KatanaSettings settings)
+        private void takeOverFromExistingServer(EmbeddedFubuMvcServer peer, NowinSettings settings)
         {
             _urls = peer.Urls;
             _services = peer.Services;
@@ -128,45 +113,21 @@ namespace FubuMVC.Katana
             _endpoints = new EndpointDriver(_urls, _baseAddress);
         }
 
-
-
         private void startServer(OwinSettings settings, string physicalPath, int port)
         {
-            var parameters = new StartOptions {Port = port};
-            parameters.Urls.Add("http://*:" + port); //for netsh http add urlacl
-
-
             if (physicalPath != null) FubuMvcPackageFacility.PhysicalRootPath = physicalPath;
 
-            var context = new StartContext(parameters)
-            {
-               App = FubuOwinHost.ToAppFunc(_runtime, settings),
-            };
-
-            settings.EnvironmentData.ToDictionary().Each(pair => context.EnvironmentData.Add(pair));
-
+            var owinBuilder = new AppBuilder();
+            OwinServerFactory.Initialize(owinBuilder.Properties);
 
             settings.EnvironmentData[OwinConstants.AppMode] = FubuMode.Mode().ToLower();
-            context.EnvironmentData.AddRange(settings.EnvironmentData.ToDictionary());
+            settings.EnvironmentData.ToDictionary().Each(pair => owinBuilder.Properties.Add(pair));
 
-            var engine = new HostingEngine(new AppBuilderFactory(), new TraceOutputFactory(),
-                new AppLoader(new IAppLoaderFactory[0]),
-                new ServerFactoryLoader(new ServerFactoryActivator(new ServiceProvider())),
-                new DiagnosticsLoggerFactory());
+            var host = new FubuOwinHost(_runtime.Routes);
+            owinBuilder.Run((context) => host.Invoke(context.Environment));
 
-            try
-            {
-                _server = engine.Start(context);
-            }
-            catch (TargetInvocationException e)
-            {
-                if (e.InnerException != null && e.InnerException.Message.Contains("Access is denied"))
-                {
-                    throw new KatanaRightsException(e.InnerException);
-                }
-
-                throw;
-            }
+            var builder = ServerBuilder.New().SetPort(port).SetOwinApp(owinBuilder.Build());
+            _server = builder.Start();
         }
 
         public FubuRuntime Runtime
@@ -203,32 +164,6 @@ namespace FubuMVC.Katana
         public string BaseAddress
         {
             get { return _baseAddress; }
-        }
-    }
-
-    [Serializable]
-    public class KatanaRightsException : Exception
-    {
-
-
-        public KatanaRightsException(Exception innerException) : base(string.Empty, innerException)
-        {
-        }
-
-        protected KatanaRightsException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
-
-        public override string Message
-        {
-            get
-            {
-                return @"
-To use Katana hosting, you need to either run with administrative rights
-or optionally, use 'netsh http add urlacl url=http://+:80/MyUri user=DOMAIN\\user' at the command line.
-See http://msdn.microsoft.com/en-us/library/ms733768.aspx for more information.
-".Trim();
-            }
         }
     }
 }

@@ -118,7 +118,7 @@ namespace FubuMVC.IntegrationTesting
             get
             {
                 if (_server == null) Recycle();
-                
+
                 return _server;
             }
         }
@@ -128,7 +128,7 @@ namespace FubuMVC.IntegrationTesting
             get
             {
                 if (_server == null) Recycle();
-                
+
                 return _host;
             }
         }

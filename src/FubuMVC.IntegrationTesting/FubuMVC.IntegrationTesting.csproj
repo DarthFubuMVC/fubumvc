@@ -61,6 +61,9 @@
     <Reference Include="Microsoft.Owin.Hosting">
       <HintPath>..\packages\Microsoft.Owin.Hosting\lib\net45\Microsoft.Owin.Hosting.dll</HintPath>
     </Reference>
+    <Reference Include="Nowin">
+      <HintPath>..\packages\Nowin\lib\net45\Nowin.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -118,6 +121,7 @@
     <Compile Include="Async\AsyncRouteIntegrationTester.cs" />
     <Compile Include="Authorization\end_to_end_authorization_tester.cs" />
     <Compile Include="Auto_Katana_Hosting_Integration_Tester.cs" />
+    <Compile Include="Auto_Nowin_Hosting_Integration_Tester.cs" />
     <Compile Include="Caching\caching_tester.cs" />
     <Compile Include="can_register_and_use_OWIN_middleware_from_a_bottle.cs" />
     <Compile Include="Chrome\ChromeBehaviorIntegrationTester.cs" />
@@ -249,6 +253,10 @@
     <ProjectReference Include="..\FubuMVC.Katana\FubuMVC.Katana.csproj">
       <Project>{48BC51C2-B759-48DB-AAE1-F4686CD6D02A}</Project>
       <Name>FubuMVC.Katana</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Nowin\FubuMVC.Nowin.csproj">
+      <Project>{b2d23037-7b43-4c8e-8f0c-bbf1d5f7fa82}</Project>
+      <Name>FubuMVC.Nowin</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Razor\FubuMVC.Razor.csproj">
       <Project>{a88246a6-2a7a-4964-902e-a5a7fdaaa9d4}</Project>
@@ -386,7 +394,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent></PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
