@@ -217,6 +217,7 @@
     <Compile Include="Http\Owin\Middleware\StaticFiles\WriteStatusCodeContinuation.cs" />
     <Compile Include="Http\Owin\OwinConstants.cs" />
     <Compile Include="Http\Owin\OwinContext.cs" />
+    <Compile Include="Http\Owin\OwinHeaderSettings.cs" />
     <Compile Include="Http\Owin\OwinHttpRequest.cs" />
     <Compile Include="Http\Owin\OwinHttpContext.cs" />
     <Compile Include="Http\Owin\AspNetHttpRequestAdapter.cs" />

@@ -67,8 +67,8 @@ namespace FubuMVC.Core.Http.Owin
                 }
             }
 
-            
-            
+
+
         }
 
         public void WriteContentType(string contentType)
