@@ -5,3 +5,5 @@ FubuMVC.Spark.Tests
 fubu.Testing
 FubuPersistence.Tests
 FubuMVC.Authentication.Tests
+FubuMVC.AntiForgery.Testing
+FubuMVC.Localization.Testing
