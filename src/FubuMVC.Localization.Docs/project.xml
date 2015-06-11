@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<ProjectRoot xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TagLine>Quickly bootstrap FubuLocalization inside a FubuMVC application</TagLine>
+  <Name>FubuMVC.Localization</Name>
+  <GitHubPage>http://github.com/DarthFubuMVC/FubuMVC.Localization</GitHubPage>
+  <UserGroupUrl>https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel</UserGroupUrl>
+  <BuildServerUrl>http://build.fubu-project.org/project.html?projectId=project34&amp;tab=projectOverview</BuildServerUrl>
+  <BottleName>FubuMVC.Localization.Docs</BottleName>
+  <Nugets>
+    <PublishedNuget>
+      <Name>FubuMVC.Localization</Name>
+      <Description>Quickly bootstrap FubuLocalization inside a FubuMVC application</Description>
+    </PublishedNuget>
+  </Nugets>
+  <Url>fubumvc.localization</Url>
+</ProjectRoot>
