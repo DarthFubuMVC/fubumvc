@@ -17,8 +17,7 @@ namespace FubuMVC.Spark
             defaultSearch();
 
             _precompileViews = () => !FubuMode.InDevelopment();
-
-           
+            RetryViewLoadingCount = 5;
         }
 
         public void Describe(Description description)
@@ -55,6 +54,7 @@ namespace FubuMVC.Spark
         }
 
         public FileSet Search { get; private set; }
+        public int RetryViewLoadingCount { get; set; }
 
         /// <summary>
         /// By default, FubuMVC.Spark will precompile views if FubuMode.InDevelopment() is false.

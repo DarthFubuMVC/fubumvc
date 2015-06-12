@@ -10,8 +10,8 @@ namespace FubuMVC.Spark.Tests.SparkModel
     [TestFixture]
     public class ChunkLoaderTester : InteractionContext<ChunkLoader>
     {
-        private readonly ISparkTemplate _template1 = new SparkTemplate("r/t1/path1", "r/t1", "t1");
-        private readonly ISparkTemplate _template2 = new SparkTemplate("r/t2/path2", "r/t2", "t2");
+        private readonly ISparkTemplate _template1 = new SparkTemplate("r/t1/path1", "r/t1", "t1", new SparkEngineSettings());
+        private readonly ISparkTemplate _template2 = new SparkTemplate("r/t2/path2", "r/t2", "t2", new SparkEngineSettings());
 
         private string _lastRequestedRoot;
         private int _rootRequestCount;
@@ -56,9 +56,9 @@ namespace FubuMVC.Spark.Tests.SparkModel
     [TestFixture]
     public class ChunkLoaderExtensionsTester : InteractionContext<ChunkLoader>
     {
-        private readonly ISparkTemplate _spark1 = new SparkTemplate("root/spark1", "root", "origin");
-        private readonly ISparkTemplate _spark2 = new SparkTemplate("root/spark2", "root", "origin");
-        private readonly ISparkTemplate _spark3 = new SparkTemplate("root/spark3", "root", "origin");
+        private readonly ISparkTemplate _spark1 = new SparkTemplate("root/spark1", "root", "origin", new SparkEngineSettings());
+        private readonly ISparkTemplate _spark2 = new SparkTemplate("root/spark2", "root", "origin", new SparkEngineSettings());
+        private readonly ISparkTemplate _spark3 = new SparkTemplate("root/spark3", "root", "origin", new SparkEngineSettings());
 
         protected override void beforeEach()
         {
@@ -70,7 +70,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
             });
         }
 
-        [Test] 
+        [Test]
         public void when_spark_has_master_it_is_extracted()
         {
             ClassUnderTest.Load(_spark1).Master().ShouldEqual("Fubu");
