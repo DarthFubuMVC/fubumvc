@@ -1,3 +1,4 @@
+using System;
 using FubuCore;
 using OpenQA.Selenium;
 
@@ -18,7 +19,15 @@ namespace Serenity.Fixtures.Handlers
         {
             if (element.GetAttribute("value").IsNotEmpty())
             {
-                element.Click();
+
+                try
+                {
+                    element.Click();
+                }
+                catch (Exception)
+                {
+                    // nothing
+                }
                 element.SendKeys(Keys.Home + Keys.Shift + Keys.End + Keys.Backspace);
             }
         }
