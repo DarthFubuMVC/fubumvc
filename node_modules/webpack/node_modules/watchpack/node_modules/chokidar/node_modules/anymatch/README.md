@@ -1,4 +1,4 @@
-anymatch [![Build Status](https://travis-ci.org/es128/anymatch.svg)](https://travis-ci.org/es128/anymatch) [![Coverage Status](https://img.shields.io/coveralls/es128/anymatch.svg)](https://coveralls.io/r/es128/anymatch?branch=master)
+anymatch [![Build Status](https://travis-ci.org/es128/anymatch.svg?branch=master)](https://travis-ci.org/es128/anymatch) [![Coverage Status](https://img.shields.io/coveralls/es128/anymatch.svg?branch=master)](https://coveralls.io/r/es128/anymatch?branch=master)
 ======
 Javascript module to match a string against a regular expression, glob, string,
 or function that takes the string as an argument and returns a truthy or falsy

@@ -95,7 +95,7 @@ module.exports = function parseGlob(glob) {
   tok.is.braces   = has(is, glob, '{');
   tok.is.brackets = has(is, glob, '[:');
   tok.is.globstar = has(is, glob, '**');
-  tok.is.dotfile  = dotfile(tok.path.basename);
+  tok.is.dotfile  = dotfile(tok.path.basename) || dotfile(tok.path.filename);
   tok.is.dotdir   = dotdir(tok.path.dirname);
   return (cache[glob] = tok);
 }

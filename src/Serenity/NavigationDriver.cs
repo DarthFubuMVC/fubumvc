@@ -5,7 +5,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using FubuCore;
 using FubuMVC.Core.Endpoints;
-using FubuMVC.Core.Http.Owin;
 using OpenQA.Selenium;
 using StoryTeller;
 

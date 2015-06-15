@@ -25,6 +25,7 @@ console.log(binaryExtensions);
 ## Related
 
 - [`is-binary-path`](https://github.com/sindresorhus/is-binary-path) - Check if a filepath is a binary file
+- [`text-extensions`](https://github.com/sindresorhus/text-extensions) - List of text file extensions
 
 
 ## License
