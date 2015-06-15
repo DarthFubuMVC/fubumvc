@@ -209,7 +209,7 @@ namespace Serenity.Fixtures
 
         protected IGrammar BrowserIsAt(Func<IUrlRegistry, string> toUrl, string title)
         {
-            return new FactGrammar(title, c => Driver.Url.IsUrlMatch(toUrl(_application.Urls)));
+            return new FactGrammar(title, c => Driver.Url.Matches(toUrl(_application.Urls)));
         }
     }
 

@@ -24,12 +24,22 @@ namespace Serenity.Testing.Fixtures
         }
 
         [Test]
+        public void is_exact_url_match()
+        {
+
+            "http://localhost:5500/?a=b".MatchesWithQuerystring("/?a=b").ShouldBeTrue();
+            "http://localhost:5500/?a=b".MatchesWithQuerystring("/?a=c").ShouldBeFalse();
+
+
+        }
+
+        [Test]
         public void is_url_match()
         {
-            "http://localhost:5500".IsUrlMatch("/").ShouldBeTrue();
-            "http://localhost:5500/".IsUrlMatch("/").ShouldBeTrue();
-            "http://localhost:5500/?a=b".IsUrlMatch("/?a=b").ShouldBeTrue();
-            "http://localhost:5500/home".IsUrlMatch("/").ShouldBeFalse();
+            "http://localhost:5500".Matches("/").ShouldBeTrue();
+            "http://localhost:5500/".Matches("/").ShouldBeTrue();
+            "http://localhost:5500".Matches("/?a=b").ShouldBeTrue();
+            "http://localhost:5500/home?a=b".Matches("/").ShouldBeFalse();
 
 
         }

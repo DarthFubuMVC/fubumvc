@@ -36,7 +36,7 @@ namespace Serenity
             var expected = application.Urls.UrlFor(input, "GET");
             var actual = application.Driver.Url;
 
-            if (!expected.IsUrlMatch(application.Driver.Url))
+            if (!expected.Matches(application.Driver.Url))
             {
                 StoryTellerAssert.Fail("The actual Url of the browser is " + actual.Canonize());
             }
@@ -48,7 +48,7 @@ namespace Serenity
         {
             var actual = application.Driver.Url;
 
-            if (!expected.IsUrlMatch(application.Driver.Url))
+            if (!expected.Matches(application.Driver.Url))
             {
                 StoryTellerAssert.Fail("The actual Url of the browser is " + actual.Canonize());
             }
@@ -61,7 +61,7 @@ namespace Serenity
             var actual = new Uri(application.Driver.Url).AbsolutePath;
             var expected = application.Urls.UrlFor(input, "GET");
 
-            return !expected.IsUrlMatch(actual);
+            return !expected.Matches(actual);
         }
     }
 }
