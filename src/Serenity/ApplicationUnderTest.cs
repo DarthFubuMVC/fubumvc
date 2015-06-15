@@ -1,14 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Net;
 using FubuCore;
 using FubuMVC.Core;
-using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Endpoints;
-using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
-
 using OpenQA.Selenium;
 
 namespace Serenity
@@ -21,13 +17,12 @@ namespace Serenity
         private readonly Lazy<IServiceFactory> _container;
         private readonly Lazy<IUrlRegistry> _urls;
         private readonly Lazy<IServiceLocator> _services;
-        private Lazy<NavigationDriver> _navigation;
+        private readonly Lazy<NavigationDriver> _navigation;
 
 
         public ApplicationUnderTest(FubuRuntime runtime, ApplicationSettings settings, IBrowserLifecycle browser)
             : this(settings.Name, settings.RootUrl, browser, () => runtime.Factory)
         {
-            
         }
 
         public ApplicationUnderTest(IApplicationSource source, ApplicationSettings settings, IBrowserLifecycle browser)
@@ -35,14 +30,12 @@ namespace Serenity
             {
                 var app = source.BuildApplication();
                 return app.Bootstrap().Factory;
-
-
             })
         {
-
         }
 
-        private ApplicationUnderTest(string name, string rootUrl, IBrowserLifecycle browser, Func<IServiceFactory> factorySource)
+        private ApplicationUnderTest(string name, string rootUrl, IBrowserLifecycle browser,
+            Func<IServiceFactory> factorySource)
         {
             _name = name;
             _rootUrl = rootUrl;
@@ -109,6 +102,4 @@ namespace Serenity
             get { return _browser.Driver; }
         }
     }
-
-
 }
