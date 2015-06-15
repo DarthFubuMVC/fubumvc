@@ -209,18 +209,7 @@ namespace Serenity.Fixtures
 
         protected IGrammar BrowserIsAt(Func<IUrlRegistry, string> toUrl, string title)
         {
-            return new FactGrammar(title, c => IsUrlMatch(Driver.Url, toUrl(_application.Urls)));
-        }
-
-        protected static bool IsUrlMatch(string browserUrl, string url)
-        {
-            var browserUri = new Uri(browserUrl.ToAbsoluteUrl());
-            var searchUri = new Uri(url.ToAbsoluteUrl());
-            if (!browserUri.Host.Equals(searchUri.Host, StringComparison.CurrentCultureIgnoreCase))
-            {
-                return false;
-            }
-            return browserUri.AbsolutePath.StartsWith(searchUri.AbsolutePath, StringComparison.CurrentCultureIgnoreCase);
+            return new FactGrammar(title, c => Driver.Url.IsUrlMatch(toUrl(_application.Urls)));
         }
     }
 

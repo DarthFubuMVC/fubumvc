@@ -115,6 +115,7 @@
     <Compile Include="Fixtures\Handlers\TextboxElementHandler.cs" />
     <Compile Include="Fixtures\ScreenFixture.cs" />
     <Compile Include="Fixtures\WebDriverExtensions.cs" />
+    <Compile Include="UrlExtensions.cs" />
     <Compile Include="WebDriver\EmbeddedDrivers\ChromeEmbeddedDriver.cs" />
     <Compile Include="WebDriver\EmbeddedDrivers\EmbeddedBrowserLifecycle.cs" />
     <Compile Include="WebDriver\EmbeddedDrivers\EmbeddedDriverExtractor.cs" />
