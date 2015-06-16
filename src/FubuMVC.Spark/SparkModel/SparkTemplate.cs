@@ -155,7 +155,7 @@ namespace FubuMVC.Spark.SparkModel
                     }
                     catch (Exception)
                     {
-                        if (count >= 4)
+                        if (count >= (times - 1))
                         {
                             throw;
                         }
