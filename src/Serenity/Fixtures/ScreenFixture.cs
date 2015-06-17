@@ -209,18 +209,7 @@ namespace Serenity.Fixtures
 
         protected IGrammar BrowserIsAt(Func<IUrlRegistry, string> toUrl, string title)
         {
-            return new FactGrammar(title, c => IsUrlMatch(Driver.Url, toUrl(_application.Urls)));
-        }
-
-        protected static bool IsUrlMatch(string browserUrl, string url)
-        {
-            var browserUri = new Uri(browserUrl.ToAbsoluteUrl());
-            var searchUri = new Uri(url.ToAbsoluteUrl());
-            if (!browserUri.Host.Equals(searchUri.Host, StringComparison.CurrentCultureIgnoreCase))
-            {
-                return false;
-            }
-            return browserUri.AbsolutePath.StartsWith(searchUri.AbsolutePath, StringComparison.CurrentCultureIgnoreCase);
+            return new FactGrammar(title, c => Driver.Url.Matches(toUrl(_application.Urls)));
         }
     }
 
@@ -258,7 +247,7 @@ namespace Serenity.Fixtures
         {
             var config = getGesture(expression, label, key);
 
-            config.Template = "Enter {" + config.CellName + "} for " + label ?? config.CellName;
+            config.Template = "Enter {" + config.CellName + "} for " + config.CellName;
             config.Description = "Enter data for property " + expression.ToAccessor().Name;
 
             return new EnterValueGrammar(this, config);

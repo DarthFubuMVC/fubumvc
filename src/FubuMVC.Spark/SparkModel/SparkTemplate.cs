@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using Bottles;
 using Bottles.Diagnostics;
 using FubuCore;
@@ -24,10 +25,12 @@ namespace FubuMVC.Spark.SparkModel
         private readonly IList<ISparkTemplate> _bindings = new List<ISparkTemplate>();
         private readonly WatchedSparkEntry _viewEntry;
         private readonly WatchedSparkEntry _partialViewEntry;
+        private readonly SparkEngineSettings _settings;
 
-        public SparkTemplate(IFubuFile file, ISparkViewEngine engine)
+        public SparkTemplate(IFubuFile file, ISparkViewEngine engine, SparkEngineSettings settings)
             : base(file)
         {
+            _settings = settings;
             _full = new Lazy<SparkViewDescriptor>(() => createSparkDescriptor(true));
             _partial = new Lazy<SparkViewDescriptor>(() => createSparkDescriptor(false));
 
@@ -35,7 +38,7 @@ namespace FubuMVC.Spark.SparkModel
             _partialViewEntry = new WatchedSparkEntry(() => engine.CreateEntry(_partial.Value));
         }
 
-        public SparkTemplate(string filepath, string rootpath, string origin) : this(new FubuFile(filepath, origin){ProvenancePath = rootpath}, new SparkViewEngine())
+        public SparkTemplate(string filepath, string rootpath, string origin, SparkEngineSettings settings) : this(new FubuFile(filepath, origin){ProvenancePath = rootpath}, new SparkViewEngine(), settings)
         {
         }
 
@@ -54,21 +57,7 @@ namespace FubuMVC.Spark.SparkModel
         {
             try
             {
-                IEnumerable<Chunk> chunk = null;
-
-                try
-                {
-                    // A retry here.
-                    chunk = Loader.Load(this) ?? Loader.Load(this);
-                }
-                catch (Exception)
-                {
-                    // Retry ONCE.
-                    chunk = Loader.Load(this);
-                }
-
-                chunk = chunk.ToList();
-
+                var chunk = Retry.Times(_settings.RetryViewLoadingCount, () => Loader.Load(this)).ToList();
 
                 return new Parsing
                 {
@@ -148,6 +137,36 @@ namespace FubuMVC.Spark.SparkModel
 
             descriptor.AddTemplate(template.ViewPath);
             appendMasterPage(descriptor, template.Master as ISparkTemplate);
+        }
+
+        internal static class Retry
+        {
+            public static T Times<T>(int times, Func<T> action)
+            {
+                if (times == 0)
+                    return action();
+
+                var count = 0;
+                while (count < times)
+                {
+                    try
+                    {
+                        return action();
+                    }
+                    catch (Exception)
+                    {
+                        if (count >= (times - 1))
+                        {
+                            throw;
+                        }
+
+                        count++;
+                        Thread.Sleep(100);
+                    }
+                }
+
+                throw new InvalidOperationException("Could not execute action");
+            }
         }
     }
 

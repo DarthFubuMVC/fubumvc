@@ -13,81 +13,35 @@ namespace Serenity.Testing.Fixtures
     public class BrowserIsAtTester : ScreenFixture
     {
         [Test]
-        public void isurlmatch_returns_true_with_matching_url()
+        public void canonize()
         {
-            IsUrlMatch("http://any.html", "http://any.html").ShouldBeTrue();
+            "http://localhost".Canonize().ShouldEqual("/");
+            "http://localhost:5500".Canonize().ShouldEqual("/");
+            "http://localhost:5500/a".Canonize().ShouldEqual("/a");
+            "/a".Canonize().ShouldEqual("/a");
+
+            "http://host.com/a/b".Canonize().ShouldEqual("/a/b");
         }
 
         [Test]
-        public void isurlmatch_returns_true_with_matching_text()
+        public void is_exact_url_match()
         {
-            IsUrlMatch("//abc", "//abc").ShouldBeTrue();
+
+            "http://localhost:5500/?a=b".MatchesWithQuerystring("/?a=b").ShouldBeTrue();
+            "http://localhost:5500/?a=b".MatchesWithQuerystring("/?a=c").ShouldBeFalse();
+
+
         }
 
         [Test]
-        public void isurlmatch_returns_true_with_matching_text_of_different_case()
+        public void is_url_match()
         {
-            IsUrlMatch("//aBc", "//AbC").ShouldBeTrue();
-        }
+            "http://localhost:5500".Matches("/").ShouldBeTrue();
+            "http://localhost:5500/".Matches("/").ShouldBeTrue();
+            "http://localhost:5500".Matches("/?a=b").ShouldBeTrue();
+            "http://localhost:5500/home?a=b".Matches("/").ShouldBeFalse();
 
-        [Test]
-        public void isurlmatch_returns_true_starting_with_matching_url()
-        {
-            IsUrlMatch("http://any:3030/thing/", "http://any:5050/").ShouldBeTrue();
-        }
 
-        [Test]
-        public void irulmatch_returns_false_when_browser_url_starting_with()
-        {
-            IsUrlMatch("http://any/html/", "http://any/html/a").ShouldBeFalse();
-        }
-
-        [Test]
-        public void isurlmatch_returns_false_when_they_dont_match()
-        {
-            IsUrlMatch("http://any.html", "http://other.html").ShouldBeFalse();
-        }
-
-        [Test]
-        public void isurlmatch_returns_false_when_search_url_empty()
-        {
-            IsUrlMatch("http://some.html", "abc://").ShouldBeFalse();
-        }
-
-        [Test]
-        public void empty_urls_should_return_true()
-        {
-            IsUrlMatch("abc://", "efg://").ShouldBeTrue();
-        }
-
-        [Test]
-        public void searching_in_empty_url_returns_false()
-        {
-            IsUrlMatch("abc://", "http://a").ShouldBeFalse();
-        }
-
-        [Test]
-        public void uri_format_in_browserurl_returns_true()
-        {
-            IsUrlMatch("http://something", "//something").ShouldBeTrue();
-        }
-
-        [Test]
-        public void uri_format_in_browserurl_non_match_false()
-        {
-            IsUrlMatch("http://something", "//something/different").ShouldBeFalse();
-        }
-
-        [Test]
-        public void uri_format_in_searchurl_matches()
-        {
-            IsUrlMatch("//something", "http://something").ShouldBeTrue();
-        }
-
-        [Test]
-        public void https_uri_format_matches()
-        {
-            IsUrlMatch("//something", "https://something").ShouldBeTrue();
         }
     }
 

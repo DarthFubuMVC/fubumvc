@@ -68,6 +68,8 @@ namespace FubuMVC.Core.Runtime.Files
 
         private IFubuFile findFile(string name)
         {
+            if (name.IsEmpty()) return null;
+
             var fileSet = new FileSet{
                 DeepSearch = true,
                 Include = name

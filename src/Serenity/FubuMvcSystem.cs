@@ -254,7 +254,7 @@ namespace Serenity
                 SetupApplicationHost();
 
                 _application = _hosting.Start(_settings, _runtime, browserLifecycle);
-                _applicationAlterations.Each(x => x(_application));
+                _applicationAlterations.ToArray().Each(x => x(_application));
 
                 _runtime.Facility.Register(typeof (IApplicationUnderTest), ObjectDef.ForValue(_application));
                 _runtime.Facility.Register(typeof (IRemoteSubsystems), ObjectDef.ForValue(this));

@@ -38,7 +38,7 @@ namespace FubuMVC.Spark
 
         protected override void addNamespacesForViews(CommonViewNamespaces namespaces)
         {
-            
+
         }
 
         protected override void precompile(BehaviorGraph graph)
@@ -53,7 +53,7 @@ namespace FubuMVC.Spark
 
         public override Func<IFubuFile, SparkTemplate> CreateBuilder(SettingsCollection settings)
         {
-            return file => new SparkTemplate(file, _engine);
+            return file => new SparkTemplate(file, _engine, settings.Get<SparkEngineSettings>());
         }
 
         public override FileSet FindMatching(SettingsCollection settings)
@@ -71,7 +71,7 @@ namespace FubuMVC.Spark
 
             var bindingTemplates = graph.Files
                 .FindFiles(FileSet.Shallow("Shared/bindings.xml"))
-                .Select(x => new SparkTemplate(x, _engine)).ToArray();
+                .Select(x => new SparkTemplate(x, _engine, graph.Settings.Get<SparkEngineSettings>())).ToArray();
 
             _engine.ViewFolder = new TemplateViewFolder(AllTemplates());
             _engine.DefaultPageBaseType = typeof (FubuSparkView).FullName;
@@ -88,7 +88,7 @@ namespace FubuMVC.Spark
                 .AddNamespace(typeof (IPartialInvoker).Namespace)
                 .AddNamespace(typeof (VirtualPathUtility).Namespace) // System.Web
                 .AddNamespace(typeof (SparkViewFacility).Namespace) // FubuMVC.Spark
-                .AddNamespace(typeof (HtmlTag).Namespace); // HtmlTags 
+                .AddNamespace(typeof (HtmlTag).Namespace); // HtmlTags
 
             var engineSettings = graph.Settings.Get<SparkEngineSettings>();
             engineSettings.UseNamespaces.Each(ns => _sparkSettings.AddNamespace(ns));

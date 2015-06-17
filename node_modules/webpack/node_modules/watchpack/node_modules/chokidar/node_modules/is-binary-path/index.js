@@ -8,11 +8,5 @@ binaryExtensions.forEach(function (el) {
 });
 
 module.exports = function (filepath) {
-	var ext = path.extname(filepath).slice(1);
-
-	if (ext === '') {
-		return false;
-	}
-
-	return ext in exts;
+	return path.extname(filepath).slice(1).toLowerCase() in exts;
 };

@@ -7,6 +7,7 @@ using FubuCore;
 using FubuMVC.Core.Http.Owin.Readers;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Handlers;
+using HtmlTags;
 
 namespace FubuMVC.Core.Http.Owin
 {
@@ -75,8 +76,17 @@ namespace FubuMVC.Core.Http.Owin
             using (var writer = new OwinHttpResponse(environment))
             {
                 writer.WriteResponseCode(HttpStatusCode.InternalServerError);
-                writer.Write("FubuMVC has detected an exception\r\n");
-                writer.Write(exception.ToString());
+                var document = new HtmlDocument
+                {
+                    Title = "Exception!"
+                };
+
+                document.Add("h1").Text("FubuMVC has detected an exception");
+                document.Add("hr");
+                document.Add("pre").Id("error").Text(exception.ToString());
+
+                writer.WriteContentType(MimeType.Html.Value);
+                writer.Write(document.ToString());
             }
         }
     }

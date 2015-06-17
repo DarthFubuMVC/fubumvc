@@ -1,4 +1,5 @@
-# Chokidar [![Mac/Linux Build Status](https://img.shields.io/travis/paulmillr/chokidar/master.svg?label=Mac%20OSX%20%26%20Linux)](https://travis-ci.org/paulmillr/chokidar) [![Windows Build status](https://img.shields.io/appveyor/ci/es128/chokidar/master.svg?label=Windows)](https://ci.appveyor.com/project/es128/chokidar/branch/master) [![Coverage Status](https://coveralls.io/repos/paulmillr/chokidar/badge.svg)](https://coveralls.io/r/paulmillr/chokidar)
+# Chokidar [![Mac/Linux Build Status](https://img.shields.io/travis/paulmillr/chokidar/master.svg?label=Mac%20OSX%20%26%20Linux)](https://travis-ci.org/paulmillr/chokidar) [![Windows Build status](https://img.shields.io/appveyor/ci/es128/chokidar/master.svg?label=Windows)](https://ci.appveyor.com/project/es128/chokidar/branch/master) [![Coverage Status](https://coveralls.io/repos/paulmillr/chokidar/badge.svg)](https://coveralls.io/r/paulmillr/chokidar) [![Join the chat at https://gitter.im/paulmillr/chokidar](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/paulmillr/chokidar?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 A neat wrapper around node.js fs.watch / fs.watchFile / fsevents.
 
 [![NPM](https://nodei.co/npm-dl/chokidar.png)](https://nodei.co/npm/chokidar/)
@@ -32,9 +33,11 @@ It is used in
 [brunch](http://brunch.io),
 [karma](http://karma-runner.github.io),
 [PM2](https://github.com/Unitech/PM2),
+[browserify](http://browserify.org/),
+[webpack](http://webpack.github.io/),
+[BrowserSync](http://www.browsersync.io/),
 [socketstream](http://www.socketstream.org),
 [derby](http://derbyjs.com/),
-[watchify](https://github.com/substack/watchify),
 and [many others](https://www.npmjs.org/browse/depended/chokidar/).
 It has proven itself in production environments.
 
@@ -185,6 +188,10 @@ and path for every event other than `ready`, `raw`, and `error`.
 * `.unwatch(path / paths)`: Stop watching files, directories, or glob patterns.
 Takes an array of strings or just one string.
 * `.close()`: Removes all listeners from watched files.
+
+## CLI
+
+If you need a CLI interface for your file watching, check out [chokidar-cli](https://github.com/kimmobrunfeldt/chokidar-cli) which allows you to either execute a command on each change, or get a stdio stream of change events.
 
 ## Install Troubleshooting
 

@@ -108,7 +108,7 @@ namespace Serenity
 
         ~BrowserLifecycle()
         {
-            Dispose();
+            this.SafeDispose();
         }
 
         protected abstract void aggressiveCleanup();
