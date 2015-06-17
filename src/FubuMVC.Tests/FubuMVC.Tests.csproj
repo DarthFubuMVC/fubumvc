@@ -10,8 +10,8 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FubuMVC.Tests</RootNamespace>
     <AssemblyName>FubuMVC.Tests</AssemblyName>
-    <FileAlignment>512</FileAlignment>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -482,7 +482,7 @@
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\TestPackage1\TestPackage1.csproj">
-      <Project>{1F18D6EB-4D9C-407A-BD70-C5D525E377B6}</Project>
+      <Project>{1f18d6eb-4d9c-407a-bd70-c5d525e377b6}</Project>
       <Name>TestPackage1</Name>
     </ProjectReference>
   </ItemGroup>
@@ -524,7 +524,7 @@
     <Folder Include="View\Model\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
