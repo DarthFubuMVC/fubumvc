@@ -17,7 +17,7 @@ require 'fuburake'
 
 	sln.integration_test = ['FubuMVC.IntegrationTesting', 'Serenity.Testing', 'FubuMVC.Authentication.IntegrationTesting', 'FubuMVC.PersistedMembership.Testing']
 	sln.ci_steps = [:integration_test, :storyteller, :archive_gem]
-	
+
 	sln.options[:nuget_publish_folder] = 'nupkgs'
 	sln.options[:nuget_publish_url] = 'https://www.myget.org/F/fubumvc-edge/'
 end
@@ -30,6 +30,15 @@ task :full => [:default, :integration_test]
 
 desc "Target used for CI on Mono"
 task :mono_ci => [:compile, :unit_test, :integration_test]
+
+desc "Delegates to npm install and builds the javascript for diagnostics"
+task :npm do
+	sh 'npm install'
+	sh 'npm run build'
+end
+
+add_dependency :compile, :npm
+
 
 desc "Replaces the existing installed gem with the new version for local testing"
 task :local_gem => [:create_gem] do

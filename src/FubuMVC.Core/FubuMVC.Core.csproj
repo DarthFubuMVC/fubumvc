@@ -754,9 +754,6 @@
     <EmbeddedResource Include="fubu-diagnostics\master.css" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="fubu-diagnostics\root.js" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="fubu-diagnostics\FubuDiagnostics.js" />
   </ItemGroup>
   <ItemGroup>
@@ -767,6 +764,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="fubu-diagnostics\typeahead.bundle.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\TestHarnessApp\fubu-diagnostics\root.js">
+      <Link>fubu-diagnostics\root.js</Link>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
