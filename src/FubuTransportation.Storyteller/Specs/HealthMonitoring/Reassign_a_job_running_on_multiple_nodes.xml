@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<Test name="Reassign a job running on multiple nodes" lifecycle="Acceptance" retryAttemptNumber="0">
+  <Monitoring>
+    <Context isStep="True">
+      <MonitoringSetup>
+        <TheNodesAre isStep="True">
+          <table>
+            <row isStep="True" id="Node1" incoming="memory://1" />
+            <row isStep="True" id="Node2" incoming="memory://2" />
+            <row isStep="True" id="Node3" incoming="memory://3" />
+          </table>
+        </TheNodesAre>
+        <HealthMonitoringIsDisabled isStep="True" />
+        <TheTasksAre isStep="True">
+          <table>
+            <row isStep="True" task="foo://1" node="NONE" nodes="Node1" />
+          </table>
+        </TheTasksAre>
+      </MonitoringSetup>
+    </Context>
+    <TaskStateIs isStep="True">
+      <table>
+        <row isStep="True" Task="foo://1" Node="Node2" State="Healthy and Functional" />
+        <row isStep="True" Task="foo://1" Node="Node3" State="Healthy and Functional" />
+      </table>
+    </TaskStateIs>
+    <AfterTheHealthChecksRunOnAllNodes isStep="True" />
+    <TheTaskAssignmentsShouldBe isStep="True">
+      <rows>
+        <row isStep="True" Task="foo://1" Node="Node1" />
+      </rows>
+    </TheTaskAssignmentsShouldBe>
+    <ThePersistedAssignmentsShouldBe isStep="True">
+      <rows>
+        <row isStep="True" Task="foo://1" Node="Node1" />
+      </rows>
+    </ThePersistedAssignmentsShouldBe>
+  </Monitoring>
+</Test>

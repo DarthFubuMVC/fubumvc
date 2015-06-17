@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<Test name="Assign on order of preference when some nodes fail" lifecycle="Acceptance" retryAttemptNumber="0">
+  <Monitoring>
+    <Context isStep="True">
+      <MonitoringSetup>
+        <TheNodesAre isStep="True">
+          <table>
+            <row isStep="True" id="Node1" incoming="memory://1" />
+            <row isStep="True" id="Node2" incoming="memory://2" />
+            <row isStep="True" id="Node3" incoming="memory://3" />
+            <row isStep="True" id="Node4" incoming="memory://4" />
+          </table>
+        </TheNodesAre>
+        <HealthMonitoringIsDisabled isStep="True" />
+        <TheTasksAre isStep="True">
+          <table>
+            <row isStep="True" task="foo://1" node="NONE" nodes="Node1, Node2, Node3, Node4" />
+          </table>
+        </TheTasksAre>
+      </MonitoringSetup>
+    </Context>
+    <TaskStateIs isStep="True">
+      <table>
+        <row isStep="True" Task="foo://1" Node="Node1" State="Throws exception on startup or health check" />
+        <row isStep="True" Task="foo://1" Node="Node2" State="Throws exception on startup or health check" />
+      </table>
+    </TaskStateIs>
+    <AfterTheHealthChecksRunOnNode node="Node1" isStep="True" />
+    <ThePersistedNodesShouldBe isStep="True">
+      <rows>
+        <row isStep="True" Id="Node1" ControlChannel="memory://1" />
+        <row isStep="True" Id="Node2" ControlChannel="memory://2" />
+        <row isStep="True" Id="Node3" ControlChannel="memory://3" />
+        <row isStep="True" Id="Node4" ControlChannel="memory://4" />
+      </rows>
+    </ThePersistedNodesShouldBe>
+    <TheTaskAssignmentsShouldBe isStep="True">
+      <rows>
+        <row isStep="True" Task="foo://1" Node="Node3" />
+      </rows>
+    </TheTaskAssignmentsShouldBe>
+    <ThePersistedAssignmentsShouldBe isStep="True">
+      <rows>
+        <row isStep="True" Task="foo://1" Node="Node3" />
+      </rows>
+    </ThePersistedAssignmentsShouldBe>
+  </Monitoring>
+</Test>

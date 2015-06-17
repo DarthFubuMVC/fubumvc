@@ -1,0 +1,838 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0196722C-FDEF-4C0E-AFDC-4867F75F770D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FubuTransportation.Testing</RootNamespace>
+    <AssemblyName>FubuTransportation.Testing</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Bottles">
+      <HintPath>..\packages\Bottles\lib\Bottles.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuCore">
+      <HintPath>..\packages\FubuCore\lib\FubuCore.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuLocalization">
+      <HintPath>..\packages\FubuLocalization\lib\FubuLocalization.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuTestingSupport">
+      <HintPath>..\packages\FubuTestingSupport\lib\FubuTestingSupport.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlTags">
+      <HintPath>..\packages\HtmlTags\lib\4.0\HtmlTags.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\FubuMVC.Katana\lib\net40\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.HttpListener">
+      <HintPath>..\packages\FubuMVC.Katana\lib\net40\Microsoft.Owin.Host.HttpListener.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Hosting">
+      <HintPath>..\packages\FubuMVC.Katana\lib\net40\Microsoft.Owin.Hosting.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.mocks">
+      <HintPath>..\packages\NUnit\lib\nunit.mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="pnunit.framework">
+      <HintPath>..\packages\NUnit\lib\pnunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\packages\RhinoMocks\lib\net\Rhino.Mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="Spark">
+      <HintPath>..\packages\Spark\lib\NET40\Spark.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\packages\structuremap\lib\net40\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.AutoMocking">
+      <HintPath>..\packages\structuremap.automocking\lib\net40\StructureMap.AutoMocking.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.Net4">
+      <HintPath>..\packages\structuremap\lib\net40\StructureMap.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Async\AsyncChainExecutionContinuationTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Async\AsyncHandlerInvokerTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Async\AsyncHandlingConventionTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Async\AsynchHandlingTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Async\FullAsyncHandlingIntegrationTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Async\when_invoking_with_cascading_messages.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\AllInMemoryQueues_Mechanics_Tester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\ByTaskSchedulerMakerTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\ChannelGraphTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\ChannelGraph_can_read_thread_and_task_counts_from_config.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\ChannelGraph_has_to_be_a_StructureMap_singleton.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\ChannelNodeTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\Configuring_envelope_modifier_by_channel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\FubuTransportRegistryTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\FubuTransportRegistry_register_subscription_requirements_Tester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\HandlerChainTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\HandlerChain_Exception_Handling_Rules_Registration_Tester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\HandlerGraphTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\UriExtensionsTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Diagnostics\MessageRecordListenerTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Diagnostics\MessageRecordTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Diagnostics\Web_endpoints_integration_Smoke_Tester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docs\Basics\ErrorHandlingSamples.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docs\Basics\PubSubSamples.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docs\Basics\ReceivingSamples.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docs\Basics\SendingSamples.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docs\GettingStarted\GettingStartedApplicationSource.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docs\GettingStarted\GettingStartedSettings.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docs\GettingStarted\GettingStartedTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docs\GettingStarted\GettingStartedTransportRegistry.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docs\GettingStarted\Handlers.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docs\Instrumentation\FubuEmbeddedApplicationSource.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docs\Instrumentation\FubuEmbeddedRegistry.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docs\Polling\PollingJobSamples.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docs\Sagas\SagaRepositorySample.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docs\Sagas\SimpleSaga.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docs\Transports\InMemorySamples.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docs\Transports\LightningQueuesSamples.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="envelope_handlers_are_registered_in_the_right_order.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ErrorHandling\CompositeContinuation_integration_testing.cs" />
+    <Compile Include="ErrorHandling\DelayedRetryContinuationTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ErrorHandling\ErrorHandlerBehavior_attachment_to_the_handler_chains.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ErrorHandling\ErrorHandlerTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ErrorHandling\ErrorHandling_services_have_descriptions_for_diagnostics.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ErrorHandling\ErrorReportTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ErrorHandling\ExceptionHandlerBehaviorTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ErrorHandling\ExceptionMatchingExpression_and_ExpressionMatch_Tester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ErrorHandling\ExceptionTypeMatchTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ErrorHandling\MoveToErrorQueueHandlerTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ErrorHandling\MovetoErrorQueueTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ErrorHandling\RequeueContinuationTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ErrorHandling\RespondWithMessageContinuationTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ErrorHandling\RespondWithMessageHandlerTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ErrorHandling\RetryNowContinuationTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ErrorHandling\RetryNow_integration_testing.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Events\EventAggregatorTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Events\ExpiringListenerCleanupTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="InMemory\Full_end_to_end_delayed_message_processing_with_in_memory_queues.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="InMemory\InMemoryCallbackTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="InMemory\InMemoryQueueIntegrationTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="InMemory\InMemoryReplyQueueIntegratedTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="InMemory\InMemorySagaRepositoryTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="InMemory\InMemorySagaStorageTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="InMemory\InMemoryTransportTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="InMemory\InMemoryTransport_opt_in_registration_tester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="InMemory\ReplayDelayedQueueIntegrationTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="InMemory\SagaStateCacheTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Logging\All_log_records_should_be_MessageLogRecord_subtype.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Logging\EventAggregationListenerTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\FakePersistentTask.cs" />
+    <Compile Include="Monitoring\FakePersistentTaskAgent.cs" />
+    <Compile Include="Monitoring\FakePersistentTasks.cs" />
+    <Compile Include="Monitoring\FakePersistentTaskSource.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\FakeTransportPeer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\Monitoring_handlers_are_registered.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\Monitoring_health_polling_job_is_registered.cs" />
+    <Compile Include="Monitoring\OrderedAssignmentTester.cs" />
+    <Compile Include="Monitoring\PermanentTaskController\CurrentlyOwnedSubjectsTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\PermanentTaskController\PersistentTaskControllerContext.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\PermanentTaskController\TakeOwnership_specs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\PermanentTaskController\when_checking_status.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\PermanentTaskController\when_checking_the_status_of_owned_tasks.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\PermanentTaskController\when_finding_a_task.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\PermanentTaskController\when_stopping_a_task.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\PersistentTaskAgentTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\PersistentTaskMessageModifierTester.cs" />
+    <Compile Include="Monitoring\RiggedServiceBus.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\Service_registration_specs.cs" />
+    <Compile Include="Monitoring\TaskHealthResponseTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\TransportPeerTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Polling\DefaultTimerTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Polling\EnvelopeToken_is_polling_job_related_Tester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Polling\JobTimeoutTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Polling\PollingJobActivatorTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Polling\PollingJobIntegrationTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Polling\PollingJobRunImmediatelyIntegrationTester.cs" />
+    <Compile Include="Polling\PollingJobTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Polling\PollingServicesRegistry_spec.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Publishing\EventPublisherTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Publishing\PublishingConfigurationIntegrationTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Registration\FuncBuilderTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Registration\HandlerSourceTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Registration\Nodes\HandlerCallTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Cascading\DelayedResponseTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Cascading\OutgoingSenderTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Cascading\RespondTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Cascading\RespondToSenderTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Cascading\SendDirectlyToTester.cs" />
+    <Compile Include="Runtime\Delayed\DelayedEnvelopeProcessorTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Delayed\Delayed_Processing_Job_Registration_Tester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\EnvelopeModifierTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\EnvelopeSenderTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\EnvelopeTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\generic_handlers_are_called_for_messages_that_match.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Headers\Headers_testing.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Invocation\CascadingHandlerInvokerTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Invocation\ChainExecutionEnvelopeHandlerTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Invocation\ChainFailureContinuationTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Invocation\ChainInvokerIntegrationTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Invocation\ChainInvokerTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Invocation\ChainSuccessContinuationTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Invocation\CompositeContinuationTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Invocation\DelayedEnvelopeHandlerTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Invocation\DeserializationFailureContinuationTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Invocation\HandlerPipelineTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Invocation\handling_a_batch_of_messages.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Invocation\InvocationContext.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Invocation\InvocationContextTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Invocation\Messages.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Invocation\multiple_handlers_for_one_message.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Invocation\NoSubscriberHandlerTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Invocation\ResponseEnvelopeHandlerTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Invocation\sending_a_message_with_no_consumer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Invocation\SimpleHandlerInvokerTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Invocation\simplest_possible_invocation.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Invocation\StubServiceFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Invocation\WhenInvokingWithNoHandlerForMessageType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Invocation\when_invoking_a_message_right_now_happy_path.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\ReceiverTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\ReplyListenerTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Routing\AssemblyRuleTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Routing\LambdaRoutingRuleTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Routing\NamespaceRuleTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Routing\SingleTypeRoutingRuleTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Serializers\BasicJsonMessageSerializerTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Serializers\BinarySerializerTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Serializers\EnvelopeSerializerIntegratedTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Serializers\EnvelopeSerializerTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Serializers\XmlMessageSerializerRhinoMessageTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Serializers\XmlMessageSerializerTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\when_requesting_a_response.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\when_sending_with_the_expectation_of_a_response.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sagas\SagaBehaviorTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sagas\SagaIntegrationTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sagas\SagaTypesTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sagas\StatefulSagaConventionTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScheduledJobs\EveryDayAtSpecificTimeJobSchedulerTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScheduledJobs\InMemorySchedulePersistenceTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScheduledJobs\JobExecutionRecordTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScheduledJobs\JobScheduleTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScheduledJobs\JobStatusTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScheduledJobs\JobTimerIntegratedTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScheduledJobs\ScheduledJobController_integration_Tester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScheduledJobs\ScheduledJobGraphTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScheduledJobs\ScheduledJobIntegrationTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScheduledJobs\ScheduledJobPersistentTaskTester.cs" />
+    <Compile Include="ScheduledJobs\ScheduledJobTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScheduledJobs\ScheduledStatusMonitorTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScheduledJobs\ScheduleRepositoryTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Scheduling\TaskSchedulerTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Scheduling\ThreadSchedulerTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ServiceBus_RemoveSubscriptions_Tester.cs" />
+    <Compile Include="Subscriptions\SubscriptionCache_clearing_tester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Subscriptions\SubscriptionCache_replace_subscriptions_tester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Subscriptions\SubscriptionCache_routing_with_subscription_Tester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Subscriptions\SubscriptionHandler_is_registered_in_fubu_application_apps.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Subscriptions\SubscriptionRepositoryTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Subscriptions\SubscriptionsHandlerTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Subscriptions\SubscriptionsIntegrationTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Subscriptions\Subscription_equality_tester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Subscriptions\Subscription_matches_tester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Subscriptions\TransportNodeTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Subscriptions\when_creating_grouped_subscriptions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Subscriptions\when_creating_local_subscriptions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TestingSupportClasses.cs" />
+    <Compile Include="Extension_importing_tester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FakeHandlers.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FubuTransport_default_options_Tester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FubuTransportRegistry_application_of_policies_Tester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FubuTransportRegistry_default_handler_source_policies_spec.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FubuTransportRegistry_HandlerSource_registration_Tester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FubuTransportRegistry_registration_of_services_Tester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FubuTransportServiceRegistry_spec.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FullStackConfigurationIntegrationTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IntegratedFubuTransportRegistryTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ObjectMother.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecordingChannel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RecordingEnvelopeSender.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RecordingReceiver.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RecordingServiceBusTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioRunner.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Scenarios\Request_a_reply_for_a_single_message.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Scenarios\Send_a_message_that_raises_events.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Scenarios\Send_a_single_message_to_multiple_listening_nodes.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Scenarios\Send_a_single_message_to_the_correct_node.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioSupport\AnotherOneHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioSupport\DifferentOneHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioSupport\FourHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioSupport\FourMessage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioSupport\GenericHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioSupport\HarnessSettings.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioSupport\IScenarioStep.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioSupport\ManyResponseHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioSupport\MatchingMessageStep.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioSupport\Message.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioSupport\MessageProcessed.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioSupport\MirrorMessage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioSupport\NodeConfiguration.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioSupport\OneHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioSupport\OneMessage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioSupport\RequestReplyExpression.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioSupport\RequestReplyStep.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioSupport\RequestResponseHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioSupport\Scenario.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioSupport\SendAndAwaitStep.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioSupport\SendMessageStep.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioSupport\SimpleHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioSupport\SourceRecordingHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioSupport\TestMessageRecorder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioSupport\ThreeHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioSupport\ThreeMessage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioSupport\TwoHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioSupport\TwoMessage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioWriterSmokeTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ServiceBus_Consume_right_now_Mr_Tester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ServiceBus_DelaySend_Tester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ServiceBus_Send_to_destination_Tester.cs" />
+    <Compile Include="StubChannelNode.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TestContinuationContext.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TestSupport\MessageWatcherTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TimeoutRunnerTester.cs" />
+    <Compile Include="TransportActivatorTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TransportSettingsTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeExtensionsTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
+      <Project>{e18fd922-0e7a-49cd-b89f-473826077b9d}</Project>
+      <Name>FubuMVC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Katana\FubuMVC.Katana.csproj">
+      <Project>{48bc51c2-b759-48db-aae1-f4686cd6d02a}</Project>
+      <Name>FubuMVC.Katana</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
+      <Project>{abfea520-820c-4b77-9015-6a09e24252fa}</Project>
+      <Name>FubuMVC.StructureMap</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuTransportation\FubuTransportation.csproj">
+      <Project>{23FDB1CE-1EC5-4D1B-B3E5-008A439CAA13}</Project>
+      <Name>FubuTransportation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TestMessages\TestMessages.csproj">
+      <Project>{3735a25a-28b6-4da3-a4cf-7606538e0155}</Project>
+      <Name>TestMessages</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ripple.dependencies.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

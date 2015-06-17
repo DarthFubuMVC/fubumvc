@@ -1,0 +1,14 @@
+<h1>Message Id: ${Model.MessageId.ToString()}</h1>
+
+<br></br>
+<h3>Queue: ${Model.QueueName}</h3>
+<h3>Sub Queue: ${Model.SubQueueName}</h3>
+<h3>Status: ${Model.Status}</h3>
+<h3>Sent At: ${Model.SentAt}</h3>
+<br></br>
+
+<h3>Headers</h3>
+!{Model.HeadersAsHtml}
+
+<h3>Message Payload</h3>
+<pre>${Model.PayloadAsJson}</pre>

@@ -1,0 +1,11 @@
+<viewdata model="FubuTransportation.LightningQueues.Diagnostics.ErrorQueueMessageVisualization" />
+
+<StandardMessageDetails />
+
+<h3>Exception Details</h3>
+<dl>
+    <dt>Explanation:</dt><dd>${Model.ExceptionDetails.Explanation}</dd>
+    <dt>Exception Type:</dt><dd>${Model.ExceptionDetails.ExceptionType}</dd>
+    <dt>Exception Message:</dt><dd>${Model.ExceptionDetails.ExceptionMessage}</dd>
+    <dt>Exception Text:</dt><dd><pre>${Model.ExceptionDetails.ExceptionText}</pre></dd>
+</dl>

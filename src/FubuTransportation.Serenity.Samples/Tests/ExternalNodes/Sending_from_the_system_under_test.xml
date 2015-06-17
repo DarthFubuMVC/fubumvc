@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<Test name="Sending from the system under test" lifecycle="Regression" retryAttemptNumber="0">
+  <MultipleEndpoints>
+    <SetupAnotherService isStep="True" />
+    <SendMessageToOtherService isStep="True" />
+    <OtherServiceReceivedMessage isStep="True" />
+  </MultipleEndpoints>
+</Test>

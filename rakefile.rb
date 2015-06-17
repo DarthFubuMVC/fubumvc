@@ -22,6 +22,17 @@ require 'fuburake'
 	sln.options[:nuget_publish_url] = 'https://www.myget.org/F/fubumvc-edge/'
 end
 
+
+FubuRake::BottleServices.new({
+  :dir => "src/DiagnosticsHarness/bin/#{@solution.compilemode}", 
+  :name => 'ft-harness', 
+  :local_service => true,
+  :manual => true
+})
+
+FubuRake::MvcApp.new({:directory => 'src/DiagnosticsHarness', :name => 'harness'})
+
+
 add_dependency 'ripple:publish', :integration_test
 
 

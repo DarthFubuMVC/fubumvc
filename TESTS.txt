@@ -7,3 +7,6 @@ FubuPersistence.Tests
 FubuMVC.Authentication.Tests
 FubuMVC.AntiForgery.Testing
 FubuMVC.Localization.Testing
+FubuTransportation.Testing
+FubuTransportation.RavenDb.Testing
+FubuTransportation.LightningQueues.Testing

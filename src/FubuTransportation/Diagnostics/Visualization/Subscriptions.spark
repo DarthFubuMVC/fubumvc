@@ -1,0 +1,16 @@
+<viewdata model="FubuTransportation.Diagnostics.Visualization.SubscriptionsViewModel" />
+
+<h1>Subscription Storage</h1>
+
+<br></br>
+
+<h3>Subscription Persistence</h3>
+!{Model.Persistence}
+<hr></hr>
+
+<h3>Nodes</h3>
+!{Model.Nodes}
+<hr></hr>
+
+<h3>Subscriptions</h3>
+!{Model.Subscriptions}

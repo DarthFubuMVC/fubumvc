@@ -1,0 +1,24 @@
+<Spec id="2349b85e-1ff3-492a-891f-4ec93a19cc9b" maxRetries="0" tags="" lifecycle="Acceptance" name="2nd publisher with global subscriptions is brought online">
+  <Subscriptions id="47bff81e-ed23-45d8-9581-26f17e27acf5">
+    <LoadNode Key="Publisher" Registry="PublishingRegistry" ReplyUri="memory://publisher1" />
+    <LoadNode Key="Subscriber" Registry="HasGlobalSubscriptionsRegistry" ReplyUri="memory://subscriber1" />
+    <LoadNode Key="PublisherTwo" Registry="PublishingRegistry" ReplyUri="memory://publisher2" />
+    <ForNode Key="PublisherTwo" />
+    <TheActiveSubscriptionsAre>
+      <rows id="c98a2ef9-a908-4e4c-b226-d36ede7ce419">
+        <TheActiveSubscriptionsAre-row NodeName="Publishing" MessageType="FubuTransportation.Storyteller.Support.OneMessage" Source="memory://harness/publisher1" Receiver="memory://harness/subscriber1" />
+      </rows>
+    </TheActiveSubscriptionsAre>
+    <ThePersistedSubscriptionsAre>
+      <rows id="51d6d0b6-3651-4b93-96b7-65b21f8f8c0f">
+        <ThePersistedSubscriptionsAre-row NodeName="Publishing" MessageType="FubuTransportation.Storyteller.Support.OneMessage" Source="memory://harness/publisher1" Receiver="memory://harness/subscriber1" />
+      </rows>
+    </ThePersistedSubscriptionsAre>
+    <ThePersistedTransportNodesAre>
+      <rows id="303a13ea-2fb5-4c81-9d7c-2d48ddbd0292">
+        <ThePersistedTransportNodesAre-row NodeName="Publishing" Address="memory://publisher1/" />
+        <ThePersistedTransportNodesAre-row NodeName="Publishing" Address="memory://publisher2/" />
+      </rows>
+    </ThePersistedTransportNodesAre>
+  </Subscriptions>
+</Spec>

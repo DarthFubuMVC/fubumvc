@@ -1,0 +1,26 @@
+<Spec id="ee67cd60-cdec-4d31-8db1-26938175fe49" maxRetries="0" tags="" lifecycle="Regression" name="Multiple publishers all get new subscriptions">
+  <Subscriptions id="cb0dc688-3408-41d4-ba77-7140e5570061">
+    <LoadNode Key="Publisher" Registry="PublishingRegistry" ReplyUri="memory://publisher1" />
+    <LoadNode Key="PublisherTwo" Registry="PublishingRegistry" ReplyUri="memory://publisher2" />
+    <LoadNode Key="PublisherThree" Registry="PublishingRegistry" ReplyUri="memory://publisher3" />
+    <LoadNode Key="Subscriber" Registry="HasGlobalSubscriptionsRegistry" ReplyUri="memory://subscriber1" />
+    <ForNode Key="Publisher" />
+    <TheActiveSubscriptionsAre>
+      <rows id="a1fc2ea7-38e3-4419-85b8-b99261918745">
+        <TheActiveSubscriptionsAre-row NodeName="Publishing" MessageType="FubuTransportation.Storyteller.Support.OneMessage" Source="memory://harness/publisher1" Receiver="memory://harness/subscriber1" />
+      </rows>
+    </TheActiveSubscriptionsAre>
+    <ForNode Key="PublisherTwo" />
+    <TheActiveSubscriptionsAre>
+      <rows id="8780079d-33c4-4c0d-a8b2-704960d46b38">
+        <TheActiveSubscriptionsAre-row NodeName="Publishing" MessageType="FubuTransportation.Storyteller.Support.OneMessage" Source="memory://harness/publisher1" Receiver="memory://harness/subscriber1" />
+      </rows>
+    </TheActiveSubscriptionsAre>
+    <ForNode Key="PublisherThree" />
+    <TheActiveSubscriptionsAre>
+      <rows id="777007e5-c9ef-4103-bee4-e3a029eebf9b">
+        <TheActiveSubscriptionsAre-row NodeName="Publishing" MessageType="FubuTransportation.Storyteller.Support.OneMessage" Source="memory://harness/publisher1" Receiver="memory://harness/subscriber1" />
+      </rows>
+    </TheActiveSubscriptionsAre>
+  </Subscriptions>
+</Spec>

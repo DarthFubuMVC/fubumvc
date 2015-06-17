@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<Test name="All messages in a batch are processed" lifecycle="Regression" retryAttemptNumber="0">
+  <BatchMessage>
+    <SendBatch isStep="True">
+      <DefineBatchMessage>
+        <DescriptionIs isStep="True" description="The batch" />
+        <SendColor isStep="True" color="Red" />
+        <SendDirection isStep="True" direction="North" />
+        <SendState isStep="True" state="Texas" />
+        <SendTeam isStep="True" team="Chiefs" />
+      </DefineBatchMessage>
+    </SendBatch>
+    <TheRecordedMessagesAre isStep="True">
+      <Rows>
+        <row isStep="True" expected="Starting: The batch" />
+        <row isStep="True" expected="Color: Red" />
+        <row isStep="True" expected="Direction: North" />
+        <row isStep="True" expected="State: Texas" />
+        <row isStep="True" expected="Team: Chiefs" />
+        <row isStep="True" expected="Finishing: The batch" />
+      </Rows>
+    </TheRecordedMessagesAre>
+  </BatchMessage>
+</Test>

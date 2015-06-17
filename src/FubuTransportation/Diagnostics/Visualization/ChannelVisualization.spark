@@ -1,0 +1,19 @@
+<viewdata model="FubuTransportation.Diagnostics.Visualization.ChannelVisualization" />
+
+<h1>Channels and Transports for Node "!{Model.Graph.Name}"</h1>
+
+<br></br>
+
+<h3>Transports</h3>
+!{Model.Transports}
+<hr></hr>
+
+<h3>Serializers</h3>
+!{Model.Serializers}
+<hr></hr>
+
+<h3>Channels</h3>
+!{Model.Channels}
+
+<h3>Subscriptions</h3>
+!{Model.Subscriptions}

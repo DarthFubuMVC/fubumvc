@@ -1,0 +1,25 @@
+<viewdata model="FubuTransportation.LightningQueues.Diagnostics.QueueManagersVisualization" />
+
+<h1>Listing of all LightningQueues QueueManagers / Queues</h1>
+
+<br></br>
+
+<h2>QueueManagers</h2>
+<hr></hr>
+<for each="var queueInfo in Model.QueueManagers">
+  <ul style="float:left">
+    <li>Storage Path: ${queueInfo.Path}</li>
+    <li>Port: ${queueInfo.Port}</li>
+    <li>Keep Outgoing History: ${queueInfo.EnableOutgoingMessageHistory}</li>
+    <li>Keep Processed History: ${queueInfo.EnableProcessedMessageHistory}</li>
+  </ul>
+  <ul style="float:left">
+    <li>Oldest Outgoing History: ${queueInfo.OldestMessageInOutgoingHistory}</li>
+    <li>Oldest Processed History: ${queueInfo.OldestMessageInProcessedHistory}</li>
+    <li>Max # in Outgoing History: ${queueInfo.NumberOfMessagesToKeepInOutgoingHistory}</li>
+    <li>Max # in Processed History: ${queueInfo.NumberOfMessagesToKeepInProcessedHistory}</li>
+    <li>Max # MessageId's to keep: ${queueInfo.NumberOfMessagIdsToKeep}</li>
+  </ul>
+  !{queueInfo.Queues}
+  <hr></hr>
+</for>

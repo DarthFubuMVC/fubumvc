@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<Test name="Remove local subscriptions" lifecycle="Regression" retryAttemptNumber="0">
+  <Subscriptions>
+    <LoadNode isStep="True" Key="Publisher" Registry="PublishingRegistry" ReplyUri="memory://publisher1" />
+    <LoadNode isStep="True" Key="Subscriber" Registry="HasLocalSubscriptionsRegistry" ReplyUri="memory://subscriber1" />
+    <LoadNode isStep="True" Key="SubscriberTwo" Registry="HasLocalSubscriptionsRegistry" ReplyUri="memory://subscriber2" />
+    <NodeRemovesLocalSubscritpions isStep="True" Key="Subscriber" />
+    <ForNode isStep="True" Key="Publisher" />
+    <TheActiveSubscriptionsAre isStep="True">
+      <rows>
+        <row isStep="True" NodeName="Publishing" MessageType="FubuTransportation.Storyteller.Support.OneMessage" Source="memory://harness/publisher1" Receiver="memory://subscriber2" />
+        <row isStep="True" NodeName="Publishing" MessageType="FubuTransportation.Storyteller.Support.TwoMessage" Source="memory://harness/publisher1" Receiver="memory://subscriber2" />
+      </rows>
+    </TheActiveSubscriptionsAre>
+    <ThePersistedSubscriptionsAre isStep="True">
+      <rows>
+        <row isStep="True" NodeName="Publishing" MessageType="FubuTransportation.Storyteller.Support.OneMessage" Source="memory://harness/publisher1" Receiver="memory://subscriber2" />
+        <row isStep="True" NodeName="Publishing" MessageType="FubuTransportation.Storyteller.Support.TwoMessage" Source="memory://harness/publisher1" Receiver="memory://subscriber2" />
+      </rows>
+    </ThePersistedSubscriptionsAre>
+    <ForNode isStep="True" Key="Subscriber" />
+    <Comment><![CDATA[The other "LocalSubscriber" node will still have its subscriptions.]]></Comment>
+    <TheLocalSubscriptionsAre isStep="True">
+      <rows>
+        <row isStep="True" NodeName="LocalSubscriber" MessageType="FubuTransportation.Storyteller.Support.OneMessage" Source="memory://harness/publisher1" Receiver="memory://subscriber2" />
+        <row isStep="True" NodeName="LocalSubscriber" MessageType="FubuTransportation.Storyteller.Support.TwoMessage" Source="memory://harness/publisher1" Receiver="memory://subscriber2" />
+      </rows>
+    </TheLocalSubscriptionsAre>
+  </Subscriptions>
+</Test>

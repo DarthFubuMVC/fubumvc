@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<Test name="Multiple nodes of global subscriptions does not duplicate entries" lifecycle="Regression">
+  <Subscriptions>
+    <LoadNode isStep="True" Key="Publisher" Registry="PublishingRegistry" ReplyUri="memory://publisher1" />
+    <LoadNode isStep="True" Key="Subscriber" Registry="HasGlobalSubscriptionsRegistry" ReplyUri="memory://subscriber1" />
+    <LoadNode isStep="True" Key="Subscriber" Registry="HasGlobalSubscriptionsRegistry" ReplyUri="memory://subscriber2" />
+    <LoadNode isStep="True" Key="Subscriber" Registry="HasGlobalSubscriptionsRegistry" ReplyUri="memory://subscriber3" />
+    <ForNode isStep="True" Key="Publisher" />
+    <TheActiveSubscriptionsAre isStep="True">
+      <rows>
+        <row isStep="True" NodeName="Publishing" MessageType="FubuTransportation.Storyteller.Support.OneMessage" Source="memory://harness/publisher1" Receiver="memory://harness/subscriber1" />
+      </rows>
+    </TheActiveSubscriptionsAre>
+    <ThePersistedSubscriptionsAre isStep="True">
+      <rows>
+        <row isStep="True" NodeName="Publishing" MessageType="FubuTransportation.Storyteller.Support.OneMessage" Source="memory://harness/publisher1" Receiver="memory://harness/subscriber1" />
+      </rows>
+    </ThePersistedSubscriptionsAre>
+    <ThePersistedTransportNodesAre isStep="True">
+      <rows>
+        <row isStep="True" NodeName="Publishing" Address="memory://publisher1/" />
+      </rows>
+    </ThePersistedTransportNodesAre>
+    <ForNode isStep="True" Key="Subscriber" />
+    <ThePersistedTransportNodesAre isStep="True">
+      <rows>
+        <row isStep="True" NodeName="GlobalSubscriber" Address="memory://subscriber1/" />
+        <row isStep="True" NodeName="GlobalSubscriber" Address="memory://subscriber2/" />
+        <row isStep="True" NodeName="GlobalSubscriber" Address="memory://subscriber3/" />
+      </rows>
+    </ThePersistedTransportNodesAre>
+  </Subscriptions>
+</Test>

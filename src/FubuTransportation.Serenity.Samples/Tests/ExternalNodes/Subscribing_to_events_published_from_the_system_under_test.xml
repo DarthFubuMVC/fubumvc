@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<Test name="Subscribing to events published from the system under test" lifecycle="Regression" retryAttemptNumber="0">
+  <MultipleEndpoints>
+    <SetupAnotherService isStep="True" />
+    <SendCommandFromNode isStep="True" name="Client 1" />
+    <OtherServiceReceivedEvent isStep="True" />
+  </MultipleEndpoints>
+</Test>

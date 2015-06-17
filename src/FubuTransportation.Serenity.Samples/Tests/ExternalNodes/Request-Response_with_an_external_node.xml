@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<Test name="Request-Response with an external node" lifecycle="Acceptance" retryAttemptNumber="0">
+  <MultipleEndpoints>
+    <SetupAnotherService isStep="True" />
+    <SendRequestToOtherService isStep="True" />
+    <SystemReceivedRequestedResponse isStep="True" />
+  </MultipleEndpoints>
+</Test>
