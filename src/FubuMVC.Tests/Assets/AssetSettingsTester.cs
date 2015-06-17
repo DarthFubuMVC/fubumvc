@@ -206,6 +206,7 @@ namespace FubuMVC.Tests.Assets
             search.Include.ShouldContain(".eot");
             search.Include.ShouldContain(".ttf");
             search.Include.ShouldContain(".woff");
+            search.Include.ShouldContain(".woff2");
         }
 
         [Test]

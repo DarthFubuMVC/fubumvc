@@ -212,7 +212,7 @@ namespace FubuMVC.Core.Assets
         /// <summary>
         /// Add additional file extensions as allowable assets
         /// </summary>
-        public IList<string> AllowableExtensions = new List<string>{".eot", ".ttf", ".woff", ".svg", ".map"};
+        public IList<string> AllowableExtensions = new List<string>{".eot", ".ttf", ".woff", ".woff2", ".svg", ".map"};
 
 
         /// <summary>
