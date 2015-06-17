@@ -210,6 +210,11 @@ namespace Serenity
 
         public virtual IExecutionContext CreateContext()
         {
+            if (_application == null)
+            {
+                startAll();
+            }
+
             _application.Services.GetInstance<IRequestHistoryCache>().Clear();
 
             var context = new FubuMvcContext(this);
@@ -258,8 +263,6 @@ namespace Serenity
 
                 _runtime.Facility.Register(typeof (IApplicationUnderTest), ObjectDef.ForValue(_application));
                 _runtime.Facility.Register(typeof (IRemoteSubsystems), ObjectDef.ForValue(this));
-
-                return Task.Factory.StartNew(browserLifecycle.Warmup);
             });
         }
 

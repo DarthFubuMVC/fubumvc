@@ -135,10 +135,6 @@ namespace Serenity
             return _driver.IsValueCreated;
         }
 
-        public void Warmup()
-        {
-            Debug.WriteLine("Starting up browser of type " + _driver.Value.GetType().Name);
-        }
 
         private IWebDriver BuildDriverAndIncrementLifecycleCount()
         {

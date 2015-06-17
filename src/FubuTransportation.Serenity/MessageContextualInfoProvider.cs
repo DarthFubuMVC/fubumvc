@@ -26,6 +26,16 @@ namespace FubuTransportation.Serenity
             get { return "Messaging Log"; }
         }
 
+        public string ShortTitle
+        {
+            get { return "FubuTransportation"; }
+        }
+
+        public int Count
+        {
+            get { return _session.TopLevelMessages().Count(); }
+        }
+
         public IEnumerable<HtmlTag> GenerateReports()
         {
             yield return new HtmlTag("h3").Text("Message History");

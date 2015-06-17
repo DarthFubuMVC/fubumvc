@@ -1,8 +1,12 @@
 /** @jsx React.DOM */
 
 
+
+
 class FubuDiagnosticsView {
 	constructor(view, section){
+		var React = require('react');
+
 		this.url = section.key + '/' + view.key;
 		this.key = view.key;
 
@@ -35,6 +39,11 @@ class FubuDiagnosticsView {
 				});
 			}
 		}
+
+		var Router = require('react-router'); // or var Router = ReactRouter; in browsers
+
+		var Route = Router.Route, DefaultRoute = Router.DefaultRoute,
+		  Link=Router.Link, RouteHandler = Router.RouteHandler;
 
 		this.route = (<Route name={routeName} path={this.url} handler={component}/>);
 		

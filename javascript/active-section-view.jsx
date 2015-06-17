@@ -2,6 +2,12 @@
 
 var React = require('react');
 
+var Router = require('react-router'); // or var Router = ReactRouter; in browsers
+var Route = Router.Route, DefaultRoute = Router.DefaultRoute,
+  Link=Router.Link, RouteHandler = Router.RouteHandler;
+
+var SectionLinks = require('./section-links');
+
 var ActiveSectionView = React.createClass({
 	mixins: [ Router.State ],
 

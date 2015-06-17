@@ -53,6 +53,16 @@ namespace Serenity
             _system = system;
         }
 
+        public string ShortTitle
+        {
+            get { return "FubuMVC"; }
+        }
+
+        public int Count
+        {
+            get { return _logs.Count; }
+        }
+
 
         public string ToHtml()
         {
