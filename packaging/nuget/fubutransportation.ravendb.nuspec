@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <id>FubuTransportation.RavenDb</id>
+    <version>0.0.0</version>
+    <authors>Jeremy D. Miller, Corey Kaylor</authors>
+    <owners>Jeremy D. Miller, Corey Kaylor</owners>
+    <licenseUrl>https://github.com/DarthFubuMVC/fubutransportation/raw/master/license.txt</licenseUrl>
+    <projectUrl>https://github.com/DarthFubuMVC/FubuTransportation</projectUrl>
+    <iconUrl>https://github.com/DarthFubuMVC/fubu-collateral/raw/master/Icons/FubuMvc_256.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>LightningQueues integration for FubuTransporation projects</description>
+    <tags>fubumvc service bus ravendb</tags>
+    <dependencies>
+      <dependency id="FubuTransportation" />
+      <dependency id="FubuMVC.RavenDb45" />
+    </dependencies>
+  </metadata>
+  <files xmlns="">
+    <file src="..\..\src\FubuTransportation.RavenDb\bin\release\FubuTransportation.RavenDb.dll" target="lib\4.5" />
+    <file src="..\..\src\FubuTransportation.RavenDb\bin\release\FubuTransportation.RavenDb.pdb" target="lib\4.5" />
+  </files>
+</package>
