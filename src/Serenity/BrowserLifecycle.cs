@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using FubuCore;
@@ -132,6 +133,11 @@ namespace Serenity
         public bool HasBeenStarted()
         {
             return _driver.IsValueCreated;
+        }
+
+        public void Warmup()
+        {
+            Debug.WriteLine("Starting up browser of type " + _driver.Value.GetType().Name);
         }
 
         private IWebDriver BuildDriverAndIncrementLifecycleCount()

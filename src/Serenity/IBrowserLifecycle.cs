@@ -12,5 +12,6 @@ namespace Serenity
         IWebDriver Driver { get; }
         void Recycle();
         bool HasBeenStarted();
+        void Warmup();
     }
 }
