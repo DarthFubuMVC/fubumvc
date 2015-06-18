@@ -93,9 +93,11 @@
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ApplicationUnderTest.cs" />
+    <Compile Include="AssetTagsState.cs" />
     <Compile Include="BrowserLifecycle.cs" />
     <Compile Include="BrowserType.cs" />
     <Compile Include="ChromeBrowser.cs" />
+    <Compile Include="ContextualNavigationLogger.cs" />
     <Compile Include="FirefoxBrowser.cs" />
     <Compile Include="Fixtures\DateTimeExtensions.cs" />
     <Compile Include="Fixtures\Grammars\CheckValueGrammar.cs" />
@@ -115,6 +117,11 @@
     <Compile Include="Fixtures\Handlers\TextboxElementHandler.cs" />
     <Compile Include="Fixtures\ScreenFixture.cs" />
     <Compile Include="Fixtures\WebDriverExtensions.cs" />
+    <Compile Include="IAfterNavigation.cs" />
+    <Compile Include="INavigationLogger.cs" />
+    <Compile Include="NulloAfterNavigation.cs" />
+    <Compile Include="NulloNavigationLogger.cs" />
+    <Compile Include="ScreenDriver.cs" />
     <Compile Include="UrlExtensions.cs" />
     <Compile Include="WebDriver\EmbeddedDrivers\ChromeEmbeddedDriver.cs" />
     <Compile Include="WebDriver\EmbeddedDrivers\EmbeddedBrowserLifecycle.cs" />

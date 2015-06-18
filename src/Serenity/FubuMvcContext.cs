@@ -41,6 +41,11 @@ namespace Serenity
 
             _system.ApplyLogging(context);
         }
+
+        public void BeforeExecution(ISpecContext context)
+        {
+           _system.Application.Navigation.Logger = new ContextualNavigationLogger(context);
+        }
     }
 
     public class RequestReporter : Report

@@ -95,7 +95,14 @@ namespace FubuMVC.Core.Diagnostics
                     html = determineHtml(step.Log)
                 };
 
-                (step.Log as BehaviorFinish).CallIfNotNull(x => stack.Pop());
+                (step.Log as BehaviorFinish).CallIfNotNull(x =>
+                {
+                    if (stack.Any())
+                    {
+                        stack.Pop();
+                    }
+                    
+                });
             }
         }
 
