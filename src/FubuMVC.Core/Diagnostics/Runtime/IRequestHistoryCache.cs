@@ -8,6 +8,8 @@ namespace FubuMVC.Core.Diagnostics.Runtime
         void Store(RequestLog log);
         IEnumerable<RequestLog> RecentReports();
 
+        string CurrentSessionTag { get; set; }
+
         RequestLog Find(Guid id);
         void Clear();
     }

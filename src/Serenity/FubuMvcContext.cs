@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
@@ -12,6 +13,7 @@ namespace Serenity
     public class FubuMvcContext : IExecutionContext
     {
         private readonly FubuMvcSystem _system;
+        private readonly string _sessionTag = Guid.NewGuid().ToString();
 
         public FubuMvcContext(FubuMvcSystem system)
         {
@@ -35,7 +37,8 @@ namespace Serenity
         public virtual void AfterExecution(ISpecContext context)
         {
             var reporter = new RequestReporter(_system);
-            reporter.Append(Services.GetInstance<IRequestHistoryCache>().RecentReports().ToArray());
+            var requestLogs = Services.GetInstance<IRequestHistoryCache>().RecentReports().Where(x => x.SessionTag == _sessionTag).ToArray();
+            reporter.Append(requestLogs);
 
             context.Reporting.Log(reporter);
 
@@ -44,6 +47,7 @@ namespace Serenity
 
         public void BeforeExecution(ISpecContext context)
         {
+            Services.GetInstance<IRequestHistoryCache>().CurrentSessionTag = _sessionTag;
            _system.Application.Navigation.Logger = new ContextualNavigationLogger(context);
         }
     }

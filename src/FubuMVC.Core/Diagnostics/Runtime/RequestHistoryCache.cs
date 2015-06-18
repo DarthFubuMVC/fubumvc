@@ -17,6 +17,8 @@ namespace FubuMVC.Core.Diagnostics.Runtime
 
         public void Store(RequestLog log)
         {
+            log.SessionTag = CurrentSessionTag;
+
             _reports.Enqueue(log);
             while (_reports.Count > _settings.MaxRequests)
             {
@@ -29,6 +31,8 @@ namespace FubuMVC.Core.Diagnostics.Runtime
         {
             return _reports.ToList();
         }
+
+        public string CurrentSessionTag { get; set; }
 
         public RequestLog Find(Guid id)
         {

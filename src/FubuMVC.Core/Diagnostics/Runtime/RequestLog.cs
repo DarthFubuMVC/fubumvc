@@ -87,6 +87,7 @@ namespace FubuMVC.Core.Diagnostics.Runtime
         public IEnumerable<Header> RequestHeaders { get; set; }
         public NameValueCollection FormData { get; set; }
         public NameValueCollection QueryString { get; set; }
+        public string SessionTag { get; set; }
 
         public IEnumerable<RequestStep> AllSteps()
         {

@@ -215,8 +215,6 @@ namespace Serenity
                 startAll();
             }
 
-            _application.Services.GetInstance<IRequestHistoryCache>().Clear();
-
             var context = new FubuMvcContext(this);
 
             _contextCreationActions.Each(x => x());

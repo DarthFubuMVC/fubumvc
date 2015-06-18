@@ -26,30 +26,48 @@ namespace FubuMVC.Core.Diagnostics.Runtime.Tracing
         {
             var log = new RequestLog
             {
-                Hash = _currentChain.OriginatingChain.GetHashCode(),
+                Hash = _currentChain.Current.GetHashCode(),
                 Time = _systemTime.UtcNow(),
             };
 
-            if (_settings.TraceLevel == TraceLevel.Verbose)
+            if (_currentChain.IsInPartial())
             {
-                heavyTrace(log);
-            }
+                log.HttpMethod = "Partial";
 
-            if (_currentChain.OriginatingChain is RoutedChain)
-            {
-                log.HttpMethod = _request.HttpMethod();
-                log.Endpoint = _request.RelativeUrl();
-            }
-            else if (_currentChain.OriginatingChain.InputType() != null)
-            {
-                log.Endpoint = _currentChain.OriginatingChain.InputType().FullName;
-                log.HttpMethod = "n/a";
+                if (_currentChain.Current.InputType() != null)
+                {
+                    log.Endpoint = _currentChain.Current.InputType().FullName;
+                }
+                else
+                {
+                    log.Endpoint = _currentChain.Current.Title();
+                }
             }
             else
             {
-                log.Endpoint = _currentChain.OriginatingChain.Title();
-                log.HttpMethod = "n/a";
+                if (_settings.TraceLevel == TraceLevel.Verbose)
+                {
+                    heavyTrace(log);
+                }
+
+                if (_currentChain.Current is RoutedChain)
+                {
+                    log.HttpMethod = _request.HttpMethod();
+                    log.Endpoint = _request.RelativeUrl();
+                }
+                else if (_currentChain.Current.InputType() != null)
+                {
+                    log.Endpoint = _currentChain.Current.InputType().FullName;
+                    log.HttpMethod = "n/a";
+                }
+                else
+                {
+                    log.Endpoint = _currentChain.Current.Title();
+                    log.HttpMethod = "n/a";
+                }
+
             }
+
 
             return log;
         }

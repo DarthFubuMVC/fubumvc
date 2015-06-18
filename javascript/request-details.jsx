@@ -6,7 +6,7 @@ var Router = require('react-router');
 
 var HeaderTable = React.createClass({
 	render: function(){
-		if (this.props.headers.length == 0){
+		if (!(this.props.headers) || this.props.headers.length == 0){
 			return (
 				<div></div>
 			);
@@ -31,7 +31,7 @@ var HeaderTable = React.createClass({
 
 var PropTable = React.createClass({
 	render: function(){
-		if (this.props.data.length == 0){
+		if (!(this.props.data) || this.props.data.length == 0){
 			return (
 				<div></div>
 			);

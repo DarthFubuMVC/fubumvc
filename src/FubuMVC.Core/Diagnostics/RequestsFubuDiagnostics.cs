@@ -57,15 +57,15 @@ namespace FubuMVC.Core.Diagnostics
             var request = log.ToDictionary();
             dict.Add("request", request);
 
-            
-            request.AddHeaders("request-headers", log.RequestHeaders);
-            request.AddHeaders("response-headers", log.ResponseHeaders);
+
+            if (log.RequestHeaders != null) request.AddHeaders("request-headers", log.RequestHeaders);
+            if (log.ResponseHeaders != null) request.AddHeaders("response-headers", log.ResponseHeaders);
 
             var chain = _graph.Behaviors.FirstOrDefault(x => x.GetHashCode() == log.Hash);
             request.Add("title", chain.Title());
 
-            request.AddNameValues("querystring", log.QueryString);
-            request.AddNameValues("form", log.FormData);
+            if (log.QueryString != null) request.AddNameValues("querystring", log.QueryString);
+            if (log.FormData != null) request.AddNameValues("form", log.FormData);
 
             request.Add("logs", buildLogs(log).ToArray());
 

@@ -20,15 +20,8 @@ _.assign(FubuDiagnostics, {
     get: function (key, params, callback) {
         var url = this.toUrl(key, params);
         $.get(url, function(data){
-            if (data instanceof String){
-                var parsed = JSON.parse(data);
-                callback(parsed);
-            }
-            else {
-                callback(data);
-            }
-
-
+            var parsed = JSON.parse(data.toString());
+            callback(parsed);
         });
     },
 
