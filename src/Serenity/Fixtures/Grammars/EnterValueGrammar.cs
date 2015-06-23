@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text;
 using OpenQA.Selenium;
 using Serenity.Fixtures.Handlers;
 using StoryTeller.Conversion;
@@ -17,7 +18,7 @@ namespace Serenity.Fixtures.Grammars
             var handler = ElementHandlers.FindHandler(element);
             handler.EnterData(SearchContext, element, values.Get(Cell.Key));
 
-            yield return CellResult.Ok(Cell.Key);
+            return new [] {CellResult.Ok(Cell.Key)};
         }
     }
 }

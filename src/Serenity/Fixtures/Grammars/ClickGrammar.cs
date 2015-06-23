@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using OpenQA.Selenium;
 using StoryTeller.Conversion;
 using StoryTeller.Results;
@@ -18,7 +19,7 @@ namespace Serenity.Fixtures.Grammars
 
             element.Click();
 
-            yield return CellResult.Ok(Cell.Key);
+            return new [] { CellResult.Ok(Cell.Key) };
         }
 
     }

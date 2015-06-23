@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text;
 using OpenQA.Selenium;
 using Serenity.Fixtures.Handlers;
 using StoryTeller.Conversion;
@@ -21,11 +22,11 @@ namespace Serenity.Fixtures.Grammars
             var matchingHandler = handler as IMatchingHandler ?? new BasicMatchingHandler(handler);
             if (matchingHandler.MatchesData(element, expectedValue))
             {
-                yield return new CellResult(Cell.Key, ResultStatus.success);
+                return new [] { new CellResult(Cell.Key, ResultStatus.success) };
             }
             else
             {
-                yield return new CellResult(Cell.Key, ResultStatus.failed){actual = handler.GetData(SearchContext, element)};
+                return new [] { new CellResult(Cell.Key, ResultStatus.failed){actual = handler.GetData(SearchContext, element)} };
             }
         }
     }
