@@ -23,7 +23,7 @@ namespace Serenity.Fixtures
         private IApplicationUnderTest _application;
         private readonly Stack<ISearchContext> _searchContexts = new Stack<ISearchContext>();
 
-        protected ISearchContext SearchContext
+        public ISearchContext SearchContext
         {
             get
             {

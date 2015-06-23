@@ -33,7 +33,7 @@ namespace Serenity.Fixtures.Grammars
 
         protected ISearchContext SearchContext
         {
-            get { return _fixture.Driver; }
+            get { return _fixture.SearchContext; }
         }
 
         public GestureConfig Config
