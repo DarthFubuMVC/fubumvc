@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using FubuCore;
 using OpenQA.Selenium;
@@ -67,7 +68,17 @@ namespace Serenity.Fixtures.Grammars
             var element = _config.Finder(SearchContext);
             StoryTellerAssert.Fail(element == null, "Could not find an element w/ description: " + _config.Description);
 
-            return execute(element, values);
+            try
+            {
+                return execute(element, values);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Use exception metadata with and add a custom exception formatter to show exception metadata
+                //       See: https://github.com/storyteller/Storyteller/issues/400
+                // ex.Data.Add("Gesture Description", _config.Description);
+                throw new Exception("Gesture failed. [Description: {0}]".ToFormat(_config.Description), ex);
+            }
         }
 
         protected void assertCondition(bool condition, string message)
