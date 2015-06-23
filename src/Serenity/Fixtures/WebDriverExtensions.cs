@@ -41,6 +41,18 @@ namespace Serenity.Fixtures
             return (T)driver.InjectJavascript(script);
         }
 
+        public static IWebElement FindElementOrNull(this ISearchContext context, By selector)
+        {
+            try
+            {
+                return context.FindElement(selector);
+            }
+            catch (NoSuchElementException)
+            {
+                return null;
+            }
+        }
+
         public static IWebElement FindElementByData(this IWebDriver driver, string attribute, string value)
         {
             return driver.FindElement(By.CssSelector(CssSelectorByData(attribute, value)));

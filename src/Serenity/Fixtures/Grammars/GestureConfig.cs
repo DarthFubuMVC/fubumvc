@@ -18,7 +18,7 @@ namespace Serenity.Fixtures.Grammars
             return new GestureConfig{
                 Finder = driver =>
                 {
-                    return driver.FindElement(By.Name(name)) ?? driver.FindElement(By.Id(name));
+                    return driver.FindElementOrNull(By.Name(name)) ?? driver.FindElementOrNull(By.Id(name));
                 },
                 CellName = name,
                 Description = "Name/Id=" + name
