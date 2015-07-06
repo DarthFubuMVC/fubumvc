@@ -104,6 +104,7 @@
     <Compile Include="Caching\ResourceHashTester.cs" />
     <Compile Include="Caching\VaryByResourceTester.cs" />
     <Compile Include="Caching\VaryByThreadCultureTester.cs" />
+    <Compile Include="client_message_mechanics_Tester.cs" />
     <Compile Include="ConfigurationActionSetTester.cs" />
     <Compile Include="deactivators_are_called_in_fuburuntime_dispose.cs" />
     <Compile Include="DiagnosticsSettingsTester.cs" />
@@ -412,7 +413,8 @@
     <Compile Include="FubuBootstrapperIntegrationTester.cs" />
     <Compile Include="FubuRegistryTester.cs" />
     <Compile Include="HtmlGenerationTestExtensions.cs" />
-    <Compile Include="Registration\BehaviorGraphTester.cs"></Compile>
+    <Compile Include="Registration\BehaviorGraphTester.cs">
+    </Compile>
     <Compile Include="Registration\Conventions\ActionSourceTester.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConventionTester.cs" />
     <Compile Include="Registration\Conventions\CustomConventionIntegratedTester.cs" />

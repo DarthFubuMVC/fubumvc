@@ -92,6 +92,7 @@
     <Compile Include="Assets\Templates\TemplateGraph.cs" />
     <Compile Include="AsymmetricJsonAttribute.cs" />
     <Compile Include="Caching\CacheAttribute.cs" />
+    <Compile Include="ClientMessage.cs" />
     <Compile Include="Configuration\BehaviorGraphBuilder.cs" />
     <Compile Include="Behaviors\AsyncContinueWithBehavior.cs" />
     <Compile Include="Behaviors\Chrome\ChromeAttribute.cs" />

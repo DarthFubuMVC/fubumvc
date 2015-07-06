@@ -1,5 +1,4 @@
-﻿using FubuJson;
-using FubuMVC.Core.Behaviors;
+﻿using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 

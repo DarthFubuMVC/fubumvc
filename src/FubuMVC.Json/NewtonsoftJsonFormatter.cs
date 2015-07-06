@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using FubuCore;
-using FubuJson;
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime.Formatters;
 

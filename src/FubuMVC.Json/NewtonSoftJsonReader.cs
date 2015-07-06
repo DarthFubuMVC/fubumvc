@@ -1,6 +1,5 @@
 using System.IO;
 using System.Text;
-using FubuJson;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
 
