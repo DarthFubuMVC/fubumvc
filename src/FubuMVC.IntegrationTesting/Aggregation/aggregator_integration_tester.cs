@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime.Aggregation;
 using FubuMVC.Json;
@@ -180,6 +182,34 @@ namespace FubuMVC.IntegrationTesting.Aggregation
             readQuery.queries[2].type.ShouldEqual("input-2");
             readQuery.queries[3].query.ShouldBeNull();
         }
+
+        [Test]
+        public void run_aggregated_query_through_http_endpoint()
+        {
+            var query = new AggregatedQuery();
+            query.AddQuery(new AggregationEndpoint.Query1 { Name = "Jeremy Maclin" });
+            query.Resource<AggregationEndpoint.Resource2>();
+            query.AddQuery(new AggregationEndpoint.Input2());
+            query.Resource<AggregationEndpoint.Resource4>();
+
+            TestHost.Scenario(_ =>
+            {
+                _.JsonData(query);
+
+                _.StatusCodeShouldBeOk();
+                _.ContentTypeShouldBe("application/json");
+
+                var json = _.Response.Body.ReadAsText();
+
+                var response =
+                    new JsonSerializer().Deserialize<AggregationResponse>(new JsonTextReader(new StringReader(json)));
+
+
+                response.responses.Count().ShouldEqual(4);
+                response.responses.Select(x => x.type)
+                    .ShouldHaveTheSameElementsAs("resource-1", "resource-2", "resource-3", "resource-4");
+            });
+        }
     }
 
     public class AggregationEndpoint
@@ -209,6 +239,11 @@ namespace FubuMVC.IntegrationTesting.Aggregation
         public Resource4 get_fourth_resource()
         {
             return new Resource4();
+        }
+
+        public AggregationResponse post_aggregated_query(AggregatedQuery query)
+        {
+            return _aggregator.QueryAggregate(query);
         }
 
         public string[] get_aggregation()
