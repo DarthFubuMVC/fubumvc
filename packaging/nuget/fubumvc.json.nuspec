@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <id>FubuMVC.Json</id>
+    <version>0.0</version>
+    <authors>Jeremy Miller, et al.</authors>
+    <owners>Jeremy Miller, Joshua Arnold</owners>
+    <licenseUrl>https://github.com/DarthFubuMVC/fubumvc/raw/master/license.txt</licenseUrl>
+    <projectUrl>http://mvc.fubu-project.org/</projectUrl>
+    <iconUrl>https://github.com/DarthFubuMVC/fubu-collateral/raw/master/Icons/FubuMvc_256.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>JSON.NET adapters for FubuMVC to bring the power of model-binding to JSON usage.</description>
+    <tags>fubumvc json modelbinding</tags>
+    <dependencies>
+      <dependency id="FubuJson" version="0.2.0.6" />
+      <dependency id="FubuMVC.Core" version="0.9.8.1219" />
+      <dependency id="FubuMVC.Media" version="0.9.5.2" />
+      <dependency id="Newtonsoft.Json" version="4.0.8" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\..\src\FubuMVC.Json\bin\release\FubuMVC.Json.*" target="lib\net40" />
+  </files>
+</package>

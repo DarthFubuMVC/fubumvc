@@ -10,3 +10,4 @@ FubuMVC.Localization.Testing
 FubuTransportation.Testing
 FubuTransportation.RavenDb.Testing
 FubuTransportation.LightningQueues.Testing
+FubuMVC.Json.Tests
