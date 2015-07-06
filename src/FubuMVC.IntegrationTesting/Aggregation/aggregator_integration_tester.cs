@@ -1,8 +1,10 @@
 ﻿using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime.Aggregation;
+using FubuMVC.Json;
 using FubuTestingSupport;
 using HtmlTags;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using StructureMap;
 
@@ -152,9 +154,31 @@ namespace FubuMVC.IntegrationTesting.Aggregation
                 aggregatedResponse.responses[2].result.ShouldBeOfType<AggregationEndpoint.Resource3>();
                 aggregatedResponse.responses[3].result.ShouldBeOfType<AggregationEndpoint.Resource4>();
             }
+        }
 
+        [Test]
+        public void use_aggregated_query_reader()
+        {
+            var query = new AggregatedQuery();
+            query.AddQuery(new AggregationEndpoint.Query1 { Name = "Jeremy Maclin" });
+            query.Resource<AggregationEndpoint.Resource2>();
+            query.AddQuery(new AggregationEndpoint.Input2());
+            query.Resource<AggregationEndpoint.Resource4>();
 
-            
+            var json = JsonUtil.ToJson(query);
+
+            var messageTypes = TestHost.Service<IClientMessageCache>();
+
+            var readQuery = new AggregatedQueryReader().Read(new JsonSerializer(), messageTypes, json);
+
+            readQuery.ShouldNotBeNull();
+            readQuery.queries[0].type.ShouldEqual("query-1");
+            readQuery.queries[0].query.ShouldBeOfType<AggregationEndpoint.Query1>()
+                .Name.ShouldEqual("Jeremy Maclin");
+
+            readQuery.queries[1].type.ShouldEqual("resource-2");
+            readQuery.queries[2].type.ShouldEqual("input-2");
+            readQuery.queries[3].query.ShouldBeNull();
         }
     }
 

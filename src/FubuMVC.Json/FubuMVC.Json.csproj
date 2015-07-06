@@ -66,8 +66,8 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AggregatedQueryReader.cs" />
     <Compile Include="AggregatedRegistry.cs" />
-    <Compile Include="AggregationClasses.cs" />
     <Compile Include="ApplyJsonBindingPolicy.cs" />
     <Compile Include="FubuJsonConverter.cs" />
     <Compile Include="IJsonSerializer.cs" />

@@ -17,6 +17,11 @@ namespace FubuMVC.Json
 		    _converters = converters;
 		}
 
+	    public JsonSerializer InnerSerializer()
+	    {
+	        return buildSerializer(false);
+	    }
+
 	    private JsonSerializer buildSerializer(bool includeMetadata)
 	    {
 	        var jsonSerializer = JsonSerializer.Create(_settings);

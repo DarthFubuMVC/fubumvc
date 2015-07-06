@@ -11,7 +11,7 @@ namespace FubuMVC.Json
         {
             var serializer = context.Services.GetInstance<IJsonSerializer>();
             var text = serializer.Serialize(target);
-            context.Writer.Write(text);
+            context.Writer.Write(mimeType, text);
         }
 
         public T Read<T>(IFubuRequestContext context)
