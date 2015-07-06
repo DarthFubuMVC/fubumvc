@@ -81,6 +81,27 @@ namespace FubuMVC.IntegrationTesting.Aggregation
                 resource.Name.ShouldEqual("Joe");
             });
         }
+
+        [Test]
+        public void client_message_cache_knows_its_chains()
+        {
+            var cache = TestHost.Service<IClientMessageCache>();
+            cache.AllClientMessages()
+                .ShouldHaveTheSameElementsAs(
+                    new ClientMessagePath { Message = "query-1", InputType = typeof(AggregationEndpoint.Query1), ResourceType = typeof(AggregationEndpoint.Resource1)},
+                    new ClientMessagePath { Message = "resource-2", InputType = null, ResourceType = typeof(AggregationEndpoint.Resource2)},
+                    new ClientMessagePath { Message = "input-2", InputType = typeof(AggregationEndpoint.Input2), ResourceType = typeof(AggregationEndpoint.Resource3)},
+                    new ClientMessagePath { Message = "resource-4", InputType = null, ResourceType = typeof(AggregationEndpoint.Resource4)}
+                );
+        }
+
+        [Test]
+        public void find_chain_by_message_type()
+        {
+            var cache = TestHost.Service<IClientMessageCache>();
+            cache.FindChain("query-1").InputType().ShouldEqual(typeof(AggregationEndpoint.Query1));
+            cache.FindChain("resource-4").ResourceType().ShouldEqual(typeof (AggregationEndpoint.Resource4));
+        }
     }
 
     public class AggregationEndpoint
@@ -139,11 +160,13 @@ namespace FubuMVC.IntegrationTesting.Aggregation
             .ToArray();
         }
 
+        [ClientMessage]
         public class Input1
         {
             
         }
 
+        [ClientMessage]
         public class Resource2
         {
             public override string ToString()
@@ -152,8 +175,10 @@ namespace FubuMVC.IntegrationTesting.Aggregation
             }
         }
 
+        [ClientMessage]
         public class Input2 { }
 
+        [ClientMessage]
         public class Resource3
         {
             public override string ToString()
@@ -162,6 +187,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
             }
         }
 
+        [ClientMessage]
         public class Resource4
         {
             public override string ToString()
@@ -170,11 +196,13 @@ namespace FubuMVC.IntegrationTesting.Aggregation
             }
         }
 
+        [ClientMessage]
         public class Query1
         {
             public string Name { get; set; }
         }
 
+        [ClientMessage]
         public class Resource1
         {
             public string Name { get; set; }

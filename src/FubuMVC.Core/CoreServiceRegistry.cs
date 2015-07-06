@@ -137,6 +137,8 @@ namespace FubuMVC.Core
             SetServiceIfNone<IVisualizer, Visualizer>();
 
             SetServiceIfNone<IAssetFinder, AssetFinderCache>();
+
+            SetServiceIfNone<IClientMessageCache, ClientMessageCache>();
         }
     }
 }

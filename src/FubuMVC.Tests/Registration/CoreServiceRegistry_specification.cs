@@ -171,6 +171,13 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void client_message_cache_is_registered_as_a_singleton()
+        {
+            ServiceRegistry.ShouldBeSingleton(typeof(IClientMessageCache)).ShouldBeTrue();
+            registeredTypeIs<IClientMessageCache, ClientMessageCache>();
+        }
+
+        [Test]
         public void display_formatter_is_registered()
         {
             registeredTypeIs<IDisplayFormatter, DisplayFormatter>();

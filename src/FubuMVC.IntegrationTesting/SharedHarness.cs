@@ -30,6 +30,11 @@ namespace FubuMVC.IntegrationTesting
 
         public static ManualResetEvent Finish = new ManualResetEvent(false);
 
+        public static T Service<T>()
+        {
+            return _host.Value.Services.GetInstance<T>();
+        }
+
         public static void Scenario(Action<Scenario> configuration)
         {
             _host.Value.Scenario(configuration);
