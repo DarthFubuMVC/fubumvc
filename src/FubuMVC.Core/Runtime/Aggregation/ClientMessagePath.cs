@@ -1,4 +1,5 @@
 ﻿using System;
+using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Runtime.Aggregation
 {
@@ -7,6 +8,7 @@ namespace FubuMVC.Core.Runtime.Aggregation
         public string Message { get; set; }
         public Type InputType { get; set; }
         public Type ResourceType { get; set; }
+        public BehaviorChain Chain { get; set; }
 
         protected bool Equals(ClientMessagePath other)
         {

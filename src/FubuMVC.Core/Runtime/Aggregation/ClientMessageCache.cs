@@ -46,7 +46,8 @@ namespace FubuMVC.Core.Runtime.Aggregation
                 {
                     Message = name,
                     InputType = chain.InputType(),
-                    ResourceType = chain.ResourceType()
+                    ResourceType = chain.ResourceType(),
+                    Chain = chain
                 });
             });
 

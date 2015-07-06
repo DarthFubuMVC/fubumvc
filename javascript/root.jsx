@@ -20,7 +20,7 @@ _.assign(FubuDiagnostics, {
     get: function (key, params, callback) {
         var url = this.toUrl(key, params);
         $.get(url, function(data){
-            var parsed = JSON.parse(data.toString());
+            var parsed = JSON.parse(JSON.stringify(data));
             callback(parsed);
         });
     },
@@ -76,6 +76,7 @@ require('./chain-details');
 require('./request-table.jsx');
 require('./request-details.jsx');
 require('./packaging');
+require('./client-messages');
 
 
 

@@ -124,6 +124,7 @@
     <Compile Include="Diagnostics\BehaviorChainExtensions.cs" />
     <Compile Include="Diagnostics\ChainFubuDiagnostics.cs" />
     <Compile Include="Diagnostics\ChildDescriptionTag.cs" />
+    <Compile Include="Diagnostics\ClientMessagesFubuDiagnostics.cs" />
     <Compile Include="Diagnostics\DescriptionPropertyTag.cs" />
     <Compile Include="Diagnostics\DescriptionBodyTag.cs" />
     <Compile Include="Diagnostics\DiagnosticChain.cs" />

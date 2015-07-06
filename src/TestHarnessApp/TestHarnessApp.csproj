@@ -69,6 +69,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AggregationEndpoint.cs" />
     <Compile Include="BlowsUpEndpoint.cs" />
     <Compile Include="Instrumentation\HelloTextBehavior.cs" />
     <Compile Include="Instrumentation\ErrorEndpoint.cs" />
