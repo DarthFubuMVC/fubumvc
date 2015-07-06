@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
-using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.UI;
 
@@ -12,13 +10,11 @@ namespace FubuMVC.Core.Runtime.Aggregation
     public class Aggregator : IAggregator, IAggregatorSource
     {
         private readonly IPartialInvoker _invoker;
-        private readonly IFubuRequest _models;
         private readonly IChainResolver _resolver;
 
-        public Aggregator(IPartialInvoker invoker, IFubuRequest models, IChainResolver resolver)
+        public Aggregator(IPartialInvoker invoker, IChainResolver resolver)
         {
             _invoker = invoker;
-            _models = models;
             _resolver = resolver;
         }
 
@@ -44,7 +40,7 @@ namespace FubuMVC.Core.Runtime.Aggregation
 
         public object ForQuery<T>(T query)
         {
-            var chain = _resolver.FindUniqueByType(typeof(T));
+            var chain = _resolver.FindUniqueByType(typeof (T));
             return _invoker.InvokeFast(chain, query);
         }
 
