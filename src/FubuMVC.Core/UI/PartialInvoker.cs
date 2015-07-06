@@ -74,13 +74,22 @@ namespace FubuMVC.Core.UI
             }
         }
 
-        public void InvokeFast(BehaviorChain chain)
+        public object InvokeFast(BehaviorChain chain, object input = null)
         {
             _request.Set(OutputPartialBehavior.None);
+            if (input != null)
+            {
+                _request.Set(chain.InputType(), input);
+            }
+
             try
             {
                 var partial = _factory.BuildPartial(chain);
                 partial.InvokePartial();
+
+                // TODO -- how to detect authorization failures here?
+                var resourceType = chain.ResourceType();
+                return _request.Has(resourceType) ? _request.Get(resourceType) : null;
             }
             finally
             {

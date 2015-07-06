@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Core.Registration.Querying;
@@ -66,9 +67,7 @@ namespace FubuMVC.IntegrationTesting.Http
             _request.Set(input);
 
             var chain = _resolver.FindUniqueByType(typeof (FastInput));
-            _partialInvoker.InvokeFast(chain);
-
-            var output = _request.Get<FastOutput>();
+            var output = _partialInvoker.InvokeFast(chain, input).As<FastOutput>();
 
             return "The name was " + output.Name;
         }

@@ -22,19 +22,6 @@ namespace FubuMVC.Core.Runtime.Aggregation
             _resolver = resolver;
         }
 
-        public object ExecuteChain(BehaviorChain chain, object input = null)
-        {
-            if (input != null)
-            {
-                _models.Set(chain.InputType(), input);
-            }
-
-            _invoker.InvokeFast(chain);
-
-            var resourceType = chain.ResourceType();
-            return _models.Has(resourceType) ? _models.Get(resourceType) : null;
-        }
-
 
         public IEnumerable<object> Fetch(AggregateRequest request)
         {
@@ -52,13 +39,13 @@ namespace FubuMVC.Core.Runtime.Aggregation
         public object ForInputType(Type inputType)
         {
             var chain = _resolver.FindUniqueByType(inputType);
-            return ExecuteChain(chain);
+            return _invoker.InvokeFast(chain, null);
         }
 
         public object ForQuery<T>(T query)
         {
             var chain = _resolver.FindUniqueByType(typeof(T));
-            return ExecuteChain(chain, query);
+            return _invoker.InvokeFast(chain, query);
         }
 
         public object ForResource(Type resourceType)
@@ -66,13 +53,13 @@ namespace FubuMVC.Core.Runtime.Aggregation
             var chain =
                 _resolver.Find(new ChainSearch {Type = resourceType, TypeMode = TypeSearchMode.ResourceModelOnly});
 
-            return ExecuteChain(chain);
+            return _invoker.InvokeFast(chain, null);
         }
 
         public object ForAction<T>(Expression<Func<T, object>> expression)
         {
             var chain = _resolver.Find(typeof (T), ReflectionHelper.GetMethod(expression));
-            return ExecuteChain(chain);
+            return _invoker.InvokeFast(chain, null);
         }
     }
 }

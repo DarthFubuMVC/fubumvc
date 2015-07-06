@@ -14,6 +14,7 @@ namespace FubuMVC.Core.UI
         /// the partial request
         /// </summary>
         /// <param name="chain"></param>
-        void InvokeFast(BehaviorChain chain);
+        /// <param name="input"></param>
+        object InvokeFast(BehaviorChain chain, object input = null);
     }
 }
