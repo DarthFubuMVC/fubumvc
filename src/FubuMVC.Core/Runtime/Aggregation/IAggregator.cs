@@ -7,5 +7,6 @@ namespace FubuMVC.Core.Runtime.Aggregation
     {
         IEnumerable<object> Fetch(AggregateRequest request);
         IEnumerable<object> Fetch(Action<AggregateRequest> configure);
+        AggregationResponse QueryAggregate(AggregatedQuery request);
     }
 }

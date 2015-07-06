@@ -4,6 +4,7 @@ using FubuMVC.Core.Runtime.Aggregation;
 using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
+using StructureMap;
 
 namespace FubuMVC.IntegrationTesting.Aggregation
 {
@@ -101,6 +102,59 @@ namespace FubuMVC.IntegrationTesting.Aggregation
             var cache = TestHost.Service<IClientMessageCache>();
             cache.FindChain("query-1").InputType().ShouldEqual(typeof(AggregationEndpoint.Query1));
             cache.FindChain("resource-4").ResourceType().ShouldEqual(typeof (AggregationEndpoint.Resource4));
+        }
+
+        [Test]
+        public void aggregated_request_with_an_input_type()
+        {
+            var container = TestHost.Service<IContainer>();
+
+            using (var nested = container.GetNestedContainer())
+            {
+                var aggregator = nested.GetInstance<Aggregator>();
+
+
+                var response = aggregator.ExecuteQuery(new ClientQuery
+                {
+                    query = new AggregationEndpoint.Query1 { Name = "Justin Houston" },
+                    type = typeof(AggregationEndpoint.Query1).GetMessageName()
+                });
+
+                response.request.ShouldEqual("query-1");
+                response.type.ShouldEqual("resource-1");
+                response.result.ShouldBeOfType<AggregationEndpoint.Resource1>()
+                    .Name.ShouldEqual("Justin Houston");
+            }
+
+        }
+
+        [Test]
+        public void aggregate_request_through_the_initial_endpoint()
+        {
+            var container = TestHost.Service<IContainer>();
+
+            using (var nested = container.GetNestedContainer())
+            {
+                var aggregator = nested.GetInstance<Aggregator>();
+
+                var query = new AggregatedQuery();
+                query.AddQuery(new AggregationEndpoint.Query1 { Name = "Jeremy Maclin" });
+                query.Resource<AggregationEndpoint.Resource2>();
+                query.AddQuery(new AggregationEndpoint.Input2());
+                query.Resource<AggregationEndpoint.Resource4>();
+
+                var aggregatedResponse = aggregator.QueryAggregate(query);
+
+                aggregatedResponse.responses[0].result.ShouldBeOfType<AggregationEndpoint.Resource1>()
+                    .Name.ShouldEqual("Jeremy Maclin");
+
+                aggregatedResponse.responses[1].result.ShouldBeOfType<AggregationEndpoint.Resource2>();
+                aggregatedResponse.responses[2].result.ShouldBeOfType<AggregationEndpoint.Resource3>();
+                aggregatedResponse.responses[3].result.ShouldBeOfType<AggregationEndpoint.Resource4>();
+            }
+
+
+            
         }
     }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Querying;
@@ -7,17 +8,39 @@ using FubuMVC.Core.UI;
 
 namespace FubuMVC.Core.Runtime.Aggregation
 {
-    public class Aggregator : IAggregator, IAggregatorSource
+    public class Aggregator : IAggregatorSource, IAggregator
     {
         private readonly IPartialInvoker _invoker;
         private readonly IChainResolver _resolver;
+        private readonly IClientMessageCache _messageTypes;
 
-        public Aggregator(IPartialInvoker invoker, IChainResolver resolver)
+        public Aggregator(IPartialInvoker invoker, IChainResolver resolver, IClientMessageCache messageTypes)
         {
             _invoker = invoker;
             _resolver = resolver;
+            _messageTypes = messageTypes;
         }
 
+        public AggregationResponse QueryAggregate(AggregatedQuery request)
+        {
+            return new AggregationResponse
+            {
+                responses = request.queries.Select(ExecuteQuery).ToArray()
+            };
+        }
+
+        public ClientResponse ExecuteQuery(ClientQuery query)
+        {
+            var chain = _messageTypes.FindChain(query.type);
+            var output = _invoker.InvokeFast(chain, query.query);
+
+            return new ClientResponse
+            {
+                request = query.type,
+                type = chain.ResourceType().GetMessageName(),
+                result = output
+            };
+        }
 
         public IEnumerable<object> Fetch(AggregateRequest request)
         {
