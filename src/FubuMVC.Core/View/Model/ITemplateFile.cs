@@ -1,3 +1,4 @@
+using System;
 using FubuMVC.Core.View.Rendering;
 
 namespace FubuMVC.Core.View.Model
@@ -15,6 +16,7 @@ namespace FubuMVC.Core.View.Model
         string DirectoryPath();
         string RelativeDirectoryPath();
 
+        [Obsolete("No longer makes sense after asset loading from bottles is removed")]
         bool FromHost();
         bool IsPartial();
 

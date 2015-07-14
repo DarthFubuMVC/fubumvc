@@ -237,6 +237,14 @@ namespace FubuMVC.Tests.Assets
     {
         private FileSet search = new AssetSettings().CreateAssetSearch();
 
+        [SetUp]
+        public void SetUp()
+        {
+            FubuMvcPackageFacility.PhysicalRootPath =
+                AppDomain.CurrentDomain.BaseDirectory.ParentDirectory().ParentDirectory();
+
+        }
+
         [Test]
         public void exclude_should_include_node_modules()
         {
@@ -274,6 +282,7 @@ namespace FubuMVC.Tests.Assets
         [Test]
         public void find_files_for_public_folder_only()
         {
+
             var registry = new FubuRegistry();
             registry.AlterSettings<AssetSettings>(x => { x.Mode = SearchMode.PublicFolderOnly; });
 

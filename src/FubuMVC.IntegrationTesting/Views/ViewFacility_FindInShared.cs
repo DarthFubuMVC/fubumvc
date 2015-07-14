@@ -12,12 +12,10 @@ namespace FubuMVC.IntegrationTesting.Views
             RazorView("Shared/Application");
             RazorView("Shared/Theme");
 
-            InBottle("BottleA");
             RazorView("Shared/Foo");
             RazorView("Shared/Application");
             RazorView("Bar"); // NOT shared
 
-            InBottle("BottleB");
             RazorView("Shared/Foo");
             RazorView("Shared/Bar");
         }
@@ -28,16 +26,5 @@ namespace FubuMVC.IntegrationTesting.Views
             RazorViews.FindInShared("Application").Origin.ShouldEqual(ContentFolder.Application);
         }
 
-        [Test]
-        public void find_the_file_in_the_bottle_order()
-        {
-            RazorViews.FindInShared("Foo").Origin.ShouldEqual("BottleA");
-        }
-
-        [Test]
-        public void search_through_all_bottles_to_find_shared()
-        {
-            RazorViews.FindInShared("Bar").Origin.ShouldEqual("BottleB");
-        }
     }
 }

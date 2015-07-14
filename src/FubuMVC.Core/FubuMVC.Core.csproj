@@ -238,7 +238,6 @@
     <Compile Include="IContainerFacilityExpression.cs" />
     <Compile Include="ImageTag.cs" />
     <Compile Include="IFubuRequestContext.cs" />
-    <Compile Include="Packaging\PackageService.cs" />
     <Compile Include="Projections\AccessorProjection.cs" />
     <Compile Include="Projections\AdaptiveAccessorProjection.cs" />
     <Compile Include="Projections\ChildProjection.cs" />
@@ -495,7 +494,6 @@
     <Compile Include="Http\IHttpRequest.cs" />
     <Compile Include="Http\MimeTypeList.cs" />
     <Compile Include="Http\RequestDataSource.cs" />
-    <Compile Include="Packaging\ContentOnlyPackageInfo.cs" />
     <Compile Include="Registration\Nodes\ActionCallBase.cs" />
     <Compile Include="Registration\Nodes\BehaviorNode.ObjectDef.cs" />
     <Compile Include="Registration\Nodes\Process.cs" />
@@ -519,9 +517,6 @@
     <Compile Include="FubuExtensionFinder.cs" />
     <Compile Include="FubuPackageRegistry.cs" />
     <Compile Include="IFubuRegistryExtension.cs" />
-    <Compile Include="Packaging\PackageSettingsSource.cs" />
-    <Compile Include="Packaging\VirtualPaths\VirtualPathProviderActivator.cs" />
-    <Compile Include="Packaging\FubuMvcZipFilePackageLoader.cs" />
     <Compile Include="Resources\PathBased\ResourcePathBinder.cs" />
     <Compile Include="Resources\PathBased\ResourcePath.cs" />
     <Compile Include="Registration\AddImplementationsServiceRegistrationConvention.cs" />
@@ -536,14 +531,9 @@
     <Compile Include="Registration\Nodes\BehaviorSearch.cs" />
     <Compile Include="Registration\Routes\IRouteInput.cs" />
     <Compile Include="Registration\Routes\RouteParameters.cs" />
-    <Compile Include="Packaging\IStandaloneAssemblyFinder.cs" />
-    <Compile Include="Packaging\StandaloneAssemblyPackageLoader.cs" />
     <Compile Include="Registration\Routes\RouteInput.cs" />
     <Compile Include="Routing\IRoutePolicy.cs" />
     <Compile Include="Packaging\FubuMvcPackageFacility.cs" />
-    <Compile Include="Packaging\VirtualPaths\FileSystemVirtualFile.cs" />
-    <Compile Include="Packaging\VirtualPaths\FileSystemVirtualPathProvider.cs" />
-    <Compile Include="Packaging\PackageLoadingConfigurationExtensions.cs" />
     <Compile Include="Registration\Conventions\ReorderBehaviorsPolicy.cs" />
     <Compile Include="Registration\DSL\ModelsExpression.cs" />
     <Compile Include="Registration\DSL\PoliciesExpression.cs" />

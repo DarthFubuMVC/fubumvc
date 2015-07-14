@@ -63,24 +63,9 @@ namespace FubuMVC.IntegrationTesting
             theHarness = Harness.Run(configure, theContainer);
         }
 
-        protected void installZipPackage(string zipFile)
-        {
-            _runner.InstallZipPackage(zipFile);
-        }
-
-        protected void uninstallZipPackage(string zipFile)
-        {
-            _runner.UnInstallZipPackage(zipFile);
-        }
-
         protected void removeAllLinkedPackages()
         {
             _runner.RemoveAllLinks();
-        }
-
-        protected void cleanAndRemoveAllPackages()
-        {
-            _runner.CleanAndRemoveAllPackages();
         }
 
         protected virtual void beforeRunning()

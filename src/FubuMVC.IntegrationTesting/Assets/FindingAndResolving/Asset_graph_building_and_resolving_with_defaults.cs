@@ -24,8 +24,6 @@ namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
             File("foo.txt");
             File("bar.spark");
 
-            InBottle("BottleA");
-
             File("image.jpg");
             File("Content/scripts/bottle1.js");
             File("Content/scripts/folder1/bottle1A.js");
@@ -33,9 +31,6 @@ namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
 
             // Duplicated from the application, but the app wins
             File("MyLib.js").Write("alert(1);");
-
-
-            InBottle("BottleB");
 
             File("BottleB.css");
 
@@ -100,30 +95,6 @@ namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
         }
 
         [Test]
-        public void file_construction_in_a_bottle_root()
-        {
-            var asset = Assets.FindAsset("image.jpg");
-            asset.ShouldNotBeNull();
-
-            asset.File.Provenance.ShouldEqual("BottleA");
-            asset.Url.ShouldEqual("image.jpg");
-            asset.MimeType.ShouldBeTheSameAs(MimeType.Jpg);
-            asset.Filename.ShouldEqual("image.jpg");
-        }
-
-        [Test]
-        public void file_construction_in_a_bottle_child_folder()
-        {
-            var asset = Assets.FindAsset("Content/scripts/bottle1.js");
-            asset.ShouldNotBeNull();
-
-            asset.File.Provenance.ShouldEqual("BottleA");
-            asset.Url.ShouldEqual("Content/scripts/bottle1.js");
-            asset.MimeType.ShouldBeTheSameAs(MimeType.Javascript);
-            asset.Filename.ShouldEqual("bottle1.js");
-        }
-
-        [Test]
         public void search_by_filename_only()
         {
             Assets.FindAsset("bottle1.js").Url.ShouldEqual("Content/scripts/bottle1.js");
@@ -146,19 +117,6 @@ namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
                 .Url.ShouldEqual("Content/scripts/folder1/bottle1A.js");
         }
 
-        [Test]
-        public void application_assets_have_priority_over_the_bottles()
-        {
-            Assets.FindAsset("MyLib.js").File.Provenance.ShouldEqual(ContentFolder.Application);
-        }
-
-        [Test]
-        public void precedence_on_naming_collisions_is_in_bottle_loading_order()
-        {
-            // BottleA and BottleB both have this file, but BottleA is
-            // loaded first
-            Assets.FindAsset("bottle2.js").File.Provenance.ShouldEqual("BottleA");
-        }
     }
 
 }

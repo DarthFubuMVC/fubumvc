@@ -12,7 +12,6 @@ namespace FubuMVC.TestingHarness
     {
         private readonly string _solutionDirectory;
         private readonly string _applicationDirectory;
-        private readonly IPackageService _packaging = new PackageService(new FileSystem());
 
         public CommandRunner()
         {
@@ -53,13 +52,6 @@ namespace FubuMVC.TestingHarness
             }
         }
 
-
-        public void CleanAndRemoveAllPackages()
-        {
-            _packaging.CleanAllPackages(_applicationDirectory);
-            _packaging.RemoveAllPackages(_applicationDirectory);
-        }
-
         public void RemoveAllLinks()
         {
             new LinkCommand().Execute(new LinkInput{
@@ -68,14 +60,5 @@ namespace FubuMVC.TestingHarness
             });
         }
 
-        public void InstallZipPackage(string zipFile)
-        {
-            _packaging.InstallPackage(_applicationDirectory, _solutionDirectory.AppendPath(zipFile), false);
-        }
-
-        public void UnInstallZipPackage(string zipFile)
-        {
-            _packaging.InstallPackage(_applicationDirectory, _solutionDirectory.AppendPath(zipFile), true);
-        }
     }
 }

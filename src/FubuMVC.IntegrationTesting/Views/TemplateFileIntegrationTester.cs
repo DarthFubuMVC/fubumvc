@@ -19,7 +19,6 @@ namespace FubuMVC.IntegrationTesting.Views
             RazorView<ViewModel1>("View1");
             RazorView<ViewModel2>("Folder1/View2");
         
-            InBottle("BottleA");
             RazorView<ViewModel3>("View3");
             RazorView<ViewModel4>("Folder1/Folder2/View4");
         }
@@ -49,23 +48,11 @@ namespace FubuMVC.IntegrationTesting.Views
         }
 
         [Test]
-        public void has_the_correct_file_path_in_bottle()
-        {
-            view3.FilePath.ShouldEqual(Folder.AppendPath("BottleA").AppendPath("View3.cshtml").ToFullPath());
-            view4.FilePath.ShouldEqual(Folder.AppendPath("BottleA").AppendPath("Folder1/Folder2/View4.cshtml").ToFullPath());
-        }
-
-        [Test]
         public void root_path_in_application()
         {
             view1.RootPath.ShouldEqual(Folder.AppendPath(Application).ToFullPath());
         }
 
-        [Test]
-        public void root_path_in_bottle()
-        {
-            view3.RootPath.ShouldEqual(Folder.AppendPath("BottleA").ToFullPath());
-        }
 
         [Test]
         public void origin_of_application_file()
@@ -73,11 +60,6 @@ namespace FubuMVC.IntegrationTesting.Views
             view1.Origin.ShouldEqual("Application");
         }
 
-        [Test]
-        public void origin_of_Bottle_file()
-        {
-            view3.Origin.ShouldEqual("BottleA");
-        }
 
         [Test]
         public void view_path_of_application_file()
@@ -85,12 +67,6 @@ namespace FubuMVC.IntegrationTesting.Views
             view1.ViewPath.ShouldEqual("View1.cshtml");
         }
 
-        [Test]
-        public void view_path_of_bottle_file()
-        {
-            view3.ViewPath.ShouldEqual("_BottleA/View3.cshtml");
-            view4.ViewPath.ShouldEqual("_BottleA/Folder1/Folder2/View4.cshtml");
-        }
 
         [Test]
         public void relative_path_of_application_files()
@@ -135,10 +111,7 @@ namespace FubuMVC.IntegrationTesting.Views
         {
             view1.FromHost().ShouldBeTrue();
             view2.FromHost().ShouldBeTrue();
-            
-            // these views are from a bottle
-            view3.FromHost().ShouldBeFalse();
-            view4.FromHost().ShouldBeFalse();
+
         }
 
         [Test]

@@ -289,8 +289,6 @@
     <Compile Include="NewConneg\MediaTester.cs" />
     <Compile Include="NewConneg\OutputBehaviorTester.cs" />
     <Compile Include="NewConneg\OutputNodeTester.cs" />
-    <Compile Include="Packaging\ContentOnlyPackageInfoTester.cs" />
-    <Compile Include="Packaging\FileSystemVirtualPathProviderTester.cs" />
     <Compile Include="Registration\ActionMethodFilterTester.cs" />
     <Compile Include="Registration\Conventions\actions_that_return_IDictionary_are_json.cs" />
     <Compile Include="Registration\Conventions\AsyncContinueWithHandlerConventionTester.cs" />
@@ -304,8 +302,6 @@
     <Compile Include="Runtime\Formatters\XmlFormatterTester.cs" />
     <Compile Include="CustomExceptionsTester.cs" />
     <Compile Include="FubuRegistryImportingTester.cs" />
-    <Compile Include="Packaging\PackageManifestReaderIntegratedTester.cs" />
-    <Compile Include="Packaging\ZipFilePackageLoaderTester.cs" />
     <Compile Include="Resources\PathBased\ResourcePathBinderTester.cs" />
     <Compile Include="Resources\PathBased\ResourcePathIntegratedUrlCreationTester.cs" />
     <Compile Include="Registration\attaching_behaviors_to_action_calls.cs" />

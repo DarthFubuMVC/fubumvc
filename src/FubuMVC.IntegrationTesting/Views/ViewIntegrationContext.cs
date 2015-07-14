@@ -22,13 +22,12 @@ using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Views
 {
-    public class ViewIntegrationContext : IPackageLoader
+    public class ViewIntegrationContext
     {
         public static readonly string Folder = "Views" + Guid.NewGuid();
         public static readonly IFileSystem fileSystem = new FileSystem();
         public static readonly string Application = "Application";
         private string _directory;
-        private readonly IList<ContentOnlyPackageInfo> _bottles = new List<ContentOnlyPackageInfo>();
         private readonly IList<ContentStream> _streams = new List<ContentStream>();
         private InMemoryHost _host;
         private readonly string _applicationDirectory;
@@ -54,7 +53,7 @@ namespace FubuMVC.IntegrationTesting.Views
             FubuMvcPackageFacility.PhysicalRootPath = _applicationDirectory;
 
             var runtime = FubuApplication.For(determineRegistry()).StructureMap()
-                .Packages(x => x.Loader(this)).Bootstrap();
+                .Bootstrap();
 
             _host = new InMemoryHost(runtime);
         }
@@ -98,13 +97,6 @@ namespace FubuMVC.IntegrationTesting.Views
             {
                 return Services.GetInstance<BehaviorGraph>();
             }
-        }
-
-        protected void InBottle(string name)
-        {
-            _directory = Folder.AppendPath(name).ToFullPath();
-            var bottle = new ContentOnlyPackageInfo(_directory, name);
-            _bottles.Add(bottle);
         }
 
         protected ContentStream File(string name)
@@ -153,11 +145,6 @@ namespace FubuMVC.IntegrationTesting.Views
             _streams.Add(stream);
 
             return stream;
-        }
-
-        IEnumerable<IPackageInfo> IPackageLoader.Load(IPackageLog log)
-        {
-            return _bottles;
         }
 
         protected ViewBag Views
