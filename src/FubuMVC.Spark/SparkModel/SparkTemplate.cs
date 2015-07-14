@@ -74,15 +74,8 @@ namespace FubuMVC.Spark.SparkModel
 
         public void Precompile()
         {
-            try
-            {
-                _viewEntry.Precompile();
-                _partialViewEntry.Precompile();
-            }
-            catch (Exception e)
-            {
-                PackageRegistry.Diagnostics.LogFor(this).MarkFailure(e);
-            }
+            _viewEntry.Precompile();
+            _partialViewEntry.Precompile();
         }
 
         public override string ToString()

@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using Bottles;
 using Bottles.Diagnostics;
 using FubuCore;
 using FubuMVC.Core.Assets;
@@ -12,7 +10,7 @@ using FubuMVC.Core.Runtime.Files;
 
 namespace FubuMVC.Core.View.Model
 {
-    public abstract class ViewFacility<T> : IViewFacility, IFubuRegistryExtension where T : class,ITemplateFile
+    public abstract class ViewFacility<T> : IViewFacility, IFubuRegistryExtension where T : class, ITemplateFile
     {
         private readonly IList<BottleViews<T>> _bottles = new List<BottleViews<T>>();
         private List<T> _views = new List<T>();
@@ -45,19 +43,16 @@ namespace FubuMVC.Core.View.Model
             // HAS TO BE SHALLOW
             match.DeepSearch = false;
 
-            graph.Files.AllFolders.Each(folder => {
+            graph.Files.AllFolders.Each(folder =>
+            {
                 var bottle = new BottleViews<T>(this, folder, builder, settings, match);
                 _bottles.Add(bottle);
             });
 
             LayoutAttachment = timer.RecordTask("Attaching Layouts for " + GetType().Name,
-                () => {
-                    AttachLayouts(settings);
-                });
+                () => { AttachLayouts(settings); });
 
             _views = _bottles.SelectMany(x => x.AllViews()).ToList();
-
-
         }
 
         protected virtual void precompile(BehaviorGraph graph)
@@ -66,6 +61,7 @@ namespace FubuMVC.Core.View.Model
         }
 
         public Task LayoutAttachment { get; private set; }
+
         public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
         {
             _bottles.Each(x => x.AttachViewModels(types, logger));
@@ -79,7 +75,11 @@ namespace FubuMVC.Core.View.Model
         }
 
         public ViewEngineSettings Settings { get; set; }
-        public Type TemplateType { get { return typeof (T); } }
+
+        public Type TemplateType
+        {
+            get { return typeof (T); }
+        }
 
         public IEnumerable<BottleViews<T>> Bottles
         {
@@ -94,7 +94,7 @@ namespace FubuMVC.Core.View.Model
         public IEnumerable<T> AllTemplates()
         {
             return _views;
-        } 
+        }
 
         public ITemplateFile FindInShared(string viewName)
         {
@@ -114,7 +114,7 @@ namespace FubuMVC.Core.View.Model
 
             // first look in the same bottle.
             var bottle = _bottles.FirstOrDefault(x => x.Provenance == template.Origin);
-            
+
             if (bottle != null)
             {
                 returnValue = bottle.AllViews().FirstOrDefault(x => x.Name() == partialName);
@@ -132,7 +132,5 @@ namespace FubuMVC.Core.View.Model
         {
             return _bottles.SelectMany(x => x.SharedPaths()).ToArray();
         }
-
-
     }
 }
