@@ -34,12 +34,18 @@ namespace FubuTransportation
                 return;
             }
 
+            _transports.Activate(packages, log);
+            _subscriptions.Activate(packages, log);
+            _pollingJobs.Activate(packages, log);
+
+            /* TODO -- add timings back here!
             PackageRegistry.Timer.Record("Activating Transports and Starting Listening",
                 () => _transports.Activate(packages, log));
 
             PackageRegistry.Timer.Record("Activating Subscriptions", () => _subscriptions.Activate(packages, log));
 
             PackageRegistry.Timer.Record("Activating Polling Jobs", () => _pollingJobs.Activate(packages, log));
+             * */
         }
 
         public void Deactivate(IPackageLog log)

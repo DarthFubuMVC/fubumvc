@@ -18,10 +18,5 @@ namespace FubuMVC.Core
                 return timer.Record<T>(description, func);
             });
         }
-
-        public static Task RecordContinuation<T>(this Task<T> task, string description, Action<Task<T>> action)
-        {
-            return task.ContinueWith(t => PackageRegistry.Timer.Record(description, () => action(t)));
-        }
     }
 }

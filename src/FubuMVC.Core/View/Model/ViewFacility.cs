@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Bottles;
+using Bottles.Diagnostics;
 using FubuCore;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Registration;
@@ -36,7 +37,7 @@ namespace FubuMVC.Core.View.Model
 
         protected abstract void registerServices(ServiceRegistry services);
 
-        public virtual void Fill(ViewEngineSettings settings, BehaviorGraph graph)
+        public virtual void Fill(ViewEngineSettings settings, BehaviorGraph graph, IPerfTimer timer)
         {
             var builder = CreateBuilder(graph.Settings);
             var match = FindMatching(graph.Settings);
@@ -49,7 +50,7 @@ namespace FubuMVC.Core.View.Model
                 _bottles.Add(bottle);
             });
 
-            LayoutAttachment = PackageRegistry.Timer.RecordTask("Attaching Layouts for " + GetType().Name,
+            LayoutAttachment = timer.RecordTask("Attaching Layouts for " + GetType().Name,
                 () => {
                     AttachLayouts(settings);
                 });

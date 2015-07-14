@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Bottles.Diagnostics;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
@@ -183,20 +184,20 @@ namespace FubuMVC.Core.Configuration
             yield return new UIServiceRegistry();
         }
 
-        public void BuildLocal(BehaviorGraph graph)
+        public void BuildLocal(BehaviorGraph graph, IPerfTimer timer)
         {
             // Local policies will ONLY apply to chains built by this ConfigGraph,
             // and not to chains that are built by imports
 
             var imports = UniqueImports().Select(x => {
                 return Task.Factory.StartNew(() => {
-                    return x.BuildChains(graph);
+                    return x.BuildChains(graph, timer);
                 });
             }).ToArray();
 
             var chainSources = Sources.Select(source => {
                 return Task.Factory.StartNew(() => {
-                    return source.BuildChains(graph);
+                    return source.BuildChains(graph, timer);
                 });
             }).ToArray();
 

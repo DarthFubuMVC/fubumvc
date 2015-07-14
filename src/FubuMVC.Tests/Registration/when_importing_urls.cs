@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Bottles.Diagnostics;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Configuration;
@@ -63,7 +64,7 @@ namespace FubuMVC.Tests.Registration
             });
 
             theImport.InitializeSettings(graph2);
-            graph2.As<IChainImporter>().Import(theImport.BuildChains(graph2));
+            graph2.As<IChainImporter>().Import(theImport.BuildChains(graph2, new PerfTimer()));
         }
 
         #endregion

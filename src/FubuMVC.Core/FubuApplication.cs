@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web.Hosting;
 using System.Web.Routing;
 using Bottles;
+using Bottles.Diagnostics;
 using Bottles.Services;
 using FubuCore;
 using FubuCore.Binding;
@@ -155,7 +156,7 @@ namespace FubuMVC.Core
 
                     perfTimer.Record("Applying IFubuRegistryExtension's", applyFubuExtensionsFromPackages);
 
-                    var graph = perfTimer.Record("Building the BehaviorGraph", () => buildBehaviorGraph());
+                    var graph = perfTimer.Record("Building the BehaviorGraph", () => buildBehaviorGraph(perfTimer));
 
                     perfTimer.Record("Registering services into the IoC Container",
                         () => bakeBehaviorGraphIntoContainer(graph, containerFacility));
@@ -203,9 +204,9 @@ namespace FubuMVC.Core
             graph.As<IRegisterable>().Register(containerFacility.Register);
         }
 
-        private BehaviorGraph buildBehaviorGraph()
+        private BehaviorGraph buildBehaviorGraph(IPerfTimer timer)
         {
-            var graph = BehaviorGraphBuilder.Build(_registry.Value);
+            var graph = BehaviorGraphBuilder.Build(_registry.Value, timer);
 
             return graph;
         }
@@ -224,7 +225,7 @@ namespace FubuMVC.Core
         {
             // THIS IS NEW, ONLY ASSEMBLIES MARKED AS [FubuModule] will be scanned
             var importers = PackageRegistry.PackageAssemblies.Where(a => a.HasAttribute<FubuModuleAttribute>()).Select(
-                assem => { return Task.Factory.StartNew(() => { return assem.FindAllExtensions(); }); }).ToArray();
+                assem => Task.Factory.StartNew(() => assem.FindAllExtensions())).ToArray();
 
             Task.WaitAll(importers);
 

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Bottles;
+using Bottles.Diagnostics;
 using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
@@ -15,9 +15,9 @@ namespace FubuTransportation
     // needs to be done AFTER authentication, so this is good
     public class ImportHandlers : IChainSource
     {
-        public IEnumerable<BehaviorChain> BuildChains(BehaviorGraph graph)
+        public IEnumerable<BehaviorChain> BuildChains(BehaviorGraph graph, IPerfTimer timer)
         {
-            return PackageRegistry.Timer.Record("Building FubuTransportation Chains", () => buildChains(graph));
+            return timer.Record("Building FubuTransportation Chains", () => buildChains(graph));
         }
 
         private static IEnumerable<BehaviorChain> buildChains(BehaviorGraph graph)

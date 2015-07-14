@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Bottles;
+using Bottles.Diagnostics;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Registration;
@@ -77,14 +78,14 @@ namespace FubuMVC.Core.View
             return IfTheViewMatches(combined);
         }
 
-        public Task<ViewBag> BuildViewBag(BehaviorGraph graph)
+        public Task<ViewBag> BuildViewBag(BehaviorGraph graph, IPerfTimer timer)
         {
-            return PackageRegistry.Timer.RecordTask("Building the View Bag", () => {
+            return timer.RecordTask("Building the View Bag", () => {
                 var viewFinders = _facilities.Select(x =>
                 {
                     return Task.Factory.StartNew(() =>
                     {
-                        x.Fill(this, graph);
+                        x.Fill(this, graph, timer);
                         return x.AllViews();
                     });
                 });

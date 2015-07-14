@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Bottles.Diagnostics;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 
@@ -16,7 +17,7 @@ namespace FubuMVC.Core.Registration
             _applicationAssembly = applicationAssembly;
         }
 
-        public IEnumerable<BehaviorChain> BuildChains(BehaviorGraph graph)
+        public IEnumerable<BehaviorChain> BuildChains(BehaviorGraph graph, IPerfTimer timer)
         {
             var sources = _sources.Any() ? _sources : new IActionSource[] {new EndpointActionSource()};
 

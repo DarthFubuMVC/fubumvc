@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Bottles;
+using Bottles.Diagnostics;
 using FubuCore;
 using FubuCore.Binding.InMemory;
 using FubuCore.Logging;
@@ -23,44 +25,45 @@ namespace FubuMVC.Core.Configuration
 
 
         // TOOD -- clean this up a little bit
-        public static BehaviorGraph Build(FubuRegistry registry)
+        public static BehaviorGraph Build(FubuRegistry registry, IPerfTimer perfTimer)
         {
             var graph = new BehaviorGraph {ApplicationAssembly = registry.ApplicationAssembly};
             var config = registry.Config;
 
-            PackageRegistry.Timer.Record("Applying Settings", () => applySettings(config, graph));
+            perfTimer.Record("Applying Settings", () => applySettings(config, graph));
 
-            var viewDiscovery = graph.Settings.Get<ViewEngineSettings>().BuildViewBag(graph);
+            var viewDiscovery = graph.Settings.Get<ViewEngineSettings>().BuildViewBag(graph, perfTimer);
             var layoutAttachmentTasks =
                 viewDiscovery.ContinueWith(
                     t => graph.Settings.Get<ViewEngineSettings>().Facilities.Select(x => x.LayoutAttachment).ToArray());
 
             graph.Settings.Replace(viewDiscovery);
 
-            AccessorRulesCompiler.Compile(graph);
+            AccessorRulesCompiler.Compile(graph, perfTimer);
 
 
-            addBuiltInDiagnostics(graph);
+            addBuiltInDiagnostics(graph, perfTimer);
 
-            PackageRegistry.Timer.Record("Local Application BehaviorGraph", () => config.BuildLocal(graph));
+            perfTimer.Record("Local Application BehaviorGraph", () => config.BuildLocal(graph, perfTimer));
 
-            viewDiscovery.RecordContinuation("View Attachment",t =>
+            // TODO -- undo the R# change to something. Or other.
+            viewDiscovery.ContinueWith(t1 => perfTimer.Record("View Attachment", () => ((Action<Task<ViewBag>>) (t =>
             {
                 var attacher = new ViewAttachmentWorker(t.Result, graph.Settings.Get<ViewAttachmentPolicy>());
                 attacher.Configure(graph);
-            }).Wait();
+            }))(t1))).Wait();
 
 
-            PackageRegistry.Timer.Record("Explicit Configuration", () => config.Global.Explicits.RunActions(graph));
-            PackageRegistry.Timer.Record("Global Policies", () => config.Global.Policies.RunActions(graph));
+            perfTimer.Record("Explicit Configuration", () => config.Global.Explicits.RunActions(graph));
+            perfTimer.Record("Global Policies", () => config.Global.Policies.RunActions(graph));
 
-            PackageRegistry.Timer.Record("Inserting Conneg and Authorization Nodes",
+            perfTimer.Record("Inserting Conneg and Authorization Nodes",
                 () => insertConnegAndAuthorizationNodes(graph));
 
-            PackageRegistry.Timer.Record("Applying Global Reorderings", () => config.ApplyGlobalReorderings(graph));
+            perfTimer.Record("Applying Global Reorderings", () => config.ApplyGlobalReorderings(graph));
 
 
-            PackageRegistry.Timer.Record("Applying Tracing", () => applyTracing(graph));
+            perfTimer.Record("Applying Tracing", () => applyTracing(graph));
 
             // Wait until all the other threads are done.
             var registration = Task.Factory.StartNew(() => config.RegisterServices(graph));
@@ -73,12 +76,12 @@ namespace FubuMVC.Core.Configuration
             return graph;
         }
 
-        private static void addBuiltInDiagnostics(BehaviorGraph graph)
+        private static void addBuiltInDiagnostics(BehaviorGraph graph, IPerfTimer timer)
         {
             var settings = graph.Settings.Get<DiagnosticsSettings>();
             if (FubuMode.InDevelopment() || settings.TraceLevel != TraceLevel.None)
             {
-                var chains = new DiagnosticChainsSource().BuildChains(graph).ToArray();
+                var chains = new DiagnosticChainsSource().BuildChains(graph, timer).ToArray();
 
                 // Apply authorization rules to the diagnostic chains
                 chains.Each(x => x.Authorization.AddPolicies(settings.AuthorizationRights));

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Web;
+using Bottles.Diagnostics;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets;
@@ -61,13 +62,13 @@ namespace FubuMVC.Spark
             return settings.Get<SparkEngineSettings>().Search;
         }
 
-        public override void Fill(ViewEngineSettings settings, BehaviorGraph graph)
+        public override void Fill(ViewEngineSettings settings, BehaviorGraph graph, IPerfTimer timer)
         {
             configureNamespaces(graph);
 
 
 
-            base.Fill(settings, graph);
+            base.Fill(settings, graph, timer);
 
             var bindingTemplates = graph.Files
                 .FindFiles(FileSet.Shallow("Shared/bindings.xml"))

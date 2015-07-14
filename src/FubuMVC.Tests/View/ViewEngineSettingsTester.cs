@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Bottles.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View;
@@ -196,7 +197,7 @@ namespace FubuMVC.Tests.View
                 return null;
             }
 
-            public void Fill(ViewEngineSettings settings, BehaviorGraph graph)
+            public void Fill(ViewEngineSettings settings, BehaviorGraph graph, IPerfTimer timer)
             {
                 throw new NotImplementedException();
             }

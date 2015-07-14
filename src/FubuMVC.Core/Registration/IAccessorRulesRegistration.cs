@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Bottles;
+using Bottles.Diagnostics;
 using FubuCore;
 using FubuCore.Reflection;
 
@@ -14,10 +15,10 @@ namespace FubuMVC.Core.Registration
 
     public static class AccessorRulesCompiler
     {
-        public static void Compile(BehaviorGraph graph)
+        public static void Compile(BehaviorGraph graph, IPerfTimer timer)
         {
             graph.Settings.Replace(() => {
-                return PackageRegistry.Timer.Record("Finding AccessorRules", () => {
+                return timer.Record("Finding AccessorRules", () => {
                     var rules = new AccessorRules();
 
                     graph.Types()

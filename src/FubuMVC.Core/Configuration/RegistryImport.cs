@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Bottles;
+using Bottles.Diagnostics;
 using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
@@ -21,14 +21,15 @@ namespace FubuMVC.Core.Configuration
             };
 
             Registry.Config.Imports.Each(x => x.InitializeSettings(parentGraph));
-            
+
             Registry.Config.Settings.Each(x => x.Alter(_behaviorGraph.Settings));
         }
 
-        public IEnumerable<BehaviorChain> BuildChains(BehaviorGraph graph)
+        public IEnumerable<BehaviorChain> BuildChains(BehaviorGraph graph, IPerfTimer timer)
         {
-            return PackageRegistry.Timer.Record("Building Imported Chains for " + Registry, () => {
-                Registry.Config.BuildLocal(_behaviorGraph);
+            return timer.Record("Building Imported Chains for " + Registry, () =>
+            {
+                Registry.Config.BuildLocal(_behaviorGraph, timer);
                 if (Prefix.IsNotEmpty())
                 {
                     _behaviorGraph.Behaviors.OfType<RoutedChain>().Each(x => x.Route.Prepend(Prefix));

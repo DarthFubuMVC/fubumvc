@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Bottles;
+using Bottles.Diagnostics;
 using FubuCore;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
@@ -9,7 +10,7 @@ namespace FubuMVC.Core.Diagnostics
 {
     public class DiagnosticChainsSource : IChainSource
     {
-        public IEnumerable<BehaviorChain> BuildChains(BehaviorGraph graph)
+        public IEnumerable<BehaviorChain> BuildChains(BehaviorGraph graph, IPerfTimer timer)
         {
             foreach (var action in findActions())
             {

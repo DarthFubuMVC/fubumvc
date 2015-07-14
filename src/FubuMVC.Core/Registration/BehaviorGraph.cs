@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using Bottles;
+using Bottles.Diagnostics;
 using FubuCore;
 using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Registration.Nodes;
@@ -156,22 +157,22 @@ namespace FubuMVC.Core.Registration
 
         #endregion
 
-        public static BehaviorGraph BuildFrom(FubuRegistry registry)
+        public static BehaviorGraph BuildFrom(FubuRegistry registry, IPerfTimer timer = null)
         {
-            return BehaviorGraphBuilder.Build(registry);
+            return BehaviorGraphBuilder.Build(registry, timer ?? new PerfTimer());
         }
 
-        public static BehaviorGraph BuildFrom<T>() where T : FubuRegistry, new()
+        public static BehaviorGraph BuildFrom<T>(IPerfTimer timer = null) where T : FubuRegistry, new()
         {
-            return BehaviorGraphBuilder.Build(new T());
+            return BehaviorGraphBuilder.Build(new T(), timer ?? new PerfTimer());
         }
 
-        public static BehaviorGraph BuildFrom(Action<FubuRegistry> configure)
+        public static BehaviorGraph BuildFrom(Action<FubuRegistry> configure, IPerfTimer timer = null)
         {
             var registry = new FubuRegistry();
             configure(registry);
 
-            return BehaviorGraphBuilder.Build(registry);
+            return BehaviorGraphBuilder.Build(registry, timer ?? new PerfTimer());
         }
 
         /// <summary>
