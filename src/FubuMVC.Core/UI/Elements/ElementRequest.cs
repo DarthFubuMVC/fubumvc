@@ -4,7 +4,6 @@ using System.Reflection;
 using FubuCore;
 using FubuCore.Formatting;
 using FubuCore.Reflection;
-using FubuMVC.Core.UI.Security;
 using HtmlTags;
 using HtmlTags.Conventions;
 
@@ -111,11 +110,6 @@ namespace FubuMVC.Core.UI.Elements
             if (ValueIsEmpty()) return;
 
             action((T)RawValue);
-        }
-
-        public virtual AccessRight AccessRights()
-        {
-            return Get<IFieldAccessService>().RightsFor(this);
         }
 
         public void Attach(IServiceLocator locator)

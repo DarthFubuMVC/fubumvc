@@ -636,16 +636,7 @@
     <Compile Include="Registration\Querying\ChainInterrogator.cs" />
     <Compile Include="UI\ProfileExpression.cs" />
     <Compile Include="UI\Scenarios\HtmlElementScenario.cs" />
-    <Compile Include="UI\Security\AccessRight.cs" />
-    <Compile Include="UI\Security\AccessRightExtensions.cs" />
-    <Compile Include="UI\Security\DegradingAccessElementBuilder.cs" />
-    <Compile Include="UI\Security\FieldAccessRightsExecutor.cs" />
-    <Compile Include="UI\Security\FieldAccessService.cs" />
-    <Compile Include="UI\Security\FieldAccessServiceExtensions.cs" />
-    <Compile Include="UI\Security\IFieldAccessRule.cs" />
-    <Compile Include="UI\Security\IFieldAccessService.cs" />
     <Compile Include="UI\ServiceLocatorTagRequestActivator.cs" />
-    <Compile Include="UI\Templates\TemplateWriter.cs" />
     <Compile Include="UI\UIServiceRegistry.cs" />
     <Compile Include="UrlAliasAttribute.cs" />
     <Compile Include="UrlContext.cs" />

@@ -2,7 +2,6 @@ using System.Linq;
 using Bottles;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.UI;
-using FubuMVC.Core.UI.Templates;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -38,10 +37,5 @@ namespace FubuMVC.Tests.UI
             registeredTypeIs<IPartialInvoker, PartialInvoker>();
         }
 
-        [Test]
-        public void ITemplateWriter_is_registered()
-        {
-            registeredTypeIs<ITemplateWriter, TemplateWriter>();
-        }
     }
 }

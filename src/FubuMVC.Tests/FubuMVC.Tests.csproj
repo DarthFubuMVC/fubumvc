@@ -376,15 +376,8 @@
     <Compile Include="UI\inline_definition_of_element_actions_with_always_condition.cs" />
     <Compile Include="UI\inline_definition_of_html_conventions_using_attributes.cs" />
     <Compile Include="UI\PartialInvokerTester.cs" />
-    <Compile Include="UI\Properties\AssemblyInfo.cs" />
     <Compile Include="UI\Scenarios\HtmlElementScenarioTester.cs" />
-    <Compile Include="UI\Security\AccessRightTester.cs" />
-    <Compile Include="UI\Security\DegradingAccessElementBuilderIntegrationTester.cs" />
-    <Compile Include="UI\Security\DegradingAccessElementBuilderTester.cs" />
-    <Compile Include="UI\Security\FieldAccessRightsTester.cs" />
-    <Compile Include="UI\Security\FieldAccessServiceIntegratedTester.cs" />
     <Compile Include="UI\ServiceLocatorTagRequestActivatorTester.cs" />
-    <Compile Include="UI\Templates\TemplateWriterTester.cs" />
     <Compile Include="UI\templates_html_creation_specs.cs" />
     <Compile Include="UI\UIServiceRegistry_registration_spec.cs" />
     <Compile Include="UrlAliasAttributeTester.cs" />

@@ -1,8 +1,6 @@
 using Bottles;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.UI.Elements;
-using FubuMVC.Core.UI.Security;
-using FubuMVC.Core.UI.Templates;
 using HtmlTags.Conventions;
 
 namespace FubuMVC.Core.UI
@@ -11,12 +9,9 @@ namespace FubuMVC.Core.UI
     {
         public UIServiceRegistry()
         {
-            SetServiceIfNone<IFieldAccessService, FieldAccessService>();
-            SetServiceIfNone<IFieldAccessRightsExecutor, FieldAccessRightsExecutor>();
-
             SetServiceIfNone<IElementNamingConvention, DefaultElementNamingConvention>();
 
-            AddService<IActivator>(typeof(DisplayConversionRegistryActivator));
+            AddService<IActivator>(typeof (DisplayConversionRegistryActivator));
 
             SetServiceIfNone<IPartialInvoker, PartialInvoker>();
 
@@ -29,8 +24,7 @@ namespace FubuMVC.Core.UI
 
             SetServiceIfNone<ITagGeneratorFactory, TagGeneratorFactory>();
 
-            SetServiceIfNone<ITemplateWriter, TemplateWriter>();
-            
+
             SetServiceIfNone<ITagRequestBuilder, TagRequestBuilder>();
         }
     }
