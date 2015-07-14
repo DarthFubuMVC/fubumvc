@@ -372,10 +372,6 @@
     <Compile Include="UI\Elements\ElementRequestActivatorTester.cs" />
     <Compile Include="UI\Elements\ElementRequestTester.cs" />
     <Compile Include="UI\Elements\ElementTagOverrideTester.cs" />
-    <Compile Include="UI\Extensions\ContentExtensionGraphTester.cs" />
-    <Compile Include="UI\Extensions\ExtensionsExpressionTester.cs" />
-    <Compile Include="UI\Extensions\ExtensionShelfTester.cs" />
-    <Compile Include="UI\Extensions\FilteredContentExtensionTester.cs" />
     <Compile Include="UI\Forms\DefinitionListFieldChromeTester.cs" />
     <Compile Include="UI\Forms\FormForExpressionTester.cs" />
     <Compile Include="UI\Forms\FormLineExpressionTester.cs" />
