@@ -28,18 +28,9 @@ namespace FubuMVC.Core.Runtime.Files
 
         public IEnumerable<IFubuFile> FindFiles(FileSet fileSet)
         {
-            fileSet.AppendExclude(FubuMvcPackageFacility.FubuContentFolder + "/*.*");
-            fileSet.AppendExclude(FubuMvcPackageFacility.FubuPackagesFolder + "/*.*");
-
-            return _folders.Value.SelectMany(folder => folder.FindFiles(fileSet))
-                .Where(IsNotUnderExplodedBottleFolder);
+            return _folders.Value.SelectMany(folder => folder.FindFiles(fileSet));
         }
 
-        public static bool IsNotUnderExplodedBottleFolder(IFubuFile fubuFile)
-        {
-            return !fubuFile.RelativePath.Contains(FubuMvcPackageFacility.FubuContentFolder) 
-                && !fubuFile.RelativePath.Contains(FubuMvcPackageFacility.FubuPackagesFolder);
-        }
 
         public IFubuFile Find(string relativeName)
         {

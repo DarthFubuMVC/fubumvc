@@ -8,8 +8,6 @@ namespace FubuMVC.Core.Packaging
 {
     public class FubuMvcPackageFacility : PackageFacility
     {
-        public static readonly string FubuPackagesFolder = "fubu-packages";
-        public static readonly string FubuContentFolder = "fubu-content";
 
         public FubuMvcPackageFacility()
         {

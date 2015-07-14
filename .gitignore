@@ -77,3 +77,4 @@ src/Specifications/phantomjs.exe.version
 node_modules
 UpgradeLog*.htm
 npm-debug.log
+content

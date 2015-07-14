@@ -135,8 +135,6 @@ namespace FubuMVC.Core
             // TODO -- I think Bottles probably needs to enforce a "tell me the paths"
             // step maybe
             PackageRegistry.GetApplicationDirectory = FubuMvcPackageFacility.GetApplicationPath;
-            BottleFiles.ContentFolder = FubuMvcPackageFacility.FubuContentFolder;
-            BottleFiles.PackagesFolder = FileSystem.Combine("bin", FubuMvcPackageFacility.FubuPackagesFolder);
 
 
             FubuRuntime runtime = null;

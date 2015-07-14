@@ -63,16 +63,13 @@ namespace Fubu.Running
         [FlagAlias("mode")]
         public string ModeFlag { get; set; }
 
-        [Description("If selected, the run command will re-explode all the Bottle content and immediately exit")]
-        [FlagAlias("explode-only")]
-        public bool ExplodeOnlyFlag { get; set; }
 
         [Description("If selected, the run command will generate and write all the templates and immediately exit")]
         public bool TemplatesFlag { get; set; }
 
         public bool ShouldRunApp()
         {
-            if (TemplatesFlag || ExplodeOnlyFlag) return false;
+            if (TemplatesFlag) return false;
 
             return true;
         }
