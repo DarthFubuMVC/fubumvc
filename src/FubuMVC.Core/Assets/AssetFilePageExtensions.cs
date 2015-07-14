@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web.UI;
 using FubuCore;
 using FubuMVC.Core.Assets.JavascriptRouting;
 using FubuMVC.Core.Http;
-using FubuMVC.Core.Packaging;
 using FubuMVC.Core.View;
 using HtmlTags;
 
@@ -21,7 +18,9 @@ namespace FubuMVC.Core.Assets
         /// <returns></returns>
         public static ImageTag Image(this IFubuPage viewPage, string fileOrUrl)
         {
-            string imageUrl = Uri.IsWellFormedUriString(fileOrUrl, UriKind.Absolute) ? fileOrUrl : viewPage.ImageUrl(fileOrUrl);
+            var imageUrl = Uri.IsWellFormedUriString(fileOrUrl, UriKind.Absolute)
+                ? fileOrUrl
+                : viewPage.ImageUrl(fileOrUrl);
 
             return new ImageTag(imageUrl);
         }
@@ -48,7 +47,6 @@ namespace FubuMVC.Core.Assets
         {
             return page.Image(assetName);
         }
-
 
 
         /// <summary>
@@ -84,10 +82,9 @@ namespace FubuMVC.Core.Assets
             var request = page.Get<IHttpRequest>();
 
             var tags = scripts.Select(finder.FindAsset).Where(x => x != null)
-                .Select(x => new ScriptTag(request.ToFullUrl,x)).ToArray();
+                .Select(x => new ScriptTag(request.ToFullUrl, x)).ToArray();
 
             return new TagList(tags);
-
         }
 
 
@@ -117,7 +114,8 @@ namespace FubuMVC.Core.Assets
             page.Get<IAssetTagBuilder>().RequireScript(scripts);
         }
 
-        public static HtmlTag WriteJavascriptRoutes(this JavascriptRouteWriter writer, string groupName, IJavascriptRouter router)
+        public static HtmlTag WriteJavascriptRoutes(this JavascriptRouteWriter writer, string groupName,
+            IJavascriptRouter router)
         {
             var dict = writer.Write(router.Routes());
 
@@ -144,7 +142,7 @@ namespace FubuMVC.Core.Assets
             if (settings.PublicAssetFolder.IsEmpty())
             {
                 var directory = settings.DeterminePublicFolder();
-                var relativePath = directory.PathRelativeTo(FubuMvcPackageFacility.GetApplicationPath())
+                var relativePath = directory.PathRelativeTo(FubuApplication.GetApplicationPath())
                     .Replace('\\', '/');
 
                 settings.PublicAssetFolder = page.Get<IHttpRequest>().ToFullUrl(relativePath);
@@ -153,5 +151,4 @@ namespace FubuMVC.Core.Assets
             return settings.PublicAssetFolder;
         }
     }
-
 }

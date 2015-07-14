@@ -4,15 +4,11 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
-using Bottles;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuCore.Util;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
-using FubuMVC.Core.Packaging;
-using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Security;
@@ -24,6 +20,7 @@ namespace FubuMVC.Core.Assets
         public string Url;
         public string Fallback;
         public string File;
+
         public void Describe(Description description)
         {
             description.Title = Url;
@@ -50,8 +47,6 @@ namespace FubuMVC.Core.Assets
         PublicFolderOnly
     }
 
-    
-
 
     [Description("Allow read access to javascript, css, image, and html files")]
     public class AssetSettings : IStaticFileRule, DescribesItself
@@ -62,14 +57,13 @@ namespace FubuMVC.Core.Assets
         public static readonly int MaxAgeInSeconds = 24*60*60;
 
 
-
         public AssetSettings()
         {
             if (!FubuMode.InDevelopment())
             {
                 var cacheHeader = "private, max-age={0}".ToFormat(MaxAgeInSeconds);
-                Headers[HttpResponseHeaders.CacheControl] = () => cacheHeader;
-                Headers[HttpResponseHeaders.Expires] = () => DateTime.UtcNow.AddSeconds(MaxAgeInSeconds).ToString("R");
+                Headers[HttpGeneralHeaders.CacheControl] = () => cacheHeader;
+                Headers[HttpGeneralHeaders.Expires] = () => DateTime.UtcNow.AddSeconds(MaxAgeInSeconds).ToString("R");
             }
 
             Exclude("node_modules/*");
@@ -78,16 +72,14 @@ namespace FubuMVC.Core.Assets
             PublicFolder = "public";
 
             TemplateDestination = "_templates";
-
         }
 
-        internal string PublicAssetFolder ;
+        internal string PublicAssetFolder;
 
         /// <summary>
         /// Add assets that will be sourced by CDN
         /// </summary>
-        public readonly IList<CdnAsset> CdnAssets = new List<CdnAsset>(); 
-
+        public readonly IList<CdnAsset> CdnAssets = new List<CdnAsset>();
 
 
         /// <summary>
@@ -97,7 +89,7 @@ namespace FubuMVC.Core.Assets
         /// <returns></returns>
         public string DeterminePublicFolder()
         {
-            var candidate = FubuMvcPackageFacility.GetApplicationPath().AppendPath(PublicFolder);
+            var candidate = FubuApplication.GetApplicationPath().AppendPath(PublicFolder);
 
             if (Version.IsNotEmpty())
             {
@@ -136,7 +128,8 @@ namespace FubuMVC.Core.Assets
         /// <returns></returns>
         public FileSet CreateAssetSearch()
         {
-            var extensions = assetMimeTypes().SelectMany(x => x.Extensions).Union(AllowableExtensions).Select(x => "*" + x).Join(";");
+            var extensions =
+                assetMimeTypes().SelectMany(x => x.Extensions).Union(AllowableExtensions).Select(x => "*" + x).Join(";");
 
             return FileSet.Deep(extensions, Exclusions);
         }
@@ -212,7 +205,7 @@ namespace FubuMVC.Core.Assets
         /// <summary>
         /// Add additional file extensions as allowable assets
         /// </summary>
-        public IList<string> AllowableExtensions = new List<string>{".eot", ".ttf", ".woff", ".woff2", ".svg", ".map"};
+        public IList<string> AllowableExtensions = new List<string> {".eot", ".ttf", ".woff", ".woff2", ".svg", ".map"};
 
 
         /// <summary>
@@ -224,14 +217,13 @@ namespace FubuMVC.Core.Assets
         /// <summary>
         /// Designate all the CultureInfo's for template generation. Default is ['en-US']
         /// </summary>
-        public IList<string> TemplateCultures = new List<string>{"en-US"};
-
+        public IList<string> TemplateCultures = new List<string> {"en-US"};
 
 
         /// <summary>
         /// List of file patterns that should be considered to be content files
         /// </summary>
-        public readonly IList<string> ContentMatches = new List<string> { ".txt", ".htm", ".html" };
+        public readonly IList<string> ContentMatches = new List<string> {".txt", ".htm", ".html"};
 
         public FileWatcherManifest CreateFileWatcherManifest()
         {

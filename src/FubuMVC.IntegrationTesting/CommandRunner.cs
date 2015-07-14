@@ -4,7 +4,6 @@ using System.IO;
 using Bottles.Commands;
 using FubuCore;
 using FubuCore.CommandLine;
-using FubuMVC.Core.Packaging;
 
 namespace FubuMVC.TestingHarness
 {
@@ -26,7 +25,8 @@ namespace FubuMVC.TestingHarness
         public void RunBottles(string commandLine)
         {
             var fileName = Path.Combine(_solutionDirectory, @"bottles.cmd");
-            var startup = new ProcessStartInfo(fileName, commandLine){
+            var startup = new ProcessStartInfo(fileName, commandLine)
+            {
                 CreateNoWindow = true,
                 RedirectStandardError = true,
                 RedirectStandardInput = true,
@@ -54,11 +54,11 @@ namespace FubuMVC.TestingHarness
 
         public void RemoveAllLinks()
         {
-            new LinkCommand().Execute(new LinkInput{
+            new LinkCommand().Execute(new LinkInput
+            {
                 AppFolder = _applicationDirectory,
                 CleanAllFlag = true
             });
         }
-
     }
 }

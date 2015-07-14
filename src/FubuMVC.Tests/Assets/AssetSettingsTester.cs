@@ -5,7 +5,6 @@ using FubuMVC.Core;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
-using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Security;
 using FubuMVC.StructureMap;
@@ -135,10 +134,10 @@ namespace FubuMVC.Tests.Assets
 
             var settings = new AssetSettings();
             settings.Headers.GetAllKeys()
-                .ShouldHaveTheSameElementsAs(HttpRequestHeaders.CacheControl, HttpRequestHeaders.Expires);
+                .ShouldHaveTheSameElementsAs(HttpGeneralHeaders.CacheControl, HttpGeneralHeaders.Expires);
 
-            settings.Headers[HttpRequestHeaders.CacheControl]().ShouldEqual("private, max-age=86400");
-            settings.Headers[HttpRequestHeaders.Expires]().ShouldNotBeNull();
+            settings.Headers[HttpGeneralHeaders.CacheControl]().ShouldEqual("private, max-age=86400");
+            settings.Headers[HttpGeneralHeaders.Expires]().ShouldNotBeNull();
         }
 
         [Test]
@@ -153,7 +152,7 @@ namespace FubuMVC.Tests.Assets
         public void determine_the_public_folder_with_no_version()
         {
             new FileSystem().CreateDirectory(
-                FubuMvcPackageFacility.GetApplicationPath().AppendPath("public").ToFullPath());
+                FubuApplication.GetApplicationPath().AppendPath("public").ToFullPath());
 
             var settings = new AssetSettings
             {
@@ -161,14 +160,14 @@ namespace FubuMVC.Tests.Assets
             };
 
             settings.DeterminePublicFolder()
-                .ShouldEqual(FubuMvcPackageFacility.GetApplicationPath().AppendPath("public"));
+                .ShouldEqual(FubuApplication.GetApplicationPath().AppendPath("public"));
         }
 
         [Test]
         public void determine_the_public_folder_with_a_non_null_but_nonexistent_version()
         {
             new FileSystem().CreateDirectory(
-                FubuMvcPackageFacility.GetApplicationPath().AppendPath("public").ToFullPath());
+                FubuApplication.GetApplicationPath().AppendPath("public").ToFullPath());
 
             var settings = new AssetSettings
             {
@@ -176,16 +175,16 @@ namespace FubuMVC.Tests.Assets
             };
 
             settings.DeterminePublicFolder()
-                .ShouldEqual(FubuMvcPackageFacility.GetApplicationPath().AppendPath("public").ToFullPath());
+                .ShouldEqual(FubuApplication.GetApplicationPath().AppendPath("public").ToFullPath());
         }
 
         [Test]
         public void determine_the_public_folder_when_the_version_does_exist()
         {
             new FileSystem().CreateDirectory(
-                FubuMvcPackageFacility.GetApplicationPath().AppendPath("public").ToFullPath());
+                FubuApplication.GetApplicationPath().AppendPath("public").ToFullPath());
             new FileSystem().CreateDirectory(
-                FubuMvcPackageFacility.GetApplicationPath().AppendPath("public", "1.0.1").ToFullPath());
+                FubuApplication.GetApplicationPath().AppendPath("public", "1.0.1").ToFullPath());
 
             var settings = new AssetSettings
             {
@@ -193,7 +192,7 @@ namespace FubuMVC.Tests.Assets
             };
 
             settings.DeterminePublicFolder()
-                .ShouldEqual(FubuMvcPackageFacility.GetApplicationPath().AppendPath("public", "1.0.1").ToFullPath());
+                .ShouldEqual(FubuApplication.GetApplicationPath().AppendPath("public", "1.0.1").ToFullPath());
         }
 
         [Test]
@@ -235,14 +234,13 @@ namespace FubuMVC.Tests.Assets
     [TestFixture]
     public class when_creating_the_default_search
     {
-        private FileSet search = new AssetSettings().CreateAssetSearch();
+        private readonly FileSet search = new AssetSettings().CreateAssetSearch();
 
         [SetUp]
         public void SetUp()
         {
-            FubuMvcPackageFacility.PhysicalRootPath =
+            FubuApplication.PhysicalRootPath =
                 AppDomain.CurrentDomain.BaseDirectory.ParentDirectory().ParentDirectory();
-
         }
 
         [Test]
@@ -282,7 +280,6 @@ namespace FubuMVC.Tests.Assets
         [Test]
         public void find_files_for_public_folder_only()
         {
-
             var registry = new FubuRegistry();
             registry.AlterSettings<AssetSettings>(x => { x.Mode = SearchMode.PublicFolderOnly; });
 
@@ -299,7 +296,8 @@ namespace FubuMVC.Tests.Assets
         public void find_files_for_public_folder_with_version()
         {
             var registry = new FubuRegistry();
-            registry.AlterSettings<AssetSettings>(x => {
+            registry.AlterSettings<AssetSettings>(x =>
+            {
                 x.Mode = SearchMode.PublicFolderOnly;
                 x.Version = "1.0.1";
             });
@@ -328,8 +326,7 @@ namespace FubuMVC.Tests.Assets
             var manifest = settings.CreateFileWatcherManifest();
 
             manifest.PublicAssetFolder.ShouldEqual(
-                FubuMvcPackageFacility.GetApplicationPath().AppendPath("public").Replace('\\', '/'));
-
+                FubuApplication.GetApplicationPath().AppendPath("public").Replace('\\', '/'));
         }
 
         [Test]

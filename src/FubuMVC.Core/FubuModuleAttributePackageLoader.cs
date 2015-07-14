@@ -7,7 +7,6 @@ using Bottles;
 using Bottles.Diagnostics;
 using Bottles.PackageLoaders.Assemblies;
 using FubuCore;
-using FubuMVC.Core.Packaging;
 
 namespace FubuMVC.Core
 {
@@ -17,13 +16,11 @@ namespace FubuMVC.Core
     /// </summary>
     public class FubuModuleAttributePackageLoader : IPackageLoader
     {
-
-
         public IEnumerable<IPackageInfo> Load(IPackageLog log)
         {
-            var list = new List<string> { AppDomain.CurrentDomain.SetupInformation.ApplicationBase };
+            var list = new List<string> {AppDomain.CurrentDomain.SetupInformation.ApplicationBase};
 
-            var binPath = FubuMvcPackageFacility.FindBinPath();
+            var binPath = FubuApplication.FindBinPath();
             if (binPath.IsNotEmpty())
             {
                 list.Add(binPath);
@@ -31,20 +28,16 @@ namespace FubuMVC.Core
 
             // This is a workaround for Self Hosted apps where the physical path is different than the AppDomain's original
             // path
-            if (FubuMvcPackageFacility.PhysicalRootPath.IsNotEmpty())
+            if (FubuApplication.PhysicalRootPath.IsNotEmpty())
             {
-
-                var path = FubuMvcPackageFacility.PhysicalRootPath.ToFullPath().AppendPath("bin");
+                var path = FubuApplication.PhysicalRootPath.ToFullPath().AppendPath("bin");
                 if (Directory.Exists(path) && !list.Select(x => x.ToLower()).Contains(path.ToLower()))
                 {
                     list.Add(path);
                 }
             }
 
-            list.Each(x =>
-            {
-                log.Trace("Looking for assemblies marked with the [FubuModule] attribute in " + x);
-            });
+            list.Each(x => { log.Trace("Looking for assemblies marked with the [FubuModule] attribute in " + x); });
 
             return LoadPackages(list);
         }
@@ -59,27 +52,25 @@ namespace FubuMVC.Core
         {
             return directories.SelectMany(
                 x =>
-                AssembliesFromPath(x, assem => assem.GetCustomAttributes(typeof (FubuModuleAttribute), false).Any()));
+                    AssembliesFromPath(x, assem => assem.GetCustomAttributes(typeof (FubuModuleAttribute), false).Any()));
         }
 
         // TODO -- this is so common here and in FubuMVC, just get something into FubuCore
         public static IEnumerable<Assembly> AssembliesFromPath(string path, Predicate<Assembly> assemblyFilter)
         {
-
-
             var assemblyPaths = Directory.GetFiles(path)
                 .Where(file =>
-                       Path.GetExtension(file).Equals(
-                           ".exe",
-                           StringComparison.OrdinalIgnoreCase)
-                       ||
-                       Path.GetExtension(file).Equals(
-                           ".dll",
-                           StringComparison.OrdinalIgnoreCase));
+                    Path.GetExtension(file).Equals(
+                        ".exe",
+                        StringComparison.OrdinalIgnoreCase)
+                    ||
+                    Path.GetExtension(file).Equals(
+                        ".dll",
+                        StringComparison.OrdinalIgnoreCase));
 
             foreach (string assemblyPath in assemblyPaths)
             {
-                Assembly assembly =
+                var assembly =
                     AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(
                         x => x.GetName().Name == Path.GetFileNameWithoutExtension(assemblyPath));
 
@@ -92,9 +83,7 @@ namespace FubuMVC.Core
                     catch
                     {
                     }
-                }             
-
-
+                }
 
 
                 if (assembly != null && assemblyFilter(assembly))

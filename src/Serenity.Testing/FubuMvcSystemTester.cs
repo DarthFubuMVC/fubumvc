@@ -1,14 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using FubuCore;
 using FubuMVC.Core;
-using FubuMVC.Core.Packaging;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
-using HtmlTags;
 using KayakTestApplication;
 using NUnit.Framework;
-using StoryTeller.Engine;
 using StructureMap;
 
 namespace Serenity.Testing
@@ -29,7 +25,7 @@ namespace Serenity.Testing
         [Test]
         public void registers_the_IRemoveSubsystems_with_the_container()
         {
-            FubuMvcPackageFacility.PhysicalRootPath = ".".ToFullPath();
+            FubuApplication.PhysicalRootPath = ".".ToFullPath();
 
             using (var system = new FubuMvcSystem<TargetApplication>())
             {
@@ -66,7 +62,7 @@ namespace Serenity.Testing
         [Test]
         public void parallel_path()
         {
-            using (var system = new FubuMvcSystem<KayakApplication>(parallelDirectory: "foo"))
+            using (var system = new FubuMvcSystem<KayakApplication>("foo"))
             {
                 // assembly name
                 system.Settings.PhysicalPath.ShouldEndWith("foo");
@@ -94,7 +90,6 @@ namespace Serenity.Testing
             }
         }
     }
-
 
 
     public class TargetApplication : IApplicationSource

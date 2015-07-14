@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Web.Routing;
 using FubuCore;
@@ -8,14 +7,11 @@ using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin;
-using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Handlers;
 using FubuMVC.StructureMap;
-using FubuMVC.Tests.Urls;
 using FubuTestingSupport;
 using NUnit.Framework;
-using Rhino.Mocks;
 using StructureMap;
 
 namespace FubuMVC.Tests
@@ -28,11 +24,8 @@ namespace FubuMVC.Tests
         [SetUp]
         public void SetUp()
         {
-            registry = new FubuRegistry(x => {
-                x.Actions.IncludeType<TestController>();
-            });
+            registry = new FubuRegistry(x => { x.Actions.IncludeType<TestController>(); });
 
-            
 
             container = new Container(x =>
             {
@@ -40,7 +33,7 @@ namespace FubuMVC.Tests
                 x.For<IHttpRequest>().Use(OwinHttpRequest.ForTesting());
             });
 
-            FubuMvcPackageFacility.PhysicalRootPath = AppDomain.CurrentDomain.BaseDirectory;
+            FubuApplication.PhysicalRootPath = AppDomain.CurrentDomain.BaseDirectory;
 
             routes = FubuApplication.For(registry)
                 .StructureMap(container)
@@ -57,7 +50,7 @@ namespace FubuMVC.Tests
         [TearDown]
         public void TearDown()
         {
-            FubuMvcPackageFacility.PhysicalRootPath = null;
+            FubuApplication.PhysicalRootPath = null;
         }
 
         private FubuRegistry registry;

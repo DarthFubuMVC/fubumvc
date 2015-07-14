@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using FubuCore;
-using FubuMVC.Core.Packaging;
+using FubuMVC.Core;
 using FubuMVC.Core.Runtime.Files;
-using NUnit.Framework;
 using FubuTestingSupport;
+using NUnit.Framework;
 
 namespace FubuMVC.Tests.Runtime.Files
 {
@@ -25,7 +21,7 @@ namespace FubuMVC.Tests.Runtime.Files
         {
             theFiles.AssertHasFile("Runtime/Files/Data/a.txt");
 
-            IFubuFile fubuFile = theFiles.Find("Runtime/Files/Data/a.txt");
+            var fubuFile = theFiles.Find("Runtime/Files/Data/a.txt");
             fubuFile.ShouldNotBeNull();
 
             fubuFile.ReadContents()
@@ -44,7 +40,7 @@ namespace FubuMVC.Tests.Runtime.Files
         [Test]
         public void get_application_path_delegates_to_fubumvc_package_facility()
         {
-            theFiles.GetApplicationPath().ShouldEqual(FubuMvcPackageFacility.GetApplicationPath());
+            theFiles.GetApplicationPath().ShouldEqual(FubuApplication.GetApplicationPath());
         }
     }
 }

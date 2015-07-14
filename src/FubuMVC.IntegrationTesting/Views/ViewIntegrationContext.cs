@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using Bottles;
-using Bottles.Diagnostics;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Http.Hosting;
-using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Scenarios;
-using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Attachment;
@@ -27,7 +22,7 @@ namespace FubuMVC.IntegrationTesting.Views
         public static readonly string Folder = "Views" + Guid.NewGuid();
         public static readonly IFileSystem fileSystem = new FileSystem();
         public static readonly string Application = "Application";
-        private string _directory;
+        private readonly string _directory;
         private readonly IList<ContentStream> _streams = new List<ContentStream>();
         private InMemoryHost _host;
         private readonly string _applicationDirectory;
@@ -50,7 +45,7 @@ namespace FubuMVC.IntegrationTesting.Views
 
             Thread.Sleep(100); // let the file system cool off a bit first
 
-            FubuMvcPackageFacility.PhysicalRootPath = _applicationDirectory;
+            FubuApplication.PhysicalRootPath = _applicationDirectory;
 
             var runtime = FubuApplication.For(determineRegistry()).StructureMap()
                 .Bootstrap();
@@ -85,18 +80,12 @@ namespace FubuMVC.IntegrationTesting.Views
 
         protected IServiceLocator Services
         {
-            get
-            {
-                return _host.Services;
-            }
+            get { return _host.Services; }
         }
 
         protected BehaviorGraph BehaviorGraph
         {
-            get
-            {
-                return Services.GetInstance<BehaviorGraph>();
-            }
+            get { return Services.GetInstance<BehaviorGraph>(); }
         }
 
         protected ContentStream File(string name)
@@ -121,7 +110,7 @@ namespace FubuMVC.IntegrationTesting.Views
         protected ContentStream RazorView<T>(string name)
         {
             var stream = new ContentStream(_directory, name, ".cshtml");
-            stream.WriteLine("@model {0}", typeof(T).FullName);
+            stream.WriteLine("@model {0}", typeof (T).FullName);
 
             _streams.Add(stream);
 
@@ -131,7 +120,7 @@ namespace FubuMVC.IntegrationTesting.Views
         protected ContentStream SparkView<T>(string name)
         {
             var stream = new ContentStream(_directory, name, ".spark");
-            stream.WriteLine("<viewdata model=\"{0}\" />", typeof(T).FullName);
+            stream.WriteLine("<viewdata model=\"{0}\" />", typeof (T).FullName);
 
             _streams.Add(stream);
 
@@ -149,10 +138,7 @@ namespace FubuMVC.IntegrationTesting.Views
 
         protected ViewBag Views
         {
-            get
-            {
-                return _host.Services.GetInstance<ViewBag>();
-            }
+            get { return _host.Services.GetInstance<ViewBag>(); }
         }
 
         protected RazorViewFacility RazorViews
@@ -196,8 +182,19 @@ namespace FubuMVC.IntegrationTesting.Views
         }
     }
 
-    public class ViewModel1{}
-    public class ViewModel2{}
-    public class ViewModel3{}
-    public class ViewModel4{}
+    public class ViewModel1
+    {
+    }
+
+    public class ViewModel2
+    {
+    }
+
+    public class ViewModel3
+    {
+    }
+
+    public class ViewModel4
+    {
+    }
 }

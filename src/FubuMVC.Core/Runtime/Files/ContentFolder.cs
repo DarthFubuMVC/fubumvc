@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Bottles;
 using FubuCore;
-using FubuMVC.Core.Packaging;
 
 namespace FubuMVC.Core.Runtime.Files
 {
@@ -43,7 +42,7 @@ namespace FubuMVC.Core.Runtime.Files
         {
             return new ContentFolder(
                 Application,
-                FubuMvcPackageFacility.GetApplicationPath()
+                FubuApplication.GetApplicationPath()
                 );
         }
 

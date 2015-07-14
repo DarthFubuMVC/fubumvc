@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Hosting;
 using System.Web.Routing;
 using Bottles;
 using Bottles.Services;
@@ -12,7 +14,6 @@ using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
-using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
@@ -27,10 +28,8 @@ namespace FubuMVC.Core
     public class FubuApplication : IContainerFacilityExpression, IApplication<FubuRuntime>
     {
         private readonly Lazy<IContainerFacility> _facility;
-        private readonly List<Action<IPackageFacility>> _packagingDirectives = new List<Action<IPackageFacility>>();
         private readonly Lazy<FubuRegistry> _registry;
         private Func<IContainerFacility> _facilitySource;
-        private FubuMvcPackageFacility _fubuFacility;
 
         private FubuApplication(Func<FubuRegistry> registryBuilder)
         {
@@ -130,22 +129,25 @@ namespace FubuMVC.Core
         {
             SetupNamingStrategyForHttpHeaders();
 
-            _fubuFacility = new FubuMvcPackageFacility();
-
             // TODO -- I think Bottles probably needs to enforce a "tell me the paths"
             // step maybe
-            PackageRegistry.GetApplicationDirectory = FubuMvcPackageFacility.GetApplicationPath;
+            PackageRegistry.GetApplicationDirectory = GetApplicationPath;
 
 
             FubuRuntime runtime = null;
 
             Task<IList<RouteBase>> routeTask = null;
 
-            PackageRegistry.LoadPackages(x => {
-                x.Facility(_fubuFacility);
-                _packagingDirectives.Each(d => d(x));
+            PackageRegistry.LoadPackages(x =>
+            {
+                if (GetApplicationPath().IsNotEmpty())
+                {
+                    x.Loader(new FubuModuleAttributePackageLoader());
+                }
 
-                x.Bootstrap("FubuMVC Bootstrapping", log => {
+
+                x.Bootstrap("FubuMVC Bootstrapping", log =>
+                {
                     // container facility has to be spun up here
                     var containerFacility = _facility.Value;
 
@@ -162,7 +164,8 @@ namespace FubuMVC.Core
                     var factory = perfTimer.Record("Build the IServiceFactory",
                         () => containerFacility.BuildFactory(graph));
 
-                    routeTask = perfTimer.RecordTask("Building Routes", () => {
+                    routeTask = perfTimer.RecordTask("Building Routes", () =>
+                    {
                         var routes = buildRoutes(factory, graph);
                         routes.Each(r => RouteTable.Routes.Add(r));
 
@@ -174,19 +177,17 @@ namespace FubuMVC.Core
 
                     runtime = new FubuRuntime(factory, _facility.Value, routeTask.Result);
 
-                    _facility.Value.Register(typeof(FubuRuntime), ObjectDef.ForValue(runtime));
+                    _facility.Value.Register(typeof (FubuRuntime), ObjectDef.ForValue(runtime));
 
                     return factory.GetAll<IActivator>();
                 });
             });
 
-
-            FubuMvcPackageFacility.Restarted = DateTime.Now;
+            // TODO -- put this on FubuRuntime or BehaviorGraph
+            Restarted = DateTime.Now;
 
             PackageRegistry.AssertNoFailures(
                 () => { throw new FubuException(0, FubuApplicationDescriber.WriteDescription()); });
-
-
 
 
             return runtime;
@@ -223,26 +224,56 @@ namespace FubuMVC.Core
         {
             // THIS IS NEW, ONLY ASSEMBLIES MARKED AS [FubuModule] will be scanned
             var importers = PackageRegistry.PackageAssemblies.Where(a => a.HasAttribute<FubuModuleAttribute>()).Select(
-                assem => {
-                    return Task.Factory.StartNew(() => {
-                        return assem.FindAllExtensions();
-                    });
-                }).ToArray();
+                assem => { return Task.Factory.StartNew(() => { return assem.FindAllExtensions(); }); }).ToArray();
 
             Task.WaitAll(importers);
 
             importers.SelectMany(x => x.Result).Each(x => x.Apply(_registry.Value));
         }
 
-        /// <summary>
-        /// Modify the Bottles configuration for this application
-        /// </summary>
-        /// <param name="configure"></param>
-        /// <returns></returns>
-        public FubuApplication Packages(Action<IPackageFacility> configure)
+        public static string PhysicalRootPath { get; set; }
+
+
+        public static string GetApplicationPath()
         {
-            _packagingDirectives.Add(configure);
-            return this;
+            return PhysicalRootPath ??
+                   HostingEnvironment.ApplicationPhysicalPath ?? determineApplicationPathFromAppDomain();
+        }
+
+        public static string FindBinPath()
+        {
+            var binPath = AppDomain.CurrentDomain.SetupInformation.PrivateBinPath;
+            if (binPath.IsNotEmpty())
+            {
+                return Path.IsPathRooted(binPath)
+                    ? binPath
+                    : AppDomain.CurrentDomain.SetupInformation.ApplicationBase.AppendPath(binPath);
+            }
+
+            return null;
+        }
+
+
+        public static DateTime? Restarted { get; set; }
+
+        private static string determineApplicationPathFromAppDomain()
+        {
+            var basePath = AppDomain.CurrentDomain.BaseDirectory.TrimEnd(Path.DirectorySeparatorChar);
+            if (basePath.EndsWith("bin"))
+            {
+                basePath = basePath.Substring(0, basePath.Length - 3).TrimEnd(Path.DirectorySeparatorChar);
+            }
+
+            var segments = basePath.Split(Path.DirectorySeparatorChar);
+            if (segments.Length > 2)
+            {
+                if (segments[segments.Length - 2].EqualsIgnoreCase("bin"))
+                {
+                    return basePath.ParentDirectory().ParentDirectory();
+                }
+            }
+
+            return basePath;
         }
     }
 

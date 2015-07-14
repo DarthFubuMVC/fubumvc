@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using FubuCore;
 using FubuCore.Util;
-using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Runtime.Files;
 
 namespace FubuMVC.Core.Assets
@@ -87,7 +86,7 @@ namespace FubuMVC.Core.Assets
             if (_settings.Mode == SearchMode.PublicFolderOnly)
             {
                 var publicFolder = _settings.DeterminePublicFolder();
-                var appFolder = FubuMvcPackageFacility.GetApplicationPath();
+                var appFolder = FubuApplication.GetApplicationPath();
 
                 return new FileSystem().FindFiles(publicFolder, FileSet.Deep(filename))
                     .Select(x =>
@@ -131,7 +130,7 @@ namespace FubuMVC.Core.Assets
             if (_settings.Mode == SearchMode.PublicFolderOnly)
             {
                 var publicFolder = _settings.DeterminePublicFolder();
-                var appFolder = FubuMvcPackageFacility.GetApplicationPath();
+                var appFolder = FubuApplication.GetApplicationPath();
 
                 return new FileSystem().FindFiles(publicFolder, search)
                     .Select(x =>

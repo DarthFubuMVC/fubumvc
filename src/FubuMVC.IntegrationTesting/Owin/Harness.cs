@@ -5,7 +5,6 @@ using System.Xml;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Endpoints;
-using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Katana;
 using FubuMVC.StructureMap;
@@ -39,7 +38,7 @@ namespace FubuMVC.IntegrationTesting.Owin
 
         public static void Run(Action<EndpointDriver> action)
         {
-            using (var server = EmbeddedFubuMvcServer.For<HarnessApplication>(port:PortFinder.FindPort(5502)))
+            using (var server = EmbeddedFubuMvcServer.For<HarnessApplication>(port: PortFinder.FindPort(5502)))
             {
                 action(server.Endpoints);
             }
@@ -63,9 +62,9 @@ namespace FubuMVC.IntegrationTesting.Owin
 
         public static void Start()
         {
-            FubuMvcPackageFacility.PhysicalRootPath = GetRootDirectory();
+            FubuApplication.PhysicalRootPath = GetRootDirectory();
 
-            int port = PortFinder.FindPort(5501);
+            var port = PortFinder.FindPort(5501);
 
             _server = EmbeddedFubuMvcServer.For<HarnessApplication>(GetRootDirectory(), port);
         }
@@ -145,12 +144,12 @@ namespace FubuMVC.IntegrationTesting.Owin
 
         public static IEnumerable<string> ScriptNames(this HttpResponse response)
         {
-            XmlDocument document = response.ReadAsXml();
-            XmlNodeList tags = document.DocumentElement.SelectNodes("//script");
+            var document = response.ReadAsXml();
+            var tags = document.DocumentElement.SelectNodes("//script");
 
             foreach (XmlElement tag in tags)
             {
-                string name = tag.GetAttribute("src");
+                var name = tag.GetAttribute("src");
                 yield return name.Substring(name.IndexOf('_'));
             }
         }

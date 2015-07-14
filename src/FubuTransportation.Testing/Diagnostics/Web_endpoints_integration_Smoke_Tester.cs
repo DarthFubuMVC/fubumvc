@@ -1,20 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net;
-using System.Threading;
-using Bottles;
 using FubuCore;
 using FubuMVC.Core;
-using FubuMVC.Core.Packaging;
-using FubuMVC.Core.Registration;
 using FubuMVC.Katana;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using FubuTransportation.Configuration;
 using FubuTransportation.Diagnostics.Visualization;
 using FubuTransportation.InMemory;
-using FubuTransportation.Polling;
 using NUnit.Framework;
 
 namespace FubuTransportation.Testing.Diagnostics
@@ -22,9 +15,9 @@ namespace FubuTransportation.Testing.Diagnostics
     [TestFixture, Explicit("Will bring this back later")]
     public class Web_endpoints_integration_Smoke_Tester
     {
-        string appPath = Environment.CurrentDirectory
-                .ParentDirectory().ParentDirectory().ParentDirectory()
-                .AppendPath("FubuTransportation");
+        private readonly string appPath = Environment.CurrentDirectory
+            .ParentDirectory().ParentDirectory().ParentDirectory()
+            .AppendPath("FubuTransportation");
 
 
         [Test]
@@ -91,7 +84,8 @@ namespace FubuTransportation.Testing.Diagnostics
             var registry = new FubuRegistry();
             registry.Import<DiagnosticApplication>();
 
-            registry.AlterSettings<TransportSettings>(x => {
+            registry.AlterSettings<TransportSettings>(x =>
+            {
                 x.DelayMessagePolling = Int32.MaxValue;
                 x.ListenerCleanupPolling = Int32.MaxValue;
             });

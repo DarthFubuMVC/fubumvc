@@ -2,13 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using FubuCore;
-using FubuMVC.Core.Assets;
 using FubuMVC.Core.Http.Owin;
-using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
 using FubuMVC.Core.Http.Scenarios;
-using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.Urls;
 
@@ -28,7 +24,7 @@ namespace FubuMVC.Core.Http.Hosting
         {
             if (directory.IsNotEmpty())
             {
-                FubuMvcPackageFacility.PhysicalRootPath = directory;
+                FubuApplication.PhysicalRootPath = directory;
             }
 
             var runtime = new T().BuildApplication().Bootstrap();
@@ -51,10 +47,7 @@ namespace FubuMVC.Core.Http.Hosting
 
         public BehaviorGraph Behaviors
         {
-            get
-            {
-                return _services.GetInstance<BehaviorGraph>();
-            }
+            get { return _services.GetInstance<BehaviorGraph>(); }
         }
 
         public OwinHttpResponse Send(Action<OwinHttpRequest> configuration)
@@ -111,7 +104,7 @@ namespace FubuMVC.Core.Http.Hosting
         {
             if (directory.IsNotEmpty())
             {
-                FubuMvcPackageFacility.PhysicalRootPath = directory;
+                FubuApplication.PhysicalRootPath = directory;
             }
 
             return new InMemoryHost(application.Bootstrap());

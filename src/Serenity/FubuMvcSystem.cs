@@ -8,8 +8,6 @@ using FubuCore;
 using FubuCore.CommandLine;
 using FubuCore.Util;
 using FubuMVC.Core;
-using FubuMVC.Core.Diagnostics.Runtime;
-using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration.ObjectGraph;
 using Serenity.Fixtures.Handlers;
 using StoryTeller;
@@ -149,7 +147,6 @@ namespace Serenity
         }
 
 
-
         /// <summary>
         /// Add an element handler to the ElementHandlers collection for driving
         /// IWebElement's with WebDriver
@@ -250,7 +247,7 @@ namespace Serenity
         {
             return Task.Factory.StartNew(() =>
             {
-                FubuMvcPackageFacility.PhysicalRootPath = _settings.PhysicalPath;
+                FubuApplication.PhysicalRootPath = _settings.PhysicalPath;
                 _runtime = _runtimeSource();
 
                 var browserLifecycle = WebDriverSettings.GetBrowserLifecyle(ChooseBrowserType());

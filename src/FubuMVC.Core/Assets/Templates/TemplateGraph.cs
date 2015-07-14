@@ -7,19 +7,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Routing;
 using FubuCore;
-using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin;
-using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Runtime.Conditionals;
 using StructureMap.Util;
 
 namespace FubuMVC.Core.Assets.Templates
 {
-
-
     [Singleton]
     public class TemplateGraph
     {
@@ -34,11 +29,9 @@ namespace FubuMVC.Core.Assets.Templates
             _settings = settings;
             _services = services;
 
-            _templates = new Lazy<LightweightCache<string, TemplateDef>>(() => {
-                return buildTemplateCache(behaviors);
-            });
+            _templates = new Lazy<LightweightCache<string, TemplateDef>>(() => { return buildTemplateCache(behaviors); });
 
-            _templateDirectory = FubuMvcPackageFacility
+            _templateDirectory = FubuApplication
                 .GetApplicationPath()
                 .AppendPath(_settings.TemplateDestination)
                 .ToFullPath()
@@ -49,7 +42,8 @@ namespace FubuMVC.Core.Assets.Templates
         {
             var cache = new LightweightCache<string, TemplateDef>();
 
-            behaviors.Behaviors.Where(x => x.InputType().CanBeCastTo<Template>()).Each(chain => {
+            behaviors.Behaviors.Where(x => x.InputType().CanBeCastTo<Template>()).Each(chain =>
+            {
                 var def = new TemplateDef(this, chain);
 
                 cache[def.Name] = def;
@@ -92,7 +86,8 @@ namespace FubuMVC.Core.Assets.Templates
 
         private Task writeCulture(CultureInfo culture)
         {
-            return Task.Factory.StartNew(() => {
+            return Task.Factory.StartNew(() =>
+            {
                 SetCulture(culture);
 
                 _templates.Value.Each(x => x.Write(culture));
@@ -143,7 +138,6 @@ namespace FubuMVC.Core.Assets.Templates
                     _name = Path.GetFileNameWithoutExtension(view.Name());
                     _file = view.FilePath;
                 }
-
             }
 
             public string PathFor(CultureInfo culture)
@@ -162,7 +156,7 @@ namespace FubuMVC.Core.Assets.Templates
             }
 
             public void Write(CultureInfo culture)
-            {                
+            {
                 // Do this in a different way?
                 SetCulture(culture);
 
@@ -172,7 +166,6 @@ namespace FubuMVC.Core.Assets.Templates
 
                 _parent._files.WriteStringToFile(path, text);
             }
-
 
 
             public string GenerateTextForCurrentThreadCulture()

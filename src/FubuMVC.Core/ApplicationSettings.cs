@@ -18,7 +18,7 @@ namespace FubuMVC.Core
         }
 
         /// <summary>
-        /// The root directory of the application, equivalent to FubuMvcPackageFacility.PhysicalPath
+        /// The root directory of the application, equivalent to FubuApplication.PhysicalPath
         /// </summary>
         public string PhysicalPath { get; set; }
 

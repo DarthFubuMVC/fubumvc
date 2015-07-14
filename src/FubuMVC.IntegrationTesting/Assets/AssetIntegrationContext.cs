@@ -1,31 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bottles;
-using Bottles.Diagnostics;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Http.Scenarios;
-using FubuMVC.Core.Packaging;
 using FubuMVC.IntegrationTesting.Views;
 using FubuMVC.StructureMap;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Assets
 {
-    public class AssetIntegrationContext 
+    public class AssetIntegrationContext
     {
         public static readonly string Folder = "Assets" + Guid.NewGuid();
         public static readonly IFileSystem fileSystem = new FileSystem();
         public static readonly string Application = "Application";
-        private string _directory;
+        private readonly string _directory;
         private readonly IList<ContentStream> _streams = new List<ContentStream>();
         private InMemoryHost _host;
         private readonly string _applicationDirectory;
         protected Scenario Scenario;
-        private Lazy<AssetGraph> _allAssets; 
+        private Lazy<AssetGraph> _allAssets;
 
         public AssetIntegrationContext()
         {
@@ -42,15 +39,13 @@ namespace FubuMVC.IntegrationTesting.Assets
 
             _streams.Each(x => x.DumpContents());
 
-            FubuMvcPackageFacility.PhysicalRootPath = _applicationDirectory;
+            FubuApplication.PhysicalRootPath = _applicationDirectory;
 
             var runtime = FubuApplication.For(determineRegistry()).StructureMap().Bootstrap();
 
             _host = new InMemoryHost(runtime);
 
-            _allAssets = new Lazy<AssetGraph>(() => {
-                return runtime.Factory.Get<IAssetFinder>().FindAll();
-            });
+            _allAssets = new Lazy<AssetGraph>(() => { return runtime.Factory.Get<IAssetFinder>().FindAll(); });
         }
 
         private FubuRegistry determineRegistry()
@@ -80,10 +75,7 @@ namespace FubuMVC.IntegrationTesting.Assets
 
         public AssetGraph AllAssets
         {
-            get
-            {
-                return _allAssets.Value;
-            }
+            get { return _allAssets.Value; }
         }
 
         protected ContentStream File(string name)
@@ -101,13 +93,9 @@ namespace FubuMVC.IntegrationTesting.Assets
         }
 
 
-
         public IAssetFinder Assets
         {
-            get
-            {
-                return _host.Services.GetInstance<IAssetFinder>();
-            }
+            get { return _host.Services.GetInstance<IAssetFinder>(); }
         }
     }
 }

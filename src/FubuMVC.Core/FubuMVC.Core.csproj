@@ -49,15 +49,9 @@
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap\lib\net40\StructureMap.dll</HintPath>
     </Reference>
-    <Reference Include="StructureMap.Net4">
-      <HintPath>..\packages\structuremap\lib\net40\StructureMap.Net4.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
@@ -512,7 +506,6 @@
     <Compile Include="Registration\Routes\RouteParameters.cs" />
     <Compile Include="Registration\Routes\RouteInput.cs" />
     <Compile Include="Routing\IRoutePolicy.cs" />
-    <Compile Include="Packaging\FubuMvcPackageFacility.cs" />
     <Compile Include="Registration\Conventions\ReorderBehaviorsPolicy.cs" />
     <Compile Include="Registration\DSL\ModelsExpression.cs" />
     <Compile Include="Registration\DSL\PoliciesExpression.cs" />

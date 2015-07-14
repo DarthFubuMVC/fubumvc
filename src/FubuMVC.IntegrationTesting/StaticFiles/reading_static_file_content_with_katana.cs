@@ -1,9 +1,5 @@
-﻿using System.IO;
-using System.Net;
-using System.Security.Cryptography.X509Certificates;
-using FubuCore;
+﻿using System.Net;
 using FubuMVC.Core;
-using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Katana;
 using FubuMVC.StructureMap;
@@ -22,34 +18,31 @@ namespace FubuMVC.IntegrationTesting.StaticFiles
         {
             using (var server = FubuApplication.DefaultPolicies().StructureMap().RunEmbedded(port: 0))
             {
-                server.Endpoints.Get("Sample.js", etag:file.Etag())
+                server.Endpoints.Get("Sample.js", etag: file.Etag())
                     .StatusCodeShouldBe(HttpStatusCode.NotModified);
-
             }
         }
 
         [Test]
         public void can_return_the_HEAD_for_a_file()
         {
-            using (var server = FubuApplication.DefaultPolicies().StructureMap().RunEmbedded(port:0))
+            using (var server = FubuApplication.DefaultPolicies().StructureMap().RunEmbedded(port: 0))
             {
                 server.Endpoints.Head("Sample.js")
                     .StatusCodeShouldBe(HttpStatusCode.OK)
                     .LastModifiedShouldBe(file.LastModified())
                     .EtagShouldBe(file.Etag());
-
             }
         }
 
         [Test]
         public void can_return_the_text_of_a_txt_file()
         {
-            using (var server = FubuApplication.DefaultPolicies().StructureMap().RunEmbedded(port:0))
+            using (var server = FubuApplication.DefaultPolicies().StructureMap().RunEmbedded(port: 0))
             {
                 var response = server.Endpoints.Get("Sample.js");
                 response.StatusCodeShouldBe(HttpStatusCode.OK);
                 response.ReadAsText().ShouldContain("This is some sample data in a static file");
-                
             }
         }
 
@@ -58,10 +51,9 @@ namespace FubuMVC.IntegrationTesting.StaticFiles
         {
             using (var server = FubuApplication.DefaultPolicies().StructureMap().RunEmbeddedWithAutoPort())
             {
-                var response = server.Endpoints.Get("Sample.js", etag:file.Etag() + "!!!");
+                var response = server.Endpoints.Get("Sample.js", etag: file.Etag() + "!!!");
                 response.StatusCodeShouldBe(HttpStatusCode.OK);
                 response.ReadAsText().ShouldContain("This is some sample data in a static file");
-
             }
         }
 
@@ -72,7 +64,6 @@ namespace FubuMVC.IntegrationTesting.StaticFiles
             {
                 server.Endpoints.Get("Sample.js", ifModifiedSince: file.LastModified().ToUniversalTime().AddMinutes(10))
                     .StatusCodeShouldBe(HttpStatusCode.NotModified);
-
             }
         }
 
@@ -84,7 +75,6 @@ namespace FubuMVC.IntegrationTesting.StaticFiles
                 server.Endpoints.Get("Sample.js", ifModifiedSince: file.LastModified().ToUniversalTime().AddMinutes(-20))
                     .StatusCodeShouldBe(HttpStatusCode.OK)
                     .ReadAsText().ShouldContain("This is some sample data in a static file");
-
             }
         }
     }

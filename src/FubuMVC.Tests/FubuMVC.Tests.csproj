@@ -126,7 +126,6 @@
     <Compile Include="Diagnostics\Visualization\Visualizers\BehaviorStartAndFinishEndpointsTester.cs" />
     <Compile Include="Diagnostics\Visualization\Visualizers\ModelBindingLogEndpointTester.cs" />
     <Compile Include="Docs\Examples\Bootstrapping.cs" />
-    <Compile Include="Docs\Examples\ConfiguringBottles.cs" />
     <Compile Include="Docs\Introduction\Overview\HomeEndpoint.cs" />
     <Compile Include="Docs\Topics\Authorization\AuthorizationPolicyController.cs" />
     <Compile Include="Docs\Topics\Authorization\Controller.cs" />

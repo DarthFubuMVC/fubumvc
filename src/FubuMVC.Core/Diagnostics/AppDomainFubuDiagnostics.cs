@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using FubuMVC.Core.Packaging;
 
 namespace FubuMVC.Core.Diagnostics
 {
@@ -20,9 +19,9 @@ namespace FubuMVC.Core.Diagnostics
             var dict = new Dictionary<string, object>
             {
                 {"reloaded", _reloaded.Timestamp.ToLocalTime().ToString()},
-                {"fubuPath", FubuMvcPackageFacility.GetApplicationPath()},
+                {"fubuPath", FubuApplication.GetApplicationPath()},
                 {"baseDirectory", AppDomain.CurrentDomain.BaseDirectory},
-                {"binPath", FubuMvcPackageFacility.FindBinPath()},
+                {"binPath", FubuApplication.FindBinPath()},
                 {"config", AppDomain.CurrentDomain.SetupInformation.ConfigurationFile}
             };
 

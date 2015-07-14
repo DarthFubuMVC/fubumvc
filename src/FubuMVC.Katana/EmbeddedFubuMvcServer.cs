@@ -1,21 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net;
 using System.Reflection;
 using System.Runtime.Serialization;
-using System.Web.Routing;
 using FubuCore;
-using FubuCore.CommandLine;
 using FubuMVC.Core;
-using FubuMVC.Core.Assets;
 using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Http.Owin;
-using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
-using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Urls;
 using Microsoft.Owin.Hosting;
 using Microsoft.Owin.Hosting.Builder;
@@ -25,7 +17,6 @@ using Microsoft.Owin.Hosting.ServerFactory;
 using Microsoft.Owin.Hosting.Services;
 using Microsoft.Owin.Hosting.Tracing;
 using Microsoft.Owin.Logging;
-using Owin;
 
 namespace FubuMVC.Katana
 {
@@ -48,7 +39,8 @@ namespace FubuMVC.Katana
         /// <param name="physicalPath">The physical path of the web server path.  This only needs to be set if the location for application content like scripts or views is at a different place than the current AppDomain base directory.  If this value is blank, the embedded server will attempt to find a folder with the same name as the assembly that contains the IApplicationSource</param>
         /// <param name="port">The port to run the web server at.  The web server will try other port numbers starting at this point if it is unable to bind to this specific port</param>
         /// <returns></returns>
-        public static EmbeddedFubuMvcServer For<T>(string physicalPath = null, int port = 5500) where T : IApplicationSource, new()
+        public static EmbeddedFubuMvcServer For<T>(string physicalPath = null, int port = 5500)
+            where T : IApplicationSource, new()
         {
             if (physicalPath.IsEmpty())
             {
@@ -56,12 +48,12 @@ namespace FubuMVC.Katana
             }
 
             return new EmbeddedFubuMvcServer(new T().BuildApplication().Bootstrap(), physicalPath, port);
-
         }
 
         public static string TryToGuessApplicationPath(Type type)
         {
-            var solutionFolder = AppDomain.CurrentDomain.BaseDirectory.ParentDirectory().ParentDirectory().ParentDirectory();
+            var solutionFolder =
+                AppDomain.CurrentDomain.BaseDirectory.ParentDirectory().ParentDirectory().ParentDirectory();
             var applicationFolder = solutionFolder.AppendPath(type.Assembly.GetName().Name);
 
             if (Directory.Exists(applicationFolder)) return applicationFolder;
@@ -129,18 +121,17 @@ namespace FubuMVC.Katana
         }
 
 
-
         private void startServer(OwinSettings settings, string physicalPath, int port)
         {
             var parameters = new StartOptions {Port = port};
             parameters.Urls.Add("http://*:" + port); //for netsh http add urlacl
 
 
-            if (physicalPath != null) FubuMvcPackageFacility.PhysicalRootPath = physicalPath;
+            if (physicalPath != null) FubuApplication.PhysicalRootPath = physicalPath;
 
             var context = new StartContext(parameters)
             {
-               App = FubuOwinHost.ToAppFunc(_runtime, settings),
+                App = FubuOwinHost.ToAppFunc(_runtime, settings),
             };
 
             settings.EnvironmentData.ToDictionary().Each(pair => context.EnvironmentData.Add(pair));
@@ -191,7 +182,7 @@ namespace FubuMVC.Katana
 
         public string PhysicalPath
         {
-            get { return FubuMvcPackageFacility.GetApplicationPath(); }
+            get { return FubuApplication.GetApplicationPath(); }
         }
 
         public void Dispose()
@@ -209,8 +200,6 @@ namespace FubuMVC.Katana
     [Serializable]
     public class KatanaRightsException : Exception
     {
-
-
         public KatanaRightsException(Exception innerException) : base(string.Empty, innerException)
         {
         }
@@ -221,14 +210,11 @@ namespace FubuMVC.Katana
 
         public override string Message
         {
-            get
-            {
-                return @"
+            get { return @"
 To use Katana hosting, you need to either run with administrative rights
 or optionally, use 'netsh http add urlacl url=http://+:80/MyUri user=DOMAIN\\user' at the command line.
 See http://msdn.microsoft.com/en-us/library/ms733768.aspx for more information.
-".Trim();
-            }
+".Trim(); }
         }
     }
 }

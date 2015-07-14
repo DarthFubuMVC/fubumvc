@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuCore.Util;
-using FubuMVC.Core.Packaging;
 
 namespace FubuMVC.Core.Runtime.Files
 {
@@ -21,7 +20,7 @@ namespace FubuMVC.Core.Runtime.Files
 
         public string GetApplicationPath()
         {
-            return FubuMvcPackageFacility.GetApplicationPath();
+            return FubuApplication.GetApplicationPath();
         }
 
         // I'm okay with this finding nulls

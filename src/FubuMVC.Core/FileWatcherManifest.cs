@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using Bottles;
 using Bottles.Diagnostics;
 using Bottles.PackageLoaders.LinkedFolders;
 using FubuCore;
-using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core
@@ -18,17 +16,17 @@ namespace FubuMVC.Core
         public string[] ContentMatches = new string[0];
 
         public string PublicAssetFolder = string.Empty;
-        
+
         public string[] AssetExtensions = new string[0];
 
-        public string ApplicationPath = FubuMvcPackageFacility.GetApplicationPath();
-        public string BinPath = FubuMvcPackageFacility.FindBinPath();
-                
+        public string ApplicationPath = FubuApplication.GetApplicationPath();
+        public string BinPath = FubuApplication.FindBinPath();
+
         public string[] LinkedFolders = determineLinkedFolders();
 
         private static string[] determineLinkedFolders()
         {
-            var loader = new LinkedFolderPackageLoader(FubuMvcPackageFacility.GetApplicationPath(), x => x);
+            var loader = new LinkedFolderPackageLoader(FubuApplication.GetApplicationPath(), x => x);
             var packages = loader.Load(new PackageLog());
 
             var links = new List<string>();
@@ -43,12 +41,14 @@ namespace FubuMVC.Core
 
         public void Watch(bool refreshContent, IApplicationObserver observer)
         {
-            FileSystemEventHandler appDomain = (o, args) => {
+            FileSystemEventHandler appDomain = (o, args) =>
+            {
                 StopWatching();
                 observer.RecycleAppDomain();
             };
 
-            FileSystemEventHandler reload = (o, args) => {
+            FileSystemEventHandler reload = (o, args) =>
+            {
                 var watcher = o.As<FileSystemWatcher>();
 
                 watcher.EnableRaisingEvents = false;
@@ -88,14 +88,16 @@ namespace FubuMVC.Core
                 add(ApplicationPath, "*.jsx").OnChange(reload);
                 add(ApplicationPath, "*.css").OnChange(reload);
 
-                LinkedFolders.Each(x => {
+                LinkedFolders.Each(x =>
+                {
                     add(x, "*.js").OnChange(reload);
                     add(x, "*.jsx").OnChange(reload);
                     add(x, "*.css").OnChange(reload);
                 });
             }
 
-            ContentMatches.Each(ext => {
+            ContentMatches.Each(ext =>
+            {
                 if (!ext.StartsWith("*")) ext = "*" + ext;
 
                 add(ApplicationPath, ext).OnChange(reload);
@@ -140,7 +142,6 @@ namespace FubuMVC.Core
             _watchers.Each(x => x.SafeDispose());
             _watchers.Clear();
         }
-
     }
 
     public static class FileSystemWatcherExtensions
@@ -159,7 +160,8 @@ namespace FubuMVC.Core
             return watcher;
         }
 
-        public static FileSystemWatcher OnChangeOrCreation(this FileSystemWatcher watcher, FileSystemEventHandler handler)
+        public static FileSystemWatcher OnChangeOrCreation(this FileSystemWatcher watcher,
+            FileSystemEventHandler handler)
         {
             watcher.Changed += handler;
             watcher.Created += handler;

@@ -1,7 +1,6 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Http.Hosting;
-using FubuMVC.Core.Packaging;
 using FubuMVC.Core.UI;
 using FubuMVC.StructureMap;
 using HtmlTags;
@@ -15,23 +14,25 @@ namespace FubuMVC.IntegrationTesting.Assets
         [TestFixtureSetUp]
         public void SetUp()
         {
-            FubuMvcPackageFacility.PhysicalRootPath = null;
+            FubuApplication.PhysicalRootPath = null;
         }
 
         [Test]
         public void public_folder_only()
         {
             var registry = new FubuRegistry();
-            registry.AlterSettings<AssetSettings>(x => {
+            registry.AlterSettings<AssetSettings>(x =>
+            {
                 x.Mode = SearchMode.PublicFolderOnly;
                 x.Version = null;
             });
 
             using (var runtime = FubuApplication.For(registry).StructureMap().RunInMemory())
             {
-                runtime.Scenario(_ => {
+                runtime.Scenario(_ =>
+                {
                     _.Get.Action<PublicAssetFolderEndpoint>(x => x.get_public_asset_folder());
-                
+
                     _.ContentShouldContain("*/public*");
                 });
             }

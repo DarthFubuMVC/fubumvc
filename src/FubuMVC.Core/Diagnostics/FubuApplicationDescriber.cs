@@ -4,7 +4,6 @@ using System.IO;
 using System.Reflection;
 using Bottles;
 using FubuCore.Util.TextWriting;
-using FubuMVC.Core.Packaging;
 
 namespace FubuMVC.Core.Diagnostics
 {
@@ -104,9 +103,9 @@ namespace FubuMVC.Core.Diagnostics
             var report = new TextReport();
             report.StartColumns(2);
 
-            if (FubuMvcPackageFacility.Restarted.HasValue)
-                report.AddColumnData("Restarted", FubuMvcPackageFacility.Restarted.ToString());
-            report.AddColumnData("Application Path", FubuMvcPackageFacility.GetApplicationPath());
+            if (FubuApplication.Restarted.HasValue)
+                report.AddColumnData("Restarted", FubuApplication.Restarted.ToString());
+            report.AddColumnData("Application Path", FubuApplication.GetApplicationPath());
 
             report.Write(writer);
 

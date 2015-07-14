@@ -1,12 +1,11 @@
-using System.Diagnostics;
-using System.IO;
-using FubuCore;
-using FubuMVC.Core.Packaging;
-using FubuMVC.Core.Runtime.Files;
-using NUnit.Framework;
-using System.Linq;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using FubuCore;
+using FubuMVC.Core;
+using FubuMVC.Core.Runtime.Files;
 using FubuTestingSupport;
+using NUnit.Framework;
 
 namespace FubuMVC.Tests.Runtime.Files
 {
@@ -15,7 +14,7 @@ namespace FubuMVC.Tests.Runtime.Files
     {
         private ContentFolder theFolder;
 
-        [SetUp]     
+        [SetUp]
         public void SetUp()
         {
             theFolder = ContentFolder.ForApplication();
@@ -24,7 +23,7 @@ namespace FubuMVC.Tests.Runtime.Files
         [Test]
         public void sets_the_folder_path()
         {
-            theFolder.Path.ShouldEqual(FubuMvcPackageFacility.GetApplicationPath());
+            theFolder.Path.ShouldEqual(FubuApplication.GetApplicationPath());
         }
 
         [Test]
@@ -36,10 +35,11 @@ namespace FubuMVC.Tests.Runtime.Files
         [Test]
         public void can_find_files()
         {
-            var files = theFolder.FindFiles(new FileSet{
+            var files = theFolder.FindFiles(new FileSet
+            {
                 DeepSearch = true,
                 Include = "*.txt"
-            }).Select(x => x.Path.PathRelativeTo(FubuMvcPackageFacility.GetApplicationPath()));
+            }).Select(x => x.Path.PathRelativeTo(FubuApplication.GetApplicationPath()));
 
             files.ShouldContain(@"Runtime{0}Files{0}Data{0}a.txt".ToFormat(Path.DirectorySeparatorChar));
             files.ShouldContain(@"Runtime{0}Files{0}Data{0}b.txt".ToFormat(Path.DirectorySeparatorChar));
@@ -54,8 +54,7 @@ namespace FubuMVC.Tests.Runtime.Files
             {
                 DeepSearch = true,
                 Include = "*.txt"
-            }).Each(f => f.ProvenancePath.ShouldEqual(FubuMvcPackageFacility.GetApplicationPath()));
+            }).Each(f => f.ProvenancePath.ShouldEqual(FubuApplication.GetApplicationPath()));
         }
-
     }
 }

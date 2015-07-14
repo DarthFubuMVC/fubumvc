@@ -1,18 +1,14 @@
 using System;
-using System.Diagnostics;
+using System.Collections.Generic;
+using System.Linq;
 using FubuCore;
 using FubuMVC.Core;
-using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Diagnostics;
-using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
-using NUnit.Framework;
-using StructureMap;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
-using System.Linq;
-using System.Collections.Generic;
-using FubuCore.Descriptions;
+using NUnit.Framework;
+using StructureMap;
 
 namespace FubuMVC.Tests
 {
@@ -27,7 +23,6 @@ namespace FubuMVC.Tests
             {
                 Include = "*.asset.config;*.script.config"
             }).ToList().Each(system.DeleteFile);
- 
         }
 
         [Test]
@@ -36,13 +31,12 @@ namespace FubuMVC.Tests
             var floor = DateTime.Now.AddSeconds(-5);
             var ceiling = DateTime.Now.AddSeconds(5);
 
-            FubuMvcPackageFacility.Restarted = null;
+            FubuApplication.Restarted = null;
 
             var container = new Container();
             FubuApplication.For(new FubuRegistry()).StructureMap(container).Bootstrap();
 
-            (floor < FubuMvcPackageFacility.Restarted && FubuMvcPackageFacility.Restarted < ceiling).ShouldBeTrue();
-
+            (floor < FubuApplication.Restarted && FubuApplication.Restarted < ceiling).ShouldBeTrue();
         }
 
         [Test]
@@ -54,7 +48,6 @@ namespace FubuMVC.Tests
             var description = FubuApplicationDescriber.WriteDescription();
 
             Console.WriteLine(description);
-
         }
 
         [Test]
@@ -74,4 +67,4 @@ namespace FubuMVC.Tests
             return "Hello";
         }
     }
-}   
+}

@@ -1,7 +1,6 @@
 using System;
 using Bottles;
 using FubuCore;
-using FubuMVC.Core.Packaging;
 
 namespace FubuMVC.Core
 {
@@ -32,7 +31,7 @@ namespace FubuMVC.Core
 
         private static string filename()
         {
-            return FubuMvcPackageFacility.GetApplicationPath().AppendPath(File);
+            return FubuApplication.GetApplicationPath().AppendPath(File);
         }
 
         public string GetMode()

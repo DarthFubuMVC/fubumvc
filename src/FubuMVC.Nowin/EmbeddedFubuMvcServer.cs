@@ -5,7 +5,6 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Http.Owin;
-using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using Microsoft.Owin.Builder;
@@ -33,7 +32,8 @@ namespace FubuMVC.Nowin
         /// <param name="physicalPath">The physical path of the web server path.  This only needs to be set if the location for application content like scripts or views is at a different place than the current AppDomain base directory.  If this value is blank, the embedded server will attempt to find a folder with the same name as the assembly that contains the IApplicationSource</param>
         /// <param name="port">The port to run the web server at.  The web server will try other port numbers starting at this point if it is unable to bind to this specific port</param>
         /// <returns></returns>
-        public static EmbeddedFubuMvcServer For<T>(string physicalPath = null, int port = 5500) where T : IApplicationSource, new()
+        public static EmbeddedFubuMvcServer For<T>(string physicalPath = null, int port = 5500)
+            where T : IApplicationSource, new()
         {
             if (physicalPath.IsEmpty())
             {
@@ -41,12 +41,12 @@ namespace FubuMVC.Nowin
             }
 
             return new EmbeddedFubuMvcServer(new T().BuildApplication().Bootstrap(), physicalPath, port);
-
         }
 
         public static string TryToGuessApplicationPath(Type type)
         {
-            var solutionFolder = AppDomain.CurrentDomain.BaseDirectory.ParentDirectory().ParentDirectory().ParentDirectory();
+            var solutionFolder =
+                AppDomain.CurrentDomain.BaseDirectory.ParentDirectory().ParentDirectory().ParentDirectory();
             var applicationFolder = solutionFolder.AppendPath(type.Assembly.GetName().Name);
 
             if (Directory.Exists(applicationFolder)) return applicationFolder;
@@ -115,7 +115,7 @@ namespace FubuMVC.Nowin
 
         private void startServer(OwinSettings settings, string physicalPath, int port)
         {
-            if (physicalPath != null) FubuMvcPackageFacility.PhysicalRootPath = physicalPath;
+            if (physicalPath != null) FubuApplication.PhysicalRootPath = physicalPath;
 
             var owinBuilder = new AppBuilder();
             OwinServerFactory.Initialize(owinBuilder.Properties);
@@ -124,7 +124,7 @@ namespace FubuMVC.Nowin
             settings.EnvironmentData.ToDictionary().Each(pair => owinBuilder.Properties.Add(pair));
 
             var host = new FubuOwinHost(_runtime.Routes);
-            owinBuilder.Run((context) => host.Invoke(context.Environment));
+            owinBuilder.Run(context => host.Invoke(context.Environment));
 
             var builder = ServerBuilder.New().SetPort(port).SetOwinApp(owinBuilder.Build());
             _server = builder.Start();
@@ -152,7 +152,7 @@ namespace FubuMVC.Nowin
 
         public string PhysicalPath
         {
-            get { return FubuMvcPackageFacility.GetApplicationPath(); }
+            get { return FubuApplication.GetApplicationPath(); }
         }
 
         public void Dispose()

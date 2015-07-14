@@ -6,7 +6,6 @@ using Bottles.Commands;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Endpoints;
-using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Runtime;
 using FubuMVC.IntegrationTesting.Querying;
 using FubuMVC.Katana;
@@ -28,7 +27,8 @@ namespace FubuMVC.IntegrationTesting
 
         static FubuRegistryHarness()
         {
-            new AliasCommand().Execute(new AliasInput{
+            new AliasCommand().Execute(new AliasInput
+            {
                 Name = "harness",
                 Folder = Harness.GetApplicationDirectory().FileEscape()
             });
@@ -70,7 +70,6 @@ namespace FubuMVC.IntegrationTesting
 
         protected virtual void beforeRunning()
         {
-            
         }
 
         [TestFixtureTearDown]
@@ -136,7 +135,7 @@ namespace FubuMVC.IntegrationTesting
     public class SimpleSource : IApplicationSource
     {
         private readonly Action<FubuRegistry> _configuration;
-        private readonly IContainer _container; 
+        private readonly IContainer _container;
 
         public SimpleSource(Action<FubuRegistry> configuration, IContainer container)
         {
@@ -170,10 +169,7 @@ namespace FubuMVC.IntegrationTesting
             _server = new EmbeddedFubuMvcServer(runtime, GetApplicationDirectory(), _port);
             _port = port;
 
-            _remote = new Lazy<RemoteBehaviorGraph>(() =>
-            {
-                return new RemoteBehaviorGraph(_server.BaseAddress);
-            });
+            _remote = new Lazy<RemoteBehaviorGraph>(() => { return new RemoteBehaviorGraph(_server.BaseAddress); });
         }
 
         public string BaseAddress
@@ -204,7 +200,7 @@ namespace FubuMVC.IntegrationTesting
         public static Harness Run(Action<FubuRegistry> configure, IContainer container)
         {
             var applicationDirectory = GetApplicationDirectory();
-            FubuMvcPackageFacility.PhysicalRootPath = applicationDirectory;
+            FubuApplication.PhysicalRootPath = applicationDirectory;
 
 
             var simpleSource = new SimpleSource(configure, container);
@@ -286,7 +282,6 @@ namespace FubuMVC.IntegrationTesting
         }
 
 
-
         public static HttpResponse EtagShouldBe(this HttpResponse response, string etag)
         {
             etag.Trim('"').ShouldEqual(etag);
@@ -296,7 +291,7 @@ namespace FubuMVC.IntegrationTesting
         public static DateTime? LastModified(this HttpResponse response)
         {
             var lastModifiedString = response.ResponseHeaderFor(HttpResponseHeader.LastModified);
-            return lastModifiedString.IsEmpty() ? (DateTime?)null : DateTime.ParseExact(lastModifiedString, "r", null);
+            return lastModifiedString.IsEmpty() ? (DateTime?) null : DateTime.ParseExact(lastModifiedString, "r", null);
         }
 
         public static HttpResponse LastModifiedShouldBe(this HttpResponse response, DateTime expected)
@@ -307,7 +302,5 @@ namespace FubuMVC.IntegrationTesting
 
             return response;
         }
-
-
     }
 }

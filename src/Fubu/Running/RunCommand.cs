@@ -1,7 +1,5 @@
 ﻿using System;
 using FubuCore.CommandLine;
-using FubuCore;
-using FubuMVC.Core.Packaging;
 
 namespace Fubu.Running
 {
@@ -34,7 +32,7 @@ namespace Fubu.Running
             }
 
             tellUsersWhatToDo();
-            ConsoleKeyInfo key = Console.ReadKey();
+            var key = Console.ReadKey();
             while (key.Key != ConsoleKey.Q)
             {
                 if (key.Key == ConsoleKey.R)

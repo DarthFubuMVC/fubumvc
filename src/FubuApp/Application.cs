@@ -2,10 +2,7 @@
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Continuations;
-using FubuMVC.Core.Packaging;
 using FubuMVC.StructureMap;
-using FubuMVC.StructureMap.Settings;
-using StructureMap;
 
 namespace FubuApp
 {
@@ -33,26 +30,22 @@ namespace FubuApp
 
         public string get_file()
         {
-            var filename = FubuMvcPackageFacility.GetApplicationPath().AppendPath("Something.spark");
+            var filename = FubuApplication.GetApplicationPath().AppendPath("Something.spark");
             return new FileSystem().ReadStringFromFile(filename);
         }
 
         public string get_time()
         {
-            return "AppDomain Startup Time = " + First.ToLongTimeString() + "\n\nApplication Startup Time = " + FubuMvcPackageFacility.Restarted.Value.ToLongTimeString();
+            return "AppDomain Startup Time = " + First.ToLongTimeString() + "\n\nApplication Startup Time = " +
+                   FubuApplication.Restarted.Value.ToLongTimeString();
         }
-
     }
 
     public class SampleApplication : IApplicationSource
     {
-        
-
         public FubuApplication BuildApplication()
         {
             return FubuApplication.DefaultPolicies().StructureMap();
         }
-
-
     }
 }
