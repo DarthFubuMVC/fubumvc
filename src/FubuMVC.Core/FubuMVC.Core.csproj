@@ -90,7 +90,6 @@
     <Compile Include="Assets\ScriptTag.cs" />
     <Compile Include="Assets\StylesheetLinkTag.cs" />
     <Compile Include="Assets\Templates\TemplateGraph.cs" />
-    <Compile Include="AsymmetricJsonAttribute.cs" />
     <Compile Include="Caching\CacheAttribute.cs" />
     <Compile Include="ClientMessage.cs" />
     <Compile Include="Configuration\BehaviorGraphBuilder.cs" />
@@ -317,7 +316,12 @@
     <Compile Include="Registration\SettingAlteration.cs" />
     <Compile Include="Registration\SettingReplacement.cs" />
     <Compile Include="Registration\SettingsCollection.cs" />
+    <Compile Include="Resources\Conneg\AjaxContinuations.cs" />
     <Compile Include="Resources\Conneg\ConnegGraph.cs" />
+    <Compile Include="Resources\Conneg\ConnegRule.cs" />
+    <Compile Include="Resources\Conneg\CustomReadersAndWriters.cs" />
+    <Compile Include="Resources\Conneg\DefaultReadersAndWriters.cs" />
+    <Compile Include="Resources\Conneg\HtmlTagsRule.cs" />
     <Compile Include="Resources\Conneg\IMediaCollection.cs" />
     <Compile Include="Resources\Conneg\IOutputNode.cs" />
     <Compile Include="Resources\Conneg\IReaderCollection.cs" />
@@ -328,7 +332,8 @@
     <Compile Include="Resources\Conneg\NoWritersMatch.cs" />
     <Compile Include="Resources\Conneg\OutputNodeExtensions.cs" />
     <Compile Include="Resources\Conneg\ReaderCollection.cs" />
-    <Compile Include="Resources\Conneg\Rules.cs" />
+    <Compile Include="Resources\Conneg\ConnegRules.cs" />
+    <Compile Include="Resources\Conneg\StringOutput.cs" />
     <Compile Include="Resources\Conneg\WriterChoice.cs" />
     <Compile Include="Resources\Etags\IHeadersCache.cs" />
     <Compile Include="Resources\Hypermedia\ILinkCreator.cs" />
@@ -457,7 +462,6 @@
     <Compile Include="Security\SecurityServicesRegistry.cs" />
     <Compile Include="Security\SecuritySettings.cs" />
     <Compile Include="SessionState\CookieFlashProvider.cs" />
-    <Compile Include="SymmetricJsonAttribute.cs" />
     <Compile Include="TagAttribute.cs" />
     <Compile Include="Template.cs" />
     <Compile Include="UI\AuthorizationOnPageExtensions.cs" />

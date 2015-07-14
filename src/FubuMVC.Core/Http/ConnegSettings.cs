@@ -18,8 +18,6 @@ namespace FubuMVC.Core.Http
 
         public ConnegSettings()
         {
-            Rules.AddToEnd<SymmetricJson>();
-            Rules.AddToEnd<AsymmetricJson>();
             Rules.AddToEnd<AjaxContinuations>();
             Rules.AddToEnd<StringOutput>();
             Rules.AddToEnd<HtmlTagsRule>();

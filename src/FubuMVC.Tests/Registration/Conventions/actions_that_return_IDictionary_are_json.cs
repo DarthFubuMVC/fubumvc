@@ -27,11 +27,11 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void methods_that_return_an_IDictionary_string_object_should_be_asymmetric_json()
         {
-            theGraph.BehaviorFor<MyController>(x => x.ReturnsJson(null)).ShouldBeAsymmetricJson();
-            var behaviorChain = theGraph.BehaviorFor<MyController>(x => x.ReturnOtherJson());
+            var chain = theGraph.BehaviorFor<MyController>(x => x.ReturnsJson(null));
+            chain.Output.Writes(MimeType.Json).ShouldBeTrue();
 
-            behaviorChain.ResourceType().ShouldEqual(typeof (IDictionary<string, object>));
-            behaviorChain.ShouldBeAsymmetricJson();
+            var behaviorChain = theGraph.BehaviorFor<MyController>(x => x.ReturnOtherJson());
+            behaviorChain.Output.Writes(MimeType.Json).ShouldBeTrue();
         }
 
 
@@ -55,24 +55,4 @@ namespace FubuMVC.Tests.Registration.Conventions
         }
     }
 
-    public static class ConnegSpecifications
-    {
-        public static void ShouldBeAsymmetricJson(this BehaviorChain chain)
-        {
-            if (chain.ResourceType() != null)
-            {
-                chain.Output.MimeTypes()
-                    .OrderBy(x => x)
-                    .ShouldHaveTheSameElementsAs("application/json", "text/json");
-            }
-
-            if (chain.InputType() != null)
-            {
-                var mimetypes = chain.Input.Mimetypes.ToArray();
-                mimetypes
-                    .OrderBy(x => x)
-                    .ShouldHaveTheSameElementsAs("application/json", MimeType.HttpFormMimetype.ToString(), MimeType.MultipartMimetype.ToString(), "text/json");
-            }
-        }
-    }
 }
