@@ -199,13 +199,7 @@
     <Compile Include="SharedHarnessContext.cs" />
     <Compile Include="SelfHostHttpServerTester.cs" />
     <Compile Include="UI\doughnut_caching_tester.cs" />
-    <Compile Include="UI\ElementConventionsFubuPageExtensions_FullStackTester_DefaultConventions.cs" />
-    <Compile Include="UI\ElementConventions_for_Partials_in_Loop_Tester.cs" />
-    <Compile Include="UI\ElementConventions_with_Profiles_Tester.cs" />
-    <Compile Include="UI\Explicit_accessor_overrides_integration_tester.cs" />
     <Compile Include="UI\FubuPageExtensions_FullStack_Tester.cs" />
-    <Compile Include="UI\indexer_owner_type_bug_tester.cs" />
-    <Compile Include="UI\Templates\TemplateGenerationIntegration_Tests.cs" />
     <Compile Include="Using_a_custom_routing_policy.cs" />
     <Compile Include="Views\Actionless_Views.cs" />
     <Compile Include="Auto_Import_Model_Namespaces.cs" />

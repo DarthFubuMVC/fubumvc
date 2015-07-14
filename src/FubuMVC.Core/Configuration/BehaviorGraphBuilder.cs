@@ -39,7 +39,6 @@ namespace FubuMVC.Core.Configuration
 
             AccessorRulesCompiler.Compile(graph);
 
-            var htmlConventionCollation = HtmlConventionCollator.BuildHtmlConventions(graph);
 
             addBuiltInDiagnostics(graph);
 
@@ -64,7 +63,8 @@ namespace FubuMVC.Core.Configuration
             PackageRegistry.Timer.Record("Applying Tracing", () => applyTracing(graph));
 
             // Wait until all the other threads are done.
-            var registration = htmlConventionCollation.ContinueWith(t => config.RegisterServices(graph));
+            var registration = Task.Factory.StartNew(() => config.RegisterServices(graph));
+                
             Task.WaitAll(registration, layoutAttachmentTasks);
             Task.WaitAll(layoutAttachmentTasks.Result);
 

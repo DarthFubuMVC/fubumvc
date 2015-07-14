@@ -135,6 +135,12 @@ namespace FubuMVC.IntegrationTesting.UI
 
     }
 
+    public class ConventionTarget
+    {
+        public string BigName { get; set; }
+
+        public DateTime? NullableNow { get; set; }
+    }
 
     [TestFixture]
     public class FubuPageExtensionContext

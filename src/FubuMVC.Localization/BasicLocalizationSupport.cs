@@ -32,7 +32,6 @@ namespace FubuMVC.Localization
                 registry.Services(x => _modifications.Each(modify => modify(x)));
             }
 
-            registry.Import<HtmlConventionRegistry>(x => x.Labels.Add(new LabelBuilder()));
         }
 
         public class BasicLocalizationServices : ServiceRegistry

@@ -89,7 +89,6 @@
     <Compile Include="AssemblyNeedsTheFubuModuleAttribute.cs" />
     <Compile Include="HtmlTagExtensionsTester.cs" />
     <Compile Include="IntegratedBootstrappingTests.cs" />
-    <Compile Include="LabelBuilderTester.cs" />
     <Compile Include="LocalizationBootstrappingTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpinUpLocalizationCachesTester.cs" />

@@ -1,7 +1,6 @@
 using System;
 using System.Linq.Expressions;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.UI.Elements;
 using FubuMVC.Core.View;
 using HtmlTags;
 using FubuCore;
@@ -128,7 +127,7 @@ namespace FubuMVC.Core.UI
         public static string ElementNameFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression)
             where T : class
         {
-            return page.Get<IElementNamingConvention>().GetName(typeof (T), expression.ToAccessor());
+            return expression.ToAccessor().Name;
         }
 
         /// <summary>
