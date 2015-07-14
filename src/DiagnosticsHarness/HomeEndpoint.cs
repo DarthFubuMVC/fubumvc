@@ -47,19 +47,6 @@ namespace DiagnosticsHarness
 
             _document.Add("a").Attr("href", "/_fubu").Text("Diagnostics");
 
-            _document.Add("p")
-                .Text("Type in a list of comma delimited integers.  Any number over 100 will cause an exception in the message handling");
-
-            var formTag = _document.FormFor<NumberPost>();
-            _document.Push(formTag);
-
-            _document.Add("textarea").Name("Numbers");
-            _document.Add("br");
-            _document.Add("input").Attr("type", "submit").Attr("value", "Submit");
-
-            _document.Pop();
-            _document.Add(new LiteralTag("</form>")); // ugh.
-
 
             return _document;
         }

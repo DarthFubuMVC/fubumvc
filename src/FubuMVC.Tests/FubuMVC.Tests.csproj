@@ -368,12 +368,6 @@
     <Compile Include="UI\Elements\ElementRequestActivatorTester.cs" />
     <Compile Include="UI\Elements\ElementRequestTester.cs" />
     <Compile Include="UI\Elements\ElementTagOverrideTester.cs" />
-    <Compile Include="UI\Forms\DefinitionListFieldChromeTester.cs" />
-    <Compile Include="UI\Forms\FormForExpressionTester.cs" />
-    <Compile Include="UI\Forms\FormLineExpressionTester.cs" />
-    <Compile Include="UI\Forms\FormRequestTester.cs" />
-    <Compile Include="UI\Forms\FormTagBuilderTester.cs" />
-    <Compile Include="UI\Forms\FubuPageExtensionsTester.cs" />
     <Compile Include="UI\FubuPageExtensionsTester.cs" />
     <Compile Include="UI\HtmlConventionRegistryTester.cs" />
     <Compile Include="UI\HtmlElementConventionsContext.cs" />

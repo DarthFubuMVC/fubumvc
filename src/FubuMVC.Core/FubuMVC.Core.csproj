@@ -626,15 +626,8 @@
     <Compile Include="UI\Elements\IElementNamingConvention.cs" />
     <Compile Include="UI\Elements\IElementTagOverride.cs" />
     <Compile Include="UI\Elements\TagRequestActivator.cs" />
-    <Compile Include="UI\Forms\DefinitionListFieldChrome.cs" />
-    <Compile Include="UI\Forms\FormLineExpression.cs" />
-    <Compile Include="UI\Forms\FormRequest.cs" />
-    <Compile Include="UI\Forms\FormTagBuilder.cs" />
-    <Compile Include="UI\Forms\IFieldChrome.cs" />
-    <Compile Include="UI\Forms\TableRowFieldChrome.cs" />
     <Compile Include="UI\FubuHtmlDocument.cs" />
     <Compile Include="UI\FubuPageExtensions.cs" />
-    <Compile Include="UI\FubuPageFormExtensions.cs" />
     <Compile Include="UI\HtmlConventionCollator.cs" />
     <Compile Include="UI\HtmlConventionRegistry.cs" />
     <Compile Include="UI\HtmlTagExtensions.cs" />
@@ -652,7 +645,6 @@
     <Compile Include="UI\Security\IFieldAccessRule.cs" />
     <Compile Include="UI\Security\IFieldAccessService.cs" />
     <Compile Include="UI\ServiceLocatorTagRequestActivator.cs" />
-    <Compile Include="UI\ShowEditFieldExpressions.cs" />
     <Compile Include="UI\Templates\TemplateWriter.cs" />
     <Compile Include="UI\UIServiceRegistry.cs" />
     <Compile Include="UrlAliasAttribute.cs" />
