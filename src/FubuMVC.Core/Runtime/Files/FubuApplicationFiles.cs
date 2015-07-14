@@ -9,9 +9,7 @@ namespace FubuMVC.Core.Runtime.Files
     public class FubuApplicationFiles : IFubuApplicationFiles
     {
         private readonly Cache<string, IFubuFile> _files;
-
-        private readonly Lazy<IEnumerable<ContentFolder>> _folders
-            = new Lazy<IEnumerable<ContentFolder>>(ContentFolder.FindAllContentFolders);
+        private readonly static IFileSystem _fileSystem = new FileSystem();
 
         public FubuApplicationFiles()
         {
@@ -27,7 +25,21 @@ namespace FubuMVC.Core.Runtime.Files
 
         public IEnumerable<IFubuFile> FindFiles(FileSet fileSet)
         {
-            return _folders.Value.SelectMany(folder => folder.FindFiles(fileSet));
+            var applicationPath = GetApplicationPath();
+            return _fileSystem.FindFiles(applicationPath, fileSet).Select(file =>
+            {
+                var fubuFile = new FubuFile(file)
+                {
+                    RelativePath = file.PathRelativeTo(applicationPath).Replace("\\", "/")
+                };
+
+                if (fubuFile.RelativePath.IsEmpty())
+                {
+                    throw new ArgumentException("Not able to determine a relative path for " + file);
+                }
+
+                return fubuFile;
+            });
         }
 
 
@@ -42,18 +54,13 @@ namespace FubuMVC.Core.Runtime.Files
             var file = findFile(relativeName);
             if (file == null)
             {
-                var files = AllFolders.SelectMany(x => FindFiles(FileSet.Deep("*"))).Select(x => x.Path);
+                var files = FindFiles(FileSet.Deep("*")).Select(x => x.Path);
 
                 var description = "Could not find " + relativeName;
                 files.Each(x => description += "\n" + x);
 
                 throw new ApplicationException(description);
             }
-        }
-
-        public IEnumerable<ContentFolder> AllFolders
-        {
-            get { return _folders.Value; }
         }
 
         private IFubuFile findFile(string name)

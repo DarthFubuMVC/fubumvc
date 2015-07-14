@@ -62,42 +62,42 @@ namespace FubuMVC.Tests.Assets
         [Test]
         public void can_write_javascript_files()
         {
-            theRule.IsAllowed(new FubuFile("foo.js", null)).ShouldEqual(AuthorizationRight.Allow);
-            theRule.IsAllowed(new FubuFile("foo.coffee", null)).ShouldEqual(AuthorizationRight.Allow);
+            theRule.IsAllowed(new FubuFile("foo.js")).ShouldEqual(AuthorizationRight.Allow);
+            theRule.IsAllowed(new FubuFile("foo.coffee")).ShouldEqual(AuthorizationRight.Allow);
         }
 
         [Test]
         public void can_write_css()
         {
-            theRule.IsAllowed(new FubuFile("bar.css", null)).ShouldEqual(AuthorizationRight.Allow);
+            theRule.IsAllowed(new FubuFile("bar.css")).ShouldEqual(AuthorizationRight.Allow);
         }
 
         [Test]
         public void can_write_htm_or_html()
         {
-            theRule.IsAllowed(new FubuFile("bar.htm", null)).ShouldEqual(AuthorizationRight.Allow);
-            theRule.IsAllowed(new FubuFile("bar.html", null)).ShouldEqual(AuthorizationRight.Allow);
+            theRule.IsAllowed(new FubuFile("bar.htm")).ShouldEqual(AuthorizationRight.Allow);
+            theRule.IsAllowed(new FubuFile("bar.html")).ShouldEqual(AuthorizationRight.Allow);
         }
 
         [Test]
         public void can_write_images()
         {
-            theRule.IsAllowed(new FubuFile("bar.jpg", null)).ShouldEqual(AuthorizationRight.Allow);
-            theRule.IsAllowed(new FubuFile("bar.gif", null)).ShouldEqual(AuthorizationRight.Allow);
-            theRule.IsAllowed(new FubuFile("bar.tif", null)).ShouldEqual(AuthorizationRight.Allow);
-            theRule.IsAllowed(new FubuFile("bar.png", null)).ShouldEqual(AuthorizationRight.Allow);
+            theRule.IsAllowed(new FubuFile("bar.jpg")).ShouldEqual(AuthorizationRight.Allow);
+            theRule.IsAllowed(new FubuFile("bar.gif")).ShouldEqual(AuthorizationRight.Allow);
+            theRule.IsAllowed(new FubuFile("bar.tif")).ShouldEqual(AuthorizationRight.Allow);
+            theRule.IsAllowed(new FubuFile("bar.png")).ShouldEqual(AuthorizationRight.Allow);
         }
 
         [Test]
         public void none_if_the_mime_type_is_not_recognized()
         {
-            theRule.IsAllowed(new FubuFile("bar.nonexistent", null)).ShouldEqual(AuthorizationRight.None);
+            theRule.IsAllowed(new FubuFile("bar.nonexistent")).ShouldEqual(AuthorizationRight.None);
         }
 
         [Test]
         public void none_if_not_an_asset_file_or_html()
         {
-            theRule.IsAllowed(new FubuFile("bar.txt", null)).ShouldEqual(AuthorizationRight.None);
+            theRule.IsAllowed(new FubuFile("bar.txt")).ShouldEqual(AuthorizationRight.None);
         }
 
         [Test]
@@ -110,7 +110,7 @@ namespace FubuMVC.Tests.Assets
 
         private AuthorizationRight forFile(string filename)
         {
-            var file = new FubuFile(filename, null);
+            var file = new FubuFile(filename);
             var owinSettings = new AssetSettings();
             owinSettings.StaticFileRules.Add(new AssetSettings());
 

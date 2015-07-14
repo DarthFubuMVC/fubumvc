@@ -341,7 +341,6 @@
     <Compile Include="Runtime\Conditionals\IConditionalService.cs" />
     <Compile Include="Runtime\DataContractJsonSerializer.cs" />
     <Compile Include="Runtime\ExceptionHandlingObserver.cs" />
-    <Compile Include="Runtime\Files\ContentFolder.cs" />
     <Compile Include="Runtime\Files\FubuApplicationFiles.cs" />
     <Compile Include="Runtime\Files\FubuFile.cs" />
     <Compile Include="Runtime\Files\IFubuApplicationFiles.cs" />
@@ -633,7 +632,7 @@
     <Compile Include="View\CommonViewNamespaces.cs" />
     <Compile Include="View\IFubuView.cs" />
     <Compile Include="View\IViewFacility.cs" />
-    <Compile Include="View\Model\BottleViews.cs" />
+    <Compile Include="View\Model\ViewCollection.cs" />
     <Compile Include="View\Model\ITemplateFile.cs" />
     <Compile Include="View\IViewToken.cs" />
     <Compile Include="View\Model\Parsing.cs" />

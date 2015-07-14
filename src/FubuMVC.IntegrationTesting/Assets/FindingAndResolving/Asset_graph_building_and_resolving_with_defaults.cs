@@ -76,7 +76,6 @@ namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
             var asset = Assets.FindAsset("MyLib.js");
             asset.ShouldNotBeNull();
 
-            asset.File.Provenance.ShouldEqual(ContentFolder.Application);
             asset.Url.ShouldEqual("MyLib.js");
             asset.MimeType.ShouldBeTheSameAs(MimeType.Javascript);
             asset.Filename.ShouldEqual("MyLib.js");
@@ -88,7 +87,6 @@ namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
             var asset = Assets.FindAsset("Content/styles/MyStyles.css");
             asset.ShouldNotBeNull();
 
-            asset.File.Provenance.ShouldEqual(ContentFolder.Application);
             asset.Url.ShouldEqual("Content/styles/MyStyles.css");
             asset.MimeType.ShouldBeTheSameAs(MimeType.Css);
             asset.Filename.ShouldEqual("MyStyles.css");

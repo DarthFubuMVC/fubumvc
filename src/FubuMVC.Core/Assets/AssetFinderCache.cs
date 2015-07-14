@@ -91,7 +91,7 @@ namespace FubuMVC.Core.Assets
                 return new FileSystem().FindFiles(publicFolder, FileSet.Deep(filename))
                     .Select(x =>
                     {
-                        return new FubuFile(x, ContentFolder.Application)
+                        return new FubuFile(x)
                         {
                             RelativePath = x.PathRelativeTo(appFolder).Replace('\\', '/')
                         };
@@ -135,7 +135,7 @@ namespace FubuMVC.Core.Assets
                 return new FileSystem().FindFiles(publicFolder, search)
                     .Select(x =>
                     {
-                        return new FubuFile(x, ContentFolder.Application)
+                        return new FubuFile(x)
                         {
                             RelativePath = x.PathRelativeTo(appFolder).Replace('\\', '/')
                         };

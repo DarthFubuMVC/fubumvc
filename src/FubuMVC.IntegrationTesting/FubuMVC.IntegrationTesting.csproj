@@ -227,7 +227,6 @@
     <Compile Include="Views\Spark\Simple_rendering.cs" />
     <Compile Include="Views\Spark\Three_Pass_Rendering_And_Bindings.cs" />
     <Compile Include="Views\TemplateFileIntegrationTester.cs" />
-    <Compile Include="Views\ViewFacility_FindInShared.cs" />
     <Compile Include="Views\ViewIntegrationContext.cs" />
   </ItemGroup>
   <ItemGroup>

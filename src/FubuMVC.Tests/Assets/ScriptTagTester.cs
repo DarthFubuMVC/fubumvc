@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Assets
         {
             new FileSystem().WriteStringToFile("foo.js", "some stuff");
 
-            theFile = new FubuFile("foo.js", ContentFolder.Application);
+            theFile = new FubuFile("foo.js");
             theFile.RelativePath = "foo.js";
         }
 

@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
             theResponse = MockRepository.GenerateMock<IHttpResponse>();
 
             new FileSystem().WriteStringToFile("foo.txt", "some text");
-            theFile = new FubuFile("foo.txt", "application");
+            theFile = new FubuFile("foo.txt");
 
             new WriteFileContinuation(theResponse, theFile, new AssetSettings())
                 .Write(theResponse);

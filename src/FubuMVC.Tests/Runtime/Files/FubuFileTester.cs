@@ -14,14 +14,14 @@ namespace FubuMVC.Tests.Runtime.Files
         [Test]
         public void read_contents()
         {
-            var file = new FubuFile(Path.Combine("Runtime", "Files", "Data", "a.txt"), ContentFolder.Application);
+            var file = new FubuFile(Path.Combine("Runtime", "Files", "Data", "a.txt"));
             file.ReadContents().Trim().ShouldEqual("some text from a.txt");
         }
 
         [Test]
         public void read_lines()
         {
-            var file = new FubuFile(Path.Combine("Runtime", "Files", "Data", "a.txt"), ContentFolder.Application);
+            var file = new FubuFile(Path.Combine("Runtime", "Files", "Data", "a.txt"));
             var action = MockRepository.GenerateMock<Action<string>>();
 
             file.ReadLines(action);
@@ -33,7 +33,7 @@ namespace FubuMVC.Tests.Runtime.Files
         public void read_contents_by_stream()
         {
             var wasCalled = false;
-            var file = new FubuFile(Path.Combine("Runtime", "Files", "Data", "a.txt"), ContentFolder.Application);
+            var file = new FubuFile(Path.Combine("Runtime", "Files", "Data", "a.txt"));
             file.ReadContents(stream =>
             {
                 wasCalled = true;
@@ -48,7 +48,7 @@ namespace FubuMVC.Tests.Runtime.Files
         {
             new FileSystem().WriteStringToFile("ghostbusters.txt", "Who you gonna call?");
 
-            new FubuFile("ghostbusters.txt", "Application")
+            new FubuFile("ghostbusters.txt")
                 .Length().ShouldEqual(19);
         }
 
@@ -59,7 +59,7 @@ namespace FubuMVC.Tests.Runtime.Files
 
             new FileSystem().WriteStringToFile("ghostbusters.txt", "Who you gonna call?");
 
-            var lastModified = new FubuFile("ghostbusters.txt", "Application")
+            var lastModified = new FubuFile("ghostbusters.txt")
                 .LastModified();
 
 
@@ -72,9 +72,9 @@ namespace FubuMVC.Tests.Runtime.Files
         {
             new FileSystem().WriteStringToFile("ghostbusters.txt", "Who you gonna call?");
 
-            var etag1 = new FubuFile("ghostbusters.txt", "Application").Etag();
-            var etag2 = new FubuFile("ghostbusters.txt", "Application").Etag();
-            var etag3 = new FubuFile("ghostbusters.txt", "Application").Etag();
+            var etag1 = new FubuFile("ghostbusters.txt").Etag();
+            var etag2 = new FubuFile("ghostbusters.txt").Etag();
+            var etag3 = new FubuFile("ghostbusters.txt").Etag();
 
             etag1.ShouldEqual(etag2);
             etag1.ShouldEqual(etag3);
@@ -85,11 +85,11 @@ namespace FubuMVC.Tests.Runtime.Files
         {
             new FileSystem().WriteStringToFile("ghostbusters.txt", "Who you gonna call?");
 
-            var etag1 = new FubuFile("ghostbusters.txt", "Application").Etag();
+            var etag1 = new FubuFile("ghostbusters.txt").Etag();
 
             new FileSystem().WriteStringToFile("ghostbusters.txt", "He slimed me!");
 
-            var etag2 = new FubuFile("ghostbusters.txt", "Application").Etag();
+            var etag2 = new FubuFile("ghostbusters.txt").Etag();
 
             etag1.ShouldNotEqual(etag2);
         }

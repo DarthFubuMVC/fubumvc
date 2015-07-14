@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuCore.Util;
-using FubuMVC.Core.View.Model;
+using FubuMVC.Core;
 using Spark;
 using Spark.Compiler;
 using Spark.FileSystem;
@@ -24,10 +24,9 @@ namespace FubuMVC.Spark.SparkModel
         private readonly ISparkSyntaxProvider _syntaxProvider;
 
 
-        public ChunkLoader() : this(path => new FileSystemViewFolder(path)) { }
-        public ChunkLoader(Func<string, IViewFolder> viewFolder)
+        public ChunkLoader()
         {
-            _viewFolder = viewFolder;
+            _viewFolder = path => new FileSystemViewFolder(path);
             _syntaxProvider = new DefaultSyntaxProvider(ParserSettings.DefaultBehavior);
 
             _loaders = new Cache<string, ViewLoader>(defaultLoaderByRoot);
@@ -35,9 +34,14 @@ namespace FubuMVC.Spark.SparkModel
 
         public IEnumerable<Chunk> Load(ISparkTemplate template)
         {
+            if (template.RelativePath().IsEmpty())
+            {
+                throw new ArgumentOutOfRangeException("Invalid template path for file " + template.FilePath);
+            }
+
             try
             {
-                var viewLoader = _loaders[template.RootPath];
+                var viewLoader = _loaders[FubuApplication.GetApplicationPath()];
                 var chunks = viewLoader.Load(template.RelativePath());
                 if (chunks == null)
                 {
@@ -52,10 +56,6 @@ namespace FubuMVC.Spark.SparkModel
 
                 throw new Exception("Unable to parse file '{0}'".ToFormat(template.RelativePath()), e);
             }
-
-
-
-            
         }
 
         private ViewLoader defaultLoaderByRoot(string root)

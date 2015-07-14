@@ -18,12 +18,6 @@ namespace FubuMVC.Core.Runtime.Files
         string GetApplicationPath();
 
         /// <summary>
-        /// All the folders in the current server that contain content for the running
-        /// FubuMVC application
-        /// </summary>
-        IEnumerable<ContentFolder> AllFolders { get; }
-
-        /// <summary>
         /// Find files by FileSet across the application and all Bottles
         /// </summary>
         /// <param name="fileSet"></param>

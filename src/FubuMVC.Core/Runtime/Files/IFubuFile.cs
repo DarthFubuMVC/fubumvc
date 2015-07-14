@@ -8,18 +8,6 @@ namespace FubuMVC.Core.Runtime.Files
         string Path { get; }
 
         /// <summary>
-        /// Name of the Bottle that contains this file or "application" if the file is found in
-        /// the main application content folder
-        /// </summary>
-        string Provenance { get; }
-
-        /// <summary>
-        /// Content folder of the parent Bottle or application content folder where this file
-        /// was found
-        /// </summary>
-        string ProvenancePath { get; set; }
-
-        /// <summary>
         /// Path relative to the containing content folder
         /// </summary>
         string RelativePath { get; set; }

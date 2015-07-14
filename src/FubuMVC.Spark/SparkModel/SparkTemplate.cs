@@ -11,7 +11,6 @@ using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Rendering;
 using Spark;
-using Spark.Compiler;
 
 namespace FubuMVC.Spark.SparkModel
 {
@@ -38,7 +37,7 @@ namespace FubuMVC.Spark.SparkModel
             _partialViewEntry = new WatchedSparkEntry(() => engine.CreateEntry(_partial.Value));
         }
 
-        public SparkTemplate(string filepath, string rootpath, string origin, SparkEngineSettings settings) : this(new FubuFile(filepath, origin){ProvenancePath = rootpath}, new SparkViewEngine(), settings)
+        public SparkTemplate(string filepath, SparkEngineSettings settings) : this(new FubuFile(filepath), new SparkViewEngine(), settings)
         {
         }
 
@@ -55,6 +54,16 @@ namespace FubuMVC.Spark.SparkModel
 
         protected override Parsing createParsing()
         {
+            if (RelativePath().IsEmpty())
+            {
+                return new Parsing
+                {
+                    Master = null,
+                    Namespaces = new String[0],
+                    ViewModelType = null
+                };
+            }
+
             try
             {
                 var chunk = Retry.Times(_settings.RetryViewLoadingCount, () => Loader.Load(this)).ToList();

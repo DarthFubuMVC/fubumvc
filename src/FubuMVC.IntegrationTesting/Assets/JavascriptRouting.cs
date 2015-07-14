@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net;
 using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
@@ -9,7 +8,6 @@ using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.UI;
-using FubuMVC.IntegrationTesting.Conneg;
 using FubuMVC.StructureMap;
 using HtmlTags;
 using NUnit.Framework;
@@ -42,19 +40,14 @@ namespace FubuMVC.IntegrationTesting.Assets
                     x.ContentShouldContain("\"m5\":{\"name\":\"m5\",\"method\":\"DELETE\",\"url\":\"/js/method3\"}");
 
                     x.StatusCodeShouldBe(HttpStatusCode.OK);
-
                 });
             }
-
-
         }
 
         [Test]
         public void can_swap_out_the_javascript_route_data()
         {
-            var container = new Container(_ => {
-                _.For<IJavascriptRouteData>().Use<FakeJavascriptRouteData>();
-            });
+            var container = new Container(_ => { _.For<IJavascriptRouteData>().Use<FakeJavascriptRouteData>(); });
 
             using (var host = FubuApplication.DefaultPolicies().StructureMap(container).RunInMemory())
             {
@@ -66,7 +59,8 @@ namespace FubuMVC.IntegrationTesting.Assets
                     x.ContentShouldContain("myRoutes = {");
 
 
-                    x.ContentShouldContain("\"m1\":{\"name\":\"m1\",\"method\":\"GET\",\"url\":\"/fake/js/method1/{Name}\"");
+                    x.ContentShouldContain(
+                        "\"m1\":{\"name\":\"m1\",\"method\":\"GET\",\"url\":\"/fake/js/method1/{Name}\"");
 
 
                     x.ContentShouldContain("\"m2\":{\"name\":\"m2\",\"method\":\"GET\",\"url\":\"/fake/js/method2\"}");
@@ -74,7 +68,6 @@ namespace FubuMVC.IntegrationTesting.Assets
 
 
                     x.StatusCodeShouldBe(HttpStatusCode.OK);
-
                 });
             }
         }

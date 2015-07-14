@@ -1,22 +1,30 @@
 using System;
-using System.Globalization;
 using System.IO;
 using FubuCore;
+using FubuCore.Logging;
 
 namespace FubuMVC.Core.Runtime.Files
 {
     public class FubuFile : IFubuFile
     {
-        public FubuFile(string path, string provenance)
+        private string _relativePath;
+
+        public FubuFile(string path)
         {
             Path = path;
-            Provenance = provenance;
+            if (!System.IO.Path.IsPathRooted(path))
+            {
+                RelativePath = path;
+            }
         }
 
         public string Path { get; private set; }
-        public string Provenance { get; private set; }
-        public string RelativePath { get; set; }
-        public string ProvenancePath { get; set; }
+
+        public string RelativePath
+        {
+            get { return _relativePath; }
+            set { _relativePath = value.IsEmpty() ? string.Empty : value.Replace('\\', '/'); }
+        }
 
         public string ReadContents()
         {
@@ -57,32 +65,27 @@ namespace FubuMVC.Core.Runtime.Files
             return new DateTime(last.Year, last.Month, last.Day, last.Hour, last.Minute, last.Second, last.Kind);
         }
 
-        public bool Equals(FubuFile other)
+        protected bool Equals(FubuFile other)
         {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return Equals(other.Path, Path) && Equals(other.Provenance, Provenance);
+            return string.Equals(RelativePath, other.RelativePath);
         }
 
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof (FubuFile)) return false;
+            if (obj.GetType() != this.GetType()) return false;
             return Equals((FubuFile) obj);
         }
 
         public override int GetHashCode()
         {
-            unchecked
-            {
-                return ((Path != null ? Path.GetHashCode() : 0)*397) ^ (Provenance != null ? Provenance.GetHashCode() : 0);
-            }
+            return (RelativePath != null ? RelativePath.GetHashCode() : 0);
         }
 
         public override string ToString()
         {
-            return string.Format("Path: {0}, Provenance: {1}", Path, Provenance);
+            return string.Format("RelativePath: {0}", RelativePath);
         }
 
         public static IFubuFile Load(string relativePath)

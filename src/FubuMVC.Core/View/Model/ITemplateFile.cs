@@ -7,7 +7,6 @@ namespace FubuMVC.Core.View.Model
     public interface ITemplateFile : IViewToken
     {
         string FilePath { get;  }
-        string RootPath { get; }
         string ViewPath { get; }
 
         Parsing Parsing { get; }
@@ -16,11 +15,7 @@ namespace FubuMVC.Core.View.Model
         string DirectoryPath();
         string RelativeDirectoryPath();
 
-        [Obsolete("No longer makes sense after asset loading from bottles is removed")]
-        bool FromHost();
         bool IsPartial();
-
-        string FullName();
 
         ITemplateFile Master { get; set; }
 

@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
         public void SetUp()
         {
             new FileSystem().WriteStringToFile("foo.txt", "some text");
-            theFile = new FubuFile("foo.txt", "application");
+            theFile = new FubuFile("foo.txt");
 
             theResponse = MockRepository.GenerateMock<IHttpResponse>();
             
@@ -54,7 +54,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
         public void SetUp()
         {
             new FileSystem().WriteStringToFile("foo.txt", "some text");
-            theFile = new FubuFile("foo.txt", "application");
+            theFile = new FubuFile("foo.txt");
 
             theResponse = MockRepository.GenerateMock<IHttpResponse>();
 

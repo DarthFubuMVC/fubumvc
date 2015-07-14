@@ -157,7 +157,7 @@ namespace FubuMVC.Core.View
         }
 
 
-        private readonly string[] _ignoredFolders = new[] { "bin", "obj", "fubu-content", "node_modules" };
+        private readonly string[] _ignoredFolders = new[] { "bin", "obj", "fubu-content", "node_modules", "debug", "release" };
         public bool FolderShouldBeIgnored(string folder)
         {
             var segment = folder.Replace('\\', '/').Trim('/').Split('/').Last();

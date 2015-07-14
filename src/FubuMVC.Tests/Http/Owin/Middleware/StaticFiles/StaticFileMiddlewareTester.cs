@@ -236,7 +236,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
             var path = relativePath.TrimStart('/').Replace('/', Path.DirectorySeparatorChar).TrimStart('/');
             new FileSystem().WriteStringToFile(path, contents);
         
-            return new FubuFile(path, "application");
+            return new FubuFile(path);
         }
 
         public string GetApplicationPath()
@@ -244,7 +244,6 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<ContentFolder> AllFolders { get; private set; }
         public IEnumerable<IFubuFile> FindFiles(FileSet fileSet)
         {
             throw new System.NotImplementedException();
@@ -255,7 +254,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
             var path = Environment.CurrentDirectory.AppendPath(relativeName.Replace('/', Path.DirectorySeparatorChar));
             
             return File.Exists(path)
-                ? new FubuFile(path, "application")
+                ? new FubuFile(path)
                 {
                     RelativePath = relativeName
                 }

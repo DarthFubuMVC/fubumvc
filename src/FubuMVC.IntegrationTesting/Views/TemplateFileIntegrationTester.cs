@@ -1,5 +1,4 @@
 ﻿using FubuCore;
-using FubuMVC.Core.View.Attachment;
 using FubuMVC.Core.View.Model;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -45,19 +44,6 @@ namespace FubuMVC.IntegrationTesting.Views
         public void has_the_correct_file_path_in_application()
         {
             view1.FilePath.ShouldEqual(Folder.AppendPath(Application).AppendPath("View1.cshtml").ToFullPath());
-        }
-
-        [Test]
-        public void root_path_in_application()
-        {
-            view1.RootPath.ShouldEqual(Folder.AppendPath(Application).ToFullPath());
-        }
-
-
-        [Test]
-        public void origin_of_application_file()
-        {
-            view1.Origin.ShouldEqual("Application");
         }
 
 
@@ -106,13 +92,6 @@ namespace FubuMVC.IntegrationTesting.Views
             view4.Name().ShouldEqual("View4");
         }
 
-        [Test]
-        public void from_host()
-        {
-            view1.FromHost().ShouldBeTrue();
-            view2.FromHost().ShouldBeTrue();
-
-        }
 
         [Test]
         public void namespace_from_application_view()
@@ -121,11 +100,5 @@ namespace FubuMVC.IntegrationTesting.Views
             view2.Namespace.ShouldEqual("FubuMVC.IntegrationTesting.Folder1");
         }
 
-        [Test]
-        public void full_name_of_application_file()
-        {
-            view1.FullName().ShouldEqual("FubuMVC.IntegrationTesting.View1");
-            view2.FullName().ShouldEqual("FubuMVC.IntegrationTesting.Folder1.View2");
-        }
     }
 }

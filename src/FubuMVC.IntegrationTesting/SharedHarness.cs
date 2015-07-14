@@ -23,6 +23,9 @@ namespace FubuMVC.IntegrationTesting
         private static readonly Lazy<InMemoryHost> _host =
             new Lazy<InMemoryHost>(() =>
             {
+                FubuApplication.PhysicalRootPath =
+                    AppDomain.CurrentDomain.BaseDirectory.ParentDirectory().ParentDirectory();
+
                 var registry = new FubuRegistry();
                 registry.AlterSettings<DiagnosticsSettings>(x => x.TraceLevel = TraceLevel.Verbose);
                 return FubuApplication.For(registry).StructureMap().RunInMemory();

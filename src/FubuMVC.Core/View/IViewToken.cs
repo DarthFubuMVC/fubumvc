@@ -10,12 +10,8 @@ namespace FubuMVC.Core.View
         Type ViewModel { get;  }
         string ProfileName { get; set; }
 
-        /// <summary>
-        /// The Bottle name or "Application" where this view is from
-        /// </summary>
-        string Origin { get; }
         string Name();
-        void AttachViewModels(Assembly defaultAssembly, ViewTypePool types, ITemplateLogger logger);
+        void AttachViewModels(ViewTypePool types, ITemplateLogger logger);
 
         string FilePath { get; }
     }

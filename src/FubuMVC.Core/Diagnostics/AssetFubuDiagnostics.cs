@@ -39,7 +39,6 @@ namespace FubuMVC.Core.Diagnostics
         public string mimetype;
         public string file;
         public string cdn;
-        public string provenance;
 
         public AssetToken()
         {
@@ -51,7 +50,6 @@ namespace FubuMVC.Core.Diagnostics
             mimetype = asset.MimeType.Value;
             file = asset.Filename;
             cdn = asset.CdnUrl;
-            provenance = asset.File.Provenance;
         }
     }
 }

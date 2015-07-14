@@ -204,7 +204,7 @@ namespace FubuMVC.Tests.View
             throw new NotImplementedException();
         }
 
-        public void AttachViewModels(Assembly defaultAssembly, ViewTypePool types, ITemplateLogger logger)
+        public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
         {
         }
 

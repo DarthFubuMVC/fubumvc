@@ -15,11 +15,6 @@ namespace FubuMVC.Core.View.Attachment
             _filteredName = filteredName;
         }
 
-        public string Origin
-        {
-            get { return _view.Origin; }
-        }
-
         public IViewToken View
         {
             get { return _view; }
@@ -35,9 +30,9 @@ namespace FubuMVC.Core.View.Attachment
             return _filteredName;
         }
 
-        public void AttachViewModels(Assembly defaultAssembly, ViewTypePool types, ITemplateLogger logger)
+        public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
         {
-            _view.AttachViewModels(defaultAssembly, types, logger);
+            _view.AttachViewModels(types, logger);
         }
 
         public string FilePath

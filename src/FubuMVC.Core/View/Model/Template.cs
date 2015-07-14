@@ -1,8 +1,6 @@
 using System;
 using System.IO;
-using System.Reflection;
 using FubuCore;
-using FubuCore.Util;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View.Rendering;
 
@@ -10,33 +8,18 @@ namespace FubuMVC.Core.View.Model
 {
     public abstract class Template : ITemplateFile
     {
-        private static readonly Cache<string, string> _cache = new Cache<string, string>(getPrefix);
-
-
-        private static string getPrefix(string origin)
-        {
-            return origin == ContentFolder.Application ? string.Empty : "_{0}".ToFormat(origin);
-        }
-
         private readonly Lazy<Parsing> _parsing;
         private ITemplateFile _master;
 
         public Template(IFubuFile file)
-            : this(file.Path, file.ProvenancePath, file.Provenance)
         {
-        }
+            _file = file;
 
-        public Template(string filePath, string rootPath, string origin)
-        {
-            FilePath = filePath;
-            RootPath = rootPath;
-            Origin = origin;
-
-            ViewPath = FileSystem.Combine(_cache[Origin], RelativePath()).Replace('\\', '/');
 
             _parsing = new Lazy<Parsing>(createParsing);
 
-            _relativeDirectoryPath = new Lazy<string>(() => DirectoryPath().PathRelativeTo(RootPath).Replace('\\', '/'));
+
+            _relativeDirectoryPath = _file.RelativePath.ParentDirectory().Replace('\\', '/');
         }
 
         public Parsing Parsing
@@ -46,11 +29,16 @@ namespace FubuMVC.Core.View.Model
 
         protected abstract Parsing createParsing();
 
-        public string FilePath { get; set; }
-        public string RootPath { get; set; }
-        public string Origin { get; set; }
+        public string FilePath
+        {
+            get { return _file.Path; }
+        }
 
-        public string ViewPath { get; set; }
+
+        public string ViewPath
+        {
+            get { return _file.RelativePath; }
+        }
 
         public override string ToString()
         {
@@ -59,7 +47,7 @@ namespace FubuMVC.Core.View.Model
 
         public string RelativePath()
         {
-            return FilePath.PathRelativeTo(RootPath).Replace("\\", "/");
+            return _file.RelativePath;
         }
 
         public string DirectoryPath()
@@ -67,11 +55,12 @@ namespace FubuMVC.Core.View.Model
             return Path.GetDirectoryName(FilePath);
         }
 
-        private readonly Lazy<string> _relativeDirectoryPath;
+        private readonly string _relativeDirectoryPath;
+        private readonly IFubuFile _file;
 
         public string RelativeDirectoryPath()
         {
-            return _relativeDirectoryPath.Value;
+            return _relativeDirectoryPath;
         }
 
         public string Name()
@@ -79,10 +68,6 @@ namespace FubuMVC.Core.View.Model
             return Path.GetFileNameWithoutExtension(FilePath);
         }
 
-        public bool FromHost()
-        {
-            return Origin == ContentFolder.Application;
-        }
 
         public virtual bool IsPartial()
         {
@@ -110,20 +95,16 @@ namespace FubuMVC.Core.View.Model
 
         public Type ViewModel { get; set; }
 
-        public string FullName()
-        {
-            return Namespace.IsEmpty() ? Name() : Namespace + "." + Name();
-        }
 
         // Tested through integration tests
-        public void AttachViewModels(Assembly defaultAssembly, ViewTypePool types, ITemplateLogger logger)
+        public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
         {
             if (IsPartial()) return;
 
             var typeName = Parsing.ViewModelType;
             if (typeName.IsEmpty()) return;
 
-            ViewModel = types.FindTypeByName(typeName, defaultAssembly, message => logger.Log(this, message));
+            ViewModel = types.FindTypeByName(typeName, message => logger.Log(this, message));
         }
 
         public ITemplateFile Master
@@ -142,7 +123,6 @@ namespace FubuMVC.Core.View.Model
 
                 // This prevents Stackoverflow problems
                 if (value != null && value.Parsing.Master == Name()) return;
-
 
 
                 _master = value;
@@ -168,10 +148,8 @@ namespace FubuMVC.Core.View.Model
             if (layoutName == Name()) return;
 
 
-
             Master = folder.FindRecursivelyInShared(layoutName)
-                ?? facility.FindInShared(layoutName);
-
+                     ?? facility.FindInShared(layoutName);
         }
     }
 }

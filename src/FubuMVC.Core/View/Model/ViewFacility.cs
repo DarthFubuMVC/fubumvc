@@ -12,8 +12,8 @@ namespace FubuMVC.Core.View.Model
 {
     public abstract class ViewFacility<T> : IViewFacility, IFubuRegistryExtension where T : class, ITemplateFile
     {
-        private readonly IList<BottleViews<T>> _bottles = new List<BottleViews<T>>();
         private List<T> _views = new List<T>();
+        private ViewCollection<T> _bottle;
 
         public abstract Func<IFubuFile, T> CreateBuilder(SettingsCollection settings);
 
@@ -43,16 +43,13 @@ namespace FubuMVC.Core.View.Model
             // HAS TO BE SHALLOW
             match.DeepSearch = false;
 
-            graph.Files.AllFolders.Each(folder =>
-            {
-                var bottle = new BottleViews<T>(this, folder, builder, settings, match);
-                _bottles.Add(bottle);
-            });
+            _bottle = new ViewCollection<T>(this, graph.Files, builder, settings, match);
+
 
             LayoutAttachment = timer.RecordTask("Attaching Layouts for " + GetType().Name,
-                () => { AttachLayouts(settings); });
+                () => AttachLayouts(settings));
 
-            _views = _bottles.SelectMany(x => x.AllViews()).ToList();
+            _views = _bottle.AllViews().ToList();
         }
 
         protected virtual void precompile(BehaviorGraph graph)
@@ -64,14 +61,14 @@ namespace FubuMVC.Core.View.Model
 
         public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
         {
-            _bottles.Each(x => x.AttachViewModels(types, logger));
+            _bottle.AttachViewModels(types, logger);
         }
 
         public abstract void ReadSharedNamespaces(CommonViewNamespaces namespaces);
 
         public void AttachLayouts(ViewEngineSettings settings)
         {
-            _bottles.Each(x => x.AttachLayouts(settings.ApplicationLayoutName));
+            _bottle.AttachLayouts(settings.ApplicationLayoutName);
         }
 
         public ViewEngineSettings Settings { get; set; }
@@ -79,11 +76,6 @@ namespace FubuMVC.Core.View.Model
         public Type TemplateType
         {
             get { return typeof (T); }
-        }
-
-        public IEnumerable<BottleViews<T>> Bottles
-        {
-            get { return _bottles; }
         }
 
         public IEnumerable<IViewToken> AllViews()
@@ -98,39 +90,19 @@ namespace FubuMVC.Core.View.Model
 
         public ITemplateFile FindInShared(string viewName)
         {
-            foreach (var bottle in _bottles)
-            {
-                var view = bottle.FindInShared(viewName);
-                if (view != null) return view;
-            }
-
-            return null;
+            return _bottle.FindInShared(viewName);
         }
 
         public T FindPartial(T template, string name)
         {
             var partialName = "_" + name;
-            T returnValue = null;
 
-            // first look in the same bottle.
-            var bottle = _bottles.FirstOrDefault(x => x.Provenance == template.Origin);
-
-            if (bottle != null)
-            {
-                returnValue = bottle.AllViews().FirstOrDefault(x => x.Name() == partialName);
-            }
-
-            if (returnValue == null)
-            {
-                returnValue = AllViews().FirstOrDefault(x => x.Name() == partialName) as T;
-            }
-
-            return returnValue;
+            return AllViews().FirstOrDefault(x => x.Name() == partialName) as T;
         }
 
         public IEnumerable<string> SharedPaths()
         {
-            return _bottles.SelectMany(x => x.SharedPaths()).ToArray();
+            return _bottle.SharedPaths();
         }
     }
 }
