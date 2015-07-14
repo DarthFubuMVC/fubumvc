@@ -126,7 +126,6 @@
     <Compile Include="Authorization\end_to_end_authorization_tester.cs" />
     <Compile Include="Auto_Katana_Hosting_Integration_Tester.cs" />
     <Compile Include="Auto_Nowin_Hosting_Integration_Tester.cs" />
-    <Compile Include="Caching\caching_tester.cs" />
     <Compile Include="can_register_and_use_OWIN_middleware_from_a_bottle.cs" />
     <Compile Include="CommandRunner.cs" />
     <Compile Include="Conneg\AjaxInputModelBindingIntegrationTester.cs" />
@@ -198,7 +197,6 @@
     <Compile Include="SharedHarness.cs" />
     <Compile Include="SharedHarnessContext.cs" />
     <Compile Include="SelfHostHttpServerTester.cs" />
-    <Compile Include="UI\doughnut_caching_tester.cs" />
     <Compile Include="UI\FubuPageExtensions_FullStack_Tester.cs" />
     <Compile Include="Using_a_custom_routing_policy.cs" />
     <Compile Include="Views\Actionless_Views.cs" />

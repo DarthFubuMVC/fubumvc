@@ -206,33 +206,12 @@ namespace FubuMVC.Core.Registration.Nodes
             }
         }
 
-        public bool ShouldBeCached()
-        {
-            if (Method.Name.EndsWith("CachedPartial")) return true;
-            if (HasAttribute<CacheAttribute>()) return true;
-            if (OutputType() != null && OutputType().HasAttribute<CacheAttribute>()) return true;
-
-            return false;
-        }
 
         public void Modify(BehaviorChain chain)
         {
             var outputType = OutputType();
 
-            if (ShouldBeCached())
-            {
-                var cachingNode = new OutputCachingNode();
-                AddBefore(cachingNode);
 
-                ForAttributes<CacheAttribute>(x => x.Alter(cachingNode));
-
-                if (outputType != null)
-                {
-                    outputType.ForAttribute<CacheAttribute>(att => att.Alter(cachingNode));
-                }
-            }
-
-            
             if (outputType == null) return;
 
             if (outputType.CanBeCastTo<FubuContinuation>() || outputType.CanBeCastTo<IRedirectable>())

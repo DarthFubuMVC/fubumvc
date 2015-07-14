@@ -81,7 +81,6 @@
     <Compile Include="AntiForgeryTokenProvider.cs" />
     <Compile Include="AntiForgeryValidator.cs" />
     <Compile Include="BinaryAntiForgerySerializer.cs" />
-    <Compile Include="AntiForgeryTagModifier.cs" />
     <Compile Include="FormToken.cs" />
     <Compile Include="IAntiForgeryEncoder.cs" />
     <Compile Include="IAntiForgerySerializer.cs" />

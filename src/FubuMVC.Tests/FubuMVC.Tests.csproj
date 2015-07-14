@@ -94,14 +94,6 @@
     <Compile Include="Bugs\FubuPackageRegistry_should_honor_the_url_prefix.cs" />
     <Compile Include="Bugs\Issue101.cs" />
     <Compile Include="Bugs\Issue504.cs" />
-    <Compile Include="Caching\CacheAttributeTester.cs" />
-    <Compile Include="Caching\Caching_services_are_registered.cs" />
-    <Compile Include="Caching\EtagInvocationFilterTester.cs" />
-    <Compile Include="Caching\HeadersCacheTester.cs" />
-    <Compile Include="Caching\OutputCacheTester.cs" />
-    <Compile Include="Caching\ResourceHashTester.cs" />
-    <Compile Include="Caching\VaryByResourceTester.cs" />
-    <Compile Include="Caching\VaryByThreadCultureTester.cs" />
     <Compile Include="client_message_mechanics_Tester.cs" />
     <Compile Include="ConfigurationActionSetTester.cs" />
     <Compile Include="deactivators_are_called_in_fuburuntime_dispose.cs" />
@@ -200,8 +192,6 @@
     <Compile Include="Registration\ActionFilterTester.cs" />
     <Compile Include="Registration\Application_settings_alteration_wins_out_over_an_import.cs" />
     <Compile Include="Registration\Conventions\BehaviorGraphExtensions.cs" />
-    <Compile Include="Registration\Conventions\CacheAttributePolicyTester.cs" />
-    <Compile Include="Registration\Conventions\CachedPartialConventionTester.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteConventionBasedUrlPolicyTester.cs" />
     <Compile Include="Registration\Conventions\DefaultUrlPolicyTester.cs" />
     <Compile Include="Registration\Conventions\EndpointActionSourceTester.cs" />
@@ -259,8 +249,6 @@
     <Compile Include="Behaviors\InterceptExceptionBehaviorTester.cs" />
     <Compile Include="Behaviors\ITargetController.cs" />
     <Compile Include="Behaviors\RenderStatusCodeBehaviorTester.cs" />
-    <Compile Include="Caching\OuputCachingNodeTester.cs" />
-    <Compile Include="Caching\OutputCachingBehaviorTester.cs" />
     <Compile Include="can_find_and_load_bottles_with_the_FubuModule_attribute.cs" />
     <Compile Include="FakeHttpContext.cs" />
     <Compile Include="FubuApplicationTester.cs" />
@@ -298,7 +286,6 @@
     <Compile Include="Registration\Querying\ChainSearchTester.cs" />
     <Compile Include="Registration\ServiceGraphTester.cs" />
     <Compile Include="Resources\Conneg\Conneg_Services_Registration_Tester.cs" />
-    <Compile Include="Resources\Etags\ModelBindingETaggedRequestTester.cs" />
     <Compile Include="Runtime\Formatters\XmlFormatterTester.cs" />
     <Compile Include="CustomExceptionsTester.cs" />
     <Compile Include="FubuRegistryImportingTester.cs" />

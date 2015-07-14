@@ -33,7 +33,6 @@ namespace FubuMVC.StructureMap.Testing.Internals
                 x.For<ICurrentChain>().Use(new CurrentChain(null, null));
                 x.For<IHttpRequest>().Use(OwinHttpRequest.ForTesting());
 
-                x.For<IResourceHash>().Use(MockRepository.GenerateMock<IResourceHash>());
             });
 
             container.Configure(x => x.For<IContainerFacility>().Use<StructureMapContainerFacility>());

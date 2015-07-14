@@ -160,9 +160,6 @@ namespace FubuMVC.Core.Configuration
                 CategoryMustBeBefore = BehaviorCategory.Authentication
             };
 
-            yield return new ReorderBehaviorsPolicy()
-                .ThisNodeMustBeBefore<OutputCachingNode>()
-                .ThisNodeMustBeAfter<OutputNode>();
 
         }
 
@@ -183,7 +180,6 @@ namespace FubuMVC.Core.Configuration
             yield return new SecurityServicesRegistry();
             yield return new HttpStandInServiceRegistry();
             yield return new CoreServiceRegistry();
-            yield return new CachingServiceRegistry();
             yield return new UIServiceRegistry();
         }
 

@@ -43,15 +43,6 @@
     <Reference Include="FubuLocalization">
       <HintPath>..\packages\FubuLocalization\lib\FubuLocalization.dll</HintPath>
     </Reference>
-    <Reference Include="FubuMVC.Core">
-      <HintPath>..\packages\FubuMVC.Core\lib\net40\FubuMVC.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="FubuMVC.Core.UI">
-      <HintPath>..\packages\FubuMVC.Core.UI\lib\net40\FubuMVC.Core.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="FubuMVC.Core.View">
-      <HintPath>..\packages\FubuMVC.Core.View\lib\net40\FubuMVC.Core.View.dll</HintPath>
-    </Reference>
     <Reference Include="FubuTestingSupport">
       <HintPath>..\packages\FubuTestingSupport\lib\FubuTestingSupport.dll</HintPath>
     </Reference>
@@ -103,6 +94,10 @@
     <ProjectReference Include="..\FubuMVC.AntiForgery\FubuMVC.AntiForgery.csproj">
       <Project>{F8ACD67C-2620-451D-8772-A44D579A83D7}</Project>
       <Name>FubuMVC.AntiForgery</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
+      <Project>{e18fd922-0e7a-49cd-b89f-473826077b9d}</Project>
+      <Name>FubuMVC.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{e18fd922-0e7a-49cd-b89f-473826077b9d}</Project>

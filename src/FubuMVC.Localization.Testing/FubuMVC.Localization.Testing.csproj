@@ -43,12 +43,6 @@
     <Reference Include="FubuLocalization">
       <HintPath>..\packages\FubuLocalization\lib\FubuLocalization.dll</HintPath>
     </Reference>
-    <Reference Include="FubuMVC.Core">
-      <HintPath>..\packages\FubuMVC.Core\lib\net40\FubuMVC.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="FubuMVC.StructureMap">
-      <HintPath>..\packages\FubuMVC.StructureMap\lib\net40\FubuMVC.StructureMap.dll</HintPath>
-    </Reference>
     <Reference Include="FubuTestingSupport">
       <HintPath>..\packages\FubuTestingSupport\lib\FubuTestingSupport.dll</HintPath>
     </Reference>
@@ -103,9 +97,17 @@
       <Project>{e18fd922-0e7a-49cd-b89f-473826077b9d}</Project>
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
+      <Project>{e18fd922-0e7a-49cd-b89f-473826077b9d}</Project>
+      <Name>FubuMVC.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Localization\FubuMVC.Localization.csproj">
       <Project>{3C249185-11C0-47CC-8F92-40888995D88F}</Project>
       <Name>FubuMVC.Localization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
+      <Project>{abfea520-820c-4b77-9015-6a09e24252fa}</Project>
+      <Name>FubuMVC.StructureMap</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
       <Project>{abfea520-820c-4b77-9015-6a09e24252fa}</Project>
