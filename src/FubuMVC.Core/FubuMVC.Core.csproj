@@ -95,10 +95,6 @@
     <Compile Include="ClientMessage.cs" />
     <Compile Include="Configuration\BehaviorGraphBuilder.cs" />
     <Compile Include="Behaviors\AsyncContinueWithBehavior.cs" />
-    <Compile Include="Behaviors\Chrome\ChromeAttribute.cs" />
-    <Compile Include="Behaviors\Chrome\ChromeBehavior.cs" />
-    <Compile Include="Behaviors\Chrome\ChromeContent.cs" />
-    <Compile Include="Behaviors\Chrome\ChromeNode.cs" />
     <Compile Include="Caching\CachingServiceRegistry.cs" />
     <Compile Include="Caching\EtagInvocationFilter.cs" />
     <Compile Include="Caching\IVaryBy.cs" />
@@ -758,9 +754,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Behaviors\Conditional\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="fubu-diagnostics\bootstrap.min.css" />
     <EmbeddedResource Include="fubu-diagnostics\bootstrap.overrides.css" />

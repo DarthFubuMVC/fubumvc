@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using FubuMVC.Core.Behaviors.Chrome;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuTestingSupport;
@@ -7,7 +6,6 @@ using NUnit.Framework;
 
 namespace FubuMVC.Tests.Diagnostics
 {
-
     [TestFixture]
     public class DiagnosticChainTester
     {
@@ -27,8 +25,6 @@ namespace FubuMVC.Tests.Diagnostics
                 .Description
                 .ShouldEqual("FakeFubuDiagnostics.get_link() : String");
         }
-
-
     }
 
     public class FakeQuery

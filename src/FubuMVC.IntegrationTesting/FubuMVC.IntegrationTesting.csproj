@@ -128,7 +128,6 @@
     <Compile Include="Auto_Nowin_Hosting_Integration_Tester.cs" />
     <Compile Include="Caching\caching_tester.cs" />
     <Compile Include="can_register_and_use_OWIN_middleware_from_a_bottle.cs" />
-    <Compile Include="Chrome\ChromeBehaviorIntegrationTester.cs" />
     <Compile Include="CommandRunner.cs" />
     <Compile Include="Conneg\AjaxInputModelBindingIntegrationTester.cs" />
     <Compile Include="Conneg\Conneg_can_be_corrected_with_querystring_parameters_for_JSON_and_XML.cs" />

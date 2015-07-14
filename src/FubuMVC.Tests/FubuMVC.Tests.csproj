@@ -90,8 +90,6 @@
     <Compile Include="Assets\AssetSettingsTester.cs" />
     <Compile Include="Assets\JavascriptRouterTester.cs" />
     <Compile Include="Assets\ScriptTagTester.cs" />
-    <Compile Include="Behaviors\Chrome\ChromeAttributeTester.cs" />
-    <Compile Include="Behaviors\Chrome\ChromeNodeTester.cs" />
     <Compile Include="Bugs\DoubleRegistrationOfImports.cs" />
     <Compile Include="Bugs\FubuPackageRegistry_should_honor_the_url_prefix.cs" />
     <Compile Include="Bugs\Issue101.cs" />
