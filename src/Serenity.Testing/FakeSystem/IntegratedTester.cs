@@ -150,8 +150,8 @@ namespace Serenity.Testing.FakeSystem
             document.Title = "Persion:" + model.Name;
 
             document.Push("p");
-            document.Add(x => x.LabelFor(o => o.Name));
-            document.Add(x => x.InputFor(o => o.Name));
+            document.Add("span").Text(document.Model.Name);
+            document.Add("input").Attr("type", "text").Id("Name").Name("Name").Value(model.Name);
 
             return document;
         }
