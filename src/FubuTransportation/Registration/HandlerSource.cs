@@ -39,7 +39,7 @@ namespace FubuTransportation.Registration
 
         public void UseThisAssembly()
         {
-            UseAssembly(FubuTransportRegistry.FindTheCallingAssembly());
+            UseAssembly(TypePool.FindTheCallingAssembly());
         }
 
         IEnumerable<HandlerCall> IHandlerSource.FindCalls(Assembly applicationAssembly)

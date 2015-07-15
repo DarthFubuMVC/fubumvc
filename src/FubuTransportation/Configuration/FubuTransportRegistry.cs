@@ -195,35 +195,6 @@ namespace FubuTransportation.Configuration
             _alterations.Each(x => x(registry));
         }
 
-        /// <summary>
-        ///   Finds the currently Executing assembly.
-        /// </summary>
-        /// <returns></returns>
-        public static Assembly FindTheCallingAssembly()
-        {
-            var trace = new StackTrace(false);
-
-            var thisAssembly = Assembly.GetExecutingAssembly();
-            var fubuCore = typeof (ITypeResolver).Assembly;
-            var bottles = typeof (IPackageLoader).Assembly;
-            var fubumvc = typeof (FubuRegistry).Assembly;
-
-
-            Assembly callingAssembly = null;
-            for (var i = 0; i < trace.FrameCount; i++)
-            {
-                var frame = trace.GetFrame(i);
-                var assembly = frame.GetMethod().DeclaringType.Assembly;
-                if (assembly != thisAssembly && assembly != fubuCore && assembly != bottles && assembly != fubumvc &&
-                    !assembly.GetName().Name.StartsWith("System."))
-                {
-                    callingAssembly = assembly;
-                    break;
-                }
-            }
-            return callingAssembly;
-        }
-
         public HandlersExpression Handlers
         {
             get { return new HandlersExpression(this); }
