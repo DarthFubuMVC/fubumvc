@@ -1,20 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
-using Bottles;
 using Bottles.Diagnostics;
-using FubuCore;
 using FubuCore.Binding.InMemory;
 using FubuCore.Logging;
-using FubuMVC.Core.Assets;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
-using FubuMVC.Core.UI;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Attachment;
 
@@ -22,12 +18,15 @@ namespace FubuMVC.Core.Configuration
 {
     internal static class BehaviorGraphBuilder
     {
-
-
         // TOOD -- clean this up a little bit
-        public static BehaviorGraph Build(FubuRegistry registry, IPerfTimer perfTimer)
+        public static BehaviorGraph Build(FubuRegistry registry, IPerfTimer perfTimer,
+            IEnumerable<Assembly> packageAssemblies)
         {
-            var graph = new BehaviorGraph {ApplicationAssembly = registry.ApplicationAssembly};
+            var graph = new BehaviorGraph
+            {
+                ApplicationAssembly = registry.ApplicationAssembly,
+                PackageAssemblies = packageAssemblies
+            };
             var config = registry.Config;
 
             perfTimer.Record("Applying Settings", () => applySettings(config, graph));
@@ -67,7 +66,7 @@ namespace FubuMVC.Core.Configuration
 
             // Wait until all the other threads are done.
             var registration = Task.Factory.StartNew(() => config.RegisterServices(graph));
-                
+
             Task.WaitAll(registration, layoutAttachmentTasks);
             Task.WaitAll(layoutAttachmentTasks.Result);
 
@@ -87,17 +86,15 @@ namespace FubuMVC.Core.Configuration
                 chains.Each(x => x.Authorization.AddPolicies(settings.AuthorizationRights));
 
                 graph.AddChains(chains);
-
-
             }
 
 
             if (FubuMode.InDevelopment() || settings.TraceLevel == TraceLevel.Verbose)
             {
-                graph.Services.Clear(typeof(IBindingLogger));
+                graph.Services.Clear(typeof (IBindingLogger));
                 graph.Services.AddService<IBindingLogger, RecordingBindingLogger>();
 
-                graph.Services.Clear(typeof(IBindingHistory));
+                graph.Services.Clear(typeof (IBindingHistory));
                 graph.Services.AddService<IBindingHistory, BindingHistory>();
 
                 graph.Services.AddService<ILogListener, RequestTraceListener>();
@@ -106,7 +103,6 @@ namespace FubuMVC.Core.Configuration
             {
                 graph.Services.AddService<ILogListener, ProductionModeTraceListener>();
             }
-
         }
 
         private static void applyTracing(BehaviorGraph graph)

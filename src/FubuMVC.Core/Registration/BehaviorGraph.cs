@@ -58,6 +58,7 @@ namespace FubuMVC.Core.Registration
         }
 
         public Assembly ApplicationAssembly { get; set; }
+        public IEnumerable<Assembly> PackageAssemblies { get; set; } 
 
         public TypePool Types()
         {
@@ -151,12 +152,12 @@ namespace FubuMVC.Core.Registration
 
         public static BehaviorGraph BuildFrom(FubuRegistry registry, IPerfTimer timer = null)
         {
-            return BehaviorGraphBuilder.Build(registry, timer ?? new PerfTimer());
+            return BehaviorGraphBuilder.Build(registry, timer ?? new PerfTimer(), new Assembly[0]);
         }
 
         public static BehaviorGraph BuildFrom<T>(IPerfTimer timer = null) where T : FubuRegistry, new()
         {
-            return BehaviorGraphBuilder.Build(new T(), timer ?? new PerfTimer());
+            return BehaviorGraphBuilder.Build(new T(), timer ?? new PerfTimer(), new Assembly[0]);
         }
 
         public static BehaviorGraph BuildFrom(Action<FubuRegistry> configure, IPerfTimer timer = null)
@@ -164,7 +165,7 @@ namespace FubuMVC.Core.Registration
             var registry = new FubuRegistry();
             configure(registry);
 
-            return BehaviorGraphBuilder.Build(registry, timer ?? new PerfTimer());
+            return BehaviorGraphBuilder.Build(registry, timer ?? new PerfTimer(), new Assembly[0]);
         }
 
 

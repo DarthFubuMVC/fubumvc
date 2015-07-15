@@ -6,6 +6,7 @@ using System.Security.Permissions;
 using Bottles;
 using FubuCore;
 using FubuCore.Util;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Diagnostics.Assets
@@ -23,10 +24,10 @@ namespace FubuMVC.Core.Diagnostics.Assets
         private readonly IList<EmbeddedFile> _files = new List<EmbeddedFile>();
         private readonly Cache<string, EmbeddedFile> _searches;
 
-        public DiagnosticAssetsCache()
+        public DiagnosticAssetsCache(BehaviorGraph graph)
         {
             AddAssembly(Assembly.GetExecutingAssembly());
-            PackageRegistry.PackageAssemblies.Each(AddAssembly);
+            graph.PackageAssemblies.Each(AddAssembly);
 
             _searches = new Cache<string, EmbeddedFile>(name =>
             {

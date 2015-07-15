@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Hosting;
 using System.Web.Routing;
@@ -206,7 +207,7 @@ namespace FubuMVC.Core
 
         private BehaviorGraph buildBehaviorGraph(IPerfTimer timer)
         {
-            var graph = BehaviorGraphBuilder.Build(_registry.Value, timer);
+            var graph = BehaviorGraphBuilder.Build(_registry.Value, timer, new Assembly[0]);
 
             return graph;
         }

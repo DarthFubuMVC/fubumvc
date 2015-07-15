@@ -1,7 +1,9 @@
 ﻿using System.IO;
+using System.Reflection;
 using System.Text;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics.Assets;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -16,7 +18,7 @@ namespace FubuMVC.Tests.Diagnostics.Assets
         [SetUp]
         public void SetUp()
         {
-            theAssets = new DiagnosticAssetsCache();
+            theAssets = new DiagnosticAssetsCache(new BehaviorGraph{PackageAssemblies = new Assembly[0]});
         }
 
         [Test]
