@@ -16,7 +16,6 @@ namespace FubuMVC.Core.Registration.Querying
         BehaviorChain FindCreatorOf(Type type);
 
         void RootAt(string baseUrl);
-        IChainForwarder FindForwarder(object model, string category = null);
 
         BehaviorChain Find(ChainSearch search);
     }

@@ -306,7 +306,6 @@
     <Compile Include="Registration\Nodes\BehaviorChain_building_an_object_def.cs" />
     <Compile Include="Registration\Nodes\Behavior_node_ObjectDef_creation_Tester.cs" />
     <Compile Include="Registration\ObjectGraph\ConfiguredDependencyTester.cs" />
-    <Compile Include="Registration\Querying\ChainForwarderTester.cs" />
     <Compile Include="Registration\Querying\ChainResolverTester.cs" />
     <Compile Include="Registration\RouteInputTester.cs" />
     <Compile Include="Registration\Scanning\AssemblyScannerTester.cs" />

@@ -5,6 +5,7 @@ namespace FubuMVC.IntegrationTesting.Assets
     [TestFixture]
     public class can_write_font_related_assets_Issue_764
     {
+
         [Test]
         public void read_WOFF_file()
         {

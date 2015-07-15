@@ -80,12 +80,6 @@ namespace FubuMVC.Core.Registration.Querying
                 throw new ArgumentNullException("model");
             }
 
-            var forwarder = FindForwarder(model, category);
-            if (forwarder != null)
-            {
-                return forwarder.FindChain(this, model).Chain;
-            }
-
             var modelType = _typeResolver.ResolveType(model);
 
             var search = new ChainSearch
@@ -113,18 +107,6 @@ namespace FubuMVC.Core.Registration.Querying
                 x.Route.RootUrlAt(baseUrl);
                 x.AdditionalRoutes.Each(r => r.RootUrlAt(baseUrl));
             });
-        }
-
-        public IChainForwarder FindForwarder(object model, string category = null)
-        {
-            if (category == null)
-            {
-                var forwarder = FindForwarder(model, Categories.DEFAULT);
-                if (forwarder != null) return forwarder;
-            }
-
-            var modelType = _typeResolver.ResolveType(model);
-            return _behaviorGraph.Forwarders.SingleOrDefault(f => f.Category == category && f.InputType == modelType);
         }
 
         public void ClearAll()

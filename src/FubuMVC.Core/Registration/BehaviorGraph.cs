@@ -35,7 +35,6 @@ namespace FubuMVC.Core.Registration
     {
         private readonly List<BehaviorChain> _behaviors = new List<BehaviorChain>();
 
-        private readonly List<IChainForwarder> _forwarders = new List<IChainForwarder>();
         private readonly ServiceGraph _services = new ServiceGraph();
 
         private readonly SettingsCollection _settings;
@@ -93,11 +92,6 @@ namespace FubuMVC.Core.Registration
         public IFubuApplicationFiles Files
         {
             get { return _settings.Get<IFubuApplicationFiles>(); }
-        }
-
-        public IList<IChainForwarder> Forwarders
-        {
-            get { return _forwarders; }
         }
 
         public TypeResolver TypeResolver { get; private set; }
@@ -175,39 +169,6 @@ namespace FubuMVC.Core.Registration
             return BehaviorGraphBuilder.Build(registry, timer ?? new PerfTimer());
         }
 
-        /// <summary>
-        ///   Register a ChainForwarder that forwards UrlFor requests
-        ///   for T to something else
-        /// </summary>
-        /// <typeparam name = "T"></typeparam>
-        /// <param name = "converter"></param>
-        public void Forward<T>(Func<T, object> converter)
-        {
-            var forwarder = new ChainForwarder<T>(converter);
-            _forwarders.Add(forwarder);
-        }
-
-        /// <summary>
-        ///   Register a ChainForwarder that forwards UrlFor(category) requests
-        ///   for T to something else
-        /// </summary>
-        /// <typeparam name = "T"></typeparam>
-        /// <param name = "converter"></param>
-        /// <param name = "category"></param>
-        public void Forward<T>(Func<T, object> converter, string category)
-        {
-            var forwarder = new ChainForwarder<T>(converter, category);
-            _forwarders.Add(forwarder);
-        }
-
-        /// <summary>
-        ///   Register a ChainForwarder
-        /// </summary>
-        /// <param name = "forwarder"></param>
-        public void AddForwarder(IChainForwarder forwarder)
-        {
-            _forwarders.Add(forwarder);
-        }
 
         /// <summary>
         ///   Finds the matching BehaviorChain for the given IRouteDefinition.  If no

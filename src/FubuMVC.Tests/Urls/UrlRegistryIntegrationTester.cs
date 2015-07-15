@@ -183,31 +183,6 @@ namespace FubuMVC.Tests.Urls
             urls.UrlFor(new SubclassUrlModel()).ShouldEqual("/two/m4");
         }
 
-
-        [Test]
-        public void forward_with_a_category()
-        {
-            graph.Forward<Model4>(m => new Model6(), "A");
-            graph.Forward<Model4>(m => new Model7(), "B");
-
-            urls.UrlFor(new Model4(), "A").ShouldEqual("/one/a");
-            urls.UrlFor(new Model4(), "B").ShouldEqual("/one/b");
-        }
-
-        [Test]
-        public void forward_with_route_inputs()
-        {
-            graph.Forward<Model4>(m => new ModelWithInputs() {Name = "chiefs"});
-            urls.UrlFor(new Model4()).ShouldEqual("/find/chiefs");
-        }
-
-        [Test]
-        public void forward_respects_the_type_resolution()
-        {
-            graph.Forward<UrlModel>(m => new Model6(), "new");
-            urls.UrlFor(new SubclassUrlModel(), "new").ShouldEqual("/one/a");
-        }
-
         [Test]
         public void template_for_model_will_respects_the_absolute_pathing()
         {
@@ -265,13 +240,6 @@ namespace FubuMVC.Tests.Urls
                 new JQueryUrlTemplate(), theHttpRequest);
         }
 
-
-        [Test]
-        public void forward_without_a_category()
-        {
-            graph.Forward<Model4>(m => new Model3());
-            urls.UrlFor(new Model4()).ShouldEqual("/one/m5");
-        }
     }
 
     public class RandomClass

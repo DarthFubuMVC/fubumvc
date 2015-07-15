@@ -528,7 +528,6 @@
     <Compile Include="Registration\Nodes\UrlCategory.cs" />
     <Compile Include="Registration\ObjectGraph\ListDependency.cs" />
     <Compile Include="Registration\Querying\ChainResolutionCache.cs" />
-    <Compile Include="Registration\Querying\ChainForwarder.cs" />
     <Compile Include="Registration\Querying\IChainResolver.cs" />
     <Compile Include="Registration\ServiceRegistry.cs" />
     <Compile Include="Registration\TypePool.cs" />

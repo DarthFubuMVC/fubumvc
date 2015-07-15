@@ -26,18 +26,6 @@ namespace FubuMVC.Core.Registration.Querying
             return createResult(model, chain);
         }
 
-        private T processForwarder(object model, Func<IChainForwarder> forwarderSource, Func<IChainResolver, BehaviorChain> finder)
-        {
-            var forwarder = forwarderSource();
-            if (forwarder != null)
-            {
-                var result = forwarder.FindChain(resolver, model);
-                return createResult(result.RealInput, result.Chain);
-            }
-
-            return findAnswerFromResolver(model, finder);
-        }
-
         protected T For(object model, string categoryOrMethod = null)
         {
             if (model == null)
@@ -45,10 +33,7 @@ namespace FubuMVC.Core.Registration.Querying
                 throw new ArgumentNullException("model");
             }
 
-            return processForwarder(
-                model, 
-                () => resolver.FindForwarder(model, categoryOrMethod),
-                r => r.FindUnique(model, categoryOrMethod));
+            return findAnswerFromResolver(model, r => r.FindUnique(model, categoryOrMethod));
         }
 
         protected T For(Type handlerType, MethodInfo method, string categoryOrHttpMethod = null)

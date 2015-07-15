@@ -41,7 +41,6 @@ namespace FubuMVC.Tests.Registration.Querying
 
             _resolutionCache.ClearAll();
 
-            graph.Forwarders.Clear();
         }
 
         #endregion
@@ -144,34 +143,6 @@ namespace FubuMVC.Tests.Registration.Querying
             _resolutionCache.FindCreatorOf(typeof (Entity1)).FirstCall().Method.Name.ShouldEqual("M6");
             _resolutionCache.FindCreatorOf(typeof (Entity2)).FirstCall().Method.Name.ShouldEqual("M6");
             _resolutionCache.FindCreatorOf(typeof (Entity3)).ShouldBeNull();
-        }
-
-        [Test]
-        public void find_forwarder_if_there_is_only_one()
-        {
-            graph.Forward<ForwardedModel>(m => new UniqueInput());
-
-            var forwarder = _resolutionCache.FindForwarder(new ForwardedModel());
-            forwarder.ShouldNotBeNull();
-            forwarder.FindChain(_resolutionCache, new ForwardedModel()).Chain.FirstCall().Method.Name.ShouldEqual("M9");
-        }
-
-        [Test]
-        public void find_forwarder_is_null_with_no_forwarders_registered()
-        {
-            _resolutionCache.FindForwarder(new ForwardedModel()).ShouldBeNull();
-        }
-
-        [Test]
-        public void find_forwarder_with_DEFAULT_category_if_there_is_more_than_one()
-        {
-            graph.Forward<ForwardedModel>(m => new UniqueInput(), Categories.DEFAULT);
-            graph.Forward<ForwardedModel>(m => new ChainResolverInput1(), Categories.NEW);
-            graph.Forward<ForwardedModel>(m => new ChainResolverInput1(), Categories.EDIT);
-
-            var forwarder = _resolutionCache.FindForwarder(new ForwardedModel());
-            forwarder.ShouldNotBeNull();
-            forwarder.FindChain(_resolutionCache, new ForwardedModel()).Chain.FirstCall().Method.Name.ShouldEqual("M9");
         }
 
         [Test]
