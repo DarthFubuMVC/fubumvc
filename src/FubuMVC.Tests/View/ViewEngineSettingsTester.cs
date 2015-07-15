@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using Bottles.Diagnostics;
 using FubuMVC.Core.Registration;
@@ -22,9 +21,6 @@ namespace FubuMVC.Tests.View
         [SetUp]
         public void Setup()
         {
-            var types = new TypePool();
-            types.AddAssembly(GetType().Assembly);
-
             _runner = new ViewEngineSettings();
         }
 
@@ -215,6 +211,7 @@ namespace FubuMVC.Tests.View
             public ViewEngineSettings Settings { get; set; }
             public Type TemplateType { get; private set; }
             public Task LayoutAttachment { get; private set; }
+
             public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
             {
                 throw new NotImplementedException();
