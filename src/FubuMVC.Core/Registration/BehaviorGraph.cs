@@ -73,15 +73,6 @@ namespace FubuMVC.Core.Registration
             }
         } 
 
-        public TypePool Types()
-        {
-            var types = new TypePool();
-            if (ApplicationAssembly != null) types.AddAssembly(ApplicationAssembly);
-            types.AddAssemblies(PackageRegistry.PackageAssemblies);
-
-            return types;
-        }
-
         private string _version;
 
         public string Version
