@@ -1,10 +1,8 @@
 ﻿using AssemblyPackage;
-using Bottles;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration;
-using NUnit.Framework;
 using FubuTestingSupport;
-using System.Linq;
+using NUnit.Framework;
 
 namespace FubuMVC.Tests.Registration
 {
@@ -16,15 +14,9 @@ namespace FubuMVC.Tests.Registration
         [SetUp]
         public void SetUp()
         {
-            PackageRegistry.LoadPackages(x => {
-                x.Assembly(typeof(AssemblyPackage.Address).Assembly);
-            }, false);
+            theGraph = BehaviorGraph.BuildFrom(x => { });
 
-            PackageRegistry.PackageAssemblies.Single()
-                .ShouldEqual(typeof (AssemblyPackage.Address).Assembly);
-
-            theGraph = BehaviorGraph.BuildFrom(x => {
-            });
+            theGraph.PackageAssemblies = new[] {typeof (AssemblyPackage.Address).Assembly};
         }
 
         [Test]
@@ -43,7 +35,7 @@ namespace FubuMVC.Tests.Registration
                 .ShouldHaveTheSameElementsAs(new ColorRule("orange"));
         }
 
-        [Test,Explicit]
+        [Test, Explicit]
         public void finds_overrides_from_package_assemblies_too()
         {
             var rules = theGraph.Settings.Get<AccessorRules>();
@@ -75,7 +67,6 @@ namespace FubuMVC.Tests.Registration
 
     public interface IRule
     {
-
     }
 
     public class ColorRule : IRule
@@ -102,7 +93,7 @@ namespace FubuMVC.Tests.Registration
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((ColorRule)obj);
+            return Equals((ColorRule) obj);
         }
 
         public override int GetHashCode()

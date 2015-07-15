@@ -157,7 +157,7 @@ namespace FubuMVC.Core
 
                     perfTimer.Record("Applying IFubuRegistryExtension's", applyFubuExtensionsFromPackages);
 
-                    var graph = perfTimer.Record("Building the BehaviorGraph", () => buildBehaviorGraph(perfTimer));
+                    var graph = perfTimer.Record("Building the BehaviorGraph", () => buildBehaviorGraph(perfTimer, PackageRegistry.PackageAssemblies));
 
                     perfTimer.Record("Registering services into the IoC Container",
                         () => bakeBehaviorGraphIntoContainer(graph, containerFacility));
@@ -205,9 +205,9 @@ namespace FubuMVC.Core
             graph.As<IRegisterable>().Register(containerFacility.Register);
         }
 
-        private BehaviorGraph buildBehaviorGraph(IPerfTimer timer)
+        private BehaviorGraph buildBehaviorGraph(IPerfTimer timer, IEnumerable<Assembly> assemblies)
         {
-            var graph = BehaviorGraphBuilder.Build(_registry.Value, timer, new Assembly[0]);
+            var graph = BehaviorGraphBuilder.Build(_registry.Value, timer, assemblies);
 
             return graph;
         }

@@ -12,7 +12,7 @@ namespace FubuMVC.Core.Diagnostics
     {
         public IEnumerable<BehaviorChain> BuildChains(BehaviorGraph graph, IPerfTimer timer)
         {
-            foreach (var action in findActions())
+            foreach (var action in findActions(graph))
             {
                 if (action.Method.Name.StartsWith("Visualize"))
                 {
@@ -31,12 +31,12 @@ namespace FubuMVC.Core.Diagnostics
             }
         }
 
-        private IEnumerable<ActionCall> findActions()
+        private IEnumerable<ActionCall> findActions(BehaviorGraph graph)
         {
             var source = new ActionSource();
 
             source.Applies.ToAssemblyContainingType<IActionBehavior>();
-            PackageRegistry.PackageAssemblies.Each(a => source.Applies.ToAssembly(a));
+            graph.PackageAssemblies.Each(a => source.Applies.ToAssembly(a));
             source.IncludeTypesNamed(name => name.EndsWith("FubuDiagnostics"));
             source.IncludeTypes(type => type == typeof(FubuDiagnosticsEndpoint));
 
