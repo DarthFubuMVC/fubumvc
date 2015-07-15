@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -98,8 +99,8 @@ namespace FubuMVC.Core
         /// <returns></returns>
         public static IContainerFacilityExpression DefaultPolicies()
         {
-            var assembly = TypePool.FindTheCallingAssembly();
-            return new FubuApplication(() => new FubuRegistry(assembly));
+            var assembly = FindTheCallingAssembly();
+            return new FubuApplication(() => new FubuRegistry((Assembly) assembly));
         }
 
         /// <summary>
@@ -276,6 +277,34 @@ namespace FubuMVC.Core
             }
 
             return basePath;
+        }
+
+        /// <summary>
+        ///   Finds the currently executing assembly.
+        /// </summary>
+        /// <returns></returns>
+        public static Assembly FindTheCallingAssembly()
+        {
+            var trace = new StackTrace(false);
+
+            var thisAssembly = Assembly.GetExecutingAssembly().GetName().Name;
+            var fubuCore = typeof(ITypeResolver).Assembly.GetName().Name;
+            var bottles = typeof(IPackageLoader).Assembly.GetName().Name;
+
+            Assembly callingAssembly = null;
+            for (int i = 0; i < trace.FrameCount; i++)
+            {
+                StackFrame frame = trace.GetFrame(i);
+                Assembly assembly = frame.GetMethod().DeclaringType.Assembly;
+                var name = assembly.GetName().Name;
+
+                if (name != thisAssembly && name != fubuCore && name != bottles && name != "mscorlib" && name != "FubuMVC.Katana" && name != "Serenity" && name != "System.Core" && name != "FubuTransportation")
+                {
+                    callingAssembly = assembly;
+                    break;
+                }
+            }
+            return callingAssembly;
         }
     }
 

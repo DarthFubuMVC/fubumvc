@@ -19,7 +19,7 @@ namespace FubuMVC.Core.Registration.DSL
         /// </summary>
         public void ToThisAssembly()
         {
-            ToAssembly(TypePool.FindTheCallingAssembly());
+            ToAssembly(FubuApplication.FindTheCallingAssembly());
         }
 
         /// <summary>

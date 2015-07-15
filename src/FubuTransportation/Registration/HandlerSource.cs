@@ -8,6 +8,7 @@ using FubuCore;
 using FubuCore.Descriptions;
 using FubuCore.Reflection;
 using FubuCore.Util;
+using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuTransportation.Configuration;
 using FubuTransportation.Registration.Nodes;
@@ -39,7 +40,7 @@ namespace FubuTransportation.Registration
 
         public void UseThisAssembly()
         {
-            UseAssembly(TypePool.FindTheCallingAssembly());
+            UseAssembly(FubuApplication.FindTheCallingAssembly());
         }
 
         IEnumerable<HandlerCall> IHandlerSource.FindCalls(Assembly applicationAssembly)

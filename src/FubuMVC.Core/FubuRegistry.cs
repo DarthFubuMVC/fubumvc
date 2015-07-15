@@ -33,7 +33,7 @@ namespace FubuMVC.Core
             var type = GetType();
             if (type == typeof (FubuRegistry) || type == typeof (FubuPackageRegistry))
             {
-                _applicationAssembly = TypePool.FindTheCallingAssembly();
+                _applicationAssembly = FubuApplication.FindTheCallingAssembly();
             }
             else
             {
