@@ -176,9 +176,6 @@ namespace FubuMVC.Core
                         return routes;
                     });
 
-
-                    _facility.Value.Register(typeof (FubuRouteTable), ObjectDef.ForValue(new FubuRouteTable(routeTask)));
-
                     runtime = new FubuRuntime(factory, _facility.Value, routeTask.Result);
 
                     _facility.Value.Register(typeof (FubuRuntime), ObjectDef.ForValue(runtime));
@@ -312,18 +309,4 @@ namespace FubuMVC.Core
     }
 
 
-    public class FubuRouteTable
-    {
-        private readonly Task<IList<RouteBase>> _routeTask;
-
-        public FubuRouteTable(Task<IList<RouteBase>> routeTask)
-        {
-            _routeTask = routeTask;
-        }
-
-        public IList<RouteBase> Routes
-        {
-            get { return _routeTask.Result; }
-        }
-    }
 }
