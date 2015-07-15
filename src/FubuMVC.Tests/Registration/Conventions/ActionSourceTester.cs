@@ -1,13 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Security.Cryptography;
 using AssemblyPackage;
 using FubuCore;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuTestingSupport;
@@ -25,19 +21,16 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void SetUp()
         {
             source = new ActionSource();
-            _graph = new Lazy<BehaviorGraph>(() => {
-                return BehaviorGraph.BuildFrom(r => {
-                    r.Actions.FindWith(source);
-                });
-            });
+            _graph =
+                new Lazy<BehaviorGraph>(() => BehaviorGraph.BuildFrom(r => r.Actions.FindWith(source)));
         }
 
         private BehaviorGraph theResultingGraph
         {
             get { return _graph.Value; }
         }
-            
-            
+
+
         [Test]
         public void uses_the_application_assembly_if_none_is_specified()
         {
@@ -53,7 +46,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void does_not_use_The_application_assembly_if_other_assemblies_are_specified()
         {
-            source.Applies.ToAssemblyContainingType<AssemblyPackage.AssemblyEndpoint>();
+            source.Applies.ToAssemblyContainingType<AssemblyEndpoint>();
 
             theResultingGraph.BehaviorFor<OneController>(x => x.Query(null))
                 .ShouldBeNull();
@@ -62,7 +55,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void does_find_actions_from_other_assemblies()
         {
-            source.Applies.ToAssemblyContainingType<AssemblyPackage.AssemblyEndpoint>();
+            source.Applies.ToAssemblyContainingType<AssemblyEndpoint>();
             source.IncludeClassesSuffixedWithEndpoint();
 
             theResultingGraph.BehaviorFor<AssemblyEndpoint>(x => x.get_hello())
@@ -130,11 +123,10 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void exclude_types()
         {
             source.IncludeClassesSuffixedWithController();
-            source.ExcludeTypes(x => x == typeof(TwoController));
+            source.ExcludeTypes(x => x == typeof (TwoController));
 
             theResultingGraph.BehaviorFor<OneController>(x => x.Query(null)).ShouldNotBeNull();
             theResultingGraph.BehaviorFor<TwoController>(x => x.Query(null)).ShouldBeNull();
-
         }
 
         [Test]
@@ -215,7 +207,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         public SimpleOutputModel Report()
         {
             return new SimpleOutputModel();
-        }  
+        }
     }
 
     public class TwoEndpoint
@@ -296,12 +288,12 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
         }
 
-        protected override Core.Registration.ObjectGraph.ObjectDef buildObjectDef()
+        protected override ObjectDef buildObjectDef()
         {
             //replace IActionBehavior with something other than one/zero in/out action invoker
             return new ObjectDef
             {
-                Type = typeof(TestActionBehavior)
+                Type = typeof (TestActionBehavior)
             };
         }
     }

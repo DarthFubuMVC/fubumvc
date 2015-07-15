@@ -10,7 +10,6 @@ using FubuCore;
 using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
-using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Routing;
 using FubuMVC.Core.Runtime.Files;
@@ -70,17 +69,16 @@ namespace FubuMVC.Core.Registration
         }
 
         private string _version;
+
         public string Version
         {
             get
             {
                 return _version.IsEmpty()
-                    ? (ApplicationAssembly == null ? string.Empty : ApplicationAssembly.GetName().Version.ToString()) : _version;
+                    ? (ApplicationAssembly == null ? string.Empty : ApplicationAssembly.GetName().Version.ToString())
+                    : _version;
             }
-            set
-            {
-                _version = value;
-            }
+            set { _version = value; }
         }
 
 

@@ -2,36 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Bottles;
 
 namespace FubuMVC.Core.Registration.DSL
 {
     public class AppliesToExpression
     {
-        private readonly IList<Action<TypePool>> _typePoolConfigurations = new List<Action<TypePool>>(); 
+        private readonly IList<Assembly> _assemblies = new List<Assembly>();
 
-        private Action<TypePool> configure
+        internal IEnumerable<Assembly> Assemblies
         {
-            set
-            {
-                _typePoolConfigurations.Add(value);
-            }
-        }
-
-        internal TypePool BuildPool(Assembly applicationAssembly)
-        {
-            var types = new TypePool();
-
-            if (_typePoolConfigurations.Any())
-            {
-                _typePoolConfigurations.Each(x => x(types));
-            }
-            else
-            {
-                types.AddAssembly(applicationAssembly);
-            }
-
-            return types;
+            get { return _assemblies; }
         }
 
         /// <summary>
@@ -47,7 +27,7 @@ namespace FubuMVC.Core.Registration.DSL
         /// </summary>
         public void ToAssembly(Assembly assembly)
         {
-            configure = pool => pool.AddAssembly(assembly);
+            _assemblies.Add(assembly);
         }
 
         /// <summary>

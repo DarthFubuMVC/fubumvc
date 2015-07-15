@@ -159,6 +159,13 @@ namespace FubuMVC.Core.Registration
 
             return task.Task;
         }
+
+        [Obsolete("Whenever this is used, treat it as temporary and try to get rid of the usage")]
+        public static T Result<T>(this Task<T> task)
+        {
+            task.Wait();
+            return task.Result;
+        }
     }
 
 

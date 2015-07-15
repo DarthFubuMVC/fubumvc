@@ -58,10 +58,9 @@ namespace FubuMVC.Core.Registration
 
         IEnumerable<ActionCall> IActionSource.FindActions(Assembly applicationAssembly)
         {
-            var types = _applies.BuildPool(applicationAssembly);
-            _assemblies.AddRange(types.Assemblies);
-
-            return types.TypesMatching(_typeFilters.Matches).SelectMany(actionsFromType);
+            var assemblies = _applies.Assemblies.Any() ? _applies.Assemblies : new Assembly[]{applicationAssembly};
+            return TypeRepository.FindTypes(assemblies, TypeClassification.Concretes, _typeFilters.Matches)
+                .ContinueWith(x => x.Result.SelectMany(actionsFromType)).Result;
         }
 
         private IEnumerable<ActionCall> actionsFromType(Type type)
