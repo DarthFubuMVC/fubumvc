@@ -58,7 +58,20 @@ namespace FubuMVC.Core.Registration
         }
 
         public Assembly ApplicationAssembly { get; set; }
-        public IEnumerable<Assembly> PackageAssemblies { get; set; } 
+        public IEnumerable<Assembly> PackageAssemblies { get; set; }
+
+        public IEnumerable<Assembly> AllAssemblies()
+        {
+            if (ApplicationAssembly != null) yield return ApplicationAssembly;
+
+            if (PackageAssemblies != null)
+            {
+                foreach (var packageAssembly in PackageAssemblies)
+                {
+                    yield return packageAssembly;
+                }
+            }
+        } 
 
         public TypePool Types()
         {

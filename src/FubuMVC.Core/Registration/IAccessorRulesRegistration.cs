@@ -15,19 +15,19 @@ namespace FubuMVC.Core.Registration
 
     public static class AccessorRulesCompiler
     {
+        public static bool IsAccessorRule(Type type)
+        {
+            return type.IsConcreteWithDefaultCtor() && type.CanBeCastTo<IAccessorRulesRegistration>();
+        }
+
         public static void Compile(BehaviorGraph graph, IPerfTimer timer)
         {
             graph.Settings.Replace(() => {
                 return timer.Record("Finding AccessorRules", () => {
                     var rules = new AccessorRules();
 
-                    graph.Types()
-                        .TypesMatching(
-                            x =>
-                                x.CanBeCastTo<IAccessorRulesRegistration>() && x.IsConcreteWithDefaultCtor() &&
-                                !x.IsOpenGeneric())
-                        .
-                        Distinct().Select(x => Activator.CreateInstance(x).As<IAccessorRulesRegistration>())
+                    TypeRepository.FindTypes(graph.AllAssemblies(), TypeClassification.Concretes | TypeClassification.Closed, IsAccessorRule).Result().Distinct()
+                        .Select(x => Activator.CreateInstance(x).As<IAccessorRulesRegistration>())
                         .Each(x => x.AddRules(rules));
 
                     return rules;
