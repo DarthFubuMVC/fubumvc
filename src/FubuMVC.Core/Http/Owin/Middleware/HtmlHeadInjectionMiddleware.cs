@@ -19,7 +19,7 @@ namespace FubuMVC.Core.Http.Owin.Middleware
         {
             if (FubuMode.InDevelopment() || FubuMode.Mode().EqualsIgnoreCase("diagnostics"))
             {
-                var injectedContent = PackageRegistry.Properties[TEXT_PROPERTY];
+                var injectedContent = FubuApplication.Properties[TEXT_PROPERTY];
                 if (injectedContent.IsNotEmpty())
                 {
                     settings.AddMiddleware<HtmlHeadInjectionMiddleware>().Arguments.With(new InjectionOptions

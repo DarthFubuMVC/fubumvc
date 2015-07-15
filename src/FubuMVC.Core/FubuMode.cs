@@ -151,19 +151,19 @@ namespace FubuMVC.Core
         public static bool InTestingMode()
         {
             var returnValue = false;
-            bool.TryParse(PackageRegistry.Properties[Testing], out returnValue);
+            bool.TryParse(FubuApplication.Properties[Testing], out returnValue);
 
             return returnValue;
         }
 
         public static void SetupForTestingMode()
         {
-            PackageRegistry.Properties[Testing] = true.ToString();
+            FubuApplication.Properties[Testing] = true.ToString();
         }
 
         public static void RemoveTestingMode()
         {
-            PackageRegistry.Properties.Remove(Testing);
+            FubuApplication.Properties.Remove(Testing);
         }
 
         /// <summary>

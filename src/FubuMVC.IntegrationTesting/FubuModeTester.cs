@@ -106,7 +106,7 @@ namespace FubuMVC.IntegrationTesting
         [Test]
         public void in_testing_mode_if_package_registry_is_set()
         {
-            PackageRegistry.Properties[FubuMode.Testing] = true.ToString();
+            FubuApplication.Properties[FubuMode.Testing] = true.ToString();
 
             FubuMode.InTestingMode().ShouldBeTrue();
         }
@@ -114,7 +114,7 @@ namespace FubuMVC.IntegrationTesting
         [Test]
         public void in_testing_mode_is_false()
         {
-            PackageRegistry.Properties[FubuMode.Testing] = false.ToString();
+            FubuApplication.Properties[FubuMode.Testing] = false.ToString();
 
             FubuMode.InTestingMode().ShouldBeFalse();
         }
@@ -122,7 +122,7 @@ namespace FubuMVC.IntegrationTesting
         [Test]
         public void in_testing_mode_is_false_if_no_property_exists()
         {
-            PackageRegistry.Properties.Remove(FubuMode.Testing);
+            FubuApplication.Properties.Remove(FubuMode.Testing);
 
             FubuMode.InTestingMode().ShouldBeFalse();
         }
@@ -130,7 +130,7 @@ namespace FubuMVC.IntegrationTesting
         [Test]
         public void setup_for_testing_mode()
         {
-            PackageRegistry.Properties.Remove(FubuMode.Testing);
+            FubuApplication.Properties.Remove(FubuMode.Testing);
             FubuMode.SetupForTestingMode();
             FubuMode.InTestingMode().ShouldBeTrue();
         }

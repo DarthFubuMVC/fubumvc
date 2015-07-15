@@ -13,6 +13,7 @@ using Bottles.Services;
 using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Reflection;
+using FubuCore.Util;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Diagnostics;
@@ -306,6 +307,8 @@ namespace FubuMVC.Core
             }
             return callingAssembly;
         }
+
+        public readonly static Cache<string, string> Properties = new Cache<string, string>(key => null); 
     }
 
 

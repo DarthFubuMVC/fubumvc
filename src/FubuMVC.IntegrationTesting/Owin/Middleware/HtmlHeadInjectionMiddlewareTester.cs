@@ -17,7 +17,7 @@ namespace FubuMVC.IntegrationTesting.Owin.Middleware
         [SetUp]
         public void SetUp()
         {
-            PackageRegistry.Properties[HtmlHeadInjectionMiddleware.TEXT_PROPERTY] = null;
+            FubuApplication.Properties[HtmlHeadInjectionMiddleware.TEXT_PROPERTY] = null;
         }
 
         [Test]
