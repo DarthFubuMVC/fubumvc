@@ -2,35 +2,35 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using Bottles;
+using Bottles.Diagnostics;
 using FubuCore.Util.TextWriting;
 
 namespace FubuMVC.Core.Diagnostics
 {
     public static class FubuApplicationDescriber
     {
-        public static string WriteDescription()
+        public static string WriteDescription(IBottlingDiagnostics diagnostics)
         {
             var writer = new System.IO.StringWriter();
 
             writeProperties(writer);
 
-            writeErrors(writer);
+            writeErrors(writer, diagnostics);
 
             writeAssemblies(writer);
 
-            writeBottles(writer);
+            writeBottles(writer, diagnostics);
 
             return writer.ToString();
         }
 
-        private static void writeBottles(StringWriter writer)
+        private static void writeBottles(StringWriter writer, IBottlingDiagnostics diagnostics)
         {
             writer.WriteLine("------------------------------------------------------------------------------------------------");
             writer.WriteLine("Logs");
             writer.WriteLine("------------------------------------------------------------------------------------------------");
 
-            PackageRegistry.Diagnostics.EachLog((o, log) =>
+            diagnostics.EachLog((o, log) =>
             {
                 if (log.Success)
                 {
@@ -43,13 +43,13 @@ namespace FubuMVC.Core.Diagnostics
             writer.WriteLine();
         }
 
-        private static void writeErrors(StringWriter writer)
+        private static void writeErrors(StringWriter writer, IBottlingDiagnostics diagnostics)
         {
             writer.WriteLine("------------------------------------------------------------------------------------------------");
             writer.WriteLine("Errors");
             writer.WriteLine("------------------------------------------------------------------------------------------------");
 
-            PackageRegistry.Diagnostics.EachLog((o, log) =>
+            diagnostics.EachLog((o, log) =>
             {
                 if (!log.Success)
                 {

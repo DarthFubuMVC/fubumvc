@@ -190,7 +190,7 @@ namespace FubuMVC.Core
             Restarted = DateTime.Now;
 
             PackageRegistry.AssertNoFailures(
-                () => { throw new FubuException(0, FubuApplicationDescriber.WriteDescription()); });
+                () => { throw new FubuException(0, FubuApplicationDescriber.WriteDescription(runtime.Behaviors.Diagnostics)); });
 
 
             return runtime;

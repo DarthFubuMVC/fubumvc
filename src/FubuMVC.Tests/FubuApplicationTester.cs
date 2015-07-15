@@ -43,11 +43,14 @@ namespace FubuMVC.Tests
         public void description_smoke_tester()
         {
             var container = new Container();
-            FubuApplication.For(new FubuRegistry()).StructureMap(container).Bootstrap();
+            using (var runtime = FubuApplication.For(new FubuRegistry()).StructureMap(container).Bootstrap())
+            {
+                var description = FubuApplicationDescriber.WriteDescription(runtime.Behaviors.Diagnostics);
 
-            var description = FubuApplicationDescriber.WriteDescription();
+                Console.WriteLine(description);
+            }
 
-            Console.WriteLine(description);
+
         }
 
         [Test]
