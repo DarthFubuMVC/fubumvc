@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using FubuCore;
 using FubuTransportation.Registration;
 using FubuTransportation.Registration.Nodes;
@@ -12,7 +13,7 @@ namespace FubuTransportation.ScheduledJobs.Configuration
     {
         public readonly IList<Type> JobTypes = new List<Type>(); 
 
-        public IEnumerable<HandlerCall> FindCalls()
+        public IEnumerable<HandlerCall> FindCalls(Assembly applicationAssembly)
         {
             return JobTypes.SelectMany(handlersForJob).ToArray();
 

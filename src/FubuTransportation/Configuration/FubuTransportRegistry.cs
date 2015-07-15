@@ -175,7 +175,7 @@ namespace FubuTransportation.Configuration
         void IFubuRegistryExtension.Configure(FubuRegistry registry)
         {
             var graph = new HandlerGraph();
-            var allCalls = allSources().SelectMany(x => x.FindCalls()).Distinct();
+            var allCalls = allSources().SelectMany(x => x.FindCalls(registry.ApplicationAssembly)).Distinct();
             graph.Add(allCalls);
 
             graph.ApplyPolicies(_localPolicies);
@@ -594,7 +594,7 @@ namespace FubuTransportation.Configuration
 
     public class NulloHandlerSource : IHandlerSource
     {
-        public IEnumerable<HandlerCall> FindCalls()
+        public IEnumerable<HandlerCall> FindCalls(Assembly applicationAssembly)
         {
             yield break;
         }

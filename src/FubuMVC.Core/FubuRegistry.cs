@@ -214,7 +214,7 @@ namespace FubuMVC.Core
             _config.Local.Explicits.Fill(explicitAction);
         }
 
-        internal Assembly ApplicationAssembly
+        public Assembly ApplicationAssembly
         {
             get { return _applicationAssembly; }
         }

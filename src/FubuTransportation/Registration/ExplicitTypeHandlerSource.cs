@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using FubuTransportation.Configuration;
 using FubuTransportation.Registration.Nodes;
 
@@ -15,7 +16,7 @@ namespace FubuTransportation.Registration
             _types.Fill(types);
         }
 
-        public IEnumerable<HandlerCall> FindCalls()
+        public IEnumerable<HandlerCall> FindCalls(Assembly applicationAssembly)
         {
             foreach (var type in _types)
             {

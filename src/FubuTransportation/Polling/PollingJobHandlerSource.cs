@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using FubuTransportation.Registration;
 using FubuTransportation.Registration.Nodes;
 
@@ -16,7 +17,7 @@ namespace FubuTransportation.Polling
             _jobTypes.Add(type);
         }
 
-        public IEnumerable<HandlerCall> FindCalls()
+        public IEnumerable<HandlerCall> FindCalls(Assembly applicationAssembly)
         {
             return _jobTypes.Select(x => {
                 var handlerType = typeof (JobRunner<>).MakeGenericType(x);

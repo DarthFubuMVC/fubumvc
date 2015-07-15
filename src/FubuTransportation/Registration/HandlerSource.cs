@@ -42,19 +42,14 @@ namespace FubuTransportation.Registration
             UseAssembly(FubuTransportRegistry.FindTheCallingAssembly());
         }
 
-        IEnumerable<HandlerCall> IHandlerSource.FindCalls()
+        IEnumerable<HandlerCall> IHandlerSource.FindCalls(Assembly applicationAssembly)
         {
-            var types = new TypePool();
-            if (_assemblies.Any())
-            {
-                types.AddAssemblies(_assemblies);
-            }
-            else
-            {
-                types.AddAssembly(FubuTransportRegistry.FindTheCallingAssembly());
-            }
+            var types = _assemblies.Any()
+                ? TypeRepository.FindTypes(_assemblies, TypeClassification.Concretes, _typeFilters.Matches)
+                : TypeRepository.FindTypes(applicationAssembly, TypeClassification.Concretes, _typeFilters.Matches);
 
-            return types.TypesMatching(_typeFilters.Matches).SelectMany(actionsFromType);
+            return types.Result().SelectMany(actionsFromType);
+
         }
 
         private IEnumerable<HandlerCall> actionsFromType(Type type)

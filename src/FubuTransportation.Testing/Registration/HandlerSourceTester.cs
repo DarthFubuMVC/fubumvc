@@ -18,7 +18,7 @@ namespace FubuTransportation.Testing.Registration
             source.UseThisAssembly();
             source.IncludeClassesSuffixedWithConsumer();
 
-            var descriptions = source.As<IHandlerSource>().FindCalls().Select(x => x.Description);
+            var descriptions = source.As<IHandlerSource>().FindCalls(GetType().Assembly).Select(x => x.Description);
             descriptions
                 .ShouldHaveTheSameElementsAs(
                 "MyConsumer.M1(M1 input) : void",
@@ -37,7 +37,7 @@ namespace FubuTransportation.Testing.Registration
 
             source.IncludeClassesSuffixedWithConsumer();
 
-            var descriptions = source.As<IHandlerSource>().FindCalls().Select(x => x.Description);
+            var descriptions = source.As<IHandlerSource>().FindCalls(GetType().Assembly).Select(x => x.Description);
             descriptions
                 .ShouldHaveTheSameElementsAs(
                 "MyConsumer.M1(M1 input) : void",
@@ -57,7 +57,7 @@ namespace FubuTransportation.Testing.Registration
             source.IncludeClassesSuffixedWithConsumer();
             source.ExcludeTypes(x => x.Name == "MyOtherConsumer");
 
-            var descriptions = source.As<IHandlerSource>().FindCalls().Select(x => x.Description);
+            var descriptions = source.As<IHandlerSource>().FindCalls(GetType().Assembly).Select(x => x.Description);
             descriptions
                 .ShouldHaveTheSameElementsAs(
                     "MyConsumer.M1(M1 input) : void",
@@ -72,7 +72,7 @@ namespace FubuTransportation.Testing.Registration
             source.ExcludeTypes(x => x.Namespace != "FubuTransportation.Testing.Registration");
             source.IncludeTypes(x => x.Name == "MyConsumer");
 
-            var descriptions = source.As<IHandlerSource>().FindCalls().Select(x => x.Description);
+            var descriptions = source.As<IHandlerSource>().FindCalls(GetType().Assembly).Select(x => x.Description);
             descriptions
                 .ShouldHaveTheSameElementsAs(
                     "MyConsumer.M1(M1 input) : void",
@@ -88,7 +88,7 @@ namespace FubuTransportation.Testing.Registration
             source.IncludeClassesSuffixedWithConsumer();
             source.IncludeMethods(x => x.Name == "M2");
 
-            var descriptions = source.As<IHandlerSource>().FindCalls().Select(x => x.Description);
+            var descriptions = source.As<IHandlerSource>().FindCalls(GetType().Assembly).Select(x => x.Description);
             descriptions
                 .ShouldHaveTheSameElementsAs(
 "MyConsumer.M2(M2 input) : void",
@@ -103,7 +103,7 @@ namespace FubuTransportation.Testing.Registration
             source.IncludeClassesSuffixedWithConsumer();
             source.ExcludeMethods(x => x.Name == "M2");
 
-            var descriptions = source.As<IHandlerSource>().FindCalls().Select(x => x.Description);
+            var descriptions = source.As<IHandlerSource>().FindCalls(GetType().Assembly).Select(x => x.Description);
             descriptions
                 .ShouldHaveTheSameElementsAs(
                 "MyConsumer.M1(M1 input) : void",

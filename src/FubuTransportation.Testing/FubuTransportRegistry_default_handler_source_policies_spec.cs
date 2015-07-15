@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using FubuTestingSupport;
 using FubuTransportation.Configuration;
 using FubuTransportation.Registration;
@@ -61,6 +62,7 @@ namespace FubuTransportation.Testing
         {
             var graph = FubuTransportRegistry.HandlerGraphFor(r =>
             {
+                
                 r.Handlers.FindBy(x => {
                     x.IncludeClassesSuffixedWithConsumer();
                 });
@@ -79,7 +81,7 @@ namespace FubuTransportation.Testing
 
     public class MyFunkyHandlerSource : IHandlerSource
     {
-        public IEnumerable<HandlerCall> FindCalls()
+        public IEnumerable<HandlerCall> FindCalls(Assembly applicationAssembly)
         {
             yield return HandlerCall.For<MyFunkySpaceAgeProcessor>(x => x.Go(null));
         }
