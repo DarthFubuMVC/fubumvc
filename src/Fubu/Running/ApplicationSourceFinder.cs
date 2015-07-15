@@ -28,12 +28,12 @@ namespace Fubu.Running
                 }
             }
 
-            var assemblies = list.SelectMany(x => AssembliesFromPath(x));
-            var pool = new TypePool();
-            pool.IgnoreExportTypeFailures = true;
+            var assemblies = list.SelectMany(AssembliesFromPath);
 
-            pool.AddAssemblies(assemblies);
-            return pool.TypesMatching(x => x.IsConcreteTypeOf<IApplicationSource>() && x.IsConcreteWithDefaultCtor());
+            return
+                TypeRepository.FindTypes(assemblies, TypeClassification.Concretes,
+                    x => x.IsConcreteTypeOf<IApplicationSource>() && x.IsConcreteWithDefaultCtor()).Result();
+
         }
 
 
