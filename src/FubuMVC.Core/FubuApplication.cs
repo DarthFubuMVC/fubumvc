@@ -152,6 +152,8 @@ namespace FubuMVC.Core
 
                 x.Bootstrap("FubuMVC Bootstrapping", log =>
                 {
+                    var diagnostics = PackageRegistry.Diagnostics;
+
                     // container facility has to be spun up here
                     var containerFacility = _facility.Value;
 
@@ -159,7 +161,7 @@ namespace FubuMVC.Core
 
                     perfTimer.Record("Applying IFubuRegistryExtension's", applyFubuExtensionsFromPackages);
 
-                    var graph = perfTimer.Record("Building the BehaviorGraph", () => buildBehaviorGraph(perfTimer, PackageRegistry.PackageAssemblies));
+                    var graph = perfTimer.Record("Building the BehaviorGraph", () => buildBehaviorGraph(perfTimer, PackageRegistry.PackageAssemblies, diagnostics));
 
                     perfTimer.Record("Registering services into the IoC Container",
                         () => bakeBehaviorGraphIntoContainer(graph, containerFacility));
@@ -204,9 +206,9 @@ namespace FubuMVC.Core
             graph.As<IRegisterable>().Register(containerFacility.Register);
         }
 
-        private BehaviorGraph buildBehaviorGraph(IPerfTimer timer, IEnumerable<Assembly> assemblies)
+        private BehaviorGraph buildBehaviorGraph(IPerfTimer timer, IEnumerable<Assembly> assemblies, IBottlingDiagnostics diagnostics)
         {
-            var graph = BehaviorGraphBuilder.Build(_registry.Value, timer, assemblies);
+            var graph = BehaviorGraphBuilder.Build(_registry.Value, timer, assemblies, diagnostics);
 
             return graph;
         }
