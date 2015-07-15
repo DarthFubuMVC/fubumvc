@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core.Registration;
 
@@ -15,24 +16,16 @@ namespace FubuMVC.Core.Resources.Conneg
         {
             var graph = new ConnegGraph();
 
-            TypePool typePool = behaviorGraph.Types();
-            var writers = typePool
-                .TypesMatching(
-                    x =>
-                        x.Closes(typeof (IMediaWriter<>)) && x.IsConcreteWithDefaultCtor() &&
-                        !x.IsOpenGeneric());
 
-            graph.Writers.AddRange(writers);
+            var writers = TypeRepository.FindTypes(behaviorGraph.AllAssemblies(),
+                TypeClassification.Concretes | TypeClassification.Closed, x => x.Closes(typeof (IMediaWriter<>)))
+                .ContinueWith(t => graph.Writers.AddRange(t.Result));
 
+            var readers = TypeRepository.FindTypes(behaviorGraph.AllAssemblies(),
+                TypeClassification.Concretes | TypeClassification.Closed, x => x.Closes(typeof(IReader<>)))
+                .ContinueWith(t => graph.Readers.AddRange(t.Result));
 
-            var readers = typePool
-                .TypesMatching(
-                    x =>
-                        x.Closes(typeof (IReader<>)) && x.IsConcreteWithDefaultCtor() &&
-                        !x.IsOpenGeneric());
-
-            graph.Readers.AddRange(readers);
-
+            Task.WaitAll(writers, readers);
 
             return graph;
         }
