@@ -69,7 +69,7 @@ namespace FubuMVC.Core
             
 
             deactivators.Each(x => {
-                var log = PackageRegistry.Diagnostics.LogFor(x);
+                var log = Behaviors.Diagnostics.LogFor(x);
 
                 try
                 {

@@ -18,43 +18,39 @@ namespace FubuMVC.Core.View.Model
 
     public class TemplateLogger : ITemplateLogger
     {
-        private readonly Action<ITemplateFile, string, object[]> _format;
-        private readonly Action<ITemplateFile, string> _trace;
+        private readonly IBottlingDiagnostics _diagnostics;
 
-        public TemplateLogger(Action<ITemplateFile, string, object[]> format, Action<ITemplateFile, string> trace)
+        public TemplateLogger(IBottlingDiagnostics diagnostics)
         {
-            _format = format;
-            _trace = trace;
+            _diagnostics = diagnostics;
         }
 
         public void Log(ITemplateFile template, string format, params object[] args)
         {
-            _format(template, format, args);
+            formatTrace(template, format, args);
         }
 
         public void Log(ITemplateFile template, string text)
         {
-            _trace(template, text);
+            trace(template, text);
         }
 
-        public static ITemplateLogger Default()
+        public static ITemplateLogger Default(IBottlingDiagnostics diagnostics)
         {
-            return new TemplateLogger(formatTrace, trace);
+            return new TemplateLogger(diagnostics);
         }
 
-        private static IPackageLog getPackageLogger(ITemplateFile template)
+        private IPackageLog getPackageLogger(ITemplateFile template)
         {
-            if (PackageRegistry.Diagnostics == null) return new PackageLog();
-
-            return PackageRegistry.Diagnostics.LogFor(template);
+            return _diagnostics.LogFor(template);
         }
 
-        private static void formatTrace(ITemplateFile template, string format, object[] args)
+        private void formatTrace(ITemplateFile template, string format, object[] args)
         {
             getPackageLogger(template).Trace(format, args);
         }
 
-        private static void trace(ITemplateFile template, string text)
+        private void trace(ITemplateFile template, string text)
         {
             getPackageLogger(template).Trace(text);
         }

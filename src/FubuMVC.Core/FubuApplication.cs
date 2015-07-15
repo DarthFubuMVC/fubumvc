@@ -159,7 +159,7 @@ namespace FubuMVC.Core
 
                     var perfTimer = PackageRegistry.Timer;
 
-                    perfTimer.Record("Applying IFubuRegistryExtension's", applyFubuExtensionsFromPackages);
+                    perfTimer.Record("Applying IFubuRegistryExtension's", () => applyFubuExtensionsFromPackages(diagnostics));
 
                     var graph = perfTimer.Record("Building the BehaviorGraph", () => buildBehaviorGraph(perfTimer, PackageRegistry.PackageAssemblies, diagnostics));
 
@@ -223,11 +223,11 @@ namespace FubuMVC.Core
             return routes;
         }
 
-        private void applyFubuExtensionsFromPackages()
+        private void applyFubuExtensionsFromPackages(IBottlingDiagnostics diagnostics)
         {
             // THIS IS NEW, ONLY ASSEMBLIES MARKED AS [FubuModule] will be scanned
             var importers = PackageRegistry.PackageAssemblies.Where(a => a.HasAttribute<FubuModuleAttribute>()).Select(
-                assem => Task.Factory.StartNew(() => assem.FindAllExtensions())).ToArray();
+                assem => Task.Factory.StartNew(() => assem.FindAllExtensions(diagnostics))).ToArray();
 
             Task.WaitAll(importers);
 

@@ -14,10 +14,10 @@ namespace FubuMVC.Core
     /// </summary>
     public static class FubuExtensionFinder
     {
-        public static IEnumerable<IImporter> FindAllExtensions(this Assembly assembly)
+        public static IEnumerable<IImporter> FindAllExtensions(this Assembly assembly, IBottlingDiagnostics diagnostics)
         {
             // Yeah, it really does have to be this way
-            var log = PackageRegistry.Diagnostics.LogFor(assembly);
+            var log = diagnostics.LogFor(assembly);
             return assembly.GetExportedTypes().Where(isExtension).Select(type => typeof(Importer<>).CloseAndBuildAs<IImporter>(log,type));
         }
 

@@ -1,4 +1,4 @@
-﻿using Bottles;
+﻿using System.Diagnostics;
 using FubuMVC.Core;
 using FubuMVC.StructureMap;
 using NUnit.Framework;
@@ -13,10 +13,9 @@ namespace FubuMVC.IntegrationTesting
         {
             using (var runtime = FubuApplication.DefaultPolicies().StructureMap().Bootstrap())
             {
-                
+                Debug.WriteLine(runtime.Behaviors.Diagnostics.Timer.DisplayTimings());
             }
 
-            PackageRegistry.Diagnostics.Timer.DisplayTimings();
         }
     }
 }

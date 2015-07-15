@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Reflection;
+using Bottles.Diagnostics;
 using FubuMVC.Core;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -14,7 +15,7 @@ namespace FubuMVC.Tests
         {
             var assembly = Assembly.GetExecutingAssembly();
 
-            var types = assembly.FindAllExtensions();
+            var types = assembly.FindAllExtensions(new BottlingDiagnostics());
 
             types.OfType<FubuExtensionFinder.Importer<GoodExtension>>().Any().ShouldBeTrue();
             types.OfType<FubuExtensionFinder.Importer<NotAutoExtension>>().Any().ShouldBeFalse();

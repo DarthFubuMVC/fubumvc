@@ -1,11 +1,18 @@
 using System.Collections.Generic;
-using Bottles;
 using Bottles.Diagnostics;
+using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.Diagnostics.Packaging
 {
     public class PackageLogFubuDiagnostics
     {
+        private readonly BehaviorGraph _graph;
+
+        public PackageLogFubuDiagnostics(BehaviorGraph graph)
+        {
+            _graph = graph;
+        }
+
         [System.ComponentModel.Description("Application Startup")]
         public PackageDiagnosticsModel get_package_logs(PackageDiagnosticsRequestModel request)
         {
@@ -13,7 +20,7 @@ namespace FubuMVC.Core.Diagnostics.Packaging
             var logs = new List<PackageDiagnosticsLogModel>();
 
             // Nothing really gained here by mocking this so let's hit it directly
-            PackageRegistry
+            _graph
                 .Diagnostics
                 .EachLog((target, log) => logs.Add(new PackageDiagnosticsLogModel{
                     Type = BottlingDiagnostics.GetTypeName(target),

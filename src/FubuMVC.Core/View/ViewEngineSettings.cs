@@ -93,7 +93,7 @@ namespace FubuMVC.Core.View
                 var views = viewFinders.SelectMany(x => x.Result).ToList();
                 _viewPolicies.Each(x => x.Alter(views));
 
-                var logger = TemplateLogger.Default();
+                var logger = TemplateLogger.Default(graph.Diagnostics);
                 var types = new ViewTypePool(graph);
 
                 // Attaching the view models
