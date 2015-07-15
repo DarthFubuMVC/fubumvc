@@ -26,6 +26,7 @@ namespace FubuMVC.Core.Registration
         /// <summary>
         /// All types in the AppDomain in non dynamic assemblies
         /// </summary>
+        [Obsolete("GET RID OF THIS")]
         public static TypePool AppDomainTypes()
         {
             return _appDomainTypes.Value;

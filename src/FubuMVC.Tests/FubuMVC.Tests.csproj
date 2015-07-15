@@ -216,6 +216,7 @@
     <Compile Include="Registration\Registration\ModelBindingServiceRegistry_specification.cs" />
     <Compile Include="Registration\SettingsCollectionTester.cs" />
     <Compile Include="Registration\SettingsCollection_creates_with_the_app_setting_provider_Tester.cs" />
+    <Compile Include="Registration\TypeRepositoryTester.cs" />
     <Compile Include="Registration\when_importing_urls.cs" />
     <Compile Include="Resources\Conneg\ConnegGraphTester.cs" />
     <Compile Include="Resources\Conneg\ReaderChoiceTester.cs" />
