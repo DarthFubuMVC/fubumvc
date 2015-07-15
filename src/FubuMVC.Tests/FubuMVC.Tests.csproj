@@ -309,7 +309,6 @@
     <Compile Include="Registration\ObjectGraph\ConfiguredDependencyTester.cs" />
     <Compile Include="Registration\Querying\ChainResolverTester.cs" />
     <Compile Include="Registration\RouteInputTester.cs" />
-    <Compile Include="Registration\Scanning\AssemblyScannerTester.cs" />
     <Compile Include="Registration\system_policy_for_authorization.cs" />
     <Compile Include="Routing\StandardRoutePolicyTester.cs" />
     <Compile Include="Runtime\AspNetPassthroughConverterTester.cs" />

@@ -493,12 +493,9 @@
     <Compile Include="Resources\PathBased\ResourcePathBinder.cs" />
     <Compile Include="Resources\PathBased\ResourcePath.cs" />
     <Compile Include="Registration\AddImplementationsServiceRegistrationConvention.cs" />
-    <Compile Include="Registration\AssemblyScanner.cs" />
-    <Compile Include="Registration\AssemblyScanningExtensions.cs" />
     <Compile Include="Registration\ConnectImplementationsServiceRegistrationConvention.cs" />
     <Compile Include="Registration\Conventions\MethodToUrlBuilder.cs" />
     <Compile Include="Registration\HandlerActionsSet.cs" />
-    <Compile Include="Registration\IAssemblyScanner.cs" />
     <Compile Include="Registration\IServiceRegistrationConvention.cs" />
     <Compile Include="Registration\Nodes\BehaviorCategory.cs" />
     <Compile Include="Registration\Nodes\BehaviorSearch.cs" />
@@ -563,7 +560,6 @@
     <Compile Include="Security\IAuthorizationPreviewService.cs" />
     <Compile Include="Security\PrincipalRoles.cs" />
     <Compile Include="Routing\StandardRoutePolicy.cs" />
-    <Compile Include="ServiceRegistryExtensions.cs" />
     <Compile Include="UI\FubuHtmlDocument.cs" />
     <Compile Include="UI\FubuPageExtensions.cs" />
     <Compile Include="UI\HtmlTagExtensions.cs" />
