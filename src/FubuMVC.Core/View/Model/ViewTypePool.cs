@@ -9,11 +9,11 @@ namespace FubuMVC.Core.View.Model
 {
     public class ViewTypePool
     {
-        private readonly TypePool _types;
+        private readonly BehaviorGraph _graph;
 
         public ViewTypePool(BehaviorGraph graph)
         {
-            _types = graph.Types();
+            _graph = graph;
         }
 
 
@@ -21,7 +21,7 @@ namespace FubuMVC.Core.View.Model
         {
             if (GenericParser.IsGeneric(typeFullName))
             {
-                var genericParser = new GenericParser(_types.Assemblies);
+                var genericParser = new GenericParser(_graph.AllAssemblies());
                 return genericParser.Parse(typeFullName);
             }
 
@@ -30,7 +30,12 @@ namespace FubuMVC.Core.View.Model
 
         private Type findClosedTypeByFullName(string typeFullName, Action<string> log)
         {
-            var types = _types.TypesWithFullName(typeFullName);
+
+
+            var types =
+                TypeRepository.FindTypes(_graph.AllAssemblies(),
+                    TypeClassification.Closed | TypeClassification.Concretes, x => x.FullName == typeFullName).Result();
+
             var typeCount = types.Count();
 
             if (typeCount == 1)
