@@ -6,6 +6,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Http.Scenarios;
+using FubuMVC.Core.StructureMap;
 using FubuMVC.IntegrationTesting.Views;
 using FubuMVC.StructureMap;
 using NUnit.Framework;

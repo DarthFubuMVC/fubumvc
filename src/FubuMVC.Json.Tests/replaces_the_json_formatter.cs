@@ -2,7 +2,7 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
-using FubuMVC.StructureMap;
+using FubuMVC.Core.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 

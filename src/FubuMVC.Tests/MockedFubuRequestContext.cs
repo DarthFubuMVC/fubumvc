@@ -4,6 +4,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.StructureMap;
 using FubuMVC.StructureMap;
 using Rhino.Mocks;
 using StructureMap;

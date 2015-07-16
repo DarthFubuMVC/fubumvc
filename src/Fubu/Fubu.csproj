@@ -11,8 +11,7 @@
     <RootNamespace>Fubu</RootNamespace>
     <AssemblyName>Fubu</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
+    <TargetFrameworkProfile></TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -144,10 +143,6 @@
     <ProjectReference Include="..\FubuMVC.Katana\FubuMVC.Katana.csproj">
       <Project>{48bc51c2-b759-48db-aae1-f4686cd6d02a}</Project>
       <Name>FubuMVC.Katana</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
-      <Project>{abfea520-820c-4b77-9015-6a09e24252fa}</Project>
-      <Name>FubuMVC.StructureMap</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

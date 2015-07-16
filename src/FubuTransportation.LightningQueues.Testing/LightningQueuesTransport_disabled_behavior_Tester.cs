@@ -1,5 +1,5 @@
 ﻿using FubuCore;
-using FubuMVC.StructureMap;
+using FubuMVC.Core.StructureMap;
 using FubuTestingSupport;
 using FubuTransportation.Configuration;
 using FubuTransportation.Subscriptions;

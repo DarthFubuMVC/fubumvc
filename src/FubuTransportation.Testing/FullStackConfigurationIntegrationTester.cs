@@ -2,11 +2,11 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.StructureMap;
 using FubuTransportation.Configuration;
 using FubuTransportation.Runtime;
 using NUnit.Framework;
 using StructureMap;
-using FubuMVC.StructureMap;
 using System.Linq;
 using FubuTestingSupport;
 

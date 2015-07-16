@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using FubuMVC.Core;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Owin.Middleware;
+using FubuMVC.Core.StructureMap;
 using FubuMVC.Katana;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;

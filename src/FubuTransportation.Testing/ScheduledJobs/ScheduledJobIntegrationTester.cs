@@ -4,7 +4,7 @@ using System.Threading;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
-using FubuMVC.StructureMap;
+using FubuMVC.Core.StructureMap;
 using FubuTestingSupport;
 using FubuTransportation.Configuration;
 using FubuTransportation.Polling;

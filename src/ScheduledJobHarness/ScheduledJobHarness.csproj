@@ -182,10 +182,6 @@
       <Project>{02441e35-668b-4713-9279-bd51948b95eb}</Project>
       <Name>FubuMVC.RavenDb</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
-      <Project>{abfea520-820c-4b77-9015-6a09e24252fa}</Project>
-      <Name>FubuMVC.StructureMap</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FubuTransportation.RavenDb\FubuTransportation.RavenDb.csproj">
       <Project>{0d252b13-1636-43d4-b203-cce05de43073}</Project>
       <Name>FubuTransportation.RavenDb</Name>

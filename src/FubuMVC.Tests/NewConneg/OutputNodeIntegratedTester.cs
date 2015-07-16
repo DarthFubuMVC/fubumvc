@@ -8,6 +8,7 @@ using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.Runtime.Formatters;
+using FubuMVC.Core.StructureMap;
 using FubuMVC.StructureMap;
 using NUnit.Framework;
 using Rhino.Mocks;

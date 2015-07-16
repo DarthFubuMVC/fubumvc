@@ -46,6 +46,9 @@
     <Reference Include="Selenium.WebDriverBackedSelenium">
       <HintPath>..\packages\Selenium.WebDriverBackedSelenium\lib\net40\Selenium.WebDriverBackedSelenium.dll</HintPath>
     </Reference>
+    <Reference Include="Serenity">
+      <HintPath>..\packages\Serenity\lib\net45\Serenity.dll</HintPath>
+    </Reference>
     <Reference Include="StoryTeller">
       <HintPath>..\packages\Storyteller\lib\net45\StoryTeller.dll</HintPath>
     </Reference>
@@ -93,10 +96,6 @@
     <ProjectReference Include="..\FubuMVC.Katana\FubuMVC.Katana.csproj">
       <Project>{48bc51c2-b759-48db-aae1-f4686cd6d02a}</Project>
       <Name>FubuMVC.Katana</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
-      <Project>{abfea520-820c-4b77-9015-6a09e24252fa}</Project>
-      <Name>FubuMVC.StructureMap</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuTransportation\FubuTransportation.csproj">
       <Project>{23fdb1ce-1ec5-4d1b-b3e5-008a439caa13}</Project>

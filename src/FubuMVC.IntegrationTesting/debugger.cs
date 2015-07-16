@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Reflection;
 using FubuCore.Dates;
 using FubuMVC.Core;
+using FubuMVC.Core.StructureMap;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;

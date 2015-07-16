@@ -2,9 +2,9 @@ using FubuMVC.Authentication.Membership;
 using FubuMVC.Core;
 using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.StructureMap;
 using FubuMVC.Core.Urls;
 using FubuMVC.Katana;
-using FubuMVC.StructureMap;
 using NUnit.Framework;
 using StructureMap;
 

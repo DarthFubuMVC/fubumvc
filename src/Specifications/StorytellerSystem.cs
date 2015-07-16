@@ -2,8 +2,8 @@
 using FubuMVC.Authentication;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.StructureMap;
 using FubuMVC.PersistedMembership;
-using FubuMVC.StructureMap;
 using Serenity;
 using StructureMap;
 

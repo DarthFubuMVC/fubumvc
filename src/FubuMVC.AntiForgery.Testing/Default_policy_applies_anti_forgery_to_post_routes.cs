@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
-using FubuMVC.StructureMap;
+using FubuMVC.Core.StructureMap;
 using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;

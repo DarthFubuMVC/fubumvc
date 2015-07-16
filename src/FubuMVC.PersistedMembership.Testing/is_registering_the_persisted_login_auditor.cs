@@ -1,9 +1,9 @@
 ﻿using FubuMVC.Authentication;
 using FubuMVC.Authentication.Auditing;
 using FubuMVC.Core;
+using FubuMVC.Core.StructureMap;
 using FubuPersistence.InMemory;
 using NUnit.Framework;
-using FubuMVC.StructureMap;
 using StructureMap;
 using FubuTestingSupport;
 

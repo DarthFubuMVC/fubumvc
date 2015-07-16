@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web.UI.WebControls;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Packaging;
+using FubuMVC.Core.StructureMap;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;

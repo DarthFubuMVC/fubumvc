@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core;
-using FubuMVC.StructureMap;
+using FubuMVC.Core.StructureMap;
 using FubuTransportation.Configuration;
 using FubuTransportation.Diagnostics;
 using FubuTransportation.Events;

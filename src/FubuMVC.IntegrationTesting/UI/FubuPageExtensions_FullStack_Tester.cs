@@ -3,6 +3,7 @@ using System.Net;
 using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Security;
+using FubuMVC.Core.StructureMap;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.View;
 using FubuMVC.Katana;

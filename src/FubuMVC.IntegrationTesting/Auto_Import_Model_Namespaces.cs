@@ -1,5 +1,6 @@
 ﻿using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.StructureMap;
 using FubuMVC.Core.View;
 using FubuMVC.StructureMap;
 using FubuMVC.Tests.Runtime;

@@ -85,10 +85,6 @@
       <Project>{48bc51c2-b759-48db-aae1-f4686cd6d02a}</Project>
       <Name>FubuMVC.Katana</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
-      <Project>{abfea520-820c-4b77-9015-6a09e24252fa}</Project>
-      <Name>FubuMVC.StructureMap</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Serenity\Serenity.csproj">
       <Project>{900a0419-3579-4dae-85be-71a3e4b34239}</Project>
       <Name>Serenity</Name>

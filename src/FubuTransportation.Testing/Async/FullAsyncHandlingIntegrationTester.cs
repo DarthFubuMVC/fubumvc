@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
-using FubuMVC.StructureMap;
+using FubuMVC.Core.StructureMap;
 using FubuTestingSupport;
 using FubuTransportation.Configuration;
 using FubuTransportation.Runtime.Invocation;

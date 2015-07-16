@@ -5,7 +5,7 @@ using System.Threading;
 using FubuCore;
 using FubuCore.Dates;
 using FubuMVC.Core;
-using FubuMVC.StructureMap;
+using FubuMVC.Core.StructureMap;
 using FubuTestingSupport;
 using FubuTransportation.Configuration;
 using FubuTransportation.Testing;

@@ -251,10 +251,6 @@
       <Project>{9d6bf559-6461-4eac-bb16-f976ff43e8da}</Project>
       <Name>FubuMVC.Spark</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
-      <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
-      <Name>FubuMVC.StructureMap</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Tests\FubuMVC.Tests.csproj">
       <Project>{FEB91F9F-ECE2-480C-B39C-A44BBF1F7B01}</Project>
       <Name>FubuMVC.Tests</Name>
@@ -379,8 +375,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent></PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

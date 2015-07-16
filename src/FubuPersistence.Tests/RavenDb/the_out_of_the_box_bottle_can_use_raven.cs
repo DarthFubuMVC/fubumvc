@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core;
-using FubuMVC.StructureMap;
+using FubuMVC.Core.StructureMap;
 using FubuPersistence.RavenDb;
 using FubuTestingSupport;
 using NUnit.Framework;

@@ -1,6 +1,6 @@
 ﻿using FubuMVC.Core;
+using FubuMVC.Core.StructureMap;
 using FubuMVC.RavenDb;
-using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using FubuTransportation.Configuration;
 using FubuTransportation.ScheduledJobs.Persistence;

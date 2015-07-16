@@ -5,7 +5,7 @@ using System.Reflection;
 using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core;
-using FubuMVC.StructureMap;
+using FubuMVC.Core.StructureMap;
 using FubuTransportation.Configuration;
 using FubuTransportation.InMemory;
 using FubuTransportation.LightningQueues;

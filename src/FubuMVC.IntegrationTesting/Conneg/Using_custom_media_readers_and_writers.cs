@@ -5,6 +5,7 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Projections;
 using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.StructureMap;
 using FubuMVC.StructureMap;
 using NUnit.Framework;
 

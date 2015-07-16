@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using FubuMVC.Core;
-using FubuMVC.StructureMap;
+using FubuMVC.Core.StructureMap;
 using FubuTransportation.Configuration;
 using FubuTransportation.Polling;
 using ServiceNode;

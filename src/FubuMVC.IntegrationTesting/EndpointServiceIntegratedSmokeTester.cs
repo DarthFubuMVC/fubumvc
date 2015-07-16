@@ -1,4 +1,5 @@
 ﻿using FubuMVC.Core;
+using FubuMVC.Core.StructureMap;
 using NUnit.Framework;
 using FubuMVC.StructureMap;
 using StructureMap;

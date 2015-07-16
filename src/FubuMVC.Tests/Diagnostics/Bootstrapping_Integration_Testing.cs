@@ -2,8 +2,9 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.StructureMap;
+using FubuMVC.Core.StructureMap.Diagnostics;
 using FubuMVC.StructureMap;
-using FubuMVC.StructureMap.Diagnostics;
 using FubuTestingSupport;
 using NUnit.Framework;
 

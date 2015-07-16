@@ -5,6 +5,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.StructureMap;
 using FubuMVC.Katana;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;

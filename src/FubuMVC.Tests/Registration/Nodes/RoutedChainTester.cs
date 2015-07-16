@@ -4,6 +4,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Core.StructureMap;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;

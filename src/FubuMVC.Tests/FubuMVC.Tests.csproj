@@ -36,9 +36,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles\lib\Bottles.dll</HintPath>
-    </Reference>
     <Reference Include="FubuCore">
       <HintPath>..\packages\FubuCore\lib\FubuCore.dll</HintPath>
     </Reference>
@@ -343,6 +340,25 @@
     <Compile Include="Security\DefaultAuthorizationFailureHandlerTester.cs" />
     <Compile Include="Security\PrincipalRolesTester.cs" />
     <Compile Include="Security\AuthorizationPolicyExecutorTester.cs" />
+    <Compile Include="StructureMap\Compliance\Does_not_require_explicit_registration_in_order_to_retrieve_a_concrete_type.cs" />
+    <Compile Include="StructureMap\Compliance\IServiceLocator_Compliance.cs" />
+    <Compile Include="StructureMap\Compliance\Lifecycle_Scoping_Compliance.cs" />
+    <Compile Include="StructureMap\Compliance\ObjectDef_Compliance.cs" />
+    <Compile Include="StructureMap\Compliance\OpenGeneric_Registration_Compliance.cs" />
+    <Compile Include="StructureMap\Compliance\ServiceArgument_Injection_Compliance.cs" />
+    <Compile Include="StructureMap\Compliance\Setter_Injection_from_ObjectDef_Dependency.cs" />
+    <Compile Include="StructureMap\ContainerFacilitySource.cs" />
+    <Compile Include="StructureMap\Internals\AppSettingProviderRegistrySmokeTester.cs" />
+    <Compile Include="StructureMap\Internals\Include_StructureMap_registrys.cs" />
+    <Compile Include="StructureMap\Internals\ObjectDefInstanceTester.cs" />
+    <Compile Include="StructureMap\Internals\StructureMapContainerFacilityTester.cs" />
+    <Compile Include="StructureMap\Internals\StructureMapServiceLocatorTester.cs" />
+    <Compile Include="StructureMap\Internals\StubActivator.cs" />
+    <Compile Include="StructureMap\Internals\TestController.cs" />
+    <Compile Include="StructureMap\Internals\UsesTheIsSingletonPropertyTester.cs" />
+    <Compile Include="StructureMap\IServiceFactory_Compliance.cs" />
+    <Compile Include="StructureMap\Settings\SettingIntegrationTester.cs" />
+    <Compile Include="StructureMap\using_child_containers_for_isolated_overrides.cs" />
     <Compile Include="TagAttributeTester.cs" />
     <Compile Include="UI\AuthorizationOnPageExtensionsTester.cs" />
     <Compile Include="UI\AuthorizedLinkExpressionsTester.cs" />
@@ -361,8 +377,7 @@
     <Compile Include="FubuBootstrapperIntegrationTester.cs" />
     <Compile Include="FubuRegistryTester.cs" />
     <Compile Include="HtmlGenerationTestExtensions.cs" />
-    <Compile Include="Registration\BehaviorGraphTester.cs">
-    </Compile>
+    <Compile Include="Registration\BehaviorGraphTester.cs"></Compile>
     <Compile Include="Registration\Conventions\ActionSourceTester.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConventionTester.cs" />
     <Compile Include="Registration\Conventions\CustomConventionIntegratedTester.cs" />
@@ -423,10 +438,6 @@
       <Project>{99dba82a-e811-4da0-983c-12e8317f8642}</Project>
       <Name>AssemblyPackage</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
-      <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
-      <Name>FubuMVC.StructureMap</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
@@ -470,6 +481,7 @@
     <None Include="ripple.dependencies.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="StructureMap\ripple.dependencies.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Diagnostics\Shared\" />

@@ -2,6 +2,7 @@
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.StructureMap;
 using FubuMVC.Katana;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;

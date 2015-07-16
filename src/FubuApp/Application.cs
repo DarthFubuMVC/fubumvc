@@ -2,7 +2,7 @@
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Continuations;
-using FubuMVC.StructureMap;
+using FubuMVC.Core.StructureMap;
 
 namespace FubuApp
 {

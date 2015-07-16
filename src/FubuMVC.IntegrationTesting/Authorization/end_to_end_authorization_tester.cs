@@ -3,6 +3,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
+using FubuMVC.Core.StructureMap;
 using FubuMVC.Katana;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;

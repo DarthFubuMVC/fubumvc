@@ -7,6 +7,7 @@ using FubuMVC.Core.Assets.JavascriptRouting;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
+using FubuMVC.Core.StructureMap;
 using FubuMVC.Core.UI;
 using FubuMVC.StructureMap;
 using HtmlTags;

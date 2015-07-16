@@ -8,6 +8,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Http.Scenarios;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.StructureMap;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Attachment;
 using FubuMVC.Core.View.Model;

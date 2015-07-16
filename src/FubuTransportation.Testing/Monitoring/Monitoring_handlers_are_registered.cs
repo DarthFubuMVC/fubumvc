@@ -1,5 +1,4 @@
-﻿using FubuMVC.StructureMap;
-using FubuTestingSupport;
+﻿using FubuTestingSupport;
 using FubuTransportation.Configuration;
 using FubuTransportation.Monitoring;
 using NUnit.Framework;

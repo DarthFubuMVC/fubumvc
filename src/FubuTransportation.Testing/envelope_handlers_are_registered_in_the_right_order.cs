@@ -1,9 +1,9 @@
 ﻿using FubuMVC.Core;
+using FubuMVC.Core.StructureMap;
 using FubuTransportation.Configuration;
 using FubuTransportation.Runtime.Invocation;
 using NUnit.Framework;
 using StructureMap;
-using FubuMVC.StructureMap;
 using FubuTestingSupport;
 
 namespace FubuTransportation.Testing

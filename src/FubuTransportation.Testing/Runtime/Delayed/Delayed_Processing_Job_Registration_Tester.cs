@@ -1,6 +1,6 @@
 ﻿using FubuCore.Dates;
 using FubuMVC.Core;
-using FubuMVC.StructureMap;
+using FubuMVC.Core.StructureMap;
 using FubuTransportation.Configuration;
 using FubuTransportation.Polling;
 using FubuTransportation.Runtime.Delayed;

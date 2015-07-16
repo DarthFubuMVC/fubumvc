@@ -5,6 +5,7 @@ using FubuCore.Binding;
 using FubuCore.Logging;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Logging;
+using FubuMVC.Core.StructureMap;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;

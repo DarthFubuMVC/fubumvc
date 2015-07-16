@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using FubuCore;
 using FubuMVC.Core;
-using FubuMVC.StructureMap;
+using FubuMVC.Core.StructureMap;
 using FubuTestingSupport;
 using KayakTestApplication;
 using NUnit.Framework;

@@ -1,6 +1,6 @@
 ﻿using FubuCore;
 using FubuMVC.Core;
-using FubuMVC.StructureMap;
+using FubuMVC.Core.StructureMap;
 using NUnit.Framework;
 
 namespace FubuTransportation.LightningQueues.Testing

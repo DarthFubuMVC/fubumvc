@@ -811,10 +811,6 @@
       <Project>{48bc51c2-b759-48db-aae1-f4686cd6d02a}</Project>
       <Name>FubuMVC.Katana</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
-      <Project>{abfea520-820c-4b77-9015-6a09e24252fa}</Project>
-      <Name>FubuMVC.StructureMap</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FubuTransportation\FubuTransportation.csproj">
       <Project>{23FDB1CE-1EC5-4D1B-B3E5-008A439CAA13}</Project>
       <Name>FubuTransportation</Name>

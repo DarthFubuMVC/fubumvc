@@ -10,6 +10,7 @@ using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Scenarios;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.StructureMap;
 using FubuMVC.Katana;
 using FubuMVC.StructureMap;
 using NUnit.Framework;

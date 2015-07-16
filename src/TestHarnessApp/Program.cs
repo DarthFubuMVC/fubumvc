@@ -7,9 +7,9 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.StructureMap;
 using FubuMVC.Core.UI;
 using FubuMVC.Katana;
-using FubuMVC.StructureMap;
 using Process = System.Diagnostics.Process;
 
 namespace TestHarnessApp

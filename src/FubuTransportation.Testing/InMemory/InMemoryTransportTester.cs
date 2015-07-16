@@ -1,5 +1,5 @@
 ﻿using System;
-using FubuMVC.StructureMap;
+using FubuMVC.Core.StructureMap;
 using FubuTransportation.Configuration;
 using FubuTransportation.InMemory;
 using NUnit.Framework;

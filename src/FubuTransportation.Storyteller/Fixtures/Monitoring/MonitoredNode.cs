@@ -6,7 +6,7 @@ using FubuCore;
 using FubuCore.Logging;
 using FubuCore.Util;
 using FubuMVC.Core;
-using FubuMVC.StructureMap;
+using FubuMVC.Core.StructureMap;
 using FubuTransportation.Configuration;
 using FubuTransportation.LightningQueues;
 using FubuTransportation.Monitoring;

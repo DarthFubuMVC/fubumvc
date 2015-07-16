@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core;
-using FubuMVC.StructureMap;
+using FubuMVC.Core.StructureMap;
 using FubuTestingSupport;
 using FubuTransportation.Configuration;
 using FubuTransportation.ErrorHandling;

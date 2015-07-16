@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using FubuMVC.Core;
+using FubuMVC.Core.StructureMap;
 using FubuTransportation.Configuration;
 using FubuTransportation.Events;
 using NUnit.Framework;
 using StructureMap;
-using FubuMVC.StructureMap;
 using FubuTestingSupport;
 
 namespace FubuTransportation.Testing.Configuration

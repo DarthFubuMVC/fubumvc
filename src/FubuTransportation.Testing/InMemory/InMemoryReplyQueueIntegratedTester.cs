@@ -1,8 +1,8 @@
 ﻿using FubuMVC.Core;
+using FubuMVC.Core.StructureMap;
 using FubuTransportation.Configuration;
 using FubuTransportation.InMemory;
 using NUnit.Framework;
-using FubuMVC.StructureMap;
 using StructureMap;
 using System.Linq;
 using FubuTestingSupport;

@@ -488,6 +488,27 @@
     <Compile Include="Services\Remote\ServiceStarted.cs" />
     <Compile Include="Services\Wait.cs" />
     <Compile Include="SessionState\CookieFlashProvider.cs" />
+    <Compile Include="StructureMap\AppSettingProviderRegistry.cs" />
+    <Compile Include="StructureMap\BootstrappingExtensions.cs" />
+    <Compile Include="StructureMap\ContainerExtensions.cs" />
+    <Compile Include="StructureMap\Diagnostics\AssemblyDTO.cs" />
+    <Compile Include="StructureMap\Diagnostics\BuildPlanRequest.cs" />
+    <Compile Include="StructureMap\Diagnostics\InstanceDTO.cs" />
+    <Compile Include="StructureMap\Diagnostics\Namespace.cs" />
+    <Compile Include="StructureMap\Diagnostics\PluginTypeDTO.cs" />
+    <Compile Include="StructureMap\Diagnostics\SearchOption.cs" />
+    <Compile Include="StructureMap\Diagnostics\SearchOptions.cs" />
+    <Compile Include="StructureMap\Diagnostics\SettingsFubuDiagnostics.cs" />
+    <Compile Include="StructureMap\Diagnostics\StructureMapExtensions.cs" />
+    <Compile Include="StructureMap\Diagnostics\StructureMapFubuDiagnostics.cs" />
+    <Compile Include="StructureMap\IContainerExtension.cs" />
+    <Compile Include="StructureMap\NestedStructureMapContainerBehavior.cs" />
+    <Compile Include="StructureMap\ObjectDefInstance.cs" />
+    <Compile Include="StructureMap\SettingsScanner.cs" />
+    <Compile Include="StructureMap\Settings\SettingPolicy.cs" />
+    <Compile Include="StructureMap\StructureMapContainerFacility.cs" />
+    <Compile Include="StructureMap\StructureMapFubuRegistry.cs" />
+    <Compile Include="StructureMap\StructureMapServiceLocator.cs" />
     <Compile Include="TagAttribute.cs" />
     <Compile Include="Template.cs" />
     <Compile Include="UI\AuthorizationOnPageExtensions.cs" />
@@ -719,6 +740,7 @@
       <Link>fubu-diagnostics\root.js</Link>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

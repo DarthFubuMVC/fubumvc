@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime.Files;
+using FubuMVC.Core.StructureMap;
 using FubuMVC.Katana;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;

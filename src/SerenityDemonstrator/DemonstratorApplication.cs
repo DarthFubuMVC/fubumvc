@@ -1,5 +1,5 @@
 ﻿using FubuMVC.Core;
-using FubuMVC.StructureMap;
+using FubuMVC.Core.StructureMap;
 
 namespace SerenityDemonstrator
 {
