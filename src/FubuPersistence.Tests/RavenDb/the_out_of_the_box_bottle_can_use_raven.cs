@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.StructureMap;
 using FubuPersistence.RavenDb;
@@ -24,6 +26,10 @@ namespace FubuPersistence.Tests.RavenDb
             var container = new Container();
             using (var application = FubuApplication.DefaultPolicies().StructureMap(container).Bootstrap())
             {
+                application.Behaviors.PackageAssemblies.Each(x => Debug.WriteLine(x.GetName().FullName));
+
+                Debug.WriteLine(container.WhatDoIHave(assembly:typeof(IDocumentStore).Assembly));
+
                 container.GetInstance<IDocumentStore>().ShouldNotBeNull();
             }
         }

@@ -403,7 +403,6 @@
     <Compile Include="Continuations\IRedirectable.cs" />
     <Compile Include="CoreServiceRegistry.cs" />
     <Compile Include="FubuMode.cs" />
-    <Compile Include="FubuModuleAttributePackageLoader.cs" />
     <Compile Include="Http\CurrentRequestFullUrlPropertyBinder.cs" />
     <Compile Include="Http\CurrentRequestRelativeUrlPropertyBinder.cs" />
     <Compile Include="Http\AspNet\RequestPropertyValueSource.cs" />

@@ -114,6 +114,70 @@ namespace FubuMVC.Core
         [SkipOverForProvenance]
         public FubuRuntime Bootstrap()
         {
+            RouteTable.Routes.Clear();
+            SetupNamingStrategyForHttpHeaders();
+
+            var diagnostics = new BottlingDiagnostics();
+            var perfTimer = diagnostics.Timer;
+            perfTimer.Start("FubuMVC Application Bootstrapping");
+
+            var packageAssemblies = perfTimer.Record("Searching for Assemblies marked with [FubuModule]", () => findModuleAssemblies(diagnostics).Where(x => x.HasAttribute<FubuModuleAttribute>()).ToArray());
+
+            var containerFacility = _facilitySource();
+            var runtime = bootstrapRuntime(perfTimer, diagnostics, packageAssemblies, containerFacility);
+
+            var activators = runtime.Factory.GetAll<IActivator>();
+            diagnostics.LogExecutionOnEachInParallel(activators, (activator, log) => activator.Activate(new IPackageInfo[0], log));
+
+            diagnostics.AssertNoFailures();
+
+            diagnostics.Timer.Stop();
+
+            Restarted = DateTime.Now;
+
+            return runtime;
+        }
+
+        private static IEnumerable<Assembly> findModuleAssemblies(IBottlingDiagnostics diagnostics)
+        {
+            var assemblyPath = AppDomain.CurrentDomain.BaseDirectory;
+            var binPath = FindBinPath();
+            if (binPath.IsNotEmpty())
+            {
+                assemblyPath = assemblyPath.AppendPath(binPath);
+            }
+
+
+            var files = new FileSystem().FindFiles(assemblyPath, FileSet.Deep("*.dll"));
+            foreach (var file in files)
+            {
+                var name = Path.GetFileNameWithoutExtension(file);
+                Assembly assembly = null;
+
+                try
+                {
+                    assembly = AppDomain.CurrentDomain.Load(name);
+                }
+                catch (Exception)
+                {
+                    diagnostics.LogFor(typeof(FubuApplication)).Trace("Unable to load assembly from file " + file);
+                }
+
+                if (assembly != null) yield return assembly;
+            }
+
+        }
+
+
+        /*
+
+            /// <summary>
+        /// Called to bootstrap and "start" a FubuMVC application 
+        /// </summary>
+        /// <returns></returns>
+        [SkipOverForProvenance]
+        public FubuRuntime Bootstrap()
+        {
             SetupNamingStrategyForHttpHeaders();
 
             // TODO -- I think Bottles probably needs to enforce a "tell me the paths"
@@ -155,11 +219,13 @@ namespace FubuMVC.Core
 
             return runtime;
         }
+         * 
+         */
 
         private FubuRuntime bootstrapRuntime(IPerfTimer perfTimer, IBottlingDiagnostics diagnostics,
             IEnumerable<Assembly> packageAssemblies, IContainerFacility containerFacility)
         {
-            perfTimer.Record("Applying IFubuRegistryExtension's", () => applyFubuExtensionsFromPackages(diagnostics));
+            perfTimer.Record("Applying IFubuRegistryExtension's", () => applyFubuExtensionsFromPackages(diagnostics, packageAssemblies));
 
             var graph = perfTimer.Record("Building the BehaviorGraph",
                 () => buildBehaviorGraph(perfTimer, packageAssemblies, diagnostics));
@@ -212,10 +278,10 @@ namespace FubuMVC.Core
             return routes;
         }
 
-        private void applyFubuExtensionsFromPackages(IBottlingDiagnostics diagnostics)
+        private void applyFubuExtensionsFromPackages(IBottlingDiagnostics diagnostics, IEnumerable<Assembly> packageAssemblies)
         {
             // THIS IS NEW, ONLY ASSEMBLIES MARKED AS [FubuModule] will be scanned
-            var importers = PackageRegistry.PackageAssemblies.Where(a => a.HasAttribute<FubuModuleAttribute>()).Select(
+            var importers = packageAssemblies.Where(a => a.HasAttribute<FubuModuleAttribute>()).Select(
                 assem => Task.Factory.StartNew(() => assem.FindAllExtensions(diagnostics))).ToArray();
 
             Task.WaitAll(importers);
@@ -299,5 +365,43 @@ namespace FubuMVC.Core
         public readonly static Cache<string, string> Properties = new Cache<string, string>(key => null); 
     }
 
+    public static class DiagnosticsExtensions
+    {
+        /// <summary>
+        /// A static method that should be exposed, to allow you to 
+        /// take an action when there has been a failure in the system.
+        /// </summary>
+        /// <param name="failure">The action to perform</param>
+        public static void AssertNoFailures(this IBottlingDiagnostics diagnostics, Action failure)
+        {
+            if (diagnostics.HasErrors())
+            {
+                failure();
+            }
+        }
 
+        /// <summary>
+        /// Default AssertNoFailures
+        /// </summary>
+        public static void AssertNoFailures(this IBottlingDiagnostics diagnostics)
+        {
+            diagnostics.AssertNoFailures(() =>
+            {
+                var writer = new StringWriter();
+                writer.WriteLine("Package loading and application bootstrapping failed");
+                writer.WriteLine();
+                diagnostics.EachLog((o, log) =>
+                {
+                    if (!log.Success)
+                    {
+                        writer.WriteLine(o.ToString());
+                        writer.WriteLine(log.FullTraceText());
+                        writer.WriteLine("------------------------------------------------------------------------------------------------");
+                    }
+                });
+
+                throw new FubuException(1, writer.GetStringBuilder().ToString());
+            });
+        }
+    }
 }
