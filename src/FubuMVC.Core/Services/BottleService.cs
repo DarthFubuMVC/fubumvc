@@ -33,7 +33,7 @@ namespace Bottles.Services
 
         public void Start()
         {
-            _activator.Activate(new IPackageInfo[0], _log);
+            _activator.Activate(_log);
             EventAggregator.SendMessage(new ServiceStarted
             {
                 ActivatorTypeName = _activator.GetType().AssemblyQualifiedName

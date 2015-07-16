@@ -14,7 +14,7 @@ namespace FubuMVC.Authentication
             _strategies = strategies;
         }
 
-        public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
+        public void Activate(IPackageLog log)
         {
             if (!_strategies.Any())
             {

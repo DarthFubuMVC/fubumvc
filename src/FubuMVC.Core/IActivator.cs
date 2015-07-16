@@ -14,6 +14,6 @@ namespace Bottles
     /// </summary>
     public interface IActivator
     {
-        void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log);
+        void Activate(IPackageLog log);
     }
 }

@@ -19,24 +19,6 @@ namespace Bottles.Diagnostics
             _log = new LoggingSession(Timer);
         }
 
-        public void LogAssembly(IPackageInfo package, Assembly assembly, string provenance)
-        {
-            try
-            {
-                var versionInfo = getVersion(assembly);
-
-
-                _log.LogObject(assembly, provenance);
-                var packageLog = _log.LogFor(package);
-                packageLog.Trace("Loaded assembly '{0}' v{1}".ToFormat(assembly.GetName().FullName,versionInfo.FileVersion));
-                packageLog.AddChild(assembly);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Trying to log assembly '{0}' in package '{1}' at {2}".ToFormat(assembly.FullName, package.Name, assembly.Location), ex);
-            }
-        }
-
         private static FileVersionInfo getVersion(Assembly assembly)
         {
             try
@@ -50,20 +32,6 @@ namespace Bottles.Diagnostics
                 return (FileVersionInfo)Activator.CreateInstance(typeof (FileVersionInfo), BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.CreateInstance, null, new object[]{"name"}, null);
             }
         }
-
-        // just in log to package
-        public void LogDuplicateAssembly(IPackageInfo package, string assemblyName)
-        {
-            _log.LogFor(package).Trace("Assembly '{0}' was ignored because it is already loaded".ToFormat(assemblyName));
-        }
-
-        public void LogAssemblyFailure(IPackageInfo package, string fileName, Exception exception)
-        {
-            var log = _log.LogFor(package);
-            log.MarkFailure(exception);
-            log.Trace("Failed to load assembly at '{0}'".ToFormat(fileName));
-        }
-
 
         public void LogObject(object target, string provenance)
         {
@@ -101,7 +69,6 @@ namespace Bottles.Diagnostics
         public static string GetTypeName(object target)
         {
             if (target is IActivator) return typeof (IActivator).Name;
-            if (target is IPackageInfo) return typeof (IPackageInfo).Name;
             if (target is Assembly) return typeof (Assembly).Name;
             if (target is IEnvironmentRequirement) return typeof (IEnvironmentRequirement).Name;
 

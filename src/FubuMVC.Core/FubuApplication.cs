@@ -126,7 +126,7 @@ namespace FubuMVC.Core
             var runtime = bootstrapRuntime(perfTimer, diagnostics, packageAssemblies, containerFacility);
 
             var activators = runtime.Factory.GetAll<IActivator>();
-            diagnostics.LogExecutionOnEachInParallel(activators, (activator, log) => activator.Activate(new IPackageInfo[0], log));
+            diagnostics.LogExecutionOnEachInParallel(activators, (activator, log) => activator.Activate(log));
 
             diagnostics.AssertNoFailures();
 

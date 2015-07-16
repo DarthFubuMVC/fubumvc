@@ -6,11 +6,6 @@ namespace Bottles.Diagnostics
 {
     public interface IBottlingDiagnostics
     {
-        void LogAssembly(IPackageInfo package, Assembly assembly, string provenance);
-        void LogDuplicateAssembly(IPackageInfo package, string assemblyName);
-        void LogAssemblyFailure(IPackageInfo package, string fileName, Exception exception);
-
-
         //on logging session
         void LogObject(object target, string provenance);
         void LogExecution(object target, Action continuation);

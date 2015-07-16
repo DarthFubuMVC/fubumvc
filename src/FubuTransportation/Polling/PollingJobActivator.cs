@@ -17,7 +17,7 @@ namespace FubuTransportation.Polling
             _jobs = jobs;
         }
 
-        public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
+        public void Activate(IPackageLog log)
         {
             _jobs.Where(x => x.ScheduledExecution != ScheduledExecution.Disabled).Each(x => {
                 try

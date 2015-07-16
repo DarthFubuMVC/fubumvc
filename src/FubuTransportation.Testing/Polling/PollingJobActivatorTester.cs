@@ -17,12 +17,10 @@ namespace FubuTransportation.Testing.Polling
         private NotImplementedException ex1;
         private NotSupportedException ex2;
         private IPackageLog theLog;
-        private IPackageInfo[] thePackages;
 
         protected override void beforeEach()
         {
             theLog = MockFor<IPackageLog>();
-            thePackages = new IPackageInfo[0];
 
             theJobs = Services.CreateMockArrayFor<IPollingJob>(5);
             foreach (var pollingJob in theJobs)
@@ -38,7 +36,7 @@ namespace FubuTransportation.Testing.Polling
             theJobs[1].Expect(x => x.Start()).Throw(ex1);
             theJobs[2].Expect(x => x.Start()).Throw(ex2);
 
-            ClassUnderTest.Activate(thePackages, theLog);
+            ClassUnderTest.Activate(theLog);
         }
 
         [Test]

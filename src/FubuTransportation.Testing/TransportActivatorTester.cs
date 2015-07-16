@@ -29,7 +29,7 @@ namespace FubuTransportation.Testing
              ClassUnderTest.Stub(x => x.OpenChannels());
             ClassUnderTest.Stub(x => x.ExecuteActivators());
 
-            ClassUnderTest.Activate(new IPackageInfo[0], new PackageLog());
+            ClassUnderTest.Activate(new PackageLog());
         }
 
         [Test]

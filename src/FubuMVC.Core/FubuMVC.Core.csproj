@@ -233,7 +233,6 @@
     <Compile Include="Http\Scenarios\ScenarioAssertionException.cs" />
     <Compile Include="IActivator.cs" />
     <Compile Include="IDeactivator.cs" />
-    <Compile Include="IPackageInfo.cs" />
     <Compile Include="LambdaActivator.cs" />
     <Compile Include="NoDiagnosticsAttribute.cs" />
     <Compile Include="PerfTimerExtensions.cs" />

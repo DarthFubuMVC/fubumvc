@@ -29,7 +29,7 @@ namespace FubuTransportation.Subscriptions
             _settings = settings;
         }
 
-        public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
+        public void Activate(IPackageLog log)
         {
             log.Trace("Determining subscriptions for node " + _cache.NodeName);
 

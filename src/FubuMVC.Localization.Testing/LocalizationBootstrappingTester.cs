@@ -84,7 +84,7 @@ namespace FubuMVC.Localization.Testing
 
         public class StubLocalizationActivator : IActivator
         {
-            public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
+            public void Activate(IPackageLog log)
             {
                 throw new NotImplementedException();
             }

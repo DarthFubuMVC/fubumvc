@@ -26,7 +26,7 @@ namespace FubuTransportation
             _settings = settings;
         }
 
-        public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
+        public void Activate(IPackageLog log)
         {
             if (_settings.Disabled)
             {
@@ -34,9 +34,9 @@ namespace FubuTransportation
                 return;
             }
 
-            _transports.Activate(packages, log);
-            _subscriptions.Activate(packages, log);
-            _pollingJobs.Activate(packages, log);
+            _transports.Activate(log);
+            _subscriptions.Activate(log);
+            _pollingJobs.Activate(log);
 
             /* TODO -- add timings back here!
             PackageRegistry.Timer.Record("Activating Transports and Starting Listening",

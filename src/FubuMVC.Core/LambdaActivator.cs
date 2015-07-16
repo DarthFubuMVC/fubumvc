@@ -15,7 +15,7 @@ namespace Bottles
             _action = action;
         }
 
-        public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
+        public void Activate(IPackageLog log)
         {
             _action();
         }

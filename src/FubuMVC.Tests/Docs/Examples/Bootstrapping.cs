@@ -109,7 +109,7 @@ namespace FubuMVC.Tests.Docs.Examples
 
     public class MyCustomActivator : IActivator
     {
-        public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
+        public void Activate(IPackageLog log)
         {
             // do something as the application starts up, 
             // but after the IoC container registrations are

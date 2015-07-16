@@ -41,15 +41,6 @@ namespace FubuMVC.StructureMap.Testing.Internals
             graph = BehaviorGraph.BuildFrom(x => {
                 x.Actions.IncludeType<TestController>();
 
-//                x.Route("/area/sub/{Name}/{Age}")
-//                    .Calls<TestController>(c => c.AnotherAction(null));
-//
-//                x.Route("/area/sub2/{Name}/{Age}")
-//                    .Calls<TestController>(c => c.AnotherAction(null));
-//
-//                x.Route("/area/sub3/{Name}/{Age}")
-//                    .Calls<TestController>(c => c.AnotherAction(null));
-
                 x.Models.ConvertUsing<ExampleConverter>().ConvertUsing<ExampleConverter2>();
 
 

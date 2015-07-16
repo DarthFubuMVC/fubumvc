@@ -15,7 +15,7 @@ namespace FubuMVC.Authentication.Tests
             Services.CreateMockArrayFor<IAuthenticationStrategy>(3);
 
             var packageLog = MockFor<IPackageLog>();
-            ClassUnderTest.Activate(null, packageLog);
+            ClassUnderTest.Activate(packageLog);
 
             packageLog.AssertWasNotCalled(x => x.MarkFailure("text"), x => x.IgnoreArguments());
         }
@@ -29,7 +29,7 @@ namespace FubuMVC.Authentication.Tests
 
             var activator = new AuthenticationIsConfigured(Enumerable.Empty<IAuthenticationStrategy>());
 
-            activator.Activate(null, packageLog);
+            activator.Activate(packageLog);
 
             packageLog.AssertWasCalled(x => x.MarkFailure("There are no IAuthenticationStrategy services registered.  Either register an IAuthenticationStrategy or remove FubuMVC.Authentication from your application"));
         }
