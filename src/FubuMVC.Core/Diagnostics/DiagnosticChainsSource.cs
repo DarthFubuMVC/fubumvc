@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using Bottles;
-using Bottles.Diagnostics;
 using FubuCore;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 

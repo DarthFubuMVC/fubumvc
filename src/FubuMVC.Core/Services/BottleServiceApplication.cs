@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using FubuCore;
 using System.Linq;
+using FubuCore;
 
-namespace Bottles.Services
+namespace FubuMVC.Core.Services
 {
     public static class BottleServiceApplication
     {

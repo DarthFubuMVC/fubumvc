@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Bottles.Services.Messaging
+namespace FubuMVC.Core.Services.Messaging
 {
     public interface IMessagingHub
     {

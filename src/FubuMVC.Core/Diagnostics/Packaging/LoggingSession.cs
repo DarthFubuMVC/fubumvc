@@ -4,7 +4,7 @@ using System.Linq;
 using FubuCore;
 using FubuCore.Util;
 
-namespace Bottles.Diagnostics
+namespace FubuMVC.Core.Diagnostics.Packaging
 {
     public class LoggingSession
     {

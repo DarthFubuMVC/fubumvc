@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using Bottles.Services.Messaging;
 using FubuCore;
 
 namespace Serenity

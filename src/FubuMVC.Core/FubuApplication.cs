@@ -7,9 +7,6 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Hosting;
 using System.Web.Routing;
-using Bottles;
-using Bottles.Diagnostics;
-using Bottles.Services;
 using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Reflection;
@@ -17,10 +14,12 @@ using FubuCore.Util;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Services;
 
 namespace FubuMVC.Core
 {

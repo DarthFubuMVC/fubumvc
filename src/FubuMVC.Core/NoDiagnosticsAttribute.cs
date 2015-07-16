@@ -1,6 +1,6 @@
 using System;
 
-namespace FubuMVC.Diagnostics
+namespace FubuMVC.Core
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class NoDiagnosticsAttribute : Attribute

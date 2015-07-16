@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Web.UI.WebControls;
-using Bottles;
-using Bottles.Diagnostics;
 using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;

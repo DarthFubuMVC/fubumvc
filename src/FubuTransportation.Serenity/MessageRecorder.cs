@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using Bottles.Services;
-using Bottles.Services.Messaging.Tracking;
 using FubuCore;
+using FubuMVC.Core.Services;
+using FubuMVC.Core.Services.Messaging.Tracking;
 using FubuTransportation.Events;
 using FubuTransportation.Logging;
 using FubuTransportation.Runtime;
@@ -39,7 +39,7 @@ namespace FubuTransportation.Serenity
                 Status = MessageTrack.Received,
                 Type = "OutstandingEnvelope"
             };
-            Bottles.Services.Messaging.EventAggregator.SendMessage(track);
+            FubuMVC.Core.Services.Messaging.EventAggregator.SendMessage(track);
         }
 
         public IEnumerable<EnvelopeToken> ReceivedEnvelopes

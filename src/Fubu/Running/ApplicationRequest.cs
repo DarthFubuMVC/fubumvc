@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.IO;
-using Bottles;
 using FubuCore;
 using FubuCore.CommandLine;
 

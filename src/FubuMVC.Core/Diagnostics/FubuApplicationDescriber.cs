@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using Bottles.Diagnostics;
 using FubuCore.Util.TextWriting;
+using FubuMVC.Core.Diagnostics.Packaging;
 
 namespace FubuMVC.Core.Diagnostics
 {

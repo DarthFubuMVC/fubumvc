@@ -5,7 +5,7 @@ using System.Linq;
 using FubuCore;
 using FubuCore.CommandLine;
 
-namespace Bottles.Diagnostics
+namespace FubuMVC.Core.Diagnostics.Packaging
 {
     [Serializable]
     public class PackageLog : IPackageLog

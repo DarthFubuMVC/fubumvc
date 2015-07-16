@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using FubuCore;
 
-namespace Bottles
+namespace FubuMVC.Core
 {
     public static class AssemblyFinder
     {

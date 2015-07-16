@@ -1,5 +1,4 @@
-﻿using Bottles;
-using FubuMVC.Core;
+﻿using FubuMVC.Core;
 
 namespace FubuMVC.Nowin
 {

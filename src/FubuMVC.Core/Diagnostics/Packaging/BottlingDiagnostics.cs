@@ -1,9 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Reflection;
-using Bottles.Environment;
+using FubuMVC.Core.Environment;
 
-namespace Bottles.Diagnostics
+namespace FubuMVC.Core.Diagnostics.Packaging
 {
     public class BottlingDiagnostics : IBottlingDiagnostics
     {

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bottles.Services.Messaging;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuCore.Reflection;

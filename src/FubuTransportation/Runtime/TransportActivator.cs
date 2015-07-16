@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bottles;
-using Bottles.Diagnostics;
 using FubuCore;
+using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics.Packaging;
 using FubuTransportation.Configuration;
 using FubuTransportation.Runtime.Invocation;
 using FubuTransportation.Subscriptions;

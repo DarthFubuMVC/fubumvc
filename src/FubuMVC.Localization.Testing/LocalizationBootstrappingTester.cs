@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using Bottles;
-using Bottles.Diagnostics;
 using FubuLocalization;
 using FubuLocalization.Basic;
 using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration;
 using NUnit.Framework;
 using System.Linq;

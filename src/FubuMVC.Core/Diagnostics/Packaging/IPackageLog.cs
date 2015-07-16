@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Bottles.Diagnostics
+namespace FubuMVC.Core.Diagnostics.Packaging
 {
     public interface IPackageLog
     {

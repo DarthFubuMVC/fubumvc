@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Bottles;
 using FubuLocalization;
 using FubuLocalization.Basic;
 using FubuMVC.Core;

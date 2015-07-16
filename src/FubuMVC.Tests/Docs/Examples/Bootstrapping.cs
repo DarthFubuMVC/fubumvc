@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web;
-using Bottles;
-using Bottles.Diagnostics;
 using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.StructureMap;
 

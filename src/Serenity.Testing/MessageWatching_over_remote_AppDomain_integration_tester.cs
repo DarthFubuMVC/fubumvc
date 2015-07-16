@@ -1,7 +1,7 @@
 ﻿using System;
-using Bottles.Services.Messaging.Tracking;
 using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.Services.Messaging.Tracking;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;

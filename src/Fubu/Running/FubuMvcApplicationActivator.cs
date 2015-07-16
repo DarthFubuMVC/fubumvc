@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Bottles;
-using Bottles.Services.Messaging;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets;
+using FubuMVC.Core.Services.Messaging;
 using FubuMVC.Katana;
 
 namespace Fubu.Running

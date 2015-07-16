@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Bottles;
-using Bottles.Diagnostics;
+using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics.Packaging;
 using FubuTransportation.Polling;
 using FubuTransportation.Runtime;
 using FubuTransportation.ScheduledJobs.Execution;

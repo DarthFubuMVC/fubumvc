@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Bottles.Services.Messaging;
-using Bottles.Services.Remote;
 using FubuCore;
 using FubuCore.CommandLine;
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Services.Messaging;
+using FubuMVC.Core.Services.Remote;
 
 namespace Fubu.Running
 {

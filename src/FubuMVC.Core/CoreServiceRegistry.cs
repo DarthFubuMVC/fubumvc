@@ -1,4 +1,3 @@
-using Bottles;
 using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Configuration;

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Linq.Expressions;
-using Bottles.Diagnostics;
 using FubuCore;
 using FubuCore.Reflection;
+using FubuMVC.Core.Diagnostics.Packaging;
 
-namespace Bottles.Environment
+namespace FubuMVC.Core.Environment
 {
     public class FileExists : IEnvironmentRequirement
     {

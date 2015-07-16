@@ -1,4 +1,4 @@
-﻿namespace Bottles.Services.Messaging
+﻿namespace FubuMVC.Core.Services.Messaging
 {
     public interface IListener
     {

@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Bottles;
-using Bottles.Diagnostics;
 using FubuCore;
 using FubuCore.Reflection;
+using FubuMVC.Core.Diagnostics.Packaging;
 
 namespace FubuMVC.Core
 {

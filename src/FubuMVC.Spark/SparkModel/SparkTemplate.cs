@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using Bottles;
-using Bottles.Diagnostics;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Runtime.Files;

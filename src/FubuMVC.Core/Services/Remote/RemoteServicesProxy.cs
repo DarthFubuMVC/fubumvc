@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Bottles.Services.Messaging;
+using FubuMVC.Core.Services.Messaging;
 
-namespace Bottles.Services.Remote
+namespace FubuMVC.Core.Services.Remote
 {
     public class LoaderStarted
     {

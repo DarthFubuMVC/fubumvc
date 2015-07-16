@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Bottles;
-using Bottles.Diagnostics;
+using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics.Packaging;
 
 namespace FubuTransportation.Polling
 {

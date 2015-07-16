@@ -2,9 +2,9 @@
 using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
-using Bottles.Services.Messaging.Tracking;
+using FubuMVC.Core.Services.Messaging.Tracking;
 
-namespace Bottles.Services.Messaging
+namespace FubuMVC.Core.Services.Messaging
 {
     public static class EventAggregator
     {

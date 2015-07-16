@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Web;
-using Bottles;
 using FubuMVC.Core;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Owin.Middleware;

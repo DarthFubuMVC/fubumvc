@@ -1,9 +1,9 @@
-using Bottles;
 using FubuMVC.Authentication.Auditing;
 using FubuMVC.Authentication.Cookies;
 using FubuMVC.Authentication.Membership;
 using FubuMVC.Authentication.Membership.FlatFile;
 using FubuMVC.Authentication.Tickets;
+using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Authentication

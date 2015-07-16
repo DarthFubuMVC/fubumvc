@@ -1,5 +1,4 @@
 ﻿using System;
-using Bottles.Services.Messaging;
 using Fubu.Running;
 using FubuMVC.Core;
 using FubuTestingSupport;

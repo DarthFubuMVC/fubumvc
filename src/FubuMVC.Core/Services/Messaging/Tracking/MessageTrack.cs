@@ -2,7 +2,7 @@
 using System.Linq;
 using FubuCore;
 
-namespace Bottles.Services.Messaging.Tracking
+namespace FubuMVC.Core.Services.Messaging.Tracking
 {
     public class MessageTrack
     {

@@ -1,5 +1,5 @@
 using System;
-using Bottles;
+using FubuMVC.Core;
 using StructureMap;
 using StructureMap.Configuration.DSL;
 

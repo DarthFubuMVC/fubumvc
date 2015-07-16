@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Bottles.Services.Remote;
 using FubuCore;
+using FubuMVC.Core.Services.Remote;
 
-namespace Bottles.Services.Messaging.Tracking
+namespace FubuMVC.Core.Services.Messaging.Tracking
 {
     public static class MessageHistory
     {

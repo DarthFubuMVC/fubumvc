@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using FubuMVC.Core.Services.Messaging;
 using FubuTransportation.Runtime;
 using FubuTransportation.Subscriptions;
 
 namespace FubuTransportation.TestSupport
 {
-    public class TransportCleanup : Bottles.Services.Messaging.IListener<ClearAllTransports>
+    public class TransportCleanup : IListener<ClearAllTransports>
     {
         private readonly IEnumerable<ITransport> _transports;
         private readonly ISubscriptionCache _subscriptions;

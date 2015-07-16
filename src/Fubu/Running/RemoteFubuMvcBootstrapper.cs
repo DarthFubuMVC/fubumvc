@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Bottles;
-using Bottles.Diagnostics;
-using Bottles.Services;
-using Bottles.Services.Messaging;
 using FubuMVC.Core;
 using FubuCore;
+using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Http.Owin.Middleware;
+using FubuMVC.Core.Services;
+using FubuMVC.Core.Services.Messaging;
 
 namespace Fubu.Running
 {

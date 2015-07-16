@@ -2,8 +2,6 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
-using Bottles;
-using Bottles.Diagnostics;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;

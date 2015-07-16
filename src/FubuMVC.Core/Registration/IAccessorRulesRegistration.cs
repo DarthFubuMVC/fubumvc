@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bottles.Diagnostics;
 using FubuCore;
 using FubuCore.Reflection;
+using FubuMVC.Core.Diagnostics.Packaging;
 
 namespace FubuMVC.Core.Registration
 {

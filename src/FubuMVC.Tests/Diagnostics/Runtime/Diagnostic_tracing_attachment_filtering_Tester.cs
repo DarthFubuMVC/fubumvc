@@ -3,7 +3,6 @@ using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Endpoints;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration;
-using FubuMVC.Diagnostics;
 using FubuTestingSupport;
 using NUnit.Framework;
 

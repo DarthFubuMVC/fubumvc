@@ -1,6 +1,6 @@
 using System;
 
-namespace Bottles.Diagnostics
+namespace FubuMVC.Core.Diagnostics.Packaging
 {
     /// <summary>
     /// Provides static access to the 'current' IPackageLog

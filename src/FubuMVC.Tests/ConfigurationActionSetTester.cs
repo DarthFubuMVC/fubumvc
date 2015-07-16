@@ -1,5 +1,4 @@
 ﻿using System;
-using Bottles;
 using FubuMVC.Core;
 using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Registration;

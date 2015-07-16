@@ -1,6 +1,6 @@
 using System.Xml.Serialization;
 
-namespace Bottles.Services
+namespace FubuMVC.Core.Services
 {
     [XmlType("service")]
     public class BottleServiceConfiguration

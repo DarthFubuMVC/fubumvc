@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Bottles.Environment
+namespace FubuMVC.Core.Environment
 {
     public interface IEnvironmentRequirements
     {

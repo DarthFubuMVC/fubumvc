@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Bottles.Services.Messaging;
 using FubuCore;
 using FubuCore.Util;
+using FubuMVC.Core.Services.Messaging;
 
-namespace Bottles.Services.Remote
+namespace FubuMVC.Core.Services.Remote
 {
     public interface IAssemblyMover
     {

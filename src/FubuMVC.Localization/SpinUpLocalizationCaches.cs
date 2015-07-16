@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Bottles;
-using Bottles.Diagnostics;
 using FubuLocalization.Basic;
+using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics.Packaging;
 
 namespace FubuMVC.Localization
 {

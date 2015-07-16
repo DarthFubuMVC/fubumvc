@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Specialized;
-using Bottles.Services;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Services;
 using FubuTransportation.ErrorHandling;
 using FubuTransportation.Runtime;
 using FubuTransportation.Runtime.Headers;

@@ -1,5 +1,4 @@
-﻿using Bottles;
-using FubuMVC.Core;
+﻿using FubuMVC.Core;
 using FubuTransportation.Configuration;
 using NUnit.Framework;
 using FubuTestingSupport;

@@ -1,6 +1,6 @@
-﻿using Bottles.Diagnostics;
+﻿using FubuMVC.Core.Diagnostics.Packaging;
 
-namespace Bottles.Environment
+namespace FubuMVC.Core.Environment
 {
     public interface IEnvironmentRequirement
     {

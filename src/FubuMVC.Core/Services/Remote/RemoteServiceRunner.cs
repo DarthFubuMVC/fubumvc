@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bottles.Services.Messaging;
 using FubuCore;
+using FubuMVC.Core.Services.Messaging;
 
-namespace Bottles.Services.Remote
+namespace FubuMVC.Core.Services.Remote
 {
     public class RemoteServiceRunner : IDisposable, IListener<ServiceStarted>
     {

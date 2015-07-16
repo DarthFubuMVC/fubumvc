@@ -1,10 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using FubuCore;
 
-namespace Bottles.Services.Remote
+namespace FubuMVC.Core.Services.Remote
 {
     public class AssemblyRequirement
     {

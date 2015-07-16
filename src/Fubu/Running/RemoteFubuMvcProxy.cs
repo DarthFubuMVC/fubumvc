@@ -1,10 +1,9 @@
 ﻿using System;
-using Bottles;
-using Bottles.Services.Remote;
 using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Services.Remote;
 using FubuMVC.Katana;
 using HtmlTags;
 using Owin;

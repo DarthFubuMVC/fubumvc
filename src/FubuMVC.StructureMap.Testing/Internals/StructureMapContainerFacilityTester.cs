@@ -1,8 +1,8 @@
 using System.Linq;
 using System.Reflection;
-using Bottles;
 using FubuCore;
 using FubuCore.Binding;
+using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Caching;

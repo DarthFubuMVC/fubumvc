@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Bottles.Diagnostics;
+using FubuMVC.Core.Diagnostics.Packaging;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;

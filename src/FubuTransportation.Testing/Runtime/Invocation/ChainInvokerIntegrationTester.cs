@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Bottles.Services.Messaging.Tracking;
 using FubuMVC.Core;
+using FubuMVC.Core.Services.Messaging.Tracking;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using FubuTransportation.Configuration;

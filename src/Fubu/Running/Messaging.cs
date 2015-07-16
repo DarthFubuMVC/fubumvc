@@ -1,4 +1,4 @@
-﻿using Bottles.Services.Messaging;
+﻿using FubuMVC.Core.Services.Messaging;
 
 namespace Fubu.Running
 {

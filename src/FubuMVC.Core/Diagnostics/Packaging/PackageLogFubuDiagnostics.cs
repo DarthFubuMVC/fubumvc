@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Bottles.Diagnostics;
 using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.Diagnostics.Packaging

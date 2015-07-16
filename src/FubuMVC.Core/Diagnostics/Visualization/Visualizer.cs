@@ -7,6 +7,7 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.UI.Bootstrap.Tags;
+using FubuMVC.Core.View;
 using HtmlTags;
 
 namespace FubuMVC.Core.Diagnostics.Visualization

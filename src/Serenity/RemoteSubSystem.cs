@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using Bottles.Services.Remote;
+using FubuMVC.Core.Services.Remote;
 
 namespace Serenity
 {

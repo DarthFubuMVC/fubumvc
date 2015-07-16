@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq.Expressions;
 using System.Reflection;
-using Bottles;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuCore.Util;

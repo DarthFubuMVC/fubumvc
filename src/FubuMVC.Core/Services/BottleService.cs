@@ -1,11 +1,11 @@
 using System;
 using System.Threading.Tasks;
-using Bottles.Diagnostics;
-using Bottles.Services.Messaging;
-using Bottles.Services.Remote;
 using FubuCore;
+using FubuMVC.Core.Diagnostics.Packaging;
+using FubuMVC.Core.Services.Messaging;
+using FubuMVC.Core.Services.Remote;
 
-namespace Bottles.Services
+namespace FubuMVC.Core.Services
 {
     public interface IBottleService
     {

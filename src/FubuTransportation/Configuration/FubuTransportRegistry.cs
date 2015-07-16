@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using Bottles;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core;

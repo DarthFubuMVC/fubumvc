@@ -1,4 +1,4 @@
-﻿namespace Bottles.Services.Remote
+﻿namespace FubuMVC.Core.Services.Remote
 {
     public enum AssemblyCopyMode
     {

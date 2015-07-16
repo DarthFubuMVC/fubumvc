@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bottles.Services
+namespace FubuMVC.Core.Services
 {
     public interface IApplication<T> where T : IDisposable
     {

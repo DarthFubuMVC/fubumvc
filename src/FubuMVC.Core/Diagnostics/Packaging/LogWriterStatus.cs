@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Bottles.Diagnostics
+namespace FubuMVC.Core.Diagnostics.Packaging
 {
     /// <summary>
     /// Manages the log stack

@@ -1,5 +1,4 @@
 using System;
-using Bottles;
 using FubuCore;
 
 namespace FubuMVC.Core
@@ -16,12 +15,13 @@ namespace FubuMVC.Core
 
         public string GetMode()
         {
-            return Environment.GetEnvironmentVariable(EnvironmentVariableDetector.EnvironmentVariable, EnvironmentVariableTarget.Machine) ?? "";
+            return System.Environment.GetEnvironmentVariable(EnvironmentVariable, EnvironmentVariableTarget.Machine) ??
+                   "";
         }
 
         public void SetMode(string mode)
         {
-            Environment.SetEnvironmentVariable(EnvironmentVariableDetector.EnvironmentVariable, mode, EnvironmentVariableTarget.Machine);
+            System.Environment.SetEnvironmentVariable(EnvironmentVariable, mode, EnvironmentVariableTarget.Machine);
         }
     }
 
@@ -49,7 +49,7 @@ namespace FubuMVC.Core
         public void SetMode(string mode)
         {
             var fileSystem = new FileSystem();
-            string file = filename();
+            var file = filename();
             if (mode.IsEmpty())
             {
                 fileSystem.DeleteFile(file);
@@ -63,7 +63,7 @@ namespace FubuMVC.Core
         public static void Clear()
         {
             var fileSystem = new FileSystem();
-            string file = filename();
+            var file = filename();
 
             fileSystem.DeleteFile(file);
         }
@@ -177,7 +177,6 @@ namespace FubuMVC.Core
         }
 
 
-         
         /// <summary>
         /// Provides a lambda to allow Mode to be set through complex logic using delayed execution 
         /// </summary>
@@ -193,25 +192,25 @@ namespace FubuMVC.Core
         }
     }
 
-        public class DoExpression
+    public class DoExpression
+    {
+        private readonly bool _shouldDo;
+
+        internal DoExpression(bool shouldDo)
         {
-            private readonly bool _shouldDo;
+            _shouldDo = shouldDo;
+        }
 
-            internal DoExpression(bool shouldDo)
+        /// <summary>
+        /// Perform an action if the mode matches
+        /// </summary>
+        /// <param name="action"></param>
+        public void Do(Action action)
+        {
+            if (_shouldDo)
             {
-                _shouldDo = shouldDo;
-            }
-
-            /// <summary>
-            /// Perform an action if the mode matches
-            /// </summary>
-            /// <param name="action"></param>
-            public void Do(Action action)
-            {
-                if (_shouldDo)
-                {
-                    action();
-                }
+                action();
             }
         }
+    }
 }

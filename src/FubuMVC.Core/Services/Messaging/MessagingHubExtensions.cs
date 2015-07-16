@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bottles.Services.Messaging
+namespace FubuMVC.Core.Services.Messaging
 {
     public static class MessagingHubExtensions
     {

@@ -1,4 +1,4 @@
-﻿using Bottles;
+﻿using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
 

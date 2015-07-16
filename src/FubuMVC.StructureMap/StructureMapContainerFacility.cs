@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Bottles;
 using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Configuration;

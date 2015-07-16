@@ -1,6 +1,6 @@
-using Bottles.Diagnostics;
+using FubuMVC.Core.Diagnostics.Packaging;
 
-namespace Bottles
+namespace FubuMVC.Core
 {
     /// <summary>
     /// Marker interface for activators that require some shutdown.

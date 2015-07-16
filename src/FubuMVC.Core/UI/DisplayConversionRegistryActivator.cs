@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using Bottles;
-using Bottles.Diagnostics;
 using FubuCore.Formatting;
+using FubuMVC.Core.Diagnostics.Packaging;
 
 namespace FubuMVC.Core.UI
 {

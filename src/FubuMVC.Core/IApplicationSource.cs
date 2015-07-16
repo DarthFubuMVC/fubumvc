@@ -1,4 +1,4 @@
-using Bottles.Services;
+using FubuMVC.Core.Services;
 
 namespace FubuMVC.Core
 {

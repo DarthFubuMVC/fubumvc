@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Bottles;
-using Bottles.Diagnostics;
+using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics.Packaging;
 
 namespace FubuTransportation.TestSupport
 {
@@ -16,7 +16,7 @@ namespace FubuTransportation.TestSupport
         public void Activate(IPackageLog log)
         {
             log.Trace("Adding TransportCleanup to the Bottles EventAggregator");
-            Bottles.Services.Messaging.EventAggregator.Messaging.AddListener(_cleanup);
+            FubuMVC.Core.Services.Messaging.EventAggregator.Messaging.AddListener(_cleanup);
         }
     }
 }

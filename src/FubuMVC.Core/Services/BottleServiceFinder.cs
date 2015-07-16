@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Bottles.Diagnostics;
-using FubuCore;
 
-namespace Bottles.Services
+namespace FubuMVC.Core.Services
 {
     public static class BottleServiceFinder
     {

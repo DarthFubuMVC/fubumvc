@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bottles;
-using Bottles.Diagnostics;
+using FubuMVC.Core.Diagnostics.Packaging;
 
 namespace FubuMVC.Core.Http.Owin.Middleware
 {

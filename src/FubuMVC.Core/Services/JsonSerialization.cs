@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Newtonsoft.Json;
 
-namespace Bottles.Services
+namespace FubuMVC.Core.Services
 {
     public static class JsonSerialization
     {

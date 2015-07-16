@@ -6,7 +6,7 @@ using System.Threading;
 using FubuCore;
 using Newtonsoft.Json;
 
-namespace Bottles.Services.Messaging
+namespace FubuMVC.Core.Services.Messaging
 {
     public class MessagingHub : IMessagingHub
     {

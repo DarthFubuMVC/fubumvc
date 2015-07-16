@@ -3,7 +3,6 @@ using System.Linq;
 using System.Net.Mime;
 using System.Reflection;
 using System.Security.Permissions;
-using Bottles;
 using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core.Registration;

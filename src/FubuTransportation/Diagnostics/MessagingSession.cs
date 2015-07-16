@@ -4,11 +4,12 @@ using System.Diagnostics;
 using System.Linq;
 using FubuCore;
 using FubuCore.Util;
+using FubuMVC.Core.Services.Messaging;
 using FubuTransportation.Configuration;
 
 namespace FubuTransportation.Diagnostics
 {
-    public class MessagingSession : IMessagingSession, Bottles.Services.Messaging.IListener<MessageRecord>
+    public class MessagingSession : IMessagingSession, IListener<MessageRecord>
     {
         private readonly ChannelGraph _graph;
         private readonly ConcurrentCache<string, MessageHistory> _histories = new ConcurrentCache<string, MessageHistory>(id => new MessageHistory{Id = id});
@@ -39,7 +40,7 @@ namespace FubuTransportation.Diagnostics
             }
 
             // Letting the remote AppDomain's know about it.
-            Bottles.Services.Messaging.EventAggregator.SendMessage(record);
+            FubuMVC.Core.Services.Messaging.EventAggregator.SendMessage(record);
 
             var history = _histories[record.Id];
             history.Record(record);

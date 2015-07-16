@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Reflection;
-using Bottles.Diagnostics;
 using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics.Packaging;
 using FubuTestingSupport;
 using NUnit.Framework;
 

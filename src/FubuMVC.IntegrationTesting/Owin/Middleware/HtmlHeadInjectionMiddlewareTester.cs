@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using Bottles;
 using Castle.Core.Resource;
 using FubuMVC.Core;
 using FubuMVC.Core.Http.Hosting;

@@ -1,7 +1,7 @@
 using System;
 using FubuCore;
 
-namespace Bottles.Diagnostics
+namespace FubuMVC.Core.Diagnostics.Packaging
 {
     public static class BottleLogExtensions
     {

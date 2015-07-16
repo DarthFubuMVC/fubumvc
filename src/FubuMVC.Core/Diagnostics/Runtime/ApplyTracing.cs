@@ -5,7 +5,6 @@ using System.Reflection;
 using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Diagnostics;
 
 namespace FubuMVC.Core.Diagnostics.Runtime
 {

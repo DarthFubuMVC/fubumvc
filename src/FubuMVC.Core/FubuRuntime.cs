@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Routing;
-using Bottles;
-using Bottles.Diagnostics;
 using FubuCore.Descriptions;
 using FubuCore.Logging;
 using FubuMVC.Core.Bootstrapping;
+using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 

@@ -6,7 +6,7 @@ using System.Linq;
 using FubuCore.Util;
 using FubuCore.Util.TextWriting;
 
-namespace Bottles.Diagnostics
+namespace FubuMVC.Core.Diagnostics.Packaging
 {
     public interface IPerfTimer
     {

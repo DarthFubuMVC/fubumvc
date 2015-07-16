@@ -1,6 +1,5 @@
 ﻿using System;
-using Bottles;
-using Bottles.Diagnostics;
+using FubuMVC.Core.Diagnostics.Packaging;
 using FubuTestingSupport;
 using FubuTransportation.Polling;
 using FubuTransportation.Testing.ScheduledJobs;

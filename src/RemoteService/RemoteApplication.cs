@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Bottles.Services;
-using Bottles.Services.Messaging;
+using FubuMVC.Core.Services;
+using FubuMVC.Core.Services.Messaging;
 
 namespace RemoteService
 {

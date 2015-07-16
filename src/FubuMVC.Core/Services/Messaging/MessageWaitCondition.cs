@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace Bottles.Services.Messaging
+namespace FubuMVC.Core.Services.Messaging
 {
     public class MessageWaitCondition<T> : IListener<T>
     {

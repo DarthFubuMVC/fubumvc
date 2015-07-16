@@ -1,7 +1,6 @@
-using System.Collections.Generic;
-using Bottles.Diagnostics;
+using FubuMVC.Core.Diagnostics.Packaging;
 
-namespace Bottles
+namespace FubuMVC.Core
 {
     /// <summary>
     /// Returned from a bootstrapper.

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bottles.Services
+namespace FubuMVC.Core.Services
 {
     /// <summary>
     /// Strictly used within the main Program

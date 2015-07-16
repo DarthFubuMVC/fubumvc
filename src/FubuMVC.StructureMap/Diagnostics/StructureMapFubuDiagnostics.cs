@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
-using Bottles.Services.Remote;
 using FubuCore;
 using FubuMVC.Core.Runtime;
 using StructureMap;

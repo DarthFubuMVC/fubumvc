@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bottles.Services
+namespace FubuMVC.Core.Services
 {
     public class ApplicationLoader<TSource, TApplication, TRuntime> : IApplicationLoader
         where TSource : IApplicationSource<TApplication, TRuntime>, new()

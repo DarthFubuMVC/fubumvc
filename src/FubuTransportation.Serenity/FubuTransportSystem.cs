@@ -23,7 +23,7 @@ namespace FubuTransportation.Serenity
         {
             FubuTransport.SetupForTesting(); // Uses FubuMode.SetUpTestingMode();
 
-            OnStartup<IMessagingSession>(x => Bottles.Services.Messaging.EventAggregator.Messaging.AddListener(x));
+            OnStartup<IMessagingSession>(x => FubuMVC.Core.Services.Messaging.EventAggregator.Messaging.AddListener(x));
 
             // Clean up all the existing queue state to prevent test pollution
             OnContextCreation<TransportCleanup>(cleanup => {
