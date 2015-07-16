@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using FubuMVC.Core;
-using FubuMVC.Core.StructureMap;
 using FubuTransportation.Configuration;
 using FubuTransportation.Polling;
 using ServiceNode;
@@ -16,7 +15,7 @@ namespace WebsiteNode
                 x.For<MessageRecorder>().Singleton();
             });
 
-            return FubuTransport.For<WebsiteRegistry>().StructureMap(container);
+            return FubuTransport.For<WebsiteRegistry>(container);
         }
     }
 

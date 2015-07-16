@@ -14,7 +14,7 @@ namespace FubuTransportation.Testing.Configuration
         [Test]
         public void can_register_modifiers_by_channel()
         {
-            using (var runtime = FubuTransport.For<ModifyingChannelRegistry>().StructureMap().Bootstrap())
+            using (var runtime = FubuTransport.For<ModifyingChannelRegistry>().Bootstrap())
             {
                 var graph = runtime.Factory.Get<ChannelGraph>();
 

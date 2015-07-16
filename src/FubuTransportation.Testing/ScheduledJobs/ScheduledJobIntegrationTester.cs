@@ -34,7 +34,7 @@ namespace FubuTransportation.Testing.ScheduledJobs
             CJob.Reset();
 
             theRuntime = FubuTransport.For<ScheduledJobRegistry>()
-                .StructureMap()
+                
                 .Bootstrap();
         }
 

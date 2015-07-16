@@ -15,7 +15,7 @@ namespace FubuTransportation.Testing.Configuration
     [TestFixture]
     public class AllInMemoryQueues_Mechanics_Tester
     {
-        private Container container;
+        private IContainer container;
         private FubuRuntime runtime;
 
         [SetUp]
@@ -23,12 +23,12 @@ namespace FubuTransportation.Testing.Configuration
         {
             FubuTransport.AllQueuesInMemory = true;
 
-            container = new Container();
             var registry = new FubuRegistry();
             registry.Import<AllInMemoryRegistry>();
             registry.Import<AnotherRegistry>();
 
-            runtime = FubuApplication.For(registry).StructureMap(container).Bootstrap();
+            runtime = FubuApplication.For(registry).Bootstrap();
+            container = runtime.Factory.Get<IContainer>();
 
         }
 

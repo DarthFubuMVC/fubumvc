@@ -33,7 +33,7 @@ namespace FubuTransportation.LightningQueues.Testing
             var registry = new FubuRegistry();
             registry.Import<LightningQueuesDiagnosticsTransportRegistry>();
 
-            return FubuApplication.For(registry).StructureMap();
+            return FubuApplication.For(registry);
         }
     }
 

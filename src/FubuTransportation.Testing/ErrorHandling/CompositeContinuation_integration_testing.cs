@@ -22,7 +22,7 @@ namespace FubuTransportation.Testing.ErrorHandling
             CounterContinuation.Counter = 0;
 
             using (var runtime = FubuTransport.For<CountAndRetryOnExceptionRegistry>()
-                        .StructureMap(new Container())
+                        
                         .Bootstrap())
             {
                 var pipeline = runtime.Factory.Get<IHandlerPipeline>();

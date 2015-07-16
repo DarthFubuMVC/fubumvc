@@ -16,6 +16,17 @@ namespace FubuMVC.IntegrationTesting.Security
     [TestFixture]
     public class AuthorizationPreviewServiceIntegratedTester
     {
+        private FubuRuntime _runtime;
+
+        [TearDown]
+        public void TearDown()
+        {
+            if (_runtime != null)
+            {
+                _runtime.Dispose();
+            }
+        }
+
         private AuthorizationPreviewService withAuthorizationRules(Action<BehaviorGraph> configure)
         {
             var registry = new FubuRegistry();
@@ -31,10 +42,11 @@ namespace FubuMVC.IntegrationTesting.Security
 
             registry.Configure(configure);
 
-            var container = new Container();
-            FubuApplication.For(() => registry).StructureMap(container).Bootstrap();
 
-            return container.GetInstance<AuthorizationPreviewService>();
+            _runtime = FubuApplication.For(() => registry).Bootstrap();
+
+
+            return _runtime.Factory.Get<AuthorizationPreviewService>();
         }
 
 

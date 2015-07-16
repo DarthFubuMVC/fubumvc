@@ -8,7 +8,7 @@ namespace SerenityDemonstrator
         public FubuApplication BuildApplication()
         {
             FubuMode.SetUpForDevelopmentMode();
-            return FubuApplication.DefaultPolicies().StructureMap();
+            return FubuApplication.DefaultPolicies();
         }
     }
 }

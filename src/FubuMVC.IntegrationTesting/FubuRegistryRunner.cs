@@ -99,11 +99,12 @@ namespace FubuMVC.IntegrationTesting
             {
                 var registry = new FubuRegistry();
                 registry.Actions.IncludeType<GraphQuery>();
+                registry.StructureMap(_container);
 
                 _configuration(registry);
 
                 return registry;
-            }).StructureMap(_container);
+            });
         }
     }
 

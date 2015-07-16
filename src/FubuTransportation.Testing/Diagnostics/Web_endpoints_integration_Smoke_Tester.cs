@@ -90,7 +90,7 @@ namespace FubuTransportation.Testing.Diagnostics
                 x.ListenerCleanupPolling = Int32.MaxValue;
             });
 
-            return FubuApplication.For(registry).StructureMap();
+            return FubuApplication.For(registry);
         }
     }
 }

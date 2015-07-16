@@ -1,15 +1,9 @@
-using System.Diagnostics;
 using System.Web;
-using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Reflection;
 using FubuMVC.Core;
-using FubuMVC.Core.StructureMap;
-using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
-using System.Collections.Generic;
-using StructureMap;
 
 namespace FubuMVC.Tests.Http.AspNet
 {
@@ -18,12 +12,13 @@ namespace FubuMVC.Tests.Http.AspNet
     {
         private IValueConverterRegistry registry;
 
-        [SetUp]
+        [TestFixtureSetUp]
         public void SetUp()
         {
-            var container = new Container();
-            FubuApplication.For(new FubuRegistry()).StructureMap(container).Bootstrap();
-            registry = container.GetInstance<BindingRegistry>();
+            using (var runtime = FubuApplication.DefaultPolicies().Bootstrap())
+            {
+                registry = runtime.Factory.Get<BindingRegistry>();
+            }
         }
 
         [Test]

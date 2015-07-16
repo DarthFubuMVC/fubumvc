@@ -1,5 +1,4 @@
 ﻿using FubuMVC.Core;
-using FubuMVC.Core.StructureMap;
 using StructureMap;
 
 namespace DiagnosticsHarness
@@ -8,10 +7,9 @@ namespace DiagnosticsHarness
     {
         public FubuApplication BuildApplication()
         {
-            var container = new Container(x => { x.ForSingletonOf<INumberCache>().Use<NumberCache>(); });
+            var container = new Container(x => x.ForSingletonOf<INumberCache>().Use<NumberCache>());
 
-            return FubuApplication.For<FubuHarnessRegistry>().StructureMap(container);
-            //return FubuTransport.For<HarnessRegistry>().StructureMap(container);
+            return FubuApplication.For<FubuHarnessRegistry>(_ => _.StructureMap(container));
         }
     }
 }

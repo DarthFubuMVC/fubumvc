@@ -184,7 +184,7 @@ namespace FubuTransportation.Testing.Runtime.Invocation
                 x.ForSingletonOf<MessageRecorder>();
             });
 
-            return FubuTransport.For<ChainInvokerTransportRegistry>().StructureMap(container);
+            return FubuTransport.For<ChainInvokerTransportRegistry>(container);
         }
     }
 

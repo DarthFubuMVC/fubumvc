@@ -98,7 +98,7 @@ namespace Serenity.Testing
         {
             var container = new Container(x => { x.For<IColor>().Use<Red>(); });
 
-            return FubuApplication.DefaultPolicies().StructureMap(container);
+            return FubuApplication.DefaultPolicies(container);
         }
     }
 

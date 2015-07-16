@@ -34,7 +34,7 @@ namespace FubuTransportation.Testing.Events
         {
             FubuTransport.SetupForInMemoryTesting();
 
-            using (var runtime = FubuTransport.For<InMemory.DelayedRegistry>().StructureMap(new Container())
+            using (var runtime = FubuTransport.For<InMemory.DelayedRegistry>()
                            .Bootstrap())
             {
 

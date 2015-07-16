@@ -25,7 +25,11 @@ namespace FubuTransportation.Testing.Configuration
                 x.For<BusSettings>().Use(theSettings);
             });
 
-            runtime = FubuTransport.For<SubscribedRegistry>().StructureMap(container).Bootstrap();
+            var registry = new FubuRegistry();
+            registry.StructureMap(container);
+            registry.Import<SubscribedRegistry>();
+
+            runtime = FubuApplication.For(registry).Bootstrap();
         }
 
         [TestFixtureTearDown]

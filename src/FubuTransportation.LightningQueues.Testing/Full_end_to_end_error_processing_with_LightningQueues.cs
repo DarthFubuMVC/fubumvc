@@ -41,7 +41,7 @@ namespace FubuTransportation.LightningQueues.Testing
 
             
 
-            _runtime = FubuTransport.For<ErrorRegistry>().StructureMap(container)
+            _runtime = FubuTransport.For<ErrorRegistry>(container)
                 .Bootstrap();
             //_runtime.Factory.Get<IPersistentQueues>().ClearAll();
 

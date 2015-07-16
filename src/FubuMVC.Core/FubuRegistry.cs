@@ -6,6 +6,8 @@ using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Routing;
+using StructureMap;
+using StructureMap.Configuration.DSL;
 
 namespace FubuMVC.Core
 {
@@ -22,7 +24,7 @@ namespace FubuMVC.Core
     ///   }
     ///   }
     /// </example>
-    public partial class FubuRegistry
+    public class FubuRegistry
     {
         private readonly IList<Type> _importedTypes = new List<Type>();
         private readonly Assembly _applicationAssembly;
@@ -57,6 +59,8 @@ namespace FubuMVC.Core
             _applicationAssembly = assembly;
             _config = new ConfigGraph(_applicationAssembly);
         }
+
+        
 
         internal ConfigGraph Config
         {
@@ -222,6 +226,29 @@ namespace FubuMVC.Core
         public void RoutePolicy<T>() where T : IRoutePolicy, new()
         {
             Configure(x => x.RoutePolicy = new T());
+        }
+
+
+        private Func<IContainer> _containerSource = () => new Container();
+
+        public void StructureMap(IContainer existing)
+        {
+            _containerSource = () => existing;
+        }
+
+        public void StructureMap<T>() where T : Registry, new()
+        {
+            _containerSource = Container.For<T>;
+        }
+
+        public void StructureMap(Registry registry)
+        {
+            _containerSource = () => new Container(registry);
+        }
+
+        internal IContainer ToContainer()
+        {
+            return _containerSource == null ? new Container() : _containerSource();
         }
     }
 }

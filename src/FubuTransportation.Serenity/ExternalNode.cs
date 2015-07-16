@@ -148,7 +148,7 @@ namespace FubuTransportation.Serenity
                 x.Forward<IMessageRecorder, IListener>();
             });
 
-            Runtime = FubuTransport.For(registry).StructureMap(container).Bootstrap();
+            Runtime = FubuTransport.For(registry, container).Bootstrap();
             Uri = Runtime.Factory.Get<ChannelGraph>().ReplyUriList().First();
             _recorder = Runtime.Factory.Get<IMessageRecorder>();
 

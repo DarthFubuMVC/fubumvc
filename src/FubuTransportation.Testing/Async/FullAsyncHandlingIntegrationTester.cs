@@ -23,7 +23,7 @@ namespace FubuTransportation.Testing.Async
         {
             AsyncWatcher.Clear();
 
-            using (var runtime = FubuTransport.For<AsyncRegistry>().StructureMap().Bootstrap())
+            using (var runtime = FubuTransport.For<AsyncRegistry>().Bootstrap())
             {
                 var invoker = runtime.Factory.Get<IChainInvoker>();
                 var message = new Foo {Name = "Buck Rogers"};

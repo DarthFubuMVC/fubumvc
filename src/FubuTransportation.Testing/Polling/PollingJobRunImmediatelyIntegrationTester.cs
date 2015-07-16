@@ -21,7 +21,7 @@ namespace FubuTransportation.Testing.Polling
             ImmediateJob.Executed = DelayJob.Executed = DisabledJob.Executed = 0;
 
             theRuntime = FubuTransport.For<PollingImmediateRegistry>()
-                                      .StructureMap()
+                                      
                                       .Bootstrap();
         }
 

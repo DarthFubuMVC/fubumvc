@@ -23,14 +23,12 @@ namespace FubuPersistence.Tests.RavenDb
         {
             NonAdminHttp.EnsureCanListenToWhenInNonAdminContext(8080);
 
-            var container = new Container();
-            using (var application = FubuApplication.DefaultPolicies().StructureMap(container).Bootstrap())
+            using (var application = FubuApplication.DefaultPolicies().Bootstrap())
             {
                 application.Behaviors.PackageAssemblies.Each(x => Debug.WriteLine(x.GetName().FullName));
 
-                Debug.WriteLine(container.WhatDoIHave(assembly:typeof(IDocumentStore).Assembly));
-
-                container.GetInstance<IDocumentStore>().ShouldNotBeNull();
+                
+                application.Factory.Get<IDocumentStore>().ShouldNotBeNull();
             }
         }
 

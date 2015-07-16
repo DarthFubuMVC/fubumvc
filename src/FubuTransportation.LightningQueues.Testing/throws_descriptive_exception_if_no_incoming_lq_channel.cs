@@ -16,7 +16,7 @@ namespace FubuTransportation.LightningQueues.Testing
         {
             string message =
                 Exception<FubuException>.ShouldBeThrownBy(
-                    () => { FubuTransport.For<BadTransportRegistry>().StructureMap().Bootstrap(); }).Message;
+                    () => { FubuTransport.For<BadTransportRegistry>().Bootstrap(); }).Message;
 
             message.ShouldContain("You must have at least one incoming Lightning Queue channel for accepting replies");
         }

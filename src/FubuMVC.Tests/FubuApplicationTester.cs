@@ -34,17 +34,18 @@ namespace FubuMVC.Tests
 
             FubuApplication.Restarted = null;
 
-            var container = new Container();
-            FubuApplication.For(new FubuRegistry()).StructureMap(container).Bootstrap();
+            using (var runtime = FubuApplication.For(new FubuRegistry()).Bootstrap())
+            {
+                (floor < FubuApplication.Restarted && FubuApplication.Restarted < ceiling).ShouldBeTrue();
+            }
 
-            (floor < FubuApplication.Restarted && FubuApplication.Restarted < ceiling).ShouldBeTrue();
+            
         }
 
         [Test]
         public void description_smoke_tester()
         {
-            var container = new Container();
-            using (var runtime = FubuApplication.For(new FubuRegistry()).StructureMap(container).Bootstrap())
+            using (var runtime = FubuApplication.DefaultPolicies().Bootstrap())
             {
                 var description = FubuApplicationDescriber.WriteDescription(runtime.Behaviors.Diagnostics);
 
@@ -57,7 +58,7 @@ namespace FubuMVC.Tests
         [Test]
         public void can_use_the_default_policies()
         {
-            var application = FubuApplication.DefaultPolicies().StructureMap(new Container()).Bootstrap();
+            var application = FubuApplication.DefaultPolicies().Bootstrap();
             var graph = application.Factory.Get<BehaviorGraph>();
 
             graph.BehaviorFor<TargetEndpoint>(x => x.get_hello()).ShouldNotBeNull();

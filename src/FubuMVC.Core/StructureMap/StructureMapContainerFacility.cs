@@ -141,7 +141,10 @@ namespace FubuMVC.Core.StructureMap
 
             container.Configure(x => x.For<IHttpResponse>().Use(new OwinHttpResponse()));
 
-            FubuApplication.For(() => new FubuRegistry()).StructureMap(container).Bootstrap();
+            var registry = new FubuRegistry();
+            registry.StructureMap(container);
+
+            FubuApplication.For(registry).Bootstrap();
 
             return container;
         }

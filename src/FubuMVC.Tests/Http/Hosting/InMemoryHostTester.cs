@@ -39,7 +39,7 @@ namespace FubuMVC.Tests.Http.Hosting
 
         private static InMemoryHost newHost()
         {
-            return FubuApplication.DefaultPolicies().StructureMap().RunInMemory();
+            return FubuApplication.DefaultPolicies().RunInMemory();
         }
 
         private ScenarioAssertionException fails(Action<Scenario> configuration)

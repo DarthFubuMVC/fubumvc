@@ -48,7 +48,7 @@ namespace FubuMVC.IntegrationTesting.Views
 
             FubuApplication.PhysicalRootPath = _applicationDirectory;
 
-            var runtime = FubuApplication.For(determineRegistry()).StructureMap()
+            var runtime = FubuApplication.For(determineRegistry())
                 .Bootstrap();
 
             _host = new InMemoryHost(runtime);

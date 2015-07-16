@@ -45,7 +45,7 @@ namespace FubuApp
     {
         public FubuApplication BuildApplication()
         {
-            return FubuApplication.DefaultPolicies().StructureMap();
+            return FubuApplication.DefaultPolicies();
         }
     }
 }

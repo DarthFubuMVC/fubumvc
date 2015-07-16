@@ -12,7 +12,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
         [Test]
         public void applies_model_binding_after_serialization_with_json()
         {
-            using (var server = FubuApplication.DefaultPolicies().StructureMap().RunEmbeddedWithAutoPort())
+            using (var server = FubuApplication.DefaultPolicies().RunEmbeddedWithAutoPort())
             {
                 // TODO -- need a better EndpointDriver first
             }

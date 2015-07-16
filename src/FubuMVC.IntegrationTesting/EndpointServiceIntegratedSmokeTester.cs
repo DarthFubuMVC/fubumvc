@@ -14,7 +14,7 @@ namespace FubuMVC.IntegrationTesting
         [Test]
         public void chain_is_on_the_endpoint()
         {
-            var runtime = FubuApplication.For<SomeRegistry>().StructureMap(new Container()).Bootstrap();
+            var runtime = FubuApplication.For<SomeRegistry>().Bootstrap();
             var endpoint = runtime.Factory.Get<IEndpointService>().EndpointFor<SomeEndpoint>(x => x.get_hello());
 
             endpoint.Chain.Calls.Single().HandlerType.ShouldEqual(typeof (SomeEndpoint));

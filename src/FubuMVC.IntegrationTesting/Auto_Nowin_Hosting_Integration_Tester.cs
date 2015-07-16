@@ -14,7 +14,7 @@ namespace FubuMVC.IntegrationTesting
         [Test]
         public void use_auto_enabled_hosting_from_embedded_server()
         {
-            using (var server = FubuApplication.For<NowinRegistry>().StructureMap().RunEmbedded())
+            using (var server = FubuApplication.For<NowinRegistry>().RunEmbedded())
             {
                 server.Endpoints.Get<NowinEndpoint>(x => x.get_nowin())
                     .ReadAsText()
@@ -25,7 +25,7 @@ namespace FubuMVC.IntegrationTesting
         [Test]
         public void use_auto_enabled_hosting_as_is()
         {
-            using (var server = FubuApplication.For<NowinRegistry>().StructureMap().Bootstrap())
+            using (var server = FubuApplication.For<NowinRegistry>().Bootstrap())
             {
                 var client = new WebClient();
                 client.DownloadString("http://localhost:5601/nowin")

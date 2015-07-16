@@ -33,7 +33,7 @@ namespace TestHarnessApp
     {
         public FubuApplication BuildApplication()
         {
-            return FubuApplication.For<TestHarnessRegistry>().StructureMap();
+            return FubuApplication.For<TestHarnessRegistry>();
         }
     }
 

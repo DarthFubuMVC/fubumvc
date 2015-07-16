@@ -21,7 +21,7 @@ namespace FubuTransportation.Testing.InMemory
         {
             FubuTransport.AllQueuesInMemory = true;
 
-            theRuntime = FubuTransport.For(x => { }).StructureMap(new Container()).Bootstrap();
+            theRuntime = FubuTransport.For(x => { }).Bootstrap();
             graph = theRuntime.Factory.Get<ChannelGraph>();
 
             var uri = graph.ReplyChannelFor(InMemoryChannel.Protocol);

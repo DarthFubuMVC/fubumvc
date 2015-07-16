@@ -22,7 +22,7 @@ namespace FubuMVC.IntegrationTesting.Assets
         [Test]
         public void can_write_the_javascript_routes_for_all_methods()
         {
-            using (var host = FubuApplication.DefaultPolicies().StructureMap().RunInMemory())
+            using (var host = FubuApplication.DefaultPolicies().RunInMemory())
             {
                 host.Scenario(x =>
                 {
@@ -50,7 +50,7 @@ namespace FubuMVC.IntegrationTesting.Assets
         {
             var container = new Container(_ => { _.For<IJavascriptRouteData>().Use<FakeJavascriptRouteData>(); });
 
-            using (var host = FubuApplication.DefaultPolicies().StructureMap(container).RunInMemory())
+            using (var host = FubuApplication.DefaultPolicies(container).RunInMemory())
             {
                 host.Scenario(x =>
                 {

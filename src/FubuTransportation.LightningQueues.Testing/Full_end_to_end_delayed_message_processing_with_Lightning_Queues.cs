@@ -43,7 +43,7 @@ namespace FubuTransportation.LightningQueues.Testing
             theClock = new SettableClock();
             container.Inject<ISystemTime>(theClock);
 
-            _runtime = FubuTransport.For<DelayedRegistry>().StructureMap(container)
+            _runtime = FubuTransport.For<DelayedRegistry>(container)
                                        .Bootstrap();
 
             theServiceBus = _runtime.Factory.Get<IServiceBus>();

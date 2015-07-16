@@ -14,7 +14,7 @@ namespace FubuPersistence.Tests.RavenDb.Integration
         [Test]
         public void can_replace_with_new_database()
         {
-            using (var runtime = FubuApplication.DefaultPolicies().StructureMap().Bootstrap())
+            using (var runtime = FubuApplication.DefaultPolicies().Bootstrap())
             {
                 var original = runtime.Factory.Get<IDocumentStore>();
 

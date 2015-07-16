@@ -13,7 +13,7 @@ namespace FubuMVC.Tests
         [Test]
         public void find_assembly_bottles()
         {
-            using (var runtime = FubuApplication.For(new FubuRegistry()).StructureMap().Bootstrap())
+            using (var runtime = FubuApplication.For(new FubuRegistry()).Bootstrap())
             {
                 var assembly = typeof (AssemblyPackageMarker).Assembly;
 

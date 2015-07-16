@@ -26,7 +26,7 @@ namespace FubuTransportation.Testing.Subscriptions
             settings = InMemoryTransport.ToInMemory<HarnessSettings>();
             container.Inject(settings);
 
-            runtime = FubuTransport.For<RoutedRegistry>().StructureMap(container).Bootstrap();
+            runtime = FubuTransport.For<RoutedRegistry>(container).Bootstrap();
 
             theRouter = runtime.Factory.Get<ISubscriptionCache>();
         }

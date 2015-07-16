@@ -19,7 +19,7 @@ namespace FubuTransportation.LightningQueues.Testing
         [Test]
         public void PurgeQueuesJob_is_registered()
         {
-            using (var runtime = FubuTransport.For<TestRegistry>().StructureMap().Bootstrap())
+            using (var runtime = FubuTransport.For<TestRegistry>().Bootstrap())
             {
                 runtime.Factory.Get<IPollingJobs>().Any(x => x is PollingJob<PurgeQueuesJob, LightningQueueSettings>)
                     .ShouldBeTrue();

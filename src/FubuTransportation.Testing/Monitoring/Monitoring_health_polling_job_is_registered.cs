@@ -15,7 +15,7 @@ namespace FubuTransportation.Testing.Monitoring
         [Test]
         public void the_job_is_registered()
         {
-            using (var runtime = FubuTransport.DefaultPolicies().StructureMap().Bootstrap())
+            using (var runtime = FubuTransport.DefaultPolicies().Bootstrap())
             {
                 runtime.Factory.Get<IPollingJobs>().Any(x => x is PollingJob<HealthMonitorPollingJob, HealthMonitoringSettings>)
                     .ShouldBeTrue();

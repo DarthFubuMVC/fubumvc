@@ -1,5 +1,4 @@
 ﻿using FubuMVC.Core;
-using FubuMVC.Core.StructureMap;
 using FubuTransportation.Configuration;
 using StructureMap;
 
@@ -14,7 +13,7 @@ namespace FubuTransportation.Serenity.Samples.SystemUnderTest
                 x.For<MessageRecorder>().Singleton();
             });
 
-            return FubuTransport.For<TestRegistry>().StructureMap(container);
+            return FubuTransport.For<TestRegistry>(container);
         }
     }
 }

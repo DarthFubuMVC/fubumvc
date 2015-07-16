@@ -34,7 +34,7 @@ namespace FubuTransportation.LightningQueues.Testing
 
         private void BootstrapApplication()
         {
-            var application = FubuApplication.For(_registry).StructureMap();
+            var application = FubuApplication.For(_registry);
             application.Bootstrap();
         }
     }

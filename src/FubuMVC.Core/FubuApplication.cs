@@ -13,13 +13,14 @@ using FubuCore.Reflection;
 using FubuCore.Util;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Configuration;
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Services;
+using FubuMVC.Core.StructureMap;
+using StructureMap;
 
 namespace FubuMVC.Core
 {
@@ -28,30 +29,13 @@ namespace FubuMVC.Core
     /// <summary>
     /// Key class used to define and bootstrap a FubuMVC application
     /// </summary>
-    public class FubuApplication : IContainerFacilityExpression, IApplication<FubuRuntime>
+    public class FubuApplication : IApplication<FubuRuntime>
     {
         private readonly Lazy<FubuRegistry> _registry;
-        private Func<IContainerFacility> _facilitySource;
 
         private FubuApplication(Func<FubuRegistry> registryBuilder)
         {
             _registry = new Lazy<FubuRegistry>(registryBuilder);
-        }
-
-        FubuApplication IContainerFacilityExpression.ContainerFacility(IContainerFacility facility)
-        {
-            return registerContainerFacilitySource(() => facility);
-        }
-
-        FubuApplication IContainerFacilityExpression.ContainerFacility(Func<IContainerFacility> facilitySource)
-        {
-            return registerContainerFacilitySource(facilitySource);
-        }
-
-        private FubuApplication registerContainerFacilitySource(Func<IContainerFacility> facilitySource)
-        {
-            _facilitySource = facilitySource;
-            return this;
         }
 
         /// <summary>
@@ -61,7 +45,7 @@ namespace FubuMVC.Core
         /// </summary>
         /// <param name="registry"></param>
         /// <returns></returns>
-        public static IContainerFacilityExpression For(Func<FubuRegistry> registry)
+        public static FubuApplication For(Func<FubuRegistry> registry)
         {
             return new FubuApplication(registry);
         }
@@ -71,7 +55,7 @@ namespace FubuMVC.Core
         /// </summary>
         /// <param name="registry"></param>
         /// <returns></returns>
-        public static IContainerFacilityExpression For(FubuRegistry registry)
+        public static FubuApplication For(FubuRegistry registry)
         {
             return new FubuApplication(() => registry);
         }
@@ -80,10 +64,20 @@ namespace FubuMVC.Core
         /// Use only the default FubuMVC policies and conventions
         /// </summary>
         /// <returns></returns>
-        public static IContainerFacilityExpression DefaultPolicies()
+        public static FubuApplication DefaultPolicies(IContainer container = null)
         {
             var assembly = FindTheCallingAssembly();
-            return new FubuApplication(() => new FubuRegistry((Assembly) assembly));
+            return new FubuApplication(() =>
+            {
+                var registry = new FubuRegistry(assembly);
+                if (container != null)
+                {
+                    registry.StructureMap(container);
+                }
+
+
+                return registry;
+            });
         }
 
         /// <summary>
@@ -91,9 +85,18 @@ namespace FubuMVC.Core
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static IContainerFacilityExpression For<T>() where T : FubuRegistry, new()
+        public static FubuApplication For<T>(Action<T> customize = null) where T : FubuRegistry, new()
         {
-            return For(() => new T());
+            return For(() =>
+            {
+                var registry = new T();
+                if (customize != null)
+                {
+                    customize(registry);
+                }
+
+                return registry;
+            });
         }
 
         /// <summary>
@@ -121,7 +124,8 @@ namespace FubuMVC.Core
 
             var packageAssemblies = perfTimer.Record("Searching for Assemblies marked with [FubuModule]", () => findModuleAssemblies(diagnostics).Where(x => x.HasAttribute<FubuModuleAttribute>()).ToArray());
 
-            var containerFacility = _facilitySource();
+            // TODO -- going to remove this
+            var containerFacility = new StructureMapContainerFacility(_registry.Value.ToContainer());
             var runtime = bootstrapRuntime(perfTimer, diagnostics, packageAssemblies, containerFacility);
 
             var activators = runtime.Factory.GetAll<IActivator>();
@@ -166,59 +170,6 @@ namespace FubuMVC.Core
 
         }
 
-
-        /*
-
-            /// <summary>
-        /// Called to bootstrap and "start" a FubuMVC application 
-        /// </summary>
-        /// <returns></returns>
-        [SkipOverForProvenance]
-        public FubuRuntime Bootstrap()
-        {
-            SetupNamingStrategyForHttpHeaders();
-
-            // TODO -- I think Bottles probably needs to enforce a "tell me the paths"
-            // step maybe
-            PackageRegistry.GetApplicationDirectory = GetApplicationPath;
-
-
-            FubuRuntime runtime = null;
-
-            PackageRegistry.LoadPackages(x =>
-            {
-                if (GetApplicationPath().IsNotEmpty())
-                {
-                    x.Loader(new FubuModuleAttributePackageLoader());
-                }
-
-
-                x.Bootstrap("FubuMVC Bootstrapping", log =>
-                {
-                    var diagnostics = PackageRegistry.Diagnostics;
-                    var packageAssemblies = PackageRegistry.PackageAssemblies;
-                    var perfTimer = PackageRegistry.Timer;
-
-                    // container facility has to be spun up here
-                    var containerFacility = _facilitySource();
-
-                    runtime = bootstrapRuntime(perfTimer, diagnostics, packageAssemblies, containerFacility);
-
-                    return runtime.Factory.GetAll<IActivator>();
-                });
-            });
-
-            // TODO -- put this on FubuRuntime or BehaviorGraph
-            Restarted = DateTime.Now;
-
-            PackageRegistry.AssertNoFailures(
-                () => { throw new FubuException(0, FubuApplicationDescriber.WriteDescription(runtime.Behaviors.Diagnostics)); });
-
-
-            return runtime;
-        }
-         * 
-         */
 
         private FubuRuntime bootstrapRuntime(IPerfTimer perfTimer, IActivationDiagnostics diagnostics,
             IEnumerable<Assembly> packageAssemblies, IContainerFacility containerFacility)

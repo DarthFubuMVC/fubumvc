@@ -1,7 +1,7 @@
-﻿using FubuMVC.Authentication;
+﻿using Amazon.SimpleWorkflow.Model;
+using FubuMVC.Authentication;
 using FubuMVC.Authentication.Membership;
 using FubuMVC.Core;
-using FubuMVC.Core.StructureMap;
 using FubuPersistence.InMemory;
 using NUnit.Framework;
 using StructureMap;
@@ -16,13 +16,12 @@ namespace FubuMVC.PersistedMembership.Testing
         [Test]
         public void build_application_with_persisted_membership()
         {
-            var container = new Container(new InMemoryPersistenceRegistry());
-
             using (var runtime = FubuApplication
-                .For<FubuRepoWithPersistedMembership>()
-                .StructureMap(container)
+                .For<FubuRepoWithPersistedMembership>(_ => _.StructureMap<InMemoryPersistenceRegistry>())
                 .Bootstrap())
             {
+                var container = runtime.Factory.Get<IContainer>();
+
                 container.GetInstance<IMembershipRepository>()
                                           .ShouldBeOfType<MembershipRepository<User>>();
 

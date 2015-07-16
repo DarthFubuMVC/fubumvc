@@ -23,7 +23,7 @@ namespace FubuTransportation.RavenDb.Testing
         [SetUp]
         public void SetUp()
         {
-            runtime = FubuTransport.DefaultPolicies().StructureMap().Bootstrap();
+            runtime = FubuTransport.DefaultPolicies().Bootstrap();
             runtime.Factory.Get<IContainer>().UseInMemoryDatastore();
 
             persistence = runtime.Factory.Get<RavenDbSubscriptionPersistence>();

@@ -17,7 +17,7 @@ namespace FubuMVC.IntegrationTesting.Owin
         {
             using (var server = FubuApplication
                 .For<OverriddenEnvironmentRegistry>()
-                .StructureMap()
+                
                 .RunEmbedded(port: 0))
             {
                 server.Endpoints.GetByInput(new KeyRequest {Key = "Foo"})

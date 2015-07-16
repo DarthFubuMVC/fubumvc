@@ -34,7 +34,7 @@ namespace FubuMVC.IntegrationTesting.Owin
     {
         public FubuApplication BuildApplication()
         {
-            return FubuApplication.For<HarnessRegistry>().StructureMap();
+            return FubuApplication.For<HarnessRegistry>();
         }
 
         public static void Run(Action<EndpointDriver> action)

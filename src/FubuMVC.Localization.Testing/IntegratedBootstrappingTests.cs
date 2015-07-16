@@ -20,8 +20,7 @@ namespace FubuMVC.Localization.Testing
             public FubuApplication BuildApplication()
             {
                 return FubuApplication
-                    .For<LocalizationRegistry>()
-                    .StructureMapObjectFactory();
+                    .For<LocalizationRegistry>();
             }
         }
         public class LocalizationRegistry : FubuRegistry

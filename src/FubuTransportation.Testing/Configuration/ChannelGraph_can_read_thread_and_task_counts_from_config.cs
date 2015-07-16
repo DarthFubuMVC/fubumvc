@@ -34,7 +34,7 @@ namespace FubuTransportation.Testing.Configuration
                 x.For<ConfiguredSettings>().Use(theSettings);
             });
 
-            theRuntime = FubuTransport.For<ConfiguredFubuRegistry>().StructureMap(theContainer)
+            theRuntime = FubuTransport.For<ConfiguredFubuRegistry>(theContainer)
                 .Bootstrap();
 
             theGraph = theContainer.GetInstance<ChannelGraph>();

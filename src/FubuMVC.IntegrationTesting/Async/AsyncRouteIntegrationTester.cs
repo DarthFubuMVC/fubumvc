@@ -29,7 +29,7 @@ namespace FubuMVC.IntegrationTesting.Async
             });
 
             _server = FubuApplication .For(registry)
-                .StructureMap(new Container())
+                
                 .RunEmbedded(port: PortFinder.FindPort(5500));
         }
 

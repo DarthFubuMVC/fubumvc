@@ -21,7 +21,7 @@ namespace FubuMVC.IntegrationTesting.Projections
         {
             _host = FubuApplication
                 .For<JsonSerializationFubuRegistry>()
-                .StructureMap()
+                
                 .RunInMemory();
         }
 

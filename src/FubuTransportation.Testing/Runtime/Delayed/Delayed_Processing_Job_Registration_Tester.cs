@@ -22,7 +22,7 @@ namespace FubuTransportation.Testing.Runtime.Delayed
         {
             FubuTransport.SetupForInMemoryTesting();
 
-            runtime = FubuTransport.For<DelayedRegistry>().StructureMap(new Container())
+            runtime = FubuTransport.For<DelayedRegistry>()
                            .Bootstrap();
 
             runtime.Factory.Get<IPollingJobs>().Any(x => x is PollingJob<DelayedEnvelopeProcessor, TransportSettings>)

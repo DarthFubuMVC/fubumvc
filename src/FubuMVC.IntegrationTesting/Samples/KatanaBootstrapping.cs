@@ -16,7 +16,7 @@ namespace FubuMVC.IntegrationTesting.Samples
         {
             return FubuApplication
                 .DefaultPolicies()
-                .StructureMap();
+                ;
         }
     }
 
@@ -38,7 +38,7 @@ namespace FubuMVC.IntegrationTesting.Samples
             // You don't have to use a custom IApplicationSource if you
             // do not want to.
             // RunEmbedded() is an extension method in FubuMVC.Katana
-            using (var server = FubuApplication.DefaultPolicies().StructureMap().RunEmbedded())
+            using (var server = FubuApplication.DefaultPolicies().RunEmbedded())
             {
                 var greeting = server.Endpoints.Get<HelloEndpoint>(x => x.get_greeting());
                 Console.WriteLine(greeting);

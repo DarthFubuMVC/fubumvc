@@ -1,10 +1,7 @@
-﻿using FubuMVC.Core;
-using FubuMVC.Core.StructureMap;
+﻿using FubuTestingSupport;
 using FubuTransportation.Configuration;
 using FubuTransportation.Runtime.Invocation;
 using NUnit.Framework;
-using StructureMap;
-using FubuTestingSupport;
 
 namespace FubuTransportation.Testing
 {
@@ -14,15 +11,11 @@ namespace FubuTransportation.Testing
         [Test]
         public void the_order()
         {
-            var container = new Container();
-
-
-            using (var runtime = FubuTransport.For<Defaults>().StructureMap(container).Bootstrap())
+            using (var runtime = FubuTransport.For<Defaults>().Bootstrap())
             {
-                var handlers = container.GetInstance<IHandlerPipeline>().ShouldBeOfType<HandlerPipeline>().Handlers;
-            
+                var handlers = runtime.Factory.Get<IHandlerPipeline>().ShouldBeOfType<HandlerPipeline>().Handlers;
 
-                container.Dispose();
+
                 handlers[0].ShouldBeOfType<DelayedEnvelopeHandler>();
                 handlers[1].ShouldBeOfType<ResponseEnvelopeHandler>();
                 handlers[2].ShouldBeOfType<ChainExecutionEnvelopeHandler>();

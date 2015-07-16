@@ -59,7 +59,7 @@ namespace FubuTransportation.Storyteller.Fixtures
 
             registry.EnableInMemoryTransport(_replyUri);
 
-            _runtime = FubuTransport.For(registry).StructureMap().Bootstrap();
+            _runtime = FubuTransport.For(registry).Bootstrap();
         }
 
         public InMemorySubscriptionPersistence Persistence

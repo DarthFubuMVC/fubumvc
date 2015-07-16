@@ -26,7 +26,7 @@ namespace FubuTransportation.Testing.Subscriptions
                 x.For<SubscriptionSettings>().Use(theSettings);
             });
 
-            _runtime = FubuTransport.For<SubscriptionRegistry>().StructureMap(container).Bootstrap();
+            _runtime = FubuTransport.For<SubscriptionRegistry>(container).Bootstrap();
 
             theCache = _runtime.Factory.Get<ISubscriptionCache>().As<SubscriptionCache>();
         }

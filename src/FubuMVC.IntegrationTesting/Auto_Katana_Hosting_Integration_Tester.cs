@@ -15,7 +15,7 @@ namespace FubuMVC.IntegrationTesting
         [Test]
         public void use_auto_enabled_hosting_from_embedded_server()
         {
-            using (var server = FubuApplication.For<KatanaRegistry>().StructureMap().RunEmbedded())
+            using (var server = FubuApplication.For<KatanaRegistry>().RunEmbedded())
             {
                 server.Endpoints.Get<KatanaEndpoint>(x => x.get_katana())
                     .ReadAsText()
@@ -26,7 +26,7 @@ namespace FubuMVC.IntegrationTesting
         [Test]
         public void use_auto_enabled_hosting_as_is()
         {
-            using (var runtime = FubuApplication.For<KatanaRegistry>().StructureMap().Bootstrap())
+            using (var runtime = FubuApplication.For<KatanaRegistry>().Bootstrap())
             {
                 var client = new WebClient();
                 client.DownloadString("http://localhost:5601/katana")

@@ -29,7 +29,7 @@ namespace FubuMVC.IntegrationTesting
 
                 var registry = new FubuRegistry();
                 registry.AlterSettings<DiagnosticsSettings>(x => x.TraceLevel = TraceLevel.Verbose);
-                return FubuApplication.For(registry).StructureMap().RunInMemory();
+                return FubuApplication.For(registry).RunInMemory();
             });
 
         public static ManualResetEvent Finish = new ManualResetEvent(false);
@@ -81,7 +81,7 @@ namespace FubuMVC.IntegrationTesting
 
         public static void Scenario<T>(Action<Scenario> configuration) where T : FubuRegistry, new()
         {
-            using (var host = FubuApplication.For<T>().StructureMap().RunInMemory())
+            using (var host = FubuApplication.For<T>().RunInMemory())
             {
                 host.Scenario(configuration);
             }
@@ -183,7 +183,7 @@ namespace FubuMVC.IntegrationTesting
 
         private static FubuRuntime bootstrapRuntime()
         {
-            return FubuApplication.For<HarnessRegistry>().StructureMap(new Container()).Bootstrap();
+            return FubuApplication.For<HarnessRegistry>().Bootstrap();
         }
     }
 

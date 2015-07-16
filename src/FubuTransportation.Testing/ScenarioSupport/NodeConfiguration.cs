@@ -63,7 +63,7 @@ namespace FubuTransportation.Testing.ScenarioSupport
 
             _uri = (Uri) ReflectionHelper.GetAccessor(_expression).GetValue(harnessSettings);
 
-            _runtime = FubuTransport.For(registry).StructureMap(container).Bootstrap();
+            _runtime = FubuTransport.For(registry, container).Bootstrap();
             _serviceBus = container.GetInstance<IServiceBus>();
         }
 

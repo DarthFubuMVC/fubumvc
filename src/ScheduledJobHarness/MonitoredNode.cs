@@ -98,7 +98,7 @@ namespace ScheduledJobHarness
                 _.ReplaceService(schedules);
             });
 
-            _runtime = FubuTransport.For(this).StructureMap().Bootstrap();
+            _runtime = FubuTransport.For(this).Bootstrap();
         }
 
         void IDisposable.Dispose()

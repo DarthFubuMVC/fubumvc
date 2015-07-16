@@ -1,7 +1,7 @@
 ﻿using System;
 using FubuMVC.Core;
 using FubuCore;
-using FubuMVC.Core.Registration.DSL;
+using StructureMap;
 
 namespace FubuTransportation.Configuration
 {
@@ -11,28 +11,46 @@ namespace FubuTransportation.Configuration
     /// </summary>
     public static class FubuTransport
     {
-        public static IContainerFacilityExpression For<T>() where T : FubuTransportRegistry, new()
+        public static FubuApplication For<T>(Action<T> customize = null, IContainer container = null) where T : FubuTransportRegistry, new()
         {
             var extension = new T();
+            if (customize != null)
+            {
+                customize(extension);
+            }
 
-            return For(extension);
+            return For(extension, container);
         }
 
-        public static IContainerFacilityExpression For(FubuTransportRegistry extension)
+        public static FubuApplication For<T>(IContainer container) where T : FubuTransportRegistry, new()
         {
             var registry = new FubuRegistry();
+            registry.StructureMap(container);
+            var extension = new T();
             extension.As<IFubuRegistryExtension>().Configure(registry);
             return FubuApplication.For(registry);
         }
 
-        public static IContainerFacilityExpression For(Action<FubuTransportRegistry> configuration)
+        public static FubuApplication For(FubuTransportRegistry extension, IContainer container = null)
+        {
+            var registry = new FubuRegistry();
+            if (container != null)
+            {
+                registry.StructureMap(container);
+            }
+
+            extension.As<IFubuRegistryExtension>().Configure(registry);
+            return FubuApplication.For(registry);
+        }
+
+        public static FubuApplication For(Action<FubuTransportRegistry> configuration, IContainer container = null)
         {
             var extension = FubuTransportRegistry.For(configuration);
-            return For(extension);
+            return For(extension, container);
  
         }
 
-        public static IContainerFacilityExpression DefaultPolicies()
+        public static FubuApplication DefaultPolicies(IContainer container = null)
         {
             return For(x => {
                 x.EnableInMemoryTransport();

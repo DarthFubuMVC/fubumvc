@@ -241,7 +241,6 @@
     <Compile Include="Http\Owin\Readers\MediaTypeReader.cs" />
     <Compile Include="Http\Owin\Readers\OwinRequestReader.cs" />
     <Compile Include="IApplicationSource.cs" />
-    <Compile Include="IContainerFacilityExpression.cs" />
     <Compile Include="ImageTag.cs" />
     <Compile Include="IFubuRequestContext.cs" />
     <Compile Include="Projections\AccessorProjection.cs" />
@@ -489,7 +488,6 @@
     <Compile Include="Services\Wait.cs" />
     <Compile Include="SessionState\CookieFlashProvider.cs" />
     <Compile Include="StructureMap\AppSettingProviderRegistry.cs" />
-    <Compile Include="StructureMap\BootstrappingExtensions.cs" />
     <Compile Include="StructureMap\ContainerExtensions.cs" />
     <Compile Include="StructureMap\Diagnostics\AssemblyDTO.cs" />
     <Compile Include="StructureMap\Diagnostics\BuildPlanRequest.cs" />

@@ -37,7 +37,7 @@ namespace FubuTransportation.Testing.InMemory
             MessageHistory.ClearAll();
             InMemoryQueueManager.ClearAll();
 
-            runtime = FubuTransport.For<DelayedRegistry>().StructureMap(new Container())
+            runtime = FubuTransport.For<DelayedRegistry>()
                                        .Bootstrap();
 
             theServiceBus = runtime.Factory.Get<IServiceBus>();

@@ -1,10 +1,8 @@
-﻿using FubuMVC.Core;
-using FubuMVC.Core.StructureMap;
-using NUnit.Framework;
-using StructureMap;
-using StructureMap.Configuration.DSL;
+﻿using System.Linq;
+using FubuMVC.Core;
 using FubuTestingSupport;
-using System.Linq;
+using NUnit.Framework;
+using StructureMap.Configuration.DSL;
 using StructureMap.Graph;
 
 namespace FubuMVC.StructureMap.Testing.Internals
@@ -15,24 +13,22 @@ namespace FubuMVC.StructureMap.Testing.Internals
         [Test]
         public void registries_registered_to_fubumvc_by_value_will_be_applied_to_structureMap_container()
         {
-            var container = new Container();
-
-            FubuApplication.For<FooFubuRegistry>().StructureMap(container).Bootstrap();
-
-            container.GetAllInstances<IFoo>().Select(x => x.GetType()).OrderBy(x => x.Name)
-                .ShouldHaveTheSameElementsAs(typeof(BlueFoo), typeof(GreenFoo), typeof(RedFoo));
+            using (var runtime = FubuApplication.For<FooFubuRegistry>().Bootstrap())
+            {
+                runtime.Factory.GetAll<IFoo>().Select(x => x.GetType()).OrderBy(x => x.Name)
+                    .ShouldHaveTheSameElementsAs(typeof (BlueFoo), typeof (GreenFoo), typeof (RedFoo));
+            }
         }
 
 
         [Test]
         public void registries_registered_to_fubumvc_by_type_will_be_applied_to_structuremap_container()
         {
-            var container = new Container();
-
-            FubuApplication.For<FooFubuRegistry2>().StructureMap(container).Bootstrap();
-
-            container.GetAllInstances<IFoo>().Select(x => x.GetType()).OrderBy(x => x.Name)
-                .ShouldHaveTheSameElementsAs(typeof(BlueFoo), typeof(GreenFoo), typeof(RedFoo));
+            using (var runtime = FubuApplication.For<FooFubuRegistry2>().Bootstrap())
+            {
+                runtime.Factory.GetAll<IFoo>().Select(x => x.GetType()).OrderBy(x => x.Name)
+                    .ShouldHaveTheSameElementsAs(typeof (BlueFoo), typeof (GreenFoo), typeof (RedFoo));
+            }
         }
     }
 
@@ -56,7 +52,8 @@ namespace FubuMVC.StructureMap.Testing.Internals
     {
         public FooRegistry()
         {
-            Scan(x => {
+            Scan(x =>
+            {
                 x.TheCallingAssembly();
                 x.AddAllTypesOf<IFoo>();
             });
@@ -65,10 +62,17 @@ namespace FubuMVC.StructureMap.Testing.Internals
 
     public interface IFoo
     {
-        
     }
 
-    public class RedFoo : IFoo{}
-    public class GreenFoo : IFoo{}
-    public class BlueFoo : IFoo{}
+    public class RedFoo : IFoo
+    {
+    }
+
+    public class GreenFoo : IFoo
+    {
+    }
+
+    public class BlueFoo : IFoo
+    {
+    }
 }

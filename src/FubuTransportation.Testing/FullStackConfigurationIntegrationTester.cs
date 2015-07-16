@@ -18,11 +18,10 @@ namespace FubuTransportation.Testing
         [Test]
         public void has_all_the_chains_we_expect()
         {
-            var container = new Container();
-            using (var runtime = FubuTransport.For<MyFirstTransport>().StructureMap(container).Bootstrap())
+            using (var runtime = FubuTransport.For<MyFirstTransport>().Bootstrap())
             {
 
-                var graph = container.GetInstance<BehaviorGraph>();
+                var graph = runtime.Factory.Get<BehaviorGraph>();
 
                 graph.Behaviors.Count(x => typeof (Foo1) == x.InputType()).ShouldEqual(1);
                 graph.Behaviors.Count(x => typeof (Foo2) == x.InputType()).ShouldEqual(1);
@@ -34,14 +33,13 @@ namespace FubuTransportation.Testing
         [Test]
         public void has_all_the_chains_we_expect_through_FubuApplication()
         {
-            var container = new Container();
             var registry = new FubuRegistry();
             registry.Import<MyFirstTransport>();
 
-            using (var runtime = FubuApplication.For(registry).StructureMap(container).Bootstrap())
+            using (var runtime = FubuApplication.For(registry).Bootstrap())
             {
 
-                var graph = container.GetInstance<BehaviorGraph>();
+                var graph = runtime.Factory.Get<BehaviorGraph>();
 
                 graph.Behaviors.Count(x => typeof(Foo1) == x.InputType()).ShouldEqual(1);
                 graph.Behaviors.Count(x => typeof(Foo2) == x.InputType()).ShouldEqual(1);

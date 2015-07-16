@@ -23,7 +23,7 @@ namespace FubuTransportation.Testing.InMemory
         public void to_in_memory_with_default_settings()
         {
             FubuTransport.SetupForInMemoryTesting<DefaultSettings>();
-            using (var runtime = FubuTransport.For<DefaultRegistry>().StructureMap().Bootstrap())
+            using (var runtime = FubuTransport.For<DefaultRegistry>().Bootstrap())
             {
                 var settings = InMemoryTransport.ToInMemory<NodeSettings>();
                 settings.Inbound.ShouldEqual(new Uri("memory://default/inbound"));
@@ -36,7 +36,7 @@ namespace FubuTransportation.Testing.InMemory
         {
             using (var runtime = FubuTransport.For(x => {
                 x.EnableInMemoryTransport();
-            }).StructureMap().Bootstrap())
+            }).Bootstrap())
             {
                 runtime.Factory.Get<ChannelGraph>().ReplyChannelFor(InMemoryChannel.Protocol)
                     .ShouldEqual("memory://localhost/fubu/replies".ToUri());
@@ -49,7 +49,7 @@ namespace FubuTransportation.Testing.InMemory
             using (var runtime = FubuTransport.For(x =>
             {
                 x.EnableInMemoryTransport("memory://special".ToUri());
-            }).StructureMap().Bootstrap())
+            }).Bootstrap())
             {
                 runtime.Factory.Get<ChannelGraph>().ReplyChannelFor(InMemoryChannel.Protocol)
                     .ShouldEqual("memory://special".ToUri());

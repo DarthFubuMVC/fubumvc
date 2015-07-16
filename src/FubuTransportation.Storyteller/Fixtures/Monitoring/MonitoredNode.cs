@@ -77,7 +77,7 @@ namespace FubuTransportation.Storyteller.Fixtures.Monitoring
                 .ScheduledExecution(monitoringEnabled ? ScheduledExecution.WaitUntilInterval : ScheduledExecution.Disabled)
                 .IntervalSeed(3);
 
-            _runtime = FubuTransport.For(this).StructureMap().Bootstrap();
+            _runtime = FubuTransport.For(this).Bootstrap();
             var controller = _runtime.Factory.Get<IPersistentTaskController>();
 
             _initialTasks.Each(subject => {

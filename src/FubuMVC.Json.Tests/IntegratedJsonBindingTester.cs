@@ -91,9 +91,11 @@ namespace FubuMVC.Json.Tests
 
             public FubuApplication BuildApplication()
             {
-                return FubuApplication
-                    .For(new IntegrationJsonBindingRegistry(_time))
-                    .StructureMap(new Container(x => x.For<Recorder>().Use(_recorder)));
+                var container = new Container(x => x.For<Recorder>().Use(_recorder));
+                var registry = new IntegrationJsonBindingRegistry(_time);
+                registry.StructureMap(container);
+
+                return FubuApplication.For(registry);
             }
         }
 

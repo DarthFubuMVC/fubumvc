@@ -1,11 +1,9 @@
 ﻿using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.StructureMap;
 using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
-using StructureMap;
 
 namespace FubuMVC.AntiForgery.Testing
 {
@@ -17,7 +15,7 @@ namespace FubuMVC.AntiForgery.Testing
         {
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<TestEndpoint>();
-            using (var runtime = FubuApplication.For(registry).ContainerFacility(new StructureMapContainerFacility(new Container())).Bootstrap())
+            using (var runtime = FubuApplication.For(registry).Bootstrap())
             {
                 var graph = runtime.Factory.Get<BehaviorGraph>();
 
@@ -25,8 +23,6 @@ namespace FubuMVC.AntiForgery.Testing
                     .OfType<AntiForgeryNode>().Any()
                     .ShouldBeTrue();
             }
-
-
         }
     }
 

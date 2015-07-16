@@ -40,7 +40,7 @@ namespace FubuTransportation.Testing.Sagas
                 x.For<IListener>().Add<MessageWatcher>();
             });
 
-            theRuntime = FubuTransport.For<SagaTestRegistry>().StructureMap(theContainer).Bootstrap();
+            theRuntime = FubuTransport.For<SagaTestRegistry>(theContainer).Bootstrap();
 
             MessageHistory.StartListening();
         }
@@ -109,7 +109,7 @@ namespace FubuTransportation.Testing.Sagas
                 x.For<IListener>().Add<MessageWatcher>();
             });
 
-            theRuntime = FubuTransport.For<SagaTestRegistry>().StructureMap(theContainer).Bootstrap();
+            theRuntime = FubuTransport.For<SagaTestRegistry>(theContainer).Bootstrap();
 
             MessageHistory.ClearAll();
         }

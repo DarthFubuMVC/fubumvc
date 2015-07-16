@@ -9,7 +9,7 @@ namespace ServiceNode
     {
         public FubuApplication BuildApplication()
         {
-            return FubuTransport.For<ServiceRegistry>().StructureMap();
+            return FubuTransport.For<ServiceRegistry>();
         }
     }
 

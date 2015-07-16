@@ -75,7 +75,7 @@ namespace FubuTransportation.LightningQueues.Testing
                 DisableIfNoChannels = true
             });
 
-            using (var runtime = FubuTransport.DefaultPolicies().StructureMap(container).Bootstrap())
+            using (var runtime = FubuTransport.DefaultPolicies(container).Bootstrap())
             {
                 // just looking for the absence of an exception here
             }
@@ -91,7 +91,7 @@ namespace FubuTransportation.LightningQueues.Testing
             });
 
             Exception<FubuException>.ShouldBeThrownBy(() => {
-                using (var runtime = FubuTransport.DefaultPolicies().StructureMap(container).Bootstrap())
+                using (var runtime = FubuTransport.DefaultPolicies(container).Bootstrap())
                 {
                 }
             });

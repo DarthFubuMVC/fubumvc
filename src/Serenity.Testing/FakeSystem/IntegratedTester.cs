@@ -114,7 +114,7 @@ namespace Serenity.Testing.FakeSystem
     {
         public FubuApplication BuildApplication()
         {
-            return FubuApplication.For<FakeSerenityRegistry>().StructureMap(new Container());
+            return FubuApplication.For<FakeSerenityRegistry>();
         }
     }
 

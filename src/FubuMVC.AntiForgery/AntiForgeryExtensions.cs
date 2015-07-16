@@ -1,5 +1,4 @@
 ﻿using FubuMVC.Core;
-using FubuMVC.Core.UI;
 
 namespace FubuMVC.AntiForgery
 {

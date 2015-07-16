@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.Docs.Examples
 
                 // Starting with a brand new
                 // StructureMap container.
-                .StructureMap()
+                
 
                 // Build it up!
                 .Bootstrap();
@@ -40,7 +40,7 @@ namespace FubuMVC.Tests.Docs.Examples
         {
             return FubuApplication
                 .DefaultPolicies()
-                .StructureMap();
+                ;
         }
     }
     // ENDSAMPLE
@@ -74,7 +74,7 @@ namespace FubuMVC.Tests.Docs.Examples
         {
             return FubuApplication
                 .For<CustomFubuRegistry>()
-                .StructureMap();
+                ;
         }
     }
 

@@ -13,7 +13,7 @@ namespace FubuTransportation.Testing.Subscriptions
         [Test]
         public void SubscriptionHandler_should_be_part_of_the_application()
         {
-            using (var runtime = FubuTransport.DefaultPolicies().StructureMap().Bootstrap())
+            using (var runtime = FubuTransport.DefaultPolicies().Bootstrap())
             {
                 var graph = runtime.Factory.Get<HandlerGraph>();
                 graph.ChainFor(typeof (SubscriptionRequested)).ShouldNotBeNull();

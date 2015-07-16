@@ -13,12 +13,12 @@ namespace FubuTransportation.Testing.Configuration
         [Test]
         public void able_to_derive_the_node_name_from_fubu_transport_registry_name()
         {
-            using (var runtime = FubuTransport.For<CustomTransportRegistry>().StructureMap(new Container()).Bootstrap())
+            using (var runtime = FubuTransport.For<CustomTransportRegistry>().Bootstrap())
             {
                 runtime.Factory.Get<ChannelGraph>().Name.ShouldEqual("custom");
             }
 
-            using (var fubuRuntime = FubuTransport.For<OtherRegistry>().StructureMap(new Container()).Bootstrap())
+            using (var fubuRuntime = FubuTransport.For<OtherRegistry>().Bootstrap())
             {
                 fubuRuntime
                     .Factory.Get<ChannelGraph>().Name.ShouldEqual("other");
@@ -31,7 +31,7 @@ namespace FubuTransportation.Testing.Configuration
             using (var fubuRuntime = FubuTransport.For(x => {
                 x.NodeName = "MyNode";
                 x.EnableInMemoryTransport();
-            }).StructureMap(new Container()).Bootstrap())
+            }).Bootstrap())
             {
                 fubuRuntime
                     .Factory.Get<ChannelGraph>().Name.ShouldEqual("MyNode");

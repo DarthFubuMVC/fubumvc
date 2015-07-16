@@ -1,6 +1,5 @@
 using FubuCore.Dates;
 using FubuMVC.Core;
-using FubuMVC.Core.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
@@ -14,10 +13,10 @@ namespace FubuMVC.StructureMap.Testing.Internals
         [Test]
         public void IClock_should_be_a_singleton_just_by_usage_of_the_IsSingleton_property()
         {
-            var container = new Container();
-            FubuApplication.For(new FubuRegistry()).StructureMap(container).Bootstrap();
-
-            container.Model.For<IClock>().Lifecycle.ShouldBeOfType<SingletonLifecycle>();
+            using (var runtime = FubuApplication.For(new FubuRegistry()).Bootstrap())
+            {
+                runtime.Factory.Get<IContainer>().Model.For<IClock>().Lifecycle.ShouldBeOfType<SingletonLifecycle>();
+            }
         }
     }
 }

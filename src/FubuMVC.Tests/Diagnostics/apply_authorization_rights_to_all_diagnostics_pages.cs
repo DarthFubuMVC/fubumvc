@@ -15,7 +15,7 @@ namespace FubuMVC.Tests.Diagnostics
         public void should_be_applied_to_all()
         {
             FubuMode.SetUpForDevelopmentMode();
-            using (var runtime = FubuApplication.For<AuthorizedRegistry>().StructureMap().Bootstrap())
+            using (var runtime = FubuApplication.For<AuthorizedRegistry>().Bootstrap())
             {
                 runtime.Behaviors.BehaviorFor<FubuDiagnosticsEndpoint>(x => x.get__fubu()).Authorization.AllowedRoles().ShouldContain("admin");
                 runtime.Behaviors.BehaviorFor<EndpointExplorerFubuDiagnostics>(x => x.get_endpoints()).Authorization.AllowedRoles().ShouldContain("admin");

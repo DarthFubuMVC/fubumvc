@@ -14,7 +14,7 @@ namespace FubuMVC.Json.Tests
         [Test]
         public void does_replace_the_built_in_json_formatter()
         {
-            using (var runtime = FubuApplication.DefaultPolicies().StructureMap().Bootstrap())
+            using (var runtime = FubuApplication.DefaultPolicies().Bootstrap())
             {
                 var settings = runtime.Factory.Get<ConnegSettings>();
                 settings.Formatters.First().ShouldBeOfType<NewtonsoftJsonFormatter>();

@@ -1,6 +1,4 @@
 ﻿using FubuMVC.Core;
-using FubuMVC.Core.StructureMap;
-using StructureMap;
 
 namespace FubuTransportation.Testing.Docs.Instrumentation
 {
@@ -9,9 +7,9 @@ namespace FubuTransportation.Testing.Docs.Instrumentation
     {
         public FubuApplication BuildApplication()
         {
-            return FubuApplication.For<FubuEmbeddedRegistry>()
-                .StructureMap(new Container());
+            return FubuApplication.For<FubuEmbeddedRegistry>();
         }
     }
+
     // ENDSAMPLE
 }

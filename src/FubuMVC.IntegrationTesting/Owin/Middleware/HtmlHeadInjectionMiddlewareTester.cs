@@ -33,7 +33,7 @@ namespace FubuMVC.IntegrationTesting.Owin.Middleware
                 });
             });
 
-            using (var server = FubuApplication.For(registry).StructureMap().RunInMemory())
+            using (var server = FubuApplication.For(registry).RunInMemory())
             {
                 server.Scenario(_ => {
                     _.Get.Action<SimpleHtmlEndpoint>(x => x.get_html_content());

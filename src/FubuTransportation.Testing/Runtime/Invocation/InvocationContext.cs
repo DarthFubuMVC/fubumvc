@@ -36,10 +36,9 @@ namespace FubuTransportation.Testing.Runtime.Invocation
             TestMessageRecorder.Clear();
 
             _invoker = new Lazy<IChainInvoker>(() => {
-                var container = new Container();
-                theRuntime = FubuTransport.For(theTransportRegistry).StructureMap(container).Bootstrap();
+                theRuntime = FubuTransport.For(theTransportRegistry).Bootstrap();
 
-                return container.GetInstance<IChainInvoker>();
+                return theRuntime.Factory.Get<IChainInvoker>();
             });
 
             theCallback = MockRepository.GenerateMock<IMessageCallback>();

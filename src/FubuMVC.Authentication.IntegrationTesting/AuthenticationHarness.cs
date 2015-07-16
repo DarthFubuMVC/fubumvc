@@ -41,9 +41,8 @@ namespace FubuMVC.Authentication.IntegrationTesting
             var registry = new FubuRegistry();
             configure(registry);
 
-            theContainer = new Container();
-
-            server = FubuApplication.For(registry).StructureMap(theContainer).RunEmbeddedWithAutoPort();
+            server = FubuApplication.For(registry).RunEmbeddedWithAutoPort();
+            theContainer = server.Runtime.Factory.Get<IContainer>();
 
             beforeEach();
         }

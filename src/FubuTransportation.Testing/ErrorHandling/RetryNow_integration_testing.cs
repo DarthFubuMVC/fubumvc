@@ -21,7 +21,7 @@ namespace FubuTransportation.Testing.ErrorHandling
             MessageThatBombsHandler.Successful = null;
 
             using (var runtime = FubuTransport.For<RetryNoOnDbConcurrencyRegistry>()
-                        .StructureMap(new Container())
+                        
                         .Bootstrap())
             {
                 var pipeline = runtime.Factory.Get<IHandlerPipeline>();

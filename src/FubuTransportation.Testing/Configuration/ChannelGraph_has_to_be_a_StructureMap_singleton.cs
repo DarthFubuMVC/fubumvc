@@ -1,5 +1,4 @@
-﻿using FubuMVC.Core.StructureMap;
-using FubuTestingSupport;
+﻿using FubuTestingSupport;
 using FubuTransportation.Configuration;
 using NUnit.Framework;
 using StructureMap;
@@ -13,11 +12,10 @@ namespace FubuTransportation.Testing.Configuration
         [Test]
         public void must_be_a_singleton()
         {
-            var container= new Container();
-            using (var runtime = FubuTransport.For(x => x.EnableInMemoryTransport()).StructureMap(container).Bootstrap()
+            using (var runtime = FubuTransport.For(x => x.EnableInMemoryTransport()).Bootstrap()
                 )
             {
-                container.Model.For<ChannelGraph>().Lifecycle.ShouldBeOfType<SingletonLifecycle>();
+                runtime.Factory.Get<IContainer>().Model.For<ChannelGraph>().Lifecycle.ShouldBeOfType<SingletonLifecycle>();
             }
 
            

@@ -87,7 +87,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
     {
         public FubuApplication BuildApplication()
         {
-            return FubuApplication.DefaultPolicies().StructureMap();
+            return FubuApplication.DefaultPolicies();
         }
     }
 

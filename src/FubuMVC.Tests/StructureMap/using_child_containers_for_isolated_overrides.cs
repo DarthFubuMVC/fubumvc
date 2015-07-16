@@ -15,7 +15,10 @@ namespace FubuMVC.StructureMap.Testing
         [Test]
         public void override_services()
         {
-            using (var runtime = FubuApplication.DefaultPolicies().StructureMap<ThingRegistry>().Bootstrap())
+            var registry = new FubuRegistry();
+            registry.StructureMap<ThingRegistry>();
+
+            using (var runtime = FubuApplication.For(registry).Bootstrap())
             {
                 var facility = runtime.Facility.As<StructureMapContainerFacility>();
 

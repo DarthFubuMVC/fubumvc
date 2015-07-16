@@ -12,7 +12,7 @@ namespace KayakTestApplication
         {
             return FubuApplication
                 .For<KayakRegistry>()
-                .StructureMap(new Container());
+                ;
         }
     }
 

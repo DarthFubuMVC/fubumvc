@@ -71,7 +71,7 @@ namespace FubuMVC.IntegrationTesting.Authorization
             registry.Services(x => x.ReplaceService<IAuthorizationFailureHandler, CustomAuthHandler>());
 
             AuthorizationCheck.IsAuthorized = false;
-            using (var server = FubuApplication.For(registry).StructureMap().RunEmbeddedWithAutoPort())
+            using (var server = FubuApplication.For(registry).RunEmbeddedWithAutoPort())
             {
                 server.Endpoints.Get<AuthorizedEndpoint>(x => x.get_authorized_text())
                     .StatusCodeShouldBe(HttpStatusCode.Forbidden)
@@ -88,7 +88,7 @@ namespace FubuMVC.IntegrationTesting.Authorization
             });
 
             AuthorizationCheck.IsAuthorized = false;
-            using (var server = FubuApplication.For(registry).StructureMap().RunEmbeddedWithAutoPort())
+            using (var server = FubuApplication.For(registry).RunEmbeddedWithAutoPort())
             {
                 server.Endpoints.Get<AuthorizedEndpoint>(x => x.get_authorized_text())
                     .StatusCodeShouldBe(HttpStatusCode.Forbidden)

@@ -21,7 +21,7 @@ namespace FubuMVC.Json.Tests
 
             JsonTargetEndpoint.LastTarget = null;
 
-            using (var server = FubuApplication.DefaultPolicies().StructureMap().RunInMemory())
+            using (var server = FubuApplication.DefaultPolicies().RunInMemory())
             {
                 server.Scenario(_ => {
                     _.Post.Input<JsonTarget>();

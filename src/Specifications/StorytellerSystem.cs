@@ -13,7 +13,7 @@ namespace Specifications
     {
         public FubuApplication BuildApplication()
         {
-            return FubuApplication.For<StorytellerFubuRegistry>().StructureMap();
+            return FubuApplication.For<StorytellerFubuRegistry>();
         }
     }
 

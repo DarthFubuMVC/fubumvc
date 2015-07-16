@@ -40,7 +40,7 @@ namespace FubuTransportation.Testing.InMemory
             MessageHistory.ClearAll();
             InMemoryQueueManager.ClearAll();
 
-            theRuntime = FubuTransport.For<DelayedRegistry>().StructureMap(new Container())
+            theRuntime = FubuTransport.For<DelayedRegistry>()
                                        .Bootstrap();
 
             // Disable polling!

@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.Registration.Registration
         {
             FubuMode.Reset();
 
-            _runtime = FubuApplication.For<ApplicationRegistry>().StructureMap().Bootstrap();
+            _runtime = FubuApplication.For<ApplicationRegistry>().Bootstrap();
             behaviors = _runtime.Factory.Get<BehaviorGraph>();
 
             appChain = behaviors.BehaviorFor<ApplicationActions>(x => x.get_app_action());

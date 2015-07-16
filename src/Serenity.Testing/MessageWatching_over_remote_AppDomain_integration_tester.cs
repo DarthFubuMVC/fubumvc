@@ -24,7 +24,7 @@ namespace Serenity.Testing
                     .AppendPath("RemoteService")
             };
 
-            var system = new FubuMvcSystem(settings, () => FubuApplication.DefaultPolicies().StructureMap().Bootstrap());
+            var system = new FubuMvcSystem(settings, () => FubuApplication.DefaultPolicies().Bootstrap());
 
             system.AddRemoteSubSystem("Remote", x => { x.UseParallelServiceDirectory("RemoteService"); });
 

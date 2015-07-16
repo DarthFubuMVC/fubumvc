@@ -35,9 +35,9 @@ namespace FubuMVC.Tests
             });
 
             FubuApplication.PhysicalRootPath = AppDomain.CurrentDomain.BaseDirectory;
+            registry.StructureMap(container);
 
             routes = FubuApplication.For(registry)
-                .StructureMap(container)
                 .Bootstrap()
                 .Routes
                 .Where(r => !r.As<Route>().Url.StartsWith("_content"))

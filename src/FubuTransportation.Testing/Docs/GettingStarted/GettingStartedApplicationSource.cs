@@ -11,7 +11,7 @@ namespace FubuTransportation.Testing.Docs.GettingStarted
         public FubuApplication BuildApplication()
         {
             return FubuTransport.For<GettingStartedTransportRegistry>()
-                .StructureMap(new Container());
+                ;
         }
     }
     // ENDSAMPLE

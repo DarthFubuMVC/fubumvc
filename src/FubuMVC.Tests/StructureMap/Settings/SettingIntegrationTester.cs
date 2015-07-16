@@ -27,7 +27,9 @@ namespace FubuMVC.StructureMap.Testing.Settings
                     x.For<ISettingsSource>().Add(new AppSettingsSettingSource(SettingCategory.core));
                 });
 
-                FubuApplication.For(registry).StructureMap(c).Bootstrap();
+                registry.StructureMap(c);
+
+                FubuApplication.For(registry).Bootstrap();
 
                 return c;
             });
