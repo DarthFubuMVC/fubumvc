@@ -12,6 +12,5 @@ namespace Bottles
         void ForFolder(string folderName, Action<string> onFound);
         void ForFiles(string directory, string searchPattern, Action<string, Stream> fileCallback);
 
-        IPackageFiles Files { get; } 
     }
 }

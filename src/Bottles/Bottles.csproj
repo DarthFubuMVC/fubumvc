@@ -53,7 +53,6 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AssemblyFinder.cs" />
-    <Compile Include="CompileTarget.cs" />
     <Compile Include="Diagnostics\PerfTimer.cs" />
     <Compile Include="Environment\CanWriteToFolder.cs" />
     <Compile Include="Environment\FileExists.cs" />
@@ -65,19 +64,14 @@
     <Compile Include="Diagnostics\LogWriter.cs" />
     <Compile Include="Diagnostics\LogWriterStatus.cs" />
     <Compile Include="Diagnostics\BottleLogExtensions.cs" />
-    <Compile Include="BottleFiles.cs" />
-    <Compile Include="FileSystemExtensions.cs" />
     <Compile Include="IActivator.cs" />
     <Compile Include="IPackageInfo.cs" />
     <Compile Include="Diagnostics\IPackageLog.cs" />
     <Compile Include="Diagnostics\IBottlingDiagnostics.cs" />
     <Compile Include="LambdaActivator.cs" />
-    <Compile Include="PackageFiles.cs" />
-    <Compile Include="BottleLoadingRecord.cs" />
     <Compile Include="Diagnostics\PackageLog.cs" />
     <Compile Include="Diagnostics\BottlingDiagnostics.cs" />
     <Compile Include="Diagnostics\PackagingDiagnosticsExtensions.cs" />
-    <Compile Include="BottleRoles.cs" />
     <Compile Include="Services\ApplicationLoader.cs" />
     <Compile Include="Services\BottleService.cs" />
     <Compile Include="Services\BottleServiceApplication.cs" />
@@ -108,7 +102,6 @@
     <Compile Include="Services\Remote\RemoteServicesProxy.cs" />
     <Compile Include="Services\Remote\ServiceStarted.cs" />
     <Compile Include="Services\Wait.cs" />
-    <Compile Include="StringExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
