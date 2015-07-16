@@ -70,6 +70,7 @@
     <Compile Include="Ajax\AjaxContinuationWriter.cs" />
     <Compile Include="Ajax\AjaxError.cs" />
     <Compile Include="ApplicationSettings.cs" />
+    <Compile Include="AssemblyFinder.cs" />
     <Compile Include="Assets\Asset.cs" />
     <Compile Include="Assets\AssetFinderCache.cs" />
     <Compile Include="Assets\AssetGraph.cs" />
@@ -116,10 +117,20 @@
     <Compile Include="Diagnostics\Endpoints\EndpointReport.cs" />
     <Compile Include="Diagnostics\FubuDiagnosticsEndpoint.cs" />
     <Compile Include="Diagnostics\ModelBindingFubuDiagnostics.cs" />
+    <Compile Include="Diagnostics\Packaging\BottleLogExtensions.cs" />
+    <Compile Include="Diagnostics\Packaging\BottlingDiagnostics.cs" />
+    <Compile Include="Diagnostics\Packaging\IBottlingDiagnostics.cs" />
+    <Compile Include="Diagnostics\Packaging\IPackageLog.cs" />
+    <Compile Include="Diagnostics\Packaging\LoggingSession.cs" />
+    <Compile Include="Diagnostics\Packaging\LogWriter.cs" />
+    <Compile Include="Diagnostics\Packaging\LogWriterStatus.cs" />
     <Compile Include="Diagnostics\Packaging\PackageDiagnosticsLogModel.cs" />
     <Compile Include="Diagnostics\Packaging\PackageDiagnosticsModel.cs" />
     <Compile Include="Diagnostics\Packaging\PackageDiagnosticsRequestModel.cs" />
+    <Compile Include="Diagnostics\Packaging\PackageLog.cs" />
     <Compile Include="Diagnostics\Packaging\PackageLogFubuDiagnostics.cs" />
+    <Compile Include="Diagnostics\Packaging\PackagingDiagnosticsExtensions.cs" />
+    <Compile Include="Diagnostics\Packaging\PerfTimer.cs" />
     <Compile Include="Diagnostics\RequestsFubuDiagnostics.cs" />
     <Compile Include="Diagnostics\Runtime\ApplyTracing.cs" />
     <Compile Include="Diagnostics\Runtime\BehaviorFinish.cs" />
@@ -164,6 +175,11 @@
     <Compile Include="Endpoints\HttpResponse.cs" />
     <Compile Include="Endpoints\WebRequestResponseExtensions.cs" />
     <Compile Include="Diagnostics\FubuApplicationDescriber.cs" />
+    <Compile Include="Environment\CanWriteToFolder.cs" />
+    <Compile Include="Environment\FileExists.cs" />
+    <Compile Include="Environment\FolderExists.cs" />
+    <Compile Include="Environment\IEnvironmentRequirement.cs" />
+    <Compile Include="Environment\IEnvironmentRequirements.cs" />
     <Compile Include="FileWatcherManifest.cs" />
     <Compile Include="FormatterOptions.cs" />
     <Compile Include="FubuModuleAttribute.cs" />
@@ -215,6 +231,10 @@
     <Compile Include="Http\Scenarios\Scenario.cs" />
     <Compile Include="Http\Scenarios\IUrlExpression.cs" />
     <Compile Include="Http\Scenarios\ScenarioAssertionException.cs" />
+    <Compile Include="IActivator.cs" />
+    <Compile Include="IDeactivator.cs" />
+    <Compile Include="IPackageInfo.cs" />
+    <Compile Include="LambdaActivator.cs" />
     <Compile Include="NoDiagnosticsAttribute.cs" />
     <Compile Include="PerfTimerExtensions.cs" />
     <Compile Include="PortFinder.cs" />
@@ -443,6 +463,36 @@
     <Compile Include="Runtime\IFubuRouteHandler.cs" />
     <Compile Include="Security\SecurityServicesRegistry.cs" />
     <Compile Include="Security\SecuritySettings.cs" />
+    <Compile Include="Services\ApplicationLoader.cs" />
+    <Compile Include="Services\BottleService.cs" />
+    <Compile Include="Services\BottleServiceApplication.cs" />
+    <Compile Include="Services\BottleServiceConfiguration.cs" />
+    <Compile Include="Services\BottleServiceFinder.cs" />
+    <Compile Include="Services\BottleServiceRuntime.cs" />
+    <Compile Include="Services\IApplication.cs" />
+    <Compile Include="Services\IApplicationLoader.cs" />
+    <Compile Include="Services\IApplicationSource.cs" />
+    <Compile Include="Services\JsonSerialization.cs" />
+    <Compile Include="Services\Messaging\EventAggregator.cs" />
+    <Compile Include="Services\Messaging\IListener.cs" />
+    <Compile Include="Services\Messaging\IMessagingHub.cs" />
+    <Compile Include="Services\Messaging\IRemoteListener.cs" />
+    <Compile Include="Services\Messaging\MessageWaitCondition.cs" />
+    <Compile Include="Services\Messaging\MessagingHub.cs" />
+    <Compile Include="Services\Messaging\MessagingHubExtensions.cs" />
+    <Compile Include="Services\Messaging\RemoteListener.cs" />
+    <Compile Include="Services\Messaging\ServiceMessage.cs" />
+    <Compile Include="Services\Messaging\Tracking\AllMessagesComplete.cs" />
+    <Compile Include="Services\Messaging\Tracking\MessageHistory.cs" />
+    <Compile Include="Services\Messaging\Tracking\MessageTrack.cs" />
+    <Compile Include="Services\Remote\AppDomainFileChangeWatcher.cs" />
+    <Compile Include="Services\Remote\AssemblyCopyMode.cs" />
+    <Compile Include="Services\Remote\AssemblyRequirement.cs" />
+    <Compile Include="Services\Remote\RemoteDomainExpression.cs" />
+    <Compile Include="Services\Remote\RemoteServiceRunner.cs" />
+    <Compile Include="Services\Remote\RemoteServicesProxy.cs" />
+    <Compile Include="Services\Remote\ServiceStarted.cs" />
+    <Compile Include="Services\Wait.cs" />
     <Compile Include="SessionState\CookieFlashProvider.cs" />
     <Compile Include="TagAttribute.cs" />
     <Compile Include="Template.cs" />
@@ -648,17 +698,10 @@
     <Compile Include="WrapWithAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Diagnostics\Packaging\Packaging.spark" />
     <None Include="Diagnostics\Visualization\BehaviorNode.spark" />
     <None Include="ripple.dependencies.config">
       <SubType>Designer</SubType>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Bottles\Bottles.csproj">
-      <Project>{e208a2b1-31b0-4455-ba16-3d79f5887ece}</Project>
-      <Name>Bottles</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="fubu-diagnostics\bootstrap.min.css" />
