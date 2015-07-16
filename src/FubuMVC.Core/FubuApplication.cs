@@ -31,29 +31,12 @@ namespace FubuMVC.Core
     /// </summary>
     public class FubuApplication : IContainerFacilityExpression, IApplication<FubuRuntime>
     {
-        private readonly Lazy<IContainerFacility> _facility;
         private readonly Lazy<FubuRegistry> _registry;
         private Func<IContainerFacility> _facilitySource;
 
         private FubuApplication(Func<FubuRegistry> registryBuilder)
         {
             _registry = new Lazy<FubuRegistry>(registryBuilder);
-            _facility = new Lazy<IContainerFacility>(() => _facilitySource());
-        }
-
-        public IContainerFacility Facility
-        {
-            get
-            {
-                if (!_facility.IsValueCreated)
-                {
-                    throw new InvalidOperationException(
-                        "Application has not yet been bootstrapped.  This operation is only valid after bootstrapping the application");
-                }
-
-
-                return _facility.Value;
-            }
         }
 
         FubuApplication IContainerFacilityExpression.ContainerFacility(IContainerFacility facility)
@@ -140,8 +123,6 @@ namespace FubuMVC.Core
 
             FubuRuntime runtime = null;
 
-            Task<IList<RouteBase>> routeTask = null;
-
             PackageRegistry.LoadPackages(x =>
             {
                 if (GetApplicationPath().IsNotEmpty())
@@ -153,36 +134,15 @@ namespace FubuMVC.Core
                 x.Bootstrap("FubuMVC Bootstrapping", log =>
                 {
                     var diagnostics = PackageRegistry.Diagnostics;
-
-                    // container facility has to be spun up here
-                    var containerFacility = _facility.Value;
-
+                    var packageAssemblies = PackageRegistry.PackageAssemblies;
                     var perfTimer = PackageRegistry.Timer;
 
-                    perfTimer.Record("Applying IFubuRegistryExtension's", () => applyFubuExtensionsFromPackages(diagnostics));
+                    // container facility has to be spun up here
+                    var containerFacility = _facilitySource();
 
-                    var graph = perfTimer.Record("Building the BehaviorGraph", () => buildBehaviorGraph(perfTimer, PackageRegistry.PackageAssemblies, diagnostics));
+                    runtime = bootstrapRuntime(perfTimer, diagnostics, packageAssemblies, containerFacility);
 
-                    perfTimer.Record("Registering services into the IoC Container",
-                        () => bakeBehaviorGraphIntoContainer(graph, containerFacility));
-
-                    // factory HAS to be spun up here.
-                    var factory = perfTimer.Record("Build the IServiceFactory",
-                        () => containerFacility.BuildFactory(graph));
-
-                    routeTask = perfTimer.RecordTask("Building Routes", () =>
-                    {
-                        var routes = buildRoutes(factory, graph);
-                        routes.Each(r => RouteTable.Routes.Add(r));
-
-                        return routes;
-                    });
-
-                    runtime = new FubuRuntime(factory, _facility.Value, routeTask.Result);
-
-                    _facility.Value.Register(typeof (FubuRuntime), ObjectDef.ForValue(runtime));
-
-                    return factory.GetAll<IActivator>();
+                    return runtime.Factory.GetAll<IActivator>();
                 });
             });
 
@@ -193,6 +153,35 @@ namespace FubuMVC.Core
                 () => { throw new FubuException(0, FubuApplicationDescriber.WriteDescription(runtime.Behaviors.Diagnostics)); });
 
 
+            return runtime;
+        }
+
+        private FubuRuntime bootstrapRuntime(IPerfTimer perfTimer, IBottlingDiagnostics diagnostics,
+            IEnumerable<Assembly> packageAssemblies, IContainerFacility containerFacility)
+        {
+            perfTimer.Record("Applying IFubuRegistryExtension's", () => applyFubuExtensionsFromPackages(diagnostics));
+
+            var graph = perfTimer.Record("Building the BehaviorGraph",
+                () => buildBehaviorGraph(perfTimer, packageAssemblies, diagnostics));
+
+            perfTimer.Record("Registering services into the IoC Container",
+                () => bakeBehaviorGraphIntoContainer(graph, containerFacility));
+
+            // factory HAS to be spun up here.
+            var factory = perfTimer.Record("Build the IServiceFactory",
+                () => containerFacility.BuildFactory(graph));
+
+            var routeTask = perfTimer.RecordTask("Building Routes", () =>
+            {
+                var routes = buildRoutes(factory, graph);
+                routes.Each(r => RouteTable.Routes.Add(r));
+
+                return routes;
+            });
+
+            var runtime = new FubuRuntime(factory, containerFacility, routeTask.Result);
+
+            containerFacility.Register(typeof (FubuRuntime), ObjectDef.ForValue(runtime));
             return runtime;
         }
 
