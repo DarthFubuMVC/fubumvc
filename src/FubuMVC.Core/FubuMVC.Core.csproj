@@ -687,7 +687,7 @@
     <Compile Include="View\Model\ViewFacility.cs" />
     <Compile Include="View\Model\ViewFolder.cs" />
     <Compile Include="View\Model\ViewTypePool.cs" />
-    <Compile Include="View\PartialExpressionExtensions.cs" />
+    <Compile Include="UI\PartialExpressionExtensions.cs" />
     <Compile Include="View\Registration\GenericParser.cs" />
     <Compile Include="View\Rendering\IRenderableView.cs" />
     <Compile Include="View\ViewEngineSettings.cs" />

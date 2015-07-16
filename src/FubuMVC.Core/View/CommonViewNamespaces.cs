@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Web;
 using FubuCore;
-using FubuMVC.Core.UI;
 using HtmlTags;
 
 namespace FubuMVC.Core.View
