@@ -3,13 +3,13 @@ using System;
 namespace FubuMVC.Core.Diagnostics.Packaging
 {
     /// <summary>
-    /// Provides static access to the 'current' IPackageLog
+    /// Provides static access to the 'current' IActivationLog
     /// </summary>
     public static class LogWriter
     {
         private static readonly LogWriterStatus _status = new LogWriterStatus();
 
-        public static void WithLog(IPackageLog log, Action action)
+        public static void WithLog(IActivationLog log, Action action)
         {
             _status.PushLog(log);
             try
@@ -26,7 +26,7 @@ namespace FubuMVC.Core.Diagnostics.Packaging
             }
         }
 
-        public static IPackageLog Current
+        public static IActivationLog Current
         {
             get { return _status.Current; }
         }

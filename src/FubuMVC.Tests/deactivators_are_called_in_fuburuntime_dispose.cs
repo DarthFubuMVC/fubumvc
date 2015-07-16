@@ -41,7 +41,7 @@ namespace FubuMVC.Tests
             _name = name;
         }
 
-        public void Deactivate(IPackageLog log)
+        public void Deactivate(IActivationLog log)
         {
             Messages.Add(_name);
         }

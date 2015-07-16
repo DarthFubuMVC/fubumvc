@@ -14,7 +14,7 @@ namespace FubuMVC.Core.Diagnostics.Packaging
         {
             _timer = timer;
 
-            _logs = new Cache<object, PackageLog>(o => new PackageLog(_timer)
+            _logs = new Cache<object, ActivationLog>(o => new ActivationLog(_timer)
             {
                 Description = o.ToString()
             });
@@ -24,14 +24,14 @@ namespace FubuMVC.Core.Diagnostics.Packaging
         {
         }
 
-        private readonly Cache<object, PackageLog> _logs;
+        private readonly Cache<object, ActivationLog> _logs;
 
         public void LogObject(object target, string provenance)
         {
             _logs[target].Provenance = provenance;
         }
 
-        public IPackageLog LogFor(object target)
+        public IActivationLog LogFor(object target)
         {
             return _logs[target];
         }
@@ -41,7 +41,7 @@ namespace FubuMVC.Core.Diagnostics.Packaging
             _logs[target].Execute(continuation);
         }
 
-        public void EachLog(Action<object, PackageLog> action)
+        public void EachLog(Action<object, ActivationLog> action)
         {
             _logs.Each(action);
         }
@@ -70,6 +70,6 @@ namespace FubuMVC.Core.Diagnostics.Packaging
     public class LogSubject
     {
         public object Subject { get; set; }
-        public PackageLog Log { get; set; }
+        public ActivationLog Log { get; set; }
     }
 }

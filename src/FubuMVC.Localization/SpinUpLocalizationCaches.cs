@@ -14,7 +14,7 @@ namespace FubuMVC.Localization
             _factory = factory;
         }
 
-        public void Activate(IPackageLog log)
+        public void Activate(IActivationLog log)
         {
             _factory.LoadAll(text => log.Trace(text));
             _factory.ApplyToLocalizationManager();

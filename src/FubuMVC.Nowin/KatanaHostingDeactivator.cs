@@ -13,7 +13,7 @@ namespace FubuMVC.Nowin
             _settings = settings;
         }
 
-        public void Deactivate(IPackageLog log)
+        public void Deactivate(IActivationLog log)
         {
             if (_settings.EmbeddedServer != null)
             {

@@ -9,7 +9,7 @@ namespace FubuMVC.Core.Diagnostics
 {
     public static class FubuApplicationDescriber
     {
-        public static string WriteDescription(IBottlingDiagnostics diagnostics)
+        public static string WriteDescription(IActivationDiagnostics diagnostics)
         {
             var writer = new System.IO.StringWriter();
 
@@ -24,7 +24,7 @@ namespace FubuMVC.Core.Diagnostics
             return writer.ToString();
         }
 
-        private static void writeBottles(StringWriter writer, IBottlingDiagnostics diagnostics)
+        private static void writeBottles(StringWriter writer, IActivationDiagnostics diagnostics)
         {
             writer.WriteLine("------------------------------------------------------------------------------------------------");
             writer.WriteLine("Logs");
@@ -43,7 +43,7 @@ namespace FubuMVC.Core.Diagnostics
             writer.WriteLine();
         }
 
-        private static void writeErrors(StringWriter writer, IBottlingDiagnostics diagnostics)
+        private static void writeErrors(StringWriter writer, IActivationDiagnostics diagnostics)
         {
             writer.WriteLine("------------------------------------------------------------------------------------------------");
             writer.WriteLine("Errors");

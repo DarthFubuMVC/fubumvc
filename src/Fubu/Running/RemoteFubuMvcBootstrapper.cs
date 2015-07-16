@@ -66,7 +66,7 @@ namespace Fubu.Running
             _activator.GenerateTemplates();
         }
 
-        void IActivator.Activate(IPackageLog log)
+        void IActivator.Activate(IActivationLog log)
         {
         }
     }

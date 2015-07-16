@@ -21,7 +21,7 @@ namespace FubuTransportation.Polling
             _latch = latch;
         }
 
-        public void Deactivate(IPackageLog log)
+        public void Deactivate(IActivationLog log)
         {
             _latch.Latched = true;
 

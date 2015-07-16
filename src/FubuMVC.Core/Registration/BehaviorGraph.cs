@@ -121,7 +121,7 @@ namespace FubuMVC.Core.Registration
         /// </summary>
         public IRouteIterator RouteIterator { get; set; }
 
-        public IBottlingDiagnostics Diagnostics { get; set; }
+        public IActivationDiagnostics Diagnostics { get; set; }
 
         #region IChainImporter Members
 
@@ -157,12 +157,12 @@ namespace FubuMVC.Core.Registration
 
         public static BehaviorGraph BuildFrom(FubuRegistry registry, IPerfTimer timer = null)
         {
-            return BehaviorGraphBuilder.Build(registry, timer ?? new PerfTimer(), new Assembly[0], new BottlingDiagnostics());
+            return BehaviorGraphBuilder.Build(registry, timer ?? new PerfTimer(), new Assembly[0], new ActivationDiagnostics());
         }
 
         public static BehaviorGraph BuildFrom<T>(IPerfTimer timer = null) where T : FubuRegistry, new()
         {
-            return BehaviorGraphBuilder.Build(new T(), timer ?? new PerfTimer(), new Assembly[0], new BottlingDiagnostics());
+            return BehaviorGraphBuilder.Build(new T(), timer ?? new PerfTimer(), new Assembly[0], new ActivationDiagnostics());
         }
 
         public static BehaviorGraph BuildFrom(Action<FubuRegistry> configure, IPerfTimer timer = null)
@@ -170,7 +170,7 @@ namespace FubuMVC.Core.Registration
             var registry = new FubuRegistry();
             configure(registry);
 
-            return BehaviorGraphBuilder.Build(registry, timer ?? new PerfTimer(), new Assembly[0], new BottlingDiagnostics());
+            return BehaviorGraphBuilder.Build(registry, timer ?? new PerfTimer(), new Assembly[0], new ActivationDiagnostics());
         }
 
 

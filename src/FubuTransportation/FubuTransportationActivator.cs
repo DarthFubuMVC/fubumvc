@@ -26,7 +26,7 @@ namespace FubuTransportation
             _settings = settings;
         }
 
-        public void Activate(IPackageLog log)
+        public void Activate(IActivationLog log)
         {
             if (_settings.Disabled)
             {
@@ -48,7 +48,7 @@ namespace FubuTransportation
              * */
         }
 
-        public void Deactivate(IPackageLog log)
+        public void Deactivate(IActivationLog log)
         {
             if(_settings.Disabled) return;
 

@@ -115,7 +115,7 @@ namespace FubuMVC.Core
             RouteTable.Routes.Clear();
             SetupNamingStrategyForHttpHeaders();
 
-            var diagnostics = new BottlingDiagnostics();
+            var diagnostics = new ActivationDiagnostics();
             var perfTimer = diagnostics.Timer;
             perfTimer.Start("FubuMVC Application Bootstrapping");
 
@@ -136,7 +136,7 @@ namespace FubuMVC.Core
             return runtime;
         }
 
-        private static IEnumerable<Assembly> findModuleAssemblies(IBottlingDiagnostics diagnostics)
+        private static IEnumerable<Assembly> findModuleAssemblies(IActivationDiagnostics diagnostics)
         {
             var assemblyPath = AppDomain.CurrentDomain.BaseDirectory;
             var binPath = FindBinPath();
@@ -220,7 +220,7 @@ namespace FubuMVC.Core
          * 
          */
 
-        private FubuRuntime bootstrapRuntime(IPerfTimer perfTimer, IBottlingDiagnostics diagnostics,
+        private FubuRuntime bootstrapRuntime(IPerfTimer perfTimer, IActivationDiagnostics diagnostics,
             IEnumerable<Assembly> packageAssemblies, IContainerFacility containerFacility)
         {
             perfTimer.Record("Applying IFubuRegistryExtension's", () => applyFubuExtensionsFromPackages(diagnostics, packageAssemblies));
@@ -259,7 +259,7 @@ namespace FubuMVC.Core
             graph.As<IRegisterable>().Register(containerFacility.Register);
         }
 
-        private BehaviorGraph buildBehaviorGraph(IPerfTimer timer, IEnumerable<Assembly> assemblies, IBottlingDiagnostics diagnostics)
+        private BehaviorGraph buildBehaviorGraph(IPerfTimer timer, IEnumerable<Assembly> assemblies, IActivationDiagnostics diagnostics)
         {
             var graph = BehaviorGraphBuilder.Build(_registry.Value, timer, assemblies, diagnostics);
 
@@ -276,7 +276,7 @@ namespace FubuMVC.Core
             return routes;
         }
 
-        private void applyFubuExtensionsFromPackages(IBottlingDiagnostics diagnostics, IEnumerable<Assembly> packageAssemblies)
+        private void applyFubuExtensionsFromPackages(IActivationDiagnostics diagnostics, IEnumerable<Assembly> packageAssemblies)
         {
             // THIS IS NEW, ONLY ASSEMBLIES MARKED AS [FubuModule] will be scanned
             var importers = packageAssemblies.Where(a => a.HasAttribute<FubuModuleAttribute>()).Select(
@@ -370,7 +370,7 @@ namespace FubuMVC.Core
         /// take an action when there has been a failure in the system.
         /// </summary>
         /// <param name="failure">The action to perform</param>
-        public static void AssertNoFailures(this IBottlingDiagnostics diagnostics, Action failure)
+        public static void AssertNoFailures(this IActivationDiagnostics diagnostics, Action failure)
         {
             if (diagnostics.HasErrors())
             {
@@ -381,7 +381,7 @@ namespace FubuMVC.Core
         /// <summary>
         /// Default AssertNoFailures
         /// </summary>
-        public static void AssertNoFailures(this IBottlingDiagnostics diagnostics)
+        public static void AssertNoFailures(this IActivationDiagnostics diagnostics)
         {
             diagnostics.AssertNoFailures(() =>
             {

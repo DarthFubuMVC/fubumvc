@@ -26,7 +26,7 @@ namespace FubuMVC.Core.Environment
             return "File '{0}' must exist".ToFormat(_file);
         }
 
-        public void Check(IPackageLog log)
+        public void Check(IActivationLog log)
         {
             if (File.Exists(_file))
             {

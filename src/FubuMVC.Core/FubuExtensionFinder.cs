@@ -13,7 +13,7 @@ namespace FubuMVC.Core
     /// </summary>
     public static class FubuExtensionFinder
     {
-        public static IEnumerable<IImporter> FindAllExtensions(this Assembly assembly, IBottlingDiagnostics diagnostics)
+        public static IEnumerable<IImporter> FindAllExtensions(this Assembly assembly, IActivationDiagnostics diagnostics)
         {
             // Yeah, it really does have to be this way
             var log = diagnostics.LogFor(assembly);
@@ -35,9 +35,9 @@ namespace FubuMVC.Core
 
         public class Importer<T> : IImporter where T : IFubuRegistryExtension, new()
         {
-            private readonly IPackageLog _log;
+            private readonly IActivationLog _log;
 
-            public Importer(IPackageLog log)
+            public Importer(IActivationLog log)
             {
                 _log = log;
             }

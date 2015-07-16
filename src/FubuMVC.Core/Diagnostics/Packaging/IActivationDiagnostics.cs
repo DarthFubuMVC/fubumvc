@@ -2,12 +2,12 @@
 
 namespace FubuMVC.Core.Diagnostics.Packaging
 {
-    public interface IBottlingDiagnostics
+    public interface IActivationDiagnostics
     {
         //on logging session
         void LogExecution(object target, Action continuation);
-        IPackageLog LogFor(object target);
-        void EachLog(Action<object, PackageLog> action);
+        IActivationLog LogFor(object target);
+        void EachLog(Action<object, ActivationLog> action);
         bool HasErrors();
 
 

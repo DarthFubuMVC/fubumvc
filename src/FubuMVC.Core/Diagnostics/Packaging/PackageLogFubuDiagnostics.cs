@@ -22,7 +22,7 @@ namespace FubuMVC.Core.Diagnostics.Packaging
             _graph
                 .Diagnostics
                 .EachLog((target, log) => logs.Add(new PackageDiagnosticsLogModel{
-                    Type = BottlingDiagnostics.GetTypeName(target),
+                    Type = ActivationDiagnostics.GetTypeName(target),
                     Description = target.ToString(),
                     Provenance = log.Provenance,
                     FullTraceText = log.FullTraceText(),

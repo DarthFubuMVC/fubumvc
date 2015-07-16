@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace FubuMVC.Core.Diagnostics.Packaging
 {
-    public interface IPackageLog
+    public interface IActivationLog
     {
         void Trace(ConsoleColor color, string text, params object[] parameters);
         void Trace(string text, params object[] parameters);

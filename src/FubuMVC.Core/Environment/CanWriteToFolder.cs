@@ -26,7 +26,7 @@ namespace FubuMVC.Core.Environment
             return DescriptionMessage.ToFormat(_folder);
         }
 
-        public void Check(IPackageLog log)
+        public void Check(IActivationLog log)
         {
             var file = _folder.AppendPath(TracerFile);
             try

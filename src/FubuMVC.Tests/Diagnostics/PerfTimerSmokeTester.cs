@@ -72,7 +72,7 @@ namespace FubuMVC.Tests.Diagnostics
             _time = time;
         }
 
-        public void Activate(IPackageLog log)
+        public void Activate(IActivationLog log)
         {
             Thread.Sleep(_time);
         }

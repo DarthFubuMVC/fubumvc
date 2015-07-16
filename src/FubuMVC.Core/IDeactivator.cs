@@ -8,6 +8,6 @@ namespace FubuMVC.Core
     /// </summary>
     public interface IDeactivator
     {
-        void Deactivate(IPackageLog log);
+        void Deactivate(IActivationLog log);
     }
 }

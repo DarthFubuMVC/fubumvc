@@ -28,7 +28,7 @@ namespace FubuTransportation.Runtime
             _fubuTransportActivators = fubuTransportActivators;
         }
 
-        public void Activate(IPackageLog log)
+        public void Activate(IActivationLog log)
         {
             _graph.ReadSettings(_services);
             OpenChannels();

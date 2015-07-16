@@ -26,7 +26,7 @@ namespace FubuMVC.Core.Environment
             return DescriptionMessage;
         }
 
-        public void Check(IPackageLog log)
+        public void Check(IActivationLog log)
         {
             if (Directory.Exists(_folder))
             {

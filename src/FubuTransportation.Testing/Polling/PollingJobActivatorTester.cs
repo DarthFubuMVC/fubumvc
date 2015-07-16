@@ -15,11 +15,11 @@ namespace FubuTransportation.Testing.Polling
         private IPollingJob[] theJobs;
         private NotImplementedException ex1;
         private NotSupportedException ex2;
-        private IPackageLog theLog;
+        private IActivationLog theLog;
 
         protected override void beforeEach()
         {
-            theLog = MockFor<IPackageLog>();
+            theLog = MockFor<IActivationLog>();
 
             theJobs = Services.CreateMockArrayFor<IPollingJob>(5);
             foreach (var pollingJob in theJobs)
@@ -58,11 +58,11 @@ namespace FubuTransportation.Testing.Polling
         private IPollingJob[] theJobs;
         private NotImplementedException ex1;
         private NotSupportedException ex2;
-        private IPackageLog theLog;
+        private IActivationLog theLog;
 
         protected override void beforeEach()
         {
-            theLog = MockFor<IPackageLog>();
+            theLog = MockFor<IActivationLog>();
 
             theJobs = Services.CreateMockArrayFor<IPollingJob>(5);
             Services.Inject<IPollingJobs>(new PollingJobs(theJobs));

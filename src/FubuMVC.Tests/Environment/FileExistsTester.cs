@@ -15,7 +15,7 @@ namespace FubuMVC.Tests.Environment
         {
             new FileSystem().WriteStringToFile("file.txt", "anything");
 
-            var log = new PackageLog();
+            var log = new ActivationLog();
 
             var requirement = new FileExists("file.txt");
 
@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.Environment
         [Test]
         public void negative_test()
         {
-            var log = new PackageLog();
+            var log = new ActivationLog();
 
             var file = Guid.NewGuid().ToString() + ".txt";
             var requirement = new FileExists(file);
@@ -48,7 +48,7 @@ namespace FubuMVC.Tests.Environment
                 File = "file.txt"
             };
 
-            var log = new PackageLog();
+            var log = new ActivationLog();
 
             var requirement = new FileExists<FileSettings>(x => x.File, settings);
 
@@ -61,7 +61,7 @@ namespace FubuMVC.Tests.Environment
         [Test]
         public void negative_test_with_settings()
         {
-            var log = new PackageLog();
+            var log = new ActivationLog();
 
             var file = Guid.NewGuid().ToString() + ".txt";
             var settings = new FileSettings

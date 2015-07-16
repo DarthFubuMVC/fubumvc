@@ -12,7 +12,7 @@ namespace FubuMVC.Localization.Testing
     {
         protected override void beforeEach()
         {
-            ClassUnderTest.Activate(MockFor<IPackageLog>());
+            ClassUnderTest.Activate(MockFor<IActivationLog>());
         }
 
         [Test]

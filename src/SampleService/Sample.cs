@@ -71,14 +71,14 @@ namespace SampleService
             _dependency = dependency;
         }
 
-        public void Activate(IPackageLog log)
+        public void Activate(IActivationLog log)
         {
             Write("Starting SampleService...");
 
             EventAggregator.Messaging.AddListener(this);
         }
 
-        public void Deactivate(IPackageLog log)
+        public void Deactivate(IActivationLog log)
         {
             Write("Stopping SampleService...");
         }
@@ -100,13 +100,13 @@ namespace SampleService
 
     public class RemoteService : IActivator, IDeactivator, IListener<TestSignal>
     {
-        public void Activate(IPackageLog log)
+        public void Activate(IActivationLog log)
         {
             EventAggregator.Messaging.AddListener(this);
         }
 
 
-        public void Deactivate(IPackageLog log)
+        public void Deactivate(IActivationLog log)
         {
         }
 

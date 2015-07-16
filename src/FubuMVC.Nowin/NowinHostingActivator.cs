@@ -16,7 +16,7 @@ namespace FubuMVC.Nowin
             _settings = settings;
         }
 
-        public void Activate(IPackageLog log)
+        public void Activate(IActivationLog log)
         {
             if (!_settings.AutoHostingEnabled)
             {

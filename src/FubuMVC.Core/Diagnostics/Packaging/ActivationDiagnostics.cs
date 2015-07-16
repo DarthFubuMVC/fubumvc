@@ -4,11 +4,11 @@ using FubuMVC.Core.Environment;
 
 namespace FubuMVC.Core.Diagnostics.Packaging
 {
-    public class BottlingDiagnostics : IBottlingDiagnostics
+    public class ActivationDiagnostics : IActivationDiagnostics
     {
         private readonly LoggingSession _log;
 
-        public BottlingDiagnostics()
+        public ActivationDiagnostics()
         {
             Timer = new PerfTimer();
             _log = new LoggingSession(Timer);
@@ -19,12 +19,12 @@ namespace FubuMVC.Core.Diagnostics.Packaging
             _log.LogExecution(target, continuation);
         }
 
-        public IPackageLog LogFor(object target)
+        public IActivationLog LogFor(object target)
         {
             return _log.LogFor(target);
         }
 
-        public void EachLog(Action<object, PackageLog> action)
+        public void EachLog(Action<object, ActivationLog> action)
         {
             _log.EachLog(action);
         }

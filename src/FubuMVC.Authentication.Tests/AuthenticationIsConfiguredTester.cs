@@ -14,7 +14,7 @@ namespace FubuMVC.Authentication.Tests
         {
             Services.CreateMockArrayFor<IAuthenticationStrategy>(3);
 
-            var packageLog = MockFor<IPackageLog>();
+            var packageLog = MockFor<IActivationLog>();
             ClassUnderTest.Activate(packageLog);
 
             packageLog.AssertWasNotCalled(x => x.MarkFailure("text"), x => x.IgnoreArguments());
@@ -25,7 +25,7 @@ namespace FubuMVC.Authentication.Tests
         {
             Services.CreateMockArrayFor<IAuthenticationStrategy>(0);
 
-            var packageLog = MockFor<IPackageLog>();
+            var packageLog = MockFor<IActivationLog>();
 
             var activator = new AuthenticationIsConfigured(Enumerable.Empty<IAuthenticationStrategy>());
 

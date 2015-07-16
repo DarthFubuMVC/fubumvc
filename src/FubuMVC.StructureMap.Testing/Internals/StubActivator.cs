@@ -5,14 +5,14 @@ namespace FubuMVC.StructureMap.Testing.Internals
 {
     public class StubActivator : IActivator
     {
-        private IPackageLog _log;
+        private IActivationLog _log;
 
-        public void Activate(IPackageLog log)
+        public void Activate(IActivationLog log)
         {
             _log = log;
         }
 
-        public IPackageLog Log
+        public IActivationLog Log
         {
             get { return _log; }
         }

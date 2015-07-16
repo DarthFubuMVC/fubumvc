@@ -19,7 +19,7 @@ namespace FubuMVC.Core.Configuration
     internal static class BehaviorGraphBuilder
     {
         // TOOD -- clean this up a little bit
-        public static BehaviorGraph Build(FubuRegistry registry, IPerfTimer perfTimer, IEnumerable<Assembly> packageAssemblies, IBottlingDiagnostics diagnostics)
+        public static BehaviorGraph Build(FubuRegistry registry, IPerfTimer perfTimer, IEnumerable<Assembly> packageAssemblies, IActivationDiagnostics diagnostics)
         {
             var graph = new BehaviorGraph
             {

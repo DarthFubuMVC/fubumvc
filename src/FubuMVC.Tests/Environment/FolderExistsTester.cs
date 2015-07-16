@@ -15,7 +15,7 @@ namespace FubuMVC.Tests.Environment
         {
             new FileSystem().CreateDirectory("foo");
 
-            var log = new PackageLog();
+            var log = new ActivationLog();
 
             var requirement = new FolderExists("foo");
 
@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.Environment
         [Test]
         public void negative_test()
         {
-            var log = new PackageLog();
+            var log = new ActivationLog();
 
             var folder = Guid.NewGuid().ToString();
             var requirement = new FolderExists(folder);
@@ -48,7 +48,7 @@ namespace FubuMVC.Tests.Environment
                 Folder = "foo"
             };
 
-            var log = new PackageLog();
+            var log = new ActivationLog();
 
             var requirement = new FolderExists<FileSettings>(x => x.Folder, settings);
 
@@ -61,7 +61,7 @@ namespace FubuMVC.Tests.Environment
         [Test]
         public void negative_test_with_settings()
         {
-            var log = new PackageLog();
+            var log = new ActivationLog();
 
             var folder = Guid.NewGuid().ToString();
             var settings = new FileSettings

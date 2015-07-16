@@ -8,20 +8,20 @@ using FubuCore.CommandLine;
 namespace FubuMVC.Core.Diagnostics.Packaging
 {
     [Serializable]
-    public class PackageLog : IPackageLog
+    public class ActivationLog : IActivationLog
     {
         private readonly IPerfTimer _timer;
         private readonly StringWriter _text = new StringWriter();
         private readonly IList<object> _children = new List<object>();
 
-        public PackageLog(IPerfTimer timer)
+        public ActivationLog(IPerfTimer timer)
         {
             _timer = timer;
             Success = true;
             Id = Guid.NewGuid();
         }
 
-        public PackageLog() : this(new PerfTimer())
+        public ActivationLog() : this(new PerfTimer())
         {
         }
 

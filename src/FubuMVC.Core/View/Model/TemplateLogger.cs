@@ -17,9 +17,9 @@ namespace FubuMVC.Core.View.Model
 
     public class TemplateLogger : ITemplateLogger
     {
-        private readonly IBottlingDiagnostics _diagnostics;
+        private readonly IActivationDiagnostics _diagnostics;
 
-        public TemplateLogger(IBottlingDiagnostics diagnostics)
+        public TemplateLogger(IActivationDiagnostics diagnostics)
         {
             _diagnostics = diagnostics;
         }
@@ -34,12 +34,12 @@ namespace FubuMVC.Core.View.Model
             trace(template, text);
         }
 
-        public static ITemplateLogger Default(IBottlingDiagnostics diagnostics)
+        public static ITemplateLogger Default(IActivationDiagnostics diagnostics)
         {
             return new TemplateLogger(diagnostics);
         }
 
-        private IPackageLog getPackageLogger(ITemplateFile template)
+        private IActivationLog getPackageLogger(ITemplateFile template)
         {
             return _diagnostics.LogFor(template);
         }

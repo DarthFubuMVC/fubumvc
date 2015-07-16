@@ -104,7 +104,7 @@ namespace FubuMVC.Core
     public class DeactivatorExecuted : LogRecord, DescribesItself
     {
         public string Deactivator { get; set; }
-        public IPackageLog Log { get; set; }
+        public IActivationLog Log { get; set; }
         public void Describe(Description description)
         {
             description.Title = "Deactivator: " + Deactivator;

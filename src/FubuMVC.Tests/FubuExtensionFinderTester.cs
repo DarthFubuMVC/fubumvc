@@ -15,7 +15,7 @@ namespace FubuMVC.Tests
         {
             var assembly = Assembly.GetExecutingAssembly();
 
-            var types = assembly.FindAllExtensions(new BottlingDiagnostics());
+            var types = assembly.FindAllExtensions(new ActivationDiagnostics());
 
             types.OfType<FubuExtensionFinder.Importer<GoodExtension>>().Any().ShouldBeTrue();
             types.OfType<FubuExtensionFinder.Importer<NotAutoExtension>>().Any().ShouldBeFalse();

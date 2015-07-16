@@ -14,7 +14,7 @@ namespace FubuMVC.Core.Http.Owin.Middleware
             _settings = settings;
         }
 
-        public void Deactivate(IPackageLog log)
+        public void Deactivate(IActivationLog log)
         {
             _settings.Middleware.OfType<IDisposable>().Each(x => x.Dispose());
         }

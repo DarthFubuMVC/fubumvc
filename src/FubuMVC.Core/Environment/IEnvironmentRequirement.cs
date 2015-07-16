@@ -5,7 +5,7 @@ namespace FubuMVC.Core.Environment
     public interface IEnvironmentRequirement
     {
         string Describe();
-        void Check(IPackageLog log);
+        void Check(IActivationLog log);
     }
 
 }

@@ -7,14 +7,14 @@ namespace FubuMVC.Core.Diagnostics.Packaging
     /// </summary>
     public class LogWriterStatus
     {
-        private readonly Stack<IPackageLog> _logs = new Stack<IPackageLog>();
+        private readonly Stack<IActivationLog> _logs = new Stack<IActivationLog>();
 
         public LogWriterStatus()
         {
-            _logs.Push(new PackageLog(new PerfTimer()));
+            _logs.Push(new ActivationLog(new PerfTimer()));
         }
 
-        public IPackageLog Current
+        public IActivationLog Current
         {
             get
             {
@@ -22,7 +22,7 @@ namespace FubuMVC.Core.Diagnostics.Packaging
             }
         }
 
-        public void PushLog(IPackageLog log)
+        public void PushLog(IActivationLog log)
         {
             _logs.Push(log);
         }

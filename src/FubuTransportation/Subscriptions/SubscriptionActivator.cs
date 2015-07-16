@@ -29,7 +29,7 @@ namespace FubuTransportation.Subscriptions
             _settings = settings;
         }
 
-        public void Activate(IPackageLog log)
+        public void Activate(IActivationLog log)
         {
             log.Trace("Determining subscriptions for node " + _cache.NodeName);
 
@@ -58,7 +58,7 @@ namespace FubuTransportation.Subscriptions
             sendSubscriptions();
         }
 
-        private Subscription[] determineStaticRequirements(IPackageLog log)
+        private Subscription[] determineStaticRequirements(IActivationLog log)
         {
             var requirements = _requirements.SelectMany(x => x.DetermineRequirements()).ToArray();
             traceLoadedRequirements(log, requirements);
@@ -72,7 +72,7 @@ namespace FubuTransportation.Subscriptions
                 .Each(group => sendSubscriptionsToSource(@group.Key, @group));
         }
 
-        private static void traceLoadedRequirements(IPackageLog log, Subscription[] requirements)
+        private static void traceLoadedRequirements(IActivationLog log, Subscription[] requirements)
         {
             log.Trace("Found subscription requirements:");
             requirements.Each(x => log.Trace(x.ToString()));

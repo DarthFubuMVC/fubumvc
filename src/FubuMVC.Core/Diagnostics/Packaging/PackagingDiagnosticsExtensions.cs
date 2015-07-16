@@ -7,7 +7,7 @@ namespace FubuMVC.Core.Diagnostics.Packaging
 {
     public static class PackagingDiagnosticsExtensions
     {
-        public static void LogExecutionOnEach<TItem>(this IBottlingDiagnostics diagnostics, IEnumerable<TItem> targets, Action<TItem, IPackageLog> continuation)
+        public static void LogExecutionOnEach<TItem>(this IActivationDiagnostics diagnostics, IEnumerable<TItem> targets, Action<TItem, IActivationLog> continuation)
         {
             targets.Each(currentTarget =>
             {
@@ -16,7 +16,7 @@ namespace FubuMVC.Core.Diagnostics.Packaging
             });
         }
 
-        public static void LogExecutionOnEachInParallel<TItem>(this IBottlingDiagnostics diagnostics, IEnumerable<TItem> targets, Action<TItem, IPackageLog> continuation)
+        public static void LogExecutionOnEachInParallel<TItem>(this IActivationDiagnostics diagnostics, IEnumerable<TItem> targets, Action<TItem, IActivationLog> continuation)
         {
             var tasks = targets.Select(currentTarget => {
                 return Task.Factory.StartNew(() => {

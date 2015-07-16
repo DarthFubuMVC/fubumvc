@@ -16,7 +16,7 @@ namespace FubuMVC.Core.UI
             _stringifier = stringifier;
         }
 
-        public void Activate(IPackageLog log)
+        public void Activate(IActivationLog log)
         {
             _registries.Each(r =>
             {

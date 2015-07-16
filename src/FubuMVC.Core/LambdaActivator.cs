@@ -14,7 +14,7 @@ namespace FubuMVC.Core
             _action = action;
         }
 
-        public void Activate(IPackageLog log)
+        public void Activate(IActivationLog log)
         {
             _action();
         }

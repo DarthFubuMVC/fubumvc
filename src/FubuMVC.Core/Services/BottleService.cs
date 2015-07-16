@@ -18,9 +18,9 @@ namespace FubuMVC.Core.Services
     public class BottleService : IBottleService
     {
         private readonly IActivator _activator;
-        private readonly IPackageLog _log;
+        private readonly IActivationLog _log;
 
-        public BottleService(IActivator activator, IPackageLog log)
+        public BottleService(IActivator activator, IActivationLog log)
         {
             _activator = activator;
             _log = log;
@@ -88,7 +88,7 @@ namespace FubuMVC.Core.Services
 
         public static BottleService For(IActivator service)
         {
-            return new BottleService(service, new PackageLog());
+            return new BottleService(service, new ActivationLog());
         }
 
         public override string ToString()
