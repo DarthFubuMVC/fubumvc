@@ -5,10 +5,9 @@ using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
-using FubuMVC.Diagnostics;
 using FubuMVC.Katana;
-using FubuMVC.Spark.SparkModel;
 using HtmlTags;
+using Owin;
 using Spark;
 
 namespace Fubu.Running
@@ -25,18 +24,18 @@ namespace Fubu.Running
 
         public void Start(object listener, Action<RemoteDomainExpression> configuration = null)
         {
-            _runner = RemoteServiceRunner.For<RemoteFubuMvcBootstrapper>(x => {
+            _runner = RemoteServiceRunner.For<RemoteFubuMvcBootstrapper>(x =>
+            {
                 x.RequireAssemblyContainingType<EmbeddedFubuMvcServer>(AssemblyCopyMode.SemVerCompatible);
                 x.RequireAssemblyContainingType<RemoteFubuMvcProxy>(AssemblyCopyMode.SemVerCompatible);
                 x.RequireAssemblyContainingType<RemoteServiceRunner>(AssemblyCopyMode.SemVerCompatible);
-                x.RequireAssemblyContainingType<Owin.IAppBuilder>();
+                x.RequireAssemblyContainingType<IAppBuilder>();
                 x.RequireAssemblyContainingType<IActivator>(); // Bottles
                 x.RequireAssemblyContainingType<IModelBinder>(); // FubuCore
                 x.RequireAssemblyContainingType<FubuApplication>(AssemblyCopyMode.SemVerCompatible); // FubuMVC.Core
                 x.RequireAssemblyContainingType<HtmlTag>(AssemblyCopyMode.SemVerCompatible); // HtmlTags
-                x.RequireAssemblyContainingType<DiagnosticChainsSource>(AssemblyCopyMode.SemVerCompatible); 
+                x.RequireAssemblyContainingType<DiagnosticChainsSource>(AssemblyCopyMode.SemVerCompatible);
                 x.RequireAssemblyContainingType<SparkViewEngine>(AssemblyCopyMode.SemVerCompatible);
-                x.RequireAssemblyContainingType<SparkTemplate>(AssemblyCopyMode.SemVerCompatible);
 
                 x.RequireAssembly("Microsoft.Owin.Hosting");
                 x.RequireAssembly("Microsoft.Owin.Host.HttpListener");
@@ -65,7 +64,6 @@ namespace Fubu.Running
 
             _runner.Messaging.AddListener(listener);
 
-            
 
             _runner.SendRemotely(new StartApplication
             {
@@ -75,7 +73,6 @@ namespace Fubu.Running
                 Mode = _request.ModeFlag,
                 AutoRefreshWebSocketsAddress = _request.AutoRefreshWebSocketsAddress
             });
-        
         }
 
         public void Recycle()
@@ -94,5 +91,7 @@ namespace Fubu.Running
         }
     }
 
-    public class GenerateTemplates{}
+    public class GenerateTemplates
+    {
+    }
 }

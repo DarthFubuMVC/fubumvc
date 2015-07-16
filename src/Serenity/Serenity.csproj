@@ -34,9 +34,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles\lib\Bottles.dll</HintPath>
-    </Reference>
     <Reference Include="Castle.Core">
       <HintPath>..\packages\Castle.Core\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
@@ -233,6 +230,10 @@
   </Target>
   -->
   <ItemGroup>
+    <ProjectReference Include="..\Bottles\Bottles.csproj">
+      <Project>{e208a2b1-31b0-4455-ba16-3d79f5887ece}</Project>
+      <Name>Bottles</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{e18fd922-0e7a-49cd-b89f-473826077b9d}</Project>
       <Name>FubuMVC.Core</Name>

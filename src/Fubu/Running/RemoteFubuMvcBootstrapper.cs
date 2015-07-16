@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Bottles;
 using Bottles.Diagnostics;
+using Bottles.Services;
 using Bottles.Services.Messaging;
 using FubuMVC.Core;
 using FubuCore;
@@ -9,7 +10,7 @@ using FubuMVC.Core.Http.Owin.Middleware;
 
 namespace Fubu.Running
 {
-    public class RemoteFubuMvcBootstrapper : IBootstrapper, IActivator, IDeactivator, IListener<StartApplication>, IListener<RecycleApplication>, IListener<GenerateTemplates>
+    public class RemoteFubuMvcBootstrapper : IApplicationLoader, IActivator, IListener<StartApplication>, IListener<RecycleApplication>, IListener<GenerateTemplates>, IDisposable
     {
         private readonly IApplicationSourceFinder _typeFinder;
         private readonly IFubuMvcApplicationActivator _activator;
@@ -26,21 +27,16 @@ namespace Fubu.Running
             _messaging = messaging;
         }
 
-        public IEnumerable<IActivator> Bootstrap(IPackageLog log)
-        {
-            yield return this;
-        }
-
-        public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
+        public IDisposable Load()
         {
             EventAggregator.Messaging.AddListener(this);
+            return this;
         }
 
-        public void Deactivate(IPackageLog log)
+        public void Dispose()
         {
             _activator.ShutDown();
         }
-
 
         public void Receive(StartApplication message)
         {
@@ -69,6 +65,10 @@ namespace Fubu.Running
         public void Receive(GenerateTemplates message)
         {
             _activator.GenerateTemplates();
+        }
+
+        void IActivator.Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
+        {
         }
     }
 }

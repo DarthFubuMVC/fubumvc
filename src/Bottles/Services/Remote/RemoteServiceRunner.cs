@@ -13,7 +13,7 @@ namespace Bottles.Services.Remote
         private RemoteServicesProxy _proxy;
         private RemoteListener _remoteListener;
         private readonly IList<ServiceStarted> _started = new List<ServiceStarted>();
-        private RemoteDomainExpression _expression;
+        private readonly RemoteDomainExpression _expression;
 
         public RemoteServiceRunner(Action<RemoteDomainExpression> configure)
         {
@@ -107,7 +107,7 @@ namespace Bottles.Services.Remote
 
         public void WaitForServiceToStart<T>() where T : IActivator
         {
-            Wait.Until(() => { return _started.Any(x => x.ActivatorTypeName == typeof (T).AssemblyQualifiedName); });
+            Wait.Until(() => _started.Any(x => x.ActivatorTypeName == typeof (T).AssemblyQualifiedName));
         }
 
         public void SendRemotely<T>(T message)

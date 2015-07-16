@@ -11,7 +11,8 @@
     <RootNamespace>Fubu</RootNamespace>
     <AssemblyName>Fubu</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile></TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -36,9 +37,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles\lib\Bottles.dll</HintPath>
-    </Reference>
     <Reference Include="Fleck">
       <HintPath>..\packages\Fleck\lib\net40\Fleck.dll</HintPath>
     </Reference>
@@ -140,6 +138,10 @@
     <EmbeddedResource Include="Running\WebsocketsRefresh.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Bottles\Bottles.csproj">
+      <Project>{e208a2b1-31b0-4455-ba16-3d79f5887ece}</Project>
+      <Name>Bottles</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{e18fd922-0e7a-49cd-b89f-473826077b9d}</Project>
       <Name>FubuMVC.Core</Name>
@@ -147,10 +149,6 @@
     <ProjectReference Include="..\FubuMVC.Katana\FubuMVC.Katana.csproj">
       <Project>{48bc51c2-b759-48db-aae1-f4686cd6d02a}</Project>
       <Name>FubuMVC.Katana</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.Spark\FubuMVC.Spark.csproj">
-      <Project>{9d6bf559-6461-4eac-bb16-f976ff43e8da}</Project>
-      <Name>FubuMVC.Spark</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
       <Project>{abfea520-820c-4b77-9015-6a09e24252fa}</Project>

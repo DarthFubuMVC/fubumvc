@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Bottles;
 using Bottles.Services.Messaging;
 using FubuCore;
-using FubuCsProjFile.Templating.Graph;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets;
 using FubuMVC.Katana;
