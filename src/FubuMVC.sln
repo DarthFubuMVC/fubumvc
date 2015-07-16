@@ -128,6 +128,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Json", "FubuMVC.Jso
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Json.Tests", "FubuMVC.Json.Tests\FubuMVC.Json.Tests.csproj", "{9A5A2E9D-400E-4FBB-8D39-C3D27E1B1F2D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleService", "SampleService\SampleService.csproj", "{EDDD686C-2DB1-411C-833F-ABAFCAE5498D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -921,6 +923,21 @@ Global
 		{9A5A2E9D-400E-4FBB-8D39-C3D27E1B1F2D}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{9A5A2E9D-400E-4FBB-8D39-C3D27E1B1F2D}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
 		{9A5A2E9D-400E-4FBB-8D39-C3D27E1B1F2D}.Retail|x86.ActiveCfg = Release|Any CPU
+		{EDDD686C-2DB1-411C-833F-ABAFCAE5498D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDDD686C-2DB1-411C-833F-ABAFCAE5498D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDDD686C-2DB1-411C-833F-ABAFCAE5498D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{EDDD686C-2DB1-411C-833F-ABAFCAE5498D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{EDDD686C-2DB1-411C-833F-ABAFCAE5498D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EDDD686C-2DB1-411C-833F-ABAFCAE5498D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDDD686C-2DB1-411C-833F-ABAFCAE5498D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDDD686C-2DB1-411C-833F-ABAFCAE5498D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{EDDD686C-2DB1-411C-833F-ABAFCAE5498D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{EDDD686C-2DB1-411C-833F-ABAFCAE5498D}.Release|x86.ActiveCfg = Release|Any CPU
+		{EDDD686C-2DB1-411C-833F-ABAFCAE5498D}.Retail|Any CPU.ActiveCfg = Release|Any CPU
+		{EDDD686C-2DB1-411C-833F-ABAFCAE5498D}.Retail|Any CPU.Build.0 = Release|Any CPU
+		{EDDD686C-2DB1-411C-833F-ABAFCAE5498D}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{EDDD686C-2DB1-411C-833F-ABAFCAE5498D}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
+		{EDDD686C-2DB1-411C-833F-ABAFCAE5498D}.Retail|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -963,5 +980,6 @@ Global
 		{61C504B7-4D55-4CB3-9FD2-B0726E09F425} = {79F0A938-58F7-47CB-B800-0BB3990E1A3A}
 		{82E23B59-EC49-4D75-B655-0C6086F334C8} = {BB6072D3-FE55-4840-A4D3-15B61ABCC7E6}
 		{9A5A2E9D-400E-4FBB-8D39-C3D27E1B1F2D} = {BB6072D3-FE55-4840-A4D3-15B61ABCC7E6}
+		{EDDD686C-2DB1-411C-833F-ABAFCAE5498D} = {DE130877-DDCB-425C-9C20-BF1B73D4191D}
 	EndGlobalSection
 EndGlobal

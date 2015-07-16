@@ -105,6 +105,7 @@
     <Compile Include="Diagnostics\DiagnosticSettings_TraceLevel_Registration_Tester.cs" />
     <Compile Include="Diagnostics\FakeFubuDiagnostics.cs" />
     <Compile Include="Diagnostics\InteractionContextExtensions.cs" />
+    <Compile Include="Diagnostics\PerfTimerSmokeTester.cs" />
     <Compile Include="Diagnostics\Routes\EndpointReportTester.cs" />
     <Compile Include="Diagnostics\Runtime\ApplyTracingIntegrationTesting.cs" />
     <Compile Include="Diagnostics\Runtime\BehaviorFinishTester.cs" />
@@ -133,6 +134,8 @@
     <Compile Include="Docs\Topics\Authorization\PurchasedProductPolicy.cs" />
     <Compile Include="Docs\Topics\Authorization\PurchaseProductAuthorizationPolicy.cs" />
     <Compile Include="Docs\Topics\Authorization\RoleModelAuthorizationPolicy.cs" />
+    <Compile Include="Environment\FileExistsTester.cs" />
+    <Compile Include="Environment\FolderExistsTester.cs" />
     <Compile Include="FubuApplication_registers_the_FubuRuntime_in_bootstrap.cs" />
     <Compile Include="FubuExtensionFinderTester.cs" />
     <Compile Include="Http\Compression\ContentCompressionExtensionTester.cs" />
@@ -239,6 +242,18 @@
     <Compile Include="Security\AuthorizationCheckPolicyTester.cs" />
     <Compile Include="Security\SecurityServicesRegistry_specification.cs" />
     <Compile Include="Security\SecuritySettingsTester.cs" />
+    <Compile Include="Services\BottleServiceApplicationTester.cs" />
+    <Compile Include="Services\Messaging\EventAggregatorTester.cs" />
+    <Compile Include="Services\Messaging\MessageWaitConditionTester.cs" />
+    <Compile Include="Services\Messaging\MessagingHubTester.cs" />
+    <Compile Include="Services\Messaging\RemoteListenerTester.cs" />
+    <Compile Include="Services\Messaging\Tracking\MessageHistoryTester.cs" />
+    <Compile Include="Services\Messaging\Tracking\MessageSentTester.cs" />
+    <Compile Include="Services\Messaging\WaitTester.cs" />
+    <Compile Include="Services\Remote\AssemblyRequirementTester.cs" />
+    <Compile Include="Services\Remote\BigRemoteServicesIntegrationTester.cs" />
+    <Compile Include="Services\Remote\RemoteDomainExpressionTester.cs" />
+    <Compile Include="Services\Remote\RemoteServicesProxyTester.cs" />
     <Compile Include="SessionState\flashing_an_object.cs" />
     <Compile Include="SessionState\retrieving_an_existing_item_from_flash.cs" />
     <Compile Include="SessionState\retrieving_an_item_when_flash_is_empty.cs" />
@@ -346,7 +361,8 @@
     <Compile Include="FubuBootstrapperIntegrationTester.cs" />
     <Compile Include="FubuRegistryTester.cs" />
     <Compile Include="HtmlGenerationTestExtensions.cs" />
-    <Compile Include="Registration\BehaviorGraphTester.cs"></Compile>
+    <Compile Include="Registration\BehaviorGraphTester.cs">
+    </Compile>
     <Compile Include="Registration\Conventions\ActionSourceTester.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConventionTester.cs" />
     <Compile Include="Registration\Conventions\CustomConventionIntegratedTester.cs" />
@@ -414,6 +430,10 @@
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SampleService\SampleService.csproj">
+      <Project>{eddd686c-2db1-411c-833f-abafcae5498d}</Project>
+      <Name>SampleService</Name>
     </ProjectReference>
     <ProjectReference Include="..\TestPackage1\TestPackage1.csproj">
       <Project>{1f18d6eb-4d9c-407a-bd70-c5d525e377b6}</Project>

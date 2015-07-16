@@ -251,7 +251,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
 
         public IFubuFile Find(string relativeName)
         {
-            var path = Environment.CurrentDirectory.AppendPath(relativeName.Replace('/', Path.DirectorySeparatorChar));
+            var path = System.Environment.CurrentDirectory.AppendPath(relativeName.Replace('/', Path.DirectorySeparatorChar));
             
             return File.Exists(path)
                 ? new FubuFile(path)

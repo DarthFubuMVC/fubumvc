@@ -28,8 +28,7 @@ namespace FubuMVC.Core.Services.Remote
             // TODO -- need to handle exceptions gracefully here
             EventAggregator.Start((IRemoteListener) remoteListener);
 
-            // TODO -- COME BACK HERE AND CHANGE THIS TO FUBUAPPLICTION
-            //properties.Each(x => PackageRegistry.Properties[x.Key] = x.Value);
+            properties.Each(x => FubuApplication.Properties[x.Key] = x.Value);
 
             var loader = BottleServiceApplication.FindLoader(bootstrapperName);
             _shutdown = loader.Load();

@@ -466,7 +466,6 @@
     <Compile Include="Services\BottleService.cs" />
     <Compile Include="Services\BottleServiceApplication.cs" />
     <Compile Include="Services\BottleServiceConfiguration.cs" />
-    <Compile Include="Services\BottleServiceFinder.cs" />
     <Compile Include="Services\BottleServiceRuntime.cs" />
     <Compile Include="Services\IApplication.cs" />
     <Compile Include="Services\IApplicationLoader.cs" />
