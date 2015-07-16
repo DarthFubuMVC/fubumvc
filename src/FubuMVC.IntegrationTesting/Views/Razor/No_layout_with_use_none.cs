@@ -27,7 +27,9 @@ namespace FubuMVC.IntegrationTesting.Views.Razor
         }
     }
 
-    public class NoLayoutModel{}
+    public class NoLayoutModel
+    {
+    }
 
     public class NoLayoutEndpoint
     {

@@ -1,9 +1,9 @@
 ﻿using FubuMVC.Core.Runtime;
 using FubuMVC.Core.StructureMap;
-using NUnit.Framework;
 using FubuTestingSupport;
+using NUnit.Framework;
 
-namespace FubuMVC.StructureMap.Testing
+namespace FubuMVC.Tests.StructureMap
 {
     [TestFixture]
     public class IServiceFactory_Compliance

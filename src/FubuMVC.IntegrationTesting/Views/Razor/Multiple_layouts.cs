@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using FubuMVC.Razor.RazorModel;
-using FubuTestingSupport;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Views.Razor
 {
@@ -48,7 +45,6 @@ namespace FubuMVC.IntegrationTesting.Views.Razor
         }
 
 
-
         [Test]
         public void uses_layout_in_closest_shared_directory_when_found()
         {
@@ -73,7 +69,6 @@ namespace FubuMVC.IntegrationTesting.Views.Razor
             Scenario.ContentShouldContain("<h1>UsesDefault.cshtml</h1>");
             Scenario.ContentShouldContain("<h2>Default Layout</h2>");
         }
-
     }
 
     public class ClosestEndpoint

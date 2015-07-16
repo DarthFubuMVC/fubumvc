@@ -10,7 +10,6 @@ namespace FubuMVC.IntegrationTesting.Diagnostics
         {
             TestHost.Scenario(_ =>
             {
-
                 _.Get.Url("_fubu/asset/version/bootstrap.min.css");
                 _.StatusCodeShouldBeOk();
 

@@ -5,11 +5,8 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.StructureMap;
-using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
-using StructureMap;
 
 namespace FubuMVC.Tests
 {
@@ -38,8 +35,6 @@ namespace FubuMVC.Tests
             {
                 (floor < FubuApplication.Restarted && FubuApplication.Restarted < ceiling).ShouldBeTrue();
             }
-
-            
         }
 
         [Test]
@@ -51,8 +46,6 @@ namespace FubuMVC.Tests
 
                 Console.WriteLine(description);
             }
-
-
         }
 
         [Test]

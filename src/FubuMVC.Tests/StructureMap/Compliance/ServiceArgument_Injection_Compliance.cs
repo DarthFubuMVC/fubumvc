@@ -1,14 +1,14 @@
-﻿using FubuCore.Binding;
+﻿using FubuCore;
+using FubuCore.Binding;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
-using NUnit.Framework;
-using FubuCore;
 using FubuTestingSupport;
+using NUnit.Framework;
 
-namespace FubuMVC.StructureMap.Testing.Compliance
+namespace FubuMVC.Tests.StructureMap.Compliance
 {
     [TestFixture]
     public class ServiceArgument_Injection_Compliance

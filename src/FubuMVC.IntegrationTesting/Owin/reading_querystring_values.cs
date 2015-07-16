@@ -1,10 +1,6 @@
 ﻿using FubuCore;
-using FubuMVC.Core;
 using FubuMVC.Core.Http;
-using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Katana;
-using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -17,10 +13,11 @@ namespace FubuMVC.IntegrationTesting.Owin
         public void read_querystring_values_from_current_request()
         {
             TestHost.BehaviorGraph.BehaviorFor<ReadingQuerystringEndpoint>(x => x.get_querystring_Key(null))
-                    .As<RoutedChain>()
-                    .GetRoutePattern().ShouldEqual("querystring/{Key}");
+                .As<RoutedChain>()
+                .GetRoutePattern().ShouldEqual("querystring/{Key}");
 
-            TestHost.Scenario(_ => {
+            TestHost.Scenario(_ =>
+            {
                 _.Get.Url("/querystring/Foo?Foo=Bar&A=1&B=2");
                 _.ContentShouldBe("Bar");
             });
@@ -36,8 +33,6 @@ namespace FubuMVC.IntegrationTesting.Owin
                 _.Get.Url("/querystring/B?Foo=Bar&A=1&B=2");
                 _.ContentShouldBe("2");
             });
-
-
         }
     }
 

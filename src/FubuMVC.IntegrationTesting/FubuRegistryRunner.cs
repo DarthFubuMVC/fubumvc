@@ -6,10 +6,8 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.StructureMap;
 using FubuMVC.IntegrationTesting.Querying;
 using FubuMVC.Katana;
-using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
@@ -78,7 +76,6 @@ namespace FubuMVC.IntegrationTesting
         protected virtual void configure(FubuRegistry registry)
         {
         }
-
     }
 
 

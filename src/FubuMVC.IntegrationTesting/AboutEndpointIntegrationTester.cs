@@ -3,9 +3,7 @@ using System.Threading;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
-using FubuMVC.Core.StructureMap;
 using FubuMVC.Katana;
-using FubuMVC.StructureMap;
 using HtmlTags;
 using NUnit.Framework;
 
@@ -34,7 +32,8 @@ namespace FubuMVC.IntegrationTesting
         [Test]
         public void can_get_The_about_page_smoke_test()
         {
-            TestHost.Scenario(_ => {
+            TestHost.Scenario(_ =>
+            {
                 _.Get.Action<AboutFubuDiagnostics>(x => x.get_about());
                 _.ContentShouldContain("Assemblies");
             });

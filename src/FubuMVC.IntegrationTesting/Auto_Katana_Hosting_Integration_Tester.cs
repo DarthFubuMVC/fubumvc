@@ -1,11 +1,8 @@
 ﻿using System.Net;
 using FubuMVC.Core;
-using FubuMVC.Core.StructureMap;
 using FubuMVC.Katana;
-using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
-using Rhino.Mocks;
 
 namespace FubuMVC.IntegrationTesting
 {
@@ -42,7 +39,8 @@ namespace FubuMVC.IntegrationTesting
         {
             Actions.IncludeType<KatanaEndpoint>();
 
-            AlterSettings<KatanaSettings>(x => {
+            AlterSettings<KatanaSettings>(x =>
+            {
                 // This line is absolutely mandatory
                 x.AutoHostingEnabled = true;
 
@@ -50,6 +48,7 @@ namespace FubuMVC.IntegrationTesting
             });
         }
     }
+
     // ENDSAMPLE
 
     public class KatanaEndpoint

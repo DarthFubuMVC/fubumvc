@@ -1,4 +1,3 @@
-using System.Threading;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Core.Runtime;
@@ -13,7 +12,8 @@ namespace FubuMVC.IntegrationTesting.Owin
         [Test]
         public void can_write_extension_headers()
         {
-            TestHost.Scenario(_ => {
+            TestHost.Scenario(_ =>
+            {
                 _.Get.Action<ResponseHeadersEndpoint>(x => x.get_response_headers());
 
                 _.Header("x-1").SingleValueShouldEqual("a");
@@ -25,20 +25,20 @@ namespace FubuMVC.IntegrationTesting.Owin
         [Test]
         public void can_write_built_in_response_headers()
         {
-            TestHost.Scenario(_ => {
+            TestHost.Scenario(_ =>
+            {
                 _.Get.Action<ResponseHeadersEndpoint>(x => x.get_response_headers());
 
                 _.Header(HttpResponseHeaders.KeepAlive).SingleValueShouldEqual("True");
                 _.Header(HttpResponseHeaders.Server).SingleValueShouldEqual("Server1");
-
             });
-
         }
 
         [Test]
         public void can_write_etag()
         {
-            TestHost.Scenario(_ => {
+            TestHost.Scenario(_ =>
+            {
                 _.Get.Action<ResponseHeadersEndpoint>(x => x.get_etag());
 
                 _.Header(HttpResponseHeaders.ETag).SingleValueShouldEqual("123456");
@@ -48,31 +48,32 @@ namespace FubuMVC.IntegrationTesting.Owin
         [Test]
         public void can_write_content_headers()
         {
-            TestHost.Scenario(_ => {
+            TestHost.Scenario(_ =>
+            {
                 _.Get.Action<ResponseHeadersEndpoint>(x => x.get_content_headers());
 
                 _.Header(HttpResponseHeaders.ContentMd5).SingleValueShouldEqual("A");
                 _.Header(HttpResponseHeaders.ContentDisposition).SingleValueShouldEqual("B");
-                _.Header(HttpResponseHeaders.ContentLocation).SingleValueShouldEqual("C");
-                _.Header(HttpResponseHeaders.Allow).SingleValueShouldEqual("D");
-                _.Header(HttpResponseHeaders.ContentEncoding).SingleValueShouldEqual("UTF-16");
+                _.Header(HttpGeneralHeaders.ContentLocation).SingleValueShouldEqual("C");
+                _.Header(HttpGeneralHeaders.Allow).SingleValueShouldEqual("D");
+                _.Header(HttpGeneralHeaders.ContentEncoding).SingleValueShouldEqual("UTF-16");
                 _.Header(HttpResponseHeaders.ContentLength).SingleValueShouldEqual("19");
-                _.Header(HttpResponseHeaders.ContentLanguage).SingleValueShouldEqual("jp-JP");
-                _.Header(HttpResponseHeaders.ContentRange).SingleValueShouldEqual("E");
-                _.Header(HttpResponseHeaders.Expires).SingleValueShouldEqual("5");
-                _.Header(HttpResponseHeaders.LastModified).SingleValueShouldEqual("12345");
+                _.Header(HttpGeneralHeaders.ContentLanguage).SingleValueShouldEqual("jp-JP");
+                _.Header(HttpGeneralHeaders.ContentRange).SingleValueShouldEqual("E");
+                _.Header(HttpGeneralHeaders.Expires).SingleValueShouldEqual("5");
+                _.Header(HttpGeneralHeaders.LastModified).SingleValueShouldEqual("12345");
             });
         }
 
         [Test]
         public void can_write_multiple_cookies()
         {
-            TestHost.Scenario(_ => {
+            TestHost.Scenario(_ =>
+            {
                 _.Get.Action<ResponseHeadersEndpoint>(x => x.get_multiple_cookies());
 
                 _.Response.CookieFor("Foo").Value.ShouldEqual("1");
                 _.Response.CookieFor("Foo").Value.ShouldEqual("1");
-                
             });
         }
     }
@@ -101,14 +102,14 @@ namespace FubuMVC.IntegrationTesting.Owin
         {
             _writer.AppendHeader(HttpResponseHeaders.ContentMd5, "A");
             _writer.AppendHeader(HttpResponseHeaders.ContentDisposition, "B");
-            _writer.AppendHeader(HttpResponseHeaders.ContentLocation, "C");
-            _writer.AppendHeader(HttpResponseHeaders.Allow, "D");
-            _writer.AppendHeader(HttpResponseHeaders.ContentEncoding, "UTF-16");
+            _writer.AppendHeader(HttpGeneralHeaders.ContentLocation, "C");
+            _writer.AppendHeader(HttpGeneralHeaders.Allow, "D");
+            _writer.AppendHeader(HttpGeneralHeaders.ContentEncoding, "UTF-16");
             _writer.AppendHeader(HttpResponseHeaders.ContentLength, "Nothing to see here".Length.ToString());
-            _writer.AppendHeader(HttpResponseHeaders.ContentLanguage, "jp-JP");
-            _writer.AppendHeader(HttpResponseHeaders.ContentRange, "E");
-            _writer.AppendHeader(HttpResponseHeaders.Expires, "5");
-            _writer.AppendHeader(HttpResponseHeaders.LastModified, "12345");
+            _writer.AppendHeader(HttpGeneralHeaders.ContentLanguage, "jp-JP");
+            _writer.AppendHeader(HttpGeneralHeaders.ContentRange, "E");
+            _writer.AppendHeader(HttpGeneralHeaders.Expires, "5");
+            _writer.AppendHeader(HttpGeneralHeaders.LastModified, "12345");
 
 
             return "Nothing to see here";

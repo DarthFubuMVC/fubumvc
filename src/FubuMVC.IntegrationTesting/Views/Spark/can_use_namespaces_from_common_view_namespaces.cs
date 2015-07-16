@@ -1,5 +1,4 @@
-﻿using System.Xml.Serialization;
-using FubuMVC.Core;
+﻿using FubuMVC.Core;
 using FubuMVC.Core.View;
 using NUnit.Framework;
 
@@ -35,6 +34,5 @@ namespace FubuMVC.IntegrationTesting.Views.Spark
     [UrlPattern("fake/foo")]
     public class FakeFoo
     {
-        
     }
 }

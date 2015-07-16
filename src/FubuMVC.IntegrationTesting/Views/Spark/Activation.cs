@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using FubuMVC.Core;
+﻿using FubuMVC.Core;
 using FubuMVC.Core.View;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Views.Spark
 {
     [TestFixture]
-    public class Activation:ViewIntegrationContext
+    public class Activation : ViewIntegrationContext
     {
         public Activation()
         {
@@ -22,10 +20,7 @@ namespace FubuMVC.IntegrationTesting.Views.Spark
             public MyRegistry()
             {
                 Actions.IncludeType<ActivationEndpoint>();
-                Services(x =>
-                {
-                    x.SetServiceIfNone<IActivationRenderer, ActivationRenderer>();
-                });
+                Services(x => { x.SetServiceIfNone<IActivationRenderer, ActivationRenderer>(); });
 
                 AlterSettings<CommonViewNamespaces>(x => x.AddForType<ActivationEndpoint>());
             }
@@ -37,7 +32,6 @@ namespace FubuMVC.IntegrationTesting.Views.Spark
         {
             Scenario.Get.Action<ActivationEndpoint>(x => x.get_model());
             Scenario.ContentShouldContain("the model is named Jeremy");
-
         }
     }
 
@@ -45,7 +39,7 @@ namespace FubuMVC.IntegrationTesting.Views.Spark
     {
         public ActivationModel get_model()
         {
-            return new ActivationModel { Name = "Jeremy" };
+            return new ActivationModel {Name = "Jeremy"};
         }
     }
 

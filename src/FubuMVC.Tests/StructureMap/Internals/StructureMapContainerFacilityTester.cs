@@ -5,7 +5,6 @@ using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Bootstrapping;
-using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Registration;
@@ -14,10 +13,9 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
-using Rhino.Mocks;
 using StructureMap;
 
-namespace FubuMVC.StructureMap.Testing.Internals
+namespace FubuMVC.Tests.StructureMap.Internals
 {
     [TestFixture]
     public class StructureMapContainerFacilityTester

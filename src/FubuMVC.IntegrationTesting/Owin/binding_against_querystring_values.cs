@@ -10,7 +10,8 @@ namespace FubuMVC.IntegrationTesting.Owin
         [Test]
         public void can_bind_against_querystring_parameters()
         {
-            var model = new QueryStringModel{
+            var model = new QueryStringModel
+            {
                 Color = "Green",
                 Direction = "South"
             };

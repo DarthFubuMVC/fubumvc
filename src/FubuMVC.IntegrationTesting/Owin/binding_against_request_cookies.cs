@@ -15,7 +15,8 @@ namespace FubuMVC.IntegrationTesting.Owin
                 Direction = "South"
             };
 
-            TestHost.Scenario(_ => {
+            TestHost.Scenario(_ =>
+            {
                 _.Get.Input(model);
 
                 _.Request.AppendCookie(new Cookie("Color", "Green"));

@@ -7,7 +7,7 @@ using FubuMVC.Core.Registration.ObjectGraph;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.StructureMap.Testing.Compliance
+namespace FubuMVC.Tests.StructureMap.Compliance
 {
     [TestFixture]
     public class Lifecycle_Scoping_Compliance

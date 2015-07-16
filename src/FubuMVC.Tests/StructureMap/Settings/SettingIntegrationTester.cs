@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using FubuCore.Configuration;
 using FubuMVC.Core;
-using FubuMVC.Core.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
 
-namespace FubuMVC.StructureMap.Testing.Settings
+namespace FubuMVC.Tests.StructureMap.Settings
 {
     [TestFixture]
     public class SettingIntegrationTester

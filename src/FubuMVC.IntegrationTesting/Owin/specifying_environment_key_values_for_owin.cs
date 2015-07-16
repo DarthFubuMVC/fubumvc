@@ -1,9 +1,7 @@
 ﻿using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Http.Owin;
-using FubuMVC.Core.StructureMap;
 using FubuMVC.Katana;
-using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -17,13 +15,12 @@ namespace FubuMVC.IntegrationTesting.Owin
         {
             using (var server = FubuApplication
                 .For<OverriddenEnvironmentRegistry>()
-                
                 .RunEmbedded(port: 0))
             {
                 server.Endpoints.GetByInput(new KeyRequest {Key = "Foo"})
                     .ReadAsText().ShouldEqual("1");
 
-                server.Endpoints.GetByInput(new KeyRequest { Key = "Bar" })
+                server.Endpoints.GetByInput(new KeyRequest {Key = "Bar"})
                     .ReadAsText().ShouldEqual("2");
             }
         }
@@ -33,7 +30,8 @@ namespace FubuMVC.IntegrationTesting.Owin
     {
         public OverriddenEnvironmentRegistry()
         {
-            AlterSettings<OwinSettings>(x => {
+            AlterSettings<OwinSettings>(x =>
+            {
                 x.EnvironmentData["Foo"] = "1";
                 x.EnvironmentData["Bar"] = "2";
 

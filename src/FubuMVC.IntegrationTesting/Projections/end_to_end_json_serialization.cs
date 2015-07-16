@@ -5,8 +5,6 @@ using FubuMVC.Core;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Projections;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.StructureMap;
-using FubuMVC.StructureMap;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Projections
@@ -21,7 +19,6 @@ namespace FubuMVC.IntegrationTesting.Projections
         {
             _host = FubuApplication
                 .For<JsonSerializationFubuRegistry>()
-                
                 .RunInMemory();
         }
 

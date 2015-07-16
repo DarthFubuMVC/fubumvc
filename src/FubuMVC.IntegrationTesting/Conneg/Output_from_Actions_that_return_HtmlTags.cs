@@ -37,7 +37,8 @@ namespace FubuMVC.IntegrationTesting.Conneg
 
         public HtmlDocument get_document()
         {
-            return new HtmlDocument(){
+            return new HtmlDocument
+            {
                 Title = "This is a document"
             };
         }

@@ -4,8 +4,6 @@ using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
-using FubuMVC.Core.StructureMap;
-using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -21,9 +19,8 @@ namespace FubuMVC.Tests.Registration.Nodes
 
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<AuthenticatedEndpoint>();
-            registry.Configure(graph => {
-                graph.Behaviors.OfType<RoutedChain>().Each(x => x.Authentication = new AuthNode());
-            });
+            registry.Configure(
+                graph => { graph.Behaviors.OfType<RoutedChain>().Each(x => x.Authentication = new AuthNode()); });
 
             using (var runtime = FubuApplication.For(registry).Bootstrap())
             {
@@ -35,8 +32,6 @@ namespace FubuMVC.Tests.Registration.Nodes
             var chain = new RoutedChain("something");
             var auth = new AuthNode();
             chain.Authentication = auth;
-
-            
         }
     }
 

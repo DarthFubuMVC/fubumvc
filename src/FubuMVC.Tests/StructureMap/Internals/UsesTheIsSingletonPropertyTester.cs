@@ -5,7 +5,7 @@ using NUnit.Framework;
 using StructureMap;
 using StructureMap.Pipeline;
 
-namespace FubuMVC.StructureMap.Testing.Internals
+namespace FubuMVC.Tests.StructureMap.Internals
 {
     [TestFixture]
     public class UsesTheIsSingletonPropertyTester

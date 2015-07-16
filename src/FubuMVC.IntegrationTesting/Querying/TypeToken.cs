@@ -38,7 +38,7 @@ namespace FubuMVC.IntegrationTesting.Querying
         {
             unchecked
             {
-                int result = (Name != null ? Name.GetHashCode() : 0);
+                var result = (Name != null ? Name.GetHashCode() : 0);
                 result = (result*397) ^ (Namespace != null ? Namespace.GetHashCode() : 0);
                 result = (result*397) ^ (Assembly != null ? Assembly.GetHashCode() : 0);
                 return result;

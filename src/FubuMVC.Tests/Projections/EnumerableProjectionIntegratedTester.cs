@@ -7,8 +7,6 @@ using FubuCore.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Projections;
 using FubuMVC.Core.Resources.Hypermedia;
-using FubuMVC.Core.StructureMap;
-using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
@@ -24,11 +22,13 @@ namespace FubuMVC.Tests.Projections
         [SetUp]
         public void SetUp()
         {
-            theParent = new Parent{
-                Children = new Child[]{
-                    new Child{Name = "Jeremy"},
-                    new Child{Name = "Jessica"},
-                    new Child{Name = "Natalie"}
+            theParent = new Parent
+            {
+                Children = new[]
+                {
+                    new Child {Name = "Jeremy"},
+                    new Child {Name = "Jessica"},
+                    new Child {Name = "Natalie"}
                 }
             };
 
@@ -45,7 +45,10 @@ namespace FubuMVC.Tests.Projections
         public void accessors()
         {
             var projection = EnumerableProjection<Parent, Child>.For(x => x.Children);
-            projection.As<IProjection<Parent>>().Accessors().Single().ShouldEqual(ReflectionHelper.GetAccessor<Parent>(x => x.Children));
+            projection.As<IProjection<Parent>>()
+                .Accessors()
+                .Single()
+                .ShouldEqual(ReflectionHelper.GetAccessor<Parent>(x => x.Children));
         }
 
         public XmlElement write(IProjection<Parent> projection)
@@ -60,14 +63,12 @@ namespace FubuMVC.Tests.Projections
         public void write_with_inline_projection()
         {
             var projection = new Projection<Parent>(DisplayFormatting.RawValues);
-            projection.Enumerable(x => x.Children).DefineProjection(p =>
-            {
-                p.Value(x => x.Name).Name("name");
-            });
+            projection.Enumerable(x => x.Children).DefineProjection(p => { p.Value(x => x.Name).Name("name"); });
 
             var element = write(projection);
 
-            element.OuterXml.ShouldEqual("<root><Children><Child><name>Jeremy</name></Child><Child><name>Jessica</name></Child><Child><name>Natalie</name></Child></Children></root>");
+            element.OuterXml.ShouldEqual(
+                "<root><Children><Child><name>Jeremy</name></Child><Child><name>Jessica</name></Child><Child><name>Natalie</name></Child></Children></root>");
         }
 
         [Test]
@@ -78,7 +79,8 @@ namespace FubuMVC.Tests.Projections
 
             var element = write(projection);
 
-            element.OuterXml.ShouldEqual("<root><Children><Child><name>Jeremy</name></Child><Child><name>Jessica</name></Child><Child><name>Natalie</name></Child></Children></root>");
+            element.OuterXml.ShouldEqual(
+                "<root><Children><Child><name>Jeremy</name></Child><Child><name>Jessica</name></Child><Child><name>Natalie</name></Child></Children></root>");
         }
 
         [Test]
@@ -89,7 +91,8 @@ namespace FubuMVC.Tests.Projections
 
             var element = write(projection);
 
-            element.OuterXml.ShouldEqual("<root><children><Child><name>Jeremy</name></Child><Child><name>Jessica</name></Child><Child><name>Natalie</name></Child></children></root>");
+            element.OuterXml.ShouldEqual(
+                "<root><children><Child><name>Jeremy</name></Child><Child><name>Jessica</name></Child><Child><name>Natalie</name></Child></children></root>");
         }
 
         [Test]
@@ -100,7 +103,8 @@ namespace FubuMVC.Tests.Projections
 
             var element = write(projection);
 
-            element.OuterXml.ShouldEqual("<root><Children><child><name>Jeremy</name></child><child><name>Jessica</name></child><child><name>Natalie</name></child></Children></root>");
+            element.OuterXml.ShouldEqual(
+                "<root><Children><child><name>Jeremy</name></child><child><name>Jessica</name></child><child><name>Natalie</name></child></Children></root>");
         }
 
         public class Parent

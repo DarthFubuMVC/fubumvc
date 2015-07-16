@@ -24,7 +24,6 @@ namespace FubuMVC.IntegrationTesting.Views.Spark
 <p>!{Model.Description}</p>
 
 ");
-
         }
 
         [Test]

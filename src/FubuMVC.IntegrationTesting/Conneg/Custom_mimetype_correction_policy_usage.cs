@@ -12,7 +12,8 @@ namespace FubuMVC.IntegrationTesting.Conneg
         [Test]
         public void use_the_custom_mimetype_correction()
         {
-            TestHost.Scenario<RegistryWithCustomMimetypeCorrection>(_ => {
+            TestHost.Scenario<RegistryWithCustomMimetypeCorrection>(_ =>
+            {
                 _.Get.Input(new OverriddenResponse {Name = "Foo"});
                 _.Request.Accepts("text/html");
 

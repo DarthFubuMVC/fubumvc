@@ -8,12 +8,10 @@ using FubuMVC.Core;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Http.Scenarios;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.StructureMap;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Attachment;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Razor;
-using FubuMVC.StructureMap;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Views

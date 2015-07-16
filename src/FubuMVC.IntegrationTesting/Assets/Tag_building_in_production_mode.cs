@@ -19,7 +19,6 @@ namespace FubuMVC.IntegrationTesting.Assets
             File("content/styles/styles1.css");
 
             File("content/images/image1.bmp");
-
         }
 
         [Test]
@@ -27,7 +26,8 @@ namespace FubuMVC.IntegrationTesting.Assets
         {
             Scenario.Get.Action<TagBuildingEndpoint>(x => x.get_page_with_assets());
 
-            Scenario.ContentShouldContain("<link href=\"/content/styles/styles1.css\" rel=\"stylesheet\" type=\"text/css\" />");
+            Scenario.ContentShouldContain(
+                "<link href=\"/content/styles/styles1.css\" rel=\"stylesheet\" type=\"text/css\" />");
             Scenario.ContentShouldContain("<script type=\"text/javascript\" src=\"/content/scripts/script1.js\">");
             Scenario.ContentShouldContain("<img src=\"/content/images/image1.bmp\" />");
 
@@ -52,13 +52,14 @@ namespace FubuMVC.IntegrationTesting.Assets
             Scenario.StatusCodeShouldBe(HttpStatusCode.OK);
 
             // these exist and should be written out
-            Scenario.ContentShouldContain("<link href=\"/content/styles/styles1.css\" rel=\"stylesheet\" type=\"text/css\" />");
+            Scenario.ContentShouldContain(
+                "<link href=\"/content/styles/styles1.css\" rel=\"stylesheet\" type=\"text/css\" />");
             Scenario.ContentShouldContain("<script type=\"text/javascript\" src=\"/content/scripts/script1.js\">");
 
             // these don't, so don't do anything with them
-            Scenario.ContentShouldNotContain("</script><script type=\"text/javascript\" src=\"nonexistent.js\"></script>");
+            Scenario.ContentShouldNotContain(
+                "</script><script type=\"text/javascript\" src=\"nonexistent.js\"></script>");
             Scenario.ContentShouldNotContain("<link href=\"nonexistent.css\" rel=\"stylesheet\" type=\"text/css\" />");
-
         }
     }
 
@@ -85,8 +86,6 @@ namespace FubuMVC.IntegrationTesting.Assets
         }
 
 
-
-
         public HtmlDocument get_page_with_optional_assets()
         {
             _document.Head.Append(_document.OptionalCss("styles1.css", "nonexistent.css"));
@@ -97,6 +96,5 @@ namespace FubuMVC.IntegrationTesting.Assets
 
             return _document;
         }
-
     }
 }

@@ -4,9 +4,7 @@ using System.Threading.Tasks;
 using FubuMVC.Core;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Owin.Middleware;
-using FubuMVC.Core.StructureMap;
 using FubuMVC.Katana;
-using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -21,15 +19,13 @@ namespace FubuMVC.IntegrationTesting.Owin
         {
             var registry = new FubuRegistry();
             registry.AlterSettings(action);
-            return FubuApplication.For(registry).RunEmbedded(port:0);
+            return FubuApplication.For(registry).RunEmbedded(port: 0);
         }
 
         [Test]
         public void can_add_a_single_OWIN_middleware()
         {
-            using (var server = serverFor(x => {
-                x.AddMiddleware<JamesBondMiddleware>();
-            }))
+            using (var server = serverFor(x => { x.AddMiddleware<JamesBondMiddleware>(); }))
             {
                 server.Endpoints.Get<MiddleWareInterceptedEndpoint>(x => x.get_middleware_result())
                     .ShouldHaveHeaderValue("James", "Bond");
@@ -39,15 +35,13 @@ namespace FubuMVC.IntegrationTesting.Owin
         [Test]
         public void use_anonymous_AppFunc_as_middleware()
         {
-            AppFunc sillyHeader = dict => {
-                return Task.Factory.StartNew(() => {
-                    new OwinHttpResponse(dict).AppendHeader("silly", "string");
-                });
-            };
+            AppFunc sillyHeader =
+                dict =>
+                {
+                    return Task.Factory.StartNew(() => { new OwinHttpResponse(dict).AppendHeader("silly", "string"); });
+                };
 
-            using (var server = serverFor(x => {
-                x.AddMiddleware(sillyHeader);
-            }))
+            using (var server = serverFor(x => { x.AddMiddleware(sillyHeader); }))
             {
                 server.Endpoints.Get<MiddleWareInterceptedEndpoint>(x => x.get_middleware_result())
                     .ShouldHaveHeaderValue("silly", "string")
@@ -58,29 +52,27 @@ namespace FubuMVC.IntegrationTesting.Owin
         [Test]
         public void use_anonymous_wrapping_Func_AppFunc_AppFunc_as_middleware()
         {
-            Func<AppFunc, AppFunc> middleware = inner => {
-                return dict => {
+            Func<AppFunc, AppFunc> middleware = inner =>
+            {
+                return dict =>
+                {
                     var response = new OwinHttpResponse(dict);
 
                     response.Write("1-");
                     response.Flush();
-                    return inner(dict).ContinueWith(t => {
+                    return inner(dict).ContinueWith(t =>
+                    {
                         response.Write("-2");
                         response.Flush();
                     });
                 };
             };
 
-            using (var server = serverFor(x =>
-            {
-                x.AddMiddleware(middleware);
-            }))
+            using (var server = serverFor(x => { x.AddMiddleware(middleware); }))
             {
                 server.Endpoints.Get<MiddleWareInterceptedEndpoint>(x => x.get_middleware_result())
                     .ReadAsText().ShouldContain("1-I'm okay-2");
             }
-
-
         }
 
         [Test]
@@ -88,10 +80,7 @@ namespace FubuMVC.IntegrationTesting.Owin
         {
             MiddlewareNode<SpecialDisposableMiddleware> node = null;
 
-            using (var server = serverFor(x =>
-            {
-                node = x.AddMiddleware<SpecialDisposableMiddleware>();
-            }))
+            using (var server = serverFor(x => { node = x.AddMiddleware<SpecialDisposableMiddleware>(); }))
             {
                 server.Endpoints.Get<MiddleWareInterceptedEndpoint>(x => x.get_middleware_result())
                     .ReadAsText().ShouldContain("I'm okay");
@@ -99,8 +88,6 @@ namespace FubuMVC.IntegrationTesting.Owin
 
             node.Middleware.IWasDisposed.ShouldBeTrue();
         }
-
-
     }
 
     public class SpecialDisposableMiddleware : IOwinMiddleware, IDisposable
@@ -131,7 +118,7 @@ namespace FubuMVC.IntegrationTesting.Owin
             return "I'm okay";
         }
     }
-    
+
 
     public class JamesBondMiddleware : IOwinMiddleware
     {

@@ -1,21 +1,11 @@
 using System;
-using System.Diagnostics;
 using System.Linq;
-using FubuCore;
-using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
-using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Runtime.Formatters;
-using FubuMVC.Core.Security;
-using FubuMVC.StructureMap;
 using FubuTestingSupport;
-using HtmlTags;
 using NUnit.Framework;
-using Rhino.Mocks;
-using StructureMap;
 using TestPackage1.FakeControllers;
 
 namespace FubuMVC.Tests.Registration.Nodes
@@ -99,7 +89,6 @@ namespace FubuMVC.Tests.Registration.Nodes
         }
 
         #endregion
-
 
         [Test]
         public void adding_a_node_to_the_end_sets_the_chain_on_the_node()
@@ -420,8 +409,6 @@ namespace FubuMVC.Tests.Registration.Nodes
             newNode.Previous.ShouldBeNull();
             newNode.Next.ShouldBeTheSameAs(node2);
         }
-
-
     }
 
     [TestFixture]
@@ -520,7 +507,6 @@ namespace FubuMVC.Tests.Registration.Nodes
             theChain.AddToEnd(ints);
 
             theChain.ResourceType().ShouldEqual(typeof (int));
-
         }
 
         [Test]
@@ -531,7 +517,6 @@ namespace FubuMVC.Tests.Registration.Nodes
             theChain.AddToEnd(none);
 
             theChain.ResourceType().ShouldEqual(typeof (int));
-
         }
 
         [Test]
@@ -642,6 +627,6 @@ namespace FubuMVC.Tests.Registration.Nodes
             chain.IsTagged("foo").ShouldBeTrue();
             chain.IsTagged("Foo").ShouldBeTrue();
             chain.IsTagged("bar").ShouldBeFalse();
-        }   
+        }
     }
 }

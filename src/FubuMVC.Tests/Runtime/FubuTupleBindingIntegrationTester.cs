@@ -1,7 +1,6 @@
 using FubuCore.Binding;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.StructureMap;
-using FubuMVC.StructureMap;
 using NUnit.Framework;
 using InMemoryRequestData = FubuCore.Binding.InMemoryRequestData;
 using FubuTestingSupport;

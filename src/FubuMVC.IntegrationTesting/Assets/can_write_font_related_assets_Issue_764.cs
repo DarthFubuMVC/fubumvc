@@ -5,11 +5,11 @@ namespace FubuMVC.IntegrationTesting.Assets
     [TestFixture]
     public class can_write_font_related_assets_Issue_764
     {
-
         [Test]
         public void read_WOFF_file()
         {
-            TestHost.Scenario(_ => {
+            TestHost.Scenario(_ =>
+            {
                 _.Get.Url("content/styles/fonts/286692_2_0.woff");
                 _.StatusCodeShouldBeOk();
                 _.ContentTypeShouldBe("application/font-woff");
@@ -19,7 +19,8 @@ namespace FubuMVC.IntegrationTesting.Assets
         [Test]
         public void read_WOFF2_file()
         {
-            TestHost.Scenario(_ => {
+            TestHost.Scenario(_ =>
+            {
                 _.Get.Url("content/styles/fonts/woff2_font.woff2");
                 _.StatusCodeShouldBeOk();
                 _.ContentTypeShouldBe("application/font-woff2");
@@ -60,7 +61,5 @@ namespace FubuMVC.IntegrationTesting.Assets
                 _.ContentTypeShouldBe("application/octet-stream");
             });
         }
-
-
     }
 }

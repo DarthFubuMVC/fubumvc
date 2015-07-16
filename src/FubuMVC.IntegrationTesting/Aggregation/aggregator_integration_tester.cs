@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime.Aggregation;
@@ -23,7 +22,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
                 _.Get.Action<AggregationEndpoint>(x => x.get_aggregation());
 
                 var json = _.Response.Body.ReadAsText();
-                string[] values = JsonUtil.Get<string[]>(json);
+                var values = JsonUtil.Get<string[]>(json);
 
                 values.ShouldContain("Resource1: Jeremy Maclin");
             });
@@ -37,7 +36,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
                 _.Get.Action<AggregationEndpoint>(x => x.get_aggregation());
 
                 var json = _.Response.Body.ReadAsText();
-                string[] values = JsonUtil.Get<string[]>(json);
+                var values = JsonUtil.Get<string[]>(json);
 
                 values.ShouldContain("I am Resource2");
             });
@@ -52,7 +51,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
                 _.Get.Action<AggregationEndpoint>(x => x.get_aggregation());
 
                 var json = _.Response.Body.ReadAsText();
-                string[] values = JsonUtil.Get<string[]>(json);
+                var values = JsonUtil.Get<string[]>(json);
 
                 values.ShouldContain("Resource3 from input type 2");
             });
@@ -66,7 +65,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
                 _.Get.Action<AggregationEndpoint>(x => x.get_aggregation());
 
                 var json = _.Response.Body.ReadAsText();
-                string[] values = JsonUtil.Get<string[]>(json);
+                var values = JsonUtil.Get<string[]>(json);
 
                 values.ShouldContain("Resource4 from an action identified by expression");
             });
@@ -78,7 +77,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
         {
             TestHost.Scenario(_ =>
             {
-                _.Get.Input(new AggregationEndpoint.Query1{Name = "Joe"});
+                _.Get.Input(new AggregationEndpoint.Query1 {Name = "Joe"});
 
                 var json = _.Response.Body.ReadAsText();
 
@@ -93,10 +92,30 @@ namespace FubuMVC.IntegrationTesting.Aggregation
             var cache = TestHost.Service<IClientMessageCache>();
             cache.AllClientMessages()
                 .ShouldHaveTheSameElementsAs(
-                    new ClientMessagePath { Message = "query-1", InputType = typeof(AggregationEndpoint.Query1), ResourceType = typeof(AggregationEndpoint.Resource1)},
-                    new ClientMessagePath { Message = "resource-2", InputType = null, ResourceType = typeof(AggregationEndpoint.Resource2)},
-                    new ClientMessagePath { Message = "input-2", InputType = typeof(AggregationEndpoint.Input2), ResourceType = typeof(AggregationEndpoint.Resource3)},
-                    new ClientMessagePath { Message = "resource-4", InputType = null, ResourceType = typeof(AggregationEndpoint.Resource4)}
+                    new ClientMessagePath
+                    {
+                        Message = "query-1",
+                        InputType = typeof (AggregationEndpoint.Query1),
+                        ResourceType = typeof (AggregationEndpoint.Resource1)
+                    },
+                    new ClientMessagePath
+                    {
+                        Message = "resource-2",
+                        InputType = null,
+                        ResourceType = typeof (AggregationEndpoint.Resource2)
+                    },
+                    new ClientMessagePath
+                    {
+                        Message = "input-2",
+                        InputType = typeof (AggregationEndpoint.Input2),
+                        ResourceType = typeof (AggregationEndpoint.Resource3)
+                    },
+                    new ClientMessagePath
+                    {
+                        Message = "resource-4",
+                        InputType = null,
+                        ResourceType = typeof (AggregationEndpoint.Resource4)
+                    }
                 );
         }
 
@@ -104,7 +123,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
         public void find_chain_by_message_type()
         {
             var cache = TestHost.Service<IClientMessageCache>();
-            cache.FindChain("query-1").InputType().ShouldEqual(typeof(AggregationEndpoint.Query1));
+            cache.FindChain("query-1").InputType().ShouldEqual(typeof (AggregationEndpoint.Query1));
             cache.FindChain("resource-4").ResourceType().ShouldEqual(typeof (AggregationEndpoint.Resource4));
         }
 
@@ -120,8 +139,8 @@ namespace FubuMVC.IntegrationTesting.Aggregation
 
                 var response = aggregator.ExecuteQuery(new ClientQuery
                 {
-                    query = new AggregationEndpoint.Query1 { Name = "Justin Houston" },
-                    type = typeof(AggregationEndpoint.Query1).GetMessageName()
+                    query = new AggregationEndpoint.Query1 {Name = "Justin Houston"},
+                    type = typeof (AggregationEndpoint.Query1).GetMessageName()
                 });
 
                 response.request.ShouldEqual("query-1");
@@ -129,7 +148,6 @@ namespace FubuMVC.IntegrationTesting.Aggregation
                 response.result.ShouldBeOfType<AggregationEndpoint.Resource1>()
                     .Name.ShouldEqual("Justin Houston");
             }
-
         }
 
         [Test]
@@ -142,7 +160,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
                 var aggregator = nested.GetInstance<Aggregator>();
 
                 var query = new AggregatedQuery();
-                query.AddQuery(new AggregationEndpoint.Query1 { Name = "Jeremy Maclin" });
+                query.AddQuery(new AggregationEndpoint.Query1 {Name = "Jeremy Maclin"});
                 query.Resource<AggregationEndpoint.Resource2>();
                 query.AddQuery(new AggregationEndpoint.Input2());
                 query.Resource<AggregationEndpoint.Resource4>();
@@ -162,7 +180,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
         public void use_aggregated_query_reader()
         {
             var query = new AggregatedQuery();
-            query.AddQuery(new AggregationEndpoint.Query1 { Name = "Jeremy Maclin" });
+            query.AddQuery(new AggregationEndpoint.Query1 {Name = "Jeremy Maclin"});
             query.Resource<AggregationEndpoint.Resource2>();
             query.AddQuery(new AggregationEndpoint.Input2());
             query.Resource<AggregationEndpoint.Resource4>();
@@ -187,7 +205,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
         public void run_aggregated_query_through_http_endpoint()
         {
             var query = new AggregatedQuery();
-            query.AddQuery(new AggregationEndpoint.Query1 { Name = "Jeremy Maclin" });
+            query.AddQuery(new AggregationEndpoint.Query1 {Name = "Jeremy Maclin"});
             query.Resource<AggregationEndpoint.Resource2>();
             query.AddQuery(new AggregationEndpoint.Input2());
             query.Resource<AggregationEndpoint.Resource4>();
@@ -356,7 +374,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
             return _aggregator.Fetch(_ =>
             {
                 // By an input query
-                _.Query(new Query1{Name = "Jeremy Maclin"});
+                _.Query(new Query1 {Name = "Jeremy Maclin"});
 
                 // By the resource type
                 _.Resource<Resource2>();
@@ -367,8 +385,8 @@ namespace FubuMVC.IntegrationTesting.Aggregation
                 // By action method
                 _.Action<AggregationEndpoint>(x => x.get_fourth_resource());
             })
-            .Select(x => x.ToString())
-            .ToArray();
+                .Select(x => x.ToString())
+                .ToArray();
         }
 
         [ClientMessage]
@@ -387,7 +405,9 @@ namespace FubuMVC.IntegrationTesting.Aggregation
         }
 
         [ClientMessage]
-        public class Input2 { }
+        public class Input2
+        {
+        }
 
         [ClientMessage]
         public class Resource3
@@ -425,5 +445,5 @@ namespace FubuMVC.IntegrationTesting.Aggregation
         }
     }
 
-
 }
+

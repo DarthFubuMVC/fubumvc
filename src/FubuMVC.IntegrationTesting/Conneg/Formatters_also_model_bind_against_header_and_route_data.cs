@@ -1,7 +1,5 @@
 ﻿using FubuMVC.Core;
-using FubuMVC.Core.StructureMap;
 using FubuMVC.Katana;
-using FubuMVC.StructureMap;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Conneg
@@ -21,7 +19,6 @@ namespace FubuMVC.IntegrationTesting.Conneg
 
     public class RouteFilledInput
     {
-
         public string Name { get; set; }
     }
 

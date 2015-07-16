@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using FubuMVC.Core;
+﻿using FubuMVC.Core;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Diagnostics
@@ -18,7 +17,5 @@ namespace FubuMVC.IntegrationTesting.Diagnostics
                 _.StatusCodeShouldBeOk();
             });
         }
-
-
     }
 }

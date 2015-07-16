@@ -1,10 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
+﻿using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
-using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Urls;
 using FubuTestingSupport;
@@ -60,7 +56,7 @@ I am in the view w/ partials
             {
                 CategoryMode = CategorySearchMode.Relaxed,
                 CategoryOrHttpMethod = Categories.VIEW,
-                Type = typeof(ActionlessView3),
+                Type = typeof (ActionlessView3),
                 TypeMode = TypeSearchMode.Any
             });
 
@@ -70,8 +66,6 @@ I am in the view w/ partials
         [Test]
         public void can_use_actionless_views_as_partials_if_they_have_no_url_pattern()
         {
-
-
             Scenario.Get.Input<ActionlessViewWithPartials>();
 
             Scenario.ContentShouldContain("I am in the view w/ partials");
@@ -82,22 +76,21 @@ I am in the view w/ partials
     [UrlPattern("has_some_partials")]
     public class ActionlessViewWithPartials
     {
-        
     }
 
     [UrlPattern("actionless1")]
     public class ActionlessView1
     {
-        
     }
 
     [UrlPattern("actionless2")]
     public class ActionlessView2
     {
-
     }
 
-    public class ActionlessView3{}
+    public class ActionlessView3
+    {
+    }
 
 
     public class ActionlessViewAjaxEndpoint

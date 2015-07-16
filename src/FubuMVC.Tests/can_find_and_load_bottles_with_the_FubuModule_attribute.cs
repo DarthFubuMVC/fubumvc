@@ -1,7 +1,5 @@
 using AssemblyPackage;
 using FubuMVC.Core;
-using FubuMVC.Core.StructureMap;
-using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 

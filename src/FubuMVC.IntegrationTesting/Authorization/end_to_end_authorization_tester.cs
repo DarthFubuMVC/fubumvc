@@ -3,9 +3,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
-using FubuMVC.Core.StructureMap;
 using FubuMVC.Katana;
-using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -26,7 +24,7 @@ namespace FubuMVC.IntegrationTesting.Authorization
             AuthorizationCheck.IsAuthorized = false;
 
             endpoints.Get<AuthorizedEndpoint>(x => x.get_authorized_text())
-                     .StatusCodeShouldBe(HttpStatusCode.Forbidden);
+                .StatusCodeShouldBe(HttpStatusCode.Forbidden);
         }
 
         [Test]
@@ -34,11 +32,11 @@ namespace FubuMVC.IntegrationTesting.Authorization
         {
             AuthorizationCheck.IsAuthorized = false;
 
-            SelfHostHarness.Host.Scenario(_ => {
+            SelfHostHarness.Host.Scenario(_ =>
+            {
                 _.Security.AuthorizationEnabled = false;
                 _.Get.Action<AuthorizedEndpoint>(x => x.get_authorized_text());
 
-                
 
                 _.StatusCodeShouldBeOk();
             });
@@ -50,7 +48,7 @@ namespace FubuMVC.IntegrationTesting.Authorization
             AuthorizationCheck.IsAuthorized = true;
 
             endpoints.Get<AuthorizedEndpoint>(x => x.get_authorized_text())
-                     .StatusCodeShouldBe(HttpStatusCode.OK);
+                .StatusCodeShouldBe(HttpStatusCode.OK);
         }
 
         [Test]
@@ -59,8 +57,8 @@ namespace FubuMVC.IntegrationTesting.Authorization
             AuthorizationCheck.IsAuthorized = false;
 
             endpoints.Get<AuthorizedEndpoint>(x => x.get_authorized_text_special())
-                    .StatusCodeShouldBe(HttpStatusCode.Forbidden)
-                    .ReadAsText().ShouldEqual("you are forbidden!");
+                .StatusCodeShouldBe(HttpStatusCode.Forbidden)
+                .ReadAsText().ShouldEqual("you are forbidden!");
         }
 
 
@@ -83,9 +81,12 @@ namespace FubuMVC.IntegrationTesting.Authorization
         public void use_custom_auth_handler_on_only_one_endpoint()
         {
             var registry = new FubuRegistry();
-            registry.Configure(x => {
-                x.BehaviorFor<AuthorizedEndpoint>(_ => _.get_authorized_text()).Authorization.FailureHandler<CustomAuthHandler>();
-            });
+            registry.Configure(
+                x =>
+                {
+                    x.BehaviorFor<AuthorizedEndpoint>(_ => _.get_authorized_text())
+                        .Authorization.FailureHandler<CustomAuthHandler>();
+                });
 
             AuthorizationCheck.IsAuthorized = false;
             using (var server = FubuApplication.For(registry).RunEmbeddedWithAutoPort())
@@ -104,7 +105,6 @@ namespace FubuMVC.IntegrationTesting.Authorization
             return FubuContinuation.RedirectTo<AuthFailureEndpoint>(x => x.get_403());
         }
     }
-
 
 
     public class AuthFailureEndpoint
@@ -136,7 +136,7 @@ namespace FubuMVC.IntegrationTesting.Authorization
         }
     }
 
-    [AuthorizedBy(typeof(AuthorizationCheckPolicy))]
+    [AuthorizedBy(typeof (AuthorizationCheckPolicy))]
     public class AuthorizedEndpoint
     {
         public string get_authorized_text()
@@ -144,7 +144,7 @@ namespace FubuMVC.IntegrationTesting.Authorization
             return "Hello";
         }
 
-        [AuthorizationFailure(typeof(CustomAuthHandler))]
+        [AuthorizationFailure(typeof (CustomAuthHandler))]
         public string get_authorized_text_special()
         {
             return "Hola";

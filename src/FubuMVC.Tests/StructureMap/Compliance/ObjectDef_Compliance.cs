@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using FubuMVC.Core.Registration.ObjectGraph;
-using NUnit.Framework;
-using FubuTestingSupport;
 using System.Linq;
+using FubuMVC.Core.Registration.ObjectGraph;
+using FubuTestingSupport;
+using NUnit.Framework;
 
-namespace FubuMVC.StructureMap.Testing.Compliance
+namespace FubuMVC.Tests.StructureMap.Compliance
 {
     [TestFixture]
     public class ObjectDef_Compliance

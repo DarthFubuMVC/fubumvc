@@ -22,24 +22,23 @@ namespace FubuMVC.IntegrationTesting.Conneg
         [Test]
         public void action_that_returns_a_string_from_a_method_that_should_be_html()
         {
-            endpoints.Get<StringController>(x => x.SayHelloWithHtml(), acceptType:"text/html")
+            endpoints.Get<StringController>(x => x.SayHelloWithHtml(), acceptType: "text/html")
                 .ContentShouldBe(MimeType.Html, "<h1>Hello</h1>");
         }
 
         [Test]
         public void action_marked_with_html_endpoint_should_be_written_as_html()
         {
-            endpoints.Get<StringController>(x => x.DifferentKindOfName(), acceptType:"text/html")
+            endpoints.Get<StringController>(x => x.DifferentKindOfName(), acceptType: "text/html")
                 .ContentShouldBe(MimeType.Html, "different");
         }
 
         [Test]
         public void action_marked_with_html_endpoint_that_returns_string_still_returns_text_when_text_is_requested()
         {
-            endpoints.Get<StringController>(x => x.DifferentKindOfName(), acceptType:"text/plain")
+            endpoints.Get<StringController>(x => x.DifferentKindOfName(), acceptType: "text/plain")
                 .ContentShouldBe(MimeType.Text, "different");
         }
-
     }
 
 
@@ -63,14 +62,10 @@ namespace FubuMVC.IntegrationTesting.Conneg
         public Something AsHtml()
         {
             return new Something();
-        } 
+        }
     }
 
     public class Something
     {
-        
     }
-
-
-
 }

@@ -3,15 +3,11 @@ using System.Net;
 using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Security;
-using FubuMVC.Core.StructureMap;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.View;
 using FubuMVC.Katana;
-using FubuMVC.StructureMap;
-using FubuMVC.Tests.UI;
 using FubuTestingSupport;
 using NUnit.Framework;
-using StructureMap;
 
 namespace FubuMVC.IntegrationTesting.UI
 {
@@ -21,10 +17,11 @@ namespace FubuMVC.IntegrationTesting.UI
         [Test]
         public void authorized_link_to_positive_directly_against_endpoint_service()
         {
-            execute(page => {
+            execute(page =>
+            {
                 PrincipalRoles.SetCurrentRolesForTesting("Role1");
 
-                return  page.AuthorizedLinkTo(svc => svc.EndpointFor<ConventionEndpoint>(x => x.get_authorized_data()));
+                return page.AuthorizedLinkTo(svc => svc.EndpointFor<ConventionEndpoint>(x => x.get_authorized_data()));
             });
 
             theResult.ShouldEqual("<a href=\"/authorized/data\"></a>");
@@ -53,14 +50,15 @@ namespace FubuMVC.IntegrationTesting.UI
         [Test]
         public void link_to_by_input_model_gets_full_pattern()
         {
-            execute(page => page.LinkTo(new InputWithPattern{Name = "Jeremy"}));
+            execute(page => page.LinkTo(new InputWithPattern {Name = "Jeremy"}));
             theResult.ShouldEqual("<a href=\"/input/Jeremy\"></a>");
         }
 
         [Test]
         public void link_to_by_input_model_that_passes_authorization()
         {
-            execute(page => {
+            execute(page =>
+            {
                 PrincipalRoles.SetCurrentRolesForTesting("Role1");
 
                 return page.LinkTo(new SecuredInput {Name = "Max"});
@@ -76,7 +74,7 @@ namespace FubuMVC.IntegrationTesting.UI
             {
                 PrincipalRoles.SetCurrentRolesForTesting("Role2");
 
-                return page.LinkTo(new SecuredInput { Name = "Max" });
+                return page.LinkTo(new SecuredInput {Name = "Max"});
             });
 
             theResult.ShouldBeEmpty();
@@ -101,7 +99,7 @@ namespace FubuMVC.IntegrationTesting.UI
         [Test]
         public void link_variable_simple()
         {
-            execute(page => page.LinkVariable("foo", new InputWithPattern{Name = "Shiner"}));
+            execute(page => page.LinkVariable("foo", new InputWithPattern {Name = "Shiner"}));
 
             theResult.ShouldEqual("var foo = '/input/Shiner';");
         }
@@ -125,7 +123,8 @@ namespace FubuMVC.IntegrationTesting.UI
         [Test]
         public void TextboxFor()
         {
-            execute(page => {
+            execute(page =>
+            {
                 page.Model.BigName = "some big name";
 
                 return page.TextBoxFor(x => x.BigName);
@@ -133,7 +132,6 @@ namespace FubuMVC.IntegrationTesting.UI
 
             theResult.ShouldEqual("<input type=\"text\" name=\"BigName\" value=\"some big name\" />");
         }
-
     }
 
     public class ConventionTarget
@@ -151,7 +149,7 @@ namespace FubuMVC.IntegrationTesting.UI
         {
             var port = PortFinder.FindPort(5500);
 
-            _server = FubuApplication.DefaultPolicies().RunEmbedded(port:port);
+            _server = FubuApplication.DefaultPolicies().RunEmbedded(port: port);
         }
 
         [TestFixtureTearDown]
@@ -229,22 +227,27 @@ namespace FubuMVC.IntegrationTesting.UI
             return "Hello";
         }
 
-        [UrlForNew(typeof(Foo))]
+        [UrlForNew(typeof (Foo))]
         public string get_creates_foo()
         {
             return "hello";
         }
     }
 
-    public class Foo{}
+    public class Foo
+    {
+    }
 
-    public class SpecificInput{}
+    public class SpecificInput
+    {
+    }
 
     public class InputWithPattern
     {
         public string Name { get; set; }
     }
 
-    public class SecuredInput : InputWithPattern{}
-
+    public class SecuredInput : InputWithPattern
+    {
+    }
 }

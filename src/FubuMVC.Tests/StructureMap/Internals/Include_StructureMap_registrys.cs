@@ -5,7 +5,7 @@ using NUnit.Framework;
 using StructureMap.Configuration.DSL;
 using StructureMap.Graph;
 
-namespace FubuMVC.StructureMap.Testing.Internals
+namespace FubuMVC.Tests.StructureMap.Internals
 {
     [TestFixture]
     public class Include_StructureMap_registrys

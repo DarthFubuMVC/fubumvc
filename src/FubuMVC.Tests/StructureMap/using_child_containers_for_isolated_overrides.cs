@@ -7,7 +7,7 @@ using NUnit.Framework;
 using StructureMap;
 using StructureMap.Configuration.DSL;
 
-namespace FubuMVC.StructureMap.Testing
+namespace FubuMVC.Tests.StructureMap
 {
     [TestFixture]
     public class using_child_containers_for_isolated_overrides

@@ -1,6 +1,4 @@
-﻿using System.Text;
-using FubuCore.Descriptions;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Views.Spark
 {
@@ -66,8 +64,6 @@ namespace FubuMVC.IntegrationTesting.Views.Spark
         [Test, Explicit("Just too flakey.  Blaming the file system")]
         public void three_pass_renders_correctly()
         {
-            
-
             Scenario.Get.Action<ThreePassEndpoint>(x => x.ThreePassSample(null));
 
             Scenario.ContentShouldContain("<html>");
@@ -96,6 +92,7 @@ namespace FubuMVC.IntegrationTesting.Views.Spark
         {
             Message = "Three Pass Rendering Test!";
         }
+
         public string Message { get; set; }
     }
 }

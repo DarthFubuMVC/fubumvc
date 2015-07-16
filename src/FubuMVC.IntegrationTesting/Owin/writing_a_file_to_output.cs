@@ -11,7 +11,8 @@ namespace FubuMVC.IntegrationTesting.Owin
         [Test]
         public void can_write_the_contents_of_a_file_to_the_output()
         {
-            HarnessApplication.Run(x => {
+            HarnessApplication.Run(x =>
+            {
                 var response = x.GetByInput(new FileInput
                 {
                     Name = "Test.txt"
@@ -20,8 +21,6 @@ namespace FubuMVC.IntegrationTesting.Owin
                 response.ContentTypeShouldBe(MimeType.Text);
                 response.ReadAsText().ShouldContain("Some text here");
             });
-
-
         }
     }
 
@@ -41,10 +40,10 @@ namespace FubuMVC.IntegrationTesting.Owin
             var file = _files.Find(input.Name);
             _writer.WriteFile(MimeType.Text, file.Path, input.Name);
         }
-    }    
+    }
 
     public class FileInput
     {
-        public string Name { get; set;}
+        public string Name { get; set; }
     }
 }

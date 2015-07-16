@@ -43,7 +43,7 @@ namespace FubuMVC.IntegrationTesting
         [Test]
         public void override_devmode()
         {
-            string isDev = FubuMode.Development;
+            var isDev = FubuMode.Development;
 
             FubuMode.Mode(() => isDev);
 
@@ -65,7 +65,6 @@ namespace FubuMVC.IntegrationTesting
         }
 
 
-
         [Test]
         public void DevMode_as_is_is_true_with_file()
         {
@@ -84,7 +83,7 @@ namespace FubuMVC.IntegrationTesting
         public void DevMode_is_false_with_file()
         {
             Environment.SetEnvironmentVariable("FubuMode", "Development", EnvironmentVariableTarget.Machine);
-            
+
             FubuMode.Detector = new FubuModeFileDetector();
             FubuMode.Detector.SetMode("Production");
 

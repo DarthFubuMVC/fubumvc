@@ -10,10 +10,12 @@ namespace FubuMVC.IntegrationTesting.Owin
         [Test]
         public void can_write_a_different_status_code()
         {
-            HarnessApplication.Run(endpoints => {
-                endpoints.Get<StatusCodeEndpoint>(x => x.get_not_modified()).StatusCodeShouldBe(HttpStatusCode.NotModified);
-            });
-
+            HarnessApplication.Run(
+                endpoints =>
+                {
+                    endpoints.Get<StatusCodeEndpoint>(x => x.get_not_modified())
+                        .StatusCodeShouldBe(HttpStatusCode.NotModified);
+                });
         }
     }
 

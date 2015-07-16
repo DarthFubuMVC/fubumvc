@@ -5,12 +5,9 @@ using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.StructureMap;
 using FubuMVC.Katana;
-using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
-using StructureMap;
 
 namespace FubuMVC.IntegrationTesting.Async
 {
@@ -28,8 +25,7 @@ namespace FubuMVC.IntegrationTesting.Async
                 x.Policies.Local.Add<EarlyReturnConvention>();
             });
 
-            _server = FubuApplication .For(registry)
-                
+            _server = FubuApplication.For(registry)
                 .RunEmbedded(port: PortFinder.FindPort(5500));
         }
 

@@ -2,9 +2,7 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.StructureMap;
 using FubuMVC.Core.StructureMap.Diagnostics;
-using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -60,7 +58,5 @@ namespace FubuMVC.Tests.Diagnostics
             names.ShouldContain("Chain:chain_details_Hash");
             names.ShouldContain("Requests:requests");
         }
-
-
     }
 }

@@ -1,5 +1,4 @@
-﻿using FubuCore;
-using FubuMVC.Core;
+﻿using FubuMVC.Core;
 using FubuMVC.Spark;
 using NUnit.Framework;
 
@@ -27,10 +26,8 @@ namespace FubuMVC.IntegrationTesting.Views.Spark
         [Test]
         public void can_render()
         {
-            Scenario.Get.Input(new AirInputModel{TakeABreath = true});
+            Scenario.Get.Input(new AirInputModel {TakeABreath = true});
             Scenario.ContentShouldContain("<h2>Breathe in!</h2>");
         }
     }
-
-
 }

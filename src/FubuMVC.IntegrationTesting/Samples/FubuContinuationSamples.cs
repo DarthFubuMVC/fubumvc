@@ -6,9 +6,6 @@ using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Katana;
-using FubuMVC.StructureMap;
-using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Samples
@@ -28,7 +25,7 @@ namespace FubuMVC.IntegrationTesting.Samples
 
         private Customer determineCustomer()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 
@@ -46,7 +43,7 @@ namespace FubuMVC.IntegrationTesting.Samples
     {
         public bool IsSpecial()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public Guid Id { get; set; }
@@ -62,8 +59,9 @@ namespace FubuMVC.IntegrationTesting.Samples
             // SAMPLE: fubucontinuation-in-action
 
             // Proceed as normal through the chain
-            TestHost.Scenario(_ => {
-                _.Get.Input(new Number { Value = 1 });
+            TestHost.Scenario(_ =>
+            {
+                _.Get.Input(new Number {Value = 1});
                 _.ContentShouldBe("The number is 1");
             });
 
@@ -71,7 +69,7 @@ namespace FubuMVC.IntegrationTesting.Samples
             // a different chain inline
             TestHost.Scenario(_ =>
             {
-                _.Get.Input(new Number { Value = 5 });
+                _.Get.Input(new Number {Value = 5});
                 _.ContentShouldBe("Five is a special number!");
             });
 
@@ -79,7 +77,7 @@ namespace FubuMVC.IntegrationTesting.Samples
             // than 10
             TestHost.Scenario(_ =>
             {
-                _.Get.Input(new Number { Value = 11 });
+                _.Get.Input(new Number {Value = 11});
                 _.StatusCodeShouldBe(HttpStatusCode.Unauthorized);
             });
 
@@ -87,19 +85,21 @@ namespace FubuMVC.IntegrationTesting.Samples
             // the user to another page instead
             TestHost.Scenario(_ =>
             {
-                _.Get.Input(new Number { Value = -1 });
+                _.Get.Input(new Number {Value = -1});
                 _.StatusCodeShouldBe(HttpStatusCode.Redirect);
                 _.Header(HttpResponseHeaders.Location).SingleValueShouldEqual("/invalid");
             });
 
 
-            TestHost.Scenario(_ => {
-                _.Get.Input(new Number { Value = 2 });
+            TestHost.Scenario(_ =>
+            {
+                _.Get.Input(new Number {Value = 2});
                 _.ContentShouldBe("The doubled number is 4");
             });
 
-            TestHost.Scenario(_ => {
-                _.Get.Input(new Number { Value = 4 });
+            TestHost.Scenario(_ =>
+            {
+                _.Get.Input(new Number {Value = 4});
                 _.StatusCodeShouldBe(HttpStatusCode.Redirect);
                 _.Header(HttpResponseHeaders.Location).SingleValueShouldEqual("/doubled/8");
             });

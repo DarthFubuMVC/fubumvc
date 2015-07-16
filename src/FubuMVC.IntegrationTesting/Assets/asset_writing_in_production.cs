@@ -1,7 +1,5 @@
-﻿using System.Runtime.InteropServices;
-using FubuMVC.Core;
+﻿using FubuMVC.Core;
 using FubuMVC.Core.Http;
-using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Assets
@@ -22,8 +20,8 @@ namespace FubuMVC.IntegrationTesting.Assets
 
             Scenario.ContentShouldContain("var x = 0;");
 
-            Scenario.Header(HttpResponseHeaders.CacheControl).SingleValueShouldEqual("private, max-age=86400");
-            Scenario.Header(HttpResponseHeaders.Expires).ShouldHaveOneNonNullValue();
+            Scenario.Header(HttpGeneralHeaders.CacheControl).SingleValueShouldEqual("private, max-age=86400");
+            Scenario.Header(HttpGeneralHeaders.Expires).ShouldHaveOneNonNullValue();
         }
     }
 }

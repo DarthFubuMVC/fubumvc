@@ -28,8 +28,6 @@ namespace FubuMVC.IntegrationTesting.Views.Razor
 ");
 
 
-
-
             RazorView<ActionlessView1>("View1").Write(@"
 @layout Chrome
 <p>I am in view 1</p>
@@ -41,7 +39,6 @@ namespace FubuMVC.IntegrationTesting.Views.Razor
 @this.Partial(new FubuMVC.IntegrationTesting.Views.ActionlessView1())
 
 ");
-
         }
 
         [Test]
@@ -63,6 +60,4 @@ namespace FubuMVC.IntegrationTesting.Views.Razor
             Scenario.ContentShouldNotContain("<h1>Text from Chrome</h1>");
         }
     }
-
-    
 }

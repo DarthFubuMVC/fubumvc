@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using FubuMVC.Core;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
@@ -10,14 +9,14 @@ using NUnit.Framework;
 namespace FubuMVC.IntegrationTesting.Partials
 {
     [TestFixture]
-    public class invoke_as_html_in_endpoint 
+    public class invoke_as_html_in_endpoint
     {
         [Test]
         public void get_the_partial_as_html_if_requested()
         {
             SelfHostHarness.Host.Scenario(_ =>
             {
-                _.Get.Input(new InputModel2{Name = "Jeremy"});
+                _.Get.Input(new InputModel2 {Name = "Jeremy"});
 
                 _.Request.Accepts("text/json");
 
@@ -45,7 +44,7 @@ namespace FubuMVC.IntegrationTesting.Partials
         {
             return new OutputModel
             {
-                Text = _invoker.InvokeObject(new PartialModel{Name = model.Name})
+                Text = _invoker.InvokeObject(new PartialModel {Name = model.Name})
             };
         }
 
@@ -53,7 +52,7 @@ namespace FubuMVC.IntegrationTesting.Partials
         {
             return new OutputModel
             {
-                Text = _invoker.InvokeAsHtml(new PartialModel { Name = model.Name })
+                Text = _invoker.InvokeAsHtml(new PartialModel {Name = model.Name})
             };
         }
 
@@ -73,7 +72,9 @@ namespace FubuMVC.IntegrationTesting.Partials
         public string Name { get; set; }
     }
 
-    public class InputModel2 : InputModel{}
+    public class InputModel2 : InputModel
+    {
+    }
 
     public class PartialModel
     {
@@ -90,10 +91,7 @@ namespace FubuMVC.IntegrationTesting.Partials
 
         public IEnumerable<string> Mimetypes
         {
-            get
-            {
-                yield return MimeType.Html.Value;
-            }
+            get { yield return MimeType.Html.Value; }
         }
     }
 }

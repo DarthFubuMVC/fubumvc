@@ -10,7 +10,6 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
-using FubuMVC.Core.Runtime.Formatters;
 
 namespace FubuMVC.IntegrationTesting.Samples
 {
@@ -22,17 +21,16 @@ namespace FubuMVC.IntegrationTesting.Samples
             return new ResourceModel();
         }
     }
+
     // ENDSAMPLE
 
     public class ResourceModel
     {
-        
     }
 
     // SAMPLE: custom-reader
     public class InputMessage
     {
-
     }
 
 
@@ -40,10 +38,7 @@ namespace FubuMVC.IntegrationTesting.Samples
     {
         public IEnumerable<string> Mimetypes
         {
-            get
-            {
-                yield return "special/format";
-            }
+            get { yield return "special/format"; }
         }
 
         public InputMessage Read(string mimeType, IFubuRequestContext context)
@@ -54,8 +49,8 @@ namespace FubuMVC.IntegrationTesting.Samples
 
             return new InputMessage();
         }
-
     }
+
     // ENDSAMPLE
 
     // SAMPLE: custom-writer
@@ -116,6 +111,7 @@ namespace FubuMVC.IntegrationTesting.Samples
             }
         }
     }
+
     // ENDSAMPLE
 
     // SAMPLE: conneg-policies
@@ -130,6 +126,7 @@ namespace FubuMVC.IntegrationTesting.Samples
             // TODO -- redo this.
         }
     }
+
     // ENDSAMPLE
 
     // SAMPLE: writer-attribute-for-one-off
@@ -149,6 +146,7 @@ namespace FubuMVC.IntegrationTesting.Samples
             _types.Each(t => outputNode.Add(t));
         }
     }
+
     // ENDSAMPLE
 
     // SAMPLE: reader-attribute-for-one-off
@@ -169,10 +167,10 @@ namespace FubuMVC.IntegrationTesting.Samples
             _types.Each(inputNode.Add);
         }
     }
+
     // ENDSAMPLE
 
 
-    
     public static class ConnegManipulation
     {
         // SAMPLE: conneg-manipulation
@@ -182,13 +180,13 @@ namespace FubuMVC.IntegrationTesting.Samples
             chain.Input.ClearAll();
 
             // Accept 'application/x-www-form-urlencoded' with model binding
-            chain.Input.Add(typeof(ModelBindingReader<>));
-            
+            chain.Input.Add(typeof (ModelBindingReader<>));
+
             // Add basic Json reading
             chain.Input.Add(new JsonSerializer());
 
             // Query whether or not the chain uses the basic Json reading
-            bool readsJson = chain.Input.CanRead(MimeType.Json);
+            var readsJson = chain.Input.CanRead(MimeType.Json);
 
             // Add a completely custom Reader
             chain.Input
@@ -202,7 +200,6 @@ namespace FubuMVC.IntegrationTesting.Samples
 
             // Remove all writers
             chain.Output.ClearAll();
-
         }
 
 
@@ -212,7 +209,7 @@ namespace FubuMVC.IntegrationTesting.Samples
         // This method is just an example of how you can add 
         // runtime conditions to an existing WriterNode
         // hanging off of BehaviorChain.Output.Writers
-        
+
 
         // TODO -- need to redo this
 
@@ -227,14 +224,13 @@ namespace FubuMVC.IntegrationTesting.Samples
                 return false;
             }
         }
-        // ENDSAMPLE
 
+        // ENDSAMPLE
     }
 
 
     public class JsonInput
     {
-        
     }
 
     public class ConnegSampleEndpoints
@@ -275,6 +271,7 @@ namespace FubuMVC.IntegrationTesting.Samples
             }
         }
     }
+
     // ENDSAMPLE
 
     // SAMPLE: spoofing-mimetype-policy
@@ -289,6 +286,6 @@ namespace FubuMVC.IntegrationTesting.Samples
             Wrap.WithBehavior<CorrectMimetypeForAjaxBehavior>();
         }
     }
-    // ENDSAMPLE
 
+    // ENDSAMPLE
 }

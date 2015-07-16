@@ -41,8 +41,6 @@ namespace FubuMVC.IntegrationTesting.Views.Razor
 @helperTest('helper message')
 
 ");
-
-
         }
 
         [Test]
@@ -58,7 +56,8 @@ namespace FubuMVC.IntegrationTesting.Views.Razor
         {
             Scenario.Get.Action<UsingHelpersWithAttrEndpoint>(x => x.get_razor_using_helpers_attr());
 
-            Scenario.ContentShouldContain("<a href=\"helperWithAttribute\" class=\"helperWithAttribute test\">rendered by helper: helperWithAttribute</a>");
+            Scenario.ContentShouldContain(
+                "<a href=\"helperWithAttribute\" class=\"helperWithAttribute test\">rendered by helper: helperWithAttribute</a>");
         }
     }
 
@@ -66,7 +65,7 @@ namespace FubuMVC.IntegrationTesting.Views.Razor
     {
         public UsingHelpersWithAttrModel get_razor_using_helpers_attr()
         {
-            return new UsingHelpersWithAttrModel { Message = "Hello from UsingHelpersWithAttrModel" };
+            return new UsingHelpersWithAttrModel {Message = "Hello from UsingHelpersWithAttrModel"};
         }
     }
 
@@ -83,7 +82,7 @@ namespace FubuMVC.IntegrationTesting.Views.Razor
     {
         public UsingHelpersModel get_razor_using_helpers()
         {
-            return new UsingHelpersModel { Message = "Hello from endpoint" };
+            return new UsingHelpersModel {Message = "Hello from endpoint"};
         }
     }
 

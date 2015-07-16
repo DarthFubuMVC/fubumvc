@@ -59,14 +59,13 @@ namespace FubuMVC.IntegrationTesting.Views.Spark
 </html>
 
 ");
-
         }
 
         [Test]
         public void does_not_apply_layout_when_invoked_as_partial()
         {
             Scenario.Get.Action<UsesPartialEndpoint>(x => x.Execute());
-            
+
             Scenario.ContentShouldContain("<h1>Uses partial</h1>");
             Scenario.ContentShouldContain("<h1>Default layout</h1>");
             Scenario.ContentShouldContain("<p>In a partial</p>");
@@ -105,7 +104,6 @@ namespace FubuMVC.IntegrationTesting.Views.Spark
             Scenario.ContentShouldContain("<p>In a partial</p>");
             Scenario.ContentShouldContain("<h1>This layout means FAIL!</h1>");
         }
-
     }
 
     public class HelloPartialEndpoint
@@ -114,6 +112,7 @@ namespace FubuMVC.IntegrationTesting.Views.Spark
         {
             return new HelloPartialViewModel();
         }
+
         public HelloPartialViewModel Render()
         {
             return new HelloPartialViewModel();
@@ -159,6 +158,7 @@ namespace FubuMVC.IntegrationTesting.Views.Spark
             return FubuContinuation.TransferTo(new HelloPartialInputModel());
         }
     }
+
     public class RedirectToEndpoint
     {
         public FubuContinuation Redirect()

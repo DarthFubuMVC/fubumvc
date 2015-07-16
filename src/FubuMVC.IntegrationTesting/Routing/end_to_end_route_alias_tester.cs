@@ -10,7 +10,9 @@ namespace FubuMVC.IntegrationTesting.Routing
         [Test]
         public void call_the_aliased_route()
         {
-            endpoints.Get(SelfHostHarness.Root + "/something/completely/different").ReadAsText().ShouldEqual("Hey there");
+            endpoints.Get(SelfHostHarness.Root + "/something/completely/different")
+                .ReadAsText()
+                .ShouldEqual("Hey there");
         }
     }
 

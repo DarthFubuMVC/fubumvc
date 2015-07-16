@@ -7,8 +7,6 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Security;
-using FubuMVC.Core.StructureMap;
-using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 

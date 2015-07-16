@@ -35,14 +35,14 @@ namespace FubuMVC.IntegrationTesting.Views.LayoutAttachment
         [Test]
         public void all_views_have_the_main_application_master()
         {
-
-            var master = Views.Templates<RazorTemplate>().FirstOrDefault(x => x.Name() == "Application" && x.RelativePath() == "Layouts/Application.cshtml");
+            var master =
+                Views.Templates<RazorTemplate>()
+                    .FirstOrDefault(x => x.Name() == "Application" && x.RelativePath() == "Layouts/Application.cshtml");
             master.ShouldNotBeNull();
 
-            Views.Templates<RazorTemplate>().Where(x => x != master && x.Name() != "Application").Each(view =>
-            {
-                view.Master.ShouldBeTheSameAs(master);
-            });
+            Views.Templates<RazorTemplate>()
+                .Where(x => x != master && x.Name() != "Application")
+                .Each(view => { view.Master.ShouldBeTheSameAs(master); });
         }
     }
 }

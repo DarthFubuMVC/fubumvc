@@ -9,7 +9,8 @@ namespace FubuMVC.IntegrationTesting.Owin
         [Test]
         public void no_longer_puts_localhost_in_the_resolved_url()
         {
-            TestHost.Scenario(_ => {
+            TestHost.Scenario(_ =>
+            {
                 _.Get.Action<UrlEndpoints>(x => x.get_green());
 
                 _.ContentShouldBe("/green");

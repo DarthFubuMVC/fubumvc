@@ -1,7 +1,6 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
-using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Samples
 {
@@ -38,7 +37,7 @@ namespace FubuMVC.IntegrationTesting.Samples
 
         private static PrivateMessage createPrivateMessage()
         {
-            return new PrivateMessage{Name = "Han Solo"};
+            return new PrivateMessage {Name = "Han Solo"};
         }
     }
 
@@ -63,6 +62,7 @@ namespace FubuMVC.IntegrationTesting.Samples
             return DoNext.Continue;
         }
     }
+
     // ENDSAMPLE
 
     public static class FubuRequestSamples
@@ -71,9 +71,8 @@ namespace FubuMVC.IntegrationTesting.Samples
         {
             // SAMPLE: using-in-memory-fubu-request
             var request = new InMemoryFubuRequest();
-            request.Set(new PrivateMessage{Name = "Darth Vader"});
+            request.Set(new PrivateMessage {Name = "Darth Vader"});
             // ENDSAMPLE
         }
     }
-
 }

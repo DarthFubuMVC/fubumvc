@@ -46,7 +46,7 @@ namespace FubuMVC.IntegrationTesting.Views.Razor
     {
         public HasLayoutsWithSectionModel get_razor_layouts_with_sections()
         {
-            return new HasLayoutsWithSectionModel { Message = "Hello from endpoint" };
+            return new HasLayoutsWithSectionModel {Message = "Hello from endpoint"};
         }
     }
 

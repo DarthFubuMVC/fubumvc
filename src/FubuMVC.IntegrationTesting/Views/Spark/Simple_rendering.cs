@@ -17,7 +17,7 @@ namespace FubuMVC.IntegrationTesting.Views.Spark
         [Test]
         public void can_render()
         {
-            Scenario.Get.Input(new AirInputModel{TakeABreath = true});
+            Scenario.Get.Input(new AirInputModel {TakeABreath = true});
             Scenario.ContentShouldContain("<h2>Breathe in!</h2>");
         }
     }
@@ -26,14 +26,14 @@ namespace FubuMVC.IntegrationTesting.Views.Spark
     {
         public AirViewModel TakeABreath(AirRequest request)
         {
-            return new AirViewModel { Text = "Take a {0} breath?".ToFormat(request.Type) };
+            return new AirViewModel {Text = "Take a {0} breath?".ToFormat(request.Type)};
         }
 
         public BreatheViewModel get_breathe_TakeABreath(AirInputModel model)
         {
             var result = model.TakeABreath
-                ? new BreatheViewModel { Text = "Breathe in!" }
-                : new BreatheViewModel { Text = "Exhale!" };
+                ? new BreatheViewModel {Text = "Breathe in!"}
+                : new BreatheViewModel {Text = "Exhale!"};
 
             return result;
         }
@@ -61,6 +61,5 @@ namespace FubuMVC.IntegrationTesting.Views.Spark
 
     public class BreatheViewModel : AirViewModel
     {
-
     }
 }

@@ -1,8 +1,6 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Http.Owin;
-using FubuMVC.Core.StructureMap;
 using FubuMVC.Katana;
-using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 

@@ -19,10 +19,6 @@ namespace FubuMVC.IntegrationTesting.Views.Razor
 
 <div id='null' class='@null' title=''></div>
 ");
-
-
-
-
         }
 
         [Test]
@@ -35,7 +31,7 @@ namespace FubuMVC.IntegrationTesting.Views.Razor
             Scenario.ContentShouldContain("With model");
             Scenario.ContentShouldContain("Without model");
             Scenario.ContentShouldContain("<div id=\"null\" title=\"\"></div>");
-        } 
+        }
     }
 
     public class PageExtensionsEndpoint

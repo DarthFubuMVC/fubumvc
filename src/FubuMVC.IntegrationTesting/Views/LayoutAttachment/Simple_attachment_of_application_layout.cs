@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Web.UI.WebControls;
 using FubuMVC.Razor.RazorModel;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -30,13 +28,12 @@ namespace FubuMVC.IntegrationTesting.Views.LayoutAttachment
         [Test]
         public void all_views_have_the_main_application_master()
         {
-
             var master = Views.Templates<RazorTemplate>().FirstOrDefault(x => x.Name() == "Application");
             master.ShouldNotBeNull();
 
-            Views.Templates<RazorTemplate>().Where(x => x != master).Each(view => {
-                view.Master.ShouldBeTheSameAs(master);
-            });
+            Views.Templates<RazorTemplate>()
+                .Where(x => x != master)
+                .Each(view => { view.Master.ShouldBeTheSameAs(master); });
         }
 
         [Test]

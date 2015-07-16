@@ -1,8 +1,6 @@
 ﻿using System.Net;
 using FubuMVC.Core;
-using FubuMVC.Core.StructureMap;
 using FubuMVC.Nowin;
-using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -50,6 +48,7 @@ namespace FubuMVC.IntegrationTesting
             });
         }
     }
+
     // ENDSAMPLE
 
     public class NowinEndpoint

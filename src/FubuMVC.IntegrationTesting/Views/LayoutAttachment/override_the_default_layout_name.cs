@@ -20,8 +20,6 @@ namespace FubuMVC.IntegrationTesting.Views.LayoutAttachment
             RazorView<ViewModel2>("Folder1/View2");
             RazorView<ViewModel3>("Folder1/Folder2/View3");
             RazorView<ViewModel4>("Folder1/Folder2/View4");
-
-
         }
 
         public class MyRegistry : FubuRegistry
@@ -35,14 +33,12 @@ namespace FubuMVC.IntegrationTesting.Views.LayoutAttachment
         [Test]
         public void all_views_have_the_main_application_master_called_Theme_from_the_override()
         {
-
             var master = Views.Templates<RazorTemplate>().FirstOrDefault(x => x.Name() == "Theme");
             master.ShouldNotBeNull();
 
-            Views.Templates<RazorTemplate>().Where(x => x != master).Each(view =>
-            {
-                view.Master.ShouldBeTheSameAs(master);
-            });
+            Views.Templates<RazorTemplate>()
+                .Where(x => x != master)
+                .Each(view => { view.Master.ShouldBeTheSameAs(master); });
         }
     }
 }

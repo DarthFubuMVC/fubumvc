@@ -54,7 +54,7 @@ namespace FubuTransportation.Configuration
         {
             return For(x => {
                 x.EnableInMemoryTransport();
-            });
+            }, container);
         }
 
         static FubuTransport()

@@ -5,11 +5,8 @@ using FubuMVC.Core;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Http.Scenarios;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.StructureMap;
-using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
-using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Http.Hosting
 {
@@ -44,9 +41,7 @@ namespace FubuMVC.Tests.Http.Hosting
 
         private ScenarioAssertionException fails(Action<Scenario> configuration)
         {
-            return Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
-                host.Scenario(configuration);
-            });
+            return Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => { host.Scenario(configuration); });
         }
 
         [Test]
@@ -90,7 +85,8 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void using_scenario_with_ContentShouldContain_declaration_happy_path()
         {
-            host.Scenario(x => {
+            host.Scenario(x =>
+            {
                 x.Get.Input<MarkerInput>();
                 x.ContentShouldContain("just the marker");
             });
@@ -100,8 +96,10 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void using_scenario_with_ContentShouldContain_declaration_sad_path()
         {
-            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
-                host.Scenario(x => {
+            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
+            {
+                host.Scenario(x =>
+                {
                     x.Get.Input<MarkerInput>();
                     x.ContentShouldContain("wrong text");
                 });
@@ -113,7 +111,8 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void using_scenario_with_ContentShouldNotContain_declaration_happy_path()
         {
-            host.Scenario(x => {
+            host.Scenario(x =>
+            {
                 x.Get.Input<MarkerInput>();
                 x.ContentShouldNotContain("some random stuff");
             });
@@ -122,8 +121,10 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void using_scenario_with_ContentShouldNotContain_declaration_sad_path()
         {
-            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
-                host.Scenario(x => {
+            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
+            {
+                host.Scenario(x =>
+                {
                     x.Get.Input<MarkerInput>();
                     x.ContentShouldNotContain("just the marker");
                 });
@@ -135,7 +136,8 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void using_scenario_with_StatusCodeShouldBe_happy_path()
         {
-            host.Scenario(x => {
+            host.Scenario(x =>
+            {
                 x.Get.Input<MarkerInput>();
                 x.StatusCodeShouldBe(HttpStatusCode.OK);
             });
@@ -144,8 +146,10 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void using_scenario_with_StatusCodeShouldBe_sad_path()
         {
-            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
-                host.Scenario(x => {
+            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
+            {
+                host.Scenario(x =>
+                {
                     x.Get.Input<MarkerInput>();
                     x.StatusCodeShouldBe(HttpStatusCode.InternalServerError);
                 });
@@ -157,7 +161,8 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void single_header_value_is_positive()
         {
-            host.Scenario(x => {
+            host.Scenario(x =>
+            {
                 x.JsonData(new HeaderInput {Key = "Foo", Value1 = "Bar"});
                 x.Header("Foo").ShouldHaveOneNonNullValue()
                     .SingleValueShouldEqual("Bar");
@@ -167,8 +172,10 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void single_header_value_is_negative_with_the_wrong_value()
         {
-            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
-                host.Scenario(x => {
+            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
+            {
+                host.Scenario(x =>
+                {
                     x.JsonData(new HeaderInput {Key = "Foo", Value1 = "NotBar"});
                     x.Header("Foo").ShouldHaveOneNonNullValue()
                         .SingleValueShouldEqual("Bar");
@@ -181,8 +188,10 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void single_header_value_is_negative_with_the_too_many_values()
         {
-            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
-                host.Scenario(x => {
+            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
+            {
+                host.Scenario(x =>
+                {
                     x.JsonData(new HeaderInput {Key = "Foo", Value1 = "NotBar", Value2 = "AnotherBar"});
                     x.Header("Foo").ShouldHaveOneNonNullValue()
                         .SingleValueShouldEqual("Bar");
@@ -196,8 +205,10 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void single_header_value_is_negative_because_there_are_no_values()
         {
-            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
-                host.Scenario(x => {
+            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
+            {
+                host.Scenario(x =>
+                {
                     x.JsonData(new HeaderInput {Key = "Foo"});
                     x.Header("Foo")
                         .SingleValueShouldEqual("Bar");
@@ -211,7 +222,8 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void should_have_on_non_null_header_value_happy_path()
         {
-            host.Scenario(x => {
+            host.Scenario(x =>
+            {
                 x.JsonData(new HeaderInput {Key = "Foo", Value1 = "Anything"});
                 x.Header("Foo").ShouldHaveOneNonNullValue();
             });
@@ -220,8 +232,10 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void should_have_one_non_null_value_sad_path()
         {
-            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
-                host.Scenario(x => {
+            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
+            {
+                host.Scenario(x =>
+                {
                     x.JsonData(new HeaderInput {Key = "Foo"});
                     x.Header("Foo").ShouldHaveOneNonNullValue();
                 });
@@ -233,8 +247,10 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void should_have_on_non_null_value_sad_path_with_too_many_values()
         {
-            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
-                host.Scenario(x => {
+            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
+            {
+                host.Scenario(x =>
+                {
                     x.JsonData(new HeaderInput {Key = "Foo", Value1 = "Bar1", Value2 = "Bar2"});
                     x.Header("Foo").ShouldHaveOneNonNullValue();
                 });
@@ -247,7 +263,8 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void header_should_not_be_written_happy_path()
         {
-            host.Scenario(x => {
+            host.Scenario(x =>
+            {
                 x.JsonData(new HeaderInput {Key = "Foo"});
                 x.Header("Foo").ShouldNotBeWritten();
             });
@@ -256,8 +273,10 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void header_should_not_be_written_sad_path_with_values()
         {
-            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
-                host.Scenario(x => {
+            var ex = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
+            {
+                host.Scenario(x =>
+                {
                     x.JsonData(new HeaderInput {Key = "Foo", Value1 = "Bar1", Value2 = "Bar2"});
                     x.Header("Foo").ShouldNotBeWritten();
                 });
@@ -269,7 +288,8 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void exact_content_happy_path()
         {
-            host.Scenario(x => {
+            host.Scenario(x =>
+            {
                 x.Get.Action<InMemoryEndpoint>(_ => _.get_memory_hello());
 
                 x.ContentShouldBe("hello from the in memory host");
@@ -279,7 +299,8 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void exact_content_sad_path()
         {
-            var e = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() => {
+            var e = Exception<ScenarioAssertionException>.ShouldBeThrownBy(() =>
+            {
                 host.Scenario(x =>
                 {
                     x.Get.Action<InMemoryEndpoint>(_ => _.get_memory_hello());
@@ -294,7 +315,8 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void content_type_should_be_happy_path()
         {
-            host.Scenario(_ => {
+            host.Scenario(_ =>
+            {
                 _.Get.Action<InMemoryEndpoint>(x => x.get_memory_hello());
 
                 _.ContentTypeShouldBe(MimeType.Text);
@@ -304,22 +326,21 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void content_type_sad_path()
         {
-            var ex = fails(_ => {
+            var ex = fails(_ =>
+            {
                 _.Get.Action<InMemoryEndpoint>(x => x.get_memory_hello());
 
                 _.ContentTypeShouldBe("text/json");
             });
 
-            ex.Message.ShouldContain("Expected a single header value of 'Content-Type'='text/json', but the actual value was 'text/plain'");
+            ex.Message.ShouldContain(
+                "Expected a single header value of 'Content-Type'='text/json', but the actual value was 'text/plain'");
         }
 
         [Test]
         public void happily_blows_up_on_an_unexpected_500()
         {
-            var ex = fails(_ => {
-                _.Get.Action<InMemoryEndpoint>(x => x.get_wrong_status_code());
-
-            });
+            var ex = fails(_ => { _.Get.Action<InMemoryEndpoint>(x => x.get_wrong_status_code()); });
 
             ex.Message.ShouldContain("Expected status code 200 (Ok), but was 500");
             ex.Message.ShouldContain("the error text");

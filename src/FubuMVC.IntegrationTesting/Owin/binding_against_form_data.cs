@@ -1,6 +1,4 @@
 using FubuMVC.Core.Runtime;
-using FubuMVC.Tests.Runtime;
-using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Owin
@@ -17,7 +15,8 @@ namespace FubuMVC.IntegrationTesting.Owin
                 Direction = "South"
             };
 
-            TestHost.Scenario(_ => {
+            TestHost.Scenario(_ =>
+            {
                 _.FormData(formInput);
 
                 _.ContentShouldBe(formInput.ToString());
@@ -34,7 +33,8 @@ namespace FubuMVC.IntegrationTesting.Owin
                 Direction = "South"
             };
 
-            TestHost.Scenario(_ => {
+            TestHost.Scenario(_ =>
+            {
                 _.Post.Input(formInput);
                 _.Request.ContentType(MimeType.HttpFormMimetype);
 

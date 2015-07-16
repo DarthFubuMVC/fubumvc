@@ -1,7 +1,7 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Packaging;
 
-namespace FubuMVC.StructureMap.Testing.Internals
+namespace FubuMVC.Tests.StructureMap.Internals
 {
     public class StubActivator : IActivator
     {

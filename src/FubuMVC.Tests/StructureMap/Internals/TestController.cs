@@ -1,7 +1,7 @@
 using System;
 using FubuMVC.Core.Behaviors;
 
-namespace FubuMVC.StructureMap.Testing.Internals
+namespace FubuMVC.Tests.StructureMap.Internals
 {
     public class TestViewModel
     {

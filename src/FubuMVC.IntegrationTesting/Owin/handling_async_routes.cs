@@ -13,7 +13,7 @@ namespace FubuMVC.IntegrationTesting.Owin
         {
             var response = Harness.Endpoints.Get<AsyncEndpoint>(x => x.get_async()).ReadAsText();
             response.ShouldEqual("Hello");
-        } 
+        }
 
         [Test]
         public void async_route_with_error_should_have_501_and_exception_message()
@@ -22,7 +22,7 @@ namespace FubuMVC.IntegrationTesting.Owin
             response.StatusCode.ShouldEqual(HttpStatusCode.InternalServerError);
             var text = response.ReadAsText();
             text.ShouldContain("Error in async method");
-        } 
+        }
     }
 
     public class AsyncEndpoint
@@ -34,10 +34,7 @@ namespace FubuMVC.IntegrationTesting.Owin
 
         public Task<string> get_async_error()
         {
-            return Task<string>.Factory.StartNew(() =>
-            {
-                throw new InvalidOperationException("Error in async method");
-            });
+            return Task<string>.Factory.StartNew(() => { throw new InvalidOperationException("Error in async method"); });
         }
     }
 }

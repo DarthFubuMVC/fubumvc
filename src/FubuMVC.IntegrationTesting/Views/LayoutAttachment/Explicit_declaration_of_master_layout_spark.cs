@@ -23,8 +23,6 @@ Special content");
             SparkView<ViewModel2>("Folder1/View2");
             SparkView<ViewModel3>("Folder1/Folder2/View3");
             SparkView<ViewModel4>("Folder1/Folder2/View4");
-
-            
         }
 
         public class MyViewModelRegistry : FubuRegistry
@@ -57,7 +55,9 @@ Special content");
         }
     }
 
-    public class MyViewModel{}
+    public class MyViewModel
+    {
+    }
 
     public class MyViewModelEndpoint
     {

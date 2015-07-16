@@ -1,10 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Web.UI.WebControls;
+﻿using System.Collections.Generic;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Packaging;
-using FubuMVC.Core.StructureMap;
-using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
@@ -19,7 +15,8 @@ namespace FubuMVC.Tests
         {
             FakeDeactivator.Messages.Clear();
 
-            var container = new Container(x => {
+            var container = new Container(x =>
+            {
                 x.For<IDeactivator>().Add(new FakeDeactivator("red"));
                 x.For<IDeactivator>().Add(new FakeDeactivator("green"));
                 x.For<IDeactivator>().Add(new FakeDeactivator("blue"));

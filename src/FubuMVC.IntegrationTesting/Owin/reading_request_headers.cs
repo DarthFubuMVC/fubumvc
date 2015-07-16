@@ -11,7 +11,8 @@ namespace FubuMVC.IntegrationTesting.Owin
         [Test]
         public void read_build_in_header()
         {
-            HarnessApplication.Run(x => {
+            HarnessApplication.Run(x =>
+            {
                 x.GetByInput(new HeaderRequest
                 {
                     Name = HttpRequestHeaders.IfNoneMatch
@@ -22,7 +23,8 @@ namespace FubuMVC.IntegrationTesting.Owin
         [Test]
         public void read_custom_header()
         {
-            HarnessApplication.Run(x => {
+            HarnessApplication.Run(x =>
+            {
                 x.GetByInput(new HeaderRequest
                 {
                     Name = "x-1"

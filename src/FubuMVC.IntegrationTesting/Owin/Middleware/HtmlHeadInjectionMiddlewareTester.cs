@@ -1,11 +1,7 @@
-﻿using System.Diagnostics;
-using Castle.Core.Resource;
-using FubuMVC.Core;
+﻿using FubuMVC.Core;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Owin.Middleware;
-using FubuMVC.Core.StructureMap;
-using FubuMVC.StructureMap;
 using HtmlTags;
 using NUnit.Framework;
 
@@ -23,10 +19,9 @@ namespace FubuMVC.IntegrationTesting.Owin.Middleware
         [Test]
         public void can_inject_the_right_html_on_GET_for_html_text()
         {
-            
-
             var registry = new FubuRegistry();
-            registry.AlterSettings<OwinSettings>(x => {
+            registry.AlterSettings<OwinSettings>(x =>
+            {
                 x.AddMiddleware<HtmlHeadInjectionMiddleware>().Arguments.With(new InjectionOptions
                 {
                     Content = e => new HtmlTag("script").Attr("foo", "bar").ToString()
@@ -35,21 +30,20 @@ namespace FubuMVC.IntegrationTesting.Owin.Middleware
 
             using (var server = FubuApplication.For(registry).RunInMemory())
             {
-                server.Scenario(_ => {
+                server.Scenario(_ =>
+                {
                     _.Get.Action<SimpleHtmlEndpoint>(x => x.get_html_content());
 
                     _.ContentShouldContain("<script foo=\"bar\"></script></head>");
-
                 });
 
-                server.Scenario(_ => {
+                server.Scenario(_ =>
+                {
                     _.Get.Action<SimpleHtmlEndpoint>(x => x.get_text_content());
 
                     _.ContentShouldNotContain("<script foo=\"bar\"></script></head>");
                 });
             }
-
-
         }
     }
 

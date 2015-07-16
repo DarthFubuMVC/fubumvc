@@ -1,6 +1,5 @@
 ﻿using System;
 using FubuCore;
-using FubuCore.Util;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets;
 using FubuTestingSupport;
@@ -21,7 +20,8 @@ namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
         {
             public MyRegistry()
             {
-                AlterSettings<AssetSettings>(x => {
+                AlterSettings<AssetSettings>(x =>
+                {
                     x.Aliases.Add("foo", "Foo.js");
                     x.Aliases.Add("bar", "Foo.js");
                 });
@@ -37,9 +37,9 @@ namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
         [Test]
         public void alias_is_not_found_sad_path()
         {
-            Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() => {
-                AllAssets.As<AssetGraph>().StoreAlias("bar", "nonexistent.js");
-            }).Message.ShouldContain("No asset file named 'nonexistent.js' can be found");
+            Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(
+                () => { AllAssets.As<AssetGraph>().StoreAlias("bar", "nonexistent.js"); })
+                .Message.ShouldContain("No asset file named 'nonexistent.js' can be found");
         }
 
         [Test]

@@ -26,7 +26,7 @@ This is just a test to see if we can set properties that are null.
     {
         public ComplexModelViewModel get_razor_complex()
         {
-            return new ComplexModelViewModel { TestString = "Test String" };
+            return new ComplexModelViewModel {TestString = "Test String"};
         }
     }
 

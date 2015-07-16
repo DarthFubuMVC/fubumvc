@@ -4,20 +4,21 @@ using System.Net;
 using FubuMVC.Core.Http;
 using FubuTestingSupport;
 using NUnit.Framework;
+using Cookie = FubuMVC.Core.Http.Cookies.Cookie;
 
 namespace FubuMVC.IntegrationTesting
 {
-    [TestFixture, Ignore("Test doesn't work because of EndpointDriver and our usage of the underlying HttpWebRequest business")]
+    [TestFixture,
+     Ignore("Test doesn't work because of EndpointDriver and our usage of the underlying HttpWebRequest business")]
     public class read_cookies_from_the_request : SharedHarnessContext
     {
         [Test]
         public void read_a_single_request_cookie()
         {
-            endpoints.Get<CookieReceiverEndpoint>(x => x.get_cookies(), configure: r => {
-                r.Headers.Add(HttpRequestHeader.Cookie, new Core.Http.Cookies.Cookie("Foo", "Bar").ToString());
-
-
-            }).ReadAsText().ShouldEqual("Some stuff");
+            endpoints.Get<CookieReceiverEndpoint>(x => x.get_cookies(),
+                configure: r => { r.Headers.Add(HttpRequestHeader.Cookie, new Cookie("Foo", "Bar").ToString()); })
+                .ReadAsText()
+                .ShouldEqual("Some stuff");
         }
 
         [Test]
@@ -25,9 +26,8 @@ namespace FubuMVC.IntegrationTesting
         {
             endpoints.Get<CookieReceiverEndpoint>(x => x.get_cookies(), configure: r =>
             {
-                r.CookieContainer.Add(new Cookie("Foo", "Bar", "Foo", "http://FooDomain.com"));
-                r.CookieContainer.Add(new Cookie("Dallas", "Cowboys", "Dallas", "http://DallasDomain.com"));
-                
+                r.CookieContainer.Add(new System.Net.Cookie("Foo", "Bar", "Foo", "http://FooDomain.com"));
+                r.CookieContainer.Add(new System.Net.Cookie("Dallas", "Cowboys", "Dallas", "http://DallasDomain.com"));
             }).ReadAsText().ShouldEqual("Some stuff");
         }
     }

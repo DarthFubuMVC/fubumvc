@@ -26,7 +26,7 @@ context: @(Context != null)
     {
         public ContextTestModel get_razor_context()
         {
-            return new ContextTestModel { Message = "Hello from endpoint" };
+            return new ContextTestModel {Message = "Hello from endpoint"};
         }
     }
 

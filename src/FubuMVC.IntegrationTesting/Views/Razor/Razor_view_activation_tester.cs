@@ -36,7 +36,7 @@ namespace FubuMVC.IntegrationTesting.Views.Razor
     {
         public ActivationModel get_model()
         {
-            return new ActivationModel { Name = "Jeremy" };
+            return new ActivationModel {Name = "Jeremy"};
         }
     }
 

@@ -16,9 +16,9 @@ namespace FubuMVC.IntegrationTesting.Querying
             FullName = assemblyName.FullName;
         }
 
-        public string Name { get; set;}
-        public string Version { get; set;}
-        public string FullName { get; set;}
+        public string Name { get; set; }
+        public string Version { get; set; }
+        public string FullName { get; set; }
 
         public bool Equals(AssemblyToken other)
         {
@@ -39,7 +39,7 @@ namespace FubuMVC.IntegrationTesting.Querying
         {
             unchecked
             {
-                int result = (Name != null ? Name.GetHashCode() : 0);
+                var result = (Name != null ? Name.GetHashCode() : 0);
                 result = (result*397) ^ (Version != null ? Version.GetHashCode() : 0);
                 result = (result*397) ^ (FullName != null ? FullName.GetHashCode() : 0);
                 return result;

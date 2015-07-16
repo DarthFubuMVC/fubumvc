@@ -2,11 +2,8 @@ using System;
 using System.Collections.Generic;
 using FubuCore;
 using FubuMVC.Core;
-using FubuMVC.Core.StructureMap;
-using FubuMVC.StructureMap;
-using NUnit.Framework;
 using FubuTestingSupport;
-using StructureMap;
+using NUnit.Framework;
 
 namespace FubuMVC.Tests
 {
@@ -31,7 +28,8 @@ namespace FubuMVC.Tests
         [Test]
         public void get_the_application_folder_with_a_file_but_no_physical_path()
         {
-            var settings = new ApplicationSettings{
+            var settings = new ApplicationSettings
+            {
                 PhysicalPath = null,
                 ParentFolder = ".".ToFullPath()
             };
@@ -42,7 +40,8 @@ namespace FubuMVC.Tests
         [Test]
         public void get_the_application_folder_with_no_directory_and_no_folder_uses_the_appdomain()
         {
-            new ApplicationSettings{
+            new ApplicationSettings
+            {
                 ParentFolder = null,
                 PhysicalPath = null
             }.GetApplicationFolder().ShouldEqual(AppDomain.CurrentDomain.BaseDirectory);
@@ -51,7 +50,8 @@ namespace FubuMVC.Tests
         [Test]
         public void get_the_application_folder_when_the_physical_path_is_absolute()
         {
-            new ApplicationSettings{
+            new ApplicationSettings
+            {
                 ParentFolder = ".".ToFullPath(),
                 PhysicalPath = "app1".ToFullPath()
             }.GetApplicationFolder().ShouldEqual("app1".ToFullPath());
@@ -60,14 +60,13 @@ namespace FubuMVC.Tests
         [Test]
         public void get_the_application_folder_when_the_physical_path_is_relative()
         {
-            var settings = new ApplicationSettings{
+            var settings = new ApplicationSettings
+            {
                 ParentFolder = ".".ToFullPath(),
                 PhysicalPath = "app1"
             };
 
             settings.GetApplicationFolder().ShouldEqual(settings.ParentFolder.AppendPath(settings.PhysicalPath));
-
-
         }
 
         [Test]
@@ -85,7 +84,7 @@ namespace FubuMVC.Tests
         {
             var settings1 = ApplicationSettings.For<KayakApplication>();
             settings1.Port = 5501;
-            
+
             settings1.Write();
 
             var settings2 = ApplicationSettings.ReadByName(settings1.Name);
@@ -94,8 +93,6 @@ namespace FubuMVC.Tests
             settings1.RootUrl.ShouldEqual(settings2.RootUrl);
             settings1.ApplicationSourceName.ShouldEqual(settings2.ApplicationSourceName);
         }
-
-
     }
 
     public class KayakApplication : IApplicationSource
@@ -135,7 +132,7 @@ namespace FubuMVC.Tests
 
         public IDictionary<string, object> post_name(NameModel model)
         {
-            return new Dictionary<string, object> { { "name", model.Name } };
+            return new Dictionary<string, object> {{"name", model.Name}};
         }
     }
 }

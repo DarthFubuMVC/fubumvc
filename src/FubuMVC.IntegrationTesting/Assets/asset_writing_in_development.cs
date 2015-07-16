@@ -20,8 +20,8 @@ namespace FubuMVC.IntegrationTesting.Assets
 
             Scenario.ContentShouldContain("var x = 0;");
 
-            Scenario.Header(HttpResponseHeaders.CacheControl).ShouldNotBeWritten();
-            Scenario.Header(HttpResponseHeaders.Expires).ShouldNotBeWritten();
+            Scenario.Header(HttpGeneralHeaders.CacheControl).ShouldNotBeWritten();
+            Scenario.Header(HttpGeneralHeaders.Expires).ShouldNotBeWritten();
         }
     }
 }

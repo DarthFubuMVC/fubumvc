@@ -1,7 +1,6 @@
 using System;
 using System.Linq.Expressions;
 using System.Threading;
-using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Endpoints;
@@ -9,13 +8,8 @@ using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Scenarios;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.StructureMap;
 using FubuMVC.Katana;
-using FubuMVC.StructureMap;
 using NUnit.Framework;
-using StructureMap;
-using Process = System.Diagnostics.Process;
 
 namespace FubuMVC.IntegrationTesting
 {
@@ -48,7 +42,8 @@ namespace FubuMVC.IntegrationTesting
         {
             OwinHttpResponse response = null;
 
-            Scenario(x => {
+            Scenario(x =>
+            {
                 x.Get.Input(input);
 
                 response = x.Response;
@@ -73,10 +68,7 @@ namespace FubuMVC.IntegrationTesting
 
         public static BehaviorGraph BehaviorGraph
         {
-            get
-            {
-                return _host.Value.Behaviors;
-            }
+            get { return _host.Value.Behaviors; }
         }
 
         public static void Scenario<T>(Action<Scenario> configuration) where T : FubuRegistry, new()

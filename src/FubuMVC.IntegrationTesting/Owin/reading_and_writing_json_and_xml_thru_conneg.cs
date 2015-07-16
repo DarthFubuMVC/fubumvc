@@ -13,45 +13,42 @@ namespace FubuMVC.IntegrationTesting.Owin
         [Test]
         public void read_and_write_json()
         {
-            HarnessApplication.Run(x => {
+            HarnessApplication.Run(x =>
+            {
                 var message = new Message
                 {
                     Color = "Blue",
                     Direction = "East"
                 };
 
-                var response = x.PostJson(message, contentType: "text/json", accept: "text/json");
+                var response = x.PostJson(message, "text/json", "text/json");
 
                 response.StatusCodeShouldBe(HttpStatusCode.OK);
                 response.ContentType.ShouldEqual("text/json");
 
                 response.ReadAsJson<Message>().ShouldEqual(message);
             });
-
-
-
         }
 
         [Test]
         public void read_and_write_xml()
         {
-            HarnessApplication.Run(x => {
+            HarnessApplication.Run(x =>
+            {
                 var message = new Message
                 {
                     Color = "Blue",
                     Direction = "East"
                 };
 
-                var response = x.PostXml(message, contentType: "text/xml", accept: "text/xml");
+                var response = x.PostXml(message, "text/xml", "text/xml");
 
                 response.StatusCodeShouldBe(HttpStatusCode.OK);
                 response.ContentType.ShouldEqual("text/xml");
 
-                var serializer = new XmlSerializer(typeof(Message));
+                var serializer = new XmlSerializer(typeof (Message));
                 serializer.Deserialize(new XmlTextReader(new StringReader(response.ReadAsText()))).ShouldEqual(message);
             });
-
-
         }
     }
 
@@ -92,7 +89,8 @@ namespace FubuMVC.IntegrationTesting.Owin
         {
             unchecked
             {
-                return ((Color != null ? Color.GetHashCode() : 0)*397) ^ (Direction != null ? Direction.GetHashCode() : 0);
+                return ((Color != null ? Color.GetHashCode() : 0)*397) ^
+                       (Direction != null ? Direction.GetHashCode() : 0);
             }
         }
     }

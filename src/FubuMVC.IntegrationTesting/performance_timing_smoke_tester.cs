@@ -1,7 +1,5 @@
 ﻿using System.Diagnostics;
 using FubuMVC.Core;
-using FubuMVC.Core.StructureMap;
-using FubuMVC.StructureMap;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting
@@ -16,7 +14,6 @@ namespace FubuMVC.IntegrationTesting
             {
                 Debug.WriteLine(runtime.Behaviors.Diagnostics.Timer.DisplayTimings());
             }
-
         }
     }
 }

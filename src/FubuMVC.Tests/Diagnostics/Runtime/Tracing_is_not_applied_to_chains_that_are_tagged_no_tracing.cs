@@ -3,8 +3,6 @@ using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.StructureMap;
-using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -22,17 +20,41 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
             {
                 var graph = runtime.Factory.Get<BehaviorGraph>();
 
-                graph.BehaviorFor<NotTracedEndpoint>(x => x.get_nothing()).OfType<DiagnosticNode>().Any().ShouldBeFalse();
-                graph.BehaviorFor<NotTracedEndpoint>(x => x.get_nothing()).OfType<BehaviorTracerNode>().Any().ShouldBeFalse();
+                graph.BehaviorFor<NotTracedEndpoint>(x => x.get_nothing())
+                    .OfType<DiagnosticNode>()
+                    .Any()
+                    .ShouldBeFalse();
+                graph.BehaviorFor<NotTracedEndpoint>(x => x.get_nothing())
+                    .OfType<BehaviorTracerNode>()
+                    .Any()
+                    .ShouldBeFalse();
 
-                graph.BehaviorFor<NotTracedEndpoint>(x => x.get_something()).OfType<DiagnosticNode>().Any().ShouldBeFalse();
-                graph.BehaviorFor<NotTracedEndpoint>(x => x.get_something()).OfType<BehaviorTracerNode>().Any().ShouldBeFalse();
+                graph.BehaviorFor<NotTracedEndpoint>(x => x.get_something())
+                    .OfType<DiagnosticNode>()
+                    .Any()
+                    .ShouldBeFalse();
+                graph.BehaviorFor<NotTracedEndpoint>(x => x.get_something())
+                    .OfType<BehaviorTracerNode>()
+                    .Any()
+                    .ShouldBeFalse();
 
-                graph.BehaviorFor<SomeTracingEndpoint>(x => x.get_tracing_no()).OfType<DiagnosticNode>().Any().ShouldBeFalse();
-                graph.BehaviorFor<SomeTracingEndpoint>(x => x.get_tracing_no()).OfType<BehaviorTracerNode>().Any().ShouldBeFalse();
+                graph.BehaviorFor<SomeTracingEndpoint>(x => x.get_tracing_no())
+                    .OfType<DiagnosticNode>()
+                    .Any()
+                    .ShouldBeFalse();
+                graph.BehaviorFor<SomeTracingEndpoint>(x => x.get_tracing_no())
+                    .OfType<BehaviorTracerNode>()
+                    .Any()
+                    .ShouldBeFalse();
 
-                graph.BehaviorFor<SomeTracingEndpoint>(x => x.get_tracing_yes()).OfType<DiagnosticNode>().Any().ShouldBeTrue();
-                graph.BehaviorFor<SomeTracingEndpoint>(x => x.get_tracing_yes()).OfType<BehaviorTracerNode>().Any().ShouldBeTrue();
+                graph.BehaviorFor<SomeTracingEndpoint>(x => x.get_tracing_yes())
+                    .OfType<DiagnosticNode>()
+                    .Any()
+                    .ShouldBeTrue();
+                graph.BehaviorFor<SomeTracingEndpoint>(x => x.get_tracing_yes())
+                    .OfType<BehaviorTracerNode>()
+                    .Any()
+                    .ShouldBeTrue();
             }
         }
     }

@@ -1,7 +1,5 @@
-﻿using System.Threading;
-using FubuMVC.IntegrationTesting.Views.Razor;
+﻿using FubuMVC.IntegrationTesting.Views.Razor;
 using NUnit.Framework;
-using StructureMap.Pipeline;
 
 namespace FubuMVC.IntegrationTesting.Views.Spark
 {

@@ -1,12 +1,7 @@
 ﻿using System.Net;
-using FubuMVC.Core;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Http;
-using FubuMVC.Katana;
-using FubuMVC.StructureMap;
-using FubuTestingSupport;
 using NUnit.Framework;
-using StructureMap;
 
 namespace FubuMVC.IntegrationTesting.Continuations
 {
@@ -16,7 +11,8 @@ namespace FubuMVC.IntegrationTesting.Continuations
         [Test]
         public void the_FubuContinuation_Redirect_uses_GET_by_default()
         {
-            TestHost.Scenario(_ => {
+            TestHost.Scenario(_ =>
+            {
                 _.Get.Action<RedirectedEndpoint>(x => x.get_redirect());
 
                 _.StatusCodeShouldBe(HttpStatusCode.Redirect);
@@ -28,7 +24,8 @@ namespace FubuMVC.IntegrationTesting.Continuations
         [Test]
         public void FubuContinuation_Redirect_honors_the_explicit_METHOD()
         {
-            TestHost.Scenario(_ => {
+            TestHost.Scenario(_ =>
+            {
                 _.Get.Action<RedirectedEndpoint>(x => x.get_redirect_explicit());
 
                 _.StatusCodeShouldBe(HttpStatusCode.Redirect);
@@ -40,7 +37,6 @@ namespace FubuMVC.IntegrationTesting.Continuations
 
     public class RedirectRequest
     {
-        
     }
 
     public class RedirectedEndpoint

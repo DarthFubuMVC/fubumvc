@@ -5,7 +5,7 @@ using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
 
-namespace FubuMVC.StructureMap.Testing.Internals
+namespace FubuMVC.Tests.StructureMap.Internals
 {
     [TestFixture]
     public class AppSettingProviderRegistrySmokeTester

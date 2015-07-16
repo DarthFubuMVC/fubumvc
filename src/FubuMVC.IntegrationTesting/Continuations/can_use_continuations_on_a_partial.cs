@@ -11,12 +11,14 @@ namespace FubuMVC.IntegrationTesting.Continuations
         [Test]
         public void transfer_in_a_partial()
         {
-            TestHost.Scenario(_ => {
+            TestHost.Scenario(_ =>
+            {
                 _.Get.Input(new FullInput {Redirect = false});
                 _.ContentShouldBe("original");
             });
 
-            TestHost.Scenario(_ => {
+            TestHost.Scenario(_ =>
+            {
                 _.Get.Input(new FullInput {Redirect = true});
                 _.ContentShouldBe("transferred");
             });

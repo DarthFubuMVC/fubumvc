@@ -1,10 +1,7 @@
-﻿using FubuMVC.Core;
-using FubuMVC.Core.StructureMap;
-using NUnit.Framework;
-using FubuMVC.StructureMap;
-using StructureMap;
-using System.Linq;
+﻿using System.Linq;
+using FubuMVC.Core;
 using FubuTestingSupport;
+using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting
 {
@@ -23,7 +20,6 @@ namespace FubuMVC.IntegrationTesting
 
     public class SomeRegistry : FubuRegistry
     {
-        
     }
 
     public class SomeEndpoint

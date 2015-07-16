@@ -1,10 +1,8 @@
-using System.Diagnostics;
 using FubuCore;
 using FubuCore.Formatting;
 using FubuCore.Reflection;
 using FubuMVC.Core.Projections;
 using FubuMVC.Core.Urls;
-using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -13,18 +11,14 @@ using StructureMap.TypeRules;
 namespace FubuMVC.Tests.Projections
 {
     [TestFixture]
-    public class ProjectionContextTester : InteractionContext<ProjectionContext<ProjectionModel>> 
+    public class ProjectionContextTester : InteractionContext<ProjectionContext<ProjectionModel>>
     {
-
-
-
         [Test]
         public void subject_delegates_to_the_inner_values()
         {
             var model = new ProjectionModel();
             MockFor<IValues<ProjectionModel>>().Stub(x => x.Subject).Return(model);
 
-            
 
             ClassUnderTest.Subject.ShouldBeTheSameAs(model);
         }
@@ -107,8 +101,8 @@ namespace FubuMVC.Tests.Projections
             ClassUnderTest.Urls.ShouldBeTheSameAs(stub);
             ClassUnderTest.Urls.ShouldBeTheSameAs(stub);
             ClassUnderTest.Urls.ShouldBeTheSameAs(stub);
-        
-            MockFor<IServiceLocator>().AssertWasCalled(x => x.GetInstance<IUrlRegistry>(), x=> x.Repeat.Once());
+
+            MockFor<IServiceLocator>().AssertWasCalled(x => x.GetInstance<IUrlRegistry>(), x => x.Repeat.Once());
         }
 
         [Test]
@@ -123,7 +117,7 @@ namespace FubuMVC.Tests.Projections
             ClassUnderTest.Formatter.ShouldBeTheSameAs(formatter);
             ClassUnderTest.Formatter.ShouldBeTheSameAs(formatter);
 
-            MockFor<IServiceLocator>().AssertWasCalled(x => x.GetInstance<IDisplayFormatter>(), x => x.Repeat.Once()); 
+            MockFor<IServiceLocator>().AssertWasCalled(x => x.GetInstance<IDisplayFormatter>(), x => x.Repeat.Once());
         }
 
         [Test]
@@ -143,8 +137,6 @@ namespace FubuMVC.Tests.Projections
             context.Formatter.ShouldBeTheSameAs(formatter);
             context.Subject.ShouldBeTheSameAs(different);
         }
-
-
     }
 
 
@@ -155,6 +147,5 @@ namespace FubuMVC.Tests.Projections
 
     public class DifferentTarget
     {
-
     }
 }

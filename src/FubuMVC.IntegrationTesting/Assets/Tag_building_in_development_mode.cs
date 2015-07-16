@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using System.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.UI;
@@ -38,7 +37,8 @@ namespace FubuMVC.IntegrationTesting.Assets
             Scenario.Get.Action<MissingAssetsEndpoint>(x => x.get_missing_script());
 
             Scenario.StatusCodeShouldBe(HttpStatusCode.InternalServerError);
-            Scenario.ContentShouldContain("Requested script(s) 'nonexistent.js', 'random.js' cannot be found".HtmlEncode());
+            Scenario.ContentShouldContain(
+                "Requested script(s) 'nonexistent.js', 'random.js' cannot be found".HtmlEncode());
         }
 
         [Test]
@@ -47,7 +47,8 @@ namespace FubuMVC.IntegrationTesting.Assets
             Scenario.Get.Action<MissingAssetsEndpoint>(x => x.get_missing_stylesheet());
 
             Scenario.StatusCodeShouldBe(HttpStatusCode.InternalServerError);
-            Scenario.ContentShouldContain("Requested stylesheets(s) 'nonexistent.css', 'weird.css' cannot be found".HtmlEncode());
+            Scenario.ContentShouldContain(
+                "Requested stylesheets(s) 'nonexistent.css', 'weird.css' cannot be found".HtmlEncode());
         }
     }
 

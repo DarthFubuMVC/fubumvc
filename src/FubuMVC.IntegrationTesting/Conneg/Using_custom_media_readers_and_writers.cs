@@ -5,8 +5,6 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Projections;
 using FubuMVC.Core.Resources.Conneg;
-using FubuMVC.Core.StructureMap;
-using FubuMVC.StructureMap;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Conneg
@@ -19,7 +17,8 @@ namespace FubuMVC.IntegrationTesting.Conneg
         {
             using (var host = FubuApplication.DefaultPolicies().RunInMemory())
             {
-                host.Scenario(x => {
+                host.Scenario(x =>
+                {
                     x.Post.Input<SomeInput>();
                     x.Request
                         .Header("x-name", "Jeremy")
@@ -69,7 +68,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
     {
         public SomeResource post_some_input(SomeInput input)
         {
-            return new SomeResource{Name = input.Name};
+            return new SomeResource {Name = input.Name};
         }
     }
 
@@ -77,11 +76,9 @@ namespace FubuMVC.IntegrationTesting.Conneg
     {
         public IEnumerable<string> Mimetypes
         {
-            get
-            {
-                yield return "some/input";
-            }
+            get { yield return "some/input"; }
         }
+
         public SomeInput Read(string mimeType, IFubuRequestContext context)
         {
             return new SomeInput {Name = context.Request.GetSingleHeader("x-name")};
@@ -97,10 +94,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
 
         public IEnumerable<string> Mimetypes
         {
-            get
-            {
-                yield return "some/output";
-            }
+            get { yield return "some/output"; }
         }
     }
 

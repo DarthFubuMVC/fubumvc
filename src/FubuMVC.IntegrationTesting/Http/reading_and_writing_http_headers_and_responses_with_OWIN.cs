@@ -24,7 +24,7 @@ namespace FubuMVC.IntegrationTesting.Http
         {
             var request = new OwinRequest
             {
-                Headers = new Header[] { new Header("x_a", "1"), new Header("x_b", "2") },
+                Headers = new[] {new Header("x_a", "1"), new Header("x_b", "2")},
                 StatusCode = 201,
                 StatusDescription = "Weird"
             };
@@ -33,10 +33,7 @@ namespace FubuMVC.IntegrationTesting.Http
             response.Description.ShouldEqual(request.StatusDescription);
             response.StatusCode.ShouldEqual(request.StatusCode);
 
-            request.Headers.Each(x =>
-            {
-                response.ResponseHeaders.ShouldContain(x);
-            });
+            request.Headers.Each(x => { response.ResponseHeaders.ShouldContain(x); });
         }
     }
 
@@ -53,7 +50,8 @@ namespace FubuMVC.IntegrationTesting.Http
 
         public OwinResponse post_fake_response(OwinRequest request)
         {
-            _writer.WriteResponseCode((HttpStatusCode)Enum.ToObject(typeof(HttpStatusCode), request.StatusCode), request.StatusDescription);
+            _writer.WriteResponseCode((HttpStatusCode) Enum.ToObject(typeof (HttpStatusCode), request.StatusCode),
+                request.StatusDescription);
 
             if (request.Headers != null)
             {

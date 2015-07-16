@@ -1,5 +1,4 @@
-﻿using FubuMVC.Core.View;
-using FubuMVC.IntegrationTesting.Views.Spark;
+﻿using FubuMVC.IntegrationTesting.Views.Spark;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Views.Razor
@@ -23,6 +22,4 @@ namespace FubuMVC.IntegrationTesting.Views.Razor
             Scenario.ContentShouldContain("some fake foo stuff");
         }
     }
-
-
 }

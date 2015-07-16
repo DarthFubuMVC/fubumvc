@@ -1,11 +1,11 @@
-﻿using FubuCore.Binding;
+﻿using FubuCore;
+using FubuCore.Binding;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
-using NUnit.Framework;
-using FubuCore;
 using FubuTestingSupport;
+using NUnit.Framework;
 
-namespace FubuMVC.StructureMap.Testing.Compliance
+namespace FubuMVC.Tests.StructureMap.Compliance
 {
     [TestFixture]
     public class Setter_Injection_from_ObjectDef_Dependency

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Net;
-using FubuMVC.Core.Projections;
+﻿using FubuMVC.Core.Projections;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Projections
@@ -11,7 +9,8 @@ namespace FubuMVC.IntegrationTesting.Projections
         [Test]
         public void use_adaptive_projection_of_child_properties()
         {
-            TestHost.Scenario(_ => {
+            TestHost.Scenario(_ =>
+            {
                 _.Get.Action<MyAdaptiveEndpoint>(x => x.get_adaptive_projection_foo());
                 _.ContentShouldBe("{\"subject\":{\"foo\":\"Shaver\"},\"data\":\"some data\"}");
             });
@@ -36,14 +35,14 @@ namespace FubuMVC.IntegrationTesting.Projections
         [Test]
         public void projects_using_default_serialization_if_projection_cannot_be_found()
         {
-            TestHost.Scenario(_ => {
+            TestHost.Scenario(_ =>
+            {
                 _.Get.Action<MyAdaptiveEndpoint>(x => x.get_adaptive_projection_baz());
                 _.ContentShouldBe("{\"subject\":{\"BazName\":\"Screamin Cheetah Wheelies\"},\"data\":\"some data\"}");
             });
         }
     }
 
-    
 
     public class MyBaz
     {
@@ -66,7 +65,7 @@ namespace FubuMVC.IntegrationTesting.Projections
             return new MyAdaptiveModel
             {
                 Data = "some data",
-                Subject = new MyFoo{FooName = "Shaver"}
+                Subject = new MyFoo {FooName = "Shaver"}
             };
         }
 

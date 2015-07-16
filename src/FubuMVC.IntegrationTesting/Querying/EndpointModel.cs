@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace FubuMVC.IntegrationTesting.Querying
 {
-    public class EndpointModel 
+    public class EndpointModel
     {
         public EndpointToken[] AllEndpoints { get; set; }
 

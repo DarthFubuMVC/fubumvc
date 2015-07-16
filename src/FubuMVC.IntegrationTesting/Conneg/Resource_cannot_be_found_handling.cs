@@ -23,5 +23,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
         }
     }
 
-    public class MissingResource{}
+    public class MissingResource
+    {
+    }
 }

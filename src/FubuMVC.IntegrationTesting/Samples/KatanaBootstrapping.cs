@@ -2,9 +2,7 @@
 using System.Net;
 using FubuCore.Binding;
 using FubuMVC.Core;
-using FubuMVC.Core.StructureMap;
 using FubuMVC.Katana;
-using FubuMVC.StructureMap;
 using FubuTestingSupport;
 
 namespace FubuMVC.IntegrationTesting.Samples
@@ -53,6 +51,7 @@ namespace FubuMVC.IntegrationTesting.Samples
             return "Hello from an Embedded FubuMVC Application";
         }
     }
+
     // ENDSAMPLE
 
     public static class KatanaSamples
@@ -60,9 +59,8 @@ namespace FubuMVC.IntegrationTesting.Samples
         public static void WithSpecialPort()
         {
             // SAMPLE: katana-with-explicit-port
-            using (var server = EmbeddedFubuMvcServer.For<SimpleApplication>(port:6000))
+            using (var server = EmbeddedFubuMvcServer.For<SimpleApplication>(port: 6000))
             {
-                
             }
             // ENDSAMPLE
         }
@@ -70,9 +68,8 @@ namespace FubuMVC.IntegrationTesting.Samples
         public static void WithSpecialPath()
         {
             // SAMPLE: katana-with-explicit-path
-            using (var server = EmbeddedFubuMvcServer.For<SimpleApplication>(physicalPath:"../../../SimpleApplication"))
+            using (var server = EmbeddedFubuMvcServer.For<SimpleApplication>("../../../SimpleApplication"))
             {
-
             }
             // ENDSAMPLE
         }
@@ -101,7 +98,4 @@ namespace FubuMVC.IntegrationTesting.Samples
             // ENDSAMPLE
         }
     }
-
-
-
 }

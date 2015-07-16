@@ -10,7 +10,6 @@ namespace FubuMVC.IntegrationTesting.Querying
         }
 
 
-
         public ActionToken(ActionCall call)
         {
             MethodName = call.Method.Name;
@@ -31,13 +30,10 @@ namespace FubuMVC.IntegrationTesting.Querying
         public TypeToken OutputType { get; set; }
         public string MethodName { get; set; }
         public TypeToken HandlerType { get; set; }
-    
+
         public string Description
         {
-            get
-            {
-                return "{0}.{1}()".ToFormat(HandlerType.Name, MethodName);
-            }
+            get { return "{0}.{1}()".ToFormat(HandlerType.Name, MethodName); }
         }
     }
 }

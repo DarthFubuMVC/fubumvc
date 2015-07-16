@@ -18,9 +18,10 @@ namespace FubuMVC.IntegrationTesting.Assets
         {
             public MyRegistry()
             {
-                AlterSettings<AssetSettings>(x => {
-                    x.Headers[HttpResponseHeaders.CacheControl] = () => "Foo!";
-                    x.Headers[HttpResponseHeaders.Expires] = () => "Bar!";
+                AlterSettings<AssetSettings>(x =>
+                {
+                    x.Headers[HttpGeneralHeaders.CacheControl] = () => "Foo!";
+                    x.Headers[HttpGeneralHeaders.Expires] = () => "Bar!";
                 });
             }
         }
@@ -33,8 +34,8 @@ namespace FubuMVC.IntegrationTesting.Assets
 
             Scenario.ContentShouldContain("var x = 0;");
 
-            Scenario.Header(HttpResponseHeaders.CacheControl).SingleValueShouldEqual("Foo!");
-            Scenario.Header(HttpResponseHeaders.Expires).SingleValueShouldEqual("Bar!");
+            Scenario.Header(HttpGeneralHeaders.CacheControl).SingleValueShouldEqual("Foo!");
+            Scenario.Header(HttpGeneralHeaders.Expires).SingleValueShouldEqual("Bar!");
         }
     }
 }

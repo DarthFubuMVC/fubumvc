@@ -1,10 +1,7 @@
 ﻿using FubuCore;
-using FubuMVC.Core;
 using FubuMVC.Core.Security;
-using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
-using StructureMap;
 
 namespace FubuMVC.Tests.Security
 {
@@ -30,7 +27,6 @@ namespace FubuMVC.Tests.Security
             });
 
             policy.RightsFor(context).ShouldEqual(AuthorizationRight.Deny);
-
         }
 
         [Test]
@@ -52,7 +48,6 @@ namespace FubuMVC.Tests.Security
             });
 
             policy.RightsFor(context).ShouldEqual(AuthorizationRight.Deny);
-
         }
     }
 

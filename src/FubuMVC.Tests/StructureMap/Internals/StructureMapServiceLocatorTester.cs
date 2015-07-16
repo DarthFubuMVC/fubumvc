@@ -1,4 +1,3 @@
-using System.Web;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.StructureMap;
 using FubuMVC.Core.Web.Security;
@@ -7,7 +6,7 @@ using NUnit.Framework;
 using Rhino.Mocks;
 using StructureMap;
 
-namespace FubuMVC.StructureMap.Testing.Internals
+namespace FubuMVC.Tests.StructureMap.Internals
 {
     [TestFixture]
     public class StructureMapServiceLocatorTester

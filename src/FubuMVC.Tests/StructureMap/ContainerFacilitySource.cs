@@ -9,7 +9,7 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.StructureMap;
 using StructureMap;
 
-namespace FubuMVC.StructureMap.Testing
+namespace FubuMVC.Tests.StructureMap
 {
     public static class ContainerFacilitySource
     {

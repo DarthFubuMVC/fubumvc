@@ -1,10 +1,7 @@
 ﻿using FubuMVC.Core;
-using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.StructureMap;
 using FubuMVC.Katana;
-using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -16,7 +13,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
         [Test]
         public void force_to_json_with_querystring()
         {
-            endpoints.Get("conneg/override/Foo?Format=Json", acceptType: "text/html")
+            endpoints.Get("conneg/override/Foo?Format=Json", "text/html")
                 .ContentTypeShouldBe(MimeType.Json)
                 .ReadAsJson<OverriddenResponse>()
                 .Name.ShouldEqual("Foo");
@@ -25,14 +22,14 @@ namespace FubuMVC.IntegrationTesting.Conneg
         [Test]
         public void force_to_xml_with_querystring()
         {
-            endpoints.Get("conneg/override/Foo?Format=Xml", acceptType: "text/html")
+            endpoints.Get("conneg/override/Foo?Format=Xml", "text/html")
                 .ContentTypeShouldBe(MimeType.Xml);
         }
 
         [Test]
         public void force_to_json_with_querystring_2()
         {
-            endpoints.Get("conneg/override/Foo?format=JSON", acceptType: "text/html")
+            endpoints.Get("conneg/override/Foo?format=JSON", "text/html")
                 .ContentTypeShouldBe(MimeType.Json)
                 .ReadAsJson<OverriddenResponse>()
                 .Name.ShouldEqual("Foo");
@@ -41,7 +38,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
         [Test]
         public void force_to_xml_with_querystring_2()
         {
-            endpoints.Get("conneg/override/Foo?format=xml", acceptType: "text/html")
+            endpoints.Get("conneg/override/Foo?format=xml", "text/html")
                 .ContentTypeShouldBe(MimeType.Xml);
         }
     }
@@ -55,7 +52,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
             using (var server = EmbeddedFubuMvcServer
                 .For<SampleApplication>(port: 5700))
             {
-                server.Endpoints.Get("conneg/override/Foo?format=json", acceptType: "text/html")
+                server.Endpoints.Get("conneg/override/Foo?format=json", "text/html")
                     .ContentTypeShouldBe(MimeType.Json)
                     .ReadAsJson<OverriddenResponse>()
                     .Name.ShouldEqual("Foo");
@@ -71,7 +68,8 @@ namespace FubuMVC.IntegrationTesting.Conneg
             // into .Net objects from the response body
             using (var host = InMemoryHost.For<SampleApplication>())
             {
-                host.Scenario(_ => {
+                host.Scenario(_ =>
+                {
                     _.Get.Url("conneg/override/Foo?format=json");
                     _.Request.Accepts("text/html");
 

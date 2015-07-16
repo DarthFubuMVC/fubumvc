@@ -17,7 +17,7 @@ namespace FubuMVC.IntegrationTesting.Views
         {
             RazorView<ViewModel1>("View1");
             RazorView<ViewModel2>("Folder1/View2");
-        
+
             RazorView<ViewModel3>("View3");
             RazorView<ViewModel4>("Folder1/Folder2/View4");
         }
@@ -99,6 +99,5 @@ namespace FubuMVC.IntegrationTesting.Views
             view1.Namespace.ShouldEqual("FubuMVC.IntegrationTesting");
             view2.Namespace.ShouldEqual("FubuMVC.IntegrationTesting.Folder1");
         }
-
     }
 }

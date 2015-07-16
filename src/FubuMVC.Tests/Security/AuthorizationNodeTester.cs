@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Continuations;
@@ -6,14 +7,9 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.StructureMap;
-using FubuMVC.StructureMap;
-using FubuMVC.Tests.Urls;
 using FubuTestingSupport;
 using NUnit.Framework;
-using System.Linq;
-using System.Collections.Generic;
 using Rhino.Mocks;
-using StructureMap;
 
 namespace FubuMVC.Tests.Security
 {
@@ -44,7 +40,9 @@ namespace FubuMVC.Tests.Security
         private AuthorizationBehavior toBehavior(AuthorizationNode node)
         {
             var container = StructureMapContainerFacility.GetBasicFubuContainer();
-            return container.GetInstance<AuthorizationBehavior>(new ObjectDefInstance(node.As<IContainerModel>().ToObjectDef()));
+            return
+                container.GetInstance<AuthorizationBehavior>(
+                    new ObjectDefInstance(node.As<IContainerModel>().ToObjectDef()));
         }
 
         [Test]
@@ -128,7 +126,7 @@ namespace FubuMVC.Tests.Security
         public void add_type_for_a_policy()
         {
             var node = new AuthorizationNode();
-            node.Add(typeof(AlwaysAllowPolicy));
+            node.Add(typeof (AlwaysAllowPolicy));
 
             node.Policies.Single().ShouldBeOfType<AlwaysAllowPolicy>();
         }
@@ -137,7 +135,7 @@ namespace FubuMVC.Tests.Security
         public void add_type_for_check()
         {
             var node = new AuthorizationNode();
-            node.Add(typeof(FakeAuthCheck));
+            node.Add(typeof (FakeAuthCheck));
 
             node.Policies.Single().ShouldBeOfType<AuthorizationCheckPolicy<FakeAuthCheck>>();
         }
@@ -145,18 +143,14 @@ namespace FubuMVC.Tests.Security
         [Test]
         public void invalid_add_type()
         {
-            Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() => {
-                new AuthorizationNode().Add(GetType());
-            });
+            Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() => { new AuthorizationNode().Add(GetType()); });
         }
 
         [Test]
         public void invalid_add_type_if_policy_type_has_args()
         {
-            Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() =>
-            {
-                new AuthorizationNode().Add(typeof(PolicyWithArgs));
-            });
+            Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(
+                () => { new AuthorizationNode().Add(typeof (PolicyWithArgs)); });
         }
     }
 

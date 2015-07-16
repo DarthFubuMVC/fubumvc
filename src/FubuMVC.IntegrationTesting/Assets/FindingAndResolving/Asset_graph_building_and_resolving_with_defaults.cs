@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Runtime.Files;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -17,8 +16,7 @@ namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
             File("Content/styles/MyStyles.css").Write("/* good styles */");
 
             File("image.bmp");
-            
-           
+
 
             // These 2 are NOT assets
             File("foo.txt");
@@ -66,7 +64,6 @@ namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
             AllAssets.Assets.Any(x => x.Url == "image.bmp").ShouldBeTrue();
             AllAssets.Assets.Any(x => x.Url == "image.gif").ShouldBeTrue();
             AllAssets.Assets.Any(x => x.Url == "image.jpg").ShouldBeTrue();
-            
         }
 
 
@@ -114,7 +111,5 @@ namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
             Assets.FindAsset("folder1/bottle1A.js")
                 .Url.ShouldEqual("Content/scripts/folder1/bottle1A.js");
         }
-
     }
-
 }

@@ -16,7 +16,8 @@ namespace FubuMVC.IntegrationTesting.Conneg
         [Test]
         public void get_output_from_continuation()
         {
-            endpoints.PostJson(new AjaxInput{
+            endpoints.PostJson(new AjaxInput
+            {
                 Message = "something"
             })
                 .ContentShouldBe(MimeType.Json, "{\"success\":true,\"refresh\":false,\"message\":\"something\"}");
@@ -25,7 +26,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
         [Test]
         public void get_output_from_custom_continuation()
         {
-            endpoints.PostJson(new SpecialInput{Name = "somebody"})
+            endpoints.PostJson(new SpecialInput {Name = "somebody"})
                 .ContentShouldBe(MimeType.Json, "{\"success\":false,\"refresh\":false,\"name\":\"somebody\"}");
         }
     }
@@ -34,7 +35,8 @@ namespace FubuMVC.IntegrationTesting.Conneg
     {
         public AjaxContinuation post_input(AjaxInput input)
         {
-            return new AjaxContinuation{
+            return new AjaxContinuation
+            {
                 Success = true,
                 Message = input.Message
             };
@@ -42,7 +44,8 @@ namespace FubuMVC.IntegrationTesting.Conneg
 
         public MySpecialContinuation post_special(SpecialInput input)
         {
-            return new MySpecialContinuation{
+            return new MySpecialContinuation
+            {
                 Name = input.Name
             };
         }
@@ -64,6 +67,6 @@ namespace FubuMVC.IntegrationTesting.Conneg
 
     public class AjaxInput
     {
-        public string Message { get; set;}
+        public string Message { get; set; }
     }
 }

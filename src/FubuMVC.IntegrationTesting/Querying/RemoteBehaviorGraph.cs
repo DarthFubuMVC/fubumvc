@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Net;
 using System.Text;
 using FubuMVC.Core;
@@ -37,7 +36,5 @@ namespace FubuMVC.IntegrationTesting.Querying
 
             return client.DownloadString(url);
         }
-
-
     }
 }

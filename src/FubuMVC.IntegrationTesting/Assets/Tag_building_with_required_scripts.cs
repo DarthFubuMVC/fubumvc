@@ -24,7 +24,7 @@ namespace FubuMVC.IntegrationTesting.Assets
 
             builder.RequireScript("script1.js", "script2.js");
 
-            builder.BuildScriptTags(new []{"script3.js"}).Select(x => x.Attr("src"))
+            builder.BuildScriptTags(new[] {"script3.js"}).Select(x => x.Attr("src"))
                 .ShouldHaveTheSameElementsAs("/script1.js", "/script2.js", "/script3.js");
         }
 
@@ -35,21 +35,20 @@ namespace FubuMVC.IntegrationTesting.Assets
 
             builder.RequireScript("script1.js", "script2.js");
 
-            builder.BuildScriptTags(new[] { "script3.js" }).Select(x => x.Attr("src"))
+            builder.BuildScriptTags(new[] {"script3.js"}).Select(x => x.Attr("src"))
                 .ShouldHaveTheSameElementsAs("/script1.js", "/script2.js", "/script3.js");
 
             builder.RequireScript("script3.js");
-            builder.BuildScriptTags(new string[]{"script1.js", "script3.js"}).Any()
+            builder.BuildScriptTags(new[] {"script1.js", "script3.js"}).Any()
                 .ShouldBeFalse();
 
-            builder.BuildScriptTags(new string[] { "script1.js", "script2.js" }).Any()
+            builder.BuildScriptTags(new[] {"script1.js", "script2.js"}).Any()
                 .ShouldBeFalse();
 
             builder.RequireScript("script1.js");
 
-            builder.BuildScriptTags(new string[] { "script1.js" }).Any()
-    .ShouldBeFalse();
+            builder.BuildScriptTags(new[] {"script1.js"}).Any()
+                .ShouldBeFalse();
         }
-    
     }
 }

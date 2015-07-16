@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
-using FubuTestingSupport;
+﻿using FubuTestingSupport;
+using NUnit.Framework;
 
-namespace FubuMVC.StructureMap.Testing.Compliance
+namespace FubuMVC.Tests.StructureMap.Compliance
 {
     [TestFixture]
     public class Does_not_require_explicit_registration_in_order_to_retrieve_a_concrete_type

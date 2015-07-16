@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Web;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.StructureMap;
-using FubuMVC.StructureMap;
 
 namespace FubuMVC.Tests.Docs.Examples
 {
-    
     public static class Bootstrapper
     {
         public static void Bootstrap()
@@ -32,7 +28,6 @@ namespace FubuMVC.Tests.Docs.Examples
     }
 
 
-
     // SAMPLE: bootstrapping-simplest-possible
     public class SimpleApplicationSource : IApplicationSource
     {
@@ -43,6 +38,7 @@ namespace FubuMVC.Tests.Docs.Examples
                 ;
         }
     }
+
     // ENDSAMPLE
 
 
@@ -65,6 +61,7 @@ namespace FubuMVC.Tests.Docs.Examples
             _runtime.Dispose();
         }
     }
+
     // ENDSAMPLE
 
     // SAMPLE: bootstrapping-custom-policies
@@ -92,9 +89,7 @@ namespace FubuMVC.Tests.Docs.Examples
 
             // You *can* also declare IoC service
             // registrations in your FubuRegistry
-            Services(x => {
-                x.AddService<IActivator, MyCustomActivator>();
-            });
+            Services(x => { x.AddService<IActivator, MyCustomActivator>(); });
         }
     }
 
@@ -116,5 +111,6 @@ namespace FubuMVC.Tests.Docs.Examples
             // completely baked in
         }
     }
+
     // ENDSAMPLE
 }

@@ -1,18 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Logging;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Runtime.Logging;
 using FubuMVC.Core.StructureMap;
-using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
-using StructureMap;
-using FubuMVC.Core;
-using FubuCore;
 
 namespace FubuMVC.Tests.Runtime
 {
@@ -23,8 +19,10 @@ namespace FubuMVC.Tests.Runtime
 
         protected override void beforeEach()
         {
-            theResult = new BindResult{
-                Problems = new List<ConvertProblem>{
+            theResult = new BindResult
+            {
+                Problems = new List<ConvertProblem>
+                {
                     new ConvertProblem(),
                     new ConvertProblem()
                 },
@@ -67,7 +65,7 @@ namespace FubuMVC.Tests.Runtime
         [Test]
         public void the_object_is_only_created_once()
         {
-            FubuRequest request = ClassUnderTest;
+            var request = ClassUnderTest;
             var target1 = request.Get<BinderTarget>();
 
             request.Get<BinderTarget>().ShouldBeTheSameAs(target1);
@@ -84,7 +82,7 @@ namespace FubuMVC.Tests.Runtime
         [SetUp]
         public void beforeEach()
         {
-            IContainer container = StructureMapContainerFacility.GetBasicFubuContainer();
+            var container = StructureMapContainerFacility.GetBasicFubuContainer();
             _fubuRequest = container.GetInstance<IFubuRequest>();
         }
 
@@ -117,7 +115,7 @@ namespace FubuMVC.Tests.Runtime
         [Test]
         public void inject_by_concrete_find_by_abstraction()
         {
-            FubuRequest request = ClassUnderTest;
+            var request = ClassUnderTest;
 
             var target = new BinderTarget();
             request.Set(target);
@@ -128,7 +126,6 @@ namespace FubuMVC.Tests.Runtime
             request.Find<BinderTargetBase>().First().ShouldBeTheSameAs(target);
         }
     }
-
 
 
     [TestFixture]
@@ -145,14 +142,14 @@ namespace FubuMVC.Tests.Runtime
         [Test]
         public void should_not_do_anything_if_the_type_does_not_exist_in_the_request()
         {
-            ClassUnderTest.Clear(typeof(when_clearing_a_type_from_the_request));
+            ClassUnderTest.Clear(typeof (when_clearing_a_type_from_the_request));
             ClassUnderTest.Get(_binderTarget.GetType()).ShouldBeTheSameAs(_binderTarget);
         }
 
         [Test]
         public void should_not_clear_a_subclass_type_when_instructed_to_clear_a_parent_type()
         {
-            ClassUnderTest.Clear(typeof(BinderTargetBase));
+            ClassUnderTest.Clear(typeof (BinderTargetBase));
             ClassUnderTest.Get(_binderTarget.GetType()).ShouldBeTheSameAs(_binderTarget);
         }
 
@@ -160,7 +157,8 @@ namespace FubuMVC.Tests.Runtime
         public void should_remove_the_type_from_the_request_if_it_exists()
         {
             ClassUnderTest.Clear(_binderTarget.GetType());
-            typeof(NullReferenceException).ShouldBeThrownBy(()=> ClassUnderTest.Get(_binderTarget.GetType()).ShouldBeNull());
+            typeof (NullReferenceException).ShouldBeThrownBy(
+                () => ClassUnderTest.Get(_binderTarget.GetType()).ShouldBeNull());
         }
     }
 
@@ -198,7 +196,6 @@ namespace FubuMVC.Tests.Runtime
             request.SetObject(registered);
 
             logs.DebugMessages.Single().ShouldEqual(new SetValueReport(registered));
-
         }
 
         [Test]
