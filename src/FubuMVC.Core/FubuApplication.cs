@@ -111,7 +111,6 @@ namespace FubuMVC.Core
         /// Called to bootstrap and "start" a FubuMVC application 
         /// </summary>
         /// <returns></returns>
-        [SkipOverForProvenance]
         public FubuRuntime Bootstrap()
         {
             RouteTable.Routes.Clear();
@@ -344,7 +343,7 @@ namespace FubuMVC.Core
 
             var thisAssembly = Assembly.GetExecutingAssembly().GetName().Name;
             var fubuCore = typeof(ITypeResolver).Assembly.GetName().Name;
-            var bottles = typeof(IPackageLoader).Assembly.GetName().Name;
+            var bottles = typeof(IActivator).Assembly.GetName().Name;
 
             Assembly callingAssembly = null;
             for (int i = 0; i < trace.FrameCount; i++)

@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E208A2B1-31B0-4455-BA16-3D79F5887ECE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Bottles</RootNamespace>
+    <AssemblyName>Bottles</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FubuCore">
+      <HintPath>..\packages\FubuCore\lib\FubuCore.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuCsProjFile">
+      <HintPath>..\packages\FubuCsProjFile\lib\net40\FubuCsProjFile.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\..\lib\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="AliasRegistry.cs" />
+    <Compile Include="AssemblyFinder.cs" />
+    <Compile Include="CompileTarget.cs" />
+    <Compile Include="Configuration\AssertBottleConfiguration.cs" />
+    <Compile Include="Configuration\BottleConfiguration.cs" />
+    <Compile Include="Configuration\BottleConfigurationError.cs" />
+    <Compile Include="Configuration\BottleConfigurationException.cs" />
+    <Compile Include="Configuration\IBottleConfigurationRule.cs" />
+    <Compile Include="Configuration\MissingService.cs" />
+    <Compile Include="Diagnostics\PerfTimer.cs" />
+    <Compile Include="Environment\CanWriteToFolder.cs" />
+    <Compile Include="Environment\FileExists.cs" />
+    <Compile Include="Environment\FolderExists.cs" />
+    <Compile Include="Environment\IEnvironmentRequirement.cs" />
+    <Compile Include="Environment\IEnvironmentRequirements.cs" />
+    <Compile Include="Exceptions\BottleException.cs" />
+    <Compile Include="IDeactivator.cs" />
+    <Compile Include="Diagnostics\LoggingSession.cs" />
+    <Compile Include="Diagnostics\LogWriter.cs" />
+    <Compile Include="Diagnostics\LogWriterStatus.cs" />
+    <Compile Include="Diagnostics\BottleLogExtensions.cs" />
+    <Compile Include="BottleFiles.cs" />
+    <Compile Include="FileSystemExtensions.cs" />
+    <Compile Include="IActivator.cs" />
+    <Compile Include="IPackageInfo.cs" />
+    <Compile Include="Diagnostics\IPackageLog.cs" />
+    <Compile Include="Diagnostics\IBottlingDiagnostics.cs" />
+    <Compile Include="LambdaActivator.cs" />
+    <Compile Include="PackageFiles.cs" />
+    <Compile Include="BottleLoadingRecord.cs" />
+    <Compile Include="Diagnostics\PackageLog.cs" />
+    <Compile Include="Diagnostics\BottlingDiagnostics.cs" />
+    <Compile Include="Diagnostics\PackagingDiagnosticsExtensions.cs" />
+    <Compile Include="BottleRoles.cs" />
+    <Compile Include="Services\ApplicationLoader.cs" />
+    <Compile Include="Services\BottleService.cs" />
+    <Compile Include="Services\BottleServiceApplication.cs" />
+    <Compile Include="Services\BottleServiceConfiguration.cs" />
+    <Compile Include="Services\BottleServiceFinder.cs" />
+    <Compile Include="Services\BottleServiceRuntime.cs" />
+    <Compile Include="Services\IApplication.cs" />
+    <Compile Include="Services\IApplicationLoader.cs" />
+    <Compile Include="Services\IApplicationSource.cs" />
+    <Compile Include="Services\JsonSerialization.cs" />
+    <Compile Include="Services\Messaging\EventAggregator.cs" />
+    <Compile Include="Services\Messaging\IListener.cs" />
+    <Compile Include="Services\Messaging\IMessagingHub.cs" />
+    <Compile Include="Services\Messaging\IRemoteListener.cs" />
+    <Compile Include="Services\Messaging\MessageWaitCondition.cs" />
+    <Compile Include="Services\Messaging\MessagingHub.cs" />
+    <Compile Include="Services\Messaging\MessagingHubExtensions.cs" />
+    <Compile Include="Services\Messaging\RemoteListener.cs" />
+    <Compile Include="Services\Messaging\ServiceMessage.cs" />
+    <Compile Include="Services\Messaging\Tracking\AllMessagesComplete.cs" />
+    <Compile Include="Services\Messaging\Tracking\MessageHistory.cs" />
+    <Compile Include="Services\Messaging\Tracking\MessageTrack.cs" />
+    <Compile Include="Services\Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Remote\AppDomainFileChangeWatcher.cs" />
+    <Compile Include="Services\Remote\AssemblyCopyMode.cs" />
+    <Compile Include="Services\Remote\AssemblyRequirement.cs" />
+    <Compile Include="Services\Remote\RemoteDomainExpression.cs" />
+    <Compile Include="Services\Remote\RemoteServiceRunner.cs" />
+    <Compile Include="Services\Remote\RemoteServicesProxy.cs" />
+    <Compile Include="Services\Remote\ServiceStarted.cs" />
+    <Compile Include="Services\Wait.cs" />
+    <Compile Include="StringExtensions.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Bottles;
-using Bottles.Diagnostics;
-using Bottles.PackageLoaders.LinkedFolders;
 using FubuCore;
 using FubuMVC.Core.Runtime;
 
@@ -21,20 +18,6 @@ namespace FubuMVC.Core
 
         public string ApplicationPath = FubuApplication.GetApplicationPath();
         public string BinPath = FubuApplication.FindBinPath();
-
-        public string[] LinkedFolders = determineLinkedFolders();
-
-        private static string[] determineLinkedFolders()
-        {
-            var loader = new LinkedFolderPackageLoader(FubuApplication.GetApplicationPath(), x => x);
-            var packages = loader.Load(new PackageLog());
-
-            var links = new List<string>();
-
-            packages.Each(x => x.ForFolder(BottleFiles.WebContentFolder, links.Add));
-
-            return links.ToArray();
-        }
 
         private readonly IList<FileSystemWatcher> _watchers = new List<FileSystemWatcher>();
 
@@ -88,12 +71,6 @@ namespace FubuMVC.Core
                 add(ApplicationPath, "*.jsx").OnChange(reload);
                 add(ApplicationPath, "*.css").OnChange(reload);
 
-                LinkedFolders.Each(x =>
-                {
-                    add(x, "*.js").OnChange(reload);
-                    add(x, "*.jsx").OnChange(reload);
-                    add(x, "*.css").OnChange(reload);
-                });
             }
 
             ContentMatches.Each(ext =>
@@ -102,7 +79,6 @@ namespace FubuMVC.Core
 
                 add(ApplicationPath, ext).OnChange(reload);
 
-                LinkedFolders.Each(folder => add(folder, ext).OnChangeOrCreation(reload));
             });
         }
 
