@@ -127,7 +127,6 @@
     <Compile Include="Auto_Katana_Hosting_Integration_Tester.cs" />
     <Compile Include="Auto_Nowin_Hosting_Integration_Tester.cs" />
     <Compile Include="can_register_and_use_OWIN_middleware_from_a_bottle.cs" />
-    <Compile Include="CommandRunner.cs" />
     <Compile Include="Conneg\AjaxInputModelBindingIntegrationTester.cs" />
     <Compile Include="Conneg\Conneg_can_be_corrected_with_querystring_parameters_for_JSON_and_XML.cs" />
     <Compile Include="Conneg\Conneg_Can_Choose_Output_Media_Based_on_Mimetypes.cs" />
@@ -171,8 +170,6 @@
     <Compile Include="Owin\writing_response_headers.cs" />
     <Compile Include="Owin\writing_string_output.cs" />
     <Compile Include="Packaging\assembly_marked_as_FubuModule_is_added_as_a_package.cs" />
-    <Compile Include="Packaging\invoking_endpoints_from_a_package.cs" />
-    <Compile Include="Packaging\link_assembly_bottle_marked_as_FubuModule_does_not_blow_chunks.cs" />
     <Compile Include="Partials\invoke_as_html_in_endpoint.cs" />
     <Compile Include="performance_timing_smoke_tester.cs" />
     <Compile Include="Projections\adaptive_property_type_projection_Tester.cs" />
@@ -382,7 +379,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent></PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

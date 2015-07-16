@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Xml;
-using Bottles.Commands;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Endpoints;
@@ -10,7 +9,6 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.IntegrationTesting.Querying;
 using FubuMVC.Katana;
 using FubuMVC.StructureMap;
-using FubuMVC.TestingHarness;
 using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
@@ -22,17 +20,6 @@ namespace FubuMVC.IntegrationTesting
         private Harness theHarness;
         private IContainer theContainer;
 
-        private static readonly CommandRunner _runner = new CommandRunner();
-
-
-        static FubuRegistryHarness()
-        {
-            new AliasCommand().Execute(new AliasInput
-            {
-                Name = "harness",
-                Folder = Harness.GetApplicationDirectory().FileEscape()
-            });
-        }
 
         public RemoteBehaviorGraph remote
         {
@@ -61,11 +48,6 @@ namespace FubuMVC.IntegrationTesting
             configureContainer(theContainer);
 
             theHarness = Harness.Run(configure, theContainer);
-        }
-
-        protected void removeAllLinkedPackages()
-        {
-            _runner.RemoveAllLinks();
         }
 
         protected virtual void beforeRunning()
@@ -101,16 +83,6 @@ namespace FubuMVC.IntegrationTesting
         {
         }
 
-        protected static void runBottles(string commands)
-        {
-            commands.ReadLines(x =>
-            {
-                if (x.Trim().IsNotEmpty())
-                {
-                    _runner.RunBottles(x);
-                }
-            });
-        }
 
         protected void DebugRemoteBehaviorGraph()
         {

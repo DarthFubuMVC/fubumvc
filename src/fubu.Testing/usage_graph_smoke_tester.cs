@@ -1,5 +1,4 @@
 using System;
-using Bottles.Commands;
 using FubuCore.CommandLine;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -14,7 +13,6 @@ namespace fubu.Testing
         public void all_commands_usage_graph_works()
         {
             var factory = new CommandFactory();
-            factory.RegisterCommands(typeof(AliasCommand).Assembly);
             factory.RegisterCommands(typeof(IFubuCommand).Assembly);
 
             factory.AllCommandTypes().Each(t =>

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using FubuCore;
 using FubuMVC.Core;
@@ -6,7 +7,6 @@ using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.UI;
-using FubuMVC.TestingHarness;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -42,7 +42,8 @@ namespace FubuMVC.IntegrationTesting.Http
         private readonly IFubuRequest _request;
         private readonly IChainResolver _resolver;
 
-        public PartialController(IPartialInvoker partialInvoker, IOutputWriter outputWriter, IFubuRequest request, IChainResolver resolver)
+        public PartialController(IPartialInvoker partialInvoker, IOutputWriter outputWriter, IFubuRequest request,
+            IChainResolver resolver)
         {
             _partialInvoker = partialInvoker;
             _outputWriter = outputWriter;
@@ -100,7 +101,7 @@ namespace FubuMVC.IntegrationTesting.Http
     {
         public void Write(string mimeType, IFubuRequestContext context, FastOutput resource)
         {
-            throw new System.NotImplementedException("I should not be called");
+            throw new NotImplementedException("I should not be called");
         }
 
         public IEnumerable<string> Mimetypes

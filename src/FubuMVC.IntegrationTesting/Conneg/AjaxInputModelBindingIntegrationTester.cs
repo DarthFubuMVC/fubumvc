@@ -1,16 +1,10 @@
 ﻿using System;
 using System.Net;
 using System.Reflection;
-
 using FubuCore.Binding;
-
 using FubuMVC.Core;
-using FubuMVC.TestingHarness;
-
 using FubuTestingSupport;
-
 using NUnit.Framework;
-
 
 namespace FubuMVC.IntegrationTesting.Conneg
 {
@@ -35,8 +29,8 @@ namespace FubuMVC.IntegrationTesting.Conneg
             };
 
             var output = endpoints.PostJson(theInput)
-                                  .StatusCodeShouldBe(HttpStatusCode.OK)
-                                  .ReadAsJson<JsonInput>();
+                .StatusCodeShouldBe(HttpStatusCode.OK)
+                .ReadAsJson<JsonInput>();
 
             output.GoodThing1.ShouldEqual("Obiwan");
             output.GoodThing2.ShouldEqual("Han Solo");
@@ -53,8 +47,8 @@ namespace FubuMVC.IntegrationTesting.Conneg
             };
 
             var output = endpoints.PostXml(theInput)
-                                  .StatusCodeShouldBe(HttpStatusCode.OK)
-                                  .ReadAsJson<XmlInput>();
+                .StatusCodeShouldBe(HttpStatusCode.OK)
+                .ReadAsJson<XmlInput>();
 
             output.BadThing1.ShouldEqual("Vader");
             output.BadThing2.ShouldEqual("Jabba");
@@ -72,8 +66,8 @@ namespace FubuMVC.IntegrationTesting.Conneg
             };
 
             var output = endpoints.PostJson(theInput)
-                                  .StatusCodeShouldBe(HttpStatusCode.OK)
-                                  .ReadAsJson<JsonInput>();
+                .StatusCodeShouldBe(HttpStatusCode.OK)
+                .ReadAsJson<JsonInput>();
 
             output.TheAnswerToLifeTheUniverseAndEverything.ShouldEqual(42);
         }
@@ -89,8 +83,8 @@ namespace FubuMVC.IntegrationTesting.Conneg
             };
 
             var output = endpoints.PostXml(theInput)
-                                  .StatusCodeShouldBe(HttpStatusCode.OK)
-                                  .ReadAsJson<XmlInput>();
+                .StatusCodeShouldBe(HttpStatusCode.OK)
+                .ReadAsJson<XmlInput>();
 
             output.TheAnswerToLifeTheUniverseAndEverything.ShouldEqual(42);
         }
@@ -116,7 +110,8 @@ namespace FubuMVC.IntegrationTesting.Conneg
 
 
     public interface IAjaxInput
-    {}
+    {
+    }
 
 
     public class JsonInput : IAjaxInput
@@ -141,7 +136,8 @@ namespace FubuMVC.IntegrationTesting.Conneg
     {
         public bool Matches(PropertyInfo property)
         {
-            return (property.PropertyType == typeof(int) && property.Name.StartsWith("TheAnswer", StringComparison.InvariantCultureIgnoreCase));
+            return (property.PropertyType == typeof (int) &&
+                    property.Name.StartsWith("TheAnswer", StringComparison.InvariantCultureIgnoreCase));
         }
 
         public void Bind(PropertyInfo property, IBindingContext context)
