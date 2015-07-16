@@ -105,7 +105,6 @@
     <Compile Include="ProcessWrapper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RestartCommand.cs" />
     <Compile Include="Running\ApplicationSourceChooser.cs" />
     <Compile Include="Running\ApplicationStarted.cs" />
     <Compile Include="Running\ApplicationSourceFinder.cs" />

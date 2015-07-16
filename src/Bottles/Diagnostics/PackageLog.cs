@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using Bottles.Exceptions;
 using FubuCore;
 using FubuCore.CommandLine;
 
@@ -46,7 +44,7 @@ namespace Bottles.Diagnostics
         {
             var text = format;
 
-            if(parameters.Length > 0)
+            if (parameters.Length > 0)
             {
                 try
                 {
@@ -57,11 +55,10 @@ namespace Bottles.Diagnostics
                     //this could be moved into 'ToFormat'
                     var f = format.Replace("{", "{{").Replace("}", "}}");
                     var a = parameters.Aggregate((l, r) => l + "," + r);
-                    throw new BottleException("Attempted to format the string --{0}-- with --{1}--".ToFormat(f, a), ex);
+                    throw new Exception("Attempted to format the string --{0}-- with --{1}--".ToFormat(f, a), ex);
                 }
-                
             }
-            
+
             _text.WriteLine(text);
         }
 
@@ -83,7 +80,7 @@ namespace Bottles.Diagnostics
             ConsoleWriter.Write(ConsoleColor.Red, output);
 
             _text.WriteLine(output);
-            
+
             Success = false;
         }
 
@@ -102,11 +99,8 @@ namespace Bottles.Diagnostics
             return _children.Where(x => x is T).Cast<T>();
         }
 
-        
-        public Guid Id
-        {
-            get; private set;
-        }
+
+        public Guid Id { get; private set; }
 
 
         public void TrapErrors(Action action)
@@ -120,6 +114,5 @@ namespace Bottles.Diagnostics
                 MarkFailure(e);
             }
         }
-
     }
 }

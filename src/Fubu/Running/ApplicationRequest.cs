@@ -46,8 +46,7 @@ namespace Fubu.Running
             get { return _directoryFlag; }
             set
             {
-                var directory = new AliasService().GetFolderForAlias(value);
-                _directoryFlag = directory.ToFullPath();
+                _directoryFlag = value.ToFullPath();
             }
         }
 

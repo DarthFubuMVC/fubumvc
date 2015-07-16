@@ -52,22 +52,14 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="AliasRegistry.cs" />
     <Compile Include="AssemblyFinder.cs" />
     <Compile Include="CompileTarget.cs" />
-    <Compile Include="Configuration\AssertBottleConfiguration.cs" />
-    <Compile Include="Configuration\BottleConfiguration.cs" />
-    <Compile Include="Configuration\BottleConfigurationError.cs" />
-    <Compile Include="Configuration\BottleConfigurationException.cs" />
-    <Compile Include="Configuration\IBottleConfigurationRule.cs" />
-    <Compile Include="Configuration\MissingService.cs" />
     <Compile Include="Diagnostics\PerfTimer.cs" />
     <Compile Include="Environment\CanWriteToFolder.cs" />
     <Compile Include="Environment\FileExists.cs" />
     <Compile Include="Environment\FolderExists.cs" />
     <Compile Include="Environment\IEnvironmentRequirement.cs" />
     <Compile Include="Environment\IEnvironmentRequirements.cs" />
-    <Compile Include="Exceptions\BottleException.cs" />
     <Compile Include="IDeactivator.cs" />
     <Compile Include="Diagnostics\LoggingSession.cs" />
     <Compile Include="Diagnostics\LogWriter.cs" />
@@ -108,7 +100,6 @@
     <Compile Include="Services\Messaging\Tracking\AllMessagesComplete.cs" />
     <Compile Include="Services\Messaging\Tracking\MessageHistory.cs" />
     <Compile Include="Services\Messaging\Tracking\MessageTrack.cs" />
-    <Compile Include="Services\Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Remote\AppDomainFileChangeWatcher.cs" />
     <Compile Include="Services\Remote\AssemblyCopyMode.cs" />
     <Compile Include="Services\Remote\AssemblyRequirement.cs" />
