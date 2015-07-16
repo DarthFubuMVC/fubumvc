@@ -242,7 +242,7 @@
     <Compile Include="Security\AuthorizationCheckPolicyTester.cs" />
     <Compile Include="Security\SecurityServicesRegistry_specification.cs" />
     <Compile Include="Security\SecuritySettingsTester.cs" />
-    <Compile Include="Services\BottleServiceApplicationTester.cs" />
+    <Compile Include="Services\ApplicationLoaderFinderTester.cs" />
     <Compile Include="Services\Messaging\EventAggregatorTester.cs" />
     <Compile Include="Services\Messaging\MessageWaitConditionTester.cs" />
     <Compile Include="Services\Messaging\MessagingHubTester.cs" />

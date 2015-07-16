@@ -8,7 +8,7 @@ namespace FubuMVC.Core.Ajax
 {
     /// <summary>
     /// Used as the return value from Ajax endpoints to standardize the communication and interaction of the server
-    /// and client.  Several built in conventions and external Bottles work with AjaxContinuation
+    /// and client.  Several built in conventions and external packages work with AjaxContinuation
     /// </summary>
     public class AjaxContinuation
     {

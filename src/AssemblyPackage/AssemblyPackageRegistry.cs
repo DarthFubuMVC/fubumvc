@@ -26,14 +26,14 @@ namespace AssemblyPackage
         {
             registry.Policies.Local.Add(policy => {
                 policy.Where.LastActionMatches(call => call.HandlerType == typeof (AssemblyEndpoint));
-                policy.Wrap.WithBehavior<BehaviorFromAssemblyBottle>();
+                policy.Wrap.WithBehavior<BehaviorFromAssemblyPackage>();
             });
         }
     }
 
-    public class BehaviorFromAssemblyBottle : BasicBehavior
+    public class BehaviorFromAssemblyPackage : BasicBehavior
     {
-        public BehaviorFromAssemblyBottle()
+        public BehaviorFromAssemblyPackage()
             : base(PartialBehavior.Executes)
         {
         }

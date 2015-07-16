@@ -47,7 +47,7 @@ namespace FubuMVC.Localization
                 SetServiceIfNone<ILocalizationCache, LocalizationCache>();
                 SetServiceIfNone<ILocalizationMissingHandler, LocalizationMissingHandler>();
                 SetServiceIfNone<ILocalizationProviderFactory, LocalizationProviderFactory>();
-                SetServiceIfNone<ILocalizationStorage, BottleAwareXmlLocalizationStorage>();
+                SetServiceIfNone<ILocalizationStorage, PackageAwareXmlLocalizationStorage>();
 
                 AddService<IActivator, SpinUpLocalizationCaches>();
             }

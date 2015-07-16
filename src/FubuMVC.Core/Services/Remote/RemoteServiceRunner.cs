@@ -133,7 +133,7 @@ namespace FubuMVC.Core.Services.Remote
 
         public static RemoteServiceRunner For<T>(Action<RemoteDomainExpression> configure = null)
         {
-            BottleServiceApplication.DetermineLoaderType(typeof (T));
+            ApplicationLoaderFinder.DetermineLoaderType(typeof (T));
 
             if (configure == null)
             {

@@ -117,7 +117,6 @@
     <Compile Include="Diagnostics\Endpoints\EndpointReport.cs" />
     <Compile Include="Diagnostics\FubuDiagnosticsEndpoint.cs" />
     <Compile Include="Diagnostics\ModelBindingFubuDiagnostics.cs" />
-    <Compile Include="Diagnostics\Packaging\BottleLogExtensions.cs" />
     <Compile Include="Diagnostics\Packaging\ActivationDiagnostics.cs" />
     <Compile Include="Diagnostics\Packaging\IActivationDiagnostics.cs" />
     <Compile Include="Diagnostics\Packaging\IActivationLog.cs" />
@@ -463,10 +462,7 @@
     <Compile Include="Security\SecurityServicesRegistry.cs" />
     <Compile Include="Security\SecuritySettings.cs" />
     <Compile Include="Services\ApplicationLoader.cs" />
-    <Compile Include="Services\BottleService.cs" />
-    <Compile Include="Services\BottleServiceApplication.cs" />
-    <Compile Include="Services\BottleServiceConfiguration.cs" />
-    <Compile Include="Services\BottleServiceRuntime.cs" />
+    <Compile Include="Services\ApplicationLoaderFinder.cs" />
     <Compile Include="Services\IApplication.cs" />
     <Compile Include="Services\IApplicationLoader.cs" />
     <Compile Include="Services\IApplicationSource.cs" />

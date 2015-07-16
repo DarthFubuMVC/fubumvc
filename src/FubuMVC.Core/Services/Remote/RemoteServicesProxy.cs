@@ -30,7 +30,7 @@ namespace FubuMVC.Core.Services.Remote
 
             properties.Each(x => FubuApplication.Properties[x.Key] = x.Value);
 
-            var loader = BottleServiceApplication.FindLoader(bootstrapperName);
+            var loader = ApplicationLoaderFinder.FindLoader(bootstrapperName);
             _shutdown = loader.Load();
 
             EventAggregator.SendMessage(new LoaderStarted

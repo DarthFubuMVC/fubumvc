@@ -5,7 +5,7 @@ using FubuCore;
 
 namespace FubuMVC.Core.Services
 {
-    public static class BottleServiceApplication
+    public static class ApplicationLoaderFinder
     {
         public static IApplicationLoader FindLoader(string bootstrapperType)
         {

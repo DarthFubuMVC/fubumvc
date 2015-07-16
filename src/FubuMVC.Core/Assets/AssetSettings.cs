@@ -37,7 +37,7 @@ namespace FubuMVC.Core.Assets
     public enum SearchMode
     {
         /// <summary>
-        /// Use assets from any location in either the application or loaded Bottles
+        /// Use assets from any location in either the application or loaded FubuMVC modules
         /// </summary>
         Anywhere,
 

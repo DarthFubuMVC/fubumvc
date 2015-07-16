@@ -19,12 +19,12 @@ namespace FubuMVC.Core.Diagnostics
 
             writeAssemblies(writer);
 
-            writeBottles(writer, diagnostics);
+            writeLogs(writer, diagnostics);
 
             return writer.ToString();
         }
 
-        private static void writeBottles(StringWriter writer, IActivationDiagnostics diagnostics)
+        private static void writeLogs(StringWriter writer, IActivationDiagnostics diagnostics)
         {
             writer.WriteLine("------------------------------------------------------------------------------------------------");
             writer.WriteLine("Logs");

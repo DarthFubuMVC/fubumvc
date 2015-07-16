@@ -42,7 +42,6 @@ namespace FubuMVC.IntegrationTesting
         {
             beforeRunning();
 
-            initializeBottles();
 
             theContainer = new Container();
             configureContainer(theContainer);
@@ -79,28 +78,6 @@ namespace FubuMVC.IntegrationTesting
         {
         }
 
-        protected virtual void initializeBottles()
-        {
-        }
-
-
-        protected void DebugRemoteBehaviorGraph()
-        {
-            throw new NotImplementedException("Redo this");
-            //var output = endpoints.Get<BehaviorGraphWriter>(x => x.PrintRoutes());
-            //Debug.WriteLine(output);
-        }
-
-        protected void DebugPackageLoading()
-        {
-            throw new NotImplementedException("Redo this");
-            //var output = endpoints.Get<PackageLoadingWriter>(x => x.FullLog());
-            //var filename = Path.GetTempFileName() + ".htm";
-
-            //new FileSystem().WriteStringToFile(filename, output.ToString());
-
-            //Process.Start(filename);
-        }
     }
 
 
