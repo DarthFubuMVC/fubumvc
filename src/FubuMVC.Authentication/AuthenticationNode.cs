@@ -2,6 +2,7 @@ using System;
 using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Authentication
 {
@@ -22,6 +23,20 @@ namespace FubuMVC.Authentication
         public Type AuthType
         {
             get { return _authType; }
+        }
+
+        Instance IContainerModel.ToInstance()
+        {
+            var instance = new ConfiguredInstance(_authType);
+
+            configure(instance);
+
+            return instance;
+        }
+
+        protected virtual void configure(IConfiguredInstance instance)
+        {
+            // Nothing
         }
 
         ObjectDef IContainerModel.ToObjectDef()

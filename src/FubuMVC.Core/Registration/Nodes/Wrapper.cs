@@ -3,12 +3,14 @@ using FubuCore.Descriptions;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuCore;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Registration.Nodes
 {
     public class Wrapper : BehaviorNode, DescribesItself
     {
         private readonly ObjectDef _objectDef;
+        private readonly ConstructorInstance _instance;
 
         public Wrapper(Type behaviorType)
         {
@@ -21,6 +23,8 @@ namespace FubuMVC.Core.Registration.Nodes
             {
                 Type = behaviorType
             };
+
+            _instance = new ConstructorInstance(behaviorType);
         }
 
         /// <summary>
@@ -41,9 +45,16 @@ namespace FubuMVC.Core.Registration.Nodes
             return new Wrapper(typeof (T));
         }
 
+
+
         protected override ObjectDef buildObjectDef()
         {
             return _objectDef;
+        }
+
+        protected override IConfiguredInstance buildInstance()
+        {
+            return _instance;
         }
 
         public override string ToString()

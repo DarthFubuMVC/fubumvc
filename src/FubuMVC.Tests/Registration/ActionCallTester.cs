@@ -17,6 +17,7 @@ using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Tests.Registration.Conventions;
 using FubuTestingSupport;
 using NUnit.Framework;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Tests.Registration
 {
@@ -285,6 +286,11 @@ namespace FubuMVC.Tests.Registration
         public override BehaviorCategory Category
         {
             get { return BehaviorCategory.Process; }
+        }
+
+        protected override IConfiguredInstance buildInstance()
+        {
+            throw new NotImplementedException();
         }
 
         protected override ObjectDef buildObjectDef()

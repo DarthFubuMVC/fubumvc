@@ -8,6 +8,7 @@ using FubuMVC.Core.Registration.ObjectGraph;
 using FubuTestingSupport;
 using NUnit.Framework;
 using System.Linq;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
@@ -169,6 +170,11 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             throw new NotImplementedException();
         }
+
+        protected override IConfiguredInstance buildInstance()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class Node2 : BehaviorNode
@@ -176,6 +182,11 @@ namespace FubuMVC.Tests.Registration.Conventions
         public override BehaviorCategory Category
         {
             get { throw new NotImplementedException(); }
+        }
+
+        protected override IConfiguredInstance buildInstance()
+        {
+            throw new NotImplementedException();
         }
 
         protected override ObjectDef buildObjectDef()
@@ -189,6 +200,11 @@ namespace FubuMVC.Tests.Registration.Conventions
         public override BehaviorCategory Category
         {
             get { throw new NotImplementedException(); }
+        }
+
+        protected override IConfiguredInstance buildInstance()
+        {
+            throw new NotImplementedException();
         }
 
         protected override ObjectDef buildObjectDef()

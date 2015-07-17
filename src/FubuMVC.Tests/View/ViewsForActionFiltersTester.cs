@@ -12,6 +12,7 @@ using FubuMVC.Tests.View.FakeViews;
 using FubuMVC.Tests.View.SubNamesapce;
 using FubuTestingSupport;
 using NUnit.Framework;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Tests.View
 {
@@ -209,6 +210,11 @@ namespace FubuMVC.Tests.View
         }
 
         public ITemplateFile Master { get; set; }
+
+        protected override IConfiguredInstance buildInstance()
+        {
+            throw new NotImplementedException();
+        }
 
         protected override ObjectDef buildObjectDef()
         {

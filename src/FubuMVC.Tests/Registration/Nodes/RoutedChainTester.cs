@@ -6,6 +6,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuTestingSupport;
 using NUnit.Framework;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Tests.Registration.Nodes
 {
@@ -48,6 +49,11 @@ namespace FubuMVC.Tests.Registration.Nodes
         public override BehaviorCategory Category
         {
             get { return BehaviorCategory.Authentication; }
+        }
+
+        protected override IConfiguredInstance buildInstance()
+        {
+            return new SmartInstance<StopwatchBehavior>();
         }
 
         protected override ObjectDef buildObjectDef()

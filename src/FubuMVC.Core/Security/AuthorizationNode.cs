@@ -5,6 +5,7 @@ using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using System.Linq;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Security
 {
@@ -30,6 +31,20 @@ namespace FubuMVC.Core.Security
             }
 
             return def;
+        }
+
+        protected override IConfiguredInstance buildInstance()
+        {
+            var instance = new SmartInstance<AuthorizationBehavior>();
+            instance.Ctor<IAuthorizationNode>().Is(this);
+
+            if (_failure != null)
+            {
+                throw new NotSupportedException("Gotta convert here");
+                //instance.Ctor<IAuthorizationFailureHandler>().Is(_failure);
+            }
+
+            return instance;
         }
 
         public void FailureHandler<T>() where T : IAuthorizationFailureHandler

@@ -8,6 +8,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
@@ -132,6 +133,17 @@ namespace FubuMVC.Core.Resources.Conneg
             def.DependencyByValue(collectionType, collection);
 
             return def;
+        }
+
+        protected override IConfiguredInstance buildInstance()
+        {
+            var instance = new ConfiguredInstance(typeof (InputBehavior<>), _inputType);
+
+            var collection = new ConfiguredInstance(typeof (ReaderCollection<>), _inputType);
+            var collectionType = typeof (IReaderCollection<>).MakeGenericType(_inputType);
+            instance.Dependencies.Add(collectionType, collection);
+
+            return instance;
         }
 
 

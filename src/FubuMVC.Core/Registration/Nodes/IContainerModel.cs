@@ -1,4 +1,5 @@
 using FubuMVC.Core.Registration.ObjectGraph;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Registration.Nodes
 {
@@ -10,5 +11,7 @@ namespace FubuMVC.Core.Registration.Nodes
         /// </summary>
         /// <returns></returns>
         ObjectDef ToObjectDef();
+
+        Instance ToInstance();
     }
 }

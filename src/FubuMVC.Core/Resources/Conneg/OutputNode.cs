@@ -10,6 +10,7 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.Runtime.Formatters;
 using FubuMVC.Core.View;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
@@ -197,6 +198,21 @@ namespace FubuMVC.Core.Resources.Conneg
             return def;
         }
 
+        protected override IConfiguredInstance buildInstance()
+        {
+            var instance = new ConfiguredInstance(typeof (OutputBehavior<>), _resourceType);
+
+            var collection = new ConfiguredInstance(typeof(MediaCollection<>), _resourceType);
+            var collectionType = typeof(IMediaCollection<>).MakeGenericType(_resourceType);
+            instance.Dependencies.Add(collectionType, collection);
+
+            if (ResourceNotFound != null)
+            {
+                throw new NotSupportedException("Convert from ResourceNotFound");
+            }
+
+            return instance;
+        }
 
 
         public void ClearAll()

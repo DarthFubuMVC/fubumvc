@@ -6,6 +6,7 @@ using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
+using StructureMap.Pipeline;
 using TestPackage1.FakeControllers;
 
 namespace FubuMVC.Tests.Registration.Nodes
@@ -15,6 +16,11 @@ namespace FubuMVC.Tests.Registration.Nodes
         public override BehaviorCategory Category
         {
             get { return BehaviorCategory.Process; }
+        }
+
+        protected override IConfiguredInstance buildInstance()
+        {
+            throw new NotImplementedException();
         }
 
         protected override ObjectDef buildObjectDef()
@@ -584,6 +590,11 @@ namespace FubuMVC.Tests.Registration.Nodes
             return _inputType;
         }
 
+        protected override IConfiguredInstance buildInstance()
+        {
+            throw new NotImplementedException();
+        }
+
         protected override ObjectDef buildObjectDef()
         {
             throw new NotImplementedException();
@@ -607,6 +618,11 @@ namespace FubuMVC.Tests.Registration.Nodes
         public Type ResourceType()
         {
             return _resourceType;
+        }
+
+        protected override IConfiguredInstance buildInstance()
+        {
+            throw new NotImplementedException();
         }
 
         protected override ObjectDef buildObjectDef()

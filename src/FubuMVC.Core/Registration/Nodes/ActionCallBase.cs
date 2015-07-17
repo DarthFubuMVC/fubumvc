@@ -11,6 +11,7 @@ using FubuMVC.Core.Caching;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Registration.Nodes
 {
@@ -75,7 +76,22 @@ namespace FubuMVC.Core.Registration.Nodes
             return OutputType().CanBeCastTo<T>();
         }
 
-        
+        protected override IConfiguredInstance buildInstance()
+        {
+            Validate();
+
+            var instance = new ConfiguredInstance(determineHandlerType());
+            object lambda = HasOutput
+                                ? FuncBuilder.ToFunc(HandlerType, Method)
+                                : FuncBuilder.ToAction(HandlerType, Method);
+
+            instance.Dependencies.Add(lambda.GetType(), lambda);
+
+
+
+
+            return instance;
+        }
 
         protected override ObjectDef buildObjectDef()
         {

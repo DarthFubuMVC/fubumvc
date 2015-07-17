@@ -14,6 +14,7 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Registration.Nodes
 {
@@ -174,6 +175,11 @@ namespace FubuMVC.Core.Registration.Nodes
         ObjectDef IContainerModel.ToObjectDef()
         {
             return buildObjectDef();
+        }
+
+        Instance IContainerModel.ToInstance()
+        {
+            return Top.As<IContainerModel>().ToInstance();
         }
 
         void IRegisterable.Register(Action<Type, ObjectDef> callback)
