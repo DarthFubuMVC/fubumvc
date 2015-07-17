@@ -12,14 +12,10 @@ using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Routing;
 using FubuMVC.Core.Runtime.Files;
+using StructureMap.Configuration.DSL;
 
 namespace FubuMVC.Core.Registration
 {
-    public interface IRegisterable
-    {
-        void Register(Action<Type, ObjectDef> action);
-    }
-
     public interface IChainImporter
     {
         void Import(IEnumerable<BehaviorChain> chains);
@@ -151,6 +147,13 @@ namespace FubuMVC.Core.Registration
             {
                 Value = this
             });
+        }
+
+        void IRegisterable.Register(Registry registry)
+        {
+            // TODO -- get the services?
+            _behaviors.OfType<IRegisterable>().Each(x => x.Register(registry));
+            registry.For<BehaviorGraph>().Use(this);
         }
 
         #endregion

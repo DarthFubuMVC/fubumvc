@@ -14,6 +14,7 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
+using StructureMap.Configuration.DSL;
 using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Registration.Nodes
@@ -194,6 +195,11 @@ namespace FubuMVC.Core.Registration.Nodes
 
 
             callback(typeof (IActionBehavior), objectDef);
+        }
+
+        void IRegisterable.Register(Registry registry)
+        {
+            registry.For<IActionBehavior>().AddInstance(Top.As<IContainerModel>().ToInstance());
         }
 
         /// <summary>
