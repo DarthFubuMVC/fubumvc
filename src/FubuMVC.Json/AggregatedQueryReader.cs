@@ -51,7 +51,13 @@ namespace FubuMVC.Json
         {
             var messageName = jToken["type"].Value<string>();
             var chain = messageTypes.FindChain(messageName);
-            var correlationId = jToken["correlationId"].Value<string>();
+
+            string correlationId = null;
+            var correlationIdToken = jToken["correlationId"];
+            if (correlationIdToken != null)
+            {
+                correlationId = correlationIdToken.Value<string>();
+            }
 
             var query = new ClientQuery {type = messageName, correlationId = correlationId};
 
