@@ -27,7 +27,7 @@ namespace FubuMVC.Json
             var serializer = context.Service<NewtonSoftJsonSerializer>().InnerSerializer();
 
             var json = context.Request.Input.ReadAllText();
-            
+
 
             return Read(serializer, messageTypes, json);
         }
@@ -51,8 +51,9 @@ namespace FubuMVC.Json
         {
             var messageName = jToken["type"].Value<string>();
             var chain = messageTypes.FindChain(messageName);
+            var correlationId = jToken["correlationId"].Value<string>();
 
-            var query = new ClientQuery {type = messageName};
+            var query = new ClientQuery {type = messageName, correlationId = correlationId};
 
             if (chain.InputType() != null)
             {

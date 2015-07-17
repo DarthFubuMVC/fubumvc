@@ -38,7 +38,8 @@ namespace FubuMVC.Core.Runtime.Aggregation
             {
                 request = query.type,
                 type = chain.ResourceType().GetMessageName(),
-                result = output
+                result = output,
+                correlationId = query.correlationId
             };
         }
 

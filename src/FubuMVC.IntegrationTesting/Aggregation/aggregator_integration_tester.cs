@@ -43,7 +43,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
             });
         }
 
-        
+
         [Test]
         public void aggregate_selection_by_input_type()
         {
@@ -204,11 +204,80 @@ namespace FubuMVC.IntegrationTesting.Aggregation
                 var response =
                     new JsonSerializer().Deserialize<AggregationResponse>(new JsonTextReader(new StringReader(json)));
 
-
                 response.responses.Count().ShouldEqual(4);
                 response.responses.Select(x => x.type)
                     .ShouldHaveTheSameElementsAs("resource-1", "resource-2", "resource-3", "resource-4");
             });
+        }
+
+        [Test]
+        public void passes_corellation_id_through_http_endpoint()
+        {
+            var data = JsonUtil.ToJson(new
+            {
+                queries = new[]
+                {
+                    new
+                    {
+                        type = "query-1",
+                        query = new
+                        {
+                            name = "Joe"
+                        },
+                        correlationId = "123"
+                    }
+                }
+            });
+
+            var messageTypes = TestHost.Service<IClientMessageCache>();
+
+            var readQuery = new AggregatedQueryReader().Read(new JsonSerializer(), messageTypes, data);
+
+            TestHost.Scenario(_ =>
+            {
+                _.JsonData(readQuery);
+
+                _.StatusCodeShouldBeOk();
+                _.ContentTypeShouldBe("application/json");
+
+                var json = _.Response.Body.ReadAsText();
+
+                var response =
+                    new JsonSerializer().Deserialize<AggregationResponse>(new JsonTextReader(new StringReader(json)));
+
+                response.responses.Count().ShouldEqual(1);
+                response.responses[0].correlationId.ShouldEqual("123");
+            });
+        }
+
+        [Test]
+        public void reads_corellation_id_in_aggregated_query_reader()
+        {
+            var json = JsonUtil.ToJson(new
+            {
+                queries = new[]
+                {
+                    new
+                    {
+                        type = "query-1",
+                        query = new
+                        {
+                            name = "Joe"
+                        },
+                        correlationId = "123"
+                    }
+                }
+            });
+
+            var messageTypes = TestHost.Service<IClientMessageCache>();
+
+            var readQuery = new AggregatedQueryReader().Read(new JsonSerializer(), messageTypes, json);
+
+            readQuery.ShouldNotBeNull();
+            readQuery.queries[0].type.ShouldEqual("query-1");
+            readQuery.queries[0].query.ShouldBeOfType<AggregationEndpoint.Query1>()
+                .Name.ShouldEqual("Joe");
+            readQuery.queries[0].correlationId.ShouldEqual("123");
         }
     }
 
@@ -254,7 +323,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
             // to the view model sent to the main spark view, and
             // render it to the view with a page helper there.
             // This is so common now that I think we put a json variable
-            // helper into FubuMVC.Core. 
+            // helper into FubuMVC.Core.
             return _aggregator.Fetch(_ =>
             {
                 // By an input query
@@ -276,7 +345,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
         [ClientMessage]
         public class Input1
         {
-            
+
         }
 
         [ClientMessage]
