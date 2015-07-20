@@ -84,6 +84,7 @@
     <Compile Include="HtmlTagExtensionsTester.cs" />
     <Compile Include="IntegratedBootstrappingTests.cs" />
     <Compile Include="LocalizationBootstrappingTester.cs" />
+    <Compile Include="localization_is_disabled_by_default.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpinUpLocalizationCachesTester.cs" />
   </ItemGroup>
