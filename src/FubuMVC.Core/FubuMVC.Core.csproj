@@ -411,7 +411,6 @@
     <Compile Include="Runtime\Conditionals\Never.cs" />
     <Compile Include="Behaviors\DownloadFileBehavior.cs" />
     <Compile Include="Behaviors\InterceptExceptionBehavior.cs" />
-    <Compile Include="Behaviors\RenderStatusCodeBehavior.cs" />
     <Compile Include="Ajax\AjaxContinuation.cs" />
     <Compile Include="Caching\IRecordedHttpOutput.cs" />
     <Compile Include="Caching\IRecordedOutput.cs" />

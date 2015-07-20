@@ -258,7 +258,6 @@
     <Compile Include="Behaviors\Conditional\AlwaysTester.cs" />
     <Compile Include="Behaviors\InterceptExceptionBehaviorTester.cs" />
     <Compile Include="Behaviors\ITargetController.cs" />
-    <Compile Include="Behaviors\RenderStatusCodeBehaviorTester.cs" />
     <Compile Include="can_find_and_load_bottles_with_the_FubuModule_attribute.cs" />
     <Compile Include="FakeHttpContext.cs" />
     <Compile Include="FubuApplicationTester.cs" />
