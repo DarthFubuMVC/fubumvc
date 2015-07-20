@@ -1,6 +1,5 @@
 using FubuCore;
 using FubuMVC.Core;
-using FubuMVC.Core.Registration;
 using FubuMVC.Katana;
 
 namespace Serenity
@@ -13,7 +12,8 @@ namespace Serenity
 
     public class ExternalHosting : ISerenityHosting
     {
-        public IApplicationUnderTest Start(ApplicationSettings settings, FubuRuntime runtime, IBrowserLifecycle lifecycle)
+        public IApplicationUnderTest Start(ApplicationSettings settings, FubuRuntime runtime,
+            IBrowserLifecycle lifecycle)
         {
             var application = new ApplicationUnderTest(runtime, settings, lifecycle);
             application.Ping();
@@ -31,14 +31,13 @@ namespace Serenity
     {
         private EmbeddedFubuMvcServer _server;
 
-        public IApplicationUnderTest Start(ApplicationSettings settings, FubuRuntime runtime, IBrowserLifecycle lifecycle)
+        public IApplicationUnderTest Start(ApplicationSettings settings, FubuRuntime runtime,
+            IBrowserLifecycle lifecycle)
         {
             var port = PortFinder.FindPort(settings.Port);
             _server = new EmbeddedFubuMvcServer(runtime, settings.PhysicalPath, port);
 
             settings.RootUrl = _server.BaseAddress;
-
-            var graph = runtime.Factory.Get<BehaviorGraph>();
 
             return new ApplicationUnderTest(runtime, settings, lifecycle);
         }

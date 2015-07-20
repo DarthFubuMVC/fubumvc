@@ -9,6 +9,7 @@ using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Localization;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Security.Authentication;
@@ -21,7 +22,8 @@ namespace FubuMVC.Core.Configuration
     internal static class BehaviorGraphBuilder
     {
         // TOOD -- clean this up a little bit
-        public static BehaviorGraph Build(FubuRegistry registry, IPerfTimer perfTimer, IEnumerable<Assembly> packageAssemblies, IActivationDiagnostics diagnostics)
+        public static BehaviorGraph Build(FubuRegistry registry, IPerfTimer perfTimer,
+            IEnumerable<Assembly> packageAssemblies, IActivationDiagnostics diagnostics)
         {
             var graph = new BehaviorGraph
             {
@@ -42,8 +44,10 @@ namespace FubuMVC.Core.Configuration
 
             AccessorRulesCompiler.Compile(graph, perfTimer);
 
+            // TODO -- generalize the feature thing here.
             addBuiltInAuthentication(registry, graph);
             addBuiltInDiagnostics(graph, perfTimer);
+            addBuiltInLocalization(registry, graph);
 
             perfTimer.Record("Local Application BehaviorGraph", () => config.BuildLocal(graph, perfTimer));
 
@@ -75,6 +79,19 @@ namespace FubuMVC.Core.Configuration
             new AutoImportModelNamespacesConvention().Configure(graph);
 
             return graph;
+        }
+
+        private static void addBuiltInLocalization(FubuRegistry registry, BehaviorGraph graph)
+        {
+            var settings = graph.Settings.Get<LocalizationSettings>();
+            if (settings.Enabled)
+            {
+                registry.Services<BasicLocalizationServices>();
+                if (settings.DefaultCulture != null)
+                {
+                    registry.Services(x => x.ReplaceService(settings.DefaultCulture));
+                }
+            }
         }
 
         private static void addBuiltInAuthentication(FubuRegistry registry, BehaviorGraph graph)

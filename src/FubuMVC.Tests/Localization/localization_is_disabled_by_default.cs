@@ -1,7 +1,8 @@
-﻿using FubuTestingSupport;
+﻿using FubuMVC.Core.Localization;
+using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.Localization.Testing
+namespace FubuMVC.Tests.Localization
 {
     [TestFixture]
     public class localization_is_disabled_by_default

@@ -185,6 +185,11 @@
     <Compile Include="Json\when_deserializing_an_object.cs" />
     <Compile Include="Json\when_serializing_an_object_without_metadata.cs" />
     <Compile Include="Json\when_serializing_an_object_with_metadata.cs" />
+    <Compile Include="Localization\HtmlTagExtensionsTester.cs" />
+    <Compile Include="Localization\IntegratedBootstrappingTests.cs" />
+    <Compile Include="Localization\LocalizationBootstrappingTester.cs" />
+    <Compile Include="Localization\localization_is_disabled_by_default.cs" />
+    <Compile Include="Localization\SpinUpLocalizationCachesTester.cs" />
     <Compile Include="MockedFubuRequestContext.cs" />
     <Compile Include="NewConneg\ReaderCollectionTester.cs" />
     <Compile Include="Projections\ChildProjectionTester.cs" />
