@@ -279,6 +279,35 @@ namespace FubuMVC.IntegrationTesting.Aggregation
                 .Name.ShouldEqual("Joe");
             readQuery.queries[0].correlationId.ShouldEqual("123");
         }
+
+        [Test]
+        public void reads_query_without_corellation_id_in_aggregated_query_reader()
+        {
+            var json = JsonUtil.ToJson(new
+            {
+                queries = new[]
+                {
+                    new
+                    {
+                        type = "query-1",
+                        query = new
+                        {
+                            name = "Joe"
+                        }
+                    }
+                }
+            });
+
+            var messageTypes = TestHost.Service<IClientMessageCache>();
+
+            var readQuery = new AggregatedQueryReader().Read(new JsonSerializer(), messageTypes, json);
+
+            readQuery.ShouldNotBeNull();
+            readQuery.queries[0].type.ShouldEqual("query-1");
+            readQuery.queries[0].query.ShouldBeOfType<AggregationEndpoint.Query1>()
+                .Name.ShouldEqual("Joe");
+            readQuery.queries[0].correlationId.ShouldBeNull();
+        }
     }
 
     public class AggregationEndpoint
