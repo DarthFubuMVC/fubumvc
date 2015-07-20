@@ -1,6 +1,7 @@
 using System;
 using System.Web.Security;
 using FubuMVC.Core.Security;
+using FubuMVC.Core.Security.Authorization;
 
 namespace FubuMVC.Core.Web.Security
 {

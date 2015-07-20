@@ -1,4 +1,5 @@
 ﻿using FubuMVC.Core.Security;
+using FubuMVC.Core.Security.Authorization;
 
 namespace FubuMVC.Tests.Docs.Topics.Authorization
 {

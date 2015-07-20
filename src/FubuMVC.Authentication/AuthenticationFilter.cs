@@ -1,6 +1,7 @@
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Security;
+using FubuMVC.Core.Security.Authorization;
 
 namespace FubuMVC.Authentication
 {

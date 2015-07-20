@@ -1,5 +1,6 @@
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Security;
+using FubuMVC.Core.Security.Authorization;
 
 namespace FubuMVC.Authentication.Tests
 {

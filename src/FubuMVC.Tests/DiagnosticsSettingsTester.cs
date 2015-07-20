@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Security;
+using FubuMVC.Core.Security.Authorization;
 using FubuTestingSupport;
 using NUnit.Framework;
 

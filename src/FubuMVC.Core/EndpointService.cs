@@ -6,6 +6,7 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Security;
+using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core

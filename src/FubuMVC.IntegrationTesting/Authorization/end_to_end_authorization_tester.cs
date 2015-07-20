@@ -3,6 +3,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
+using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Katana;
 using FubuTestingSupport;
 using NUnit.Framework;

@@ -4,6 +4,7 @@ using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Policies;
 using FubuMVC.Core.Security;
+using FubuMVC.Core.Security.Authorization;
 
 namespace FubuMVC.Authentication
 {

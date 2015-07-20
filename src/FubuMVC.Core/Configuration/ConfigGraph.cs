@@ -11,6 +11,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Services;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Security;
+using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.UI;
 
 namespace FubuMVC.Core.Configuration

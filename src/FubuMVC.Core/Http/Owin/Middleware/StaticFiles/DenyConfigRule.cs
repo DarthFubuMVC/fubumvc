@@ -3,6 +3,7 @@ using System.IO;
 using FubuCore;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Security;
+using FubuMVC.Core.Security.Authorization;
 
 namespace FubuMVC.Core.Http.Owin.Middleware.StaticFiles
 {

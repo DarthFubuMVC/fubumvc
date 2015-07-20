@@ -12,6 +12,7 @@ using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
+using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using StructureMap.Configuration.DSL;

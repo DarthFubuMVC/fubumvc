@@ -3,6 +3,7 @@ using FubuMVC.Authentication.Membership;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Security;
+using FubuMVC.Core.Security.Authorization;
 using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;

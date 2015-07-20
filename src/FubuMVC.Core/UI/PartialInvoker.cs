@@ -7,6 +7,7 @@ using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
+using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.UI

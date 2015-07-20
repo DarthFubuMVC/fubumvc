@@ -21,6 +21,7 @@ using FubuMVC.Core.Runtime.Aggregation;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Security;
+using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.SessionState;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.Urls;

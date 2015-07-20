@@ -6,11 +6,10 @@ namespace FubuMVC.Authentication
     {
         void IFubuRegistryExtension.Configure(FubuRegistry registry)
         {
-            registry.Policies.Global.Add<RegisterAuthenticationStrategies>();
-
             registry.Services<AuthenticationServiceRegistry>();
-            registry.Policies.Global.Add(new ApplyAuthenticationPolicy());
 
+            registry.Policies.Global.Add(new ApplyAuthenticationPolicy());
+            registry.Policies.Global.Add<RegisterAuthenticationStrategies>();
             registry.Policies.Global.Add<ApplyPassThroughAuthenticationPolicy>();
         }
     }

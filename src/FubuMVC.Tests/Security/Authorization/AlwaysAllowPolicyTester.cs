@@ -1,0 +1,16 @@
+﻿using FubuMVC.Core.Security.Authorization;
+using FubuTestingSupport;
+using NUnit.Framework;
+
+namespace FubuMVC.Tests.Security.Authorization
+{
+    [TestFixture]
+    public class AlwaysAllowPolicyTester
+    {
+        [Test]
+        public void it_is_just_allow()
+        {
+            new AlwaysAllowPolicy().RightsFor(null).ShouldEqual(AuthorizationRight.Allow);
+        }
+    }
+}

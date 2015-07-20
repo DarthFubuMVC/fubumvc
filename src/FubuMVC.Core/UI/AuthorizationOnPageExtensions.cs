@@ -1,4 +1,5 @@
 ﻿using FubuMVC.Core.Security;
+using FubuMVC.Core.Security.Authorization;
 using HtmlTags;
 
 namespace FubuMVC.Core.UI

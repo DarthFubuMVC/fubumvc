@@ -7,6 +7,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
+using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.Urls;
 using FubuTestingSupport;

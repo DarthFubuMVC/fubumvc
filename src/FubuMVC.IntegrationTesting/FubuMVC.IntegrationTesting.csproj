@@ -184,7 +184,7 @@
     <Compile Include="Querying\RemoteBehaviorGraph.cs" />
     <Compile Include="Querying\TypeToken.cs" />
     <Compile Include="read_cookies_from_the_request.cs" />
-    <Compile Include="Security\AuthorizationPreviewServiceIntegratedTester.cs" />
+    <Compile Include="Security\Authorization\AuthorizationPreviewServiceIntegratedTester.cs" />
     <Compile Include="StaticFiles\reading_static_file_content_with_katana.cs" />
     <Compile Include="Routing\end_to_end_route_alias_tester.cs" />
     <Compile Include="Samples\ConnegSamples.cs" />

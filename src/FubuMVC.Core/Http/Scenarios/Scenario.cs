@@ -13,6 +13,7 @@ using FubuCore.Reflection;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
+using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Http.Scenarios
