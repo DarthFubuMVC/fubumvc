@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using FubuCore.Binding.InMemory;
 using FubuCore.Logging;
@@ -8,6 +10,9 @@ using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration;
 using FubuTestingSupport;
 using NUnit.Framework;
+using Rhino.Mocks;
+using StructureMap;
+using TraceLevel = FubuMVC.Core.TraceLevel;
 
 namespace FubuMVC.Tests.Diagnostics
 {
@@ -82,72 +87,55 @@ namespace FubuMVC.Tests.Diagnostics
             });
         }
 
-
-
-        [Test]
-        public void RequestTraceListener_is_added_if_verbose()
+        private void withTraceLevel(TraceLevel level, Action<IContainer> action)
         {
-            verboseGraph.Services.ServicesFor<ILogListener>()
-                .Any(x => x.Type == typeof(RequestTraceListener)).ShouldBeTrue();
+            var registry = new FubuRegistry();
+            registry.AlterSettings<DiagnosticsSettings>(_ => _.TraceLevel = level);
+
+            using (var runtime = FubuApplication.For(registry).Bootstrap())
+            {
+                var container = runtime.Factory.Get<IContainer>();
+                action(container);
+            }
         }
 
         [Test]
-        public void RequestTraceListener_should_not_be_registered_if_production()
+        public void verbose_registrations()
         {
-            productionGraph.Services.ServicesFor<ILogListener>()
-                .Any(x => x.Type == typeof(RequestTraceListener)).ShouldBeFalse();
+            withTraceLevel(TraceLevel.Verbose, c =>
+            {
+                c.ShouldHaveRegistration<ILogListener, RequestTraceListener>();
+                c.ShouldNotHaveRegistration<ILogListener, ProductionModeTraceListener>();
+
+                c.DefaultRegistrationIs<IBindingLogger, RecordingBindingLogger>();
+            });
         }
 
         [Test]
-        public void RequestTraceListener_should_not_be_registered_if_none()
+        public void production_registration()
         {
-            noneGraph.Services.ServicesFor<ILogListener>()
-                .Any(x => x.Type == typeof(RequestTraceListener)).ShouldBeFalse();
+            withTraceLevel(TraceLevel.Production, c =>
+            {
+                c.ShouldNotHaveRegistration<ILogListener, RequestTraceListener>();
+                c.ShouldHaveRegistration<ILogListener, ProductionModeTraceListener>();
+
+                c.DefaultRegistrationIs<IBindingLogger, NulloBindingLogger>();
+            });
         }
 
         [Test]
-        public void ProductionModeTraceListener_is_added_if_production()
+        public void trace_level_is_none_registration()
         {
-            productionGraph.Services.ServicesFor<ILogListener>()
-                .Any(x => x.Type == typeof(ProductionModeTraceListener)).ShouldBeTrue();
+            withTraceLevel(TraceLevel.None, c =>
+            {
+                c.ShouldNotHaveRegistration<ILogListener, RequestTraceListener>();
+                c.ShouldNotHaveRegistration<ILogListener, ProductionModeTraceListener>();
+
+                c.DefaultRegistrationIs<IBindingLogger, NulloBindingLogger>();
+            });
         }
+    
 
-        [Test]
-        public void ProductionModeTraceListener_is_not_added_if_verbose()
-        {
-            verboseGraph.Services.ServicesFor<ILogListener>()
-                .Any(x => x.Type == typeof(ProductionModeTraceListener)).ShouldBeFalse();
-        }
-
-        [Test]
-        public void ProductionModeTraceListener_is_not_added_if_trace_level_is_none()
-        {
-            noneGraph.Services.ServicesFor<ILogListener>()
-                .Any(x => x.Type == typeof(ProductionModeTraceListener)).ShouldBeFalse();
-        }
-
-
-        [Test]
-        public void RecordingBinding_logger_is_registered_if_trace_level_is_verbose()
-        {
-            verboseGraph.Services.DefaultServiceFor<IBindingLogger>()
-                .Type.ShouldEqual(typeof (RecordingBindingLogger));
-
-        }
-
-        [Test]
-        public void NulloBindingLogger_if_trace_level_is_none()
-        {
-            noneGraph.Services.DefaultServiceFor<IBindingLogger>()
-                .Type.ShouldEqual(typeof (NulloBindingLogger));
-        }
-
-        [Test]
-        public void NulloBindingLogger_if_trace_level_is_production()
-        {
-            productionGraph.Services.DefaultServiceFor<IBindingLogger>()
-                .Type.ShouldEqual(typeof(NulloBindingLogger));
-        }
 
     }
 }

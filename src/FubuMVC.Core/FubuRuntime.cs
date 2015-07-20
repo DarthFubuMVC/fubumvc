@@ -2,12 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Routing;
+using FubuCore;
 using FubuCore.Descriptions;
 using FubuCore.Logging;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.StructureMap;
+using StructureMap;
 
 namespace FubuMVC.Core
 {
@@ -26,6 +29,15 @@ namespace FubuMVC.Core
             _factory = factory;
             _facility = facility;
             _routes = routes;
+        }
+
+        public IContainer Container
+        {
+            get
+            {
+                // TODO -- de-hackify this crap below when IContainerFacility is gone
+                return _facility.As<StructureMapContainerFacility>().Container;
+            }
         }
 
         public IServiceFactory Factory

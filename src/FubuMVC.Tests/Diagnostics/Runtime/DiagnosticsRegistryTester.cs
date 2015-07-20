@@ -8,6 +8,7 @@ using FubuMVC.Core.Urls;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
+using StructureMap;
 using TraceLevel = FubuMVC.Core.TraceLevel;
 
 namespace FubuMVC.Tests.Diagnostics.Runtime
@@ -15,66 +16,24 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
     [TestFixture]
     public class DiagnosticsRegistryTester
     {
-        #region Setup/Teardown
-
-        [SetUp]
-        public void SetUp()
+        [Test]
+        public void registrations()
         {
             var registry = new FubuRegistry();
             registry.AlterSettings<DiagnosticsSettings>(x => x.TraceLevel = TraceLevel.Verbose);
 
-            graph = BehaviorGraph.BuildFrom(registry);
-            urls = MockRepository.GenerateMock<IUrlRegistry>();
 
-            graph.Behaviors.Any().ShouldBeTrue();
+            using (var runtime = FubuApplication.For(registry).Bootstrap())
+            {
+                var container = runtime.Factory.Get<IContainer>();
+
+                container.DefaultSingletonIs<IRequestHistoryCache, RequestHistoryCache>();
+                container.DefaultRegistrationIs<IRequestTrace, RequestTrace>();
+                container.DefaultRegistrationIs<IRequestLogBuilder, RequestLogBuilder>();
+            }
         }
 
-        #endregion
-
-        private BehaviorGraph graph;
-        private IUrlRegistry urls;
-
-
-        [Test]
-        public void request_history_cache_is_registered()
-        {
-            graph.Services.DefaultServiceFor<IRequestHistoryCache>()
-                .Type.ShouldEqual(typeof (RequestHistoryCache));
-
-            ServiceRegistry.ShouldBeSingleton(typeof (RequestHistoryCache))
-                .ShouldBeTrue();
-        }
-
-        [Test]
-        public void RequestTrace_is_registered()
-        {
-            graph.Services.DefaultServiceFor<IRequestTrace>().Type.ShouldEqual(typeof (RequestTrace));
-        }
-
-        [Test]
-        public void RequestLogBuilder_is_registered()
-        {
-            graph.Services.DefaultServiceFor<IRequestLogBuilder>().Type.ShouldEqual(typeof(RequestLogBuilder));
-        }
     }
 
-    public class WrappingBehavior : BasicBehavior
-    {
-        public WrappingBehavior(PartialBehavior partialBehavior)
-            : base(partialBehavior)
-        {
-        }
 
-        protected override DoNext performInvoke()
-        {
-            return DoNext.Continue;
-        }
-    }
-
-    public class WrappingBehavior2 : WrappingBehavior
-    {
-        public WrappingBehavior2(PartialBehavior partialBehavior) : base(partialBehavior)
-        {
-        }
-    }
 }

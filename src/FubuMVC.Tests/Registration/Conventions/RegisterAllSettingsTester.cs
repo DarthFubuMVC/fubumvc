@@ -1,7 +1,5 @@
 ﻿using FubuMVC.Core;
-using FubuMVC.Core.Registration;
 using NUnit.Framework;
-using FubuTestingSupport;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
@@ -20,15 +18,24 @@ namespace FubuMVC.Tests.Registration.Conventions
             var threeSettings = new ThreeSettings();
             registry.ReplaceSettings(threeSettings);
 
-            var graph = BehaviorGraph.BuildFrom(registry);
-
-            graph.Services.DefaultServiceFor<OneSettings>().Value.ShouldBeTheSameAs(oneSettings);
-            graph.Services.DefaultServiceFor<TwoSettings>().Value.ShouldBeTheSameAs(twoSettings);
-            graph.Services.DefaultServiceFor<ThreeSettings>().Value.ShouldBeTheSameAs(threeSettings);
+            using (var runtime = FubuApplication.For(registry).Bootstrap())
+            {
+                runtime.Container.DefaultRegistrationIs(oneSettings);
+                runtime.Container.DefaultRegistrationIs(twoSettings);
+                runtime.Container.DefaultRegistrationIs(threeSettings);
+            }
         }
     }
 
-    public class OneSettings{}
-    public class TwoSettings{}
-    public class ThreeSettings{}
+    public class OneSettings
+    {
+    }
+
+    public class TwoSettings
+    {
+    }
+
+    public class ThreeSettings
+    {
+    }
 }

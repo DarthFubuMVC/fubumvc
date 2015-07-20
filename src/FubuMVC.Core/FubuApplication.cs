@@ -99,6 +99,7 @@ namespace FubuMVC.Core
             });
         }
 
+
         /// <summary>
         /// Shortcut method to immediately bootstrap the specified FubuMVC application
         /// </summary>

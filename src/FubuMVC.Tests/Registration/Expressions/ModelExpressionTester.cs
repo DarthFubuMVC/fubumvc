@@ -2,39 +2,18 @@ using System;
 using System.Reflection;
 using FubuCore.Binding;
 using FubuMVC.Core;
-using FubuMVC.Core.Registration;
-using FubuTestingSupport;
 using NUnit.Framework;
-using System.Linq;
 
 namespace FubuMVC.Tests.Registration.Expressions
 {
     [TestFixture]
     public class ModelExpressionTester
     {
-        #region Setup/Teardown
-
-        [SetUp]
-        public void Setup()
-        {
-            _graph = BehaviorGraph.BuildFrom(x =>
-            {
-                x.Models
-                    .BindModelsWith<ExampleModelBinder>()
-                    .BindPropertiesWith<ExamplePropertyBinder>()
-                    .ConvertUsing<ExampleConverter>();
-            });
-        }
-
-        #endregion
-
-        private BehaviorGraph _graph;
-
         public class ExampleConverter : IConverterFamily
         {
             public bool Matches(PropertyInfo prop)
             {
-                throw new NotImplementedException();
+                return false;
             }
 
             public ValueConverter Build(IValueConverterRegistry registry, PropertyInfo prop)
@@ -47,7 +26,7 @@ namespace FubuMVC.Tests.Registration.Expressions
         {
             public bool Matches(PropertyInfo property)
             {
-                throw new NotImplementedException();
+                return false;
             }
 
             public void Bind(PropertyInfo property, IBindingContext context)
@@ -60,7 +39,7 @@ namespace FubuMVC.Tests.Registration.Expressions
         {
             public bool Matches(Type type)
             {
-                throw new NotImplementedException();
+                return false;
             }
 
             public void Bind(Type type, object instance, IBindingContext context)
@@ -75,22 +54,21 @@ namespace FubuMVC.Tests.Registration.Expressions
         }
 
         [Test]
-        public void should_register_the_converter_in_the_graph()
+        public void can_register_custom_binding_services()
         {
-            _graph.Services.ServicesFor<IConverterFamily>().Select(x => x.Type).ShouldContain(typeof(ExampleConverter));
-        }
+            var registry = new FubuRegistry();
+            registry.Models
+                .BindModelsWith<ExampleModelBinder>()
+                .BindPropertiesWith<ExamplePropertyBinder>()
+                .ConvertUsing<ExampleConverter>();
 
-        [Test]
-        public void should_register_the_property_binder_in_the_graph()
-        {
-            _graph.Services.ServicesFor<IPropertyBinder>().Select(x => x.Type).ShouldContain(typeof(ExamplePropertyBinder));
-        }
-        [Test]
-        public void should_register_the_model_binder_in_the_graph()
-        {
-            _graph.Services.ServicesFor<IModelBinder>().Where(x => x.Type != null).Select(x => x.Type).ShouldContain(typeof(ExampleModelBinder));
+
+            using (var runtime = FubuApplication.For(registry).Bootstrap())
+            {
+                runtime.Container.ShouldHaveRegistration<IConverterFamily, ExampleConverter>();
+                runtime.Container.ShouldHaveRegistration<IPropertyBinder, ExamplePropertyBinder>();
+                runtime.Container.ShouldHaveRegistration<IModelBinder, ExampleModelBinder>();
+            }
         }
     }
-
-    
 }

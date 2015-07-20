@@ -93,6 +93,7 @@
     <Compile Include="Bugs\Issue504.cs" />
     <Compile Include="client_message_mechanics_Tester.cs" />
     <Compile Include="ConfigurationActionSetTester.cs" />
+    <Compile Include="ContainerExtensions.cs" />
     <Compile Include="deactivators_are_called_in_fuburuntime_dispose.cs" />
     <Compile Include="DiagnosticsSettingsTester.cs" />
     <Compile Include="Diagnostics\apply_authorization_rights_to_all_diagnostics_pages.cs" />
@@ -213,11 +214,11 @@
     <Compile Include="Registration\Policies\ResourceTypeIsTester.cs" />
     <Compile Include="Registration\Querying\ChainResoluationCacheRootAt.cs" />
     <Compile Include="Registration\Registration\FubuPackageRegistry_Importing_Mechanics_Specs.cs" />
-    <Compile Include="Registration\Registration\ModelBindingServiceRegistry_specification.cs" />
     <Compile Include="Registration\SettingsCollectionTester.cs" />
     <Compile Include="Registration\SettingsCollection_creates_with_the_app_setting_provider_Tester.cs" />
     <Compile Include="Registration\TypeRepositoryTester.cs" />
     <Compile Include="Registration\when_importing_urls.cs" />
+    <Compile Include="required_service_registrations.cs" />
     <Compile Include="Resources\Conneg\ConnegGraphTester.cs" />
     <Compile Include="Resources\Conneg\ReaderChoiceTester.cs" />
     <Compile Include="Resources\Hypermedia\LinkExpressionTester.cs" />
@@ -377,7 +378,8 @@
     <Compile Include="FubuBootstrapperIntegrationTester.cs" />
     <Compile Include="FubuRegistryTester.cs" />
     <Compile Include="HtmlGenerationTestExtensions.cs" />
-    <Compile Include="Registration\BehaviorGraphTester.cs"></Compile>
+    <Compile Include="Registration\BehaviorGraphTester.cs">
+    </Compile>
     <Compile Include="Registration\Conventions\ActionSourceTester.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConventionTester.cs" />
     <Compile Include="Registration\Conventions\CustomConventionIntegratedTester.cs" />
@@ -385,7 +387,6 @@
     <Compile Include="Registration\Conventions\HtmlTagAndDocumentHandlerConventionTester.cs" />
     <Compile Include="Registration\Conventions\OutputIntegratedAttachmentTester.cs" />
     <Compile Include="Registration\Conventions\TypeScanningIntegratedTester.cs" />
-    <Compile Include="Registration\CoreServiceRegistry_specification.cs" />
     <Compile Include="Registration\Expressions\ModelExpressionTester.cs" />
     <Compile Include="Registration\Nodes\BehaviorChainTester.cs" />
     <Compile Include="Registration\ServiceRegistryTester.cs" />

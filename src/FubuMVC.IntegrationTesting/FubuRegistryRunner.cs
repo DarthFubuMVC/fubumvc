@@ -92,16 +92,13 @@ namespace FubuMVC.IntegrationTesting
 
         public FubuApplication BuildApplication()
         {
-            return FubuApplication.For(() =>
-            {
-                var registry = new FubuRegistry();
-                registry.Actions.IncludeType<GraphQuery>();
-                registry.StructureMap(_container);
+            var registry = new FubuRegistry();
+            registry.Actions.IncludeType<GraphQuery>();
+            registry.StructureMap(_container);
 
-                _configuration(registry);
+            _configuration(registry);
 
-                return registry;
-            });
+            return FubuApplication.For(registry);
         }
     }
 
