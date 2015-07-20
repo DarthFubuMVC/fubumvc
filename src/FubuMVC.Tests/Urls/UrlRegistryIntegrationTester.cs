@@ -38,8 +38,7 @@ namespace FubuMVC.Tests.Urls
 
             var urlResolver = new ChainUrlResolver(theHttpRequest);
 
-            urls = new UrlRegistry(new ChainResolutionCache(graph), urlResolver,
-                new JQueryUrlTemplate(), theHttpRequest);
+            urls = new UrlRegistry(new ChainResolutionCache(graph), urlResolver, theHttpRequest);
         }
 
         [Test]
@@ -171,13 +170,6 @@ namespace FubuMVC.Tests.Urls
             urls.HasNewUrl(typeof (ModelWithoutNewUrl)).ShouldBeFalse();
         }
 
-        [Test]
-        public void template_for_model_will_respects_the_absolute_pathing()
-        {
-            urls.TemplateFor(new ModelWithInputs())
-                .ShouldEqual("/find/${Name}");
-        }
-
 
         [Test]
         public void url_for_route_parameter_by_type_respects_the_absolute_path()
@@ -218,8 +210,7 @@ namespace FubuMVC.Tests.Urls
 
             var urlResolver = new ChainUrlResolver(theHttpRequest);
 
-            urls = new UrlRegistry(new ChainResolutionCache(graph), urlResolver,
-                new JQueryUrlTemplate(), theHttpRequest);
+            urls = new UrlRegistry(new ChainResolutionCache(graph), urlResolver, theHttpRequest);
         }
 
     }

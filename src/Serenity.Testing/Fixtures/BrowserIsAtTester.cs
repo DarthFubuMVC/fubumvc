@@ -65,11 +65,6 @@ namespace Serenity.Testing.Fixtures
             return _baseAddress + _stubRegistry.UrlFor(modelType, parameters);
         }
 
-        public string TemplateFor<TModel>(params Func<object, object>[] hash) where TModel : class, new()
-        {
-            throw new NotImplementedException();
-        }
-
         public string UrlFor(Type modelType, RouteParameters parameters, string categoryOrHttpMethod)
         {
             return _baseAddress + _stubRegistry.UrlFor(modelType, parameters, categoryOrHttpMethod);
@@ -86,11 +81,6 @@ namespace Serenity.Testing.Fixtures
         }
 
         public bool HasNewUrl(Type type)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string TemplateFor(object model, string categoryOrHttpMethod = null)
         {
             throw new NotImplementedException();
         }

@@ -640,7 +640,6 @@
     <Compile Include="UrlRegistryCategoryAttribute.cs" />
     <Compile Include="UrlStringExtensions.cs" />
     <Compile Include="Urls\IChainUrlResolver.cs" />
-    <Compile Include="Urls\IUrlTemplatePattern.cs" />
     <Compile Include="Urls\StubUrlRegistry.cs" />
     <Compile Include="Urls\UrlRegistry.cs" />
     <Compile Include="Registration\Nodes\BehaviorChain.cs" />

@@ -62,24 +62,6 @@ namespace FubuMVC.Core.Urls
         bool HasNewUrl(Type type);
 
         /// <summary>
-        /// Resolves an "open" url for the given input model object and optional categoryOrHttpMethod for use in client side 
-        /// scripting.  Any missing values required by the Route pattern not on the model will be left as "${name}" substitutions
-        /// </summary>
-        /// <param name="model"></param>
-        /// <param name="categoryOrHttpMethod"></param>
-        /// <returns></returns>
-        string TemplateFor(object model, string categoryOrHttpMethod = null);
-
-        /// <summary>
-        /// Resolves an "open" url for the given input model type and optional categoryOrHttpMethod for use in client side 
-        /// scripting.  Any missing values required by the Route pattern not on the model will be left as "${name}" substitutions
-        /// </summary>
-        /// <typeparam name="TModel"></typeparam>
-        /// <param name="hash"></param>
-        /// <returns></returns>
-        string TemplateFor<TModel>(params Func<object, object>[] hash) where TModel : class, new();
-
-        /// <summary>
         /// Resolve a url for a model type, but using a RouteParameters object to define route substitutions.
         /// </summary>
         /// <param name="modelType"></param>

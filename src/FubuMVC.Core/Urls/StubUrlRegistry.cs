@@ -62,10 +62,6 @@ namespace FubuMVC.Core.Urls
             throw new NotImplementedException();
         }
 
-        public string TemplateFor(object model, string categoryOrHttpMethod)
-        {
-            throw new NotImplementedException();
-        }
 
         public string UrlFor(Type handlerType, MethodInfo method, string categoryOrHttpMethodOrHttpMethod)
         {
@@ -82,15 +78,6 @@ namespace FubuMVC.Core.Urls
             return "url for {0}.{1}()".ToFormat(handlerType.FullName, method.Name);
         }
 
-        public string TemplateFor(object model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string TemplateFor<TModel>(params Func<object, object>[] hash) where TModel : class, new()
-        {
-            throw new NotImplementedException();
-        }
     }
 
     public class ValidStubUrlRegistry : IUrlRegistry
@@ -122,10 +109,6 @@ namespace FubuMVC.Core.Urls
             throw new NotImplementedException();
         }
 
-        public string TemplateFor(object model, string categoryOrHttpMethod)
-        {
-            throw new NotImplementedException();
-        }
 
         public string UrlFor(Type handlerType, MethodInfo method, string categoryOrHttpMethodOrHttpMethod)
         {
@@ -138,15 +121,6 @@ namespace FubuMVC.Core.Urls
             return url;
         }
 
-        public string TemplateFor(object model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string TemplateFor<TModel>(params Func<object, object>[] hash) where TModel : class, new()
-        {
-            throw new NotImplementedException();
-        }
 
         public string UrlFor(Type modelType, RouteParameters parameters, string categoryOrHttpMethod = null)
         {

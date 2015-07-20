@@ -14,14 +14,12 @@ namespace FubuMVC.Core.Urls
     {
 	    private readonly IChainUrlResolver _urlResolver;
 	    private readonly IHttpRequest _httpRequest;
-	    private readonly Func<string, string> _templateFunc;
 
-        public UrlRegistry(IChainResolver resolver, IChainUrlResolver urlResolver, IUrlTemplatePattern templatePattern, IHttpRequest httpRequest)
+        public UrlRegistry(IChainResolver resolver, IChainUrlResolver urlResolver, IHttpRequest httpRequest)
             : base(resolver)
         {
 	        _urlResolver = urlResolver;
 	        _httpRequest = httpRequest;
-	        _templateFunc = (s) => s.Replace("{", templatePattern.Start).Replace("}", templatePattern.End);
         }
 
         public string UrlFor<TInput>(string categoryOrHttpMethod = null) where TInput : class
@@ -66,16 +64,6 @@ namespace FubuMVC.Core.Urls
             return UrlFor(typeof(TController), ReflectionHelper.GetMethod(expression), categoryOrHttpMethod);
         }
 
-        public string TemplateFor(object model, string categoryOrHttpMethod = null)
-        {
-            return buildUrlTemplate(model, categoryOrHttpMethod, null);
-        }
-
-        public string TemplateFor<TModel>(params Func<object, object>[] hash) where TModel : class, new()
-        {
-            return buildUrlTemplate(new TModel(), null, hash);
-        }
-
         public string UrlForNew(Type entityType)
         {
             return forNew(entityType);
@@ -86,8 +74,6 @@ namespace FubuMVC.Core.Urls
         {
             return resolver.FindCreatorOf(type) != null;
         }
-
-
 
         protected override string createResult(object model, BehaviorChain chain)
         {
@@ -105,13 +91,6 @@ namespace FubuMVC.Core.Urls
             return UrlFor(modelType, parameters, categoryOrHttpMethod);
         }
 
-        private string buildUrlTemplate(object model, string categoryOrHttpMethod, Func<object, object>[] hash)
-        {
-            var chain = resolver.FindUnique(model, categoryOrHttpMethod);
-
-            string url = _templateFunc(chain.As<RoutedChain>().Route.CreateTemplate(model, hash));
-            return _httpRequest.ToFullUrl(url);
-        }
 
         /// <summary>
         ///   This is only for automated testing scenarios.  Do NOT use in real

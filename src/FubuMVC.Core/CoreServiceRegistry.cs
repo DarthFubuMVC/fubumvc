@@ -60,7 +60,6 @@ namespace FubuMVC.Core
 
             SetServiceIfNone<IUrlRegistry, UrlRegistry>();
             SetServiceIfNone<IChainUrlResolver, ChainUrlResolver>();
-            SetServiceIfNone<IUrlTemplatePattern, NulloUrlTemplate>();
 
             SetServiceIfNone<IFlash, FlashProvider>();
             SetServiceIfNone<IRequestDataProvider, RequestDataProvider>();
