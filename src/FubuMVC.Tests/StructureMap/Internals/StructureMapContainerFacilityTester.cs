@@ -100,22 +100,6 @@ namespace FubuMVC.Tests.StructureMap.Internals
             factory.ShouldBeTheSameAs(facility);
         }
 
-        [Test]
-        public void register_a_service_by_value()
-        {
-            var myContainer = new Container();
-            var myFacility = new StructureMapContainerFacility(myContainer);
-
-            var registry = new TypeResolver();
-
-            myFacility.Register(typeof (ITypeResolver), new ObjectDef{
-                Value = registry
-            });
-
-            myFacility.BuildFactory(new BehaviorGraph());
-
-            myContainer.GetInstance<ITypeResolver>().ShouldBeTheSameAs(registry);
-        }
 
         [Test]
         public void should_be_able_to_create_the_basic_services_from_the_container()

@@ -293,7 +293,7 @@ namespace FubuMVC.Core
             var trace = new StackTrace(false);
 
             var thisAssembly = Assembly.GetExecutingAssembly().GetName().Name;
-            var fubuCore = typeof(ITypeResolver).Assembly.GetName().Name;
+            var fubuCore = typeof(IObjectResolver).Assembly.GetName().Name;
             var bottles = typeof(IActivator).Assembly.GetName().Name;
 
             Assembly callingAssembly = null;

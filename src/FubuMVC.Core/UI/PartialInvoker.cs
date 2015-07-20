@@ -16,17 +16,15 @@ namespace FubuMVC.Core.UI
         private readonly IPartialFactory _factory;
         private readonly IFubuRequest _request;
         private readonly IAuthorizationPreviewService _authorization;
-        private readonly ITypeResolver _types;
         private readonly IOutputWriter _writer;
         private readonly ISetterBinder _setterBinder;
         private readonly IChainResolver _resolver;
 
-        public PartialInvoker(IPartialFactory factory, IFubuRequest request, IAuthorizationPreviewService authorization, ITypeResolver types, IOutputWriter writer, ISetterBinder setterBinder, IChainResolver resolver)
+        public PartialInvoker(IPartialFactory factory, IFubuRequest request, IAuthorizationPreviewService authorization, IOutputWriter writer, ISetterBinder setterBinder, IChainResolver resolver)
         {
             _factory = factory;
             _request = request;
             _authorization = authorization;
-            _types = types;
             _writer = writer;
             _setterBinder = setterBinder;
             _resolver = resolver;
@@ -48,7 +46,7 @@ namespace FubuMVC.Core.UI
             var output = string.Empty;
             if (_authorization.IsAuthorized(model))
             {
-                var requestType = _types.ResolveType(model);
+                var requestType = model.GetType();
                 if (withModelBinding)
                 {
                     _setterBinder.BindProperties(requestType, model);

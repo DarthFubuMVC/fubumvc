@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             var request = OwinHttpRequest.ForTesting().FullUrl("http://server/app");
 			var urlResolver = new ChainUrlResolver(request);
 
-			registry = new UrlRegistry(new ChainResolutionCache(new TypeResolver(), graph), urlResolver, new JQueryUrlTemplate(), request);
+			registry = new UrlRegistry(new ChainResolutionCache(graph), urlResolver, new JQueryUrlTemplate(), request);
         }
 
         [Test]

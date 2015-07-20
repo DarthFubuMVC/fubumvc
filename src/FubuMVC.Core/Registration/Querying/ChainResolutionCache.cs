@@ -15,11 +15,9 @@ namespace FubuMVC.Core.Registration.Querying
         private readonly Cache<Type, BehaviorChain> _creators = new Cache<Type, BehaviorChain>();
 
         private readonly BehaviorGraph _behaviorGraph;
-        private readonly ITypeResolver _typeResolver;
 
-        public ChainResolutionCache(ITypeResolver typeResolver, BehaviorGraph behaviorGraph)
+        public ChainResolutionCache(BehaviorGraph behaviorGraph)
         {
-            _typeResolver = typeResolver;
             _behaviorGraph = behaviorGraph;
 
             _results.OnMissing = find;
@@ -80,7 +78,7 @@ namespace FubuMVC.Core.Registration.Querying
                 throw new ArgumentNullException("model");
             }
 
-            var modelType = _typeResolver.ResolveType(model);
+            var modelType = model.GetType();
 
             var search = new ChainSearch
             {

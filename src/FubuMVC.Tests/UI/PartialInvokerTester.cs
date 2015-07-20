@@ -42,8 +42,6 @@ namespace FubuMVC.Tests.UI
                 .WhenCalled(r => theAction.InvokePartial())
                 .Return(MockFor<IRecordedOutput>());
 
-            Services.Inject<ITypeResolver>(new TypeResolver());
-
         	Configure();
         	Invoke();
         }
@@ -267,7 +265,6 @@ namespace FubuMVC.Tests.UI
             MockFor<IRecordedOutput>().Stub(x => x.Headers()).Return(Enumerable.Empty<Header>());
 
             MockFor<IPartialFactory>().Stub(x => x.BuildPartial(theChain)).Return(theAction);
-            Services.Inject<ITypeResolver>(new TypeResolver());
 
             theOutput = ClassUnderTest.InvokeObject(theInput);
         }

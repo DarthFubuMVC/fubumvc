@@ -34,17 +34,11 @@ namespace FubuMVC.Tests.Urls
             registry.Actions.IncludeType<QueryStringTestController>();
             registry.Actions.IncludeType<OnlyOneActionController>();
 
-
-            registry.Configure(x => { x.TypeResolver.AddStrategy<UrlModelForwarder>(); });
-
-            //registry.Routes.HomeIs<DefaultModel>();
-
             graph = BehaviorGraph.BuildFrom(registry);
 
-            var resolver = graph.Services.DefaultServiceFor<ITypeResolver>().Value;
             var urlResolver = new ChainUrlResolver(theHttpRequest);
 
-            urls = new UrlRegistry(new ChainResolutionCache((ITypeResolver) resolver, graph), urlResolver,
+            urls = new UrlRegistry(new ChainResolutionCache(graph), urlResolver,
                 new JQueryUrlTemplate(), theHttpRequest);
         }
 
@@ -178,12 +172,6 @@ namespace FubuMVC.Tests.Urls
         }
 
         [Test]
-        public void retrieve_a_url_for_a_model_when_it_trips_off_type_resolver_rules()
-        {
-            urls.UrlFor(new SubclassUrlModel()).ShouldEqual("/two/m4");
-        }
-
-        [Test]
         public void template_for_model_will_respects_the_absolute_pathing()
         {
             urls.TemplateFor(new ModelWithInputs())
@@ -226,17 +214,11 @@ namespace FubuMVC.Tests.Urls
             registry.Actions.IncludeType<QueryStringTestController>();
             registry.Actions.IncludeType<OnlyOneActionController>();
 
-
-            registry.Configure(x => { x.TypeResolver.AddStrategy<UrlModelForwarder>(); });
-
-            //registry.Routes.HomeIs<DefaultModel>();
-
             graph = BehaviorGraph.BuildFrom(registry);
 
-            var resolver = graph.Services.DefaultServiceFor<ITypeResolver>().Value;
             var urlResolver = new ChainUrlResolver(theHttpRequest);
 
-            urls = new UrlRegistry(new ChainResolutionCache((ITypeResolver)resolver, graph), urlResolver,
+            urls = new UrlRegistry(new ChainResolutionCache(graph), urlResolver,
                 new JQueryUrlTemplate(), theHttpRequest);
         }
 
@@ -379,18 +361,7 @@ namespace FubuMVC.Tests.Urls
     {
     }
 
-    public class UrlModelForwarder : ITypeResolverStrategy
-    {
-        public bool Matches(object model)
-        {
-            return model is SubclassUrlModel;
-        }
 
-        public Type ResolveType(object model)
-        {
-            return typeof (UrlModel);
-        }
-    }
 
     public class UrlModel
     {

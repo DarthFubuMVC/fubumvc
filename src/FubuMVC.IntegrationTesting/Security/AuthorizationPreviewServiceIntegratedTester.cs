@@ -32,8 +32,6 @@ namespace FubuMVC.IntegrationTesting.Security
             registry.Actions.IncludeType<OneController>();
             registry.Actions.IncludeType<TwoController>();
 
-            registry.Configure(x => { x.TypeResolver.AddStrategy<UrlModelForwarder>(); });
-
             registry.Configure(configure);
 
 
@@ -285,18 +283,6 @@ namespace FubuMVC.IntegrationTesting.Security
     {
     }
 
-    public class UrlModelForwarder : ITypeResolverStrategy
-    {
-        public bool Matches(object model)
-        {
-            return model is SubclassUrlModel;
-        }
-
-        public Type ResolveType(object model)
-        {
-            return typeof (UrlModel);
-        }
-    }
 
     public class UrlModel
     {

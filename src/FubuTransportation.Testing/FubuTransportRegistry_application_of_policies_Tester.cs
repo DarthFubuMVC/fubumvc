@@ -33,7 +33,7 @@ namespace FubuTransportation.Testing
                 x.Policies.ChainSource<ImportHandlers>(); // This would be here by Bottles normally
             });
 
-            var cache = new ChainResolutionCache(new TypeResolver(), graph);
+            var cache = new ChainResolutionCache(graph);
 
             cache.FindUniqueByType(typeof(Message1)).IsWrappedBy(typeof(GreenWrapper)).ShouldBeTrue();
             cache.FindUniqueByType(typeof(Message2)).IsWrappedBy(typeof(GreenWrapper)).ShouldBeTrue();

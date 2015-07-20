@@ -1,4 +1,3 @@
-using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Security
@@ -6,20 +5,17 @@ namespace FubuMVC.Core.Security
     public class ChainAuthorizor : IChainAuthorizor
     {
         private readonly IFubuRequestContext _context;
-        private readonly ITypeResolver _types;
 
-        public ChainAuthorizor(IFubuRequestContext context, ITypeResolver types)
+        public ChainAuthorizor(IFubuRequestContext context)
         {
             _context = context;
-            _types = types;
         }
-
 
         public AuthorizationRight Authorize(BehaviorChain chain, object model)
         {
             if (model != null)
             {
-                _context.Models.Set(_types.ResolveType(model), model);
+                _context.Models.Set(model.GetType(), model);
             }
 
             return chain.Authorization.IsAuthorized(_context);

@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Registration.Querying
         [SetUp]
         public void SetUp()
         {
-            theCache = new ChainResolutionCache(new TypeResolver(), setupActions());
+            theCache = new ChainResolutionCache(setupActions());
         }
 
         private BehaviorGraph setupActions()

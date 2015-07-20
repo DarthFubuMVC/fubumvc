@@ -47,9 +47,6 @@ namespace FubuMVC.Core.Registration
             _settings.Replace<IFubuApplicationFiles>(new FubuApplicationFiles());
 
             RouteIterator = new SortByRouteRankIterator(); // can override in a registry
-
-            TypeResolver = new TypeResolver();
-            _services.AddService<ITypeResolver>(TypeResolver);
         }
 
         public Assembly ApplicationAssembly { get; set; }
@@ -91,8 +88,6 @@ namespace FubuMVC.Core.Registration
         {
             get { return _settings.Get<IFubuApplicationFiles>(); }
         }
-
-        public TypeResolver TypeResolver { get; private set; }
 
         public ServiceGraph Services
         {

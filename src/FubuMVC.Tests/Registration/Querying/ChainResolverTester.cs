@@ -25,10 +25,7 @@ namespace FubuMVC.Tests.Registration.Querying
                 x.Actions.IncludeType<ChainResolverController>();
             });
 
-            typeResolver = new TypeResolver();
-            typeResolver.AddStrategy<ProxyDetector>();
-
-            _resolutionCache = new ChainResolutionCache(typeResolver, graph);
+            _resolutionCache = new ChainResolutionCache(graph);
         }
 
         [SetUp]
@@ -46,7 +43,6 @@ namespace FubuMVC.Tests.Registration.Querying
         #endregion
 
         private BehaviorGraph graph;
-        private TypeResolver typeResolver;
         private ChainResolutionCache _resolutionCache;
 
         [Test]
@@ -184,11 +180,6 @@ namespace FubuMVC.Tests.Registration.Querying
                 ShouldEqual(2104);
         }
 
-        [Test]
-        public void find_unique_should_respect_the_type_resolution()
-        {
-            _resolutionCache.FindUnique(new Proxy<UniqueInput>()).FirstCall().Method.Name.ShouldEqual("M9");
-        }
 
         [Test]
         public void find_unique_success()
@@ -196,16 +187,6 @@ namespace FubuMVC.Tests.Registration.Querying
             _resolutionCache.FindUnique(new UniqueInput()).FirstCall().Method.Name.ShouldEqual("M9");
         }
 
-        [Test]
-        public void find_unique_with_category_respects_the_type_resolution()
-        {
-            graph.BehaviorFor<ChainResolverController>(x => x.M2(null))
-                .As<RoutedChain>()
-                .UrlCategory.Category = Categories.NEW;
-
-            _resolutionCache.FindUnique(new Proxy<ChainResolverInput1>(), Categories.NEW)
-                .FirstCall().Method.Name.ShouldEqual("M2");
-        }
 
         [Test]
         public void has_new_negative()
@@ -296,18 +277,6 @@ namespace FubuMVC.Tests.Registration.Querying
     {
     }
 
-    public class ProxyDetector : ITypeResolverStrategy
-    {
-        public Type ResolveType(object model)
-        {
-            return model.GetType().GetGenericArguments()[0];
-        }
-
-        public bool Matches(object model)
-        {
-            return model.GetType().Closes(typeof (Proxy<>));
-        }
-    }
 
     public class Proxy<T>
     {

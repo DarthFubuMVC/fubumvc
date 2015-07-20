@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.Urls
             var request = OwinHttpRequest.ForTesting().FullUrl("http://server/cool");
 	        var urlResolver = new ChainUrlResolver(request);
 
-            registry = new UrlRegistry(new ChainResolutionCache(new TypeResolver(), graph), urlResolver, new JQueryUrlTemplate(), request);
+            registry = new UrlRegistry(new ChainResolutionCache(graph), urlResolver, new JQueryUrlTemplate(), request);
         }
 
         #endregion
