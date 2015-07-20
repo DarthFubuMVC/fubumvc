@@ -211,39 +211,6 @@ namespace FubuMVC.Tests
             graph.BehaviorFor<Action2>(x => x.M2()).IsWrappedBy(typeof (Wrapper)).ShouldBeTrue();
         }
 
-        [Test]
-        public void override_a_fubu_service_in_imported_registry()
-        {
-            import.Services(s => s.ReplaceService<IOutputWriter>(new DifferentOutputWriter()));
-            parent.Import(import, string.Empty);
 
-            var graph = BehaviorGraph.BuildFrom(parent);
-
-            graph.Services.DefaultServiceFor<IOutputWriter>().Value.ShouldBeOfType<DifferentOutputWriter>();
-        }
-
-        [Test]
-        public void parent_registry_service_registration_is_performed_after_the_import()
-        {
-            import.Services(s => s.AddService<ISomething>(new Something()));
-            parent.Import(import, string.Empty);
-
-            parent.Services(x => x.ReplaceService<ISomething>(new DifferentSomething()));
-
-            var graph = BehaviorGraph.BuildFrom(parent);
-
-            graph.Services.DefaultServiceFor<ISomething>().Value.ShouldBeOfType<DifferentSomething>();
-        }
-
-        [Test]
-        public void register_non_fubu_service_in_imported_registry()
-        {
-            import.Services(s => s.AddService<ISomething>(new Something()));
-            parent.Import(import, string.Empty);
-
-            var graph = BehaviorGraph.BuildFrom(parent);
-
-            graph.Services.DefaultServiceFor<ISomething>().Value.ShouldBeOfType<Something>();
-        }
     }
 }

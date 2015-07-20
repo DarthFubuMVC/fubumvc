@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Linq;
 using System.Web;
 using FubuCore;
 using FubuMVC.Core;
-using FubuMVC.Core.Registration;
 using FubuMVC.Core.View;
 using FubuTestingSupport;
 using HtmlTags;
@@ -25,17 +22,19 @@ namespace FubuMVC.Tests.View
                 x.Add("Bar");
             });
 
-            var graph = BehaviorGraph.BuildFrom(registry);
-            var useNamespaces = graph.Services.DefaultServiceFor<CommonViewNamespaces>().Value.As<CommonViewNamespaces>();
+            using (var runtime = FubuApplication.For(registry).Bootstrap())
+            {
+                var useNamespaces = runtime.Container.GetInstance<CommonViewNamespaces>();
 
-            useNamespaces.Namespaces.ShouldContain(typeof(VirtualPathUtility).Namespace);
-            useNamespaces.Namespaces.ShouldContain(typeof(string).Namespace);
-            useNamespaces.Namespaces.ShouldContain(typeof(FileSet).Namespace);
-            useNamespaces.Namespaces.ShouldContain(typeof(ParallelQuery).Namespace);
-            useNamespaces.Namespaces.ShouldContain(typeof(HtmlTag).Namespace);
-            useNamespaces.Namespaces.ShouldContain("FubuMVC.Tests.Http.Hosting");
-            useNamespaces.Namespaces.ShouldContain("Foo");
-            useNamespaces.Namespaces.ShouldContain("Bar");
+                useNamespaces.Namespaces.ShouldContain(typeof (VirtualPathUtility).Namespace);
+                useNamespaces.Namespaces.ShouldContain(typeof (string).Namespace);
+                useNamespaces.Namespaces.ShouldContain(typeof (FileSet).Namespace);
+                useNamespaces.Namespaces.ShouldContain(typeof (ParallelQuery).Namespace);
+                useNamespaces.Namespaces.ShouldContain(typeof (HtmlTag).Namespace);
+                useNamespaces.Namespaces.ShouldContain("FubuMVC.Tests.Http.Hosting");
+                useNamespaces.Namespaces.ShouldContain("Foo");
+                useNamespaces.Namespaces.ShouldContain("Bar");
+            }
         }
     }
 }

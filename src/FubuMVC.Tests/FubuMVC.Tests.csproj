@@ -237,7 +237,6 @@
     <Compile Include="Security\AlwaysDenyPolicyTester.cs" />
     <Compile Include="Security\AuthorizationByServiceTester.cs" />
     <Compile Include="Security\AuthorizationCheckPolicyTester.cs" />
-    <Compile Include="Security\SecurityServicesRegistry_specification.cs" />
     <Compile Include="Security\SecuritySettingsTester.cs" />
     <Compile Include="Services\ApplicationLoaderFinderTester.cs" />
     <Compile Include="Services\Messaging\EventAggregatorTester.cs" />
@@ -364,7 +363,6 @@
     <Compile Include="UI\FubuPageExtensionsTester.cs" />
     <Compile Include="UI\HtmlTagExtensionsTester.cs" />
     <Compile Include="UI\PartialInvokerTester.cs" />
-    <Compile Include="UI\UIServiceRegistry_registration_spec.cs" />
     <Compile Include="UrlAliasAttributeTester.cs" />
     <Compile Include="UrlExtensionsTester.cs" />
     <Compile Include="Behaviors\ActionInvokersTester.cs" />
@@ -386,7 +384,6 @@
     <Compile Include="Registration\Conventions\TypeScanningIntegratedTester.cs" />
     <Compile Include="Registration\Expressions\ModelExpressionTester.cs" />
     <Compile Include="Registration\Nodes\BehaviorChainTester.cs" />
-    <Compile Include="Registration\ServiceRegistryTester.cs" />
     <Compile Include="Registration\Utilities\ActionCallSpec.cs" />
     <Compile Include="Registration\Utilities\BehaviorSpec.cs" />
     <Compile Include="Registration\FuncBuilderTester.cs" />

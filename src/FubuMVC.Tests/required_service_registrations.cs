@@ -20,8 +20,11 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Aggregation;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.Runtime.Files;
+using FubuMVC.Core.Security;
 using FubuMVC.Core.SessionState;
+using FubuMVC.Core.UI;
 using FubuMVC.Core.Urls;
+using FubuMVC.Core.Web.Security;
 using FubuMVC.Tests.Registration;
 using NUnit.Framework;
 
@@ -45,6 +48,7 @@ namespace FubuMVC.Tests
                 _.DefaultRegistrationIs<IBindingLogger, NulloBindingLogger>();
                 _.DefaultRegistrationIs<ISmartRequest, FubuSmartRequest>();
                 _.ShouldHaveRegistration<IModelBinder, ResourcePathBinder>();
+                _.ShouldHaveRegistration<IConverterFamily, AspNetPassthroughConverter>();
 
 
                 // Core services
@@ -57,8 +61,11 @@ namespace FubuMVC.Tests
                 _.DefaultRegistrationIs<IFlash, FlashProvider>();
                 _.DefaultRegistrationIs<IOutputWriter, OutputWriter>();
                 _.DefaultRegistrationIs<IPartialFactory, PartialFactory>();
+                _.DefaultRegistrationIs<IPartialInvoker, PartialInvoker>();
                 _.DefaultRegistrationIs<IRequestDataProvider, RequestDataProvider>();
                 _.DefaultRegistrationIs<Stringifier, Stringifier>(); // it's goofy, but assert that it exists
+
+                _.ShouldHaveRegistration<IActivator, DisplayConversionRegistryActivator>();
 
                 _.DefaultSingletonIs<IChainResolver, ChainResolutionCache>();
                 _.DefaultSingletonIs<TemplateGraph, TemplateGraph>();
@@ -96,6 +103,14 @@ namespace FubuMVC.Tests
 
                 // Diagnostics
                 _.DefaultSingletonIs<IDiagnosticAssets, DiagnosticAssetsCache>();
+
+                // Security
+                _.DefaultRegistrationIs<IAuthenticationContext, WebAuthenticationContext>();
+                _.DefaultRegistrationIs<ISecurityContext, WebSecurityContext>();
+                _.DefaultRegistrationIs<IAuthorizationPreviewService, AuthorizationPreviewService>();
+                _.DefaultRegistrationIs<IChainAuthorizor, ChainAuthorizor>();
+                _.DefaultRegistrationIs<IAuthorizationFailureHandler, DefaultAuthorizationFailureHandler>();
+
 
             }
         }

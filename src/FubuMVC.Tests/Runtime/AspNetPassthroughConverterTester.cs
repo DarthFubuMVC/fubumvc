@@ -3,12 +3,9 @@ using System.Linq.Expressions;
 using System.Web;
 using FubuCore.Binding;
 using FubuCore.Reflection;
-using FubuMVC.Core;
-using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
-using NUnit.Framework;
 using FubuTestingSupport;
-using System.Linq;
+using NUnit.Framework;
 
 namespace FubuMVC.Tests.Runtime
 {
@@ -44,19 +41,11 @@ namespace FubuMVC.Tests.Runtime
                 .ShouldBeOfType<PassthroughConverter<HttpPostedFileBase>>();
         }
 
-        [Test]
-        public void is_registered()
-        {
-            var services = BehaviorGraph.BuildFrom(new FubuRegistry()).Services;
-            services.ServicesFor(typeof(IConverterFamily)).Select(x => x.Type)
-                .ShouldContain(typeof(AspNetPassthroughConverter));
-        }
-
         public class FakeModel
         {
             public HttpPostedFileBase File { get; set; }
             public HttpCookie Cookie { get; set; }
-            public HttpFileCollectionWrapper Wrapper { get; set;}
+            public HttpFileCollectionWrapper Wrapper { get; set; }
 
             public string Name { get; set; }
         }
