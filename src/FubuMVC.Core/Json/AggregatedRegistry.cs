@@ -1,6 +1,4 @@
-﻿using FubuMVC.Core;
-
-namespace FubuMVC.Json
+﻿namespace FubuMVC.Core.Json
 {
     public class AggregatedRegistry : FubuPackageRegistry
     {

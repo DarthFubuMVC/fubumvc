@@ -1,4 +1,4 @@
-namespace FubuMVC.Json.Tests
+namespace FubuMVC.Tests.Json
 {
 	public class ParentType
 	{

@@ -148,6 +148,7 @@
     <Compile Include="Http\partial_invocations.cs" />
     <Compile Include="Http\reading_and_writing_http_headers_and_responses_with_OWIN.cs" />
     <Compile Include="Http\compression_testing.cs" />
+    <Compile Include="Json\IntegratedJsonBindingTester.cs" />
     <Compile Include="map_files_are_whitelisted.cs" />
     <Compile Include="Owin\binding_against_form_data.cs" />
     <Compile Include="Owin\binding_against_querystring_values.cs" />
@@ -230,10 +231,6 @@
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.Json\FubuMVC.Json.csproj">
-      <Project>{82e23b59-ec49-4d75-b655-0c6086f334c8}</Project>
-      <Name>FubuMVC.Json</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Katana\FubuMVC.Katana.csproj">
       <Project>{48BC51C2-B759-48DB-AAE1-F4686CD6D02A}</Project>
@@ -375,7 +372,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent></PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

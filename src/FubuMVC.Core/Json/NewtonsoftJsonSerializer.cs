@@ -2,7 +2,7 @@
 using System.IO;
 using Newtonsoft.Json;
 
-namespace FubuMVC.Json
+namespace FubuMVC.Core.Json
 {
 
 

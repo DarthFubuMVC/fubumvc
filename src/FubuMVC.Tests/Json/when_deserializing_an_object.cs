@@ -1,14 +1,13 @@
 ﻿using System;
 using FubuCore;
 using FubuCore.Conversion;
-using FubuMVC.Json;
-using FubuMVC.Json.Tests;
+using FubuMVC.Core.Json;
 using FubuTestingSupport;
-using NUnit.Framework;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using NUnit.Framework;
 
-namespace FubuJson.Tests
+namespace FubuMVC.Tests.Json
 {
 
     [TestFixture]

@@ -1,7 +1,7 @@
 using FubuCore.Conversion;
-using FubuJson;
+using FubuMVC.Core.Json;
 
-namespace FubuMVC.Json.Tests
+namespace FubuMVC.Tests.Json
 {
 	public class ComplexTypeConverter : FubuJsonConverter<ComplexType>
 	{

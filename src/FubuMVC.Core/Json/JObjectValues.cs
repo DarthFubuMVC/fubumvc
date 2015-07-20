@@ -5,7 +5,7 @@ using FubuCore.Binding;
 using FubuCore.Binding.Values;
 using Newtonsoft.Json.Linq;
 
-namespace FubuMVC.Json
+namespace FubuMVC.Core.Json
 {
     public class JObjectValues : IValueSource
     {

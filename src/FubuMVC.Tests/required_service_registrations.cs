@@ -12,6 +12,7 @@ using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Assets;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Cookies;
+using FubuMVC.Core.Json;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Resources.PathBased;
@@ -108,6 +109,8 @@ namespace FubuMVC.Tests
                 _.DefaultRegistrationIs<IAuthorizationFailureHandler, DefaultAuthorizationFailureHandler>();
 
 
+                // Json
+                _.DefaultRegistrationIs<IJsonSerializer, NewtonSoftJsonSerializer>();
             }
         }
 

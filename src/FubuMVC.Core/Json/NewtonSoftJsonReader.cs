@@ -1,9 +1,8 @@
 using System.IO;
 using System.Text;
-using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
 
-namespace FubuMVC.Json
+namespace FubuMVC.Core.Json
 {
     public class NewtonSoftJsonReader
     {

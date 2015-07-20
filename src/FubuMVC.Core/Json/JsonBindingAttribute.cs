@@ -2,7 +2,7 @@
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 
-namespace FubuMVC.Json
+namespace FubuMVC.Core.Json
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class JsonBindingAttribute : ModifyChainAttribute

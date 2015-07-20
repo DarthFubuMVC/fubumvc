@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Text;
@@ -10,15 +9,15 @@ using FubuCore.Dates;
 using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Endpoints;
-using FubuMVC.Core.StructureMap;
+using FubuMVC.Core.Json;
 using FubuMVC.Katana;
 using FubuTestingSupport;
-using NUnit.Framework;
 using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 using Rhino.Mocks;
 using StructureMap;
 
-namespace FubuMVC.Json.Tests
+namespace FubuMVC.IntegrationTesting.Json
 {
     [TestFixture]
     public class IntegratedJsonBindingTester
@@ -35,7 +34,8 @@ namespace FubuMVC.Json.Tests
             using (var server = new IntegratedJsonBindingApplication(recorder, time).BuildApplication().RunEmbedded())
             {
                 var url = server.Urls.UrlFor(typeof (IntegratedJsonBindingTarget));
-                var response = post(url.ToAbsoluteUrl(server.BaseAddress), "{Name:'Josh',Child:{ChildName:'Joel'},DynamicData:{test:{name:'nested'}}}");
+                var response = post(url.ToAbsoluteUrl(server.BaseAddress),
+                    "{Name:'Josh',Child:{ChildName:'Joel'},DynamicData:{test:{name:'nested'}}}");
 
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
@@ -54,14 +54,14 @@ namespace FubuMVC.Json.Tests
 
         private HttpResponse post(string url, string json)
         {
-            WebRequest request = WebRequest.Create(url);
+            var request = WebRequest.Create(url);
             request.ContentType = "application/json";
             request.Method = "POST";
-            TypeExtensions.As<HttpWebRequest>((object)request).Accept = "application/json";
-            TypeExtensions.As<HttpWebRequest>((object)request).CookieContainer = new CookieContainer();
-            Stream requestStream = request.GetRequestStream();
+            request.As<HttpWebRequest>().Accept = "application/json";
+            request.As<HttpWebRequest>().CookieContainer = new CookieContainer();
+            var requestStream = request.GetRequestStream();
 
-            byte[] local_2 = Encoding.Default.GetBytes(json);
+            var local_2 = Encoding.Default.GetBytes(json);
             requestStream.Write(local_2, 0, local_2.Length);
 
             requestStream.Close();
@@ -71,7 +71,7 @@ namespace FubuMVC.Json.Tests
         public class Recorder
         {
             public IntegratedJsonBindingTarget Target { get; private set; }
-            
+
             public void Record(IntegratedJsonBindingTarget target)
             {
                 Target = target;
@@ -105,7 +105,6 @@ namespace FubuMVC.Json.Tests
             {
                 Actions.IncludeType<IntegratedJsonBindingEndpoint>();
                 Models.BindPropertiesWith<CurrentTimePropertyBinder>();
-                Import<JsonBinding>();
 
                 Services(x => x.ReplaceService(time));
             }

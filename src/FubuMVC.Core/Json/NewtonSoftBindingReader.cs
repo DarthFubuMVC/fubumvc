@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using FubuCore.Binding;
-using FubuMVC.Core;
 
-namespace FubuMVC.Json
+namespace FubuMVC.Core.Json
 {
+    [Description("Uses model binding against the parsed JSON. Use with caution")]
     public class NewtonSoftBindingReader<T> : Core.Resources.Conneg.IReader<T>
     {
         public T Read(string mimeType, IFubuRequestContext context)

@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
-using FubuMVC.Core;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime.Aggregation;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace FubuMVC.Json
+namespace FubuMVC.Core.Json
 {
     public class AggregatedQueryReader : IReader<AggregatedQuery>
     {

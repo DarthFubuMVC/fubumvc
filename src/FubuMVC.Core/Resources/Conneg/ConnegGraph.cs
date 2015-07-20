@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FubuCore;
+using FubuMVC.Core.Json;
 using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.Resources.Conneg
@@ -10,12 +11,11 @@ namespace FubuMVC.Core.Resources.Conneg
     public class ConnegGraph
     {
         public readonly IList<Type> Writers = new List<Type>();
-        public readonly IList<Type> Readers = new List<Type>();
+        public readonly IList<Type> Readers = new List<Type>{typeof(AggregatedQueryReader)};
 
         public static ConnegGraph Build(BehaviorGraph behaviorGraph)
         {
             var graph = new ConnegGraph();
-
 
             var writers = TypeRepository.FindTypes(behaviorGraph.AllAssemblies(),
                 TypeClassification.Concretes | TypeClassification.Closed, x => x.Closes(typeof (IMediaWriter<>)))

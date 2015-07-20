@@ -1,4 +1,4 @@
-﻿namespace FubuMVC.Json
+﻿namespace FubuMVC.Core.Json
 {
 	public interface IJsonSerializer
 	{

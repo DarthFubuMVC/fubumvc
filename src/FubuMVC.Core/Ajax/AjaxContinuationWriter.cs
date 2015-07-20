@@ -1,18 +1,18 @@
 using System.Collections.Generic;
 using FubuCore.Descriptions;
+using FubuMVC.Core.Json;
 using FubuMVC.Core.Resources.Conneg;
-using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Ajax
 {
     [Title("AjaxContinuationWriter")]
     public class AjaxContinuationWriter<T> : IMediaWriter<T> where T : AjaxContinuation
     {
-        private readonly JsonSerializer serializer = new JsonSerializer();
-
         public void Write(string mimeType, IFubuRequestContext context, T resource)
         {
-            serializer.Write(context, resource.ToDictionary(), mimeType);
+            var serializer = context.Services.GetInstance<IJsonSerializer>();
+            var json = serializer.Serialize(resource.ToDictionary());
+            context.Writer.Write(mimeType, json);
         }
 
         public IEnumerable<string> Mimetypes

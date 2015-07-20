@@ -5,6 +5,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Json;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
@@ -183,7 +184,7 @@ namespace FubuMVC.IntegrationTesting.Samples
             chain.Input.Add(typeof (ModelBindingReader<>));
 
             // Add basic Json reading
-            chain.Input.Add(new JsonSerializer());
+            chain.Input.Add(new NewtonsoftJsonFormatter());
 
             // Query whether or not the chain uses the basic Json reading
             var readsJson = chain.Input.CanRead(MimeType.Json);

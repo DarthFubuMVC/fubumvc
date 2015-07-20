@@ -1,12 +1,12 @@
 using System;
+using System.Linq;
 using FubuCore.Binding;
+using FubuMVC.Core.Json;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
-using FubuMVC.Json;
-using FubuTestingSupport;
-using System.Linq;
 
-namespace FubuMVC.Json.Tests
+namespace FubuMVC.Tests.Json
 {
     [TestFixture]
     public class JObjectValuesTester

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.Json;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
@@ -10,6 +11,7 @@ using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.Runtime.Formatters;
 using FubuTestingSupport;
 using HtmlTags;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.NewConneg
@@ -22,7 +24,7 @@ namespace FubuMVC.Tests.NewConneg
         {
             var node = new OutputNode(typeof (Address));
             node.Add(new XmlFormatter());
-            node.Add(new JsonSerializer());
+            node.Add(new NewtonsoftJsonFormatter());
 
             node.ClearAll();
 
@@ -67,7 +69,7 @@ namespace FubuMVC.Tests.NewConneg
         public void add_writer_by_formatter_happy_path_no_condition()
         {
             var node = new OutputNode(typeof(Address));
-            var theFormatter = new JsonSerializer();
+            var theFormatter = new NewtonsoftJsonFormatter();
             node.Add(theFormatter);
 
             var media = node.Explicits.Single().ShouldBeOfType<Media<Address>>();
@@ -83,7 +85,7 @@ namespace FubuMVC.Tests.NewConneg
         public void add_writer_with_explicit_condition()
         {
             var node = new OutputNode(typeof(Address));
-            var theFormatter = new JsonSerializer();
+            var theFormatter = new NewtonsoftJsonFormatter();
             var condition = new IsAjaxRequest();
             node.Add(theFormatter, condition);
 

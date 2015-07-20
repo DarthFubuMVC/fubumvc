@@ -2,6 +2,7 @@
 using FubuCore.Reflection;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin;
+using FubuMVC.Core.Json;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
@@ -92,14 +93,14 @@ namespace FubuMVC.Tests.Http
         public void the_default_formatters_are_json_then_xml()
         {
             new ConnegSettings().Formatters.Select(x => x.GetType())
-                .ShouldHaveTheSameElementsAs(typeof(JsonSerializer), typeof(XmlFormatter));
+                .ShouldHaveTheSameElementsAs(typeof(NewtonsoftJsonFormatter), typeof(XmlFormatter));
         }
 
         [Test]
         public void find_formatter_by_mimetype()
         {
             new ConnegSettings().FormatterFor(MimeType.Json)
-                .ShouldBeOfType<JsonSerializer>();
+                .ShouldBeOfType<NewtonsoftJsonFormatter>();
 
             new ConnegSettings().FormatterFor(MimeType.Xml)
                 .ShouldBeOfType<XmlFormatter>();

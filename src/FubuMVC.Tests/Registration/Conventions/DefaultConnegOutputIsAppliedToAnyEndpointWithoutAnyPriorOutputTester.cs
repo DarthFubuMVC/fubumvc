@@ -1,4 +1,5 @@
 using FubuMVC.Core;
+using FubuMVC.Core.Json;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
@@ -34,7 +35,7 @@ namespace FubuMVC.Tests.Registration.Conventions
 
             var chain = BehaviorGraph.BuildFrom(registry).BehaviorFor<SomeController>(x => x.Go(null));
 
-            chain.Output.Add(new JsonSerializer());
+            chain.Output.Add(new NewtonsoftJsonFormatter());
             chain.Output.Add(new XmlFormatter());
 
             chain.Input.CanRead(MimeType.HttpFormMimetype).ShouldBeTrue();

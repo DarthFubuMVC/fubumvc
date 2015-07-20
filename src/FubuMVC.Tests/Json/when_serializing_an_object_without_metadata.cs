@@ -1,13 +1,13 @@
-using FubuCore;
-using FubuCore.Conversion;
+﻿using FubuCore.Conversion;
+using FubuMVC.Core.Json;
 using FubuTestingSupport;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
-namespace FubuMVC.Json.Tests
+namespace FubuMVC.Tests.Json
 {
 	[TestFixture]
-	public class when_serializing_an_object_with_metadata
+	public class when_serializing_an_object_without_metadata
 	{
 		private NewtonSoftJsonSerializer theSerializer;
 		private ComplexTypeConverter theConverter;
@@ -23,18 +23,16 @@ namespace FubuMVC.Json.Tests
 			theTarget = new ParentType
 			            	{
 			            		Name = "Test",
-			            		Child = new ComplexType { Key = "x", Value = "123" }
+								Child = new ComplexType { Key = "x", Value = "123" }
 			            	};
 
-			theResult = theSerializer.Serialize(theTarget, true);
+			theResult = theSerializer.Serialize(theTarget);
 		}
 
 		[Test]
 		public void uses_the_provided_converters()
 		{
-			var targetType = typeof(ParentType);
-			var type = "\"$type\":\"{0}, {1}\"".ToFormat(targetType.FullName, targetType.Assembly.GetName().Name);
-			theResult.ShouldEqual("{" + type + ",\"Name\":\"Test\",\"Child\":\"x:123\"}");
+			theResult.ShouldEqual("{\"Name\":\"Test\",\"Child\":\"x:123\"}");
 		}
 	}
 }

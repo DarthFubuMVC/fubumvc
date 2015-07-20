@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 
-namespace FubuMVC.Json
+namespace FubuMVC.Core.Json
 {
     public static class JTokenKeyValuePairExtensions
     {

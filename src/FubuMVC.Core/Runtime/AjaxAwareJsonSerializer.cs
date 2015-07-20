@@ -1,14 +1,14 @@
 ﻿using System.ComponentModel;
-using System.Web.Script.Serialization;
+using FubuMVC.Core.Json;
 
 namespace FubuMVC.Core.Runtime
 {
     [Description("Ajax aware Json serialization with the built in JavaScriptSerializer")]
-    public class AjaxAwareJsonSerializer : JsonSerializer
+    public class AjaxAwareJsonSerializer : NewtonsoftJsonFormatter
     {
         public override void Write<T>(IFubuRequestContext context, T resource, string mimeType)
         {
-            var rawJsonOutput = new JavaScriptSerializer().Serialize(resource);
+            var rawJsonOutput = serializeData(context, resource);
             if (context.Request.IsAjaxRequest())
             {
                 context.Writer.Write(MimeType.Json.ToString(), rawJsonOutput);

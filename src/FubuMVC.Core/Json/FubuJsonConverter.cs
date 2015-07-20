@@ -2,7 +2,7 @@
 using FubuCore.Conversion;
 using Newtonsoft.Json;
 
-namespace FubuMVC.Json
+namespace FubuMVC.Core.Json
 {
 	// Just a convenience helper
 	// See the NewtonsoftJsonSerializer tests for examples

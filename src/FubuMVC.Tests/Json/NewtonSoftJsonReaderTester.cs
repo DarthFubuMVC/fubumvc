@@ -1,9 +1,9 @@
-﻿using FubuJson;
+﻿using FubuMVC.Core.Json;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Json.Tests
+namespace FubuMVC.Tests.Json
 {
 	[TestFixture]
 	public class NewtonSoftJsonReaderTester : InteractionContext<NewtonSoftJsonReader>

@@ -231,6 +231,17 @@
     <Compile Include="Http\Scenarios\ScenarioAssertionException.cs" />
     <Compile Include="IActivator.cs" />
     <Compile Include="IDeactivator.cs" />
+    <Compile Include="Json\AggregatedQueryReader.cs" />
+    <Compile Include="Json\AggregatedRegistry.cs" />
+    <Compile Include="Json\FubuJsonConverter.cs" />
+    <Compile Include="Json\IJsonSerializer.cs" />
+    <Compile Include="Json\JObjectValues.cs" />
+    <Compile Include="Json\JsonBindingAttribute.cs" />
+    <Compile Include="Json\JTokenKeyValuePairExtensions.cs" />
+    <Compile Include="Json\NewtonSoftBindingReader.cs" />
+    <Compile Include="Json\NewtonsoftJsonFormatter.cs" />
+    <Compile Include="Json\NewtonSoftJsonReader.cs" />
+    <Compile Include="Json\NewtonsoftJsonSerializer.cs" />
     <Compile Include="LambdaActivator.cs" />
     <Compile Include="NoDiagnosticsAttribute.cs" />
     <Compile Include="PerfTimerExtensions.cs" />
@@ -600,7 +611,6 @@
     <Compile Include="Runtime\IOutputState.cs" />
     <Compile Include="Runtime\IPartialFactory.cs" />
     <Compile Include="Runtime\ISessionState.cs" />
-    <Compile Include="Runtime\JsonSerializer.cs" />
     <Compile Include="Runtime\NormalState.cs" />
     <Compile Include="Runtime\OutputWriterExtensions.cs" />
     <Compile Include="Caching\RecordedOutput.cs" />

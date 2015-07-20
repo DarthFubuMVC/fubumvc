@@ -1,8 +1,8 @@
 ﻿using System.IO;
 using System.Linq;
 using FubuMVC.Core;
+using FubuMVC.Core.Json;
 using FubuMVC.Core.Runtime.Aggregation;
-using FubuMVC.Json;
 using FubuTestingSupport;
 using HtmlTags;
 using Newtonsoft.Json;

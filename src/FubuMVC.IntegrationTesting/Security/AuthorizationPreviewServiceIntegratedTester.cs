@@ -163,30 +163,6 @@ namespace FubuMVC.IntegrationTesting.Security
             service.IsAuthorizedForNew(typeof (UrlModel)).ShouldBeFalse();
         }
 
-        [Test]
-        public void handles_forwarding_correctly_positive_case()
-        {
-            userHasRoles("a");
-
-            var service =
-                withAuthorizationRules(
-                    graph => { graph.BehaviorFor<TwoController>(x => x.M4(null)).Authorization.AddRole("a"); });
-
-            service.IsAuthorized(new SubclassUrlModel()).ShouldBeTrue();
-        }
-
-
-        [Test]
-        public void handles_forwarding_correctly_negative_case()
-        {
-            userHasRoles("a");
-
-            var service =
-                withAuthorizationRules(
-                    graph => { graph.BehaviorFor<TwoController>(x => x.M4(null)).Authorization.AddRole("not a"); });
-
-            service.IsAuthorized(new SubclassUrlModel()).ShouldBeFalse();
-        }
     }
 
 

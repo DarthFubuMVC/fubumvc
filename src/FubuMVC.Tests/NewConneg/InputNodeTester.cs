@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.Json;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
-using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Runtime.Formatters;
 using FubuTestingSupport;
 using NUnit.Framework;
-using FubuCore;
 
 namespace FubuMVC.Tests.NewConneg
 {
@@ -18,7 +17,7 @@ namespace FubuMVC.Tests.NewConneg
         [Test]
         public void IMayHaveInputType_implementation()
         {
-            var node = new InputNode(typeof(Address));
+            var node = new InputNode(typeof (Address));
             node.As<IMayHaveInputType>().InputType().ShouldEqual(typeof (Address));
         }
 
@@ -26,8 +25,8 @@ namespace FubuMVC.Tests.NewConneg
         public void ClearAll()
         {
             var node = new InputNode(typeof (Address));
-            node.Add(new JsonSerializer());
-            node.Add(typeof(ModelBindingReader<>));
+            node.Add(new NewtonsoftJsonFormatter());
+            node.Add(typeof (ModelBindingReader<>));
 
             node.ClearAll();
 
@@ -35,27 +34,23 @@ namespace FubuMVC.Tests.NewConneg
         }
 
 
-
-
-
         [Test]
         public void add_reader_by_formatter()
         {
-            var node = new InputNode(typeof(Address));
-            var formatter = new JsonSerializer();
+            var node = new InputNode(typeof (Address));
+            var formatter = new NewtonsoftJsonFormatter();
             node.Add(formatter);
 
             node.Explicits.Single()
                 .ShouldBeOfType<FormatterReader<Address>>()
                 .Formatter.ShouldBeTheSameAs(formatter);
-
         }
 
         [Test]
         public void add_reader_by_type()
         {
-            var node = new InputNode(typeof(Address));
-            node.Add(typeof(GenericReader<>));
+            var node = new InputNode(typeof (Address));
+            node.Add(typeof (GenericReader<>));
 
             node.Explicits.Single()
                 .ShouldBeOfType<GenericReader<Address>>();
@@ -64,16 +59,17 @@ namespace FubuMVC.Tests.NewConneg
         [Test]
         public void add_reader_by_type_sad_path()
         {
-            Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() => {
-                new InputNode(typeof(Address))
-                .Add(GetType());
+            Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() =>
+            {
+                new InputNode(typeof (Address))
+                    .Add(GetType());
             });
         }
 
         [Test]
         public void add_reader_by_instance_happy_path()
         {
-            var node = new InputNode(typeof(InputTarget));
+            var node = new InputNode(typeof (InputTarget));
             var reader = new SpecificReader();
 
             node.Add(reader);
@@ -84,8 +80,9 @@ namespace FubuMVC.Tests.NewConneg
         [Test]
         public void add_reader_by_instance_sad_path()
         {
-            Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() => {
-                new InputNode(typeof(Address))
+            Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() =>
+            {
+                new InputNode(typeof (Address))
                     .Add(new SpecificReader());
             });
         }
@@ -115,10 +112,7 @@ namespace FubuMVC.Tests.NewConneg
 
         public Type ModelType
         {
-            get
-            {
-                return typeof(InputTarget);
-            }
+            get { return typeof (InputTarget); }
         }
     }
 
@@ -141,10 +135,7 @@ namespace FubuMVC.Tests.NewConneg
 
         public Type ModelType
         {
-            get
-            {
-                return typeof(T);
-            }
+            get { return typeof (T); }
         }
     }
 
@@ -162,10 +153,7 @@ namespace FubuMVC.Tests.NewConneg
 
         public Type ModelType
         {
-            get
-            {
-                return typeof(T);
-            }
+            get { return typeof (T); }
         }
     }
 
@@ -183,10 +171,7 @@ namespace FubuMVC.Tests.NewConneg
 
         public Type ModelType
         {
-            get
-            {
-                return typeof(Address);
-            }
+            get { return typeof (Address); }
         }
     }
 }

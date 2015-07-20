@@ -1,17 +1,24 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using FubuCore;
-using FubuMVC.Core;
 using FubuMVC.Core.Runtime.Formatters;
 
-namespace FubuMVC.Json
+namespace FubuMVC.Core.Json
 {
+    [Description("Json serialization with Newtonsoft.Json")]
     public class NewtonsoftJsonFormatter : IFormatter
     {
-        public void Write<T>(IFubuRequestContext context, T target, string mimeType)
+        public virtual void Write<T>(IFubuRequestContext context, T target, string mimeType)
+        {
+            var text = serializeData(context, target);
+            context.Writer.Write(mimeType, text);
+        }
+
+        protected static string serializeData<T>(IFubuRequestContext context, T target)
         {
             var serializer = context.Services.GetInstance<IJsonSerializer>();
             var text = serializer.Serialize(target);
-            context.Writer.Write(mimeType, text);
+            return text;
         }
 
         public T Read<T>(IFubuRequestContext context)

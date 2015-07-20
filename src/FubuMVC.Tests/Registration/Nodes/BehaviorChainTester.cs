@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using FubuMVC.Core.Json;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
@@ -235,7 +236,7 @@ namespace FubuMVC.Tests.Registration.Nodes
 
             chain.HasReaders().ShouldBeFalse();
 
-            chain.Input.Add(new JsonSerializer());
+            chain.Input.Add(new NewtonsoftJsonFormatter());
 
             chain.HasReaders().ShouldBeTrue();
         }
@@ -255,7 +256,7 @@ namespace FubuMVC.Tests.Registration.Nodes
 
             chain.HasOutput().ShouldBeFalse();
 
-            chain.Output.Add(new JsonSerializer());
+            chain.Output.Add(new NewtonsoftJsonFormatter());
 
             chain.HasOutput().ShouldBeTrue();
         }

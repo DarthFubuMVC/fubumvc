@@ -16,6 +16,7 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Compression;
 using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Core.Http.Owin.Middleware;
+using FubuMVC.Core.Json;
 using FubuMVC.Core.Projections;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
@@ -131,6 +132,8 @@ namespace FubuMVC.Core
             SetServiceIfNone<IAssetFinder, AssetFinderCache>();
 
             SetServiceIfNone<IClientMessageCache, ClientMessageCache>();
+
+            SetServiceIfNone<IJsonSerializer, NewtonSoftJsonSerializer>();
         }
     }
 }

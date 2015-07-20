@@ -45,6 +45,9 @@
     <Reference Include="HtmlTags">
       <HintPath>..\packages\HtmlTags\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -170,6 +173,15 @@
     <Compile Include="Http\Owin\OwnCurrentHttpRequestTester.cs" />
     <Compile Include="Http\Owin\OwnHttpWriterTester.cs" />
     <Compile Include="Http\StreamExtensions.cs" />
+    <Compile Include="Json\ComplexType.cs" />
+    <Compile Include="Json\ComplexTypeConverter.cs" />
+    <Compile Include="Json\JObjectValuesTester.cs" />
+    <Compile Include="Json\NewtonSoftBindingReaderTester.cs" />
+    <Compile Include="Json\NewtonSoftJsonReaderTester.cs" />
+    <Compile Include="Json\ParentType.cs" />
+    <Compile Include="Json\when_deserializing_an_object.cs" />
+    <Compile Include="Json\when_serializing_an_object_without_metadata.cs" />
+    <Compile Include="Json\when_serializing_an_object_with_metadata.cs" />
     <Compile Include="MockedFubuRequestContext.cs" />
     <Compile Include="NewConneg\ReaderCollectionTester.cs" />
     <Compile Include="Projections\ChildProjectionTester.cs" />
@@ -178,7 +190,6 @@
     <Compile Include="Projections\DictionaryMediaNodeTester.cs" />
     <Compile Include="Projections\EnumerableProjectionIntegratedTester.cs" />
     <Compile Include="Projections\ExternallyFormattedValueProjectorTester.cs" />
-    <Compile Include="Projections\JsonSerializerTester.cs" />
     <Compile Include="Projections\pascal_to_camel_casing_names_policy.cs" />
     <Compile Include="Projections\ProjectionContextTester.cs" />
     <Compile Include="Projections\ProjectionRunnerTester.cs" />

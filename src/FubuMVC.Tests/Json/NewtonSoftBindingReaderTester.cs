@@ -1,13 +1,11 @@
-using FubuCore.Binding;
+using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Http.Hosting;
-using FubuMVC.Core.StructureMap;
-using FubuMVC.Katana;
-using NUnit.Framework;
+using FubuMVC.Core.Json;
 using FubuTestingSupport;
-using System.Linq;
+using NUnit.Framework;
 
-namespace FubuMVC.Json.Tests
+namespace FubuMVC.Tests.Json
 {
     [TestFixture]
     public class NewtonsoftBindingReaderTester

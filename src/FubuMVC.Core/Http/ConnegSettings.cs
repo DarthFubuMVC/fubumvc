@@ -2,6 +2,7 @@
 using System.Linq;
 using FubuCore;
 using FubuCore.Descriptions;
+using FubuMVC.Core.Json;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
@@ -64,7 +65,7 @@ namespace FubuMVC.Core.Http
 
         public readonly IList<IFormatter> Formatters = new List<IFormatter>
         {
-            new JsonSerializer(),
+            new NewtonsoftJsonFormatter(),
             new XmlFormatter()
         }; 
 

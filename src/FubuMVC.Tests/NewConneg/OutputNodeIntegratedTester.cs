@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Json;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
@@ -31,7 +32,7 @@ namespace FubuMVC.Tests.NewConneg
             FubuMode.Reset();
 
             var node = new OutputNode(typeof (Address));
-            node.Add(new JsonSerializer());
+            node.Add(new NewtonsoftJsonFormatter());
             node.Add(new XmlFormatter());
             node.Add(new FakeAddressWriter(), new SomeConditional());
 
