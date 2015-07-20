@@ -62,16 +62,6 @@ namespace Fubu.Running
         public string ModeFlag { get; set; }
 
 
-        [Description("If selected, the run command will generate and write all the templates and immediately exit")]
-        public bool TemplatesFlag { get; set; }
-
-        public bool ShouldRunApp()
-        {
-            if (TemplatesFlag) return false;
-
-            return true;
-        }
-
         public string DetermineBinPath()
         {
             var buildPath = DirectoryFlag.AppendPath("bin", BuildFlag);

@@ -9,7 +9,7 @@ using FubuMVC.Core.Services.Messaging;
 
 namespace Fubu.Running
 {
-    public class RemoteFubuMvcBootstrapper : IApplicationLoader, IActivator, IListener<StartApplication>, IListener<RecycleApplication>, IListener<GenerateTemplates>, IDisposable
+    public class RemoteFubuMvcBootstrapper : IApplicationLoader, IActivator, IListener<StartApplication>, IListener<RecycleApplication>, IDisposable
     {
         private readonly IApplicationSourceFinder _typeFinder;
         private readonly IFubuMvcApplicationActivator _activator;
@@ -59,11 +59,6 @@ namespace Fubu.Running
         public void Receive(RecycleApplication message)
         {
             _activator.Recycle();
-        }
-
-        public void Receive(GenerateTemplates message)
-        {
-            _activator.GenerateTemplates();
         }
 
         void IActivator.Activate(IActivationLog log)

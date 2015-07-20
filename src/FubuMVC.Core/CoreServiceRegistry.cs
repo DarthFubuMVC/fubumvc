@@ -8,8 +8,6 @@ using FubuCore.Logging;
 using FubuCore.Reflection;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.JavascriptRouting;
-using FubuMVC.Core.Assets.Templates;
-using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Assets;
@@ -23,7 +21,6 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Resources.Conneg;
-using FubuMVC.Core.Routing;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Aggregation;
 using FubuMVC.Core.Runtime.Conditionals;
@@ -46,7 +43,7 @@ namespace FubuMVC.Core
             SetServiceIfNone<IRequestCompletion, RequestCompletion>();
 
             SetServiceIfNone<IRequestData, FubuMvcRequestData>();
-            SetServiceIfNone(typeof(AppReloaded), ObjectDef.ForValue(new AppReloaded()));
+            SetServiceIfNone(typeof (AppReloaded), ObjectDef.ForValue(new AppReloaded()));
 
             SetServiceIfNone<IDiagnosticAssets, DiagnosticAssetsCache>();
 
@@ -77,7 +74,6 @@ namespace FubuMVC.Core
             SetServiceIfNone<ITypeDescriptorCache, TypeDescriptorCache>();
 
             SetServiceIfNone<ISessionState, SimpleSessionState>();
-
 
 
             SetServiceIfNone<IFubuRequestContext, FubuRequestContext>();
@@ -119,18 +115,17 @@ namespace FubuMVC.Core
 
             SetServiceIfNone<IJavascriptRouteData, JavascriptRouteData>();
 
-            SetServiceIfNone(typeof(IValues<>), typeof(SimpleValues<>));
-            SetServiceIfNone(typeof(IValueSource<>), typeof(ValueSource<>));
+            SetServiceIfNone(typeof (IValues<>), typeof (SimpleValues<>));
+            SetServiceIfNone(typeof (IValueSource<>), typeof (ValueSource<>));
 
             SetServiceIfNone<IProjectionRunner, ProjectionRunner>();
-            SetServiceIfNone(typeof(IProjectionRunner<>), typeof(ProjectionRunner<>));
+            SetServiceIfNone(typeof (IProjectionRunner<>), typeof (ProjectionRunner<>));
             SetServiceIfNone<IProjectionRunner, ProjectionRunner>();
-            SetServiceIfNone(typeof(IProjectionRunner<>), typeof(ProjectionRunner<>));
+            SetServiceIfNone(typeof (IProjectionRunner<>), typeof (ProjectionRunner<>));
 
             SetServiceIfNone<ISettingsProvider, SettingsProvider>();
             AddService<ISettingsSource>(new AppSettingsSettingSource(SettingCategory.environment));
 
-            ReplaceService<TemplateGraph, TemplateGraph>();
 
             SetServiceIfNone<IVisualizer, Visualizer>();
 

@@ -110,8 +110,6 @@
     <Compile Include="ProcessFactoryTester.cs" />
     <Compile Include="ProcessWrapperTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Running\ApplicationRequestTester.cs" />
-    <Compile Include="Running\generate_template_smoke_tester.cs" />
     <Compile Include="Running\RemoteFubuMvcBootstrapperTester.cs" />
     <Compile Include="Running\StartApplicationTester.cs" />
     <Compile Include="usage_graph_smoke_tester.cs" />

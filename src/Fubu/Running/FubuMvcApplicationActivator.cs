@@ -69,9 +69,5 @@ namespace Fubu.Running
             StartUp();
         }
 
-        public void GenerateTemplates()
-        {
-            _server.Services.Get<FubuMVC.Core.Assets.Templates.TemplateGraph>().WriteAll();
-        }
     }
 }

@@ -20,17 +20,6 @@ namespace Fubu.Running
                 return false;
             }
 
-            if (input.TemplatesFlag)
-            {
-                _application.GenerateTemplates();
-            }
-
-            if (!input.ShouldRunApp())
-            {
-                _application.Shutdown();
-                return true;
-            }
-
             tellUsersWhatToDo();
             var key = Console.ReadKey();
             while (key.Key != ConsoleKey.Q)

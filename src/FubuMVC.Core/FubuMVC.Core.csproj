@@ -87,7 +87,6 @@
     <Compile Include="Assets\ObsoleteAssetFilePageExtensions.cs" />
     <Compile Include="Assets\ScriptTag.cs" />
     <Compile Include="Assets\StylesheetLinkTag.cs" />
-    <Compile Include="Assets\Templates\TemplateGraph.cs" />
     <Compile Include="ClientMessage.cs" />
     <Compile Include="Configuration\BehaviorGraphBuilder.cs" />
     <Compile Include="Behaviors\AsyncContinueWithBehavior.cs" />
@@ -509,7 +508,6 @@
     <Compile Include="StructureMap\StructureMapFubuRegistry.cs" />
     <Compile Include="StructureMap\StructureMapServiceLocator.cs" />
     <Compile Include="TagAttribute.cs" />
-    <Compile Include="Template.cs" />
     <Compile Include="UI\AuthorizationOnPageExtensions.cs" />
     <Compile Include="UI\Bootstrap\Collapsibles\CollapsiblePartialExpression.cs" />
     <Compile Include="UI\Bootstrap\Collapsibles\CollapsibleTag.cs" />

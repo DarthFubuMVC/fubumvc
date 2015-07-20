@@ -7,6 +7,5 @@ namespace Fubu.Running
         void Initialize(Type applicationType, int port, string physicalPath);
         void ShutDown();
         void Recycle();
-        void GenerateTemplates();
     }
 }

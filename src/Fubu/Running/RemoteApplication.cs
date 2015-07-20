@@ -140,10 +140,6 @@ namespace Fubu.Running
             _proxy.SafeDispose();
         }
 
-        public void GenerateTemplates()
-        {
-            _proxy.GenerateTemplates();
-        }
     }
 
 

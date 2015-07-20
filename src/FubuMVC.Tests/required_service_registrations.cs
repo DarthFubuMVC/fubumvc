@@ -7,7 +7,6 @@ using FubuCore.Formatting;
 using FubuCore.Logging;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets;
-using FubuMVC.Core.Assets.Templates;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Assets;
@@ -68,7 +67,6 @@ namespace FubuMVC.Tests
                 _.ShouldHaveRegistration<IActivator, DisplayConversionRegistryActivator>();
 
                 _.DefaultSingletonIs<IChainResolver, ChainResolutionCache>();
-                _.DefaultSingletonIs<TemplateGraph, TemplateGraph>();
                 _.DefaultSingletonIs<IClientMessageCache, ClientMessageCache>();
 
                 _.DefaultRegistrationIs<IDisplayFormatter, DisplayFormatter>();

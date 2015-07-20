@@ -84,13 +84,6 @@ namespace Fubu.Running
             _runner.Dispose();
         }
 
-        public void GenerateTemplates()
-        {
-            _runner.SendRemotely(new GenerateTemplates());
-        }
     }
 
-    public class GenerateTemplates
-    {
-    }
 }
