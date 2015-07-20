@@ -1,5 +1,6 @@
 ﻿using AssemblyPackage;
 using FubuCore.Reflection;
+using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -9,39 +10,21 @@ namespace FubuMVC.Tests.Registration
     [TestFixture]
     public class AccessOverridesFinderIntegratedTester
     {
-        private BehaviorGraph theGraph;
-
-        [SetUp]
-        public void SetUp()
-        {
-            theGraph = BehaviorGraph.BuildFrom(x => { });
-
-            theGraph.PackageAssemblies = new[] {typeof (AssemblyPackage.Address).Assembly};
-        }
-
         [Test]
-        public void registers_the_accessor_rules()
+        public void accessor_rules_mechanics()
         {
-            theGraph.Services.DefaultServiceFor<AccessorRules>()
-                .Value.ShouldBeTheSameAs(theGraph.Settings.Get<AccessorRules>());
+            using (var runtime = FubuApplication.DefaultPolicies().Bootstrap())
+            {
+                runtime.Container.DefaultRegistrationIs<AccessorRules, AccessorRules>();
+
+                var accessorRules = runtime.Container.GetInstance<AccessorRules>();
+                
+                accessorRules
+                    .AllRulesFor<Target1, ColorRule>(x => x.Name)
+                    .ShouldHaveTheSameElementsAs(new ColorRule("orange"));
+            }
         }
 
-        [Test]
-        public void finds_overrides_from_the_application()
-        {
-            var rules = theGraph.Settings.Get<AccessorRules>();
-
-            rules.AllRulesFor<Target1, ColorRule>(x => x.Name)
-                .ShouldHaveTheSameElementsAs(new ColorRule("orange"));
-        }
-
-        [Test, Explicit]
-        public void finds_overrides_from_package_assemblies_too()
-        {
-            var rules = theGraph.Settings.Get<AccessorRules>();
-            rules.AllRulesFor<AssemblyPackage.Address, ElementRule>(x => x.Address1)
-                .ShouldHaveTheSameElementsAs(new ElementRule("1"), new ElementRule("2"));
-        }
     }
 
     public class Target1Overrides : OverridesFor<Target1>

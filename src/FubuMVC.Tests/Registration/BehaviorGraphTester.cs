@@ -68,20 +68,6 @@ namespace FubuMVC.Tests.Registration
             graph.Settings.Get<SessionStateRequirement>().ShouldEqual(SessionStateRequirement.RequiresSessionState);
         }
 
-        [Test]
-        public void RegisterService_can_be_called_multiple_times_to_store_multiple_implementations()
-        {
-            var graph = new BehaviorGraph();
-            graph.Services.AddService<IRequestData, RequestData>();
-            graph.Services.AddService<IRequestData, InMemoryRequestData>();
-
-            var implementations = new List<Type>();
-            graph.As<IRegisterable>().Register(
-                (t, def) => { if (t == typeof (IRequestData)) implementations.Add(def.Type); });
-
-            implementations.ShouldContain(typeof (RequestData));
-            implementations.ShouldContain(typeof (InMemoryRequestData));
-        }
 
         [Test]
         public void find_home_is_not_set()
@@ -109,14 +95,6 @@ namespace FubuMVC.Tests.Registration
             graph
                 .Behaviors
                 .ShouldNotContain(chain);
-        }
-
-        [Test]
-        public void the_first_call_to_RegisterService_for_a_type_registers_the_default()
-        {
-            var graph = new BehaviorGraph();
-            graph.Services.AddService<IRequestData, RequestData>();
-            graph.Services.DefaultServiceFor<IRequestData>().Type.ShouldEqual(typeof (RequestData));
         }
 
         [Test]
@@ -239,35 +217,6 @@ namespace FubuMVC.Tests.Registration
             graph.AddChain(chain);
             graph.IdForType(typeof (Model1)).ShouldEqual(chain.UniqueId);
         }
-    }
-
-
-    [TestFixture]
-    public class when_merging_services
-    {
-        #region Setup/Teardown
-
-        [SetUp]
-        public void SetUp()
-        {
-            graph1 = new BehaviorGraph();
-            graph2 = new BehaviorGraph();
-
-            foo1 = new Foo();
-            foo2 = new Foo();
-
-            graph1.Services.AddService(foo1);
-            graph2.Services.AddService(foo2);
-
-            graph1.As<IChainImporter>().Import(graph2.Behaviors);
-        }
-
-        #endregion
-
-        private BehaviorGraph graph1;
-        private BehaviorGraph graph2;
-        private Foo foo1;
-        private Foo foo2;
     }
 
 

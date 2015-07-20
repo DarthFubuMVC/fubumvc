@@ -55,13 +55,6 @@ namespace FubuMVC.Tests.Resources.PathBased
             return (ResourcePath)new ResourcePathBinder().Bind(typeof(ResourcePath), context);
         }
 
-        [Test]
-        public void resource_binder_is_registered_by_default()
-        {
-            BehaviorGraph.BuildEmptyGraph().Services
-                .ServicesFor<IModelBinder>()
-                .Any(x => x.Type == typeof(ResourcePathBinder)).ShouldBeTrue();
-        }
 
         [Test]
         public void matches_subclass_of_resource_path()

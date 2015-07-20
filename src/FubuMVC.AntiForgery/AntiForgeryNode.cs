@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.AntiForgery
 {
@@ -25,6 +26,15 @@ namespace FubuMVC.AntiForgery
         protected override ObjectDef buildObjectDef()
         {
             return ObjectDef.ForType<AntiForgeryBehavior>(x => x.DependencyByValue(_salt));
+        }
+
+
+        protected override IConfiguredInstance buildInstance()
+        {
+            var instance = new SmartInstance<AntiForgeryBehavior>();
+            instance.Ctor<string>().Is(_salt);
+
+            return instance;
         }
 
         public string Salt

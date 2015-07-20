@@ -14,6 +14,8 @@ using FubuMVC.Core.Diagnostics.Assets;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Core.Registration.Querying;
+using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Resources.PathBased;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Aggregation;
 using FubuMVC.Core.Runtime.Conditionals;
@@ -42,6 +44,7 @@ namespace FubuMVC.Tests
                 _.DefaultRegistrationIs<IObjectResolver, ObjectResolver>();
                 _.DefaultRegistrationIs<IBindingLogger, NulloBindingLogger>();
                 _.DefaultRegistrationIs<ISmartRequest, FubuSmartRequest>();
+                _.ShouldHaveRegistration<IModelBinder, ResourcePathBinder>();
 
 
                 // Core services
@@ -75,6 +78,11 @@ namespace FubuMVC.Tests
                 _.DefaultRegistrationIs<IUrlRegistry, UrlRegistry>();
                 _.DefaultRegistrationIs<IChainUrlResolver, ChainUrlResolver>();
                 _.DefaultRegistrationIs<AppReloaded, AppReloaded>();
+
+                _.DefaultRegistrationIs<ILogger, Logger>();
+
+                // Conneg
+                _.DefaultRegistrationIs<IResourceNotFoundHandler, DefaultResourceNotFoundHandler>();
 
 
 
