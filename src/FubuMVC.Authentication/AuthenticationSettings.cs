@@ -29,6 +29,8 @@ namespace FubuMVC.Authentication
             _strategies = new AuthenticationChain();
         }
 
+        public bool Enabled = false;
+
         /// <summary>
         ///     Register and orders the IAuthenticationStrategy's applied to this
         ///     FubuMVC application

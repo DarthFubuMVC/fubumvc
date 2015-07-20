@@ -14,6 +14,12 @@ namespace FubuMVC.Authentication.Tests
     public class AuthenticationSettingsTester
     {
         [Test]
+        public void disabled_by_default()
+        {
+            new AuthenticationSettings().Enabled.ShouldBeFalse();
+        }
+
+        [Test]
         public void has_to_be_application_level()
         {
             typeof(AuthenticationSettings).HasAttribute<ApplicationLevelAttribute>()
