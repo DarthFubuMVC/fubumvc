@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using FubuCore;
-using FubuMVC.Authentication.Serenity;
+using Serenity;
 using StoryTeller;
 
 namespace Specifications.Fixtures

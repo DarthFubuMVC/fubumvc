@@ -116,6 +116,7 @@
     <Compile Include="Fixtures\WebDriverExtensions.cs" />
     <Compile Include="IAfterNavigation.cs" />
     <Compile Include="INavigationLogger.cs" />
+    <Compile Include="LoginScreenFixture.cs" />
     <Compile Include="NulloAfterNavigation.cs" />
     <Compile Include="NulloNavigationLogger.cs" />
     <Compile Include="ScreenDriver.cs" />

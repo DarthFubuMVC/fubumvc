@@ -7,11 +7,10 @@ using FubuCore.Reflection;
 using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Endpoints;
 using OpenQA.Selenium;
-using Serenity;
 using Serenity.Fixtures;
 using StoryTeller;
 
-namespace FubuMVC.Authentication.Serenity
+namespace Serenity
 {
     public class LoginScreenFixture : ScreenFixture
     {
