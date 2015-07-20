@@ -44,6 +44,19 @@ namespace FubuMVC.Tests.Registration.Nodes
         }
     }
 
+    public class FakeAuthBehavior : IActionBehavior
+    {
+        public void Invoke()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void InvokePartial()
+        {
+            throw new System.NotImplementedException();
+        }
+    }
+
     public class AuthNode : BehaviorNode
     {
         public override BehaviorCategory Category
@@ -53,12 +66,12 @@ namespace FubuMVC.Tests.Registration.Nodes
 
         protected override IConfiguredInstance buildInstance()
         {
-            return new SmartInstance<StopwatchBehavior>();
+            return new SmartInstance<FakeAuthBehavior>();
         }
 
         protected override ObjectDef buildObjectDef()
         {
-            return ObjectDef.ForType<StopwatchBehavior>();
+            return ObjectDef.ForType<FakeAuthBehavior>();
         }
     }
 }
