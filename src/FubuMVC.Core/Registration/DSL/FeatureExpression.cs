@@ -1,4 +1,5 @@
 ﻿using FubuMVC.Core.Localization;
+using FubuMVC.Core.Security.AntiForgery;
 using FubuMVC.Core.Security.Authentication;
 
 namespace FubuMVC.Core.Registration.DSL
@@ -42,6 +43,17 @@ namespace FubuMVC.Core.Registration.DSL
             get
             {
                 return new Feature<LocalizationSettings, bool>(_parent, (settings, enabled) => settings.Enabled = enabled);
+            }
+        }
+
+        /// <summary>
+        /// Configure and enable the built in anti-forgery functionality
+        /// </summary>
+        public Feature<AntiForgerySettings, bool> AntiForgery
+        {
+            get
+            {
+                return new Feature<AntiForgerySettings, bool>(_parent, (settings, enabled) => settings.Enabled = enabled);
             }
         } 
     }

@@ -1,14 +1,15 @@
 ﻿using System;
+using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Policies;
-using FubuCore;
 
-namespace FubuMVC.AntiForgery
+namespace FubuMVC.Core.Security.AntiForgery
 {
     public class AntiForgerySettings
     {
         private ChainPredicate _filter;
-        
+
+        public bool Enabled { get; set; }
         
         public AntiForgerySettings()
         {

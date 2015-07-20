@@ -252,6 +252,15 @@
     <Compile Include="Runtime\RequestCompletionTester.cs" />
     <Compile Include="Runtime\SimpleSessionStateTester.cs" />
     <Compile Include="Runtime\SynchronousCoordinator.cs" />
+    <Compile Include="Security\AntiForgery\AntiForgeryBehaviorTester.cs" />
+    <Compile Include="Security\AntiForgery\AntiForgeryServiceTester.cs" />
+    <Compile Include="Security\AntiForgery\AntiForgerySettingsTester.cs" />
+    <Compile Include="Security\AntiForgery\AntiForgeryTokenAttributeTester.cs" />
+    <Compile Include="Security\AntiForgery\AntiForgeryTokenProviderTester.cs" />
+    <Compile Include="Security\AntiForgery\AntiForgeryValidatorTester.cs" />
+    <Compile Include="Security\AntiForgery\BinaryAntiForgerySerializerTester.cs" />
+    <Compile Include="Security\AntiForgery\Default_policy_applies_anti_forgery_to_post_routes.cs" />
+    <Compile Include="Security\AntiForgery\MachineKeyAntiForgeryEncoderTester.cs" />
     <Compile Include="Security\Authentication\AjaxAuthenticationRedirectTester.cs" />
     <Compile Include="Security\Authentication\ApplyAuthenticationPolicyTester.cs" />
     <Compile Include="Security\Authentication\ApplyPassThroughAuthenticationPolicyTester.cs" />

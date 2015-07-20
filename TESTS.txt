@@ -3,7 +3,6 @@ FubuMVC.Razor.Tests
 FubuMVC.Spark.Tests
 fubu.Testing
 FubuPersistence.Tests
-FubuMVC.AntiForgery.Testing
 FubuTransportation.Testing
 FubuTransportation.RavenDb.Testing
 FubuTransportation.LightningQueues.Testing

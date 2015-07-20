@@ -74,14 +74,6 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="AntiForgeryBehaviorTester.cs" />
-    <Compile Include="AntiForgeryServiceTester.cs" />
-    <Compile Include="AntiForgeryTokenAttributeTester.cs" />
-    <Compile Include="AntiForgeryTokenProviderTester.cs" />
-    <Compile Include="AntiForgeryValidatorTester.cs" />
-    <Compile Include="BinaryAntiForgerySerializerTester.cs" />
-    <Compile Include="Default_policy_applies_anti_forgery_to_post_routes.cs" />
-    <Compile Include="MachineKeyAntiForgeryEncoderTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

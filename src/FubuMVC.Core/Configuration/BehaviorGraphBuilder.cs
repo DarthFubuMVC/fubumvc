@@ -12,6 +12,7 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Localization;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Security.AntiForgery;
 using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Endpoints;
 using FubuMVC.Core.View;
@@ -48,6 +49,7 @@ namespace FubuMVC.Core.Configuration
             addBuiltInAuthentication(registry, graph);
             addBuiltInDiagnostics(graph, perfTimer);
             addBuiltInLocalization(registry, graph);
+            addBuiltInAntiForgery(registry, graph);
 
             perfTimer.Record("Local Application BehaviorGraph", () => config.BuildLocal(graph, perfTimer));
 
@@ -79,6 +81,16 @@ namespace FubuMVC.Core.Configuration
             new AutoImportModelNamespacesConvention().Configure(graph);
 
             return graph;
+        }
+
+        private static void addBuiltInAntiForgery(FubuRegistry registry, BehaviorGraph graph)
+        {
+            var settings = graph.Settings.Get<AntiForgerySettings>();
+            if (settings.Enabled)
+            {
+                registry.Services<AntiForgeryServiceRegistry>();
+                registry.Policies.Global.Add<AntiForgeryPolicy>();
+            }
         }
 
         private static void addBuiltInLocalization(FubuRegistry registry, BehaviorGraph graph)

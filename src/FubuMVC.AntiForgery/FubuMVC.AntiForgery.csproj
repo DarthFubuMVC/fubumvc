@@ -62,30 +62,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="AntiForgeryBehavior.cs" />
-    <Compile Include="AntiForgeryData.cs" />
-    <Compile Include="AntiForgeryExtensions.cs" />
-    <Compile Include="AntiForgeryNode.cs" />
-    <Compile Include="AntiForgeryPolicy.cs" />
-    <Compile Include="AntiForgeryService.cs" />
-    <Compile Include="AntiForgeryServiceRegistry.cs" />
-    <Compile Include="AntiForgerySettings.cs" />
-    <Compile Include="AntiForgeryTokenAttribute.cs" />
-    <Compile Include="AntiForgeryTokenFubuPageExtensions.cs" />
-    <Compile Include="AntiForgeryTokenProvider.cs" />
-    <Compile Include="AntiForgeryValidator.cs" />
-    <Compile Include="BinaryAntiForgerySerializer.cs" />
-    <Compile Include="FormToken.cs" />
-    <Compile Include="IAntiForgeryEncoder.cs" />
-    <Compile Include="IAntiForgerySerializer.cs" />
-    <Compile Include="IAntiForgeryService.cs" />
-    <Compile Include="IAntiForgeryTokenProvider.cs" />
-    <Compile Include="IAntiForgeryValidator.cs" />
-    <Compile Include="MachineKeyAntiForgeryEncoder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ripple.dependencies.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
