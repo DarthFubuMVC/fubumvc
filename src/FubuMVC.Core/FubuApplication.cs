@@ -213,9 +213,7 @@ namespace FubuMVC.Core
 
         private BehaviorGraph buildBehaviorGraph(IPerfTimer timer, IEnumerable<Assembly> assemblies, IActivationDiagnostics diagnostics)
         {
-            var graph = BehaviorGraphBuilder.Build(_registry.Value, timer, assemblies, diagnostics);
-
-            return graph;
+            return BehaviorGraphBuilder.Build(_registry.Value, timer, assemblies, diagnostics);
         }
 
         // Build route objects from route definitions on graph + add packaging routes

@@ -1,4 +1,6 @@
-﻿namespace FubuMVC.Core.Registration.DSL
+﻿using FubuMVC.Core.Security.Authentication;
+
+namespace FubuMVC.Core.Registration.DSL
 {
     public class FeatureExpression
     {
@@ -17,6 +19,17 @@
             get
             {
                 return new Feature<DiagnosticsSettings, TraceLevel>(_parent, (settings, level) => settings.TraceLevel = level);
+            }
+        }
+
+        /// <summary>
+        /// Configure and enable the built in authentication features
+        /// </summary>
+        public Feature<AuthenticationSettings, bool> Authentication
+        {
+            get
+            {
+                return new Feature<AuthenticationSettings, bool>(_parent, (settings, enabled) => settings.Enabled = enabled);
             }
         } 
     }

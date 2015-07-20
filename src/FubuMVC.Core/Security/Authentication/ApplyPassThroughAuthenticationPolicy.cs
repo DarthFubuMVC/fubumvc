@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
@@ -7,6 +8,7 @@ using FubuMVC.Core.Registration.Policies;
 
 namespace FubuMVC.Core.Security.Authentication
 {
+    [Description("Adds passthrough authentication to chains that match the AuthenticationSettings.PassThroughChains")]
     public class ApplyPassThroughAuthenticationPolicy : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)

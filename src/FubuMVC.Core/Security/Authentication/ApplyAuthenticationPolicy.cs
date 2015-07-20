@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
@@ -7,6 +8,7 @@ using FubuMVC.Core.Registration.Policies;
 
 namespace FubuMVC.Core.Security.Authentication
 {
+    [Description("Applies the built in Authentication to chains")]
     public class ApplyAuthenticationPolicy : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)

@@ -410,7 +410,6 @@
     <Compile Include="Runtime\PartialFactory.cs" />
     <Compile Include="Runtime\SetValueReport.cs" />
     <Compile Include="Security\Authentication\AjaxAuthenticationRedirect.cs" />
-    <Compile Include="Security\Authentication\ApplyAuthentication.cs" />
     <Compile Include="Security\Authentication\ApplyAuthenticationPolicy.cs" />
     <Compile Include="Security\Authentication\ApplyPassThroughAuthenticationPolicy.cs" />
     <Compile Include="Security\Authentication\Auditing\AuditMessage.cs" />

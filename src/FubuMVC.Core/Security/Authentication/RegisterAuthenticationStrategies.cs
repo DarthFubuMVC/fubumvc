@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Linq;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
@@ -5,6 +6,7 @@ using FubuMVC.Core.Security.Authentication.Membership;
 
 namespace FubuMVC.Core.Security.Authentication
 {
+    [Description("Registers the authentication strategies to the application container")]
     public class RegisterAuthenticationStrategies : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)

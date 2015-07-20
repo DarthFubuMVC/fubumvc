@@ -11,6 +11,8 @@ using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Security.Authentication;
+using FubuMVC.Core.Security.Authentication.Endpoints;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Attachment;
 
@@ -40,7 +42,7 @@ namespace FubuMVC.Core.Configuration
 
             AccessorRulesCompiler.Compile(graph, perfTimer);
 
-
+            addBuiltInAuthentication(registry, graph);
             addBuiltInDiagnostics(graph, perfTimer);
 
             perfTimer.Record("Local Application BehaviorGraph", () => config.BuildLocal(graph, perfTimer));
@@ -73,6 +75,21 @@ namespace FubuMVC.Core.Configuration
             new AutoImportModelNamespacesConvention().Configure(graph);
 
             return graph;
+        }
+
+        private static void addBuiltInAuthentication(FubuRegistry registry, BehaviorGraph graph)
+        {
+            if (graph.Settings.Get<AuthenticationSettings>().Enabled)
+            {
+                registry.Actions.IncludeType<LoginController>();
+                registry.Actions.IncludeType<LogoutController>();
+
+                registry.Services<AuthenticationServiceRegistry>();
+
+                registry.Policies.Global.Add(new ApplyAuthenticationPolicy());
+                registry.Policies.Global.Add<RegisterAuthenticationStrategies>();
+                registry.Policies.Global.Add<ApplyPassThroughAuthenticationPolicy>();
+            }
         }
 
         private static void addBuiltInDiagnostics(BehaviorGraph graph, IPerfTimer timer)

@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Security.Authentication
         {
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<NothingEndpoint>(); // Have to do this to make it an isolated test
-            registry.Import<ApplyAuthentication>();
+            registry.Features.Authentication.Enable(true);
             registry.Import<FormsAuthenticationRegistry>();
 
             theGraphWithBasicAuthentication = BehaviorGraph.BuildFrom(registry);

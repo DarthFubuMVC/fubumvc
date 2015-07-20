@@ -250,7 +250,6 @@
     <Compile Include="Security\Authentication\AjaxAuthenticationRedirectTester.cs" />
     <Compile Include="Security\Authentication\ApplyAuthenticationPolicyTester.cs" />
     <Compile Include="Security\Authentication\ApplyPassThroughAuthenticationPolicyTester.cs" />
-    <Compile Include="Security\Authentication\AssemblyNeedsTheFubuModuleAttribute.cs" />
     <Compile Include="Security\Authentication\AuthenticationBootstrapperTests.cs" />
     <Compile Include="Security\Authentication\AuthenticationFilterNodeTester.cs" />
     <Compile Include="Security\Authentication\AuthenticationFilterTester.cs" />
@@ -421,7 +420,8 @@
     <Compile Include="FubuBootstrapperIntegrationTester.cs" />
     <Compile Include="FubuRegistryTester.cs" />
     <Compile Include="HtmlGenerationTestExtensions.cs" />
-    <Compile Include="Registration\BehaviorGraphTester.cs"></Compile>
+    <Compile Include="Registration\BehaviorGraphTester.cs">
+    </Compile>
     <Compile Include="Registration\Conventions\ActionSourceTester.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConventionTester.cs" />
     <Compile Include="Registration\Conventions\CustomConventionIntegratedTester.cs" />

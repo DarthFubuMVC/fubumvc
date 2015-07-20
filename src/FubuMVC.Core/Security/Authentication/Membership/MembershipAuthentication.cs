@@ -50,6 +50,7 @@ namespace FubuMVC.Core.Security.Authentication.Membership
         }
     }
 
+    [Serializable]
     public class UnknownUserException : Exception
     {
         public UnknownUserException(string user) : base("User {0} cannot be found".ToFormat(user))

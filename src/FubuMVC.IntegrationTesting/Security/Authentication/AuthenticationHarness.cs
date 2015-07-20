@@ -10,29 +10,24 @@ using StructureMap;
 
 namespace FubuMVC.IntegrationTesting.Security.Authentication
 {
-
     public class AuthenticationHarness
     {
         private IContainer theContainer;
         private EmbeddedFubuMvcServer server;
 
-        protected virtual void configure(Core.FubuRegistry registry)
+        protected virtual void configure(FubuRegistry registry)
         {
             registry.Actions.IncludeType<SampleController>();
-            registry.Import<ApplyAuthentication>();
+            
 
 
-            registry.AlterSettings<AuthenticationSettings>(_ => {
-                _.Strategies.AddToEnd(MembershipNode.For<InMemoryMembershipRepository>());
-            });
+            registry.AlterSettings<AuthenticationSettings>(
+                _ => _.Strategies.AddToEnd(MembershipNode.For<InMemoryMembershipRepository>()));
         }
 
         public BehaviorGraph BehaviorGraph
         {
-            get
-            {
-                return Container.GetInstance<BehaviorGraph>();
-            }
+            get { return Container.GetInstance<BehaviorGraph>(); }
         }
 
         [SetUp]
@@ -40,6 +35,8 @@ namespace FubuMVC.IntegrationTesting.Security.Authentication
         {
             var registry = new FubuRegistry();
             configure(registry);
+
+            registry.Features.Authentication.Enable(true);
 
             server = FubuApplication.For(registry).RunEmbeddedWithAutoPort();
             theContainer = server.Runtime.Factory.Get<IContainer>();
@@ -49,10 +46,7 @@ namespace FubuMVC.IntegrationTesting.Security.Authentication
 
         protected EndpointDriver endpoints
         {
-            get
-            {
-                return server.Endpoints;
-            }
+            get { return server.Endpoints; }
         }
 
         [TearDown]
@@ -66,8 +60,14 @@ namespace FubuMVC.IntegrationTesting.Security.Authentication
         }
 
 
-        public IContainer Container { get { return theContainer; } }
+        public IContainer Container
+        {
+            get { return theContainer; }
+        }
 
-        public IUrlRegistry Urls { get { return theContainer.GetInstance<IUrlRegistry>(); } }
+        public IUrlRegistry Urls
+        {
+            get { return theContainer.GetInstance<IUrlRegistry>(); }
+        }
     }
 }
