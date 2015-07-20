@@ -1,15 +1,8 @@
-using System.Linq;
 using FubuMVC.Core;
-using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Diagnostics.Runtime.Tracing;
-using FubuMVC.Core.Registration;
-using FubuMVC.Core.Urls;
-using FubuTestingSupport;
 using NUnit.Framework;
-using Rhino.Mocks;
 using StructureMap;
-using TraceLevel = FubuMVC.Core.TraceLevel;
 
 namespace FubuMVC.Tests.Diagnostics.Runtime
 {
@@ -32,8 +25,5 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
                 container.DefaultRegistrationIs<IRequestLogBuilder, RequestLogBuilder>();
             }
         }
-
     }
-
-
 }

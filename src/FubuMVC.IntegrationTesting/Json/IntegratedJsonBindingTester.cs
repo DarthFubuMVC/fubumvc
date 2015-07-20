@@ -31,7 +31,7 @@ namespace FubuMVC.IntegrationTesting.Json
             var time = MockRepository.GenerateStub<ISystemTime>();
             time.Stub(x => x.UtcNow()).Return(now);
 
-            using (var server = new IntegratedJsonBindingApplication(recorder, time).BuildApplication().RunEmbedded())
+            using (var server = new IntegratedJsonBindingApplication(recorder, time).BuildApplication().RunEmbedded(port:PortFinder.FindPort(5502)))
             {
                 var url = server.Urls.UrlFor(typeof (IntegratedJsonBindingTarget));
                 var response = post(url.ToAbsoluteUrl(server.BaseAddress),

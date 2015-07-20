@@ -22,7 +22,8 @@ namespace FubuMVC.IntegrationTesting
                     AppDomain.CurrentDomain.BaseDirectory.ParentDirectory().ParentDirectory();
 
                 var registry = new FubuRegistry();
-                registry.AlterSettings<DiagnosticsSettings>(x => x.TraceLevel = TraceLevel.Verbose);
+                registry.Features.Diagnostics.Enable(TraceLevel.Verbose);
+
                 return FubuApplication.For(registry).RunInMemory();
             });
 

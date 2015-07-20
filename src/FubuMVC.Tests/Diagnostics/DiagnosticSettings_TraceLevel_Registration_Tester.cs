@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using FubuCore.Binding.InMemory;
 using FubuCore.Logging;
@@ -10,9 +9,7 @@ using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration;
 using FubuTestingSupport;
 using NUnit.Framework;
-using Rhino.Mocks;
 using StructureMap;
-using TraceLevel = FubuMVC.Core.TraceLevel;
 
 namespace FubuMVC.Tests.Diagnostics
 {
@@ -22,21 +19,19 @@ namespace FubuMVC.Tests.Diagnostics
         [Test]
         public void authorization_rules_from_settings_are_applied()
         {
-            BehaviorGraph authorizedGraph = BehaviorGraph.BuildFrom(r =>
+            var authorizedGraph = BehaviorGraph.BuildFrom(r =>
             {
-                r.AlterSettings<DiagnosticsSettings>(x =>
+                r.Features.Diagnostics.Configure(x =>
                 {
                     x.TraceLevel = TraceLevel.Verbose;
                     x.RestrictToRole("admin");
                 });
             });
 
-            BehaviorGraph notAuthorizedGraph = BehaviorGraph.BuildFrom(r =>
+            var notAuthorizedGraph = BehaviorGraph.BuildFrom(r =>
             {
-                  r.AlterSettings<DiagnosticsSettings>(x =>
-                  {
-                      x.TraceLevel = TraceLevel.Verbose;
-                  });
+                r.Features.Diagnostics.Enable(TraceLevel.Verbose);
+
 //                r.AlterSettings<DiagnosticsSettings>(x =>
 //                {
 //                    x.RestrictToRule("admin");
@@ -54,43 +49,12 @@ namespace FubuMVC.Tests.Diagnostics
     [TestFixture]
     public class DiagnosticSettings_TraceLevel_Registration_Tester
     {
-        private BehaviorGraph verboseGraph;
-        private BehaviorGraph productionGraph;
-        private BehaviorGraph noneGraph;
-
-        [TestFixtureSetUp]
-        public void SetUp()
-        {
-            FubuMode.Reset();
-            verboseGraph = BehaviorGraph.BuildFrom(r =>
-            {
-                r.AlterSettings<DiagnosticsSettings>(x =>
-                {
-                    x.TraceLevel = TraceLevel.Verbose;
-                });
-            });
-
-            productionGraph = BehaviorGraph.BuildFrom(r =>
-            {
-                r.AlterSettings<DiagnosticsSettings>(x =>
-                {
-                    x.TraceLevel = TraceLevel.Production;
-                });
-            });
-
-            noneGraph = BehaviorGraph.BuildFrom(r =>
-            {
-                r.AlterSettings<DiagnosticsSettings>(x =>
-                {
-                    x.TraceLevel = TraceLevel.None;
-                });
-            });
-        }
-
         private void withTraceLevel(TraceLevel level, Action<IContainer> action)
         {
+            FubuMode.Reset();
+
             var registry = new FubuRegistry();
-            registry.AlterSettings<DiagnosticsSettings>(_ => _.TraceLevel = level);
+            registry.Features.Diagnostics.Enable(level);
 
             using (var runtime = FubuApplication.For(registry).Bootstrap())
             {
@@ -134,8 +98,5 @@ namespace FubuMVC.Tests.Diagnostics
                 c.DefaultRegistrationIs<IBindingLogger, NulloBindingLogger>();
             });
         }
-    
-
-
     }
 }

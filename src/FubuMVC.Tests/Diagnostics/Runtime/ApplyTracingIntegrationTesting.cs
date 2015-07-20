@@ -35,7 +35,7 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
 
             });
 
-            registry.AlterSettings<DiagnosticsSettings>(x => x.TraceLevel = TraceLevel.Verbose);
+            registry.Features.Diagnostics.Enable(TraceLevel.Verbose);
 
 
             BehaviorGraph.BuildFrom(registry);
@@ -45,7 +45,7 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
         public void do_nothing_if_tracing_is_off()
         {
             var registry = new FubuRegistry();
-            registry.AlterSettings<DiagnosticsSettings>(x => x.TraceLevel = TraceLevel.None);
+            registry.Features.Diagnostics.Enable(TraceLevel.None);
             registry.Configure(graph =>
             {
                 chain1 = new RoutedChain("something");

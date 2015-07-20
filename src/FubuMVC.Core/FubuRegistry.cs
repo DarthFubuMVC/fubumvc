@@ -75,7 +75,6 @@ namespace FubuMVC.Core
             get { return GetType().ToString(); }
         }
 
-        #region IFubuRegistry Members
 
         /// <summary>
         ///   Expression builder for configuring conventions that execute near the end of the build up of the <see cref = "BehaviorGraph" />.
@@ -210,7 +209,18 @@ namespace FubuMVC.Core
             _importedTypes.Add(typeof (T));
         }
 
-        #endregion
+
+        /// <summary>
+        /// Enable and configure optional features
+        /// </summary>
+        public FeatureExpression Features
+        {
+            get
+            {
+                return new FeatureExpression(this);
+            }
+        }
+
 
         private void addExplicit(Action<BehaviorGraph> action)
         {
