@@ -435,7 +435,6 @@
     <Compile Include="Security\Authentication\Cookies\ILoginCookieService.cs" />
     <Compile Include="Security\Authentication\Cookies\LoginCookieService.cs" />
     <Compile Include="Security\Authentication\DefaultAuthenticationRedirect.cs" />
-    <Compile Include="Security\Authentication\Endpoints\FormsAuthenticationRegistry.cs" />
     <Compile Include="Security\Authentication\Endpoints\LoginController.cs" />
     <Compile Include="Security\Authentication\Endpoints\LoginKeys.cs" />
     <Compile Include="Security\Authentication\Endpoints\LogoutController.cs" />

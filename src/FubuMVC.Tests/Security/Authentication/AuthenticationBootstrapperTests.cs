@@ -2,7 +2,6 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Security.Authentication;
-using FubuMVC.Core.Security.Authentication.Endpoints;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -19,7 +18,6 @@ namespace FubuMVC.Tests.Security.Authentication
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<NothingEndpoint>(); // Have to do this to make it an isolated test
             registry.Features.Authentication.Enable(true);
-            registry.Import<FormsAuthenticationRegistry>();
 
             theGraphWithBasicAuthentication = BehaviorGraph.BuildFrom(registry);
         }
@@ -53,5 +51,7 @@ namespace FubuMVC.Tests.Security.Authentication
         }
     }
 
-    public class NothingEndpoint{}
+    public class NothingEndpoint
+    {
+    }
 }
