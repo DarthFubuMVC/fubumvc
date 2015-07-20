@@ -1,14 +1,14 @@
 ﻿using System;
+using System.Linq;
 using FubuCore.Dates;
-using FubuMVC.Authentication;
-using FubuMVC.Authentication.Auditing;
+using FubuMVC.Core.Security.Authentication;
+using FubuMVC.Core.Security.Authentication.Auditing;
 using FubuPersistence;
 using FubuPersistence.RavenDb;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Raven.Client;
 using StructureMap;
-using System.Linq;
-using FubuTestingSupport;
 
 namespace FubuMVC.PersistedMembership.Testing
 {
@@ -24,14 +24,20 @@ namespace FubuMVC.PersistedMembership.Testing
             theTime = new SettableClock();
             theTime.LocalNow(LocalTime.AtMachineTime("1200")); // doesn't matter what, only needs to be constant
 
-            theContainer = new Container(x => {
+            theContainer = new Container(x =>
+            {
                 x.IncludeRegistry<RavenDbRegistry>();
-                x.For<RavenDbSettings>().Use(new RavenDbSettings {RunInMemory = true, DataDirectory = null, Url = null, ConnectionString = null});
+                x.For<RavenDbSettings>()
+                    .Use(new RavenDbSettings
+                    {
+                        RunInMemory = true,
+                        DataDirectory = null,
+                        Url = null,
+                        ConnectionString = null
+                    });
 
                 x.For<ISystemTime>().Use(theTime);
             });
-
-
         }
 
         [TearDown]
@@ -44,9 +50,10 @@ namespace FubuMVC.PersistedMembership.Testing
         public void write_audit_message()
         {
             var auditor = theContainer.GetInstance<PersistedLoginAuditor>();
-            auditor.Audit(new Something{UserName = "the something"});
+            auditor.Audit(new Something {UserName = "the something"});
 
-            var theAudit = theContainer.GetInstance<IEntityRepository>().All<Audit>().Where(x => x.Type == "Something").Single();
+            var theAudit =
+                theContainer.GetInstance<IEntityRepository>().All<Audit>().Where(x => x.Type == "Something").Single();
             theAudit.Message.ShouldBeOfType<Something>().UserName.ShouldEqual("the something");
             theAudit.Timestamp.ShouldEqual(theTime.UtcNow());
             theAudit.Username.ShouldEqual("the something");
@@ -65,7 +72,7 @@ namespace FubuMVC.PersistedMembership.Testing
             auditor.Audit(request);
 
             var theAudit = theContainer.GetInstance<IEntityRepository>().All<Audit>()
-                                       .Where(x => x.Type == "LoginSuccess").Single();
+                .Where(x => x.Type == "LoginSuccess").Single();
 
             theAudit.Message.ShouldBeOfType<LoginSuccess>();
             theAudit.Timestamp.ShouldEqual(theTime.UtcNow());
@@ -85,7 +92,7 @@ namespace FubuMVC.PersistedMembership.Testing
             auditor.Audit(request);
 
             var theAudit = theContainer.GetInstance<IEntityRepository>().All<Audit>()
-                                       .Where(x => x.Type == "LoginFailure").Single();
+                .Where(x => x.Type == "LoginFailure").Single();
 
             theAudit.Message.ShouldBeOfType<LoginFailure>();
             theAudit.Timestamp.ShouldEqual(theTime.UtcNow());
@@ -102,12 +109,7 @@ namespace FubuMVC.PersistedMembership.Testing
                 Attempts = 3
             };
 
-            theContainer.GetInstance<ITransaction>().Execute<IDocumentSession>(repo =>
-            {
-                repo.Store(history);
-            });
-
-
+            theContainer.GetInstance<ITransaction>().Execute<IDocumentSession>(repo => { repo.Store(history); });
 
 
             var request = new LoginRequest
@@ -118,8 +120,6 @@ namespace FubuMVC.PersistedMembership.Testing
 
             var auditor = theContainer.GetInstance<PersistedLoginAuditor>();
             auditor.Audit(request);
-
-
         }
 
         [Test]
@@ -131,7 +131,6 @@ namespace FubuMVC.PersistedMembership.Testing
                 UserName = "NeverFailedBefore",
                 NumberOfTries = 1,
                 LockedOutUntil = null
-                
             };
 
             var auditor = theContainer.GetInstance<PersistedLoginAuditor>();
@@ -155,7 +154,6 @@ namespace FubuMVC.PersistedMembership.Testing
                 UserName = "NeverFailedBefore",
                 NumberOfTries = 1,
                 LockedOutUntil = DateTime.Today.ToUniversalTime()
-
             };
 
             var auditor = theContainer.GetInstance<PersistedLoginAuditor>();
@@ -163,8 +161,7 @@ namespace FubuMVC.PersistedMembership.Testing
 
 
             var history = theContainer.GetInstance<IDocumentSession>()
-                        .Load<LoginFailureHistory>(request.UserName);
-
+                .Load<LoginFailureHistory>(request.UserName);
 
 
             history.LockedOutTime.ShouldEqual(request.LockedOutUntil);
@@ -179,10 +176,7 @@ namespace FubuMVC.PersistedMembership.Testing
                 Attempts = 2
             };
 
-            theContainer.GetInstance<ITransaction>().Execute<IDocumentSession>(repo =>
-            {
-                repo.Store(history);
-            });
+            theContainer.GetInstance<ITransaction>().Execute<IDocumentSession>(repo => { repo.Store(history); });
 
 
             var request = new LoginRequest
@@ -191,7 +185,6 @@ namespace FubuMVC.PersistedMembership.Testing
                 UserName = history.Id,
                 NumberOfTries = 3,
                 LockedOutUntil = DateTime.Today.ToUniversalTime()
-
             };
 
             var auditor = theContainer.GetInstance<PersistedLoginAuditor>();
@@ -199,11 +192,10 @@ namespace FubuMVC.PersistedMembership.Testing
 
 
             var history2 = theContainer.GetInstance<IDocumentSession>()
-                        .Load<LoginFailureHistory>(request.UserName);
+                .Load<LoginFailureHistory>(request.UserName);
 
             history2.Attempts.ShouldEqual(request.NumberOfTries);
             history2.LockedOutTime.ShouldEqual(request.LockedOutUntil);
-
         }
 
         [Test]

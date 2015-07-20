@@ -1,6 +1,6 @@
 ﻿using System;
 using FubuCore.Dates;
-using FubuMVC.Authentication;
+using FubuMVC.Core.Security.Authentication;
 using StoryTeller;
 using StoryTeller.Grammars.Decisions;
 
@@ -14,14 +14,10 @@ namespace Specifications.Fixtures
 
             this["Logic"] = new LoginLockoutGrammar();
         }
-
-        
     }
 
     public class LoginLockoutGrammar : DecisionTableGrammar
     {
-        
-
         private readonly AuthenticationSettings _settings = new AuthenticationSettings();
         private readonly LoginRequest _request = new LoginRequest();
         private readonly ISystemTime _systemTime = SystemTime.Default();
@@ -42,7 +38,7 @@ namespace Specifications.Fixtures
         {
             set { _request.NumberOfTries = value; }
         }
-        
+
         public int MaximumNumberOfFailedAttempts
         {
             set { _settings.MaximumNumberOfFailedAttempts = value; }
@@ -67,10 +63,7 @@ namespace Specifications.Fixtures
 
         public bool IsLockedOut
         {
-            get
-            {
-                return _lockedOutRule.IsLockedOut(_request) == LoginStatus.LockedOut;
-            }
+            get { return _lockedOutRule.IsLockedOut(_request) == LoginStatus.LockedOut; }
         }
 
         public string LockedOutUntil
@@ -78,12 +71,12 @@ namespace Specifications.Fixtures
             get
             {
                 _lockedOutRule.ProcessFailure(_request);
-                
+
                 if (_request.LockedOutUntil == null)
                 {
                     return "NONE";
                 }
-                
+
                 var totalMinutes = _request.LockedOutUntil.Value.Subtract(_systemTime.UtcNow()).TotalMinutes;
                 var number = (int) Math.Round(totalMinutes);
 

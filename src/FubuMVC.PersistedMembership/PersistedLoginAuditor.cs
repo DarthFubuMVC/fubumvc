@@ -1,6 +1,6 @@
 ﻿using FubuCore.Dates;
-using FubuMVC.Authentication;
-using FubuMVC.Authentication.Auditing;
+using FubuMVC.Core.Security.Authentication;
+using FubuMVC.Core.Security.Authentication.Auditing;
 using FubuPersistence;
 
 namespace FubuMVC.PersistedMembership
@@ -32,13 +32,12 @@ namespace FubuMVC.PersistedMembership
         {
             var audit = new Audit
             {
-                Message = new LoginFailure { UserName = request.UserName },
+                Message = new LoginFailure {UserName = request.UserName},
                 Timestamp = _systemTime.UtcNow()
             };
 
             _transaction.Execute<LoginAuditPersistor>(x => x.LogFailure(request, audit));
         }
-
 
 
         private void logSuccess(LoginRequest request)
@@ -51,7 +50,6 @@ namespace FubuMVC.PersistedMembership
 
             _transaction.Execute<LoginAuditPersistor>(x => x.LogSuccess(request, audit));
         }
-
 
 
         public void ApplyHistory(LoginRequest request)

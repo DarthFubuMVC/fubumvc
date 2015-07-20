@@ -1,4 +1,4 @@
-﻿using FubuMVC.Authentication;
+﻿using FubuMVC.Core.Security.Authentication;
 using FubuPersistence;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -35,7 +35,7 @@ namespace FubuMVC.PersistedMembership.Testing
                 UserName = "josh",
                 Password = theHash.CreateHash("else")
             };
-            
+
             theRepository.Update(user1);
             theRepository.Update(user2);
 

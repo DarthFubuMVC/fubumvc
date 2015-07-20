@@ -1,5 +1,5 @@
 ﻿using FubuCore;
-using FubuMVC.Authentication;
+using FubuMVC.Core.Security.Authentication;
 using FubuPersistence;
 using Raven.Client;
 
@@ -53,6 +53,5 @@ namespace FubuMVC.PersistedMembership
             request.NumberOfTries = history.Attempts;
             request.LockedOutUntil = history.LockedOutTime;
         }
-
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
-using FubuMVC.Authentication;
-using NUnit.Framework;
+using FubuMVC.Core.Security.Authentication;
 using FubuTestingSupport;
+using NUnit.Framework;
 
 namespace FubuMVC.PersistedMembership.Testing
 {
@@ -14,12 +14,12 @@ namespace FubuMVC.PersistedMembership.Testing
             var hash = new PasswordHash();
             var password = "something";
 
-            for (int i = 0; i < 50; i++)
+            for (var i = 0; i < 50; i++)
             {
                 Debug.WriteLine(hash.CreateHash(password));
             }
 
-                hash.CreateHash(password).ShouldEqual(hash.CreateHash(password));
+            hash.CreateHash(password).ShouldEqual(hash.CreateHash(password));
             hash.CreateHash(password).ShouldEqual(hash.CreateHash(password));
             hash.CreateHash(password).ShouldEqual(hash.CreateHash(password));
             hash.CreateHash(password).ShouldEqual(hash.CreateHash(password));

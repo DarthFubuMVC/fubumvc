@@ -1,5 +1,5 @@
-﻿using FubuMVC.Authentication;
-using FubuMVC.Authentication.Membership;
+﻿using FubuMVC.Core.Security.Authentication;
+using FubuMVC.Core.Security.Authentication.Membership;
 using FubuPersistence;
 
 namespace FubuMVC.PersistedMembership

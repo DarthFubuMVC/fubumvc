@@ -1,12 +1,11 @@
-﻿using Amazon.SimpleWorkflow.Model;
-using FubuMVC.Authentication;
-using FubuMVC.Authentication.Membership;
+﻿using System.Linq;
 using FubuMVC.Core;
+using FubuMVC.Core.Security.Authentication;
+using FubuMVC.Core.Security.Authentication.Membership;
 using FubuPersistence.InMemory;
+using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
-using FubuTestingSupport;
-using System.Linq;
 
 namespace FubuMVC.PersistedMembership.Testing
 {
@@ -23,7 +22,7 @@ namespace FubuMVC.PersistedMembership.Testing
                 var container = runtime.Factory.Get<IContainer>();
 
                 container.GetInstance<IMembershipRepository>()
-                                          .ShouldBeOfType<MembershipRepository<User>>();
+                    .ShouldBeOfType<MembershipRepository<User>>();
 
                 container.GetInstance<IPasswordHash>().ShouldBeOfType<PasswordHash>();
 
@@ -31,8 +30,6 @@ namespace FubuMVC.PersistedMembership.Testing
                     .OfType<MembershipAuthentication>()
                     .Any(x => x.Membership is MembershipRepository<User>).ShouldBeTrue();
             }
-
-
         }
     }
 

@@ -1,7 +1,6 @@
 ﻿using System;
-using FubuMVC.Authentication.Membership;
+using FubuMVC.Core.Security.Authentication.Membership;
 using FubuPersistence;
-using System.Linq;
 
 namespace FubuMVC.PersistedMembership
 {

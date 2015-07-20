@@ -1,11 +1,8 @@
-﻿using FubuCore.Binding;
-using FubuMVC.Authentication;
-using FubuMVC.Core;
+﻿using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
-using FubuMVC.Core.StructureMap;
+using FubuMVC.Core.Security.Authentication;
 using FubuMVC.PersistedMembership;
 using Serenity;
-using StructureMap;
 
 namespace Specifications
 {
@@ -23,13 +20,11 @@ namespace Specifications
         {
             Import<PersistedMembership<User>>();
 
-            AlterSettings<AuthenticationSettings>(x =>
-            {
-                x.ExcludeChains.ChainMatches(c => c is DiagnosticChain);
-            });
+            AlterSettings<AuthenticationSettings>(x => x.ExcludeChains.ChainMatches(c => c is DiagnosticChain));
         }
     }
 
-    public class SpecificationSystem : FubuMvcSystem<AuthenticationStorytellerApplication> { }
-
+    public class SpecificationSystem : FubuMvcSystem<AuthenticationStorytellerApplication>
+    {
+    }
 }

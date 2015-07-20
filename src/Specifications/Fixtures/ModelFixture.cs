@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Linq.Expressions;
-using System.Runtime.Remoting.Contexts;
 using FubuCore.Dates;
 using FubuCore.Reflection;
-using FubuMVC.Authentication;
+using FubuMVC.Core.Security.Authentication;
 using FubuMVC.PersistedMembership;
 using FubuPersistence;
 using FubuPersistence.Reset;
@@ -26,7 +25,7 @@ namespace Specifications.Fixtures
 
         public override void SetUp()
         {
-            var clock = (Clock)Context.Service<IClock>();
+            var clock = (Clock) Context.Service<IClock>();
             clock.Live();
 
             _reset = Context.Service<ICompleteReset>();
@@ -54,7 +53,8 @@ namespace Specifications.Fixtures
 
         public IGrammar SetAuthenticationSettings()
         {
-            return Paragraph("The Authentication Settings are", x => {
+            return Paragraph("The Authentication Settings are", x =>
+            {
                 x += () => Context.State.CurrentObject = Context.Service<AuthenticationSettings>();
                 x += setter(o => o.ExpireInMinutes);
                 x += setter(o => o.SlidingExpiration);

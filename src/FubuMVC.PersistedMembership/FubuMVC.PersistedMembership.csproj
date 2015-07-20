@@ -168,10 +168,6 @@
     <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FubuMVC.Authentication\FubuMVC.Authentication.csproj">
-      <Project>{b889af6b-2744-4370-842a-04026d1370b5}</Project>
-      <Name>FubuMVC.Authentication</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{e18fd922-0e7a-49cd-b89f-473826077b9d}</Project>
       <Name>FubuMVC.Core</Name>

@@ -1,5 +1,5 @@
 ﻿using System;
-using FubuMVC.Authentication;
+using FubuMVC.Core.Security.Authentication;
 using FubuPersistence;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -26,7 +26,7 @@ namespace FubuMVC.PersistedMembership.Testing
         public void does_not_apply_history_if_username_is_empty()
         {
             ClassUnderTest.ApplyHistory(theRequest);
-            theSession.AssertWasNotCalled(x=>x.Load<LoginFailureHistory>((string)null));
+            theSession.AssertWasNotCalled(x => x.Load<LoginFailureHistory>((string) null));
             theRequest.NumberOfTries.ShouldEqual(0);
             theRequest.LockedOutUntil.ShouldBeNull();
         }
@@ -36,7 +36,7 @@ namespace FubuMVC.PersistedMembership.Testing
         {
             const string userName = "foo";
             theSession.Stub(x => x.Load<LoginFailureHistory>(userName))
-                .Return(new LoginFailureHistory { Attempts = 1, LockedOutTime = DateTime.Now });
+                .Return(new LoginFailureHistory {Attempts = 1, LockedOutTime = DateTime.Now});
             theRequest.UserName = userName;
             ClassUnderTest.ApplyHistory(theRequest);
             theSession.AssertWasCalled(x => x.Load<LoginFailureHistory>("foo"));
@@ -50,7 +50,7 @@ namespace FubuMVC.PersistedMembership.Testing
             var audit = new Audit();
             ClassUnderTest.LogFailure(theRequest, audit);
             theRepository.AssertWasNotCalled(x => x.Update(audit));
-            theSession.AssertWasNotCalled(x => x.Load<LoginFailureHistory>((string)null));
+            theSession.AssertWasNotCalled(x => x.Load<LoginFailureHistory>((string) null));
             theSession.AssertWasNotCalled(x => x.Store(Arg<LoginFailureHistory>.Is.Anything));
         }
 
@@ -60,7 +60,7 @@ namespace FubuMVC.PersistedMembership.Testing
             const string userName = "foo";
             var audit = new Audit();
             theSession.Stub(x => x.Load<LoginFailureHistory>(userName))
-                .Return(new LoginFailureHistory { Attempts = 1, LockedOutTime = DateTime.Now });
+                .Return(new LoginFailureHistory {Attempts = 1, LockedOutTime = DateTime.Now});
             theRequest.UserName = userName;
             ClassUnderTest.LogFailure(theRequest, audit);
             theRepository.AssertWasCalled(x => x.Update(audit));

@@ -40,6 +40,9 @@
     <Reference Include="FubuCore">
       <HintPath>..\packages\FubuCore\lib\FubuCore.dll</HintPath>
     </Reference>
+    <Reference Include="FubuLocalization">
+      <HintPath>..\packages\FubuLocalization\lib\FubuLocalization.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlTags">
       <HintPath>..\packages\HtmlTags\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
@@ -406,6 +409,74 @@
     <Compile Include="Runtime\PartialChainSwitcher.cs" />
     <Compile Include="Runtime\PartialFactory.cs" />
     <Compile Include="Runtime\SetValueReport.cs" />
+    <Compile Include="Security\Authentication\AjaxAuthenticationRedirect.cs" />
+    <Compile Include="Security\Authentication\ApplyAuthentication.cs" />
+    <Compile Include="Security\Authentication\ApplyAuthenticationPolicy.cs" />
+    <Compile Include="Security\Authentication\ApplyPassThroughAuthenticationPolicy.cs" />
+    <Compile Include="Security\Authentication\Auditing\AuditMessage.cs" />
+    <Compile Include="Security\Authentication\Auditing\ILoginAuditor.cs" />
+    <Compile Include="Security\Authentication\Auditing\LoginFailure.cs" />
+    <Compile Include="Security\Authentication\Auditing\LoginSuccess.cs" />
+    <Compile Include="Security\Authentication\Auditing\NulloLoginAuditor.cs" />
+    <Compile Include="Security\Authentication\AuthenticationChain.cs" />
+    <Compile Include="Security\Authentication\AuthenticationFilter.cs" />
+    <Compile Include="Security\Authentication\AuthenticationFilterNode.cs" />
+    <Compile Include="Security\Authentication\AuthenticationIsConfigured.cs" />
+    <Compile Include="Security\Authentication\AuthenticationNode.cs" />
+    <Compile Include="Security\Authentication\AuthenticationRedirector.cs" />
+    <Compile Include="Security\Authentication\AuthenticationService.cs" />
+    <Compile Include="Security\Authentication\AuthenticationServiceRegistry.cs" />
+    <Compile Include="Security\Authentication\AuthenticationSettings.cs" />
+    <Compile Include="Security\Authentication\AuthResult.cs" />
+    <Compile Include="Security\Authentication\BasicAuthentication.cs" />
+    <Compile Include="Security\Authentication\Cookies\BasicFubuLoginCookies.cs" />
+    <Compile Include="Security\Authentication\Cookies\CookieSettings.cs" />
+    <Compile Include="Security\Authentication\Cookies\CookieTicketSource.cs" />
+    <Compile Include="Security\Authentication\Cookies\ILoginCookies.cs" />
+    <Compile Include="Security\Authentication\Cookies\ILoginCookieService.cs" />
+    <Compile Include="Security\Authentication\Cookies\LoginCookieService.cs" />
+    <Compile Include="Security\Authentication\DefaultAuthenticationRedirect.cs" />
+    <Compile Include="Security\Authentication\Endpoints\FormsAuthenticationRegistry.cs" />
+    <Compile Include="Security\Authentication\Endpoints\LoginController.cs" />
+    <Compile Include="Security\Authentication\Endpoints\LoginKeys.cs" />
+    <Compile Include="Security\Authentication\Endpoints\LogoutController.cs" />
+    <Compile Include="Security\Authentication\ExcludePassThroughAuthentication.cs" />
+    <Compile Include="Security\Authentication\IAuthenticationRedirect.cs" />
+    <Compile Include="Security\Authentication\IAuthenticationRedirector.cs" />
+    <Compile Include="Security\Authentication\IAuthenticationService.cs" />
+    <Compile Include="Security\Authentication\IAuthenticationSession.cs" />
+    <Compile Include="Security\Authentication\IAuthenticationStrategy.cs" />
+    <Compile Include="Security\Authentication\ICredentialsAuthenticator.cs" />
+    <Compile Include="Security\Authentication\ILockedOutRule.cs" />
+    <Compile Include="Security\Authentication\ILoginSuccessHandler.cs" />
+    <Compile Include="Security\Authentication\ILogoutSuccessHandler.cs" />
+    <Compile Include="Security\Authentication\IPasswordHash.cs" />
+    <Compile Include="Security\Authentication\IPrincipalBuilder.cs" />
+    <Compile Include="Security\Authentication\IPrincipalContext.cs" />
+    <Compile Include="Security\Authentication\LoginRequest.cs" />
+    <Compile Include="Security\Authentication\LoginStatus.cs" />
+    <Compile Include="Security\Authentication\LoginSuccessHandler.cs" />
+    <Compile Include="Security\Authentication\LogoutRequest.cs" />
+    <Compile Include="Security\Authentication\LogoutSuccessHandler.cs" />
+    <Compile Include="Security\Authentication\Membership\FlatFile\FlatFileMembershipRepository.cs" />
+    <Compile Include="Security\Authentication\Membership\FubuPrincipal.cs" />
+    <Compile Include="Security\Authentication\Membership\IMembershipRepository.cs" />
+    <Compile Include="Security\Authentication\Membership\InMemoryMembershipRepository.cs" />
+    <Compile Include="Security\Authentication\Membership\MembershipAuthentication.cs" />
+    <Compile Include="Security\Authentication\Membership\MembershipNode.cs" />
+    <Compile Include="Security\Authentication\Membership\UserInfo.cs" />
+    <Compile Include="Security\Authentication\NotAuthenticatedFilter.cs" />
+    <Compile Include="Security\Authentication\PassThroughAuthenticationAttribute.cs" />
+    <Compile Include="Security\Authentication\PassThroughAuthenticationFilter.cs" />
+    <Compile Include="Security\Authentication\PasswordHash.cs" />
+    <Compile Include="Security\Authentication\RedirectLibrary.cs" />
+    <Compile Include="Security\Authentication\RegisterAuthenticationStrategies.cs" />
+    <Compile Include="Security\Authentication\ThreadPrincipalContext.cs" />
+    <Compile Include="Security\Authentication\Tickets\AuthenticationTicket.cs" />
+    <Compile Include="Security\Authentication\Tickets\Encryption.cs" />
+    <Compile Include="Security\Authentication\Tickets\IAuthenticationTicketEncryptor.cs" />
+    <Compile Include="Security\Authentication\Tickets\ITicketSource.cs" />
+    <Compile Include="Security\Authentication\Tickets\TicketAuthenticationSession.cs" />
     <Compile Include="Security\Authorization\AlwaysAllowPolicy.cs" />
     <Compile Include="Security\Authorization\AlwaysDenyPolicy.cs" />
     <Compile Include="Security\Authorization\AuthorizationCheckPolicy.cs" />

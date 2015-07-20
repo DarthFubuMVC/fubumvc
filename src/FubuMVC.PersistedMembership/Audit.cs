@@ -1,6 +1,5 @@
 ﻿using System;
-using FubuMVC.Authentication;
-using FubuMVC.Authentication.Auditing;
+using FubuMVC.Core.Security.Authentication.Auditing;
 using FubuPersistence;
 
 namespace FubuMVC.PersistedMembership

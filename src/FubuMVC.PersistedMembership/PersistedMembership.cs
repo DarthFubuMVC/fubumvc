@@ -1,9 +1,9 @@
-﻿using FubuMVC.Authentication;
-using FubuMVC.Authentication.Auditing;
-using FubuMVC.Authentication.Membership;
-using FubuMVC.Core;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Collections.Generic;
+using FubuMVC.Core;
+using FubuMVC.Core.Security.Authentication;
+using FubuMVC.Core.Security.Authentication.Auditing;
+using FubuMVC.Core.Security.Authentication.Membership;
 
 namespace FubuMVC.PersistedMembership
 {
@@ -11,19 +11,21 @@ namespace FubuMVC.PersistedMembership
     {
         public void Configure(FubuRegistry registry)
         {
-            registry.Services(x => {
+            registry.Services(x =>
+            {
                 x.ReplaceService<IMembershipRepository, MembershipRepository<T>>();
                 x.SetServiceIfNone<IPasswordHash, PasswordHash>();
                 x.SetServiceIfNone<ILoginAuditor, PersistedLoginAuditor>();
             });
 
-            registry.AlterSettings<AuthenticationSettings>(x => {
-                x.Strategies.AddToEnd(new MembershipNode(typeof(MembershipRepository<T>)));
+            registry.AlterSettings<AuthenticationSettings>(x =>
+            {
+                x.Strategies.AddToEnd(new MembershipNode(typeof (MembershipRepository<T>)));
 
                 x.Strategies.OfType<MembershipNode>()
-                 .Where(node => node.MembershipType == typeof (MembershipAuthentication))
-                 .ToArray()
-                 .Each(node => node.Remove());
+                    .Where(node => node.MembershipType == typeof (MembershipAuthentication))
+                    .ToArray()
+                    .Each(node => node.Remove());
             });
         }
     }

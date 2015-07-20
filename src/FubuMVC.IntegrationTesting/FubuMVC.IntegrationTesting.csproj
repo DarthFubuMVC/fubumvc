@@ -45,6 +45,9 @@
     <Reference Include="FubuCore">
       <HintPath>..\packages\FubuCore\lib\FubuCore.dll</HintPath>
     </Reference>
+    <Reference Include="FubuLocalization">
+      <HintPath>..\packages\FubuLocalization\lib\FubuLocalization.dll</HintPath>
+    </Reference>
     <Reference Include="FubuTestingSupport">
       <HintPath>..\packages\FubuTestingSupport\lib\FubuTestingSupport.dll</HintPath>
     </Reference>
@@ -184,6 +187,12 @@
     <Compile Include="Querying\RemoteBehaviorGraph.cs" />
     <Compile Include="Querying\TypeToken.cs" />
     <Compile Include="read_cookies_from_the_request.cs" />
+    <Compile Include="Security\Authentication\authenticated_request_against_an_authenticated_route.cs" />
+    <Compile Include="Security\Authentication\AuthenticationHarness.cs" />
+    <Compile Include="Security\Authentication\SampleController.cs" />
+    <Compile Include="Security\Authentication\unauthenticated_ajax_request_against_an_authenticated_route.cs" />
+    <Compile Include="Security\Authentication\unauthenticated_request_against_an_authenticated_route.cs" />
+    <Compile Include="Security\Authentication\unauthenticated_request_against_an_unauthenticated_route.cs" />
     <Compile Include="Security\Authorization\AuthorizationPreviewServiceIntegratedTester.cs" />
     <Compile Include="StaticFiles\reading_static_file_content_with_katana.cs" />
     <Compile Include="Routing\end_to_end_route_alias_tester.cs" />
@@ -372,8 +381,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent></PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

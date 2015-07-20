@@ -1,5 +1,5 @@
-﻿using FubuMVC.Authentication.Auditing;
-using FubuMVC.Core;
+﻿using FubuMVC.Core;
+using FubuMVC.Core.Security.Authentication.Auditing;
 using FubuPersistence.InMemory;
 using FubuTestingSupport;
 using NUnit.Framework;

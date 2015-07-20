@@ -39,6 +39,9 @@
     <Reference Include="FubuCore">
       <HintPath>..\packages\FubuCore\lib\FubuCore.dll</HintPath>
     </Reference>
+    <Reference Include="FubuLocalization">
+      <HintPath>..\packages\FubuLocalization\lib\FubuLocalization.dll</HintPath>
+    </Reference>
     <Reference Include="FubuTestingSupport">
       <HintPath>..\packages\FubuTestingSupport\lib\FubuTestingSupport.dll</HintPath>
     </Reference>
@@ -244,6 +247,42 @@
     <Compile Include="Runtime\RequestCompletionTester.cs" />
     <Compile Include="Runtime\SimpleSessionStateTester.cs" />
     <Compile Include="Runtime\SynchronousCoordinator.cs" />
+    <Compile Include="Security\Authentication\AjaxAuthenticationRedirectTester.cs" />
+    <Compile Include="Security\Authentication\ApplyAuthenticationPolicyTester.cs" />
+    <Compile Include="Security\Authentication\ApplyPassThroughAuthenticationPolicyTester.cs" />
+    <Compile Include="Security\Authentication\AssemblyNeedsTheFubuModuleAttribute.cs" />
+    <Compile Include="Security\Authentication\AuthenticationBootstrapperTests.cs" />
+    <Compile Include="Security\Authentication\AuthenticationFilterNodeTester.cs" />
+    <Compile Include="Security\Authentication\AuthenticationFilterTester.cs" />
+    <Compile Include="Security\Authentication\AuthenticationIsConfiguredTester.cs" />
+    <Compile Include="Security\Authentication\AuthenticationNodeTester.cs" />
+    <Compile Include="Security\Authentication\AuthenticationServiceRegistryTester.cs" />
+    <Compile Include="Security\Authentication\AuthenticationServiceTester.cs" />
+    <Compile Include="Security\Authentication\AuthenticationSettingsTester.cs" />
+    <Compile Include="Security\Authentication\AuthResultTester.cs" />
+    <Compile Include="Security\Authentication\BasicAuthenticationTester.cs" />
+    <Compile Include="Security\Authentication\Cookies\CookieSettingsTester.cs" />
+    <Compile Include="Security\Authentication\Cookies\LoginCookieServiceTester.cs" />
+    <Compile Include="Security\Authentication\DefaultAuthenticationRedirectTester.cs" />
+    <Compile Include="Security\Authentication\Endpoints\LoginControllerTests.cs" />
+    <Compile Include="Security\Authentication\Endpoints\when_logging_out.cs" />
+    <Compile Include="Security\Authentication\FubuPrincipalTester.cs" />
+    <Compile Include="Security\Authentication\LockedOutRuleTester.cs" />
+    <Compile Include="Security\Authentication\LoginRequestTester.cs" />
+    <Compile Include="Security\Authentication\LoginSuccessHandlerTester.cs" />
+    <Compile Include="Security\Authentication\LogoutSuccessHandlerTester.cs" />
+    <Compile Include="Security\Authentication\Membership\FlatFile\FlatFileMembershipRepositoryTester.cs" />
+    <Compile Include="Security\Authentication\Membership\MembershipAuthenticationTester.cs" />
+    <Compile Include="Security\Authentication\Membership\MembershipNodeTester.cs" />
+    <Compile Include="Security\Authentication\Membership\UserInfoTester.cs" />
+    <Compile Include="Security\Authentication\NotAuthenticatedModel.cs" />
+    <Compile Include="Security\Authentication\PassThroughAuthenticationFilterTester.cs" />
+    <Compile Include="Security\Authentication\pass_through_authentication_for_a_partial.cs" />
+    <Compile Include="Security\Authentication\register_membership_with_a_default_repository_if_none_exists.cs" />
+    <Compile Include="Security\Authentication\ThreadPrincipalContextTester.cs" />
+    <Compile Include="Security\Authentication\Tickets\EncryptionTester.cs" />
+    <Compile Include="Security\Authentication\Tickets\TicketAuthenticationSessionTester.cs" />
+    <Compile Include="Security\Authentication\when_redirecting_an_unauthenticated_ajax_request.cs" />
     <Compile Include="Security\Authorization\AlwaysAllowPolicyTester.cs" />
     <Compile Include="Security\Authorization\AlwaysDenyPolicyTester.cs" />
     <Compile Include="Security\Authorization\AuthorizationByServiceTester.cs" />
@@ -382,8 +421,7 @@
     <Compile Include="FubuBootstrapperIntegrationTester.cs" />
     <Compile Include="FubuRegistryTester.cs" />
     <Compile Include="HtmlGenerationTestExtensions.cs" />
-    <Compile Include="Registration\BehaviorGraphTester.cs">
-    </Compile>
+    <Compile Include="Registration\BehaviorGraphTester.cs"></Compile>
     <Compile Include="Registration\Conventions\ActionSourceTester.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConventionTester.cs" />
     <Compile Include="Registration\Conventions\CustomConventionIntegratedTester.cs" />
