@@ -593,7 +593,6 @@
     <Compile Include="Registration\Querying\IChainResolver.cs" />
     <Compile Include="Registration\ServiceRegistry.cs" />
     <Compile Include="Runtime\BehaviorInvoker.cs" />
-    <Compile Include="Runtime\FubuSmartRequest.cs" />
     <Compile Include="Runtime\FubuRequestTuple.cs" />
     <Compile Include="Runtime\IBehaviorInvocationFilter.cs" />
     <Compile Include="Runtime\IBehaviorInvoker.cs" />

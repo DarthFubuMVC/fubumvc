@@ -82,7 +82,6 @@ namespace FubuMVC.Core
 
             SetServiceIfNone<IObjectConverter, ObjectConverter>();
 
-            SetServiceIfNone<ISmartRequest, FubuSmartRequest>();
             SetServiceIfNone<IResourceNotFoundHandler, DefaultResourceNotFoundHandler>();
 
 

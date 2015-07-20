@@ -24,7 +24,6 @@ using FubuMVC.Core.SessionState;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.Web.Security;
-using FubuMVC.Tests.Registration;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests
@@ -45,7 +44,6 @@ namespace FubuMVC.Tests
                 _.DefaultRegistrationIs<IBindingContext, BindingContext>();
                 _.DefaultRegistrationIs<IObjectResolver, ObjectResolver>();
                 _.DefaultRegistrationIs<IBindingLogger, NulloBindingLogger>();
-                _.DefaultRegistrationIs<ISmartRequest, FubuSmartRequest>();
                 _.ShouldHaveRegistration<IModelBinder, ResourcePathBinder>();
                 _.ShouldHaveRegistration<IConverterFamily, AspNetPassthroughConverter>();
 
