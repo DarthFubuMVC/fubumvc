@@ -8,7 +8,6 @@ using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Services;
 using FubuMVC.Core.Security.Authorization;
-using FubuMVC.Core.UI;
 
 namespace FubuMVC.Core.Registration
 {
@@ -178,7 +177,6 @@ namespace FubuMVC.Core.Registration
             yield return new SecurityServicesRegistry();
             yield return new HttpStandInServiceRegistry();
             yield return new CoreServiceRegistry();
-            yield return new UIServiceRegistry();
         }
 
         public void BuildLocal(BehaviorGraph graph, IPerfTimer timer)

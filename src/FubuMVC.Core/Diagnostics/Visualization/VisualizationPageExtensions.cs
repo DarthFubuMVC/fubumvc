@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Text;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.UI.Bootstrap;
 using FubuMVC.Core.View;
+using FubuMVC.Core.View.Bootstrap;
 using HtmlTags;
 
 namespace FubuMVC.Core.Diagnostics.Visualization

@@ -8,7 +8,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.StructureMap;
-using FubuMVC.Core.UI;
+using FubuMVC.Core.View;
 using FubuMVC.Katana;
 using Process = System.Diagnostics.Process;
 

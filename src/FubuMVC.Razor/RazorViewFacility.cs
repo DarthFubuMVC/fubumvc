@@ -3,8 +3,8 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Files;
-using FubuMVC.Core.UI;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Razor.RazorModel;
@@ -43,7 +43,7 @@ namespace FubuMVC.Razor
         protected override void addNamespacesForViews(CommonViewNamespaces namespaces)
         {
             namespaces.AddForType<RazorViewFacility>(); // FubuMVC.Razor
-            namespaces.AddForType<IPartialInvoker>(); // FubuMVC.Core.UI
+            namespaces.AddForType<IPartialInvoker>(); // FubuMVC.Core.View
         }
 
         public override void ReadSharedNamespaces(CommonViewNamespaces namespaces)

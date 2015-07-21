@@ -1,7 +1,7 @@
 using System.Linq;
 using FubuCore;
-using FubuMVC.Core.UI;
-using FubuMVC.Core.UI.Bootstrap.Tags;
+using FubuMVC.Core.View;
+using FubuMVC.Core.View.Bootstrap.Tags;
 using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;

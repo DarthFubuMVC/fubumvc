@@ -2,7 +2,6 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.UI;
 using HtmlTags;
 using NUnit.Framework;
 

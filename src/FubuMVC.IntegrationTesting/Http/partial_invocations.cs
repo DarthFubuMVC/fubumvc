@@ -6,7 +6,6 @@ using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.UI;
 using FubuTestingSupport;
 using NUnit.Framework;
 

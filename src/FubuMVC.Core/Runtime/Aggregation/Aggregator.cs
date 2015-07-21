@@ -4,7 +4,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Querying;
-using FubuMVC.Core.UI;
 
 namespace FubuMVC.Core.Runtime.Aggregation
 {

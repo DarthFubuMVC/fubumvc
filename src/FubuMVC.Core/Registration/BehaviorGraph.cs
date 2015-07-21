@@ -9,7 +9,6 @@ using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
-using FubuMVC.Core.Routing;
 using FubuMVC.Core.Runtime.Files;
 using StructureMap.Configuration.DSL;
 

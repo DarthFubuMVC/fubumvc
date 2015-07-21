@@ -6,7 +6,7 @@ using FubuCore.Descriptions;
 using FubuCore.Reflection;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Runtime;
-using FubuMVC.Core.UI.Bootstrap.Collapsibles;
+using FubuMVC.Core.View.Bootstrap.Collapsibles;
 using FubuTestingSupport;
 using NUnit.Framework;
 

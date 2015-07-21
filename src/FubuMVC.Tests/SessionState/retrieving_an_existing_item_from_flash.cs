@@ -1,6 +1,6 @@
 using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.SessionState;
+using FubuMVC.Core.Runtime.SessionState;
 using FubuMVC.Tests.Http.Cookies;
 using FubuTestingSupport;
 using NUnit.Framework;

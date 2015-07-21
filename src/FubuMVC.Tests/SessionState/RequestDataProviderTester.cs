@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Web;
-using FubuMVC.Core.SessionState;
+using FubuMVC.Core.Runtime.SessionState;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;

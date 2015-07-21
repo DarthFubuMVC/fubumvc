@@ -18,7 +18,7 @@ namespace FubuMVC.Core.View
             AddForType<FileSet>(); // FubuCore
             AddForType<ParallelQuery>(); // System.Linq
             AddForType<HtmlTag>(); // HtmlTags 
-            Add("FubuMVC.Core.UI");
+            AddForType<IViewToken>();
         }
 
         public void AddForType<T>()

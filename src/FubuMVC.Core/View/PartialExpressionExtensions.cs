@@ -1,8 +1,7 @@
 using System.Web;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.View;
 
-namespace FubuMVC.Core.UI
+namespace FubuMVC.Core.View
 {
     public static class PartialExpressionExtensions
     {

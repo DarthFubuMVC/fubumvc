@@ -1,4 +1,4 @@
-using FubuMVC.Core.Web.Security;
+using FubuMVC.Core.Security;
 using FubuTestingSupport;
 using NUnit.Framework;
 

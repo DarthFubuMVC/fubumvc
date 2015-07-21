@@ -1,5 +1,5 @@
 using System;
-using FubuMVC.Core.UI.Bootstrap.Tags;
+using FubuMVC.Core.View.Bootstrap.Tags;
 
 namespace FubuMVC.Core.Diagnostics.Visualization
 {

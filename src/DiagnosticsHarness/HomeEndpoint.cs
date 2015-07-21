@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Continuations;
-using FubuMVC.Core.UI;
+using FubuMVC.Core.View;
 using FubuTransportation;
 using HtmlTags;
 

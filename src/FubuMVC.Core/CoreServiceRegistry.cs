@@ -25,9 +25,9 @@ using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Aggregation;
 using FubuMVC.Core.Runtime.Conditionals;
-using FubuMVC.Core.SessionState;
-using FubuMVC.Core.UI;
+using FubuMVC.Core.Runtime.SessionState;
 using FubuMVC.Core.Urls;
+using FubuMVC.Core.View;
 
 namespace FubuMVC.Core
 {
@@ -134,6 +134,9 @@ namespace FubuMVC.Core
             SetServiceIfNone<IClientMessageCache, ClientMessageCache>();
 
             SetServiceIfNone<IJsonSerializer, NewtonSoftJsonSerializer>();
+
+            SetServiceIfNone<IPartialInvoker, PartialInvoker>();
+            AddService<IActivator>(typeof(DisplayConversionRegistryActivator));
         }
     }
 }

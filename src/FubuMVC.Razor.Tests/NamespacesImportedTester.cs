@@ -1,14 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Web;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.UI;
 using FubuMVC.Core.View;
 using FubuTestingSupport;
-using HtmlTags;
 using NUnit.Framework;
 
 namespace FubuMVC.Razor.Tests
@@ -28,21 +24,24 @@ namespace FubuMVC.Razor.Tests
             });
 
             var graph = BehaviorGraph.BuildFrom(registry);
-            var useNamespaces = graph.Services.DefaultServiceFor<CommonViewNamespaces>().Value.As<CommonViewNamespaces>();
+            var useNamespaces =
+                graph.Services.DefaultServiceFor<CommonViewNamespaces>().Value.As<CommonViewNamespaces>();
+
+            useNamespaces.Namespaces.Each(x => Debug.WriteLine(x));
 
             useNamespaces.Namespaces.ShouldHaveTheSameElementsAs(new[]
-            { 
-"System.Web",
-"System",
-"FubuCore",
-"System.Linq",
-"HtmlTags",
-"FubuMVC.Core.UI",
-"FubuMVC.Razor",
-"Foo",
-"Bar"
+            {
+                "System.Web",
+                "System",
+                "FubuCore",
+                "System.Linq",
+                "HtmlTags",
+                "FubuMVC.Core.View",
+                "FubuMVC.Razor",
+                "FubuMVC.Core.Runtime",
+                "Foo",
+                "Bar"
             });
         }
-
     }
 }

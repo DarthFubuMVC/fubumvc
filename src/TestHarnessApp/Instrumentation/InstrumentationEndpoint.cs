@@ -2,8 +2,8 @@
 using System.Threading;
 using FubuMVC.Core;
 using FubuMVC.Core.Continuations;
-using FubuMVC.Core.UI;
 using FubuMVC.Core.Urls;
+using FubuMVC.Core.View;
 using HtmlTags;
 
 namespace TestHarnessApp.Instrumentation

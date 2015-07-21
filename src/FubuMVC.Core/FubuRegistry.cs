@@ -4,7 +4,7 @@ using System.Reflection;
 using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.DSL;
-using FubuMVC.Core.Routing;
+using FubuMVC.Core.Registration.Routes;
 using StructureMap;
 using StructureMap.Configuration.DSL;
 

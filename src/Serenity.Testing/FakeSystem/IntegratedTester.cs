@@ -6,7 +6,7 @@ using FubuCore.Conversion;
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.StructureMap;
-using FubuMVC.Core.UI;
+using FubuMVC.Core.View;
 using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;

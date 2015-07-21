@@ -1,7 +1,6 @@
 ﻿using System.Net;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.UI;
 
 namespace FubuMVC.Core.Resources.Conneg
 {

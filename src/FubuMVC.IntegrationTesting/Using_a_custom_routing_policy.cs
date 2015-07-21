@@ -2,7 +2,7 @@
 using System.Web.Routing;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Routing;
+using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;

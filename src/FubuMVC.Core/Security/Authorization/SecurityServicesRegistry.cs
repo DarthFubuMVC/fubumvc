@@ -1,5 +1,4 @@
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Web.Security;
 
 namespace FubuMVC.Core.Security.Authorization
 {

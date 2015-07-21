@@ -1,7 +1,7 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Http.Hosting;
-using FubuMVC.Core.UI;
+using FubuMVC.Core.View;
 using HtmlTags;
 using NUnit.Framework;
 

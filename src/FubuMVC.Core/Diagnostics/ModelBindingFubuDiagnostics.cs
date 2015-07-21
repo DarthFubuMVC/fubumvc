@@ -5,7 +5,7 @@ using FubuCore.Binding;
 using FubuCore.Binding.Logging;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Diagnostics.Runtime;
-using FubuMVC.Core.UI.Bootstrap.Collapsibles;
+using FubuMVC.Core.View.Bootstrap.Collapsibles;
 using HtmlTags;
 
 namespace FubuMVC.Core.Diagnostics

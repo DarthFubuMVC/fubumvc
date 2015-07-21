@@ -2,7 +2,6 @@ using System;
 using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
-using FubuMVC.Core.UI;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using FubuTestingSupport;

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using FubuMVC.Core.UI;
+using FubuMVC.Core.View;
 using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
