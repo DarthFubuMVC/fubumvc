@@ -5,6 +5,7 @@ using System.Threading;
 using FubuCore;
 using FubuCore.CommandLine;
 using FubuMVC.Core;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Services.Messaging;
 using FubuMVC.Core.Services.Remote;

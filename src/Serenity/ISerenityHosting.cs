@@ -1,5 +1,6 @@
 using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Katana;
 
 namespace Serenity

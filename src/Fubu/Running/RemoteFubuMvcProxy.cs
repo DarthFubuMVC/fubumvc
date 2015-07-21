@@ -3,6 +3,7 @@ using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Services.Remote;
 using FubuMVC.Katana;
 using HtmlTags;

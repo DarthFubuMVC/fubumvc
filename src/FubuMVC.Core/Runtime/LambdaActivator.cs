@@ -1,7 +1,7 @@
 using System;
 using FubuMVC.Core.Diagnostics.Packaging;
 
-namespace FubuMVC.Core
+namespace FubuMVC.Core.Runtime
 {
     public class LambdaActivator : IActivator
     {

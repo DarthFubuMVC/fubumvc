@@ -5,6 +5,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.StructureMap;
 using FubuTestingSupport;

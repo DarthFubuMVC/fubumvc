@@ -2,6 +2,7 @@
 using System.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Packaging;
+using FubuMVC.Core.Registration;
 using FubuTestingSupport;
 using NUnit.Framework;
 

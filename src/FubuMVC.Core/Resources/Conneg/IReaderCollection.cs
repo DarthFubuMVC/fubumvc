@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Resources.Conneg
 {

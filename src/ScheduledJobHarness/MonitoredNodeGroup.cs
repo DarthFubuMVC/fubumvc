@@ -4,6 +4,7 @@ using System.Threading;
 using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.StructureMap;
 using FubuMVC.Katana;
 using FubuPersistence.RavenDb;

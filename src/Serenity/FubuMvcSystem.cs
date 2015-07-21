@@ -7,6 +7,7 @@ using FubuCore.CommandLine;
 using FubuCore.Util;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Services.Messaging.Tracking;
 using FubuMVC.Core.Services.Remote;
 using Serenity.Fixtures.Handlers;

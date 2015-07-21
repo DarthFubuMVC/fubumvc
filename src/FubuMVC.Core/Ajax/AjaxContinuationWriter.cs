@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Json;
 using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Ajax
 {

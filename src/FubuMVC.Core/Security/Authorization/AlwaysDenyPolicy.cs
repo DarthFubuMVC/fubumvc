@@ -1,4 +1,6 @@
-﻿namespace FubuMVC.Core.Security.Authorization
+﻿using FubuMVC.Core.Runtime;
+
+namespace FubuMVC.Core.Security.Authorization
 {
     public class AlwaysDenyPolicy : IAuthorizationPolicy
     {

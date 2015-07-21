@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using System.Linq;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Resources.Conneg
 {

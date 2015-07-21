@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.Spark.Rendering;
 using FubuTestingSupport;

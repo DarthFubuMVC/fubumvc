@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Security.Authorization
 {

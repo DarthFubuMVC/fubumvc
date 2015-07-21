@@ -73,7 +73,7 @@
     <Compile Include="Ajax\AjaxContinuationWriter.cs" />
     <Compile Include="Ajax\AjaxError.cs" />
     <Compile Include="ApplicationSettings.cs" />
-    <Compile Include="AssemblyFinder.cs" />
+    <Compile Include="Services\AssemblyFinder.cs" />
     <Compile Include="Assets\Asset.cs" />
     <Compile Include="Assets\AssetFinderCache.cs" />
     <Compile Include="Assets\AssetGraph.cs" />
@@ -93,7 +93,7 @@
     <Compile Include="ClientMessage.cs" />
     <Compile Include="Registration\BehaviorGraphBuilder.cs" />
     <Compile Include="Behaviors\AsyncContinueWithBehavior.cs" />
-    <Compile Include="CanBeMultiplesAttribute.cs" />
+    <Compile Include="Attributes\CanBeMultiplesAttribute.cs" />
     <Compile Include="Behaviors\WrappingBehavior.cs" />
     <Compile Include="Registration\ConfigGraph.cs" />
     <Compile Include="Registration\ConfigurationActionSet.cs" />
@@ -176,7 +176,7 @@
     <Compile Include="Diagnostics\Visualization\Visualizers\BehaviorStartAndFinishEndpoints.cs" />
     <Compile Include="Diagnostics\Visualization\Visualizers\CommentTag.cs" />
     <Compile Include="Diagnostics\Visualization\Visualizers\StringMessageEndpoint.cs" />
-    <Compile Include="DoNotAutoImportAttribute.cs" />
+    <Compile Include="Attributes\DoNotAutoImportAttribute.cs" />
     <Compile Include="Endpoints\EndpointDriver.cs" />
     <Compile Include="Endpoints\EndpointFormatting.cs" />
     <Compile Include="Endpoints\EndpointInvocation.cs" />
@@ -188,10 +188,9 @@
     <Compile Include="Environment\FolderExists.cs" />
     <Compile Include="Environment\IEnvironmentRequirement.cs" />
     <Compile Include="Environment\IEnvironmentRequirements.cs" />
-    <Compile Include="FileWatcherManifest.cs" />
-    <Compile Include="FormatterOptions.cs" />
-    <Compile Include="FubuModuleAttribute.cs" />
-    <Compile Include="FubuPartialAttribute.cs" />
+    <Compile Include="Assets\FileWatcherManifest.cs" />
+    <Compile Include="Attributes\FubuModuleAttribute.cs" />
+    <Compile Include="Attributes\FubuPartialAttribute.cs" />
     <Compile Include="FubuRuntime.cs" />
     <Compile Include="Http\CommaTokenParser.cs" />
     <Compile Include="Http\Compression\ApplyContentCompression.cs" />
@@ -252,17 +251,17 @@
     <Compile Include="Json\NewtonsoftJsonFormatter.cs" />
     <Compile Include="Json\NewtonSoftJsonReader.cs" />
     <Compile Include="Json\NewtonsoftJsonSerializer.cs" />
-    <Compile Include="LambdaActivator.cs" />
-    <Compile Include="NoDiagnosticsAttribute.cs" />
-    <Compile Include="PerfTimerExtensions.cs" />
-    <Compile Include="PortFinder.cs" />
+    <Compile Include="Runtime\LambdaActivator.cs" />
+    <Compile Include="Attributes\NoDiagnosticsAttribute.cs" />
+    <Compile Include="Registration\PerfTimerExtensions.cs" />
+    <Compile Include="Runtime\PortFinder.cs" />
     <Compile Include="Http\Owin\Readers\FormReader.cs" />
     <Compile Include="Http\Owin\Readers\IOwinRequestReader.cs" />
     <Compile Include="Http\Owin\Readers\MediaTypeReader.cs" />
     <Compile Include="Http\Owin\Readers\OwinRequestReader.cs" />
     <Compile Include="IApplicationSource.cs" />
-    <Compile Include="ImageTag.cs" />
-    <Compile Include="IFubuRequestContext.cs" />
+    <Compile Include="View\ImageTag.cs" />
+    <Compile Include="Runtime\IFubuRequestContext.cs" />
     <Compile Include="Projections\AccessorProjection.cs" />
     <Compile Include="Projections\AdaptiveAccessorProjection.cs" />
     <Compile Include="Projections\ChildProjection.cs" />
@@ -290,7 +289,7 @@
     <Compile Include="Projections\SingleValueProjection.cs" />
     <Compile Include="Projections\ValuesExtensions.cs" />
     <Compile Include="Projections\ValueSource.cs" />
-    <Compile Include="QueryStringAttribute.cs" />
+    <Compile Include="Attributes\QueryStringAttribute.cs" />
     <Compile Include="ReflectionExtensions.cs" />
     <Compile Include="Registration\AccessorRulesExpression.cs" />
     <Compile Include="Registration\ActionSourceAggregator.cs" />
@@ -527,7 +526,7 @@
     <Compile Include="Caching\WriteStream.cs" />
     <Compile Include="Caching\WriteTextOutput.cs" />
     <Compile Include="Continuations\IRedirectable.cs" />
-    <Compile Include="CoreServiceRegistry.cs" />
+    <Compile Include="Registration\CoreServiceRegistry.cs" />
     <Compile Include="FubuMode.cs" />
     <Compile Include="Http\CurrentRequestFullUrlPropertyBinder.cs" />
     <Compile Include="Http\CurrentRequestRelativeUrlPropertyBinder.cs" />
@@ -613,7 +612,7 @@
     <Compile Include="StructureMap\StructureMapContainerFacility.cs" />
     <Compile Include="StructureMap\StructureMapFubuRegistry.cs" />
     <Compile Include="StructureMap\StructureMapServiceLocator.cs" />
-    <Compile Include="TagAttribute.cs" />
+    <Compile Include="Attributes\TagAttribute.cs" />
     <Compile Include="View\AuthorizationOnPageExtensions.cs" />
     <Compile Include="View\Bootstrap\Collapsibles\CollapsiblePartialExpression.cs" />
     <Compile Include="View\Bootstrap\Collapsibles\CollapsibleTag.cs" />
@@ -655,9 +654,9 @@
     <Compile Include="Continuations\FubuContinuation.cs" />
     <Compile Include="Continuations\ContinuationType.cs" />
     <Compile Include="Continuations\IContinuationDirector.cs" />
-    <Compile Include="EndpointService.cs" />
+    <Compile Include="Runtime\EndpointService.cs" />
     <Compile Include="FubuApplication.cs" />
-    <Compile Include="FubuExtensionFinder.cs" />
+    <Compile Include="Registration\FubuExtensionFinder.cs" />
     <Compile Include="FubuPackageRegistry.cs" />
     <Compile Include="IFubuRegistryExtension.cs" />
     <Compile Include="Resources\PathBased\ResourcePathBinder.cs" />
@@ -679,7 +678,7 @@
     <Compile Include="Registration\Conventions\DownloadFileConvention.cs" />
     <Compile Include="Registration\Conventions\UrlPatternAttributePolicy.cs" />
     <Compile Include="Registration\DSL\ActionCallCandidateExpression.cs" />
-    <Compile Include="RouteInputAttribute.cs" />
+    <Compile Include="Attributes\RouteInputAttribute.cs" />
     <Compile Include="Behaviors\BasicBehavior.cs" />
     <Compile Include="DoNext.cs" />
     <Compile Include="Behaviors\IActionBehavior.cs" />
@@ -733,12 +732,12 @@
     <Compile Include="Runtime\IPartialInvoker.cs" />
     <Compile Include="Runtime\PartialInvoker.cs" />
     <Compile Include="Registration\Querying\ChainInterrogator.cs" />
-    <Compile Include="UrlAliasAttribute.cs" />
+    <Compile Include="Attributes\UrlAliasAttribute.cs" />
     <Compile Include="UrlContext.cs" />
-    <Compile Include="UrlFolderAttribute.cs" />
-    <Compile Include="UrlForNewAttribute.cs" />
-    <Compile Include="UrlPatternAttribute.cs" />
-    <Compile Include="UrlRegistryCategoryAttribute.cs" />
+    <Compile Include="Attributes\UrlFolderAttribute.cs" />
+    <Compile Include="Attributes\UrlForNewAttribute.cs" />
+    <Compile Include="Attributes\UrlPatternAttribute.cs" />
+    <Compile Include="Attributes\UrlRegistryCategoryAttribute.cs" />
     <Compile Include="UrlStringExtensions.cs" />
     <Compile Include="Urls\IChainUrlResolver.cs" />
     <Compile Include="Urls\StubUrlRegistry.cs" />
@@ -809,7 +808,7 @@
     <Compile Include="View\ViewWriter.cs" />
     <Compile Include="Security\WebAuthenticationContext.cs" />
     <Compile Include="Security\WebSecurityContext.cs" />
-    <Compile Include="WrapWithAttribute.cs" />
+    <Compile Include="Attributes\WrapWithAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Diagnostics\Visualization\BehaviorNode.spark" />

@@ -1,4 +1,6 @@
-﻿namespace FubuMVC.Core.View.Rendering
+﻿using FubuMVC.Core.Runtime;
+
+namespace FubuMVC.Core.View.Rendering
 {
     public interface IRenderableView //: IFubuPage
     {

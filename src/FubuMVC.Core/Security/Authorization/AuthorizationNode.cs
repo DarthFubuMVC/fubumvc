@@ -5,6 +5,7 @@ using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Core.Runtime;
 using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Security.Authorization

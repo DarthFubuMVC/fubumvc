@@ -10,6 +10,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Json;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Katana;
 using FubuTestingSupport;
 using Newtonsoft.Json.Linq;

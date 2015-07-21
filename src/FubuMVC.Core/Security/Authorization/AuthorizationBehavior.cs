@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Continuations;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Security.Authorization
 {

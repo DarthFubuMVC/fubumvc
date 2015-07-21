@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Descriptions;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
 
 namespace FubuMVC.Core.Resources.Conneg

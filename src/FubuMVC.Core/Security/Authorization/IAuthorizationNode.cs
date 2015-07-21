@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Security.Authorization
 {

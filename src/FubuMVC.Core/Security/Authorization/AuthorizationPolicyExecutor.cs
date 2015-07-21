@@ -3,6 +3,7 @@ using System.Linq;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuCore.Logging;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Security.Authorization
 {

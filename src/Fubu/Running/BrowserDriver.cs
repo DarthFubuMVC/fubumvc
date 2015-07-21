@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Fleck;
 using FubuMVC.Core;
+using FubuMVC.Core.Runtime;
 
 namespace Fubu.Running
 {

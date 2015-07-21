@@ -5,6 +5,7 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Projections;
 using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Runtime;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Conneg

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Services.Messaging;
 using FubuMVC.Katana;
 

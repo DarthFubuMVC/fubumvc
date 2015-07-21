@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Runtime;
 using HtmlTags;
 
 namespace FubuMVC.Core.View

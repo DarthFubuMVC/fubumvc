@@ -1,5 +1,6 @@
 ﻿using System;
 using FubuMVC.Core;
+using FubuMVC.Core.Assets;
 
 namespace Fubu.Running
 {

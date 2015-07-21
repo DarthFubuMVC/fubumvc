@@ -4,6 +4,7 @@ using System.IO;
 using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using Spark;

@@ -3,6 +3,7 @@ using System.Threading;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Katana;
 using HtmlTags;
 using NUnit.Framework;

@@ -1,4 +1,5 @@
 using System;
+using FubuMVC.Core.Runtime;
 using StructureMap;
 using StructureMap.Configuration.DSL;
 

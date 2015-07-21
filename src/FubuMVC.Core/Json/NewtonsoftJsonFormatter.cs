@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using FubuCore;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
 
 namespace FubuMVC.Core.Json
