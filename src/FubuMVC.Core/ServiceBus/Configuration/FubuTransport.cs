@@ -24,6 +24,8 @@ namespace FubuMVC.Core.ServiceBus.Configuration
         public static FubuApplication For<T>(IContainer container) where T : FubuTransportRegistry, new()
         {
             var registry = new FubuRegistry();
+            registry.Features.ServiceBus.Enable(true);
+
             registry.StructureMap(container);
             var extension = new T();
             extension.As<IFubuRegistryExtension>().Configure(registry);
@@ -33,6 +35,8 @@ namespace FubuMVC.Core.ServiceBus.Configuration
         public static FubuApplication For(FubuTransportRegistry extension, IContainer container = null)
         {
             var registry = new FubuRegistry();
+            registry.Features.ServiceBus.Enable(true);
+
             if (container != null)
             {
                 registry.StructureMap(container);

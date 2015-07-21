@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Security.Cryptography;
+using FubuCore.Descriptions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.ServiceBus.Sagas
 {
-    public class StatefulSagaNode : BehaviorNode
+    public class StatefulSagaNode : BehaviorNode, DescribesItself
     {
         private readonly SagaTypes _types;
 
@@ -69,6 +71,15 @@ namespace FubuMVC.Core.ServiceBus.Sagas
 
             return def;
              */
+        }
+
+        public void Describe(Description description)
+        {
+            description.Title = "Stateful Saga Node";
+            description.ShortDescription = "Applies saga state loading and persistence within this chain";
+            description.Properties["State Type"] = StateType.FullName;
+            description.Properties["Message Type"] = MessageType.FullName;
+            description.AddChild("Repository", Repository);
         }
     }
 }

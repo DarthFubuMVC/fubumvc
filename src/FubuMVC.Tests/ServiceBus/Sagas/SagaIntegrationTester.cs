@@ -100,8 +100,6 @@ namespace FubuTransportation.Testing.Sagas
         [SetUp]
         public void SetUp()
         {
-
-
             theLogger = new SagaLogger();
             theContainer = new Container(x =>
             {

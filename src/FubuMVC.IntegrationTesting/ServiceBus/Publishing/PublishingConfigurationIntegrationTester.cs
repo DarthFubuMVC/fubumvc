@@ -1,24 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Net;
 using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Web;
-using FubuMVC.Core.StructureMap;
 using FubuMVC.Katana;
 using FubuTestingSupport;
+using FubuTransportation.Testing;
 using NUnit.Framework;
 using Rhino.Mocks;
 using StructureMap;
 
-namespace FubuTransportation.Testing.Publishing
+namespace FubuMVC.IntegrationTesting.ServiceBus.Publishing
 {
     [TestFixture]
     public class PublishingConfigurationIntegrationTester
@@ -43,6 +39,7 @@ namespace FubuTransportation.Testing.Publishing
             theServiceBus = MockRepository.GenerateMock<IServiceBus>();
 
             var registry = new FubuRegistry();
+            registry.Features.ServiceBus.Enable(true);
             registry.Actions.IncludeType<MessageOnePublisher>();
             registry.StructureMap(container);
 

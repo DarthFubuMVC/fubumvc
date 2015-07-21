@@ -191,6 +191,7 @@
     <Compile Include="Security\Authentication\unauthenticated_request_against_an_authenticated_route.cs" />
     <Compile Include="Security\Authentication\unauthenticated_request_against_an_unauthenticated_route.cs" />
     <Compile Include="Security\Authorization\AuthorizationPreviewServiceIntegratedTester.cs" />
+    <Compile Include="ServiceBus\Publishing\PublishingConfigurationIntegrationTester.cs" />
     <Compile Include="StaticFiles\reading_static_file_content_with_katana.cs" />
     <Compile Include="Routing\end_to_end_route_alias_tester.cs" />
     <Compile Include="Samples\ConnegSamples.cs" />

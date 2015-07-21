@@ -28,6 +28,7 @@ namespace FubuTransportation.Testing.Configuration
             var registry = new FubuRegistry();
             registry.StructureMap(container);
             registry.Import<SubscribedRegistry>();
+            registry.Features.ServiceBus.Enable(true);
 
             runtime = FubuApplication.For(registry).Bootstrap();
         }

@@ -1,13 +1,11 @@
-﻿using FubuMVC.Core;
+﻿using System.Linq;
+using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
-using FubuMVC.Core.StructureMap;
-using NUnit.Framework;
-using StructureMap;
-using System.Linq;
 using FubuTestingSupport;
+using NUnit.Framework;
 
-namespace FubuTransportation.Testing.InMemory
+namespace FubuMVC.Tests.ServiceBus.InMemory
 {
     [TestFixture]
     public class InMemoryReplyQueueIntegratedTester

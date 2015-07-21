@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
@@ -8,6 +9,7 @@ using FubuMVC.Core.ServiceBus.Configuration;
 namespace FubuMVC.Core.ServiceBus.ScheduledJobs.Configuration
 {
     // Tested with integration tests only
+    [Description("Applies routing rules to scheduled jobs")]
     public class ApplyScheduledJobRouting : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)

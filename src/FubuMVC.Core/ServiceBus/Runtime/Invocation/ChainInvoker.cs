@@ -119,6 +119,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
         }
     }
 
+    [Serializable]
     public class InlineMessageException : Exception
     {
         public InlineMessageException(string message, Exception innerException) : base(message, innerException)

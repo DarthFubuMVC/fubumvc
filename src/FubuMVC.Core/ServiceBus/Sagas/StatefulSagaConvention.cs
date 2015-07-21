@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
@@ -11,6 +12,7 @@ using FubuMVC.Core.ServiceBus.Registration.Nodes;
 
 namespace FubuMVC.Core.ServiceBus.Sagas
 {
+    [Description("Adds saga handling to handler actions that implement IStatefulSaga<T>")]
     public class StatefulSagaConvention : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)

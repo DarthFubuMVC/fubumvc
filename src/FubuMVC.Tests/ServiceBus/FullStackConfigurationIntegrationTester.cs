@@ -1,15 +1,11 @@
-﻿using System;
+﻿using System.Linq;
 using FubuMVC.Core;
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.ServiceBus.Configuration;
-using FubuMVC.Core.StructureMap;
-using NUnit.Framework;
-using StructureMap;
-using System.Linq;
 using FubuTestingSupport;
+using NUnit.Framework;
 
-namespace FubuTransportation.Testing
+namespace FubuMVC.Tests.ServiceBus
 {
     [TestFixture]
     public class FullStackConfigurationIntegrationTester

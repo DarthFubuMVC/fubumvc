@@ -5,6 +5,7 @@ using FubuMVC.Core.ServiceBus.Runtime;
 
 namespace FubuMVC.Core.ServiceBus.InMemory
 {
+    [System.ComponentModel.Description("All service bus channels use an in-memory queue")]
     public class AllQueuesInMemoryPolicy : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)

@@ -26,7 +26,7 @@ namespace FubuMVC.Core.ServiceBus
 
         public void Activate(IActivationLog log)
         {
-            if (_settings.Enabled)
+            if (!_settings.Enabled)
             {
                 log.Trace("Skipping activation because FubuTranportation is disabled.");
                 return;

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using FubuCore;
@@ -7,6 +8,7 @@ using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.ServiceBus.Web
 {
+    [Description("Finds actions for classes that implement ISendMessages")]
     public class SendsMessageActionSource : IActionSource
     {
 

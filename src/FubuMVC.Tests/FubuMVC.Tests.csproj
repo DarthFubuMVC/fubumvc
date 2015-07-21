@@ -378,7 +378,6 @@
     <Compile Include="ServiceBus\InMemory\ReplayDelayedQueueIntegrationTester.cs" />
     <Compile Include="ServiceBus\InMemory\SagaStateCacheTester.cs" />
     <Compile Include="ServiceBus\IntegratedFubuTransportRegistryTester.cs" />
-    <Compile Include="ServiceBus\Logging\All_log_records_should_be_MessageLogRecord_subtype.cs" />
     <Compile Include="ServiceBus\Logging\EventAggregationListenerTester.cs" />
     <Compile Include="ServiceBus\Monitoring\FakePersistentTask.cs" />
     <Compile Include="ServiceBus\Monitoring\FakePersistentTaskAgent.cs" />
@@ -411,7 +410,6 @@
     <Compile Include="ServiceBus\Polling\PollingJobTester.cs" />
     <Compile Include="ServiceBus\Polling\PollingServicesRegistry_spec.cs" />
     <Compile Include="ServiceBus\Publishing\EventPublisherTester.cs" />
-    <Compile Include="ServiceBus\Publishing\PublishingConfigurationIntegrationTester.cs" />
     <Compile Include="ServiceBus\RecordingChannel.cs" />
     <Compile Include="ServiceBus\RecordingEnvelopeSender.cs" />
     <Compile Include="ServiceBus\RecordingReceiver.cs" />

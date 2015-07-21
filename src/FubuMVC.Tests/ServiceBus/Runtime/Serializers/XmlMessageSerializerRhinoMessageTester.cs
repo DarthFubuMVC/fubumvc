@@ -3,7 +3,7 @@ using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuTransportation.Testing.Runtime.Serializers
+namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
 {
     [TestFixture]
     public class XmlMessageSerializerRhinoMessageTester
@@ -13,7 +13,7 @@ namespace FubuTransportation.Testing.Runtime.Serializers
 
         private const string XmlInput = @"<?xml version=""1.0"" encoding=""UTF-8""?>
             <esb:messages xmlns:esb=""http://servicebus.hibernatingrhinos.com/2008/12/20/esb""
-                xmlns:commands.testrhinotoftserialization=""FubuTransportation.Testing.Runtime.Serializers.TestRhinoToFtSerialization, FubuTransportation.Testing""
+                xmlns:commands.testrhinotoftserialization=""FubuMVC.Tests.ServiceBus.Runtime.Serializers.TestRhinoToFtSerialization, FubuMVC.Tests""
                 xmlns:System.Int32=""System.Int32"">
               <commands.testrhinotoftserialization:TestRhinoToFtSerialization>
                 <System.Int32:Id>1</System.Int32:Id>

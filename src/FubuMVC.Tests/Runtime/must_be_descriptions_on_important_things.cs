@@ -223,19 +223,6 @@ namespace FubuMVC.Tests.Runtime
         }
 
         [Test]
-        public void must_be_some_sort_of_description_on_every_LogRecord()
-        {
-            IEnumerable<Type> types = typeof (FubuRequest).Assembly.GetExportedTypes()
-                .Where(x => x.IsConcreteTypeOf<LogRecord>())
-                .Where(x => !Description.HasExplicitDescription(x));
-
-            types.Each(x => Console.WriteLine(x.Name));
-
-            types.Any().ShouldBeFalse();
-        }
-
-
-        [Test]
         public void must_be_some_sort_of_description_on_every_iconverter_family()
         {
             IEnumerable<Type> types = typeof (FubuRequest).Assembly.GetExportedTypes()
