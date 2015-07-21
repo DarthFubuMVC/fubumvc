@@ -1,11 +1,12 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Security.Authentication.Auditing;
+using FubuMVC.RavenDb.Membership;
 using FubuPersistence.InMemory;
 using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
 
-namespace FubuMVC.PersistedMembership.Testing
+namespace FubuPersistence.Tests.Membership
 {
     [TestFixture]
     public class is_registering_the_persisted_login_auditor

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using FubuMVC.PersistedMembership;
+using FubuMVC.RavenDb.Membership;
 using FubuPersistence;
 using StoryTeller;
 

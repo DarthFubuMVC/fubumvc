@@ -40,9 +40,6 @@
     <Reference Include="AWSSDK">
       <HintPath>..\packages\RavenDB.Database\lib\net45\AWSSDK.dll</HintPath>
     </Reference>
-    <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles\lib\Bottles.dll</HintPath>
-    </Reference>
     <Reference Include="Esent.Interop">
       <HintPath>..\packages\RavenDB.Database\lib\net45\Esent.Interop.dll</HintPath>
     </Reference>
@@ -169,6 +166,12 @@
     <Compile Include="FakeEntity.cs" />
     <Compile Include="InMemory\InMemoryPersistentResetTester.cs" />
     <Compile Include="InMemory\InMemoryPersistorTester.cs" />
+    <Compile Include="Membership\is_registering_the_persisted_login_auditor.cs" />
+    <Compile Include="Membership\LoginAuditPersistorTester.cs" />
+    <Compile Include="Membership\MembershipRepositoryTester.cs" />
+    <Compile Include="Membership\PasswordHash_is_predictable.cs" />
+    <Compile Include="Membership\PersistedLoginAuditorIntegratedTester.cs" />
+    <Compile Include="Membership\PersistedMembershipIntegratedTester.cs" />
     <Compile Include="MultiTenancy\ByTenantEntityStorageTester.cs" />
     <Compile Include="MultiTenancy\ByTenantStoragePolicyTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -216,10 +219,6 @@
     <ProjectReference Include="..\FubuMVC.RavenDb\FubuMVC.RavenDb.csproj">
       <Project>{02441E35-668B-4713-9279-BD51948B95EB}</Project>
       <Name>FubuMVC.RavenDb</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
-      <Project>{abfea520-820c-4b77-9015-6a09e24252fa}</Project>
-      <Name>FubuMVC.StructureMap</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

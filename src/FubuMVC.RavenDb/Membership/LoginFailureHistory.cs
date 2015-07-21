@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FubuMVC.PersistedMembership
+namespace FubuMVC.RavenDb.Membership
 {
     public class LoginFailureHistory
     {

@@ -16,13 +16,16 @@ namespace FubuMVC.Core.Registration
         public static IEnumerable<IImporter> FindAllExtensions(this Assembly assembly, IActivationDiagnostics diagnostics)
         {
             // Yeah, it really does have to be this way
+            // TODO -- use TypeRepository here.
             var log = diagnostics.LogFor(assembly);
             return assembly.GetExportedTypes().Where(isExtension).Select(type => typeof(Importer<>).CloseAndBuildAs<IImporter>(log,type));
         }
 
+
         private static bool isExtension(Type type)
         {
             return type.CanBeCastTo<IFubuRegistryExtension>()
+                   && !type.IsOpenGeneric()
                    && type.IsConcreteWithDefaultCtor()
                    && !type.HasAttribute<DoNotAutoImportAttribute>();
         }

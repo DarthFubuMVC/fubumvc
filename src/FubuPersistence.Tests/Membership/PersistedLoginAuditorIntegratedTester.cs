@@ -3,14 +3,14 @@ using System.Linq;
 using FubuCore.Dates;
 using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Auditing;
-using FubuPersistence;
+using FubuMVC.RavenDb.Membership;
 using FubuPersistence.RavenDb;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Raven.Client;
 using StructureMap;
 
-namespace FubuMVC.PersistedMembership.Testing
+namespace FubuPersistence.Tests.Membership
 {
     [TestFixture]
     public class PersistedLoginAuditorIntegratedTester

@@ -2,7 +2,7 @@
 using FubuMVC.Core.Security.Authentication.Membership;
 using FubuPersistence;
 
-namespace FubuMVC.PersistedMembership
+namespace FubuMVC.RavenDb.Membership
 {
     public class MembershipRepository<T> : IMembershipRepository where T : User
     {

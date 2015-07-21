@@ -5,7 +5,7 @@ using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Auditing;
 using FubuMVC.Core.Security.Authentication.Membership;
 
-namespace FubuMVC.PersistedMembership
+namespace FubuMVC.RavenDb.Membership
 {
     public class PersistedMembership<T> : IFubuRegistryExtension where T : User
     {

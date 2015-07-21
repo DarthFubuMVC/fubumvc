@@ -3,7 +3,7 @@ using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Auditing;
 using FubuPersistence;
 
-namespace FubuMVC.PersistedMembership
+namespace FubuMVC.RavenDb.Membership
 {
     public class PersistedLoginAuditor : ILoginAuditor
     {

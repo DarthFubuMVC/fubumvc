@@ -2,7 +2,7 @@
 using FubuMVC.Core.Security.Authentication.Auditing;
 using FubuPersistence;
 
-namespace FubuMVC.PersistedMembership
+namespace FubuMVC.RavenDb.Membership
 {
     public class Audit : Entity
     {

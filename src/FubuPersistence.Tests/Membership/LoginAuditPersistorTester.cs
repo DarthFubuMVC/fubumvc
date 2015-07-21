@@ -1,12 +1,12 @@
 ﻿using System;
 using FubuMVC.Core.Security.Authentication;
-using FubuPersistence;
+using FubuMVC.RavenDb.Membership;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Raven.Client;
 using Rhino.Mocks;
 
-namespace FubuMVC.PersistedMembership.Testing
+namespace FubuPersistence.Tests.Membership
 {
     [TestFixture]
     public class LoginAuditPersistorTester : InteractionContext<LoginAuditPersistor>

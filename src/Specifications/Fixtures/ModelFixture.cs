@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using FubuCore.Dates;
 using FubuCore.Reflection;
 using FubuMVC.Core.Security.Authentication;
-using FubuMVC.PersistedMembership;
+using FubuMVC.RavenDb.Membership;
 using FubuPersistence;
 using FubuPersistence.Reset;
 using StoryTeller;

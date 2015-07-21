@@ -1,7 +1,7 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Security.Authentication;
-using FubuMVC.PersistedMembership;
+using FubuMVC.RavenDb.Membership;
 using Serenity;
 
 namespace Specifications

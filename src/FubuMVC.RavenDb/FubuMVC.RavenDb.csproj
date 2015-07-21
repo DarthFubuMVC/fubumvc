@@ -40,9 +40,6 @@
     <Reference Include="AWSSDK">
       <HintPath>..\packages\RavenDB.Database\lib\net45\AWSSDK.dll</HintPath>
     </Reference>
-    <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles\lib\Bottles.dll</HintPath>
-    </Reference>
     <Reference Include="Esent.Interop">
       <HintPath>..\packages\RavenDB.Database\lib\net45\Esent.Interop.dll</HintPath>
     </Reference>
@@ -51,9 +48,6 @@
     </Reference>
     <Reference Include="FubuLocalization">
       <HintPath>..\packages\FubuLocalization\lib\FubuLocalization.dll</HintPath>
-    </Reference>
-    <Reference Include="FubuMVC.Core">
-      <HintPath>..\packages\FubuMVC.Core\lib\net40\FubuMVC.Core.dll</HintPath>
     </Reference>
     <Reference Include="GeoAPI">
       <HintPath>..\packages\RavenDB.Database\lib\net45\GeoAPI.dll</HintPath>
@@ -159,6 +153,13 @@
     <Compile Include="IPersistor.cs" />
     <Compile Include="ITransaction.cs" />
     <Compile Include="IUnitOfWork.cs" />
+    <Compile Include="Membership\Audit.cs" />
+    <Compile Include="Membership\LoginAuditPersistor.cs" />
+    <Compile Include="Membership\LoginFailureHistory.cs" />
+    <Compile Include="Membership\MembershipRepository.cs" />
+    <Compile Include="Membership\PersistedLoginAuditor.cs" />
+    <Compile Include="Membership\PersistedMembership.cs" />
+    <Compile Include="Membership\User.cs" />
     <Compile Include="MultiTenancy\ByTenantEntityStorage.cs" />
     <Compile Include="MultiTenancy\ByTenantStoragePolicy.cs" />
     <Compile Include="MultiTenancy\ITenantContext.cs" />
@@ -202,6 +203,10 @@
     <Compile Include="TransactionalBehaviorRavenSessionUsageMessage.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
+      <Project>{e18fd922-0e7a-49cd-b89f-473826077b9d}</Project>
+      <Name>FubuMVC.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{e18fd922-0e7a-49cd-b89f-473826077b9d}</Project>
       <Name>FubuMVC.Core</Name>

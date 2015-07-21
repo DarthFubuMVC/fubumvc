@@ -3,7 +3,7 @@ using FubuMVC.Core.Security.Authentication;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.PersistedMembership.Testing
+namespace FubuPersistence.Tests.Membership
 {
     [TestFixture]
     public class PasswordHash_is_predictable

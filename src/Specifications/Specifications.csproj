@@ -90,10 +90,6 @@
       <Project>{48bc51c2-b759-48db-aae1-f4686cd6d02a}</Project>
       <Name>FubuMVC.Katana</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.PersistedMembership\FubuMVC.PersistedMembership.csproj">
-      <Project>{89c78a78-4c10-4c34-94ad-80c89f8c6606}</Project>
-      <Name>FubuMVC.PersistedMembership</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.RavenDb\FubuMVC.RavenDb.csproj">
       <Project>{02441e35-668b-4713-9279-bd51948b95eb}</Project>
       <Name>FubuMVC.RavenDb</Name>

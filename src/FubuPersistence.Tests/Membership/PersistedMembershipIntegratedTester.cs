@@ -2,12 +2,13 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Membership;
+using FubuMVC.RavenDb.Membership;
 using FubuPersistence.InMemory;
 using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
 
-namespace FubuMVC.PersistedMembership.Testing
+namespace FubuPersistence.Tests.Membership
 {
     [TestFixture]
     public class PersistedMembershipIntegratedTester
@@ -16,19 +17,23 @@ namespace FubuMVC.PersistedMembership.Testing
         public void build_application_with_persisted_membership()
         {
             using (var runtime = FubuApplication
-                .For<FubuRepoWithPersistedMembership>(_ => _.StructureMap<InMemoryPersistenceRegistry>())
+                .For<FubuRepoWithPersistedMembership>(_ =>
+                {
+                    _.Features.Authentication.Enable(true);
+                    _.StructureMap<InMemoryPersistenceRegistry>();
+                })
                 .Bootstrap())
             {
                 var container = runtime.Factory.Get<IContainer>();
 
                 container.GetInstance<IMembershipRepository>()
-                    .ShouldBeOfType<MembershipRepository<User>>();
+                    .ShouldBeOfType<MembershipRepository<FubuMVC.RavenDb.Membership.User>>();
 
                 container.GetInstance<IPasswordHash>().ShouldBeOfType<PasswordHash>();
 
                 container.GetAllInstances<IAuthenticationStrategy>()
                     .OfType<MembershipAuthentication>()
-                    .Any(x => x.Membership is MembershipRepository<User>).ShouldBeTrue();
+                    .Any(x => x.Membership is MembershipRepository<FubuMVC.RavenDb.Membership.User>).ShouldBeTrue();
             }
         }
     }
@@ -37,7 +42,7 @@ namespace FubuMVC.PersistedMembership.Testing
     {
         public FubuRepoWithPersistedMembership()
         {
-            Import<PersistedMembership<User>>();
+            Import<PersistedMembership<FubuMVC.RavenDb.Membership.User>>();
         }
     }
 }

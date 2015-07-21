@@ -1,16 +1,16 @@
 ﻿using FubuMVC.Core.Security.Authentication;
-using FubuPersistence;
+using FubuMVC.RavenDb.Membership;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.PersistedMembership.Testing
+namespace FubuPersistence.Tests.Membership
 {
     [TestFixture]
     public class MembershipRepositoryTester
     {
         private EntityRepository theRepository;
         private PasswordHash theHash;
-        private MembershipRepository<User> theMembership;
+        private MembershipRepository<FubuMVC.RavenDb.Membership.User> theMembership;
 
         [SetUp]
         public void SetUp()
@@ -18,19 +18,19 @@ namespace FubuMVC.PersistedMembership.Testing
             theRepository = EntityRepository.InMemory();
             theHash = new PasswordHash();
 
-            theMembership = new MembershipRepository<User>(theRepository, theHash);
+            theMembership = new MembershipRepository<FubuMVC.RavenDb.Membership.User>(theRepository, theHash);
         }
 
         [Test]
         public void matches_credentials_postive()
         {
-            var user1 = new User
+            var user1 = new FubuMVC.RavenDb.Membership.User
             {
                 UserName = "jeremy",
                 Password = theHash.CreateHash("something")
             };
 
-            var user2 = new User
+            var user2 = new FubuMVC.RavenDb.Membership.User
             {
                 UserName = "josh",
                 Password = theHash.CreateHash("else")
@@ -62,13 +62,13 @@ namespace FubuMVC.PersistedMembership.Testing
         [Test]
         public void matches_credentials_negative()
         {
-            var user1 = new User
+            var user1 = new FubuMVC.RavenDb.Membership.User
             {
                 UserName = "jeremy",
                 Password = theHash.CreateHash("something")
             };
 
-            var user2 = new User
+            var user2 = new FubuMVC.RavenDb.Membership.User
             {
                 UserName = "josh",
                 Password = theHash.CreateHash("else")
@@ -94,13 +94,13 @@ namespace FubuMVC.PersistedMembership.Testing
         [Test]
         public void find_by_name()
         {
-            var user1 = new User
+            var user1 = new FubuMVC.RavenDb.Membership.User
             {
                 UserName = "jeremy",
                 Password = theHash.CreateHash("something")
             };
 
-            var user2 = new User
+            var user2 = new FubuMVC.RavenDb.Membership.User
             {
                 UserName = "josh",
                 Password = theHash.CreateHash("else")
