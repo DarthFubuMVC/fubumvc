@@ -1,6 +1,7 @@
 ﻿using FubuMVC.Core.Localization;
 using FubuMVC.Core.Security.AntiForgery;
 using FubuMVC.Core.Security.Authentication;
+using FubuMVC.Core.ServiceBus;
 
 namespace FubuMVC.Core.Registration.DSL
 {
@@ -54,6 +55,17 @@ namespace FubuMVC.Core.Registration.DSL
             get
             {
                 return new Feature<AntiForgerySettings, bool>(_parent, (settings, enabled) => settings.Enabled = enabled);
+            }
+        }
+
+        /// <summary>
+        /// Configure and enable the service bus features of FubuMVC
+        /// </summary>
+        public Feature<TransportSettings, bool> ServiceBus
+        {
+            get
+            {
+                return new Feature<TransportSettings, bool>(_parent, (settings, enabled) => settings.Enabled = enabled);
             }
         } 
     }

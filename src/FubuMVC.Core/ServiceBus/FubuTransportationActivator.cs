@@ -26,7 +26,7 @@ namespace FubuMVC.Core.ServiceBus
 
         public void Activate(IActivationLog log)
         {
-            if (_settings.Disabled)
+            if (_settings.Enabled)
             {
                 log.Trace("Skipping activation because FubuTranportation is disabled.");
                 return;
@@ -48,7 +48,7 @@ namespace FubuMVC.Core.ServiceBus
 
         public void Deactivate(IActivationLog log)
         {
-            if(_settings.Disabled) return;
+            if(_settings.Enabled) return;
 
             log.Trace("Shutting down the scheduled jobs");
             _scheduledJobs.Deactivate();

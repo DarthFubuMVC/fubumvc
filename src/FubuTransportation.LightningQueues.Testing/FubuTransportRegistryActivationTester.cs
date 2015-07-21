@@ -21,7 +21,7 @@ namespace FubuTransportation.LightningQueues.Testing
         [Test]
         public void should_start_when_transport_disabled()
         {
-            _registry.AlterSettings<TransportSettings>(x => x.Disabled = true);
+            _registry.AlterSettings<TransportSettings>(x => x.Enabled = true);
             _registry.AlterSettings<LightningQueueSettings>(x => x.DisableIfNoChannels = true);
             BootstrapApplication();
         }

@@ -1,17 +1,15 @@
 ﻿using System;
-using System.IO;
+using System.Linq;
 using System.Linq.Expressions;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime.Routing;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 using FubuMVC.Core.ServiceBus.Scheduling;
 using FubuTestingSupport;
 using NUnit.Framework;
-using System.Linq;
 
 namespace FubuTransportation.Testing
 {
@@ -22,9 +20,11 @@ namespace FubuTransportation.Testing
         public void SetUp()
         {
             theRegistry = new BusRegistry();
-            _behaviors = new Lazy<BehaviorGraph>(() => {
-                return BehaviorGraph.BuildFrom(registry => {
-                    new FubuTransportationExtensions().As<IFubuRegistryExtension>().Configure(registry);
+            _behaviors = new Lazy<BehaviorGraph>(() =>
+            {
+                return BehaviorGraph.BuildFrom(registry =>
+                {
+                    registry.Features.ServiceBus.Enable(true);
                     theRegistry.As<IFubuRegistryExtension>().Configure(registry);
                 });
             });
@@ -114,7 +114,7 @@ namespace FubuTransportation.Testing
             theRegistry.Channel(x => x.Outbound).AcceptsMessagesInNamespaceContainingType<BusSettings>();
 
             channelFor(x => x.Outbound).Rules.Single()
-                                       .ShouldEqual(NamespaceRule.For<BusSettings>());
+                .ShouldEqual(NamespaceRule.For<BusSettings>());
 
             channelFor(x => x.Upstream).Rules.Any().ShouldBeFalse();
         }
@@ -122,10 +122,10 @@ namespace FubuTransportation.Testing
         [Test]
         public void add_namespace_publishing_rule_2()
         {
-            theRegistry.Channel(x => x.Outbound).AcceptsMessagesInNamespace(typeof(BusSettings).Namespace);
+            theRegistry.Channel(x => x.Outbound).AcceptsMessagesInNamespace(typeof (BusSettings).Namespace);
 
             channelFor(x => x.Outbound).Rules.Single()
-                                       .ShouldEqual(NamespaceRule.For<BusSettings>());
+                .ShouldEqual(NamespaceRule.For<BusSettings>());
 
             channelFor(x => x.Upstream).Rules.Any().ShouldBeFalse();
         }
@@ -136,7 +136,7 @@ namespace FubuTransportation.Testing
             theRegistry.Channel(x => x.Outbound).AcceptsMessagesInAssemblyContainingType<BusSettings>();
 
             channelFor(x => x.Outbound).Rules.Single()
-                                       .ShouldEqual(AssemblyRule.For<BusSettings>());
+                .ShouldEqual(AssemblyRule.For<BusSettings>());
 
             channelFor(x => x.Upstream).Rules.Any().ShouldBeFalse();
         }
@@ -144,10 +144,10 @@ namespace FubuTransportation.Testing
         [Test]
         public void add_assembly_publishing_rule_2()
         {
-            theRegistry.Channel(x => x.Outbound).AcceptsMessagesInAssembly(typeof(BusSettings).Assembly.GetName().Name);
+            theRegistry.Channel(x => x.Outbound).AcceptsMessagesInAssembly(typeof (BusSettings).Assembly.GetName().Name);
 
             channelFor(x => x.Outbound).Rules.Single()
-                                       .ShouldEqual(AssemblyRule.For<BusSettings>());
+                .ShouldEqual(AssemblyRule.For<BusSettings>());
 
             channelFor(x => x.Upstream).Rules.Any().ShouldBeFalse();
         }
@@ -157,7 +157,7 @@ namespace FubuTransportation.Testing
         {
             theRegistry.Channel(x => x.Outbound).AcceptsMessage<BusSettings>();
             channelFor(x => x.Outbound).Rules.Single()
-                                       .ShouldBeOfType<SingleTypeRoutingRule<BusSettings>>();
+                .ShouldBeOfType<SingleTypeRoutingRule<BusSettings>>();
 
             channelFor(x => x.Upstream).Rules.Any().ShouldBeFalse();
         }
@@ -165,9 +165,9 @@ namespace FubuTransportation.Testing
         [Test]
         public void add_single_type_rule_2()
         {
-            theRegistry.Channel(x => x.Outbound).AcceptsMessage(typeof(BusSettings));
+            theRegistry.Channel(x => x.Outbound).AcceptsMessage(typeof (BusSettings));
             channelFor(x => x.Outbound).Rules.Single()
-                                       .ShouldBeOfType<SingleTypeRoutingRule<BusSettings>>();
+                .ShouldBeOfType<SingleTypeRoutingRule<BusSettings>>();
 
             channelFor(x => x.Upstream).Rules.Any().ShouldBeFalse();
         }
@@ -175,12 +175,12 @@ namespace FubuTransportation.Testing
         [Test]
         public void add_adhoc_rule()
         {
-            theRegistry.Channel(x => x.Outbound).AcceptsMessages(type => type == typeof(BusSettings));
+            theRegistry.Channel(x => x.Outbound).AcceptsMessages(type => type == typeof (BusSettings));
 
             var rule = channelFor(x => x.Outbound).Rules.Single();
 
             rule.ShouldBeOfType<LambdaRoutingRule>();
-            rule.Matches(typeof(BusSettings)).ShouldBeTrue();
+            rule.Matches(typeof (BusSettings)).ShouldBeTrue();
             rule.Matches(GetType()).ShouldBeFalse();
         }
 
@@ -190,9 +190,8 @@ namespace FubuTransportation.Testing
             theRegistry.Channel(x => x.Outbound).AcceptsMessagesMatchingRule<CustomRule>();
 
             channelFor(x => x.Outbound).Rules.Single()
-                                       .ShouldBeOfType<CustomRule>();
+                .ShouldBeOfType<CustomRule>();
         }
-
     }
 
     public class BusSettings

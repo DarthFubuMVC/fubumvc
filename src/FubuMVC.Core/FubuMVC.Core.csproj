@@ -146,7 +146,6 @@
     <Compile Include="ServiceBus\Events\IListener.cs" />
     <Compile Include="ServiceBus\Events\SynchronousEventAggregator.cs" />
     <Compile Include="ServiceBus\FubuTransportationActivator.cs" />
-    <Compile Include="ServiceBus\FubuTransportationExtensions.cs" />
     <Compile Include="ServiceBus\FubuTransportServiceRegistry.cs" />
     <Compile Include="ServiceBus\HandlerExtensions.cs" />
     <Compile Include="ServiceBus\IFubuTransportActivator.cs" />
@@ -385,7 +384,6 @@
     <Compile Include="ServiceBus\Web\SendsMessage.cs" />
     <Compile Include="ServiceBus\Web\SendsMessageActionSource.cs" />
     <Compile Include="ServiceBus\Web\SendsMessageConvention.cs" />
-    <Compile Include="ServiceBus\Web\SendsMessageExtensions.cs" />
     <Compile Include="Services\AssemblyFinder.cs" />
     <Compile Include="Assets\Asset.cs" />
     <Compile Include="Assets\AssetFinderCache.cs" />

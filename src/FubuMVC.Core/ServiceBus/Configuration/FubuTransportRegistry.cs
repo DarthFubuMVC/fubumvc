@@ -49,14 +49,17 @@ namespace FubuMVC.Core.ServiceBus.Configuration
         public static BehaviorGraph BehaviorGraphFor(Action<FubuTransportRegistry> configure)
         {
             var registry = new FubuRegistry();
+            registry.Features.ServiceBus.Enable(true);
+            
             var transportRegistry = new FubuTransportRegistry();
+
 
             configure(transportRegistry);
 
             transportRegistry.As<IFubuRegistryExtension>()
                 .Configure(registry);
 
-            new FubuTransportationExtensions().Configure(registry);
+            
 
             return BehaviorGraph.BuildFrom(registry);
         }
