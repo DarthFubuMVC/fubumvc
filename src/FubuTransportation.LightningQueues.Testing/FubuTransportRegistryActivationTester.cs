@@ -1,7 +1,6 @@
 ﻿using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus;
-using FubuMVC.Core.StructureMap;
 using NUnit.Framework;
 
 namespace FubuTransportation.LightningQueues.Testing
@@ -15,7 +14,7 @@ namespace FubuTransportation.LightningQueues.Testing
         public void SetUp()
         {
             _registry = new FubuRegistry();
-            _registry.Services<FubuTransportServiceRegistry>();
+            //_registry.Services<FubuTransportServiceRegistry>();
         }
 
         [Test]

@@ -30,6 +30,7 @@ namespace FubuMVC.Tests.ServiceBus
         {
             var registry = new FubuRegistry();
             registry.Import<MyFirstTransport>();
+            registry.Features.ServiceBus.Enable(true);
 
             using (var runtime = FubuApplication.For(registry).Bootstrap())
             {

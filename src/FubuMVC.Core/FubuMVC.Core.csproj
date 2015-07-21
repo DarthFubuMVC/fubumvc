@@ -200,7 +200,6 @@
     <Compile Include="ServiceBus\Monitoring\TaskOwner.cs" />
     <Compile Include="ServiceBus\Monitoring\TransportPeer.cs" />
     <Compile Include="ServiceBus\NotHandlerAttribute.cs" />
-    <Compile Include="ServiceBus\Polling\BuiltInPollingJobRegistry.cs" />
     <Compile Include="ServiceBus\Polling\DefaultTimer.cs" />
     <Compile Include="ServiceBus\Polling\IJob.cs" />
     <Compile Include="ServiceBus\Polling\IPollingJob.cs" />

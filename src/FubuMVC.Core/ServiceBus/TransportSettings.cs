@@ -44,9 +44,6 @@ namespace FubuMVC.Core.ServiceBus
             registry.Actions.FindWith<SendsMessageActionSource>();
             registry.Policies.Global.Add<SendsMessageConvention>();
 
-            registry.Import<BuiltInPollingJobRegistry>();
-
-
             registry.Policies.Global.Add<ApplyScheduledJobRouting>();
             registry.Services<ScheduledJobServicesRegistry>();
             registry.Services<MonitoringServiceRegistry>();
