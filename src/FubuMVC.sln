@@ -58,8 +58,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.RavenDb", "FubuMVC.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuPersistence.Tests", "FubuPersistence.Tests\FubuPersistence.Tests.csproj", "{E80DC8C6-3BC3-4F00-9939-12BA2B34A4EB}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authentication", "Authentication", "{696AFFAB-BFDA-4ECF-80D4-3C1E1186711D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.PersistedMembership", "FubuMVC.PersistedMembership\FubuMVC.PersistedMembership.csproj", "{89C78A78-4C10-4C34-94AD-80C89F8C6606}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.PersistedMembership.Testing", "FubuMVC.PersistedMembership.Testing\FubuMVC.PersistedMembership.Testing.csproj", "{D320FB44-9A73-446E-80ED-5CA4C9C2838A}"
