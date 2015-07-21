@@ -186,10 +186,6 @@
       <Project>{0d252b13-1636-43d4-b203-cce05de43073}</Project>
       <Name>FubuTransportation.RavenDb</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuTransportation\FubuTransportation.csproj">
-      <Project>{23fdb1ce-1ec5-4d1b-b3e5-008a439caa13}</Project>
-      <Name>FubuTransportation</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

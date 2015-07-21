@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using FubuTransportation.Configuration;
-using FubuTransportation.Runtime;
-using FubuTransportation.Runtime.Delayed;
+using FubuMVC.Core.ServiceBus.Configuration;
+using FubuMVC.Core.ServiceBus.Runtime;
+using FubuMVC.Core.ServiceBus.Runtime.Delayed;
 using LightningQueues.Model;
 
 namespace FubuTransportation.LightningQueues

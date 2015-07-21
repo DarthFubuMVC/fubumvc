@@ -30,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles\lib\Bottles.dll</HintPath>
-    </Reference>
     <Reference Include="FubuCore">
       <HintPath>..\packages\FubuCore\lib\FubuCore.dll</HintPath>
     </Reference>
@@ -82,10 +79,6 @@
     <ProjectReference Include="..\FubuTransportation.LightningQueues\FubuTransportation.LightningQueues.csproj">
       <Project>{f151167c-4736-4c67-9697-7876574c05d0}</Project>
       <Name>FubuTransportation.LightningQueues</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuTransportation\FubuTransportation.csproj">
-      <Project>{23fdb1ce-1ec5-4d1b-b3e5-008a439caa13}</Project>
-      <Name>FubuTransportation</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

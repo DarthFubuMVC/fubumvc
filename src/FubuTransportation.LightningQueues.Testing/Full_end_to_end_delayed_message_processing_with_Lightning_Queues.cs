@@ -5,11 +5,12 @@ using System.Threading;
 using FubuCore;
 using FubuCore.Dates;
 using FubuMVC.Core;
+using FubuMVC.Core.ServiceBus;
+using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.StructureMap;
+using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using FubuTestingSupport;
-using FubuTransportation.Configuration;
 using FubuTransportation.Testing;
-using FubuTransportation.Testing.ScenarioSupport;
 using NUnit.Framework;
 using StructureMap;
 

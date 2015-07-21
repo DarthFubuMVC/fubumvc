@@ -1,6 +1,6 @@
 using System;
-using FubuTransportation.Runtime;
-using FubuTransportation.Runtime.Headers;
+using FubuMVC.Core.ServiceBus.Runtime;
+using FubuMVC.Core.ServiceBus.Runtime.Headers;
 using LightningQueues;
 
 namespace FubuTransportation.LightningQueues

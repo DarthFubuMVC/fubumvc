@@ -33,12 +33,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles\lib\Bottles.dll</HintPath>
-    </Reference>
-    <Reference Include="Esent.Collections">
-      <HintPath>..\packages\ManagedEsent\lib\net40\Esent.Collections.dll</HintPath>
-    </Reference>
     <Reference Include="Esent.Interop">
       <HintPath>..\packages\ManagedEsent\lib\net40\Esent.Interop.dll</HintPath>
     </Reference>
@@ -105,10 +99,6 @@
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{e18fd922-0e7a-49cd-b89f-473826077b9d}</Project>
       <Name>FubuMVC.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuTransportation\FubuTransportation.csproj">
-      <Project>{23fdb1ce-1ec5-4d1b-b3e5-008a439caa13}</Project>
-      <Name>FubuTransportation</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

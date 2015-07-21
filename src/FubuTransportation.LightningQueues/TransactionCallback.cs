@@ -1,7 +1,7 @@
 using System;
-using FubuTransportation.Runtime.Delayed;
-using FubuTransportation.ErrorHandling;
-using FubuTransportation.Runtime.Invocation;
+using FubuMVC.Core.ServiceBus.ErrorHandling;
+using FubuMVC.Core.ServiceBus.Runtime.Delayed;
+using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using LightningQueues;
 using LightningQueues.Model;
 

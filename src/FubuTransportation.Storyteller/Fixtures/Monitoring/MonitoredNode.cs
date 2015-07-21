@@ -6,12 +6,12 @@ using FubuCore;
 using FubuCore.Logging;
 using FubuCore.Util;
 using FubuMVC.Core;
-using FubuMVC.Core.StructureMap;
-using FubuTransportation.Configuration;
+using FubuMVC.Core.ServiceBus;
+using FubuMVC.Core.ServiceBus.Configuration;
+using FubuMVC.Core.ServiceBus.Monitoring;
+using FubuMVC.Core.ServiceBus.Polling;
+using FubuMVC.Core.ServiceBus.Subscriptions;
 using FubuTransportation.LightningQueues;
-using FubuTransportation.Monitoring;
-using FubuTransportation.Polling;
-using FubuTransportation.Subscriptions;
 
 namespace FubuTransportation.Storyteller.Fixtures.Monitoring
 {
@@ -28,8 +28,10 @@ namespace FubuTransportation.Storyteller.Fixtures.Monitoring
         private FubuRuntime _runtime;
 
         private readonly IList<Uri> _initialTasks = new List<Uri>();
-        private readonly Cache<string, FakePersistentTaskSource> _sources = new Cache<string, FakePersistentTaskSource>(scheme => new FakePersistentTaskSource(scheme)); 
-            
+
+        private readonly Cache<string, FakePersistentTaskSource> _sources =
+            new Cache<string, FakePersistentTaskSource>(scheme => new FakePersistentTaskSource(scheme));
+
         public MonitoredNode(string nodeId, Uri incoming, PersistentTaskMessageListener listener)
         {
             AlterSettings<MonitoringSettings>(x => x.Incoming = incoming);
@@ -42,7 +44,8 @@ namespace FubuTransportation.Storyteller.Fixtures.Monitoring
 
             Services(_ => _.AddService<ILogListener>(listener));
 
-            AlterSettings<HealthMonitoringSettings>(_ => {
+            AlterSettings<HealthMonitoringSettings>(_ =>
+            {
                 _.TakeOwnershipMessageTimeout = 3.Seconds();
                 _.HealthCheckMessageTimeout = 1.Seconds();
                 _.DeactivationMessageTimeout = 3.Seconds();
@@ -67,23 +70,20 @@ namespace FubuTransportation.Storyteller.Fixtures.Monitoring
 
         public void Startup(bool monitoringEnabled, ISubscriptionPersistence persistence)
         {
-            
-
             AlterSettings<LightningQueueSettings>(x => x.DisableIfNoChannels = true);
 
             Services(_ => _sources.Each(_.AddService<IPersistentTaskSource>));
             Services(_ => _.ReplaceService(persistence));
             HealthMonitoring
-                .ScheduledExecution(monitoringEnabled ? ScheduledExecution.WaitUntilInterval : ScheduledExecution.Disabled)
+                .ScheduledExecution(monitoringEnabled
+                    ? ScheduledExecution.WaitUntilInterval
+                    : ScheduledExecution.Disabled)
                 .IntervalSeed(3);
 
             _runtime = FubuTransport.For(this).Bootstrap();
             var controller = _runtime.Factory.Get<IPersistentTaskController>();
 
-            _initialTasks.Each(subject => {
-                controller.TakeOwnership(subject).Wait(1.Seconds());
-            });
-
+            _initialTasks.Each(subject => { controller.TakeOwnership(subject).Wait(1.Seconds()); });
         }
 
         void IDisposable.Dispose()
@@ -121,7 +121,6 @@ namespace FubuTransportation.Storyteller.Fixtures.Monitoring
             }
 
             return jobs.ExecuteJob<HealthMonitorPollingJob>();
-
         }
 
         public void Shutdown()

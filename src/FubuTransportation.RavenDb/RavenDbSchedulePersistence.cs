@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using FubuMVC.Core.ServiceBus.ScheduledJobs;
+using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
 using FubuPersistence;
-using FubuTransportation.ScheduledJobs;
-using FubuTransportation.ScheduledJobs.Persistence;
 using Raven.Client;
 
 namespace FubuTransportation.RavenDb

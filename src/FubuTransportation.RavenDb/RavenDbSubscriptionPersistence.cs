@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FubuMVC.Core.ServiceBus.Subscriptions;
 using FubuPersistence;
-using FubuTransportation.Subscriptions;
 using Raven.Client;
 
 namespace FubuTransportation.RavenDb

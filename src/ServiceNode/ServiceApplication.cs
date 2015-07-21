@@ -1,7 +1,6 @@
 ﻿using FubuMVC.Core;
-using FubuMVC.Core.StructureMap;
-using FubuTransportation.Configuration;
-using FubuTransportation.Polling;
+using FubuMVC.Core.ServiceBus.Configuration;
+using FubuMVC.Core.ServiceBus.Polling;
 
 namespace ServiceNode
 {

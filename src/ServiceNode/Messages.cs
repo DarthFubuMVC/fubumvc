@@ -1,5 +1,5 @@
-﻿using FubuTransportation.Runtime.Invocation;
-using FubuTransportation.Runtime.Invocation.Batching;
+﻿using FubuMVC.Core.ServiceBus.Runtime.Invocation;
+using FubuMVC.Core.ServiceBus.Runtime.Invocation.Batching;
 
 namespace ServiceNode
 {

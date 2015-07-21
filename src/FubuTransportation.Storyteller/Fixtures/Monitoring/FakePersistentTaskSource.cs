@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuCore.Util;
-using FubuTransportation.Monitoring;
+using FubuMVC.Core.ServiceBus;
+using FubuMVC.Core.ServiceBus.Monitoring;
 
 namespace FubuTransportation.Storyteller.Fixtures.Monitoring
 {

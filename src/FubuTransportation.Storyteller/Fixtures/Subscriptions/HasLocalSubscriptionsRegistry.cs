@@ -1,4 +1,4 @@
-﻿using FubuTransportation.Configuration;
+﻿using FubuMVC.Core.ServiceBus.Configuration;
 using FubuTransportation.Storyteller.Support;
 
 namespace FubuTransportation.Storyteller.Fixtures.Subscriptions

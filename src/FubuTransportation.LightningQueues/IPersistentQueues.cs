@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using FubuTransportation.Runtime;
+using FubuMVC.Core.ServiceBus.Runtime;
 using LightningQueues;
 
 namespace FubuTransportation.LightningQueues

@@ -1,6 +1,6 @@
 ﻿using System;
-using FubuTransportation.ScheduledJobs.Execution;
-using FubuTransportation.ScheduledJobs.Persistence;
+using FubuMVC.Core.ServiceBus.ScheduledJobs.Execution;
+using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
 
 namespace ScheduledJobHarness
 {
@@ -10,7 +10,6 @@ namespace ScheduledJobHarness
         {
             var hour = new DateTimeOffset(currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, 0, 0,
                 currentTime.Offset);
-
 
 
             while (hour < currentTime)

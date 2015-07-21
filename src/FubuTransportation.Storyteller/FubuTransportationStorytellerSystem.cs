@@ -1,5 +1,4 @@
-﻿using FubuTransportation.Configuration;
-using FubuTransportation.Serenity;
+﻿using FubuTransportation.Serenity;
 using ServiceNode;
 using WebsiteNode;
 

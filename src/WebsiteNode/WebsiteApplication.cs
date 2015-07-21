@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using FubuMVC.Core;
-using FubuTransportation.Configuration;
-using FubuTransportation.Polling;
+using FubuMVC.Core.ServiceBus.Configuration;
+using FubuMVC.Core.ServiceBus.Polling;
 using ServiceNode;
 using StructureMap;
 
@@ -11,9 +11,7 @@ namespace WebsiteNode
     {
         public FubuApplication BuildApplication()
         {
-            var container = new Container(x => {
-                x.For<MessageRecorder>().Singleton();
-            });
+            var container = new Container(x => { x.For<MessageRecorder>().Singleton(); });
 
             return FubuTransport.For<WebsiteRegistry>(container);
         }
@@ -32,6 +30,6 @@ namespace WebsiteNode
 
     public class MessageRecorder
     {
-        public IList<string> Messages = new List<string>(); 
+        public IList<string> Messages = new List<string>();
     }
 }

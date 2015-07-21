@@ -1,4 +1,4 @@
-﻿using FubuTransportation.Configuration;
+﻿using FubuMVC.Core.ServiceBus.Configuration;
 using StoryTeller;
 
 namespace FubuTransportation.Serenity

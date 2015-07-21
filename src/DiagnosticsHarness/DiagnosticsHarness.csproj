@@ -30,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles\lib\Bottles.dll</HintPath>
-    </Reference>
     <Reference Include="BottleServiceRunner">
       <HintPath>..\packages\BottleServiceRunner\lib\BottleServiceRunner.exe</HintPath>
     </Reference>
@@ -106,10 +103,6 @@
     <ProjectReference Include="..\FubuTransportation.LightningQueues\FubuTransportation.LightningQueues.csproj">
       <Project>{f151167c-4736-4c67-9697-7876574c05d0}</Project>
       <Name>FubuTransportation.LightningQueues</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuTransportation\FubuTransportation.csproj">
-      <Project>{23FDB1CE-1EC5-4D1B-B3E5-008A439CAA13}</Project>
-      <Name>FubuTransportation</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

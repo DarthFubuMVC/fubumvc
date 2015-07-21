@@ -1,0 +1,22 @@
+﻿using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.ObjectGraph;
+
+namespace FubuMVC.Core.ServiceBus.Polling
+{
+    public class PollingServicesRegistry : ServiceRegistry
+    {
+        public PollingServicesRegistry()
+        {
+            // NEED MORE.
+            SetServiceIfNone<ITimer, DefaultTimer>();
+            AddService<IDeactivator, PollingJobDeactivator>();
+            SetServiceIfNone<IPollingJobLogger, PollingJobLogger>();
+
+            var def = ObjectDef.ForType<PollingJobs>();
+            def.IsSingleton = true;
+            SetServiceIfNone(typeof (IPollingJobs), def);
+
+            SetServiceIfNone(typeof (PollingJobLatch), ObjectDef.ForValue(new PollingJobLatch()).AsSingleton());
+        }
+    }
+}

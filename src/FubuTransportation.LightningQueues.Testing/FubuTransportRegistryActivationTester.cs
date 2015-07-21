@@ -1,5 +1,6 @@
 ﻿using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.StructureMap;
 using NUnit.Framework;
 

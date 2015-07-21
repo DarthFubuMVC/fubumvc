@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
-using FubuTransportation.Polling;
-using FubuTransportation.Runtime;
+using FubuMVC.Core.ServiceBus.Polling;
+using FubuMVC.Core.ServiceBus.Runtime;
 
 namespace ScheduledJobHarness
 {

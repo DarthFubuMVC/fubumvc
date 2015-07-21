@@ -5,8 +5,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FubuCore;
-using FubuTransportation.Monitoring;
-using FubuTransportation.Subscriptions;
+using FubuMVC.Core.ServiceBus.Monitoring;
+using FubuMVC.Core.ServiceBus.Subscriptions;
 using OpenQA.Selenium.Safari.Internal;
 using StoryTeller;
 

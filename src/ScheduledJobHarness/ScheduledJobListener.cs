@@ -1,6 +1,6 @@
 ﻿using System;
 using FubuCore.Logging;
-using FubuTransportation.ScheduledJobs.Execution;
+using FubuMVC.Core.ServiceBus.ScheduledJobs.Execution;
 
 namespace ScheduledJobHarness
 {

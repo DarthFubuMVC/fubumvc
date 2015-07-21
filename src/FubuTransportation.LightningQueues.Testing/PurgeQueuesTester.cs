@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using FubuMVC.Core.ServiceBus.Configuration;
+using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.StructureMap;
+using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using FubuTestingSupport;
-using FubuTransportation.Configuration;
-using FubuTransportation.Polling;
-using FubuTransportation.Testing.ScenarioSupport;
 using LightningQueues;
 using NUnit.Framework;
 using Rhino.Mocks;

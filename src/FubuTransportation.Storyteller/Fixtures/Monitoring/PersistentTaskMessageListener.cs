@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuCore.Logging;
-using FubuTransportation.Monitoring;
+using FubuMVC.Core.ServiceBus.Monitoring;
 
 namespace FubuTransportation.Storyteller.Fixtures.Monitoring
 {

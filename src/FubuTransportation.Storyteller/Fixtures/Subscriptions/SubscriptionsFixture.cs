@@ -2,10 +2,11 @@
 using System.Reflection;
 using FubuCore;
 using FubuCore.Util;
+using FubuMVC.Core.ServiceBus;
+using FubuMVC.Core.ServiceBus.Configuration;
+using FubuMVC.Core.ServiceBus.InMemory;
+using FubuMVC.Core.ServiceBus.Subscriptions;
 using FubuMVC.Core.Services.Messaging.Tracking;
-using FubuTransportation.Configuration;
-using FubuTransportation.InMemory;
-using FubuTransportation.Subscriptions;
 using HtmlTags;
 using StoryTeller;
 
@@ -41,7 +42,8 @@ namespace FubuTransportation.Storyteller.Fixtures.Subscriptions
         [FormatAs("Load a node {Key} from {Registry} with reply Uri {ReplyUri}")]
         public void LoadNode(string Key, [SelectionList("FubuTransportRegistries")] string Registry, string ReplyUri)
         {
-            MessageHistory.WaitForWorkToFinish(() => {
+            MessageHistory.WaitForWorkToFinish(() =>
+            {
                 var node = new RunningNode(Registry, ReplyUri.ToUri());
                 node.Start();
 
@@ -110,7 +112,8 @@ namespace FubuTransportation.Storyteller.Fixtures.Subscriptions
         public CodeTag(string name, string code) : base("h4")
         {
             Text(name);
-            Next = new HtmlTag("pre", tag => {
+            Next = new HtmlTag("pre", tag =>
+            {
                 tag.Style("border", "thin solid black");
                 tag.Style("padding", "5px");
                 tag.Text(code);

@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using FubuCore;
-using FubuMVC.Core;
 using FubuMVC.Core.Continuations;
-using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.ServiceBus;
+using FubuMVC.Core.ServiceBus.Diagnostics.Visualization;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
-using FubuTransportation;
-using FubuTransportation.Diagnostics.Visualization;
-using FubuTransportation.RavenDb;
-using FubuTransportation.ScheduledJobs.Persistence;
-using FubuTransportation.Subscriptions;
 using HtmlTags;
-using Process = System.Diagnostics.Process;
 
 namespace ScheduledJobHarness
 {
@@ -61,7 +56,8 @@ namespace ScheduledJobHarness
             _document.Add("p").Text("The running nodes are:");
             _document.Push("ul");
 
-            _group.Nodes().Each(node => {
+            _group.Nodes().Each(node =>
+            {
                 var url = _urls.UrlFor(new ShutdownRequest {Node = node.Id});
                 _document.Add("li/a").Text("Shutdown " + node.Id).Attr("href", url);
             });

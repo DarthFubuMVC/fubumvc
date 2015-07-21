@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using FubuMVC.Core.ServiceBus;
 using Serenity.Fixtures;
 using ServiceNode;
 using StoryTeller;

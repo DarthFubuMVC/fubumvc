@@ -100,10 +100,6 @@
       <Project>{7e7f5adc-d27d-4bb9-bf03-e5909330a53c}</Project>
       <Name>FubuTransportation.Serenity</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuTransportation\FubuTransportation.csproj">
-      <Project>{23fdb1ce-1ec5-4d1b-b3e5-008a439caa13}</Project>
-      <Name>FubuTransportation</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Serenity\Serenity.csproj">
       <Project>{900a0419-3579-4dae-85be-71a3e4b34239}</Project>
       <Name>Serenity</Name>

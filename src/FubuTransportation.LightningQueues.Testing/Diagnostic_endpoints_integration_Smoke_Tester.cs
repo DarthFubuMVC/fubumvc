@@ -2,10 +2,10 @@
 using System.Net;
 using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.StructureMap;
 using FubuMVC.Katana;
 using FubuTestingSupport;
-using FubuTransportation.Configuration;
 using FubuTransportation.LightningQueues.Diagnostics;
 using NUnit.Framework;
 

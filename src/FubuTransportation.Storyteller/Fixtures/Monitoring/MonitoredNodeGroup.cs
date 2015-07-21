@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Util;
-using FubuTransportation.Monitoring;
-using FubuTransportation.Subscriptions;
+using FubuMVC.Core.ServiceBus.Monitoring;
+using FubuMVC.Core.ServiceBus.Subscriptions;
 
 namespace FubuTransportation.Storyteller.Fixtures.Monitoring
 {
@@ -14,7 +13,10 @@ namespace FubuTransportation.Storyteller.Fixtures.Monitoring
     {
         private readonly Cache<string, MonitoredNode> _nodes = new Cache<string, MonitoredNode>();
         private readonly InMemorySubscriptionPersistence _persistence = new InMemorySubscriptionPersistence();
-        private readonly IList<Action<MonitoredNode>> _configurations = new List<Action<MonitoredNode>>();
+
+        private readonly System.Collections.Generic.IList<Action<MonitoredNode>> _configurations =
+            new System.Collections.Generic.List<Action<MonitoredNode>>();
+
         private readonly PersistentTaskMessageListener _listener = new PersistentTaskMessageListener();
 
         public void Add(string nodeId, Uri incoming)
@@ -23,7 +25,8 @@ namespace FubuTransportation.Storyteller.Fixtures.Monitoring
             _nodes[nodeId] = node;
         }
 
-        public void AddTask(Uri subject, string initialNode, IEnumerable<string> preferredNodes)
+        public void AddTask(Uri subject, string initialNode,
+            System.Collections.Generic.IEnumerable<string> preferredNodes)
         {
             _configurations.Add(node => node.AddTask(subject, preferredNodes));
 
@@ -31,15 +34,14 @@ namespace FubuTransportation.Storyteller.Fixtures.Monitoring
             {
                 _nodes[initialNode].AddInitialTask(subject);
             }
-            
         }
 
         public bool MonitoringEnabled { get; set; }
 
-        public IEnumerable<PersistentTaskMessage> LoggedEvents()
+        public System.Collections.Generic.IEnumerable<PersistentTaskMessage> LoggedEvents()
         {
             return _listener.LoggedEvents().Where(x => x.Subject.Scheme != "scheduled").ToArray();
-        } 
+        }
 
         public MonitoredNode NodeFor(string id)
         {
@@ -48,7 +50,8 @@ namespace FubuTransportation.Storyteller.Fixtures.Monitoring
 
         public void Startup()
         {
-            _nodes.Each(node => {
+            _nodes.Each(node =>
+            {
                 _configurations.Each(x => x(node));
                 node.Startup(MonitoringEnabled, _persistence);
             });
@@ -65,30 +68,33 @@ namespace FubuTransportation.Storyteller.Fixtures.Monitoring
             task.SetState(state, _persistence, node);
         }
 
-        public IEnumerable<TaskState> AssignedTasks()
+        public System.Collections.Generic.IEnumerable<TaskState> AssignedTasks()
         {
             return _nodes.SelectMany(x => x.AssignedTasks()).Where(x => x.Task.Scheme != "scheduled");
         }
 
-        public IEnumerable<TaskState> PersistedTasks()
+        public System.Collections.Generic.IEnumerable<TaskState> PersistedTasks()
         {
             return
                 _persistence.AllNodes()
-                    .SelectMany(node => {
-                        return node.OwnedTasks.Select(x => new TaskState { Node = node.Id, Task = x });
-                    }).Where(x => x.Task.Scheme != "scheduled");
+                    .SelectMany(
+                        node => { return node.OwnedTasks.Select(x => new TaskState {Node = node.Id, Task = x}); })
+                    .Where(x => x.Task.Scheme != "scheduled");
         }
 
         public void WaitForAllHealthChecks()
         {
-            var tasks = _nodes.Select(x => {
-                return Task.Delay(MonitoredNode.Random.Next(25, 200)).ContinueWith(t => {
-                    return x.WaitForHealthCheck();
-                }).Unwrap();
-            });
+            var tasks =
+                _nodes.Select(
+                    x =>
+                    {
+                        return
+                            Task.Delay(MonitoredNode.Random.Next(25, 200))
+                                .ContinueWith(t => { return x.WaitForHealthCheck(); })
+                                .Unwrap();
+                    });
 
             Task.WaitAll(tasks.ToArray(), 15.Seconds());
-
         }
 
         public void ShutdownNode(string node)
@@ -97,7 +103,7 @@ namespace FubuTransportation.Storyteller.Fixtures.Monitoring
             _nodes.Remove(node);
         }
 
-        public IEnumerable<TransportNode> GetPersistedNodes()
+        public System.Collections.Generic.IEnumerable<TransportNode> GetPersistedNodes()
         {
             return _persistence.NodesForGroup("Monitoring");
         }

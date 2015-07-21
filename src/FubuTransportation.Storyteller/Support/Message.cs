@@ -1,6 +1,6 @@
 ﻿using System;
 using FubuCore;
-using FubuTransportation.Runtime;
+using FubuMVC.Core.ServiceBus.Runtime;
 
 namespace FubuTransportation.Storyteller.Support
 {

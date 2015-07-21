@@ -1,4 +1,5 @@
-﻿using FubuTransportation.Serenity;
+﻿using FubuMVC.Core.ServiceBus;
+using FubuTransportation.Serenity;
 using ServiceNode;
 using StoryTeller;
 using StoryTeller.Engine;

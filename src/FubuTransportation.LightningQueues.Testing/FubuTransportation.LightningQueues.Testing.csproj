@@ -33,12 +33,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles\lib\Bottles.dll</HintPath>
-    </Reference>
-    <Reference Include="Esent.Collections">
-      <HintPath>..\packages\ManagedEsent\lib\net40\Esent.Collections.dll</HintPath>
-    </Reference>
     <Reference Include="Esent.Interop">
       <HintPath>..\packages\ManagedEsent\lib\net40\Esent.Interop.dll</HintPath>
     </Reference>
@@ -134,17 +128,13 @@
       <Project>{48bc51c2-b759-48db-aae1-f4686cd6d02a}</Project>
       <Name>FubuMVC.Katana</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Tests\FubuMVC.Tests.csproj">
+      <Project>{feb91f9f-ece2-480c-b39c-a44bbf1f7b01}</Project>
+      <Name>FubuMVC.Tests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FubuTransportation.LightningQueues\FubuTransportation.LightningQueues.csproj">
       <Project>{f151167c-4736-4c67-9697-7876574c05d0}</Project>
       <Name>FubuTransportation.LightningQueues</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuTransportation.Testing\FubuTransportation.Testing.csproj">
-      <Project>{0196722C-FDEF-4C0E-AFDC-4867F75F770D}</Project>
-      <Name>FubuTransportation.Testing</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuTransportation\FubuTransportation.csproj">
-      <Project>{23fdb1ce-1ec5-4d1b-b3e5-008a439caa13}</Project>
-      <Name>FubuTransportation</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

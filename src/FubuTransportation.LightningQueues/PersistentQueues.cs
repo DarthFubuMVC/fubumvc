@@ -5,8 +5,8 @@ using System.Net;
 using System.Runtime.Serialization;
 using FubuCore.Logging;
 using FubuCore.Util;
-using FubuTransportation.Runtime;
-using FubuTransportation.Runtime.Delayed;
+using FubuMVC.Core.ServiceBus.Runtime;
+using FubuMVC.Core.ServiceBus.Runtime.Delayed;
 using LightningQueues;
 using LightningQueues.Model;
 

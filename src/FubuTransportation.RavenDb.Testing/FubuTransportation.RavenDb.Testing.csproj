@@ -39,9 +39,6 @@
     <Reference Include="AWSSDK">
       <HintPath>..\packages\RavenDB.Database\lib\net45\AWSSDK.dll</HintPath>
     </Reference>
-    <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles\lib\Bottles.dll</HintPath>
-    </Reference>
     <Reference Include="Esent.Interop">
       <HintPath>..\packages\RavenDB.Database\lib\net45\Esent.Interop.dll</HintPath>
     </Reference>
@@ -176,17 +173,13 @@
       <Project>{02441e35-668b-4713-9279-bd51948b95eb}</Project>
       <Name>FubuMVC.RavenDb</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Tests\FubuMVC.Tests.csproj">
+      <Project>{feb91f9f-ece2-480c-b39c-a44bbf1f7b01}</Project>
+      <Name>FubuMVC.Tests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FubuTransportation.RavenDb\FubuTransportation.RavenDb.csproj">
       <Project>{0d252b13-1636-43d4-b203-cce05de43073}</Project>
       <Name>FubuTransportation.RavenDb</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuTransportation.Testing\FubuTransportation.Testing.csproj">
-      <Project>{0196722c-fdef-4c0e-afdc-4867f75f770d}</Project>
-      <Name>FubuTransportation.Testing</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuTransportation\FubuTransportation.csproj">
-      <Project>{23fdb1ce-1ec5-4d1b-b3e5-008a439caa13}</Project>
-      <Name>FubuTransportation</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

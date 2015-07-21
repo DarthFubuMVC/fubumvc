@@ -3,15 +3,18 @@ using System.Diagnostics;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.ServiceBus;
+using FubuMVC.Core.ServiceBus.Configuration;
+using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.StructureMap;
+using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using FubuTestingSupport;
-using FubuTransportation.Configuration;
-using FubuTransportation.ErrorHandling;
 using FubuTransportation.Testing;
-using FubuTransportation.Testing.ScenarioSupport;
 using LightningQueues;
+using LightningQueues.Model;
 using NUnit.Framework;
 using StructureMap;
+using Message = FubuMVC.Tests.ServiceBus.ScenarioSupport.Message;
 
 namespace FubuTransportation.LightningQueues.Testing
 {

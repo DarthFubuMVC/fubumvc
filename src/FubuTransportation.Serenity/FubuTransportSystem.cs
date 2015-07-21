@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using FubuMVC.Core;
-using FubuTransportation.Configuration;
-using FubuTransportation.Diagnostics;
-using FubuTransportation.TestSupport;
+using FubuMVC.Core.ServiceBus.Configuration;
+using FubuMVC.Core.ServiceBus.Diagnostics;
+using FubuMVC.Core.ServiceBus.TestSupport;
 using Serenity;
 using StoryTeller;
 

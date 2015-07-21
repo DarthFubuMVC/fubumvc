@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
-using Amazon.SimpleWorkflow.Model;
 using FubuMVC.Core;
-using FubuMVC.Core.StructureMap;
+using FubuMVC.Core.ServiceBus;
+using FubuMVC.Core.ServiceBus.Configuration;
+using FubuMVC.Core.ServiceBus.Subscriptions;
 using FubuMVC.RavenDb;
 using FubuTestingSupport;
-using FubuTransportation.Configuration;
-using FubuTransportation.Subscriptions;
 using FubuTransportation.Testing;
 using NUnit.Framework;
 using StructureMap;
@@ -50,7 +48,7 @@ namespace FubuTransportation.RavenDb.Testing
             var subscriptions2 = new Subscription[]
             {
                 ObjectMother.ExistingSubscription("Node2"),
-                ObjectMother.ExistingSubscription("Node2"),
+                ObjectMother.ExistingSubscription("Node2")
             };
 
             persistence.Persist(subscriptions);
@@ -71,7 +69,7 @@ namespace FubuTransportation.RavenDb.Testing
                 Id = Guid.NewGuid().ToString(),
                 MachineName = "Box1",
                 NodeName = "Node1",
-                Addresses = new Uri[] { "memory://1".ToUri(), "memory://2".ToUri() }
+                Addresses = new Uri[] {"memory://1".ToUri(), "memory://2".ToUri()}
             };
 
             persistence.Persist(node1);
@@ -81,7 +79,7 @@ namespace FubuTransportation.RavenDb.Testing
                 Id = Guid.NewGuid().ToString(),
                 MachineName = "Box2",
                 NodeName = "Node2",
-                Addresses = new Uri[] { "memory://3".ToUri(), "memory://4".ToUri() }
+                Addresses = new Uri[] {"memory://3".ToUri(), "memory://4".ToUri()}
             };
 
             persistence.Persist(node2);
@@ -101,7 +99,7 @@ namespace FubuTransportation.RavenDb.Testing
                 Id = Guid.NewGuid().ToString(),
                 MachineName = "Box1",
                 NodeName = "Node1",
-                Addresses = new Uri[] { "memory://1".ToUri(), "memory://2".ToUri() }
+                Addresses = new Uri[] {"memory://1".ToUri(), "memory://2".ToUri()}
             };
 
 
@@ -110,7 +108,7 @@ namespace FubuTransportation.RavenDb.Testing
                 Id = Guid.NewGuid().ToString(),
                 MachineName = "Box2",
                 NodeName = "Node2",
-                Addresses = new Uri[] { "memory://3".ToUri(), "memory://4".ToUri() }
+                Addresses = new Uri[] {"memory://3".ToUri(), "memory://4".ToUri()}
             };
 
             persistence.Persist(node1, node2);
@@ -130,7 +128,7 @@ namespace FubuTransportation.RavenDb.Testing
                 Id = Guid.NewGuid().ToString(),
                 MachineName = "Box1",
                 NodeName = "Node1",
-                Addresses = new Uri[] { "memory://1".ToUri(), "memory://2".ToUri() }
+                Addresses = new Uri[] {"memory://1".ToUri(), "memory://2".ToUri()}
             };
 
 
@@ -139,7 +137,7 @@ namespace FubuTransportation.RavenDb.Testing
                 Id = Guid.NewGuid().ToString(),
                 MachineName = "Box2",
                 NodeName = "Node2",
-                Addresses = new Uri[] { "memory://3".ToUri(), "memory://4".ToUri() }
+                Addresses = new Uri[] {"memory://3".ToUri(), "memory://4".ToUri()}
             };
 
             var subject = "foo://1".ToUri();

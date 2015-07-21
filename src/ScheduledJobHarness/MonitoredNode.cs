@@ -1,22 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Amazon.ElasticLoadBalancing.Model;
 using FubuCore;
 using FubuCore.Logging;
-using FubuCore.Util;
 using FubuMVC.Core;
-using FubuMVC.Core.StructureMap;
-using FubuTransportation;
-using FubuTransportation.Configuration;
-using FubuTransportation.Monitoring;
-using FubuTransportation.Polling;
+using FubuMVC.Core.ServiceBus;
+using FubuMVC.Core.ServiceBus.Configuration;
+using FubuMVC.Core.ServiceBus.ScheduledJobs;
+using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
+using FubuMVC.Core.ServiceBus.Subscriptions;
 using FubuTransportation.RavenDb;
-using FubuTransportation.ScheduledJobs;
-using FubuTransportation.ScheduledJobs.Persistence;
-using FubuTransportation.Subscriptions;
 using Raven.Client;
 
 namespace ScheduledJobHarness
@@ -61,10 +52,11 @@ namespace ScheduledJobHarness
 
             EnableInMemoryTransport(incoming);
 
-            Services(_ => {
+            Services(_ =>
+            {
                 _.ReplaceService<ISubscriptionPersistence, RavenDbSubscriptionPersistence>();
                 _.ReplaceService<ISchedulePersistence, RavenDbSchedulePersistence>();
-                _.ReplaceService<IDocumentStore>(store);
+                _.ReplaceService(store);
 
                 _.AddService<ILogListener, ScheduledJobListener>();
             });
@@ -75,7 +67,6 @@ namespace ScheduledJobHarness
             ScheduledJob.RunJob<FailsFirstTwoTimes>().ScheduledBy<SevenMinuteIncrements>();
             ScheduledJob.RunJob<FailsSometimes>().ScheduledBy<FiveMinuteIncrements>();
             ScheduledJob.RunJob<TimesOutSometimes>().ScheduledBy<ThreeMinuteIncrements>().Timeout(10.Seconds());
-
         }
 
         public string Id
@@ -85,15 +76,13 @@ namespace ScheduledJobHarness
 
         public ScheduledJobGraph Jobs
         {
-            get
-            {
-                return _runtime.Factory.Get<ScheduledJobGraph>();
-            }
+            get { return _runtime.Factory.Get<ScheduledJobGraph>(); }
         }
 
         public void Startup(ISubscriptionPersistence subscriptions, ISchedulePersistence schedules)
         {
-            Services(_ => {
+            Services(_ =>
+            {
                 _.ReplaceService(subscriptions);
                 _.ReplaceService(schedules);
             });

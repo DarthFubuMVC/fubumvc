@@ -1,8 +1,8 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.ServiceBus.Runtime;
+using FubuMVC.Core.ServiceBus.Runtime.Delayed;
 using FubuTestingSupport;
-using FubuTransportation.Runtime;
-using FubuTransportation.Runtime.Delayed;
 using LightningQueues.Model;
 using NUnit.Framework;
 

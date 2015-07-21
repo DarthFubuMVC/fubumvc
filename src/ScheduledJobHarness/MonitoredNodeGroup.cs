@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.StructureMap;
+using FubuMVC.Core.ServiceBus.Configuration;
+using FubuMVC.Core.ServiceBus.ScheduledJobs;
+using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
+using FubuMVC.Core.ServiceBus.Subscriptions;
 using FubuMVC.Katana;
 using FubuPersistence.RavenDb;
-using FubuTransportation.Configuration;
 using FubuTransportation.RavenDb;
-using FubuTransportation.ScheduledJobs;
-using FubuTransportation.ScheduledJobs.Persistence;
-using FubuTransportation.Subscriptions;
 using Raven.Client;
 using StructureMap;
 
@@ -71,7 +69,7 @@ namespace ScheduledJobHarness
             }
         }
 
-        public IEnumerable<MonitoredNode> Nodes()
+        public System.Collections.Generic.IEnumerable<MonitoredNode> Nodes()
         {
             return _nodes;
         }

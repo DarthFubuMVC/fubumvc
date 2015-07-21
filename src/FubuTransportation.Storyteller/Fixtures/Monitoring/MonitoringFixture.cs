@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FubuCore;
-using FubuTransportation.Monitoring;
+using FubuMVC.Core.ServiceBus.Monitoring;
+using FubuMVC.Core.ServiceBus.Subscriptions;
 using FubuTransportation.Serenity;
-using FubuTransportation.Subscriptions;
 using HtmlTags;
 using StoryTeller;
 using StoryTeller.Grammars.Tables;
@@ -20,8 +19,6 @@ namespace FubuTransportation.Storyteller.Fixtures.Monitoring
             Title = "Health Monitoring, Failover, and Task Assignment";
 
             this["Context"] = Embed<MonitoringSetupFixture>("If the nodes and tasks are");
-
-
         }
 
         protected override void setup()
@@ -61,9 +58,10 @@ namespace FubuTransportation.Storyteller.Fixtures.Monitoring
 
         [ExposeAsTable("If the task state is")]
         public void TaskStateIs(
-            Uri Task, 
-            string Node, 
-            [SelectionValues(MonitoredNode.HealthyAndFunctional, MonitoredNode.TimesOutOnStartupOrHealthCheck, MonitoredNode.ThrowsExceptionOnStartupOrHealthCheck, MonitoredNode.IsInactive)]string State)
+            Uri Task,
+            string Node,
+            [SelectionValues(MonitoredNode.HealthyAndFunctional, MonitoredNode.TimesOutOnStartupOrHealthCheck,
+                MonitoredNode.ThrowsExceptionOnStartupOrHealthCheck, MonitoredNode.IsInactive)] string State)
         {
             _nodes.SetTaskState(Task, Node, State);
         }
@@ -125,6 +123,4 @@ namespace FubuTransportation.Storyteller.Fixtures.Monitoring
                 .MatchOn(x => x.Id, x => x.ControlChannel);
         }
     }
-
-    
 }

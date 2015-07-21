@@ -72,10 +72,6 @@
       <Project>{f151167c-4736-4c67-9697-7876574c05d0}</Project>
       <Name>FubuTransportation.LightningQueues</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuTransportation\FubuTransportation.csproj">
-      <Project>{23fdb1ce-1ec5-4d1b-b3e5-008a439caa13}</Project>
-      <Name>FubuTransportation</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ServiceNode\ServiceNode.csproj">
       <Project>{c71136ae-8197-4a9a-aa5f-9102f657c502}</Project>
       <Name>ServiceNode</Name>

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
-using FubuTransportation.Polling;
+using FubuMVC.Core.ServiceBus.Polling;
 
 namespace FubuTransportation.LightningQueues
 {

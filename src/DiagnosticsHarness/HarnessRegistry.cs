@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Data;
-using FubuTransportation.Configuration;
-using FubuTransportation.Runtime.Serializers;
+using FubuMVC.Core.ServiceBus.Configuration;
+using FubuMVC.Core.ServiceBus.Runtime.Serializers;
+
 
 namespace DiagnosticsHarness
 {

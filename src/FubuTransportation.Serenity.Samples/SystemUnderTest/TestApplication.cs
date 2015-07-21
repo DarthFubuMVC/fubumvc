@@ -1,5 +1,5 @@
 ﻿using FubuMVC.Core;
-using FubuTransportation.Configuration;
+using FubuMVC.Core.ServiceBus.Configuration;
 using StructureMap;
 
 namespace FubuTransportation.Serenity.Samples.SystemUnderTest

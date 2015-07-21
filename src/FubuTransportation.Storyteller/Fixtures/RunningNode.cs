@@ -5,11 +5,11 @@ using System.Reflection;
 using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core;
-using FubuMVC.Core.StructureMap;
-using FubuTransportation.Configuration;
-using FubuTransportation.InMemory;
+using FubuMVC.Core.ServiceBus;
+using FubuMVC.Core.ServiceBus.Configuration;
+using FubuMVC.Core.ServiceBus.InMemory;
+using FubuMVC.Core.ServiceBus.Subscriptions;
 using FubuTransportation.LightningQueues;
-using FubuTransportation.Subscriptions;
 
 namespace FubuTransportation.Storyteller.Fixtures
 {
@@ -20,7 +20,8 @@ namespace FubuTransportation.Storyteller.Fixtures
         public static readonly HarnessSettings Settings
             = InMemoryTransport.ToInMemory<HarnessSettings>();
 
-        public static Cache<string, InMemorySubscriptionPersistence> Subscriptions = new Cache<string, InMemorySubscriptionPersistence>(name => new InMemorySubscriptionPersistence());
+        public static Cache<string, InMemorySubscriptionPersistence> Subscriptions =
+            new Cache<string, InMemorySubscriptionPersistence>(name => new InMemorySubscriptionPersistence());
 
         private readonly Type _registryType;
         private readonly string _contents;
@@ -34,7 +35,10 @@ namespace FubuTransportation.Storyteller.Fixtures
             _replyUri = replyUri;
 
 
-            _registryType = Assembly.GetExecutingAssembly().ExportedTypes.Where(x => x.IsConcreteTypeOf<FubuTransportRegistry>()).FirstOrDefault(x => x.Name.EqualsIgnoreCase(typeName));
+            _registryType =
+                Assembly.GetExecutingAssembly()
+                    .ExportedTypes.Where(x => x.IsConcreteTypeOf<FubuTransportRegistry>())
+                    .FirstOrDefault(x => x.Name.EqualsIgnoreCase(typeName));
 
             var file =
                 new FileSystem().FindFiles(Environment.CurrentDirectory.ParentDirectory().ParentDirectory(),
@@ -49,7 +53,8 @@ namespace FubuTransportation.Storyteller.Fixtures
         public void Start()
         {
             var registry = Activator.CreateInstance(_registryType).As<FubuTransportRegistry>();
-            registry.Services(x => {
+            registry.Services(x =>
+            {
                 _persistence = Subscriptions[registry.NodeName];
                 x.ReplaceService<ISubscriptionPersistence>(_persistence);
                 x.ReplaceService(Settings);
@@ -71,7 +76,6 @@ namespace FubuTransportation.Storyteller.Fixtures
         {
             return _runtime.Factory.Get<ISubscriptionCache>()
                 .ActiveSubscriptions;
-
         }
 
         public IEnumerable<Subscription> PersistedSubscriptions(SubscriptionRole role = SubscriptionRole.Publishes)

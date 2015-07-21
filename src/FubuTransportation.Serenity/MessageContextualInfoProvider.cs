@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using FubuTransportation.Diagnostics;
+using FubuMVC.Core.ServiceBus.Diagnostics;
 using HtmlTags;
 using Serenity;
 using StoryTeller.Results;

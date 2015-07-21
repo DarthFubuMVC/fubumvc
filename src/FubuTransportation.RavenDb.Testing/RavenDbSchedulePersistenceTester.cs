@@ -1,9 +1,8 @@
 ﻿using FubuMVC.Core;
-using FubuMVC.Core.StructureMap;
+using FubuMVC.Core.ServiceBus.Configuration;
+using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
 using FubuMVC.RavenDb;
 using FubuTestingSupport;
-using FubuTransportation.Configuration;
-using FubuTransportation.ScheduledJobs.Persistence;
 using NUnit.Framework;
 using StructureMap;
 
@@ -29,13 +28,13 @@ namespace FubuTransportation.RavenDb.Testing
 
             thePersistence = runtime.Factory.Get<RavenDbSchedulePersistence>();
 
-            foo1 = new JobStatusDTO { JobKey = "1", NodeName = "foo" };
-            foo2 = new JobStatusDTO { JobKey = "2", NodeName = "foo" };
-            foo3 = new JobStatusDTO { JobKey = "3", NodeName = "foo" };
-            bar1 = new JobStatusDTO { JobKey = "1", NodeName = "bar" };
-            bar2 = new JobStatusDTO { JobKey = "2", NodeName = "bar" };
+            foo1 = new JobStatusDTO {JobKey = "1", NodeName = "foo"};
+            foo2 = new JobStatusDTO {JobKey = "2", NodeName = "foo"};
+            foo3 = new JobStatusDTO {JobKey = "3", NodeName = "foo"};
+            bar1 = new JobStatusDTO {JobKey = "1", NodeName = "bar"};
+            bar2 = new JobStatusDTO {JobKey = "2", NodeName = "bar"};
 
-            thePersistence.Persist(new[] { foo1, foo2, foo3, bar1, bar2 });
+            thePersistence.Persist(new[] {foo1, foo2, foo3, bar1, bar2});
         }
 
         [TearDown]
@@ -78,7 +77,7 @@ namespace FubuTransportation.RavenDb.Testing
             foo1.Status = foo2.Status = bar1.Status = JobExecutionStatus.Scheduled;
             foo3.Status = bar2.Status = JobExecutionStatus.Inactive;
 
-            thePersistence.Persist(new[] { foo1, foo2, foo3, bar1, bar2 });
+            thePersistence.Persist(new[] {foo1, foo2, foo3, bar1, bar2});
 
             thePersistence.FindAllActive("foo")
                 .ShouldHaveTheSameElementsAs(foo1, foo2);
@@ -91,9 +90,9 @@ namespace FubuTransportation.RavenDb.Testing
         public void persist_job_status()
         {
             foo1.Status = foo2.Status = foo3.Status = bar1.Status = bar2.Status = JobExecutionStatus.Inactive;
-            thePersistence.Persist(new[] { foo1, foo2, foo3, bar1, bar2 });
+            thePersistence.Persist(new[] {foo1, foo2, foo3, bar1, bar2});
 
-            var change = new JobStatusDTO { JobKey = "1", NodeName = "foo", Status = JobExecutionStatus.Scheduled };
+            var change = new JobStatusDTO {JobKey = "1", NodeName = "foo", Status = JobExecutionStatus.Scheduled};
 
             thePersistence.Persist(change);
 

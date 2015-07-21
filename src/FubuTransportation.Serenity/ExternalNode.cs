@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.ServiceBus;
+using FubuMVC.Core.ServiceBus.Configuration;
+using FubuMVC.Core.ServiceBus.Diagnostics;
+using FubuMVC.Core.ServiceBus.Events;
+using FubuMVC.Core.ServiceBus.Runtime;
+using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Core.StructureMap;
-using FubuTransportation.Configuration;
-using FubuTransportation.Diagnostics;
-using FubuTransportation.Events;
-using FubuTransportation.Runtime;
-using FubuTransportation.Runtime.Invocation;
 using StructureMap;
 
 namespace FubuTransportation.Serenity

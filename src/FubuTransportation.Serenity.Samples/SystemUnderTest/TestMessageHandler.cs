@@ -1,4 +1,4 @@
-﻿using FubuTransportation.Runtime.Cascading;
+﻿using FubuMVC.Core.ServiceBus.Runtime.Cascading;
 
 namespace FubuTransportation.Serenity.Samples.SystemUnderTest
 {

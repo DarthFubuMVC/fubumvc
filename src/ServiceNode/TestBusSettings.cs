@@ -1,4 +1,5 @@
 ﻿using System;
+using FubuMVC.Core.ServiceBus;
 using FubuTransportation;
 
 namespace ServiceNode

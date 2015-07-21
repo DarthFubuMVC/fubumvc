@@ -1,7 +1,7 @@
 ﻿using System;
 using FubuCore;
-using FubuTransportation.ScheduledJobs.Execution;
-using FubuTransportation.ScheduledJobs.Persistence;
+using FubuMVC.Core.ServiceBus.ScheduledJobs.Execution;
+using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
 
 namespace ScheduledJobHarness
 {

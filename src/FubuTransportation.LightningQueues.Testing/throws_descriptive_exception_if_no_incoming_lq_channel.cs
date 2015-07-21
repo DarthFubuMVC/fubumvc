@@ -1,8 +1,8 @@
 ﻿using System;
 using FubuCore;
+using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.StructureMap;
 using FubuTestingSupport;
-using FubuTransportation.Configuration;
 using FubuTransportation.Testing;
 using NUnit.Framework;
 

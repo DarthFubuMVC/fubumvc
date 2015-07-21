@@ -1,4 +1,4 @@
-﻿using FubuTransportation.Configuration;
+﻿using FubuMVC.Core.ServiceBus.Configuration;
 using FubuTransportation.Serenity.Samples.SystemUnderTest.Subscriptions;
 
 namespace FubuTransportation.Serenity.Samples.Setup

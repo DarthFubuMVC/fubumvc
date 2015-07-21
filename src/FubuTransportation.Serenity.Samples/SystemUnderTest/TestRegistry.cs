@@ -1,5 +1,5 @@
 ﻿using System;
-using FubuTransportation.Configuration;
+using FubuMVC.Core.ServiceBus.Configuration;
 using FubuTransportation.Serenity.Samples.Setup;
 using FubuTransportation.Serenity.Samples.SystemUnderTest.Subscriptions;
 
