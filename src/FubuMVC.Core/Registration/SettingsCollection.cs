@@ -147,6 +147,8 @@ namespace FubuMVC.Core.Registration
                 graph.SetServiceIfNone(typeof(T), ObjectDef.ForValue(_task.Result));
             }
         }
+
+
     }
 
 

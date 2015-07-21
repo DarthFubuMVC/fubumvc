@@ -1,5 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using FubuCore.Binding.InMemory;
 using FubuCore.Descriptions;
+using FubuCore.Logging;
+using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Security.Authorization;
 
@@ -7,7 +12,7 @@ namespace FubuMVC.Core
 {
     [ApplicationLevel]
     [Title("Diagnostic Tracing and Authorization Configuration")]
-    public class DiagnosticsSettings : DescribesItself
+    public class DiagnosticsSettings : DescribesItself, IFeatureSettings
     {
         private TraceLevel? _traceLevel;
 
@@ -50,6 +55,28 @@ namespace FubuMVC.Core
             description.Properties["Tracing Level"] = TraceLevel.ToString();
             description.Properties["Maximum Number of Requests to Keep"] = MaxRequests.ToString();
             description.AddList("Authorization Rules for Diagnostics", AuthorizationRights);
+        }
+
+        void IFeatureSettings.Apply(FubuRegistry registry)
+        {
+            if (FubuMode.InDevelopment() || TraceLevel != TraceLevel.None)
+            {
+                registry.Policies.ChainSource<DiagnosticChainsSource>();
+            }
+
+            if (FubuMode.InDevelopment() || TraceLevel == TraceLevel.Verbose)
+            {
+                registry.Services(_ =>
+                {
+                    _.ReplaceService<IBindingLogger, RecordingBindingLogger>();
+                    _.ReplaceService<IBindingHistory, BindingHistory>();
+                    _.AddService<ILogListener, RequestTraceListener>();
+                });
+            }
+            else if (TraceLevel == TraceLevel.Production)
+            {
+                registry.Services(_ => _.AddService<ILogListener, ProductionModeTraceListener>());
+            }
         }
     }
 

@@ -1,6 +1,5 @@
 using System;
 using FubuCore.Formatting;
-using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Registration.ObjectGraph;
 
 namespace FubuMVC.Core.Registration.DSL

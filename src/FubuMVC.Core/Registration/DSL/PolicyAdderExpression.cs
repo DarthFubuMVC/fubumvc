@@ -1,5 +1,4 @@
 using System;
-using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Registration.Conventions;
 
 namespace FubuMVC.Core.Registration.DSL

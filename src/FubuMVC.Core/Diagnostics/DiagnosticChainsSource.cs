@@ -11,6 +11,8 @@ namespace FubuMVC.Core.Diagnostics
     {
         public IEnumerable<BehaviorChain> BuildChains(BehaviorGraph graph, IPerfTimer timer)
         {
+            var settings = graph.Settings.Get<DiagnosticsSettings>();
+
             foreach (var action in findActions(graph))
             {
                 if (action.Method.Name.StartsWith("Visualize"))
@@ -25,7 +27,10 @@ namespace FubuMVC.Core.Diagnostics
                 }
                 else
                 {
-                    yield return new DiagnosticChain(action);
+                    var diagnosticChain = new DiagnosticChain(action);
+                    diagnosticChain.Authorization.AddPolicies(settings.AuthorizationRights);
+
+                    yield return diagnosticChain;
                 }
             }
         }

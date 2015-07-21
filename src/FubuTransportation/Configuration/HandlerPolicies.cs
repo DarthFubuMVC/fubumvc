@@ -1,5 +1,4 @@
-﻿using FubuMVC.Core.Configuration;
-using FubuMVC.Core.Registration;
+﻿using FubuMVC.Core.Registration;
 
 namespace FubuTransportation.Configuration
 {

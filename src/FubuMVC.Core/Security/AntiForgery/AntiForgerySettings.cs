@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Runtime.Remoting.Messaging;
 using FubuCore;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Policies;
 
 namespace FubuMVC.Core.Security.AntiForgery
 {
-    public class AntiForgerySettings
+    public class AntiForgerySettings : IFeatureSettings
     {
         private ChainPredicate _filter;
 
@@ -31,6 +33,15 @@ namespace FubuMVC.Core.Security.AntiForgery
         public bool AppliesTo(BehaviorChain chain)
         {
             return _filter.As<IChainFilter>().Matches(chain);
+        }
+
+        void IFeatureSettings.Apply(FubuRegistry registry)
+        {
+            if (!Enabled) return;
+
+            registry.Services<AntiForgeryServiceRegistry>();
+            registry.Policies.Global.Add<AntiForgeryPolicy>();
+
         }
     }
 }

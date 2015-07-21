@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using FubuCore;
 using System.Linq;
-using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Registration;
 using FubuTransportation.Registration.Nodes;
 

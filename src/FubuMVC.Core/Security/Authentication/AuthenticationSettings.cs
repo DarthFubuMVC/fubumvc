@@ -2,11 +2,12 @@ using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Policies;
+using FubuMVC.Core.Security.Authentication.Endpoints;
 
 namespace FubuMVC.Core.Security.Authentication
 {
     [ApplicationLevel]
-    public class AuthenticationSettings
+    public class AuthenticationSettings : IFeatureSettings
     {
         private readonly ChainPredicate _exclusions = new ChainPredicate();
 		private readonly ChainPredicate _passthroughChains = new ChainPredicate();
@@ -65,6 +66,21 @@ namespace FubuMVC.Core.Security.Authentication
         public bool ShouldBeExcluded(BehaviorChain chain)
         {
             return _exclusions.As<IChainFilter>().Matches(chain);
+        }
+
+        void IFeatureSettings.Apply(FubuRegistry registry)
+        {
+            if (!Enabled) return;
+
+            registry.Actions.IncludeType<LoginController>();
+            registry.Actions.IncludeType<LogoutController>();
+
+            registry.Services<AuthenticationServiceRegistry>();
+
+            registry.Policies.Global.Add(new ApplyAuthenticationPolicy());
+            registry.Policies.Global.Add<RegisterAuthenticationStrategies>();
+            registry.Policies.Global.Add<ApplyPassThroughAuthenticationPolicy>();
+
         }
     }
 

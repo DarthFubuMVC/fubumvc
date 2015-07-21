@@ -91,12 +91,12 @@
     <Compile Include="Assets\ScriptTag.cs" />
     <Compile Include="Assets\StylesheetLinkTag.cs" />
     <Compile Include="ClientMessage.cs" />
-    <Compile Include="Configuration\BehaviorGraphBuilder.cs" />
+    <Compile Include="Registration\BehaviorGraphBuilder.cs" />
     <Compile Include="Behaviors\AsyncContinueWithBehavior.cs" />
     <Compile Include="CanBeMultiplesAttribute.cs" />
     <Compile Include="Behaviors\WrappingBehavior.cs" />
-    <Compile Include="Configuration\ConfigGraph.cs" />
-    <Compile Include="Configuration\ConfigurationActionSet.cs" />
+    <Compile Include="Registration\ConfigGraph.cs" />
+    <Compile Include="Registration\ConfigurationActionSet.cs" />
     <Compile Include="Localization\BasicLocalizationServices.cs" />
     <Compile Include="Localization\HtmlTagExtensions.cs" />
     <Compile Include="Localization\LocalizationSettings.cs" />
@@ -307,10 +307,12 @@
     <Compile Include="Registration\Conventions\UrlPolicies.cs" />
     <Compile Include="Registration\DSL\AppliesToExpression.cs" />
     <Compile Include="Registration\DSL\PolicyAdderExpression.cs" />
+    <Compile Include="Registration\FeatureLoader.cs" />
     <Compile Include="Registration\FilterAttribute.cs" />
     <Compile Include="Registration\IAccessorRulesExpression.cs" />
     <Compile Include="Registration\IAccessorRulesRegistration.cs" />
     <Compile Include="Registration\IChainSource.cs" />
+    <Compile Include="Registration\IFeatureSettings.cs" />
     <Compile Include="Registration\IRegisterable.cs" />
     <Compile Include="Registration\ISettingsAlteration.cs" />
     <Compile Include="Registration\Nodes\BehaviorChainExtensions.cs" />
@@ -535,7 +537,7 @@
     <Compile Include="Http\RouteDataValues.cs" />
     <Compile Include="Registration\Nodes\Chain.cs" />
     <Compile Include="Registration\Nodes\Node.cs" />
-    <Compile Include="Configuration\RegistryImport.cs" />
+    <Compile Include="Registration\RegistryImport.cs" />
     <Compile Include="Resources\Conneg\InputNode.cs" />
     <Compile Include="Resources\Conneg\IReader.cs" />
     <Compile Include="Resources\Conneg\OutputNode.cs" />

@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core;
-using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
