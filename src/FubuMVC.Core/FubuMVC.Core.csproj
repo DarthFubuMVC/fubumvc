@@ -150,7 +150,6 @@
     <Compile Include="ServiceBus\HandlerExtensions.cs" />
     <Compile Include="ServiceBus\IFubuTransportActivator.cs" />
     <Compile Include="ServiceBus\ImportHandlers.cs" />
-    <Compile Include="ServiceBus\InMemoryQueueRegistration.cs" />
     <Compile Include="ServiceBus\InMemory\AllQueuesInMemoryPolicy.cs" />
     <Compile Include="ServiceBus\InMemory\InMemoryChannel.cs" />
     <Compile Include="ServiceBus\InMemory\InMemoryQueue.cs" />

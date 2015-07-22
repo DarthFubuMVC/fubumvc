@@ -12,43 +12,31 @@ namespace FubuMVC.Tests.Security.Authentication
     {
         private BehaviorGraph theGraphWithBasicAuthentication;
 
-        [SetUp]
-        public void SetUp()
+        [Test]
+        public void service_registrations()
         {
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<NothingEndpoint>(); // Have to do this to make it an isolated test
             registry.Features.Authentication.Enable(true);
 
-            theGraphWithBasicAuthentication = BehaviorGraph.BuildFrom(registry);
+            using (var runtime = FubuApplication.For(registry).Bootstrap())
+            {
+                var theGraphWithBasicAuthentication = runtime.Behaviors;
+
+                // This login endpoint was added
+                theGraphWithBasicAuthentication.Behaviors.Where(x => x.InputType() == typeof(LoginRequest))
+                    .Count().ShouldEqual(2);
+
+                // The logout endpoint was added
+                theGraphWithBasicAuthentication.BehaviorFor(typeof(LogoutRequest)).ShouldNotBeNull();
+
+                runtime.Container.DefaultRegistrationIs<ILoginSuccessHandler, LoginSuccessHandler>();
+                runtime.Container.DefaultRegistrationIs<ILogoutSuccessHandler, LogoutSuccessHandler>();
+            }
+
         }
 
-        [Test]
-        public void login_endpoint_is_added()
-        {
-            theGraphWithBasicAuthentication.Behaviors.Where(x => x.InputType() == typeof (LoginRequest))
-                .Count().ShouldEqual(2);
-        }
 
-        [Test]
-        public void logout_endpoint_is_added()
-        {
-            theGraphWithBasicAuthentication.BehaviorFor(typeof (LogoutRequest)).ShouldNotBeNull();
-        }
-
-
-        [Test]
-        public void basic_login_success_handler_is_registered()
-        {
-            theGraphWithBasicAuthentication.Services.DefaultServiceFor<ILoginSuccessHandler>()
-                .Type.ShouldEqual(typeof (LoginSuccessHandler));
-        }
-
-        [Test]
-        public void basic_logout_success_handler_is_registered()
-        {
-            theGraphWithBasicAuthentication.Services.DefaultServiceFor<ILogoutSuccessHandler>()
-                .Type.ShouldEqual(typeof (LogoutSuccessHandler));
-        }
     }
 
     public class NothingEndpoint

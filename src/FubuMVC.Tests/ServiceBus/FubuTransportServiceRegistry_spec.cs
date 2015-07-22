@@ -15,6 +15,7 @@ using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 using FubuMVC.Core.ServiceBus.Subscriptions;
 using FubuMVC.Core.ServiceBus.TestSupport;
+using FubuMVC.Tests;
 using FubuTestingSupport;
 using NUnit.Framework;
 using System.Linq;
@@ -24,180 +25,89 @@ namespace FubuTransportation.Testing
     [TestFixture]
     public class FubuTransportServiceRegistry_spec
     {
-        [SetUp]
-        public void SetUp()
-        {
-            FubuMode.RemoveTestingMode();
-        }
-
-        private void registeredTypeIs<TService, TImplementation>()
-        {
-            registeredTypeIs(typeof(TService), typeof(TImplementation));
-        }
-
-        private void registeredTypeIs(Type service, Type implementation)
-        {
-            var registry = new FubuRegistry();
-            registry.Services<FubuTransportServiceRegistry>();
-            BehaviorGraph.BuildFrom(registry)
-                .Services.DefaultServiceFor(service)
-                .Type.ShouldEqual(implementation);
-        }
-
         [Test]
-        public void service_bus_is_registered()
+        public void service_registrations()
         {
-            registeredTypeIs<IServiceBus, ServiceBus>();
+            FubuTransport.Reset();
+
+            using (var runtime = FubuTransport.DefaultPolicies().Bootstrap())
+            {
+                var c = runtime.Container;
+
+
+
+                c.DefaultSingletonIs<ISubscriptionCache, SubscriptionCache>();
+                c.DefaultSingletonIs<ISagaStateCacheFactory, SagaStateCacheFactory>();
+                c.DefaultSingletonIs<IEventAggregator, EventAggregator>();
+
+                c.DefaultRegistrationIs<IServiceBus, ServiceBus>();
+                c.DefaultRegistrationIs<IEnvelopeSender, EnvelopeSender>();
+                c.DefaultRegistrationIs<IEnvelopeSerializer, EnvelopeSerializer>();
+                c.DefaultRegistrationIs<IChainInvoker, ChainInvoker>();
+                c.DefaultRegistrationIs<IMessageSerializer, XmlMessageSerializer>();
+                c.DefaultRegistrationIs<IHandlerPipeline, HandlerPipeline>();
+                c.DefaultRegistrationIs<IMessageExecutor, MessageExecutor>();
+                c.DefaultRegistrationIs<IOutgoingSender, OutgoingSender>();
+                c.DefaultRegistrationIs<IAsyncHandling, AsyncHandling>();
+                c.DefaultRegistrationIs<ISubscriptionRepository, SubscriptionRepository>();
+
+
+
+                c.ShouldHaveRegistration<IActivator, FubuTransportationActivator>();
+                c.ShouldHaveRegistration<ILogListener, EventAggregationListener>();
+
+                c.ShouldNotHaveRegistration<IActivator, TransportCleanupActivator>();
+
+            }
         }
 
-        [Test]
-        public void subscriptions_is_registered_as_singleton()
-        {
-            var registry = new FubuRegistry();
-            registry.Services<FubuTransportServiceRegistry>();
-            var @default = BehaviorGraph.BuildFrom(registry).Services
-                                        .DefaultServiceFor<ISubscriptionCache>();
 
-            @default.ShouldNotBeNull();
-            @default.Type.ShouldEqual(typeof (SubscriptionCache));
-            @default.IsSingleton.ShouldBeTrue();
-
-
-
-        }
-
-        [Test]
-        public void envelope_sender_is_registered()
-        {
-            registeredTypeIs<IEnvelopeSender, EnvelopeSender>();
-        }
-
-        [Test]
-        public void event_aggregation_listener_is_registered()
-        {
-            var registry = new FubuRegistry();
-            registry.Services<FubuTransportServiceRegistry>();
-            BehaviorGraph.BuildFrom(registry).Services
-                         .ServicesFor<ILogListener>()
-                         .Any(x => x.Type == typeof(EventAggregationListener))
-                         .ShouldBeTrue();
-        }
-
-        [Test]
-        public void event_aggregator_is_registered_as_a_singleton_by_default()
-        {
-            FubuTransport.UseSynchronousLogging = false;
-
-            var registry = new FubuRegistry();
-            registry.Services<FubuTransportServiceRegistry>();
-            var @default = BehaviorGraph.BuildFrom(registry).Services.DefaultServiceFor<IEventAggregator>();
-
-            @default.Type.ShouldEqual(typeof (EventAggregator));
-            @default.IsSingleton.ShouldBeTrue();
-
-        }
 
         [Test]
         public void use_synchronous_event_aggregator_if_FubuTransport_UseSynchronousLogging()
         {
             FubuTransport.UseSynchronousLogging = true;
 
-            var registry = new FubuRegistry();
-            registry.Services<FubuTransportServiceRegistry>();
-            var @default = BehaviorGraph.BuildFrom(registry).Services.DefaultServiceFor<IEventAggregator>();
+            using (var runtime = FubuTransport.DefaultPolicies().Bootstrap())
+            {
+                var c = runtime.Container;
 
-            @default.Type.ShouldEqual(typeof(SynchronousEventAggregator));
-            @default.IsSingleton.ShouldBeTrue();
+                c.DefaultSingletonIs<IEventAggregator, SynchronousEventAggregator>();
+
+            }
         }
 
-        [Test]
-        public void saga_state_cache_is_registered_as_a_singleton()
-        {
-            var registry = new FubuRegistry();
-            registry.Services<FubuTransportServiceRegistry>();
-            var @default = BehaviorGraph.BuildFrom(registry).Services.DefaultServiceFor<ISagaStateCacheFactory>();
-
-            @default.Type.ShouldEqual(typeof(SagaStateCacheFactory));
-            @default.IsSingleton.ShouldBeTrue();
-
-
-        }
 
         [Test]
-        public void message_watcher_is_registered_as_listener_if_FubuTransport_messagewatching_is_applied()
-        {
-            FubuTransport.ApplyMessageHistoryWatching = true;
-            
-            var registry = new FubuRegistry();
-            registry.Services<FubuTransportServiceRegistry>();
-            var serviceGraph = BehaviorGraph.BuildFrom(registry).Services;
-            serviceGraph.ServicesFor<IListener>().Any(x => x.Type == typeof (MessageWatcher)).ShouldBeTrue();
-        }
-
-        [Test]
-        public void messaging_session_is_registered_if_FubuTransport_MessageWatching_is_on()
+        public void service_registrations_when_FubuTransport_messagewatching_is_applied()
         {
             FubuTransport.ApplyMessageHistoryWatching = true;
 
-            registeredTypeIs<IMessagingSession, MessagingSession>();
+            using (var runtime = FubuTransport.DefaultPolicies().Bootstrap())
+            {
+                var c = runtime.Container;
+
+                c.ShouldHaveRegistration<IListener, MessageWatcher>();
+                c.DefaultRegistrationIs<IMessagingSession, MessagingSession>();
+                c.ShouldHaveRegistration<ILogListener, MessageRecordListener>();
+            }
         }
 
-        [Test]
-        public void message_record_listener_is_registered_if_FubuTransport_MessageWatching_is_on()
-        {
-            FubuTransport.ApplyMessageHistoryWatching = true;
 
-            var registry = new FubuRegistry();
-            registry.Services<FubuTransportServiceRegistry>();
-            var serviceGraph = BehaviorGraph.BuildFrom(registry).Services;
-            serviceGraph.ServicesFor<ILogListener>().Any(x => x.Type == typeof(MessageRecordListener)).ShouldBeTrue();
-        }
 
         [Test]
-        public void messaging_session_is_NOT_registered_if_FubuTransport_MessageWatching_is_on()
+        public void service_registrations_when_FubuTransport_messagewatching_is_NOT_applied()
         {
             FubuTransport.ApplyMessageHistoryWatching = false;
 
-            var registry = new FubuRegistry();
-            registry.Services<FubuTransportServiceRegistry>();
-            var serviceGraph = BehaviorGraph.BuildFrom(registry).Services;
-            serviceGraph.ServicesFor<IMessagingSession>().Any().ShouldBeFalse();
-        }
+            using (var runtime = FubuTransport.DefaultPolicies().Bootstrap())
+            {
+                var c = runtime.Container;
 
-        [Test]
-        public void message_record_listener_is_NOT_registered_if_FubuTransport_MessageWatching_is_off()
-        {
-            FubuTransport.ApplyMessageHistoryWatching = false;
-
-            var registry = new FubuRegistry();
-            registry.Services<FubuTransportServiceRegistry>();
-            var serviceGraph = BehaviorGraph.BuildFrom(registry).Services;
-            serviceGraph.ServicesFor<ILogListener>()
-                .Any(x => x.Type == typeof(MessageRecordListener))
-                .ShouldBeFalse();
-        }
-
-        [Test]
-        public void message_watcher_is_NOT_registered_as_listener_if_FubuTransport_messagewatching_is_NOT_applied()
-        {
-            FubuTransport.ApplyMessageHistoryWatching = false;
-
-            var registry = new FubuRegistry();
-            registry.Services<FubuTransportServiceRegistry>();
-            var serviceGraph = BehaviorGraph.BuildFrom(registry).Services;
-            serviceGraph.ServicesFor<IListener>().Any(x => x.Type == typeof(MessageWatcher)).ShouldBeFalse();
-        }
-
-        [Test]
-        public void TransportCleanupActivator_is_NOT_registered_if_FubuTransport_testing_mode_is_off()
-        {
-
-            var registry = new FubuRegistry();
-            registry.Services<FubuTransportServiceRegistry>();
-            var serviceGraph = BehaviorGraph.BuildFrom(registry).Services;
-            serviceGraph.ServicesFor<IActivator>()
-                .Any(x => x.Type == typeof(TransportCleanupActivator))
-                .ShouldBeFalse();
+                c.ShouldNotHaveRegistration<IListener, MessageWatcher>();
+                c.Model.HasImplementationsFor<IMessagingSession>().ShouldBeFalse();
+                c.ShouldNotHaveRegistration<ILogListener, MessageRecordListener>();
+            }
         }
 
         [Test]
@@ -205,67 +115,12 @@ namespace FubuTransportation.Testing
         {
             FubuMode.SetupForTestingMode();
 
-            var registry = new FubuRegistry();
-            registry.Services<FubuTransportServiceRegistry>();
-            var serviceGraph = BehaviorGraph.BuildFrom(registry).Services;
-            serviceGraph.ServicesFor<IActivator>()
-                .Any(x => x.Type == typeof(TransportCleanupActivator))
-                .ShouldBeTrue();
-        }
-
-        [Test]
-        public void EnvelopeSerializer_is_registered()
-        {
-            registeredTypeIs<IEnvelopeSerializer, EnvelopeSerializer>();
-        }
-
-        [Test]
-        public void MessageInvoker_is_registered()
-        {
-            registeredTypeIs<IChainInvoker, ChainInvoker>();
-        }
-
-        [Test]
-        public void XmlMessageSerializer_is_registered()
-        {
-            registeredTypeIs<IMessageSerializer, XmlMessageSerializer>();
-        }
-
-        [Test]
-        public void CompoundActivator_is_registered()
-        {
-            registeredTypeIs<IActivator, FubuTransportationActivator>();
+            using (var runtime = FubuTransport.DefaultPolicies().Bootstrap())
+            {
+                runtime.Container.ShouldHaveRegistration<IActivator, TransportCleanupActivator>();
+            }
         }
 
 
-        [Test]
-        public void handler_pipeline_is_registered()
-        {
-            registeredTypeIs<IHandlerPipeline, HandlerPipeline>();
-        }
-
-        [Test]
-        public void message_executor_is_registered()
-        {
-            registeredTypeIs<IMessageExecutor, MessageExecutor>();
-        }
-
-        [Test]
-        public void outgoing_messages_is_registered()
-        {
-            registeredTypeIs<IOutgoingSender, OutgoingSender>();
-        }
-
-        [Test]
-        public void async_handling_is_registered()
-        {
-            registeredTypeIs<IAsyncHandling,AsyncHandling>();
-        }
-
-        [Test]
-        public void subscription_repository_is_registered()
-        {
-            registeredTypeIs<ISubscriptionRepository, SubscriptionRepository>();
-        }
     }
 }

@@ -302,10 +302,6 @@ namespace FubuMVC.Core.ServiceBus.Configuration
         }
 
 
-        public void Services<T>() where T : ServiceRegistry, new()
-        {
-            _alterations.Add(r => r.Services<T>());
-        }
 
         /// <summary>
         /// Enable the in memory transport

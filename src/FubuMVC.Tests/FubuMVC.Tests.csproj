@@ -363,7 +363,6 @@
     <Compile Include="ServiceBus\FubuTransportRegistry_application_of_policies_Tester.cs" />
     <Compile Include="ServiceBus\FubuTransportRegistry_default_handler_source_policies_spec.cs" />
     <Compile Include="ServiceBus\FubuTransportRegistry_HandlerSource_registration_Tester.cs" />
-    <Compile Include="ServiceBus\FubuTransportRegistry_registration_of_services_Tester.cs" />
     <Compile Include="ServiceBus\FubuTransportServiceRegistry_spec.cs" />
     <Compile Include="ServiceBus\FubuTransport_default_options_Tester.cs" />
     <Compile Include="ServiceBus\FullStackConfigurationIntegrationTester.cs" />

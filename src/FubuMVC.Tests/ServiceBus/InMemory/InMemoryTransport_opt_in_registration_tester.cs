@@ -1,12 +1,10 @@
-﻿using System.Linq;
-using FubuMVC.Core.ServiceBus;
+﻿using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Runtime;
-using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuTransportation.Testing.InMemory
+namespace FubuMVC.Tests.ServiceBus.InMemory
 {
     [TestFixture]
     public class InMemoryTransport_opt_in_registration_tester
@@ -15,11 +13,12 @@ namespace FubuTransportation.Testing.InMemory
         public void is_not_registered_normally()
         {
             FubuTransport.Reset();
+            
 
-            var graph = FubuTransportRegistry.BehaviorGraphFor(x => { });
-            graph.Services.ServicesFor<ITransport>()
-                .Any(x => x.Type == typeof(InMemoryTransport))
-                .ShouldBeFalse();
+            using (var runtime = FubuApplication.DefaultPolicies().Bootstrap())
+            {
+                runtime.Container.ShouldNotHaveRegistration<ITransport, InMemoryTransport>();
+            }
         }
 
         [Test]
@@ -27,10 +26,10 @@ namespace FubuTransportation.Testing.InMemory
         {
             FubuTransport.AllQueuesInMemory = true;
 
-            var graph = FubuTransportRegistry.BehaviorGraphFor(x => { });
-            graph.Services.ServicesFor<ITransport>()
-                .Any(x => x.Type == typeof(InMemoryTransport))
-                .ShouldBeTrue();
+            using (var runtime = FubuTransport.DefaultPolicies().Bootstrap())
+            {
+                runtime.Container.ShouldHaveRegistration<ITransport, InMemoryTransport>();
+            }
         }
 
         [Test]
@@ -38,12 +37,17 @@ namespace FubuTransportation.Testing.InMemory
         {
             FubuTransport.Reset();
 
-            var graph = FubuTransportRegistry.BehaviorGraphFor(x => {
-                x.AlterSettings<TransportSettings>(o => o.EnableInMemoryTransport = true);
+            var registry = new FubuRegistry();
+            registry.Features.ServiceBus.Configure(_ =>
+            {
+                _.EnableInMemoryTransport = true;
+                _.Enabled = true;
             });
-            graph.Services.ServicesFor<ITransport>()
-                .Any(x => x.Type == typeof(InMemoryTransport))
-                .ShouldBeTrue();
+
+            using (var runtime = FubuTransport.DefaultPolicies().Bootstrap())
+            {
+                runtime.Container.ShouldHaveRegistration<ITransport, InMemoryTransport>();
+            }
         }
     }
 }

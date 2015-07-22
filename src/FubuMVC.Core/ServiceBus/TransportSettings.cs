@@ -8,6 +8,7 @@ using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Monitoring;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
+using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Sagas;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Configuration;
 using FubuMVC.Core.ServiceBus.Web;
@@ -18,7 +19,8 @@ namespace FubuMVC.Core.ServiceBus
     public class TransportSettings : IFeatureSettings
     {
         public readonly IList<ISagaStorage> SagaStorageProviders;
-        public readonly IList<Type> SettingTypes = new List<Type>(); 
+        public readonly IList<Type> SettingTypes = new List<Type>();
+        private bool _enableInMemoryTransport;
 
         public TransportSettings()
         {
@@ -31,7 +33,16 @@ namespace FubuMVC.Core.ServiceBus
         }
 
         public bool Enabled { get; set; }
-        public bool EnableInMemoryTransport { get; set; }
+
+        public bool EnableInMemoryTransport
+        {
+            get { return _enableInMemoryTransport; }
+            set
+            {
+                _enableInMemoryTransport = value;
+            }
+        }
+
         public bool DebugEnabled { get; set; }
         public double DelayMessagePolling { get; set; }
         public double ListenerCleanupPolling { get; set; }
@@ -60,7 +71,12 @@ namespace FubuMVC.Core.ServiceBus
                 registry.Policies.Global.Add<AllQueuesInMemoryPolicy>();
             }
 
-            registry.Policies.Global.Add<InMemoryQueueRegistration>();
+            var enabled = FubuTransport.AllQueuesInMemory || EnableInMemoryTransport;
+
+            if (enabled)
+            {
+                registry.Services(_ => _.AddService<ITransport, InMemoryTransport>());
+            }
 
             registry.Policies.Global.Add<ReorderBehaviorsPolicy>(x =>
             {
