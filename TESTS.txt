@@ -1,4 +1,3 @@
 FubuMVC.Tests
-fubu.Testing
 FubuPersistence.Tests
 FubuTransportation.LightningQueues.Testing

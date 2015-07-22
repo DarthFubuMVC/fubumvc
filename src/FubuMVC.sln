@@ -36,8 +36,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHarnessApp", "TestHarne
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fubu", "Fubu\Fubu.csproj", "{90DBE31C-948D-47AF-8C17-0056511A7313}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fubu.Testing", "fubu.Testing\fubu.Testing.csproj", "{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuApp", "FubuApp\FubuApp.csproj", "{8A284565-46C1-47ED-A44D-C4BF8384B9E2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestProjects", "TestProjects", "{DE130877-DDCB-425C-9C20-BF1B73D4191D}"
@@ -279,21 +277,6 @@ Global
 		{90DBE31C-948D-47AF-8C17-0056511A7313}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{90DBE31C-948D-47AF-8C17-0056511A7313}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
 		{90DBE31C-948D-47AF-8C17-0056511A7313}.Retail|x86.ActiveCfg = Release|Any CPU
-		{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}.Release|x86.ActiveCfg = Release|Any CPU
-		{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}.Retail|Any CPU.ActiveCfg = Release|Any CPU
-		{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}.Retail|Any CPU.Build.0 = Release|Any CPU
-		{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
-		{C2F4F7E8-2DD6-41F5-9D11-1224892FC1B7}.Retail|x86.ActiveCfg = Release|Any CPU
 		{8A284565-46C1-47ED-A44D-C4BF8384B9E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8A284565-46C1-47ED-A44D-C4BF8384B9E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A284565-46C1-47ED-A44D-C4BF8384B9E2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
