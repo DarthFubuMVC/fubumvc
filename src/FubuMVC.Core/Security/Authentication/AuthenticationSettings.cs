@@ -1,8 +1,10 @@
+using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Policies;
 using FubuMVC.Core.Security.Authentication.Endpoints;
+using FubuMVC.Core.Security.Authentication.Membership;
 
 namespace FubuMVC.Core.Security.Authentication
 {
@@ -78,8 +80,27 @@ namespace FubuMVC.Core.Security.Authentication
             registry.Services<AuthenticationServiceRegistry>();
 
             registry.Policies.Global.Add(new ApplyAuthenticationPolicy());
-            registry.Policies.Global.Add<RegisterAuthenticationStrategies>();
             registry.Policies.Global.Add<ApplyPassThroughAuthenticationPolicy>();
+
+            if (MembershipEnabled == MembershipStatus.Enabled)
+            {
+                if (!Strategies.OfType<MembershipNode>().Any())
+                {
+                    Strategies.InsertFirst(new MembershipNode());
+                }
+            }
+
+            registry.Services(_ =>
+            {
+                foreach (IContainerModel strategy in Strategies)
+                {
+                    var def = strategy.ToObjectDef();
+
+                    _.AddService(typeof(IAuthenticationStrategy), def);
+                }
+            });
+
+
 
         }
     }

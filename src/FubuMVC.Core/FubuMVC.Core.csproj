@@ -802,7 +802,6 @@
     <Compile Include="Security\Authentication\PassThroughAuthenticationFilter.cs" />
     <Compile Include="Security\Authentication\PasswordHash.cs" />
     <Compile Include="Security\Authentication\RedirectLibrary.cs" />
-    <Compile Include="Security\Authentication\RegisterAuthenticationStrategies.cs" />
     <Compile Include="Security\Authentication\ThreadPrincipalContext.cs" />
     <Compile Include="Security\Authentication\Tickets\AuthenticationTicket.cs" />
     <Compile Include="Security\Authentication\Tickets\Encryption.cs" />
