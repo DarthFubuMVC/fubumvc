@@ -11,7 +11,8 @@
     <RootNamespace>Fubu</RootNamespace>
     <AssemblyName>Fubu</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile></TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -96,12 +97,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="EditCommand.cs" />
-    <Compile Include="IProcess.cs" />
-    <Compile Include="IProcessFactory.cs" />
     <Compile Include="ModeCommand.cs" />
-    <Compile Include="ProcessFactory.cs" />
-    <Compile Include="ProcessWrapper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Running\ApplicationSourceChooser.cs" />
@@ -127,9 +123,6 @@
     <None Include="ripple.dependencies.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="chromedriver.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="file-patterns.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -2,13 +2,11 @@
 using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core;
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Services.Remote;
 using FubuMVC.Katana;
 using HtmlTags;
 using Owin;
-using Spark;
 
 namespace Fubu.Running
 {
@@ -28,14 +26,10 @@ namespace Fubu.Running
             {
                 x.RequireAssemblyContainingType<EmbeddedFubuMvcServer>(AssemblyCopyMode.SemVerCompatible);
                 x.RequireAssemblyContainingType<RemoteFubuMvcProxy>(AssemblyCopyMode.SemVerCompatible);
-                x.RequireAssemblyContainingType<RemoteServiceRunner>(AssemblyCopyMode.SemVerCompatible);
                 x.RequireAssemblyContainingType<IAppBuilder>();
-                x.RequireAssemblyContainingType<IActivator>(); // Bottles
                 x.RequireAssemblyContainingType<IModelBinder>(); // FubuCore
                 x.RequireAssemblyContainingType<FubuApplication>(AssemblyCopyMode.SemVerCompatible); // FubuMVC.Core
                 x.RequireAssemblyContainingType<HtmlTag>(AssemblyCopyMode.SemVerCompatible); // HtmlTags
-                x.RequireAssemblyContainingType<DiagnosticChainsSource>(AssemblyCopyMode.SemVerCompatible);
-                x.RequireAssemblyContainingType<SparkViewEngine>(AssemblyCopyMode.SemVerCompatible);
 
                 x.RequireAssembly("Microsoft.Owin.Hosting");
                 x.RequireAssembly("Microsoft.Owin.Host.HttpListener");
@@ -84,7 +78,5 @@ namespace Fubu.Running
         {
             _runner.Dispose();
         }
-
     }
-
 }
