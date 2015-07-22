@@ -135,17 +135,17 @@ namespace FubuMVC.Core.Registration
             }
         }
 
-        public void Register(ServiceGraph graph)
+        public void Register(ServiceRegistry registry)
         {
             _settings.Each((t, o) => {
                 var registrar = typeof (Registrar<>).CloseAndBuildAs<IRegistrar>(o, t);
-                registrar.Register(graph);
+                registrar.Register(registry);
             });
         }
 
         public interface IRegistrar
         {
-            void Register(ServiceGraph graph);
+            void Register(ServiceRegistry registry);
         }
 
         public class Registrar<T> : IRegistrar
@@ -157,9 +157,9 @@ namespace FubuMVC.Core.Registration
                 _task = task;
             }
 
-            public void Register(ServiceGraph graph)
+            public void Register(ServiceRegistry registry)
             {
-                graph.SetServiceIfNone(typeof(T), ObjectDef.ForValue(_task.Result));
+                registry.SetServiceIfNone(typeof(T), ObjectDef.ForValue(_task.Result));
             }
         }
 

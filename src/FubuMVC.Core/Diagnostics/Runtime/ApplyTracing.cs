@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 
@@ -14,8 +13,6 @@ namespace FubuMVC.Core.Diagnostics.Runtime
         {
             // Do nothing
             if (graph.Settings.Get<DiagnosticsSettings>().TraceLevel == TraceLevel.None && !FubuMode.InDevelopment()) return;
-
-            new TracingServices().As<IServiceRegistration>().Apply(graph.Services);
 
             foreach (BehaviorChain chain in graph.Behaviors.Where(ShouldApply).ToArray())
             {

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using FubuCore;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Conventions;
@@ -162,7 +163,10 @@ namespace FubuMVC.Core.Registration
 
         public void RegisterServices(BehaviorGraph graph)
         {
-            graph.Settings.Register(graph.Services);
+            var services = new ServiceRegistry();
+            graph.Settings.Register(services);
+
+            services.As<IServiceRegistration>().Apply(graph.Services);
 
             AllServiceRegistrations().Union(DefaultServices())
                 .OfType<IServiceRegistration>()

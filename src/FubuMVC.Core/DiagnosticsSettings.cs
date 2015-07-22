@@ -62,6 +62,7 @@ namespace FubuMVC.Core
             if (FubuMode.InDevelopment() || TraceLevel != TraceLevel.None)
             {
                 registry.Policies.ChainSource<DiagnosticChainsSource>();
+                registry.Services<TracingServices>();
             }
 
             if (FubuMode.InDevelopment() || TraceLevel == TraceLevel.Verbose)
