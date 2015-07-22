@@ -11,7 +11,7 @@ using FubuMVC.Core.ServiceBus.Subscriptions;
 namespace FubuMVC.Core.ServiceBus.Polling
 {
     [ApplicationLevel]
-    public class PollingJobSettings
+    public class PollingJobSettings : IFeatureSettings
     {
         private readonly Cache<Type, PollingJobDefinition> _jobs =
             new Cache<Type, PollingJobDefinition>(type => new PollingJobDefinition {JobType = type});
@@ -39,6 +39,12 @@ namespace FubuMVC.Core.ServiceBus.Polling
 
             yield return
                 PollingJobDefinition.For<SubscriptionRefreshJob, TransportSettings>(x => x.SubscriptionRefreshPolling);
+        }
+
+        void IFeatureSettings.Apply(FubuRegistry registry)
+        {
+            registry.Services(_ => Jobs.Select(x => x.ToObjectDef())
+                .Each(x => _.AddService(typeof (IPollingJob), x)));
         }
     }
 }

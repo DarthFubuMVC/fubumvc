@@ -201,6 +201,15 @@ namespace FubuMVC.Core.Registration
 
             return type.Name.EndsWith("Cache") || type.HasAttribute<SingletonAttribute>();
         }
+
+        public void ReplaceService(Type type, ObjectDef @default)
+        {
+            alter = x =>
+            {
+                x.Clear(type);
+                x.AddService(type, @default);
+            };
+        }
     }
 
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]

@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using FubuCore.Binding;
 using FubuCore.Configuration;
@@ -7,6 +8,10 @@ using FubuCore.Util;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Core.ServiceBus;
+using FubuMVC.Core.ServiceBus.Configuration;
+using FubuMVC.Core.ServiceBus.Polling;
+using FubuMVC.Core.ServiceBus.ScheduledJobs;
 
 namespace FubuMVC.Core.Registration
 {
@@ -21,6 +26,16 @@ namespace FubuMVC.Core.Registration
         {
             _settings.OnMissing = buildDefault;
             _parent = parent;
+
+            warmUp<ChannelGraph>();
+            warmUp<PollingJobSettings>();
+            warmUp<ScheduledJobGraph>();
+            warmUp<TransportSettings>();
+        }
+
+        private void warmUp<T>() where T : class
+        {
+            Alter<T>(x => {});
         }
 
         private static object buildDefault(Type type)

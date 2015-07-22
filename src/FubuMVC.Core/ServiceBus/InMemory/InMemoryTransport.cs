@@ -101,14 +101,20 @@ namespace FubuMVC.Core.ServiceBus.InMemory
         {
             var settings = Activator.CreateInstance(type);
 
-            type.GetProperties().Where(x => x.CanWrite && x.PropertyType == typeof (Uri)).Each(prop => {
+            AllChannelsAreInMemory(type, settings);
+
+            return settings;
+        }
+
+        public static void AllChannelsAreInMemory(Type type, object settings)
+        {
+            type.GetProperties().Where(x => x.CanWrite && x.PropertyType == typeof (Uri)).Each(prop =>
+            {
                 var accessor = new SingleProperty(prop);
                 var uri = GetUriForProperty(accessor);
 
                 accessor.SetValue(settings, uri);
             });
-
-            return settings;
         }
 
         private static Uri GetUriForProperty(SingleProperty accessor)

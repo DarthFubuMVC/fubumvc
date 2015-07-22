@@ -15,7 +15,14 @@ namespace FubuTransportation.Testing.Configuration
             using (var runtime = FubuTransport.For(x => x.EnableInMemoryTransport()).Bootstrap()
                 )
             {
-                runtime.Factory.Get<IContainer>().Model.For<ChannelGraph>().Lifecycle.ShouldBeOfType<SingletonLifecycle>();
+                var graph1 = runtime.Container.GetInstance<ChannelGraph>();
+                var graph2 = runtime.Container.GetInstance<ChannelGraph>();
+                var graph3 = runtime.Container.GetInstance<ChannelGraph>();
+                var graph4 = runtime.Container.GetInstance<ChannelGraph>();
+
+                graph1.ShouldBeTheSameAs(graph2);
+                graph1.ShouldBeTheSameAs(graph3);
+                graph1.ShouldBeTheSameAs(graph4);
             }
 
            

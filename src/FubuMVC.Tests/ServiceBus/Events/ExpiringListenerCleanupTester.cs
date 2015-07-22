@@ -5,11 +5,10 @@ using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Events;
 using FubuMVC.Core.ServiceBus.Polling;
-using FubuMVC.Core.StructureMap;
 using FubuTestingSupport;
+using FubuTransportation.Testing.InMemory;
 using NUnit.Framework;
 using Rhino.Mocks;
-using StructureMap;
 
 namespace FubuTransportation.Testing.Events
 {
@@ -35,11 +34,11 @@ namespace FubuTransportation.Testing.Events
         {
             FubuTransport.SetupForInMemoryTesting();
 
-            using (var runtime = FubuTransport.For<InMemory.DelayedRegistry>()
-                           .Bootstrap())
+            using (var runtime = FubuTransport.For<DelayedRegistry>()
+                .Bootstrap())
             {
-
-                runtime.Factory.Get<IPollingJobs>().Any(x => x is PollingJob<ExpiringListenerCleanup, TransportSettings>)
+                runtime.Factory.Get<IPollingJobs>()
+                    .Any(x => x is PollingJob<ExpiringListenerCleanup, TransportSettings>)
                     .ShouldBeTrue();
             }
         }

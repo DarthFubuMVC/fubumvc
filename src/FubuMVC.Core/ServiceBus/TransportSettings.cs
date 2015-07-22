@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
+using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.ServiceBus.Async;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
@@ -20,7 +22,6 @@ namespace FubuMVC.Core.ServiceBus
     {
         public readonly IList<ISagaStorage> SagaStorageProviders;
         public readonly IList<Type> SettingTypes = new List<Type>();
-        private bool _enableInMemoryTransport;
 
         public TransportSettings()
         {
@@ -34,14 +35,7 @@ namespace FubuMVC.Core.ServiceBus
 
         public bool Enabled { get; set; }
 
-        public bool EnableInMemoryTransport
-        {
-            get { return _enableInMemoryTransport; }
-            set
-            {
-                _enableInMemoryTransport = value;
-            }
-        }
+        public bool EnableInMemoryTransport { get; set; }
 
         public bool DebugEnabled { get; set; }
         public double DelayMessagePolling { get; set; }
@@ -58,25 +52,40 @@ namespace FubuMVC.Core.ServiceBus
             registry.Policies.Global.Add<ApplyScheduledJobRouting>();
             registry.Services<ScheduledJobServicesRegistry>();
             registry.Services<MonitoringServiceRegistry>();
-            registry.Policies.Global.Add<RegisterScheduledJobs>();
             registry.Policies.ChainSource<ImportHandlers>();
             registry.Services<FubuTransportServiceRegistry>();
             registry.Services<PollingServicesRegistry>();
-            registry.Policies.Global.Add<RegisterPollingJobs>();
             registry.Policies.Global.Add<StatefulSagaConvention>();
             registry.Policies.Global.Add<AsyncHandlingConvention>();
 
+            // Just forcing it to get spun up.
+            registry.AlterSettings<ChannelGraph>(x => {});
+
             if (FubuTransport.AllQueuesInMemory)
             {
-                registry.Policies.Global.Add<AllQueuesInMemoryPolicy>();
+
+
+                registry.Services(x =>
+                {
+                    x.ClearAll<ITransport>();
+                    x.AddService<ITransport, InMemoryTransport>();
+
+                    SettingTypes.Each(settingType =>
+                    {
+                        var settings = InMemoryTransport.ToInMemory(settingType);
+                        x.ReplaceService(settingType, ObjectDef.ForValue(settings));
+                    });
+                });
             }
 
-            var enabled = FubuTransport.AllQueuesInMemory || EnableInMemoryTransport;
-
-            if (enabled)
+            if (FubuTransport.AllQueuesInMemory || EnableInMemoryTransport)
             {
                 registry.Services(_ => _.AddService<ITransport, InMemoryTransport>());
             }
+
+
+
+
 
             registry.Policies.Global.Add<ReorderBehaviorsPolicy>(x =>
             {
@@ -84,5 +93,21 @@ namespace FubuMVC.Core.ServiceBus
                 x.ThisNodeMustBeAfter<HandlerCall>();
             });
         }
+
+
+        public interface SetInMemory
+        {
+            void SetToInMemory(FubuRegistry registry);
+        }
+
+        public class SetInMemory<T> : SetInMemory where T : class, new()
+        {
+            public void SetToInMemory(FubuRegistry registry)
+            {
+                registry.AlterSettings<T>(x => InMemoryTransport.AllChannelsAreInMemory(typeof(T), x));
+            }
+        }
     }
+
+    
 }

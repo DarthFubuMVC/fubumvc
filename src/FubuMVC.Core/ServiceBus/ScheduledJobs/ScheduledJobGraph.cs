@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Execution;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
@@ -10,7 +11,7 @@ using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
 namespace FubuMVC.Core.ServiceBus.ScheduledJobs
 {
     [ApplicationLevel]
-    public class ScheduledJobGraph
+    public class ScheduledJobGraph : IFeatureSettings
     {
         public ScheduledJobGraph()
         {
@@ -40,6 +41,19 @@ namespace FubuMVC.Core.ServiceBus.ScheduledJobs
         public IScheduledJob<T> FindJob<T>() where T : IJob
         {
             return Jobs.OfType<IScheduledJob<T>>().FirstOrDefault();
-        } 
+        }
+
+        void IFeatureSettings.Apply(FubuRegistry registry)
+        {
+            registry.Services(_ =>
+            {
+                Jobs.Each(x =>
+                {
+                    Type jobType = typeof(IScheduledJob<>).MakeGenericType(x.JobType);
+                    _.AddService(jobType, ObjectDef.ForValue(x));
+
+                });
+            });
+        }
     }
 }

@@ -179,12 +179,6 @@ namespace FubuMVC.Core.ServiceBus.Configuration
                 _channelAlterations.Each(x => x(channels));
             });
 
-            registry.Configure(behaviorGraph => {
-                var channels = behaviorGraph.Settings.Get<ChannelGraph>();
-                behaviorGraph.Services.Clear(typeof(ChannelGraph));
-                behaviorGraph.Services.AddService(typeof(ChannelGraph), ObjectDef.ForValue(channels).AsSingleton());
-            });
-
             _alterations.Each(x => x(registry));
         }
 

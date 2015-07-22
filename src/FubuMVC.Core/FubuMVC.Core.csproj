@@ -150,7 +150,6 @@
     <Compile Include="ServiceBus\HandlerExtensions.cs" />
     <Compile Include="ServiceBus\IFubuTransportActivator.cs" />
     <Compile Include="ServiceBus\ImportHandlers.cs" />
-    <Compile Include="ServiceBus\InMemory\AllQueuesInMemoryPolicy.cs" />
     <Compile Include="ServiceBus\InMemory\InMemoryChannel.cs" />
     <Compile Include="ServiceBus\InMemory\InMemoryQueue.cs" />
     <Compile Include="ServiceBus\InMemory\InMemoryQueueManager.cs" />
@@ -220,7 +219,6 @@
     <Compile Include="ServiceBus\Polling\PollingJobStopped.cs" />
     <Compile Include="ServiceBus\Polling\PollingJobSuccess.cs" />
     <Compile Include="ServiceBus\Polling\PollingServicesRegistry.cs" />
-    <Compile Include="ServiceBus\Polling\RegisterPollingJobs.cs" />
     <Compile Include="ServiceBus\ReceiveFailureException.cs" />
     <Compile Include="ServiceBus\RecordingServiceBus.cs" />
     <Compile Include="ServiceBus\Registration\DefaultHandlerSource.cs" />
@@ -309,7 +307,6 @@
     <Compile Include="ServiceBus\Sagas\StatefulSagaConvention.cs" />
     <Compile Include="ServiceBus\Sagas\StatefulSagaNode.cs" />
     <Compile Include="ServiceBus\ScheduledJobs\Configuration\ApplyScheduledJobRouting.cs" />
-    <Compile Include="ServiceBus\ScheduledJobs\Configuration\RegisterScheduledJobs.cs" />
     <Compile Include="ServiceBus\ScheduledJobs\Configuration\ScheduledJobExpression.cs" />
     <Compile Include="ServiceBus\ScheduledJobs\Configuration\ScheduledJobHandlerCall.cs" />
     <Compile Include="ServiceBus\ScheduledJobs\Configuration\ScheduledJobHandlerSource.cs" />
