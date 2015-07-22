@@ -208,6 +208,7 @@ namespace FubuMVC.Core
         private void bakeBehaviorGraphIntoContainer(BehaviorGraph graph, IContainerFacility containerFacility)
         {
             graph.As<IRegisterable>().Register(containerFacility.Register);
+            _registry.Value.Config.RegisterServices(containerFacility, graph);
         }
 
         private BehaviorGraph buildBehaviorGraph(IPerfTimer timer, IEnumerable<Assembly> assemblies, IActivationDiagnostics diagnostics)

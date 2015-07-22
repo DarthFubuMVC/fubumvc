@@ -27,8 +27,6 @@ namespace FubuMVC.Core.Registration
     {
         private readonly List<BehaviorChain> _behaviors = new List<BehaviorChain>();
 
-        private readonly ServiceGraph _services = new ServiceGraph();
-
         private readonly SettingsCollection _settings;
 
         public IRoutePolicy RoutePolicy = new StandardRoutePolicy();
@@ -87,11 +85,6 @@ namespace FubuMVC.Core.Registration
             get { return _settings.Get<IFubuApplicationFiles>(); }
         }
 
-        public ServiceGraph Services
-        {
-            get { return _services; }
-        }
-
         public IEnumerable<IRouteDefinition> Routes
         {
             get { return _behaviors.OfType<RoutedChain>().Select(x => x.Route); }
@@ -125,28 +118,22 @@ namespace FubuMVC.Core.Registration
 
         void IRegisterable.Register(Action<Type, ObjectDef> action)
         {
-            /*
-             * 1.) Loop through each service
-             * 2.) Loop through each top level behavior for routes
-             * 3.) Loop through each partial behavior
-             * 4.) add in the UrlRegistry as a value
-             */
-
-            _services.Each(action);
-
             _behaviors.OfType<IRegisterable>().Each(chain => chain.Register(action));
 
             action(typeof (BehaviorGraph), new ObjectDef
             {
                 Value = this
             });
+
+            
         }
 
         void IRegisterable.Register(Registry registry)
         {
-            // TODO -- get the services?
             _behaviors.OfType<IRegisterable>().Each(x => x.Register(registry));
             registry.For<BehaviorGraph>().Use(this);
+
+            
         }
 
         #endregion

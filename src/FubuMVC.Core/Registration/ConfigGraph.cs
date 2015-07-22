@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using FubuCore;
+using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Conventions;
@@ -161,18 +162,23 @@ namespace FubuMVC.Core.Registration
 
         }
 
-        public void RegisterServices(BehaviorGraph graph)
+        public void RegisterServices(IContainerFacility container, BehaviorGraph graph)
         {
-            var services = new ServiceRegistry();
-            graph.Settings.Register(services);
+            var services = new ServiceGraph();
 
-            services.As<IServiceRegistration>().Apply(graph.Services);
+            var settingServices = new ServiceRegistry();
+            graph.Settings.Register(settingServices);
+
+            settingServices.As<IServiceRegistration>().Apply(services);
 
             AllServiceRegistrations().Union(DefaultServices())
                 .OfType<IServiceRegistration>()
-                .Each(x => x.Apply(graph.Services));
+                .Each(x => x.Apply(services));
 
-            graph.Services.AddService(this);
+            services.AddService(this);
+
+            services.Each(container.Register);
+
         }
 
         public static IEnumerable<ServiceRegistry> DefaultServices()

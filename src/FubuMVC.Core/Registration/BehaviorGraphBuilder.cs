@@ -3,18 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using FubuCore;
-using FubuCore.Binding.InMemory;
-using FubuCore.Logging;
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Http;
-using FubuMVC.Core.Localization;
 using FubuMVC.Core.Resources.Conneg;
-using FubuMVC.Core.Security.AntiForgery;
-using FubuMVC.Core.Security.Authentication;
-using FubuMVC.Core.Security.Authentication.Endpoints;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Attachment;
 
@@ -74,10 +66,8 @@ namespace FubuMVC.Core.Registration
 
             perfTimer.Record("Applying Tracing", () => applyTracing(graph));
 
-            // Wait until all the other threads are done.
-            var registration = Task.Factory.StartNew(() => config.RegisterServices(graph));
-
-            Task.WaitAll(registration, layoutAttachmentTasks);
+            // TODO -- just make this all async
+            layoutAttachmentTasks.Wait();
             Task.WaitAll(layoutAttachmentTasks.Result);
 
             new AutoImportModelNamespacesConvention().Configure(graph);
