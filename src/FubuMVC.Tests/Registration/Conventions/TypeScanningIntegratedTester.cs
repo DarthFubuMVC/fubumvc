@@ -1,12 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using FubuCore;
 using FubuCore.Reflection;
 using FubuCore.Util;
-using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Tests.Behaviors;
@@ -31,38 +28,33 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void pick_up_behaviors_from_another_assembly()
         {
-            var graph = BehaviorGraph.BuildFrom(x => {
-                x.Actions.FindBy(o => {
+            var graph = BehaviorGraph.BuildFrom(x =>
+            {
+                x.Actions.FindBy(o =>
+                {
                     o.Applies.ToAssemblyContainingType<ClassInAnotherAssembly>();
                     o.IncludeTypesNamed(name => name.EndsWith("Controller"));
                 });
-
-
             });
 
             graph.Behaviors.Count().ShouldBeGreaterThan(0);
 
             graph.Behaviors
-                .Where(x => x.FirstCall().HandlerType.Assembly != typeof(BehaviorGraph).Assembly)
+                .Where(x => x.FirstCall().HandlerType.Assembly != typeof (BehaviorGraph).Assembly)
                 .Each(x =>
-            {
-                x.Calls.First().HandlerType.Name.EndsWith("Controller");
-                x.Calls.First().HandlerType.Assembly.ShouldEqual(typeof (ClassInAnotherAssembly).Assembly);
-            });
-
-
+                {
+                    x.Calls.First().HandlerType.Name.EndsWith("Controller");
+                    x.Calls.First().HandlerType.Assembly.ShouldEqual(typeof (ClassInAnotherAssembly).Assembly);
+                });
         }
 
         [Test]
         public void pick_up_behaviors_from_this_assembly()
         {
-            var graph = BehaviorGraph.BuildFrom(x => {
-                x.Actions.IncludeClassesSuffixedWithController();
-            });
+            var graph = BehaviorGraph.BuildFrom(x => { x.Actions.IncludeClassesSuffixedWithController(); });
 
             graph.Behaviors.Count().ShouldBeGreaterThan(0);
             graph.Behaviors.Each(x => x.Calls.First().HandlerType.Name.EndsWith("Controller"));
-
         }
 
         [Test]

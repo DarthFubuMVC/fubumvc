@@ -279,10 +279,6 @@
       <Project>{1F18D6EB-4D9C-407A-BD70-C5D525E377B6}</Project>
       <Name>TestPackage1</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TestPackage2\TestPackage2.csproj">
-      <Project>{290ECAD5-5086-4020-B137-C6AFA7C50874}</Project>
-      <Name>TestPackage2</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

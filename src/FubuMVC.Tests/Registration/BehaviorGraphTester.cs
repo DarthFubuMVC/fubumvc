@@ -1,19 +1,12 @@
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
 using FubuCore;
-using FubuCore.Binding;
-using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using FubuTestingSupport;
 using NUnit.Framework;
-using Rhino.Mocks;
-using TestPackage1.FakeControllers;
 
 namespace FubuMVC.Tests.Registration
 {
@@ -54,7 +47,9 @@ namespace FubuMVC.Tests.Registration
             }
         }
 
-        public class MyOtherRequestModel{}
+        public class MyOtherRequestModel
+        {
+        }
 
         public class MyRequestModel
         {
@@ -72,10 +67,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void find_home_is_not_set()
         {
-            var graph = BehaviorGraph.BuildFrom(x =>
-            {
-                x.Actions.IncludeClassesSuffixedWithController();
-            });
+            var graph = BehaviorGraph.BuildFrom(x => { x.Actions.IncludeClassesSuffixedWithController(); });
 
             graph.FindHomeChain().ShouldBeNull();
         }
@@ -83,11 +75,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void should_remove_chain()
         {
-            var graph = BehaviorGraph.BuildFrom(x =>
-            {
-                x.Actions.IncludeClassesSuffixedWithController();
-
-            });
+            var graph = BehaviorGraph.BuildFrom(x => { x.Actions.IncludeClassesSuffixedWithController(); });
 
             var chain = graph.BehaviorFor<MyHomeController>(x => x.ThisIsHome());
             graph.RemoveChain(chain);
@@ -109,11 +97,10 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void derive_if_the_assembly_is_set()
         {
-            var graph = new BehaviorGraph()
+            var graph = new BehaviorGraph
             {
                 ApplicationAssembly = Assembly.GetExecutingAssembly()
             };
-
 
 
             graph.Version.ShouldEqual(Assembly.GetExecutingAssembly().GetName().Version);
