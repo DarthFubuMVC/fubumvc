@@ -24,7 +24,6 @@ namespace FubuMVC.Core.ServiceBus.Configuration
     public class FubuTransportRegistry : IFubuRegistryExtension
     {
         private readonly IList<IHandlerSource> _sources = new List<IHandlerSource>();
-        internal readonly PollingJobHandlerSource _pollingJobs = new PollingJobHandlerSource(); // leave it as internal
         internal readonly ScheduledJobHandlerSource _scheduledJobs = new ScheduledJobHandlerSource();
         private readonly IList<Action<ChannelGraph>> _channelAlterations = new List<Action<ChannelGraph>>();
         private readonly IList<Action<FubuRegistry>> _alterations = new List<Action<FubuRegistry>>();
@@ -159,11 +158,6 @@ namespace FubuMVC.Core.ServiceBus.Configuration
             foreach (var handlerSource in _sources)
             {
                 yield return handlerSource;
-            }
-
-            if (_pollingJobs.HasAny())
-            {
-                yield return _pollingJobs;
             }
 
 

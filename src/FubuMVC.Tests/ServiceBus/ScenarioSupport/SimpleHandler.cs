@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core.ServiceBus.Runtime;
+﻿using System.Diagnostics;
+using FubuMVC.Core.ServiceBus.Runtime;
 
 namespace FubuMVC.Tests.ServiceBus.ScenarioSupport
 {
@@ -13,6 +14,7 @@ namespace FubuMVC.Tests.ServiceBus.ScenarioSupport
 
         public void Handle(T message)
         {
+            Debug.WriteLine("Got message {0}:{1}", typeof(T).Name, message.Id);
             TestMessageRecorder.Processed(GetType().Name, message, _envelope.ReceivedAt);
         }
     }

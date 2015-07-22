@@ -214,7 +214,6 @@
     <Compile Include="ServiceBus\Polling\PollingJobDefinition.cs" />
     <Compile Include="ServiceBus\Polling\PollingJobExpression.cs" />
     <Compile Include="ServiceBus\Polling\PollingJobFailed.cs" />
-    <Compile Include="ServiceBus\Polling\PollingJobHandlerSource.cs" />
     <Compile Include="ServiceBus\Polling\PollingJobLogger.cs" />
     <Compile Include="ServiceBus\Polling\PollingJobs.cs" />
     <Compile Include="ServiceBus\Polling\PollingJobSettings.cs" />

@@ -20,17 +20,14 @@ namespace FubuTransportation.LightningQueues.Testing
         [Test]
         public void should_start_when_transport_disabled()
         {
-            _registry.AlterSettings<TransportSettings>(x => x.Enabled = true);
+            _registry.AlterSettings<TransportSettings>(x => {
+                                                                x.Enabled = true;
+                                                                x.EnableInMemoryTransport = true;
+            });
             _registry.AlterSettings<LightningQueueSettings>(x => x.DisableIfNoChannels = true);
             BootstrapApplication();
         }
 
-        [Test]
-        public void should_throw_when_no_transports_are_registered()
-        {
-            Assert.Throws<FubuException>(BootstrapApplication,
-                "No transports are registered.  FubuTransportation cannot function without at least one ITransport");
-        }
 
         private void BootstrapApplication()
         {

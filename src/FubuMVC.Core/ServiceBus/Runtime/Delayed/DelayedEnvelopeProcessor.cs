@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using FubuCore.Dates;
 using FubuCore.Logging;
@@ -23,6 +24,8 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Delayed
         public void Execute(CancellationToken cancellation)
         {
             var currentTime = _systemTime.UtcNow();
+
+            Debug.WriteLine("Running delayed envelopes at " + currentTime);
 
             _transports.Each(transport => {
                 DequeuFromTransport(transport, currentTime);

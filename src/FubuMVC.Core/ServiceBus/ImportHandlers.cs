@@ -33,10 +33,21 @@ namespace FubuMVC.Core.ServiceBus
             handlers.Add(HandlerCall.For<MonitoringControlHandler>(x => x.Handle(new TaskHealthRequest())));
             handlers.Add(HandlerCall.For<MonitoringControlHandler>(x => x.Handle(new TaskDeactivation())));
 
+            var jobs = graph.Settings.Get<PollingJobSettings>();
+            jobs.Jobs.Each(x =>
+            {
+                var handlerType = typeof(JobRunner<>).MakeGenericType(x.JobType);
+                var method = handlerType.GetMethod("Run");
+
+                handlers.Add(new HandlerCall(handlerType, method)); ;
+            });
+
+
             handlers.ApplyGeneralizedHandlers();
 
             var policies = graph.Settings.Get<HandlerPolicies>();
             handlers.ApplyPolicies(policies.GlobalPolicies);
+
 
             foreach (var chain in handlers)
             {

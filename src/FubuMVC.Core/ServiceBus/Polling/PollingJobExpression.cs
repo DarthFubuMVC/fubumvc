@@ -30,10 +30,6 @@ namespace FubuMVC.Core.ServiceBus.Polling
             public ScheduledExecutionExpression ScheduledAtInterval<TSettings>(
                 Expression<Func<TSettings, double>> intervalInMillisecondsProperty)
             {
-
-                _parent._parent._pollingJobs.AddJobType(typeof(TJob));
-
-
                 _parent._parent.AlterSettings<PollingJobSettings>(x => {
                     var job = x.JobFor<TJob>();
                     job.SettingType = typeof (TSettings);

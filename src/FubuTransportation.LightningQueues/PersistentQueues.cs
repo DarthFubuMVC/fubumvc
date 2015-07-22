@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Runtime.Serialization;
@@ -103,11 +104,13 @@ namespace FubuTransportation.LightningQueues
             try
             {
                 var readyToSend = _delayedMessages.AllMessagesBefore(currentTime);
+
                 readyToSend.Each(x =>
                 {
                     var message = transactionalScope.ReceiveById(LightningQueuesTransport.DelayedQueueName, x);
                     var uri = message.Headers[Envelope.ReceivedAtKey].ToLightningUri();
-                    transactionalScope.EnqueueDirectlyTo(uri.QueueName, message.ToPayload());
+                    MessagePayload messagePayload = message.ToPayload();
+                    transactionalScope.EnqueueDirectlyTo(uri.QueueName, messagePayload);
                     list.Add(message.ToToken());
                 });
                 transactionalScope.Commit();
