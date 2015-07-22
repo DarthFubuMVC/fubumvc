@@ -9,8 +9,8 @@ using FubuMVC.Core.ServiceBus.ScheduledJobs;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
 using FubuMVC.Core.ServiceBus.Subscriptions;
 using FubuMVC.Katana;
+using FubuMVC.RavenDb.ServiceBus;
 using FubuPersistence.RavenDb;
-using FubuTransportation.RavenDb;
 using Raven.Client;
 using StructureMap;
 

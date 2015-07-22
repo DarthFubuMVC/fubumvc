@@ -192,6 +192,8 @@
     <Compile Include="Reset\IPersistenceReset.cs" />
     <Compile Include="Reset\IServiceReset.cs" />
     <Compile Include="Reset\ResetMessage.cs" />
+    <Compile Include="ServiceBus\RavenDbSchedulePersistence.cs" />
+    <Compile Include="ServiceBus\RavenDbSubscriptionPersistence.cs" />
     <Compile Include="Storage\EntityStorage.cs" />
     <Compile Include="Storage\IEntityStorage.cs" />
     <Compile Include="Storage\IEntityStoragePolicy.cs" />

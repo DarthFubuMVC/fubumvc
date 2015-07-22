@@ -5,12 +5,13 @@ using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Subscriptions;
 using FubuMVC.RavenDb;
+using FubuMVC.RavenDb.ServiceBus;
 using FubuTestingSupport;
 using FubuTransportation.Testing;
 using NUnit.Framework;
 using StructureMap;
 
-namespace FubuTransportation.RavenDb.Testing
+namespace FubuPersistence.Tests.ServiceBus
 {
     [TestFixture]
     public class RavenDbSubscriptionPersistenceTester

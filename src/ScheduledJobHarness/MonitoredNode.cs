@@ -7,7 +7,7 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.ScheduledJobs;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
 using FubuMVC.Core.ServiceBus.Subscriptions;
-using FubuTransportation.RavenDb;
+using FubuMVC.RavenDb.ServiceBus;
 using Raven.Client;
 
 namespace ScheduledJobHarness

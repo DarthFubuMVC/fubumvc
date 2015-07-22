@@ -191,6 +191,8 @@
     <Compile Include="RavenDb\RavenUnitOfWorkTester.cs" />
     <Compile Include="RavenDb\the_out_of_the_box_bottle_can_use_raven.cs" />
     <Compile Include="Reset\CompleteResetTester.cs" />
+    <Compile Include="ServiceBus\RavenDbSchedulePersistenceTester.cs" />
+    <Compile Include="ServiceBus\RavenDbSubscriptionPersistenceTester.cs" />
     <Compile Include="Storage\GlobalEntityStorageTester.cs" />
     <Compile Include="Storage\SoftDeletedEntityStorageTester.cs" />
     <Compile Include="Storage\SoftDeletedStoragePolicyTester.cs" />
@@ -219,6 +221,10 @@
     <ProjectReference Include="..\FubuMVC.RavenDb\FubuMVC.RavenDb.csproj">
       <Project>{02441E35-668B-4713-9279-BD51948B95EB}</Project>
       <Name>FubuMVC.RavenDb</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Tests\FubuMVC.Tests.csproj">
+      <Project>{feb91f9f-ece2-480c-b39c-a44bbf1f7b01}</Project>
+      <Name>FubuMVC.Tests</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

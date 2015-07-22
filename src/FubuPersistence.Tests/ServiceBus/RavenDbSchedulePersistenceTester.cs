@@ -2,11 +2,12 @@
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
 using FubuMVC.RavenDb;
+using FubuMVC.RavenDb.ServiceBus;
 using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
 
-namespace FubuTransportation.RavenDb.Testing
+namespace FubuPersistence.Tests.ServiceBus
 {
     [TestFixture]
     public class RavenDbSchedulePersistenceTester

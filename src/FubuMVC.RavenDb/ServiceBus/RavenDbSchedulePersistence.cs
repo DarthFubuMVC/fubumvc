@@ -5,7 +5,7 @@ using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
 using FubuPersistence;
 using Raven.Client;
 
-namespace FubuTransportation.RavenDb
+namespace FubuMVC.RavenDb.ServiceBus
 {
     public class RavenDbSchedulePersistence : ISchedulePersistence
     {

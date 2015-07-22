@@ -5,7 +5,7 @@ using FubuMVC.Core.ServiceBus.Subscriptions;
 using FubuPersistence;
 using Raven.Client;
 
-namespace FubuTransportation.RavenDb
+namespace FubuMVC.RavenDb.ServiceBus
 {
     public class RavenDbSubscriptionPersistence : ISubscriptionPersistence
     {
