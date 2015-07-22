@@ -1,7 +1,6 @@
 using System.ComponentModel;
 using FubuMVC.Core.Diagnostics.Runtime.Tracing;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.ObjectGraph;
 using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Diagnostics.Runtime
@@ -25,15 +24,6 @@ namespace FubuMVC.Core.Diagnostics.Runtime
             instance.Ctor<BehaviorCorrelation>().Is(new BehaviorCorrelation(Next));
 
             return instance;
-        }
-
-        protected override ObjectDef buildObjectDef()
-        {
-            var tracerDef = new ObjectDef(typeof (BehaviorTracer));
-
-            tracerDef.DependencyByValue(new BehaviorCorrelation(Next));
-
-            return tracerDef;
         }
     }
 }

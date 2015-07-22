@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
 using StructureMap.Pipeline;
 
@@ -14,24 +13,11 @@ namespace FubuMVC.Core.Security.Authorization
     public class AuthorizationNode : BehaviorNode, IAuthorizationNode
     {
         private readonly IList<IAuthorizationPolicy> _policies = new List<IAuthorizationPolicy>();
-        private ObjectDef _failure;
+        private Instance _failure;
 
         public override BehaviorCategory Category
         {
             get { return BehaviorCategory.Authorization; }
-        }
-
-        protected override ObjectDef buildObjectDef()
-        {
-            var def = ObjectDef.ForType<AuthorizationBehavior>();
-            def.DependencyByValue<IAuthorizationNode>(this);
-
-            if (_failure != null)
-            {
-                def.Dependency(typeof(IAuthorizationFailureHandler), _failure);
-            }
-
-            return def;
         }
 
         protected override IConfiguredInstance buildInstance()
@@ -41,8 +27,7 @@ namespace FubuMVC.Core.Security.Authorization
 
             if (_failure != null)
             {
-                throw new NotSupportedException("Gotta convert here");
-                //instance.Ctor<IAuthorizationFailureHandler>().Is(_failure);
+                instance.Ctor<IAuthorizationFailureHandler>().Is(_failure);
             }
 
             return instance;
@@ -50,22 +35,22 @@ namespace FubuMVC.Core.Security.Authorization
 
         public void FailureHandler<T>() where T : IAuthorizationFailureHandler
         {
-            _failure = ObjectDef.ForType<T>();
+            _failure = new SmartInstance<T>();
         }
 
         public void FailureHandler(IAuthorizationFailureHandler handler)
         {
-            _failure = ObjectDef.ForValue(handler);
+            _failure = new ObjectInstance(handler);
         }
 
-        public ObjectDef FailureHandler()
+        public Instance FailureHandler()
         {
             return _failure;
         }
 
         public void FailureHandler(Type handlerType)
         {
-            _failure = new ObjectDef(handlerType);
+            _failure = new ConfiguredInstance(handlerType);
         }
 
         public AuthorizationRight IsAuthorized(IFubuRequestContext context)

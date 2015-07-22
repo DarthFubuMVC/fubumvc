@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Security.Cryptography;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.ObjectGraph;
 using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.ServiceBus.Sagas
@@ -16,7 +14,7 @@ namespace FubuMVC.Core.ServiceBus.Sagas
             _types = types;
         }
 
-        public ObjectDef Repository { get; set; }
+        public Instance Repository { get; set; }
 
         public override BehaviorCategory Category
         {
@@ -33,20 +31,6 @@ namespace FubuMVC.Core.ServiceBus.Sagas
             get { return _types.MessageType; }
         }
 
-        protected override ObjectDef buildObjectDef()
-        {
-            if (Repository == null)
-            {
-                throw new InvalidOperationException(
-                    "something descriptive here saying you don't know how to do the repo for the saga");
-            }
-
-            var def = new ObjectDef(typeof (SagaBehavior<,,>), _types.StateType, _types.MessageType, _types.HandlerType);
-            var repositoryType = typeof (ISagaRepository<,>).MakeGenericType(_types.StateType, _types.MessageType);
-            def.Dependency(repositoryType, Repository);
-
-            return def;
-        }
 
         protected override IConfiguredInstance buildInstance()
         {
@@ -56,21 +40,21 @@ namespace FubuMVC.Core.ServiceBus.Sagas
                     "You must specify a SagaRepository");
             }
 
-            throw new NotImplementedException("Do later");
-
-            /*
             if (Repository == null)
             {
                 throw new InvalidOperationException(
                     "something descriptive here saying you don't know how to do the repo for the saga");
             }
 
-            var def = new ObjectDef(typeof (SagaBehavior<,,>), _types.StateType, _types.MessageType, _types.HandlerType);
-            var repositoryType = typeof (ISagaRepository<,>).MakeGenericType(_types.StateType, _types.MessageType);
-            def.Dependency(repositoryType, Repository);
+            
 
-            return def;
-             */
+            var instance = new ConfiguredInstance(typeof (SagaBehavior<,,>), _types.StateType, _types.MessageType, _types.HandlerType);
+            var repositoryType = typeof (ISagaRepository<,>).MakeGenericType(_types.StateType, _types.MessageType);
+
+            instance.Dependencies.Add(repositoryType, Repository);
+
+            return instance;
+
         }
 
         public void Describe(Description description)

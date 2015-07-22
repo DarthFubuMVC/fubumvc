@@ -1,7 +1,6 @@
 using System;
 using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.ObjectGraph;
 using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Security.Authentication
@@ -39,18 +38,5 @@ namespace FubuMVC.Core.Security.Authentication
             // Nothing
         }
 
-        ObjectDef IContainerModel.ToObjectDef()
-        {
-            var def = new ObjectDef(_authType);
-
-            configure(def);
-
-            return def;
-        }
-
-        protected virtual void configure(ObjectDef def)
-        {
-
-        }
     }
 }

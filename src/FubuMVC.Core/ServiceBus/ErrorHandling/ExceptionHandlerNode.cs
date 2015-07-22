@@ -1,6 +1,5 @@
 ﻿using FubuCore.Descriptions;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.ServiceBus.Configuration;
 using StructureMap.Pipeline;
 
@@ -18,14 +17,6 @@ namespace FubuMVC.Core.ServiceBus.ErrorHandling
         public HandlerChain Chain
         {
             get { return _chain; }
-        }
-
-        protected override ObjectDef buildObjectDef()
-        {
-            var def = ObjectDef.ForType<ExceptionHandlerBehavior>();
-            def.DependencyByValue(_chain);
-
-            return def;
         }
 
         protected override IConfiguredInstance buildInstance()

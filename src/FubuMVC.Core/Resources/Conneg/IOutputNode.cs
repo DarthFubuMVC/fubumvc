@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.Runtime.Formatters;
 using FubuMVC.Core.View;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
@@ -74,7 +74,7 @@ namespace FubuMVC.Core.Resources.Conneg
         /// the resource not being found on a chain by chain
         /// basis
         /// </summary>
-        ObjectDef ResourceNotFound { get; set; }
+        Instance ResourceNotFound { get; set; }
 
         bool HasView(IConditional conditional);
 

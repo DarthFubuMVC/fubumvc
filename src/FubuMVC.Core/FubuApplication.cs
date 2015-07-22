@@ -15,11 +15,11 @@ using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Services;
 using FubuMVC.Core.StructureMap;
 using StructureMap;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core
 {
@@ -196,7 +196,7 @@ namespace FubuMVC.Core
 
             var runtime = new FubuRuntime(factory, containerFacility, routeTask.Result);
 
-            containerFacility.Register(typeof (FubuRuntime), ObjectDef.ForValue(runtime));
+            containerFacility.Register(typeof (FubuRuntime), new ObjectInstance(runtime));
             return runtime;
         }
 
@@ -207,7 +207,7 @@ namespace FubuMVC.Core
 
         private void bakeBehaviorGraphIntoContainer(BehaviorGraph graph, IContainerFacility containerFacility)
         {
-            graph.As<IRegisterable>().Register(containerFacility.Register);
+            graph.As<IRegisterable>().Register((serviceType, def) => containerFacility.Register(serviceType, def));
             _registry.Value.Config.RegisterServices(containerFacility, graph);
         }
 

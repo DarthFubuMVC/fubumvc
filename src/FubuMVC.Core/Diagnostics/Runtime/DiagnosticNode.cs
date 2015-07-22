@@ -1,7 +1,6 @@
 using System.ComponentModel;
 using FubuMVC.Core.Diagnostics.Runtime.Tracing;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.ObjectGraph;
 using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Diagnostics.Runtime
@@ -17,11 +16,6 @@ namespace FubuMVC.Core.Diagnostics.Runtime
         protected override IConfiguredInstance buildInstance()
         {
             return new SmartInstance<DiagnosticBehavior>();
-        }
-
-        protected override ObjectDef buildObjectDef()
-        {
-            return new ObjectDef(typeof (DiagnosticBehavior));
         }
 
         public override BehaviorCategory Category

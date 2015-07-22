@@ -5,7 +5,6 @@ using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.Runtime.Formatters;
@@ -145,7 +144,7 @@ namespace FubuMVC.Core.Resources.Conneg
         /// the resource not being found on a chain by chain
         /// basis
         /// </summary>
-        public ObjectDef ResourceNotFound { get; set; }
+        public Instance ResourceNotFound { get; set; }
 
         /// <summary>
         /// Use the specified type T as the resource not found handler strategy
@@ -154,7 +153,7 @@ namespace FubuMVC.Core.Resources.Conneg
         /// <typeparam name="T"></typeparam>
         public void UseForResourceNotFound<T>() where T : IResourceNotFoundHandler
         {
-            ResourceNotFound = ObjectDef.ForType<T>();
+            ResourceNotFound = new SmartInstance<T>();
         }
 
         #region DescribesItself Members
@@ -178,25 +177,6 @@ namespace FubuMVC.Core.Resources.Conneg
 
         #endregion
 
-        protected override ObjectDef buildObjectDef()
-        {
-            var def = new ObjectDef(typeof (OutputBehavior<>), _resourceType);
-
-
-
-            
-            var collectionType = typeof (IMediaCollection<>).MakeGenericType(_resourceType);
-            var collection = typeof (MediaCollection<>).CloseAndBuildAs<object>(this, _resourceType);
-
-            def.DependencyByValue(collectionType, collection);
-
-            if (ResourceNotFound != null)
-            {
-                def.Dependency(typeof(IResourceNotFoundHandler), ResourceNotFound);
-            }
-
-            return def;
-        }
 
         protected override IConfiguredInstance buildInstance()
         {

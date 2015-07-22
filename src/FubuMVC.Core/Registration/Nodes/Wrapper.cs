@@ -1,7 +1,6 @@
 using System;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Behaviors;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuCore;
 using StructureMap.Pipeline;
 
@@ -9,7 +8,6 @@ namespace FubuMVC.Core.Registration.Nodes
 {
     public class Wrapper : BehaviorNode, DescribesItself
     {
-        private readonly ObjectDef _objectDef;
         private readonly ConstructorInstance _instance;
 
         public Wrapper(Type behaviorType)
@@ -18,11 +16,6 @@ namespace FubuMVC.Core.Registration.Nodes
             {
                 throw new ArgumentOutOfRangeException("behaviorType", "Only types that can be cast to IActionBehavior may be used here");
             }
-
-            _objectDef = new ObjectDef
-            {
-                Type = behaviorType
-            };
 
             _instance = new ConstructorInstance(behaviorType);
         }
@@ -34,7 +27,7 @@ namespace FubuMVC.Core.Registration.Nodes
         {
             get
             {
-                return _objectDef.Type;
+                return _instance.ReturnedType;
             }
         }
 
@@ -46,12 +39,6 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
 
-
-        protected override ObjectDef buildObjectDef()
-        {
-            return _objectDef;
-        }
-
         protected override IConfiguredInstance buildInstance()
         {
             return _instance;
@@ -59,7 +46,7 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public override string ToString()
         {
-            return "Wrapped by " + _objectDef.Type.FullName;
+            return "Wrapped by " + Type.FullName;
         }
 
         void DescribesItself.Describe(Description description)

@@ -7,10 +7,10 @@ using System.Reflection;
 using FubuCore;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Runtime.Files;
 using StructureMap.Configuration.DSL;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Registration
 {
@@ -116,25 +116,14 @@ namespace FubuMVC.Core.Registration
 
         #region IRegisterable Members
 
-        void IRegisterable.Register(Action<Type, ObjectDef> action)
+        void IRegisterable.Register(Action<Type, Instance> action)
         {
             _behaviors.OfType<IRegisterable>().Each(chain => chain.Register(action));
 
-            action(typeof (BehaviorGraph), new ObjectDef
-            {
-                Value = this
-            });
-
+            action(typeof (BehaviorGraph), new ObjectInstance(this));
             
         }
 
-        void IRegisterable.Register(Registry registry)
-        {
-            _behaviors.OfType<IRegisterable>().Each(x => x.Register(registry));
-            registry.For<BehaviorGraph>().Use(this);
-
-            
-        }
 
         #endregion
 

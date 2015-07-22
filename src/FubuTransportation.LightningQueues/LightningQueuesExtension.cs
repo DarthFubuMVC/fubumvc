@@ -5,6 +5,7 @@ using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Delayed;
 using FubuTransportation.LightningQueues.Diagnostics;
 using LightningQueues.Model;
+using StructureMap.Pipeline;
 
 namespace FubuTransportation.LightningQueues
 {
@@ -24,7 +25,7 @@ namespace FubuTransportation.LightningQueues
         {
             AddService<ITransport, LightningQueuesTransport>();
             AddService<IQueueMessageRetrieval, QueueMessageRetrieval>(); // For diagnostics
-            SetServiceIfNone<IPersistentQueues, PersistentQueues>(x => x.IsSingleton = true);
+            SetServiceIfNone<IPersistentQueues, PersistentQueues>(x => x.SetLifecycleTo<SingletonLifecycle>());
             SetServiceIfNone<IDelayedMessageCache<MessageId>, DelayedMessageCache<MessageId>>();
         }
     }

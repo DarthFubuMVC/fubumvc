@@ -94,7 +94,7 @@ namespace FubuMVC.Core.Security.Authentication
             {
                 foreach (IContainerModel strategy in Strategies)
                 {
-                    var def = strategy.ToObjectDef();
+                    var def = strategy.ToInstance();
 
                     _.AddService(typeof(IAuthenticationStrategy), def);
                 }

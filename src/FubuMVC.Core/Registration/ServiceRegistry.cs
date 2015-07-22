@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using FubuCore;
 using FubuCore.Reflection;
-using FubuMVC.Core.Registration.ObjectGraph;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Registration
 {
@@ -29,65 +29,63 @@ namespace FubuMVC.Core.Registration
         }
 
         /// <summary>
-        /// Sets the default implementation of a service if there is no
+        /// Sets the instanceault implementation of a service if there is no
         /// previous registration
         /// </summary>
         /// <typeparam name="TService"></typeparam>
         /// <typeparam name="TImplementation"></typeparam>
         public void SetServiceIfNone<TService, TImplementation>() where TImplementation : TService
         {
-            fill(typeof (TService), new ObjectDef(typeof (TImplementation)));
+            fill(typeof (TService), new ConfiguredInstance(typeof (TImplementation)));
         }
 
 
         /// <summary>
-        /// Sets the default implementation of a service if there is no
+        /// Sets the instanceault implementation of a service if there is no
         /// previous registration
         /// </summary>
-        public void SetServiceIfNone(Type type, ObjectDef def)
+        public void SetServiceIfNone(Type type, Instance instance)
         {
-            fill(type, def);
+            fill(type, instance);
         }
 
         /// <summary>
-        /// Sets the default implementation of a service if there is no
-        /// previous registration, and allows you to customize the ObjectDef created
+        /// Sets the instanceault implementation of a service if there is no
+        /// previous registration, and allows you to customize the Instance created
         /// </summary>
         /// <typeparam name="TService"></typeparam>
         /// <typeparam name="TImplementation"></typeparam>
-        public void SetServiceIfNone<TService, TImplementation>(Action<ObjectDef> configure) where TImplementation : TService
+        public void SetServiceIfNone<TService, TImplementation>(Action<Instance> configure) where TImplementation : TService
         {
-            var def = new ObjectDef(typeof (TImplementation));
-            configure(def);
+            var instance = new ConfiguredInstance(typeof (TImplementation));
+            configure(instance);
 
-            fill(typeof(TService), def);
+            fill(typeof(TService), instance);
         }
 
         /// <summary>
-        /// Sets the default implementation of a service if there is no
+        /// Sets the instanceault implementation of a service if there is no
         /// previous registration
         /// </summary>
         /// <typeparam name="TService"></typeparam>
         /// <param name="value"></param>
         public void SetServiceIfNone<TService>(TService value)
         {
-            fill(typeof (TService), new ObjectDef{
-                Value = value
-            });
+            fill(typeof (TService), new ObjectInstance(value));
         }
 
         /// <summary>
-        /// Sets the default implementation of a service if there is no
+        /// Sets the instanceault implementation of a service if there is no
         /// previous registration
         /// </summary>
         /// <param name="interfaceType"></param>
         /// <param name="concreteType"></param>
         /// <returns></returns>
-        public ObjectDef SetServiceIfNone(Type interfaceType, Type concreteType)
+        public Instance SetServiceIfNone(Type interfaceType, Type concreteType)
         {
-            var objectDef = new ObjectDef(concreteType);
-            fill(interfaceType, objectDef);
-            return objectDef;
+            var Instance = new ConfiguredInstance(concreteType);
+            fill(interfaceType, Instance);
+            return Instance;
         }
 
         /// <summary>
@@ -97,7 +95,7 @@ namespace FubuMVC.Core.Registration
         /// <typeparam name="TService"></typeparam>
         /// <typeparam name="TImplementation"></typeparam>
         /// <returns></returns>
-        public ObjectDef AddService<TService, TImplementation>() where TImplementation : TService
+        public Instance AddService<TService, TImplementation>() where TImplementation : TService
         {
             var implementationType = typeof (TImplementation);
             return AddService<TService>(implementationType);
@@ -110,17 +108,17 @@ namespace FubuMVC.Core.Registration
         /// <typeparam name="TService"></typeparam>
         /// <param name="implementation"></param>
         /// <returns></returns>
-        public ObjectDef AddService<TService>(Type implementationType)
+        public Instance AddService<TService>(Type implementationType)
         {
-            var objectDef = new ObjectDef(implementationType);
+            var Instance = new ConfiguredInstance(implementationType);
 
-            alter = x => x.AddService(typeof (TService), objectDef);
+            alter = x => x.AddService(typeof (TService), Instance);
 
-            return objectDef;
+            return Instance;
         }
 
         /// <summary>
-        /// Registers a default implementation for a service.  Overwrites any existing
+        /// Registers a instanceault implementation for a service.  Overwrites any existing
         /// registration
         /// </summary>
         /// <typeparam name="TService"></typeparam>
@@ -133,7 +131,7 @@ namespace FubuMVC.Core.Registration
         }
 
         /// <summary>
-        /// Registers a default implementation for a service.  Overwrites any existing
+        /// Registers a instanceault implementation for a service.  Overwrites any existing
         /// registration
         /// </summary>
         /// <typeparam name="TService"></typeparam>
@@ -152,20 +150,18 @@ namespace FubuMVC.Core.Registration
         /// <param name="value"></param>
         public void AddService<TService>(TService value)
         {
-            var objectDef = new ObjectDef{
-                Value = value
-            };
+            var instance = new ObjectInstance(value);
 
-            alter = x => x.AddService(typeof (TService), objectDef);
+            alter = x => x.AddService(typeof (TService), instance);
         }
 
         /// <summary>
         /// Removes any registrations for type T
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public void AddService(Type type, ObjectDef objectDef)
+        public void AddService(Type type, Instance Instance)
         {
-            alter = x => x.AddService(type, objectDef);
+            alter = x => x.AddService(type, Instance);
         }
 
         /// <summary>
@@ -184,15 +180,15 @@ namespace FubuMVC.Core.Registration
         /// IoC container
         /// </summary>
         /// <param name="type"></param>
-        /// <param name="objectDef"></param>
+        /// <param name="Instance"></param>
         public void FillType(Type interfaceType, Type concreteType)
         {
             alter = x => x.FillType(interfaceType, concreteType);
         }
 
-        private void fill(Type serviceType, ObjectDef def)
+        private void fill(Type serviceType, Instance instance)
         {
-            alter = x => x.SetServiceIfNone(serviceType, def);
+            alter = x => x.SetServiceIfNone(serviceType, instance);
         }
 
         public static bool ShouldBeSingleton(Type type)
@@ -202,12 +198,12 @@ namespace FubuMVC.Core.Registration
             return type.Name.EndsWith("Cache") || type.HasAttribute<SingletonAttribute>();
         }
 
-        public void ReplaceService(Type type, ObjectDef @default)
+        public void ReplaceService(Type type, Instance @instanceault)
         {
             alter = x =>
             {
                 x.Clear(type);
-                x.AddService(type, @default);
+                x.AddService(type, @instanceault);
             };
         }
     }

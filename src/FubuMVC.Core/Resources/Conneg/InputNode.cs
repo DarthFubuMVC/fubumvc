@@ -5,7 +5,6 @@ using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
 using StructureMap.Pipeline;
@@ -121,18 +120,6 @@ namespace FubuMVC.Core.Resources.Conneg
         public override BehaviorCategory Category
         {
             get { return BehaviorCategory.Process; }
-        }
-
-        protected override ObjectDef buildObjectDef()
-        {
-            var def = new ObjectDef(typeof (InputBehavior<>), _inputType);
-
-            var collection = typeof (ReaderCollection<>).CloseAndBuildAs<object>(this, _inputType);
-            var collectionType = typeof (IReaderCollection<>).MakeGenericType(_inputType);
-
-            def.DependencyByValue(collectionType, collection);
-
-            return def;
         }
 
         protected override IConfiguredInstance buildInstance()

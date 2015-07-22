@@ -8,14 +8,11 @@ using FubuCore.Descriptions;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Http;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Security;
 using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
-using StructureMap.Configuration.DSL;
 using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Registration.Nodes
@@ -33,7 +30,9 @@ namespace FubuMVC.Core.Registration.Nodes
         private readonly IList<IBehaviorInvocationFilter> _filters = new List<IBehaviorInvocationFilter>();
         private readonly Lazy<InputNode> _input;
         private Lazy<OutputNode> _output;
-        private readonly Lazy<AuthorizationNode> _authorization = new Lazy<AuthorizationNode>(() => new AuthorizationNode()); 
+
+        private readonly Lazy<AuthorizationNode> _authorization =
+            new Lazy<AuthorizationNode>(() => new AuthorizationNode());
 
         public BehaviorChain()
         {
@@ -76,7 +75,7 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
 
-        internal protected virtual void InsertNodes(ConnegSettings settings)
+        protected internal virtual void InsertNodes(ConnegSettings settings)
         {
             if (HasResourceType() && !ResourceType().CanBeCastTo<FubuContinuation>())
             {
@@ -155,11 +154,9 @@ namespace FubuMVC.Core.Registration.Nodes
         /// <summary>
         ///   Model of the authorization rules for this BehaviorChain
         /// </summary>
-        public IAuthorizationNode Authorization {
-            get
-            {
-                return _authorization.Value;
-            }
+        public IAuthorizationNode Authorization
+        {
+            get { return _authorization.Value; }
         }
 
         /// <summary>
@@ -174,33 +171,25 @@ namespace FubuMVC.Core.Registration.Nodes
             get { return UrlCategory == null ? null : UrlCategory.Category; }
         }
 
-        ObjectDef IContainerModel.ToObjectDef()
-        {
-            return buildObjectDef();
-        }
 
         Instance IContainerModel.ToInstance()
         {
             return Top.As<IContainerModel>().ToInstance();
         }
 
-        void IRegisterable.Register(Action<Type, ObjectDef> callback)
+        void IRegisterable.Register(Action<Type, Instance> callback)
         {
             if (Top == null)
             {
-                Console.WriteLine("Some how or another me, a fully formed BehaviorChain, has no BehaviorNode's, so I'm a just gonna punt on registering services");
+                Console.WriteLine(
+                    "Some how or another me, a fully formed BehaviorChain, has no BehaviorNode's, so I'm a just gonna punt on registering services");
                 return;
             }
 
-            var objectDef = buildObjectDef();
+            var instance = this.As<IContainerModel>().ToInstance();
 
 
-            callback(typeof (IActionBehavior), objectDef);
-        }
-
-        void IRegisterable.Register(Registry registry)
-        {
-            registry.For<IActionBehavior>().AddInstance(Top.As<IContainerModel>().ToInstance());
+            callback(typeof (IActionBehavior), instance);
         }
 
         /// <summary>
@@ -226,12 +215,6 @@ namespace FubuMVC.Core.Registration.Nodes
             }
 
             return this.OfType<IMayHaveResourceType>().Reverse().FirstValue(x => x.ResourceType());
-        }
-
-
-        protected ObjectDef buildObjectDef()
-        {
-            return Top.As<IContainerModel>().ToObjectDef();
         }
 
         /// <summary>
@@ -382,7 +365,11 @@ namespace FubuMVC.Core.Registration.Nodes
 
             if (Tags.Contains("ActionlessView"))
             {
-                var views = Output.Media().Select(x => x.Writer).OfType<IViewWriter>().Select(x => Description.For(x.View).Title);
+                var views =
+                    Output.Media()
+                        .Select(x => x.Writer)
+                        .OfType<IViewWriter>()
+                        .Select(x => Description.For(x.View).Title);
                 return "View(s): " + views.Join("");
             }
 

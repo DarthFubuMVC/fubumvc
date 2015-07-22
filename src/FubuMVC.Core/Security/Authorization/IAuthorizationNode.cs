@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Security.Authorization
 {
@@ -41,7 +41,7 @@ namespace FubuMVC.Core.Security.Authorization
         void AddPolicies(IEnumerable<IAuthorizationPolicy> authorizationPolicies);
         void FailureHandler<T>() where T : IAuthorizationFailureHandler;
         void FailureHandler(IAuthorizationFailureHandler handler);
-        ObjectDef FailureHandler();
+        Instance FailureHandler();
         void FailureHandler(Type handlerType);
 
         /// <summary>

@@ -1,7 +1,6 @@
 using System;
 using System.ComponentModel;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.ObjectGraph;
 using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Security.AntiForgery
@@ -22,12 +21,6 @@ namespace FubuMVC.Core.Security.AntiForgery
         {
             get { return BehaviorCategory.Wrapper; }
         }
-
-        protected override ObjectDef buildObjectDef()
-        {
-            return ObjectDef.ForType<AntiForgeryBehavior>(x => x.DependencyByValue(_salt));
-        }
-
 
         protected override IConfiguredInstance buildInstance()
         {

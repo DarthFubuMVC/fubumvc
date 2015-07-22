@@ -1,6 +1,5 @@
 ﻿using System;
 using FubuCore;
-using FubuMVC.Core.Registration.ObjectGraph;
 using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Security.Authentication.Membership
@@ -35,11 +34,6 @@ namespace FubuMVC.Core.Security.Authentication.Membership
             {
                 instance.Dependencies.Add(typeof(IMembershipRepository), new ConfiguredInstance(_membershipType));
             }
-        }
-
-        protected override void configure(ObjectDef def)
-        {
-            if (_membershipType != null) def.DependencyByType<IMembershipRepository>(new ObjectDef(_membershipType));
         }
 
         public static MembershipNode For<T>() where T : IMembershipRepository

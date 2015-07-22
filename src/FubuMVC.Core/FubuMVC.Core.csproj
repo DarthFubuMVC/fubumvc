@@ -910,7 +910,6 @@
     <Compile Include="StructureMap\Diagnostics\StructureMapFubuDiagnostics.cs" />
     <Compile Include="StructureMap\IContainerExtension.cs" />
     <Compile Include="StructureMap\NestedStructureMapContainerBehavior.cs" />
-    <Compile Include="StructureMap\ObjectDefInstance.cs" />
     <Compile Include="StructureMap\SettingsScanner.cs" />
     <Compile Include="StructureMap\Settings\SettingPolicy.cs" />
     <Compile Include="StructureMap\StructureMapContainerFacility.cs" />
@@ -997,7 +996,6 @@
     <Compile Include="Registration\Nodes\ContinuationNode.cs" />
     <Compile Include="Registration\Nodes\IMayHaveInputType.cs" />
     <Compile Include="Registration\Nodes\UrlCategory.cs" />
-    <Compile Include="Registration\ObjectGraph\ListDependency.cs" />
     <Compile Include="Registration\Querying\ChainResolutionCache.cs" />
     <Compile Include="Registration\Querying\IChainResolver.cs" />
     <Compile Include="Registration\ServiceRegistry.cs" />
@@ -1051,17 +1049,12 @@
     <Compile Include="Registration\BehaviorGraph.cs" />
     <Compile Include="Registration\Nodes\BehaviorNode.cs" />
     <Compile Include="Urls\Categories.cs" />
-    <Compile Include="Registration\ObjectGraph\ConfiguredDependency.cs" />
     <Compile Include="FubuRegistry.cs" />
     <Compile Include="Registration\Routes\FuncBuilder.cs" />
     <Compile Include="Registration\Nodes\ActionCall.cs" />
     <Compile Include="Registration\IConfigurationAction.cs" />
-    <Compile Include="Registration\ObjectGraph\IDependency.cs" />
-    <Compile Include="Registration\ObjectGraph\IDependencyVisitor.cs" />
     <Compile Include="Registration\LambdaConfigurationAction.cs" />
-    <Compile Include="Registration\ObjectGraph\ObjectDef.cs" />
     <Compile Include="Registration\Routes\RouteBuilder.cs" />
-    <Compile Include="Registration\ObjectGraph\ValueDependency.cs" />
     <Compile Include="Registration\Nodes\Wrapper.cs" />
     <Compile Include="Registration\Routes\IRouteDefinition.cs" />
     <Compile Include="Registration\Routes\RouteDefinition.cs" />

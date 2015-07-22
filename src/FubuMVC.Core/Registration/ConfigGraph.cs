@@ -177,7 +177,7 @@ namespace FubuMVC.Core.Registration
 
             services.AddService(this);
 
-            services.Each(container.Register);
+            services.Each((serviceType, def) => container.Register(serviceType, def));
 
         }
 

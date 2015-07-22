@@ -18,7 +18,6 @@ using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Core.Http.Owin.Middleware;
 using FubuMVC.Core.Json;
 using FubuMVC.Core.Projections;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
@@ -27,6 +26,7 @@ using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.Runtime.SessionState;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Registration
 {
@@ -43,7 +43,7 @@ namespace FubuMVC.Core.Registration
             SetServiceIfNone<IRequestCompletion, RequestCompletion>();
 
             SetServiceIfNone<IRequestData, FubuMvcRequestData>();
-            SetServiceIfNone(typeof (AppReloaded), ObjectDef.ForValue(new AppReloaded()));
+            SetServiceIfNone(typeof (AppReloaded), new ObjectInstance(new AppReloaded()));
 
             SetServiceIfNone<IDiagnosticAssets, DiagnosticAssetsCache>();
 
@@ -88,7 +88,7 @@ namespace FubuMVC.Core.Registration
             SetServiceIfNone<ILogger, Logger>();
             AddService<ILogModifier, LogRecordModifier>();
 
-            SetServiceIfNone<IClock, Clock>(x => x.IsSingleton = true);
+            SetServiceIfNone<IClock, Clock>(x => x.SetLifecycleTo<SingletonLifecycle>());
             SetServiceIfNone<ITimeZoneContext, MachineTimeZoneContext>();
             SetServiceIfNone<ISystemTime, SystemTime>();
 

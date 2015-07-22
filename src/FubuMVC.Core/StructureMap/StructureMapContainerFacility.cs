@@ -7,7 +7,6 @@ using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.StructureMap.Settings;
 using StructureMap;
@@ -31,41 +30,14 @@ namespace FubuMVC.Core.StructureMap
             _registry = new StructureMapFubuRegistry();
             _registry.For<IServiceFactory>().Use(this);
 
-            _registration = (serviceType, def) =>
+            _registration = (serviceType, instance) =>
             {
-                if (serviceType == typeof (Registry))
+                if (ServiceRegistry.ShouldBeSingleton(serviceType) || ServiceRegistry.ShouldBeSingleton(instance.ReturnedType))
                 {
-                    var registry = def.Value as Registry;
-                    if (registry != null)
-                    {
-                        Container.Configure(x => x.IncludeRegistry(registry));
-                    }
-
-                    if (def.Type.CanBeCastTo<Registry>() && def.Type.IsConcreteWithDefaultCtor())
-                    {
-                        registry = (Registry) Activator.CreateInstance(def.Type);
-                        Container.Configure(x => x.IncludeRegistry(registry));
-                    }
-
-                    return;
+                    instance.SetLifecycleTo<SingletonLifecycle>();
                 }
 
-                if (def.Value == null)
-                {
-                    _registry.For(serviceType).Add(new ObjectDefInstance(def));
-                }
-                else
-                {
-                    _registry.For(serviceType).Add(new ObjectInstance(def.Value)
-                    {
-                        Name = def.Name
-                    });
-                }
-
-                if (ServiceRegistry.ShouldBeSingleton(serviceType) || ServiceRegistry.ShouldBeSingleton(def.Type) || def.IsSingleton)
-                {
-                    _registry.For(serviceType).Singleton();
-                }
+                _registry.For(serviceType).Add(instance);
             };
         }
 
@@ -91,28 +63,19 @@ namespace FubuMVC.Core.StructureMap
                 x.Policies.OnMissingFamily<SettingPolicy>();
             });
 
-            _registration = (serviceType, def) =>
+            _registration = (serviceType, instance) =>
             {
-                if (def.Value != null)
-                {
-                    Container.Configure(x => x.For(serviceType).Add(def.Value));
-                }
-                else
-                {
-                    Container.Configure(x => x.For(serviceType).Add(new ObjectDefInstance(def)));
-                }
-
-                
+                Container.Configure(x => x.For(serviceType).Add(instance));
             };
 
             return this;
         }
 
-        private Action<Type, ObjectDef> _registration; 
+        private Action<Type, Instance> _registration; 
 
-        public void Register(Type serviceType, ObjectDef def)
+        public void Register(Type serviceType, Instance instance)
         {
-            _registration(serviceType, def);
+            _registration(serviceType, instance);
         }
 
         public void Shutdown()

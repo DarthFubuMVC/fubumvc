@@ -1,6 +1,6 @@
 using System;
 using FubuCore.Formatting;
-using FubuMVC.Core.Registration.ObjectGraph;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Registration.DSL
 {
@@ -40,7 +40,7 @@ namespace FubuMVC.Core.Registration.DSL
         private void addStringConversions(DisplayConversionRegistry conversions)
         {
             var registry = new ServiceRegistry();
-            registry.AddService(typeof (DisplayConversionRegistry), ObjectDef.ForValue(conversions));
+            registry.AddService(typeof(DisplayConversionRegistry), new ObjectInstance(conversions));
             _graph.Add(registry);
         }
 

@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FubuCore;
+using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.ServiceBus.Polling
 {
+    [Singleton]
     public class PollingJobs : IPollingJobs
     {
         private readonly IEnumerable<IPollingJob> _jobs;

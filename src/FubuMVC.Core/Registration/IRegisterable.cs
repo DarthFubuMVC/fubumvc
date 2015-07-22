@@ -1,12 +1,10 @@
 using System;
-using FubuMVC.Core.Registration.ObjectGraph;
-using StructureMap.Configuration.DSL;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Registration
 {
     public interface IRegisterable
     {
-        void Register(Action<Type, ObjectDef> action);
-        void Register(Registry registry);
+        void Register(Action<Type, Instance> action);
     }
 }

@@ -6,7 +6,6 @@ using System.Reflection;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.ServiceBus.Registration;

@@ -5,10 +5,10 @@ using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.ServiceBus.Sagas
 {
@@ -57,7 +57,7 @@ namespace FubuMVC.Core.ServiceBus.Sagas
             return false;
         }
 
-        public static ObjectDef DetermineSagaRepositoryDef(TransportSettings settings, SagaTypes sagaTypes)
+        public static Instance DetermineSagaRepositoryDef(TransportSettings settings, SagaTypes sagaTypes)
         {
             var def = settings.SagaStorageProviders.FirstValue(x => x.RepositoryFor(sagaTypes))
                       ?? new InMemorySagaStorage().RepositoryFor(sagaTypes);

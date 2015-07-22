@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.ServiceBus.Async;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
@@ -14,6 +13,7 @@ using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Sagas;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Configuration;
 using FubuMVC.Core.ServiceBus.Web;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.ServiceBus
 {
@@ -73,7 +73,7 @@ namespace FubuMVC.Core.ServiceBus
                     SettingTypes.Each(settingType =>
                     {
                         var settings = InMemoryTransport.ToInMemory(settingType);
-                        x.ReplaceService(settingType, ObjectDef.ForValue(settings));
+                        x.ReplaceService(settingType, new ObjectInstance(settings));
                     });
                 });
             }

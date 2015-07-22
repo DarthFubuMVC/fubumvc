@@ -1,23 +1,22 @@
 using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
+using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Configuration;
-using FubuCore.Descriptions;
-using FubuCore.Util;
-using FubuCore;
 using FubuCore.Reflection;
-using FubuMVC.Core.Registration.ObjectGraph;
+using FubuCore.Util;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.ServiceBus.ScheduledJobs;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Registration
 {
     public class SettingsCollection
     {
-        public readonly static Lazy<ISettingsProvider> SettingsProvider = new Lazy<ISettingsProvider>(() => new AppSettingsProvider(ObjectResolver.Basic()));
+        public static readonly Lazy<ISettingsProvider> SettingsProvider =
+            new Lazy<ISettingsProvider>(() => new AppSettingsProvider(ObjectResolver.Basic()));
 
         private readonly SettingsCollection _parent;
         private readonly Cache<Type, object> _settings = new Cache<Type, object>();
@@ -35,7 +34,7 @@ namespace FubuMVC.Core.Registration
 
         private void warmUp<T>() where T : class
         {
-            Alter<T>(x => {});
+            Alter<T>(x => { });
         }
 
         private static object buildDefault(Type type)
@@ -61,7 +60,8 @@ namespace FubuMVC.Core.Registration
 
         private Cache<Type, object> selectSettings<T>()
         {
-            if (_parent != null && !HasExplicit<T>() && (_parent._settings.Has(typeof(T)) || typeof(T).HasAttribute<ApplicationLevelAttribute>()))
+            if (_parent != null && !HasExplicit<T>() &&
+                (_parent._settings.Has(typeof (T)) || typeof (T).HasAttribute<ApplicationLevelAttribute>()))
             {
                 return _parent._settings;
             }
@@ -79,14 +79,16 @@ namespace FubuMVC.Core.Registration
             var inner = settings[typeof (T)].As<Task<T>>();
 
 
-            settings[typeof (T)] = inner.ContinueWith(t => {
+            settings[typeof (T)] = inner.ContinueWith(t =>
+            {
                 try
                 {
                     alteration(t.Result);
                 }
                 catch (Exception e)
                 {
-                    throw new Exception("Error while trying to process a Settings alteration on " + typeof(T).FullName, e);
+                    throw new Exception(
+                        "Error while trying to process a Settings alteration on " + typeof (T).FullName, e);
                 }
 
                 return t.Result;
@@ -95,7 +97,7 @@ namespace FubuMVC.Core.Registration
 
         public void Replace<T>(T settings) where T : class
         {
-            _settings[typeof(T)] = settings.ToTask();
+            _settings[typeof (T)] = settings.ToTask();
         }
 
         public void Replace<T>(Task<T> source)
@@ -108,7 +110,7 @@ namespace FubuMVC.Core.Registration
             _settings[typeof (T)] = Task.Factory.StartNew(source);
         }
 
-        public bool HasExplicit<T>() 
+        public bool HasExplicit<T>()
         {
             return _settings.Has(typeof (T));
         }
@@ -137,7 +139,8 @@ namespace FubuMVC.Core.Registration
 
         public void Register(ServiceRegistry registry)
         {
-            _settings.Each((t, o) => {
+            _settings.Each((t, o) =>
+            {
                 var registrar = typeof (Registrar<>).CloseAndBuildAs<IRegistrar>(o, t);
                 registrar.Register(registry);
             });
@@ -159,11 +162,9 @@ namespace FubuMVC.Core.Registration
 
             public void Register(ServiceRegistry registry)
             {
-                registry.SetServiceIfNone(typeof(T), ObjectDef.ForValue(_task.Result));
+                registry.SetServiceIfNone(typeof (T), new ObjectInstance(_task.Result));
             }
         }
-
-
     }
 
 
@@ -177,13 +178,11 @@ namespace FubuMVC.Core.Registration
             return task.Task;
         }
 
-        
+
         public static T Result<T>(this Task<T> task)
         {
             task.Wait();
             return task.Result;
         }
     }
-
-
 }

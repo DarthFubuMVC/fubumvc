@@ -1,5 +1,5 @@
 ﻿using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.ObjectGraph;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.ServiceBus.Polling
 {
@@ -7,16 +7,13 @@ namespace FubuMVC.Core.ServiceBus.Polling
     {
         public PollingServicesRegistry()
         {
-            // NEED MORE.
             SetServiceIfNone<ITimer, DefaultTimer>();
             AddService<IDeactivator, PollingJobDeactivator>();
             SetServiceIfNone<IPollingJobLogger, PollingJobLogger>();
 
-            var def = ObjectDef.ForType<PollingJobs>();
-            def.IsSingleton = true;
-            SetServiceIfNone(typeof (IPollingJobs), def);
+            SetServiceIfNone<IPollingJobs, PollingJobs>();
 
-            SetServiceIfNone(typeof (PollingJobLatch), ObjectDef.ForValue(new PollingJobLatch()).AsSingleton());
+            SetServiceIfNone(typeof(PollingJobLatch), new ObjectInstance(new PollingJobLatch()));
         }
     }
 }

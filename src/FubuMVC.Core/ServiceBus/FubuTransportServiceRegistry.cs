@@ -1,6 +1,5 @@
 ﻿using FubuCore.Logging;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.ServiceBus.Async;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Diagnostics;
@@ -13,6 +12,7 @@ using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 using FubuMVC.Core.ServiceBus.Subscriptions;
 using FubuMVC.Core.ServiceBus.TestSupport;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.ServiceBus
 {
@@ -21,16 +21,16 @@ namespace FubuMVC.Core.ServiceBus
         public FubuTransportServiceRegistry()
         {
             var eventAggregatorDef = FubuTransport.UseSynchronousLogging 
-                ? ObjectDef.ForType<SynchronousEventAggregator>() 
-                : ObjectDef.ForType<EventAggregator>();
+                ? new SmartInstance<SynchronousEventAggregator>()
+                : (Instance)new SmartInstance<EventAggregator>();
             
-            eventAggregatorDef.IsSingleton = true;
+            eventAggregatorDef.SetLifecycleTo<SingletonLifecycle>();
             SetServiceIfNone(typeof(IEventAggregator), eventAggregatorDef);
 
-            
 
-            var stateCacheDef = new ObjectDef(typeof(SagaStateCacheFactory));
-            stateCacheDef.IsSingleton = true;
+
+            var stateCacheDef = new SmartInstance<SagaStateCacheFactory>();
+            stateCacheDef.Singleton();
             SetServiceIfNone(typeof(ISagaStateCacheFactory), stateCacheDef);
 
             SetServiceIfNone<IChainInvoker, ChainInvoker>();
@@ -51,8 +51,8 @@ namespace FubuMVC.Core.ServiceBus
             {
                 AddService<IListener, MessageWatcher>();
 
-                var def = ObjectDef.ForType<MessagingSession>();
-                def.IsSingleton = true;
+                var def = new SmartInstance<MessagingSession>();
+                def.Singleton();
                 SetServiceIfNone(typeof(IMessagingSession), def);
                 AddService<ILogListener, MessageRecordListener>();
             }
@@ -78,8 +78,8 @@ namespace FubuMVC.Core.ServiceBus
 
         private void subscriptions()
         {
-            var subscriberDef = ObjectDef.ForType<SubscriptionCache>();
-            subscriberDef.IsSingleton = true;
+            var subscriberDef = new SmartInstance<SubscriptionCache>();
+            subscriberDef.Singleton();
             SetServiceIfNone(typeof (ISubscriptionCache), subscriberDef);
 
             SetServiceIfNone<ISubscriptionRepository, SubscriptionRepository>();

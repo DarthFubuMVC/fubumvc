@@ -597,7 +597,6 @@
     <Compile Include="Registration\Conventions\PartialOnlyConventionTester.cs" />
     <Compile Include="Registration\Nodes\ActionCallBaseObjectDefCreationTester.cs" />
     <Compile Include="Registration\Querying\ChainSearchTester.cs" />
-    <Compile Include="Registration\ServiceGraphTester.cs" />
     <Compile Include="Runtime\Formatters\XmlFormatterTester.cs" />
     <Compile Include="CustomExceptionsTester.cs" />
     <Compile Include="FubuRegistryImportingTester.cs" />
@@ -615,7 +614,6 @@
     <Compile Include="Registration\Conventions\WrapWithAttributeConventionTester.cs" />
     <Compile Include="Registration\DSL\PoliciesExpressionTester.cs" />
     <Compile Include="Registration\HandlerActionsSetTester.cs" />
-    <Compile Include="Registration\ListDependencyTester.cs" />
     <Compile Include="Registration\Nodes\BehaviorChain_building_an_object_def.cs" />
     <Compile Include="Registration\Nodes\Behavior_node_ObjectDef_creation_Tester.cs" />
     <Compile Include="Registration\ObjectGraph\ConfiguredDependencyTester.cs" />
@@ -639,13 +637,6 @@
     <Compile Include="Security\Authorization\DefaultAuthorizationFailureHandlerTester.cs" />
     <Compile Include="Security\Authorization\PrincipalRolesTester.cs" />
     <Compile Include="Security\Authorization\AuthorizationPolicyExecutorTester.cs" />
-    <Compile Include="StructureMap\Compliance\Does_not_require_explicit_registration_in_order_to_retrieve_a_concrete_type.cs" />
-    <Compile Include="StructureMap\Compliance\IServiceLocator_Compliance.cs" />
-    <Compile Include="StructureMap\Compliance\Lifecycle_Scoping_Compliance.cs" />
-    <Compile Include="StructureMap\Compliance\ObjectDef_Compliance.cs" />
-    <Compile Include="StructureMap\Compliance\OpenGeneric_Registration_Compliance.cs" />
-    <Compile Include="StructureMap\Compliance\ServiceArgument_Injection_Compliance.cs" />
-    <Compile Include="StructureMap\Compliance\Setter_Injection_from_ObjectDef_Dependency.cs" />
     <Compile Include="StructureMap\ContainerFacilitySource.cs" />
     <Compile Include="StructureMap\Internals\AppSettingProviderRegistrySmokeTester.cs" />
     <Compile Include="StructureMap\Internals\Include_StructureMap_registrys.cs" />
@@ -692,7 +683,6 @@
     <Compile Include="Registration\RouteBuilderTester.cs" />
     <Compile Include="Registration\Utilities\BehaviorSpecCheck.cs" />
     <Compile Include="Registration\WrapperTester.cs" />
-    <Compile Include="Registration\ObjectDefTester.cs" />
     <Compile Include="Registration\RouteDefinitionTester.cs" />
     <Compile Include="Runtime\FubuRequestTester.cs" />
     <Compile Include="Runtime\PartialFactoryTester.cs" />

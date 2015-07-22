@@ -1,4 +1,4 @@
-﻿using FubuMVC.Core.Registration.ObjectGraph;
+﻿using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.ServiceBus.Sagas
 {
@@ -9,6 +9,6 @@ namespace FubuMVC.Core.ServiceBus.Sagas
         /// </summary>
         /// <param name="sagaTypes"></param>
         /// <returns></returns>
-        ObjectDef RepositoryFor(SagaTypes sagaTypes);
+        Instance RepositoryFor(SagaTypes sagaTypes);
     }
 }

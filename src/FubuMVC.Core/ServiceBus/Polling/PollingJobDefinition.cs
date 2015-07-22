@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
-using FubuMVC.Core.Registration.ObjectGraph;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.ServiceBus.Polling
 {
@@ -16,12 +16,12 @@ namespace FubuMVC.Core.ServiceBus.Polling
             ScheduledExecution = ScheduledExecution.WaitUntilInterval;
         }
 
-        public ObjectDef ToObjectDef()
+        public Instance ToInstance()
         {
-            var def = new ObjectDef(typeof(PollingJob<,>), JobType, SettingType);
-            def.DependencyByValue(this);
+            var instance = new ConfiguredInstance(typeof(PollingJob<,>), JobType, SettingType);
+            instance.Dependencies.Add(typeof(PollingJobDefinition), this);
 
-            return def;
+            return instance;
         }
 
         public static PollingJobDefinition For<TJob, TSettings>(Expression<Func<TSettings, double>> intervalSource) where TJob : IJob

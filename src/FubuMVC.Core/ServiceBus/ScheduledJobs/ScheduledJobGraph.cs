@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Execution;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.ServiceBus.ScheduledJobs
 {
@@ -50,7 +50,7 @@ namespace FubuMVC.Core.ServiceBus.ScheduledJobs
                 Jobs.Each(x =>
                 {
                     Type jobType = typeof(IScheduledJob<>).MakeGenericType(x.JobType);
-                    _.AddService(jobType, ObjectDef.ForValue(x));
+                    _.AddService(jobType, new ObjectInstance(x));
 
                 });
             });
