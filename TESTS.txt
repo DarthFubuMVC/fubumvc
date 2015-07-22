@@ -1,5 +1,4 @@
 FubuMVC.Tests
-FubuMVC.Razor.Tests
 fubu.Testing
 FubuPersistence.Tests
 FubuTransportation.LightningQueues.Testing

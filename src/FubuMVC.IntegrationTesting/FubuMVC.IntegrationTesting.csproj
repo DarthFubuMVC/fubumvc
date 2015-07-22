@@ -94,6 +94,10 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -208,11 +212,15 @@
     <Compile Include="Views\Razor\Do_not_use_layout_if_view_is_being_rendered_as_partial.cs" />
     <Compile Include="Views\Razor\Handles_null_properties.cs" />
     <Compile Include="Views\Razor\Layouts_with_Sections.cs" />
+    <Compile Include="Views\Razor\modifies_the_WatchSettings.cs" />
     <Compile Include="Views\Razor\Multiple_layouts.cs" />
     <Compile Include="Views\Razor\No_layout_with_use_none.cs" />
     <Compile Include="Views\Razor\Page_extensions.cs" />
+    <Compile Include="Views\Razor\RazorEngineSettingsTester.cs" />
     <Compile Include="Views\Razor\RazorRendering_without_layouts_Tester.cs" />
     <Compile Include="Views\Razor\Razor_view_activation_tester.cs" />
+    <Compile Include="Views\Razor\Rendering\FubuRazorViewTester.cs" />
+    <Compile Include="Views\Razor\Rendering\StubView.cs" />
     <Compile Include="Views\Razor\Using_Helpers.cs" />
     <Compile Include="Views\Spark\Activation.cs" />
     <Compile Include="Views\Spark\can_use_namespaces_from_common_view_namespaces.cs" />
@@ -270,6 +278,18 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Views\Razor\Templates\App\fubu-packages\Package1\WebContent\Handlers\Shared\bindings.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Razor\Templates\App\Shared\bindings.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Razor\Templates\Pak1\data.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Razor\Templates\Shared\bindings.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="FubuTestApplication.application.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -372,10 +392,186 @@
     <Content Include="Tests\Packaging\Environment\Execute Environment Happy Path.xml" />
     <Content Include="Tests\Packaging\Environment\Logging installer failures.xml" />
     <None Include="test.map" />
+    <None Include="Views\Razor\App.config" />
+    <None Include="Views\Razor\Templates\A3.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\A4.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\App\fubu-packages\Package1\WebContent\Handlers\Models\SerieSL.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\App\fubu-packages\Package1\WebContent\Handlers\Models\SerieT.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\App\fubu-packages\Package1\WebContent\Handlers\Models\SerieW.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\App\fubu-packages\Package1\WebContent\Handlers\Models\SerieX.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\App\fubu-packages\Package1\WebContent\Handlers\Models\SerieZ.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\App\fubu-packages\Package1\WebContent\Handlers\Shared\Maker.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\App\fubu-packages\Package1\WebContent\Handlers\Shared\_fail.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\App\fubu-packages\Package1\WebContent\Handlers\Shared\_header.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\App\fubu-packages\Package1\WebContent\Handlers\Shared\_lenovo.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\App\fubu-packages\Package1\WebContent\Handlers\Shared\_samePath.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\App\Handlers\Models\MacBook.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\App\Handlers\Models\MacBookAir.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\App\Handlers\Models\MacMini.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\App\Handlers\Models\MacPro.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\App\Handlers\Models\NoLuck.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\App\Handlers\Shared\Maker.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\App\Handlers\Shared\_samePath.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\App\Shared\_appname.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\App\Shared\_footer.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\App\Shared\_header.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\HasEmptyMaster.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\header.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Home\file.foo">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Home\Home.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\One\Shared\application.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Package2\Handlers\Models\AttributeSample.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Package2\Handlers\Models\Inspiron.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Package2\Handlers\Models\Vostro.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Package2\Handlers\Models\Xps.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Package2\Handlers\Shared\Maker.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Package2\Handlers\Shared\_dell.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Package2\Handlers\Shared\_fail.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Package2\Handlers\Shared\_footer.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Package2\Handlers\Shared\_samePath.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Package2\sample.123">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Pak1\Alpha\Bravo\Bar.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Pak1\Alpha\Bravo\Charlie\Delta.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Pak1\Alpha\Foxtrot\Golf.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Pak1\Alpha\Hotel.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Pak1\Baz.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Pak1\Foo\Bar.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Pak1\Home\Home.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Pak1\Home\_name.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Pak2\Buzz.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Pak2\Home\Home.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Pak2\Shared\application.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Pak2\Shared\theme.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Shared\application.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Shared\footer.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\ToParse.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Views\A1.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Views\A2.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Views\F1\baz.fub">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Views\F1\dog.zoo">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Views\F1\G1.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Razor\Templates\Views\file.bar">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent></PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
