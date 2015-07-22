@@ -70,23 +70,14 @@
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit\lib\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.mocks">
-      <HintPath>..\packages\NUnit\lib\nunit.mocks.dll</HintPath>
-    </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin\lib\net40\Owin.dll</HintPath>
     </Reference>
-    <Reference Include="Owin.Extensions">
-      <HintPath>..\packages\Owin.Extensions\lib\net40\Owin.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="Owin.Types">
-      <HintPath>..\packages\Owin.Types\lib\net40\Owin.Types.dll</HintPath>
-    </Reference>
-    <Reference Include="pnunit.framework">
-      <HintPath>..\packages\NUnit\lib\pnunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="Rhino.Mocks">
       <HintPath>..\packages\RhinoMocks\lib\net\Rhino.Mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="Spark">
+      <HintPath>..\packages\Spark\lib\NET40\Spark.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap\lib\net40\StructureMap.dll</HintPath>
@@ -225,11 +216,16 @@
     <Compile Include="Views\Razor\Using_Helpers.cs" />
     <Compile Include="Views\Spark\Activation.cs" />
     <Compile Include="Views\Spark\can_use_namespaces_from_common_view_namespaces.cs" />
+    <Compile Include="Views\Spark\modifies_the_WatchSettings.cs" />
+    <Compile Include="Views\Spark\Rendering\FubuSparkViewDecoratorTester.cs" />
+    <Compile Include="Views\Spark\Rendering\FubuSparkViewTester.cs" />
     <Compile Include="Views\Spark\Simple_rendering_with_precompilation.cs" />
     <Compile Include="Views\Spark\No_layout_with_use_none.cs" />
     <Compile Include="Views\Spark\Partials.cs" />
     <Compile Include="Views\Spark\Partials_do_not_get_layout.cs" />
     <Compile Include="Views\Spark\Simple_rendering.cs" />
+    <Compile Include="Views\Spark\SparkEngineSettingsTester.cs" />
+    <Compile Include="Views\Spark\SparkModel\Policies\StubTemplate.cs" />
     <Compile Include="Views\Spark\Three_Pass_Rendering_And_Bindings.cs" />
     <Compile Include="Views\TemplateFileIntegrationTester.cs" />
     <Compile Include="Views\ViewIntegrationContext.cs" />
@@ -379,8 +375,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent></PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
