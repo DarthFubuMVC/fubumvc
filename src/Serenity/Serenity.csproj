@@ -120,6 +120,13 @@
     <Compile Include="NulloAfterNavigation.cs" />
     <Compile Include="NulloNavigationLogger.cs" />
     <Compile Include="ScreenDriver.cs" />
+    <Compile Include="ServiceBus\ExternalNode.cs" />
+    <Compile Include="ServiceBus\ExternalNodeFixture.cs" />
+    <Compile Include="ServiceBus\FubuTransportFixture.cs" />
+    <Compile Include="ServiceBus\FubuTransportSystem.cs" />
+    <Compile Include="ServiceBus\MessageContextualInfoProvider.cs" />
+    <Compile Include="ServiceBus\MessageRecorder.cs" />
+    <Compile Include="ServiceBus\TestNodes.cs" />
     <Compile Include="UrlExtensions.cs" />
     <Compile Include="WebDriver\EmbeddedDrivers\ChromeEmbeddedDriver.cs" />
     <Compile Include="WebDriver\EmbeddedDrivers\EmbeddedBrowserLifecycle.cs" />

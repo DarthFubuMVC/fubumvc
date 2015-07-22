@@ -1,7 +1,7 @@
 ﻿using FubuMVC.Core.ServiceBus.Configuration;
 using StoryTeller;
 
-namespace FubuTransportation.Serenity
+namespace Serenity.ServiceBus
 {
     public abstract class ExternalNodeFixture : Fixture
     {

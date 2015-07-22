@@ -5,6 +5,7 @@ using FubuTransportation.Serenity.Samples.Setup;
 using FubuTransportation.Serenity.Samples.SystemUnderTest;
 using FubuTransportation.Serenity.Samples.SystemUnderTest.Subscriptions;
 using Serenity;
+using Serenity.ServiceBus;
 using StoryTeller;
 using StoryTeller.Engine;
 

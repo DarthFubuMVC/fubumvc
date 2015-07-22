@@ -1,5 +1,6 @@
 ﻿using FubuMVC.Core.ServiceBus.Configuration;
 using FubuTransportation.Serenity.Samples.SystemUnderTest;
+using Serenity.ServiceBus;
 
 namespace FubuTransportation.Serenity.Samples
 {

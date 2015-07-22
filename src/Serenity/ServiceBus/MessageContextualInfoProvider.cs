@@ -2,10 +2,9 @@
 using System.Linq;
 using FubuMVC.Core.ServiceBus.Diagnostics;
 using HtmlTags;
-using Serenity;
 using StoryTeller.Results;
 
-namespace FubuTransportation.Serenity
+namespace Serenity.ServiceBus
 {
     public class MessageContextualInfoProvider : Report
     {

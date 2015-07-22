@@ -1,9 +1,8 @@
 ﻿using System.Linq;
 using FubuMVC.Core.Services.Messaging.Tracking;
 using StoryTeller;
-using Wait = Serenity.Wait;
 
-namespace FubuTransportation.Serenity
+namespace Serenity.ServiceBus
 {
     public abstract class FubuTransportActFixture : Fixture
     {

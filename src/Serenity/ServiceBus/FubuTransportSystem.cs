@@ -3,10 +3,9 @@ using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Diagnostics;
 using FubuMVC.Core.ServiceBus.TestSupport;
-using Serenity;
 using StoryTeller;
 
-namespace FubuTransportation.Serenity
+namespace Serenity.ServiceBus
 {
     public class FubuTransportSystem<T> : FubuMvcSystem<T> where T : IApplicationSource, new()
     {

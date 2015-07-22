@@ -1,8 +1,7 @@
 ﻿using FubuMVC.Core.ServiceBus;
-using FubuTransportation.Serenity;
+using Serenity.ServiceBus;
 using ServiceNode;
 using StoryTeller;
-using StoryTeller.Engine;
 
 namespace FubuTransportation.Storyteller.Fixtures
 {
@@ -45,25 +44,25 @@ namespace FubuTransportation.Storyteller.Fixtures
         [FormatAs("Add color {color}")]
         public void SendColor(string color)
         {
-            _batch.Add(new ColorMessage{Color = color});
+            _batch.Add(new ColorMessage {Color = color});
         }
 
         [FormatAs("Add direction {direction}")]
         public void SendDirection(string direction)
         {
-            _batch.Add(new DirectionMessage { Direction = direction });
+            _batch.Add(new DirectionMessage {Direction = direction});
         }
 
         [FormatAs("Add state {state}")]
         public void SendState(string state)
         {
-            _batch.Add(new StateMessage { State = state });
+            _batch.Add(new StateMessage {State = state});
         }
 
         [FormatAs("Add team {team}")]
         public void SendTeam(string team)
         {
-            _batch.Add(new TeamMessage { Team = team });
+            _batch.Add(new TeamMessage {Team = team});
         }
 
         protected override void teardown()

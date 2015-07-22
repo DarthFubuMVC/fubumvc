@@ -5,7 +5,7 @@ using System.Reflection;
 using FubuCore;
 using FubuMVC.Core.ServiceBus.Configuration;
 
-namespace FubuTransportation.Serenity
+namespace Serenity.ServiceBus
 {
     public static class TestNodes
     {

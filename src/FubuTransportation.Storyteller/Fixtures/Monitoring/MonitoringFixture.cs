@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.ServiceBus.Monitoring;
-using FubuMVC.Core.ServiceBus.Subscriptions;
-using FubuTransportation.Serenity;
 using HtmlTags;
+using Serenity.ServiceBus;
 using StoryTeller;
 using StoryTeller.Grammars.Tables;
 
@@ -118,7 +117,7 @@ namespace FubuTransportation.Storyteller.Fixtures.Monitoring
 
         public IGrammar ThePersistedNodesShouldBe()
         {
-            return VerifySetOf<TransportNode>(() => _nodes.GetPersistedNodes())
+            return VerifySetOf(() => _nodes.GetPersistedNodes())
                 .Titled("The persisted nodes should be")
                 .MatchOn(x => x.Id, x => x.ControlChannel);
         }

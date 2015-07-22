@@ -1,4 +1,4 @@
-﻿using FubuTransportation.Serenity;
+﻿using Serenity.ServiceBus;
 using ServiceNode;
 using WebsiteNode;
 

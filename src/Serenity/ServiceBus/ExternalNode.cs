@@ -9,10 +9,9 @@ using FubuMVC.Core.ServiceBus.Diagnostics;
 using FubuMVC.Core.ServiceBus.Events;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
-using FubuMVC.Core.StructureMap;
 using StructureMap;
 
-namespace FubuTransportation.Serenity
+namespace Serenity.ServiceBus
 {
     public class ExternalNode : IDisposable
     {

@@ -4,10 +4,9 @@ using FubuCore;
 using FubuMVC.Core.ServiceBus.Events;
 using FubuMVC.Core.ServiceBus.Logging;
 using FubuMVC.Core.ServiceBus.Runtime;
-using FubuMVC.Core.Services;
 using FubuMVC.Core.Services.Messaging.Tracking;
 
-namespace FubuTransportation.Serenity
+namespace Serenity.ServiceBus
 {
     public interface IMessageRecorder
     {
@@ -29,7 +28,7 @@ namespace FubuTransportation.Serenity
             // get stuck as Outstanding in the MessageHistory
             // Sometimes this happens in the wrong order so we need to 
             // wait for it to be in the pending list first.
-            Wait.Until(() => MessageHistory.Outstanding().Any(x => x.Id == envelope.CorrelationId),
+            FubuMVC.Core.Services.Wait.Until(() => MessageHistory.Outstanding().Any(x => x.Id == envelope.CorrelationId),
                 millisecondPolling: 50, 
                 timeoutInMilliseconds: 1000);
             var track = new MessageTrack
