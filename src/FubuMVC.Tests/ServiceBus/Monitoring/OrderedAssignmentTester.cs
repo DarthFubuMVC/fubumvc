@@ -26,10 +26,10 @@ namespace FubuTransportation.Testing.Monitoring
         public void only_one_happy_path()
         {
             route(new RiggedTransportPeer("A", OwnershipStatus.OwnershipActivated))
-                .NodeId.ShouldEqual("A");
+                .NodeId.ShouldBe("A");
 
             route(new RiggedTransportPeer("B", OwnershipStatus.AlreadyOwned))
-                .NodeId.ShouldEqual("B");
+                .NodeId.ShouldBe("B");
         }
 
         [Test]
@@ -40,7 +40,7 @@ namespace FubuTransportation.Testing.Monitoring
                 new RiggedTransportPeer("B", OwnershipStatus.OwnershipActivated),
                 new RiggedTransportPeer("C", OwnershipStatus.OwnershipActivated)
                 )
-                .NodeId.ShouldEqual("A");
+                .NodeId.ShouldBe("A");
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace FubuTransportation.Testing.Monitoring
                 new RiggedTransportPeer("B", OwnershipStatus.OwnershipActivated),
                 new RiggedTransportPeer("C", OwnershipStatus.OwnershipActivated)
                 )
-                .NodeId.ShouldEqual("B");
+                .NodeId.ShouldBe("B");
         }
 
         [Test]
@@ -62,7 +62,7 @@ namespace FubuTransportation.Testing.Monitoring
                 new RiggedTransportPeer("B", OwnershipStatus.OwnershipActivated),
                 new RiggedTransportPeer("C", OwnershipStatus.OwnershipActivated)
                 )
-                .NodeId.ShouldEqual("B");
+                .NodeId.ShouldBe("B");
         }
 
         [Test]
@@ -73,7 +73,7 @@ namespace FubuTransportation.Testing.Monitoring
                 new RiggedTransportPeer("B", OwnershipStatus.OwnershipActivated),
                 new RiggedTransportPeer("C", OwnershipStatus.OwnershipActivated)
                 )
-                .NodeId.ShouldEqual("B");
+                .NodeId.ShouldBe("B");
         }
 
         [Test]

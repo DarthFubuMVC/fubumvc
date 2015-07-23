@@ -59,7 +59,7 @@ namespace FubuMVC.IntegrationTesting.Authorization
 
             endpoints.Get<AuthorizedEndpoint>(x => x.get_authorized_text_special())
                 .StatusCodeShouldBe(HttpStatusCode.Forbidden)
-                .ReadAsText().ShouldEqual("you are forbidden!");
+                .ReadAsText().ShouldBe("you are forbidden!");
         }
 
 
@@ -74,7 +74,7 @@ namespace FubuMVC.IntegrationTesting.Authorization
             {
                 server.Endpoints.Get<AuthorizedEndpoint>(x => x.get_authorized_text())
                     .StatusCodeShouldBe(HttpStatusCode.Forbidden)
-                    .ReadAsText().ShouldEqual("you are forbidden!");
+                    .ReadAsText().ShouldBe("you are forbidden!");
             }
         }
 
@@ -94,7 +94,7 @@ namespace FubuMVC.IntegrationTesting.Authorization
             {
                 server.Endpoints.Get<AuthorizedEndpoint>(x => x.get_authorized_text())
                     .StatusCodeShouldBe(HttpStatusCode.Forbidden)
-                    .ReadAsText().ShouldEqual("you are forbidden!");
+                    .ReadAsText().ShouldBe("you are forbidden!");
             }
         }
     }

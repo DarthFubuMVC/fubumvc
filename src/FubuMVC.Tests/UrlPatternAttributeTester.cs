@@ -12,7 +12,7 @@ namespace FubuMVC.Tests
         {
             var attribute = new UrlPatternAttribute("GET::foo");
             var route = attribute.BuildRoute(null);
-            route.Pattern.ShouldEqual("foo");
+            route.Pattern.ShouldBe("foo");
             route.AllowedHttpMethods.ShouldHaveTheSameElementsAs("GET");
         }
 
@@ -21,7 +21,7 @@ namespace FubuMVC.Tests
         {
             var attribute = new UrlPatternAttribute("GET,post,PUT::foo");
             var route = attribute.BuildRoute(null);
-            route.Pattern.ShouldEqual("foo");
+            route.Pattern.ShouldBe("foo");
             route.AllowedHttpMethods.ShouldHaveTheSameElementsAs("GET", "POST", "PUT");
         }
 
@@ -30,7 +30,7 @@ namespace FubuMVC.Tests
         {
             var attribute = new GetAttribute("foo");
             var route = attribute.BuildRoute(null);
-            route.Pattern.ShouldEqual("foo");
+            route.Pattern.ShouldBe("foo");
             route.AllowedHttpMethods.ShouldHaveTheSameElementsAs("GET");
         }
 
@@ -39,7 +39,7 @@ namespace FubuMVC.Tests
         {
             var attribute = new PostAttribute("foo");
             var route = attribute.BuildRoute(null);
-            route.Pattern.ShouldEqual("foo");
+            route.Pattern.ShouldBe("foo");
             route.AllowedHttpMethods.ShouldHaveTheSameElementsAs("POST");
         }
 
@@ -49,7 +49,7 @@ namespace FubuMVC.Tests
         {
             var attribute = new PutAttribute("foo");
             var route = attribute.BuildRoute(null);
-            route.Pattern.ShouldEqual("foo");
+            route.Pattern.ShouldBe("foo");
             route.AllowedHttpMethods.ShouldHaveTheSameElementsAs("PUT");
         }
 
@@ -60,7 +60,7 @@ namespace FubuMVC.Tests
         {
             var attribute = new DeleteAttribute("foo");
             var route = attribute.BuildRoute(null);
-            route.Pattern.ShouldEqual("foo");
+            route.Pattern.ShouldBe("foo");
             route.AllowedHttpMethods.ShouldHaveTheSameElementsAs("DELETE");
         }
     }

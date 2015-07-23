@@ -17,11 +17,11 @@ namespace FubuMVC.Tests.Registration
 
 
             AppSettingsProvider.GetValueFor<DiagnosticsSettings>(x => x.TraceLevel)
-                .ShouldEqual(TraceLevel.None);
+                .ShouldBe(TraceLevel.None);
 
             var collection = new SettingsCollection(null);
             collection.Get<DiagnosticsSettings>()
-                .TraceLevel.ShouldEqual(TraceLevel.None);
+                .TraceLevel.ShouldBe(TraceLevel.None);
         }
     }
 }

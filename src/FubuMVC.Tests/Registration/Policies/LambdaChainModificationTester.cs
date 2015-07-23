@@ -22,8 +22,8 @@ namespace FubuMVC.Tests.Registration.Policies
 
             var description = Description.For(modification);
 
-            description.Title.ShouldEqual(modification.Title);
-            description.ShortDescription.ShouldEqual(modification.Description);
+            description.Title.ShouldBe(modification.Title);
+            description.ShortDescription.ShouldBe(modification.Description);
         }
 
         [Test]

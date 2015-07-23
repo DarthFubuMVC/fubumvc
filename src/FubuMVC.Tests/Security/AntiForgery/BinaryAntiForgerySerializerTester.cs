@@ -45,10 +45,10 @@ namespace FubuMVC.Tests.Security.AntiForgery
             AntiForgeryData deserialized = ClassUnderTest.Deserialize(aspSerialized);
 
 
-            deserialized.CreationDate.ShouldEqual(token.CreationDate);
-            deserialized.Salt.ShouldEqual(token.Salt);
-            deserialized.Username.ShouldEqual(token.Username);
-            deserialized.Value.ShouldEqual(token.Value);
+            deserialized.CreationDate.ShouldBe(token.CreationDate);
+            deserialized.Salt.ShouldBe(token.Salt);
+            deserialized.Username.ShouldBe(token.Username);
+            deserialized.Value.ShouldBe(token.Value);
         }
 
         [Test]
@@ -64,10 +64,10 @@ namespace FubuMVC.Tests.Security.AntiForgery
             string serialized = ClassUnderTest.Serialize(token);
             AntiForgeryData deserialized = ClassUnderTest.Deserialize(serialized);
 
-            deserialized.CreationDate.ShouldEqual(token.CreationDate);
-            deserialized.Salt.ShouldEqual(token.Salt);
-            deserialized.Username.ShouldEqual(token.Username);
-            deserialized.Value.ShouldEqual(token.Value);
+            deserialized.CreationDate.ShouldBe(token.CreationDate);
+            deserialized.Salt.ShouldBe(token.Salt);
+            deserialized.Username.ShouldBe(token.Username);
+            deserialized.Value.ShouldBe(token.Value);
         }
 
 
@@ -87,7 +87,7 @@ namespace FubuMVC.Tests.Security.AntiForgery
 
             string deserialized = ClassUnderTest.Serialize(token);
 
-            deserialized.ShouldEqual(aspSerialized);
+            deserialized.ShouldBe(aspSerialized);
         }
     }
 }

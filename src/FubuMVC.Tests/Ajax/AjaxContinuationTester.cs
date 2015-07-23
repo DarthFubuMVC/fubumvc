@@ -45,7 +45,7 @@ namespace FubuMVC.Tests.Ajax
 
             theContinuation.Message = "something";
 
-            theContinuation.ToDictionary()["message"].ShouldEqual("something");
+            theContinuation.ToDictionary()["message"].ShouldBe("something");
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace FubuMVC.Tests.Ajax
             theContinuation.Errors.Add(new AjaxError(){message = "bad!"});
 
             theContinuation.ToDictionary()["errors"].ShouldBeOfType<AjaxError[]>()
-                .Single().message.ShouldEqual("bad!");
+                .Single().message.ShouldBe("bad!");
         }
         
         [Test]
@@ -65,7 +65,7 @@ namespace FubuMVC.Tests.Ajax
             theContinuation.ToDictionary().ContainsKey("navigatePage").ShouldBeFalse();
 
             theContinuation.NavigatePage = "/test";
-            theContinuation.ToDictionary()["navigatePage"].ShouldEqual("/test");
+            theContinuation.ToDictionary()["navigatePage"].ShouldBe("/test");
 
         }
 
@@ -84,7 +84,7 @@ namespace FubuMVC.Tests.Ajax
             var continuation = AjaxContinuation.ForMessage("some message");
 
             continuation.Success.ShouldBeFalse();
-            continuation.Message.ShouldEqual("some message");
+            continuation.Message.ShouldBe("some message");
         }
 
         [Test]
@@ -94,7 +94,7 @@ namespace FubuMVC.Tests.Ajax
             var continuation = AjaxContinuation.ForMessage(token);
 
             continuation.Success.ShouldBeFalse();
-            continuation.Message.ShouldEqual(token.ToString());
+            continuation.Message.ShouldBe(token.ToString());
         }
 
         [Test]

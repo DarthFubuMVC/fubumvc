@@ -65,7 +65,7 @@ namespace FubuTransportation.Testing.Runtime
                 .Flatten()
                 .InnerExceptions.Single()
                 .ShouldBeOfType<ReplyFailureException>()
-                .Message.ShouldEqual("No soup for you!");
+                .Message.ShouldBe("No soup for you!");
         }
 
         [Test]

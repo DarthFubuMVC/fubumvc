@@ -25,7 +25,7 @@ namespace FubuMVC.IntegrationTesting.UI
                 return page.AuthorizedLinkTo(svc => svc.EndpointFor<ConventionEndpoint>(x => x.get_authorized_data()));
             });
 
-            theResult.ShouldEqual("<a href=\"/authorized/data\"></a>");
+            theResult.ShouldBe("<a href=\"/authorized/data\"></a>");
         }
 
         [Test]
@@ -38,21 +38,21 @@ namespace FubuMVC.IntegrationTesting.UI
                 return page.AuthorizedLinkTo(svc => svc.EndpointFor<ConventionEndpoint>(x => x.get_authorized_data()));
             });
 
-            theResult.ShouldEqual(string.Empty);
+            theResult.ShouldBe(string.Empty);
         }
 
         [Test]
         public void link_to_by_input_model_type()
         {
             execute(page => page.LinkTo<SpecificInput>());
-            theResult.ShouldEqual("<a href=\"/specific/input\"></a>");
+            theResult.ShouldBe("<a href=\"/specific/input\"></a>");
         }
 
         [Test]
         public void link_to_by_input_model_gets_full_pattern()
         {
             execute(page => page.LinkTo(new InputWithPattern {Name = "Jeremy"}));
-            theResult.ShouldEqual("<a href=\"/input/Jeremy\"></a>");
+            theResult.ShouldBe("<a href=\"/input/Jeremy\"></a>");
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace FubuMVC.IntegrationTesting.UI
                 return page.LinkTo(new SecuredInput {Name = "Max"});
             });
 
-            theResult.ShouldEqual("<a href=\"/secured/by/role/Max\"></a>");
+            theResult.ShouldBe("<a href=\"/secured/by/role/Max\"></a>");
         }
 
         [Test]
@@ -86,7 +86,7 @@ namespace FubuMVC.IntegrationTesting.UI
         {
             execute(page => page.LinkTo<ConventionEndpoint>(x => x.get_result()));
 
-            theResult.ShouldEqual("<a href=\"/result\"></a>");
+            theResult.ShouldBe("<a href=\"/result\"></a>");
         }
 
         [Test]
@@ -94,7 +94,7 @@ namespace FubuMVC.IntegrationTesting.UI
         {
             execute(page => page.LinkToNew<Foo>());
 
-            theResult.ShouldEqual("<a href=\"/creates/foo\"></a>");
+            theResult.ShouldBe("<a href=\"/creates/foo\"></a>");
         }
 
         [Test]
@@ -102,7 +102,7 @@ namespace FubuMVC.IntegrationTesting.UI
         {
             execute(page => page.LinkVariable("foo", new InputWithPattern {Name = "Shiner"}));
 
-            theResult.ShouldEqual("var foo = '/input/Shiner';");
+            theResult.ShouldBe("var foo = '/input/Shiner';");
         }
 
         [Test]
@@ -110,7 +110,7 @@ namespace FubuMVC.IntegrationTesting.UI
         {
             execute(page => page.LinkVariable<SpecificInput>("foo"));
 
-            theResult.ShouldEqual("var foo = '/specific/input';");
+            theResult.ShouldBe("var foo = '/specific/input';");
         }
 
         [Test]
@@ -118,7 +118,7 @@ namespace FubuMVC.IntegrationTesting.UI
         {
             execute(page => page.ElementNameFor(x => x.NullableNow));
 
-            theResult.ShouldEqual("NullableNow");
+            theResult.ShouldBe("NullableNow");
         }
 
         [Test]
@@ -131,7 +131,7 @@ namespace FubuMVC.IntegrationTesting.UI
                 return page.TextBoxFor(x => x.BigName);
             });
 
-            theResult.ShouldEqual("<input type=\"text\" name=\"BigName\" value=\"some big name\" />");
+            theResult.ShouldBe("<input type=\"text\" name=\"BigName\" value=\"some big name\" />");
         }
     }
 

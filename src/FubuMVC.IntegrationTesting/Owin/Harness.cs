@@ -94,36 +94,36 @@ namespace FubuMVC.IntegrationTesting.Owin
 
         public static HttpResponse ShouldHaveHeaderValue(this HttpResponse response, string header, string value)
         {
-            response.ResponseHeaderFor(header).ShouldEqual(value);
+            response.ResponseHeaderFor(header).ShouldBe(value);
             return response;
         }
 
         public static HttpResponse ContentShouldBe(this HttpResponse response, MimeType mimeType, string content)
         {
-            response.ContentType.ShouldEqual(mimeType.Value);
-            response.ReadAsText().ShouldEqual(content);
+            response.ContentType.ShouldBe(mimeType.Value);
+            response.ReadAsText().ShouldBe(content);
 
             return response;
         }
 
         public static HttpResponse ContentTypeShouldBe(this HttpResponse response, MimeType mimeType)
         {
-            response.ContentType.ShouldEqual(mimeType.Value);
+            response.ContentType.ShouldBe(mimeType.Value);
 
             return response;
         }
 
         public static HttpResponse LengthShouldBe(this HttpResponse response, int length)
         {
-            response.ContentLength().ShouldEqual(length);
+            response.ContentLength().ShouldBe(length);
 
             return response;
         }
 
         public static HttpResponse ContentShouldBe(this HttpResponse response, string mimeType, string content)
         {
-            response.ContentType.ShouldEqual(mimeType);
-            response.ReadAsText().ShouldEqual(content);
+            response.ContentType.ShouldBe(mimeType);
+            response.ReadAsText().ShouldBe(content);
 
             return response;
         }
@@ -131,7 +131,7 @@ namespace FubuMVC.IntegrationTesting.Owin
 
         public static HttpResponse StatusCodeShouldBe(this HttpResponse response, HttpStatusCode code)
         {
-            response.StatusCode.ShouldEqual(code);
+            response.StatusCode.ShouldBe(code);
 
             return response;
         }

@@ -63,7 +63,7 @@ namespace FubuMVC.Tests.Registration
         public void can_calculate_rank_without_input_if_there_are_substitutions()
         {
             var route = new RouteDefinition("{Client}/foo");
-            route.Rank.ShouldEqual(1);
+            route.Rank.ShouldBe(1);
         }
 
         [Test]
@@ -78,7 +78,7 @@ namespace FubuMVC.Tests.Registration
             var route = RouteBuilder.Build(typeof (QueryStringTarget), "route");
 
             route.CreateUrlFromInput(new QueryStringTarget())
-                .ShouldEqual("route");
+                .ShouldBe("route");
         }
 
         [Test]
@@ -87,7 +87,7 @@ namespace FubuMVC.Tests.Registration
             var maker = new MyOwnUrlMaker("something/else");
             var route = new RouteDefinition("folder");
 
-            route.CreateUrlFromInput(maker).ShouldEqual("folder/something/else");
+            route.CreateUrlFromInput(maker).ShouldBe("folder/something/else");
         }
 
         [Test]
@@ -102,7 +102,7 @@ namespace FubuMVC.Tests.Registration
         {
             const string pattern = "some/pattern";
             var routeDefinition = new RouteDefinition(pattern);
-            routeDefinition.ToString().ShouldEqual(pattern);
+            routeDefinition.ToString().ShouldBe(pattern);
         }
 
         [Test]
@@ -119,7 +119,7 @@ namespace FubuMVC.Tests.Registration
         public void to_string_gets_pattern_and_type_full_name()
         {
             var url = new RouteInput<SampleViewModel>("my/sample");
-            url.ToString().ShouldEqual("{0} --> {1}".ToFormat(url.Parent.Pattern, typeof(SampleViewModel).FullName));
+            url.ToString().ShouldBe("{0} --> {1}".ToFormat(url.Parent.Pattern, typeof(SampleViewModel).FullName));
         }
 
         [Test]
@@ -130,7 +130,7 @@ namespace FubuMVC.Tests.Registration
             url.RouteInputFor("InPath").DefaultValue = "something";
             Route route = url.Parent.ToRoute();
 
-            route.Defaults["InPath"].ShouldEqual("something");
+            route.Defaults["InPath"].ShouldBe("something");
         }
 
         [Test]
@@ -143,7 +143,7 @@ namespace FubuMVC.Tests.Registration
             url.RouteInputFor("AlsoInPath").DefaultValue = "something else";
             Route route = url.Parent.ToRoute();
 
-            route.Defaults.Count().ShouldEqual(2);
+            route.Defaults.Count().ShouldBe(2);
         }
 
 
@@ -154,7 +154,7 @@ namespace FubuMVC.Tests.Registration
             url.AddRouteInput(x => x.InPath);
             url.AddRouteInput(x => x.AlsoInPath);
 
-            url.Parent.ToRoute().Url.ShouldEqual("my/sample/{InPath}/{AlsoInPath}");
+            url.Parent.ToRoute().Url.ShouldBe("my/sample/{InPath}/{AlsoInPath}");
         }
 
         [Test]
@@ -166,7 +166,7 @@ namespace FubuMVC.Tests.Registration
             url.CreateUrlFromInput(new SampleViewModel
             {
                 InPath = "some text"
-            }).ShouldEqual("test/edit/some%20text");
+            }).ShouldBe("test/edit/some%20text");
         }
 
         [Test]
@@ -178,7 +178,7 @@ namespace FubuMVC.Tests.Registration
             var parameters = new RouteParameters<SampleViewModel>();
             parameters[x => x.InPath] = "some text";
 
-            url.CreateUrlFromParameters(parameters).ShouldEqual("test/edit/some%20text");
+            url.CreateUrlFromParameters(parameters).ShouldBe("test/edit/some%20text");
         }
 
         [Test]
@@ -190,7 +190,7 @@ namespace FubuMVC.Tests.Registration
             url.CreateUrlFromInput(new SampleViewModel
             {
                 InPath = "5"
-            }).ShouldEqual("test/edit/5");
+            }).ShouldBe("test/edit/5");
         }
 
         [Test]
@@ -202,7 +202,7 @@ namespace FubuMVC.Tests.Registration
             var parameters = new RouteParameters<SampleViewModel>();
             parameters[x => x.InPath] = "5";
 
-            url.CreateUrlFromParameters(parameters).ShouldEqual("test/edit/5");
+            url.CreateUrlFromParameters(parameters).ShouldBe("test/edit/5");
         }
 
         [Test]
@@ -214,7 +214,7 @@ namespace FubuMVC.Tests.Registration
             url.CreateUrlFromInput(new SampleViewModel
             {
                 InPath = "abc/def&ghi=jkl"
-            }).ShouldEqual("test/edit/abc%2Fdef%26ghi%3Djkl");
+            }).ShouldBe("test/edit/abc%2Fdef%26ghi%3Djkl");
         }
 
         [Test]
@@ -327,7 +327,7 @@ namespace FubuMVC.Tests.Registration
             {
                 InPath = "5",
                 AlsoInPath = "some text"
-            }).ShouldEqual("test/edit/5/some%20text");
+            }).ShouldBe("test/edit/5/some%20text");
         }
 
         [Test]
@@ -341,7 +341,7 @@ namespace FubuMVC.Tests.Registration
             parameters[x => x.InPath] = "5";
             parameters[x => x.AlsoInPath] = "some text";
 
-            url.CreateUrlFromParameters(parameters).ShouldEqual("test/edit/5/some%20text");
+            url.CreateUrlFromParameters(parameters).ShouldBe("test/edit/5/some%20text");
         }
 
         [Test]
@@ -355,7 +355,7 @@ namespace FubuMVC.Tests.Registration
             parameters[x => x.InPath] = "5";
             parameters[x => x.AlsoInPath] = "abc/def&ghi=jkl";
 
-            url.CreateUrlFromParameters(parameters).ShouldEqual("test/edit/5/abc%2Fdef%26ghi%3Djkl");
+            url.CreateUrlFromParameters(parameters).ShouldBe("test/edit/5/abc%2Fdef%26ghi%3Djkl");
         }
 
         [Test]
@@ -375,7 +375,7 @@ namespace FubuMVC.Tests.Registration
                 InQueryString = "query",
                 AlsoInQueryString = "alsoquery"
             })
-                .ShouldEqual("/my/sample/path?InQueryString=query&AlsoInQueryString=alsoquery");
+                .ShouldBe("/my/sample/path?InQueryString=query&AlsoInQueryString=alsoquery");
         }
 
         [Test]
@@ -432,7 +432,7 @@ namespace FubuMVC.Tests.Registration
             {
                 InPath = "5",
                 InQueryString = "query"
-            }).ShouldEqual("test/edit/5?InQueryString=query");
+            }).ShouldBe("test/edit/5?InQueryString=query");
         }
 
         [Test]
@@ -446,7 +446,7 @@ namespace FubuMVC.Tests.Registration
             {
                 InPath = "5",
                 InQueryString = null
-            }).ShouldEqual("test/edit/5");
+            }).ShouldBe("test/edit/5");
         }
 
         [Test]
@@ -460,7 +460,7 @@ namespace FubuMVC.Tests.Registration
             parameters[x => x.InPath] = "5";
             parameters[x => x.InQueryString] = "query";
 
-            url.CreateUrlFromParameters(parameters).ShouldEqual("test/edit/5?InQueryString=query");
+            url.CreateUrlFromParameters(parameters).ShouldBe("test/edit/5?InQueryString=query");
         }
 
         [Test]
@@ -472,7 +472,7 @@ namespace FubuMVC.Tests.Registration
             url.CreateUrlFromInput(new SampleViewModel
             {
                 InQueryString = "query"
-            }).ShouldEqual("/my/sample/path?InQueryString=query");
+            }).ShouldBe("/my/sample/path?InQueryString=query");
         }
 
 
@@ -485,7 +485,7 @@ namespace FubuMVC.Tests.Registration
             var parameters = new RouteParameters<SampleViewModel>();
             parameters[x => x.InQueryString] = "query";
 
-            url.CreateUrlFromParameters(parameters).ShouldEqual("/my/sample/path?InQueryString=query");
+            url.CreateUrlFromParameters(parameters).ShouldBe("/my/sample/path?InQueryString=query");
         }
 
         [Test]
@@ -495,7 +495,7 @@ namespace FubuMVC.Tests.Registration
             url.AddRouteInput(x => x.InPath);
             Route route = url.Parent.ToRoute();
 
-            route.Defaults.Count().ShouldEqual(0);
+            route.Defaults.Count().ShouldBe(0);
         }
 
         [Test]
@@ -504,7 +504,7 @@ namespace FubuMVC.Tests.Registration
             var route = new RouteDefinition("my/sample");
             route.Prepend("area");
 
-            route.Pattern.ShouldEqual("area/my/sample");
+            route.Pattern.ShouldBe("area/my/sample");
         }
 
         [Test]
@@ -513,7 +513,7 @@ namespace FubuMVC.Tests.Registration
             var route = new RouteDefinition("my/sample");
             route.Prepend("area/");
 
-            route.Pattern.ShouldEqual("area/my/sample");
+            route.Pattern.ShouldBe("area/my/sample");
         }
 
         [Test]
@@ -526,7 +526,7 @@ namespace FubuMVC.Tests.Registration
             };
             var routeInput = new RouteParameter(accessor);
 
-            routeInput.Substitute(viewModel, "test/edit/{InPath}").ShouldEqual("test/edit/5");
+            routeInput.Substitute(viewModel, "test/edit/{InPath}").ShouldBe("test/edit/5");
         }
 
         [Test]
@@ -539,7 +539,7 @@ namespace FubuMVC.Tests.Registration
             url.QueryInputFor("InQueryString").DefaultValue = "querysomething";
             Route route = url.Parent.ToRoute();
 
-            route.Defaults.Count().ShouldEqual(1);
+            route.Defaults.Count().ShouldBe(1);
         }
 
         [Test]
@@ -551,7 +551,7 @@ namespace FubuMVC.Tests.Registration
             url.RouteInputFor("InPath").DefaultValue = "something";
             Route route = url.Parent.ToRoute();
 
-            route.Defaults.Count().ShouldEqual(1);
+            route.Defaults.Count().ShouldBe(1);
         }
 
         [Test]
@@ -672,19 +672,19 @@ namespace FubuMVC.Tests.Registration
             var route = new RouteDefinition("something");
             route.SessionStateRequirement.ShouldBeNull();
 
-            Description.For(route).Properties["SessionStateRequirement"].ShouldEqual("Default");
+            Description.For(route).Properties["SessionStateRequirement"].ShouldBe("Default");
 
 
             route.SessionStateRequirement = SessionStateRequirement.RequiresSessionState;
 
-            Description.For(route).Properties["SessionStateRequirement"].ShouldEqual(
+            Description.For(route).Properties["SessionStateRequirement"].ShouldBe(
                 SessionStateRequirement.RequiresSessionState.ToString());
         }
 
         [Test]
         public void describing_itself_gets_the_title()
         {
-            Description.For(new RouteDefinition("something")).Title.ShouldEqual("Route:  something");
+            Description.For(new RouteDefinition("something")).Title.ShouldBe("Route:  something");
         }
 
         [Test]
@@ -694,7 +694,7 @@ namespace FubuMVC.Tests.Registration
 
             var description = Description.For(route);
 
-            description.Children["Input"].Title.ShouldEqual(Description.For(route.Input).Title);
+            description.Children["Input"].Title.ShouldBe(Description.For(route.Input).Title);
         }
 
     }

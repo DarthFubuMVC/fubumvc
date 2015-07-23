@@ -27,7 +27,7 @@ namespace FubuTransportation.Testing.Runtime.Cascading
 
 
             respondToSender.CreateEnvelope(original).ShouldBeTheSameAs(response);
-            response.Destination.ShouldEqual(original.ReplyUri);
+            response.Destination.ShouldBe(original.ReplyUri);
         }
     }
 }

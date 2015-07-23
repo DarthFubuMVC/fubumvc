@@ -70,7 +70,7 @@ namespace FubuTransportation.Testing.Subscriptions
         {
             var envelope = theSender.Sent.Single();
             envelope.Message.ShouldBeOfType<SubscriptionsChanged>();
-            envelope.Destination.ShouldEqual(thePeer.Addresses.FirstOrDefault());
+            envelope.Destination.ShouldBe(thePeer.Addresses.FirstOrDefault());
         }
     }
 

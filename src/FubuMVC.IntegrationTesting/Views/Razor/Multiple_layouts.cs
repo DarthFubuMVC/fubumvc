@@ -49,7 +49,7 @@ namespace FubuMVC.IntegrationTesting.Views.Razor
         public void uses_layout_in_closest_shared_directory_when_found()
         {
 //            var view = Views.Templates<RazorTemplate>().FirstOrDefault(x => x.Name() == "Closest");
-//            view.Master.ViewPath.ShouldEqual("One/Shared/Application.cshtml");
+//            view.Master.ViewPath.ShouldBe("One/Shared/Application.cshtml");
 //            view.Master.Master.ShouldBeNull();
 
             Scenario.Get.Action<ClosestEndpoint>(x => x.get_razor_closest());

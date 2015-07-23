@@ -20,7 +20,7 @@ namespace FubuMVC.Tests
         public void default_request_count_is_200()
         {
             new DiagnosticsSettings()
-                .MaxRequests.ShouldEqual(200);
+                .MaxRequests.ShouldBe(200);
         }
 
         [Test]
@@ -30,14 +30,14 @@ namespace FubuMVC.Tests
             settings.RestrictToRole("admin");
 
             settings.AuthorizationRights.Single().ShouldBeOfType<AllowRole>()
-                .Role.ShouldEqual("admin");
+                .Role.ShouldBe("admin");
         }
 
         [Test]
         public void the_default_trace_level_is_verbose()
         {
             new DiagnosticsSettings()
-                .TraceLevel.ShouldEqual(TraceLevel.None);
+                .TraceLevel.ShouldBe(TraceLevel.None);
         }
 
         [Test]
@@ -46,11 +46,11 @@ namespace FubuMVC.Tests
             var settings = new DiagnosticsSettings();
             settings.SetIfNone(TraceLevel.Verbose);
 
-            settings.TraceLevel.ShouldEqual(TraceLevel.Verbose);
+            settings.TraceLevel.ShouldBe(TraceLevel.Verbose);
 
             settings.SetIfNone(TraceLevel.Production);
 
-            settings.TraceLevel.ShouldEqual(TraceLevel.Verbose);
+            settings.TraceLevel.ShouldBe(TraceLevel.Verbose);
         }
 
         [Test]
@@ -58,7 +58,7 @@ namespace FubuMVC.Tests
         {
             FubuMode.SetUpForDevelopmentMode();
 
-            new DiagnosticsSettings().TraceLevel.ShouldEqual(TraceLevel.Verbose);
+            new DiagnosticsSettings().TraceLevel.ShouldBe(TraceLevel.Verbose);
         }
     }
 }

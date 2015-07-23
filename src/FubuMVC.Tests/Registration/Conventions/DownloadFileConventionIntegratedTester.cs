@@ -34,7 +34,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             BehaviorNode behavior = graph.BehaviorFor<DownloadTestController>(x => x.Download()).Calls.First().Next;
             var outputNode = behavior.ShouldBeOfType<DownloadFileNode>();
-            outputNode.BehaviorType.ShouldEqual(typeof(DownloadFileBehavior));
+            outputNode.BehaviorType.ShouldBe(typeof(DownloadFileBehavior));
         }
     }
 

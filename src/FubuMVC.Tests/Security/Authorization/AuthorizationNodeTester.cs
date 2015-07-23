@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Security.Authorization
         [Test]
         public void category_is_authorization()
         {
-            new AuthorizationNode().Category.ShouldEqual(BehaviorCategory.Authorization);
+            new AuthorizationNode().Category.ShouldBe(BehaviorCategory.Authorization);
         }
 
         [Test]
@@ -52,8 +52,8 @@ namespace FubuMVC.Tests.Security.Authorization
             node.AddRole("RoleA");
 
             var authorizationBehavior = toBehavior(node);
-            authorizationBehavior.Policies.Count().ShouldEqual(1);
-            authorizationBehavior.Policies.First().ShouldBeOfType<AllowRole>().Role.ShouldEqual("RoleA");
+            authorizationBehavior.Policies.Count().ShouldBe(1);
+            authorizationBehavior.Policies.First().ShouldBeOfType<AllowRole>().Role.ShouldBe("RoleA");
         }
 
         [Test]
@@ -78,11 +78,11 @@ namespace FubuMVC.Tests.Security.Authorization
             node.AddRole("RoleC");
 
             var authorizationBehavior = toBehavior(node);
-            authorizationBehavior.Policies.Count().ShouldEqual(3);
+            authorizationBehavior.Policies.Count().ShouldBe(3);
 
-            authorizationBehavior.Policies.ToArray()[0].ShouldBeOfType<AllowRole>().Role.ShouldEqual("RoleA");
-            authorizationBehavior.Policies.ToArray()[1].ShouldBeOfType<AllowRole>().Role.ShouldEqual("RoleB");
-            authorizationBehavior.Policies.ToArray()[2].ShouldBeOfType<AllowRole>().Role.ShouldEqual("RoleC");
+            authorizationBehavior.Policies.ToArray()[0].ShouldBeOfType<AllowRole>().Role.ShouldBe("RoleA");
+            authorizationBehavior.Policies.ToArray()[1].ShouldBeOfType<AllowRole>().Role.ShouldBe("RoleB");
+            authorizationBehavior.Policies.ToArray()[2].ShouldBeOfType<AllowRole>().Role.ShouldBe("RoleC");
         }
 
 
@@ -104,7 +104,7 @@ namespace FubuMVC.Tests.Security.Authorization
             var def = node.As<IContainerModel>().ToInstance().As<IConfiguredInstance>();
 
             def.FindDependencyDefinitionFor<IAuthorizationFailureHandler>()
-                .ReturnedType.ShouldEqual(typeof (FakeAuthHandler));
+                .ReturnedType.ShouldBe(typeof (FakeAuthHandler));
         }
 
         [Test]

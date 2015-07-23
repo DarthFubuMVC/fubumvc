@@ -70,7 +70,7 @@ namespace FubuTransportation.LightningQueues.Testing
 
 
             var report = ErrorReport.Deserialize(message.Data);
-            message.Headers.Get("ExceptionType").ShouldEqual("System.InvalidOperationException");
+            message.Headers.Get("ExceptionType").ShouldBe("System.InvalidOperationException");
             report.RawData.ShouldNotBeNull();
         }
 

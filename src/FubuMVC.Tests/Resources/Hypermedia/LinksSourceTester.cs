@@ -34,7 +34,7 @@ namespace FubuMVC.Tests.Resources.Hypermedia
             theLinks.ToSubject();
 
             theLinks.As<ILinkSource<Site>>().LinksFor(theTarget, theUrls)
-                .Single().Url.ShouldEqual(theUrls.UrlFor(theSubject));
+                .Single().Url.ShouldBe(theUrls.UrlFor(theSubject));
         }
 
         [Test]
@@ -46,7 +46,7 @@ namespace FubuMVC.Tests.Resources.Hypermedia
             parameters["Name"] = theSubject.Name;
 
             theLinks.As<ILinkSource<Site>>().LinksFor(theTarget, theUrls)
-                .Single().Url.ShouldEqual(theUrls.UrlFor(parameters));
+                .Single().Url.ShouldBe(theUrls.UrlFor(parameters));
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace FubuMVC.Tests.Resources.Hypermedia
             theLinks.To(site => new SiteAction(site.Name));
 
             theLinks.As<ILinkSource<Site>>().LinksFor(theTarget, theUrls)
-                .Single().Url.ShouldEqual(theUrls.UrlFor(new SiteAction(theSubject.Name)));
+                .Single().Url.ShouldBe(theUrls.UrlFor(new SiteAction(theSubject.Name)));
         }
 
         [Test]
@@ -67,7 +67,7 @@ namespace FubuMVC.Tests.Resources.Hypermedia
             parameters[x => x.Id] = theSubject.Id.ToString();
 
             theLinks.As<ILinkSource<Site>>().LinksFor(theTarget, theUrls)
-                .Single().Url.ShouldEqual(theUrls.UrlFor(typeof(Site), parameters));
+                .Single().Url.ShouldBe(theUrls.UrlFor(typeof(Site), parameters));
         }
 
         public class SiteAction

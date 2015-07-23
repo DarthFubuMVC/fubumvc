@@ -12,14 +12,14 @@ namespace FubuMVC.IntegrationTesting.Owin
         public void async_route_should_render()
         {
             var response = Harness.Endpoints.Get<AsyncEndpoint>(x => x.get_async()).ReadAsText();
-            response.ShouldEqual("Hello");
+            response.ShouldBe("Hello");
         }
 
         [Test]
         public void async_route_with_error_should_have_501_and_exception_message()
         {
             var response = Harness.Endpoints.Get<AsyncEndpoint>(x => x.get_async_error());
-            response.StatusCode.ShouldEqual(HttpStatusCode.InternalServerError);
+            response.StatusCode.ShouldBe(HttpStatusCode.InternalServerError);
             var text = response.ReadAsText();
             text.ShouldContain("Error in async method");
         }

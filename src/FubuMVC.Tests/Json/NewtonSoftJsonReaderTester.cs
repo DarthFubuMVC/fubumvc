@@ -27,7 +27,7 @@ namespace FubuMVC.Tests.Json
 		[Test]
 		public void just_delegates_to_the_json_serializer()
 		{
-			ClassUnderTest.Read<ParentType>().ShouldEqual(theTarget);
+			ClassUnderTest.Read<ParentType>().ShouldBe(theTarget);
 		}
 	}
 }

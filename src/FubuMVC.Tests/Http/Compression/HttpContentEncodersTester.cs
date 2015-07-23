@@ -27,13 +27,13 @@ namespace FubuMVC.Tests.Http.Compression
         [Test]
         public void simple_match_on_first()
         {
-            theEncoders.MatchFor("gzip, deflate").ShouldEqual(e1);
+            theEncoders.MatchFor("gzip, deflate").ShouldBe(e1);
         }
 
         [Test]
         public void match_on_last()
         {
-            theEncoders.MatchFor("unknown, deflate").ShouldEqual(e2);
+            theEncoders.MatchFor("unknown, deflate").ShouldBe(e2);
         }
 
         [Test]

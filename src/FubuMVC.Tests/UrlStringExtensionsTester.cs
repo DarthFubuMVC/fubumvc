@@ -12,7 +12,7 @@ namespace FubuMVC.Tests
         public void to_absolute_url_when_it_is_already_an_absolute_url()
         {
             "http://cnn.com".ToAbsoluteUrl("http://localhost:5050")
-                        .ShouldEqual("http://cnn.com");
+                        .ShouldBe("http://cnn.com");
         }
 
         [Test]
@@ -20,7 +20,7 @@ namespace FubuMVC.Tests
         {
 
             "/foo".ToAbsoluteUrl("http://localhost:5050")
-                  .ShouldEqual("http://localhost:5050/foo");
+                  .ShouldBe("http://localhost:5050/foo");
         }
 
 
@@ -28,20 +28,20 @@ namespace FubuMVC.Tests
         public void to_absolute_url_from_relative_to_absolute_2()
         {
             "~/foo".ToAbsoluteUrl("http://localhost:5050")
-                  .ShouldEqual("http://localhost:5050/foo");
+                  .ShouldBe("http://localhost:5050/foo");
         }
 
         [Test]
         public void to_absolute_url_respects_the_template()
         {
             "http://cnn.com/{script}".ToAbsoluteUrl("http://localhost:5050")
-                                     .ShouldEqual("http://cnn.com/{script}");
+                                     .ShouldBe("http://cnn.com/{script}");
         }
 
         [Test]
         public void url_encoding()
         {
-            "abc/def&ghi=jkl".UrlEncoded().ShouldEqual("abc%2Fdef%26ghi%3Djkl");
+            "abc/def&ghi=jkl".UrlEncoded().ShouldBe("abc%2Fdef%26ghi%3Djkl");
         }
     }
 }

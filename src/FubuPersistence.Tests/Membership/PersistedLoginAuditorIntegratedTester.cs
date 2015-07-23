@@ -54,9 +54,9 @@ namespace FubuPersistence.Tests.Membership
 
             var theAudit =
                 theContainer.GetInstance<IEntityRepository>().All<Audit>().Where(x => x.Type == "Something").Single();
-            theAudit.Message.ShouldBeOfType<Something>().UserName.ShouldEqual("the something");
-            theAudit.Timestamp.ShouldEqual(theTime.UtcNow());
-            theAudit.Username.ShouldEqual("the something");
+            theAudit.Message.ShouldBeOfType<Something>().UserName.ShouldBe("the something");
+            theAudit.Timestamp.ShouldBe(theTime.UtcNow());
+            theAudit.Username.ShouldBe("the something");
         }
 
         [Test]
@@ -75,8 +75,8 @@ namespace FubuPersistence.Tests.Membership
                 .Where(x => x.Type == "LoginSuccess").Single();
 
             theAudit.Message.ShouldBeOfType<LoginSuccess>();
-            theAudit.Timestamp.ShouldEqual(theTime.UtcNow());
-            theAudit.Username.ShouldEqual("somebody");
+            theAudit.Timestamp.ShouldBe(theTime.UtcNow());
+            theAudit.Username.ShouldBe("somebody");
         }
 
         [Test]
@@ -95,8 +95,8 @@ namespace FubuPersistence.Tests.Membership
                 .Where(x => x.Type == "LoginFailure").Single();
 
             theAudit.Message.ShouldBeOfType<LoginFailure>();
-            theAudit.Timestamp.ShouldEqual(theTime.UtcNow());
-            theAudit.Username.ShouldEqual(request.UserName);
+            theAudit.Timestamp.ShouldBe(theTime.UtcNow());
+            theAudit.Username.ShouldBe(request.UserName);
         }
 
 
@@ -141,7 +141,7 @@ namespace FubuPersistence.Tests.Membership
 
 
             history.ShouldNotBeNull();
-            history.Attempts.ShouldEqual(1);
+            history.Attempts.ShouldBe(1);
             history.LockedOutTime.ShouldBeNull();
         }
 
@@ -164,7 +164,7 @@ namespace FubuPersistence.Tests.Membership
                 .Load<LoginFailureHistory>(request.UserName);
 
 
-            history.LockedOutTime.ShouldEqual(request.LockedOutUntil);
+            history.LockedOutTime.ShouldBe(request.LockedOutUntil);
         }
 
         [Test]
@@ -194,8 +194,8 @@ namespace FubuPersistence.Tests.Membership
             var history2 = theContainer.GetInstance<IDocumentSession>()
                 .Load<LoginFailureHistory>(request.UserName);
 
-            history2.Attempts.ShouldEqual(request.NumberOfTries);
-            history2.LockedOutTime.ShouldEqual(request.LockedOutUntil);
+            history2.Attempts.ShouldBe(request.NumberOfTries);
+            history2.LockedOutTime.ShouldBe(request.LockedOutUntil);
         }
 
         [Test]
@@ -211,7 +211,7 @@ namespace FubuPersistence.Tests.Membership
             var auditor = theContainer.GetInstance<PersistedLoginAuditor>();
             auditor.ApplyHistory(request);
 
-            request.NumberOfTries.ShouldEqual(5); // Nothing gets replaced
+            request.NumberOfTries.ShouldBe(5); // Nothing gets replaced
         }
 
         [Test]
@@ -234,8 +234,8 @@ namespace FubuPersistence.Tests.Membership
 
             auditor.ApplyHistory(request);
 
-            request.NumberOfTries.ShouldEqual(history.Attempts);
-            request.LockedOutUntil.ShouldEqual(history.LockedOutTime.Value);
+            request.NumberOfTries.ShouldBe(history.Attempts);
+            request.LockedOutUntil.ShouldBe(history.LockedOutTime.Value);
         }
     }
 

@@ -25,31 +25,31 @@ namespace FubuTransportation.Testing.ErrorHandling
         [Test]
         public void capture_the_exception_message()
         {
-            report.ExceptionMessage.ShouldEqual(exception.Message);
+            report.ExceptionMessage.ShouldBe(exception.Message);
         }
 
         [Test]
         public void capture_the_headers()
         {
-            report.Headers.ShouldEqual(envelope.Headers.ToNameValues());
+            report.Headers.ShouldBe(envelope.Headers.ToNameValues());
         }
 
         [Test]
         public void explanation_is_via_an_exception()
         {
-            report.Explanation.ShouldEqual(ErrorReport.ExceptionDetected);
+            report.Explanation.ShouldBe(ErrorReport.ExceptionDetected);
         }
 
         [Test]
         public void exception_stack_trace_is_captured()
         {
-            report.ExceptionText.ShouldEqual(exception.ToString());
+            report.ExceptionText.ShouldBe(exception.ToString());
         }
 
         [Test]
         public void exception_type_is_captured()
         {
-            report.ExceptionType.ShouldEqual(exception.GetType().FullName);
+            report.ExceptionType.ShouldBe(exception.GetType().FullName);
         }
 
         [Test]
@@ -58,14 +58,14 @@ namespace FubuTransportation.Testing.ErrorHandling
             var data = report.Serialize();
             var report2 = ErrorReport.Deserialize(data);
 
-            report2.Explanation.ShouldEqual(report.Explanation);
-            report2.ExceptionMessage.ShouldEqual(report.ExceptionMessage);
-            report2.ExceptionType.ShouldEqual(report.ExceptionType);
-            report2.RawData.ShouldEqual(report.RawData);
+            report2.Explanation.ShouldBe(report.Explanation);
+            report2.ExceptionMessage.ShouldBe(report.ExceptionMessage);
+            report2.ExceptionType.ShouldBe(report.ExceptionType);
+            report2.RawData.ShouldBe(report.RawData);
 
             foreach (string key in report.Headers.Keys)
             {
-                report2.Headers.Get(key).ShouldEqual(report.Headers.Get(key));
+                report2.Headers.Get(key).ShouldBe(report.Headers.Get(key));
             }
         }
     }

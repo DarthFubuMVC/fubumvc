@@ -23,10 +23,10 @@ namespace FubuMVC.Tests.Json
 
             var serializer = new NewtonSoftJsonSerializer(settings, new JsonConverter[0]);
             var json = serializer.Serialize(new Target {Name = "Jeremy"});
-            json.ShouldEqual("{\"name\":\"Jeremy\"}");
+            json.ShouldBe("{\"name\":\"Jeremy\"}");
 
             var target2 = serializer.Deserialize<Target>(json);
-            target2.Name.ShouldEqual("Jeremy");
+            target2.Name.ShouldBe("Jeremy");
         }    
      }
 
@@ -61,8 +61,8 @@ namespace FubuMVC.Tests.Json
 		[Test]
 		public void uses_the_object_converter()
 		{
-			theObject.Name.ShouldEqual("Test");
-			theObject.Child.ShouldEqual(new ComplexType {Key = "x", Value = "123"});
+			theObject.Name.ShouldBe("Test");
+			theObject.Child.ShouldBe(new ComplexType {Key = "x", Value = "123"});
 		}
 	}
 

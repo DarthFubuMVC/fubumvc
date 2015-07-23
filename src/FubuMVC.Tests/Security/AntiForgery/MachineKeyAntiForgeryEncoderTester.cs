@@ -15,7 +15,7 @@ namespace FubuMVC.Tests.Security.AntiForgery
             string encoded = ClassUnderTest.Encode(input);
             byte[] decoded = ClassUnderTest.Decode(encoded);
 
-            decoded.ShouldEqual(input);
+            decoded.ShouldBe(input);
         }
     }
 }

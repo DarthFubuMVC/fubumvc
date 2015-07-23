@@ -23,14 +23,14 @@ namespace FubuTransportation.Testing.Configuration
         [Test]
         public void the_default_content_type_should_be_xml_serialization()
         {
-            new ChannelGraph().DefaultContentType.ShouldEqual(new XmlMessageSerializer().ContentType);
+            new ChannelGraph().DefaultContentType.ShouldBe(new XmlMessageSerializer().ContentType);
         }
 
         [Test]
         public void to_key_by_expression()
         {
             ChannelGraph.ToKey<ChannelSettings>(x => x.Outbound)
-                        .ShouldEqual("Channel:Outbound");
+                        .ShouldBe("Channel:Outbound");
         }
 
         [Test]
@@ -42,8 +42,8 @@ namespace FubuTransportation.Testing.Configuration
                  .ShouldBeTheSameAs(graph.ChannelFor<ChannelSettings>(x => x.Outbound));
 
 
-            channelNode.Key.ShouldEqual("Channel:Outbound");
-            channelNode.SettingAddress.Name.ShouldEqual("Outbound");
+            channelNode.Key.ShouldBe("Channel:Outbound");
+            channelNode.SettingAddress.Name.ShouldBe("Outbound");
 
         }
 
@@ -75,13 +75,13 @@ namespace FubuTransportation.Testing.Configuration
             graph.ReadSettings(services);
 
             graph.ChannelFor<ChannelSettings>(x => x.Outbound)
-                 .Uri.ShouldEqual(channel.Outbound);
+                 .Uri.ShouldBe(channel.Outbound);
             graph.ChannelFor<ChannelSettings>(x => x.Downstream)
-                 .Uri.ShouldEqual(channel.Downstream);
+                 .Uri.ShouldBe(channel.Downstream);
             graph.ChannelFor<BusSettings>(x => x.Outbound)
-                .Uri.ShouldEqual(bus.Outbound);
+                .Uri.ShouldBe(bus.Outbound);
             graph.ChannelFor<BusSettings>(x => x.Downstream)
-                .Uri.ShouldEqual(bus.Downstream);
+                .Uri.ShouldBe(bus.Downstream);
         }
 
         [Test, Ignore("Too flaky, too slow. Replace w/ ST tests?")]
@@ -104,9 +104,9 @@ namespace FubuTransportation.Testing.Configuration
                 graph.StartReceiving(MockRepository.GenerateMock<IHandlerPipeline>());
 
                 node1.Channel.As<FakeChannel>().ReceivedCount.ShouldBeGreaterThan(0);
-                node2.Channel.As<FakeChannel>().ReceivedCount.ShouldEqual(0);
+                node2.Channel.As<FakeChannel>().ReceivedCount.ShouldBe(0);
                 node3.Channel.As<FakeChannel>().ReceivedCount.ShouldBeGreaterThan(0);
-                node4.Channel.As<FakeChannel>().ReceivedCount.ShouldEqual(0);
+                node4.Channel.As<FakeChannel>().ReceivedCount.ShouldBe(0);
             }
         }
 

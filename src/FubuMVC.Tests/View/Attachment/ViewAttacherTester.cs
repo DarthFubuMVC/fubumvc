@@ -189,7 +189,7 @@ namespace FubuMVC.Tests.View.Attachment
 
             theChain.Output.AddView(existingView, profile.Condition);
 
-            theChain.Output.Media().Where(x => x.Mimetypes.Contains(MimeType.Html.Value)).Count().ShouldEqual(1);
+            theChain.Output.Media().Where(x => x.Mimetypes.Contains(MimeType.Html.Value)).Count().ShouldBe(1);
 
             // There is a set of filters where it would match, see the test above
             filterMatching(1);
@@ -197,7 +197,7 @@ namespace FubuMVC.Tests.View.Attachment
 
             afterAttaching();
 
-            theChain.Output.Media().Where(x => x.Mimetypes.Contains(MimeType.Html.Value)).Count().ShouldEqual(1);
+            theChain.Output.Media().Where(x => x.Mimetypes.Contains(MimeType.Html.Value)).Count().ShouldBe(1);
         }
 
         [Test]

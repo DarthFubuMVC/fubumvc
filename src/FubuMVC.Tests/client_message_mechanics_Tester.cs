@@ -29,10 +29,10 @@ namespace FubuMVC.Tests
         [Test]
         public void get_message_name()
         {
-            typeof (ClientA).GetMessageName().ShouldEqual("a");
-            typeof (ClientB).GetMessageName().ShouldEqual("b");
-            typeof (ClientC).GetMessageName().ShouldEqual("c");
-            typeof (NotClient).GetMessageName().ShouldEqual("not-client");
+            typeof (ClientA).GetMessageName().ShouldBe("a");
+            typeof (ClientB).GetMessageName().ShouldBe("b");
+            typeof (ClientC).GetMessageName().ShouldBe("c");
+            typeof (NotClient).GetMessageName().ShouldBe("not-client");
         }
 
         [Test]

@@ -26,7 +26,7 @@ namespace FubuTransportation.Testing.ErrorHandling
 
             theExpression.MessageContains("like you");
 
-            theMatch.Description.ShouldEqual("Exception message contains 'like you'");
+            theMatch.Description.ShouldBe("Exception message contains 'like you'");
 
             theMatch.Matches(null, exception1).ShouldBeTrue();
             theMatch.Matches(null, exception2).ShouldBeFalse();
@@ -40,7 +40,7 @@ namespace FubuTransportation.Testing.ErrorHandling
 
             theExpression.IsType<NotImplementedException>();
 
-            theMatch.Description.ShouldEqual("Exception type is " + typeof (NotImplementedException).FullName);
+            theMatch.Description.ShouldBe("Exception type is " + typeof (NotImplementedException).FullName);
 
             theMatch.Matches(null, exception1).ShouldBeTrue();
             theMatch.Matches(null, exception2).ShouldBeFalse();

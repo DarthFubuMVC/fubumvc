@@ -44,7 +44,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                 .Each(x =>
                 {
                     x.Calls.First().HandlerType.Name.EndsWith("Controller");
-                    x.Calls.First().HandlerType.Assembly.ShouldEqual(typeof (ClassInAnotherAssembly).Assembly);
+                    x.Calls.First().HandlerType.Assembly.ShouldBe(typeof (ClassInAnotherAssembly).Assembly);
                 });
         }
 

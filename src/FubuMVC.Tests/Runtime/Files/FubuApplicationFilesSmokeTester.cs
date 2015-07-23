@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.Runtime.Files
             fubuFile.ShouldNotBeNull();
 
             fubuFile.ReadContents()
-                .Trim().ShouldEqual("some text from a.txt");
+                .Trim().ShouldBe("some text from a.txt");
         }
 
         [Test]
@@ -38,13 +38,13 @@ namespace FubuMVC.Tests.Runtime.Files
             theFiles.AssertHasFile("Runtime\\Files\\Data\\a.txt");
 
             theFiles.Find("Runtime\\Files\\Data\\a.txt").ReadContents()
-                .Trim().ShouldEqual("some text from a.txt");
+                .Trim().ShouldBe("some text from a.txt");
         }
 
         [Test]
         public void get_application_path_delegates_to_fubumvc_package_facility()
         {
-            theFiles.GetApplicationPath().ShouldEqual(FubuApplication.GetApplicationPath());
+            theFiles.GetApplicationPath().ShouldBe(FubuApplication.GetApplicationPath());
         }
     }
 }

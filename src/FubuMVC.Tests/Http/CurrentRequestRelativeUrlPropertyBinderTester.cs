@@ -48,7 +48,7 @@ namespace FubuMVC.Tests.Http
                                                               x.Service<IHttpRequest>(stubCurrentHttpRequest);
                                                           })
                                                           .Model;
-            model.RelativeUrl.ShouldEqual(stubCurrentHttpRequest.RelativeUrl());
+            model.RelativeUrl.ShouldBe(stubCurrentHttpRequest.RelativeUrl());
         }
 
         public class RelativeUrlModel

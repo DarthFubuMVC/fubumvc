@@ -40,7 +40,7 @@ namespace FubuMVC.Tests.Http
                     x.Service<IHttpRequest>(stubCurrentHttpRequest);
                 })
                     .Model;
-            model.FullUrl.ShouldEqual(stubCurrentHttpRequest.FullUrl());
+            model.FullUrl.ShouldBe(stubCurrentHttpRequest.FullUrl());
         }
 
         public class FullUrlModel

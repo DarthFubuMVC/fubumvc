@@ -35,7 +35,7 @@ namespace FubuMVC.Tests.SessionState
         [Test]
         public void parses_the_json()
         {
-            theTarget.ShouldEqual(new FlashTarget {Name = "Joel"});
+            theTarget.ShouldBe(new FlashTarget {Name = "Joel"});
         }
 
         [Test]

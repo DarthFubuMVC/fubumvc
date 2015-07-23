@@ -65,8 +65,8 @@ namespace FubuTransportation.Testing.ScheduledJobs
         public void registration_of_scheduled_jobs_can_capture_channel_names()
         {
             var graph = theRuntime.Factory.Get<ScheduledJobGraph>();
-            graph.DefaultChannel.Name.ShouldEqual("Downstream");
-            graph.FindJob(typeof (AJob)).Channel.Name.ShouldEqual("Upstream");
+            graph.DefaultChannel.Name.ShouldBe("Downstream");
+            graph.FindJob(typeof (AJob)).Channel.Name.ShouldBe("Upstream");
         }
 
         [Test]
@@ -98,7 +98,7 @@ namespace FubuTransportation.Testing.ScheduledJobs
         {
             var graph = theRuntime.Factory.Get<ScheduledJobGraph>();
             graph.FindJob(typeof (BJob))
-                .Timeout.ShouldEqual(11.Minutes());
+                .Timeout.ShouldBe(11.Minutes());
         }
 
     }

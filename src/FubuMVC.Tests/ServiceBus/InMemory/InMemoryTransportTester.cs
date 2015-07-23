@@ -16,8 +16,8 @@ namespace FubuTransportation.Testing.InMemory
         {
             var settings = InMemoryTransport.ToInMemory<NodeSettings>();
 
-            settings.Inbound.ShouldEqual(new Uri("memory://node/inbound"));
-            settings.Outbound.ShouldEqual(new Uri("memory://node/outbound"));
+            settings.Inbound.ShouldBe(new Uri("memory://node/inbound"));
+            settings.Outbound.ShouldBe(new Uri("memory://node/outbound"));
         }
 
         [Test]
@@ -27,8 +27,8 @@ namespace FubuTransportation.Testing.InMemory
             using (var runtime = FubuTransport.For<DefaultRegistry>().Bootstrap())
             {
                 var settings = InMemoryTransport.ToInMemory<NodeSettings>();
-                settings.Inbound.ShouldEqual(new Uri("memory://default/inbound"));
-                settings.Outbound.ShouldEqual(new Uri("memory://node/outbound"));
+                settings.Inbound.ShouldBe(new Uri("memory://default/inbound"));
+                settings.Outbound.ShouldBe(new Uri("memory://node/outbound"));
             }
         }
 
@@ -40,7 +40,7 @@ namespace FubuTransportation.Testing.InMemory
             }).Bootstrap())
             {
                 runtime.Factory.Get<ChannelGraph>().ReplyChannelFor(InMemoryChannel.Protocol)
-                    .ShouldEqual("memory://localhost/fubu/replies".ToUri());
+                    .ShouldBe("memory://localhost/fubu/replies".ToUri());
             }
         }
 
@@ -53,7 +53,7 @@ namespace FubuTransportation.Testing.InMemory
             }).Bootstrap())
             {
                 runtime.Factory.Get<ChannelGraph>().ReplyChannelFor(InMemoryChannel.Protocol)
-                    .ShouldEqual("memory://special".ToUri());
+                    .ShouldBe("memory://special".ToUri());
             }
         }
 

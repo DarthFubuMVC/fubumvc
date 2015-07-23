@@ -23,7 +23,7 @@ namespace FubuTransportation.Testing.Configuration
                 .ApplySettings(settings, channelNode);
 
             channelNode.Scheduler.ShouldBeOfType<TaskScheduler>()
-                .TaskCount.ShouldEqual(5);
+                .TaskCount.ShouldBe(5);
 
         }
 
@@ -41,7 +41,7 @@ namespace FubuTransportation.Testing.Configuration
                 .ApplySettings(settings, channelNode);
 
             channelNode.Scheduler.ShouldBeOfType<ThreadScheduler>()
-                .ThreadCount.ShouldEqual(7);
+                .ThreadCount.ShouldBe(7);
 
         }
 

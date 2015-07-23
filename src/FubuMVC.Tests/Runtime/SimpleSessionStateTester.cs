@@ -30,7 +30,7 @@ namespace FubuMVC.Tests.Runtime
         {
             var target = new SimpleSessionTarget {Name = "Test"};
             theSessionState.Set(target);
-            theSessionState.Get<SimpleSessionTarget>().ShouldEqual(target);
+            theSessionState.Get<SimpleSessionTarget>().ShouldBe(target);
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace FubuMVC.Tests.Runtime
             var target = new SimpleSessionTarget { Name = "Test" };
             var key = "the key";
             theSessionState.Set(key, target);
-            theSessionState.Get<SimpleSessionTarget>(key).ShouldEqual(target);
+            theSessionState.Get<SimpleSessionTarget>(key).ShouldBe(target);
         }
 
         public class StubSession : HttpSessionStateBase

@@ -24,9 +24,9 @@ namespace FubuMVC.IntegrationTesting.Owin
                 var response = x.PostJson(message, "text/json", "text/json");
 
                 response.StatusCodeShouldBe(HttpStatusCode.OK);
-                response.ContentType.ShouldEqual("text/json");
+                response.ContentType.ShouldBe("text/json");
 
-                response.ReadAsJson<Message>().ShouldEqual(message);
+                response.ReadAsJson<Message>().ShouldBe(message);
             });
         }
 
@@ -44,10 +44,10 @@ namespace FubuMVC.IntegrationTesting.Owin
                 var response = x.PostXml(message, "text/xml", "text/xml");
 
                 response.StatusCodeShouldBe(HttpStatusCode.OK);
-                response.ContentType.ShouldEqual("text/xml");
+                response.ContentType.ShouldBe("text/xml");
 
                 var serializer = new XmlSerializer(typeof (Message));
-                serializer.Deserialize(new XmlTextReader(new StringReader(response.ReadAsText()))).ShouldEqual(message);
+                serializer.Deserialize(new XmlTextReader(new StringReader(response.ReadAsText()))).ShouldBe(message);
             });
         }
     }

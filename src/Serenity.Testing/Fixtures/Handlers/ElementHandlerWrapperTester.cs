@@ -129,7 +129,7 @@ namespace Serenity.Testing.Fixtures.Handlers
 
             ElementHandlerWrapper.AllHandlers = () => handlers;
 
-            ClassUnderTest.GetData(_context, _element).ShouldEqual(Result);
+            ClassUnderTest.GetData(_context, _element).ShouldBe(Result);
 
             handlers[1].AssertWasCalled(x => x.Matches(_element));
             handlers[2].AssertWasCalled(x => x.Matches(_element));

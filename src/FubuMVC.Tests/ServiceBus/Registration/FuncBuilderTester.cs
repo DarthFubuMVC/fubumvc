@@ -16,7 +16,7 @@ namespace FubuTransportation.Testing.Registration
 
             var func = FuncBuilder.CompileGetter(sample.GetType().GetProperty("Message")).As<Func<SampleClass, string>>();
             var result = func(sample);
-            result.ShouldEqual(sample.Message);
+            result.ShouldBe(sample.Message);
         }
 
         [Test]
@@ -27,7 +27,7 @@ namespace FubuTransportation.Testing.Registration
 
             var func = FuncBuilder.CompileSetter(sample.GetType().GetProperty("Message")).As<Action<SampleClass, string>>();
             func(sample, message);
-            sample.Message.ShouldEqual(message);
+            sample.Message.ShouldBe(message);
         }
     }
 

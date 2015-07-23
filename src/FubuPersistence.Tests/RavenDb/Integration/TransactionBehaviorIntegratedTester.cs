@@ -28,9 +28,9 @@ namespace FubuPersistence.Tests.RavenDb.Integration
 
             using (var application = FubuApplication.For<NamedEntityRegistry>(_ => _.StructureMap(container)).RunEmbedded())
             {
-                application.Endpoints.PostJson(new NamedEntity {Name = "Jeremy"}).StatusCode.ShouldEqual(HttpStatusCode.OK);
-                application.Endpoints.PostJson(new NamedEntity {Name = "Josh"}).StatusCode.ShouldEqual(HttpStatusCode.OK);
-                application.Endpoints.PostJson(new NamedEntity {Name = "Vyrak"}).StatusCode.ShouldEqual(HttpStatusCode.OK);
+                application.Endpoints.PostJson(new NamedEntity {Name = "Jeremy"}).StatusCode.ShouldBe(HttpStatusCode.OK);
+                application.Endpoints.PostJson(new NamedEntity {Name = "Josh"}).StatusCode.ShouldBe(HttpStatusCode.OK);
+                application.Endpoints.PostJson(new NamedEntity {Name = "Vyrak"}).StatusCode.ShouldBe(HttpStatusCode.OK);
             
                 application.Services.Get<ITransaction>().Execute<IDocumentSession>(session => {
                     session.Query<NamedEntity>()

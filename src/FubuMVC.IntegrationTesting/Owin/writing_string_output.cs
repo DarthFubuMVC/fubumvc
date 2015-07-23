@@ -14,7 +14,7 @@ namespace FubuMVC.IntegrationTesting.Owin
             HarnessApplication.Run(endpoints =>
             {
                 endpoints.Get<StringEndpoint>(x => x.get_hello()).ContentShouldBe(MimeType.Text, "Hello.")
-                    .StatusCode.ShouldEqual(HttpStatusCode.OK);
+                    .StatusCode.ShouldBe(HttpStatusCode.OK);
             });
         }
     }

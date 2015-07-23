@@ -76,9 +76,9 @@ namespace FubuPersistence.Tests.RavenDb
 
             repo = theUnitOfWork.Start();
 
-            repo.All<User>().Count().ShouldEqual(0);
-            repo.All<OtherEntity>().Count().ShouldEqual(0);
-            repo.All<ThirdEntity>().Count().ShouldEqual(0);
+            repo.All<User>().Count().ShouldBe(0);
+            repo.All<OtherEntity>().Count().ShouldBe(0);
+            repo.All<ThirdEntity>().Count().ShouldBe(0);
         }
     }
 

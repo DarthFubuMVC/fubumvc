@@ -48,7 +48,7 @@ namespace FubuMVC.Tests.Registration
         {
             MethodInfo method = type.GetMethod("OneInOneOut");
             var func = FuncBuilder.ToFunc(type, method).ShouldBeOfType<Func<PropertyTarget, int, string>>();
-            func(new PropertyTarget(), 123).ShouldEqual("123");
+            func(new PropertyTarget(), 123).ShouldBe("123");
         }
 
         [Test]
@@ -61,7 +61,7 @@ namespace FubuMVC.Tests.Registration
 
             action(target, "last name");
 
-            target.LastCallToGo.ShouldEqual("last name");
+            target.LastCallToGo.ShouldBe("last name");
         }
 
         [Test]
@@ -72,7 +72,7 @@ namespace FubuMVC.Tests.Registration
 
             var target = new PropertyTarget();
 
-            func(target).ShouldEqual(target.ZeroInOneOut());
+            func(target).ShouldBe(target.ZeroInOneOut());
         }
     }
 }

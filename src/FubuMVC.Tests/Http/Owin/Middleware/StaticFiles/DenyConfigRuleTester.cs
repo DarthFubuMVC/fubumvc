@@ -15,9 +15,9 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
         {
             var theRule = new DenyConfigRule();
 
-            theRule.IsAllowed(new FubuFile("foo.config")).ShouldEqual(AuthorizationRight.Deny);
-            theRule.IsAllowed(new FubuFile("web.config")).ShouldEqual(AuthorizationRight.Deny);
-            theRule.IsAllowed(new FubuFile("foo.asset.config")).ShouldEqual(AuthorizationRight.Deny);
+            theRule.IsAllowed(new FubuFile("foo.config")).ShouldBe(AuthorizationRight.Deny);
+            theRule.IsAllowed(new FubuFile("web.config")).ShouldBe(AuthorizationRight.Deny);
+            theRule.IsAllowed(new FubuFile("foo.asset.config")).ShouldBe(AuthorizationRight.Deny);
         }
 
         [Test]
@@ -25,9 +25,9 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
         {
             var theRule = new DenyConfigRule();
 
-            theRule.IsAllowed(new FubuFile("foo.txt")).ShouldEqual(AuthorizationRight.None);
-            theRule.IsAllowed(new FubuFile("foo.htm")).ShouldEqual(AuthorizationRight.None);
-            theRule.IsAllowed(new FubuFile("foo.jpg")).ShouldEqual(AuthorizationRight.None);
+            theRule.IsAllowed(new FubuFile("foo.txt")).ShouldBe(AuthorizationRight.None);
+            theRule.IsAllowed(new FubuFile("foo.htm")).ShouldBe(AuthorizationRight.None);
+            theRule.IsAllowed(new FubuFile("foo.jpg")).ShouldBe(AuthorizationRight.None);
         }
     }
 }

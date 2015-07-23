@@ -14,7 +14,7 @@ namespace FubuMVC.IntegrationTesting.Owin
         {
             TestHost.BehaviorGraph.BehaviorFor<ReadingQuerystringEndpoint>(x => x.get_querystring_Key(null))
                 .As<RoutedChain>()
-                .GetRoutePattern().ShouldEqual("querystring/{Key}");
+                .GetRoutePattern().ShouldBe("querystring/{Key}");
 
             TestHost.Scenario(_ =>
             {

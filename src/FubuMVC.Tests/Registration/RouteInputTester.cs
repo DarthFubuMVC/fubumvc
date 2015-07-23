@@ -21,13 +21,13 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void to_query_string_of_empty_value_returns_name()
         {
-            _parameter.ToQueryString(new FakeInput()).ShouldEqual(_parameter.Name + "=");
+            _parameter.ToQueryString(new FakeInput()).ShouldBe(_parameter.Name + "=");
         }
 
         [Test]
         public void to_query_string_fromwith_encoded_value()
         {
-            _parameter.ToQueryString(new FakeInput { Code = "abc/def&ghi=jkl" }).ShouldEqual(_parameter.Name + "=abc%2Fdef%26ghi%3Djkl");
+            _parameter.ToQueryString(new FakeInput { Code = "abc/def&ghi=jkl" }).ShouldBe(_parameter.Name + "=abc%2Fdef%26ghi%3Djkl");
         }
 
         [Test]
@@ -35,7 +35,7 @@ namespace FubuMVC.Tests.Registration
         {
             var parameters = new RouteParameters<FakeInput>();
             parameters[x => x.Code] = "something";
-            _parameter.Substitute(parameters, "aaa/{Code}/aaa").ShouldEqual("aaa/something/aaa");
+            _parameter.Substitute(parameters, "aaa/{Code}/aaa").ShouldBe("aaa/something/aaa");
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace FubuMVC.Tests.Registration
         {
             var parameters = new RouteParameters<FakeInput>();
             parameters[x => x.Code] = "something&else";
-            _parameter.Substitute(parameters, "aaa/{Code}/aaa").ShouldEqual("aaa/something%26else/aaa");
+            _parameter.Substitute(parameters, "aaa/{Code}/aaa").ShouldBe("aaa/something%26else/aaa");
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace FubuMVC.Tests.Registration
         {
             var parameters = new RouteParameters<FakeInput>();
             parameters[x => x.Code] = "computers/laptop/i7/dell&ibm";
-            _parameter.Substitute(parameters, "product/category/{*Code}").ShouldEqual("product/category/computers/laptop/i7/dell%26ibm");
+            _parameter.Substitute(parameters, "product/category/{*Code}").ShouldBe("product/category/computers/laptop/i7/dell%26ibm");
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace FubuMVC.Tests.Registration
         {
             var parameters = new RouteParameters<FakeInput>();
             parameters[x => x.Code] = "laptop&apple";
-            _parameter.Substitute(parameters, "product/category/{*Code}").ShouldEqual("product/category/laptop%26apple");
+            _parameter.Substitute(parameters, "product/category/{*Code}").ShouldBe("product/category/laptop%26apple");
         }
 
         [Test]
@@ -90,7 +90,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void to_query_string_from_route_parameter_with_no_values()
         {
-            _parameter.ToQueryString(new RouteParameters()).ShouldEqual("Code=");
+            _parameter.ToQueryString(new RouteParameters()).ShouldBe("Code=");
         }
 
         [Test]
@@ -99,7 +99,7 @@ namespace FubuMVC.Tests.Registration
             var parameters = new RouteParameters<FakeInput>();
             parameters[x => x.Code] = "something";
 
-            _parameter.ToQueryString(parameters).ShouldEqual("Code=something");
+            _parameter.ToQueryString(parameters).ShouldBe("Code=something");
         }
 
         [Test]
@@ -108,7 +108,7 @@ namespace FubuMVC.Tests.Registration
             var parameters = new RouteParameters<FakeInput>();
             parameters[x => x.Code] = "abc/def&ghi=jkl";
 
-            _parameter.ToQueryString(parameters).ShouldEqual("Code=abc%2Fdef%26ghi%3Djkl");
+            _parameter.ToQueryString(parameters).ShouldBe("Code=abc%2Fdef%26ghi%3Djkl");
         }
     }
 }

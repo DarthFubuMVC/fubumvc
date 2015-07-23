@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.Security.Authentication
                 UserName = "something"
             }, role => role == "A");
 
-            principal.Identity.Name.ShouldEqual("something");
+            principal.Identity.Name.ShouldBe("something");
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace FubuMVC.Tests.Security.Authentication
                 user.AddRoles("A", "B");
             });
 
-            FubuPrincipal.Current.Identity.Name.ShouldEqual("WreckItRalph");
+            FubuPrincipal.Current.Identity.Name.ShouldBe("WreckItRalph");
 
             FubuPrincipal.Current.IsInRole("A").ShouldBeTrue();
             FubuPrincipal.Current.IsInRole("B").ShouldBeTrue();

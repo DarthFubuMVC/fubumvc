@@ -27,7 +27,7 @@ namespace FubuTransportation.Testing.Diagnostics
             using (var server = EmbeddedFubuMvcServer.For<DiagnosticApplication>(appPath))
             {
                 server.Endpoints.Get<MessagesFubuDiagnostics>(x => x.get_messages())
-                    .StatusCode.ShouldEqual(HttpStatusCode.OK);
+                    .StatusCode.ShouldBe(HttpStatusCode.OK);
             }
 
             InMemoryQueueManager.ClearAll();
@@ -39,7 +39,7 @@ namespace FubuTransportation.Testing.Diagnostics
             using (var server = EmbeddedFubuMvcServer.For<DiagnosticApplication>(appPath))
             {
                 server.Endpoints.Get<ChannelGraphFubuDiagnostics>(x => x.get_channels())
-                    .StatusCode.ShouldEqual(HttpStatusCode.OK);
+                    .StatusCode.ShouldBe(HttpStatusCode.OK);
             }
 
             InMemoryQueueManager.ClearAll();
@@ -66,7 +66,7 @@ namespace FubuTransportation.Testing.Diagnostics
             using (var server = EmbeddedFubuMvcServer.For<DiagnosticApplication>(appPath))
             {
                 server.Endpoints.Get<ScheduledJobsFubuDiagnostics>(x => x.get_scheduled_jobs())
-                    .StatusCode.ShouldEqual(HttpStatusCode.OK);
+                    .StatusCode.ShouldBe(HttpStatusCode.OK);
             }
 
             InMemoryQueueManager.ClearAll();

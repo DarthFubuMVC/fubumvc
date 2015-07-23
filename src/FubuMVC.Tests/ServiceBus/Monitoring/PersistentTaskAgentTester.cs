@@ -34,7 +34,7 @@ namespace FubuTransportation.Testing.Monitoring
 
 
 
-            task.Result.ShouldEqual(HealthStatus.Error);
+            task.Result.ShouldBe(HealthStatus.Error);
         }
 
         [Test]

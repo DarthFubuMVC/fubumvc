@@ -43,24 +43,24 @@ namespace FubuMVC.Tests.StructureMap.Settings
         [Test]
         public void include_explicitly()
         {
-            TheResultingSettings.Name.ShouldEqual("Max");
-            TheResultingSettings.Age.ShouldEqual(9);
+            TheResultingSettings.Name.ShouldBe("Max");
+            TheResultingSettings.Age.ShouldBe(9);
         }
 
         [Test]
         public void include_by_settings_convention_in_the_application_assembly()
         {
-            container.Value.GetInstance<BarSettings>().Direction.ShouldEqual("North");
-            TheResultingSettings.Name.ShouldEqual("Max");
-            TheResultingSettings.Age.ShouldEqual(9);
+            container.Value.GetInstance<BarSettings>().Direction.ShouldBe("North");
+            TheResultingSettings.Name.ShouldBe("Max");
+            TheResultingSettings.Age.ShouldBe(9);
         }
 
         [Test]
         public void include_by_settings_convention_by_picking_the_assembly()
         {
-            container.Value.GetInstance<BarSettings>().Direction.ShouldEqual("North");
-            TheResultingSettings.Name.ShouldEqual("Max");
-            TheResultingSettings.Age.ShouldEqual(9);
+            container.Value.GetInstance<BarSettings>().Direction.ShouldBe("North");
+            TheResultingSettings.Name.ShouldBe("Max");
+            TheResultingSettings.Age.ShouldBe(9);
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace FubuMVC.Tests.StructureMap.Settings
         {
             registry.Services(x => { x.ReplaceService(new BarSettings {Direction = "West"}); });
 
-            container.Value.GetInstance<BarSettings>().Direction.ShouldEqual("West");
+            container.Value.GetInstance<BarSettings>().Direction.ShouldBe("West");
         }
     }
 

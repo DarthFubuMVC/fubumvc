@@ -48,7 +48,7 @@ namespace FubuMVC.Tests.Projections
             projection.As<IProjection<Parent>>()
                 .Accessors()
                 .Single()
-                .ShouldEqual(ReflectionHelper.GetAccessor<Parent>(x => x.Children));
+                .ShouldBe(ReflectionHelper.GetAccessor<Parent>(x => x.Children));
         }
 
         public XmlElement write(IProjection<Parent> projection)
@@ -67,7 +67,7 @@ namespace FubuMVC.Tests.Projections
 
             var element = write(projection);
 
-            element.OuterXml.ShouldEqual(
+            element.OuterXml.ShouldBe(
                 "<root><Children><Child><name>Jeremy</name></Child><Child><name>Jessica</name></Child><Child><name>Natalie</name></Child></Children></root>");
         }
 
@@ -79,7 +79,7 @@ namespace FubuMVC.Tests.Projections
 
             var element = write(projection);
 
-            element.OuterXml.ShouldEqual(
+            element.OuterXml.ShouldBe(
                 "<root><Children><Child><name>Jeremy</name></Child><Child><name>Jessica</name></Child><Child><name>Natalie</name></Child></Children></root>");
         }
 
@@ -91,7 +91,7 @@ namespace FubuMVC.Tests.Projections
 
             var element = write(projection);
 
-            element.OuterXml.ShouldEqual(
+            element.OuterXml.ShouldBe(
                 "<root><children><Child><name>Jeremy</name></Child><Child><name>Jessica</name></Child><Child><name>Natalie</name></Child></children></root>");
         }
 
@@ -103,7 +103,7 @@ namespace FubuMVC.Tests.Projections
 
             var element = write(projection);
 
-            element.OuterXml.ShouldEqual(
+            element.OuterXml.ShouldBe(
                 "<root><Children><child><name>Jeremy</name></child><child><name>Jessica</name></child><child><name>Natalie</name></child></Children></root>");
         }
 

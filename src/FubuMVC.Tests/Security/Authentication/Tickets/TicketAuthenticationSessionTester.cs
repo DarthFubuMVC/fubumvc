@@ -35,20 +35,20 @@ namespace FubuMVC.Tests.Security.Authentication.Tickets
         [Test]
         public void the_ticket_should_have_the_user_name()
         {
-            theResultingTicket.UserName.ShouldEqual(theUserName);
+            theResultingTicket.UserName.ShouldBe(theUserName);
         }
 
         [Test]
         public void last_accessed_should_be_now()
         {
-            theResultingTicket.LastAccessed.ShouldEqual(UtcSystemTime);
+            theResultingTicket.LastAccessed.ShouldBe(UtcSystemTime);
         }
 
         [Test]
         public void expiration_is_now_plus_the_expiration_in_minutes_from_settings()
         {
             var expirationTime = UtcSystemTime.AddMinutes(30);
-            theResultingTicket.Expiration.ShouldEqual(expirationTime);
+            theResultingTicket.Expiration.ShouldBe(expirationTime);
         }
     }
 
@@ -142,7 +142,7 @@ namespace FubuMVC.Tests.Security.Authentication.Tickets
         [Test]
         public void should_return_the_username_of_the_current_logged_in_user()
         {
-            ClassUnderTest.PreviouslyAuthenticatedUser().ShouldEqual(theTicket.UserName);
+            ClassUnderTest.PreviouslyAuthenticatedUser().ShouldBe(theTicket.UserName);
         }
     }
 
@@ -198,7 +198,7 @@ namespace FubuMVC.Tests.Security.Authentication.Tickets
         [Test]
         public void should_set_the_last_accessed_time_to_now()
         {
-            theTicket.LastAccessed.ShouldEqual(UtcSystemTime);
+            theTicket.LastAccessed.ShouldBe(UtcSystemTime);
         }
 
         [Test]

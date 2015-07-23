@@ -21,8 +21,8 @@ namespace FubuMVC.Tests.ServiceBus.ScenarioSupport
 
         public static void ShouldMatch<THandler>(this MessageProcessed processed, Message message)
         {
-            processed.Description.ShouldEqual(typeof (THandler).Name);
-            processed.Message.ShouldEqual(message);
+            processed.Description.ShouldBe(typeof (THandler).Name);
+            processed.Message.ShouldBe(message);
         }
 
         public static bool HasProcessed(Message message)

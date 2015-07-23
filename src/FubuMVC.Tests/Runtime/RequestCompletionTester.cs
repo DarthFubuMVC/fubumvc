@@ -30,7 +30,7 @@ namespace FubuMVC.Tests.Runtime
         public void start_completes_when_synchronous()
         {
             _requestCompletion.Start(() => { });
-            _completedCount.ShouldEqual(1);
+            _completedCount.ShouldBe(1);
         }
 
         [Test]
@@ -58,7 +58,7 @@ namespace FubuMVC.Tests.Runtime
             });
             _requestCompletion.Start(() => { });
             completed.ShouldBeTrue();
-            _completedCount.ShouldEqual(1);
+            _completedCount.ShouldBe(1);
         }
 
         [Test]
@@ -76,9 +76,9 @@ namespace FubuMVC.Tests.Runtime
             trackRequestCompletion.Expect(x => x.IsComplete()).Return(false);
             _requestCompletion.TrackRequestCompletionWith(trackRequestCompletion);
             _requestCompletion.Start(() => { });
-            _completedCount.ShouldEqual(0);
+            _completedCount.ShouldBe(0);
             _requestCompletion.Complete();
-            _completedCount.ShouldEqual(1);
+            _completedCount.ShouldBe(1);
         }
 
         [Test]

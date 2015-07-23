@@ -11,8 +11,8 @@ namespace FubuMVC.Tests.Http.Cookies
         public void parse_with_one_value()
         {
             var state = CookieState.Parse("key", "1");
-            state.Name.ShouldEqual("key");
-            state.Value.ShouldEqual("1");
+            state.Name.ShouldBe("key");
+            state.Value.ShouldBe("1");
         }
 
         [Test]
@@ -20,10 +20,10 @@ namespace FubuMVC.Tests.Http.Cookies
         {
             var state = CookieState.Parse("key", "a=1");
 
-            state.Name.ShouldEqual("key");
+            state.Name.ShouldBe("key");
             state.Value.ShouldBeNull();
 
-            state["a"].ShouldEqual("1");
+            state["a"].ShouldBe("1");
         }
 
         [Test]
@@ -31,12 +31,12 @@ namespace FubuMVC.Tests.Http.Cookies
         {
             var state = CookieState.Parse("key", "a=1&b=2&c=3");
 
-            state.Name.ShouldEqual("key");
+            state.Name.ShouldBe("key");
             state.Value.ShouldBeNull();
 
-            state["a"].ShouldEqual("1");
-            state["b"].ShouldEqual("2");
-            state["c"].ShouldEqual("3");
+            state["a"].ShouldBe("1");
+            state["b"].ShouldBe("2");
+            state["c"].ShouldBe("3");
         }
 
         [Test]
@@ -44,14 +44,14 @@ namespace FubuMVC.Tests.Http.Cookies
         {
             var state = new CookieState("key").With("a", "1").With("b", "2");
 
-            state["a"].ShouldEqual("1");
-            state["b"].ShouldEqual("2");
+            state["a"].ShouldBe("1");
+            state["b"].ShouldBe("2");
         }
 
         private void roundtrips(string name, string text)
         {
             var state = CookieState.Parse(name, text);
-            state.ToString().ShouldEqual(name + "=" + text);
+            state.ToString().ShouldBe(name + "=" + text);
         }
 
         [Test]

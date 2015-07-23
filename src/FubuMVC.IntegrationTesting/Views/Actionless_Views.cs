@@ -30,7 +30,7 @@ I am in the view w/ partials
         public void action_less_view_has_UrlCategory_for_VIEW()
         {
             BehaviorGraph.Behaviors.Single(x => typeof (ActionlessView1) == x.InputType())
-                .Category.ShouldEqual(Categories.VIEW);
+                .Category.ShouldBe(Categories.VIEW);
         }
 
         [Test]

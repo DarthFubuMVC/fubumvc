@@ -21,8 +21,8 @@ namespace FubuMVC.Tests.Runtime
 
             var target = BindingScenario<HeaderValueTarget>.For(x => { x.Service<IHttpRequest>(headers); }).Model;
 
-            target.LastEventId.ShouldEqual("something");
-            target.Warning.ShouldEqual("oh no!");
+            target.LastEventId.ShouldBe("something");
+            target.Warning.ShouldBe("oh no!");
         }
     }
 

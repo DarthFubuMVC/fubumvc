@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.StructureMap
 
                 facility.StartNewScope();
 
-                facility.Container.Role.ShouldEqual(ContainerRole.ProfileOrChild);
+                facility.Container.Role.ShouldBe(ContainerRole.ProfileOrChild);
 
                 facility.Container.Configure(_ => _.For<IThing>().Use<BThing>().Singleton());
 

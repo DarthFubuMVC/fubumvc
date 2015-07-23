@@ -39,8 +39,8 @@ namespace FubuMVC.Tests.Projections
             var theFormattedValue = "*Jeremy*";
             formatter.Stub(x => x.GetDisplayForValue(accessor, theRawValue)).Return(theFormattedValue);
 
-            ClassUnderTest.FormattedValueOf(accessor).ShouldEqual(theFormattedValue);
-            ClassUnderTest.FormattedValueOf(x => x.Name).ShouldEqual(theFormattedValue);
+            ClassUnderTest.FormattedValueOf(accessor).ShouldBe(theFormattedValue);
+            ClassUnderTest.FormattedValueOf(x => x.Name).ShouldBe(theFormattedValue);
         }
 
         [Test]
@@ -79,7 +79,7 @@ namespace FubuMVC.Tests.Projections
             MockFor<IValues<ProjectionModel>>().Stub(x => x.ValueFor(accessor))
                 .Return("Jeremy");
 
-            ClassUnderTest.Values.ValueFor(accessor).ShouldEqual("Jeremy");
+            ClassUnderTest.Values.ValueFor(accessor).ShouldBe("Jeremy");
         }
 
         [Test]

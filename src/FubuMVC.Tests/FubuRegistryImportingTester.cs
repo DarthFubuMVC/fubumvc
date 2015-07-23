@@ -149,8 +149,8 @@ namespace FubuMVC.Tests
 
             var graph = BehaviorGraph.BuildFrom(parent);
 
-            graph.BehaviorFor<Action1>(x => x.M1()).As<RoutedChain>().GetRoutePattern().ShouldEqual("import/a/m1");
-            graph.BehaviorFor<Action1>(x => x.M2()).As<RoutedChain>().GetRoutePattern().ShouldEqual("import/a/m2");
+            graph.BehaviorFor<Action1>(x => x.M1()).As<RoutedChain>().GetRoutePattern().ShouldBe("import/a/m1");
+            graph.BehaviorFor<Action1>(x => x.M2()).As<RoutedChain>().GetRoutePattern().ShouldBe("import/a/m2");
         }
 
         [Test]
@@ -161,8 +161,8 @@ namespace FubuMVC.Tests
 
             var graph = BehaviorGraph.BuildFrom(parent);
 
-            graph.BehaviorFor<Action1>(x => x.M1()).As<RoutedChain>().GetRoutePattern().ShouldEqual("a/m1");
-            graph.BehaviorFor<Action1>(x => x.M2()).As<RoutedChain>().GetRoutePattern().ShouldEqual("a/m2");
+            graph.BehaviorFor<Action1>(x => x.M1()).As<RoutedChain>().GetRoutePattern().ShouldBe("a/m1");
+            graph.BehaviorFor<Action1>(x => x.M2()).As<RoutedChain>().GetRoutePattern().ShouldBe("a/m2");
         }
 
         [Test]

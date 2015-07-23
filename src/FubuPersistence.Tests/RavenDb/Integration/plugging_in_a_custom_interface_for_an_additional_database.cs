@@ -47,12 +47,12 @@ namespace FubuPersistence.Tests.RavenDb.Integration
 
             transaction.Execute<IFourthDatabase>(session =>
             {
-                session.Load<Foo>(foo1.Id).Name.ShouldEqual("Jeremy");
+                session.Load<Foo>(foo1.Id).Name.ShouldBe("Jeremy");
             });
 
             transaction.Execute<IFourthDatabase>(session =>
             {
-                session.Load<Foo>(foo1.Id).Name.ShouldEqual("Jeremy");
+                session.Load<Foo>(foo1.Id).Name.ShouldBe("Jeremy");
             });
 
 

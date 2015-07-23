@@ -37,31 +37,31 @@ namespace FubuTransportation.Testing.Monitoring.PermanentTaskController
             settings.TakeOwnershipMessageTimeout = 2.Seconds();
             settings.TaskAvailabilityCheckTimeout = 2.Seconds();
 
-            findStatus("timeout://1").ShouldEqual(HealthStatus.Timedout);
+            findStatus("timeout://1").ShouldBe(HealthStatus.Timedout);
         }
 
         [Test]
         public void check_the_status_of_an_unknown_task()
         {
-            findStatus("unknown://1").ShouldEqual(HealthStatus.Unknown);
+            findStatus("unknown://1").ShouldBe(HealthStatus.Unknown);
         }
 
         [Test]
         public void check_the_status_of_an_active_and_functional_task()
         {
-            findStatus("running://1").ShouldEqual(HealthStatus.Active);
+            findStatus("running://1").ShouldBe(HealthStatus.Active);
         }
 
         [Test]
         public void check_the_status_of_an_inactive_task()
         {
-            findStatus("stopped://1").ShouldEqual(HealthStatus.Inactive);
+            findStatus("stopped://1").ShouldBe(HealthStatus.Inactive);
         }
 
         [Test]
         public void check_the_status_of_an_active_task_that_has_errored_out()
         {
-            findStatus("error://1").ShouldEqual(HealthStatus.Error);
+            findStatus("error://1").ShouldBe(HealthStatus.Error);
         }
     }
 }

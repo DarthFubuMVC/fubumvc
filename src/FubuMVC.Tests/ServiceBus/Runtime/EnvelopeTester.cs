@@ -32,7 +32,7 @@ namespace FubuTransportation.Testing.Runtime
             headers[Envelope.IdKey] = "FOO";
 
             var envelope = new Envelope(headers);
-            envelope.CorrelationId.ShouldEqual("FOO");
+            envelope.CorrelationId.ShouldBe("FOO");
         }
 
         [Test]
@@ -68,8 +68,8 @@ namespace FubuTransportation.Testing.Runtime
 
             child.Message.ShouldBeTheSameAs(childMessage);
 
-            child.OriginalId.ShouldEqual(parent.CorrelationId);
-            child.ParentId.ShouldEqual(parent.CorrelationId);
+            child.OriginalId.ShouldBe(parent.CorrelationId);
+            child.ParentId.ShouldBe(parent.CorrelationId);
         }
 
         [Test]
@@ -87,8 +87,8 @@ namespace FubuTransportation.Testing.Runtime
 
             child.Message.ShouldBeTheSameAs(childMessage);
 
-            child.OriginalId.ShouldEqual(parent.OriginalId);
-            child.ParentId.ShouldEqual(parent.CorrelationId);
+            child.OriginalId.ShouldBe(parent.OriginalId);
+            child.ParentId.ShouldBe(parent.CorrelationId);
         }
 
         [Test]
@@ -106,8 +106,8 @@ namespace FubuTransportation.Testing.Runtime
 
             var child = parent.ForResponse(childMessage);
 
-            child.Headers[Envelope.ResponseIdKey].ShouldEqual(parent.CorrelationId);
-            child.Destination.ShouldEqual(parent.ReplyUri);
+            child.Headers[Envelope.ResponseIdKey].ShouldBe(parent.CorrelationId);
+            child.Destination.ShouldBe(parent.ReplyUri);
         }
 
 
@@ -160,8 +160,8 @@ namespace FubuTransportation.Testing.Runtime
             var uri = "fake://thing".ToUri();
             envelope.Source = uri;
 
-            envelope.Headers[Envelope.SourceKey].ShouldEqual(uri.ToString());
-            envelope.Source.ShouldEqual(uri);
+            envelope.Headers[Envelope.SourceKey].ShouldBe(uri.ToString());
+            envelope.Source.ShouldBe(uri);
         }
 
         [Test]
@@ -174,8 +174,8 @@ namespace FubuTransportation.Testing.Runtime
             var uri = "fake://thing".ToUri();
             envelope.ReplyUri = uri;
 
-            envelope.Headers[Envelope.ReplyUriKey].ShouldEqual(uri.ToString());
-            envelope.ReplyUri.ShouldEqual(uri);
+            envelope.Headers[Envelope.ReplyUriKey].ShouldBe(uri.ToString());
+            envelope.ReplyUri.ShouldBe(uri);
         }
 
 
@@ -183,12 +183,12 @@ namespace FubuTransportation.Testing.Runtime
         public void content_type()
         {
             var envelope = new Envelope();
-            envelope.ContentType.ShouldEqual(null);
+            envelope.ContentType.ShouldBe(null);
 
             envelope.ContentType = "text/xml";
 
-            envelope.Headers[Envelope.ContentTypeKey].ShouldEqual("text/xml");
-            envelope.ContentType.ShouldEqual("text/xml");
+            envelope.Headers[Envelope.ContentTypeKey].ShouldBe("text/xml");
+            envelope.ContentType.ShouldBe("text/xml");
         }
 
         [Test]
@@ -200,8 +200,8 @@ namespace FubuTransportation.Testing.Runtime
             var originalId = Guid.NewGuid().ToString();
             envelope.OriginalId = originalId;
 
-            envelope.Headers[Envelope.OriginalIdKey].ShouldEqual(originalId);
-            envelope.OriginalId.ShouldEqual(originalId);
+            envelope.Headers[Envelope.OriginalIdKey].ShouldBe(originalId);
+            envelope.OriginalId.ShouldBe(originalId);
         }
 
         [Test]
@@ -213,8 +213,8 @@ namespace FubuTransportation.Testing.Runtime
             var parentId = Guid.NewGuid().ToString();
             envelope.ParentId = parentId;
 
-            envelope.Headers[Envelope.ParentIdKey].ShouldEqual(parentId);
-            envelope.ParentId.ShouldEqual(parentId);
+            envelope.Headers[Envelope.ParentIdKey].ShouldBe(parentId);
+            envelope.ParentId.ShouldBe(parentId);
         }
 
         [Test]
@@ -226,8 +226,8 @@ namespace FubuTransportation.Testing.Runtime
             var responseId = Guid.NewGuid().ToString();
             envelope.ResponseId = responseId;
 
-            envelope.Headers[Envelope.ResponseIdKey].ShouldEqual(responseId);
-            envelope.ResponseId.ShouldEqual(responseId);
+            envelope.Headers[Envelope.ResponseIdKey].ShouldBe(responseId);
+            envelope.ResponseId.ShouldBe(responseId);
         }
 
         [Test]
@@ -240,8 +240,8 @@ namespace FubuTransportation.Testing.Runtime
             var uri = "fake://thing".ToUri();
             envelope.Destination = uri;
 
-            envelope.Headers[Envelope.DestinationKey].ShouldEqual(uri.ToString());
-            envelope.Destination.ShouldEqual(uri);
+            envelope.Headers[Envelope.DestinationKey].ShouldBe(uri.ToString());
+            envelope.Destination.ShouldBe(uri);
         }
 
         [Test]
@@ -254,8 +254,8 @@ namespace FubuTransportation.Testing.Runtime
             var uri = "fake://thing".ToUri();
             envelope.ReceivedAt = uri;
 
-            envelope.Headers[Envelope.ReceivedAtKey].ShouldEqual(uri.ToString());
-            envelope.ReceivedAt.ShouldEqual(uri);
+            envelope.Headers[Envelope.ReceivedAtKey].ShouldBe(uri.ToString());
+            envelope.ReceivedAt.ShouldBe(uri);
         }
 
         [Test]
@@ -266,8 +266,8 @@ namespace FubuTransportation.Testing.Runtime
 
 
             envelope.ReplyRequested = "Foo";
-            envelope.Headers[Envelope.ReplyRequestedKey].ShouldEqual("Foo");
-            envelope.ReplyRequested.ShouldEqual("Foo");
+            envelope.Headers[Envelope.ReplyRequestedKey].ShouldBe("Foo");
+            envelope.ReplyRequested.ShouldBe("Foo");
 
             envelope.ReplyRequested = null;
             envelope.ReplyRequested.ShouldBeNull();
@@ -281,7 +281,7 @@ namespace FubuTransportation.Testing.Runtime
 
 
             envelope.AckRequested = true;
-            envelope.Headers[Envelope.AckRequestedKey].ShouldEqual("true");
+            envelope.Headers[Envelope.AckRequestedKey].ShouldBe("true");
             envelope.AckRequested.ShouldBeTrue();
 
             envelope.AckRequested = false;
@@ -302,7 +302,7 @@ namespace FubuTransportation.Testing.Runtime
             var envelope = new Envelope();
             envelope.ExecutionTime = time;
 
-            envelope.ExecutionTime.ShouldEqual(time);
+            envelope.ExecutionTime.ShouldBe(time);
         }
 
         [Test]
@@ -348,19 +348,19 @@ namespace FubuTransportation.Testing.Runtime
 
             // Hey, this HAS to work, so we're UT'ing it.
             token.Headers.ShouldBeTheSameAs(envelope.Headers);
-            token.Message.ShouldEqual(envelope.Message);
-            token.Data.ShouldEqual(envelope.Data);
+            token.Message.ShouldBe(envelope.Message);
+            token.Data.ShouldBe(envelope.Data);
         }
 
         [Test]
         public void attempts()
         {
             var envelope = new Envelope();
-            envelope.Attempts.ShouldEqual(0);
+            envelope.Attempts.ShouldBe(0);
 
             envelope.Attempts++;
 
-            envelope.Attempts.ShouldEqual(1);
+            envelope.Attempts.ShouldBe(1);
         }
 
         [Test]
@@ -377,8 +377,8 @@ namespace FubuTransportation.Testing.Runtime
             clone.Message.ShouldBeTheSameAs(envelope.Message);
             clone.Headers.ShouldNotBeTheSameAs(envelope.Headers);
 
-            clone.Headers["a"].ShouldEqual("1");
-            clone.Headers["b"].ShouldEqual("2");
+            clone.Headers["a"].ShouldBe("1");
+            clone.Headers["b"].ShouldBe("2");
         }
     }
 

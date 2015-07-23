@@ -23,14 +23,14 @@ namespace FubuMVC.IntegrationTesting.Http
         public void add_their_cookies_to_the_parent_request()
         {
             var response = endpoints.GetByInput(new NonPartialInput());
-            response.Cookies.Count.ShouldEqual(1);
+            response.Cookies.Count.ShouldBe(1);
         }
 
         [Test]
         public void fast_invocation()
         {
             endpoints.Get<PartialController>(x => x.get_fast_partial())
-                .ReadAsText().ShouldEqual("The name was Malcolm Reynolds");
+                .ReadAsText().ShouldBe("The name was Malcolm Reynolds");
         }
     }
 

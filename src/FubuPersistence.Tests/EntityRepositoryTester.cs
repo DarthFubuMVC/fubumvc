@@ -16,7 +16,7 @@ namespace FubuPersistence.Tests
             var repository = EntityRepository.InMemory();
             var @case = new FakeEntity();
 
-            @case.Id.ShouldEqual(Guid.Empty);
+            @case.Id.ShouldBe(Guid.Empty);
 
             repository.Update(@case);
 

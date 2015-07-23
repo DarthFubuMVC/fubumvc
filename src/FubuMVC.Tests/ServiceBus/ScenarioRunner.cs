@@ -36,7 +36,7 @@ namespace FubuTransportation.Testing
 
             new Send_a_single_message_to_the_correct_node().Execute(writer);
 
-            writer.FailureCount.ShouldEqual(0);
+            writer.FailureCount.ShouldBe(0);
         }
 
         [Test]
@@ -46,7 +46,7 @@ namespace FubuTransportation.Testing
 
             new Send_a_single_message_to_multiple_listening_nodes().Execute(writer);
 
-            writer.FailureCount.ShouldEqual(0);
+            writer.FailureCount.ShouldBe(0);
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace FubuTransportation.Testing
 
             new Send_a_message_that_raises_events().Execute(writer);
 
-            writer.FailureCount.ShouldEqual(0);
+            writer.FailureCount.ShouldBe(0);
         }
 
         [Test]
@@ -66,7 +66,7 @@ namespace FubuTransportation.Testing
 
             new Request_a_reply_for_a_single_message().Execute(writer);
 
-            writer.FailureCount.ShouldEqual(0);
+            writer.FailureCount.ShouldBe(0);
         }
 
         [Test]
@@ -76,7 +76,7 @@ namespace FubuTransportation.Testing
 
             new SendAndAwait_for_a_single_message().Execute(writer);
 
-            writer.FailureCount.ShouldEqual(0);
+            writer.FailureCount.ShouldBe(0);
         }
 
 

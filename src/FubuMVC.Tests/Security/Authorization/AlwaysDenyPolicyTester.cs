@@ -11,7 +11,7 @@ namespace FubuMVC.Tests.Security.Authorization
         public void it_is_just_deny()
         {
             new AlwaysDenyPolicy().RightsFor(null)
-                .ShouldEqual(AuthorizationRight.Deny);
+                .ShouldBe(AuthorizationRight.Deny);
         }
     }
 }

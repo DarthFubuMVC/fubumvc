@@ -21,7 +21,7 @@ namespace FubuTransportation.Testing.ScheduledJobs
         [Test]
         public void next_scheduled_time_should_start_the_next_day()
         {
-            nextScheduledTime.LocalDateTime.ShouldEqual(DateTime.Today.AddDays(1).AddHours(6)); // Tomorrow 6am
+            nextScheduledTime.LocalDateTime.ShouldBe(DateTime.Today.AddDays(1).AddHours(6)); // Tomorrow 6am
         }
     }
 
@@ -40,7 +40,7 @@ namespace FubuTransportation.Testing.ScheduledJobs
         [Test]
         public void next_scheduled_time_should_start_the_same_day()
         {
-            nextScheduledTime.LocalDateTime.ShouldEqual(DateTime.Today.AddHours(8)); // Today 8am
+            nextScheduledTime.LocalDateTime.ShouldBe(DateTime.Today.AddHours(8)); // Today 8am
         }
     }
 
@@ -59,7 +59,7 @@ namespace FubuTransportation.Testing.ScheduledJobs
         [Test]
         public void next_scheduled_time_should_start_the_next_day()
         {
-            nextScheduledTime.LocalDateTime.ShouldEqual(DateTime.Today.AddDays(1).AddHours(7).AddMinutes(33)); // Tomorrow 7:33am
+            nextScheduledTime.LocalDateTime.ShouldBe(DateTime.Today.AddDays(1).AddHours(7).AddMinutes(33)); // Tomorrow 7:33am
         }
     }
 }

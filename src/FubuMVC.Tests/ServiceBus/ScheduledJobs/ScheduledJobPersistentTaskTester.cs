@@ -14,7 +14,7 @@ namespace FubuTransportation.Testing.ScheduledJobs
         [Test]
         public void protocol()
         {
-            ClassUnderTest.Protocol.ShouldEqual("scheduled");
+            ClassUnderTest.Protocol.ShouldBe("scheduled");
         }
 
         [Test]
@@ -22,7 +22,7 @@ namespace FubuTransportation.Testing.ScheduledJobs
         {
             ClassUnderTest.PermanentTasks()
                 .Single()
-                .ShouldEqual(ScheduledJobPersistentTask.Uri);
+                .ShouldBe(ScheduledJobPersistentTask.Uri);
         }
 
         [Test]

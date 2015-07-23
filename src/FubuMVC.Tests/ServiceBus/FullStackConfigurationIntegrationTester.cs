@@ -18,10 +18,10 @@ namespace FubuMVC.Tests.ServiceBus
 
                 var graph = runtime.Factory.Get<BehaviorGraph>();
 
-                graph.Behaviors.Count(x => typeof (Foo1) == x.InputType()).ShouldEqual(1);
-                graph.Behaviors.Count(x => typeof (Foo2) == x.InputType()).ShouldEqual(1);
-                graph.Behaviors.Count(x => typeof (Foo3) == x.InputType()).ShouldEqual(1);
-                graph.Behaviors.Count(x => typeof (Foo4) == x.InputType()).ShouldEqual(1);
+                graph.Behaviors.Count(x => typeof (Foo1) == x.InputType()).ShouldBe(1);
+                graph.Behaviors.Count(x => typeof (Foo2) == x.InputType()).ShouldBe(1);
+                graph.Behaviors.Count(x => typeof (Foo3) == x.InputType()).ShouldBe(1);
+                graph.Behaviors.Count(x => typeof (Foo4) == x.InputType()).ShouldBe(1);
             }
         }
 
@@ -37,10 +37,10 @@ namespace FubuMVC.Tests.ServiceBus
 
                 var graph = runtime.Factory.Get<BehaviorGraph>();
 
-                graph.Behaviors.Count(x => typeof(Foo1) == x.InputType()).ShouldEqual(1);
-                graph.Behaviors.Count(x => typeof(Foo2) == x.InputType()).ShouldEqual(1);
-                graph.Behaviors.Count(x => typeof(Foo3) == x.InputType()).ShouldEqual(1);
-                graph.Behaviors.Count(x => typeof(Foo4) == x.InputType()).ShouldEqual(1);
+                graph.Behaviors.Count(x => typeof(Foo1) == x.InputType()).ShouldBe(1);
+                graph.Behaviors.Count(x => typeof(Foo2) == x.InputType()).ShouldBe(1);
+                graph.Behaviors.Count(x => typeof(Foo3) == x.InputType()).ShouldBe(1);
+                graph.Behaviors.Count(x => typeof(Foo4) == x.InputType()).ShouldBe(1);
             }
         }
     }

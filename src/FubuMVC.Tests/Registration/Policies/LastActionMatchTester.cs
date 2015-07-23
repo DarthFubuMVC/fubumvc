@@ -16,7 +16,7 @@ namespace FubuMVC.Tests.Registration.Policies
 
             var description = Description.For(match);
 
-            description.ShortDescription.ShouldEqual("call => call.Method.Name.EndsWith(\"HTML\")");
+            description.ShortDescription.ShouldBe("call => call.Method.Name.EndsWith(\"HTML\")");
         }
 
         [Test]
@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.Registration.Policies
 
             var description = Description.For(match);
 
-            description.ShortDescription.ShouldEqual("Action method is suffixed with HTML");
+            description.ShortDescription.ShouldBe("Action method is suffixed with HTML");
         }
 
         [Test]

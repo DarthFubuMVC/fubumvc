@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.NewConneg
         public void IMayHaveInputType_implementation()
         {
             var node = new InputNode(typeof (Address));
-            node.As<IMayHaveInputType>().InputType().ShouldEqual(typeof (Address));
+            node.As<IMayHaveInputType>().InputType().ShouldBe(typeof (Address));
         }
 
         [Test]

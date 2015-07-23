@@ -35,8 +35,8 @@ namespace FubuTransportation.Testing.Polling
         [Test]
         public void should_only_execute_ImmediateJob_now_and_interval_should_still_work()
         {
-            DelayJob.Executed.ShouldEqual(0);
-            ImmediateJob.Executed.ShouldEqual(1);
+            DelayJob.Executed.ShouldBe(0);
+            ImmediateJob.Executed.ShouldBe(1);
 
             Wait.Until(() => ImmediateJob.Executed > 1, timeoutInMilliseconds: 6000);
             ImmediateJob.Executed.ShouldBeGreaterThan(1);
@@ -45,7 +45,7 @@ namespace FubuTransportation.Testing.Polling
         [Test]
         public void disabled_jobs_are_not_executed_or_started()
         {
-            DisabledJob.Executed.ShouldEqual(0);
+            DisabledJob.Executed.ShouldBe(0);
             theRuntime.Factory.Get<IPollingJobs>().IsActive<DisabledJob>()
                 .ShouldBeFalse();
 

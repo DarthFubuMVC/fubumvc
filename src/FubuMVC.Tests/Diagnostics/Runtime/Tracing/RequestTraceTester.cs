@@ -112,7 +112,7 @@ namespace FubuMVC.Tests.Diagnostics.Runtime.Tracing
         public void logs_to_the_current_request_log_with_the_stopwatch_time()
         {
             ClassUnderTest.Current.AllSteps().Single()
-                .ShouldEqual(new RequestStep(ClassUnderTest.Stopwatch.ElapsedMilliseconds, "something"));
+                .ShouldBe(new RequestStep(ClassUnderTest.Stopwatch.ElapsedMilliseconds, "something"));
         }
     }
 
@@ -159,7 +159,7 @@ namespace FubuMVC.Tests.Diagnostics.Runtime.Tracing
         [Test]
         public void should_mark_the_execution_time_on_the_RequestLog()
         {
-            ClassUnderTest.Current.ExecutionTime.ShouldEqual(ClassUnderTest.Stopwatch.ElapsedMilliseconds);
+            ClassUnderTest.Current.ExecutionTime.ShouldBe(ClassUnderTest.Stopwatch.ElapsedMilliseconds);
         }
     }
 }

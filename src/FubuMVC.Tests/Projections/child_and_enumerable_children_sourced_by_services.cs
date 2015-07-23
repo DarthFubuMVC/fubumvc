@@ -48,8 +48,8 @@ namespace FubuMVC.Tests.Projections
             var values = project(projection);
 
             var leader = values.Child("Leader");
-            leader["FirstName"].ShouldEqual("Rand");
-            leader["LastName"].ShouldEqual("Al'Thor");
+            leader["FirstName"].ShouldBe("Rand");
+            leader["LastName"].ShouldBe("Al'Thor");
         }
 
         [Test]
@@ -65,8 +65,8 @@ namespace FubuMVC.Tests.Projections
             var values = project(projection);
 
             var leader = values.Child("leader");
-            leader["first"].ShouldEqual("Rand");
-            leader["last"].ShouldEqual("Al'Thor");
+            leader["first"].ShouldBe("Rand");
+            leader["last"].ShouldBe("Al'Thor");
         }
 
         [Test]
@@ -83,9 +83,9 @@ namespace FubuMVC.Tests.Projections
 
             var values = project(projection);
             var heros = values.Children("heros");
-            heros.Count().ShouldEqual(3);
-            heros.ElementAt(1)["FirstName"].ShouldEqual("Mat");
-            heros.ElementAt(2)["LastName"].ShouldEqual("Aybara");
+            heros.Count().ShouldBe(3);
+            heros.ElementAt(1)["FirstName"].ShouldBe("Mat");
+            heros.ElementAt(2)["LastName"].ShouldBe("Aybara");
         }
 
         [Test]
@@ -98,9 +98,9 @@ namespace FubuMVC.Tests.Projections
 
             var values = project(projection);
             var heros = values.Children("heros");
-            heros.Count().ShouldEqual(3);
-            heros.ElementAt(1)["first"].ShouldEqual("Mat");
-            heros.ElementAt(2)["last"].ShouldEqual("Aybara");
+            heros.Count().ShouldBe(3);
+            heros.ElementAt(1)["first"].ShouldBe("Mat");
+            heros.ElementAt(2)["last"].ShouldBe("Aybara");
         }
     }
 

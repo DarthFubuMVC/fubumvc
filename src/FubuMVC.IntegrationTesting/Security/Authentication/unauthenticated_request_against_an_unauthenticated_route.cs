@@ -13,8 +13,8 @@ namespace FubuMVC.IntegrationTesting.Security.Authentication
             var model = new PublicModel {Message = "Test"};
             var response = endpoints.GetByInput(model, configure: r => r.AllowAutoRedirect = false);
             
-            response.StatusCode.ShouldEqual(HttpStatusCode.OK);
-            response.ReadAsText().ShouldEqual(model.Message);
+            response.StatusCode.ShouldBe(HttpStatusCode.OK);
+            response.ReadAsText().ShouldBe(model.Message);
         }
     }
 }

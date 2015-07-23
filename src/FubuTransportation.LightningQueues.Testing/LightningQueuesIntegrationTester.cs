@@ -58,7 +58,7 @@ namespace FubuTransportation.LightningQueues.Testing
             var uri = graph.ReplyChannelFor(LightningUri.Protocol);
             uri.ShouldNotBeNull();
 
-            uri.Host.ToUpperInvariant().ShouldEqual(Environment.MachineName.ToUpperInvariant());
+            uri.Host.ToUpperInvariant().ShouldBe(Environment.MachineName.ToUpperInvariant());
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace FubuTransportation.LightningQueues.Testing
             SetupTransport("lq.tcp://www.foo.com:2032/upstream");
 
             var uri = graph.ReplyChannelFor(LightningUri.Protocol);
-            uri.Host.ToUpperInvariant().ShouldEqual(Environment.MachineName.ToUpperInvariant());
+            uri.Host.ToUpperInvariant().ShouldBe(Environment.MachineName.ToUpperInvariant());
         }
 
         [Test]
@@ -91,8 +91,8 @@ namespace FubuTransportation.LightningQueues.Testing
             receiver.Received.Any().ShouldBeTrue();
 
             Envelope actual = receiver.Received.Single();
-            actual.Data.ShouldEqual(envelope.Data);
-            actual.Headers["foo"].ShouldEqual("bar");
+            actual.Data.ShouldBe(envelope.Data);
+            actual.Headers["foo"].ShouldBe("bar");
         }
     }
 

@@ -60,7 +60,7 @@ namespace FubuTransportation.Testing.Polling
             var pollingJobs = container.GetInstance<IPollingJobs>();
 
             pollingJobs.Count()
-                     .ShouldEqual(8);
+                     .ShouldBe(8);
 
         }
 

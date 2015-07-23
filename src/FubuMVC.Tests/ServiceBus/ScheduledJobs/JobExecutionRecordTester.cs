@@ -16,7 +16,7 @@ namespace FubuTransportation.Testing.ScheduledJobs
 
             record.ReadException(ex);
 
-            record.ExceptionText.ShouldEqual(ex.ToString());
+            record.ExceptionText.ShouldBe(ex.ToString());
         }
 
         [Test]

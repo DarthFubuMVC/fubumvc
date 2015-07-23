@@ -38,7 +38,7 @@ namespace FubuTransportation.Testing.Runtime.Invocation
 
             invoker.FindChain(new Envelope {Message = new OneMessage()})
                    .OfType<HandlerCall>().Single()
-                   .HandlerType.ShouldEqual(typeof (OneHandler));
+                   .HandlerType.ShouldBe(typeof (OneHandler));
         }
 
         

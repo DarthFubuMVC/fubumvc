@@ -49,7 +49,7 @@ Special content");
             var view1 = Views.Templates<SparkTemplate>().FirstOrDefault(x => x.Name() == "View1");
 
             view1.Master.ShouldNotBeNull();
-            view1.Master.Name().ShouldEqual("Special");
+            view1.Master.Name().ShouldBe("Special");
 
             view1.Master.Master.ShouldBeNull();
         }

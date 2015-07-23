@@ -17,7 +17,7 @@ namespace FubuMVC.Tests.UI
                 .ReadOnlyIfNotAuthorized();
 
             tag.Authorized().ShouldBeFalse();
-            tag.TagName().ShouldEqual("div");
+            tag.TagName().ShouldBe("div");
             
         }
 
@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.UI
                 .ReadOnlyIfNotAuthorized();
 
             tag.Authorized().ShouldBeTrue();
-            tag.TagName().ShouldEqual("a");
+            tag.TagName().ShouldBe("a");
         }
 
         [Test]
@@ -38,7 +38,7 @@ namespace FubuMVC.Tests.UI
                 .ReadOnlyIfNotAuthorized();
 
             tag.Authorized().ShouldBeTrue();
-            tag.TagName().ShouldEqual("span");
+            tag.TagName().ShouldBe("span");
         }
     }
 
@@ -87,14 +87,14 @@ namespace FubuMVC.Tests.UI
         public void sets_the_disabled_attribute()
         {
             new HtmlTag("a").ReadOnly()
-                .Attr("disabled").ShouldEqual("disabled");
+                .Attr("disabled").ShouldBe("disabled");
         }
 
         [Test]
         public void set_the_disabled_attribute_if_the_condition_is_true()
         {
             new HtmlTag("a").ReadOnly(true)
-                .Attr("disabled").ShouldEqual("disabled");
+                .Attr("disabled").ShouldBe("disabled");
         }
 
         [Test]

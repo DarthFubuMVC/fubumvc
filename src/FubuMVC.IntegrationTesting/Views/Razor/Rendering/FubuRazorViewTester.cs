@@ -29,7 +29,7 @@ namespace FubuMVC.IntegrationTesting.Views.Razor.Rendering
         [Test]
         public void service_locator()
         {
-            ClassUnderTest.ServiceLocator.ShouldEqual(_serviceLocator);
+            ClassUnderTest.ServiceLocator.ShouldBe(_serviceLocator);
         }
 
         [Test]
@@ -45,9 +45,9 @@ namespace FubuMVC.IntegrationTesting.Views.Razor.Rendering
             _serviceLocator.Stub(x => x.GetInstance(typeof(ViewObject))).Return(latest);
             var second = ClassUnderTest.Get<ViewObject>();
 
-            first.ShouldEqual(original);
-            second.ShouldEqual(original);
-            first.Tag.ShouldEqual(original.Tag);
+            first.ShouldBe(original);
+            second.ShouldBe(original);
+            first.Tag.ShouldBe(original.Tag);
         }
 
         [Test]
@@ -63,22 +63,22 @@ namespace FubuMVC.IntegrationTesting.Views.Razor.Rendering
             _serviceLocator.Stub(x => x.GetInstance(typeof(ViewObject))).Return(latest);
             var second = ClassUnderTest.GetNew<ViewObject>();
 
-            first.ShouldEqual(original);
-            second.ShouldEqual(latest);
-            first.Tag.ShouldEqual(original.Tag);
-            second.Tag.ShouldEqual(latest.Tag);
+            first.ShouldBe(original);
+            second.ShouldBe(latest);
+            first.Tag.ShouldBe(original.Tag);
+            second.Tag.ShouldBe(latest.Tag);
         }
 
         [Test]
         public void urls()
         {
-            ClassUnderTest.Urls.ShouldEqual(_urlRegistry);
+            ClassUnderTest.Urls.ShouldBe(_urlRegistry);
         }
 
         [Test]
         public void tag()
         {
-            ClassUnderTest.Tag("div").ShouldNotBeNull().TagName().ShouldEqual("div");
+            ClassUnderTest.Tag("div").ShouldNotBeNull().TagName().ShouldBe("div");
         }
 
         [Test]
@@ -86,16 +86,16 @@ namespace FubuMVC.IntegrationTesting.Views.Razor.Rendering
         {
             const string encodedValue = "&lt;div&gt;";
             var result = ClassUnderTest.Raw(encodedValue);
-            result.ToString().ShouldEqual(encodedValue);
-            result.ToHtmlString().ShouldEqual(encodedValue);
+            result.ToString().ShouldBe(encodedValue);
+            result.ToHtmlString().ShouldBe(encodedValue);
         }
 
         [Test]
         public void raw_handles_null_value()
         {
             var result = ClassUnderTest.Raw(null);
-            result.ToString().ShouldEqual(null);
-            result.ToHtmlString().ShouldEqual(null);
+            result.ToString().ShouldBe(null);
+            result.ToHtmlString().ShouldBe(null);
         }
 
         [Test]
@@ -106,7 +106,7 @@ namespace FubuMVC.IntegrationTesting.Views.Razor.Rendering
             request.Expect(x => x.Has<PersonViewModel>()).Return(true);
             request.Expect(x => x.Get<PersonViewModel>()).Return(model);
             ClassUnderTest.SetModel(request);
-            ClassUnderTest.Model.ShouldEqual(model);
+            ClassUnderTest.Model.ShouldBe(model);
             request.VerifyAllExpectations();
         }
 
@@ -119,7 +119,7 @@ namespace FubuMVC.IntegrationTesting.Views.Razor.Rendering
             request.Expect(x => x.Find<SharedViewModel>()).Return(new SharedViewModel[] {model});
             var sharedLayout = new SharedView();
             sharedLayout.SetModel(request);
-            sharedLayout.Model.ShouldEqual(model);
+            sharedLayout.Model.ShouldBe(model);
             request.VerifyAllExpectations();
         }
 
@@ -128,7 +128,7 @@ namespace FubuMVC.IntegrationTesting.Views.Razor.Rendering
         {
             object model = new PersonViewModel { Name = "Mr. FubuRazor" };
             ClassUnderTest.SetModel(model);
-            ClassUnderTest.Model.ShouldEqual(model);
+            ClassUnderTest.Model.ShouldBe(model);
         }
 
         [Test]
@@ -136,7 +136,7 @@ namespace FubuMVC.IntegrationTesting.Views.Razor.Rendering
         {
             var model = new PersonViewModel { Name = "Mr. FubuRazor" };
             ClassUnderTest.SetModel(model);
-            ClassUnderTest.Model.ShouldEqual(model);
+            ClassUnderTest.Model.ShouldBe(model);
         }
 
         [Test]
@@ -144,7 +144,7 @@ namespace FubuMVC.IntegrationTesting.Views.Razor.Rendering
         {
             var model = new PersonViewModel { Name = "Mr. FubuRazor" };
             ClassUnderTest.SetModel(model);
-            ClassUnderTest.GetModel().ShouldEqual(model);
+            ClassUnderTest.GetModel().ShouldBe(model);
         }
 
     }

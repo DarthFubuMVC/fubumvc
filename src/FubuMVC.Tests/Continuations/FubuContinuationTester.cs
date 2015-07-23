@@ -39,7 +39,7 @@ namespace FubuMVC.Tests.Continuations
         public void Continue_just_continues()
         {
             FubuContinuation continuation = FubuContinuation.NextBehavior();
-            continuation.Type.ShouldEqual(ContinuationType.NextBehavior);
+            continuation.Type.ShouldBe(ContinuationType.NextBehavior);
 
             continuation.Process(director);
             director.AssertWasCalled(x => x.InvokeNextBehavior());
@@ -50,7 +50,7 @@ namespace FubuMVC.Tests.Continuations
         {
             var continuation = FubuContinuation.EndWithStatusCode(HttpStatusCode.NotModified);
 
-            continuation.Type.ShouldEqual(ContinuationType.Stop);
+            continuation.Type.ShouldBe(ContinuationType.Stop);
             continuation.Process(director);
 
             director.AssertWasCalled(x => x.EndWithStatusCode(HttpStatusCode.NotModified));
@@ -73,7 +73,7 @@ namespace FubuMVC.Tests.Continuations
         public void assert_redirect_to_a_method()
         {
             FubuContinuation continuation = FubuContinuation.RedirectTo<ControllerTarget>(x => x.OneInOneOut(null));
-            continuation.Type.ShouldEqual(ContinuationType.Redirect);
+            continuation.Type.ShouldBe(ContinuationType.Redirect);
 
             continuation.AssertWasRedirectedTo<ControllerTarget>(x => x.OneInOneOut(null));
 
@@ -88,7 +88,7 @@ namespace FubuMVC.Tests.Continuations
         public void assert_redirect_to_a_method_with_category()
         {
             FubuContinuation continuation = FubuContinuation.RedirectTo<ControllerTarget>(x => x.OneInOneOut(null));
-            continuation.Type.ShouldEqual(ContinuationType.Redirect);
+            continuation.Type.ShouldBe(ContinuationType.Redirect);
 
             continuation.AssertWasRedirectedTo<ControllerTarget>(x => x.OneInOneOut(null));
 
@@ -243,7 +243,7 @@ namespace FubuMVC.Tests.Continuations
         {
             FubuContinuation continuation = FubuContinuation.RedirectTo<ControllerTarget>(x => x.OneInOneOut(null));
 
-            continuation.Type.ShouldEqual(ContinuationType.Redirect);
+            continuation.Type.ShouldBe(ContinuationType.Redirect);
 
             continuation.Process(director);
 
@@ -257,7 +257,7 @@ namespace FubuMVC.Tests.Continuations
         {
             FubuContinuation continuation = FubuContinuation.RedirectTo<ControllerTarget>(x => x.OneInOneOut(null), "PUT");
 
-            continuation.Type.ShouldEqual(ContinuationType.Redirect);
+            continuation.Type.ShouldBe(ContinuationType.Redirect);
 
             continuation.Process(director);
 
@@ -272,7 +272,7 @@ namespace FubuMVC.Tests.Continuations
             var input = new InputModel();
             FubuContinuation continuation = FubuContinuation.RedirectTo(input);
 
-            continuation.Type.ShouldEqual(ContinuationType.Redirect);
+            continuation.Type.ShouldBe(ContinuationType.Redirect);
 
             continuation.Process(director);
 
@@ -285,7 +285,7 @@ namespace FubuMVC.Tests.Continuations
             var input = new InputModel();
             FubuContinuation continuation = FubuContinuation.RedirectTo(input, "PUT");
 
-            continuation.Type.ShouldEqual(ContinuationType.Redirect);
+            continuation.Type.ShouldBe(ContinuationType.Redirect);
 
             continuation.Process(director);
 
@@ -298,7 +298,7 @@ namespace FubuMVC.Tests.Continuations
         {
             FubuContinuation continuation = FubuContinuation.TransferTo<ControllerTarget>(x => x.OneInOneOut(null));
 
-            continuation.Type.ShouldEqual(ContinuationType.Transfer);
+            continuation.Type.ShouldBe(ContinuationType.Transfer);
 
             continuation.Process(director);
 
@@ -312,7 +312,7 @@ namespace FubuMVC.Tests.Continuations
         {
             FubuContinuation continuation = FubuContinuation.TransferTo<ControllerTarget>(x => x.OneInOneOut(null), "PUT");
 
-            continuation.Type.ShouldEqual(ContinuationType.Transfer);
+            continuation.Type.ShouldBe(ContinuationType.Transfer);
 
             continuation.Process(director);
 
@@ -327,7 +327,7 @@ namespace FubuMVC.Tests.Continuations
             var input = new InputModel();
             FubuContinuation continuation = FubuContinuation.TransferTo(input);
 
-            continuation.Type.ShouldEqual(ContinuationType.Transfer);
+            continuation.Type.ShouldBe(ContinuationType.Transfer);
 
             continuation.Process(director);
 
@@ -340,7 +340,7 @@ namespace FubuMVC.Tests.Continuations
             var input = new InputModel();
             FubuContinuation continuation = FubuContinuation.TransferTo(input, "PUT");
 
-            continuation.Type.ShouldEqual(ContinuationType.Transfer);
+            continuation.Type.ShouldBe(ContinuationType.Transfer);
 
             continuation.Process(director);
 
@@ -352,7 +352,7 @@ namespace FubuMVC.Tests.Continuations
         {
             FubuContinuation continuation = FubuContinuation.TransferTo<ControllerTarget>(x => x.OneInOneOut(null), "PUT");
 
-            continuation.Type.ShouldEqual(ContinuationType.Transfer);
+            continuation.Type.ShouldBe(ContinuationType.Transfer);
 
             continuation.Process(director);
 
@@ -375,7 +375,7 @@ namespace FubuMVC.Tests.Continuations
             var exception =
                 typeof (ArgumentNullException).ShouldBeThrownBy(() => handler.TransferTo(null)) as ArgumentNullException;
             exception.ShouldNotBeNull();
-            exception.ParamName.ShouldEqual("input");
+            exception.ParamName.ShouldBe("input");
         }
 
 
@@ -384,7 +384,7 @@ namespace FubuMVC.Tests.Continuations
         {
             var destination = new object();
             var continuation = FubuContinuation.TransferTo(destination);
-            continuation.Destination<object>().ShouldEqual(destination);
+            continuation.Destination<object>().ShouldBe(destination);
         }
 
         [Test]

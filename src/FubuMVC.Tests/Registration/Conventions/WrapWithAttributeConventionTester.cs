@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void should_have_a_call_in_each_behavior_chain()
         {
             int callCount = graph.Behaviors.SelectMany(x => x.Calls).Count();
-            callCount.ShouldEqual(graph.Behaviors.Count());
+            callCount.ShouldBe(graph.Behaviors.Count());
         }
 
         [Test]
@@ -46,7 +46,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             var chain = graph.BehaviorFor<WrapWithAttributeController>(x => x.MethodWithOneAttribute());
             chain.First()
-                .ShouldBeOfType<Wrapper>().BehaviorType.ShouldEqual(typeof(Wrapper1));
+                .ShouldBeOfType<Wrapper>().BehaviorType.ShouldBe(typeof(Wrapper1));
         }
 
         [Test]
@@ -56,9 +56,9 @@ namespace FubuMVC.Tests.Registration.Conventions
                 graph.BehaviorFor<WrapWithAttributeController>(x => x.MethodWithMultipleAttributes()).ToList();
 
 
-            behaviors[0].ShouldBeOfType<Wrapper>().BehaviorType.ShouldEqual(typeof (Wrapper1));
-            behaviors[1].ShouldBeOfType<Wrapper>().BehaviorType.ShouldEqual(typeof (Wrapper2));
-            behaviors[2].ShouldBeOfType<Wrapper>().BehaviorType.ShouldEqual(typeof (Wrapper3));
+            behaviors[0].ShouldBeOfType<Wrapper>().BehaviorType.ShouldBe(typeof (Wrapper1));
+            behaviors[1].ShouldBeOfType<Wrapper>().BehaviorType.ShouldBe(typeof (Wrapper2));
+            behaviors[2].ShouldBeOfType<Wrapper>().BehaviorType.ShouldBe(typeof (Wrapper3));
         }
     }
 

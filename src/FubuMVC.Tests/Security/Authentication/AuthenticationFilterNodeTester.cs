@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Security.Authentication
         [Test]
         public void has_to_be_authentication()
         {
-            theNode.Category.ShouldEqual(BehaviorCategory.Authentication);
+            theNode.Category.ShouldBe(BehaviorCategory.Authentication);
         }
 
         public class SomeDependency { }

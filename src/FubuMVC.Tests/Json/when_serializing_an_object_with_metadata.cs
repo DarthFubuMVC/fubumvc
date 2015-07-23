@@ -35,7 +35,7 @@ namespace FubuMVC.Tests.Json
 		{
 			var targetType = typeof(ParentType);
 			var type = "\"$type\":\"{0}, {1}\"".ToFormat(targetType.FullName, targetType.Assembly.GetName().Name);
-			theResult.ShouldEqual("{" + type + ",\"Name\":\"Test\",\"Child\":\"x:123\"}");
+			theResult.ShouldBe("{" + type + ",\"Name\":\"Test\",\"Child\":\"x:123\"}");
 		}
 	}
 }

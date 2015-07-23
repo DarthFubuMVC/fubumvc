@@ -41,21 +41,21 @@ namespace FubuTransportation.Testing.Subscriptions
         public void should_set_the_receiver_uri_to_the_reply_uri_of_the_matching_transport()
         {
             theSubscriptions.First().Receiver
-                .ShouldEqual(theLocalReplyUri);
+                .ShouldBe(theLocalReplyUri);
         }
 
         [Test]
         public void sets_the_node_name_from_the_channel_graph()
         {
             theSubscriptions.Select(x => x.NodeName).Distinct()
-                .Single().ShouldEqual(theGraph.Name);
+                .Single().ShouldBe(theGraph.Name);
         }
 
         [Test]
         public void should_set_the_source_uri_to_the_requested_source_from_settings()
         {
             theSubscriptions.First().Source
-                .ShouldEqual(theSettings.Upstream);
+                .ShouldBe(theSettings.Upstream);
 
         }
 

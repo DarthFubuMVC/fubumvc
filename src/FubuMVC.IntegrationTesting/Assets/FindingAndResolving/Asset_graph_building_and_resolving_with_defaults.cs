@@ -73,9 +73,9 @@ namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
             var asset = Assets.FindAsset("MyLib.js");
             asset.ShouldNotBeNull();
 
-            asset.Url.ShouldEqual("MyLib.js");
+            asset.Url.ShouldBe("MyLib.js");
             asset.MimeType.ShouldBeTheSameAs(MimeType.Javascript);
-            asset.Filename.ShouldEqual("MyLib.js");
+            asset.Filename.ShouldBe("MyLib.js");
         }
 
         [Test]
@@ -84,32 +84,32 @@ namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
             var asset = Assets.FindAsset("Content/styles/MyStyles.css");
             asset.ShouldNotBeNull();
 
-            asset.Url.ShouldEqual("Content/styles/MyStyles.css");
+            asset.Url.ShouldBe("Content/styles/MyStyles.css");
             asset.MimeType.ShouldBeTheSameAs(MimeType.Css);
-            asset.Filename.ShouldEqual("MyStyles.css");
+            asset.Filename.ShouldBe("MyStyles.css");
         }
 
         [Test]
         public void search_by_filename_only()
         {
-            Assets.FindAsset("bottle1.js").Url.ShouldEqual("Content/scripts/bottle1.js");
-            Assets.FindAsset("bottle1.js").Url.ShouldEqual("Content/scripts/bottle1.js");
-            Assets.FindAsset("bottle1.js").Url.ShouldEqual("Content/scripts/bottle1.js");
-            Assets.FindAsset("bottle1.js").Url.ShouldEqual("Content/scripts/bottle1.js");
+            Assets.FindAsset("bottle1.js").Url.ShouldBe("Content/scripts/bottle1.js");
+            Assets.FindAsset("bottle1.js").Url.ShouldBe("Content/scripts/bottle1.js");
+            Assets.FindAsset("bottle1.js").Url.ShouldBe("Content/scripts/bottle1.js");
+            Assets.FindAsset("bottle1.js").Url.ShouldBe("Content/scripts/bottle1.js");
         }
 
         [Test]
         public void search_by_full_path()
         {
             Assets.FindAsset("Content/scripts/bottle1.js")
-                .Url.ShouldEqual("Content/scripts/bottle1.js");
+                .Url.ShouldBe("Content/scripts/bottle1.js");
         }
 
         [Test]
         public void search_by_part_of_the_path()
         {
             Assets.FindAsset("folder1/bottle1A.js")
-                .Url.ShouldEqual("Content/scripts/folder1/bottle1A.js");
+                .Url.ShouldBe("Content/scripts/folder1/bottle1A.js");
         }
     }
 }

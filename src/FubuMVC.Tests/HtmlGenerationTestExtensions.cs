@@ -7,7 +7,7 @@ namespace FubuMVC.Tests
     {
         public static HtmlTag ShouldHaveTagName(this HtmlTag tag, string tagName)
         {
-            tag.TagName().ShouldEqual(tagName);
+            tag.TagName().ShouldBe(tagName);
 
             return tag;
         }
@@ -26,7 +26,7 @@ namespace FubuMVC.Tests
 
         public static HtmlTag ShouldHaveAttribute(this HtmlTag tag, string key, string value)
         {
-            tag.Attr(key).ShouldEqual(value);
+            tag.Attr(key).ShouldBe(value);
             return tag;
         }
 
@@ -105,7 +105,7 @@ namespace FubuMVC.Tests
 
         //public static HtmlTag ShouldHaveInnerText(this HtmlTag node, string innerText)
         //{
-        //    node.InnerText.Trim().ShouldEqual(innerText);
+        //    node.InnerText.Trim().ShouldBe(innerText);
         //    return node;
         //}
 
@@ -153,7 +153,7 @@ namespace FubuMVC.Tests
 
         //public static HtmlTag ShouldHaveAttributeValue(this HtmlTag node, string attributeName, string attributeValue)
         //{
-        //    node.ShouldHaveAttribute(attributeName).Value.ShouldEqual(attributeValue);
+        //    node.ShouldHaveAttribute(attributeName).Value.ShouldBe(attributeValue);
         //    return node;
         //}
 

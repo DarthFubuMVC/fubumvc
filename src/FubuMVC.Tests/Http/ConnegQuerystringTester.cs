@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.Http
             values[theParameter.Key] = theParameter.Value;
 
             theParameter.Determine(values)
-                .ShouldEqual(theParameter.Mimetype);
+                .ShouldBe(theParameter.Mimetype);
         }
 
         [Test]
@@ -46,7 +46,7 @@ namespace FubuMVC.Tests.Http
             values[theParameter.Key.ToLower()] = theParameter.Value;
 
             theParameter.Determine(values)
-                .ShouldEqual(theParameter.Mimetype);
+                .ShouldBe(theParameter.Mimetype);
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace FubuMVC.Tests.Http
             values[theParameter.Key] = theParameter.Value.ToLower();
 
             theParameter.Determine(values)
-                .ShouldEqual(theParameter.Mimetype);
+                .ShouldBe(theParameter.Mimetype);
         }
     }
 }

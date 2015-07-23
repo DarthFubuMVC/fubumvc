@@ -38,7 +38,7 @@ namespace FubuMVC.Tests.SessionState
         public void writes_the_cookie()
         {
             theCookie.Matches(CookieFlashProvider.FlashKey).ShouldBeTrue();
-            theCookie.Value.ShouldEqual(theJson);
+            theCookie.Value.ShouldBe(theJson);
         }
     }
 

@@ -57,9 +57,9 @@ namespace FubuPersistence.Tests.RavenDb
 
             boundary.SaveChanges();
 
-            persistor.LoadAll<User>().Count().ShouldEqual(3);
-            persistor.LoadAll<OtherEntity>().Count().ShouldEqual(2);
-            persistor.LoadAll<ThirdEntity>().Count().ShouldEqual(1);
+            persistor.LoadAll<User>().Count().ShouldBe(3);
+            persistor.LoadAll<OtherEntity>().Count().ShouldBe(2);
+            persistor.LoadAll<ThirdEntity>().Count().ShouldBe(1);
         }
 
         [Test]
@@ -90,9 +90,9 @@ namespace FubuPersistence.Tests.RavenDb
 
             boundary.SaveChanges();
 
-            persistor.LoadAll<User>().Count().ShouldEqual(3);
-            persistor.LoadAll<OtherEntity>().Count().ShouldEqual(2);
-            persistor.LoadAll<ThirdEntity>().Count().ShouldEqual(0);
+            persistor.LoadAll<User>().Count().ShouldBe(3);
+            persistor.LoadAll<OtherEntity>().Count().ShouldBe(2);
+            persistor.LoadAll<ThirdEntity>().Count().ShouldBe(0);
         }
 
         [Test]
@@ -118,7 +118,7 @@ namespace FubuPersistence.Tests.RavenDb
             container.GetInstance<RavenTransaction>()
                 .Execute<RavenPersistor>(p => {
                     var users = p.LoadAll<User>().ToList();
-                    users.Count().ShouldEqual(2);
+                    users.Count().ShouldBe(2);
                     users.ShouldNotContain(user1);
                 });
         }
@@ -135,7 +135,7 @@ namespace FubuPersistence.Tests.RavenDb
 
             boundary.SaveChanges();
 
-            persistor.FindSingle<User>(x => x.FirstName == "Jeremy").FirstName.ShouldEqual("Jeremy");
+            persistor.FindSingle<User>(x => x.FirstName == "Jeremy").FirstName.ShouldBe("Jeremy");
         }
 
         [Test]

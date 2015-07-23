@@ -30,8 +30,8 @@ namespace FubuMVC.Tests.Registration
         {
             var chain = theGraph.BehaviorFor<SomeEndpoint>(x => x.get_something(null));
 
-            chain.InputType().ShouldEqual(typeof (RealInput));
-            chain.ResourceType().ShouldEqual(typeof (RealOutput));
+            chain.InputType().ShouldBe(typeof (RealInput));
+            chain.ResourceType().ShouldBe(typeof (RealOutput));
         }
 
         [Test]
@@ -46,8 +46,8 @@ namespace FubuMVC.Tests.Registration
         public void does_not_impact_a_normal_action_call()
         {
             var chain = theGraph.BehaviorFor<SomeEndpoint>(x => x.get_somewhere(null));
-            chain.ResourceType().ShouldEqual(typeof (FubuContinuation));
-            chain.InputType().ShouldEqual(typeof (RealInput));
+            chain.ResourceType().ShouldBe(typeof (FubuContinuation));
+            chain.InputType().ShouldBe(typeof (RealInput));
         }
     }
 

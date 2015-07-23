@@ -24,21 +24,21 @@ namespace FubuMVC.Tests.View.Attachment
         {
             theInner.Stub(x => x.Name()).Throw(new AssertionException("Don't call me"));
 
-            theToken.Name().ShouldEqual("filtered name");
+            theToken.Name().ShouldBe("filtered name");
         }
 
         [Test]
         public void view_model_delegates()
         {
             theInner.Stub(x => x.ViewModel).Return(typeof (string));
-            theToken.ViewModel.ShouldEqual(typeof (string));
+            theToken.ViewModel.ShouldBe(typeof (string));
         }
 
         [Test]
         public void name_space_delegates()
         {
             theInner.Stub(x => x.Namespace).Return("something.else");
-            theToken.Namespace.ShouldEqual("something.else");
+            theToken.Namespace.ShouldBe("something.else");
         }
 
     }

@@ -12,7 +12,7 @@ namespace FubuMVC.IntegrationTesting.Routing
         {
             endpoints.Get(SelfHostHarness.Root + "/something/completely/different")
                 .ReadAsText()
-                .ShouldEqual("Hey there");
+                .ShouldBe("Hey there");
         }
     }
 

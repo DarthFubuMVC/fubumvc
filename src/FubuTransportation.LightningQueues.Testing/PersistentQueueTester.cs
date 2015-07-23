@@ -47,13 +47,13 @@ namespace FubuTransportation.LightningQueues.Testing
                 queues.Start(new[] {new LightningUri("lq.tcp://localhost:2424/some_queue")});
                 var queueManager = queues.ManagerFor(2424, true);
                 var actual = queueManager.Configuration;
-                actual.EnableOutgoingMessageHistory.ShouldEqual(defaultConfiguration.EnableOutgoingMessageHistory);
-                actual.EnableProcessedMessageHistory.ShouldEqual(defaultConfiguration.EnableProcessedMessageHistory);
-                actual.NumberOfMessagesToKeepInOutgoingHistory.ShouldEqual(defaultConfiguration.NumberOfMessagesToKeepInOutgoingHistory);
-                actual.NumberOfMessagesToKeepInProcessedHistory.ShouldEqual(defaultConfiguration.NumberOfMessagesToKeepInProcessedHistory);
-                actual.NumberOfReceivedMessageIdsToKeep.ShouldEqual(defaultConfiguration.NumberOfReceivedMessageIdsToKeep);
-                actual.OldestMessageInOutgoingHistory.ShouldEqual(defaultConfiguration.OldestMessageInOutgoingHistory);
-                actual.OldestMessageInProcessedHistory.ShouldEqual(defaultConfiguration.OldestMessageInProcessedHistory);
+                actual.EnableOutgoingMessageHistory.ShouldBe(defaultConfiguration.EnableOutgoingMessageHistory);
+                actual.EnableProcessedMessageHistory.ShouldBe(defaultConfiguration.EnableProcessedMessageHistory);
+                actual.NumberOfMessagesToKeepInOutgoingHistory.ShouldBe(defaultConfiguration.NumberOfMessagesToKeepInOutgoingHistory);
+                actual.NumberOfMessagesToKeepInProcessedHistory.ShouldBe(defaultConfiguration.NumberOfMessagesToKeepInProcessedHistory);
+                actual.NumberOfReceivedMessageIdsToKeep.ShouldBe(defaultConfiguration.NumberOfReceivedMessageIdsToKeep);
+                actual.OldestMessageInOutgoingHistory.ShouldBe(defaultConfiguration.OldestMessageInOutgoingHistory);
+                actual.OldestMessageInProcessedHistory.ShouldBe(defaultConfiguration.OldestMessageInProcessedHistory);
             }
         }
 
@@ -77,13 +77,13 @@ namespace FubuTransportation.LightningQueues.Testing
                 queues.Start(new[] { new LightningUri("lq.tcp://localhost:2424/some_queue") });
                 var queueManager = queues.ManagerFor(2424, true);
                 var actual = queueManager.Configuration;
-                actual.EnableOutgoingMessageHistory.ShouldEqual(settings.EnableOutgoingMessageHistory);
-                actual.EnableProcessedMessageHistory.ShouldEqual(settings.EnableProcessedMessageHistory);
-                actual.NumberOfMessagesToKeepInOutgoingHistory.ShouldEqual(settings.NumberOfMessagesToKeepInOutgoingHistory);
-                actual.NumberOfMessagesToKeepInProcessedHistory.ShouldEqual(settings.NumberOfMessagesToKeepInProcessedHistory);
-                actual.NumberOfReceivedMessageIdsToKeep.ShouldEqual(settings.NumberOfReceivedMessageIdsToKeep);
-                actual.OldestMessageInOutgoingHistory.ShouldEqual(settings.OldestMessageInOutgoingHistory);
-                actual.OldestMessageInProcessedHistory.ShouldEqual(settings.OldestMessageInProcessedHistory);
+                actual.EnableOutgoingMessageHistory.ShouldBe(settings.EnableOutgoingMessageHistory);
+                actual.EnableProcessedMessageHistory.ShouldBe(settings.EnableProcessedMessageHistory);
+                actual.NumberOfMessagesToKeepInOutgoingHistory.ShouldBe(settings.NumberOfMessagesToKeepInOutgoingHistory);
+                actual.NumberOfMessagesToKeepInProcessedHistory.ShouldBe(settings.NumberOfMessagesToKeepInProcessedHistory);
+                actual.NumberOfReceivedMessageIdsToKeep.ShouldBe(settings.NumberOfReceivedMessageIdsToKeep);
+                actual.OldestMessageInOutgoingHistory.ShouldBe(settings.OldestMessageInOutgoingHistory);
+                actual.OldestMessageInProcessedHistory.ShouldBe(settings.OldestMessageInProcessedHistory);
             }
         }
 

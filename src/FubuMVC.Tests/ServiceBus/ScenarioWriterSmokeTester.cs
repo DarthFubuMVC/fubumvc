@@ -61,7 +61,7 @@ namespace FubuTransportation.Testing
 
             writer.Exception(ex);
 
-            writer.FailureCount.ShouldEqual(1);
+            writer.FailureCount.ShouldBe(1);
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace FubuTransportation.Testing
         {
             writer.Failure("You stink!");
 
-            writer.FailureCount.ShouldEqual(1);
+            writer.FailureCount.ShouldBe(1);
         }
     }
 }

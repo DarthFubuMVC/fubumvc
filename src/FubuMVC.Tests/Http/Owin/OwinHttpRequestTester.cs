@@ -26,9 +26,9 @@ namespace FubuMVC.Tests.Http.Owin
         public void server_root_round_trip()
         {
             request.FullUrl("http://server/foo/bar");
-            request.FullUrl().ShouldEqual("http://server/foo/bar");
+            request.FullUrl().ShouldBe("http://server/foo/bar");
 
-            request.RelativeUrl().ShouldEqual("foo/bar");
+            request.RelativeUrl().ShouldBe("foo/bar");
         }
 
 
@@ -36,9 +36,9 @@ namespace FubuMVC.Tests.Http.Owin
         public void server_root_round_trip_with_querystring()
         {
             request.FullUrl("http://server/foo/bar?foo=bar");
-            request.FullUrl().ShouldEqual("http://server/foo/bar?foo=bar");
+            request.FullUrl().ShouldBe("http://server/foo/bar?foo=bar");
 
-            request.RelativeUrl().ShouldEqual("foo/bar?foo=bar");
+            request.RelativeUrl().ShouldBe("foo/bar?foo=bar");
         }
 
         [Test]

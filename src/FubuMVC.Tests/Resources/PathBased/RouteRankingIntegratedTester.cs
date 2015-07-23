@@ -67,7 +67,7 @@ namespace FubuMVC.Tests.Resources.PathBased
 		{
 			_graph.BehaviorFor<Controller1>(x => x.get_last_ranked(null))
                 .As<RoutedChain>()
-			      .Route.Rank.ShouldEqual(int.MaxValue);
+			      .Route.Rank.ShouldBe(int.MaxValue);
 		}
 
 		[Test]
@@ -75,7 +75,7 @@ namespace FubuMVC.Tests.Resources.PathBased
 		{
 			_graph.BehaviorFor<Controller1>(x => x.zero(null))
                 .As<RoutedChain>()
-				  .Route.Rank.ShouldEqual(0);
+				  .Route.Rank.ShouldBe(0);
 		}
 
 		[Test]
@@ -83,7 +83,7 @@ namespace FubuMVC.Tests.Resources.PathBased
 		{
 			_graph.BehaviorFor<Controller1>(x => x.one(null))
                 .As<RoutedChain>()
-			      .Route.Rank.ShouldEqual(1);
+			      .Route.Rank.ShouldBe(1);
 		}
 
 		[Test]
@@ -91,7 +91,7 @@ namespace FubuMVC.Tests.Resources.PathBased
 		{
 			_graph.BehaviorFor<Controller1>(x => x.two(null))
                 .As<RoutedChain>()
-				  .Route.Rank.ShouldEqual(2);
+				  .Route.Rank.ShouldBe(2);
 		}
 
 	}

@@ -15,7 +15,7 @@ namespace FubuMVC.Tests.Runtime.Files
         public void read_contents()
         {
             var file = new FubuFile(Path.Combine("Runtime", "Files", "Data", "a.txt"));
-            file.ReadContents().Trim().ShouldEqual("some text from a.txt");
+            file.ReadContents().Trim().ShouldBe("some text from a.txt");
         }
 
         [Test]
@@ -37,7 +37,7 @@ namespace FubuMVC.Tests.Runtime.Files
             file.ReadContents(stream =>
             {
                 wasCalled = true;
-                stream.ReadAllText().ShouldEqual("some text from a.txt");
+                stream.ReadAllText().ShouldBe("some text from a.txt");
             });
 
             wasCalled.ShouldBeTrue();
@@ -49,7 +49,7 @@ namespace FubuMVC.Tests.Runtime.Files
             new FileSystem().WriteStringToFile("ghostbusters.txt", "Who you gonna call?");
 
             new FubuFile("ghostbusters.txt")
-                .Length().ShouldEqual(19);
+                .Length().ShouldBe(19);
         }
 
         [Test]
@@ -76,8 +76,8 @@ namespace FubuMVC.Tests.Runtime.Files
             var etag2 = new FubuFile("ghostbusters.txt").Etag();
             var etag3 = new FubuFile("ghostbusters.txt").Etag();
 
-            etag1.ShouldEqual(etag2);
-            etag1.ShouldEqual(etag3);
+            etag1.ShouldBe(etag2);
+            etag1.ShouldBe(etag3);
         }
 
         [Test]

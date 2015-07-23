@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.Security.Authentication
             thePolicy.Configure(graph);
 
 	        var filter = chain.OfType<ActionFilter>().Single();
-	        filter.HandlerType.ShouldEqual(typeof (PassThroughAuthenticationFilter));
+	        filter.HandlerType.ShouldBe(typeof (PassThroughAuthenticationFilter));
         }
 
         private static BehaviorChain chainFor<T>(Expression<Func<T, object>> expression)

@@ -47,9 +47,9 @@ namespace FubuTransportation.Testing.InMemory
 
             var received = receiver.Received.Single();
 
-            received.CorrelationId.ShouldEqual(envelope.CorrelationId);
-            received.ContentType.ShouldEqual(envelope.ContentType);
-            received.Data.ShouldEqual(envelope.Data);
+            received.CorrelationId.ShouldBe(envelope.CorrelationId);
+            received.ContentType.ShouldBe(envelope.ContentType);
+            received.Data.ShouldBe(envelope.Data);
             task.SafeDispose();
         }
 
@@ -81,9 +81,9 @@ namespace FubuTransportation.Testing.InMemory
 
                 var received = receiver.Received.Single();
 
-                received.CorrelationId.ShouldEqual(envelope.CorrelationId);
-                received.ContentType.ShouldEqual(envelope.ContentType);
-                received.Data.ShouldEqual(envelope.Data);
+                received.CorrelationId.ShouldBe(envelope.CorrelationId);
+                received.ContentType.ShouldBe(envelope.ContentType);
+                received.Data.ShouldBe(envelope.Data);
 
             }
         }

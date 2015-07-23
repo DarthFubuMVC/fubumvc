@@ -36,7 +36,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
             _stream.Position = 0;
 
             var result = (TestRhinoToFtSerialization) _serializer.Deserialize(_stream);
-            result.Id.ShouldEqual(1);
+            result.Id.ShouldBe(1);
         }
     }
 

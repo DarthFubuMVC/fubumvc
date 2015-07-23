@@ -19,11 +19,11 @@ namespace FubuMVC.Tests.Services.Messaging.Tracking
 
             var sent = MessageTrack.ForSent(message);
 
-            sent.FullName.ShouldEqual(typeof (MyMessage).FullName);
-            sent.Type.ShouldEqual(typeof (MyMessage).Name);
-            sent.Description.ShouldEqual(message.ToString());
-            sent.Id.ShouldEqual(message.Id.ToString());
-            sent.Status.ShouldEqual(MessageTrack.Sent);
+            sent.FullName.ShouldBe(typeof (MyMessage).FullName);
+            sent.Type.ShouldBe(typeof (MyMessage).Name);
+            sent.Description.ShouldBe(message.ToString());
+            sent.Id.ShouldBe(message.Id.ToString());
+            sent.Status.ShouldBe(MessageTrack.Sent);
         }
 
         [Test]
@@ -37,11 +37,11 @@ namespace FubuMVC.Tests.Services.Messaging.Tracking
 
             var sent = MessageTrack.ForSent(message, "foo");
 
-            sent.FullName.ShouldEqual(typeof(MyMessage).FullName);
-            sent.Type.ShouldEqual(typeof(MyMessage).Name);
-            sent.Description.ShouldEqual(message.ToString());
-            sent.Id.ShouldEqual("foo");
-            sent.Status.ShouldEqual(MessageTrack.Sent);
+            sent.FullName.ShouldBe(typeof(MyMessage).FullName);
+            sent.Type.ShouldBe(typeof(MyMessage).Name);
+            sent.Description.ShouldBe(message.ToString());
+            sent.Id.ShouldBe("foo");
+            sent.Status.ShouldBe(MessageTrack.Sent);
         }
 
         [Test]
@@ -55,11 +55,11 @@ namespace FubuMVC.Tests.Services.Messaging.Tracking
 
             var sent = MessageTrack.ForReceived(message);
 
-            sent.FullName.ShouldEqual(typeof(MyMessage).FullName);
-            sent.Type.ShouldEqual(typeof(MyMessage).Name);
-            sent.Description.ShouldEqual(message.ToString());
-            sent.Id.ShouldEqual(message.Id.ToString());
-            sent.Status.ShouldEqual(MessageTrack.Received);
+            sent.FullName.ShouldBe(typeof(MyMessage).FullName);
+            sent.Type.ShouldBe(typeof(MyMessage).Name);
+            sent.Description.ShouldBe(message.ToString());
+            sent.Id.ShouldBe(message.Id.ToString());
+            sent.Status.ShouldBe(MessageTrack.Received);
         }
 
         [Test]
@@ -73,11 +73,11 @@ namespace FubuMVC.Tests.Services.Messaging.Tracking
 
             var sent = MessageTrack.ForReceived(message, "bar");
 
-            sent.FullName.ShouldEqual(typeof(MyMessage).FullName);
-            sent.Type.ShouldEqual(typeof(MyMessage).Name);
-            sent.Description.ShouldEqual(message.ToString());
-            sent.Id.ShouldEqual("bar");
-            sent.Status.ShouldEqual(MessageTrack.Received);
+            sent.FullName.ShouldBe(typeof(MyMessage).FullName);
+            sent.Type.ShouldBe(typeof(MyMessage).Name);
+            sent.Description.ShouldBe(message.ToString());
+            sent.Id.ShouldBe("bar");
+            sent.Status.ShouldBe(MessageTrack.Received);
         }
     }
 

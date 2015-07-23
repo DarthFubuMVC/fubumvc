@@ -29,7 +29,7 @@ namespace FubuMVC.Tests
                 x.Policies.Local.Add<FakePolicy>();
             });
 
-            FakePolicy.Count.ShouldEqual(1);
+            FakePolicy.Count.ShouldBe(1);
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace FubuMVC.Tests
                 x.Import<FakeIncludeRegistry>(string.Empty);
             });
 
-            FakeIncludeRegistry.Count.ShouldEqual(1);
+            FakeIncludeRegistry.Count.ShouldBe(1);
         }
 
         [Test]

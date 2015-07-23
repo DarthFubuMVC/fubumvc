@@ -36,7 +36,7 @@ namespace FubuMVC.Tests.Http.Compression
             theArguments.Set(typeof(IHttpRequest), request);
             theArguments.Set(typeof(IHttpResponse), MockFor<IHttpResponse>());
 
-            ClassUnderTest.Filter(theArguments).ShouldEqual(DoNext.Continue);
+            ClassUnderTest.Filter(theArguments).ShouldBe(DoNext.Continue);
         }
 
         [Test]

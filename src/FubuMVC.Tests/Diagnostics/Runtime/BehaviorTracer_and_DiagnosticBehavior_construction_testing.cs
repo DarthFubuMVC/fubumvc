@@ -39,16 +39,16 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
             new DiagnosticNode(theChain);
 
             var instance = toInstance();
-            instance.PluggedType.ShouldEqual(typeof(DiagnosticBehavior));
+            instance.PluggedType.ShouldBe(typeof(DiagnosticBehavior));
 
 
             instance.FindDependencyDefinitionFor<IActionBehavior>()
-                .ReturnedType.ShouldEqual(typeof(BehaviorTracer));
+                .ReturnedType.ShouldBe(typeof(BehaviorTracer));
 
             instance
                 .FindDependencyDefinitionFor<IActionBehavior>().As<IConfiguredInstance>()
                 .FindDependencyDefinitionFor<IActionBehavior>()
-                .ReturnedType.ShouldEqual(typeof(OneInZeroOutActionInvoker<Controller1, Controller1.Input1>));
+                .ReturnedType.ShouldBe(typeof(OneInZeroOutActionInvoker<Controller1, Controller1.Input1>));
 
         }
 
@@ -70,15 +70,15 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
                 .FindDependencyDefinitionFor<IActionBehavior>()
                 .As<IConfiguredInstance>();
 
-            instance.PluggedType.ShouldEqual(typeof(BehaviorTracer));
+            instance.PluggedType.ShouldBe(typeof(BehaviorTracer));
             var child1 = instance.FindDependencyDefinitionFor<IActionBehavior>().As<IConfiguredInstance>();
-            child1.PluggedType.ShouldEqual(typeof(SimpleBehavior));
+            child1.PluggedType.ShouldBe(typeof(SimpleBehavior));
 
             var child2 = child1.FindDependencyDefinitionFor<IActionBehavior>().As<IConfiguredInstance>();
-            child2.PluggedType.ShouldEqual(typeof(BehaviorTracer));
+            child2.PluggedType.ShouldBe(typeof(BehaviorTracer));
 
             var child3 = child2.FindDependencyDefinitionFor<IActionBehavior>();
-            child3.ReturnedType.ShouldEqual(typeof(DifferentBehavior));
+            child3.ReturnedType.ShouldBe(typeof(DifferentBehavior));
         }
 
 
@@ -89,9 +89,9 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
             var node = new Wrapper(typeof(SimpleBehavior));
             var instance = new BehaviorTracerNode(node).As<IContainerModel>().ToInstance().As<IConfiguredInstance>();
 
-            instance.PluggedType.ShouldEqual(typeof(BehaviorTracer));
+            instance.PluggedType.ShouldBe(typeof(BehaviorTracer));
             instance.FindDependencyDefinitionFor<IActionBehavior>()
-                .ReturnedType.ShouldEqual(typeof(SimpleBehavior));
+                .ReturnedType.ShouldBe(typeof(SimpleBehavior));
         }
 
 

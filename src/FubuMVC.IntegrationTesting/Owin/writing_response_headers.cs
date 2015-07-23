@@ -72,8 +72,8 @@ namespace FubuMVC.IntegrationTesting.Owin
             {
                 _.Get.Action<ResponseHeadersEndpoint>(x => x.get_multiple_cookies());
 
-                _.Response.CookieFor("Foo").Value.ShouldEqual("1");
-                _.Response.CookieFor("Foo").Value.ShouldEqual("1");
+                _.Response.CookieFor("Foo").Value.ShouldBe("1");
+                _.Response.CookieFor("Foo").Value.ShouldBe("1");
             });
         }
     }

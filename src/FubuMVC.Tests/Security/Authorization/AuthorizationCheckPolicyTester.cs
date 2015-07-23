@@ -20,13 +20,13 @@ namespace FubuMVC.Tests.Security.Authorization
             var context = new FubuRequestContext(new StructureMapServiceLocator(new Container()), null, null,null,null);
             var policy = new AuthorizationCheckPolicy<FakeCheck>();
 
-            policy.RightsFor(context).ShouldEqual(AuthorizationRight.Allow);
+            policy.RightsFor(context).ShouldBe(AuthorizationRight.Allow);
 
             FakeCheck.Rights = AuthorizationRight.Deny;
 
-            policy.RightsFor(context).ShouldEqual(AuthorizationRight.Deny);
+            policy.RightsFor(context).ShouldBe(AuthorizationRight.Deny);
 
-            FakeCheck.Created.ShouldEqual(2);
+            FakeCheck.Created.ShouldBe(2);
         }
     }
 

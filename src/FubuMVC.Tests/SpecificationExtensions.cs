@@ -44,15 +44,6 @@ namespace FubuTestingSupport
 
     public static class SpecificationExtensions
     {
-        public static T ShouldTransferViaSerialization<T>(this T instance)
-        {
-            var stream = new MemoryStream();
-            new BinaryFormatter().Serialize(stream, instance);
-            stream.Position = 0;
-
-            return new BinaryFormatter().Deserialize(stream).ShouldBeOfType<T>();
-        }
-
         public static void ShouldHave<T>(this IEnumerable<T> values, Func<T, bool> func)
         {
             values.FirstOrDefault(func).ShouldNotBeNull();
@@ -73,69 +64,16 @@ namespace FubuTestingSupport
             Assert.IsTrue(condition);
         }
 
-        public static void ShouldBeTrueBecause(this bool condition, string reason, params object[] args)
-        {
-            Assert.IsTrue(condition, reason, args);
-        }
-
-        public static object ShouldEqual(this object actual, object expected)
+        public static object ShouldBe(this object actual, object expected)
         {
             Assert.AreEqual(expected, actual);
             return expected;
         }
 
-        public static object ShouldEqual(this string actual, object expected)
+        public static object ShouldBe(this string actual, object expected)
         {
             Assert.AreEqual((expected != null) ? expected.ToString() : null, actual);
             return expected;
-        }
-
-        public static object ShouldEqualWithLineEndings(this string actual, object expected)
-        {
-            Assert.AreEqual((expected != null) ? expected.ToString().Replace("\r", "") : null, actual.Replace("\r", ""));
-            return expected;
-        }
-
-        public static void ShouldMatch(this string actual, string pattern)
-        {
-            Assert.That(actual, Is.StringMatching(pattern));
-        }
-
-        public static XmlElement AttributeShouldEqual(this XmlElement element, string attributeName, object expected)
-        {
-            Assert.IsNotNull(element, "The Element is null");
-
-            string actual = element.GetAttribute(attributeName);
-            Assert.AreEqual(expected, actual);
-            return element;
-        }
-
-        public static XmlElement AttributeShouldEqual(this XmlNode node, string attributeName, object expected)
-        {
-            var element = node as XmlElement;
-
-            Assert.IsNotNull(element, "The Element is null");
-
-            string actual = element.GetAttribute(attributeName);
-            Assert.AreEqual(expected, actual);
-            return element;
-        }
-
-        public static XmlElement ShouldHaveChild(this XmlElement element, string xpath)
-        {
-            var child = element.SelectSingleNode(xpath) as XmlElement;
-            Assert.IsNotNull(child, "Should have a child element matching " + xpath);
-
-            return child;
-        }
-
-        public static XmlElement DoesNotHaveAttribute(this XmlElement element, string attributeName)
-        {
-            Assert.IsNotNull(element, "The Element is null");
-            Assert.IsFalse(element.HasAttribute(attributeName),
-                           "Element should not have an attribute named " + attributeName);
-
-            return element;
         }
 
         public static object ShouldNotEqual(this object actual, object expected)
@@ -229,11 +167,11 @@ namespace FubuTestingSupport
                 actual.ShouldNotBeNull();
                 expected.ShouldNotBeNull();
 
-                actual.Count.ShouldEqual(expected.Count);
+                actual.Count.ShouldBe(expected.Count);
 
                 for (int i = 0; i < actual.Count; i++)
                 {
-                    actual[i].ShouldEqual(expected[i]);
+                    actual[i].ShouldBe(expected[i]);
                 }
             }
             catch (Exception)
@@ -267,11 +205,11 @@ namespace FubuTestingSupport
             ELEMENT[] actualArray = actual.ToArray();
             object[] expectedArray = expected.Cast<object>().ToArray();
 
-            actualArray.Length.ShouldEqual(expectedArray.Length);
+            actualArray.Length.ShouldBe(expectedArray.Length);
 
             for (int i = 0; i < actual.Count(); i++)
             {
-                keySelector(actualArray[i]).ShouldEqual(expectedArray[i]);
+                keySelector(actualArray[i]).ShouldBe(expectedArray[i]);
             }
         }
 
@@ -297,11 +235,6 @@ namespace FubuTestingSupport
             Assert.IsEmpty(aString);
         }
 
-        public static void ShouldNotBeEmpty(this ICollection collection)
-        {
-            Assert.IsNotEmpty(collection);
-        }
-
         public static void ShouldNotBeEmpty(this string aString)
         {
             Assert.IsNotEmpty(aString);
@@ -312,29 +245,7 @@ namespace FubuTestingSupport
             StringAssert.Contains(expected, actual);
         }
 
-        public static void ShouldContainAllOf(this string actual, params string[] expectedItems)
-        {
-            expectedItems.Each(expected => actual.ShouldContain(expected));
-        }
-
-        public static void ShouldContain<T>(this IEnumerable<T> actual, Func<T, bool> expected)
-        {
-            actual.Count().ShouldBeGreaterThan(0);
-            T result = actual.FirstOrDefault(expected);
-            Assert.That(result, Is.Not.EqualTo(default(T)), "Expected item was not found in the actual sequence");
-        }
-
-        public static void ShouldNotContain(this string actual, string expected)
-        {
-            Assert.That(actual, new NotConstraint(new SubstringConstraint(expected)));
-        }
-
-        public static string ShouldBeEqualIgnoringCase(this string actual, string expected)
-        {
-            StringAssert.AreEqualIgnoringCase(expected, actual);
-            return expected;
-        }
-
+ 
         public static void ShouldEndWith(this string actual, string expected)
         {
             StringAssert.EndsWith(expected, actual);
@@ -345,10 +256,7 @@ namespace FubuTestingSupport
             StringAssert.StartsWith(expected, actual);
         }
 
-        public static void ShouldContainErrorMessage(this Exception exception, string expected)
-        {
-            StringAssert.Contains(expected, exception.Message);
-        }
+ 
 
         public static Exception ShouldBeThrownBy(this Type exceptionType, MethodThatThrows method)
         {
@@ -372,118 +280,17 @@ namespace FubuTestingSupport
             return exception;
         }
 
-        public static void ShouldContainInOrder(this string actual, params string[] values)
-        {
-            int index = 0;
-            foreach (string value in values)
-            {
-                int nextIndex = actual.IndexOf(value, index);
-                Assert.GreaterOrEqual(nextIndex, 0, string.Format("Looking for {0}", value));
-                index = nextIndex + value.Length;
-            }
-        }
 
-        public static void ShouldEqualSqlDate(this DateTime actual, DateTime expected)
-        {
-            TimeSpan timeSpan = actual - expected;
-            Assert.Less(Math.Abs(timeSpan.TotalMilliseconds), 3);
-        }
-
-        public static void ShouldBe<T>(this Expression<Func<T, object>> actual, Expression<Func<T, object>> expected)
-        {
-            string expectedMethod = ReflectionHelper.GetMethod(expected).Name;
-            string actualMethod = ReflectionHelper.GetMethod(actual).Name;
-            actualMethod.ShouldEqual(expectedMethod);
-        }
 
         public static IEnumerable<T> ShouldHaveCount<T>(this IEnumerable<T> actual, int expected)
         {
-            actual.Count().ShouldEqual(expected);
+            actual.Count().ShouldBe(expected);
             return actual;
         }
 
-        public static void Matches(this List<string> list, params string[] values)
-        {
-            AssertListMatches(list, values);
-        }
-
-        public static void AssertListMatches(IList actualList, IList expectedList)
-        {
-            var actual = new ArrayList(actualList);
-            var expected = new ArrayList(expectedList);
-
-            foreach (object item in actual.ToArray())
-            {
-                actual.Remove(item);
-                expected.Remove(item);
-            }
-
-            if (actual.Count == 0 && expected.Count == 0) return;
-
-            string message = "";
-            actual.Each(o => message += string.Format("Extra:  {0}\n", o));
-            expected.Each(o => message += string.Format("Missing:  {0}\n", o));
-
-            Assert.Fail(message);
-        }
 
 
-        public static CapturingConstraint CaptureArgumentsFor<MOCK>(this MOCK mock,
-                                                                    Expression<Action<MOCK>> methodExpression)
-            where MOCK : class
-        {
-            return SetupConstraint(
-                ReflectionHelper.GetMethod(methodExpression),
-                mock.Expect(methodExpression.Compile()),
-                null);
-        }
 
-        public static CapturingConstraint CaptureArgumentsFor<MOCK>(this MOCK mock,
-                                                                    Expression<Action<MOCK>> methodExpression,
-                                                                    Action
-                                                                        <IMethodOptions<RhinoMocksExtensions.VoidType>>
-                                                                        optionsAction) where MOCK : class
-        {
-            return SetupConstraint(
-                ReflectionHelper.GetMethod(methodExpression),
-                mock.Expect(methodExpression.Compile()),
-                optionsAction);
-        }
-
-        public static CapturingConstraint CaptureArgumentsFor<MOCK, RESULT>(
-            this MOCK mock,
-            Expression<Func<MOCK, RESULT>> methodExpression,
-            Action<IMethodOptions<RESULT>> optionsAction)
-            where MOCK : class
-        {
-            return SetupConstraint(
-                ReflectionHelper.GetMethod(methodExpression),
-                mock.Expect(new Function<MOCK, RESULT>(methodExpression.Compile())),
-                optionsAction);
-        }
-
-        private static CapturingConstraint SetupConstraint<T>(MethodInfo method, IMethodOptions<T> options,
-                                                              Action<IMethodOptions<T>> optionsAction)
-        {
-            var constraint = new CapturingConstraint();
-            var constraints = new List<AbstractConstraint>();
-
-            foreach (ParameterInfo arg in method.GetParameters())
-            {
-                constraints.Add(constraint);
-            }
-
-            options = options.Constraints(constraints.ToArray()).Repeat.Any();
-
-            if (optionsAction != null)
-            {
-                optionsAction(options);
-            }
-
-            return constraint;
-        }
-
-        #region Nested type: CapturingConstraint
 
         public class CapturingConstraint : AbstractConstraint
         {
@@ -513,6 +320,5 @@ namespace FubuTestingSupport
             }
         }
 
-        #endregion
     }
 }

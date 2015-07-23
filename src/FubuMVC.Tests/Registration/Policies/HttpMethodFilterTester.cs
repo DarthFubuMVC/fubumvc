@@ -17,7 +17,7 @@ namespace FubuMVC.Tests.Registration.Policies
         {
             var filter = new HttpMethodFilter("POST");
 
-            Description.For(filter).Title.ShouldEqual("Responds to Http POST's");
+            Description.For(filter).Title.ShouldBe("Responds to Http POST's");
         }
 
         [Test]

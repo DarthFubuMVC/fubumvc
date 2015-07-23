@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
             cache.Store(new RequestLog());
             cache.Store(new RequestLog());
 
-            cache.RecentReports().Count().ShouldEqual(9);
+            cache.RecentReports().Count().ShouldBe(9);
 
             cache.Store(new RequestLog());
             cache.Store(new RequestLog());
@@ -36,7 +36,7 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
             cache.Store(new RequestLog());
             cache.Store(new RequestLog());
 
-            cache.RecentReports().Count().ShouldEqual(settings.MaxRequests);
+            cache.RecentReports().Count().ShouldBe(settings.MaxRequests);
         }
     }
 }

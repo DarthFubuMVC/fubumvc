@@ -14,7 +14,7 @@ namespace FubuTransportation.LightningQueues.Testing
             var message = new MessagePayload();
             message.Headers.Add(LightningQueuesChannel.MaxAttemptsHeader, 1.ToString());
             message.TranslateHeaders();
-            message.MaxAttempts.ShouldEqual(1);
+            message.MaxAttempts.ShouldBe(1);
         }
 
         [Test]
@@ -24,7 +24,7 @@ namespace FubuTransportation.LightningQueues.Testing
             var message = new MessagePayload();
             message.Headers.Add(LightningQueuesChannel.DeliverByHeader, now.ToString("o"));
             message.TranslateHeaders();
-            message.DeliverBy.ShouldEqual(now);
+            message.DeliverBy.ShouldBe(now);
         }
 
         [Test]

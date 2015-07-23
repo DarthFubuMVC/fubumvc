@@ -93,14 +93,14 @@ namespace Serenity.Testing.WebDriver
 
             By selector = element.ToJQueryBy().Parent().Find(".depth-level-3 > span");
 
-            Driver.FindElement(selector).Text.ShouldEqual("---Div at depth 3 index 0");
+            Driver.FindElement(selector).Text.ShouldBe("---Div at depth 3 index 0");
         }
 
         [Test]
         public void CanRetrievePrimitiveTypeData()
         {
             JavaScript selector = By.jQuery(".depth-level-3-0-0-0").Parents(".depth-level").Children("span").Length;
-            selector.ExecuteAndGet<long>(Driver).ShouldEqual(3);
+            selector.ExecuteAndGet<long>(Driver).ShouldBe(3);
         }
 
         [Test]
@@ -108,7 +108,7 @@ namespace Serenity.Testing.WebDriver
         {
             var element = Driver.FindElement((By) By.jQuery(".depth-level-3-0-0-0"));
             JavaScript selector = element.ToJQueryBy().Parents(".depth-level").Children("span").Length;
-            selector.ExecuteAndGet<long>(Driver).ShouldEqual(3);
+            selector.ExecuteAndGet<long>(Driver).ShouldBe(3);
         }
 
         [Test]
@@ -116,7 +116,7 @@ namespace Serenity.Testing.WebDriver
         {
             JavaScript js = "$(\".root-marker\").text('alternate text')".ToJQueryJS();
             js.Execute(Driver);
-            Driver.FindElement((By) By.jQuery(".root-marker")).Text.ShouldEqual("alternate text");
+            Driver.FindElement((By) By.jQuery(".root-marker")).Text.ShouldBe("alternate text");
         }
 
         private static DivTag BuildTestDiv(Stack<int> indexes, int depth)

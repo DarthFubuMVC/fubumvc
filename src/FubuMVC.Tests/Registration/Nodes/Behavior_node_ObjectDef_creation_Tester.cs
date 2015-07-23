@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.Registration.Nodes
         {
             var node = new Wrapper(typeof (SimpleBehavior));
             node.As<IContainerModel>().ToInstance()
-                .ReturnedType.ShouldEqual(typeof (SimpleBehavior));
+                .ReturnedType.ShouldBe(typeof (SimpleBehavior));
         }
     }
 }

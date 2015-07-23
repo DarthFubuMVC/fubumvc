@@ -26,7 +26,7 @@ namespace FubuTransportation.Testing.Subscriptions
 
             var node = new TransportNode(graph);
 
-            node.Id.ShouldEqual(graph.NodeId);
+            node.Id.ShouldBe(graph.NodeId);
         }
 
         [Test]
@@ -40,7 +40,7 @@ namespace FubuTransportation.Testing.Subscriptions
 
             Exception<InvalidOperationException>.ShouldBeThrownBy(() => {
                 new TransportNode(graph);
-            }).Message.ShouldEqual("At least one reply channel is required");
+            }).Message.ShouldBe("At least one reply channel is required");
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace FubuTransportation.Testing.Subscriptions
 
             var node = new TransportNode(graph);
 
-            node.NodeName.ShouldEqual("Service1");
+            node.NodeName.ShouldBe("Service1");
 
             node.Addresses.OrderBy(x => x.ToString()).ShouldHaveTheSameElementsAs("bar://replies".ToUri(), "foo://replies".ToUri(), "memory://replies".ToUri());
         }

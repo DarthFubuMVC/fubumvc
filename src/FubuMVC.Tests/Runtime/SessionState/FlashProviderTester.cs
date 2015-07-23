@@ -62,7 +62,7 @@ namespace FubuMVC.Tests.SessionState
         [Test]
         public void should_return_value()
         {
-            _flash.Retrieve<TestInputModel>().PropInt.ShouldEqual(99);
+            _flash.Retrieve<TestInputModel>().PropInt.ShouldBe(99);
         }
     }
 

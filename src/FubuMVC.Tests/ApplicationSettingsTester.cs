@@ -20,8 +20,8 @@ namespace FubuMVC.Tests
             });
 
             var settings = ApplicationSettings.ReadByName("proj1");
-            settings.PhysicalPath.ShouldEqual("source/proj1");
-            settings.RootUrl.ShouldEqual("http://localhost/proj1");
+            settings.PhysicalPath.ShouldBe("source/proj1");
+            settings.RootUrl.ShouldBe("http://localhost/proj1");
         }
 
 
@@ -34,7 +34,7 @@ namespace FubuMVC.Tests
                 ParentFolder = ".".ToFullPath()
             };
 
-            settings.GetApplicationFolder().ShouldEqual(settings.ParentFolder);
+            settings.GetApplicationFolder().ShouldBe(settings.ParentFolder);
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace FubuMVC.Tests
             {
                 ParentFolder = null,
                 PhysicalPath = null
-            }.GetApplicationFolder().ShouldEqual(AppDomain.CurrentDomain.BaseDirectory);
+            }.GetApplicationFolder().ShouldBe(AppDomain.CurrentDomain.BaseDirectory);
         }
 
         [Test]
@@ -54,7 +54,7 @@ namespace FubuMVC.Tests
             {
                 ParentFolder = ".".ToFullPath(),
                 PhysicalPath = "app1".ToFullPath()
-            }.GetApplicationFolder().ShouldEqual("app1".ToFullPath());
+            }.GetApplicationFolder().ShouldBe("app1".ToFullPath());
         }
 
         [Test]
@@ -66,17 +66,17 @@ namespace FubuMVC.Tests
                 PhysicalPath = "app1"
             };
 
-            settings.GetApplicationFolder().ShouldEqual(settings.ParentFolder.AppendPath(settings.PhysicalPath));
+            settings.GetApplicationFolder().ShouldBe(settings.ParentFolder.AppendPath(settings.PhysicalPath));
         }
 
         [Test]
         public void generate_default_settings_for_an_application()
         {
             var settings1 = ApplicationSettings.For<KayakApplication>();
-            settings1.Name.ShouldEqual("Kayak");
-            settings1.Port.ShouldEqual(5500);
-            settings1.RootUrl.ShouldEqual("http://localhost/kayak");
-            settings1.ApplicationSourceName.ShouldEqual(typeof (KayakApplication).AssemblyQualifiedName);
+            settings1.Name.ShouldBe("Kayak");
+            settings1.Port.ShouldBe(5500);
+            settings1.RootUrl.ShouldBe("http://localhost/kayak");
+            settings1.ApplicationSourceName.ShouldBe(typeof (KayakApplication).AssemblyQualifiedName);
         }
 
         [Test]
@@ -88,10 +88,10 @@ namespace FubuMVC.Tests
             settings1.Write();
 
             var settings2 = ApplicationSettings.ReadByName(settings1.Name);
-            settings1.Name.ShouldEqual(settings2.Name);
-            settings1.Port.ShouldEqual(settings2.Port);
-            settings1.RootUrl.ShouldEqual(settings2.RootUrl);
-            settings1.ApplicationSourceName.ShouldEqual(settings2.ApplicationSourceName);
+            settings1.Name.ShouldBe(settings2.Name);
+            settings1.Port.ShouldBe(settings2.Port);
+            settings1.RootUrl.ShouldBe(settings2.RootUrl);
+            settings1.ApplicationSourceName.ShouldBe(settings2.ApplicationSourceName);
         }
     }
 

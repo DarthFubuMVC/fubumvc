@@ -42,21 +42,21 @@ namespace FubuTransportation.Testing.ScheduledJobs
         [Test]
         public void changes_the_jobs_that_are_already_scheduled_correcting_where_necessary()
         {
-            theSchedule.Find(typeof (CJob)).NextTime.ShouldEqual((DateTimeOffset) DateTime.Today.AddHours(3));
-            theSchedule.Find(typeof (BJob)).NextTime.ShouldEqual((DateTimeOffset) DateTime.Today.AddHours(1));
+            theSchedule.Find(typeof (CJob)).NextTime.ShouldBe((DateTimeOffset) DateTime.Today.AddHours(3));
+            theSchedule.Find(typeof (BJob)).NextTime.ShouldBe((DateTimeOffset) DateTime.Today.AddHours(1));
         }
 
         [Test]
         public void schedules_new_jobs()
         {
-            theSchedule.Find(typeof (DJob)).NextTime.ShouldEqual((DateTimeOffset) DateTime.Today.AddHours(4));
-            theSchedule.Find(typeof (EJob)).NextTime.ShouldEqual((DateTimeOffset) DateTime.Today.AddHours(5));
+            theSchedule.Find(typeof (DJob)).NextTime.ShouldBe((DateTimeOffset) DateTime.Today.AddHours(4));
+            theSchedule.Find(typeof (EJob)).NextTime.ShouldBe((DateTimeOffset) DateTime.Today.AddHours(5));
         }
 
         [Test]
         public void removes_obsolete_jobs()
         {
-            theSchedule.Find(typeof (AJob)).Status.ShouldEqual(JobExecutionStatus.Inactive);
+            theSchedule.Find(typeof (AJob)).Status.ShouldBe(JobExecutionStatus.Inactive);
         }
     }
 

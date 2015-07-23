@@ -82,7 +82,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
                 var json = _.Response.Body.ReadAsText();
 
                 var resource = JsonUtil.Get<AggregationEndpoint.Resource1>(json);
-                resource.Name.ShouldEqual("Joe");
+                resource.Name.ShouldBe("Joe");
             });
         }
 
@@ -123,8 +123,8 @@ namespace FubuMVC.IntegrationTesting.Aggregation
         public void find_chain_by_message_type()
         {
             var cache = TestHost.Service<IClientMessageCache>();
-            cache.FindChain("query-1").InputType().ShouldEqual(typeof (AggregationEndpoint.Query1));
-            cache.FindChain("resource-4").ResourceType().ShouldEqual(typeof (AggregationEndpoint.Resource4));
+            cache.FindChain("query-1").InputType().ShouldBe(typeof (AggregationEndpoint.Query1));
+            cache.FindChain("resource-4").ResourceType().ShouldBe(typeof (AggregationEndpoint.Resource4));
         }
 
         [Test]
@@ -143,10 +143,10 @@ namespace FubuMVC.IntegrationTesting.Aggregation
                     type = typeof (AggregationEndpoint.Query1).GetMessageName()
                 });
 
-                response.request.ShouldEqual("query-1");
-                response.type.ShouldEqual("resource-1");
+                response.request.ShouldBe("query-1");
+                response.type.ShouldBe("resource-1");
                 response.result.ShouldBeOfType<AggregationEndpoint.Resource1>()
-                    .Name.ShouldEqual("Justin Houston");
+                    .Name.ShouldBe("Justin Houston");
             }
         }
 
@@ -168,7 +168,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
                 var aggregatedResponse = aggregator.QueryAggregate(query);
 
                 aggregatedResponse.responses[0].result.ShouldBeOfType<AggregationEndpoint.Resource1>()
-                    .Name.ShouldEqual("Jeremy Maclin");
+                    .Name.ShouldBe("Jeremy Maclin");
 
                 aggregatedResponse.responses[1].result.ShouldBeOfType<AggregationEndpoint.Resource2>();
                 aggregatedResponse.responses[2].result.ShouldBeOfType<AggregationEndpoint.Resource3>();
@@ -192,12 +192,12 @@ namespace FubuMVC.IntegrationTesting.Aggregation
             var readQuery = new AggregatedQueryReader().Read(new JsonSerializer(), messageTypes, json);
 
             readQuery.ShouldNotBeNull();
-            readQuery.queries[0].type.ShouldEqual("query-1");
+            readQuery.queries[0].type.ShouldBe("query-1");
             readQuery.queries[0].query.ShouldBeOfType<AggregationEndpoint.Query1>()
-                .Name.ShouldEqual("Jeremy Maclin");
+                .Name.ShouldBe("Jeremy Maclin");
 
-            readQuery.queries[1].type.ShouldEqual("resource-2");
-            readQuery.queries[2].type.ShouldEqual("input-2");
+            readQuery.queries[1].type.ShouldBe("resource-2");
+            readQuery.queries[2].type.ShouldBe("input-2");
             readQuery.queries[3].query.ShouldBeNull();
         }
 
@@ -222,7 +222,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
                 var response =
                     new JsonSerializer().Deserialize<AggregationResponse>(new JsonTextReader(new StringReader(json)));
 
-                response.responses.Count().ShouldEqual(4);
+                response.responses.Count().ShouldBe(4);
                 response.responses.Select(x => x.type)
                     .ShouldHaveTheSameElementsAs("resource-1", "resource-2", "resource-3", "resource-4");
             });
@@ -263,8 +263,8 @@ namespace FubuMVC.IntegrationTesting.Aggregation
                 var response =
                     new JsonSerializer().Deserialize<AggregationResponse>(new JsonTextReader(new StringReader(json)));
 
-                response.responses.Count().ShouldEqual(1);
-                response.responses[0].correlationId.ShouldEqual("123");
+                response.responses.Count().ShouldBe(1);
+                response.responses[0].correlationId.ShouldBe("123");
             });
         }
 
@@ -292,10 +292,10 @@ namespace FubuMVC.IntegrationTesting.Aggregation
             var readQuery = new AggregatedQueryReader().Read(new JsonSerializer(), messageTypes, json);
 
             readQuery.ShouldNotBeNull();
-            readQuery.queries[0].type.ShouldEqual("query-1");
+            readQuery.queries[0].type.ShouldBe("query-1");
             readQuery.queries[0].query.ShouldBeOfType<AggregationEndpoint.Query1>()
-                .Name.ShouldEqual("Joe");
-            readQuery.queries[0].correlationId.ShouldEqual("123");
+                .Name.ShouldBe("Joe");
+            readQuery.queries[0].correlationId.ShouldBe("123");
         }
 
         [Test]
@@ -321,9 +321,9 @@ namespace FubuMVC.IntegrationTesting.Aggregation
             var readQuery = new AggregatedQueryReader().Read(new JsonSerializer(), messageTypes, json);
 
             readQuery.ShouldNotBeNull();
-            readQuery.queries[0].type.ShouldEqual("query-1");
+            readQuery.queries[0].type.ShouldBe("query-1");
             readQuery.queries[0].query.ShouldBeOfType<AggregationEndpoint.Query1>()
-                .Name.ShouldEqual("Joe");
+                .Name.ShouldBe("Joe");
             readQuery.queries[0].correlationId.ShouldBeNull();
         }
     }

@@ -43,13 +43,13 @@ namespace FubuTransportation.Testing.Runtime.Invocation
             var report = theContext.RecordedLogs.ErrorMessages.Single()
                 .As<ExceptionReport>();
 
-            report.ExceptionText.ShouldEqual(theException.ToString());
+            report.ExceptionText.ShouldBe(theException.ToString());
         }
 
         [Test]
         public void should_send_a_failure_ack()
         {
-            theContext.RecordedOutgoing.FailureAcknowledgementMessage.ShouldEqual("Deserialization failed");
+            theContext.RecordedOutgoing.FailureAcknowledgementMessage.ShouldBe("Deserialization failed");
 
         }
     }

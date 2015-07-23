@@ -36,9 +36,9 @@ namespace FubuMVC.Tests.Json
         {
             var values = valuesFor("{a:'1', b:2, c:3}");
 
-            values.Get("a").ShouldEqual("1");
-            values.Get("b").ShouldEqual("2");
-            values.Get("c").ShouldEqual("3");
+            values.Get("a").ShouldBe("1");
+            values.Get("b").ShouldBe("2");
+            values.Get("c").ShouldBe("3");
         }
 
         [Test]
@@ -58,8 +58,8 @@ namespace FubuMVC.Tests.Json
             var values = valuesFor("{child1:'1', child2:{a:'1', b:'2'}}");
             var child = values.GetChild("child2");
 
-            child.Get("a").ShouldEqual("1");
-            child.Get("b").ShouldEqual("2");
+            child.Get("a").ShouldBe("1");
+            child.Get("b").ShouldBe("2");
         }
 
         [Test]
@@ -76,7 +76,7 @@ namespace FubuMVC.Tests.Json
 
             var children = values.GetChildren("children");
 
-            children.Count().ShouldEqual(3);
+            children.Count().ShouldBe(3);
             children.Select(x => x.Get("a")).ShouldHaveTheSameElementsAs("1", "2", "3");
         }
 

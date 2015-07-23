@@ -14,7 +14,7 @@ namespace FubuMVC.Tests.Registration
         public void one_method_is_valid()
         {
             FilterAttribute.DetermineMethod(typeof (ValidFilter))
-                           .Name.ShouldEqual("Filter");
+                           .Name.ShouldBe("Filter");
         }
 
         [Test]
@@ -53,8 +53,8 @@ namespace FubuMVC.Tests.Registration
             var chain = graph.BehaviorFor<FilterTargetEndpoint>(x => x.get_hello());
 
             var filter = chain.OfType<ActionFilter>().Single();
-            filter.HandlerType.ShouldEqual(typeof (ValidFilter));
-            filter.Method.Name.ShouldEqual("Filter");
+            filter.HandlerType.ShouldBe(typeof (ValidFilter));
+            filter.Method.Name.ShouldBe("Filter");
 
             filter.Next.ShouldBeOfType<ContinuationNode>()
                 .Next.ShouldBeOfType<ActionCall>();

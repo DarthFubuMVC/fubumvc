@@ -26,9 +26,9 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void build_route_for_endpoint_method()
         {
             var route = routeFor<SomethingEndpoint>(x => x.Go(null));
-            route.Pattern.ShouldEqual("something/go/{Name}/{Age}");
+            route.Pattern.ShouldBe("something/go/{Name}/{Age}");
 
-            route.Input.QueryParameters.Single().Name.ShouldEqual("Level");
+            route.Input.QueryParameters.Single().Name.ShouldBe("Level");
 
             route.Input.RouteParameters.Select(x => x.Name)
                 .ShouldHaveTheSameElementsAs("Name", "Age");
@@ -38,9 +38,9 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void build_route_for_endpoints_method()
         {
             var route = routeFor<SomethingEndpoints>(x => x.Go(null));
-            route.Pattern.ShouldEqual("something/go/{Name}/{Age}");
+            route.Pattern.ShouldBe("something/go/{Name}/{Age}");
 
-            route.Input.QueryParameters.Single().Name.ShouldEqual("Level");
+            route.Input.QueryParameters.Single().Name.ShouldBe("Level");
 
             route.Input.RouteParameters.Select(x => x.Name)
                 .ShouldHaveTheSameElementsAs("Name", "Age");
@@ -50,9 +50,9 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void build_route_for_controller_method()
         {
             var route = routeFor<SomethingController>(x => x.Go(null));
-            route.Pattern.ShouldEqual("something/go/{Name}/{Age}");
+            route.Pattern.ShouldBe("something/go/{Name}/{Age}");
 
-            route.Input.QueryParameters.Single().Name.ShouldEqual("Level");
+            route.Input.QueryParameters.Single().Name.ShouldBe("Level");
 
             route.Input.RouteParameters.Select(x => x.Name)
                 .ShouldHaveTheSameElementsAs("Name", "Age");
@@ -62,23 +62,23 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void build_route_for_Get_method()
         {
             var route = routeFor<SomethingEndpoint>(x => x.Get());
-            route.Pattern.ShouldEqual("something");
-            route.AllowedHttpMethods.Single().ShouldEqual("GET");
+            route.Pattern.ShouldBe("something");
+            route.AllowedHttpMethods.Single().ShouldBe("GET");
         }
 
         [Test]
         public void build_route_for_get_method_with_input()
         {
             var route = routeFor<SomethingEndpoints>(x => x.Get(null));
-            route.Pattern.ShouldEqual("something/{Name}/{Age}");
-            route.AllowedHttpMethods.Single().ShouldEqual("GET");
+            route.Pattern.ShouldBe("something/{Name}/{Age}");
+            route.AllowedHttpMethods.Single().ShouldBe("GET");
         }
 
         [Test]
         public void resource_path()
         {
             var route = routeFor<SomethingEndpoint>(x => x.Write(null));
-            route.Pattern.ShouldEqual("something/write/" + ResourcePath.UrlSuffix);
+            route.Pattern.ShouldBe("something/write/" + ResourcePath.UrlSuffix);
         }
 
 

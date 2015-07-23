@@ -37,7 +37,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             source.IncludeClassesSuffixedWithController();
 
             theResultingGraph.ApplicationAssembly.GetName()
-                .Name.ShouldEqual(Assembly.GetExecutingAssembly().GetName().Name);
+                .Name.ShouldBe(Assembly.GetExecutingAssembly().GetName().Name);
 
             theResultingGraph.BehaviorFor<OneController>(x => x.Query(null))
                 .ShouldNotBeNull();

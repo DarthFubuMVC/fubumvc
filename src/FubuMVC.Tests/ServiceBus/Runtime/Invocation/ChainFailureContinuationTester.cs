@@ -42,7 +42,7 @@ namespace FubuTransportation.Testing.Runtime.Invocation
         [Test]
         public void should_log_the_message_failed()
         {
-            theContext.RecordedLogs.InfoMessages.Single().ShouldEqual(new MessageFailed
+            theContext.RecordedLogs.InfoMessages.Single().ShouldBe(new MessageFailed
             {
                 Envelope = theEnvelope.ToToken(),
                 Exception = theException
@@ -55,13 +55,13 @@ namespace FubuTransportation.Testing.Runtime.Invocation
             var report = theContext.RecordedLogs.ErrorMessages.Single()
                 .ShouldBeOfType<FubuCore.Logging.ExceptionReport>();
 
-            report.ExceptionText.ShouldEqual(theException.ToString());
+            report.ExceptionText.ShouldBe(theException.ToString());
         }
 
         [Test]
         public void should_send_a_failure_ack()
         {
-            theContext.RecordedOutgoing.FailureAcknowledgementMessage.ShouldEqual("Chain execution failed");
+            theContext.RecordedOutgoing.FailureAcknowledgementMessage.ShouldBe("Chain execution failed");
 
         }
     }

@@ -42,7 +42,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void the_chain_has_the_url_pattern()
         {
-            theChain.Route.Pattern.ShouldEqual("cases/from/{Start}/to/{End}");
+            theChain.Route.Pattern.ShouldBe("cases/from/{Start}/to/{End}");
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             parameters["Start"] = "2";
             parameters["End"] = "5";
 
-            input.CreateUrlFromParameters(parameters).ShouldEqual("cases/from/2/to/5");
+            input.CreateUrlFromParameters(parameters).ShouldBe("cases/from/2/to/5");
         }
     }
 
@@ -96,7 +96,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             MethodToUrlBuilder.Alter(theRoute, "GetPath", theProperties);
 
-            theRoute.Pattern.ShouldEqual("getpath");
+            theRoute.Pattern.ShouldBe("getpath");
             theRoute.AllowedHttpMethods.Any().ShouldBeFalse();
         }
 
@@ -105,7 +105,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             MethodToUrlBuilder.Alter(theRoute, "Get_path", theProperties);
 
-            theRoute.Pattern.ShouldEqual("path");
+            theRoute.Pattern.ShouldBe("path");
             theRoute.AllowedHttpMethods.ShouldHaveTheSameElementsAs("GET");
         }
 
@@ -114,7 +114,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             MethodToUrlBuilder.Alter(theRoute, "post_path", theProperties);
 
-            theRoute.Pattern.ShouldEqual("path");
+            theRoute.Pattern.ShouldBe("path");
             theRoute.AllowedHttpMethods.ShouldHaveTheSameElementsAs("POST");
         }
 
@@ -123,7 +123,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             MethodToUrlBuilder.Alter(theRoute, "Put_path", theProperties);
 
-            theRoute.Pattern.ShouldEqual("path");
+            theRoute.Pattern.ShouldBe("path");
             theRoute.AllowedHttpMethods.ShouldHaveTheSameElementsAs("PUT");
         }
 
@@ -135,7 +135,7 @@ namespace FubuMVC.Tests.Registration.Conventions
 
             MethodToUrlBuilder.Alter(theRoute, "get", theProperties);
 
-            theRoute.Pattern.ShouldEqual(originalRoute);
+            theRoute.Pattern.ShouldBe(originalRoute);
             theRoute.AllowedHttpMethods.ShouldContain("GET");
         }
 
@@ -159,7 +159,7 @@ namespace FubuMVC.Tests.Registration.Conventions
 
             MethodToUrlBuilder.Alter(theRoute, "cases_from_Start_to_End", theProperties);
 
-            theRoute.Pattern.ShouldEqual("cases/from/{Start}/to/{End}");
+            theRoute.Pattern.ShouldBe("cases/from/{Start}/to/{End}");
         }
 
         [Test]
@@ -170,7 +170,7 @@ namespace FubuMVC.Tests.Registration.Conventions
 
             MethodToUrlBuilder.Alter(theRoute, "get_cases_from_Start_to_End", theProperties);
 
-            theRoute.Pattern.ShouldEqual("cases/from/{Start}/to/{End}");
+            theRoute.Pattern.ShouldBe("cases/from/{Start}/to/{End}");
             theRoute.AllowedHttpMethods.ShouldContain("GET");
         }
 
@@ -180,7 +180,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             theProperties.Add("Input1");
             MethodToUrlBuilder.Alter(theRoute, "path_Input1_folder", theProperties);
 
-            theRoute.Pattern.ShouldEqual("path/{Input1}/folder");
+            theRoute.Pattern.ShouldBe("path/{Input1}/folder");
         }
 
         [Test]
@@ -188,21 +188,21 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             MethodToUrlBuilder.Alter(theRoute, "path_folder1_folder2", theProperties);
 
-            theRoute.Pattern.ShouldEqual("path/folder1/folder2");
+            theRoute.Pattern.ShouldBe("path/folder1/folder2");
         }
 
         [Test]
         public void two_underscores_in_a_row_are_considered_to_be_an_underscore()
         {
             MethodToUrlBuilder.Alter(theRoute, "path_folder1__folder2", theProperties);
-            theRoute.Pattern.ShouldEqual("path/folder1/_folder2");
+            theRoute.Pattern.ShouldBe("path/folder1/_folder2");
         }
 
         [Test]
         public void three_underscores_in_a_row_are_a_dash()
         {
             MethodToUrlBuilder.Alter(theRoute, "path_folder1___folder2", theProperties);
-            theRoute.Pattern.ShouldEqual("path/folder1-folder2");
+            theRoute.Pattern.ShouldBe("path/folder1-folder2");
         }
     }
 }

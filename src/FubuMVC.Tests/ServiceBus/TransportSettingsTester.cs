@@ -16,7 +16,7 @@ namespace FubuTransportation.Testing
         [Test]
         public void the_default_delayed_message_polling_is_5_seconds()
         {
-            new TransportSettings().DelayMessagePolling.ShouldEqual(5000);
+            new TransportSettings().DelayMessagePolling.ShouldBe(5000);
         }
 
         [Test]

@@ -39,7 +39,7 @@ namespace FubuMVC.Tests.Http.Owin
         {
             response.WriteResponseCode(HttpStatusCode.UseProxy);
 
-            environment[OwinConstants.ResponseStatusCodeKey].ShouldEqual(HttpStatusCode.UseProxy.As<int>());
+            environment[OwinConstants.ResponseStatusCodeKey].ShouldBe(HttpStatusCode.UseProxy.As<int>());
         }
 
         [Test]
@@ -47,8 +47,8 @@ namespace FubuMVC.Tests.Http.Owin
         {
             const string description = "why u no make good request?";
             response.WriteResponseCode(HttpStatusCode.BadRequest, description);
-            environment[OwinConstants.ResponseStatusCodeKey].ShouldEqual(HttpStatusCode.BadRequest.As<int>());
-            environment[OwinConstants.ResponseReasonPhraseKey].ShouldEqual(description);
+            environment[OwinConstants.ResponseStatusCodeKey].ShouldBe(HttpStatusCode.BadRequest.As<int>());
+            environment[OwinConstants.ResponseReasonPhraseKey].ShouldBe(description);
         }
     }
 }

@@ -35,7 +35,7 @@ namespace FubuMVC.Tests.Services.Messaging
                 });
             });
 
-            result.ShouldEqual(m4);
+            result.ShouldBe(m4);
             hub.Listeners.Any().ShouldBeFalse(); // want it to remove the condition as it goes
         }
 

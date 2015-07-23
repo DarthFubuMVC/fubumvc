@@ -15,7 +15,7 @@ namespace FubuTransportation.Testing.Configuration
             var uri = new Uri("http://lOcAlHoSt/blahdee");
             var normalizedUri = uri.NormalizeLocalhost();
 
-            normalizedUri.ToString().ShouldEqual("http://{0}/blahdee".ToFormat(Environment.MachineName.ToLower()));
+            normalizedUri.ToString().ShouldBe("http://{0}/blahdee".ToFormat(Environment.MachineName.ToLower()));
         }
 
         [Test]
@@ -23,7 +23,7 @@ namespace FubuTransportation.Testing.Configuration
         {
             var uri = new Uri("http://127.0.0.1/blahdee");
             var normalizedUri = uri.NormalizeLocalhost();
-            normalizedUri.ToString().ShouldEqual("http://{0}/blahdee".ToFormat(Environment.MachineName.ToLower()));
+            normalizedUri.ToString().ShouldBe("http://{0}/blahdee".ToFormat(Environment.MachineName.ToLower()));
         }
     }
 }

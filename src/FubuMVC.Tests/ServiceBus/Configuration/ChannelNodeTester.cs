@@ -73,7 +73,7 @@ namespace FubuTransportation.Testing.Configuration
 
             node.DefaultContentType = "application/xml";
 
-            node.DefaultContentType.ShouldEqual("application/xml");
+            node.DefaultContentType.ShouldBe("application/xml");
             node.DefaultSerializer.ShouldBeNull();
         }
 
@@ -135,7 +135,7 @@ namespace FubuTransportation.Testing.Configuration
             logger.ErrorMessages.ShouldHaveCount(1);
             logger.InfoMessages.ShouldHaveCount(1);
             var message = logger.InfoMessages.Cast<ReceiveFailed>().Single();
-            message.ChannelKey.ShouldEqual(node.Key);
+            message.ChannelKey.ShouldBe(node.Key);
             message.Exception.ShouldNotBeNull();
         }
 
@@ -171,7 +171,7 @@ namespace FubuTransportation.Testing.Configuration
             var receiver = new RecordingReceiver();
             node.StartReceiving(receiver, logger);
 
-            channel.HitCount.ShouldEqual(20);
+            channel.HitCount.ShouldBe(20);
         }
 
         public class FakeChannel : IChannel
@@ -276,7 +276,7 @@ namespace FubuTransportation.Testing.Configuration
         {
             theSerializer.AssertWasCalled(x => x.Serialize(null, theNode), x => {
                 x.Constraints(Is.Matching<Envelope>(o => {
-                    o.CorrelationId.ShouldEqual(theEnvelope.CorrelationId);
+                    o.CorrelationId.ShouldBe(theEnvelope.CorrelationId);
                     o.ShouldNotBeTheSameAs(theEnvelope);
 
 
@@ -289,8 +289,8 @@ namespace FubuTransportation.Testing.Configuration
         public void should_have_applied_the_channel_specific_modifiers()
         {
             var sentHeaders = theChannel.Sent.Single().Headers;
-            sentHeaders["D"].ShouldEqual("4");
-            sentHeaders["E"].ShouldEqual("5");
+            sentHeaders["D"].ShouldBe("4");
+            sentHeaders["E"].ShouldBe("5");
         }
 
  
@@ -300,23 +300,23 @@ namespace FubuTransportation.Testing.Configuration
             var sentHeaders = theChannel.Sent.Single().Headers;
             sentHeaders.ShouldNotBeTheSameAs(theEnvelope.Headers);
 
-            sentHeaders["A"].ShouldEqual("1");
-            sentHeaders["B"].ShouldEqual("2");
-            sentHeaders["C"].ShouldEqual("3");
+            sentHeaders["A"].ShouldBe("1");
+            sentHeaders["B"].ShouldBe("2");
+            sentHeaders["C"].ShouldBe("3");
         }
 
         [Test]
         public void sends_the_channel_key()
         {
             var sentHeaders = theChannel.Sent.Single().Headers;
-            sentHeaders[Envelope.ChannelKey].ShouldEqual(theNode.Key);
+            sentHeaders[Envelope.ChannelKey].ShouldBe(theNode.Key);
         }
 
         [Test]
         public void sends_the_destination_as_a_header()
         {
             var sentHeaders = theChannel.Sent.Single().Headers;
-            sentHeaders[Envelope.DestinationKey].ToUri().ShouldEqual(theNode.Uri);
+            sentHeaders[Envelope.DestinationKey].ToUri().ShouldBe(theNode.Uri);
         }
     }
 

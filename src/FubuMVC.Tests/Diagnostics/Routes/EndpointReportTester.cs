@@ -50,14 +50,14 @@ namespace FubuMVC.Tests.Diagnostics.Routes
         public void resource_type()
         {
             theChain.AddToEnd(ActionCall.For<FakeEndpoint>(x => x.get_something(null)));
-            theReport.ResourceType.ShouldEqual(typeof (Output));
+            theReport.ResourceType.ShouldBe(typeof (Output));
         }
 
         [Test]
         public void input_model()
         {
             theChain.AddToEnd(ActionCall.For<FakeEndpoint>(x => x.get_something(null)));
-            theReport.InputModel.ShouldEqual(typeof (Input));
+            theReport.InputModel.ShouldBe(typeof (Input));
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace FubuMVC.Tests.Diagnostics.Routes
         public void one_action()
         {
             theChain.AddToEnd(ActionCall.For<FakeEndpoint>(x => x.get_something(null)));
-            theReport.Action.Single().ShouldEqual("FakeEndpoint.get_something(Input input) : Output");
+            theReport.Action.Single().ShouldBe("FakeEndpoint.get_something(Input input) : Output");
         }
 
         [Test]
@@ -89,7 +89,7 @@ namespace FubuMVC.Tests.Diagnostics.Routes
         [Test]
         public void constraints_with_no_route()
         {
-            theReport.Constraints.ShouldEqual("N/A");
+            theReport.Constraints.ShouldBe("N/A");
         }
 
         [Test]
@@ -97,7 +97,7 @@ namespace FubuMVC.Tests.Diagnostics.Routes
         {
             theRoutedChain.Route.AllowedHttpMethods.Any().ShouldBeFalse();
 
-            theRoutedReport.Constraints.ShouldEqual("Any");
+            theRoutedReport.Constraints.ShouldBe("Any");
         }
 
         [Test]
@@ -105,7 +105,7 @@ namespace FubuMVC.Tests.Diagnostics.Routes
         {
             theRoutedChain.Route.AddHttpMethodConstraint("GET");
 
-            theRoutedReport.Constraints.ShouldEqual("GET");
+            theRoutedReport.Constraints.ShouldBe("GET");
         }
 
         [Test]
@@ -114,14 +114,14 @@ namespace FubuMVC.Tests.Diagnostics.Routes
             theRoutedChain.Route.AddHttpMethodConstraint("POST");
             theRoutedChain.Route.AddHttpMethodConstraint("GET");
 
-            theRoutedReport.Constraints.ShouldEqual("GET, POST");
+            theRoutedReport.Constraints.ShouldBe("GET, POST");
         }
 
         [Test]
         public void normal_route()
         {
 
-            theRoutedReport.Title.ShouldEqual("something");
+            theRoutedReport.Title.ShouldBe("something");
         }
 
         [Test]
@@ -129,7 +129,7 @@ namespace FubuMVC.Tests.Diagnostics.Routes
         {
             theRoutedChain.UrlCategory.Category = "weird";
 
-            theRoutedReport.UrlCategory.ShouldEqual("weird");
+            theRoutedReport.UrlCategory.ShouldBe("weird");
         }
 
         [Test]
@@ -153,7 +153,7 @@ namespace FubuMVC.Tests.Diagnostics.Routes
         {
             theChain.Any(x => x is InputNode).ShouldBeFalse();
 
-            theReport.Accepts.Single().ShouldEqual(MimeType.HttpFormMimetype);
+            theReport.Accepts.Single().ShouldBe(MimeType.HttpFormMimetype);
         }
 
         public class SimpleWrapper : IActionBehavior

@@ -25,8 +25,8 @@ namespace FubuMVC.Tests.Projections
             var node = new DictionaryMediaNode();
             projection.As<IProjection<CustomValueHolder>>().Write(context, node);
 
-            node.Values["Value"].As<IDictionary<string, object>>()["Name"].ShouldEqual("Jeremy");
-            node.Values["Value"].As<IDictionary<string, object>>()["Age"].ShouldEqual(38);
+            node.Values["Value"].As<IDictionary<string, object>>()["Name"].ShouldBe("Jeremy");
+            node.Values["Value"].As<IDictionary<string, object>>()["Age"].ShouldBe(38);
         }
 
         [Test]
@@ -46,8 +46,8 @@ namespace FubuMVC.Tests.Projections
             var node = new DictionaryMediaNode();
             projection.As<IProjection<CustomValueHolder>>().Write(context, node);
 
-            node.Values["different"].As<IDictionary<string, object>>()["Name"].ShouldEqual("Jeremy");
-            node.Values["different"].As<IDictionary<string, object>>()["Age"].ShouldEqual(38);
+            node.Values["different"].As<IDictionary<string, object>>()["Name"].ShouldBe("Jeremy");
+            node.Values["different"].As<IDictionary<string, object>>()["Age"].ShouldBe(38);
         }
     }
 

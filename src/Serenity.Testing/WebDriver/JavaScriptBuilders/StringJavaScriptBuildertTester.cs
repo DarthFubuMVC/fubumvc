@@ -27,7 +27,7 @@ namespace Serenity.Testing.WebDriver.JavaScriptBuilders
         [Test]
         public void WrapsStringWithQuotes()
         {
-            ClassUnderTest.Build("some string").ShouldEqual("\"some string\"");
+            ClassUnderTest.Build("some string").ShouldBe("\"some string\"");
         }
     }
 }

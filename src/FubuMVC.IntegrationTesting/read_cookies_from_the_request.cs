@@ -18,7 +18,7 @@ namespace FubuMVC.IntegrationTesting
             endpoints.Get<CookieReceiverEndpoint>(x => x.get_cookies(),
                 configure: r => { r.Headers.Add(HttpRequestHeader.Cookie, new Cookie("Foo", "Bar").ToString()); })
                 .ReadAsText()
-                .ShouldEqual("Some stuff");
+                .ShouldBe("Some stuff");
         }
 
         [Test]
@@ -28,7 +28,7 @@ namespace FubuMVC.IntegrationTesting
             {
                 r.CookieContainer.Add(new System.Net.Cookie("Foo", "Bar", "Foo", "http://FooDomain.com"));
                 r.CookieContainer.Add(new System.Net.Cookie("Dallas", "Cowboys", "Dallas", "http://DallasDomain.com"));
-            }).ReadAsText().ShouldEqual("Some stuff");
+            }).ReadAsText().ShouldBe("Some stuff");
         }
     }
 

@@ -46,25 +46,25 @@ namespace FubuMVC.Tests.Urls
         {
 
             urls.UrlFor<OnlyOneActionController>()
-                .ShouldEqual("/onlyoneaction/go");
+                .ShouldBe("/onlyoneaction/go");
         }
 
         [Test]
         public void retrieve_by_controller_action_even_if_it_has_an_input_model()
         {
-            urls.UrlFor<OneController>(x => x.M1(null), null).ShouldEqual("/one/m1");
+            urls.UrlFor<OneController>(x => x.M1(null), null).ShouldBe("/one/m1");
         }
 
         [Test]
         public void retrieve_a_url_for_a_model_simple_case()
         {
-            urls.UrlFor(new Model1()).ShouldEqual("/one/m1");
+            urls.UrlFor(new Model1()).ShouldBe("/one/m1");
         }
 
         [Test]
         public void retrieve_a_url_for_a_inferred_model_simple_case()
         {
-            urls.UrlFor<Model1>((string) null).ShouldEqual("/one/m1");
+            urls.UrlFor<Model1>((string) null).ShouldBe("/one/m1");
         }
 
         [Test]
@@ -80,7 +80,7 @@ namespace FubuMVC.Tests.Urls
             urls.UrlFor(new ModelWithInputs
             {
                 Name = "Jeremy"
-            }).ShouldEqual("/find/Jeremy");
+            }).ShouldBe("/find/Jeremy");
         }
 
         [Test]
@@ -88,7 +88,7 @@ namespace FubuMVC.Tests.Urls
         {
             var model = new ModelWithQueryStringInput() {Param = 42};
 
-            urls.UrlFor(model).ShouldEqual("/qs/test?Param=42");
+            urls.UrlFor(model).ShouldBe("/qs/test?Param=42");
         }
 
         [Test]
@@ -96,7 +96,7 @@ namespace FubuMVC.Tests.Urls
         {
             var model = new ModelWithQueryStringAndRouteInput() {Param = 42, RouteParam = 23};
 
-            urls.UrlFor(model).ShouldEqual("/qsandroute/test/23?Param=42");
+            urls.UrlFor(model).ShouldBe("/qsandroute/test/23?Param=42");
         }
 
         [Test]
@@ -105,19 +105,19 @@ namespace FubuMVC.Tests.Urls
             var parameters = new RouteParameters<ModelWithInputs>();
             parameters[x => x.Name] = "Max";
 
-            urls.UrlFor<ModelWithInputs>(parameters).ShouldEqual("/find/Max");
+            urls.UrlFor<ModelWithInputs>(parameters).ShouldBe("/find/Max");
         }
 
         [Test]
         public void retrieve_a_url_for_a_model_and_category()
         {
-            urls.UrlFor(new UrlModel(), "different").ShouldEqual("/one/m4");
+            urls.UrlFor(new UrlModel(), "different").ShouldBe("/one/m4");
         }
 
         [Test]
         public void retrieve_a_url_by_action()
         {
-            urls.UrlFor<OneController>(x => x.M2(), null).ShouldEqual("/one/m2");
+            urls.UrlFor<OneController>(x => x.M2(), null).ShouldBe("/one/m2");
         }
 
         [Test]
@@ -132,7 +132,7 @@ namespace FubuMVC.Tests.Urls
         {
             var method = ReflectionHelper.GetMethod<OneController>(x => x.M3());
 
-            urls.UrlFor(typeof (OneController), method, null).ShouldEqual("/one/m3");
+            urls.UrlFor(typeof (OneController), method, null).ShouldBe("/one/m3");
         }
 
         [Test]
@@ -141,21 +141,21 @@ namespace FubuMVC.Tests.Urls
             Exception<FubuException>.ShouldBeThrownBy(() => {
                 var method = ReflectionHelper.GetMethod<RandomClass>(x => x.Ignored());
                 urls.UrlFor(typeof (OneController), method, null);
-            }).ErrorCode.ShouldEqual(2104);
+            }).ErrorCode.ShouldBe(2104);
         }
 
         [Test]
         public void url_for_new_positive_case()
         {
-            urls.UrlForNew<UrlModel>().ShouldEqual("/two/m2");
-            urls.UrlForNew(typeof (UrlModel)).ShouldEqual("/two/m2");
+            urls.UrlForNew<UrlModel>().ShouldBe("/two/m2");
+            urls.UrlForNew(typeof (UrlModel)).ShouldBe("/two/m2");
         }
 
         [Test]
         public void url_for_new_negative_case_should_throw_2109()
         {
             Exception<FubuException>.ShouldBeThrownBy(() => { urls.UrlForNew<ModelWithoutNewUrl>(); })
-                .ErrorCode.ShouldEqual(2109);
+                .ErrorCode.ShouldBe(2109);
         }
 
         [Test]
@@ -175,14 +175,14 @@ namespace FubuMVC.Tests.Urls
         public void url_for_route_parameter_by_type_respects_the_absolute_path()
         {
             urls.UrlFor<Model6>(new RouteParameters())
-                .ShouldEqual("/one/a");
+                .ShouldBe("/one/a");
         }
 
         [Test]
         public void url_for_route_parameter_by_type_and_category_respects_absolute_path()
         {
             urls.UrlFor<UrlModel>(new RouteParameters(), "different")
-                .ShouldEqual("/one/m4");
+                .ShouldBe("/one/m4");
         }
     }
 

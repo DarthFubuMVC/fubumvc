@@ -50,7 +50,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             var behavior =
                 graph.BehaviorFor<JsonOutputAttachmentTesterController>(x => x.Decorated()).Calls.First().Next;
-            behavior.ShouldBeOfType<OutputNode>().ResourceType.ShouldEqual(typeof (ViewModel1));
+            behavior.ShouldBeOfType<OutputNode>().ResourceType.ShouldBe(typeof (ViewModel1));
         }
 
         [Test]

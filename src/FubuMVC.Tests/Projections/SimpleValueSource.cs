@@ -19,8 +19,8 @@ namespace FubuMVC.Tests.Projections
             var ageAccessor = ReflectionHelper.GetAccessor<SimpleClass>(x => x.Age);
             var nameAccessor = ReflectionHelper.GetAccessor<SimpleClass>(x => x.Name);
 
-            target.ValueFor(ageAccessor).ShouldEqual(37);
-            target.ValueFor(nameAccessor).ShouldEqual("Jeremy");
+            target.ValueFor(ageAccessor).ShouldBe(37);
+            target.ValueFor(nameAccessor).ShouldBe("Jeremy");
         }
     }
 

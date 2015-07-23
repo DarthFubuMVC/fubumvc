@@ -38,7 +38,7 @@ namespace FubuTransportation.Testing.Monitoring.PermanentTaskController
         [Test]
         public void should_return_OwnershipActivated()
         {
-            theTask.Result.ShouldEqual(OwnershipStatus.OwnershipActivated);
+            theTask.Result.ShouldBe(OwnershipStatus.OwnershipActivated);
         }
 
         [Test]
@@ -79,7 +79,7 @@ namespace FubuTransportation.Testing.Monitoring.PermanentTaskController
         [Test]
         public void should_return_Exception()
         {
-            theTask.Result.ShouldEqual(OwnershipStatus.Exception);
+            theTask.Result.ShouldBe(OwnershipStatus.Exception);
         }
 
 
@@ -117,7 +117,7 @@ namespace FubuTransportation.Testing.Monitoring.PermanentTaskController
         [Test]
         public void should_return_OwnershipActivated()
         {
-            theTask.Result.ShouldEqual(OwnershipStatus.AlreadyOwned);
+            theTask.Result.ShouldBe(OwnershipStatus.AlreadyOwned);
         }
     }
 
@@ -129,7 +129,7 @@ namespace FubuTransportation.Testing.Monitoring.PermanentTaskController
         {
             var task = theController.TakeOwnership("unknown://1".ToUri());
             task.Wait();
-            task.Result.ShouldEqual(OwnershipStatus.UnknownSubject);
+            task.Result.ShouldBe(OwnershipStatus.UnknownSubject);
 
         }
     }

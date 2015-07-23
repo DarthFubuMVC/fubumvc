@@ -38,18 +38,18 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
         [Test]
         public void category_has_to_be_instrumentation()
         {
-            theNode.Category.ShouldEqual(BehaviorCategory.Instrumentation);
+            theNode.Category.ShouldBe(BehaviorCategory.Instrumentation);
         }
 
         [Test]
         public void build_the_object_def()
         {
             var objectDef = theNode.As<IContainerModel>().ToInstance().As<IConfiguredInstance>();
-            objectDef.PluggedType.ShouldEqual(typeof (BehaviorTracer));
+            objectDef.PluggedType.ShouldBe(typeof (BehaviorTracer));
             var correlation = objectDef.FindDependencyValueFor<BehaviorCorrelation>();
 
-            correlation.Node.ShouldEqual(inner);
-            correlation.ChainId.ShouldEqual(chain.UniqueId);
+            correlation.Node.ShouldBe(inner);
+            correlation.ChainId.ShouldBe(chain.UniqueId);
         }
 
 

@@ -16,7 +16,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
             endpoints.Get("conneg/override/Foo?Format=Json", "text/html")
                 .ContentTypeShouldBe(MimeType.Json)
                 .ReadAsJson<OverriddenResponse>()
-                .Name.ShouldEqual("Foo");
+                .Name.ShouldBe("Foo");
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
             endpoints.Get("conneg/override/Foo?format=JSON", "text/html")
                 .ContentTypeShouldBe(MimeType.Json)
                 .ReadAsJson<OverriddenResponse>()
-                .Name.ShouldEqual("Foo");
+                .Name.ShouldBe("Foo");
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
                 server.Endpoints.Get("conneg/override/Foo?format=json", "text/html")
                     .ContentTypeShouldBe(MimeType.Json)
                     .ReadAsJson<OverriddenResponse>()
-                    .Name.ShouldEqual("Foo");
+                    .Name.ShouldBe("Foo");
             }
         }
 
@@ -75,7 +75,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
 
                     _.ContentTypeShouldBe(MimeType.Json);
                     _.Response.Body.ReadAsText()
-                        .ShouldEqual("{\"Name\":\"Foo\"}");
+                        .ShouldBe("{\"Name\":\"Foo\"}");
                 });
             }
         }

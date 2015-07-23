@@ -173,30 +173,30 @@ namespace FubuMVC.IntegrationTesting
 
         public static HttpResponse ContentShouldBe(this HttpResponse response, MimeType mimeType, string content)
         {
-            response.ContentType.ShouldEqual(mimeType.Value);
-            response.ReadAsText().ShouldEqual(content);
+            response.ContentType.ShouldBe(mimeType.Value);
+            response.ReadAsText().ShouldBe(content);
 
             return response;
         }
 
         public static HttpResponse ContentTypeShouldBe(this HttpResponse response, MimeType mimeType)
         {
-            response.ContentType.ShouldEqual(mimeType.Value);
+            response.ContentType.ShouldBe(mimeType.Value);
 
             return response;
         }
 
         public static HttpResponse LengthShouldBe(this HttpResponse response, int length)
         {
-            response.ContentLength().ShouldEqual(length);
+            response.ContentLength().ShouldBe(length);
 
             return response;
         }
 
         public static HttpResponse ContentShouldBe(this HttpResponse response, string mimeType, string content)
         {
-            response.ContentType.ShouldEqual(mimeType);
-            response.ReadAsText().ShouldEqual(content);
+            response.ContentType.ShouldBe(mimeType);
+            response.ReadAsText().ShouldBe(content);
 
             return response;
         }
@@ -204,7 +204,7 @@ namespace FubuMVC.IntegrationTesting
 
         public static HttpResponse StatusCodeShouldBe(this HttpResponse response, HttpStatusCode code)
         {
-            response.StatusCode.ShouldEqual(code);
+            response.StatusCode.ShouldBe(code);
 
             return response;
         }
@@ -229,7 +229,7 @@ namespace FubuMVC.IntegrationTesting
 
         public static HttpResponse EtagShouldBe(this HttpResponse response, string etag)
         {
-            etag.Trim('"').ShouldEqual(etag);
+            etag.Trim('"').ShouldBe(etag);
             return response;
         }
 
@@ -242,8 +242,8 @@ namespace FubuMVC.IntegrationTesting
         public static HttpResponse LastModifiedShouldBe(this HttpResponse response, DateTime expected)
         {
             var lastModified = response.LastModified();
-            lastModified.HasValue.ShouldBeTrueBecause("No value for LastModified");
-            lastModified.ShouldEqual(expected);
+            lastModified.HasValue.ShouldBeTrue();
+            lastModified.ShouldBe(expected);
 
             return response;
         }

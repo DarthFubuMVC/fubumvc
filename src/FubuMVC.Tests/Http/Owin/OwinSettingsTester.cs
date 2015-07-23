@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Http.Owin
             var settings = new OwinSettings();
 
             settings.Middleware.OfType<MiddlewareNode<StaticFileMiddleware>>()
-                .Count().ShouldEqual(1);
+                .Count().ShouldBe(1);
         }
 
         [Test]

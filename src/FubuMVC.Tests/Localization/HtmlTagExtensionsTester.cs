@@ -13,7 +13,7 @@ namespace FubuMVC.Tests.Localization
         {
             var token = StringToken.FromKeyString("KEY", "the text of this string token");
             new HtmlTag("a").Text(token)
-                .Text().ShouldEqual(token.ToString());
+                .Text().ShouldBe(token.ToString());
         }
 
         [Test]
@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.Localization
             var token = StringToken.FromKeyString("KEY", "the text of this string token");
 
             new HtmlTag("span").Attr("title", token)
-                .Attr("title").ShouldEqual(token.ToString());
+                .Attr("title").ShouldBe(token.ToString());
         }
 
         [Test]
@@ -30,7 +30,7 @@ namespace FubuMVC.Tests.Localization
         {
             var token = StringToken.FromKeyString("KEY", "the localized string");
             new HtmlTag("div").TextIfEmpty(token)
-                .Text().ShouldEqual(token.ToString());
+                .Text().ShouldBe(token.ToString());
         }
     }
 }

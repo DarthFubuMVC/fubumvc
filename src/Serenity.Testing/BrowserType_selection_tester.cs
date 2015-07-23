@@ -22,7 +22,7 @@ namespace Serenity.Testing
         {
             Project.CurrentProject = new Project{Profile = BrowserType.Phantom.ToString()};
 
-            theSystem.ChooseBrowserType().ShouldEqual(BrowserType.Phantom);
+            theSystem.ChooseBrowserType().ShouldBe(BrowserType.Phantom);
         }
 
         [Test]
@@ -33,7 +33,7 @@ namespace Serenity.Testing
 
             theSystem.DefaultBrowser = BrowserType.IE;
 
-            theSystem.ChooseBrowserType().ShouldEqual(BrowserType.IE);
+            theSystem.ChooseBrowserType().ShouldBe(BrowserType.IE);
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace Serenity.Testing
 
             theSystem.DefaultBrowser = null;
 
-            theSystem.ChooseBrowserType().ShouldEqual(BrowserType.Chrome);
+            theSystem.ChooseBrowserType().ShouldBe(BrowserType.Chrome);
         }
 
     }

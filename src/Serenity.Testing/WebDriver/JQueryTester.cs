@@ -10,14 +10,14 @@ namespace Serenity.Testing.WebDriver
         public void BuildsFilterHasTextFunction()
         {
             string function = JQuery.HasTextFilterFunction("some text").Statement;
-            function.ShouldEqual("function() { return $(this).text().trim() === 'some text'; }");
+            function.ShouldBe("function() { return $(this).text().trim() === 'some text'; }");
         }
 
         [Test]
         public void BuildsFilterDoesNotHaveTextFunction()
         {
             string function = JQuery.DoesNotHaveTextFilterFunction("some text").Statement;
-            function.ShouldEqual("function() { return $(this).text().trim() !== 'some text'; }");
+            function.ShouldBe("function() { return $(this).text().trim() !== 'some text'; }");
         }
     }
 }

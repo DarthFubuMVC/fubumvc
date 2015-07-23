@@ -22,7 +22,7 @@ namespace FubuTransportation.Testing.Runtime.Invocation
 
             sendOneMessage(new MyBatch(message1, message2, message3));
 
-            TestMessageRecorder.AllProcessed.Count().ShouldEqual(6);
+            TestMessageRecorder.AllProcessed.Count().ShouldBe(6);
             TestMessageRecorder.AllProcessed[0].ShouldMatch<OneHandler>(message1);
             TestMessageRecorder.AllProcessed[1].ShouldMatch<GenericHandler>(message1);
             TestMessageRecorder.AllProcessed[2].ShouldMatch<TwoHandler>(message2);

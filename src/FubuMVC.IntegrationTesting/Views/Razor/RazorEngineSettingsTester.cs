@@ -52,7 +52,7 @@ namespace FubuMVC.IntegrationTesting.Views.Razor
         [Test]
         public void default_page_base_type_is_fuburazorview()
         {
-            ClassUnderTest.BaseTemplateType.ShouldEqual(typeof(FubuRazorView));
+            ClassUnderTest.BaseTemplateType.ShouldBe(typeof(FubuRazorView));
         }
     }
 }

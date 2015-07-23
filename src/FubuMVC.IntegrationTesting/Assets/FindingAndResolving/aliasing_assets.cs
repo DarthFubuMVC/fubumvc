@@ -31,7 +31,7 @@ namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
         [Test]
         public void asset_graph_stores_aliases()
         {
-            Assets.FindAsset("bar").Url.ShouldEqual("Folder1/Foo.js");
+            Assets.FindAsset("bar").Url.ShouldBe("Folder1/Foo.js");
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
         [Test]
         public void aliases_are_applied_at_bootstrapping_time()
         {
-            Assets.FindAsset("foo").Url.ShouldEqual("Folder1/Foo.js");
+            Assets.FindAsset("foo").Url.ShouldBe("Folder1/Foo.js");
         }
     }
 }

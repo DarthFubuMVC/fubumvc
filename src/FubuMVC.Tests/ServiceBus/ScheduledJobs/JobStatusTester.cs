@@ -31,11 +31,11 @@ namespace FubuTransportation.Testing.ScheduledJobs
             };
 
             var dto = status.ToDTO("foo");
-            dto.NodeName.ShouldEqual("foo");
-            dto.JobKey.ShouldEqual("AJob");
-            dto.LastExecution.ShouldEqual(status.LastExecution);
-            dto.NextTime.ShouldEqual(status.NextTime);
-            dto.Status.ShouldEqual(JobExecutionStatus.Scheduled);
+            dto.NodeName.ShouldBe("foo");
+            dto.JobKey.ShouldBe("AJob");
+            dto.LastExecution.ShouldBe(status.LastExecution);
+            dto.NextTime.ShouldBe(status.NextTime);
+            dto.Status.ShouldBe(JobExecutionStatus.Scheduled);
         }
 
         [Test]
@@ -55,11 +55,11 @@ namespace FubuTransportation.Testing.ScheduledJobs
             };
 
             var dto = status.ToDTO("foo");
-            dto.NodeName.ShouldEqual("foo");
-            dto.JobKey.ShouldEqual("Special");
-            dto.LastExecution.ShouldEqual(status.LastExecution);
-            dto.NextTime.ShouldEqual(status.NextTime);
-            dto.Status.ShouldEqual(JobExecutionStatus.Executing);
+            dto.NodeName.ShouldBe("foo");
+            dto.JobKey.ShouldBe("Special");
+            dto.LastExecution.ShouldBe(status.LastExecution);
+            dto.NextTime.ShouldBe(status.NextTime);
+            dto.Status.ShouldBe(JobExecutionStatus.Executing);
         }
     }
 

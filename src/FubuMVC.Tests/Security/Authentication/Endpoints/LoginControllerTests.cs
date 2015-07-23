@@ -67,7 +67,7 @@ namespace FubuMVC.Tests.Security.Authentication.Endpoints
 
             ClassUnderTest.get_login(request);
 
-            request.UserName.ShouldEqual("josh");
+            request.UserName.ShouldBe("josh");
             request.RememberMe.ShouldBeFalse();
         }
 
@@ -83,7 +83,7 @@ namespace FubuMVC.Tests.Security.Authentication.Endpoints
 
             ClassUnderTest.get_login(request);
 
-            request.UserName.ShouldEqual("jeremy");
+            request.UserName.ShouldBe("jeremy");
             request.RememberMe.ShouldBeTrue();
         }
 
@@ -100,7 +100,7 @@ namespace FubuMVC.Tests.Security.Authentication.Endpoints
             ClassUnderTest.post_login(request);
 
             theCookies.User.AssertWasCalled(x => x.Value = username);
-            request.UserName.ShouldEqual(username);
+            request.UserName.ShouldBe(username);
         }
 
         [Test]
@@ -157,7 +157,7 @@ namespace FubuMVC.Tests.Security.Authentication.Endpoints
 
             ClassUnderTest.get_login(request);
 
-            request.Message.ShouldEqual(LoginKeys.LockedOut.ToString());
+            request.Message.ShouldBe(LoginKeys.LockedOut.ToString());
         }
 
 
@@ -171,7 +171,7 @@ namespace FubuMVC.Tests.Security.Authentication.Endpoints
 
             ClassUnderTest.get_login(theRequest);
 
-            theRequest.Message.ShouldEqual(LoginKeys.Unknown.ToString());
+            theRequest.Message.ShouldBe(LoginKeys.Unknown.ToString());
         }
 
         [Test]
@@ -182,7 +182,7 @@ namespace FubuMVC.Tests.Security.Authentication.Endpoints
 
             ClassUnderTest.get_login(theRequest);
 
-            theRequest.Message.ShouldEqual("Something bad");
+            theRequest.Message.ShouldBe("Something bad");
         }
     }
 
@@ -208,7 +208,7 @@ namespace FubuMVC.Tests.Security.Authentication.Endpoints
         [Test]
         public void the_status_is_still_not_authenticated()
         {
-            theLoginRequest.Status.ShouldEqual(LoginStatus.NotAuthenticated);
+            theLoginRequest.Status.ShouldBe(LoginStatus.NotAuthenticated);
         }
 
         [Test]
@@ -243,7 +243,7 @@ namespace FubuMVC.Tests.Security.Authentication.Endpoints
         [Test]
         public void the_status_should_be_locked_out()
         {
-            theLoginRequest.Status.ShouldEqual(LoginStatus.LockedOut);
+            theLoginRequest.Status.ShouldBe(LoginStatus.LockedOut);
         }
 
         [Test]

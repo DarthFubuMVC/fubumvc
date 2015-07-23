@@ -37,7 +37,7 @@ namespace FubuTransportation.Testing
             });
 
             graph.ChainFor(typeof (Message1)).OfType<HandlerCall>().Select(x => x.HandlerType)
-                .Single().ShouldEqual(typeof (MyFunkySpaceAgeProcessor));
+                .Single().ShouldBe(typeof (MyFunkySpaceAgeProcessor));
 
 
         }
@@ -52,7 +52,7 @@ namespace FubuTransportation.Testing
             });
 
             graph.ChainFor(typeof(Message1)).OfType<HandlerCall>().Select(x => x.HandlerType)
-                .Single().ShouldEqual(typeof(MyFunkySpaceAgeProcessor));
+                .Single().ShouldBe(typeof(MyFunkySpaceAgeProcessor));
 
 
         }

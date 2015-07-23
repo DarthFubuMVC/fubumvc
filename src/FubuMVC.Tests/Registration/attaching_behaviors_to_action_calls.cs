@@ -27,7 +27,7 @@ namespace FubuMVC.Tests.Registration
 
             graph.Actions().Each(x =>
             {
-                x.Previous.ShouldBeOfType<Wrapper>().BehaviorType.ShouldEqual(typeof(MyWrapper));
+                x.Previous.ShouldBeOfType<Wrapper>().BehaviorType.ShouldBe(typeof(MyWrapper));
             });
         }
 
@@ -39,7 +39,7 @@ namespace FubuMVC.Tests.Registration
 
             graph.Actions().Each(x =>
             {
-                x.Previous.ShouldBeOfType<Wrapper>().BehaviorType.ShouldEqual(typeof(MyWrapper));
+                x.Previous.ShouldBeOfType<Wrapper>().BehaviorType.ShouldBe(typeof(MyWrapper));
             });
         }
 
@@ -51,7 +51,7 @@ namespace FubuMVC.Tests.Registration
 
             graph.Actions().Each(x =>
             {
-                x.Previous.ShouldBeOfType<Wrapper>().BehaviorType.ShouldEqual(typeof(MyWrapper));
+                x.Previous.ShouldBeOfType<Wrapper>().BehaviorType.ShouldBe(typeof(MyWrapper));
             });
         }
 

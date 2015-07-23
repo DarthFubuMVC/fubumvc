@@ -44,7 +44,7 @@ namespace FubuMVC.Tests.Registration.Querying
         {
             theCache.RootAt("localhost");
             var route = theRouteDefinitionAlias.ToRoute();
-            route.Url.ShouldEqual("localhost/{Client}/");
+            route.Url.ShouldBe("localhost/{Client}/");
         }
     }
 

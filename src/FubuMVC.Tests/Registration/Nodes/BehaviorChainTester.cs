@@ -184,7 +184,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             chain.AddToEnd(call);
             chain.AddToEnd(call2);
 
-            chain.Calls.Count().ShouldEqual(2);
+            chain.Calls.Count().ShouldBe(2);
             chain.Calls.Contains(call).ShouldBeTrue();
             chain.Calls.Contains(call2).ShouldBeTrue();
         }
@@ -466,13 +466,13 @@ namespace FubuMVC.Tests.Registration.Nodes
             var chain = new BehaviorChain();
             chain.AddToEnd(new FakeInputNode(typeof (string)));
 
-            chain.InputType().ShouldEqual(typeof (string));
+            chain.InputType().ShouldBe(typeof (string));
 
             chain.Prepend(new FakeInputNode(null));
-            chain.InputType().ShouldEqual(typeof (string));
+            chain.InputType().ShouldBe(typeof (string));
 
             chain.Prepend(new FakeInputNode(typeof (int)));
-            chain.InputType().ShouldEqual(typeof (int));
+            chain.InputType().ShouldBe(typeof (int));
         }
     }
 
@@ -506,7 +506,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             theChain.AddToEnd(strings);
             theChain.AddToEnd(ints);
 
-            theChain.ResourceType().ShouldEqual(typeof (int));
+            theChain.ResourceType().ShouldBe(typeof (int));
         }
 
         [Test]
@@ -516,7 +516,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             theChain.AddToEnd(ints);
             theChain.AddToEnd(none);
 
-            theChain.ResourceType().ShouldEqual(typeof (int));
+            theChain.ResourceType().ShouldBe(typeof (int));
         }
 
         [Test]
@@ -547,13 +547,13 @@ namespace FubuMVC.Tests.Registration.Nodes
         {
             theChain.ResourceType(typeof (DateTime));
 
-            theChain.ResourceType().ShouldEqual(typeof (DateTime));
+            theChain.ResourceType().ShouldBe(typeof (DateTime));
 
             theChain.AddToEnd(strings);
             theChain.AddToEnd(ints);
             theChain.AddToEnd(none);
 
-            theChain.ResourceType().ShouldEqual(typeof (DateTime));
+            theChain.ResourceType().ShouldBe(typeof (DateTime));
         }
     }
 

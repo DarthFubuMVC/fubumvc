@@ -38,8 +38,8 @@ namespace FubuTransportation.Testing.Runtime.Cascading
             var envelope = response
                 .CreateEnvelope(theOriginalEnvelope);
 
-            envelope.Headers["A"].ShouldEqual("1");
-            envelope.Headers["B"].ShouldEqual("2");
+            envelope.Headers["A"].ShouldBe("1");
+            envelope.Headers["B"].ShouldBe("2");
         
             response.ToString().ShouldContain("A='1'");
             response.ToString().ShouldContain("B='2'");
@@ -51,7 +51,7 @@ namespace FubuTransportation.Testing.Runtime.Cascading
             var response = Respond.With(theMessage).ToSender();
             var envelope = response.CreateEnvelope(theOriginalEnvelope);
 
-            envelope.Destination.ShouldEqual(theOriginalEnvelope.ReplyUri);
+            envelope.Destination.ShouldBe(theOriginalEnvelope.ReplyUri);
 
             response.ToString().ShouldContain("respond to sender");
         }
@@ -64,7 +64,7 @@ namespace FubuTransportation.Testing.Runtime.Cascading
             var response = Respond.With(theMessage).To(uri);
             var envelope = response.CreateEnvelope(theOriginalEnvelope);
 
-            envelope.Destination.ShouldEqual(uri);
+            envelope.Destination.ShouldBe(uri);
 
             response.ToString().ShouldContain("Destination=" + uri);
         }
@@ -76,7 +76,7 @@ namespace FubuTransportation.Testing.Runtime.Cascading
             var response = Respond.With(theMessage).DelayedUntil(time);
             var envelope = response.CreateEnvelope(theOriginalEnvelope);
 
-            envelope.ExecutionTime.ShouldEqual(time);
+            envelope.ExecutionTime.ShouldBe(time);
 
 
         }

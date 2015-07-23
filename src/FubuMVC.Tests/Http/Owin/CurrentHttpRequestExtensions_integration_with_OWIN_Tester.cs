@@ -17,7 +17,7 @@ namespace FubuMVC.Tests.Http.Owin
             new OwinHttpRequest()
                 .IfModifiedSince(time)
                 .IfModifiedSince()
-                .ShouldEqual(time.ToUniversalTime());
+                .ShouldBe(time.ToUniversalTime());
         }
 
         [Test]
@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.Http.Owin
             new OwinHttpRequest()
                 .IfUnModifiedSince(time)
                 .IfUnModifiedSince()
-                .ShouldEqual(time.ToUniversalTime());
+                .ShouldBe(time.ToUniversalTime());
         }
 
         [Test]

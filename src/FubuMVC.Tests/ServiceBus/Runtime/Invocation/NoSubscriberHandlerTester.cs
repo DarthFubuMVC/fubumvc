@@ -31,7 +31,7 @@ namespace FubuTransportation.Testing.Runtime.Invocation
         public void should_have_sent_a_failure_ack()
         {
             theContext.RecordedOutgoing.FailureAcknowledgementMessage
-                .ShouldEqual("No subscriber");
+                .ShouldBe("No subscriber");
         }
     }
 }

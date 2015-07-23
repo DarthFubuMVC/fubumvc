@@ -47,7 +47,7 @@ namespace FubuTransportation.Testing.Subscriptions
                 Destination = settings.Service4
             };
 
-            theRouter.FindDestinationChannels(envelope).Single().Uri.ShouldEqual(settings.Service4);
+            theRouter.FindDestinationChannels(envelope).Single().Uri.ShouldBe(settings.Service4);
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace FubuTransportation.Testing.Subscriptions
                 Destination = "memory://dynamic".ToUri()
             };
 
-            theRouter.FindDestinationChannels(envelope).Single().Uri.ShouldEqual(envelope.Destination);
+            theRouter.FindDestinationChannels(envelope).Single().Uri.ShouldBe(envelope.Destination);
         }
 
         [Test]

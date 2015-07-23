@@ -34,10 +34,10 @@ namespace FubuMVC.Tests.Projections
 
             projection.As<IProjection<SomeTarget>>().Write(new ProjectionContext<SomeTarget>(new InMemoryServiceLocator(), someTarget), node);
 
-            node.Values["name"].ShouldEqual("Jeremy");
-            node.Values["age"].ShouldEqual(40);
+            node.Values["name"].ShouldBe("Jeremy");
+            node.Values["age"].ShouldBe(40);
 
-            node.Values["child"].As<IDictionary<string, object>>()["name"].ShouldEqual("Max");
+            node.Values["child"].As<IDictionary<string, object>>()["name"].ShouldBe("Max");
 
         }
 
@@ -66,10 +66,10 @@ namespace FubuMVC.Tests.Projections
 
             projection.As<IProjection<SomeTarget>>().Write(new ProjectionContext<SomeTarget>(new InMemoryServiceLocator(), someTarget), node);
 
-            node.Values["Name"].ShouldEqual("Jeremy");
-            node.Values["Age"].ShouldEqual(40);
+            node.Values["Name"].ShouldBe("Jeremy");
+            node.Values["Age"].ShouldBe(40);
 
-            node.Values["Child"].As<IDictionary<string, object>>()["Name"].ShouldEqual("Max");
+            node.Values["Child"].As<IDictionary<string, object>>()["Name"].ShouldBe("Max");
 
         }
     }

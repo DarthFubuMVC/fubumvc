@@ -41,7 +41,7 @@ namespace FubuMVC.Tests.Web.Security
 
             _authSvc.ThisUserHasBeenAuthenticated(username, true);
 
-            _actualUser.ShouldEqual(username);
+            _actualUser.ShouldBe(username);
             _actualRememberMe.Value.ShouldBeTrue();
         }
 

@@ -35,7 +35,7 @@ namespace FubuMVC.IntegrationTesting.Views.Spark.Rendering
         [Test]
         public void generatedviewid_is_forwarded_to_inner_view()
         {
-            _view.GeneratedViewId.ShouldEqual(ClassUnderTest.GeneratedViewId);
+            _view.GeneratedViewId.ShouldBe(ClassUnderTest.GeneratedViewId);
         }
 
         [Test]
@@ -110,8 +110,8 @@ namespace FubuMVC.IntegrationTesting.Views.Spark.Rendering
             var guid = Guid.NewGuid();
             _view.Stub(x => x.Get<string>()).Return("Hello World");
             _view.Stub(x => x.Get<Guid>()).Return(guid);
-            ClassUnderTest.Get<string>().ShouldEqual("Hello World");
-            ClassUnderTest.Get<Guid>().ShouldEqual(guid);
+            ClassUnderTest.Get<string>().ShouldBe("Hello World");
+            ClassUnderTest.Get<Guid>().ShouldBe(guid);
         }
 
         [Test]
@@ -120,8 +120,8 @@ namespace FubuMVC.IntegrationTesting.Views.Spark.Rendering
             var guid = Guid.NewGuid();
             _view.Stub(x => x.GetNew<string>()).Return("Hello World");
             _view.Stub(x => x.GetNew<Guid>()).Return(guid);
-            ClassUnderTest.GetNew<string>().ShouldEqual("Hello World");
-            ClassUnderTest.GetNew<Guid>().ShouldEqual(guid);
+            ClassUnderTest.GetNew<string>().ShouldBe("Hello World");
+            ClassUnderTest.GetNew<Guid>().ShouldBe(guid);
         }
 
         [Test]
@@ -147,14 +147,14 @@ namespace FubuMVC.IntegrationTesting.Views.Spark.Rendering
 
             callStack.ShouldHaveCount(5)
                 .Join("|")
-                .ShouldEqual("Pre Render1|Pre Render2|Render View|Post Render1|Post Render2");
+                .ShouldBe("Pre Render1|Pre Render2|Render View|Post Render1|Post Render2");
         }
 
         [Test]
         public void cache_service_is_forwarded_to_inner_view()
         {
             ClassUnderTest.CacheService = MockFor<ICacheService>();
-            ClassUnderTest.CacheService.ShouldEqual(MockFor<ICacheService>()).ShouldEqual(_view.CacheService);
+            ClassUnderTest.CacheService.ShouldBe(MockFor<ICacheService>()).ShouldBe(_view.CacheService);
         }
     }
 }

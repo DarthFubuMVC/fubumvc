@@ -44,7 +44,7 @@ namespace FubuTransportation.Testing.Runtime
         [Test]
         public void should_have_associated_the_reply_channel_with_the_envelope()
         {
-            theEnvelope.ReplyUri.ShouldEqual(replyUri);
+            theEnvelope.ReplyUri.ShouldBe(replyUri);
         }
     }
 }

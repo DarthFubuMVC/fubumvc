@@ -17,7 +17,7 @@ namespace FubuMVC.IntegrationTesting.Owin
                     Name = "Jeremy",
                     Age = 38
                 }).ReadAsText()
-                    .ShouldEqual("Name=Jeremy, Age=38");
+                    .ShouldBe("Name=Jeremy, Age=38");
             });
         }
     }

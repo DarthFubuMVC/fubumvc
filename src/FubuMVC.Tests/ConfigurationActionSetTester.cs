@@ -35,7 +35,7 @@ namespace FubuMVC.Tests
             var policy1 = new ConfiguredPolicy("foo");
             var policy2 = new ConfiguredPolicy("foo");
 
-            policy1.ShouldEqual(policy2);
+            policy1.ShouldBe(policy2);
 
             var actions = new ConfigurationActionSet();
             actions.Fill(policy1);

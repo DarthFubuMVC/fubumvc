@@ -16,7 +16,7 @@ namespace FubuMVC.IntegrationTesting.Owin
                 x.GetByInput(new HeaderRequest
                 {
                     Name = HttpRequestHeaders.IfNoneMatch
-                }, configure: req => req.Headers[HttpRequestHeaders.IfNoneMatch] = "A").ReadAsText().ShouldEqual("A");
+                }, configure: req => req.Headers[HttpRequestHeaders.IfNoneMatch] = "A").ReadAsText().ShouldBe("A");
             });
         }
 
@@ -28,7 +28,7 @@ namespace FubuMVC.IntegrationTesting.Owin
                 x.GetByInput(new HeaderRequest
                 {
                     Name = "x-1"
-                }, configure: req => req.Headers["x-1"] = "A").ReadAsText().ShouldEqual("A");
+                }, configure: req => req.Headers["x-1"] = "A").ReadAsText().ShouldBe("A");
             });
         }
     }

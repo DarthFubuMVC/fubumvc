@@ -30,7 +30,7 @@ namespace Serenity.Testing.WebDriver.JavaScriptBuilders
         [Test]
         public void ReturnsNullAsString()
         {
-            ClassUnderTest.Build(MockFor<IWebElement>()).ShouldEqual(WebElementJavaScriptBuilder.Marker);
+            ClassUnderTest.Build(MockFor<IWebElement>()).ShouldBe(WebElementJavaScriptBuilder.Marker);
         }
 
         public class FakeWebElement : IWebElement

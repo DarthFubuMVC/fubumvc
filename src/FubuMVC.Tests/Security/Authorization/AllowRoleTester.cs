@@ -19,13 +19,13 @@ namespace FubuMVC.Tests.Security.Authorization
         [Test]
         public void positive_test_for_a_role_that_is_in_the_current_principal()
         {
-            new AllowRole("a").RightsFor(null).ShouldEqual(AuthorizationRight.Allow);
+            new AllowRole("a").RightsFor(null).ShouldBe(AuthorizationRight.Allow);
         }
 
         [Test]
         public void negative_test_for_a_role_that_is_not_in_the_current_principal()
         {
-            new AllowRole("not in principal").RightsFor(null).ShouldEqual(AuthorizationRight.None);
+            new AllowRole("not in principal").RightsFor(null).ShouldBe(AuthorizationRight.None);
         }
     }
 }

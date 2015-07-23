@@ -61,7 +61,7 @@ namespace FubuTransportation.Testing.Configuration
             var handler = chain.ErrorHandlers.Single().ShouldBeOfType<ErrorHandler>();
             handler.Conditions.Single().ShouldBeOfType<ExceptionTypeMatch<NotSupportedException>>();
             handler.Continuation().ShouldBeOfType<DelayedRetryContinuation>()
-                .Delay.ShouldEqual(10.Minutes());
+                .Delay.ShouldBe(10.Minutes());
         }
 
         [Test]

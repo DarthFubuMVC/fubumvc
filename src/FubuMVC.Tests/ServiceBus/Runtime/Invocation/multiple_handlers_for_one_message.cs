@@ -16,7 +16,7 @@ namespace FubuTransportation.Testing.Runtime.Invocation
             var theMessage = new OneMessage();
             sendMessage(theMessage);
 
-            TestMessageRecorder.AllProcessed.Count().ShouldEqual(3);
+            TestMessageRecorder.AllProcessed.Count().ShouldBe(3);
             TestMessageRecorder.AllProcessed.ElementAt(0).ShouldMatch<OneHandler>(theMessage);
             TestMessageRecorder.AllProcessed.ElementAt(1).ShouldMatch<DifferentOneHandler>(theMessage);
             TestMessageRecorder.AllProcessed.ElementAt(2).ShouldMatch<AnotherOneHandler>(theMessage);

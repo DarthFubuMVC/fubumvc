@@ -115,7 +115,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             policy.ThisNodeMustBeAfter<Node1>();
             policy.ThisWrapperBeBefore<Wrapper1>();
 
-            orderedNodes[0].ShouldBeOfType<Wrapper>().BehaviorType.ShouldEqual(typeof (Wrapper1));
+            orderedNodes[0].ShouldBeOfType<Wrapper>().BehaviorType.ShouldBe(typeof (Wrapper1));
             orderedNodes[1].ShouldBeOfType<Node1>();
             orderedNodes[2].ShouldBeOfType<Node2>();
         }
@@ -133,7 +133,7 @@ namespace FubuMVC.Tests.Registration.Conventions
 
             orderedNodes[0].ShouldBeOfType<Node2>();
             orderedNodes[1].ShouldBeOfType<Node1>();
-            orderedNodes[2].ShouldBeOfType<Wrapper>().BehaviorType.ShouldEqual(typeof(Wrapper1));
+            orderedNodes[2].ShouldBeOfType<Wrapper>().BehaviorType.ShouldBe(typeof(Wrapper1));
             
             
         }
@@ -150,7 +150,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             policy.ThisNodeMustBeAfter<Node1>();
             policy.ThisWrapperBeBefore<Wrapper1>();
 
-            orderedNodes[0].ShouldBeOfType<Wrapper>().BehaviorType.ShouldEqual(typeof(Wrapper1));
+            orderedNodes[0].ShouldBeOfType<Wrapper>().BehaviorType.ShouldBe(typeof(Wrapper1));
             orderedNodes[1].ShouldBeOfType<Node1>();
             orderedNodes[2].ShouldBeOfType<Node2>();
         }

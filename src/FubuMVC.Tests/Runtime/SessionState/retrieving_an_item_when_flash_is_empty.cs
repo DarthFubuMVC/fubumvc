@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.SessionState
         public void returns_default_for_type()
         {
             ClassUnderTest.Retrieve<FlashTarget>().ShouldBeNull();
-            ClassUnderTest.Retrieve<int>().ShouldEqual(default(int));
+            ClassUnderTest.Retrieve<int>().ShouldBe(default(int));
         }
     }
 }

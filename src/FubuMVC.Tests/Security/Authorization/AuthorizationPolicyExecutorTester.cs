@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.Security.Authorization
         [Test]
         public void should_log_the_combined_result()
         {
-           RecordedLog().DebugMessages.OfType<AuthorizationResult>().Single().Rights.ShouldEqual(_answer);
+           RecordedLog().DebugMessages.OfType<AuthorizationResult>().Single().Rights.ShouldBe(_answer);
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace FubuMVC.Tests.Security.Authorization
         [Test]
         public void should_return_the_combined_result_of_all_policies()
         {
-            _answer.ShouldEqual(AuthorizationRight.Allow);
+            _answer.ShouldBe(AuthorizationRight.Allow);
         }
     }
 

@@ -45,7 +45,7 @@ namespace FubuMVC.IntegrationTesting.CommandLine.Running
 
             var message = lastMessage<InvalidApplication>();
 
-            message.Message.ShouldEqual("Could not find any instance of IApplicationSource in any assembly in this directory");
+            message.Message.ShouldBe("Could not find any instance of IApplicationSource in any assembly in this directory");
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace FubuMVC.IntegrationTesting.CommandLine.Running
             ClassUnderTest.Receive(startMessage);
 
             var message = lastMessage<InvalidApplication>();
-            message.Message.ShouldEqual("Unable to determine the FubuMVC Application");
+            message.Message.ShouldBe("Unable to determine the FubuMVC Application");
             message.Applications.ShouldHaveTheSameElementsAs("App1", "App2", "App3");
         }
 
@@ -100,7 +100,7 @@ namespace FubuMVC.IntegrationTesting.CommandLine.Running
             ClassUnderTest.Receive(startMessage);
 
             lastMessage<InvalidApplication>()
-                .Message.ShouldEqual("Could not find any instance of IApplicationSource in any assembly in this directory");
+                .Message.ShouldBe("Could not find any instance of IApplicationSource in any assembly in this directory");
         }
 
         [Test]
@@ -114,7 +114,7 @@ namespace FubuMVC.IntegrationTesting.CommandLine.Running
 
             var invalidApplication = lastMessage<InvalidApplication>();
             invalidApplication
-                .Message.ShouldEqual("Could not find an application named 'random'");
+                .Message.ShouldBe("Could not find an application named 'random'");
         
             invalidApplication.Applications.ShouldHaveTheSameElementsAs("App1", "App2");
         }

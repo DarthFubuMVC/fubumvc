@@ -33,7 +33,7 @@ namespace FubuTransportation.Testing.Async
 
                 Wait.Until(() => AsyncWatcher.Messages.Count() == 4);
 
-                AsyncWatcher.Messages.ElementAt(0).ShouldEqual("wrapper:start");
+                AsyncWatcher.Messages.ElementAt(0).ShouldBe("wrapper:start");
                 AsyncWatcher.Messages.ElementAt(1).ShouldEndWith("Buck Rogers");
                 AsyncWatcher.Messages.ElementAt(2).ShouldEndWith("Buck Rogers");
                 AsyncWatcher.Messages.ElementAt(3).ShouldEndWith("wrapper:finish");

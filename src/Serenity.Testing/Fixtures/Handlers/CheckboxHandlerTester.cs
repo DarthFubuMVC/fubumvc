@@ -170,8 +170,8 @@ namespace Serenity.Testing.Fixtures.Handlers
         [Test]
         public void get_data()
         {
-            _handler.GetData(Driver, Driver.FindElement(_checkedById)).ShouldEqual(true.ToString());
-            _handler.GetData(Driver, Driver.FindElement(_notCheckedById)).ShouldEqual(false.ToString());
+            _handler.GetData(Driver, Driver.FindElement(_checkedById)).ShouldBe(true.ToString());
+            _handler.GetData(Driver, Driver.FindElement(_notCheckedById)).ShouldBe(false.ToString());
         }
     }
 }

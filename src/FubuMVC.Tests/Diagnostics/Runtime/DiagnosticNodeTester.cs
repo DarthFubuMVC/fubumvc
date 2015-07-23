@@ -34,7 +34,7 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
         [Test]
         public void category_has_to_be_instrumentation()
         {
-            theNode.Category.ShouldEqual(BehaviorCategory.Instrumentation);
+            theNode.Category.ShouldBe(BehaviorCategory.Instrumentation);
         }
 
 

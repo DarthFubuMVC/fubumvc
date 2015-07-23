@@ -16,7 +16,7 @@ namespace FubuMVC.IntegrationTesting
             {
                 server.Endpoints.Get<NowinEndpoint>(x => x.get_nowin())
                     .ReadAsText()
-                    .ShouldEqual("this is served by nowin");
+                    .ShouldBe("this is served by nowin");
             }
         }
 
@@ -27,7 +27,7 @@ namespace FubuMVC.IntegrationTesting
             {
                 var client = new WebClient();
                 client.DownloadString("http://localhost:5601/nowin")
-                    .ShouldEqual("this is served by nowin");
+                    .ShouldBe("this is served by nowin");
             }
         }
     }

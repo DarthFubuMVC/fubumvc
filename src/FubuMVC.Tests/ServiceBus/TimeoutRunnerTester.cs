@@ -18,7 +18,7 @@ namespace FubuTransportation.Testing
 
             TimeoutRunner.Run(1.Seconds(), () => wasCalled = true, e => {
                 throw e;
-            }).ShouldEqual(Completion.Success);
+            }).ShouldBe(Completion.Success);
 
             wasCalled.ShouldBeTrue();
         }
@@ -33,14 +33,14 @@ namespace FubuTransportation.Testing
             TimeoutRunner.Run(1.Seconds(), () => {
                 throw ex;   
             },
-                handler).ShouldEqual(Completion.Exception);
+                handler).ShouldBe(Completion.Exception);
         }
 
         [Test]
         public void run_timeout()
         {
             TimeoutRunner.Run(1.Seconds(), () => Thread.Sleep(2.Seconds()), ex => Assert.Fail("should be no exception"))
-                .ShouldEqual(Completion.Timedout);
+                .ShouldBe(Completion.Timedout);
         }
     }
 }

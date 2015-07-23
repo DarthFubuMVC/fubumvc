@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.NewConneg
         public void the_only_mime_type_is_html()
         {
             ClassUnderTest.Mimetypes.Single()
-                .ShouldEqual(MimeType.Html.Value);
+                .ShouldBe(MimeType.Html.Value);
         }
 
         [Test]

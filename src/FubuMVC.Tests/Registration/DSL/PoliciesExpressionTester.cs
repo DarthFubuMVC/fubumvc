@@ -43,7 +43,7 @@ namespace FubuMVC.Tests.Registration.DSL
             // Ordinarily, AuthorizationNode would be before any other behavior wrappers
 
             var chain = graph.BehaviorFor<OrderingPolicyController>(x => x.M1());
-            chain.First().ShouldBeOfType<Wrapper>().BehaviorType.ShouldEqual(typeof(OPWrapper1));
+            chain.First().ShouldBeOfType<Wrapper>().BehaviorType.ShouldBe(typeof(OPWrapper1));
             chain.ToList()[1].ShouldBeOfType<AuthorizationNode>();
         }
     }
@@ -80,7 +80,7 @@ namespace FubuMVC.Tests.Registration.DSL
             // Ordinarily, AuthorizationNode would be before any other behavior wrappers
 
             var chain = graph.BehaviorFor<OrderingPolicyController>(x => x.M1());
-            chain.First().ShouldBeOfType<Wrapper>().BehaviorType.ShouldEqual(typeof(OPWrapper1));
+            chain.First().ShouldBeOfType<Wrapper>().BehaviorType.ShouldBe(typeof(OPWrapper1));
             chain.ToList()[1].ShouldBeOfType<AuthorizationNode>();
         }
     }
@@ -95,7 +95,7 @@ namespace FubuMVC.Tests.Registration.DSL
             BehaviorGraph.BuildFrom(graph => 
                 graph.Policies.Local.Add(new FakePolicy()));
 
-            FakePolicy.Count.ShouldEqual(1);
+            FakePolicy.Count.ShouldBe(1);
         }
     }
 
@@ -109,7 +109,7 @@ namespace FubuMVC.Tests.Registration.DSL
             BehaviorGraph.BuildFrom(graph => 
                 graph.Policies.Local.Add<FakePolicy>(x => x.NoOp()));
 
-            FakePolicy.Count.ShouldEqual(1);
+            FakePolicy.Count.ShouldBe(1);
         }
     }
 

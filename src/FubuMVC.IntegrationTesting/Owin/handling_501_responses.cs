@@ -13,7 +13,7 @@ namespace FubuMVC.IntegrationTesting.Owin
         {
             var response = Harness.Endpoints.Get<ExceptionEndpoint>(x => x.get_exception());
 
-            response.StatusCode.ShouldEqual(HttpStatusCode.InternalServerError);
+            response.StatusCode.ShouldBe(HttpStatusCode.InternalServerError);
             var text = response.ReadAsText();
 
             text.ShouldContain("I did not like this");

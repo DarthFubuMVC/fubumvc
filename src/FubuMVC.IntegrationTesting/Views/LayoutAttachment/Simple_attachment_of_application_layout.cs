@@ -22,7 +22,7 @@ namespace FubuMVC.IntegrationTesting.Views.LayoutAttachment
         [Test]
         public void should_have_exactly_5_views()
         {
-            Views.Templates<RazorTemplate>().Count().ShouldEqual(5);
+            Views.Templates<RazorTemplate>().Count().ShouldBe(5);
         }
 
         [Test]

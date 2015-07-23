@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.Projections
         {
             theNode.SetAttribute("key", "value");
 
-            theNode.Values["key"].ShouldEqual("value");
+            theNode.Values["key"].ShouldBe("value");
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace FubuMVC.Tests.Projections
             theNode.AddChild("child").SetAttribute("color", "red");
 
             theNode.Values["child"].As<IDictionary<string, object>>()
-                ["color"].ShouldEqual("red");
+                ["color"].ShouldBe("red");
         }
 
         [Test]
@@ -49,8 +49,8 @@ namespace FubuMVC.Tests.Projections
             list.Add().SetAttribute("animal", "Horse");
 
             var nodes = theNode.Values["nodes"].As<IList<IDictionary<string, object>>>();
-            nodes.First()["animal"].ShouldEqual("Dolphin");
-            nodes.Last()["animal"].ShouldEqual("Horse");
+            nodes.First()["animal"].ShouldBe("Dolphin");
+            nodes.Last()["animal"].ShouldBe("Horse");
         }
     }
 }

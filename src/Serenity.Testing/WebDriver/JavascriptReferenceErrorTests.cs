@@ -38,7 +38,7 @@ namespace Serenity.Testing.WebDriver
         public void DoesNotThrowInvalidOperationExceptionForEmptyString()
         {
             _executor.Stub(x => x.ExecuteAsyncScript(Arg<string>.Is.Anything, Arg<object[]>.Is.Anything)).Return(string.Empty);
-            ClassUnderTest.ExecuteAndGet(_executor).ShouldEqual(string.Empty);
+            ClassUnderTest.ExecuteAndGet(_executor).ShouldBe(string.Empty);
         }
     }
 }

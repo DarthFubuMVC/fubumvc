@@ -43,7 +43,7 @@ namespace FubuMVC.Tests.Diagnostics
         {
             var chain = runtime.Behaviors.BehaviorFor<ModelBindingFubuDiagnostics>(x => x.VisualizePartial(null));
 
-            chain.GetType().ShouldEqual(typeof (BehaviorChain));
+            chain.GetType().ShouldBe(typeof (BehaviorChain));
 
             chain.IsPartialOnly.ShouldBeTrue();
         }

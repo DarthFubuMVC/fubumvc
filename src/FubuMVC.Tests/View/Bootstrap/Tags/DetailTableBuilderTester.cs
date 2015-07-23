@@ -56,7 +56,7 @@ namespace FubuMVC.Tests.UI.Bootstrap.Tags
         {
             theBuilder.AddDetail("Some Field", "Some Value");
 
-            lastRow.ToString().ShouldEqual("<tr><th><span>Some Field</span></th><td>Some Value</td></tr>");
+            lastRow.ToString().ShouldBe("<tr><th><span>Some Field</span></th><td>Some Value</td></tr>");
         }
 
         [Test]
@@ -71,7 +71,7 @@ namespace FubuMVC.Tests.UI.Bootstrap.Tags
         {
             theBuilder.AddDetail("Some Field", new string[]{"a", "b", "c"});
 
-            lastRow.ToString().ShouldEqual("<tr><th><span>Some Field</span></th><td>a, b, c</td></tr>");
+            lastRow.ToString().ShouldBe("<tr><th><span>Some Field</span></th><td>a, b, c</td></tr>");
         }
     }
 }

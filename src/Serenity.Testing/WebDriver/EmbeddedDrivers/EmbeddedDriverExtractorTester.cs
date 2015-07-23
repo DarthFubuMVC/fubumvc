@@ -20,13 +20,13 @@ namespace Serenity.Testing.WebDriver.EmbeddedDrivers
         [Test]
         public void VersionDeclarationFilePathInWorkingDirectory()
         {
-            ClassUnderTest.PathToVersionDeclarationFile.ShouldEqual(Path.Combine(WorkingDir, _embeddedDriver.ExtractedFileName + ".version"));
+            ClassUnderTest.PathToVersionDeclarationFile.ShouldBe(Path.Combine(WorkingDir, _embeddedDriver.ExtractedFileName + ".version"));
         }
 
         [Test]
         public void DriverPathIsInWorkingDirectoty()
         {
-            ClassUnderTest.PathToDriver.ShouldEqual(Path.Combine(WorkingDir, _embeddedDriver.ExtractedFileName));
+            ClassUnderTest.PathToDriver.ShouldBe(Path.Combine(WorkingDir, _embeddedDriver.ExtractedFileName));
         }
 
         [Test]

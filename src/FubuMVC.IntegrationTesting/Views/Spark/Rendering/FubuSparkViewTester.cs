@@ -43,7 +43,7 @@ namespace FubuMVC.IntegrationTesting.Views.Spark.Rendering
         [Test]
         public void service_locator()
         {
-            ClassUnderTest.ServiceLocator.ShouldEqual(_serviceLocator);
+            ClassUnderTest.ServiceLocator.ShouldBe(_serviceLocator);
         }
 
         [Test]
@@ -59,9 +59,9 @@ namespace FubuMVC.IntegrationTesting.Views.Spark.Rendering
             _serviceLocator.Stub(x => x.GetInstance(typeof(ViewObject))).Return(latest);
             var second = ClassUnderTest.Get<ViewObject>();
 
-            first.ShouldEqual(original);
-            second.ShouldEqual(original);
-            first.Tag.ShouldEqual(original.Tag);
+            first.ShouldBe(original);
+            second.ShouldBe(original);
+            first.Tag.ShouldBe(original.Tag);
         }
 
         [Test]
@@ -77,36 +77,36 @@ namespace FubuMVC.IntegrationTesting.Views.Spark.Rendering
             _serviceLocator.Stub(x => x.GetInstance(typeof(ViewObject))).Return(latest);
             var second = ClassUnderTest.GetNew<ViewObject>();
 
-            first.ShouldEqual(original);
-            second.ShouldEqual(latest);
-            first.Tag.ShouldEqual(original.Tag);
-            second.Tag.ShouldEqual(latest.Tag);
+            first.ShouldBe(original);
+            second.ShouldBe(latest);
+            first.Tag.ShouldBe(original.Tag);
+            second.Tag.ShouldBe(latest.Tag);
         }
 
         [Test]
         public void site_resource()
         {
             ClassUnderTest.SiteResource = x => "App/{0}".ToFormat(x);
-            ClassUnderTest.SiteResource("Views/Home/Home.spark").ShouldEqual("App/Views/Home/Home.spark");
+            ClassUnderTest.SiteResource("Views/Home/Home.spark").ShouldBe("App/Views/Home/Home.spark");
         }
 
         [Test]
         public void urls()
         {
-            ClassUnderTest.Urls.ShouldEqual(_urlRegistry);
+            ClassUnderTest.Urls.ShouldBe(_urlRegistry);
         }
 
         [Test]
         public void tag()
         {
-            ClassUnderTest.Tag("div").ShouldNotBeNull().TagName().ShouldEqual("div");
+            ClassUnderTest.Tag("div").ShouldNotBeNull().TagName().ShouldBe("div");
         }
 
         [Test]
         public void h_uses_servicelocator_to_get_htmlencoder()
         {
             _serviceLocator.Expect(x => x.GetInstance(typeof (IHtmlEncoder))).Return(new DefaultHtmlEncoder());
-            ClassUnderTest.H("<div>").ShouldEqual("&lt;div&gt;");
+            ClassUnderTest.H("<div>").ShouldBe("&lt;div&gt;");
             _serviceLocator.VerifyAllExpectations();
         }
 
@@ -115,16 +115,16 @@ namespace FubuMVC.IntegrationTesting.Views.Spark.Rendering
         {
             const string encodedValue = "&lt;div&gt;";
             var result = ClassUnderTest.HTML(encodedValue);
-            result.ToString().ShouldEqual(encodedValue);
-            result.ToHtmlString().ShouldEqual(encodedValue);
+            result.ToString().ShouldBe(encodedValue);
+            result.ToHtmlString().ShouldBe(encodedValue);
         }
 
         [Test]
         public void html_handles_null_value()
         {
             var result = ClassUnderTest.HTML(null);
-            result.ToString().ShouldEqual(null);
-            result.ToHtmlString().ShouldEqual(null);
+            result.ToString().ShouldBe(null);
+            result.ToHtmlString().ShouldBe(null);
         }
 
         [Test]
@@ -134,7 +134,7 @@ namespace FubuMVC.IntegrationTesting.Views.Spark.Rendering
             var model = new PersonViewModel {Name = "Mr. FubuSpark"};
             request.Expect(x => x.Get<PersonViewModel>()).Return(model);
             ClassUnderTest.SetModel(request);
-            ClassUnderTest.Model.ShouldEqual(model);
+            ClassUnderTest.Model.ShouldBe(model);
             request.VerifyAllExpectations();
         }
 
@@ -143,7 +143,7 @@ namespace FubuMVC.IntegrationTesting.Views.Spark.Rendering
         {
             object model = new PersonViewModel { Name = "Mr. FubuSpark" };
             ClassUnderTest.SetModel(model);
-            ClassUnderTest.Model.ShouldEqual(model);
+            ClassUnderTest.Model.ShouldBe(model);
         }
 
         [Test]
@@ -151,7 +151,7 @@ namespace FubuMVC.IntegrationTesting.Views.Spark.Rendering
         {
             var model = new PersonViewModel { Name = "Mr. FubuSpark" };
             ClassUnderTest.SetModel(model);
-            ClassUnderTest.Model.ShouldEqual(model);
+            ClassUnderTest.Model.ShouldBe(model);
         }
 
         [Test]
@@ -159,7 +159,7 @@ namespace FubuMVC.IntegrationTesting.Views.Spark.Rendering
         {
             var model = new PersonViewModel { Name = "Mr. FubuSpark" };
             ClassUnderTest.SetModel(model);
-            ClassUnderTest.GetModel().ShouldEqual(model);
+            ClassUnderTest.GetModel().ShouldBe(model);
         }
 
     }

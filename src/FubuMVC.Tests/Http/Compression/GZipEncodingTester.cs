@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.Http.Compression
         [Test]
         public void matches_gzip()
         {
-            theEncoding.MatchingEncoding.ShouldEqual(ContentEncoding.GZip);
+            theEncoding.MatchingEncoding.ShouldBe(ContentEncoding.GZip);
         }
 
         [Test]

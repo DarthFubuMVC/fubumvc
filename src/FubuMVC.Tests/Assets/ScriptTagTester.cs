@@ -33,7 +33,7 @@ namespace FubuMVC.Tests.Assets
         public void happy_path_prod_mode()
         {
             new ScriptTag(x => x, theAsset).ToString()
-                .ShouldEqual("<script type=\"text/javascript\" src=\"foo.js\"></script>");
+                .ShouldBe("<script type=\"text/javascript\" src=\"foo.js\"></script>");
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace FubuMVC.Tests.Assets
         {
             new ScriptTag(x => x, null, defaultUrl: "http://server/foo.js")
                 .ToString()
-                .ShouldEqual("<script type=\"text/javascript\" src=\"http://server/foo.js\"></script>");
+                .ShouldBe("<script type=\"text/javascript\" src=\"http://server/foo.js\"></script>");
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace FubuMVC.Tests.Assets
         {
             FubuMode.SetUpForDevelopmentMode();
             new ScriptTag(x => x, theAsset).ToString()
-                .ShouldEqual("<script type=\"text/javascript\" src=\"foo.js?Etag={0}\"></script>".ToFormat(theFile.Etag()));
+                .ShouldBe("<script type=\"text/javascript\" src=\"foo.js?Etag={0}\"></script>".ToFormat(theFile.Etag()));
         }
 
         [Test]
@@ -58,7 +58,7 @@ namespace FubuMVC.Tests.Assets
             theAsset.CdnUrl = "http://cdn.me.com/foo.js";
 
             new ScriptTag(x => x, theAsset).ToString()
-                .ShouldEqual("<script type=\"text/javascript\" src=\"http://cdn.me.com/foo.js\"></script>");
+                .ShouldBe("<script type=\"text/javascript\" src=\"http://cdn.me.com/foo.js\"></script>");
         }
 
         [Test]

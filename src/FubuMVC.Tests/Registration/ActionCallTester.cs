@@ -63,7 +63,7 @@ namespace FubuMVC.Tests.Registration
         public void can_get_the_behavior_type()
         {
             ActionCall.For<ControllerTarget>(c => c.OneInOneOut(null))
-                .BehaviorType.ShouldEqual(typeof (OneInOneOutActionInvoker<ControllerTarget, Model1, Model2>));
+                .BehaviorType.ShouldBe(typeof (OneInOneOutActionInvoker<ControllerTarget, Model1, Model2>));
         }
 
         [Test]
@@ -131,8 +131,8 @@ namespace FubuMVC.Tests.Registration
         public void successfully_build_an_action_from_a_handler_type()
         {
             var action = ActionCall.For(typeof (ValidActionWithOneMethod));
-            action.HandlerType.ShouldEqual(typeof (ValidActionWithOneMethod));
-            action.Method.ShouldEqual(typeof (ValidActionWithOneMethod).GetMethod("Go"));
+            action.HandlerType.ShouldBe(typeof (ValidActionWithOneMethod));
+            action.Method.ShouldBe(typeof (ValidActionWithOneMethod).GetMethod("Go"));
         }
 
         [Test]
@@ -156,7 +156,7 @@ namespace FubuMVC.Tests.Registration
             action = ActionCall.For<ControllerTarget>(x => x.ZeroInZeroOut());
             Exception<FubuException>.ShouldBeThrownBy(
                 () => action.As<IContainerModel>().ToInstance())
-                .ErrorCode.ShouldEqual(1005);
+                .ErrorCode.ShouldBe(1005);
         }
 
         [Test]
@@ -165,7 +165,7 @@ namespace FubuMVC.Tests.Registration
             action = ActionCall.For<ControllerTarget>(x => x.ZeroInTaskNoResultOut());
             Exception<FubuException>.ShouldBeThrownBy(
                 () => action.As<IContainerModel>().ToInstance())
-                .ErrorCode.ShouldEqual(1005);
+                .ErrorCode.ShouldBe(1005);
         }
     }
 
@@ -180,11 +180,11 @@ namespace FubuMVC.Tests.Registration
 
             action.AddBefore(newNode);
 
-            action.PreviousNodes.Count().ShouldEqual(1);
+            action.PreviousNodes.Count().ShouldBe(1);
 
             action.AddBefore(newNode);
 
-            action.PreviousNodes.Count().ShouldEqual(1);
+            action.PreviousNodes.Count().ShouldBe(1);
         }
 
         [Test]
@@ -195,11 +195,11 @@ namespace FubuMVC.Tests.Registration
             // first one is ok
             var newNode = new InputNode(typeof (InputModel));
             action.AddToEnd(newNode);
-            action.Count().ShouldEqual(1);
+            action.Count().ShouldBe(1);
 
             // try it again, the second should be ignored
             action.AddToEnd(newNode);
-            action.Count().ShouldEqual(1);
+            action.Count().ShouldBe(1);
         }
 
 
@@ -211,14 +211,14 @@ namespace FubuMVC.Tests.Registration
             // first one is ok
             var newNode = new InputNode(typeof (InputModel));
             action.AddToEnd(newNode);
-            action.Count().ShouldEqual(1);
+            action.Count().ShouldBe(1);
 
             action.AddToEnd(new Wrapper(typeof (Wrapper1)));
 
             // try it again, the second should be ignored
             action.AddToEnd(newNode);
-            action.Count().ShouldEqual(2);
-            action.Count(x => x is InputNode).ShouldEqual(1);
+            action.Count().ShouldBe(2);
+            action.Count(x => x is InputNode).ShouldBe(1);
         }
 
         [Test]
@@ -247,7 +247,7 @@ namespace FubuMVC.Tests.Registration
         {
             var action = ActionCall.For<ControllerTarget>(x => x.BogusOneInput(9));
             var ex = typeof (FubuException).ShouldBeThrownBy(action.Validate).ShouldBeOfType<FubuException>();
-            ex.ErrorCode.ShouldEqual(1006);
+            ex.ErrorCode.ShouldBe(1006);
         }
 
         [Test]
@@ -255,7 +255,7 @@ namespace FubuMVC.Tests.Registration
         {
             var action = ActionCall.For<ControllerTarget>(x => x.BogusMultiInput(null, null));
             var ex = typeof (FubuException).ShouldBeThrownBy(action.Validate).ShouldBeOfType<FubuException>();
-            ex.ErrorCode.ShouldEqual(1005);
+            ex.ErrorCode.ShouldBe(1005);
         }
 
         [Test]
@@ -263,7 +263,7 @@ namespace FubuMVC.Tests.Registration
         {
             var action = ActionCall.For<ControllerTarget>(x => x.BogusReturn());
             var ex = typeof (FubuException).ShouldBeThrownBy(action.Validate).ShouldBeOfType<FubuException>();
-            ex.ErrorCode.ShouldEqual(1004);
+            ex.ErrorCode.ShouldBe(1004);
         }
     }
 

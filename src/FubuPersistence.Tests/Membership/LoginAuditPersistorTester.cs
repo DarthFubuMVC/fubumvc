@@ -28,7 +28,7 @@ namespace FubuPersistence.Tests.Membership
         {
             ClassUnderTest.ApplyHistory(theRequest);
             theSession.AssertWasNotCalled(x => x.Load<LoginFailureHistory>((string) null));
-            theRequest.NumberOfTries.ShouldEqual(0);
+            theRequest.NumberOfTries.ShouldBe(0);
             theRequest.LockedOutUntil.ShouldBeNull();
         }
 
@@ -41,7 +41,7 @@ namespace FubuPersistence.Tests.Membership
             theRequest.UserName = userName;
             ClassUnderTest.ApplyHistory(theRequest);
             theSession.AssertWasCalled(x => x.Load<LoginFailureHistory>("foo"));
-            theRequest.NumberOfTries.ShouldEqual(1);
+            theRequest.NumberOfTries.ShouldBe(1);
             theRequest.LockedOutUntil.ShouldNotBeNull();
         }
 

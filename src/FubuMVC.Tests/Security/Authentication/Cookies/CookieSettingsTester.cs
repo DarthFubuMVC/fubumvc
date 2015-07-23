@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Security.Authentication.Cookies
         [Test]
         public void defaults_to_the_default_cookie_name()
         {
-            theSettings.Name.ShouldEqual(CookieSettings.DefaultCookieName);
+            theSettings.Name.ShouldBe(CookieSettings.DefaultCookieName);
         }
 
         [Test]
@@ -29,19 +29,19 @@ namespace FubuMVC.Tests.Security.Authentication.Cookies
             
             var theDate = DateTime.Today;
 
-            theSettings.ExpirationFor(theDate).ShouldEqual(theDate.AddDays(theSettings.ExpirationInDays));
+            theSettings.ExpirationFor(theDate).ShouldBe(theDate.AddDays(theSettings.ExpirationInDays));
         }
 
         [Test]
         public void default_expiration_is_30_days()
         {
-            theSettings.ExpirationInDays.ShouldEqual(30);
+            theSettings.ExpirationInDays.ShouldBe(30);
         }
 
         [Test]
         public void has_a_default_path()
         {
-            theSettings.Path.ShouldEqual("/");
+            theSettings.Path.ShouldBe("/");
         }
     }
 }

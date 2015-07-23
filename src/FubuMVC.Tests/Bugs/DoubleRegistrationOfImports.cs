@@ -33,9 +33,9 @@ namespace FubuMVC.Tests.Bugs
                 x.Import<ThreeExtension>();
             });
 
-            OneExtension.Applied.ShouldEqual(1);
-            TwoExtension.Applied.ShouldEqual(1);
-            ThreeExtension.Applied.ShouldEqual(1);
+            OneExtension.Applied.ShouldBe(1);
+            TwoExtension.Applied.ShouldBe(1);
+            ThreeExtension.Applied.ShouldBe(1);
         }
 
         [Test]
@@ -84,7 +84,7 @@ namespace FubuMVC.Tests.Bugs
                 x.Import<ThreeExtension>();
             });
 
-            SpecialPolicy.Applied.ShouldEqual(1);
+            SpecialPolicy.Applied.ShouldBe(1);
         }
     }
 

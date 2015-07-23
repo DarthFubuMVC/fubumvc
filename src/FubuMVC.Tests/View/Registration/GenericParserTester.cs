@@ -67,7 +67,7 @@ namespace FubuMVC.Tests.View.Registration
 
             var type = ClassUnderTest.Parse(typeName);
 
-            type.ShouldEqual(typeof(Generic<Baz>));
+            type.ShouldBe(typeof(Generic<Baz>));
         }
 
         [Test]
@@ -77,7 +77,7 @@ namespace FubuMVC.Tests.View.Registration
 
             var type = ClassUnderTest.Parse(typeName);
 
-            type.ShouldEqual(typeof(Generic<Baz, Bar>));
+            type.ShouldBe(typeof(Generic<Baz, Bar>));
         }
 
         [Test]
@@ -87,7 +87,7 @@ namespace FubuMVC.Tests.View.Registration
 
             var type = ClassUnderTest.Parse(typeName);
 
-            type.ShouldEqual(typeof(Generic<Baz, string>));
+            type.ShouldBe(typeof(Generic<Baz, string>));
         }
 
         [Test]

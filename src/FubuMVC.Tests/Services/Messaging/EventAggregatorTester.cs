@@ -42,7 +42,7 @@ namespace FubuMVC.Tests.Services.Messaging
             Wait.Until(() => theListener.Received.Contains(expected));
 
             theListener.Received.OfType<ServiceMessage>().Single()
-                       .ShouldEqual(expected);
+                       .ShouldBe(expected);
 
         }
     }

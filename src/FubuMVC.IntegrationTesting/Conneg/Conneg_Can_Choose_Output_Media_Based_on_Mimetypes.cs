@@ -47,7 +47,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
             endpoints.PostJson(input, accept: null)
                 .StatusCodeShouldBe(HttpStatusCode.OK)
                 .ContentTypeShouldBe(MimeType.Json)
-                .ReadAsJson<XmlJsonHtmlMessage>().Id.ShouldEqual(input.Id);
+                .ReadAsJson<XmlJsonHtmlMessage>().Id.ShouldBe(input.Id);
         }
 
         [Test]

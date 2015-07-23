@@ -50,7 +50,7 @@ namespace FubuMVC.Tests.Runtime
         {
             ClassUnderTest.RedirectToUrl("http://somewhere.com");
 
-            logs.DebugMessages.Single().ShouldEqual(new RedirectReport("http://somewhere.com"));
+            logs.DebugMessages.Single().ShouldBe(new RedirectReport("http://somewhere.com"));
         }
 
         [Test]
@@ -67,7 +67,7 @@ namespace FubuMVC.Tests.Runtime
         {
             ClassUnderTest.Write("text/json", "{}");
 
-            logs.DebugMessages.Single().ShouldEqual(new OutputReport("text/json", "{}"));
+            logs.DebugMessages.Single().ShouldBe(new OutputReport("text/json", "{}"));
         }
 
         [Test]
@@ -75,7 +75,7 @@ namespace FubuMVC.Tests.Runtime
         {
             ClassUnderTest.Write("Some text");
 
-            logs.DebugMessages.Single().ShouldEqual(new OutputReport("Some text"));
+            logs.DebugMessages.Single().ShouldBe(new OutputReport("Some text"));
         }
 
         [Test]
@@ -120,7 +120,7 @@ namespace FubuMVC.Tests.Runtime
 
             ClassUnderTest.Replay(recording);
 
-            logs.DebugMessages.Single().ShouldEqual(new ReplayRecordedOutput(recording));
+            logs.DebugMessages.Single().ShouldBe(new ReplayRecordedOutput(recording));
         }
 
         [Test]
@@ -129,7 +129,7 @@ namespace FubuMVC.Tests.Runtime
             ClassUnderTest.Flush();
 
             logs.DebugMessages.Single().ShouldBeOfType<StringMessage>()
-                .Message.ShouldEqual("Flushed content to the Http output");
+                .Message.ShouldBe("Flushed content to the Http output");
         }
 
         [Test]
@@ -137,7 +137,7 @@ namespace FubuMVC.Tests.Runtime
         {
             ClassUnderTest.WriteFile(MimeType.Jpg, "file path", "some display");
 
-            logs.DebugMessages.Single().ShouldEqual(new FileOutputReport{
+            logs.DebugMessages.Single().ShouldBe(new FileOutputReport{
                 ContentType = MimeType.Jpg.Value,
                 DisplayName = "some display",
                 LocalFilePath = "file path"
@@ -150,7 +150,7 @@ namespace FubuMVC.Tests.Runtime
             const string description = "why u no make good request?";
             ClassUnderTest.WriteResponseCode(HttpStatusCode.BadRequest, description);
 
-            logs.DebugMessages.Single().ShouldEqual(new HttpStatusReport{
+            logs.DebugMessages.Single().ShouldBe(new HttpStatusReport{
                 Description = description,
                 Status = HttpStatusCode.BadRequest
             });
@@ -163,7 +163,7 @@ namespace FubuMVC.Tests.Runtime
 
             ClassUnderTest.AppendCookie(cookie);
 
-            logs.DebugMessages.Single().ShouldEqual(new WriteCookieReport(cookie));
+            logs.DebugMessages.Single().ShouldBe(new WriteCookieReport(cookie));
         }
 
         [Test]
@@ -174,9 +174,9 @@ namespace FubuMVC.Tests.Runtime
                 ClassUnderTest.Write("some stuff");
             });
 
-            logs.DebugMessages.Count().ShouldEqual(3);
+            logs.DebugMessages.Count().ShouldBe(3);
             logs.DebugMessages.First().ShouldBeOfType<StartedRecordingOutput>();
-            logs.DebugMessages.ElementAt(1).ShouldBeOfType<OutputReport>().Contents.ShouldEqual("some stuff");
+            logs.DebugMessages.ElementAt(1).ShouldBeOfType<OutputReport>().Contents.ShouldBe("some stuff");
             logs.DebugMessages.Last().ShouldBeOfType<FinishedRecordingOutput>();
         }
 
@@ -185,7 +185,7 @@ namespace FubuMVC.Tests.Runtime
         {
             ClassUnderTest.AppendHeader("something", "a value");
 
-            logs.DebugMessages.Single().ShouldEqual(new SetHeaderValue("something", "a value"));
+            logs.DebugMessages.Single().ShouldBe(new SetHeaderValue("something", "a value"));
         }
 
         [Test]
@@ -193,7 +193,7 @@ namespace FubuMVC.Tests.Runtime
         {
             ClassUnderTest.Write("text/xml", stream => { });
 
-            logs.DebugMessages.Single().ShouldEqual(new WriteToStreamReport("text/xml"));
+            logs.DebugMessages.Single().ShouldBe(new WriteToStreamReport("text/xml"));
         }
 
         [Test]
@@ -259,7 +259,7 @@ namespace FubuMVC.Tests.Runtime
         [Test]
         public void should_nest_correctly_when_recording_1()
         {
-            theNestedOutput.GetText().ShouldEqual(theNestedContent);
+            theNestedOutput.GetText().ShouldBe(theNestedContent);
         }
 
         [Test]
@@ -271,7 +271,7 @@ namespace FubuMVC.Tests.Runtime
                 var nested = ClassUnderTest.Record(() => ClassUnderTest.WriteHtml("Python"));
                 ClassUnderTest.WriteHtml(nested.GetText());
 
-            }).GetText().ShouldEqual("MontyPython");
+            }).GetText().ShouldBe("MontyPython");
         }
     }
 

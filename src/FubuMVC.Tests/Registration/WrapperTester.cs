@@ -28,18 +28,18 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void can_get_the_concrete_behavior_type()
         {
-            _wrapper.BehaviorType.ShouldEqual(typeof (NulloBehavior));
+            _wrapper.BehaviorType.ShouldBe(typeof (NulloBehavior));
 
-            _wrapper.BehaviorType.ShouldEqual(typeof (NulloBehavior));
+            _wrapper.BehaviorType.ShouldBe(typeof (NulloBehavior));
         }
 
         [Test]
         public void build_an_object_def_for_the_type()
         {
             var def = _wrapper.As<IContainerModel>().ToInstance().As<IConfiguredInstance>();
-            def.Dependencies.Count().ShouldEqual(0);
+            def.Dependencies.Count().ShouldBe(0);
 
-            def.PluggedType.ShouldEqual(typeof (NulloBehavior));
+            def.PluggedType.ShouldBe(typeof (NulloBehavior));
         }
 
         [Test]
@@ -54,10 +54,10 @@ namespace FubuMVC.Tests.Registration
             _wrapper.AddAfter(Wrapper.For<FakeBehavior>());
             var def = _wrapper.As<IContainerModel>().ToInstance().As<IConfiguredInstance>();
 
-            def.Dependencies.Count().ShouldEqual(1);
+            def.Dependencies.Count().ShouldBe(1);
 
             def.FindDependencyDefinitionFor<IActionBehavior>().ReturnedType
-                .ShouldEqual(typeof (FakeBehavior));
+                .ShouldBe(typeof (FakeBehavior));
 
       
         }
@@ -65,7 +65,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void the_object_def_name_is_copied_from_the_unique_id_of_the_wrapper()
         {
-            _wrapper.As<IContainerModel>().ToInstance().Name.ShouldEqual(
+            _wrapper.As<IContainerModel>().ToInstance().Name.ShouldBe(
                 _wrapper.UniqueId.ToString());
         }
     }

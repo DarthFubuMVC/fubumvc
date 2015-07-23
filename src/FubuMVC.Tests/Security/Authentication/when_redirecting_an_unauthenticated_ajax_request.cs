@@ -41,7 +41,7 @@ namespace FubuMVC.Tests.Security.Authentication
 		[Test]
 		public void sets_the_navigate_page_property()
 		{
-			theValues["navigatePage"].ShouldEqual(theUrl);
+			theValues["navigatePage"].ShouldBe(theUrl);
 		}
 
 		[Test]
@@ -55,7 +55,7 @@ namespace FubuMVC.Tests.Security.Authentication
 		{
 			MockFor<IOutputWriter>()
 				.GetArgumentsForCallsMadeOn(x => x.Write(MimeType.Json, null), x => x.IgnoreArguments())[0][0]
-				.ShouldEqual(MimeType.Json.Value);
+				.ShouldBe(MimeType.Json.Value);
 		}
 
 	}

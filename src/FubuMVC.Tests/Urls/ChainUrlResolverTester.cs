@@ -47,14 +47,14 @@ namespace FubuMVC.Tests.Urls
 		[Test]
 		public void resolve_a_url_without_route_params()
 		{
-			theUrlResolver.UrlFor(null, theSimpleChain).ShouldEqual("/index");
+			theUrlResolver.UrlFor(null, theSimpleChain).ShouldBe("/index");
 		}
 
 		[Test]
 		public void resolve_a_url_with_route_params_filled_by_input()
 		{
 			var input = new ChainUrlParams {Name = "Joel"};
-			theUrlResolver.UrlFor(input, theChainWithRouteParams).ShouldEqual("/Joel");
+			theUrlResolver.UrlFor(input, theChainWithRouteParams).ShouldBe("/Joel");
 		}
 
 		[Test]
@@ -63,7 +63,7 @@ namespace FubuMVC.Tests.Urls
 			var values = new RouteParameters();
 			values["Name"] = "Joel";
 
-			theUrlResolver.UrlFor(theChainWithRouteParams, values).ShouldEqual("/Joel");
+			theUrlResolver.UrlFor(theChainWithRouteParams, values).ShouldBe("/Joel");
 		}
 
 		public class ChainUrlResolverEndpoint

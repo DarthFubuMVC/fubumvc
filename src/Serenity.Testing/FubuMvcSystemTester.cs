@@ -55,7 +55,7 @@ namespace Serenity.Testing
         {
             using (var system = new FubuMvcSystem<TargetApplication>(physicalPath: "c:\\foo"))
             {
-                system.Settings.PhysicalPath.ShouldEqual("c:\\foo");
+                system.Settings.PhysicalPath.ShouldBe("c:\\foo");
             }
         }
 

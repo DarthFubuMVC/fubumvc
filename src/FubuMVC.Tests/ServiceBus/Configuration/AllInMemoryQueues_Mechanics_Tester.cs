@@ -52,10 +52,10 @@ namespace FubuTransportation.Testing.Configuration
         {
 
             var busSettings = container.GetInstance<BusSettings>();
-            busSettings.Downstream.ToString().ShouldEqual("memory://bus/downstream");
+            busSettings.Downstream.ToString().ShouldBe("memory://bus/downstream");
 
             var anotherSettings = container.GetInstance<AnotherSettings>();
-            anotherSettings.Destination.ToString().ShouldEqual("memory://another/destination");
+            anotherSettings.Destination.ToString().ShouldBe("memory://another/destination");
 
         }
     }

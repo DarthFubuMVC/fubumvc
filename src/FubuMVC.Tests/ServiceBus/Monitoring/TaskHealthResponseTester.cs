@@ -31,7 +31,7 @@ namespace FubuTransportation.Testing.Monitoring
 
             response.AddMissingSubjects(new []{subject1, subject2, subject3, subject4});
 
-            response.Tasks.Count().ShouldEqual(4);
+            response.Tasks.Count().ShouldBe(4);
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace FubuTransportation.Testing.Monitoring
 
             response.AddMissingSubjects(new[] { subject1, subject2, subject3, subject4 });
 
-            response.Tasks.Count().ShouldEqual(4);
+            response.Tasks.Count().ShouldBe(4);
 
             response.Tasks.ShouldContain(new PersistentTaskStatus(subject2, HealthStatus.Inactive));
             response.Tasks.ShouldContain(new PersistentTaskStatus(subject3, HealthStatus.Inactive));

@@ -29,24 +29,24 @@ namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
             var cdn = new CdnAsset {File = "fubar.1.2.js", Url = "http://server/fubar.js"};
             var asset = AllAssets.RegisterCdnAsset(cdn);
 
-            asset.Filename.ShouldEqual("fubar.1.2.js");
+            asset.Filename.ShouldBe("fubar.1.2.js");
             asset.File.ShouldNotBeNull(); // just seeing that we match up on existing
-            asset.CdnUrl.ShouldEqual("http://server/fubar.js");
-            asset.Url.ShouldEqual("fubar.1.2.js");
+            asset.CdnUrl.ShouldBe("http://server/fubar.js");
+            asset.Url.ShouldBe("fubar.1.2.js");
         }
 
         [Test]
         public void cdn_registration_flows_from_settings_to_graph()
         {
             var asset = Assets.FindAsset("bar.js");
-            asset.CdnUrl.ShouldEqual("http://server.com/bar.js");
+            asset.CdnUrl.ShouldBe("http://server.com/bar.js");
         }
 
         [Test]
         public void add_cdn_that_does_not_match()
         {
             var asset = AllAssets.RegisterCdnAsset(new CdnAsset {Url = "http://cdn.server.com/jquery.js"});
-            asset.CdnUrl.ShouldEqual("http://cdn.server.com/jquery.js");
+            asset.CdnUrl.ShouldBe("http://cdn.server.com/jquery.js");
             asset.FallbackTest.ShouldBeNull();
             asset.File.ShouldBeNull();
         }
@@ -62,8 +62,8 @@ namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving
 
             var asset = AllAssets.RegisterCdnAsset(cdn);
             asset.File.ShouldNotBeNull();
-            asset.FallbackTest.ShouldEqual("something == null");
-            asset.CdnUrl.ShouldEqual("http://cdn.server.com/foo.js");
+            asset.FallbackTest.ShouldBe("something == null");
+            asset.CdnUrl.ShouldBe("http://cdn.server.com/foo.js");
         }
     }
 }

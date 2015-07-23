@@ -58,7 +58,7 @@ namespace FubuMVC.Tests.UI
         {
             theEndpoint.IsAuthorized = true;
 
-            theResultingTag.Attr("href").ShouldEqual(theEndpoint.Url);
+            theResultingTag.Attr("href").ShouldBe(theEndpoint.Url);
             theResultingTag.Authorized().ShouldBeTrue();
 
             theResultingTag.ToString().ShouldNotBeEmpty();

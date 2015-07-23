@@ -17,7 +17,7 @@ namespace FubuTransportation.Testing.Sagas
             };
 
             var func = types.ToCorrelationIdFunc().ShouldBeOfType<Func<SagaTypesTester, Guid>>();
-            func(this).ShouldEqual(Guid.Empty);
+            func(this).ShouldBe(Guid.Empty);
         }
 
         [Test]
@@ -35,7 +35,7 @@ namespace FubuTransportation.Testing.Sagas
                 CorrelationId = Guid.NewGuid()
             };
 
-            func(message).ShouldEqual(message.CorrelationId);
+            func(message).ShouldBe(message.CorrelationId);
         }
 
         [Test]
@@ -54,7 +54,7 @@ namespace FubuTransportation.Testing.Sagas
                 Id = Guid.NewGuid()
             };
 
-            func(state).ShouldEqual(state.Id);
+            func(state).ShouldBe(state.Id);
 
         }
 

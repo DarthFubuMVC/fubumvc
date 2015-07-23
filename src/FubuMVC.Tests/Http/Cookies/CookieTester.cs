@@ -58,20 +58,20 @@ namespace FubuMVC.Tests.Http.Cookies
         public void value_with_only_one_state_with_only_one_value()
         {
             var cookie = new Cookie("a", "2");
-            cookie.Value.ShouldEqual("2");
+            cookie.Value.ShouldBe("2");
         }
 
         [Test]
         public void can_set_value_for_single_value_cookies()
         {
             var cookie = new Cookie("a", "2");
-            cookie.Value.ShouldEqual("2");
+            cookie.Value.ShouldBe("2");
 
             cookie.Value = "3";
 
-            cookie.Value.ShouldEqual("3");
+            cookie.Value.ShouldBe("3");
 
-            cookie.States.Single().Value.ShouldEqual("3");
+            cookie.States.Single().Value.ShouldBe("3");
         }
 
         [Test]
@@ -94,7 +94,7 @@ namespace FubuMVC.Tests.Http.Cookies
         private void roundTrip(string text)
         {
             var cookie = CookieParser.ToCookie(text);
-            cookie.ToString().ShouldEqual(text);
+            cookie.ToString().ShouldBe(text);
         }
 
         [Test]
@@ -102,8 +102,8 @@ namespace FubuMVC.Tests.Http.Cookies
         {
             var cookie = new Cookie("foo").Add(new CookieState("a", "1")).Add(new CookieState("b", "2"));
 
-            cookie.GetValue("a").ShouldEqual("1");
-            cookie.GetValue("b").ShouldEqual("2");
+            cookie.GetValue("a").ShouldBe("1");
+            cookie.GetValue("b").ShouldBe("2");
         }
 
 		[Test]

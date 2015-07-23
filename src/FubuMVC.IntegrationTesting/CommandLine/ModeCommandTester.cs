@@ -67,7 +67,7 @@ namespace FubuMVC.IntegrationTesting.CommandLine
 
             FubuMode.Reset();
 
-            FubuMode.Mode().ShouldEqual("Something");
+            FubuMode.Mode().ShouldBe("Something");
         }
     }
 }

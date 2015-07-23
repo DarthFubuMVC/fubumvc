@@ -23,7 +23,7 @@ namespace FubuTransportation.Testing.Runtime.Cascading
             original.Stub(x => x.ForResponse(message)).Return(response);
 
             delayed.CreateEnvelope(original).ShouldBeTheSameAs(response);
-            response.ExecutionTime.ShouldEqual(delayed.Time);
+            response.ExecutionTime.ShouldBe(delayed.Time);
         }
     }
 }   

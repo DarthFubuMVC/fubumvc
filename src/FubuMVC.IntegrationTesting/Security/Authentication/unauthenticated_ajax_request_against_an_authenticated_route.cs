@@ -25,7 +25,7 @@ namespace FubuMVC.IntegrationTesting.Security.Authentication
         [Test]
         public void unauthorized_status_code()
         {
-            theResponse.StatusCode.ShouldEqual(HttpStatusCode.Unauthorized);
+            theResponse.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
         }
 
         [Test]

@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.Http.Hosting
         public void invoke_a_simple_string_endpoint()
         {
             host.Send(r => r.RelativeUrl("memory/hello"))
-                .Body.ReadAsText().ShouldEqual("hello from the in memory host");
+                .Body.ReadAsText().ShouldBe("hello from the in memory host");
         }
 
         private static InMemoryHost newHost()
@@ -48,7 +48,7 @@ namespace FubuMVC.Tests.Http.Hosting
         public void using_scenario_with_string_text_and_relative_url()
         {
             host.Scenario(x => { x.Get.Url("memory/hello"); })
-                .Body.ReadAsText().ShouldEqual("hello from the in memory host");
+                .Body.ReadAsText().ShouldBe("hello from the in memory host");
             ;
         }
 
@@ -56,7 +56,7 @@ namespace FubuMVC.Tests.Http.Hosting
         public void using_scenario_with_controller_expression()
         {
             host.Scenario(x => { x.Get.Action<InMemoryEndpoint>(e => e.get_memory_hello()); })
-                .Body.ReadAsText().ShouldEqual("hello from the in memory host");
+                .Body.ReadAsText().ShouldBe("hello from the in memory host");
             ;
         }
 
@@ -64,12 +64,12 @@ namespace FubuMVC.Tests.Http.Hosting
         public void using_scenario_with_input_model()
         {
             host.Scenario(x => { x.Get.Input(new InMemoryInput {Color = "Red"}); })
-                .Body.ReadAsText().ShouldEqual("The color is Red");
+                .Body.ReadAsText().ShouldBe("The color is Red");
             ;
 
 
             host.Scenario(x => { x.Get.Input(new InMemoryInput {Color = "Orange"}); })
-                .Body.ReadAsText().ShouldEqual("The color is Orange");
+                .Body.ReadAsText().ShouldBe("The color is Orange");
             ;
         }
 
@@ -78,7 +78,7 @@ namespace FubuMVC.Tests.Http.Hosting
         public void using_scenario_with_input_model_as_marker()
         {
             host.Scenario(x => { x.Get.Input<MarkerInput>(); })
-                .Body.ReadAsText().ShouldEqual("just the marker");
+                .Body.ReadAsText().ShouldBe("just the marker");
             ;
         }
 

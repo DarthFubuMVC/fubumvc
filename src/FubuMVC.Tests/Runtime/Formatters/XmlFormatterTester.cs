@@ -47,8 +47,8 @@ namespace FubuMVC.Tests.Runtime.Formatters
             var xmlOutput = theFormatter.Read<XmlFormatterModel>(context);
             xmlOutput.ShouldNotBeTheSameAs(xmlInput);
 
-            xmlOutput.FirstName.ShouldEqual(xmlInput.FirstName);
-            xmlOutput.LastName.ShouldEqual(xmlInput.LastName);
+            xmlOutput.FirstName.ShouldBe(xmlInput.FirstName);
+            xmlOutput.LastName.ShouldBe(xmlInput.LastName);
         }
 
         [Test]
@@ -67,8 +67,8 @@ namespace FubuMVC.Tests.Runtime.Formatters
             var xmlOutput = theFormatter.Read<XmlFormatterModel>(context);
             xmlOutput.ShouldNotBeTheSameAs(xmlInput);
 
-            xmlOutput.FirstName.ShouldEqual(xmlInput.FirstName);
-            xmlOutput.LastName.ShouldEqual(xmlInput.LastName);
+            xmlOutput.FirstName.ShouldBe(xmlInput.FirstName);
+            xmlOutput.LastName.ShouldBe(xmlInput.LastName);
         }
     }
 

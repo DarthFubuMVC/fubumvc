@@ -19,7 +19,7 @@ namespace FubuMVC.IntegrationTesting.Http
         {
             var response = endpoints.GetByInput(new CompressedInput(), acceptEncoding: "gzip");
 
-            response.ResponseHeaderFor(HttpResponseHeader.ContentEncoding).ShouldEqual("gzip");
+            response.ResponseHeaderFor(HttpResponseHeader.ContentEncoding).ShouldBe("gzip");
         }
 
         [Test]
@@ -27,7 +27,7 @@ namespace FubuMVC.IntegrationTesting.Http
         {
             var response = endpoints.GetByInput(new CompressedInput(), acceptEncoding: "deflate");
 
-            response.ResponseHeaderFor(HttpResponseHeader.ContentEncoding).ShouldEqual("deflate");
+            response.ResponseHeaderFor(HttpResponseHeader.ContentEncoding).ShouldBe("deflate");
         }
     }
 

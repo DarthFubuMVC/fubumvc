@@ -20,7 +20,7 @@ namespace FubuMVC.Tests.Security.AntiForgery
             BehaviorGraph.BuildFrom(registry).BehaviorFor<Controller1>(x => x.MethodWithAF(null))
                 .FirstCall()
                 .Previous.ShouldBeOfType<AntiForgeryNode>()
-                .Salt.ShouldEqual("abc");
+                .Salt.ShouldBe("abc");
                 
         }
 

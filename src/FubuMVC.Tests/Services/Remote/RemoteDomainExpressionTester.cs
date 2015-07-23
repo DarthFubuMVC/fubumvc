@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.Services.Remote
 
             expression.ServiceDirectory = "Service";
 
-            expression.Setup.PrivateBinPath.ShouldEqual("bin");
+            expression.Setup.PrivateBinPath.ShouldBe("bin");
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace FubuMVC.Tests.Services.Remote
 
             expression.ServiceDirectory = "Service";
 
-            expression.Setup.PrivateBinPath.ShouldEqual("bin".AppendPath("Release"));
+            expression.Setup.PrivateBinPath.ShouldBe("bin".AppendPath("Release"));
         }
 
 
@@ -63,7 +63,7 @@ namespace FubuMVC.Tests.Services.Remote
 
             expression.ServiceDirectory = "Service";
 
-            expression.Setup.PrivateBinPath.ShouldEqual("bin".AppendPath("Debug"));
+            expression.Setup.PrivateBinPath.ShouldBe("bin".AppendPath("Debug"));
         }
 
         [Test]

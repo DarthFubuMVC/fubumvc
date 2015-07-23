@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                 r.Actions.IncludeType<HomeEndpoint>();
             });
 
-            graph.BehaviorFor<HomeEndpoint>(x => x.Index()).As<RoutedChain>().Route.Pattern.ShouldEqual("");
+            graph.BehaviorFor<HomeEndpoint>(x => x.Index()).As<RoutedChain>().Route.Pattern.ShouldBe("");
         }
 
         [Test]

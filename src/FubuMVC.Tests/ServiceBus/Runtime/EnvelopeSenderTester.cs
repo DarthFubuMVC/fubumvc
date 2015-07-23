@@ -49,7 +49,7 @@ namespace FubuTransportation.Testing.Runtime
         [Test]
         public void adds_the_message_type_header()
         {
-            theEnvelope.Headers[Envelope.MessageTypeKey].ShouldEqual(theMessage.GetType().FullName);
+            theEnvelope.Headers[Envelope.MessageTypeKey].ShouldBe(theMessage.GetType().FullName);
         }
 
         [Test]
@@ -80,7 +80,7 @@ namespace FubuTransportation.Testing.Runtime
             Guid.Parse(theEnvelope.CorrelationId)
                 .ShouldNotEqual(Guid.Empty);
 
-            theEnvelope.CorrelationId.ShouldEqual(correlationId);
+            theEnvelope.CorrelationId.ShouldBe(correlationId);
         }
     }
 }

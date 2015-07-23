@@ -83,7 +83,7 @@ namespace FubuMVC.Tests.Resources.PathBased
         {
             theRouteValues.Add("Part0", "file.js");
 
-            findPathByBinding().Path.ShouldEqual("file.js");
+            findPathByBinding().Path.ShouldBe("file.js");
         }
 
         [Test]
@@ -93,7 +93,7 @@ namespace FubuMVC.Tests.Resources.PathBased
             theRouteValues.Add("Part0", "f1");
             theRouteValues.Add("Part1", "file.js");
 
-            findPathByBinding().Path.ShouldEqual("f1/file.js");
+            findPathByBinding().Path.ShouldBe("f1/file.js");
         }
 
         [Test]
@@ -104,7 +104,7 @@ namespace FubuMVC.Tests.Resources.PathBased
             theRouteValues.Add("Part1", "f2");
             theRouteValues.Add("Part2", "file.js");
 
-            findPathByBinding().Path.ShouldEqual("f1/f2/file.js");
+            findPathByBinding().Path.ShouldBe("f1/f2/file.js");
         }
 
         [Test]
@@ -116,7 +116,7 @@ namespace FubuMVC.Tests.Resources.PathBased
             theRouteValues.Add("Part2", "f3");
             theRouteValues.Add("Part3", "file.js");
 
-            findPathByBinding().Path.ShouldEqual("f1/f2/f3/file.js");
+            findPathByBinding().Path.ShouldBe("f1/f2/f3/file.js");
         }
 
         [Test]
@@ -133,7 +133,7 @@ namespace FubuMVC.Tests.Resources.PathBased
             theRouteValues.Add("Part7", "f8");
             theRouteValues.Add("Part8", "file.js");
 
-            findPathByBinding().Path.ShouldEqual("f1/f2/f3/f4/f5/f6/f7/f8/file.js");
+            findPathByBinding().Path.ShouldBe("f1/f2/f3/f4/f5/f6/f7/f8/file.js");
         }
 
         public class SpecialPath : ResourcePath

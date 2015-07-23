@@ -31,7 +31,7 @@ namespace FubuTransportation.Testing
             
             ClassUnderTest.Send(destination, message);
 
-            theLastEnvelopeSent.Destination.ShouldEqual(destination);
+            theLastEnvelopeSent.Destination.ShouldBe(destination);
             theLastEnvelopeSent.Message.ShouldBeTheSameAs(message);
         }
 
@@ -43,7 +43,7 @@ namespace FubuTransportation.Testing
             
             ClassUnderTest.SendAndWait(destination, message).ShouldNotBeNull();
 
-            theLastEnvelopeSent.Destination.ShouldEqual(destination);
+            theLastEnvelopeSent.Destination.ShouldBe(destination);
             theLastEnvelopeSent.Message.ShouldBeTheSameAs(message);
 
             var lastReplyListener = MockFor<IEventAggregator>().GetArgumentsForCallsMadeOn(x => x.AddListener(null))

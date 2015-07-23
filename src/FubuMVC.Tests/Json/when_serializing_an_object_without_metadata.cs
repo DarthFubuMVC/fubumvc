@@ -32,7 +32,7 @@ namespace FubuMVC.Tests.Json
 		[Test]
 		public void uses_the_provided_converters()
 		{
-			theResult.ShouldEqual("{\"Name\":\"Test\",\"Child\":\"x:123\"}");
+			theResult.ShouldBe("{\"Name\":\"Test\",\"Child\":\"x:123\"}");
 		}
 	}
 }

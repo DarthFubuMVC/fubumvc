@@ -26,9 +26,9 @@ namespace FubuTransportation.Testing.TestSupport
             new MessageWatcher().Handle(@event);
 
             var sent = MessageHistory.Outstanding().Single();
-            sent.Id.ShouldEqual(@event.Envelope.CorrelationId);
-            sent.Description.ShouldEqual(@event.ToString());
-            sent.Type.ShouldEqual(MessageWatcher.MessageTrackType);
+            sent.Id.ShouldBe(@event.Envelope.CorrelationId);
+            sent.Description.ShouldBe(@event.ToString());
+            sent.Type.ShouldBe(MessageWatcher.MessageTrackType);
         }
 
         [Test]
@@ -54,9 +54,9 @@ namespace FubuTransportation.Testing.TestSupport
             messageWatcher.Handle(finished);
 
             var received = MessageHistory.Received().Single();
-            received.Id.ShouldEqual(@event.Envelope.CorrelationId);
-            received.Description.ShouldEqual(finished.ToString());
-            received.Type.ShouldEqual(MessageWatcher.MessageTrackType);
+            received.Id.ShouldBe(@event.Envelope.CorrelationId);
+            received.Description.ShouldBe(finished.ToString());
+            received.Type.ShouldBe(MessageWatcher.MessageTrackType);
 
             MessageHistory.Outstanding().Any().ShouldBeFalse();
         }
@@ -75,7 +75,7 @@ namespace FubuTransportation.Testing.TestSupport
             messageWatcher.Handle(new EnvelopeSent(envelope1, node1));
             messageWatcher.Handle(new EnvelopeSent(envelope1, node2));
 
-            MessageHistory.Outstanding().Count().ShouldEqual(2);
+            MessageHistory.Outstanding().Count().ShouldBe(2);
 
             envelope1.Destination = node1.Uri;
             messageWatcher.Handle(new MessageSuccessful
@@ -83,7 +83,7 @@ namespace FubuTransportation.Testing.TestSupport
                 Envelope = envelope1
             });
 
-            MessageHistory.Outstanding().Count().ShouldEqual(1);
+            MessageHistory.Outstanding().Count().ShouldBe(1);
 
             envelope1.Destination = node2.Uri;
             messageWatcher.Handle(new MessageSuccessful
@@ -108,7 +108,7 @@ namespace FubuTransportation.Testing.TestSupport
             messageWatcher.Handle(new EnvelopeSent(envelope1, node1));
             messageWatcher.Handle(new EnvelopeSent(envelope2, node1));
 
-            MessageHistory.Outstanding().Count().ShouldEqual(2);
+            MessageHistory.Outstanding().Count().ShouldBe(2);
 
             envelope1.Destination = node1.Uri;
             messageWatcher.Handle(new MessageSuccessful
@@ -116,7 +116,7 @@ namespace FubuTransportation.Testing.TestSupport
                 Envelope = envelope1
             });
 
-            MessageHistory.Outstanding().Count().ShouldEqual(1);
+            MessageHistory.Outstanding().Count().ShouldBe(1);
 
             envelope2.Destination = node1.Uri;
             messageWatcher.Handle(new MessageSuccessful
@@ -143,7 +143,7 @@ namespace FubuTransportation.Testing.TestSupport
             messageWatcher.Handle(new EnvelopeSent(envelope1, node1));
             messageWatcher.Handle(new EnvelopeSent(envelope1, node2));
 
-            MessageHistory.Outstanding().Count().ShouldEqual(2);
+            MessageHistory.Outstanding().Count().ShouldBe(2);
 
             envelope1.Destination = node1.Uri;
             messageWatcher.Handle(new MessageFailed
@@ -151,7 +151,7 @@ namespace FubuTransportation.Testing.TestSupport
                 Envelope = envelope1
             });
 
-            MessageHistory.Outstanding().Count().ShouldEqual(1);
+            MessageHistory.Outstanding().Count().ShouldBe(1);
 
             envelope1.Destination = node2.Uri;
             messageWatcher.Handle(new MessageFailed
@@ -176,7 +176,7 @@ namespace FubuTransportation.Testing.TestSupport
             messageWatcher.Handle(new EnvelopeSent(envelope1, node1));
             messageWatcher.Handle(new EnvelopeSent(envelope2, node1));
 
-            MessageHistory.Outstanding().Count().ShouldEqual(2);
+            MessageHistory.Outstanding().Count().ShouldBe(2);
 
             envelope1.Destination = node1.Uri;
             messageWatcher.Handle(new MessageFailed
@@ -184,7 +184,7 @@ namespace FubuTransportation.Testing.TestSupport
                 Envelope = envelope1
             });
 
-            MessageHistory.Outstanding().Count().ShouldEqual(1);
+            MessageHistory.Outstanding().Count().ShouldBe(1);
 
             envelope2.Destination = node1.Uri;
             messageWatcher.Handle(new MessageFailed

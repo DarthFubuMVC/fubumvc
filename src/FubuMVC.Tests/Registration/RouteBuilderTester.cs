@@ -33,15 +33,15 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void set_the_pattern_correctly()
         {
-            route.Pattern.ShouldEqual(thePattern);
+            route.Pattern.ShouldBe(thePattern);
         }
 
         [Test]
         public void rank()
         {
-            RouteBuilder.PatternRank("{foo}/").ShouldEqual(1);
-            RouteBuilder.PatternRank("foo").ShouldEqual(0);
-            RouteBuilder.PatternRank("{foo}/to/{bar}").ShouldEqual(2);
+            RouteBuilder.PatternRank("{foo}/").ShouldBe(1);
+            RouteBuilder.PatternRank("foo").ShouldBe(0);
+            RouteBuilder.PatternRank("{foo}/to/{bar}").ShouldBe(2);
         }
     }
 
@@ -84,7 +84,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void set_the_pattern_correctly()
         {
-            route.Pattern.ShouldEqual(thePattern);
+            route.Pattern.ShouldBe(thePattern);
         }
     }
 
@@ -108,7 +108,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void pick_up_the_default_value_if_it_exists()
         {
-            route.Input.RouteParameters.First(x => x.Name == "Name").DefaultValue.ShouldEqual("Josh");
+            route.Input.RouteParameters.First(x => x.Name == "Name").DefaultValue.ShouldBe("Josh");
         }
 
         [Test]

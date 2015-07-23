@@ -14,22 +14,22 @@ namespace FubuMVC.Tests.Http
         {
             new CurrentMimeType()
                 .AcceptTypes.Single()
-                .ShouldEqual(MimeType.Any);
+                .ShouldBe(MimeType.Any);
         }
 
         [Test]
         public void feeding_in_null_for_contentType_defaults_to_HttpFormMimeType()
         {
             var currentMimeType = new CurrentMimeType(null, null);
-            currentMimeType.ContentType.ShouldEqual(MimeType.HttpFormMimetype);
+            currentMimeType.ContentType.ShouldBe(MimeType.HttpFormMimetype);
         }
 
         [Test]
         public void is_smart_enough_to_pull_out_charset()
         {
             var currentMimeType = new CurrentMimeType("application/x-www-form-urlencoded; charset=UTF-8", null);
-            currentMimeType.ContentType.ShouldEqual("application/x-www-form-urlencoded");
-            currentMimeType.Charset.ShouldEqual("UTF-8");
+            currentMimeType.ContentType.ShouldBe("application/x-www-form-urlencoded");
+            currentMimeType.Charset.ShouldBe("UTF-8");
         }
 
         [Test]
@@ -89,11 +89,11 @@ namespace FubuMVC.Tests.Http
             var currentMimeType = new CurrentMimeType("application/x-www-form-urlencoded; charset=UTF-8", "text/html, */*");
             currentMimeType
                 .SelectFirstMatching(new[]{"text/json", "application/json"})
-                .ShouldEqual("text/json");
+                .ShouldBe("text/json");
 
             currentMimeType
                 .SelectFirstMatching(new[] { "application/json", "text/json" })
-                .ShouldEqual("application/json");
+                .ShouldBe("application/json");
         
         }
 
@@ -103,7 +103,7 @@ namespace FubuMVC.Tests.Http
             var currentMimeType = new CurrentMimeType("application/x-www-form-urlencoded; charset=UTF-8", "text/html, application/json, */*");
             currentMimeType
                 .SelectFirstMatching(new[] { "text/json", "application/json" })
-                .ShouldEqual("application/json"); 
+                .ShouldBe("application/json"); 
         }
     }
 }

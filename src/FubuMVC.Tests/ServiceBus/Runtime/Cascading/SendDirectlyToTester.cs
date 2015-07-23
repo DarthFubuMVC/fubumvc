@@ -23,7 +23,7 @@ namespace FubuTransportation.Testing.Runtime.Cascading
             original.Stub(x => x.ForSend(message)).Return(response);
 
             sendDirectlyTo.CreateEnvelope(original).ShouldBeTheSameAs(response);
-            response.Destination.ShouldEqual(destination);
+            response.Destination.ShouldBe(destination);
         }
     }
 }

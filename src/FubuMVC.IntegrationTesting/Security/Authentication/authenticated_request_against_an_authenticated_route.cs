@@ -52,7 +52,7 @@ namespace FubuMVC.IntegrationTesting.Security.Authentication
                 r.AllowAutoRedirect = false;
             });
 
-            response.StatusCode.ShouldEqual(HttpStatusCode.OK);
+            response.StatusCode.ShouldBe(HttpStatusCode.OK);
         }
 
         #region Nested Type: CookieWriter

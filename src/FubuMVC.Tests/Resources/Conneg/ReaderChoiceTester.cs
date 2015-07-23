@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Resources.Conneg
 
             var description = Description.For(choice);
 
-            description.Title.ShouldEqual("Unable to select a reader for content-type 'text/json'");
+            description.Title.ShouldBe("Unable to select a reader for content-type 'text/json'");
         }
 
         [Test]
@@ -30,7 +30,7 @@ namespace FubuMVC.Tests.Resources.Conneg
 
             var description = Description.For(choice);
 
-            description.Title.ShouldEqual("Selected reader 'Some title' for content-type 'text/json'");
+            description.Title.ShouldBe("Selected reader 'Some title' for content-type 'text/json'");
         }
     }
 

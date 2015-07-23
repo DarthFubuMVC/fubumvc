@@ -54,15 +54,15 @@ namespace FubuTransportation.Testing.Configuration
                 .ShouldBeTheSameAs(theSettings);
 
             theContainer.GetInstance<ConfiguredSettings>()
-                .OutboundCount.ShouldEqual(5);
+                .OutboundCount.ShouldBe(5);
 
             theContainer.GetInstance<ConfiguredSettings>()
-                .UpstreamCount.ShouldEqual(7);
+                .UpstreamCount.ShouldBe(7);
 
             theGraph.ChannelFor<ConfiguredSettings>(x => x.Outbound)
                 .Scheduler
                 .ShouldBeOfType<TaskScheduler>()
-                .TaskCount.ShouldEqual(theSettings.OutboundCount);
+                .TaskCount.ShouldBe(theSettings.OutboundCount);
         }
 
 
@@ -72,7 +72,7 @@ namespace FubuTransportation.Testing.Configuration
             theGraph.ChannelFor<ConfiguredSettings>(x => x.Upstream)
                 .Scheduler
                 .ShouldBeOfType<ThreadScheduler>()
-                .ThreadCount.ShouldEqual(theSettings.UpstreamCount);
+                .ThreadCount.ShouldBe(theSettings.UpstreamCount);
         }
 
         public class ConfiguredFubuRegistry : FubuTransportRegistry<ConfiguredSettings>

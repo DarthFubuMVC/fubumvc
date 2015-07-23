@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.Registration
         {
             var handlerActions = theGraph.ActionsForHandler<AwesomeController>();
 
-            handlerActions.Each(x => x.HandlerType.ShouldEqual(typeof (AwesomeController)));
+            handlerActions.Each(x => x.HandlerType.ShouldBe(typeof (AwesomeController)));
             handlerActions.Select(x => x.Method.Name)
                 .ShouldHaveTheSameElementsAs("M1", "M2", "Different");
         }
@@ -37,7 +37,7 @@ namespace FubuMVC.Tests.Registration
         public void find_action_in_a_set_by_method_name()
         {
             var handlerActions = theGraph.ActionsForHandler<AwesomeController>();
-            handlerActions.ByName("M1").Method.Name.ShouldEqual("M1");
+            handlerActions.ByName("M1").Method.Name.ShouldBe("M1");
         }
 
         [Test]

@@ -32,7 +32,7 @@ namespace FubuPersistence.Tests.Storage
             ClassUnderTest.Remove(@case);
 
 
-            ClassUnderTest.Find(@case.Id).Id.ShouldEqual(@case.Id);
+            ClassUnderTest.Find(@case.Id).Id.ShouldBe(@case.Id);
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace FubuPersistence.Tests.Storage
 
             ClassUnderTest.Remove(@case);
 
-            ClassUnderTest.FindSingle(c => c.Id == @case.Id).Id.ShouldEqual(@case.Id);
+            ClassUnderTest.FindSingle(c => c.Id == @case.Id).Id.ShouldBe(@case.Id);
         }
 
         [Test]
@@ -73,7 +73,7 @@ namespace FubuPersistence.Tests.Storage
 
             ClassUnderTest.Remove(@case);
 
-            @case.Deleted.ShouldEqual(new Milestone(LocalSystemTime));
+            @case.Deleted.ShouldBe(new Milestone(LocalSystemTime));
         }
     }
 

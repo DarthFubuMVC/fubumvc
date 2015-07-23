@@ -37,7 +37,7 @@ namespace FubuMVC.Tests.Projections
         public void accessors()
         {
             var projection = new ChildProjection<Parent, Child>(x => x.Child, DisplayFormatting.RawValues);
-            projection.As<IProjection<Parent>>().Accessors().Single().ShouldEqual(ReflectionHelper.GetAccessor<Parent>(x => x.Child));
+            projection.As<IProjection<Parent>>().Accessors().Single().ShouldBe(ReflectionHelper.GetAccessor<Parent>(x => x.Child));
         }
 
         private IDictionary<string, object> theDictionary
@@ -64,8 +64,8 @@ namespace FubuMVC.Tests.Projections
             });
 
             var child = theDictionary.Child("Child");
-            child["age"].ShouldEqual(38);
-            child["name"].ShouldEqual("Jeremy");
+            child["age"].ShouldBe(38);
+            child["name"].ShouldBe("Jeremy");
         }
 
         [Test]
@@ -89,8 +89,8 @@ namespace FubuMVC.Tests.Projections
 
             theDictionary.ContainsKey("Child").ShouldBeTrue();
 
-            theDictionary.Child("Child")["Age"].ShouldEqual(38);
-            theDictionary.Child("Child")["Name"].ShouldEqual("Jeremy");
+            theDictionary.Child("Child")["Age"].ShouldBe(38);
+            theDictionary.Child("Child")["Name"].ShouldBe("Jeremy");
         }
 
         [Test]
@@ -107,8 +107,8 @@ namespace FubuMVC.Tests.Projections
             theDictionary.ContainsKey("Different").ShouldBeTrue();
             theDictionary.ContainsKey("Child").ShouldBeFalse();
 
-            theDictionary.Child("Different")["Age"].ShouldEqual(38);
-            theDictionary.Child("Different")["Name"].ShouldEqual("Jeremy");
+            theDictionary.Child("Different")["Age"].ShouldBe(38);
+            theDictionary.Child("Different")["Name"].ShouldBe("Jeremy");
         }
 
         [Test]
@@ -128,7 +128,7 @@ namespace FubuMVC.Tests.Projections
             theDictionary.ContainsKey("Child").ShouldBeTrue();
 
             theDictionary.Child("Child").ContainsKey("Age").ShouldBeFalse();
-            theDictionary.Child("Child")["Name"].ShouldEqual("Jeremy");
+            theDictionary.Child("Child")["Name"].ShouldBe("Jeremy");
         }
 
 

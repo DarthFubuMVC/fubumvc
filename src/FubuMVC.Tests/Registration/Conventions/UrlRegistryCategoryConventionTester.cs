@@ -45,26 +45,26 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void class_attribute_sets_the_category_if_there_is_no_method_level_attribute()
         {
-            graph.BehaviorFor<UrlCategoryController1>(x => x.Go(null)).As<RoutedChain>().UrlCategory.Category.ShouldEqual("admin");
+            graph.BehaviorFor<UrlCategoryController1>(x => x.Go(null)).As<RoutedChain>().UrlCategory.Category.ShouldBe("admin");
         }
 
         [Test]
         public void method_attribute_has_precedence_over_class_attribute()
         {
-            graph.BehaviorFor<UrlCategoryController1>(x => x.Comeback()).As<RoutedChain>().UrlCategory.Category.ShouldEqual("public");
+            graph.BehaviorFor<UrlCategoryController1>(x => x.Comeback()).As<RoutedChain>().UrlCategory.Category.ShouldBe("public");
         }
 
         [Test]
         public void method_attribute_without_class_attribute()
         {
-            graph.BehaviorFor<UrlCategoryController2>(x => x.DecoratedMethod()).As<RoutedChain>().UrlCategory.Category.ShouldEqual("public");
+            graph.BehaviorFor<UrlCategoryController2>(x => x.DecoratedMethod()).As<RoutedChain>().UrlCategory.Category.ShouldBe("public");
         }
         
         [Test]
         public void finds_and_registers_url_for_new_methods()
         {
             registry.HasNewUrl(typeof(UrlNewTarget)).ShouldBeTrue();
-            registry.UrlForNew(typeof(UrlNewTarget)).ShouldEqual("/urlcategory1/createnewtarget");
+            registry.UrlForNew(typeof(UrlNewTarget)).ShouldBe("/urlcategory1/createnewtarget");
             
         }
 

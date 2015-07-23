@@ -13,7 +13,7 @@ namespace FubuMVC.IntegrationTesting
             // registered from the OwinBottle assembly
             endpoints.Get<OwinPackageEndpoint>(x => x.get_stuff_from_bottle())
                 .ResponseHeaderFor("Slow-Moving")
-                .ShouldEqual("Laser");
+                .ShouldBe("Laser");
         }
     }
 

@@ -27,13 +27,13 @@ namespace FubuMVC.Tests.Assets
         [Test]
         public void public_folder_is_public()
         {
-            new AssetSettings().PublicFolder.ShouldEqual("public");
+            new AssetSettings().PublicFolder.ShouldBe("public");
         }
 
         [Test]
         public void mode_is_anywhere_by_default()
         {
-            new AssetSettings().Mode.ShouldEqual(SearchMode.Anywhere);
+            new AssetSettings().Mode.ShouldBe(SearchMode.Anywhere);
         }
 
         [Test]
@@ -56,48 +56,48 @@ namespace FubuMVC.Tests.Assets
             settings.Exclude("something.js");
             settings.Exclude("node-content");
 
-            settings.CreateAssetSearch().Exclude.ShouldEqual("node_modules/*;something.js;node-content");
+            settings.CreateAssetSearch().Exclude.ShouldBe("node_modules/*;something.js;node-content");
         }
 
         [Test]
         public void can_write_javascript_files()
         {
-            theRule.IsAllowed(new FubuFile("foo.js")).ShouldEqual(AuthorizationRight.Allow);
-            theRule.IsAllowed(new FubuFile("foo.coffee")).ShouldEqual(AuthorizationRight.Allow);
+            theRule.IsAllowed(new FubuFile("foo.js")).ShouldBe(AuthorizationRight.Allow);
+            theRule.IsAllowed(new FubuFile("foo.coffee")).ShouldBe(AuthorizationRight.Allow);
         }
 
         [Test]
         public void can_write_css()
         {
-            theRule.IsAllowed(new FubuFile("bar.css")).ShouldEqual(AuthorizationRight.Allow);
+            theRule.IsAllowed(new FubuFile("bar.css")).ShouldBe(AuthorizationRight.Allow);
         }
 
         [Test]
         public void can_write_htm_or_html()
         {
-            theRule.IsAllowed(new FubuFile("bar.htm")).ShouldEqual(AuthorizationRight.Allow);
-            theRule.IsAllowed(new FubuFile("bar.html")).ShouldEqual(AuthorizationRight.Allow);
+            theRule.IsAllowed(new FubuFile("bar.htm")).ShouldBe(AuthorizationRight.Allow);
+            theRule.IsAllowed(new FubuFile("bar.html")).ShouldBe(AuthorizationRight.Allow);
         }
 
         [Test]
         public void can_write_images()
         {
-            theRule.IsAllowed(new FubuFile("bar.jpg")).ShouldEqual(AuthorizationRight.Allow);
-            theRule.IsAllowed(new FubuFile("bar.gif")).ShouldEqual(AuthorizationRight.Allow);
-            theRule.IsAllowed(new FubuFile("bar.tif")).ShouldEqual(AuthorizationRight.Allow);
-            theRule.IsAllowed(new FubuFile("bar.png")).ShouldEqual(AuthorizationRight.Allow);
+            theRule.IsAllowed(new FubuFile("bar.jpg")).ShouldBe(AuthorizationRight.Allow);
+            theRule.IsAllowed(new FubuFile("bar.gif")).ShouldBe(AuthorizationRight.Allow);
+            theRule.IsAllowed(new FubuFile("bar.tif")).ShouldBe(AuthorizationRight.Allow);
+            theRule.IsAllowed(new FubuFile("bar.png")).ShouldBe(AuthorizationRight.Allow);
         }
 
         [Test]
         public void none_if_the_mime_type_is_not_recognized()
         {
-            theRule.IsAllowed(new FubuFile("bar.nonexistent")).ShouldEqual(AuthorizationRight.None);
+            theRule.IsAllowed(new FubuFile("bar.nonexistent")).ShouldBe(AuthorizationRight.None);
         }
 
         [Test]
         public void none_if_not_an_asset_file_or_html()
         {
-            theRule.IsAllowed(new FubuFile("bar.txt")).ShouldEqual(AuthorizationRight.None);
+            theRule.IsAllowed(new FubuFile("bar.txt")).ShouldBe(AuthorizationRight.None);
         }
 
         [Test]
@@ -120,11 +120,11 @@ namespace FubuMVC.Tests.Assets
         [Test]
         public void assert_static_rights()
         {
-            forFile("foo.txt").ShouldEqual(AuthorizationRight.None);
-            forFile("foo.config").ShouldEqual(AuthorizationRight.Deny);
-            forFile("foo.jpg").ShouldEqual(AuthorizationRight.Allow);
-            forFile("foo.css").ShouldEqual(AuthorizationRight.Allow);
-            forFile("foo.bmp").ShouldEqual(AuthorizationRight.Allow);
+            forFile("foo.txt").ShouldBe(AuthorizationRight.None);
+            forFile("foo.config").ShouldBe(AuthorizationRight.Deny);
+            forFile("foo.jpg").ShouldBe(AuthorizationRight.Allow);
+            forFile("foo.css").ShouldBe(AuthorizationRight.Allow);
+            forFile("foo.bmp").ShouldBe(AuthorizationRight.Allow);
         }
 
         [Test]
@@ -136,7 +136,7 @@ namespace FubuMVC.Tests.Assets
             settings.Headers.GetAllKeys()
                 .ShouldHaveTheSameElementsAs(HttpGeneralHeaders.CacheControl, HttpGeneralHeaders.Expires);
 
-            settings.Headers[HttpGeneralHeaders.CacheControl]().ShouldEqual("private, max-age=86400");
+            settings.Headers[HttpGeneralHeaders.CacheControl]().ShouldBe("private, max-age=86400");
             settings.Headers[HttpGeneralHeaders.Expires]().ShouldNotBeNull();
         }
 
@@ -160,7 +160,7 @@ namespace FubuMVC.Tests.Assets
             };
 
             settings.DeterminePublicFolder()
-                .ShouldEqual(FubuApplication.GetApplicationPath().AppendPath("public"));
+                .ShouldBe(FubuApplication.GetApplicationPath().AppendPath("public"));
         }
 
         [Test]
@@ -175,7 +175,7 @@ namespace FubuMVC.Tests.Assets
             };
 
             settings.DeterminePublicFolder()
-                .ShouldEqual(FubuApplication.GetApplicationPath().AppendPath("public").ToFullPath());
+                .ShouldBe(FubuApplication.GetApplicationPath().AppendPath("public").ToFullPath());
         }
 
         [Test]
@@ -192,7 +192,7 @@ namespace FubuMVC.Tests.Assets
             };
 
             settings.DeterminePublicFolder()
-                .ShouldEqual(FubuApplication.GetApplicationPath().AppendPath("public", "1.0.1").ToFullPath());
+                .ShouldBe(FubuApplication.GetApplicationPath().AppendPath("public", "1.0.1").ToFullPath());
         }
 
         [Test]
@@ -211,7 +211,7 @@ namespace FubuMVC.Tests.Assets
         [Test]
         public void template_destination_by_default_should_be_underscore_templates()
         {
-            new AssetSettings().TemplateDestination.ShouldEqual("_templates");
+            new AssetSettings().TemplateDestination.ShouldBe("_templates");
         }
 
         [Test]
@@ -246,7 +246,7 @@ namespace FubuMVC.Tests.Assets
         [Test]
         public void exclude_should_include_node_modules()
         {
-            search.Exclude.ShouldEqual("node_modules/*");
+            search.Exclude.ShouldBe("node_modules/*");
         }
 
         [Test]
@@ -325,7 +325,7 @@ namespace FubuMVC.Tests.Assets
 
             var manifest = settings.CreateFileWatcherManifest();
 
-            manifest.PublicAssetFolder.ShouldEqual(
+            manifest.PublicAssetFolder.ShouldBe(
                 FubuApplication.GetApplicationPath().AppendPath("public").Replace('\\', '/'));
         }
 

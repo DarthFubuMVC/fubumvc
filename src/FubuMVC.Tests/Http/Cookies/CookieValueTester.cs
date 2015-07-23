@@ -42,8 +42,8 @@ namespace FubuMVC.Tests.Http.Cookies
             theCookieValue.Erase();
 
             writer.LastCookie.ShouldNotBeNull();
-            writer.LastCookie.Value.ShouldEqual("BLANK"); // has to do this to keep SelfHost from going wonky
-            writer.LastCookie.Expires.ShouldEqual(new DateTimeOffset(now.AddYears(-1)));
+            writer.LastCookie.Value.ShouldBe("BLANK"); // has to do this to keep SelfHost from going wonky
+            writer.LastCookie.Expires.ShouldBe(new DateTimeOffset(now.AddYears(-1)));
         }
 
         [Test]
@@ -55,8 +55,8 @@ namespace FubuMVC.Tests.Http.Cookies
             theCookieValue.Value = "some value";
 
             writer.LastCookie.ShouldNotBeNull();
-            writer.LastCookie.Value.ShouldEqual("some value");
-            writer.LastCookie.Expires.ShouldEqual(new DateTimeOffset(now.AddYears(1)));
+            writer.LastCookie.Value.ShouldBe("some value");
+            writer.LastCookie.Expires.ShouldBe(new DateTimeOffset(now.AddYears(1)));
         }
     }
 

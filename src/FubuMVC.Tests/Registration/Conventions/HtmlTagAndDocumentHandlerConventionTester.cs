@@ -35,7 +35,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             var outputNode = graph.BehaviorFor<TagController>(x => x.BuildDoc()).Outputs.First().ShouldBeOfType<OutputNode>();
             outputNode
-                .ResourceType.ShouldEqual(typeof(HtmlDocument));
+                .ResourceType.ShouldBe(typeof(HtmlDocument));
 
             outputNode.Writes(MimeType.Html).ShouldBeTrue();
         }
@@ -46,7 +46,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             var outputNode =
                 graph.BehaviorFor<TagController>(x => x.BuildTag()).Outputs.First().ShouldBeOfType<OutputNode>();
             outputNode.Writes(MimeType.Html).ShouldBeTrue();
-            outputNode.ResourceType.ShouldEqual(typeof(HtmlTag));
+            outputNode.ResourceType.ShouldBe(typeof(HtmlTag));
         }
     }
 

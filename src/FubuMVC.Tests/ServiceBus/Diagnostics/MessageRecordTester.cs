@@ -26,19 +26,19 @@ namespace FubuTransportation.Testing.Diagnostics
         [Test]
         public void capture_the_correlation_id()
         {
-            theRecord.Id.ShouldEqual(theToken.CorrelationId);
+            theRecord.Id.ShouldBe(theToken.CorrelationId);
         }
 
         [Test]
         public void capture_the_parent_id()
         {
-            theRecord.ParentId.ShouldEqual(theToken.ParentId);
+            theRecord.ParentId.ShouldBe(theToken.ParentId);
         }
 
         [Test]
         public void capture_the_message_type()
         {
-            theRecord.Type.ShouldEqual(theToken.Message.GetType().FullName);
+            theRecord.Type.ShouldBe(theToken.Message.GetType().FullName);
         }
 
         [Test]

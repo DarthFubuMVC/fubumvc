@@ -44,13 +44,13 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
         [Test]
         public void should_mark_the_inner_behavior_as_complete_with_the_debug_report()
         {
-            logs.Logs.Last().ShouldEqual(new BehaviorFinish(correlation));
+            logs.Logs.Last().ShouldBe(new BehaviorFinish(correlation));
         }
 
         [Test]
         public void should_register_a_new_behavior_running()
         {
-            logs.Logs.First().ShouldEqual(new BehaviorStart(correlation));
+            logs.Logs.First().ShouldBe(new BehaviorStart(correlation));
         }
     }
 
@@ -84,13 +84,13 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
         [Test]
         public void should_mark_the_inner_behavior_as_complete_with_the_debug_report()
         {
-            logs.Logs.Last().ShouldEqual(new BehaviorFinish(correlation));
+            logs.Logs.Last().ShouldBe(new BehaviorFinish(correlation));
         }
 
         [Test]
         public void should_register_a_new_behavior_running()
         {
-            logs.Logs.First().ShouldEqual(new BehaviorStart(correlation));
+            logs.Logs.First().ShouldBe(new BehaviorStart(correlation));
         }
     }
 
@@ -135,19 +135,19 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
         public void should_mark_the_debug_report_with_the_exception()
         {
             logs.Logs.OfType<BehaviorFinish>().Single()
-                .Exception.ExceptionType.ShouldEqual(exception.GetType().Name);
+                .Exception.ExceptionType.ShouldBe(exception.GetType().Name);
         }
 
         [Test]
         public void should_mark_the_inner_behavior_as_complete_with_the_debug_report()
         {
-            logs.Logs.Last().ShouldEqual(new BehaviorFinish(correlation));
+            logs.Logs.Last().ShouldBe(new BehaviorFinish(correlation));
         }
 
         [Test]
         public void should_register_a_new_behavior_running()
         {
-            logs.Logs.First().ShouldEqual(new BehaviorStart(correlation));
+            logs.Logs.First().ShouldBe(new BehaviorStart(correlation));
         }
     }
 

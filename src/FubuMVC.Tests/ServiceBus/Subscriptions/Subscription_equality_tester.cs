@@ -28,8 +28,8 @@ namespace FubuTransportation.Testing.Subscriptions
                 Role = SubscriptionRole.Subscribes
             };
 
-            s1.ShouldEqual(s2);
-            s2.ShouldEqual(s1);
+            s1.ShouldBe(s2);
+            s2.ShouldBe(s1);
 
             s2.NodeName = "different";
             s1.ShouldNotEqual(s2);

@@ -14,7 +14,7 @@ namespace FubuTransportation.Testing.Configuration
         [Test]
         public void the_default_number_of_maximum_attempts_is_1()
         {
-            new HandlerChain().MaximumAttempts.ShouldEqual(1);
+            new HandlerChain().MaximumAttempts.ShouldBe(1);
         }
 
         [Test]

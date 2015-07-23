@@ -49,8 +49,8 @@ namespace FubuTransportation.Testing.ScheduledJobs
             var next = (DateTimeOffset)DateTime.Today;
             theStatusMonitor.MarkScheduled<FooJob1>(next);
 
-            foo1.Status.ShouldEqual(JobExecutionStatus.Scheduled);
-            foo1.NextTime.ShouldEqual(next);
+            foo1.Status.ShouldBe(JobExecutionStatus.Scheduled);
+            foo1.NextTime.ShouldBe(next);
         }
 
         [Test]
@@ -60,8 +60,8 @@ namespace FubuTransportation.Testing.ScheduledJobs
 
             theStatusMonitor.MarkExecuting<FooJob1>();
 
-            foo1.Status.ShouldEqual(JobExecutionStatus.Executing);
-            foo1.Executor.ShouldEqual(theChannelGraph.NodeId);
+            foo1.Status.ShouldBe(JobExecutionStatus.Executing);
+            foo1.Executor.ShouldBe(theChannelGraph.NodeId);
 
         }
 
@@ -71,11 +71,11 @@ namespace FubuTransportation.Testing.ScheduledJobs
             var record = new JobExecutionRecord{Success = true};
             theStatusMonitor.MarkCompletion<FooJob1>(record);
 
-            foo1.Status.ShouldEqual(JobExecutionStatus.Completed);
+            foo1.Status.ShouldBe(JobExecutionStatus.Completed);
             foo1.LastExecution.ShouldBeTheSameAs(record);
             foo1.Executor.ShouldBeNull();
 
-            record.Executor.ShouldEqual(theChannelGraph.NodeId);
+            record.Executor.ShouldBe(theChannelGraph.NodeId);
 
             thePersistence.FindHistory(foo1.NodeName, foo1.JobKey)
                 .ShouldHaveTheSameElementsAs(record);
@@ -89,15 +89,15 @@ namespace FubuTransportation.Testing.ScheduledJobs
             
             tracker.Success(next);
 
-            foo1.Status.ShouldEqual(JobExecutionStatus.Completed);
-            foo1.LastExecution.Executor.ShouldEqual(theChannelGraph.NodeId);
+            foo1.Status.ShouldBe(JobExecutionStatus.Completed);
+            foo1.LastExecution.Executor.ShouldBe(theChannelGraph.NodeId);
             foo1.LastExecution.Success.ShouldBeTrue();
-            foo1.LastExecution.Attempts.ShouldEqual(3);
-            foo1.NextTime.ShouldEqual(next);
+            foo1.LastExecution.Attempts.ShouldBe(3);
+            foo1.NextTime.ShouldBe(next);
             
             foo1.Executor.ShouldBeNull();
 
-            foo1.LastExecution.Executor.ShouldEqual(theChannelGraph.NodeId);
+            foo1.LastExecution.Executor.ShouldBe(theChannelGraph.NodeId);
         }
 
         [Test]
@@ -108,18 +108,18 @@ namespace FubuTransportation.Testing.ScheduledJobs
             var ex = new NotImplementedException();
             tracker.Failure(ex);
 
-            foo1.Status.ShouldEqual(JobExecutionStatus.Failed);
-            foo1.LastExecution.Executor.ShouldEqual(theChannelGraph.NodeId);
+            foo1.Status.ShouldBe(JobExecutionStatus.Failed);
+            foo1.LastExecution.Executor.ShouldBe(theChannelGraph.NodeId);
             foo1.LastExecution.Success.ShouldBeFalse();
-            foo1.LastExecution.Attempts.ShouldEqual(3);
-            foo1.LastExecution.ExceptionText.ShouldEqual(ex.ToString());
+            foo1.LastExecution.Attempts.ShouldBe(3);
+            foo1.LastExecution.ExceptionText.ShouldBe(ex.ToString());
 
             foo1.Executor.ShouldBeNull();
 
             thePersistence.FindHistory(foo1.NodeName, foo1.JobKey)
                 .Single().ShouldBeTheSameAs(foo1.LastExecution);
 
-            foo1.LastExecution.Executor.ShouldEqual(theChannelGraph.NodeId);
+            foo1.LastExecution.Executor.ShouldBe(theChannelGraph.NodeId);
         }
 
         [Test]
@@ -131,11 +131,11 @@ namespace FubuTransportation.Testing.ScheduledJobs
             };
             theStatusMonitor.MarkCompletion<FooJob1>(record);
 
-            foo1.Status.ShouldEqual(JobExecutionStatus.Failed);
+            foo1.Status.ShouldBe(JobExecutionStatus.Failed);
             foo1.LastExecution.ShouldBeTheSameAs(record);
             foo1.Executor.ShouldBeNull();
 
-            record.Executor.ShouldEqual(theChannelGraph.NodeId);
+            record.Executor.ShouldBe(theChannelGraph.NodeId);
         }
 
 

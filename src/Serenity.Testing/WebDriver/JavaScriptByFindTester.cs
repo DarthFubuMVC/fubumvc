@@ -161,7 +161,7 @@ namespace Serenity.Testing.WebDriver
         [Test]
         public void ReturnedCollectionHasItems()
         {
-            FoundResult.Count.ShouldEqual(2);
+            FoundResult.Count.ShouldBe(2);
         }
 
         [Test]

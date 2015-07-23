@@ -39,7 +39,7 @@ namespace FubuMVC.Tests.Diagnostics
             });
 
             authorizedGraph.Behaviors.OfType<DiagnosticChain>()
-                .Each(x => x.Authorization.AllowedRoles().Single().ShouldEqual("admin"));
+                .Each(x => x.Authorization.AllowedRoles().Single().ShouldBe("admin"));
 
             notAuthorizedGraph.Behaviors.OfType<DiagnosticChain>()
                 .Each(x => x.Authorization.HasRules().ShouldBeFalse());

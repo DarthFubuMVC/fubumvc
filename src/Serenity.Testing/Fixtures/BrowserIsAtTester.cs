@@ -15,12 +15,12 @@ namespace Serenity.Testing.Fixtures
         [Test]
         public void canonize()
         {
-            "http://localhost".Canonize().ShouldEqual("/");
-            "http://localhost:5500".Canonize().ShouldEqual("/");
-            "http://localhost:5500/a".Canonize().ShouldEqual("/a");
-            "/a".Canonize().ShouldEqual("/a");
+            "http://localhost".Canonize().ShouldBe("/");
+            "http://localhost:5500".Canonize().ShouldBe("/");
+            "http://localhost:5500/a".Canonize().ShouldBe("/a");
+            "/a".Canonize().ShouldBe("/a");
 
-            "http://host.com/a/b".Canonize().ShouldEqual("/a/b");
+            "http://host.com/a/b".Canonize().ShouldBe("/a/b");
         }
 
         [Test]

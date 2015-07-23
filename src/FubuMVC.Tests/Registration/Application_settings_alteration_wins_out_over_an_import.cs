@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.Registration
             });
 
             graph.Settings.Get<FireflySettings>()
-                .HowManyHaveYouCaught.ShouldEqual(11);
+                .HowManyHaveYouCaught.ShouldBe(11);
         }
     }
 

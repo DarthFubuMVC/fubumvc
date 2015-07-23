@@ -21,7 +21,7 @@ namespace FubuPersistence.Tests.RavenDb.Integration
             var session = MockRepository.GenerateMock<IDocumentSession>();
             session.Stub(x => x.Advanced).Return(advanced);
 
-            session.Advanced.NumberOfRequests.ShouldEqual(10);
+            session.Advanced.NumberOfRequests.ShouldBe(10);
 
             var request = new OwinHttpRequest();
             request.FullUrl("http://something/somethingelse");
@@ -36,25 +36,25 @@ namespace FubuPersistence.Tests.RavenDb.Integration
         [Test]
         public void the_url_is_correct()
         {
-            theMessage.Url.ShouldEqual("http://something/somethingelse");
+            theMessage.Url.ShouldBe("http://something/somethingelse");
         }
 
         [Test]
         public void the_username_is_correct()
         {
-            theMessage.UserName.ShouldEqual("bob");
+            theMessage.UserName.ShouldBe("bob");
         }
 
         [Test]
         public void the_request_number_is_correct()
         {
-            theMessage.Requests.ShouldEqual(10);
+            theMessage.Requests.ShouldBe(10);
         }
 
         [Test]
         public void the_http_method_is_correct()
         {
-            theMessage.HttpMethod.ShouldEqual("GET");
+            theMessage.HttpMethod.ShouldBe("GET");
         }
     }
 }

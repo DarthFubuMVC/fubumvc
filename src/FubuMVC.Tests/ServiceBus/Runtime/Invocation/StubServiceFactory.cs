@@ -32,7 +32,7 @@ namespace FubuTransportation.Testing.Runtime.Invocation
             Arguments = arguments.ShouldBeOfType<FubuMVC.Core.ServiceBus.Runtime.Invocation.InvocationContext>();
             _cascadingMessages.Each(x => Arguments.EnqueueCascading(x));
 
-            _chain.UniqueId.ShouldEqual(behaviorId);
+            _chain.UniqueId.ShouldBe(behaviorId);
 
             return _behavior;
         }

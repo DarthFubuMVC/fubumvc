@@ -18,19 +18,19 @@ namespace FubuMVC.Tests.Registration.Querying
         [Test]
         public void default_category_search_mode_is_relaxed()
         {
-            new ChainSearch().CategoryMode.ShouldEqual(CategorySearchMode.Relaxed);
+            new ChainSearch().CategoryMode.ShouldBe(CategorySearchMode.Relaxed);
         }
 
         [Test]
         public void default_type_search_mode_should_be_any()
         {
-            new ChainSearch().TypeMode.ShouldEqual(TypeSearchMode.Any);
+            new ChainSearch().TypeMode.ShouldBe(TypeSearchMode.Any);
         }
 
         [Test]
         public void the_category_is_default()
         {
-            new ChainSearch().CategoryOrHttpMethod.ShouldEqual(Categories.DEFAULT);
+            new ChainSearch().CategoryOrHttpMethod.ShouldBe(Categories.DEFAULT);
         }
 
         [Test]
@@ -434,7 +434,7 @@ namespace FubuMVC.Tests.Registration.Querying
 
 
             chains.Single()
-                .FirstCall().Description.ShouldEqual("SingleActionController.DoSomething(InputModel model) : void");
+                .FirstCall().Description.ShouldBe("SingleActionController.DoSomething(InputModel model) : void");
         }
 
         [Test]
@@ -444,7 +444,7 @@ namespace FubuMVC.Tests.Registration.Querying
             new ChainSearch{
                 TypeMode = TypeSearchMode.HandlerOnly,
                 Type = typeof (SimpleInputModel)
-            }.FindCandidatesByType(theGraph).Single().Single().FirstCall().Description.ShouldEqual("SimpleInputModel.DoSomething(InputModel2 model) : void");
+            }.FindCandidatesByType(theGraph).Single().Single().FirstCall().Description.ShouldBe("SimpleInputModel.DoSomething(InputModel2 model) : void");
         }
 
         [Test]
@@ -470,7 +470,7 @@ namespace FubuMVC.Tests.Registration.Querying
                 Type = typeof (SimpleInputModel)
             }.FindCandidatesByType(theGraph);
 
-            candidates.Count().ShouldEqual(3);
+            candidates.Count().ShouldBe(3);
 
             candidates.First().Select(x => x.FirstCall().Description)
                 .ShouldHaveTheSameElementsAs("OneController.Query(SimpleInputModel model) : SimpleOutputModel", "TwoController.NotQuery(SimpleInputModel model) : SimpleOutputModel");

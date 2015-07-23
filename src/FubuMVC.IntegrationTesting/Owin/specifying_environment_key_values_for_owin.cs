@@ -18,10 +18,10 @@ namespace FubuMVC.IntegrationTesting.Owin
                 .RunEmbedded(port: 0))
             {
                 server.Endpoints.GetByInput(new KeyRequest {Key = "Foo"})
-                    .ReadAsText().ShouldEqual("1");
+                    .ReadAsText().ShouldBe("1");
 
                 server.Endpoints.GetByInput(new KeyRequest {Key = "Bar"})
-                    .ReadAsText().ShouldEqual("2");
+                    .ReadAsText().ShouldBe("2");
             }
         }
     }

@@ -60,7 +60,7 @@ namespace FubuTransportation.Testing.Runtime.Serializers
         {
             Exception<InvalidOperationException>.ShouldBeThrownBy(() => {
                 ClassUnderTest.Serialize(new Envelope(), new ChannelNode());
-            }).Message.ShouldEqual("No message on this envelope to serialize");
+            }).Message.ShouldBe("No message on this envelope to serialize");
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace FubuTransportation.Testing.Runtime.Serializers
             Exception<EnvelopeDeserializationException>.ShouldBeThrownBy(() =>
             {
                 ClassUnderTest.Deserialize(new Envelope());
-            }).Message.ShouldEqual("No data on this envelope to deserialize");
+            }).Message.ShouldBe("No data on this envelope to deserialize");
         }
 
         [Test]
@@ -82,7 +82,7 @@ namespace FubuTransportation.Testing.Runtime.Serializers
                 var envelope = new Envelope(new byte[10], new NameValueHeaders(), null);
                 envelope.ContentType = messageSerializer.ContentType;
                 serializer.Deserialize(envelope);
-            }).Message.ShouldEqual("Message serializer has failed");
+            }).Message.ShouldBe("Message serializer has failed");
         }
 
         [Test]

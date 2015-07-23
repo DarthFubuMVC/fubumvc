@@ -13,7 +13,7 @@ namespace FubuMVC.Tests.Http.Headers
         {
             var values = new HttpHeaderValues(HttpResponseHeaders.Via, "something");
 
-            values["Via"].ShouldEqual("something");
+            values["Via"].ShouldBe("something");
             values.Headers.ShouldHaveTheSameElementsAs(new Header("Via", "something"));
         }
     }

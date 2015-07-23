@@ -25,13 +25,13 @@ namespace FubuTransportation.Testing.Polling
 
             reset.WaitOne(1000);
 
-            i.ShouldEqual(1);
+            i.ShouldBe(1);
 
             // Should only fire once because timer.Stop was called
             reset.Reset();
             reset.WaitOne(1000);
 
-            i.ShouldEqual(1);
+            i.ShouldBe(1);
 
             timer.Dispose();
         }
@@ -57,7 +57,7 @@ namespace FubuTransportation.Testing.Polling
 
             reset.WaitOne();
 
-            i.ShouldEqual(5);
+            i.ShouldBe(5);
 
             timer.Dispose();
         }

@@ -55,7 +55,7 @@ namespace FubuTransportation.Testing.Subscriptions
 
             theRepository.PersistSubscriptions(subscription);
             var requirements = theRepository.LoadSubscriptions(SubscriptionRole.Subscribes);
-            requirements.Count().ShouldEqual(2);
+            requirements.Count().ShouldBe(2);
             requirements.ShouldContain(existing);
             requirements.ShouldContain(subscription);
         }
@@ -79,7 +79,7 @@ namespace FubuTransportation.Testing.Subscriptions
             theRepository.PersistSubscriptions(subscription);
 
             var requirements = theRepository.LoadSubscriptions(SubscriptionRole.Subscribes);
-            requirements.Count().ShouldEqual(2);
+            requirements.Count().ShouldBe(2);
             requirements.ShouldContain(existing);
             requirements.ShouldContain(subscription);
         }
@@ -96,7 +96,7 @@ namespace FubuTransportation.Testing.Subscriptions
 
             theRepository.LoadSubscriptions(SubscriptionRole.Subscribes)
                 .Single()
-                .ShouldEqual(existing);
+                .ShouldBe(existing);
         }
 
         [Test]
@@ -121,7 +121,7 @@ namespace FubuTransportation.Testing.Subscriptions
             theRepository.PersistSubscriptions(old, newSubscription);
             var requirements = theRepository.LoadSubscriptions(SubscriptionRole.Subscribes);
 
-            requirements.Count().ShouldEqual(3);
+            requirements.Count().ShouldBe(3);
             requirements.ShouldContain(existing);
             requirements.ShouldContain(newSubscription);
             requirements.ShouldContain(anotherExisting);
@@ -137,7 +137,7 @@ namespace FubuTransportation.Testing.Subscriptions
             var node = persistence.NodesForGroup(channelGraph.Name)
                 .Single();
 
-            node.ShouldEqual(new TransportNode(channelGraph));
+            node.ShouldBe(new TransportNode(channelGraph));
             node.Id.ShouldNotEqual(Guid.Empty);
         }
 
@@ -160,7 +160,7 @@ namespace FubuTransportation.Testing.Subscriptions
             theRepository.Persist(new TransportNode(channelGraph));
 
             persistence.NodesForGroup(channelGraph.Name)
-                .Single().Id.ShouldEqual(id);
+                .Single().Id.ShouldBe(id);
         }
 
         [Test]

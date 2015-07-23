@@ -26,7 +26,7 @@ namespace FubuPersistence.Tests.RavenDb
             });
 
             container.GetInstance<IDocumentStore>().Conventions
-                     .DefaultQueryingConsistency.ShouldEqual(ConsistencyOptions.QueryYourWrites);
+                     .DefaultQueryingConsistency.ShouldBe(ConsistencyOptions.QueryYourWrites);
 
             container.Dispose();
         }
@@ -48,7 +48,7 @@ namespace FubuPersistence.Tests.RavenDb
             });
 
             container.GetInstance<IDocumentStore>().Conventions
-                     .DefaultQueryingConsistency.ShouldEqual(ConsistencyOptions.MonotonicRead);
+                     .DefaultQueryingConsistency.ShouldBe(ConsistencyOptions.MonotonicRead);
 
             container.Dispose();
         }

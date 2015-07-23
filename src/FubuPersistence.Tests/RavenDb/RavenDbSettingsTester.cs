@@ -35,7 +35,7 @@ namespace FubuPersistence.Tests.RavenDb
             using (var store = settings.Create())
             {
                 store.ShouldBeOfType<EmbeddableDocumentStore>()
-                    .Configuration.Port.ShouldEqual(8081);
+                    .Configuration.Port.ShouldBe(8081);
             }
         }
 
@@ -48,7 +48,7 @@ namespace FubuPersistence.Tests.RavenDb
             {
                 // 8080 is RavenDb's default port number
                 store.ShouldBeOfType<EmbeddableDocumentStore>()
-                    .Configuration.Port.ShouldEqual(8080);
+                    .Configuration.Port.ShouldBe(8080);
             }
         }
 
@@ -107,7 +107,7 @@ namespace FubuPersistence.Tests.RavenDb
                 x.DataDirectory = "data".ToFullPath();
                 x.UseEmbeddedHttpServer = true;
             });
-            store.DataDirectory.ShouldEqual("data".ToFullPath());
+            store.DataDirectory.ShouldBe("data".ToFullPath());
             store.UseEmbeddedHttpServer.ShouldBeTrue();
 
             store.Dispose();
@@ -117,7 +117,7 @@ namespace FubuPersistence.Tests.RavenDb
         public void build_with_data_directory()
         {
             var store = createStore<EmbeddableDocumentStore>(x => x.DataDirectory = "data".ToFullPath());
-            store.DataDirectory.ShouldEqual("data".ToFullPath());
+            store.DataDirectory.ShouldBe("data".ToFullPath());
             store.UseEmbeddedHttpServer.ShouldBeFalse();
             store.Dispose();
         }
@@ -126,7 +126,7 @@ namespace FubuPersistence.Tests.RavenDb
         public void build_with_url()
         {
             var store = createStore<DocumentStore>(x => x.Url = "http://somewhere:8080");
-            store.Url.ShouldEqual("http://somewhere:8080");
+            store.Url.ShouldBe("http://somewhere:8080");
 
             store.Dispose();
         }

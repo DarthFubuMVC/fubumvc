@@ -20,7 +20,7 @@ namespace FubuMVC.Tests.Http.Cookies
         [Test]
         public void provenance_has_to_be_cookies()
         {
-            ClassUnderTest.Provenance.ShouldEqual(RequestDataSource.Cookie.ToString());
+            ClassUnderTest.Provenance.ShouldBe(RequestDataSource.Cookie.ToString());
         }
 
         [Test]
@@ -38,11 +38,11 @@ namespace FubuMVC.Tests.Http.Cookies
         public void get_with_single_value()
         {
             var cookie = new Cookie("a", "1");
-            cookie.Value.ShouldEqual("1");
+            cookie.Value.ShouldBe("1");
 
             inner.Stub(x => x.Get("a")).Return(cookie);
 
-            ClassUnderTest.Get("a").ShouldEqual("1");
+            ClassUnderTest.Get("a").ShouldBe("1");
         }
 
         [Test]
@@ -63,9 +63,9 @@ namespace FubuMVC.Tests.Http.Cookies
             ClassUnderTest.Value("a", v => {
                 wasCalled = true;
 
-                v.RawKey.ShouldEqual("a");
-                v.RawValue.ShouldEqual("1");
-                v.Source.ShouldEqual(ClassUnderTest.Provenance);
+                v.RawKey.ShouldBe("a");
+                v.RawValue.ShouldBe("1");
+                v.Source.ShouldBe(ClassUnderTest.Provenance);
             }).ShouldBeTrue();
 
             wasCalled.ShouldBeTrue();

@@ -49,7 +49,7 @@ namespace FubuTransportation.Testing.Monitoring
         [Test]
         public void the_status_should_be_returned()
         {
-            theStatus.ShouldEqual(OwnershipStatus.Exception);
+            theStatus.ShouldBe(OwnershipStatus.Exception);
         }
     }
 
@@ -86,7 +86,7 @@ namespace FubuTransportation.Testing.Monitoring
         [Test]
         public void the_status_should_be_returned()
         {
-            theStatus.ShouldEqual(OwnershipStatus.Exception);
+            theStatus.ShouldBe(OwnershipStatus.Exception);
         }
     }
 
@@ -126,7 +126,7 @@ namespace FubuTransportation.Testing.Monitoring
         [Test]
         public void the_status_should_be_returned()
         {
-            theStatus.ShouldEqual(OwnershipStatus.UnknownSubject);
+            theStatus.ShouldBe(OwnershipStatus.UnknownSubject);
         }
     }
 
@@ -158,7 +158,7 @@ namespace FubuTransportation.Testing.Monitoring
         [Test]
         public void the_status_should_be_returned()
         {
-            theStatus.ShouldEqual(OwnershipStatus.OwnershipActivated);
+            theStatus.ShouldBe(OwnershipStatus.OwnershipActivated);
         }
     }
 
@@ -191,7 +191,7 @@ namespace FubuTransportation.Testing.Monitoring
         [Test]
         public void the_status_should_be_returned()
         {
-            theStatus.ShouldEqual(OwnershipStatus.AlreadyOwned);
+            theStatus.ShouldBe(OwnershipStatus.AlreadyOwned);
         }
     }
 

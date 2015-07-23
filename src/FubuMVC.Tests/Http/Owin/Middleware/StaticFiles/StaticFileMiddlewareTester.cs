@@ -103,7 +103,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
                 .ShouldBeOfType<WriteFileContinuation>();
 
             continuation.File.RelativePath
-                .ShouldEqual("folder1/foo.htm");
+                .ShouldBe("folder1/foo.htm");
         }
 
         [Test]
@@ -114,8 +114,8 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
             var continuation = forMethodAndFile("HEAD", "foo.css")
                 .ShouldBeOfType<WriteFileHeadContinuation>();
 
-            continuation.Status.ShouldEqual(HttpStatusCode.OK);
-            continuation.File.RelativePath.ShouldEqual("foo.css");
+            continuation.Status.ShouldBe(HttpStatusCode.OK);
+            continuation.File.RelativePath.ShouldBe("foo.css");
         }
 
         [Test]
@@ -129,7 +129,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
             var continuation = forMethodAndFile("GET", "foo.css")
                 .ShouldBeOfType<WriteStatusCodeContinuation>();
 
-            continuation.Status.ShouldEqual(HttpStatusCode.PreconditionFailed);
+            continuation.Status.ShouldBe(HttpStatusCode.PreconditionFailed);
         }
 
         [Test]
@@ -142,7 +142,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
             var continuation = forMethodAndFile("GET", "foo.css")
                 .ShouldBeOfType<WriteFileContinuation>();
 
-            continuation.File.RelativePath.ShouldEqual("foo.css");
+            continuation.File.RelativePath.ShouldBe("foo.css");
         }
 
         [Test]
@@ -156,7 +156,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
             var continuation = forMethodAndFile("GET", "foo.css")
                 .ShouldBeOfType<WriteFileContinuation>();
 
-            continuation.File.RelativePath.ShouldEqual("foo.css");
+            continuation.File.RelativePath.ShouldBe("foo.css");
         }
 
         [Test]
@@ -169,8 +169,8 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
             var continuation = forMethodAndFile("GET", "foo.css")
                 .ShouldBeOfType<WriteFileHeadContinuation>();
 
-            continuation.Status.ShouldEqual(HttpStatusCode.NotModified);
-            continuation.File.RelativePath.ShouldEqual("foo.css");
+            continuation.Status.ShouldBe(HttpStatusCode.NotModified);
+            continuation.File.RelativePath.ShouldBe("foo.css");
         }
 
         [Test]
@@ -183,8 +183,8 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
             var continuation = forMethodAndFile("GET", "foo.css")
                 .ShouldBeOfType<WriteFileHeadContinuation>();
 
-            continuation.Status.ShouldEqual(HttpStatusCode.NotModified);
-            continuation.File.RelativePath.ShouldEqual("foo.css");
+            continuation.Status.ShouldBe(HttpStatusCode.NotModified);
+            continuation.File.RelativePath.ShouldBe("foo.css");
         }
 
         [Test]
@@ -197,7 +197,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
             var continuation = forMethodAndFile("GET", "foo.css")
                 .ShouldBeOfType<WriteFileContinuation>();
 
-            continuation.File.RelativePath.ShouldEqual("foo.css");
+            continuation.File.RelativePath.ShouldBe("foo.css");
         }
 
         [Test]
@@ -211,7 +211,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
             var continuation = forMethodAndFile("GET", "foo.css")
                 .ShouldBeOfType<WriteFileContinuation>();
 
-            continuation.File.RelativePath.ShouldEqual("foo.css");
+            continuation.File.RelativePath.ShouldBe("foo.css");
         }
 
         [Test]
@@ -225,7 +225,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
             var continuation = forMethodAndFile("GET", "foo.css")
                 .ShouldBeOfType<WriteStatusCodeContinuation>();
 
-            continuation.Status.ShouldEqual(HttpStatusCode.PreconditionFailed);
+            continuation.Status.ShouldBe(HttpStatusCode.PreconditionFailed);
         }
     }
 

@@ -76,7 +76,7 @@ namespace Serenity.Testing.Fixtures.Handlers
             var select1 = Driver.FindElement(_select1ById);
             const string result = "b=2";
 
-            _handler.GetData(null, select1).ShouldEqual(result);
+            _handler.GetData(null, select1).ShouldBe(result);
         }
 
         [Test]
@@ -85,7 +85,7 @@ namespace Serenity.Testing.Fixtures.Handlers
             var select3 = Driver.FindElement(_select3ById);
             const string result = "b=b";
 
-            _handler.GetData(null, select3).ShouldEqual(result);
+            _handler.GetData(null, select3).ShouldBe(result);
         }
 
         [Test]

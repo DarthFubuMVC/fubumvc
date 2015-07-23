@@ -13,7 +13,7 @@ namespace FubuTransportation.LightningQueues.Testing
         {
             var testUri = new Uri("lq.tcp://localhost:5150/blah/test?querystring=value");
             var uri = testUri.ToMachineUri();
-            uri.ToString().ShouldEqual("lq.tcp://{0}:5150/blah/test?querystring=value".ToFormat(Environment.MachineName.ToLower()));
+            uri.ToString().ShouldBe("lq.tcp://{0}:5150/blah/test?querystring=value".ToFormat(Environment.MachineName.ToLower()));
         }
     }
 }

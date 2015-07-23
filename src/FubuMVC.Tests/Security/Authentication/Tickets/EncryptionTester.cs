@@ -24,7 +24,7 @@ namespace FubuMVC.Tests.Security.Authentication.Tickets
 
             encrypted1.ShouldNotEqual(plain);
 
-            encrypted1.ShouldEqual(encrypted2);
+            encrypted1.ShouldBe(encrypted2);
         }
 
         [Test]
@@ -33,7 +33,7 @@ namespace FubuMVC.Tests.Security.Authentication.Tickets
             var plain = "the rain in spain";
             var encrypted1 = theEncryptor.Encrypt(plain);
 
-            theEncryptor.Decrypt(encrypted1).ShouldEqual(plain);
+            theEncryptor.Decrypt(encrypted1).ShouldBe(plain);
         }
     }
 }

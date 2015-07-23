@@ -22,7 +22,7 @@ namespace FubuTransportation.Testing.Configuration
 
             concreteCall = HandlerCall.For<ConcreteHandler>(x => x.M1(null));
 
-            concreteCall.Clone().ShouldEqual(concreteCall);
+            concreteCall.Clone().ShouldBe(concreteCall);
 
 
             concreteCall2 = HandlerCall.For<ConcreteHandler>(x => x.M2(null));
@@ -36,7 +36,7 @@ namespace FubuTransportation.Testing.Configuration
             theGraph.Add(concreteCall);
 
             var call = theGraph.ChainFor(typeof (Input)).OfType<HandlerCall>().Single();
-            call.ShouldEqual(concreteCall);
+            call.ShouldBe(concreteCall);
             call.ShouldNotBeTheSameAs(concreteCall);
         }
 
@@ -93,10 +93,10 @@ namespace FubuTransportation.Testing.Configuration
             theGraph.ShouldHaveCount(2);
 
             theGraph.ChainFor(typeof (Concrete1)).Last().ShouldBeOfType<HandlerCall>()
-                    .InputType().ShouldEqual(typeof (IMessage));
+                    .InputType().ShouldBe(typeof (IMessage));
 
             theGraph.ChainFor(typeof(Concrete2)).Last().ShouldBeOfType<HandlerCall>()
-                    .InputType().ShouldEqual(typeof(IMessage));
+                    .InputType().ShouldBe(typeof(IMessage));
         }
 
         [Test]

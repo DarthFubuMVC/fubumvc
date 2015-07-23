@@ -101,13 +101,13 @@ namespace FubuMVC.Tests.Security.Authentication
         [Test]
         public void should_increment_the_number_of_retries()
         {
-            theLoginRequest.NumberOfTries.ShouldEqual(3);
+            theLoginRequest.NumberOfTries.ShouldBe(3);
         }
 
         [Test]
         public void should_mark_the_login_request_as_failed()
         {
-            theLoginRequest.Status.ShouldEqual(LoginStatus.Failed);
+            theLoginRequest.Status.ShouldBe(LoginStatus.Failed);
         }
 
         [Test]
@@ -150,13 +150,13 @@ namespace FubuMVC.Tests.Security.Authentication
         [Test]
         public void should_not_increment_the_number_of_retries()
         {
-            theLoginRequest.NumberOfTries.ShouldEqual(2);
+            theLoginRequest.NumberOfTries.ShouldBe(2);
         }
 
         [Test]
         public void should_mark_the_login_request_as_locked_out()
         {
-            theLoginRequest.Status.ShouldEqual(LoginStatus.LockedOut);
+            theLoginRequest.Status.ShouldBe(LoginStatus.LockedOut);
         }
 
         [Test]
@@ -200,7 +200,7 @@ namespace FubuMVC.Tests.Security.Authentication
         [Test]
         public void should_mark_the_login_request_as_successful()
         {
-            theLoginRequest.Status.ShouldEqual(LoginStatus.Succeeded);
+            theLoginRequest.Status.ShouldBe(LoginStatus.Succeeded);
         }
 
         [Test]

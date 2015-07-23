@@ -10,40 +10,40 @@ namespace FubuMVC.Tests.Runtime
         [Test]
         public void find_default_extension_for_javascript()
         {
-            MimeType.Javascript.DefaultExtension().ShouldEqual(".js");
+            MimeType.Javascript.DefaultExtension().ShouldBe(".js");
         }
 
         [Test]
         public void find_default_extension_for_css()
         {
-            MimeType.Css.DefaultExtension().ShouldEqual(".css");
+            MimeType.Css.DefaultExtension().ShouldBe(".css");
         }
 
         [Test]
         public void find_default_extension_for_truetype_font()
         {
-            MimeType.TrueTypeFont.DefaultExtension().ShouldEqual(".ttf");
+            MimeType.TrueTypeFont.DefaultExtension().ShouldBe(".ttf");
         }
 
         [Test]
         public void determine_mime_type_from_name_for_js()
         {
             MimeType.MimeTypeByFileName("file.coffee.js")
-                .ShouldEqual(MimeType.Javascript);
+                .ShouldBe(MimeType.Javascript);
         }
 
         [Test]
         public void determine_mime_type_from_name_for_css()
         {
             MimeType.MimeTypeByFileName("style.css")
-                .ShouldEqual(MimeType.Css);
+                .ShouldBe(MimeType.Css);
         }
 
         [Test]
         public void determine_mime_type_from_name_for_truetype_font()
         {
             MimeType.MimeTypeByFileName("somefont.ttf")
-                .ShouldEqual(MimeType.TrueTypeFont);
+                .ShouldBe(MimeType.TrueTypeFont);
         }
 
         [Test]
@@ -52,8 +52,8 @@ namespace FubuMVC.Tests.Runtime
             MimeType.Javascript.AddExtension(".coffee");
             MimeType.Css.AddExtension(".scss");
 
-            MimeType.MimeTypeByFileName("file.coffee").ShouldEqual(MimeType.Javascript);
-            MimeType.MimeTypeByFileName("file.scss").ShouldEqual(MimeType.Css);
+            MimeType.MimeTypeByFileName("file.coffee").ShouldBe(MimeType.Javascript);
+            MimeType.MimeTypeByFileName("file.scss").ShouldBe(MimeType.Css);
         }
 
         [Test]
@@ -67,7 +67,7 @@ namespace FubuMVC.Tests.Runtime
         public void mimetype_from_extended_extension_set()
         {
             MimeType.MimeTypeByFileName("foo.323")
-                .Value.ShouldEqual("text/h323");
+                .Value.ShouldBe("text/h323");
         }
     }
 }

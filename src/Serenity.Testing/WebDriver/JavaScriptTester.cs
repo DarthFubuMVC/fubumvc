@@ -37,7 +37,7 @@ namespace Serenity.Testing.WebDriver
         public void ByJQueryBuildsSelector()
         {
             string selector = By.jQuery(".test").Statement;
-            selector.ShouldEqual("$(\".test\")");
+            selector.ShouldBe("$(\".test\")");
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace Serenity.Testing.WebDriver
         {
             dynamic javaScript = new JavaScript("$(\".test\")");
             string statement = javaScript.Find().Statement;
-            statement.ShouldEqual("$(\".test\").find()");
+            statement.ShouldBe("$(\".test\").find()");
         }
 
         [TestCase(null, Result="$(\".test\").find()")]
@@ -89,14 +89,14 @@ namespace Serenity.Testing.WebDriver
                     JavaScript.Create("$(this)").Text().Trim().ModifyStatement("return {0} === x;")));
 
             string raw = javaScript.Statement;
-            raw.ShouldEqual("$(this).filter(function(x) { return $(this).text().trim() === x; })");
+            raw.ShouldBe("$(this).filter(function(x) { return $(this).text().trim() === x; })");
         }
 
         [Test]
         public void TestGetProperty()
         {
             string script = JavaScript.Create("$('.test')").Length.Statement;
-            script.ShouldEqual("$('.test').length");
+            script.ShouldBe("$('.test').length");
         }
 
 
@@ -105,7 +105,7 @@ namespace Serenity.Testing.WebDriver
         {
             dynamic javaScript = new JavaScript("$(\".test\")");
             string selector = javaScript.CamelCaseWords().Statement;
-            selector.ShouldEqual("$(\".test\").camelCaseWords()");
+            selector.ShouldBe("$(\".test\").camelCaseWords()");
         }
 
         [Test]

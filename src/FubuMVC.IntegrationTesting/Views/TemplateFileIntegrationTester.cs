@@ -43,61 +43,61 @@ namespace FubuMVC.IntegrationTesting.Views
         [Test]
         public void has_the_correct_file_path_in_application()
         {
-            view1.FilePath.ShouldEqual(Folder.AppendPath(Application).AppendPath("View1.cshtml").ToFullPath());
+            view1.FilePath.ShouldBe(Folder.AppendPath(Application).AppendPath("View1.cshtml").ToFullPath());
         }
 
 
         [Test]
         public void view_path_of_application_file()
         {
-            view1.ViewPath.ShouldEqual("View1.cshtml");
+            view1.ViewPath.ShouldBe("View1.cshtml");
         }
 
 
         [Test]
         public void relative_path_of_application_files()
         {
-            view1.RelativePath().ShouldEqual("View1.cshtml");
-            view2.RelativePath().ShouldEqual("Folder1/View2.cshtml");
+            view1.RelativePath().ShouldBe("View1.cshtml");
+            view2.RelativePath().ShouldBe("Folder1/View2.cshtml");
         }
 
 
         [Test]
         public void relative_path_of_bottle_files()
         {
-            view3.RelativePath().ShouldEqual("View3.cshtml");
-            view4.RelativePath().ShouldEqual("Folder1/Folder2/View4.cshtml");
+            view3.RelativePath().ShouldBe("View3.cshtml");
+            view4.RelativePath().ShouldBe("Folder1/Folder2/View4.cshtml");
         }
 
         [Test]
         public void relative_directory_path_of_application_file()
         {
-            view1.RelativeDirectoryPath().ShouldEqual("");
-            view2.RelativeDirectoryPath().ShouldEqual("Folder1");
+            view1.RelativeDirectoryPath().ShouldBe("");
+            view2.RelativeDirectoryPath().ShouldBe("Folder1");
         }
 
         [Test]
         public void relative_directory_path_of_bottle_file()
         {
-            view3.RelativeDirectoryPath().ShouldEqual("");
-            view4.RelativeDirectoryPath().ShouldEqual("Folder1/Folder2");
+            view3.RelativeDirectoryPath().ShouldBe("");
+            view4.RelativeDirectoryPath().ShouldBe("Folder1/Folder2");
         }
 
         [Test]
         public void name()
         {
-            view1.Name().ShouldEqual("View1");
-            view2.Name().ShouldEqual("View2");
-            view3.Name().ShouldEqual("View3");
-            view4.Name().ShouldEqual("View4");
+            view1.Name().ShouldBe("View1");
+            view2.Name().ShouldBe("View2");
+            view3.Name().ShouldBe("View3");
+            view4.Name().ShouldBe("View4");
         }
 
 
         [Test]
         public void namespace_from_application_view()
         {
-            view1.Namespace.ShouldEqual("FubuMVC.IntegrationTesting");
-            view2.Namespace.ShouldEqual("FubuMVC.IntegrationTesting.Folder1");
+            view1.Namespace.ShouldBe("FubuMVC.IntegrationTesting");
+            view2.Namespace.ShouldBe("FubuMVC.IntegrationTesting.Folder1");
         }
     }
 }

@@ -48,8 +48,8 @@ namespace FubuMVC.Tests.Security.AntiForgery
             };
             FormToken formToken = ClassUnderTest.GetFormToken(input, "Salty");
 
-            formToken.Name.ShouldEqual("FormName");
-            formToken.TokenString.ShouldEqual("Serialized!");
+            formToken.Name.ShouldBe("FormName");
+            formToken.TokenString.ShouldBe("Serialized!");
         }
 
         [Test]

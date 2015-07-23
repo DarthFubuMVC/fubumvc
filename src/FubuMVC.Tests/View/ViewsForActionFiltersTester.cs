@@ -52,7 +52,7 @@ namespace FubuMVC.Tests.View
             var action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
             token.ViewModel = typeof (ViewModel2);
 
-            filter.Apply(action, bag).Count().ShouldEqual(0);
+            filter.Apply(action, bag).Count().ShouldBe(0);
         }
 
         [Test]
@@ -61,7 +61,7 @@ namespace FubuMVC.Tests.View
             var action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
             token.Namespace = Guid.NewGuid().ToString();
 
-            filter.Apply(action, bag).Count().ShouldEqual(0);
+            filter.Apply(action, bag).Count().ShouldBe(0);
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace FubuMVC.Tests.View
             var action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
             token.ViewName = "something different";
 
-            filter.Apply(action, bag).Count().ShouldEqual(0);
+            filter.Apply(action, bag).Count().ShouldBe(0);
         }
     }
 
@@ -113,7 +113,7 @@ namespace FubuMVC.Tests.View
             var action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
             token.ViewModel = typeof (ViewModel2);
 
-            filter.Apply(action, bag).Count().ShouldEqual(0);
+            filter.Apply(action, bag).Count().ShouldBe(0);
         }
 
         [Test]
@@ -122,7 +122,7 @@ namespace FubuMVC.Tests.View
             var action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
             token.Namespace = Guid.NewGuid().ToString();
 
-            filter.Apply(action, bag).Count().ShouldEqual(0);
+            filter.Apply(action, bag).Count().ShouldBe(0);
         }
 
         [Test]

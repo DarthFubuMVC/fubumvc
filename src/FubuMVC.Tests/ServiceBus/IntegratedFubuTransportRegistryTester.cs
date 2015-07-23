@@ -69,7 +69,7 @@ namespace FubuTransportation.Testing
             theRegistry.Channel(x => x.Upstream).ReadIncoming(new ThreadScheduler(5));
 
             channelFor(x => x.Upstream).Incoming.ShouldBeTrue();
-            channelFor(x => x.Upstream).Scheduler.As<ThreadScheduler>().ThreadCount.ShouldEqual(5);
+            channelFor(x => x.Upstream).Scheduler.As<ThreadScheduler>().ThreadCount.ShouldBe(5);
 
             channelFor(x => x.Downstream).Incoming.ShouldBeFalse();
         }
@@ -79,14 +79,14 @@ namespace FubuTransportation.Testing
         {
             theRegistry.DefaultSerializer<BinarySerializer>();
 
-            theChannels.DefaultContentType.ShouldEqual(new BinarySerializer().ContentType);
+            theChannels.DefaultContentType.ShouldBe(new BinarySerializer().ContentType);
         }
 
         [Test]
         public void set_the_default_content_type_by_string()
         {
             theRegistry.DefaultContentType("application/json");
-            theChannels.DefaultContentType.ShouldEqual("application/json");
+            theChannels.DefaultContentType.ShouldBe("application/json");
         }
 
         [Test]
@@ -105,7 +105,7 @@ namespace FubuTransportation.Testing
         public void set_the_default_content_type_for_a_channel_by_string()
         {
             theRegistry.Channel(x => x.Outbound).DefaultContentType("application/json");
-            channelFor(x => x.Outbound).DefaultContentType.ShouldEqual("application/json");
+            channelFor(x => x.Outbound).DefaultContentType.ShouldBe("application/json");
         }
 
         [Test]
@@ -114,7 +114,7 @@ namespace FubuTransportation.Testing
             theRegistry.Channel(x => x.Outbound).AcceptsMessagesInNamespaceContainingType<BusSettings>();
 
             channelFor(x => x.Outbound).Rules.Single()
-                .ShouldEqual(NamespaceRule.For<BusSettings>());
+                .ShouldBe(NamespaceRule.For<BusSettings>());
 
             channelFor(x => x.Upstream).Rules.Any().ShouldBeFalse();
         }
@@ -125,7 +125,7 @@ namespace FubuTransportation.Testing
             theRegistry.Channel(x => x.Outbound).AcceptsMessagesInNamespace(typeof (BusSettings).Namespace);
 
             channelFor(x => x.Outbound).Rules.Single()
-                .ShouldEqual(NamespaceRule.For<BusSettings>());
+                .ShouldBe(NamespaceRule.For<BusSettings>());
 
             channelFor(x => x.Upstream).Rules.Any().ShouldBeFalse();
         }
@@ -136,7 +136,7 @@ namespace FubuTransportation.Testing
             theRegistry.Channel(x => x.Outbound).AcceptsMessagesInAssemblyContainingType<BusSettings>();
 
             channelFor(x => x.Outbound).Rules.Single()
-                .ShouldEqual(AssemblyRule.For<BusSettings>());
+                .ShouldBe(AssemblyRule.For<BusSettings>());
 
             channelFor(x => x.Upstream).Rules.Any().ShouldBeFalse();
         }
@@ -147,7 +147,7 @@ namespace FubuTransportation.Testing
             theRegistry.Channel(x => x.Outbound).AcceptsMessagesInAssembly(typeof (BusSettings).Assembly.GetName().Name);
 
             channelFor(x => x.Outbound).Rules.Single()
-                .ShouldEqual(AssemblyRule.For<BusSettings>());
+                .ShouldBe(AssemblyRule.For<BusSettings>());
 
             channelFor(x => x.Upstream).Rules.Any().ShouldBeFalse();
         }

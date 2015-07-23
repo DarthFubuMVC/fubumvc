@@ -58,7 +58,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void does_contain_other_methods()
         {
-            methods.Single().Name.ShouldEqual("Good");
+            methods.Single().Name.ShouldBe("Good");
         }
 
 

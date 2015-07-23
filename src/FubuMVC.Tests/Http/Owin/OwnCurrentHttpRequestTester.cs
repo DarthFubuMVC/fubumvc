@@ -75,14 +75,14 @@ namespace FubuMVC.Tests.Http.Owin
         public void should_use_path()
         {
             environment[OwinConstants.RequestPathKey] = "/foo";
-            request.FullUrl().ShouldEqual("https://localhost/foo");
+            request.FullUrl().ShouldBe("https://localhost/foo");
         }
 
         [Test]
         public void should_support_querystring()
         {
             environment[OwinConstants.RequestQueryStringKey] = "baz=foo";
-            request.FullUrl().ShouldEqual("https://localhost/?baz=foo");
+            request.FullUrl().ShouldBe("https://localhost/?baz=foo");
         }
 
         [Test]
@@ -90,7 +90,7 @@ namespace FubuMVC.Tests.Http.Owin
         {
             environment[OwinConstants.RequestPathKey] = "/foo";
             environment[OwinConstants.RequestQueryStringKey] = "baz=foo";
-            request.FullUrl().ShouldEqual("https://localhost/foo?baz=foo");
+            request.FullUrl().ShouldBe("https://localhost/foo?baz=foo");
         }
     }
 }

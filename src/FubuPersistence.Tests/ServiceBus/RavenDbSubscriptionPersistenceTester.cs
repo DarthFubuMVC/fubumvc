@@ -86,10 +86,10 @@ namespace FubuPersistence.Tests.ServiceBus
             persistence.Persist(node2);
 
             persistence.NodesForGroup("Node1").Single()
-                .ShouldEqual(node1);
+                .ShouldBe(node1);
 
             persistence.NodesForGroup("Node2").Single()
-                .ShouldEqual(node2);
+                .ShouldBe(node2);
         }
 
         [Test]
@@ -115,10 +115,10 @@ namespace FubuPersistence.Tests.ServiceBus
             persistence.Persist(node1, node2);
 
             persistence.LoadNode(node2.Id)
-                .MachineName.ShouldEqual(node2.MachineName);
+                .MachineName.ShouldBe(node2.MachineName);
 
             persistence.LoadNode(node1.Id)
-                .MachineName.ShouldEqual(node1.MachineName);
+                .MachineName.ShouldBe(node1.MachineName);
         }
 
         [Test]

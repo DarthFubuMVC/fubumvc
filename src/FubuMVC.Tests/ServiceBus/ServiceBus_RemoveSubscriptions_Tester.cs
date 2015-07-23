@@ -53,7 +53,7 @@ namespace FubuTransportation.Testing
             envelopes.ShouldHaveCount(2);
             envelopes.Any(x => x.Destination == new Uri("memory://node2")).ShouldBeTrue();
             envelopes.Any(x => x.Destination == new Uri("memory://node3")).ShouldBeTrue();
-            envelopes.Each(x => x.Message.As<SubscriptionsRemoved>().Receiver.ShouldEqual(local));
+            envelopes.Each(x => x.Message.As<SubscriptionsRemoved>().Receiver.ShouldBe(local));
         }
     }
 }

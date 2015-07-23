@@ -19,7 +19,7 @@ namespace Serenity.Testing
         {
             new FileSystem().DeleteFile(WebDriverSettings.Filename);
 
-            WebDriverSettings.Read().Browser.ShouldEqual(new WebDriverSettings().Browser);
+            WebDriverSettings.Read().Browser.ShouldBe(new WebDriverSettings().Browser);
         }
 
         [Test]
@@ -27,7 +27,7 @@ namespace Serenity.Testing
         {
             new FileSystem().AlterFlatFile(WebDriverSettings.Filename, list => list.Add("WebDriverSettings.Browser=IE"));
 
-            WebDriverSettings.Read().Browser.ShouldEqual(BrowserType.IE);
+            WebDriverSettings.Read().Browser.ShouldBe(BrowserType.IE);
         }
 
 
@@ -39,7 +39,7 @@ namespace Serenity.Testing
             // box and I'm the one who wants this to work quickly today
             // - Jeremy 10/5/2011
 
-            new WebDriverSettings().Browser.ShouldEqual(BrowserType.Firefox);
+            new WebDriverSettings().Browser.ShouldBe(BrowserType.Firefox);
         }
 
         [Test]

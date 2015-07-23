@@ -10,7 +10,7 @@ namespace FubuMVC.Tests.Security.Authorization
         [Test]
         public void it_is_just_allow()
         {
-            new AlwaysAllowPolicy().RightsFor(null).ShouldEqual(AuthorizationRight.Allow);
+            new AlwaysAllowPolicy().RightsFor(null).ShouldBe(AuthorizationRight.Allow);
         }
     }
 }

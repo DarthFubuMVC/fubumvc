@@ -19,10 +19,10 @@ namespace FubuPersistence.Tests.Membership
                 Debug.WriteLine(hash.CreateHash(password));
             }
 
-            hash.CreateHash(password).ShouldEqual(hash.CreateHash(password));
-            hash.CreateHash(password).ShouldEqual(hash.CreateHash(password));
-            hash.CreateHash(password).ShouldEqual(hash.CreateHash(password));
-            hash.CreateHash(password).ShouldEqual(hash.CreateHash(password));
+            hash.CreateHash(password).ShouldBe(hash.CreateHash(password));
+            hash.CreateHash(password).ShouldBe(hash.CreateHash(password));
+            hash.CreateHash(password).ShouldBe(hash.CreateHash(password));
+            hash.CreateHash(password).ShouldBe(hash.CreateHash(password));
 
             hash.CreateHash(password).ShouldNotEqual(password);
         }

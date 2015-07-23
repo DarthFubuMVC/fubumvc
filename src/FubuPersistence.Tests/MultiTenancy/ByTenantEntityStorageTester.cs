@@ -88,7 +88,7 @@ namespace FubuPersistence.Tests.MultiTenancy
 
             theStorage.Update(entity);
 
-            entity.TenantId.ShouldEqual(theContext.CurrentTenant);
+            entity.TenantId.ShouldBe(theContext.CurrentTenant);
 
             inner.Find(entity.Id).ShouldBeTheSameAs(entity);
         }

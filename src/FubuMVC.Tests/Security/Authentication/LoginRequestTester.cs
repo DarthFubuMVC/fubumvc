@@ -10,7 +10,7 @@ namespace FubuMVC.Tests.Security.Authentication
         [Test]
         public void status_is_not_authenticated_by_default()
         {
-            new LoginRequest().Status.ShouldEqual(LoginStatus.NotAuthenticated);
+            new LoginRequest().Status.ShouldBe(LoginStatus.NotAuthenticated);
         }
 
         [Test]
@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Security.Authentication
             var loginRequest = new LoginRequest();
             var testing_url = "the/best/url";
             loginRequest.ReturnUrl = testing_url;
-            loginRequest.Url.ShouldEqual(testing_url);
+            loginRequest.Url.ShouldBe(testing_url);
         }
     }
 }

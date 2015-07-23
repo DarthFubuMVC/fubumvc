@@ -13,7 +13,7 @@ namespace FubuMVC.Tests.Diagnostics
         public void build_the_route()
         {
             DiagnosticChain.For<FakeFubuDiagnostics>(x => x.get_link())
-                .GetRoutePattern().ShouldEqual("_fubu/fake/link");
+                .GetRoutePattern().ShouldBe("_fubu/fake/link");
         }
 
         [Test]
@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.Diagnostics
                 .Last()
                 .ShouldBeOfType<ActionCall>()
                 .Description
-                .ShouldEqual("FakeFubuDiagnostics.get_link() : String");
+                .ShouldBe("FakeFubuDiagnostics.get_link() : String");
         }
     }
 

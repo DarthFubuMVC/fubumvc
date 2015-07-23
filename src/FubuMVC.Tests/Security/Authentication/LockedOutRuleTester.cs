@@ -30,7 +30,7 @@ namespace FubuMVC.Tests.Security.Authentication
 
             theSystemTime.LocalNow(DateTime.Today.AddMinutes(theSettings.CooloffPeriodInMinutes + 1));
 
-            theRule.IsLockedOut(request).ShouldEqual(LoginStatus.NotAuthenticated);
+            theRule.IsLockedOut(request).ShouldBe(LoginStatus.NotAuthenticated);
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace FubuMVC.Tests.Security.Authentication
             var request = new LoginRequest();
             request.NumberOfTries = theSettings.MaximumNumberOfFailedAttempts - 1;
 
-            theRule.IsLockedOut(request).ShouldEqual(LoginStatus.NotAuthenticated);
+            theRule.IsLockedOut(request).ShouldBe(LoginStatus.NotAuthenticated);
         }
 
         [Test]
@@ -48,7 +48,7 @@ namespace FubuMVC.Tests.Security.Authentication
             var request = new LoginRequest();
             request.NumberOfTries = theSettings.MaximumNumberOfFailedAttempts;
 
-            theRule.IsLockedOut(request).ShouldEqual(LoginStatus.LockedOut);
+            theRule.IsLockedOut(request).ShouldBe(LoginStatus.LockedOut);
         }
 
         [Test]

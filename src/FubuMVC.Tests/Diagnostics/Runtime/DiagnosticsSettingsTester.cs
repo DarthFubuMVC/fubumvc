@@ -10,7 +10,7 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
         [Test]
         public void the_default_max_requests_is_200()
         {
-            new DiagnosticsSettings().MaxRequests.ShouldEqual(200);
+            new DiagnosticsSettings().MaxRequests.ShouldBe(200);
         }
     }
 }

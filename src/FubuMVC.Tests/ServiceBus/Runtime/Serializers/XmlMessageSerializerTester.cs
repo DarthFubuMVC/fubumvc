@@ -84,7 +84,7 @@ namespace FubuTransportation.Testing.Runtime.Serializers
             stream.Position = 0;
 
             var actual = serializer.Deserialize(stream).ShouldBeOfType<Order>();
-            actual.OrderId.ShouldEqual(sample.OrderId);
+            actual.OrderId.ShouldBe(sample.OrderId);
         }
 
         [Test]
@@ -96,7 +96,7 @@ namespace FubuTransportation.Testing.Runtime.Serializers
             serializer.Serialize(new object[] { ticks }, stream);
             stream.Position = 0;
             var actual = (long)serializer.Deserialize(stream).As<long>();
-            ticks.ShouldEqual(actual);
+            ticks.ShouldBe(actual);
         }
 
         [Test]
@@ -108,7 +108,7 @@ namespace FubuTransportation.Testing.Runtime.Serializers
             serializer.Serialize(new object[] { aDouble }, stream);
             stream.Position = 0;
             var actual = (double)serializer.Deserialize(stream).As<double>();
-            aDouble.ShouldEqual(actual);
+            aDouble.ShouldBe(actual);
         }
 
         [Test]
@@ -120,7 +120,7 @@ namespace FubuTransportation.Testing.Runtime.Serializers
             serializer.Serialize(new object[] { aFloat }, stream);
             stream.Position = 0;
             var actual = (float)serializer.Deserialize(stream).As<float>();
-            aFloat.ShouldEqual(actual);
+            aFloat.ShouldBe(actual);
         }
 
         [Test]
@@ -131,7 +131,7 @@ namespace FubuTransportation.Testing.Runtime.Serializers
             serializer.Serialize(new object[] { new byte[] { 1, 2, 3, 4 } }, stream);
             stream.Position = 0;
             var actual = (byte[])serializer.Deserialize(stream).As<byte[]>();
-            new byte[] { 1, 2, 3, 4 }.ShouldEqual(actual);
+            new byte[] { 1, 2, 3, 4 }.ShouldBe(actual);
         }
 
         [Test]
@@ -143,7 +143,7 @@ namespace FubuTransportation.Testing.Runtime.Serializers
             serializer.Serialize(new object[] { value }, stream);
             stream.Position = 0;
             var actual = (DateTimeOffset)serializer.Deserialize(stream).As<DateTimeOffset>();
-            value.ShouldEqual(actual);
+            value.ShouldBe(actual);
         }
 
         [Test]
@@ -160,7 +160,7 @@ namespace FubuTransportation.Testing.Runtime.Serializers
             }, stream);
             stream.Position = 0;
             var actual = serializer.Deserialize(stream).As<ClassWithObjectArray>();
-            "ayende".ShouldEqual(actual.Items[0].As<OrderLine>().Product);
+            "ayende".ShouldBe(actual.Items[0].As<OrderLine>().Product);
         }
 
         [Test]
@@ -180,7 +180,7 @@ namespace FubuTransportation.Testing.Runtime.Serializers
             }, stream);
             stream.Position = 0;
             var actual = serializer.Deserialize(stream).As<ClassWithDictionary>();
-            "ayende".ShouldEqual(actual.DictionaryItems["products"][0].As<OrderLine>().Product);
+            "ayende".ShouldBe(actual.DictionaryItems["products"][0].As<OrderLine>().Product);
         }
 
         [Test]
@@ -211,15 +211,15 @@ namespace FubuTransportation.Testing.Runtime.Serializers
 
             var order = serializer.Deserialize(stream).As<Order>();
 
-            sample.Url.ShouldEqual(order.Url);
-            sample.At.ShouldEqual(order.At);
-            sample.Count.ShouldEqual(order.Count);
-            sample.OrderId.ShouldEqual(order.OrderId);
-            sample.TimeToDelivery.ShouldEqual(order.TimeToDelivery);
+            sample.Url.ShouldBe(order.Url);
+            sample.At.ShouldBe(order.At);
+            sample.Count.ShouldBe(order.Count);
+            sample.OrderId.ShouldBe(order.OrderId);
+            sample.TimeToDelivery.ShouldBe(order.TimeToDelivery);
             order.OrderLines.ShouldHaveCount(2);
 
-            sample.OrderLines[0].Product.ShouldEqual(order.OrderLines[0].Product);
-            sample.OrderLines[1].Product.ShouldEqual(order.OrderLines[1].Product);
+            sample.OrderLines[0].Product.ShouldBe(order.OrderLines[0].Product);
+            sample.OrderLines[1].Product.ShouldBe(order.OrderLines[1].Product);
         }
 
         public class ClassWithDictionary

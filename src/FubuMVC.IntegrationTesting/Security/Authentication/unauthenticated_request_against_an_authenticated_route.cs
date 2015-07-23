@@ -12,7 +12,7 @@ namespace FubuMVC.IntegrationTesting.Security.Authentication
         public void redirects_to_login()
         {
             var response = endpoints.GetByInput(new TargetModel(), acceptType: "text/html", configure: r => r.AllowAutoRedirect = false);
-            response.StatusCode.ShouldEqual(HttpStatusCode.Redirect);
+            response.StatusCode.ShouldBe(HttpStatusCode.Redirect);
 
             var loginUrl = Urls.UrlFor(new LoginRequest { Url = "some/authenticated/route"}, "GET");
             loginUrl.ShouldEndWith(response.ResponseHeaderFor(HttpResponseHeader.Location).TrimStart('/'));

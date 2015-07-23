@@ -35,7 +35,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void get_policy_type_when_it_is_an_authorization_policy()
         {
             AuthorizedByAttribute.RuleTypeFor(typeof (Input1), typeof (AuthorizationRule1))
-                .ShouldEqual(typeof (AuthorizationRule1));
+                .ShouldBe(typeof (AuthorizationRule1));
         }
 
 

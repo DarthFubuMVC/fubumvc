@@ -36,14 +36,14 @@ namespace FubuTransportation.Testing.ErrorHandling
             var report = theEnvelope.Callback.GetArgumentsForCallsMadeOn(x => x.MoveToErrors(null))
                 [0][0].As<ErrorReport>();
 
-            report.ExceptionText.ShouldEqual(theException.ToString());
+            report.ExceptionText.ShouldBe(theException.ToString());
         }
 
         [Test]
         public void should_send_a_failure_acknowledgement()
         {
             theContext.RecordedOutgoing.FailureAcknowledgementMessage
-                .ShouldEqual("Moved message {0} to the Error Queue.\n{1}".ToFormat(theEnvelope.CorrelationId,
+                .ShouldBe("Moved message {0} to the Error Queue.\n{1}".ToFormat(theEnvelope.CorrelationId,
                     theException));
         }
     }

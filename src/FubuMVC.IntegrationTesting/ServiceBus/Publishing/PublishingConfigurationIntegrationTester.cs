@@ -67,7 +67,7 @@ namespace FubuMVC.IntegrationTesting.ServiceBus.Publishing
                 theServiceBus.AssertWasCalled(x => x.Send(new Message1()), x => x.IgnoreArguments());
 
 
-                response.StatusCode.ShouldEqual(HttpStatusCode.OK);
+                response.StatusCode.ShouldBe(HttpStatusCode.OK);
                 response.ReadAsText().ShouldContain("\"success\":true");
 
             }
@@ -84,13 +84,13 @@ namespace FubuMVC.IntegrationTesting.ServiceBus.Publishing
         [Test]
         public void input_type_should_be_the_input_type_of_the_publisher_method()
         {
-            chain.InputType().ShouldEqual(typeof(Message1Input));
+            chain.InputType().ShouldBe(typeof(Message1Input));
         }
 
         [Test]
         public void resource_type_should_be_AjaxContinuation()
         {
-            chain.ResourceType().ShouldEqual(typeof(AjaxContinuation));
+            chain.ResourceType().ShouldBe(typeof(AjaxContinuation));
         }
 
         [Test]
@@ -98,7 +98,7 @@ namespace FubuMVC.IntegrationTesting.ServiceBus.Publishing
         {
             // diagnostics are in here now.
             chain.FirstCall().Next.ShouldBeOfType<SendsMessage>()
-                .EventType.ShouldEqual(typeof(Message1));
+                .EventType.ShouldBe(typeof(Message1));
         }
 
     }

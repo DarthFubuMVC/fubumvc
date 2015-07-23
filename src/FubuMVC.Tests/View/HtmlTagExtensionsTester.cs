@@ -32,7 +32,7 @@ namespace FubuMVC.Tests.UI
             var tag = new HtmlTag("a");
             tag.MustacheAttr("href", "url");
 
-            tag.ToString().ShouldEqual("<a href=\"{{url}}\"></a>");
+            tag.ToString().ShouldBe("<a href=\"{{url}}\"></a>");
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace FubuMVC.Tests.UI
             var tag = new TextboxTag();
             tag.MustacheValue("prop");
 
-            tag.ToString().ShouldEqual("<input type=\"text\" value=\"{{prop}}\" />");
+            tag.ToString().ShouldBe("<input type=\"text\" value=\"{{prop}}\" />");
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace FubuMVC.Tests.UI
             var tag = new HtmlTag("span");
             tag.MustacheText("prop");
 
-            tag.ToString().ShouldEqual("<span>{{prop}}</span>");
+            tag.ToString().ShouldBe("<span>{{prop}}</span>");
         }
 
         public class TagHolder : ITagSource
@@ -87,14 +87,14 @@ namespace FubuMVC.Tests.UI
         public void do_nothing_if_the_tag_already_has_text()
         {
             new HtmlTag("div").Text("original").TextIfEmpty("different")
-                .Text().ShouldEqual("original");
+                .Text().ShouldBe("original");
         }
 
         [Test]
         public void set_the_text_if_the_tag_text_is_initially_null()
         {
             new HtmlTag("div").TextIfEmpty("defaulted")
-                .Text().ShouldEqual("defaulted");
+                .Text().ShouldBe("defaulted");
         }
 
     }

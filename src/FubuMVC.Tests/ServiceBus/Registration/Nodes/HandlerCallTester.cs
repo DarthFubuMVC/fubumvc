@@ -31,7 +31,7 @@ namespace FubuTransportation.Testing.Registration.Nodes
 
             var objectDef = handler.As<IContainerModel>().ToInstance();
 
-            objectDef.ReturnedType.ShouldEqual(typeof (CascadingHandlerInvoker<ITargetHandler, Input, Output>));
+            objectDef.ReturnedType.ShouldBe(typeof (CascadingHandlerInvoker<ITargetHandler, Input, Output>));
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace FubuTransportation.Testing.Registration.Nodes
 
             var objectDef = handler.As<IContainerModel>().ToInstance();
 
-            objectDef.ReturnedType.ShouldEqual(typeof (SimpleHandlerInvoker<ITargetHandler, Input>));
+            objectDef.ReturnedType.ShouldBe(typeof (SimpleHandlerInvoker<ITargetHandler, Input>));
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace FubuTransportation.Testing.Registration.Nodes
 
             var objectDef = handler.As<IContainerModel>().ToInstance();
 
-            objectDef.ReturnedType.ShouldEqual(typeof (AsyncHandlerInvoker<TaskHandler, Message>));
+            objectDef.ReturnedType.ShouldBe(typeof (AsyncHandlerInvoker<TaskHandler, Message>));
         }
 
         [Test]
@@ -61,7 +61,7 @@ namespace FubuTransportation.Testing.Registration.Nodes
 
             var objectDef = handler.As<IContainerModel>().ToInstance();
 
-            objectDef.ReturnedType.ShouldEqual(typeof (CascadingAsyncHandlerInvoker<TaskHandler, Message, Message1>));
+            objectDef.ReturnedType.ShouldBe(typeof (CascadingAsyncHandlerInvoker<TaskHandler, Message, Message1>));
         }
 
 
@@ -119,10 +119,10 @@ namespace FubuTransportation.Testing.Registration.Nodes
             var handler2 = HandlerCall.For<SomeHandler>(x => x.Interface(null));
             var handler3 = HandlerCall.For<SomeHandler>(x => x.Interface(null));
 
-            handler1.ShouldEqual(handler2);
-            handler1.ShouldEqual(handler3);
-            handler3.ShouldEqual(handler2);
-            handler2.ShouldEqual(handler1);
+            handler1.ShouldBe(handler2);
+            handler1.ShouldBe(handler3);
+            handler3.ShouldBe(handler2);
+            handler2.ShouldBe(handler1);
         }
 
         [Test]

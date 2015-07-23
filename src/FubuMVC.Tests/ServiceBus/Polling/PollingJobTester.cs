@@ -53,11 +53,11 @@ namespace FubuTransportation.Testing.Polling
         public void smoke_test_describe()
         {
             var description = Description.For(ClassUnderTest);
-            description.Title.ShouldEqual("Polling Job for APollingJob");
-            description.ShortDescription.ShouldEqual("A polling job just for testing purposes");
-            description.Properties["Interval"].ShouldEqual("350 ms");
-            description.Properties["Config"].ShouldEqual("x => x.Polling");
-            description.Properties["Scheduled Execution"].ShouldEqual("WaitUntilInterval");
+            description.Title.ShouldBe("Polling Job for APollingJob");
+            description.ShortDescription.ShouldBe("A polling job just for testing purposes");
+            description.Properties["Interval"].ShouldBe("350 ms");
+            description.Properties["Config"].ShouldBe("x => x.Polling");
+            description.Properties["Scheduled Execution"].ShouldBe("WaitUntilInterval");
         }
     }
 

@@ -25,7 +25,7 @@ namespace FubuTransportation.Testing.Runtime.Serializers
             stream.Position = 0;
 
             var address2 = serializer.Deserialize(stream).ShouldBeOfType<Address>();
-            address1.ShouldEqual(address2);
+            address1.ShouldBe(address2);
         }
     }
 

@@ -17,12 +17,12 @@ namespace FubuTransportation.Testing.Runtime.Headers
             values["b"] = "2";
 
             var headers = new NameValueHeaders(values);
-            headers["a"].ShouldEqual("1");
-            headers["b"].ShouldEqual("2");
+            headers["a"].ShouldBe("1");
+            headers["b"].ShouldBe("2");
 
             headers["c"] = "3";
 
-            values["c"].ShouldEqual("3");
+            values["c"].ShouldBe("3");
         }
 
         [Test]
@@ -57,12 +57,12 @@ namespace FubuTransportation.Testing.Runtime.Headers
             var values = new Dictionary<string, string>{{"a", "1"}, {"b", "2"}};
 
             var headers = new DictionaryHeaders(values);
-            headers["a"].ShouldEqual("1");
-            headers["b"].ShouldEqual("2");
+            headers["a"].ShouldBe("1");
+            headers["b"].ShouldBe("2");
 
             headers["c"] = "3";
 
-            values["c"].ShouldEqual("3");
+            values["c"].ShouldBe("3");
         }
 
         [Test]
@@ -84,8 +84,8 @@ namespace FubuTransportation.Testing.Runtime.Headers
             var headers = new DictionaryHeaders(values);
 
             var collection = headers.ToNameValues();
-            collection["a"].ShouldEqual("1");
-            collection["b"].ShouldEqual("2");
+            collection["a"].ShouldBe("1");
+            collection["b"].ShouldBe("2");
         }
 
         [Test]

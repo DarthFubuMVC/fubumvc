@@ -50,7 +50,7 @@ namespace FubuMVC.Tests.Registration.Nodes
         [Test]
         public void the_unique_id_matches_the_top_id_in_no_diagnostic_mode()
         {
-            toObjectDef().Name.ShouldEqual(theOriginalGuid);
+            toObjectDef().Name.ShouldBe(theOriginalGuid);
         }
     }
 }

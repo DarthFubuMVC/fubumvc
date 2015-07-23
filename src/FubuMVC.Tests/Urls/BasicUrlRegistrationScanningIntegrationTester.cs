@@ -131,7 +131,7 @@ namespace FubuMVC.Tests.Urls
             {
                 Name = "Jeremy",
                 Age = 35
-            }).ShouldEqual("/special/Jeremy/is/35");
+            }).ShouldBe("/special/Jeremy/is/35");
         }
 
         [Test]
@@ -140,7 +140,7 @@ namespace FubuMVC.Tests.Urls
             registry.UrlFor(new SpecialModelForDefault()
             {
                 Name = "Frank"
-            }).ShouldEqual("/defaultage/Frank/is/10");
+            }).ShouldBe("/defaultage/Frank/is/10");
         }
 
         [Test]
@@ -150,15 +150,15 @@ namespace FubuMVC.Tests.Urls
             {
                 Name = "Frank",
                 PossiblyEmpty = 36
-            }).ShouldEqual("/defaultage/Frank/is/36");
+            }).ShouldBe("/defaultage/Frank/is/36");
         }
 
         [Test]
         public void has_action_calls_for_actions_with_no_input_args()
         {
-            registry.UrlFor<SpecialController>(x => x.NoArgMethod(), null).ShouldEqual(
+            registry.UrlFor<SpecialController>(x => x.NoArgMethod(), null).ShouldBe(
                 "/special/noargmethod");
-            registry.UrlFor<SpecialController>(x => x.Index(), null).ShouldEqual("/special/index");
+            registry.UrlFor<SpecialController>(x => x.Index(), null).ShouldBe("/special/index");
         }
 
     }

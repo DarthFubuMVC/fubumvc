@@ -26,13 +26,13 @@ namespace FubuTransportation.LightningQueues.Testing
         [Test]
         public void finds_the_port()
         {
-            theUri.Port.ShouldEqual(2424);
+            theUri.Port.ShouldBe(2424);
         }
 
         [Test]
         public void parses_the_queue_name()
         {
-            theUri.QueueName.ShouldEqual("some_queue");
+            theUri.QueueName.ShouldBe("some_queue");
         }
     }
 }

@@ -32,9 +32,9 @@ namespace FubuMVC.IntegrationTesting.Conneg
                 .StatusCodeShouldBe(HttpStatusCode.OK)
                 .ReadAsJson<JsonInput>();
 
-            output.GoodThing1.ShouldEqual("Obiwan");
-            output.GoodThing2.ShouldEqual("Han Solo");
-            output.TheAnswerToLifeTheUniverseAndEverything.ShouldEqual(42);
+            output.GoodThing1.ShouldBe("Obiwan");
+            output.GoodThing2.ShouldBe("Han Solo");
+            output.TheAnswerToLifeTheUniverseAndEverything.ShouldBe(42);
         }
 
         [Test]
@@ -50,9 +50,9 @@ namespace FubuMVC.IntegrationTesting.Conneg
                 .StatusCodeShouldBe(HttpStatusCode.OK)
                 .ReadAsJson<XmlInput>();
 
-            output.BadThing1.ShouldEqual("Vader");
-            output.BadThing2.ShouldEqual("Jabba");
-            output.TheAnswerToLifeTheUniverseAndEverything.ShouldEqual(42);
+            output.BadThing1.ShouldBe("Vader");
+            output.BadThing2.ShouldBe("Jabba");
+            output.TheAnswerToLifeTheUniverseAndEverything.ShouldBe(42);
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
                 .StatusCodeShouldBe(HttpStatusCode.OK)
                 .ReadAsJson<JsonInput>();
 
-            output.TheAnswerToLifeTheUniverseAndEverything.ShouldEqual(42);
+            output.TheAnswerToLifeTheUniverseAndEverything.ShouldBe(42);
         }
 
         [Test]
@@ -86,7 +86,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
                 .StatusCodeShouldBe(HttpStatusCode.OK)
                 .ReadAsJson<XmlInput>();
 
-            output.TheAnswerToLifeTheUniverseAndEverything.ShouldEqual(42);
+            output.TheAnswerToLifeTheUniverseAndEverything.ShouldBe(42);
         }
     }
 

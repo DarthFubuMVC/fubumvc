@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.Security.Authentication
         {
             new AuthenticationNode(typeof (BasicAuthentication))
                 .As<IContainerModel>().ToInstance()
-                .ReturnedType.ShouldEqual(typeof(BasicAuthentication));
+                .ReturnedType.ShouldBe(typeof(BasicAuthentication));
 
         }
     }

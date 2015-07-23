@@ -28,7 +28,7 @@ namespace FubuMVC.IntegrationTesting
             FubuMode.Detector.SetMode("Development");
             FubuMode.InDevelopment().ShouldBeTrue();
 
-            FubuMode.Mode().ShouldEqual("Development");
+            FubuMode.Mode().ShouldBe("Development");
         }
 
         [Test]
@@ -37,7 +37,7 @@ namespace FubuMVC.IntegrationTesting
             FubuMode.Detector.SetMode("Production");
             FubuMode.InDevelopment().ShouldBeFalse();
 
-            FubuMode.Mode().ShouldEqual("Production");
+            FubuMode.Mode().ShouldBe("Production");
         }
 
         [Test]
@@ -76,7 +76,7 @@ namespace FubuMVC.IntegrationTesting
 
             FubuMode.InDevelopment().ShouldBeTrue();
 
-            FubuMode.Mode().ShouldEqual("Development");
+            FubuMode.Mode().ShouldBe("Development");
         }
 
         [Test]
@@ -89,7 +89,7 @@ namespace FubuMVC.IntegrationTesting
 
             FubuMode.InDevelopment().ShouldBeFalse();
 
-            FubuMode.Mode().ShouldEqual("Production");
+            FubuMode.Mode().ShouldBe("Production");
         }
 
         [Test]

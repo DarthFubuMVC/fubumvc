@@ -15,7 +15,7 @@ namespace FubuMVC.IntegrationTesting
             var runtime = FubuApplication.For<SomeRegistry>().Bootstrap();
             var endpoint = runtime.Factory.Get<IEndpointService>().EndpointFor<SomeEndpoint>(x => x.get_hello());
 
-            endpoint.Chain.Calls.Single().HandlerType.ShouldEqual(typeof (SomeEndpoint));
+            endpoint.Chain.Calls.Single().HandlerType.ShouldBe(typeof (SomeEndpoint));
         }
     }
 

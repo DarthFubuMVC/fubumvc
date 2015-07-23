@@ -119,7 +119,7 @@ namespace FubuMVC.Tests.Routing
         [Test]
         public void orders_additional_routes_by_rank_as_well()
         {
-            _routes.Last().Url.ShouldEqual("{Client}/");
+            _routes.Last().Url.ShouldBe("{Client}/");
         }
 
         private BehaviorGraph setupActions()

@@ -16,13 +16,13 @@ namespace FubuMVC.Tests.Http.Owin
         [Test]
         public void can_parse_query_string_with_encoding()
         {
-            runFormReader("Anesth=Moore%2C+Roy")["Anesth"].ShouldEqual("Moore, Roy");
+            runFormReader("Anesth=Moore%2C+Roy")["Anesth"].ShouldBe("Moore, Roy");
         }
 
         [Test]
         public void can_parse_field_values_in_query_string()
         {
-            runFormReader("Moore%2C+Roy=Anesth")["Moore, Roy"].ShouldEqual("Anesth");
+            runFormReader("Moore%2C+Roy=Anesth")["Moore, Roy"].ShouldBe("Anesth");
         }
 
         [Test]
@@ -30,11 +30,11 @@ namespace FubuMVC.Tests.Http.Owin
         {
             var dict = runFormReader("a=1&b=2&c=3");
 
-            dict["a"].ShouldEqual("1");
-            dict["b"].ShouldEqual("2");
-            dict["c"].ShouldEqual("3");
+            dict["a"].ShouldBe("1");
+            dict["b"].ShouldBe("2");
+            dict["c"].ShouldBe("3");
 
-            dict.Count.ShouldEqual(3);
+            dict.Count.ShouldBe(3);
         }
 
         private NameValueCollection runFormReader(string formPost)

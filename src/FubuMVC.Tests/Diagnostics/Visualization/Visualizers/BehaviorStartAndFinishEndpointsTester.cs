@@ -30,7 +30,7 @@ namespace FubuMVC.Tests.Diagnostics.Visualization.Visualizers
             finish.LogException(new NotImplementedException());
 
             var tag = new BehaviorStartAndFinishEndpoints().VisualizePartial(finish);
-            tag.Children.FirstOrDefault(x => x.HasClass("exception")).Text().ShouldEqual(
+            tag.Children.FirstOrDefault(x => x.HasClass("exception")).Text().ShouldBe(
                 typeof (NotImplementedException).Name);
 
             tag.Next.ShouldBeOfType<ExceptionReportTag>();

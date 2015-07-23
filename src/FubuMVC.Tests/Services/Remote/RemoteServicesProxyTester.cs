@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Services.Remote
 
             new RemoteServicesProxy().Start(typeof(SimpleLoader).AssemblyQualifiedName, new Dictionary<string, string>{{"Color", "Fuschia"}}, null );
 
-            SimpleLoader.Color.ShouldEqual("Fuschia");
+            SimpleLoader.Color.ShouldBe("Fuschia");
         }
     }
 

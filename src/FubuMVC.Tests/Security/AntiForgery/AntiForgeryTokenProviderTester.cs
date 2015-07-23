@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Security.AntiForgery
             const string original = "?>?>?>?>?>?>?>?>";
             string name = ClassUnderTest.GetTokenName(original);
 
-            name.ShouldEqual(aspName);
+            name.ShouldBe(aspName);
         }
 
 
@@ -30,7 +30,7 @@ namespace FubuMVC.Tests.Security.AntiForgery
             //Token name without path
 
             string name = ClassUnderTest.GetTokenName();
-            name.ShouldEqual(aspName);
+            name.ShouldBe(aspName);
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace FubuMVC.Tests.Security.AntiForgery
             AntiForgeryData token = ClassUnderTest.GenerateToken();
 
             byte[] decodedValue = Convert.FromBase64String(token.Value);
-            decodedValue.Length.ShouldEqual(16);
+            decodedValue.Length.ShouldBe(16);
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace FubuMVC.Tests.Security.AntiForgery
 
             Enumerable.Range(0, 1000000).Each(x => tokens.Add(ClassUnderTest.GenerateToken().Value));
 
-            tokens.Distinct().Count().ShouldEqual(tokens.Count);
+            tokens.Distinct().Count().ShouldBe(tokens.Count);
         }
     }
 }

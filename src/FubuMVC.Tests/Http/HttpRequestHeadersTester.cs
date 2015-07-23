@@ -17,10 +17,10 @@ namespace FubuMVC.Tests.Http
         public void smoke_test_of_the_name_lookup()
         {
             HttpRequestHeaders.HeaderNameFor(HttpRequestHeader.Warning)
-                .ShouldEqual("Warning");
+                .ShouldBe("Warning");
 
             HttpRequestHeaders.HeaderNameFor(HttpRequestHeader.IfNoneMatch)
-                .ShouldEqual("If-None-Match");
+                .ShouldBe("If-None-Match");
         }
 
         [Test]
@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.Http
         {
             var propertyInfo = ReflectionHelper.GetProperty<ETagDto>(x => x.IfModifiedSince);
             HttpRequestHeaders.HeaderDictionaryNameForProperty(propertyInfo.Name)
-                .ShouldEqual("If-Modified-Since");
+                .ShouldBe("If-Modified-Since");
         }
 
         [Test]
@@ -37,7 +37,7 @@ namespace FubuMVC.Tests.Http
             // Not sure what a null will do to us in the model binding,
             // so I'm having it return the property name
             HttpRequestHeaders.HeaderDictionaryNameForProperty("something")
-                .ShouldEqual("something");
+                .ShouldBe("something");
         }
 
 

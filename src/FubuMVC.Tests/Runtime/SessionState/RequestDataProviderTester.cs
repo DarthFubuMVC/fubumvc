@@ -51,9 +51,9 @@ namespace FubuMVC.Tests.SessionState
             _httpContext.VerifyAllExpectations();
             _sessionState.VerifyAllExpectations();
 
-            testing.Property1.ShouldEqual(_flashViewModelForTesting.Property1);
-            testing.Property2.ShouldEqual(_flashViewModelForTesting.Property2);
-            testing.Property3.ShouldEqual(_flashViewModelForTesting.Property3);
+            testing.Property1.ShouldBe(_flashViewModelForTesting.Property1);
+            testing.Property2.ShouldBe(_flashViewModelForTesting.Property2);
+            testing.Property3.ShouldBe(_flashViewModelForTesting.Property3);
         }
 
         [Test]

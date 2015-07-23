@@ -25,15 +25,15 @@ namespace FubuMVC.IntegrationTesting.Views.LayoutAttachment
         {
             Views.Templates<RazorTemplate>()
                 .FirstOrDefault(x => x.Name() == "View1")
-                .Master.ViewPath.ShouldEqual("Shared/Application.cshtml");
+                .Master.ViewPath.ShouldBe("Shared/Application.cshtml");
 
             Views.Templates<RazorTemplate>()
                 .FirstOrDefault(x => x.Name() == "View2")
-                .Master.ViewPath.ShouldEqual("Folder1/Shared/Application.cshtml");
+                .Master.ViewPath.ShouldBe("Folder1/Shared/Application.cshtml");
 
             Views.Templates<RazorTemplate>()
                 .FirstOrDefault(x => x.Name() == "View3")
-                .Master.ViewPath.ShouldEqual("Folder1/Folder2/Shared/Application.cshtml");
+                .Master.ViewPath.ShouldBe("Folder1/Folder2/Shared/Application.cshtml");
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace FubuMVC.IntegrationTesting.Views.LayoutAttachment
         {
             Views.Templates<RazorTemplate>()
                 .FirstOrDefault(x => x.Name() == "View4")
-                .Master.ViewPath.ShouldEqual("Folder1/Folder2/Shared/Application.cshtml");
+                .Master.ViewPath.ShouldBe("Folder1/Folder2/Shared/Application.cshtml");
         }
     }
 }

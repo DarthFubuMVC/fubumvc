@@ -22,8 +22,8 @@ namespace FubuMVC.Tests.Assets
 
             var route = router.Routes().Single();
 
-            route.Name.ShouldEqual("bar");
-            route.Method.ShouldEqual("PUT");
+            route.Name.ShouldBe("bar");
+            route.Method.ShouldBe("PUT");
             route.Finder(null).ShouldBeTheSameAs(chain);
         }
 

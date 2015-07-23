@@ -63,7 +63,7 @@ namespace FubuTransportation.Testing.Runtime.Invocation
             envelope.Callback.AssertWasCalled(x => x.MoveToDelayedUntil(envelope.ExecutionTime.Value));
 
             context.RecordedLogs.InfoMessages.Single().ShouldBeOfType<DelayedEnvelopeReceived>()
-                  .Envelope.ShouldEqual(envelope.ToToken());
+                  .Envelope.ShouldBe(envelope.ToToken());
         }
 
         [Test]
@@ -82,8 +82,8 @@ namespace FubuTransportation.Testing.Runtime.Invocation
 
 
             var report = context.RecordedLogs.ErrorMessages.Single().ShouldBeOfType<FubuCore.Logging.ExceptionReport>();
-            report.CorrelationId.ShouldEqual(envelope.CorrelationId);
-            report.ExceptionText.ShouldEqual(exception.ToString());
+            report.CorrelationId.ShouldBe(envelope.CorrelationId);
+            report.ExceptionText.ShouldBe(exception.ToString());
 
         }
 

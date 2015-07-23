@@ -52,7 +52,7 @@ namespace FubuMVC.Tests.Runtime
         {
             theInvoker.Invoke(theArguments, theRouteData, new RequestCompletion());
             theArguments.Get<ICurrentChain>().ShouldBeOfType<CurrentChain>()
-                .ResourceHash().ShouldEqual(new CurrentChain(theChain, theRouteData).ResourceHash());
+                .ResourceHash().ShouldBe(new CurrentChain(theChain, theRouteData).ResourceHash());
                 
         }
 

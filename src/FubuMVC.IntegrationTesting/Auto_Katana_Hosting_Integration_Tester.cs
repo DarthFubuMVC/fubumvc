@@ -16,7 +16,7 @@ namespace FubuMVC.IntegrationTesting
             {
                 server.Endpoints.Get<KatanaEndpoint>(x => x.get_katana())
                     .ReadAsText()
-                    .ShouldEqual("this is served by katana");
+                    .ShouldBe("this is served by katana");
             }
         }
 
@@ -27,7 +27,7 @@ namespace FubuMVC.IntegrationTesting
             {
                 var client = new WebClient();
                 client.DownloadString("http://localhost:5601/katana")
-                    .ShouldEqual("this is served by katana");
+                    .ShouldBe("this is served by katana");
             }
         }
     }

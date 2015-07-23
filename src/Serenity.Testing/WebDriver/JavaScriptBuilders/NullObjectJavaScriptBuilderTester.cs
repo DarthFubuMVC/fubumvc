@@ -26,7 +26,7 @@ namespace Serenity.Testing.WebDriver.JavaScriptBuilders
         [Test]
         public void ReturnsNullAsString()
         {
-            ClassUnderTest.Build(null).ShouldEqual("null");
+            ClassUnderTest.Build(null).ShouldBe("null");
         }
     }
 }

@@ -32,10 +32,10 @@ namespace FubuMVC.Tests.Registration.Conventions
 
             var chain = graph.Behaviors.First(x => x.ResourceType() == typeof (Foo))
                 .As<RoutedChain>();
-            chain.Route.Pattern.ShouldEqual("foo/{Name}");
+            chain.Route.Pattern.ShouldBe("foo/{Name}");
 
             chain.Route.Input.ShouldBeOfType<RouteInput<Foo>>()
-                .RouteParameters.Single().Name.ShouldEqual("Name");
+                .RouteParameters.Single().Name.ShouldBe("Name");
         }
     }
 

@@ -67,7 +67,7 @@ namespace FubuTransportation.Testing.Sagas
             var messages = theLogger.Traces.Select(x => x.Message);
 
             theLogger.Traces.Select(x => x.Id).Distinct()
-                     .Count().ShouldEqual(1); // should be the same correlation id all the way through
+                     .Count().ShouldBe(1); // should be the same correlation id all the way through
 
             messages
                 .ShouldHaveTheSameElementsAs("Started Jeremy", "Updated Jeremy", "Finished with Updated Jeremy!");
@@ -84,7 +84,7 @@ namespace FubuTransportation.Testing.Sagas
             var messages = theLogger.Traces.Select(x => x.Message);
 
             theLogger.Traces.Select(x => x.Id).Distinct()
-                     .Count().ShouldEqual(1); // should be the same correlation id all the way through
+                     .Count().ShouldBe(1); // should be the same correlation id all the way through
 
             messages
                 .ShouldHaveTheSameElementsAs("Started Jeremy", "Updated Jeremy", "Finished with Updated Jeremy!");

@@ -36,7 +36,7 @@ namespace FubuPersistence.Tests
         {
             ConfigurationManager.AppSettings.Set("Raven/Port", "8081");
 
-            ConfigurationManager.AppSettings.Get("Raven/Port").ShouldEqual("8081");
+            ConfigurationManager.AppSettings.Get("Raven/Port").ShouldBe("8081");
         }
 
     }

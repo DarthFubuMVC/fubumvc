@@ -25,13 +25,13 @@ namespace FubuMVC.Tests.Http
         [Test]
         public void got_the_provenance()
         {
-            theValues.Provenance.ShouldEqual(RequestDataSource.Route.ToString());
+            theValues.Provenance.ShouldBe(RequestDataSource.Route.ToString());
         }
 
         [Test]
         public void get_value()
         {
-            theValues.Get("a").ShouldEqual(1);
+            theValues.Get("a").ShouldBe(1);
         }
 
         [Test]

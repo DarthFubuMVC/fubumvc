@@ -56,9 +56,9 @@ namespace FubuPersistence.Tests.RavenDb
             transaction.Execute<IDocumentSession>(session => session.Query<ThirdEntity>().Customize(x => x.WaitForNonStaleResults()).Any().ShouldBeTrue());
 
             transaction.WithRepository(repo => {
-                repo.All<User>().Count().ShouldEqual(3);
-                repo.All<OtherEntity>().Count().ShouldEqual(2);
-                repo.All<ThirdEntity>().Count().ShouldEqual(1);
+                repo.All<User>().Count().ShouldBe(3);
+                repo.All<OtherEntity>().Count().ShouldBe(2);
+                repo.All<ThirdEntity>().Count().ShouldBe(1);
 
                 wasCalled = true;
             });

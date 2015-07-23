@@ -115,7 +115,7 @@ namespace FubuMVC.Tests.Resources.Hypermedia
             var link = source.As<ILinkSource<Site>>().LinksFor(theTarget, theUrls)
                 .Single();
 
-            link.Url.ShouldEqual("http://site.com");
+            link.Url.ShouldBe("http://site.com");
             link.Rel.ShouldBeNull();
             link.Title.ShouldBeNull();
         }
@@ -129,8 +129,8 @@ namespace FubuMVC.Tests.Resources.Hypermedia
             var link = source.As<ILinkSource<Site>>().LinksFor(theTarget, theUrls)
                 .Single();
 
-            link.Url.ShouldEqual("http://site.com");
-            link.Rel.ShouldEqual("something");
+            link.Url.ShouldBe("http://site.com");
+            link.Rel.ShouldBe("something");
             link.Title.ShouldBeNull();
         }
 
@@ -147,8 +147,8 @@ namespace FubuMVC.Tests.Resources.Hypermedia
             var link = source.As<ILinkSource<Site>>().LinksFor(theTarget, theUrls)
                 .Single();
 
-            link.Url.ShouldEqual("http://site.com");
-            link.Title.ShouldEqual(token.ToString());
+            link.Url.ShouldBe("http://site.com");
+            link.Title.ShouldBe(token.ToString());
         }
 
 

@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Http.AspNet
             var expectedUri = "https://foo.bar:999/baz?x=y";
             request.Stub(r => r.Url).Return(new System.Uri(expectedUri));
             var currentRequest = new AspNetHttpRequest(request, MockFor<HttpResponseBase>());
-            currentRequest.FullUrl().ShouldEqual(expectedUri);
+            currentRequest.FullUrl().ShouldBe(expectedUri);
         }
     }
 }

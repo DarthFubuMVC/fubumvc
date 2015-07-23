@@ -43,7 +43,7 @@ namespace FubuTransportation.Testing.Runtime.Invocation
         [Test]
         public void should_have_incremented_the_attempt_count()
         {
-            theEnvelope.Attempts.ShouldEqual(2);
+            theEnvelope.Attempts.ShouldBe(2);
         }
 
         [Test]
@@ -179,9 +179,9 @@ namespace FubuTransportation.Testing.Runtime.Invocation
         public void should_debug_the_handler_and_continuation_used()
         {
             var log = theLogger.DebugMessages.Single().ShouldBeOfType<EnvelopeContinuationChosen>();
-            log.Envelope.ShouldEqual(theEnvelope.ToToken());
-            log.ContinuationType.ShouldEqual(theContinuation.GetType());
-            log.HandlerType.ShouldEqual(theHandlers[3].GetType());
+            log.Envelope.ShouldBe(theEnvelope.ToToken());
+            log.ContinuationType.ShouldBe(theContinuation.GetType());
+            log.HandlerType.ShouldBe(theHandlers[3].GetType());
         }
     }
 

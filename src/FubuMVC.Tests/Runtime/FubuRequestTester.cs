@@ -188,7 +188,7 @@ namespace FubuMVC.Tests.Runtime
             request.Get<BinderTarget>().ShouldBeTheSameAs(registered);
             request.Get<BinderTarget>().ShouldBeTheSameAs(registered);
 
-            request.ProblemsFor<BinderTarget>().Count().ShouldEqual(0);
+            request.ProblemsFor<BinderTarget>().Count().ShouldBe(0);
         }
 
         [Test]
@@ -196,7 +196,7 @@ namespace FubuMVC.Tests.Runtime
         {
             request.SetObject(registered);
 
-            logs.DebugMessages.Single().ShouldEqual(new SetValueReport(registered));
+            logs.DebugMessages.Single().ShouldBe(new SetValueReport(registered));
         }
 
         [Test]
@@ -208,7 +208,7 @@ namespace FubuMVC.Tests.Runtime
             request.Get<BinderTarget>().ShouldBeTheSameAs(registered);
             request.Get<BinderTarget>().ShouldBeTheSameAs(registered);
 
-            request.ProblemsFor<BinderTarget>().Count().ShouldEqual(0);
+            request.ProblemsFor<BinderTarget>().Count().ShouldBe(0);
         }
 
         [Test]
@@ -216,7 +216,7 @@ namespace FubuMVC.Tests.Runtime
         {
             request.Set<BinderTargetBase>(registered);
 
-            logs.DebugMessages.Single().ShouldEqual(SetValueReport.For<BinderTargetBase>(registered));
+            logs.DebugMessages.Single().ShouldBe(SetValueReport.For<BinderTargetBase>(registered));
         }
     }
 

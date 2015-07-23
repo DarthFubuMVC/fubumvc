@@ -10,13 +10,13 @@ namespace FubuMVC.Tests
     {
         public static IContainer DefaultRegistrationIs<T, TConcrete>(this IContainer container) where TConcrete : T
         {
-            container.Model.DefaultTypeFor<T>().ShouldEqual(typeof (TConcrete));
+            container.Model.DefaultTypeFor<T>().ShouldBe(typeof (TConcrete));
             return container;
         }
 
         public static IContainer DefaultRegistrationIs(this IContainer container, Type pluginType, Type concreteType)
         {
-            container.Model.DefaultTypeFor(pluginType).ShouldEqual(concreteType);
+            container.Model.DefaultTypeFor(pluginType).ShouldBe(concreteType);
 
             return container;
         }

@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Projections
             projection.As<IProjection<HoldsProjectsItself>>()
                 .Accessors()
                 .Single()
-                .ShouldEqual(accessor);
+                .ShouldBe(accessor);
         }
     }
 

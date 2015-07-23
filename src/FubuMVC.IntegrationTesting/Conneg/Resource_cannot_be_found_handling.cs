@@ -11,7 +11,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
         public void the_resource_not_found_handler_should_kick_in()
         {
             var response = endpoints.Get<MissingResourceEndpoint>(x => x.get_missing());
-            response.StatusCode.ShouldEqual(HttpStatusCode.NotFound);
+            response.StatusCode.ShouldBe(HttpStatusCode.NotFound);
         }
     }
 

@@ -53,11 +53,11 @@ namespace FubuPersistence.Tests.RavenDb.Integration
         {
             theContainer.GetInstance<IDocumentStore<SecondDbSettings>>()
                         .Conventions.DefaultQueryingConsistency
-                        .ShouldEqual(ConsistencyOptions.MonotonicRead);
+                        .ShouldBe(ConsistencyOptions.MonotonicRead);
 
             theContainer.GetInstance<IDocumentStore<ThirdDbSettings>>()
                         .Conventions.DefaultQueryingConsistency
-                        .ShouldEqual(ConsistencyOptions.QueryYourWrites);
+                        .ShouldBe(ConsistencyOptions.QueryYourWrites);
         }
 
         [Test]
@@ -84,17 +84,17 @@ namespace FubuPersistence.Tests.RavenDb.Integration
         public void default_raven_store_is_identified_as_Default()
         {
             theContainer.GetInstance<IDocumentStore>()
-                        .Identifier.ShouldEqual("Default");
+                        .Identifier.ShouldBe("Default");
         }
 
         [Test]
         public void other_raven_stores_are_identified_as_the_type()
         {
             theContainer.GetInstance<IDocumentStore<SecondDbSettings>>()
-                        .Identifier.ShouldEqual("SecondDbSettings");
+                        .Identifier.ShouldBe("SecondDbSettings");
 
             theContainer.GetInstance<IDocumentStore<ThirdDbSettings>>()
-                        .Identifier.ShouldEqual("ThirdDbSettings");
+                        .Identifier.ShouldBe("ThirdDbSettings");
         }
 
 
@@ -109,22 +109,22 @@ namespace FubuPersistence.Tests.RavenDb.Integration
             transaction.Execute<IDocumentSession<ThirdDbSettings>>(x => x.Store(foo2));
 
             transaction.Execute<IDocumentSession<SecondDbSettings>>(session => {
-                session.Load<Foo>(foo1.Id).Name.ShouldEqual("Jeremy");
+                session.Load<Foo>(foo1.Id).Name.ShouldBe("Jeremy");
             });
 
             transaction.Execute<IDocumentSession<ThirdDbSettings>>(session =>
             {
-                session.Load<Foo>(foo1.Id).Name.ShouldEqual("Josh");
+                session.Load<Foo>(foo1.Id).Name.ShouldBe("Josh");
             });
 
             transaction.Execute<IDocumentSession<SecondDbSettings>>(session =>
             {
-                session.Load<Foo>(foo1.Id).Name.ShouldEqual("Jeremy");
+                session.Load<Foo>(foo1.Id).Name.ShouldBe("Jeremy");
             });
 
             transaction.Execute<IDocumentSession<ThirdDbSettings>>(session =>
             {
-                session.Load<Foo>(foo1.Id).Name.ShouldEqual("Josh");
+                session.Load<Foo>(foo1.Id).Name.ShouldBe("Josh");
             });
         }
     }

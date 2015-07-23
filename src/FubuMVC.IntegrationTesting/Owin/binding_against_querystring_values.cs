@@ -17,7 +17,7 @@ namespace FubuMVC.IntegrationTesting.Owin
             };
 
             Harness.Endpoints.GetByInput(model).ReadAsText()
-                .ShouldEqual(model.ToString());
+                .ShouldBe(model.ToString());
         }
     }
 

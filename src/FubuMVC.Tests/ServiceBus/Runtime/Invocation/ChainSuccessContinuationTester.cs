@@ -59,7 +59,7 @@ namespace FubuTransportation.Testing.Runtime.Invocation
         public void should_log_the_chain_success()
         {
             theContinuationContext.RecordedLogs.InfoMessages.Single()
-                .ShouldEqual(new MessageSuccessful { Envelope = theEnvelope.ToToken() });
+                .ShouldBe(new MessageSuccessful { Envelope = theEnvelope.ToToken() });
         }
     }
 
@@ -110,14 +110,14 @@ namespace FubuTransportation.Testing.Runtime.Invocation
             var report = theContinuationContext.RecordedLogs.ErrorMessages.Single()
                 .As<ExceptionReport>();
 
-            report.ExceptionText.ShouldEqual(theException.ToString());
+            report.ExceptionText.ShouldBe(theException.ToString());
         }
 
         [Test]
         public void should_send_a_failure_ack()
         {
             theContinuationContext.RecordedOutgoing.FailureAcknowledgementMessage
-                .ShouldEqual("Sending cascading message failed: Failure");
+                .ShouldBe("Sending cascading message failed: Failure");
         }
     }
 }

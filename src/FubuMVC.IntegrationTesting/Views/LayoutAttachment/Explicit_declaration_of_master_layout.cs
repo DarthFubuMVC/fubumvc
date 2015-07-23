@@ -25,7 +25,7 @@ namespace FubuMVC.IntegrationTesting.Views.LayoutAttachment
             var view1 = Views.Templates<RazorTemplate>().FirstOrDefault(x => x.Name() == "View1");
 
             view1.Master.ShouldNotBeNull();
-            view1.Master.Name().ShouldEqual("Special");
+            view1.Master.Name().ShouldBe("Special");
         }
     }
 }

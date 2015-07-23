@@ -41,7 +41,7 @@ namespace FubuMVC.Tests.NewConneg
         public void implements_the_IMayHaveResourceType_interface()
         {
             var node = new OutputNode(typeof (Address));
-            node.As<IMayHaveResourceType>().ResourceType().ShouldEqual(node.ResourceType);
+            node.As<IMayHaveResourceType>().ResourceType().ShouldBe(node.ResourceType);
         }
 
         [Test]
@@ -53,7 +53,7 @@ namespace FubuMVC.Tests.NewConneg
             var def = node.As<IContainerModel>().ToInstance().As<IConfiguredInstance>();
 
             def.FindDependencyDefinitionFor<IResourceNotFoundHandler>()
-                .ReturnedType.ShouldEqual(typeof (MyFakeResourceNotHandler));
+                .ReturnedType.ShouldBe(typeof (MyFakeResourceNotHandler));
         }
 
         [Test]

@@ -88,7 +88,7 @@ namespace FubuTransportation.LightningQueues.Testing
             Wait.Until(() => TestMessageRecorder.HasProcessed(message4)).ShouldBeTrue();
 
             // If it's more than this, we got problems
-            TestMessageRecorder.AllProcessed.Count().ShouldEqual(4);
+            TestMessageRecorder.AllProcessed.Count().ShouldBe(4);
         }
 
 

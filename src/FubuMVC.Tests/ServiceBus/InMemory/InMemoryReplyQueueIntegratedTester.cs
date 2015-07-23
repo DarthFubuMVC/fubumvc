@@ -47,7 +47,7 @@ namespace FubuMVC.Tests.ServiceBus.InMemory
         [Test]
         public void key_is_derivative_from_the_transport()
         {
-            theReplyNode.Key.ShouldEqual("memory:replies");
+            theReplyNode.Key.ShouldBe("memory:replies");
         }
 
         [Test]

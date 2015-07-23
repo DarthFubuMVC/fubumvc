@@ -54,7 +54,7 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
         public void content_type_with_out_any_headers()
         {
             var log = new RequestLog();
-            log.ContentType.ShouldEqual("Unknown");
+            log.ContentType.ShouldBe("Unknown");
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
             var log = new RequestLog();
             log.ResponseHeaders = new Header[0];
 
-            log.ContentType.ShouldEqual("Unknown");
+            log.ContentType.ShouldBe("Unknown");
         }
 
         [Test]
@@ -72,7 +72,7 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
             var log = new RequestLog();
             log.ResponseHeaders = new Header[]{new Header(HttpResponseHeader.ContentType, MimeType.Javascript.Value)};
 
-            log.ContentType.ShouldEqual(MimeType.Javascript.Value);
+            log.ContentType.ShouldBe(MimeType.Javascript.Value);
         }
     }
 

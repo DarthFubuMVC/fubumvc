@@ -27,13 +27,13 @@ namespace FubuMVC.Tests.View
         [Test]
         public void the_default_shared_folders_are_just_Shared()
         {
-            _runner.SharedLayoutFolders.Single().ShouldEqual("Shared");
+            _runner.SharedLayoutFolders.Single().ShouldBe("Shared");
         }
 
         [Test]
         public void the_default_application_layout_is_Application()
         {
-            _runner.ApplicationLayoutName.ShouldEqual("Application");
+            _runner.ApplicationLayoutName.ShouldBe("Application");
         }
 
         [Test]

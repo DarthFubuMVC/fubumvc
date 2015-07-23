@@ -19,14 +19,14 @@ namespace FubuMVC.Tests.Security.Authorization
                 Rights = AuthorizationRight.Allow
             });
 
-            policy.RightsFor(context).ShouldEqual(AuthorizationRight.Allow);
+            policy.RightsFor(context).ShouldBe(AuthorizationRight.Allow);
 
             context.Services.As<InMemoryServiceLocator>().Add(new AuthCheckingService
             {
                 Rights = AuthorizationRight.Deny
             });
 
-            policy.RightsFor(context).ShouldEqual(AuthorizationRight.Deny);
+            policy.RightsFor(context).ShouldBe(AuthorizationRight.Deny);
         }
 
         [Test]
@@ -40,14 +40,14 @@ namespace FubuMVC.Tests.Security.Authorization
                 IsOk = true
             });
 
-            policy.RightsFor(context).ShouldEqual(AuthorizationRight.Allow);
+            policy.RightsFor(context).ShouldBe(AuthorizationRight.Allow);
 
             context.Services.As<InMemoryServiceLocator>().Add(new AuthCheckingService
             {
                 IsOk = false
             });
 
-            policy.RightsFor(context).ShouldEqual(AuthorizationRight.Deny);
+            policy.RightsFor(context).ShouldBe(AuthorizationRight.Deny);
         }
     }
 

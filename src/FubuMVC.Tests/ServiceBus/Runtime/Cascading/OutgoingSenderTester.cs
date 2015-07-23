@@ -75,10 +75,10 @@ namespace FubuTransportation.Testing.Runtime.Cascading
                 .As<Envelope>();
             envelope.ShouldNotBeNull();
 
-            envelope.ResponseId.ShouldEqual(original.CorrelationId);
-            envelope.Destination.ShouldEqual(original.ReplyUri);
-            envelope.Message.ShouldEqual(new Acknowledgement {CorrelationId = original.CorrelationId});
-            envelope.ParentId.ShouldEqual(original.CorrelationId);
+            envelope.ResponseId.ShouldBe(original.CorrelationId);
+            envelope.Destination.ShouldBe(original.ReplyUri);
+            envelope.Message.ShouldBe(new Acknowledgement {CorrelationId = original.CorrelationId});
+            envelope.ParentId.ShouldBe(original.CorrelationId);
         }
 
         [Test]
@@ -152,31 +152,31 @@ namespace FubuTransportation.Testing.Runtime.Cascading
         [Test]
         public void the_message_should_be_what_was_requested()
         {
-            theAck.Message.ShouldEqual("you stink");
+            theAck.Message.ShouldBe("you stink");
         }
 
         [Test]
         public void should_have_The_parent_id_set_to_the_original_id_for_tracking()
         {
-            theSentEnvelope.ParentId.ShouldEqual(original.CorrelationId);
+            theSentEnvelope.ParentId.ShouldBe(original.CorrelationId);
         }
 
         [Test]
         public void should_have_The_correlation_id_from_the_original_envelope()
         {
-            theAck.CorrelationId.ShouldEqual(original.CorrelationId);
+            theAck.CorrelationId.ShouldBe(original.CorrelationId);
         }
 
         [Test]
         public void should_be_sent_back_to_the_requester()
         {
-            theSentEnvelope.Destination.ShouldEqual(original.ReplyUri);
+            theSentEnvelope.Destination.ShouldBe(original.ReplyUri);
         }
 
         [Test]
         public void the_response_id_going_back_should_be_the_original_correlation_id()
         {
-            theSentEnvelope.ResponseId.ShouldEqual(original.CorrelationId);
+            theSentEnvelope.ResponseId.ShouldBe(original.CorrelationId);
         }
     }
 
@@ -216,25 +216,25 @@ namespace FubuTransportation.Testing.Runtime.Cascading
         [Test]
         public void the_message_should_be_what_was_requested()
         {
-            theAck.Message.ShouldEqual("you stink");
+            theAck.Message.ShouldBe("you stink");
         }
 
         [Test]
         public void should_have_The_correlation_id_from_the_original_envelope()
         {
-            theAck.CorrelationId.ShouldEqual(original.CorrelationId);
+            theAck.CorrelationId.ShouldBe(original.CorrelationId);
         }
 
         [Test]
         public void should_be_sent_back_to_the_requester()
         {
-            theSentEnvelope.Destination.ShouldEqual(original.ReplyUri);
+            theSentEnvelope.Destination.ShouldBe(original.ReplyUri);
         }
 
         [Test]
         public void the_response_id_going_back_should_be_the_original_correlation_id()
         {
-            theSentEnvelope.ResponseId.ShouldEqual(original.CorrelationId);
+            theSentEnvelope.ResponseId.ShouldBe(original.CorrelationId);
         }
     }
 

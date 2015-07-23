@@ -76,15 +76,15 @@ namespace FubuMVC.Tests.Http
         {
             theRequest.RelativeUrl("");
             theRequest.ToRelativeContentUrl("/foo")
-                .ShouldEqual("foo");
+                .ShouldBe("foo");
 
             theRequest.RelativeUrl("/bar");
             theRequest.ToRelativeContentUrl("/foo")
-                .ShouldEqual("../foo");
+                .ShouldBe("../foo");
 
             theRequest.RelativeUrl("/bar");
             theRequest.ToRelativeContentUrl("/bar/1")
-                .ShouldEqual("1");
+                .ShouldBe("1");
 
 
         }
@@ -106,7 +106,7 @@ namespace FubuMVC.Tests.Http
         public void etag_matches_with_no_values()
         {
             new string[0].EtagMatches("foo")
-                .ShouldEqual(EtagMatch.None);
+                .ShouldBe(EtagMatch.None);
         }
 
         [Test]
@@ -114,7 +114,7 @@ namespace FubuMVC.Tests.Http
         {
             new string[] {"a", "*", "b"}
                 .EtagMatches("foo")
-                .ShouldEqual(EtagMatch.Yes);
+                .ShouldBe(EtagMatch.Yes);
         }
 
         [Test]
@@ -122,7 +122,7 @@ namespace FubuMVC.Tests.Http
         {
             new string[] {"a", "b", "foo"}
                 .EtagMatches("foo")
-                .ShouldEqual(EtagMatch.Yes);
+                .ShouldBe(EtagMatch.Yes);
         }
 
         [Test]
@@ -130,7 +130,7 @@ namespace FubuMVC.Tests.Http
         {
             new string[] { "a", "b", "bar" }
                 .EtagMatches("foo")
-                .ShouldEqual(EtagMatch.No);
+                .ShouldBe(EtagMatch.No);
         }
     }
 }

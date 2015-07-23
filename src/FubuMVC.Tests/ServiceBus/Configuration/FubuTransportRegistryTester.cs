@@ -15,13 +15,13 @@ namespace FubuTransportation.Testing.Configuration
         {
             using (var runtime = FubuTransport.For<CustomTransportRegistry>().Bootstrap())
             {
-                runtime.Factory.Get<ChannelGraph>().Name.ShouldEqual("custom");
+                runtime.Factory.Get<ChannelGraph>().Name.ShouldBe("custom");
             }
 
             using (var fubuRuntime = FubuTransport.For<OtherRegistry>().Bootstrap())
             {
                 fubuRuntime
-                    .Factory.Get<ChannelGraph>().Name.ShouldEqual("other");
+                    .Factory.Get<ChannelGraph>().Name.ShouldBe("other");
             }
         }
 
@@ -34,7 +34,7 @@ namespace FubuTransportation.Testing.Configuration
             }).Bootstrap())
             {
                 fubuRuntime
-                    .Factory.Get<ChannelGraph>().Name.ShouldEqual("MyNode");
+                    .Factory.Get<ChannelGraph>().Name.ShouldBe("MyNode");
             }
         }
     }

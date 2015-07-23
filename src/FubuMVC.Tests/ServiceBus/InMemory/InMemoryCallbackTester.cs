@@ -20,7 +20,7 @@ namespace FubuTransportation.Testing.InMemory
             callback.MoveToDelayedUntil(DateTime.Now);
 
             var delayed = InMemoryQueueManager.DelayedEnvelopes().Single();
-            delayed.CorrelationId.ShouldEqual(envelope.CorrelationId);
+            delayed.CorrelationId.ShouldBe(envelope.CorrelationId);
             delayed.ExecutionTime.ShouldNotBeNull();
         }
     }

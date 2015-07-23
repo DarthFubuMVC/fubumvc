@@ -39,7 +39,7 @@ namespace FubuTransportation.Testing.Runtime.Serializers
             envelope.Message = theSerializer.Deserialize(envelope);
 
             envelope.Message.ShouldNotBeTheSameAs(theAddress);
-            envelope.Message.ShouldEqual(theAddress);
+            envelope.Message.ShouldBe(theAddress);
         }
 
         [Test]
@@ -61,12 +61,12 @@ namespace FubuTransportation.Testing.Runtime.Serializers
 
             theSerializer.Serialize(envelope, new ChannelNode());
 
-            envelope.ContentType.ShouldEqual(theGraph.DefaultContentType);
+            envelope.ContentType.ShouldBe(theGraph.DefaultContentType);
 
             envelope.Message = theSerializer.Deserialize(envelope);
 
             envelope.Message.ShouldNotBeTheSameAs(theAddress);
-            envelope.Message.ShouldEqual(theAddress);
+            envelope.Message.ShouldBe(theAddress);
 
         }
     }

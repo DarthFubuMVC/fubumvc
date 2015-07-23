@@ -35,7 +35,7 @@ namespace FubuTransportation.Testing
             ClassUnderTest.DelaySend(theMessage, expectedTime);
 
             theLastEnvelopeSent.Message.ShouldBeTheSameAs(theMessage);
-            theLastEnvelopeSent.ExecutionTime.ShouldEqual(expectedTime.ToUniversalTime());
+            theLastEnvelopeSent.ExecutionTime.ShouldBe(expectedTime.ToUniversalTime());
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace FubuTransportation.Testing
             ClassUnderTest.DelaySend(theMessage, 5.Hours());
 
             theLastEnvelopeSent.Message.ShouldBeTheSameAs(theMessage);
-            theLastEnvelopeSent.ExecutionTime.ShouldEqual(UtcSystemTime.AddHours(5));
+            theLastEnvelopeSent.ExecutionTime.ShouldBe(UtcSystemTime.AddHours(5));
         }
     }
 }

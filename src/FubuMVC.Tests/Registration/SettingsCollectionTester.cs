@@ -45,7 +45,7 @@ namespace FubuMVC.Tests.Registration
             theSettings.Replace(new FakeSettings{Hometown = "Austin"});
 
             theSettings.Get<FakeSettings>().ShouldNotBeTheSameAs(theParent.Get<FakeSettings>());
-            theSettings.Get<FakeSettings>().Hometown.ShouldEqual("Austin");
+            theSettings.Get<FakeSettings>().Hometown.ShouldBe("Austin");
         }
 
         [Test]
@@ -82,7 +82,7 @@ namespace FubuMVC.Tests.Registration
             theSettings.Alter<FakeSettings>(x => x.Hometown = "Austin");
 
             theParent.Get<FakeSettings>().Hometown.ShouldNotEqual("Austin");
-            theSettings.Get<FakeSettings>().Hometown.ShouldEqual("Austin");
+            theSettings.Get<FakeSettings>().Hometown.ShouldBe("Austin");
         }
 
         [Test]
@@ -91,7 +91,7 @@ namespace FubuMVC.Tests.Registration
             theSettings.Alter<AppSettings>(fake => fake.Name = "Shiner");
 
             theSettings.Get<AppSettings>().ShouldBeTheSameAs(theParent.Get<AppSettings>());
-            theSettings.Get<AppSettings>().Name.ShouldEqual("Shiner");
+            theSettings.Get<AppSettings>().Name.ShouldBe("Shiner");
         }
     }
 
@@ -110,7 +110,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void get_can_happily_create_the_default()
         {
-            theSettings.Get<FakeSettings>().ShouldEqual(new FakeSettings());
+            theSettings.Get<FakeSettings>().ShouldBe(new FakeSettings());
         }
 
         [Test]
@@ -118,7 +118,7 @@ namespace FubuMVC.Tests.Registration
         {
             theSettings.Replace(new FakeSettings{Name = "Lindsey", Hometown = "San Antonio"});
 
-            theSettings.Get<FakeSettings>().ShouldEqual(new FakeSettings { Name = "Lindsey", Hometown = "San Antonio" });
+            theSettings.Get<FakeSettings>().ShouldBe(new FakeSettings { Name = "Lindsey", Hometown = "San Antonio" });
         }
 
         [Test]
@@ -132,7 +132,7 @@ namespace FubuMVC.Tests.Registration
             });
 
             theSettings.Get<FakeSettings>().ShouldBeTheSameAs(original);
-            theSettings.Get<FakeSettings>().Name.ShouldEqual("Max");
+            theSettings.Get<FakeSettings>().Name.ShouldBe("Max");
         }
 
         [Test]

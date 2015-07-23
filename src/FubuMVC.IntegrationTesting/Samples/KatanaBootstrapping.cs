@@ -84,7 +84,7 @@ namespace FubuMVC.IntegrationTesting.Samples
 
                 // Access to the EndpointDriver for the running application
                 server.Endpoints.Get<HelloEndpoint>(x => x.get_greeting())
-                    .StatusCode.ShouldEqual(HttpStatusCode.OK);
+                    .StatusCode.ShouldBe(HttpStatusCode.OK);
 
                 // Access to the IUrlRegistry for the running application
                 // to resolve Url's

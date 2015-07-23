@@ -24,7 +24,7 @@ namespace FubuMVC.Tests.Localization
 
             using (var runtime = FubuApplication.For(registry).Bootstrap())
             {
-                runtime.Container.GetInstance<CultureInfo>().Name.ShouldEqual("en-US");
+                runtime.Container.GetInstance<CultureInfo>().Name.ShouldBe("en-US");
                 runtime.Container.DefaultRegistrationIs<ICurrentCultureContext, CurrentCultureContext>();
                 runtime.Container.DefaultRegistrationIs<ILocalizationMissingHandler, LocalizationMissingHandler>();
                 runtime.Container.DefaultRegistrationIs<ILocalizationProviderFactory, LocalizationProviderFactory>();
@@ -60,7 +60,7 @@ namespace FubuMVC.Tests.Localization
 
             using (var runtime = FubuApplication.For(registry).Bootstrap())
             {
-                runtime.Container.GetInstance<CultureInfo>().Name.ShouldEqual("en-CA");
+                runtime.Container.GetInstance<CultureInfo>().Name.ShouldBe("en-CA");
             }
         }
 

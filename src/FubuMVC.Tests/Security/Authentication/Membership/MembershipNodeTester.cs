@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.Security.Authentication.Membership
             var def = node.As<IContainerModel>().ToInstance().As<IConfiguredInstance>();
 
             def.FindDependencyDefinitionFor<IMembershipRepository>()
-                .ReturnedType.ShouldEqual(typeof(FlatFileMembershipRepository));
+                .ReturnedType.ShouldBe(typeof(FlatFileMembershipRepository));
         }
     }
 }

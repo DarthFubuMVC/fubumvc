@@ -23,8 +23,8 @@ namespace FubuTransportation.Testing.Monitoring
             var message = new TaskActivationFailure("foo://1".ToUri());
             modifier.Modify(message);
 
-            message.NodeId.ShouldEqual(theChannel.NodeId);
-            message.Machine.ShouldEqual(Environment.MachineName);
+            message.NodeId.ShouldBe(theChannel.NodeId);
+            message.Machine.ShouldBe(Environment.MachineName);
         }
     }
 }

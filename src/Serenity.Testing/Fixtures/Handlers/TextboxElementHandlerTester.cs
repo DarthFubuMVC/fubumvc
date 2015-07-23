@@ -71,14 +71,14 @@ namespace Serenity.Testing.Fixtures.Handlers
         public void should_be_able_to_get_text_from_field()
         {
             var textbox1 = Driver.FindElement(_textboxById);
-            _handler.GetData(null, textbox1).ShouldEqual(TheText);
+            _handler.GetData(null, textbox1).ShouldBe(TheText);
         }
 
         [Test]
         public void should_be_able_to_get_text_from_field_password()
         {
             var textbox1 = Driver.FindElement(_passwordTextboxById);
-            _handler.GetData(null, textbox1).ShouldEqual(TheText);
+            _handler.GetData(null, textbox1).ShouldBe(TheText);
         }
 
         [Test]
@@ -87,7 +87,7 @@ namespace Serenity.Testing.Fixtures.Handlers
             const string input = "Index There";
             var textbox1 = Driver.FindElement(_textboxById);
             _handler.EnterData(null, textbox1, input);
-            _handler.GetData(null, textbox1).ShouldEqual(input);
+            _handler.GetData(null, textbox1).ShouldBe(input);
         }
 
         [Test]
@@ -96,7 +96,7 @@ namespace Serenity.Testing.Fixtures.Handlers
             const string input = "Index There";
             var textbox1 = Driver.FindElement(_passwordTextboxById);
             _handler.EnterData(null, textbox1, input);
-            _handler.GetData(null, textbox1).ShouldEqual(input);
+            _handler.GetData(null, textbox1).ShouldBe(input);
         }
 
         [Test]

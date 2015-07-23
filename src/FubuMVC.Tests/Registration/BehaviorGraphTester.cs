@@ -60,7 +60,7 @@ namespace FubuMVC.Tests.Registration
         {
             var graph = new BehaviorGraph();
 
-            graph.Settings.Get<SessionStateRequirement>().ShouldEqual(SessionStateRequirement.RequiresSessionState);
+            graph.Settings.Get<SessionStateRequirement>().ShouldBe(SessionStateRequirement.RequiresSessionState);
         }
 
 
@@ -91,7 +91,7 @@ namespace FubuMVC.Tests.Registration
             var graph = new BehaviorGraph();
             graph.Version = "2.3";
 
-            graph.Version.ShouldEqual("2.3");
+            graph.Version.ShouldBe("2.3");
         }
 
         [Test]
@@ -103,7 +103,7 @@ namespace FubuMVC.Tests.Registration
             };
 
 
-            graph.Version.ShouldEqual(Assembly.GetExecutingAssembly().GetName().Version);
+            graph.Version.ShouldBe(Assembly.GetExecutingAssembly().GetName().Version);
         }
     }
 
@@ -159,8 +159,8 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void find_the_chain_matching_the_call()
         {
-            graph.IdForCall(ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null))).ShouldEqual(chain1.UniqueId);
-            graph.IdForCall(ActionCall.For<ControllerTarget>(x => x.OneInZeroOut(null))).ShouldEqual(chain2.UniqueId);
+            graph.IdForCall(ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null))).ShouldBe(chain1.UniqueId);
+            graph.IdForCall(ActionCall.For<ControllerTarget>(x => x.OneInZeroOut(null))).ShouldBe(chain2.UniqueId);
         }
 
         [Test]
@@ -168,7 +168,7 @@ namespace FubuMVC.Tests.Registration
         {
             Exception<FubuException>.ShouldBeThrownBy(
                 () => { graph.IdForCall(ActionCall.For<ControllerTarget>(x => x.ZeroInOneOut())); }).ErrorCode.
-                ShouldEqual(2152);
+                ShouldBe(2152);
         }
     }
 
@@ -180,7 +180,7 @@ namespace FubuMVC.Tests.Registration
         public void should_throw_2150_if_the_input_type_cannot_be_found()
         {
             Exception<FubuException>.ShouldBeThrownBy(() => { new BehaviorGraph().IdForType(typeof (Model1)); }).
-                ErrorCode.ShouldEqual(2150);
+                ErrorCode.ShouldBe(2150);
         }
 
         [Test]
@@ -191,7 +191,7 @@ namespace FubuMVC.Tests.Registration
             graph.AddChain(BehaviorChain.For<ControllerTarget>(x => x.OneInOneOut(null)));
             graph.AddChain(BehaviorChain.For<ControllerTarget>(x => x.OneInZeroOut(null)));
 
-            Exception<FubuException>.ShouldBeThrownBy(() => { graph.IdForType(typeof (Model1)); }).ErrorCode.ShouldEqual
+            Exception<FubuException>.ShouldBeThrownBy(() => { graph.IdForType(typeof (Model1)); }).ErrorCode.ShouldBe
                 (2151);
         }
 
@@ -202,7 +202,7 @@ namespace FubuMVC.Tests.Registration
 
             var chain = BehaviorChain.For<ControllerTarget>(x => x.OneInOneOut(null));
             graph.AddChain(chain);
-            graph.IdForType(typeof (Model1)).ShouldEqual(chain.UniqueId);
+            graph.IdForType(typeof (Model1)).ShouldBe(chain.UniqueId);
         }
     }
 

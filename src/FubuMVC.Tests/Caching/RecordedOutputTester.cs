@@ -90,7 +90,7 @@ namespace FubuMVC.Tests.Caching
         public void the_get_text_method_appends_text_output_in_order()
         {            
             addOutputs(new WriteTextOutput("hep"), new WriteTextOutput("hey"));
-            theRecordedOutput.GetText().ShouldEqual("hephey");
+            theRecordedOutput.GetText().ShouldBe("hephey");
         }
 
         [Test]
@@ -100,11 +100,11 @@ namespace FubuMVC.Tests.Caching
             document.WithRoot("root");
 
             theRecordedOutput.Write("text/xml", document.Save);
-            theRecordedOutput.Outputs.First().ShouldEqual(new SetContentType("text/xml"));
+            theRecordedOutput.Outputs.First().ShouldBe(new SetContentType("text/xml"));
 
             var writeStream = theRecordedOutput.Outputs.Last().ShouldBeOfType<WriteStream>();
 
-            writeStream.ReadAll().ShouldEqual(document.OuterXml);
+            writeStream.ReadAll().ShouldBe(document.OuterXml);
         }
 
         [Test]
@@ -160,7 +160,7 @@ namespace FubuMVC.Tests.Caching
             var writer = new StringWriter();
             var writeText = new WriteTextOutput("jambalay");
             writeText.WriteText(writer);
-            writer.ToString().ShouldEqual("jambalay");
+            writer.ToString().ShouldBe("jambalay");
         }
 
         [Test]
@@ -177,7 +177,7 @@ namespace FubuMVC.Tests.Caching
 
             writeStream.Replay(recordingWriter);
 
-            recordingWriter.AllText().Trim().ShouldEqual("Hello!");
+            recordingWriter.AllText().Trim().ShouldBe("Hello!");
         }
 
         [Test]

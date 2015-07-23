@@ -20,9 +20,9 @@ namespace FubuPersistence.Tests.InMemory
             persistor.Persist(new OtherEntity());
             persistor.Persist(new ThirdEntity());
 
-            persistor.LoadAll<User>().Count().ShouldEqual(3);
-            persistor.LoadAll<OtherEntity>().Count().ShouldEqual(2);
-            persistor.LoadAll<ThirdEntity>().Count().ShouldEqual(1);
+            persistor.LoadAll<User>().Count().ShouldBe(3);
+            persistor.LoadAll<OtherEntity>().Count().ShouldBe(2);
+            persistor.LoadAll<ThirdEntity>().Count().ShouldBe(1);
         }
 
         [Test]
@@ -50,9 +50,9 @@ namespace FubuPersistence.Tests.InMemory
 
             persistor.DeleteAll<ThirdEntity>();
 
-            persistor.LoadAll<User>().Count().ShouldEqual(3);
-            persistor.LoadAll<OtherEntity>().Count().ShouldEqual(2);
-            persistor.LoadAll<ThirdEntity>().Count().ShouldEqual(0);
+            persistor.LoadAll<User>().Count().ShouldBe(3);
+            persistor.LoadAll<OtherEntity>().Count().ShouldBe(2);
+            persistor.LoadAll<ThirdEntity>().Count().ShouldBe(0);
         }
 
         [Test]
@@ -67,7 +67,7 @@ namespace FubuPersistence.Tests.InMemory
 
             persistor.Remove(user1);
 
-            persistor.LoadAll<User>().Count().ShouldEqual(2);
+            persistor.LoadAll<User>().Count().ShouldBe(2);
             persistor.LoadAll<User>().ShouldNotContain(user1);
         }
 
@@ -83,7 +83,7 @@ namespace FubuPersistence.Tests.InMemory
             });
             persistor.Persist(new User());
 
-            persistor.FindBy<User>(x => x.FirstName == "Jeremy").FirstName.ShouldEqual("Jeremy");
+            persistor.FindBy<User>(x => x.FirstName == "Jeremy").FirstName.ShouldBe("Jeremy");
         }
     }
 }

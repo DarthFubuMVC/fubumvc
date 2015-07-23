@@ -36,7 +36,7 @@ namespace FubuMVC.Tests.Http
         public void get_with_only_one_value()
         {
             theRequest.Header("a", "1");
-            theSource.Get("a").ShouldEqual("1");
+            theSource.Get("a").ShouldBe("1");
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace FubuMVC.Tests.Http
         {
             theRequest.Header("a", "1", "2", "3");
 
-            theSource.Get("a").ShouldEqual(new string[] { "1", "2", "3" });
+            theSource.Get("a").ShouldBe(new string[] { "1", "2", "3" });
         }
 
         [Test]
@@ -60,9 +60,9 @@ namespace FubuMVC.Tests.Http
         {
             theRequest.Header("a", "1");
             theSource.Value("a", v => {
-                v.RawKey.ShouldEqual("a");
-                v.RawValue.ShouldEqual("1");
-                v.Source.ShouldEqual(RequestDataSource.Header.ToString());
+                v.RawKey.ShouldBe("a");
+                v.RawValue.ShouldBe("1");
+                v.Source.ShouldBe(RequestDataSource.Header.ToString());
             }).ShouldBeTrue();
         }
 
@@ -73,9 +73,9 @@ namespace FubuMVC.Tests.Http
             theRequest.Header("a", "1", "2", "3");
             theSource.Value("a", v =>
             {
-                v.RawKey.ShouldEqual("a");
-                v.RawValue.ShouldEqual(new string[] { "1", "2", "3" });
-                v.Source.ShouldEqual(RequestDataSource.Header.ToString());
+                v.RawKey.ShouldBe("a");
+                v.RawValue.ShouldBe(new string[] { "1", "2", "3" });
+                v.Source.ShouldBe(RequestDataSource.Header.ToString());
             }).ShouldBeTrue();
         }
 
@@ -98,7 +98,7 @@ namespace FubuMVC.Tests.Http
         public void provenance()
         {
             // and yes, this *is* important
-            theSource.Provenance.ShouldEqual(RequestDataSource.Header.ToString());
+            theSource.Provenance.ShouldBe(RequestDataSource.Header.ToString());
         }
     }
 }

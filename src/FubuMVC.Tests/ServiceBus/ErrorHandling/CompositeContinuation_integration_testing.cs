@@ -29,8 +29,8 @@ namespace FubuTransportation.Testing.ErrorHandling
                 pipeline.Invoke(new Envelope {Message = new MessageThatThrows(), Callback = MockRepository.GenerateMock<IMessageCallback>()});
             }
 
-            CounterContinuation.Counter.ShouldEqual(2);
-            MessageThatThrowsHandler.Attempts.ShouldEqual(3);
+            CounterContinuation.Counter.ShouldBe(2);
+            MessageThatThrowsHandler.Attempts.ShouldBe(3);
             MessageThatThrowsHandler.Successful.ShouldNotBeNull();
         }
     }

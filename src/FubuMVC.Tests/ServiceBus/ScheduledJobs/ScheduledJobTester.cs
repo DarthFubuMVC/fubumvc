@@ -129,14 +129,14 @@ namespace FubuTransportation.Testing.ScheduledJobs
         public void default_timeout_is_5_minutes()
         {
             new ScheduledJob<AJob>(null)
-                .Timeout.ShouldEqual(5.Minutes());
+                .Timeout.ShouldBe(5.Minutes());
         }
 
         [Test]
         public void default_maximum_execution_time_should_be_15_minutes()
         {
             new ScheduledJob<AJob>(null)
-                .MaximumTimeBeforeRescheduling.ShouldEqual(15.Minutes());
+                .MaximumTimeBeforeRescheduling.ShouldBe(15.Minutes());
         }
     }
 
@@ -176,7 +176,7 @@ namespace FubuTransportation.Testing.ScheduledJobs
         public void should_reset_the_new_job_status_time_for_record_keeping()
         {
             theSchedule.Find(theJob.JobType)
-                .NextTime.ShouldEqual(next);
+                .NextTime.ShouldBe(next);
         }
 
         [Test]
@@ -189,7 +189,7 @@ namespace FubuTransportation.Testing.ScheduledJobs
         public void should_schedule_itself()
         {
             theExecutor.Scheduled[theJob.JobType]
-                .ShouldEqual(next);
+                .ShouldBe(next);
         }
     }
 
@@ -250,7 +250,7 @@ namespace FubuTransportation.Testing.ScheduledJobs
         [Test]
         public void should_return_the_reschedule_request_message()
         {
-            theTask.Result.NextTime.ShouldEqual(theNextTimeAccordingToTheSchedulerRule);
+            theTask.Result.NextTime.ShouldBe(theNextTimeAccordingToTheSchedulerRule);
         }
 
         [Test]

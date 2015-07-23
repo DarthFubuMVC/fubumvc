@@ -74,7 +74,7 @@ namespace FubuMVC.Tests.Security.Authentication.Membership
             var principal = ClassUnderTest.Build(user.UserName);
 
             var fubuPrincipal = principal.ShouldBeOfType<FubuPrincipal>();
-            fubuPrincipal.Identity.Name.ShouldEqual(user.UserName);
+            fubuPrincipal.Identity.Name.ShouldBe(user.UserName);
 
             fubuPrincipal.Get<AuthenticatedModel>().ShouldBeTheSameAs(model);
         }

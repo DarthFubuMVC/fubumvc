@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.Security.Authentication
 
                 // This login endpoint was added
                 theGraphWithBasicAuthentication.Behaviors.Where(x => x.InputType() == typeof(LoginRequest))
-                    .Count().ShouldEqual(2);
+                    .Count().ShouldBe(2);
 
                 // The logout endpoint was added
                 theGraphWithBasicAuthentication.BehaviorFor(typeof(LogoutRequest)).ShouldNotBeNull();

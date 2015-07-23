@@ -28,7 +28,7 @@ namespace Serenity.Testing.Fixtures.Handlers
         {
             var textarea1 = Driver.FindElement(_byId);
             _handler.EnterData(null, textarea1, "New Data");
-            _handler.GetData(null, textarea1).ShouldEqual("New Data");
+            _handler.GetData(null, textarea1).ShouldBe("New Data");
         }
 
         [Test]
@@ -36,7 +36,7 @@ namespace Serenity.Testing.Fixtures.Handlers
         {
             var textarea1 = Driver.FindElement(_byId);
             _handler.EnterData(null, textarea1, "");
-            _handler.GetData(null, textarea1).ShouldEqual("");
+            _handler.GetData(null, textarea1).ShouldBe("");
         }
     }
 }

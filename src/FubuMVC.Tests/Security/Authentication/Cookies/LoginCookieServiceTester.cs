@@ -34,21 +34,21 @@ namespace FubuMVC.Tests.Security.Authentication.Cookies
         [Test]
         public void sets_the_name_from_the_settings()
         {
-            theCookie.States.First().Name.ShouldEqual(theSettings.Name);
+            theCookie.States.First().Name.ShouldBe(theSettings.Name);
         }
 
         [Test]
         public void sets_the_domain_if_specified_in_the_settings()
         {
             theSettings.Domain = "test.com";
-            theCookie.Domain.ShouldEqual(theSettings.Domain);
+            theCookie.Domain.ShouldBe(theSettings.Domain);
         }
 
         [Test]
         public void sets_the_path_if_specified_in_the_settings()
         {
             theSettings.Path = "/test";
-            theCookie.Path.ShouldEqual(theSettings.Path);
+            theCookie.Path.ShouldBe(theSettings.Path);
         }
 
         [Test]
@@ -82,7 +82,7 @@ namespace FubuMVC.Tests.Security.Authentication.Cookies
         public void sets_the_expiration_date()
         {
             var actual = theCookie.Expires.Value.UtcDateTime;
-            actual.ShouldEqual(theSettings.ExpirationFor(today).ToUniversalTime());
+            actual.ShouldBe(theSettings.ExpirationFor(today).ToUniversalTime());
         }
     }
 

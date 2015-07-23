@@ -126,7 +126,7 @@ namespace FubuMVC.Tests.Http
             var hash1 = new CurrentChain(theChain, theRouteData).ResourceHash();
             var hash2 = new CurrentChain(theChain, theRouteData).ResourceHash();
 
-            hash1.ShouldEqual(hash2);
+            hash1.ShouldBe(hash2);
 
             var hash3 = new CurrentChain(theChain, someDifferentRouteData).ResourceHash();
 

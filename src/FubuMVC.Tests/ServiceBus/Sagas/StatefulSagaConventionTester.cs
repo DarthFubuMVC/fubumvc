@@ -74,9 +74,9 @@ namespace FubuTransportation.Testing.Sagas
             var call = HandlerCall.For<SimpleSagaHandler>(x => x.Last(null));
             var types = StatefulSagaConvention.ToSagaTypes(call);
 
-            types.HandlerType.ShouldEqual(typeof (SimpleSagaHandler));
-            types.MessageType.ShouldEqual(typeof (SagaMessageThree));
-            types.StateType.ShouldEqual(typeof (MySagaState));
+            types.HandlerType.ShouldBe(typeof (SimpleSagaHandler));
+            types.MessageType.ShouldBe(typeof (SagaMessageThree));
+            types.StateType.ShouldBe(typeof (MySagaState));
         }
 
 
@@ -90,7 +90,7 @@ namespace FubuTransportation.Testing.Sagas
             };
 
             StatefulSagaConvention.DetermineSagaRepositoryInstance(new TransportSettings(), types)
-                                  .ReturnedType.ShouldEqual(typeof (InMemorySagaRepository<MySagaState, SagaMessageOne>));
+                                  .ReturnedType.ShouldBe(typeof (InMemorySagaRepository<MySagaState, SagaMessageOne>));
         }
 
         [Test]
@@ -198,7 +198,7 @@ namespace FubuTransportation.Testing.Sagas
             var chain = graph.ChainFor(typeof (SagaMessageOne));
             chain.OfType<StatefulSagaNode>()
                 .FirstOrDefault()  // there are two saga's using this message, just worry about the first one
-                .Repository.ReturnedType.ShouldEqual(typeof (SpecialSagaRepository<MySagaState, SagaMessageOne>));
+                .Repository.ReturnedType.ShouldBe(typeof (SpecialSagaRepository<MySagaState, SagaMessageOne>));
         }
 
         [Test]

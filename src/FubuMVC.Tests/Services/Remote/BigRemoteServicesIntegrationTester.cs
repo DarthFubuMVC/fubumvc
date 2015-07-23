@@ -237,18 +237,18 @@ namespace FubuMVC.Tests.Services.Remote
 
                 runner.WaitForMessage<TestResponse>(() => {
                     runner.SendRemotely(new TestSignal { Number = 1 });
-                }).Number.ShouldEqual(1);
+                }).Number.ShouldBe(1);
 
 
                 runner.WaitForMessage<TestResponse>(() =>
                 {
                     runner.SendRemotely(new TestSignal { Number = 3 });
-                }).Number.ShouldEqual(3);
+                }).Number.ShouldBe(3);
 
                 runner.WaitForMessage<TestResponse>(() =>
                 {
                     runner.SendRemotely(new TestSignal { Number = 5 });
-                }).Number.ShouldEqual(5);
+                }).Number.ShouldBe(5);
 
             }
         }
@@ -297,7 +297,7 @@ namespace FubuMVC.Tests.Services.Remote
 
                 var newWriteTime = File.GetLastWriteTime(sampleServiceDll);
 
-                newWriteTime.ShouldEqual(originalWriteTime);
+                newWriteTime.ShouldBe(originalWriteTime);
             }
         }
     }

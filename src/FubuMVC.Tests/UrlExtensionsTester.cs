@@ -23,7 +23,7 @@ namespace FubuMVC.Tests
         {
             string test = "encode test";
 
-            test.UrlEncoded().ShouldEqual("encode%20test");
+            test.UrlEncoded().ShouldBe("encode%20test");
         }
     }
 }

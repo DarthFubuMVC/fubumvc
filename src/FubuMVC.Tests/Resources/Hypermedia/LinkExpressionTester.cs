@@ -18,9 +18,9 @@ namespace FubuMVC.Tests.Resources.Hypermedia
 
             var link = expression.As<ILinkCreator>().CreateLink(urls);
 
-            link.Url.ShouldEqual(urls.UrlFor(new SomeLinkInput()));
+            link.Url.ShouldBe(urls.UrlFor(new SomeLinkInput()));
 
-            link.Rel.ShouldEqual("some rel");
+            link.Rel.ShouldBe("some rel");
         }
     }
 

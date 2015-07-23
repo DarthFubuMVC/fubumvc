@@ -20,7 +20,7 @@ namespace FubuMVC.Tests.Bugs
 
             graph.BehaviorFor<FooEndpointClass>(x => x.get_some_foo())
                 .As<RoutedChain>()
-                 .GetRoutePattern().ShouldEqual("moar/some/foo");
+                 .GetRoutePattern().ShouldBe("moar/some/foo");
         }
     }
 

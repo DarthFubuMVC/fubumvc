@@ -41,7 +41,7 @@ namespace FubuTransportation.Testing
             bus.DelaySend(message, 5.Minutes());
 
             bus.DelayedSent.Single().Message.ShouldBeTheSameAs(message);
-            bus.DelayedSent.Single().Delay.ShouldEqual(5.Minutes());
+            bus.DelayedSent.Single().Delay.ShouldBe(5.Minutes());
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace FubuTransportation.Testing
             bus.DelaySend(message, time);
 
             bus.DelayedSent.Single().Message.ShouldBeTheSameAs(message);
-            bus.DelayedSent.Single().Time.ShouldEqual(time);
+            bus.DelayedSent.Single().Time.ShouldBe(time);
 
         }
 
@@ -84,7 +84,7 @@ namespace FubuTransportation.Testing
             bus.Send(destination, message);
 
             var sentTo = bus.SentDirectlyTo.Single();
-            sentTo.Destination.ShouldEqual(destination);
+            sentTo.Destination.ShouldBe(destination);
             sentTo.Message.ShouldBeTheSameAs(message);
         }
 
@@ -98,7 +98,7 @@ namespace FubuTransportation.Testing
             bus.SendAndWait(destination, message);
 
             var sentTo = bus.SentDirectlyTo.Single();
-            sentTo.Destination.ShouldEqual(destination);
+            sentTo.Destination.ShouldBe(destination);
             sentTo.Message.ShouldBeTheSameAs(message);
         }
     }

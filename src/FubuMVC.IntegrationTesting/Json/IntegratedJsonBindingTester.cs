@@ -42,14 +42,14 @@ namespace FubuMVC.IntegrationTesting.Json
                 {
                     Debug.WriteLine(response.ReadAsText());
                 }
-                response.StatusCode.ShouldEqual(HttpStatusCode.OK);
+                response.StatusCode.ShouldBe(HttpStatusCode.OK);
 
-                recorder.Target.Name.ShouldEqual("Josh");
-                recorder.Target.Child.ChildName.ShouldEqual("Joel");
-                recorder.Target.Child.CurrentTime.ShouldEqual(now);
+                recorder.Target.Name.ShouldBe("Josh");
+                recorder.Target.Child.ChildName.ShouldBe("Joel");
+                recorder.Target.Child.CurrentTime.ShouldBe(now);
 
                 var child = recorder.Target.DynamicData.Value<JObject>("test");
-                child["name"].ToString().ShouldEqual("nested");
+                child["name"].ToString().ShouldBe("nested");
             }
         }
 

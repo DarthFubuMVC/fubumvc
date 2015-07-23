@@ -34,7 +34,7 @@ namespace FubuMVC.Tests.Diagnostics.Assets
         {
             var file = theAssets.For("master.css");
 
-            file.ContentType.ShouldEqual(MimeType.Css);
+            file.ContentType.ShouldBe(MimeType.Css);
         }
 
 
@@ -43,7 +43,7 @@ namespace FubuMVC.Tests.Diagnostics.Assets
         {
             var file = theAssets.For("master.css");
 
-            file.Version.ShouldEqual(typeof(IActionBehavior).Assembly.GetName().Version.ToString());
+            file.Version.ShouldBe(typeof(IActionBehavior).Assembly.GetName().Version.ToString());
         }
 
         [Test]

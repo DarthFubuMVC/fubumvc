@@ -37,14 +37,14 @@ namespace FubuMVC.Tests.Json
         [Test]
         public void can_read_basic_properties()
         {
-            theResult.Name.ShouldEqual("Max");
-            theResult.Age.ShouldEqual(8);
+            theResult.Name.ShouldBe("Max");
+            theResult.Age.ShouldBe(8);
         }
 
         [Test]
         public void can_read_nested_properties()
         {
-            theResult.Nested.Order.ShouldEqual(5);
+            theResult.Nested.Order.ShouldBe(5);
         }
 
         [Test]

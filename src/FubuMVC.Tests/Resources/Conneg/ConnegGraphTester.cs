@@ -42,7 +42,7 @@ namespace FubuMVC.Tests.Resources.Conneg
         public void find_readers_for_input_type()
         {
             graph.ReaderTypesFor(typeof (Input2)).Single()
-                .ShouldEqual(typeof (Input2Reader));
+                .ShouldBe(typeof (Input2Reader));
         }
 
         

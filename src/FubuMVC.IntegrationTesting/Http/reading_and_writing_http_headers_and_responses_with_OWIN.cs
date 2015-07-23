@@ -30,8 +30,8 @@ namespace FubuMVC.IntegrationTesting.Http
             };
 
             var response = endpoints.PostJson(request).ReadAsJson<OwinResponse>();
-            response.Description.ShouldEqual(request.StatusDescription);
-            response.StatusCode.ShouldEqual(request.StatusCode);
+            response.Description.ShouldBe(request.StatusDescription);
+            response.StatusCode.ShouldBe(request.StatusCode);
 
             request.Headers.Each(x => { response.ResponseHeaders.ShouldContain(x); });
         }

@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.Security.Authentication
         public void membership_status_is_enabled_by_default()
         {
             new AuthenticationSettings().MembershipEnabled
-                                        .ShouldEqual(MembershipStatus.Enabled);
+                                        .ShouldBe(MembershipStatus.Enabled);
         }
 
         [Test]

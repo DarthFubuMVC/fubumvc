@@ -41,7 +41,7 @@ namespace FubuMVC.Tests.Security.Authentication
 
             var settings = graph.Settings.Get<AuthenticationSettings>();
   
-            settings.Strategies.Count().ShouldEqual(1);
+            settings.Strategies.Count().ShouldBe(1);
         }
 
         [Test]

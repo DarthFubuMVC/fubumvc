@@ -49,7 +49,7 @@ namespace FubuTransportation.Testing.Runtime
             var headers = new NameValueHeaders();
             theReceiver.Receive(new byte[0], headers, MockRepository.GenerateMock<IMessageCallback>());
 
-            headers[Envelope.ContentTypeKey].ShouldEqual("text/json");
+            headers[Envelope.ContentTypeKey].ShouldBe("text/json");
         }
 
         [Test]
@@ -62,7 +62,7 @@ namespace FubuTransportation.Testing.Runtime
             var headers = new NameValueHeaders();
             theReceiver.Receive(new byte[0], headers, MockRepository.GenerateMock<IMessageCallback>());
 
-            headers[Envelope.ContentTypeKey].ShouldEqual("text/xml");
+            headers[Envelope.ContentTypeKey].ShouldBe("text/xml");
         }
 
         [Test]
@@ -76,7 +76,7 @@ namespace FubuTransportation.Testing.Runtime
             headers[Envelope.ContentTypeKey] = "text/plain";
             theReceiver.Receive(new byte[0], headers, MockRepository.GenerateMock<IMessageCallback>());
 
-            headers[Envelope.ContentTypeKey].ShouldEqual("text/plain");
+            headers[Envelope.ContentTypeKey].ShouldBe("text/plain");
         }
 
     }
@@ -184,7 +184,7 @@ namespace FubuTransportation.Testing.Runtime
         [Test]
         public void should_copy_the_channel_address_to_the_envelope()
         {
-            new HeaderWrapper{Headers = theHeaders}.ReceivedAt.ShouldEqual(address);
+            new HeaderWrapper{Headers = theHeaders}.ReceivedAt.ShouldBe(address);
         }
 
         [Test]

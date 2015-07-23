@@ -100,14 +100,14 @@ namespace FubuPersistence.Tests.ServiceBus
             thePersistence.FindAllActive("foo")
                 .ShouldHaveTheSameElementsAs(change);
 
-            thePersistence.Find("foo", "1").Status.ShouldEqual(change.Status);
+            thePersistence.Find("foo", "1").Status.ShouldBe(change.Status);
         }
 
         [Test]
         public void find_a_single_status()
         {
             thePersistence.Find("foo", "1")
-                .Id.ShouldEqual("foo/1");
+                .Id.ShouldBe("foo/1");
         }
     }
 }
