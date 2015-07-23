@@ -106,26 +106,30 @@ namespace FubuMVC.Tests
         public class Action1
         {
             [UrlPattern("a/m1")]
-            public void M1()
+            public string M1()
             {
+                return "Hello";
             }
 
             [UrlPattern("a/m2")]
-            public void M2()
+            public string M2()
             {
+                return "Bye";
             }
         }
 
         public class Action2
         {
             [UrlPattern("b/m1")]
-            public void M1()
+            public string M1()
             {
+                return "Hello";
             }
 
             [UrlPattern("b/m2")]
-            public void M2()
+            public string M2()
             {
+                return "Bye";
             }
         }
 

@@ -40,7 +40,7 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public Type BehaviorType
         {
-            get { return toInstance().PluggedType; }
+            get { return buildInstance().PluggedType; }
         }
 
     }

@@ -183,12 +183,15 @@ namespace FubuMVC.Core.Resources.Conneg
             var instance = new ConfiguredInstance(typeof (OutputBehavior<>), _resourceType);
 
             var collection = new ConfiguredInstance(typeof(MediaCollection<>), _resourceType);
+            collection.Dependencies.Add<IOutputNode>(this);
             var collectionType = typeof(IMediaCollection<>).MakeGenericType(_resourceType);
             instance.Dependencies.Add(collectionType, collection);
 
+            
+
             if (ResourceNotFound != null)
             {
-                throw new NotSupportedException("Convert from ResourceNotFound");
+                instance.Dependencies.Add(typeof(IResourceNotFoundHandler), ResourceNotFound);
             }
 
             return instance;

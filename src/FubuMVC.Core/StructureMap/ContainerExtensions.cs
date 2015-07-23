@@ -40,7 +40,16 @@ namespace FubuMVC.Core.StructureMap
         public static T FindDependencyValueFor<T>(this IConfiguredInstance instance) where T : class
         {
             var dependency = instance.Dependencies.FirstOrDefault(x => x.Type == typeof(T));
-            return dependency == null ? null : dependency.Dependency.As<ObjectInstance>().Object as T;
+
+
+            if (dependency == null) return null;
+
+            if (dependency.Dependency is ObjectInstance)
+            {
+                return dependency.Dependency.As<ObjectInstance>().Object as T;
+            }
+
+            return dependency.Dependency as T;
         }
     }
 }

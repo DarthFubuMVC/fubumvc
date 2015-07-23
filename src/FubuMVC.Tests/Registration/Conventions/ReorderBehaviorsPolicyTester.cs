@@ -158,6 +158,19 @@ namespace FubuMVC.Tests.Registration.Conventions
 
     }
 
+    public class FakeBehavior : IActionBehavior
+    {
+        public void Invoke()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InvokePartial()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class Node1 : BehaviorNode
     {
         public override BehaviorCategory Category
@@ -167,7 +180,7 @@ namespace FubuMVC.Tests.Registration.Conventions
 
         protected override IConfiguredInstance buildInstance()
         {
-            throw new NotImplementedException();
+            return new SmartInstance<FakeBehavior>();
         }
     }
 
@@ -180,7 +193,7 @@ namespace FubuMVC.Tests.Registration.Conventions
 
         protected override IConfiguredInstance buildInstance()
         {
-            throw new NotImplementedException();
+            return new SmartInstance<FakeBehavior>();
         }
 
     }
@@ -194,7 +207,7 @@ namespace FubuMVC.Tests.Registration.Conventions
 
         protected override IConfiguredInstance buildInstance()
         {
-            throw new NotImplementedException();
+            return new SmartInstance<FakeBehavior>();
         }
 
     }

@@ -2,11 +2,10 @@
 using System.Linq;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
-using FubuMVC.Tests.StructureMap.Internals;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuTransportation.Testing.Runtime
+namespace FubuMVC.Tests.ServiceBus.Runtime
 {
     [TestFixture]
     public class EnvelopeModifierTester
@@ -37,4 +36,6 @@ namespace FubuTransportation.Testing.Runtime
             Modified.Add(target);
         }
     }
+
+    public class GreenFoo { }
 }
