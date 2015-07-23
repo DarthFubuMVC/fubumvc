@@ -4,7 +4,6 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuTestingSupport;
 using NUnit.Framework;
 using System.Linq;
@@ -166,11 +165,6 @@ namespace FubuMVC.Tests.Registration.Conventions
             get { throw new NotImplementedException(); }
         }
 
-        protected override ObjectDef buildObjectDef()
-        {
-            throw new NotImplementedException();
-        }
-
         protected override IConfiguredInstance buildInstance()
         {
             throw new NotImplementedException();
@@ -189,10 +183,6 @@ namespace FubuMVC.Tests.Registration.Conventions
             throw new NotImplementedException();
         }
 
-        protected override ObjectDef buildObjectDef()
-        {
-            throw new NotImplementedException();
-        }
     }
 
     public class Node3 : BehaviorNode
@@ -207,10 +197,6 @@ namespace FubuMVC.Tests.Registration.Conventions
             throw new NotImplementedException();
         }
 
-        protected override ObjectDef buildObjectDef()
-        {
-            throw new NotImplementedException();
-        }
     }
 
     public class Wrapper1 : IActionBehavior

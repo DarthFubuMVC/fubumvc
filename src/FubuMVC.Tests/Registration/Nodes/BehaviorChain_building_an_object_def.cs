@@ -1,9 +1,9 @@
 using System;
 using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuTestingSupport;
 using NUnit.Framework;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Tests.Registration.Nodes
 {
@@ -27,9 +27,9 @@ namespace FubuMVC.Tests.Registration.Nodes
         private BehaviorChain theChain;
         private Guid theOriginalGuid;
 
-        private ObjectDef toObjectDef()
+        private Instance toObjectDef()
         {
-            return theChain.As<IContainerModel>().ToObjectDef();
+            return theChain.As<IContainerModel>().ToInstance();
         }
 
         public class Controller1

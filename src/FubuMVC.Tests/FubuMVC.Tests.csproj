@@ -595,7 +595,6 @@
     <Compile Include="Registration\Conventions\AsyncContinueWithHandlerConventionTester.cs" />
     <Compile Include="Registration\Conventions\DefaultConnegOutputIsAppliedToAnyEndpointWithoutAnyPriorOutputTester.cs" />
     <Compile Include="Registration\Conventions\PartialOnlyConventionTester.cs" />
-    <Compile Include="Registration\Nodes\ActionCallBaseObjectDefCreationTester.cs" />
     <Compile Include="Registration\Querying\ChainSearchTester.cs" />
     <Compile Include="Runtime\Formatters\XmlFormatterTester.cs" />
     <Compile Include="CustomExceptionsTester.cs" />
@@ -616,7 +615,6 @@
     <Compile Include="Registration\HandlerActionsSetTester.cs" />
     <Compile Include="Registration\Nodes\BehaviorChain_building_an_object_def.cs" />
     <Compile Include="Registration\Nodes\Behavior_node_ObjectDef_creation_Tester.cs" />
-    <Compile Include="Registration\ObjectGraph\ConfiguredDependencyTester.cs" />
     <Compile Include="Registration\Querying\ChainResolverTester.cs" />
     <Compile Include="Registration\RouteInputTester.cs" />
     <Compile Include="Registration\system_policy_for_authorization.cs" />
@@ -640,7 +638,6 @@
     <Compile Include="StructureMap\ContainerFacilitySource.cs" />
     <Compile Include="StructureMap\Internals\AppSettingProviderRegistrySmokeTester.cs" />
     <Compile Include="StructureMap\Internals\Include_StructureMap_registrys.cs" />
-    <Compile Include="StructureMap\Internals\ObjectDefInstanceTester.cs" />
     <Compile Include="StructureMap\Internals\StructureMapServiceLocatorTester.cs" />
     <Compile Include="StructureMap\Internals\StubActivator.cs" />
     <Compile Include="StructureMap\Internals\TestController.cs" />

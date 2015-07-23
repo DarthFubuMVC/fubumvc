@@ -1,10 +1,7 @@
 ﻿using System;
 using FubuCore;
-using FubuCore.Binding;
-using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.StructureMap;
 using StructureMap;
@@ -31,29 +28,6 @@ namespace FubuMVC.Tests.StructureMap
             // A ContainerFacility cannot be considered "ready" for business until BuildFactory() has been
             // called
             return facility.BuildFactory(new BehaviorGraph()).Get<IServiceLocator>();
-        }
-
-        public static IActionBehavior BuildBehavior(ServiceArguments arguments,
-            ObjectDef behaviorDef, Action<IContainerFacility> configuration)
-        {
-            var id = Guid.NewGuid();
-            behaviorDef.Name = id.ToString();
-
-            var facility = New(x =>
-            {
-                configuration(x);
-
-
-                x.Register(typeof (IActionBehavior), behaviorDef);
-            });
-
-            var behavior = facility.BuildBehavior(arguments, id);
-
-            // StartInnerBehavior() is not part of the core interface,
-            // but I had to have something to get at the real top level
-            // behavior within the context of a StructureMap nested
-            // container
-            return behavior.As<NestedStructureMapContainerBehavior>().StartInnerBehavior();
         }
     }
 }

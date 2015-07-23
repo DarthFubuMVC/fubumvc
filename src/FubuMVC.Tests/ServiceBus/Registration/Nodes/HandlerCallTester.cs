@@ -29,9 +29,9 @@ namespace FubuTransportation.Testing.Registration.Nodes
         {
             var handler = HandlerCall.For<ITargetHandler>(x => x.OneInOneOut(null));
 
-            var objectDef = handler.As<IContainerModel>().ToObjectDef();
+            var objectDef = handler.As<IContainerModel>().ToInstance();
 
-            objectDef.Type.ShouldEqual(typeof (CascadingHandlerInvoker<ITargetHandler, Input, Output>));
+            objectDef.ReturnedType.ShouldEqual(typeof (CascadingHandlerInvoker<ITargetHandler, Input, Output>));
         }
 
         [Test]
@@ -39,9 +39,9 @@ namespace FubuTransportation.Testing.Registration.Nodes
         {
             var handler = HandlerCall.For<ITargetHandler>(x => x.OneInZeroOut(null));
 
-            var objectDef = handler.As<IContainerModel>().ToObjectDef();
+            var objectDef = handler.As<IContainerModel>().ToInstance();
 
-            objectDef.Type.ShouldEqual(typeof (SimpleHandlerInvoker<ITargetHandler, Input>));
+            objectDef.ReturnedType.ShouldEqual(typeof (SimpleHandlerInvoker<ITargetHandler, Input>));
         }
 
         [Test]
@@ -49,9 +49,9 @@ namespace FubuTransportation.Testing.Registration.Nodes
         {
             var handler = HandlerCall.For<TaskHandler>(x => x.Go(null));
 
-            var objectDef = handler.As<IContainerModel>().ToObjectDef();
+            var objectDef = handler.As<IContainerModel>().ToInstance();
 
-            objectDef.Type.ShouldEqual(typeof (AsyncHandlerInvoker<TaskHandler, Message>));
+            objectDef.ReturnedType.ShouldEqual(typeof (AsyncHandlerInvoker<TaskHandler, Message>));
         }
 
         [Test]
@@ -59,9 +59,9 @@ namespace FubuTransportation.Testing.Registration.Nodes
         {
             var handler = HandlerCall.For<TaskHandler>(x => x.Other(null));
 
-            var objectDef = handler.As<IContainerModel>().ToObjectDef();
+            var objectDef = handler.As<IContainerModel>().ToInstance();
 
-            objectDef.Type.ShouldEqual(typeof (CascadingAsyncHandlerInvoker<TaskHandler, Message, Message1>));
+            objectDef.ReturnedType.ShouldEqual(typeof (CascadingAsyncHandlerInvoker<TaskHandler, Message, Message1>));
         }
 
 

@@ -9,10 +9,12 @@ using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.Runtime.Formatters;
+using FubuMVC.Core.StructureMap;
 using FubuTestingSupport;
 using HtmlTags;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Tests.NewConneg
 {
@@ -48,10 +50,10 @@ namespace FubuMVC.Tests.NewConneg
             var node = new OutputNode(typeof (Address));
             node.UseForResourceNotFound<MyFakeResourceNotHandler>();
 
-            var def = node.As<IContainerModel>().ToObjectDef();
+            var def = node.As<IContainerModel>().ToInstance().As<IConfiguredInstance>();
 
             def.FindDependencyDefinitionFor<IResourceNotFoundHandler>()
-                .Type.ShouldEqual(typeof (MyFakeResourceNotHandler));
+                .ReturnedType.ShouldEqual(typeof (MyFakeResourceNotHandler));
         }
 
         [Test]
@@ -59,9 +61,9 @@ namespace FubuMVC.Tests.NewConneg
         {
             var node = new OutputNode(typeof (Address));
 
-            var def = node.As<IContainerModel>().ToObjectDef();
+            var def = node.As<IContainerModel>().ToInstance().As<IConfiguredInstance>();
 
-            def.DependencyFor<IResourceNotFoundHandler>()
+            def.FindDependencyDefinitionFor<IResourceNotFoundHandler>()
                 .ShouldBeNull();
         }
 

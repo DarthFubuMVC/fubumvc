@@ -28,7 +28,7 @@ namespace FubuMVC.Core.ServiceBus.Sagas
 
                 var sagaNode = new StatefulSagaNode(types)
                 {
-                    Repository = DetermineSagaRepositoryDef(settings, types)
+                    Repository = DetermineSagaRepositoryInstance(settings, types)
                 };
 
                 call.AddBefore(sagaNode);
@@ -57,7 +57,7 @@ namespace FubuMVC.Core.ServiceBus.Sagas
             return false;
         }
 
-        public static Instance DetermineSagaRepositoryDef(TransportSettings settings, SagaTypes sagaTypes)
+        public static Instance DetermineSagaRepositoryInstance(TransportSettings settings, SagaTypes sagaTypes)
         {
             var def = settings.SagaStorageProviders.FirstValue(x => x.RepositoryFor(sagaTypes))
                       ?? new InMemorySagaStorage().RepositoryFor(sagaTypes);

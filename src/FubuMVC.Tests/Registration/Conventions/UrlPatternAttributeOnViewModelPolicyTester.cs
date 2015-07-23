@@ -1,17 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using FubuCore;
-using FubuCore.Descriptions;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
-using NUnit.Framework;
-using System.Linq;
 using FubuTestingSupport;
+using NUnit.Framework;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
@@ -23,9 +21,10 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             var graph = BehaviorGraph.BuildFrom(x =>
             {
-                x.Configure(g => {
-                    var c = new RoutedChain(new RouteDefinition("foo/{Name}"), typeof(Foo), typeof(Foo));
-                    c.AddToEnd(new OutputNode(typeof(Foo)));
+                x.Configure(g =>
+                {
+                    var c = new RoutedChain(new RouteDefinition("foo/{Name}"), typeof (Foo), typeof (Foo));
+                    c.AddToEnd(new OutputNode(typeof (Foo)));
 
                     g.AddChain(c);
                 });
@@ -55,6 +54,4 @@ namespace FubuMVC.Tests.Registration.Conventions
 
         public IEnumerable<string> Mimetypes { get; private set; }
     }
-
-
 }

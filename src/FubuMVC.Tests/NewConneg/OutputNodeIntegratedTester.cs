@@ -43,8 +43,7 @@ namespace FubuMVC.Tests.NewConneg
                 x.For<IHttpRequest>().Use(MockRepository.GenerateMock<IHttpRequest>());
             });
 
-            var objectDef = node.As<IContainerModel>().ToObjectDef();
-            var instance = new ObjectDefInstance(objectDef);
+            var instance = node.As<IContainerModel>().ToInstance();
 
             theInputBehavior = container.GetInstance<OutputBehavior<Address>>(instance);
         }

@@ -2,9 +2,7 @@ using System;
 using System.Linq;
 using FubuMVC.Core.Json;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
-using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap.Pipeline;
@@ -22,11 +20,6 @@ namespace FubuMVC.Tests.Registration.Nodes
         protected override IConfiguredInstance buildInstance()
         {
             throw new NotImplementedException();
-        }
-
-        protected override ObjectDef buildObjectDef()
-        {
-            return new ObjectDef();
         }
     }
 
@@ -595,11 +588,6 @@ namespace FubuMVC.Tests.Registration.Nodes
         {
             throw new NotImplementedException();
         }
-
-        protected override ObjectDef buildObjectDef()
-        {
-            throw new NotImplementedException();
-        }
     }
 
     public class FakeOutputNode : BehaviorNode, IMayHaveResourceType
@@ -622,11 +610,6 @@ namespace FubuMVC.Tests.Registration.Nodes
         }
 
         protected override IConfiguredInstance buildInstance()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override ObjectDef buildObjectDef()
         {
             throw new NotImplementedException();
         }

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Sagas;
+using StructureMap.Pipeline;
 
 namespace FubuTransportation.Testing.Docs.Sagas
 {
@@ -22,12 +22,12 @@ namespace FubuTransportation.Testing.Docs.Sagas
 
     public class AlternativeSagaStorage : ISagaStorage
     {
-        public ObjectDef RepositoryFor(SagaTypes sagaTypes)
+        public Instance RepositoryFor(SagaTypes sagaTypes)
         {
             //A good place if needing something like RavenDbSagaRepository
             //The ObjectDef returned here will be a class that implements ISagaRepository
             //InMemorySagaRepository is a good example of one to look at
-            return new ObjectDef(typeof(SagaRepositorySample));
+            return new ConfiguredInstance(typeof(SagaRepositorySample));
         }
     }
 
@@ -37,7 +37,7 @@ namespace FubuTransportation.Testing.Docs.Sagas
         {
             handlerChain.OfType<StatefulSagaNode>().Each(x =>
             {
-                x.Repository = new ObjectDef(typeof(SagaRepositorySample));
+                x.Repository = new ConfiguredInstance(typeof(SagaRepositorySample));
             });
         }
 

@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap.Pipeline;
@@ -48,12 +48,12 @@ namespace FubuMVC.Tests.Registration.Nodes
     {
         public void Invoke()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void InvokePartial()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 
@@ -67,11 +67,6 @@ namespace FubuMVC.Tests.Registration.Nodes
         protected override IConfiguredInstance buildInstance()
         {
             return new SmartInstance<FakeAuthBehavior>();
-        }
-
-        protected override ObjectDef buildObjectDef()
-        {
-            return ObjectDef.ForType<FakeAuthBehavior>();
         }
     }
 }

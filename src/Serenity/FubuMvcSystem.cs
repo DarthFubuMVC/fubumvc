@@ -6,7 +6,6 @@ using FubuCore;
 using FubuCore.CommandLine;
 using FubuCore.Util;
 using FubuMVC.Core;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Services.Messaging.Tracking;
 using FubuMVC.Core.Services.Remote;
@@ -16,6 +15,7 @@ using StoryTeller.Conversion;
 using StoryTeller.Engine;
 using StoryTeller.Equivalence;
 using StructureMap;
+using StructureMap.Pipeline;
 
 namespace Serenity
 {
@@ -257,8 +257,8 @@ namespace Serenity
                 _application = _hosting.Start(_settings, _runtime, browserLifecycle);
                 _applicationAlterations.ToArray().Each(x => x(_application));
 
-                _runtime.Facility.Register(typeof (IApplicationUnderTest), ObjectDef.ForValue(_application));
-                _runtime.Facility.Register(typeof (IRemoteSubsystems), ObjectDef.ForValue(this));
+                _runtime.Facility.Register(typeof (IApplicationUnderTest), new ObjectInstance(_application));
+                _runtime.Facility.Register(typeof (IRemoteSubsystems), new ObjectInstance(this));
             });
         }
 

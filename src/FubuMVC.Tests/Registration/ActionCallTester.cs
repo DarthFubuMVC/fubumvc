@@ -1,17 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
 using System.Threading.Tasks;
 using FubuCore;
-using FubuCore.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Tests.Registration.Conventions;
@@ -109,15 +104,6 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
-        public void next_is_a_null_by_default()
-        {
-            action.Next.ShouldBeNull();
-
-            var objectDef = action.As<IContainerModel>().ToObjectDef();
-            objectDef.Dependencies.Select(x => x as ConfiguredDependency).Count().ShouldEqual(1);
-        }
-
-        [Test]
         public void returns_T_should_tell_if_action_has_output_of_type()
         {
             action = ActionCall.For<ControllerTarget>(c => c.OneInOneOut(null));
@@ -169,7 +155,7 @@ namespace FubuMVC.Tests.Registration
         {
             action = ActionCall.For<ControllerTarget>(x => x.ZeroInZeroOut());
             Exception<FubuException>.ShouldBeThrownBy(
-                () => action.As<IContainerModel>().ToObjectDef())
+                () => action.As<IContainerModel>().ToInstance())
                 .ErrorCode.ShouldEqual(1005);
         }
 
@@ -178,7 +164,7 @@ namespace FubuMVC.Tests.Registration
         {
             action = ActionCall.For<ControllerTarget>(x => x.ZeroInTaskNoResultOut());
             Exception<FubuException>.ShouldBeThrownBy(
-                () => action.As<IContainerModel>().ToObjectDef())
+                () => action.As<IContainerModel>().ToInstance())
                 .ErrorCode.ShouldEqual(1005);
         }
     }
@@ -293,10 +279,6 @@ namespace FubuMVC.Tests.Registration
             throw new NotImplementedException();
         }
 
-        protected override ObjectDef buildObjectDef()
-        {
-            throw new NotImplementedException();
-        }
 
         public bool Equals(FakeNode other)
         {
@@ -330,292 +312,6 @@ namespace FubuMVC.Tests.Registration
         }
     }
 
-
-    public abstract class InvocationBuildingContext
-    {
-        private readonly MethodInfo method;
-        private ActionCall definition;
-        protected ObjectDef theObjectDef;
-
-        protected InvocationBuildingContext(Expression<Func<ControllerTarget, object>> expression)
-        {
-            method = ReflectionHelper.GetMethod(expression);
-        }
-
-        protected InvocationBuildingContext(Expression<Action<ControllerTarget>> expression)
-        {
-            method = ReflectionHelper.GetMethod(expression);
-        }
-
-        [SetUp]
-        public void SetUp()
-        {
-            definition = new ActionCall(typeof (ControllerTarget), method);
-
-            theObjectDef = definition.As<IContainerModel>().ToObjectDef();
-        }
-    }
-
-    [TestFixture]
-    public class when_building_the_invocation_for_one_model_in_one_model_out : InvocationBuildingContext
-    {
-        public when_building_the_invocation_for_one_model_in_one_model_out()
-            : base(x => x.OneInOneOut(null))
-        {
-        }
-
-        [Test]
-        public void should_have_a_dependency_for_the_function()
-        {
-            theObjectDef.Dependencies.Count().ShouldEqual(1);
-            var dependency = theObjectDef.Dependencies.First();
-
-            dependency.DependencyType.ShouldEqual(typeof (Func<ControllerTarget, Model1, Model2>));
-        }
-
-        [Test]
-        public void the_dependency_function_invokes_the_correct_function()
-        {
-            var func = theObjectDef.Dependencies.First().ShouldBeOfType<ValueDependency>()
-                .Value.ShouldBeOfType<Func<ControllerTarget, Model1, Model2>>();
-
-            var target = new ControllerTarget();
-            func(target, new Model1{
-                Name = "Jeremy"
-            }).Name.ShouldEqual("Jeremy");
-        }
-
-        [Test]
-        public void the_type_should_be_OMIOMO()
-        {
-            theObjectDef.Type.ShouldEqual(typeof (OneInOneOutActionInvoker<ControllerTarget, Model1, Model2>));
-        }
-    }
-
-    [TestFixture]
-    public class when_building_the_invocation_for_one_model_in_zero_model_out : InvocationBuildingContext
-    {
-        public when_building_the_invocation_for_one_model_in_zero_model_out()
-            : base(x => x.OneInZeroOut(null))
-        {
-        }
-
-        [Test]
-        public void should_have_a_dependency_for_the_function()
-        {
-            theObjectDef.Dependencies.Count().ShouldEqual(1);
-            var dependency = theObjectDef.Dependencies.First();
-
-            dependency.DependencyType.ShouldEqual(typeof (Action<ControllerTarget, Model1>));
-        }
-
-        [Test]
-        public void the_dependency_function_invokes_the_correct_function()
-        {
-            var func = theObjectDef.Dependencies.First().ShouldBeOfType<ValueDependency>()
-                .Value.ShouldBeOfType<Action<ControllerTarget, Model1>>();
-
-            var target = new ControllerTarget();
-            func(target, new Model1{
-                Name = "Jeremy"
-            });
-
-            target.LastNameEntered.ShouldEqual("Jeremy");
-        }
-
-        [Test]
-        public void the_type_should_be_OMIOMO()
-        {
-            theObjectDef.Type.ShouldEqual(typeof (OneInZeroOutActionInvoker<ControllerTarget, Model1>));
-        }
-    }
-
-    [TestFixture]
-    public class when_building_the_invocation_for_zero_model_in_one_model_out : InvocationBuildingContext
-    {
-        public when_building_the_invocation_for_zero_model_in_one_model_out()
-            : base(x => x.ZeroInOneOut())
-        {
-        }
-
-        [Test]
-        public void should_have_a_dependency_for_the_function()
-        {
-            theObjectDef.Dependencies.Count().ShouldEqual(1);
-            var dependency = theObjectDef.Dependencies.First();
-
-            dependency.DependencyType.ShouldEqual(typeof (Func<ControllerTarget, Model1>));
-        }
-
-        [Test]
-        public void the_dependency_function_invokes_the_correct_function()
-        {
-            var func = theObjectDef.Dependencies.First().ShouldBeOfType<ValueDependency>()
-                .Value.ShouldBeOfType<Func<ControllerTarget, Model1>>();
-
-            var target = new ControllerTarget();
-            func(target).Name.ShouldEqual("ZeroInOneOut");
-        }
-
-        [Test]
-        public void the_type_should_be_OMIOMO()
-        {
-            theObjectDef.Type.ShouldEqual(typeof (ZeroInOneOutActionInvoker<ControllerTarget, Model1>));
-        }
-    }
-
-    [TestFixture]
-    public class when_building_the_invocation_for_one_model_in_task_with_no_output_out : InvocationBuildingContext
-    {
-        public when_building_the_invocation_for_one_model_in_task_with_no_output_out()
-            : base(x => x.OneInTaskWithNoOutputOut(null))
-        {
-        }
-
-        [Test]
-        public void should_have_a_dependency_for_the_function()
-        {
-            theObjectDef.Dependencies.Count().ShouldEqual(1);
-            var dependency = theObjectDef.Dependencies.First();
-
-            dependency.DependencyType.ShouldEqual(typeof (Func<ControllerTarget, Model1, Task>));
-        }
-
-        [Test]
-        public void the_dependency_function_invokes_the_correct_function()
-        {
-            var func = theObjectDef.Dependencies.First().ShouldBeOfType<ValueDependency>()
-                .Value.ShouldBeOfType<Func<ControllerTarget, Model1, Task>>();
-
-            var target = new ControllerTarget();
-            var task = func(target, new Model1{
-                Name = "Corey"
-            });
-            task.RunSynchronously();
-
-            target.LastNameEntered.ShouldEqual("Corey");
-        }
-
-        [Test]
-        public void the_type_should_be_OMIOMO()
-        {
-            theObjectDef.Type.ShouldEqual(typeof (OneInOneOutActionInvoker<ControllerTarget, Model1, Task>));
-        }
-    }
-
-    [TestFixture]
-    public class when_building_the_invocation_for_zero_model_in_task_with_output_out : InvocationBuildingContext
-    {
-        public when_building_the_invocation_for_zero_model_in_task_with_output_out()
-            : base(x => x.ZeroInTaskWithOutputOut())
-        {
-        }
-
-        [Test]
-        public void should_have_a_dependency_for_the_function()
-        {
-            theObjectDef.Dependencies.Count().ShouldEqual(1);
-            var dependency = theObjectDef.Dependencies.First();
-
-            dependency.DependencyType.ShouldEqual(typeof (Func<ControllerTarget, Task<Model2>>));
-        }
-
-        [Test]
-        public void the_dependency_function_invokes_the_correct_function()
-        {
-            var func = theObjectDef.Dependencies.First().ShouldBeOfType<ValueDependency>()
-                .Value.ShouldBeOfType<Func<ControllerTarget, Task<Model2>>>();
-
-            var target = new ControllerTarget();
-            var task = func(target);
-            task.RunSynchronously();
-            task.Result.Name.ShouldEqual("ZeroInTaskWithOutputOut");
-        }
-
-        [Test]
-        public void the_type_should_be_OMIOMO()
-        {
-            theObjectDef.Type.ShouldEqual(typeof (ZeroInOneOutActionInvoker<ControllerTarget, Task<Model2>>));
-        }
-    }
-
-    [TestFixture]
-    public class when_building_the_invocation_for_one_model_in_one_task_with_model_out : InvocationBuildingContext
-    {
-        public when_building_the_invocation_for_one_model_in_one_task_with_model_out()
-            : base(x => x.OneInTaskWithOutputOut(null))
-        {
-        }
-
-        [Test]
-        public void should_have_a_dependency_for_the_function()
-        {
-            theObjectDef.Dependencies.Count().ShouldEqual(1);
-            var dependency = theObjectDef.Dependencies.First();
-
-            dependency.DependencyType.ShouldEqual(typeof (Func<ControllerTarget, Model1, Task<Model2>>));
-        }
-
-        [Test]
-        public void the_dependency_function_invokes_the_correct_function()
-        {
-            var func = theObjectDef.Dependencies.First().ShouldBeOfType<ValueDependency>()
-                .Value.ShouldBeOfType<Func<ControllerTarget, Model1, Task<Model2>>>();
-
-            var target = new ControllerTarget();
-            var task = func(target, new Model1{
-                Name = "Corey"
-            });
-            task.RunSynchronously();
-            task.Result.Name.ShouldEqual("Corey");
-        }
-
-        [Test]
-        public void the_type_should_be_OMIOMO()
-        {
-            theObjectDef.Type.ShouldEqual(typeof (OneInOneOutActionInvoker<ControllerTarget, Model1, Task<Model2>>));
-        }
-
-        [Test]
-        public void build_chain_that_should_have_a_route()
-        {
-            var actionCall = ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null));
-            var chain = actionCall.BuildChain(new UrlPolicies());
-            chain.IsPartialOnly.ShouldBeFalse();
-
-            chain.Top.ShouldBeTheSameAs(actionCall);
-        }
-
-        [Test]
-        public void build_chain_for_a_partial_suffix()
-        {
-            var actionCall = ActionCall.For<ControllerTarget>(x => x.OneInOneOutPartial(null));
-            var chain = actionCall.BuildChain(new UrlPolicies());
-            chain.IsPartialOnly.ShouldBeTrue();
-
-            chain.Top.ShouldBeTheSameAs(actionCall);
-        }
-
-        [Test]
-        public void build_chain_for_an_action_decorated_with_the_FubuPartial_attribute()
-        {
-            var actionCall = ActionCall.For<ControllerTarget>(x => x.OneInOneOutWithPartialAttribute(null));
-            var chain = actionCall.BuildChain(new UrlPolicies());
-            chain.IsPartialOnly.ShouldBeTrue();
-
-            chain.Top.ShouldBeTheSameAs(actionCall);
-        }
-
-        [Test]
-        public void applies_modify_chain_attributes_to_the_created_chain()
-        {
-            var actionCall = ActionCall.For<ControllerTarget>(x => x.get_wonky());
-            var chain = actionCall.BuildChain(new UrlPolicies());
-
-            chain.IsWrappedBy(typeof(WonkyWrapper))
-                .ShouldBeTrue();
-        }
-    }
 
     public class ValidActionWithOneMethod
     {
@@ -660,14 +356,16 @@ namespace FubuMVC.Tests.Registration
 
         public Task<Model2> OneInTaskWithOutputOut(Model1 input)
         {
-            return new Task<Model2>(() => new Model2{
+            return new Task<Model2>(() => new Model2
+            {
                 Name = input.Name
             });
         }
 
         public Task<Model2> ZeroInTaskWithOutputOut()
         {
-            return new Task<Model2>(() => new Model2{
+            return new Task<Model2>(() => new Model2
+            {
                 Name = "ZeroInTaskWithOutputOut"
             });
         }
@@ -679,14 +377,16 @@ namespace FubuMVC.Tests.Registration
 
         public Model1 ZeroInOneOut()
         {
-            return new Model1{
+            return new Model1
+            {
                 Name = "ZeroInOneOut"
             };
         }
 
         public Model2 OneInOneOut(Model1 input)
         {
-            return new Model2{
+            return new Model2
+            {
                 Name = input.Name
             };
         }
@@ -747,6 +447,5 @@ namespace FubuMVC.Tests.Registration
 
     public class WonkyWrapper : WrappingBehavior
     {
-        
     }
 }

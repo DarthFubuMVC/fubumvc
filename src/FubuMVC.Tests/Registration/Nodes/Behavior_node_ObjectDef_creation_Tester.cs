@@ -28,8 +28,8 @@ namespace FubuMVC.Tests.Registration.Nodes
         public void creating_an_object_def_for_no_tracing()
         {
             var node = new Wrapper(typeof (SimpleBehavior));
-            node.As<IContainerModel>().ToObjectDef()
-                .Type.ShouldEqual(typeof (SimpleBehavior));
+            node.As<IContainerModel>().ToInstance()
+                .ReturnedType.ShouldEqual(typeof (SimpleBehavior));
         }
     }
 }

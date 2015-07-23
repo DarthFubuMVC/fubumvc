@@ -1,15 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Attachment;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Rendering;
 using FubuMVC.Tests.View.FakeViews;
-using FubuMVC.Tests.View.SubNamesapce;
 using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap.Pipeline;
@@ -45,14 +42,14 @@ namespace FubuMVC.Tests.View
         [Test]
         public void everything_matches()
         {
-            ActionCall action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
+            var action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
             filter.Apply(action, bag).First().ShouldBeTheSameAs(token);
         }
 
         [Test]
         public void only_name_and_namespace_match()
         {
-            ActionCall action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
+            var action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
             token.ViewModel = typeof (ViewModel2);
 
             filter.Apply(action, bag).Count().ShouldEqual(0);
@@ -61,7 +58,7 @@ namespace FubuMVC.Tests.View
         [Test]
         public void only_type_and_name_match()
         {
-            ActionCall action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
+            var action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
             token.Namespace = Guid.NewGuid().ToString();
 
             filter.Apply(action, bag).Count().ShouldEqual(0);
@@ -70,7 +67,7 @@ namespace FubuMVC.Tests.View
         [Test]
         public void only_type_and_namespace_match()
         {
-            ActionCall action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
+            var action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
             token.ViewName = "something different";
 
             filter.Apply(action, bag).Count().ShouldEqual(0);
@@ -106,14 +103,14 @@ namespace FubuMVC.Tests.View
         [Test]
         public void everything_matches()
         {
-            ActionCall action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
+            var action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
             filter.Apply(action, bag).First().ShouldBeTheSameAs(token);
         }
 
         [Test]
         public void only_name_and_namespace_match()
         {
-            ActionCall action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
+            var action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
             token.ViewModel = typeof (ViewModel2);
 
             filter.Apply(action, bag).Count().ShouldEqual(0);
@@ -122,7 +119,7 @@ namespace FubuMVC.Tests.View
         [Test]
         public void only_type_and_name_match()
         {
-            ActionCall action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
+            var action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
             token.Namespace = Guid.NewGuid().ToString();
 
             filter.Apply(action, bag).Count().ShouldEqual(0);
@@ -131,7 +128,7 @@ namespace FubuMVC.Tests.View
         [Test]
         public void only_type_and_namespace_match()
         {
-            ActionCall action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
+            var action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
             token.ViewName = "something different";
 
             filter.Apply(action, bag).First().ShouldBeTheSameAs(token);
@@ -141,7 +138,10 @@ namespace FubuMVC.Tests.View
 
     public class FakeViewToken : BehaviorNode, ITemplateFile
     {
-        public override BehaviorCategory Category { get { return BehaviorCategory.Output; } }
+        public override BehaviorCategory Category
+        {
+            get { return BehaviorCategory.Output; }
+        }
 
         public Type ViewModel { get; set; }
 
@@ -175,6 +175,7 @@ namespace FubuMVC.Tests.View
         public string Origin { get; private set; }
         public string ViewPath { get; private set; }
         public Parsing Parsing { get; private set; }
+
         public string RelativePath()
         {
             throw new NotImplementedException();
@@ -216,11 +217,6 @@ namespace FubuMVC.Tests.View
             throw new NotImplementedException();
         }
 
-        protected override ObjectDef buildObjectDef()
-        {
-            throw new NotImplementedException();
-        }
-
         public override string ToString()
         {
             return Name() ?? string.Empty;
@@ -229,14 +225,12 @@ namespace FubuMVC.Tests.View
 
     public class SomeOtherView
     {
-        
     }
 
     namespace SubNamesapce
     {
         public class AAction
         {
-            
         }
     }
 

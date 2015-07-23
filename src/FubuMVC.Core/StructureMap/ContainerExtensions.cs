@@ -1,7 +1,10 @@
 using System;
+using System.Linq;
+using FubuCore;
 using FubuMVC.Core.Runtime;
 using StructureMap;
 using StructureMap.Configuration.DSL;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.StructureMap
 {
@@ -26,6 +29,18 @@ namespace FubuMVC.Core.StructureMap
             expression.For<IActivator>().Add<LambdaActivator>()
                 .Ctor<string>().Is(description)
                 .Ctor<Action>().Is(activation);
+        }
+
+        public static Instance FindDependencyDefinitionFor<T>(this IConfiguredInstance instance)
+        {
+            var dependency = instance.Dependencies.FirstOrDefault(x => x.Type == typeof (T));
+            return dependency == null ? null : dependency.Dependency as Instance;
+        }
+
+        public static T FindDependencyValueFor<T>(this IConfiguredInstance instance) where T : class
+        {
+            var dependency = instance.Dependencies.FirstOrDefault(x => x.Type == typeof(T));
+            return dependency == null ? null : dependency.Dependency.As<ObjectInstance>().Object as T;
         }
     }
 }

@@ -1,16 +1,15 @@
 using System;
 using System.Linq;
 using FubuCore;
-using FubuMVC.Core;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Tests.Security.Authorization
 {
@@ -43,7 +42,7 @@ namespace FubuMVC.Tests.Security.Authorization
             var container = StructureMapContainerFacility.GetBasicFubuContainer();
             return
                 container.GetInstance<AuthorizationBehavior>(
-                    new ObjectDefInstance(node.As<IContainerModel>().ToObjectDef()));
+                    node.As<IContainerModel>().ToInstance());
         }
 
         [Test]
@@ -91,9 +90,9 @@ namespace FubuMVC.Tests.Security.Authorization
         public void use_no_custom_auth_failure_handler()
         {
             var node = new AuthorizationNode();
-            var def = node.As<IContainerModel>().ToObjectDef();
+            var def = node.As<IContainerModel>().ToInstance().As<IConfiguredInstance>();
 
-            def.DependencyFor<IAuthorizationFailureHandler>().ShouldBeNull();
+            def.FindDependencyDefinitionFor<IAuthorizationFailureHandler>().ShouldBeNull();
         }
 
         [Test]
@@ -102,10 +101,10 @@ namespace FubuMVC.Tests.Security.Authorization
             var node = new AuthorizationNode();
             node.FailureHandler<FakeAuthHandler>();
 
-            var def = node.As<IContainerModel>().ToObjectDef();
+            var def = node.As<IContainerModel>().ToInstance().As<IConfiguredInstance>();
 
-            def.DependencyFor<IAuthorizationFailureHandler>().ShouldBeOfType<ConfiguredDependency>()
-                .Definition.Type.ShouldEqual(typeof (FakeAuthHandler));
+            def.FindDependencyDefinitionFor<IAuthorizationFailureHandler>()
+                .ReturnedType.ShouldEqual(typeof (FakeAuthHandler));
         }
 
         [Test]
@@ -117,10 +116,9 @@ namespace FubuMVC.Tests.Security.Authorization
 
             node.FailureHandler(handler);
 
-            var def = node.As<IContainerModel>().ToObjectDef();
+            var def = node.As<IContainerModel>().ToInstance().As<IConfiguredInstance>();
 
-            def.DependencyFor<IAuthorizationFailureHandler>().ShouldBeOfType<ConfiguredDependency>()
-                .Definition.Value.ShouldBeTheSameAs(handler);
+            def.FindDependencyValueFor<IAuthorizationFailureHandler>().ShouldBeTheSameAs(handler);
         }
 
         [Test]

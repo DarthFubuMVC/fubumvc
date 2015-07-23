@@ -4,8 +4,10 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Diagnostics.Runtime.Tracing;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Tests.Diagnostics.Runtime
 {
@@ -42,8 +44,8 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
         [Test]
         public void build_the_object_def()
         {
-            var objectDef = theNode.As<IContainerModel>().ToObjectDef();
-            objectDef.Type.ShouldEqual(typeof (BehaviorTracer));
+            var objectDef = theNode.As<IContainerModel>().ToInstance().As<IConfiguredInstance>();
+            objectDef.PluggedType.ShouldEqual(typeof (BehaviorTracer));
             var correlation = objectDef.FindDependencyValueFor<BehaviorCorrelation>();
 
             correlation.Node.ShouldEqual(inner);

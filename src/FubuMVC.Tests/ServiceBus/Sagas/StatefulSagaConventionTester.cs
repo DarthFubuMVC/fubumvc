@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
@@ -11,7 +10,7 @@ using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using NUnit.Framework;
 using FubuTestingSupport;
 using Rhino.Mocks;
-using StructureMap;
+using StructureMap.Pipeline;
 
 namespace FubuTransportation.Testing.Sagas
 {
@@ -90,8 +89,8 @@ namespace FubuTransportation.Testing.Sagas
                 StateType = typeof (MySagaState)
             };
 
-            StatefulSagaConvention.DetermineSagaRepositoryDef(new TransportSettings(), types)
-                                  .Type.ShouldEqual(typeof (InMemorySagaRepository<MySagaState, SagaMessageOne>));
+            StatefulSagaConvention.DetermineSagaRepositoryInstance(new TransportSettings(), types)
+                                  .ReturnedType.ShouldEqual(typeof (InMemorySagaRepository<MySagaState, SagaMessageOne>));
         }
 
         [Test]
@@ -112,11 +111,11 @@ namespace FubuTransportation.Testing.Sagas
             settings.SagaStorageProviders.Add(storage2);
             settings.SagaStorageProviders.Add(storage3);
 
-            var def = new ObjectDef();
+            var def = new ConfiguredInstance(GetType());
             storage3.Stub(x => x.RepositoryFor(types))
                     .Return(def);
 
-            StatefulSagaConvention.DetermineSagaRepositoryDef(settings, types)
+            StatefulSagaConvention.DetermineSagaRepositoryInstance(settings, types)
                                   .ShouldBeTheSameAs(def);
         }
 
@@ -138,11 +137,11 @@ namespace FubuTransportation.Testing.Sagas
             settings.SagaStorageProviders.Add(storage2);
             settings.SagaStorageProviders.Add(storage3);
 
-            var def = new ObjectDef();
+            var def = new ConfiguredInstance(GetType());
             storage2.Stub(x => x.RepositoryFor(types))
                     .Return(def);
 
-            StatefulSagaConvention.DetermineSagaRepositoryDef(settings, types)
+            StatefulSagaConvention.DetermineSagaRepositoryInstance(settings, types)
                                   .ShouldBeTheSameAs(def);
         }
 
@@ -165,11 +164,11 @@ namespace FubuTransportation.Testing.Sagas
             settings.SagaStorageProviders.Add(storage2);
             settings.SagaStorageProviders.Add(storage3);
 
-            var def = new ObjectDef();
+            var def = new ConfiguredInstance(GetType());
             storage1.Stub(x => x.RepositoryFor(types))
                     .Return(def);
 
-            StatefulSagaConvention.DetermineSagaRepositoryDef(settings, types)
+            StatefulSagaConvention.DetermineSagaRepositoryInstance(settings, types)
                                   .ShouldBeTheSameAs(def);
         }
 
@@ -177,7 +176,7 @@ namespace FubuTransportation.Testing.Sagas
         public void unable_to_determine_a_saga_repository_blows_up()
         {
             Exception<SagaRepositoryUnresolvableException>.ShouldBeThrownBy(() => {
-                StatefulSagaConvention.DetermineSagaRepositoryDef(new TransportSettings(), new SagaTypes
+                StatefulSagaConvention.DetermineSagaRepositoryInstance(new TransportSettings(), new SagaTypes
                 {
                     MessageType = GetType(),
                     StateType = GetType()
@@ -199,7 +198,7 @@ namespace FubuTransportation.Testing.Sagas
             var chain = graph.ChainFor(typeof (SagaMessageOne));
             chain.OfType<StatefulSagaNode>()
                 .FirstOrDefault()  // there are two saga's using this message, just worry about the first one
-                .Repository.Type.ShouldEqual(typeof (SpecialSagaRepository<MySagaState, SagaMessageOne>));
+                .Repository.ReturnedType.ShouldEqual(typeof (SpecialSagaRepository<MySagaState, SagaMessageOne>));
         }
 
         [Test]
@@ -220,9 +219,9 @@ namespace FubuTransportation.Testing.Sagas
 
     public class SpecialSagaStorage : ISagaStorage
     {
-        public ObjectDef RepositoryFor(SagaTypes sagaTypes)
+        public Instance RepositoryFor(SagaTypes sagaTypes)
         {
-            return new ObjectDef(typeof(SpecialSagaRepository<,>), sagaTypes.StateType, sagaTypes.MessageType);
+            return new ConfiguredInstance(typeof(SpecialSagaRepository<,>), sagaTypes.StateType, sagaTypes.MessageType);
         }
     }
 

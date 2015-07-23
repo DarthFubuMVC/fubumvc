@@ -21,10 +21,9 @@ namespace FubuMVC.Tests.Security.Authentication
         [Test]
         public void build_the_object_def_successfully()
         {
-            var def = new AuthenticationNode(typeof (BasicAuthentication))
-                .As<IContainerModel>().ToObjectDef();
-
-            def.Type.ShouldEqual(typeof (BasicAuthentication));
+            new AuthenticationNode(typeof (BasicAuthentication))
+                .As<IContainerModel>().ToInstance()
+                .ReturnedType.ShouldEqual(typeof(BasicAuthentication));
 
         }
     }

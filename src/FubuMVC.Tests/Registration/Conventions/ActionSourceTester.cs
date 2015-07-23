@@ -5,9 +5,9 @@ using FubuCore;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuTestingSupport;
 using NUnit.Framework;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
@@ -288,14 +288,11 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
         }
 
-        protected override ObjectDef buildObjectDef()
+        protected override IConfiguredInstance buildInstance()
         {
-            //replace IActionBehavior with something other than one/zero in/out action invoker
-            return new ObjectDef
-            {
-                Type = typeof (TestActionBehavior)
-            };
+            return new SmartInstance<TestActionBehavior>();
         }
+
     }
 
     public class TestActionBehavior : BasicBehavior

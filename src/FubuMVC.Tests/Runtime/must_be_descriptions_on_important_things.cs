@@ -69,19 +69,6 @@ namespace FubuMVC.Tests.Runtime
             types.Any().ShouldBeFalse();
         }
 
-
-        [Test]
-        public void must_be_a_description_on_all_IDependency_types()
-        {
-            var types = typeof (FubuRequest).Assembly.GetExportedTypes()
-                .Where(x => x.IsConcreteTypeOf<IDependency>())
-                .Where(x => !Description.HasExplicitDescription(x));
-
-            types.Each(x => Console.WriteLine(x.Name));
-
-            types.Any().ShouldBeFalse();
-        }
-
         [Test]
         public void must_be_a_description_on_all_IUrlPolicy_types()
         {
