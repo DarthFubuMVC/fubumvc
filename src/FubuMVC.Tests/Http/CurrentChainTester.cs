@@ -3,7 +3,7 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuMVC.Tests.Http
 {
@@ -130,7 +130,7 @@ namespace FubuMVC.Tests.Http
 
             var hash3 = new CurrentChain(theChain, someDifferentRouteData).ResourceHash();
 
-            hash1.ShouldNotEqual(hash3);
+            hash1.ShouldNotBe(hash3);
         }
 
         [Test]
@@ -139,7 +139,7 @@ namespace FubuMVC.Tests.Http
             var hash1 = new CurrentChain(theChain, theRouteData).ResourceHash();
             var hash2 = new CurrentChain(theSecondChain, theRouteData).ResourceHash();
 
-            hash1.ShouldNotEqual(hash2);
+            hash1.ShouldNotBe(hash2);
         }
     }
 }

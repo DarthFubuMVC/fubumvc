@@ -1,7 +1,7 @@
 ﻿using FubuMVC.Core.Assets;
 using FubuMVC.Core.Registration;
 using FubuMVC.Spark;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Views.Spark

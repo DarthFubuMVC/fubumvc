@@ -1,6 +1,6 @@
 using FubuMVC.Core.Runtime;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuMVC.Tests.Runtime
 {

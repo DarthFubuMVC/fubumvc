@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using FubuMVC.Core.ServiceBus.Scheduling;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuTransportation.Testing.Scheduling

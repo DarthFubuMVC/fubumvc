@@ -3,7 +3,7 @@ using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Json;
 using FubuMVC.Core.Runtime.Aggregation;
-using FubuTestingSupport;
+using Shouldly;
 using HtmlTags;
 using Newtonsoft.Json;
 using NUnit.Framework;

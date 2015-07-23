@@ -8,7 +8,7 @@ using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Runtime;
 using FubuMVC.IntegrationTesting.Querying;
 using FubuMVC.Katana;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using StructureMap;
 

@@ -10,7 +10,7 @@ using FubuMVC.Core.Security.Authentication.Auditing;
 using FubuMVC.Core.Security.Authentication.Cookies;
 using FubuMVC.Core.Security.Authentication.Endpoints;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -116,7 +116,7 @@ namespace FubuMVC.Tests.Security.Authentication.Endpoints
             ClassUnderTest.post_login(request);
 
             theCookies.User.AssertWasNotCalled(x => x.Value = username);
-            theCookies.User.ShouldNotEqual(username);
+            theCookies.User.Value.ShouldNotBe(username);
         }
     }
 

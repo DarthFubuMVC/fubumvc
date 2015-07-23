@@ -1,7 +1,7 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Katana;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Owin

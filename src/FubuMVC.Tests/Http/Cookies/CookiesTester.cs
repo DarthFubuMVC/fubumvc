@@ -5,7 +5,7 @@ using FubuCore.Binding.Values;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Core.Http.Owin;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Http.Cookies

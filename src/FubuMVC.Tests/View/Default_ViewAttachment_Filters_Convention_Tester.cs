@@ -1,6 +1,6 @@
 using System.Linq;
 using FubuMVC.Core.View.Attachment;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.View

@@ -1,7 +1,7 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 

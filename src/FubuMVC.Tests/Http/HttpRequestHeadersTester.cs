@@ -5,7 +5,7 @@ using System.Reflection;
 using FubuCore.Reflection;
 using FubuMVC.Core.Http;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 using System.Collections.Generic;
 
 namespace FubuMVC.Tests.Http

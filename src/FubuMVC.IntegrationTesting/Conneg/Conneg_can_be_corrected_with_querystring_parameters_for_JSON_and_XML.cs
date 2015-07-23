@@ -2,7 +2,7 @@
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Katana;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Conneg

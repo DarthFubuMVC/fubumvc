@@ -7,7 +7,7 @@ using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Subscriptions;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -78,7 +78,7 @@ namespace FubuTransportation.Testing.Runtime
         public void adds_a_correlation_id_to_the_envelope()
         {
             Guid.Parse(theEnvelope.CorrelationId)
-                .ShouldNotEqual(Guid.Empty);
+                .ShouldNotBe(Guid.Empty);
 
             theEnvelope.CorrelationId.ShouldBe(correlationId);
         }

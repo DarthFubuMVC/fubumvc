@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using FubuMVC.Core.ServiceBus;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuTransportation.Testing
 {

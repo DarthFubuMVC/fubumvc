@@ -6,7 +6,7 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Urls;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 

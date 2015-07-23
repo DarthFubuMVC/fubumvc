@@ -2,7 +2,7 @@
 using System.Linq;
 using FubuMVC.Core.Assets.JavascriptRouting;
 using FubuMVC.Core.Registration.Nodes;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Assets

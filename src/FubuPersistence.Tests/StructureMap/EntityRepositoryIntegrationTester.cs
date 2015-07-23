@@ -4,7 +4,7 @@ using FubuPersistence.InMemory;
 using FubuPersistence.MultiTenancy;
 using NUnit.Framework;
 using StructureMap;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuPersistence.Tests.StructureMap
 {

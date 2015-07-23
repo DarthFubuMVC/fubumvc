@@ -3,7 +3,7 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuTransportation.Testing.Configuration
 {

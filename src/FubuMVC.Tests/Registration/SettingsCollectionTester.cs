@@ -3,7 +3,7 @@ using System.Threading;
 using FubuMVC.Core.Registration;
 using FubuMVC.Tests.UI;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Registration
@@ -81,7 +81,7 @@ namespace FubuMVC.Tests.Registration
 
             theSettings.Alter<FakeSettings>(x => x.Hometown = "Austin");
 
-            theParent.Get<FakeSettings>().Hometown.ShouldNotEqual("Austin");
+            theParent.Get<FakeSettings>().Hometown.ShouldNotBe("Austin");
             theSettings.Get<FakeSettings>().Hometown.ShouldBe("Austin");
         }
 

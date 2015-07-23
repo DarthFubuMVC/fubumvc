@@ -74,6 +74,9 @@
     <Reference Include="Selenium.WebDriverBackedSelenium">
       <HintPath>..\packages\Selenium.WebDriverBackedSelenium\lib\net40\Selenium.WebDriverBackedSelenium.dll</HintPath>
     </Reference>
+    <Reference Include="Shouldly">
+      <HintPath>..\packages\Shouldly\lib\net40\Shouldly.dll</HintPath>
+    </Reference>
     <Reference Include="StoryTeller">
       <HintPath>..\packages\Storyteller\lib\net45\StoryTeller.dll</HintPath>
     </Reference>

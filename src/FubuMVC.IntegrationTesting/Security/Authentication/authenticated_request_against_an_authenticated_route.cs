@@ -6,7 +6,7 @@ using FubuMVC.Core.Caching;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.Authentication.Cookies;
 using FubuMVC.Core.Security.Authentication.Tickets;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Cookie = FubuMVC.Core.Http.Cookies.Cookie;
 

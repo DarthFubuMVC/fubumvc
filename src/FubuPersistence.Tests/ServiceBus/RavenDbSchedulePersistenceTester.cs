@@ -3,7 +3,7 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
 using FubuMVC.RavenDb;
 using FubuMVC.RavenDb.ServiceBus;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using StructureMap;
 

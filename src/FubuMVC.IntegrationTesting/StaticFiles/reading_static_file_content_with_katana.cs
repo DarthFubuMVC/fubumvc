@@ -2,7 +2,7 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Katana;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.StaticFiles

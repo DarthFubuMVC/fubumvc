@@ -2,7 +2,7 @@
 using FubuMVC.Core.Security.Authentication;
 using FubuMVC.RavenDb.Membership;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Raven.Client;
 using Rhino.Mocks;
@@ -42,7 +42,7 @@ namespace FubuPersistence.Tests.Membership
             ClassUnderTest.ApplyHistory(theRequest);
             theSession.AssertWasCalled(x => x.Load<LoginFailureHistory>("foo"));
             theRequest.NumberOfTries.ShouldBe(1);
-            theRequest.LockedOutUntil.ShouldNotBeNull();
+            theRequest.LockedOutUntil.HasValue.ShouldBeTrue();
         }
 
         [Test]

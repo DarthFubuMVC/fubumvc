@@ -3,7 +3,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Security.Authentication;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Security.Authentication

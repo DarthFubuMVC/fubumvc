@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Urls;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Serenity.Fixtures;
 

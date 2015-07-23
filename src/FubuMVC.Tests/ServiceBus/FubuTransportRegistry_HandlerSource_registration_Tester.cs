@@ -2,7 +2,7 @@
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
 using FubuMVC.Tests.ServiceBus;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuTransportation.Testing

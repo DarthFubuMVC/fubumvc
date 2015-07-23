@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using FubuCore;
 using FubuMVC.Core.Registration;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Registration

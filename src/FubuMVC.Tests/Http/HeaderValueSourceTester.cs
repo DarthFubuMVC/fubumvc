@@ -3,7 +3,7 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Tests.Urls;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 using System.Linq;
 using Rhino.Mocks;
 

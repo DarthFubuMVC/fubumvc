@@ -2,7 +2,7 @@
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.StructureMap;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using StructureMap;
 

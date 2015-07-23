@@ -1,5 +1,5 @@
 using FubuCore;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Owin

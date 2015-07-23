@@ -1,7 +1,7 @@
 using FubuCore;
 using FubuCore.Conversion;
 using FubuMVC.Core.Json;
-using FubuTestingSupport;
+using Shouldly;
 using Newtonsoft.Json;
 using NUnit.Framework;
 

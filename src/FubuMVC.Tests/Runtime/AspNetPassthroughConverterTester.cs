@@ -4,7 +4,7 @@ using System.Web;
 using FubuCore.Binding;
 using FubuCore.Reflection;
 using FubuMVC.Core.Runtime;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Runtime

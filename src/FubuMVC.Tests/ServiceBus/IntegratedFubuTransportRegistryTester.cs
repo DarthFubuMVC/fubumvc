@@ -8,7 +8,7 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime.Routing;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 using FubuMVC.Core.ServiceBus.Scheduling;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuTransportation.Testing

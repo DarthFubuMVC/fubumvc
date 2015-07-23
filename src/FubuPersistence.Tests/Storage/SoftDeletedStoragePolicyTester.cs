@@ -1,7 +1,7 @@
 ﻿using FubuCore.Dates;
 using FubuPersistence.Storage;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuPersistence.Tests.Storage
 {

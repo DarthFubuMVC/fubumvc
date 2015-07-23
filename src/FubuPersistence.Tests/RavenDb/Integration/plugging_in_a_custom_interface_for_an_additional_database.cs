@@ -1,7 +1,7 @@
 ﻿using System;
 using FubuPersistence.RavenDb;
 using FubuPersistence.RavenDb.Multiple;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Raven.Client;
 using Raven.Client.Document;

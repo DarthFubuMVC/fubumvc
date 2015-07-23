@@ -10,7 +10,7 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.Runtime.Formatters;
 using FubuMVC.Core.StructureMap;
-using FubuTestingSupport;
+using Shouldly;
 using HtmlTags;
 using Newtonsoft.Json;
 using NUnit.Framework;

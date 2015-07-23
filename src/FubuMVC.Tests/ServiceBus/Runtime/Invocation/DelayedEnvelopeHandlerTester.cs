@@ -4,7 +4,7 @@ using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Delayed;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 using Rhino.Mocks;
 using System.Linq;
 

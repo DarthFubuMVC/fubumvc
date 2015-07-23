@@ -2,7 +2,7 @@ using System.Linq;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuMVC.Tests.Http
 {
@@ -14,7 +14,7 @@ namespace FubuMVC.Tests.Http
         {
             new CurrentMimeType()
                 .AcceptTypes.Single()
-                .ShouldBe(MimeType.Any);
+                .ShouldBe(MimeType.Any.ToString());
         }
 
         [Test]

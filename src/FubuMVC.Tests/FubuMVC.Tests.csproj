@@ -54,6 +54,9 @@
     <Reference Include="Rhino.Mocks">
       <HintPath>..\packages\RhinoMocks\lib\net\Rhino.Mocks.dll</HintPath>
     </Reference>
+    <Reference Include="Shouldly">
+      <HintPath>..\packages\Shouldly\lib\net40\Shouldly.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap\lib\net40\StructureMap.dll</HintPath>
     </Reference>
@@ -663,8 +666,7 @@
     <Compile Include="FubuBootstrapperIntegrationTester.cs" />
     <Compile Include="FubuRegistryTester.cs" />
     <Compile Include="HtmlGenerationTestExtensions.cs" />
-    <Compile Include="Registration\BehaviorGraphTester.cs">
-    </Compile>
+    <Compile Include="Registration\BehaviorGraphTester.cs"></Compile>
     <Compile Include="Registration\Conventions\ActionSourceTester.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConventionTester.cs" />
     <Compile Include="Registration\Conventions\CustomConventionIntegratedTester.cs" />

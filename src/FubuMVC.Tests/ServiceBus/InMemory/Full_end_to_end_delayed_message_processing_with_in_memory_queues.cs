@@ -12,7 +12,7 @@ using FubuMVC.Core.StructureMap;
 using FubuMVC.Tests.ServiceBus.InMemory;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using StructureMap;
 

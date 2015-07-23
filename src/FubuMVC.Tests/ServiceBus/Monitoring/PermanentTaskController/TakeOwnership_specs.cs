@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Monitoring;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuTransportation.Testing.Monitoring.PermanentTaskController

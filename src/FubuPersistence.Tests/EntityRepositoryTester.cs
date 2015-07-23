@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using FubuCore.Dates;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuPersistence.Tests
@@ -20,7 +20,7 @@ namespace FubuPersistence.Tests
 
             repository.Update(@case);
 
-            @case.Id.ShouldBeOfType<Guid>().ShouldNotEqual(Guid.Empty);
+            @case.Id.ShouldBeOfType<Guid>().ShouldNotBe(Guid.Empty);
         }
 
         [Test]

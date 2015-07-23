@@ -4,7 +4,7 @@ using FubuMVC.Core.Registration;
 using HtmlTags;
 using NUnit.Framework;
 using System.Linq;
-using FubuTestingSupport;
+using Shouldly;
 using System.Collections.Generic;
 using FubuCore;
 

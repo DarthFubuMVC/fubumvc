@@ -9,7 +9,7 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.ServiceBus.Monitoring;
 using FubuMVC.Core.ServiceBus.Subscriptions;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 

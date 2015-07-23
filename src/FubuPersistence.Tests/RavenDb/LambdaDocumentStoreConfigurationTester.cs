@@ -4,7 +4,7 @@ using Raven.Client.Document;
 using StructureMap;
 using StructureMap.Configuration.DSL;
 using FubuPersistence.RavenDb;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuPersistence.Tests.RavenDb
 {

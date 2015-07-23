@@ -7,7 +7,7 @@ using FubuMVC.Core.Json;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.NewConneg

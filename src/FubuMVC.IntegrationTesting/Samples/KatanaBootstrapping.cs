@@ -3,7 +3,7 @@ using System.Net;
 using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Katana;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuMVC.IntegrationTesting.Samples
 {

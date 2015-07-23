@@ -2,7 +2,7 @@
 using FubuPersistence.InMemory;
 using FubuPersistence.Reset;
 using FubuPersistence.Storage;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using StructureMap;
 using StructureMap.Configuration.DSL;

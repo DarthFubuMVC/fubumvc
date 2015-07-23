@@ -8,7 +8,7 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Headers;
 using NUnit.Framework;
 using Rhino.Mocks;
-using FubuTestingSupport;
+using Shouldly;
 using FubuCore.Configuration;
 using System.Linq;
 

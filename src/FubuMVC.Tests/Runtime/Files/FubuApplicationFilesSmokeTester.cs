@@ -2,7 +2,7 @@ using System;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime.Files;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Runtime.Files

@@ -7,7 +7,7 @@ using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Registration.Conventions

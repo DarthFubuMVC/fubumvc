@@ -1,7 +1,7 @@
 using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Core.Runtime.SessionState;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using FubuMVC.Core.ServiceBus.InMemory;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuTransportation.Testing.InMemory
 {

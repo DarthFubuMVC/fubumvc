@@ -8,7 +8,7 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.StructureMap;
 using NUnit.Framework;
 using StructureMap;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuTransportation.Testing.Configuration
 {

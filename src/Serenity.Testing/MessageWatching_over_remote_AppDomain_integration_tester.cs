@@ -3,7 +3,7 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Services.Messaging.Tracking;
 using FubuMVC.Core.StructureMap;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using RemoteService;
 

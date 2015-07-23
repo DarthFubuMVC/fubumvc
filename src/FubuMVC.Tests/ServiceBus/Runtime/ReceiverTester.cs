@@ -8,7 +8,7 @@ using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Headers;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 using System.Linq;

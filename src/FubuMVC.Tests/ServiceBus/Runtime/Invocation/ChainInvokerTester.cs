@@ -12,7 +12,7 @@ using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using FubuMVC.Tests.TestSupport;
 using NUnit.Framework;
 using System.Linq;
-using FubuTestingSupport;
+using Shouldly;
 using Rhino.Mocks;
 
 namespace FubuTransportation.Testing.Runtime.Invocation

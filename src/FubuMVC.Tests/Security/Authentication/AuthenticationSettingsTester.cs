@@ -5,7 +5,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Endpoints;
 using FubuMVC.Core.Security.Authorization;
-using FubuTestingSupport;
+using Shouldly;
 using HtmlTags;
 using NUnit.Framework;
 

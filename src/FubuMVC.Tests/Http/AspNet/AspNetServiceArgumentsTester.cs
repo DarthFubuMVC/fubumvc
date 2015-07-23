@@ -5,7 +5,7 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.AspNet;
 using NUnit.Framework;
 using Rhino.Mocks;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuMVC.Tests.Http.AspNet
 {

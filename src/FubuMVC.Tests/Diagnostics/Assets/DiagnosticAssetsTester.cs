@@ -5,7 +5,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics.Assets;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Diagnostics.Assets

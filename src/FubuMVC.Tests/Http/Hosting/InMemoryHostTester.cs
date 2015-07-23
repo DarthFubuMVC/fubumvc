@@ -5,7 +5,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Http.Scenarios;
 using FubuMVC.Core.Runtime;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Http.Hosting

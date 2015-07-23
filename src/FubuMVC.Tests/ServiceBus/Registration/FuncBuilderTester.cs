@@ -1,7 +1,7 @@
 ﻿using System;
 using FubuCore;
 using FubuMVC.Core.ServiceBus.Registration;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuTransportation.Testing.Registration

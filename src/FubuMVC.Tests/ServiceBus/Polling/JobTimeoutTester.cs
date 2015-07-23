@@ -2,7 +2,7 @@
 using System.Threading;
 using FubuCore;
 using FubuMVC.Core.ServiceBus.Polling;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuTransportation.Testing.Polling

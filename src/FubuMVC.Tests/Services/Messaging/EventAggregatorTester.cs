@@ -2,7 +2,7 @@
 using System.Linq;
 using FubuMVC.Core.Services.Messaging;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Services.Messaging

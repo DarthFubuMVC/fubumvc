@@ -6,7 +6,7 @@ using FubuMVC.Core.Services;
 using FubuMVC.Core.Services.Messaging;
 using FubuMVC.Core.Services.Messaging.Tracking;
 using FubuMVC.Core.Services.Remote;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using SampleService;
 using Foo = FubuMVC.Tests.Services.Messaging.Tracking.Foo;
@@ -274,7 +274,7 @@ namespace FubuMVC.Tests.Services.Remote
                 var newWriteTime = File.GetLastWriteTime(sampleServiceDll);
 
                 newWriteTime.ShouldBeGreaterThan(originalWriteTime);
-                originalWriteTime.ShouldNotEqual(newWriteTime);
+                originalWriteTime.ShouldNotBe(newWriteTime);
             }
         }
 

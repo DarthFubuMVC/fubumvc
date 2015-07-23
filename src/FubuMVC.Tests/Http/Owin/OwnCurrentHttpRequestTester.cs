@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using FubuMVC.Core.Http.Owin;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Http.Owin

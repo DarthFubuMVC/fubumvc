@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using FubuCore;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
-using FubuTestingSupport;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Runtime.Serializers
+namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
 {
     //Copied from RSB for backwards compatibility
     [TestFixture]
@@ -59,7 +59,7 @@ namespace FubuTransportation.Testing.Runtime.Serializers
         [Test]
         public void can_round_trip_object_array()
         {
-            var messages = new object[] {sample, sample2, new Address {City = "SLC", State = "Utah"}};
+            var messages = new object[] {sample, sample2, new FubuTransportation.Testing.Runtime.Serializers.Address {City = "SLC", State = "Utah"}};
 
             var serializer = new XmlMessageSerializer();
             var stream = new MemoryStream();
@@ -70,7 +70,7 @@ namespace FubuTransportation.Testing.Runtime.Serializers
             var actual = serializer.Deserialize(stream).ShouldBeOfType<object[]>();
             actual[0].ShouldBeOfType<Order>();
             actual[1].ShouldBeOfType<Order>();
-            actual[2].ShouldBeOfType<Address>();
+            actual[2].ShouldBeOfType<FubuTransportation.Testing.Runtime.Serializers.Address>();
 
         }
 

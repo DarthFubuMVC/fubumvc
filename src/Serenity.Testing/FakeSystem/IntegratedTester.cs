@@ -7,7 +7,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.StructureMap;
 using FubuMVC.Core.View;
-using FubuTestingSupport;
+using Shouldly;
 using HtmlTags;
 using NUnit.Framework;
 using OpenQA.Selenium;

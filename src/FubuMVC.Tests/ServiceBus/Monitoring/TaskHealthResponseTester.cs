@@ -2,7 +2,7 @@
 using System.Linq;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Monitoring;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuTransportation.Testing.Monitoring

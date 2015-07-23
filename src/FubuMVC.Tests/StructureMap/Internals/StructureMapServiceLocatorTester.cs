@@ -1,7 +1,7 @@
 using FubuMVC.Core.Security;
 using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.StructureMap;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 using StructureMap;

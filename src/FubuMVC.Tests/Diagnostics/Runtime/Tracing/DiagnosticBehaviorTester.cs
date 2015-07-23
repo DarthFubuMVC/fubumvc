@@ -5,7 +5,7 @@ using FubuMVC.Core.Diagnostics.Runtime.Tracing;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 

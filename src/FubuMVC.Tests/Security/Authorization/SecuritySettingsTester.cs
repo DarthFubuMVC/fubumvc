@@ -1,7 +1,7 @@
 ﻿using FubuCore.Reflection;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Security.Authorization;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Security.Authorization

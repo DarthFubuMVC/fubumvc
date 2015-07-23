@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using FubuCore.Binding;
 using FubuMVC.Core.Json;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 

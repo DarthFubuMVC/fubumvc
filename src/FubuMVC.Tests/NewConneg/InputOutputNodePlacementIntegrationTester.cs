@@ -4,7 +4,7 @@ using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.Security.Authorization;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 using System.Linq;
 
 namespace FubuMVC.Tests.NewConneg

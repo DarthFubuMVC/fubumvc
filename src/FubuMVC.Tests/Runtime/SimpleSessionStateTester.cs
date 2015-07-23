@@ -2,7 +2,7 @@
 using System.Web;
 using FubuCore.Util;
 using FubuMVC.Core.Runtime;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 

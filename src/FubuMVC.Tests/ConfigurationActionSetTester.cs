@@ -2,7 +2,7 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 using System.Linq;
 using Rhino.Mocks;
 using System.Collections.Generic;
@@ -52,7 +52,7 @@ namespace FubuMVC.Tests
             var policy1 = new ConfiguredPolicy("foo");
             var policy2 = new ConfiguredPolicy("bar");
 
-            policy1.ShouldNotEqual(policy2);
+            policy1.ShouldNotBe(policy2);
 
             var actions = new ConfigurationActionSet();
             actions.Fill(policy1);

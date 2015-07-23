@@ -5,7 +5,7 @@ using FubuCore;
 using FubuCore.Dates;
 using FubuCore.Logging;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Execution;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuTransportation.Testing.ScheduledJobs

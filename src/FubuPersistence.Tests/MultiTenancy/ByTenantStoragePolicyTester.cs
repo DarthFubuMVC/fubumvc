@@ -3,7 +3,7 @@ using FubuPersistence.InMemory;
 using FubuPersistence.MultiTenancy;
 using FubuPersistence.Storage;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuPersistence.Tests.MultiTenancy
 {

@@ -5,7 +5,7 @@ using FubuPersistence.RavenDb;
 using FubuPersistence.RavenDb.Multiple;
 using FubuPersistence.Reset;
 using FubuPersistence.Tests.RavenDb.Integration;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using StructureMap;
 using FubuCore;

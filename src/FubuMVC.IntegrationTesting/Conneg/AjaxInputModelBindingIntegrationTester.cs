@@ -3,7 +3,7 @@ using System.Net;
 using System.Reflection;
 using FubuCore.Binding;
 using FubuMVC.Core;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Conneg

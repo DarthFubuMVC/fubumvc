@@ -4,7 +4,7 @@ using FubuCore.Logging;
 using FubuPersistence.Reset;
 using NUnit.Framework;
 using Rhino.Mocks;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuPersistence.Tests.Reset
 {

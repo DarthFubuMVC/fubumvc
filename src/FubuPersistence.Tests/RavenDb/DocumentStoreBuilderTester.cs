@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using Raven.Client.Embedded;
 using Raven.Imports.Newtonsoft.Json;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuPersistence.Tests.RavenDb
 {

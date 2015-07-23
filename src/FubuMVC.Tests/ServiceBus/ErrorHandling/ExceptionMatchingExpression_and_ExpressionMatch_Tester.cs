@@ -2,7 +2,7 @@
 using FubuMVC.Core.ServiceBus.ErrorHandling;
 using NUnit.Framework;
 using FubuCore;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuTransportation.Testing.ErrorHandling
 {

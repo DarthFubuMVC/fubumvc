@@ -1,7 +1,7 @@
 using FubuMVC.Core.Security;
 using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.View;
-using FubuTestingSupport;
+using Shouldly;
 using HtmlTags;
 using NUnit.Framework;
 

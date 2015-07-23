@@ -14,7 +14,7 @@ using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Handlers;
 using FubuMVC.Core.Security;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -105,7 +105,7 @@ namespace FubuMVC.Tests.Routing
         [Test]
         public void it_assigns_routehandler_on_route()
         {
-            _routes.Each(r => r.RouteHandler.ShouldBeOfType<IFubuRouteHandler>());
+            _routes.Each(r => r.RouteHandler.ShouldBeOfType<FubuRouteHandler>());
         }
 
         [Test]

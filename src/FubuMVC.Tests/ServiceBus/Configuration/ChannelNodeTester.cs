@@ -13,7 +13,7 @@ using FubuMVC.Core.ServiceBus.Scheduling;
 using NUnit.Framework;
 using Rhino.Mocks;
 using TestMessages;
-using FubuTestingSupport;
+using Shouldly;
 using System.Linq;
 using Is = Rhino.Mocks.Constraints.Is;
 

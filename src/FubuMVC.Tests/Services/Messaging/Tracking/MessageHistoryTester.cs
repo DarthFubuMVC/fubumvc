@@ -2,7 +2,7 @@
 using System.Linq;
 using FubuMVC.Core.Services.Messaging;
 using FubuMVC.Core.Services.Messaging.Tracking;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 

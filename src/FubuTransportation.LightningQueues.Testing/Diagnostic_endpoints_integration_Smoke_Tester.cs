@@ -5,7 +5,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.StructureMap;
 using FubuMVC.Katana;
-using FubuTestingSupport;
+using Shouldly;
 using FubuTransportation.LightningQueues.Diagnostics;
 using NUnit.Framework;
 

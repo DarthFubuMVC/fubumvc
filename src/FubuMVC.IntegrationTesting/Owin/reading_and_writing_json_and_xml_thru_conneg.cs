@@ -2,7 +2,7 @@ using System.IO;
 using System.Net;
 using System.Xml;
 using System.Xml.Serialization;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Owin

@@ -3,7 +3,7 @@ using FubuCore;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Sagas;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 using StructureMap.Pipeline;
 using Message1 = FubuTransportation.Testing.Message1;
 

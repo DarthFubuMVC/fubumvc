@@ -3,7 +3,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.StructureMap.Diagnostics;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Diagnostics

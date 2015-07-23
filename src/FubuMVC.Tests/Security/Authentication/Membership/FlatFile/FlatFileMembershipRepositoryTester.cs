@@ -3,7 +3,7 @@ using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Membership;
 using FubuMVC.Core.Security.Authentication.Membership.FlatFile;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Security.Authentication.Membership.FlatFile

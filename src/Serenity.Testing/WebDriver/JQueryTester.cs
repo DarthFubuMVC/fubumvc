@@ -1,4 +1,4 @@
-﻿using FubuTestingSupport;
+﻿using Shouldly;
 using NUnit.Framework;
 using Serenity.WebDriver;
 

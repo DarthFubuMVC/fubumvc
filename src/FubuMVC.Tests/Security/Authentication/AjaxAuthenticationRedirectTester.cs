@@ -3,7 +3,7 @@ using FubuCore.Binding;
 using FubuCore.Util;
 using FubuMVC.Core;
 using FubuMVC.Core.Security.Authentication;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Security.Authentication

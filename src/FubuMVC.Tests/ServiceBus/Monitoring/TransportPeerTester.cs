@@ -6,7 +6,7 @@ using FubuCore.Logging;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Monitoring;
 using FubuMVC.Core.ServiceBus.Subscriptions;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 

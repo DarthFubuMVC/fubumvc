@@ -1,5 +1,5 @@
 using System.Linq;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Packaging

@@ -1,6 +1,6 @@
 ﻿using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Monitoring;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuTransportation.Testing.Monitoring

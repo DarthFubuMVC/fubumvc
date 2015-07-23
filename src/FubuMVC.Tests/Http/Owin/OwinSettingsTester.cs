@@ -4,7 +4,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Owin.Middleware;
 using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
-using FubuTestingSupport;
+using Shouldly;
 using HtmlTags;
 using NUnit.Framework;
 

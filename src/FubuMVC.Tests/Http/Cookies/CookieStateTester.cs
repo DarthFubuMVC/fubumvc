@@ -1,6 +1,6 @@
 ﻿using FubuMVC.Core.Http.Cookies;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuMVC.Tests.Http.Cookies
 {

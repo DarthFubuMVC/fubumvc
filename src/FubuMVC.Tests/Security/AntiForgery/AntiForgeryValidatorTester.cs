@@ -7,7 +7,7 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Core.Security.AntiForgery;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 

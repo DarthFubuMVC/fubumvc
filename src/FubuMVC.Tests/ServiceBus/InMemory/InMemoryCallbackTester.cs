@@ -3,7 +3,7 @@ using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Runtime;
 using NUnit.Framework;
 using System.Linq;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuTransportation.Testing.InMemory
 {
@@ -21,7 +21,7 @@ namespace FubuTransportation.Testing.InMemory
 
             var delayed = InMemoryQueueManager.DelayedEnvelopes().Single();
             delayed.CorrelationId.ShouldBe(envelope.CorrelationId);
-            delayed.ExecutionTime.ShouldNotBeNull();
+            delayed.ExecutionTime.HasValue.ShouldBeTrue();
         }
     }
 }

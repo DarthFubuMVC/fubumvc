@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using OpenQA.Selenium;
 using Serenity.Fixtures.Handlers;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace Serenity.Testing.Fixtures.Handlers
 {

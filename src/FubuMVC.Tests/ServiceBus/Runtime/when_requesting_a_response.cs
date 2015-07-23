@@ -4,7 +4,7 @@ using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Events;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using System.Linq;
 using Rhino.Mocks;

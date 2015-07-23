@@ -2,7 +2,7 @@ using FubuCore.Descriptions;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Resources.Conneg;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuMVC.Tests.Resources.Conneg
 {

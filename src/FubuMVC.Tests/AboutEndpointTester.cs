@@ -2,7 +2,7 @@
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuMVC.Tests
 {

@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Subscriptions;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuTransportation.Testing.Subscriptions
@@ -32,23 +32,23 @@ namespace FubuTransportation.Testing.Subscriptions
             s2.ShouldBe(s1);
 
             s2.NodeName = "different";
-            s1.ShouldNotEqual(s2);
+            s1.ShouldNotBe(s2);
 
             s2.NodeName = s1.NodeName;
             s2.MessageType = typeof (Message2).AssemblyQualifiedName;
-            s2.ShouldNotEqual(s1);
+            s2.ShouldNotBe(s1);
 
             s2.MessageType = s1.MessageType;
             s2.Receiver = "foo://3".ToUri();
-            s2.ShouldNotEqual(s1);
+            s2.ShouldNotBe(s1);
 
             s2.Receiver = s1.Receiver;
             s2.Source = "foo://4".ToUri();
-            s2.ShouldNotEqual(s1);
+            s2.ShouldNotBe(s1);
 
             s2.Source = s1.Source;
             s2.Role = SubscriptionRole.Publishes;
-            s2.ShouldNotEqual(s1);
+            s2.ShouldNotBe(s1);
         }
     }
 }

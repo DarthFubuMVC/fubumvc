@@ -9,7 +9,7 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Handlers;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using StructureMap;
 

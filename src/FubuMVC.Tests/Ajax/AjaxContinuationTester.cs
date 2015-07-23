@@ -2,7 +2,7 @@ using System.Reflection.Emit;
 using FubuCore;
 using FubuMVC.Core.Ajax;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 using System.Linq;
 
 namespace FubuMVC.Tests.Ajax

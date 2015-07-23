@@ -3,7 +3,7 @@ using System.Threading;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.ServiceBus.ScheduledJobs;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuTransportation.Testing.ScheduledJobs

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using FubuMVC.Core;
 using FubuMVC.Core.Services;
 using FubuMVC.Core.Services.Remote;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Services.Remote

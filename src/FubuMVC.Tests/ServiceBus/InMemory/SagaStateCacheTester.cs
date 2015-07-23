@@ -2,7 +2,7 @@
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuTransportation.Testing.InMemory
 {

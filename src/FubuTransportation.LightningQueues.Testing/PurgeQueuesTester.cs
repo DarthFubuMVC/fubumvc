@@ -7,7 +7,7 @@ using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.StructureMap;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using LightningQueues;
 using NUnit.Framework;
 using Rhino.Mocks;

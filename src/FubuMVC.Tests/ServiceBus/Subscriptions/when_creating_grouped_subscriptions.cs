@@ -5,7 +5,7 @@ using FubuCore;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Subscriptions;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuTransportation.Testing.Subscriptions

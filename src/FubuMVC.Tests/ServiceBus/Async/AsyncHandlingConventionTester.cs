@@ -4,7 +4,7 @@ using FubuMVC.Core.ServiceBus.Async;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuTransportation.Testing.Async

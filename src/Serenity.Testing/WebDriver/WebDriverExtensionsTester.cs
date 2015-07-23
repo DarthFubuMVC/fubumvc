@@ -1,6 +1,6 @@
 ﻿using System;
 using FubuCore;
-using FubuTestingSupport;
+using Shouldly;
 using HtmlTags;
 using NUnit.Framework;
 using OpenQA.Selenium;

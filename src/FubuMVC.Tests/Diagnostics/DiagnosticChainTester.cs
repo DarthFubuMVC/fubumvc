@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Diagnostics

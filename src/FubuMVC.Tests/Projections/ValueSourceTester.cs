@@ -1,6 +1,6 @@
 using FubuMVC.Core.Projections;
 using FubuMVC.Core.Runtime;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Projections

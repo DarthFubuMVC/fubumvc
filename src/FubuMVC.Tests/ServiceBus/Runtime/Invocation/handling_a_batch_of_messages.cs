@@ -2,7 +2,7 @@
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation.Batching;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuTransportation.Testing.Runtime.Invocation

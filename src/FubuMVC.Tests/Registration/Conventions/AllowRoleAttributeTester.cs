@@ -5,7 +5,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.Security.Authorization;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using System.Linq;
 

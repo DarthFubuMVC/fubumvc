@@ -2,7 +2,7 @@
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.StructureMap;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using StructureMap;
 using StructureMap.Configuration.DSL;

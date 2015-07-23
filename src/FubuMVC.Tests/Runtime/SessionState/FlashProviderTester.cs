@@ -1,6 +1,6 @@
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.SessionState;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.SessionState

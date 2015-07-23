@@ -12,7 +12,7 @@ using FubuMVC.Core.ServiceBus.Runtime.Delayed;
 using FubuMVC.Core.Services.Messaging.Tracking;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using FubuTransportation.Testing;
 using NUnit.Framework;
 

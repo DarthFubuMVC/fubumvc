@@ -9,7 +9,7 @@ using FubuTransportation.Testing.Scenarios;
 using NUnit.Framework;
 using System.Linq;
 using FubuCore;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuTransportation.Testing
 {

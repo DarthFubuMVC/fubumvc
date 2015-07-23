@@ -1,6 +1,6 @@
 ﻿using System;
 using FubuMVC.Core.Services.Messaging.Tracking;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Services.Messaging.Tracking

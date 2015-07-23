@@ -11,7 +11,7 @@ using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Execution;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
 using FubuMVC.Core.StructureMap;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuTransportation.Testing.ScheduledJobs

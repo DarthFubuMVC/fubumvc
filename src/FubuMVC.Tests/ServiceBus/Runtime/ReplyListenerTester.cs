@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core.ServiceBus.Events;
 using FubuMVC.Core.ServiceBus.Logging;
 using FubuMVC.Core.ServiceBus.Runtime;
+using FubuTransportation.Testing;
 using NUnit.Framework;
 using Rhino.Mocks;
-using FubuTestingSupport;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Runtime
+namespace FubuMVC.Tests.ServiceBus.Runtime
 {
     [TestFixture]
     public class ReplayListener_expiration_logic_Tester
@@ -21,7 +21,7 @@ namespace FubuTransportation.Testing.Runtime
 
             listener.IsExpired.ShouldBeFalse();
 
-            listener.ExpiresAt.ShouldNotBeNull();
+            listener.ExpiresAt.HasValue.ShouldBeTrue();
             (listener.ExpiresAt > DateTime.UtcNow.AddMinutes(9)).ShouldBeTrue();
             (listener.ExpiresAt < DateTime.UtcNow.AddMinutes(11)).ShouldBeTrue();
         }

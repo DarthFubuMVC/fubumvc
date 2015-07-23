@@ -5,7 +5,7 @@ using System.Linq;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core.View.Attachment;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.View

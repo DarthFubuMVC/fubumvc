@@ -3,7 +3,7 @@ using FubuCore.Binding.InMemory;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Runtime;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Runtime

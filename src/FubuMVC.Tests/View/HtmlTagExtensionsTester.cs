@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FubuMVC.Core.View;
-using FubuTestingSupport;
+using Shouldly;
 using HtmlTags;
 using NUnit.Framework;
 

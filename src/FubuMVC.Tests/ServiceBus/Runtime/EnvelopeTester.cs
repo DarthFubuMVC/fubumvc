@@ -3,7 +3,7 @@ using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Headers;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 using FubuCore;
@@ -18,11 +18,11 @@ namespace FubuTransportation.Testing.Runtime
         {
             new Envelope().CorrelationId.ShouldNotBeNull();
 
-            new Envelope().CorrelationId.ShouldNotEqual(new Envelope().CorrelationId);
-            new Envelope().CorrelationId.ShouldNotEqual(new Envelope().CorrelationId);
-            new Envelope().CorrelationId.ShouldNotEqual(new Envelope().CorrelationId);
-            new Envelope().CorrelationId.ShouldNotEqual(new Envelope().CorrelationId);
-            new Envelope().CorrelationId.ShouldNotEqual(new Envelope().CorrelationId);
+            new Envelope().CorrelationId.ShouldNotBe(new Envelope().CorrelationId);
+            new Envelope().CorrelationId.ShouldNotBe(new Envelope().CorrelationId);
+            new Envelope().CorrelationId.ShouldNotBe(new Envelope().CorrelationId);
+            new Envelope().CorrelationId.ShouldNotBe(new Envelope().CorrelationId);
+            new Envelope().CorrelationId.ShouldNotBe(new Envelope().CorrelationId);
         }
 
         [Test]

@@ -1,7 +1,7 @@
 ﻿using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Membership;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 

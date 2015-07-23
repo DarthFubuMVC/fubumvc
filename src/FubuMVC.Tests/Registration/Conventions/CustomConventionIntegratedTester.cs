@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Resources.Conneg;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Registration.Conventions

@@ -5,7 +5,7 @@ using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using NUnit.Framework;
 using Rhino.Mocks;
 using System.Linq;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuTransportation.Testing.Runtime.Invocation
 {

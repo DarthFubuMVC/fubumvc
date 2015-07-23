@@ -12,7 +12,7 @@ using FubuMVC.Tests.TestSupport;
 using NUnit.Framework;
 using StructureMap;
 using System.Linq;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuTransportation.Testing.Polling
 {

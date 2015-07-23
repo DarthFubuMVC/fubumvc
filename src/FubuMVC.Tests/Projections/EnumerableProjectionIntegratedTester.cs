@@ -7,7 +7,7 @@ using FubuCore.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Projections;
 using FubuMVC.Core.Resources.Hypermedia;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using StructureMap;
 

@@ -1,4 +1,4 @@
-using FubuTestingSupport;
+using Shouldly;
 using HtmlTags;
 
 namespace FubuMVC.Tests

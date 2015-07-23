@@ -9,7 +9,7 @@ using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Owin.Middleware;
 using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
 using FubuMVC.Core.Runtime.Files;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles

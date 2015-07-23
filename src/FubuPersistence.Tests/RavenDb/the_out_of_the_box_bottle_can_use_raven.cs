@@ -6,7 +6,7 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.StructureMap;
 using FubuPersistence.RavenDb;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Raven.Client;
 using Raven.Client.Document;

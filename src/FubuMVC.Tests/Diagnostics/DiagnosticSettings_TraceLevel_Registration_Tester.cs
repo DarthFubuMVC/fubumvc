@@ -7,7 +7,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using StructureMap;
 

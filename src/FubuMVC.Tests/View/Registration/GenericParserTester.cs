@@ -3,7 +3,7 @@ using System.CodeDom.Compiler;
 using System.Linq;
 using System.Reflection;
 using FubuMVC.Core.View.Registration;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.View.Registration

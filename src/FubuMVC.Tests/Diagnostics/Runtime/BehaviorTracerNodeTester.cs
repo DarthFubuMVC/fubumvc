@@ -5,7 +5,7 @@ using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Diagnostics.Runtime.Tracing;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.StructureMap;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using StructureMap.Pipeline;
 

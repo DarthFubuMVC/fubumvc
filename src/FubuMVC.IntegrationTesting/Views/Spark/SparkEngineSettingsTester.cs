@@ -3,7 +3,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Spark;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Views.Spark
@@ -50,8 +50,8 @@ namespace FubuMVC.IntegrationTesting.Views.Spark
 
             var files = faf.FindFiles(ClassUnderTest.Search).ToArray();
 
-            files.ShouldNotHave(f => f.Path.EndsWith("A3.cshtml"));
-            files.ShouldNotHave(f => f.Path.EndsWith("A4.cshtml"));
+            files.ShouldNotContain(f => f.Path.EndsWith("A3.cshtml"));
+            files.ShouldNotContain(f => f.Path.EndsWith("A4.cshtml"));
         }
 
         [Test]

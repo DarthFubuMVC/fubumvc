@@ -1,6 +1,6 @@
 ﻿using System;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuTransportation.Testing.ScheduledJobs
@@ -31,7 +31,7 @@ namespace FubuTransportation.Testing.ScheduledJobs
             var record = new JobExecutionRecord();
             record.ReadException(ex);
 
-            record.ExceptionText.ShouldNotEqual(ex.ToString());
+            record.ExceptionText.ShouldNotBe(ex.ToString());
             record.ExceptionText.ShouldContain(ex1.ToString());
             record.ExceptionText.ShouldContain(ex2.ToString());
             record.ExceptionText.ShouldContain(ex3.ToString());

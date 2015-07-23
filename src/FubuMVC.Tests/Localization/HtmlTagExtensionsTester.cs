@@ -1,5 +1,5 @@
 ﻿using FubuLocalization;
-using FubuTestingSupport;
+using Shouldly;
 using HtmlTags;
 using NUnit.Framework;
 

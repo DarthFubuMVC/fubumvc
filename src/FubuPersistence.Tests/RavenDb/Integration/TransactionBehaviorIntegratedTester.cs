@@ -8,7 +8,7 @@ using FubuMVC.Core.StructureMap;
 using FubuMVC.Katana;
 using FubuMVC.RavenDb;
 using FubuPersistence.RavenDb;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using System.Linq;
 using Raven.Client;

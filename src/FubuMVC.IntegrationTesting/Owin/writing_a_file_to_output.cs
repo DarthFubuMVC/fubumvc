@@ -1,6 +1,6 @@
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Files;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Owin

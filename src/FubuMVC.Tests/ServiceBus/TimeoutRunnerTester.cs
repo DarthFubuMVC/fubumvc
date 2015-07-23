@@ -2,7 +2,7 @@
 using System.Threading;
 using FubuCore;
 using FubuMVC.Core.ServiceBus;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 

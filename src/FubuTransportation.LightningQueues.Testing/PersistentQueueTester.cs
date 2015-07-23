@@ -6,7 +6,7 @@ using System.Transactions;
 using FubuCore.Logging;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Delayed;
-using FubuTestingSupport;
+using Shouldly;
 using LightningQueues;
 using LightningQueues.Model;
 using NUnit.Framework;

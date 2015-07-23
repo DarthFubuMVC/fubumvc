@@ -8,7 +8,7 @@ using FubuMVC.Core.ServiceBus.Diagnostics.Visualization;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.StructureMap;
 using FubuMVC.Katana;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuTransportation.Testing.Diagnostics

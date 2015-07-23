@@ -3,7 +3,7 @@ using System.Net;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Behaviors
@@ -44,7 +44,7 @@ namespace FubuMVC.Tests.Behaviors
 		{
 			var interceptExceptionBehavior = new TestInterceptExceptionBehavior<ArgumentException>();
 
-			typeof(FubuAssertionException).ShouldBeThrownBy(interceptExceptionBehavior.Invoke);
+            Exception<FubuAssertionException>.ShouldBeThrownBy(interceptExceptionBehavior.Invoke);
 		}
 
 		[Test]
@@ -69,7 +69,7 @@ namespace FubuMVC.Tests.Behaviors
 			};
 			cut.SetShouldHandle(false);
 
-			typeof(ArgumentException).ShouldBeThrownBy(cut.Invoke);
+			Exception<ArgumentException>.ShouldBeThrownBy(cut.Invoke);
 
 			cut.HandledException.ShouldBeNull();
 		}
@@ -83,7 +83,7 @@ namespace FubuMVC.Tests.Behaviors
 			};
 			cut.SetShouldHandle(false);
 
-			typeof(WebException).ShouldBeThrownBy(cut.Invoke);
+			Exception<WebException>.ShouldBeThrownBy(cut.Invoke);
 
 			cut.HandledException.ShouldBeNull();
 		}

@@ -1,6 +1,6 @@
 ﻿using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.ServiceBus.Runtime;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuTransportation.Testing.Polling

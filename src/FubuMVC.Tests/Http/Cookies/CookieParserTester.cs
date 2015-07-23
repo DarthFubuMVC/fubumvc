@@ -2,7 +2,7 @@
 using FubuMVC.Core.Http.Cookies;
 using NUnit.Framework;
 using System.Linq;
-using FubuTestingSupport;
+using Shouldly;
 using FubuCore;
 
 namespace FubuMVC.Tests.Http.Cookies

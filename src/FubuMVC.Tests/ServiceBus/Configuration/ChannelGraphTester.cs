@@ -10,7 +10,7 @@ using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 using FubuTransportation.Testing.ErrorHandling;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 using System.Collections.Generic;
 using Rhino.Mocks;
 using FubuCore.Reflection;

@@ -134,6 +134,9 @@
     <Reference Include="Rhino.Mocks">
       <HintPath>..\packages\RhinoMocks\lib\net\Rhino.Mocks.dll</HintPath>
     </Reference>
+    <Reference Include="Shouldly">
+      <HintPath>..\packages\Shouldly\lib\net40\Shouldly.dll</HintPath>
+    </Reference>
     <Reference Include="Spatial4n.Core.NTS">
       <HintPath>..\packages\RavenDB.Database\lib\net45\Spatial4n.Core.NTS.dll</HintPath>
     </Reference>

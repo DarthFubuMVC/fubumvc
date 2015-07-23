@@ -6,8 +6,8 @@ using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
 using NUnit.Framework;
-using SpecificationExtensions = FubuTestingSupport.SpecificationExtensions;
-using FubuTestingSupport;
+using SpecificationExtensions = Shouldly.SpecificationExtensions;
+using Shouldly;
 
 namespace FubuMVC.Tests.Registration
 {

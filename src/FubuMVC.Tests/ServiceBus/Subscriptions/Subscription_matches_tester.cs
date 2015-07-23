@@ -1,5 +1,5 @@
 ﻿using FubuMVC.Core.ServiceBus.Subscriptions;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuTransportation.Testing.Subscriptions

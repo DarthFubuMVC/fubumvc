@@ -6,7 +6,7 @@ using FubuMVC.Core.Projections;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Resources.Conneg

@@ -1,6 +1,6 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Assets;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Assets.FindingAndResolving

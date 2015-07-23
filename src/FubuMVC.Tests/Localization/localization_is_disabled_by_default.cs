@@ -1,5 +1,5 @@
 ﻿using FubuMVC.Core.Localization;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Localization

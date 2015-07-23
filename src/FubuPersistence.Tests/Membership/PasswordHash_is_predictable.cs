@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using FubuMVC.Core.Security.Authentication;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuPersistence.Tests.Membership
@@ -24,7 +24,7 @@ namespace FubuPersistence.Tests.Membership
             hash.CreateHash(password).ShouldBe(hash.CreateHash(password));
             hash.CreateHash(password).ShouldBe(hash.CreateHash(password));
 
-            hash.CreateHash(password).ShouldNotEqual(password);
+            hash.CreateHash(password).ShouldNotBe(password);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using FubuMVC.Core.Assets;
 using FubuMVC.Core.Registration;
 using FubuMVC.Razor;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Views.Razor

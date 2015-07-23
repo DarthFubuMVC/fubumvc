@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using FubuMVC.Core;
 using FubuMVC.Nowin;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting

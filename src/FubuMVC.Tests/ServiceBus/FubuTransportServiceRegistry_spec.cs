@@ -16,7 +16,7 @@ using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 using FubuMVC.Core.ServiceBus.Subscriptions;
 using FubuMVC.Core.ServiceBus.TestSupport;
 using FubuMVC.Tests;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using System.Linq;
 

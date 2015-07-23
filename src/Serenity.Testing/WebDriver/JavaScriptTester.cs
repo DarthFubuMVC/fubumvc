@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Serenity.WebDriver;
 using Serenity.WebDriver.JavaScriptBuilders;

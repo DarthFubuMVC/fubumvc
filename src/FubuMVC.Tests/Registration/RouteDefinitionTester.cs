@@ -9,7 +9,7 @@ using FubuCore.Descriptions;
 using FubuCore.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration.Routes;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using FubuMVC.Tests;
 
@@ -304,7 +304,7 @@ namespace FubuMVC.Tests.Registration
             var url = new RouteInput<SampleViewModelWithInputs>("test/edit/{RequiredInput}");
             url.AddRouteInput(x => x.RequiredInput);
 
-            typeof (FubuException).ShouldBeThrownBy(() => url.CreateUrlFromInput(new SampleViewModelWithInputs()));
+            Exception<FubuException>.ShouldBeThrownBy(() => url.CreateUrlFromInput(new SampleViewModelWithInputs()));
         }
 
         [Test]
@@ -313,7 +313,7 @@ namespace FubuMVC.Tests.Registration
             var url = new RouteInput<SampleViewModelWithInputs>("test/edit/{RequiredInput}");
             url.AddRouteInput(x => x.RequiredInput);
 
-            typeof(FubuException).ShouldBeThrownBy(() => url.CreateUrlFromParameters(new RouteParameters()));
+            Exception<FubuException>.ShouldBeThrownBy(() => url.CreateUrlFromParameters(new RouteParameters()));
         }
 
         [Test]
@@ -409,7 +409,7 @@ namespace FubuMVC.Tests.Registration
             var url = new RouteInput<SampleViewModelWithInputs>("test/edit/{RequiredInput}");
             url.AddRouteInput(x => x.RequiredInput);
 
-            typeof (FubuException).ShouldBeThrownBy(() => url.CreateUrlFromInput(null));
+            Exception<FubuException>.ShouldBeThrownBy(() => url.CreateUrlFromInput(null));
         }
 
         [Test]
@@ -418,7 +418,7 @@ namespace FubuMVC.Tests.Registration
             var url = new RouteInput<SampleViewModelWithInputs>("test/edit/{RequiredInput}");
             url.AddRouteInput(x => x.RequiredInput);
 
-            typeof(FubuException).ShouldBeThrownBy(() => url.CreateUrlFromParameters(null));
+            Exception<FubuException>.ShouldBeThrownBy(() => url.CreateUrlFromParameters(null));
         }
 
         [Test]

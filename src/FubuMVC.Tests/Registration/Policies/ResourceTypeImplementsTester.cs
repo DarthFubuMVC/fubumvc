@@ -1,7 +1,7 @@
 ﻿using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Policies;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuMVC.Tests.Registration.Policies
 {

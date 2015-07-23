@@ -6,7 +6,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.Security.Authorization;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using System.Linq;
 

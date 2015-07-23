@@ -2,7 +2,7 @@
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Projections;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Projections

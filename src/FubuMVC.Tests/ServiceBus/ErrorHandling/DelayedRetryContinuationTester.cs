@@ -1,7 +1,7 @@
 ﻿using FubuMVC.Core.ServiceBus.ErrorHandling;
 using NUnit.Framework;
 using FubuCore;
-using FubuTestingSupport;
+using Shouldly;
 using Rhino.Mocks;
 
 namespace FubuTransportation.Testing.ErrorHandling

@@ -7,7 +7,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Urls;
 using FubuMVC.Tests.Urls;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Registration.Conventions

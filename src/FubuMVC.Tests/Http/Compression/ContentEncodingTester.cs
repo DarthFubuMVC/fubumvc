@@ -1,5 +1,5 @@
 using FubuMVC.Core.Http.Compression;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Http.Compression

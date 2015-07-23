@@ -1,5 +1,5 @@
 using FubuMVC.Core.Security.Authentication.Tickets;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Security.Authentication.Tickets
@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.Security.Authentication.Tickets
             var encrypted1 = theEncryptor.Encrypt(plain);
             var encrypted2 = theEncryptor.Encrypt(plain);
 
-            encrypted1.ShouldNotEqual(plain);
+            encrypted1.ShouldNotBe(plain);
 
             encrypted1.ShouldBe(encrypted2);
         }

@@ -8,7 +8,7 @@ using FubuMVC.Core.ServiceBus.Registration.Nodes;
 using FubuMVC.Core.ServiceBus.Sagas;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 using Rhino.Mocks;
 using StructureMap.Pipeline;
 

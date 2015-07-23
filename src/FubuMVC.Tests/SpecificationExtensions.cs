@@ -2,22 +2,118 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Xml;
-using FubuCore.Reflection;
-using NUnit.Framework;
-using NUnit.Framework.Constraints;
-using Rhino.Mocks;
-using Rhino.Mocks.Constraints;
-using Rhino.Mocks.Interfaces;
-using Is = NUnit.Framework.Is;
 
-namespace FubuTestingSupport
+namespace Shouldly
 {
+    [Obsolete("Replace with the Shouldly equivalent")]
+    public static class Exception<T> where T : Exception
+    {
+        public static T ShouldBeThrownBy(Action action)
+        {
+            T exception = null;
+
+            try
+            {
+                action();
+            }
+            catch (Exception e)
+            {
+                exception = e.ShouldBeOfType<T>();
+            }
+
+            if (exception == null)
+                throw new Exception("An exception was expected, but not thrown by the given action.");
+
+            return exception;
+        }
+    }
+
+
+    public delegate void MethodThatThrows();
+
+    public static class SpecificationExtensions
+    {
+        public static void ShouldBeTrue(this bool anObject)
+        {
+            anObject.ShouldBe(true);
+        }
+
+        public static void ShouldBeFalse(this bool anObject)
+        {
+            anObject.ShouldBe(false);
+        }
+
+        public static void ShouldBeNull(this object anObject)
+        {
+            anObject.ShouldBe(null);
+        }
+
+        public static T ShouldNotBeNull<T>(this T anObject) where T : class
+        {
+            anObject.ShouldNotBe(null);
+            return anObject;
+        }
+
+
+        public static object ShouldBeTheSameAs(this object actual, object expected)
+        {
+            ReferenceEquals(actual, expected).ShouldBe(true);
+            return expected;
+        }
+
+        public static object ShouldNotBeTheSameAs(this object actual, object expected)
+        {
+            ReferenceEquals(actual, expected).ShouldBe(false);
+            return expected;
+        }
+
+        public static void ShouldHaveTheSameElementsAs<T>(this IEnumerable<T> actual, params T[] expected)
+        {
+            actual.ShouldBe(expected);
+        }
+
+        public static IEnumerable<T> ShouldHaveCount<T>(this IEnumerable<T> enumerable, int expected)
+        {
+            enumerable.Count().ShouldBe(expected);
+            return enumerable;
+        }
+
+        public static void ShouldHaveTheSameElementsAs(this IList actual, IList expected)
+        {
+            try
+            {
+                actual.ShouldNotBeNull();
+                expected.ShouldNotBeNull();
+
+                actual.Count.ShouldBe(expected.Count);
+
+                for (var i = 0; i < actual.Count; i++)
+                {
+                    actual[i].ShouldBe(expected[i]);
+                }
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("Actual values were:");
+                actual.Each(x => Debug.WriteLine(x));
+                throw;
+            }
+        }
+
+
+        public static void ShouldHaveTheSameElementsAs<T>(this IEnumerable<T> actual, IEnumerable<T> expected)
+        {
+            var actualList = (actual is IList) ? (IList)actual : actual.ToList();
+            var expectedList = (expected is IList) ? (IList)expected : expected.ToList();
+
+            ShouldHaveTheSameElementsAs(actualList, expectedList);
+        }
+    }
+
+
+/*
+
     public static class Exception<T> where T : Exception
     {
         public static T ShouldBeThrownBy(Action action)
@@ -76,7 +172,7 @@ namespace FubuTestingSupport
             return expected;
         }
 
-        public static object ShouldNotEqual(this object actual, object expected)
+        public static object ShouldNotBe(this object actual, object expected)
         {
             Assert.AreNotEqual(expected, actual);
             return expected;
@@ -113,8 +209,8 @@ namespace FubuTestingSupport
         public static T ShouldBeOfType<T>(this object actual)
         {
             actual.ShouldNotBeNull();
-            actual.ShouldBeOfType(typeof(T));
-            return (T)actual;
+            actual.ShouldBeOfType(typeof (T));
+            return (T) actual;
         }
 
 
@@ -131,7 +227,7 @@ namespace FubuTestingSupport
 
         public static void ShouldNotBeOfType<T>(this object actual)
         {
-            Assert.IsNotInstanceOf(typeof(T), actual);
+            Assert.IsNotInstanceOf(typeof (T), actual);
         }
 
         public static void ShouldContain(this IList actual, object expected)
@@ -169,7 +265,7 @@ namespace FubuTestingSupport
 
                 actual.Count.ShouldBe(expected.Count);
 
-                for (int i = 0; i < actual.Count; i++)
+                for (var i = 0; i < actual.Count; i++)
                 {
                     actual[i].ShouldBe(expected[i]);
                 }
@@ -184,30 +280,30 @@ namespace FubuTestingSupport
 
         public static void ShouldHaveTheSameElementsAs<T>(this IEnumerable<T> actual, params T[] expected)
         {
-            ShouldHaveTheSameElementsAs(actual, (IEnumerable<T>)expected);
+            ShouldHaveTheSameElementsAs(actual, (IEnumerable<T>) expected);
         }
 
         public static void ShouldHaveTheSameElementsAs<T>(this IEnumerable<T> actual, IEnumerable<T> expected)
         {
-            IList actualList = (actual is IList) ? (IList)actual : actual.ToList();
-            IList expectedList = (expected is IList) ? (IList)expected : expected.ToList();
+            var actualList = (actual is IList) ? (IList) actual : actual.ToList();
+            var expectedList = (expected is IList) ? (IList) expected : expected.ToList();
 
             ShouldHaveTheSameElementsAs(actualList, expectedList);
         }
 
         public static void ShouldHaveTheSameElementKeysAs<ELEMENT, KEY>(this IEnumerable<ELEMENT> actual,
-                                                                        IEnumerable expected,
-                                                                        Func<ELEMENT, KEY> keySelector)
+            IEnumerable expected,
+            Func<ELEMENT, KEY> keySelector)
         {
             actual.ShouldNotBeNull();
             expected.ShouldNotBeNull();
 
-            ELEMENT[] actualArray = actual.ToArray();
-            object[] expectedArray = expected.Cast<object>().ToArray();
+            var actualArray = actual.ToArray();
+            var expectedArray = expected.Cast<object>().ToArray();
 
             actualArray.Length.ShouldBe(expectedArray.Length);
 
-            for (int i = 0; i < actual.Count(); i++)
+            for (var i = 0; i < actual.Count(); i++)
             {
                 keySelector(actualArray[i]).ShouldBe(expectedArray[i]);
             }
@@ -245,7 +341,7 @@ namespace FubuTestingSupport
             StringAssert.Contains(expected, actual);
         }
 
- 
+
         public static void ShouldEndWith(this string actual, string expected)
         {
             StringAssert.EndsWith(expected, actual);
@@ -256,7 +352,6 @@ namespace FubuTestingSupport
             StringAssert.StartsWith(expected, actual);
         }
 
- 
 
         public static Exception ShouldBeThrownBy(this Type exceptionType, MethodThatThrows method)
         {
@@ -274,12 +369,11 @@ namespace FubuTestingSupport
 
             if (exception == null)
             {
-                Assert.Fail(String.Format("Expected {0} to be thrown.", exceptionType.FullName));
+                Assert.Fail("Expected {0} to be thrown.", exceptionType.FullName);
             }
 
             return exception;
         }
-
 
 
         public static IEnumerable<T> ShouldHaveCount<T>(this IEnumerable<T> actual, int expected)
@@ -289,14 +383,14 @@ namespace FubuTestingSupport
         }
 
 
-
-
-
         public class CapturingConstraint : AbstractConstraint
         {
             private readonly ArrayList argList = new ArrayList();
 
-            public override string Message { get { return ""; } }
+            public override string Message
+            {
+                get { return ""; }
+            }
 
             public override bool Eval(object obj)
             {
@@ -311,7 +405,7 @@ namespace FubuTestingSupport
 
             public T ArgumentAt<T>(int pos)
             {
-                return (T)argList[pos];
+                return (T) argList[pos];
             }
 
             public T Second<T>()
@@ -319,6 +413,6 @@ namespace FubuTestingSupport
                 return ArgumentAt<T>(1);
             }
         }
-
     }
+ * */
 }

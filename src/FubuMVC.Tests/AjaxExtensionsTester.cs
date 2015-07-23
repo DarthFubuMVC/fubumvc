@@ -5,7 +5,7 @@ using System.Web;
 using FubuCore.Binding;
 using FubuCore.Binding.Values;
 using FubuMVC.Core.Http.AspNet;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using FubuMVC.Core;
 

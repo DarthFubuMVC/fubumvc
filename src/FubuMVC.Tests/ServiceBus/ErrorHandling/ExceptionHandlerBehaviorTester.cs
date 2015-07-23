@@ -6,7 +6,7 @@ using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -335,7 +335,7 @@ namespace FubuTransportation.Testing.ErrorHandling
             var continuation = theContinuationSetByTheErrorHandler()
                 .ShouldBeOfType<MoveToErrorQueue>();
 
-            continuation.Exception.ShouldBeOfType<Exception>();
+            continuation.Exception.ShouldBeOfType<AggregateException>();
         }
 
     }

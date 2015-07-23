@@ -2,7 +2,7 @@
 using FubuCore.Configuration;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Registration
@@ -17,7 +17,7 @@ namespace FubuMVC.Tests.Registration
 
 
             AppSettingsProvider.GetValueFor<DiagnosticsSettings>(x => x.TraceLevel)
-                .ShouldBe(TraceLevel.None);
+                .ShouldBe(TraceLevel.None.ToString());
 
             var collection = new SettingsCollection(null);
             collection.Get<DiagnosticsSettings>()

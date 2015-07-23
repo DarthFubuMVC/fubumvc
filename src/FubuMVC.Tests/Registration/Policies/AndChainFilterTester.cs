@@ -2,7 +2,7 @@
 using FubuMVC.Core.Registration.Policies;
 using NUnit.Framework;
 using Rhino.Mocks;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuMVC.Tests.Registration.Policies
 {

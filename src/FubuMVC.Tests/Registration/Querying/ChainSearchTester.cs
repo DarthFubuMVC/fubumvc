@@ -6,7 +6,7 @@ using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Urls;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 using System.Linq;
 using System.Collections.Generic;
 

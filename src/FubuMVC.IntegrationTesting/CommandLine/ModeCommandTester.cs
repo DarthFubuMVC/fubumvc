@@ -1,7 +1,7 @@
 using Fubu;
 using FubuCore;
 using FubuMVC.Core;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.CommandLine

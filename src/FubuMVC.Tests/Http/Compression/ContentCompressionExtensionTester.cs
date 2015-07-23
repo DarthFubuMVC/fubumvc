@@ -3,7 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using FubuMVC.Core.Http.Compression;
 using FubuMVC.Core.Registration;
-using FubuTestingSupport;
+using Shouldly;
 using HtmlTags;
 using NUnit.Framework;
 

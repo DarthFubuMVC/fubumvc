@@ -9,7 +9,7 @@ using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Runtime;
 using NUnit.Framework;
 using Rhino.Mocks;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuMVC.Tests.Runtime
 {

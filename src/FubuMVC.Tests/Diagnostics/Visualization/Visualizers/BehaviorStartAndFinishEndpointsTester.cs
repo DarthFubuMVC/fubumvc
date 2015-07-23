@@ -4,7 +4,7 @@ using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Diagnostics.Runtime.Tracing;
 using FubuMVC.Core.Diagnostics.Visualization.Visualizers;
 using FubuMVC.Tests.Registration;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Diagnostics.Visualization.Visualizers

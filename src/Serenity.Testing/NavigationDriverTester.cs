@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace Serenity.Testing
 {

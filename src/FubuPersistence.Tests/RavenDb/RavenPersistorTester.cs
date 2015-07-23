@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading;
 using FubuPersistence.InMemory;
 using FubuPersistence.RavenDb;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Raven.Client;
 using Raven.Client.Document;

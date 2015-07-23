@@ -6,7 +6,7 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.Spark.Rendering;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 using Spark;
@@ -154,7 +154,8 @@ namespace FubuMVC.IntegrationTesting.Views.Spark.Rendering
         public void cache_service_is_forwarded_to_inner_view()
         {
             ClassUnderTest.CacheService = MockFor<ICacheService>();
-            ClassUnderTest.CacheService.ShouldBe(MockFor<ICacheService>()).ShouldBe(_view.CacheService);
+            ClassUnderTest.CacheService.ShouldBe(MockFor<ICacheService>());
+            ClassUnderTest.CacheService.ShouldBe(_view.CacheService);
         }
     }
 }

@@ -2,7 +2,7 @@
 using FubuTransportation.Testing.Runtime.Invocation;
 using NUnit.Framework;
 using System.Linq;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuTransportation.Testing.Runtime
 {

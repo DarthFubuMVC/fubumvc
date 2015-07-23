@@ -9,7 +9,7 @@ using FubuMVC.Core.ServiceBus.Runtime.Headers;
 using FubuMVC.Tests.TestSupport;
 using NUnit.Framework;
 using System.Linq;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuTransportation.Testing.InMemory
 {

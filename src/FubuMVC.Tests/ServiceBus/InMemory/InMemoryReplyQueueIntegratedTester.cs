@@ -2,7 +2,7 @@
 using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.ServiceBus.InMemory

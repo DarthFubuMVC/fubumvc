@@ -1,7 +1,7 @@
 using FubuCore.Configuration;
 using FubuCore.Conversion;
 using FubuMVC.Core.StructureMap;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using StructureMap;
 

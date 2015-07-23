@@ -2,7 +2,7 @@
 using System.Linq;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime

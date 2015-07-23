@@ -2,7 +2,7 @@
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using FubuTransportation.Testing.ScheduledJobs;
 using NUnit.Framework;
 using Rhino.Mocks;

@@ -6,7 +6,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Runtime;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Http

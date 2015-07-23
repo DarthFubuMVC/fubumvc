@@ -2,7 +2,7 @@
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.Security.Authorization;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles

@@ -12,7 +12,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Policies;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Runtime

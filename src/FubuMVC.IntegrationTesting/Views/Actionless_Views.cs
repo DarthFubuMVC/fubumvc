@@ -3,7 +3,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Urls;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Views

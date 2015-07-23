@@ -3,7 +3,7 @@ using FubuCore.Logging;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Events;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 

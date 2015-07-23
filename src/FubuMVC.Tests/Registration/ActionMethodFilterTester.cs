@@ -7,7 +7,7 @@ using FubuCore.Reflection;
 using FubuMVC.Core.Registration;
 using NUnit.Framework;
 using System.Linq;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuMVC.Tests.Registration
 {

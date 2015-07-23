@@ -3,7 +3,7 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.StructureMap;
 using NUnit.Framework;
 using InMemoryRequestData = FubuCore.Binding.InMemoryRequestData;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuMVC.Tests.Runtime
 {

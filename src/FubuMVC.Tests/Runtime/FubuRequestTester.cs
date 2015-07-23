@@ -7,7 +7,7 @@ using FubuCore.Logging;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.StructureMap;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -158,7 +158,7 @@ namespace FubuMVC.Tests.Runtime
         public void should_remove_the_type_from_the_request_if_it_exists()
         {
             ClassUnderTest.Clear(_binderTarget.GetType());
-            typeof (NullReferenceException).ShouldBeThrownBy(
+            Exception<NullReferenceException>.ShouldBeThrownBy(
                 () => ClassUnderTest.Get(_binderTarget.GetType()).ShouldBeNull());
         }
     }

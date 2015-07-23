@@ -2,7 +2,7 @@
 using FubuMVC.Core.ServiceBus.ScheduledJobs;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Execution;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 

@@ -10,7 +10,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Tests.Registration.Conventions;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using StructureMap.Pipeline;
 
@@ -246,7 +246,7 @@ namespace FubuMVC.Tests.Registration
         public void should_throw_if_input_type_is_value_type()
         {
             var action = ActionCall.For<ControllerTarget>(x => x.BogusOneInput(9));
-            var ex = typeof (FubuException).ShouldBeThrownBy(action.Validate).ShouldBeOfType<FubuException>();
+            var ex = Exception<FubuException>.ShouldBeThrownBy(action.Validate).ShouldBeOfType<FubuException>();
             ex.ErrorCode.ShouldBe(1006);
         }
 
@@ -254,7 +254,7 @@ namespace FubuMVC.Tests.Registration
         public void should_throw_if_more_than_one_input_parameter()
         {
             var action = ActionCall.For<ControllerTarget>(x => x.BogusMultiInput(null, null));
-            var ex = typeof (FubuException).ShouldBeThrownBy(action.Validate).ShouldBeOfType<FubuException>();
+            var ex = Exception<FubuException>.ShouldBeThrownBy(action.Validate).ShouldBeOfType<FubuException>();
             ex.ErrorCode.ShouldBe(1005);
         }
 
@@ -262,7 +262,7 @@ namespace FubuMVC.Tests.Registration
         public void should_throw_if_return_type_is_value_type()
         {
             var action = ActionCall.For<ControllerTarget>(x => x.BogusReturn());
-            var ex = typeof (FubuException).ShouldBeThrownBy(action.Validate).ShouldBeOfType<FubuException>();
+            var ex = Exception<FubuException>.ShouldBeThrownBy(action.Validate).ShouldBeOfType<FubuException>();
             ex.ErrorCode.ShouldBe(1004);
         }
     }

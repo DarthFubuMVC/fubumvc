@@ -3,7 +3,7 @@ using FubuCore.Dates;
 using FubuMVC.Tests.TestSupport;
 using FubuPersistence.InMemory;
 using FubuPersistence.Storage;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuPersistence.Tests.Storage

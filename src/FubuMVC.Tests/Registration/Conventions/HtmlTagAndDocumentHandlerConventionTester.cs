@@ -5,7 +5,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Tests.Ajax;
-using FubuTestingSupport;
+using Shouldly;
 using HtmlTags;
 using NUnit.Framework;
 using OutputNode = FubuMVC.Core.Resources.Conneg.OutputNode;

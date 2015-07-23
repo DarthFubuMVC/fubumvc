@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Projections;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 

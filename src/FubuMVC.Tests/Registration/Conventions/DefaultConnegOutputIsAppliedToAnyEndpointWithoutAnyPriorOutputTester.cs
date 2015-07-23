@@ -3,7 +3,7 @@ using FubuMVC.Core.Json;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Registration.Conventions

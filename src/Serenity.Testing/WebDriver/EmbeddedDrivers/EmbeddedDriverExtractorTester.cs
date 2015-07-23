@@ -2,7 +2,7 @@
 using System.IO;
 using FubuCore;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 using Serenity.WebDriver.EmbeddedDrivers;

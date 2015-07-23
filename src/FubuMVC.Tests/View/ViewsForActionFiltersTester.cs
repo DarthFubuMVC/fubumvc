@@ -7,7 +7,7 @@ using FubuMVC.Core.View.Attachment;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Rendering;
 using FubuMVC.Tests.View.FakeViews;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using StructureMap.Pipeline;
 

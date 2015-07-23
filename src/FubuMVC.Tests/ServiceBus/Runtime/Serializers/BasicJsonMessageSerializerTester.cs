@@ -2,7 +2,7 @@
 using System.IO;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuTransportation.Testing.Runtime.Serializers
 {

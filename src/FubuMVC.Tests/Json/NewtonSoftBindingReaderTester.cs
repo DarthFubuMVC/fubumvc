@@ -2,7 +2,7 @@ using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Json;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Json

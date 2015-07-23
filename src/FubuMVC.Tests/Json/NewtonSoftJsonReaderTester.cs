@@ -1,6 +1,6 @@
 ﻿using FubuMVC.Core.Json;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 

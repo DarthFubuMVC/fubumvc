@@ -8,7 +8,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Rendering;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.View

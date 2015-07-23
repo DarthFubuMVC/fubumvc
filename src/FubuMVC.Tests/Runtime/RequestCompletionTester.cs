@@ -1,6 +1,6 @@
 ﻿using System;
 using FubuMVC.Core.Runtime;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -43,7 +43,7 @@ namespace FubuMVC.Tests.Runtime
         [Test]
         public void when_an_error_occurs_it_is_not_handled()
         {
-            typeof(InvalidOperationException).ShouldBeThrownBy(() => 
+            Exception<InvalidOperationException>.ShouldBeThrownBy(() => 
                 _requestCompletion.Start(() => { throw new InvalidOperationException(); }));
             _exception.ShouldBeNull();
         }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Serenity.WebDriver.JavaScriptBuilders;
 

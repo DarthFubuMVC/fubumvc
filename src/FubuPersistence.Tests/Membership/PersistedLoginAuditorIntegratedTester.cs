@@ -5,7 +5,7 @@ using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Auditing;
 using FubuMVC.RavenDb.Membership;
 using FubuPersistence.RavenDb;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Raven.Client;
 using StructureMap;

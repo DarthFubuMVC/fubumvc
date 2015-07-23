@@ -1,5 +1,5 @@
 ﻿using FubuMVC.Core.ServiceBus.Configuration;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using StructureMap;
 using StructureMap.Pipeline;

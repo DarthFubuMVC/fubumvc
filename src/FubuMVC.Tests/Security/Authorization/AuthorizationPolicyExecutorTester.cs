@@ -3,7 +3,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 

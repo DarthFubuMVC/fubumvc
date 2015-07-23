@@ -4,7 +4,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Security.Authentication.Membership;
 using FubuMVC.Core.Security.Authentication.Membership.FlatFile;
 using FubuMVC.Core.StructureMap;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using StructureMap.Pipeline;
 

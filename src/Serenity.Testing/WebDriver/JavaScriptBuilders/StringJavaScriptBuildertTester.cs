@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Serenity.WebDriver.JavaScriptBuilders;
 

@@ -4,7 +4,7 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.Spark.Rendering;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 

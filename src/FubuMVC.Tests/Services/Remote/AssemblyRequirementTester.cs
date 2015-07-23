@@ -1,5 +1,5 @@
 ﻿using FubuMVC.Core.Services.Remote;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Services.Remote

@@ -2,7 +2,7 @@
 using FubuCore;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Environment;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Environment

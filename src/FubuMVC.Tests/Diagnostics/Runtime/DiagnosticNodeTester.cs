@@ -2,7 +2,7 @@ using System;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration.Nodes;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Diagnostics.Runtime

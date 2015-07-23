@@ -1,6 +1,6 @@
 ﻿using FubuMVC.Core.ServiceBus.Diagnostics;
 using FubuMVC.Core.ServiceBus.Logging;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuTransportation.Testing.Diagnostics

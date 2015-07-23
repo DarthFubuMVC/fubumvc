@@ -13,7 +13,7 @@ using FubuMVC.Core.StructureMap;
 using NUnit.Framework;
 using Rhino.Mocks;
 using OutputNode = FubuMVC.Core.Resources.Conneg.OutputNode;
-using FubuTestingSupport;
+using Shouldly;
 using System.Linq;
 
 namespace FubuMVC.Tests.NewConneg

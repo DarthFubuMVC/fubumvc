@@ -1,6 +1,6 @@
 ﻿using System.Net;
 using FubuMVC.Core;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Http

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using FubuCore;
 using FubuMVC.Core;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests

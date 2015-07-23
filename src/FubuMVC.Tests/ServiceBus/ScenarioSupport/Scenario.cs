@@ -9,7 +9,7 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.Services.Messaging.Tracking;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.ScenarioSupport
 {

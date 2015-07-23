@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Spark.SparkModel;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Views.LayoutAttachment

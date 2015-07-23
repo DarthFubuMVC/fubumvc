@@ -5,7 +5,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Registration
@@ -103,7 +103,7 @@ namespace FubuMVC.Tests.Registration
             };
 
 
-            graph.Version.ShouldBe(Assembly.GetExecutingAssembly().GetName().Version);
+            graph.Version.ShouldBe(Assembly.GetExecutingAssembly().GetName().Version.ToString());
         }
     }
 

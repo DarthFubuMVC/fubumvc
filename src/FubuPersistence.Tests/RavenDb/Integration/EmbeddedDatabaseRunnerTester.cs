@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using StructureMap;
 using System.Linq;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuPersistence.Tests.RavenDb.Integration
 {

@@ -6,7 +6,7 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Subscriptions;
 using FubuMVC.RavenDb;
 using FubuMVC.RavenDb.ServiceBus;
-using FubuTestingSupport;
+using Shouldly;
 using FubuTransportation.Testing;
 using NUnit.Framework;
 using StructureMap;

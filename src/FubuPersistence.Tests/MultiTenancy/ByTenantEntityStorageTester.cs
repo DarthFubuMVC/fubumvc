@@ -4,7 +4,7 @@ using FubuPersistence.InMemory;
 using FubuPersistence.MultiTenancy;
 using FubuPersistence.Storage;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 using System.Linq;
 using System.Collections.Generic;
 

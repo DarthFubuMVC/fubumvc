@@ -2,7 +2,7 @@
 using System.Collections.Specialized;
 using FubuMVC.Core.ServiceBus.Runtime.Headers;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuTransportation.Testing.Runtime.Headers
 {

@@ -9,7 +9,7 @@ using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.Tests.Registration;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -134,14 +134,14 @@ namespace FubuMVC.Tests.Continuations
         [Test]
         public void when_destination_null_redirect_to_throws()
         {
-            var argNullEx = typeof (ArgumentNullException).ShouldBeThrownBy(() => FubuContinuation.RedirectTo(null));
+            var argNullEx = Exception< ArgumentNullException>.ShouldBeThrownBy(() => FubuContinuation.RedirectTo(null));
             argNullEx.Message.ShouldContain("destination");
         }
 
         [Test]
         public void when_destination_null_transfer_to_throws()
         {
-            var argNullEx = typeof (ArgumentNullException).ShouldBeThrownBy(() => FubuContinuation.TransferTo(null));
+            var argNullEx = Exception<ArgumentNullException>.ShouldBeThrownBy(() => FubuContinuation.TransferTo(null));
             argNullEx.Message.ShouldContain("destination");
         }
 
@@ -373,7 +373,7 @@ namespace FubuMVC.Tests.Continuations
             var handler = new ContinuationHandler(urlRegistry, outputWriter, fubuRequest, partialFactory, resolver);
 
             var exception =
-                typeof (ArgumentNullException).ShouldBeThrownBy(() => handler.TransferTo(null)) as ArgumentNullException;
+                Exception<ArgumentNullException>.ShouldBeThrownBy(() => handler.TransferTo(null)) as ArgumentNullException;
             exception.ShouldNotBeNull();
             exception.ParamName.ShouldBe("input");
         }

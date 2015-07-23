@@ -1,7 +1,7 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuTransportation.Testing
 {

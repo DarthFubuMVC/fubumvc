@@ -1,7 +1,7 @@
 ﻿using FubuPersistence.InMemory;
 using NUnit.Framework;
 using System.Linq;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuPersistence.Tests.InMemory
 {

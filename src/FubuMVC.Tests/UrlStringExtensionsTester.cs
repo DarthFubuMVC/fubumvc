@@ -1,5 +1,5 @@
 ﻿using System;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using FubuMVC.Core;
 

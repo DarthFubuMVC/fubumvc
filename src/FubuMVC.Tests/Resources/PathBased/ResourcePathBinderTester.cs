@@ -10,9 +10,9 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Resources.PathBased;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
-using SpecificationExtensions = FubuTestingSupport.SpecificationExtensions;
+using SpecificationExtensions = Shouldly.SpecificationExtensions;
 using FubuCore;
 
 namespace FubuMVC.Tests.Resources.PathBased

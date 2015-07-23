@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 using FubuMVC.Core.Registration.Routes;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Registration

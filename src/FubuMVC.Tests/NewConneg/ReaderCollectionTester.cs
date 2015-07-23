@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Resources.Conneg;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 

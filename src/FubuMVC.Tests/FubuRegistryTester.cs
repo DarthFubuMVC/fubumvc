@@ -1,6 +1,6 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests

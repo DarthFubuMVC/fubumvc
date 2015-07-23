@@ -7,7 +7,7 @@ using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Subscriptions;
 using FubuMVC.Core.StructureMap;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using StructureMap;
 

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Packaging;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using StructureMap;
 

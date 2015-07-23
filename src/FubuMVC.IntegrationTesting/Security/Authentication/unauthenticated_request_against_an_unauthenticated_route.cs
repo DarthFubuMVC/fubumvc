@@ -1,5 +1,5 @@
 using System.Net;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Security.Authentication

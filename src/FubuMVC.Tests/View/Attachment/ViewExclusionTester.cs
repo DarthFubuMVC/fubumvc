@@ -8,7 +8,7 @@ using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Model;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.View.Attachment

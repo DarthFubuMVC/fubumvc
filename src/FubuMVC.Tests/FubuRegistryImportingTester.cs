@@ -9,7 +9,7 @@ using FubuMVC.Core.Caching;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Cookie = FubuMVC.Core.Http.Cookies.Cookie;
 

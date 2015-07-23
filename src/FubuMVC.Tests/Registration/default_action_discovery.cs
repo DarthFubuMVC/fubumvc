@@ -6,7 +6,7 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using HtmlTags;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuMVC.Tests.Registration
 {

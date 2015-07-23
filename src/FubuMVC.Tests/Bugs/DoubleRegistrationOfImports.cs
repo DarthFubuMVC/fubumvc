@@ -6,7 +6,7 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using NUnit.Framework;
 using System.Linq;
-using FubuTestingSupport;
+using Shouldly;
 using System.Collections.Generic;
 
 namespace FubuMVC.Tests.Bugs

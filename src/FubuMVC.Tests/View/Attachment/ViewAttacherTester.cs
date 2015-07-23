@@ -11,7 +11,7 @@ using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Attachment;
 using FubuMVC.Core.View.Model;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 

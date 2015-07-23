@@ -1,7 +1,7 @@
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Headers;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuMVC.Tests.Http.Headers
 {

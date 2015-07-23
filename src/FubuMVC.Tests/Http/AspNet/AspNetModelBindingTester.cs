@@ -2,7 +2,7 @@ using System.Web;
 using FubuCore.Binding;
 using FubuCore.Reflection;
 using FubuMVC.Core;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Http.AspNet

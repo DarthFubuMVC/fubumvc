@@ -3,7 +3,7 @@ using System.Web;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.View;
-using FubuTestingSupport;
+using Shouldly;
 using HtmlTags;
 using NUnit.Framework;
 

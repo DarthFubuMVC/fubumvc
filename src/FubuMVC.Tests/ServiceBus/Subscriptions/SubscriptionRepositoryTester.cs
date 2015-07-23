@@ -4,7 +4,7 @@ using System.Linq;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Subscriptions;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuTransportation.Testing.Subscriptions
@@ -39,7 +39,7 @@ namespace FubuTransportation.Testing.Subscriptions
             requirements
                 .ShouldHaveTheSameElementsAs(subscription);
 
-            requirements.Single().Id.ShouldNotEqual(Guid.Empty);
+            requirements.Single().Id.ShouldNotBe(Guid.Empty);
         }
 
         [Test]
@@ -138,7 +138,7 @@ namespace FubuTransportation.Testing.Subscriptions
                 .Single();
 
             node.ShouldBe(new TransportNode(channelGraph));
-            node.Id.ShouldNotEqual(Guid.Empty);
+            node.Id.ShouldNotBe(Guid.Empty.ToString());
         }
 
         [Test]

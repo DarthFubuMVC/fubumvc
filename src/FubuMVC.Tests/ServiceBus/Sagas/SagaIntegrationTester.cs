@@ -16,7 +16,7 @@ using FubuMVC.Tests.TestSupport;
 using NUnit.Framework;
 using FubuCore;
 using StructureMap;
-using FubuTestingSupport;
+using Shouldly;
 using System.Linq;
 using StructureMap.Graph;
 

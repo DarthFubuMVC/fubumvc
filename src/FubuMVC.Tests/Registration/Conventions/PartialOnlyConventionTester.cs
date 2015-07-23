@@ -3,7 +3,7 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {

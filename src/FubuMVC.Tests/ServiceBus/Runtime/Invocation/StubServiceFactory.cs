@@ -4,7 +4,7 @@ using FubuCore.Binding;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.ServiceBus.Configuration;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuTransportation.Testing.Runtime.Invocation
 {

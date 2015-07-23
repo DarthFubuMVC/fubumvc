@@ -9,7 +9,7 @@ using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using NUnit.Framework;
 using System.Linq;
-using FubuTestingSupport;
+using Shouldly;
 using System.Collections.Generic;
 using Message1 = FubuTransportation.Testing.Message1;
 using Message2 = FubuTransportation.Testing.Message2;

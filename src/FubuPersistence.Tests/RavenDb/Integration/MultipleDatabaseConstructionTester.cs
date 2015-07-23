@@ -5,7 +5,7 @@ using NUnit.Framework;
 using Raven.Client;
 using Raven.Client.Document;
 using StructureMap;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuPersistence.Tests.RavenDb.Integration
 {

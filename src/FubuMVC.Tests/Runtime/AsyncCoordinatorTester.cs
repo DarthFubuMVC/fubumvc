@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 

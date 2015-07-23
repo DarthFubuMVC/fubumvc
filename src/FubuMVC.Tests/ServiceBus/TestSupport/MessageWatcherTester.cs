@@ -5,7 +5,7 @@ using FubuMVC.Core.ServiceBus.TestSupport;
 using FubuMVC.Core.Services.Messaging.Tracking;
 using NUnit.Framework;
 using System.Linq;
-using FubuTestingSupport;
+using Shouldly;
 
 namespace FubuTransportation.Testing.TestSupport
 {

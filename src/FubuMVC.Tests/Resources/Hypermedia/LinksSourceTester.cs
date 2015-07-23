@@ -5,7 +5,7 @@ using FubuMVC.Core.Projections;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Resources.Hypermedia;
 using FubuMVC.Core.Urls;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Resources.Hypermedia

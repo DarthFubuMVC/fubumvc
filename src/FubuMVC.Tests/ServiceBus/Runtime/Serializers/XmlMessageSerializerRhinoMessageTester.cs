@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers

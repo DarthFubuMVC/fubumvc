@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using FubuMVC.Core.Runtime.Files;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 using Rhino.Mocks;
 using FubuCore;
 
@@ -91,7 +91,7 @@ namespace FubuMVC.Tests.Runtime.Files
 
             var etag2 = new FubuFile("ghostbusters.txt").Etag();
 
-            etag1.ShouldNotEqual(etag2);
+            etag1.ShouldNotBe(etag2);
         }
 
     }

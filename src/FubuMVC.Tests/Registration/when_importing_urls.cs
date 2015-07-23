@@ -6,7 +6,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Registration

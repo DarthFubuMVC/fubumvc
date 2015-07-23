@@ -2,7 +2,7 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Security.AntiForgery;
-using FubuTestingSupport;
+using Shouldly;
 using HtmlTags;
 using NUnit.Framework;
 

@@ -1,6 +1,6 @@
 ﻿using FubuMVC.Tests.TestSupport;
 using FubuPersistence.Storage;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 

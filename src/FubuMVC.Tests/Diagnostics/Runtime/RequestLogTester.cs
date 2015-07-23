@@ -4,7 +4,7 @@ using FubuCore.Logging;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Runtime;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Diagnostics.Runtime
@@ -40,13 +40,13 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
             var log2 = new RequestLog();
             var log3 = new RequestLog();
 
-            log1.Id.ShouldNotEqual(Guid.Empty);
-            log2.Id.ShouldNotEqual(Guid.Empty);
-            log3.Id.ShouldNotEqual(Guid.Empty);
+            log1.Id.ShouldNotBe(Guid.Empty);
+            log2.Id.ShouldNotBe(Guid.Empty);
+            log3.Id.ShouldNotBe(Guid.Empty);
 
-            log1.Id.ShouldNotEqual(log2.Id);
-            log1.Id.ShouldNotEqual(log3.Id);
-            log2.Id.ShouldNotEqual(log3.Id);
+            log1.Id.ShouldNotBe(log2.Id);
+            log1.Id.ShouldNotBe(log3.Id);
+            log2.Id.ShouldNotBe(log3.Id);
         }
 
 

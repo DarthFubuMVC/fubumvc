@@ -4,7 +4,7 @@ using System.Net;
 using System.Xml;
 using System.Xml.Serialization;
 using FubuMVC.Core.Runtime;
-using FubuTestingSupport;
+using Shouldly;
 using HtmlTags;
 using NUnit.Framework;
 

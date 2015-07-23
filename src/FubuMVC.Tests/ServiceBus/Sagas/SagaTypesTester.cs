@@ -1,6 +1,6 @@
 ﻿using System;
 using FubuMVC.Core.ServiceBus.Sagas;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuTransportation.Testing.Sagas

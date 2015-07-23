@@ -2,7 +2,7 @@
 using System.Linq;
 using FubuPersistence.RavenDb;
 using FubuPersistence.Tests.MultiTenancy;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using StructureMap;
 

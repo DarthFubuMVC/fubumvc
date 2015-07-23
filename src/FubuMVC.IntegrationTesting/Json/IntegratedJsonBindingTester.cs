@@ -12,7 +12,7 @@ using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Json;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Katana;
-using FubuTestingSupport;
+using Shouldly;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using Rhino.Mocks;

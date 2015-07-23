@@ -8,7 +8,7 @@ using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Web;
 using FubuMVC.Katana;
-using FubuTestingSupport;
+using Shouldly;
 using FubuTransportation.Testing;
 using NUnit.Framework;
 using Rhino.Mocks;

@@ -9,7 +9,7 @@ using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.StructureMap;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using FubuTransportation.Testing;
 using LightningQueues;
 using LightningQueues.Model;

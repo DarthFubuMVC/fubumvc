@@ -7,7 +7,7 @@ using FubuMVC.Core.Security;
 using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.View;
 using FubuMVC.Katana;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.UI

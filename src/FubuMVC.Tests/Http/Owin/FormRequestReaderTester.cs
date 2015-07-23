@@ -5,7 +5,7 @@ using FubuCore;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Owin.Readers;
 using FubuMVC.Core.Runtime;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Http.Owin

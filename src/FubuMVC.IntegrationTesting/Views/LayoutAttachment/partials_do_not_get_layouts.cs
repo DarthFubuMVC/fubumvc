@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using FubuCore;
 using FubuMVC.Razor.RazorModel;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Views.LayoutAttachment

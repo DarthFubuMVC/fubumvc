@@ -2,7 +2,7 @@
 using FubuMVC.Core.Runtime.Logging;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using NUnit.Framework;
-using FubuTestingSupport;
+using Shouldly;
 using Rhino.Mocks;
 
 namespace FubuTransportation.Testing.Runtime.Invocation

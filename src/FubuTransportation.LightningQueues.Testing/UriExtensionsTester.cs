@@ -1,6 +1,6 @@
 ﻿using System;
 using FubuCore;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 
 namespace FubuTransportation.LightningQueues.Testing

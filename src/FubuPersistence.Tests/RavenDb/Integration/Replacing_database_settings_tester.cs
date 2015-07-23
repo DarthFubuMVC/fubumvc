@@ -1,7 +1,7 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.StructureMap;
 using FubuMVC.RavenDb;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Raven.Client;
 using Raven.Client.Embedded;

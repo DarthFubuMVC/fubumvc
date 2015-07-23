@@ -3,7 +3,7 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.SessionState;
 using FubuMVC.Tests.Http.Cookies;
 using FubuMVC.Tests.TestSupport;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 using Cookie = FubuMVC.Core.Http.Cookies.Cookie;

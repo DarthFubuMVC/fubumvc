@@ -2,7 +2,7 @@
 using System.Threading;
 using FubuMVC.Core.Http.Owin;
 using FubuPersistence.RavenDb;
-using FubuTestingSupport;
+using Shouldly;
 using NUnit.Framework;
 using Raven.Client;
 using Rhino.Mocks;
