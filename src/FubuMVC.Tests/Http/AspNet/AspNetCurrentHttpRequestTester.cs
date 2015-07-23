@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using FubuMVC.Core.Http.AspNet;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;

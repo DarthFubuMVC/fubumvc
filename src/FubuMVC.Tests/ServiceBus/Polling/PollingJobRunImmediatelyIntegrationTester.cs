@@ -4,6 +4,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.StructureMap;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;

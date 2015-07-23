@@ -8,6 +8,7 @@ using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Logging;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;

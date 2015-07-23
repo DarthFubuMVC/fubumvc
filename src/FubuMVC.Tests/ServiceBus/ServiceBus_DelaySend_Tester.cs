@@ -3,6 +3,7 @@ using System.Linq;
 using FubuCore;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Runtime;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;

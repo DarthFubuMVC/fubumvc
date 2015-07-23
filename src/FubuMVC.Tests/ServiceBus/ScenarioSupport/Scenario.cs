@@ -8,6 +8,7 @@ using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.Services.Messaging.Tracking;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 
 namespace FubuMVC.Tests.ServiceBus.ScenarioSupport

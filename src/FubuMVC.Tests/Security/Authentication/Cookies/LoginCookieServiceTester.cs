@@ -4,6 +4,7 @@ using FubuCore.Dates;
 using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.Authentication.Cookies;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;

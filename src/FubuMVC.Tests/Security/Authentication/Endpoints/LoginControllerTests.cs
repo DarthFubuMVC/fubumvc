@@ -9,6 +9,7 @@ using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Auditing;
 using FubuMVC.Core.Security.Authentication.Cookies;
 using FubuMVC.Core.Security.Authentication.Endpoints;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;

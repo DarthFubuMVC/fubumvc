@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 using NUnit.Framework;
 using OpenQA.Selenium;

@@ -3,6 +3,7 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;

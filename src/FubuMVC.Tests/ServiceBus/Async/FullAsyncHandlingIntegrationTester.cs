@@ -10,6 +10,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Core.StructureMap;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 using NUnit.Framework;
 

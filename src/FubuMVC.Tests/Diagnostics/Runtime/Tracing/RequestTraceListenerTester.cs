@@ -1,6 +1,7 @@
 using FubuCore.Logging;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Diagnostics.Runtime.Tracing;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;

@@ -169,7 +169,8 @@
     <Compile Include="Http\Owin\OwnCurrentHttpRequestTester.cs" />
     <Compile Include="Http\Owin\OwnHttpWriterTester.cs" />
     <Compile Include="Http\StreamExtensions.cs" />
-    <Compile Include="InteractionContext.cs" />
+    <Compile Include="TestSupport\GenericVoidMethod.cs" />
+    <Compile Include="TestSupport\InteractionContext.cs" />
     <Compile Include="Json\ComplexType.cs" />
     <Compile Include="Json\ComplexTypeConverter.cs" />
     <Compile Include="Json\JObjectValuesTester.cs" />
@@ -640,6 +641,12 @@
     <Compile Include="StructureMap\Settings\SettingIntegrationTester.cs" />
     <Compile Include="StructureMap\using_child_containers_for_isolated_overrides.cs" />
     <Compile Include="TagAttributeTester.cs" />
+    <Compile Include="TestSupport\RhinoAutoMocker.cs" />
+    <Compile Include="TestSupport\RhinoMockRepositoryProxy.cs" />
+    <Compile Include="TestSupport\RhinoMocksAAAServiceLocator.cs" />
+    <Compile Include="TestSupport\SelfMockingServiceLocator.cs" />
+    <Compile Include="TestSupport\VoidMethod.cs" />
+    <Compile Include="TestSupport\Wait.cs" />
     <Compile Include="View\AuthorizationOnPageExtensionsTester.cs" />
     <Compile Include="View\AuthorizedLinkExpressionsTester.cs" />
     <Compile Include="View\Bootstrap\Tags\DetailTableBuilderTester.cs" />

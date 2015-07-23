@@ -1,6 +1,7 @@
 ﻿using System;
 using FubuMVC.Core.Security.Authentication;
 using FubuMVC.RavenDb.Membership;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Raven.Client;

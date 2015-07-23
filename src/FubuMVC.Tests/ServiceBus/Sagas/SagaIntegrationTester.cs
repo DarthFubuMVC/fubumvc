@@ -12,6 +12,7 @@ using FubuMVC.Core.ServiceBus.Scheduling;
 using FubuMVC.Core.ServiceBus.TestSupport;
 using FubuMVC.Core.Services.Messaging.Tracking;
 using FubuMVC.Core.StructureMap;
+using FubuMVC.Tests.TestSupport;
 using NUnit.Framework;
 using FubuCore;
 using StructureMap;

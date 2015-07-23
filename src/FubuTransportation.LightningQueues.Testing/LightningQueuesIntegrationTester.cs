@@ -9,6 +9,7 @@ using FubuMVC.Core.Runtime.Logging;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Delayed;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 using FubuTransportation.Testing;
 using LightningQueues.Model;

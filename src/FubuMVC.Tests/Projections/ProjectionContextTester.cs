@@ -3,6 +3,7 @@ using FubuCore.Formatting;
 using FubuCore.Reflection;
 using FubuMVC.Core.Projections;
 using FubuMVC.Core.Urls;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;

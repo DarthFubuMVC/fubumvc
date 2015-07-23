@@ -6,6 +6,7 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Events;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Tests.ServiceBus.InMemory;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 using FubuTransportation.Testing.InMemory;
 using NUnit.Framework;

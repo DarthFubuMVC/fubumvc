@@ -8,6 +8,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.StructureMap;
+using FubuMVC.Tests.TestSupport;
 using NUnit.Framework;
 using StructureMap;
 using System.Linq;

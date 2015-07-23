@@ -1,5 +1,6 @@
 using System;
 using System.Configuration;
+using FubuMVC.Tests.TestSupport;
 using FubuPersistence.Storage;
 using FubuTestingSupport;
 using NUnit.Framework;

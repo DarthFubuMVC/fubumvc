@@ -4,6 +4,7 @@ using FubuCore.Logging;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Auditing;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;

@@ -7,6 +7,7 @@ using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Headers;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;

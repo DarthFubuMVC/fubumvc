@@ -6,6 +6,7 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Headers;
+using FubuMVC.Tests.TestSupport;
 using NUnit.Framework;
 using System.Linq;
 using FubuTestingSupport;

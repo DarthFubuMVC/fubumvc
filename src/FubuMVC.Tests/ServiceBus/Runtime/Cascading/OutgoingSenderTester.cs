@@ -5,6 +5,7 @@ using FubuCore.Logging;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Cascading;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;

@@ -1,5 +1,6 @@
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime.Formatters;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;

@@ -1,6 +1,7 @@
 ﻿using System;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.ServiceBus.Polling;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 using FubuTransportation.Testing.ScheduledJobs;
 using NUnit.Framework;

@@ -7,6 +7,7 @@ using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.ServiceBus.ScheduledJobs;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Execution;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;

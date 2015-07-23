@@ -1,6 +1,7 @@
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Razor;
 using FubuMVC.Razor.Rendering;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 using NUnit.Framework;
 

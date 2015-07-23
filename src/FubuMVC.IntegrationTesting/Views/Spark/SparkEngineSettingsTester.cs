@@ -2,6 +2,7 @@ using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Spark;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 using NUnit.Framework;
 

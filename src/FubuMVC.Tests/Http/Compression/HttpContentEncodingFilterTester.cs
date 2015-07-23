@@ -4,6 +4,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Compression;
 using FubuMVC.Core.Http.Owin;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;

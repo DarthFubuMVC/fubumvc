@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Serenity.WebDriver.JavaScriptBuilders;

@@ -9,6 +9,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Resources.PathBased;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 using NUnit.Framework;
 using SpecificationExtensions = FubuTestingSupport.SpecificationExtensions;

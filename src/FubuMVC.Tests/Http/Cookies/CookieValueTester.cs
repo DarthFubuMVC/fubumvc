@@ -5,6 +5,7 @@ using FubuCore.Dates;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Cookie = FubuMVC.Core.Http.Cookies.Cookie;

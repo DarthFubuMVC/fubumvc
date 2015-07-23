@@ -6,6 +6,7 @@ using FubuCore.Binding;
 using FubuCore.Logging;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.StructureMap;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;

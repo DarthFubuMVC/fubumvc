@@ -9,6 +9,7 @@ using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.StructureMap;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 using FubuTransportation.Testing;
 using NUnit.Framework;

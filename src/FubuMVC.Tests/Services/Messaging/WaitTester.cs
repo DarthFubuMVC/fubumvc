@@ -1,4 +1,5 @@
 ﻿using System;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 using NUnit.Framework;
 

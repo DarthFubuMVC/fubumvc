@@ -9,6 +9,7 @@ using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Headers;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
+using FubuMVC.Tests.TestSupport;
 using NUnit.Framework;
 using System.Linq;
 using FubuTestingSupport;

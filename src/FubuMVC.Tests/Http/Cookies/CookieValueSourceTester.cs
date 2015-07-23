@@ -1,5 +1,6 @@
 ﻿using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Cookies;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;

@@ -2,6 +2,7 @@ using System;
 using FubuMVC.Core;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Tests.TestSupport;
 using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
