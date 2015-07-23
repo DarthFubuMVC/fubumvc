@@ -45,9 +45,6 @@
     <Reference Include="FubuLocalization">
       <HintPath>..\packages\FubuLocalization\lib\FubuLocalization.dll</HintPath>
     </Reference>
-    <Reference Include="FubuTestingSupport">
-      <HintPath>..\packages\FubuTestingSupport\lib\FubuTestingSupport.dll</HintPath>
-    </Reference>
     <Reference Include="HtmlTags">
       <HintPath>..\packages\HtmlTags\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
@@ -82,9 +79,6 @@
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap\lib\net40\StructureMap.dll</HintPath>
     </Reference>
-    <Reference Include="StructureMap.AutoMocking">
-      <HintPath>..\packages\structuremap.automocking\lib\net40\StructureMap.AutoMocking.dll</HintPath>
-    </Reference>
     <Reference Include="StructureMap.Net4">
       <HintPath>..\packages\structuremap\lib\net40\StructureMap.Net4.dll</HintPath>
     </Reference>
@@ -95,7 +89,6 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Razor\lib\net40\System.Web.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />

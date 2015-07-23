@@ -43,9 +43,6 @@
     <Reference Include="FubuLocalization">
       <HintPath>..\packages\FubuLocalization\lib\FubuLocalization.dll</HintPath>
     </Reference>
-    <Reference Include="FubuTestingSupport">
-      <HintPath>..\packages\FubuTestingSupport\lib\FubuTestingSupport.dll</HintPath>
-    </Reference>
     <Reference Include="HtmlTags">
       <HintPath>..\packages\HtmlTags\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
@@ -82,9 +79,6 @@
     </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap\lib\net40\StructureMap.dll</HintPath>
-    </Reference>
-    <Reference Include="StructureMap.AutoMocking">
-      <HintPath>..\packages\structuremap.automocking\lib\net40\StructureMap.AutoMocking.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap.Net4">
       <HintPath>..\packages\structuremap\lib\net40\StructureMap.Net4.dll</HintPath>
@@ -171,6 +165,10 @@
     <ProjectReference Include="..\FubuMVC.Spark\FubuMVC.Spark.csproj">
       <Project>{9d6bf559-6461-4eac-bb16-f976ff43e8da}</Project>
       <Name>FubuMVC.Spark</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Tests\FubuMVC.Tests.csproj">
+      <Project>{feb91f9f-ece2-480c-b39c-a44bbf1f7b01}</Project>
+      <Name>FubuMVC.Tests</Name>
     </ProjectReference>
     <ProjectReference Include="..\RemoteService\RemoteService.csproj">
       <Project>{F8186EC7-237A-4C24-AA48-1CFCDD099A8D}</Project>

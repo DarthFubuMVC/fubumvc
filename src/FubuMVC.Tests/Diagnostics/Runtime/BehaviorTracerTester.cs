@@ -161,7 +161,10 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
 
         protected override void beforeEach()
         {
-            logs = Services.RecordLogging();
+            var logger = new RecordingLogger();
+            Services.Inject<ILogger>(logger);
+
+            logs = logger;
             correlation = new BehaviorCorrelation(new FakeNode());
             Services.Inject(correlation);
             Services.Inject<IExceptionHandlingObserver>(new ExceptionHandlingObserver());
@@ -220,7 +223,10 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
 
         protected override void beforeEach()
         {
-            logs = Services.RecordLogging();
+            var logger = new RecordingLogger();
+            Services.Inject<ILogger>(logger);
+
+            logs = logger;
             correlation = new BehaviorCorrelation(new FakeNode());
             Services.Inject(correlation);
             Services.Inject<IExceptionHandlingObserver>(new ExceptionHandlingObserver());

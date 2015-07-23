@@ -42,9 +42,6 @@
     <Reference Include="FubuLocalization">
       <HintPath>..\packages\FubuLocalization\lib\FubuLocalization.dll</HintPath>
     </Reference>
-    <Reference Include="FubuTestingSupport">
-      <HintPath>..\packages\FubuTestingSupport\lib\FubuTestingSupport.dll</HintPath>
-    </Reference>
     <Reference Include="HtmlTags">
       <HintPath>..\packages\HtmlTags\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
@@ -59,9 +56,6 @@
     </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap\lib\net40\StructureMap.dll</HintPath>
-    </Reference>
-    <Reference Include="StructureMap.AutoMocking">
-      <HintPath>..\packages\structuremap.automocking\lib\net40\StructureMap.AutoMocking.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap.Net4">
       <HintPath>..\packages\structuremap\lib\net40\StructureMap.Net4.dll</HintPath>
@@ -124,7 +118,6 @@
     <Compile Include="Diagnostics\Runtime\RequestHistoryCacheTester.cs" />
     <Compile Include="Diagnostics\Runtime\RequestLogTester.cs" />
     <Compile Include="Diagnostics\Runtime\Tracing\DiagnosticBehaviorTester.cs" />
-    <Compile Include="Diagnostics\Runtime\Tracing\RequestLogBuilderTester.cs" />
     <Compile Include="Diagnostics\Runtime\Tracing\RequestTraceListenerTester.cs" />
     <Compile Include="Diagnostics\Runtime\Tracing\RequestTraceTester.cs" />
     <Compile Include="Diagnostics\Runtime\Tracing_is_not_applied_to_chains_that_are_tagged_no_tracing.cs" />
@@ -176,6 +169,7 @@
     <Compile Include="Http\Owin\OwnCurrentHttpRequestTester.cs" />
     <Compile Include="Http\Owin\OwnHttpWriterTester.cs" />
     <Compile Include="Http\StreamExtensions.cs" />
+    <Compile Include="InteractionContext.cs" />
     <Compile Include="Json\ComplexType.cs" />
     <Compile Include="Json\ComplexTypeConverter.cs" />
     <Compile Include="Json\JObjectValuesTester.cs" />
@@ -635,6 +629,7 @@
     <Compile Include="Security\Authorization\DefaultAuthorizationFailureHandlerTester.cs" />
     <Compile Include="Security\Authorization\PrincipalRolesTester.cs" />
     <Compile Include="Security\Authorization\AuthorizationPolicyExecutorTester.cs" />
+    <Compile Include="SpecificationExtensions.cs" />
     <Compile Include="StructureMap\ContainerFacilitySource.cs" />
     <Compile Include="StructureMap\Internals\AppSettingProviderRegistrySmokeTester.cs" />
     <Compile Include="StructureMap\Internals\StructureMapServiceLocatorTester.cs" />

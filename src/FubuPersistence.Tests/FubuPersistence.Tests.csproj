@@ -49,9 +49,6 @@
     <Reference Include="FubuLocalization">
       <HintPath>..\packages\FubuLocalization\lib\FubuLocalization.dll</HintPath>
     </Reference>
-    <Reference Include="FubuTestingSupport">
-      <HintPath>..\packages\FubuTestingSupport\lib\FubuTestingSupport.dll</HintPath>
-    </Reference>
     <Reference Include="GeoAPI">
       <HintPath>..\packages\RavenDB.Database\lib\net45\GeoAPI.dll</HintPath>
     </Reference>
@@ -142,9 +139,6 @@
     </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap\lib\net40\StructureMap.dll</HintPath>
-    </Reference>
-    <Reference Include="StructureMap.AutoMocking">
-      <HintPath>..\packages\structuremap.automocking\lib\net40\StructureMap.AutoMocking.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap.Net4">
       <HintPath>..\packages\structuremap\lib\net40\StructureMap.Net4.dll</HintPath>
