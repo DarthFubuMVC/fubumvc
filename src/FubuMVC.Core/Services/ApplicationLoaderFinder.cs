@@ -54,6 +54,8 @@ namespace FubuMVC.Core.Services
 
         public static bool IsLoaderTypeCandidate(Type type)
         {
+            if (type.IsOpenGeneric()) return false;
+
             if (!type.IsConcreteWithDefaultCtor()) return false;
 
             if (type.Closes(typeof (IApplicationSource<,>))) return true;
