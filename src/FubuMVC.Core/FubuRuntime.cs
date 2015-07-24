@@ -29,8 +29,6 @@ namespace FubuMVC.Core
             _factory = factory;
             _container = container;
 
-            _container.Inject(this);
-
             // TODO -- Temporary? AND THIS HAS TO BE LAZY BUILT PER NESTED CONTAINER
             _container.Configure(_ =>
             {

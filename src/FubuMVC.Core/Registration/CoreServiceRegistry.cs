@@ -43,13 +43,16 @@ namespace FubuMVC.Core.Registration
             SetServiceIfNone<IRequestCompletion, RequestCompletion>();
 
             SetServiceIfNone<IRequestData, FubuMvcRequestData>();
-            SetServiceIfNone(typeof (AppReloaded), new ObjectInstance(new AppReloaded()));
+
+            For<AppReloaded>().Use(new AppReloaded());
 
             SetServiceIfNone<IDiagnosticAssets, DiagnosticAssetsCache>().Singleton();
 
+            // HAck alert. Inconsistent usage in the app, so you're stuck with this.
             var stringifier = new Stringifier();
-            SetServiceIfNone(stringifier);
-            SetServiceIfNone<IStringifier>(stringifier); // Hack!
+            For<Stringifier>().Use(stringifier);
+            For<IStringifier>().Use(stringifier);
+
             AddService(new TypeDescriptorCache());
 
             SetServiceIfNone<IConditionalService, ConditionalService>();

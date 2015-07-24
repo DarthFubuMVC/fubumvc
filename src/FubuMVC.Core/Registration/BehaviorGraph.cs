@@ -11,7 +11,6 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Runtime.Files;
 using StructureMap.Configuration.DSL;
-using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Registration
 {
@@ -121,7 +120,6 @@ namespace FubuMVC.Core.Registration
         {
             var registry = new Registry();
             _behaviors.OfType<IContainerModel>().Each(x => registry.For<IActionBehavior>().AddInstance(x.ToInstance()));
-            registry.For<BehaviorGraph>().Use(this);
 
             return registry;
         }

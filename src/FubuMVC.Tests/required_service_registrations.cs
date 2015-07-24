@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Binding.InMemory;
@@ -40,6 +41,9 @@ namespace FubuMVC.Tests
             using (var runtime = FubuApplication.DefaultPolicies().Bootstrap())
             {
                 var _ = runtime.Container;
+
+
+                Debug.WriteLine(_.WhatDoIHave());
 
                 // Model Binding registrations
                 _.DefaultRegistrationIs<IBindingContext, BindingContext>();
