@@ -9,6 +9,7 @@ using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.StructureMap;
+using FubuMVC.Core.StructureMap.Settings;
 using StructureMap;
 
 namespace FubuMVC.Core
@@ -33,6 +34,8 @@ namespace FubuMVC.Core
             // TODO -- Temporary? AND THIS HAS TO BE LAZY BUILT PER NESTED CONTAINER
             _container.Configure(_ =>
             {
+                _.Policies.OnMissingFamily<SettingPolicy>();
+
                 _.For<IServiceLocator>().Use<StructureMapServiceLocator>();
                 _.For<FubuRuntime>().Use(this);
                 _.For<IServiceFactory>().Use(factory);

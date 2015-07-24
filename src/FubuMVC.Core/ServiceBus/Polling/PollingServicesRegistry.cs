@@ -10,7 +10,7 @@ namespace FubuMVC.Core.ServiceBus.Polling
             AddService<IDeactivator, PollingJobDeactivator>();
             SetServiceIfNone<IPollingJobLogger, PollingJobLogger>();
 
-            SetServiceIfNone<IPollingJobs, PollingJobs>();
+            SetServiceIfNone<IPollingJobs, PollingJobs>().Singleton();
 
 
             For<PollingJobLatch>().Singleton();

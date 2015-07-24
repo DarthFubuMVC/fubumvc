@@ -912,7 +912,6 @@
     <Compile Include="StructureMap\SettingsScanner.cs" />
     <Compile Include="StructureMap\Settings\SettingPolicy.cs" />
     <Compile Include="StructureMap\StructureMapServiceFactory.cs" />
-    <Compile Include="StructureMap\StructureMapFubuRegistry.cs" />
     <Compile Include="StructureMap\StructureMapServiceLocator.cs" />
     <Compile Include="Attributes\TagAttribute.cs" />
     <Compile Include="View\AuthorizationOnPageExtensions.cs" />
