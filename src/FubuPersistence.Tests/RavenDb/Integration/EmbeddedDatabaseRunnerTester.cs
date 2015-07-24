@@ -1,4 +1,5 @@
-﻿using FubuPersistence.RavenDb;
+﻿using FubuMVC.RavenDb;
+using FubuMVC.RavenDb.RavenDb;
 using NUnit.Framework;
 using StructureMap;
 using System.Linq;

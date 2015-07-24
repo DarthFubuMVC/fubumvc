@@ -1,4 +1,4 @@
-namespace FubuPersistence.Storage
+namespace FubuMVC.RavenDb.Storage
 {
     public interface IStorageFactory
     {

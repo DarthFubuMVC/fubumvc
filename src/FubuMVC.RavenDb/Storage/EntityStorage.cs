@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace FubuPersistence.Storage
+namespace FubuMVC.RavenDb.Storage
 {
     public class EntityStorage<T> : IEntityStorage<T> where T : class, IEntity
     {

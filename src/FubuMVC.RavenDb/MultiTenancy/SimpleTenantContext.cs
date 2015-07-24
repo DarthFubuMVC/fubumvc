@@ -1,7 +1,7 @@
 using System;
 using FubuCore.Binding;
 
-namespace FubuPersistence.MultiTenancy
+namespace FubuMVC.RavenDb.MultiTenancy
 {
     public class SimpleTenantContext : ITenantContext
     {

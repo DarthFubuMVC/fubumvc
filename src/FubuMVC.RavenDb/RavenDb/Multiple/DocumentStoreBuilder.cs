@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FubuPersistence.RavenDb.Multiple
+namespace FubuMVC.RavenDb.RavenDb.Multiple
 {
     public class DocumentStoreBuilder<T> : DocumentStoreBuilder where T : RavenDbSettings
     {

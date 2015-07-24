@@ -1,5 +1,6 @@
 ﻿using System;
 using FubuMVC.Core.Security.Authentication;
+using FubuMVC.RavenDb;
 using FubuMVC.RavenDb.Membership;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;

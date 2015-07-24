@@ -1,9 +1,7 @@
 ﻿using FubuCore.Binding;
-using FubuPersistence.RavenDb;
-using Raven.Client;
 using StructureMap;
 
-namespace FubuPersistence
+namespace FubuMVC.RavenDb
 {
     public static class ContainerExtensions
     {

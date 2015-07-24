@@ -7,7 +7,7 @@ using FubuMVC.Core.Ajax;
 using FubuMVC.Core.StructureMap;
 using FubuMVC.Katana;
 using FubuMVC.RavenDb;
-using FubuPersistence.RavenDb;
+using FubuMVC.RavenDb.RavenDb;
 using Shouldly;
 using NUnit.Framework;
 using System.Linq;

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Raven.Client;
 using Raven.Imports.Newtonsoft.Json;
 
-namespace FubuPersistence.RavenDb
+namespace FubuMVC.RavenDb.RavenDb
 {
     public class CustomizeRavenJsonSerializer : IDocumentStoreConfigurationAction
     {

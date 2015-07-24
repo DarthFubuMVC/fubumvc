@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using FubuCore.Dates;
 using FubuCore.Util;
-using FubuPersistence.Storage;
+using FubuMVC.RavenDb.Storage;
 
-namespace FubuPersistence
+namespace FubuMVC.RavenDb
 {
     public class EntityRepository : IEntityRepository
     {

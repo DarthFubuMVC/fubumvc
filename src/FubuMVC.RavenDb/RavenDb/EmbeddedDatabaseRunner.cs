@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
-using FubuPersistence.Reset;
+using FubuMVC.RavenDb.Reset;
 using Raven.Client;
 using Raven.Database.Server;
 
-namespace FubuPersistence.RavenDb
+namespace FubuMVC.RavenDb.RavenDb
 {
     public class EmbeddedDatabaseRunner : IDisposable, IPersistenceReset
     {

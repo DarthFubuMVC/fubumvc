@@ -1,5 +1,5 @@
 ﻿using FubuMVC.Core.Runtime;
-using FubuPersistence.RavenDb;
+using FubuMVC.RavenDb.RavenDb;
 using Raven.Client;
 using StructureMap;
 

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading;
 using FubuMVC.Core.Registration.Nodes;
-using FubuPersistence.RavenDb;
+using FubuMVC.RavenDb;
+using FubuMVC.RavenDb.RavenDb;
 using Shouldly;
 using NUnit.Framework;
 using Raven.Client;

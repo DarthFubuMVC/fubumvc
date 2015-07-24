@@ -2,7 +2,7 @@ using System;
 using FubuCore.Binding;
 using StructureMap;
 
-namespace FubuPersistence.RavenDb
+namespace FubuMVC.RavenDb.RavenDb
 {
     public class RavenTransaction : TransactionBase
     {

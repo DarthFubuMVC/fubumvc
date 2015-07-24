@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using FubuCore.Logging;
 using FubuCore.Util;
-using FubuPersistence.RavenDb.Multiple;
+using FubuMVC.RavenDb.RavenDb.Multiple;
 using Raven.Client;
 using StructureMap;
 
-namespace FubuPersistence.RavenDb
+namespace FubuMVC.RavenDb.RavenDb
 {
     public class SessionBoundary : ISessionBoundary
     {

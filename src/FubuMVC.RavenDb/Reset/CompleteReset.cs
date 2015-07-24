@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using FubuCore;
 using FubuCore.Logging;
-using System.Linq;
 
-namespace FubuPersistence.Reset
+namespace FubuMVC.RavenDb.Reset
 {
     public class CompleteReset : ICompleteReset
     {

@@ -1,7 +1,8 @@
 ﻿using System;
-using FubuPersistence.InMemory;
-using FubuPersistence.Reset;
-using FubuPersistence.Storage;
+using FubuMVC.RavenDb;
+using FubuMVC.RavenDb.InMemory;
+using FubuMVC.RavenDb.Reset;
+using FubuMVC.RavenDb.Storage;
 using Shouldly;
 using NUnit.Framework;
 using StructureMap;

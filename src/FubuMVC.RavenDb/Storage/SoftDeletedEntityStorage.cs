@@ -3,7 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using FubuCore.Dates;
 
-namespace FubuPersistence.Storage
+namespace FubuMVC.RavenDb.Storage
 {
     public class SoftDeletedEntityStorage<T> : IEntityStorage<T> where T : class, ISoftDeletedEntity
     {

@@ -1,3 +1,5 @@
+using FubuMVC.RavenDb;
+
 namespace FubuPersistence.Tests
 {
     public class FakeEntity : Entity { }

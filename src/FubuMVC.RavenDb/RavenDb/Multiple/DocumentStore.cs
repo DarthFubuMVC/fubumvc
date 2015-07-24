@@ -8,7 +8,7 @@ using Raven.Client.Connection.Async;
 using Raven.Client.Document;
 using Raven.Client.Indexes;
 
-namespace FubuPersistence.RavenDb.Multiple
+namespace FubuMVC.RavenDb.RavenDb.Multiple
 {
     public interface IDocumentStore<T> : IDocumentStore where T : RavenDbSettings
     {

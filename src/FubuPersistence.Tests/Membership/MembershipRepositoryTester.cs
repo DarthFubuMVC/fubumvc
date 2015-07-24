@@ -1,4 +1,5 @@
 ﻿using FubuMVC.Core.Security.Authentication;
+using FubuMVC.RavenDb;
 using FubuMVC.RavenDb.Membership;
 using Shouldly;
 using NUnit.Framework;

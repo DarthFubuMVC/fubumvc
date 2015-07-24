@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using FubuCore;
 
-namespace FubuPersistence.InMemory
+namespace FubuMVC.RavenDb.InMemory
 {
     public class InMemoryPersistor : IPersistor
     {

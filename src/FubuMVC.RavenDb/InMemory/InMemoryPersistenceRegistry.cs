@@ -1,11 +1,11 @@
 ﻿using FubuCore.Dates;
 using FubuCore.Logging;
-using FubuPersistence.MultiTenancy;
-using FubuPersistence.Reset;
-using FubuPersistence.Storage;
+using FubuMVC.RavenDb.MultiTenancy;
+using FubuMVC.RavenDb.Reset;
+using FubuMVC.RavenDb.Storage;
 using StructureMap.Configuration.DSL;
 
-namespace FubuPersistence.InMemory
+namespace FubuMVC.RavenDb.InMemory
 {
     public class PersistenceRegistry : Registry
     {

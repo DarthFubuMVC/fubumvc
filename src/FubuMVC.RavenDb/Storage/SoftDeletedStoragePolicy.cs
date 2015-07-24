@@ -1,8 +1,8 @@
 using System;
-using FubuCore.Dates;
 using FubuCore;
+using FubuCore.Dates;
 
-namespace FubuPersistence.Storage
+namespace FubuMVC.RavenDb.Storage
 {
     public class SoftDeletedStoragePolicy : IEntityStoragePolicy
     {

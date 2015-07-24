@@ -1,6 +1,6 @@
 using System;
 
-namespace FubuPersistence.MultiTenancy
+namespace FubuMVC.RavenDb.MultiTenancy
 {
     public interface ITenantContext
     {

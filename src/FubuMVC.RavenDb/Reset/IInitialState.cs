@@ -1,4 +1,4 @@
-namespace FubuPersistence.Reset
+namespace FubuMVC.RavenDb.Reset
 {
     public interface IInitialState
     {

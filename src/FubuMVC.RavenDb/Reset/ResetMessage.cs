@@ -1,6 +1,6 @@
 using FubuCore.Logging;
 
-namespace FubuPersistence.Reset
+namespace FubuMVC.RavenDb.Reset
 {
     public class ResetMessage : LogTopic
     {

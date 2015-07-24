@@ -2,7 +2,6 @@
 using System.Linq;
 using FubuMVC.Core.ServiceBus.ScheduledJobs;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
-using FubuPersistence;
 using Raven.Client;
 
 namespace FubuMVC.RavenDb.ServiceBus

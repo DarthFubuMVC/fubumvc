@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
-using FubuPersistence.RavenDb;
+using FubuMVC.RavenDb;
+using FubuMVC.RavenDb.RavenDb;
 using FubuPersistence.Tests.MultiTenancy;
 using Shouldly;
 using NUnit.Framework;

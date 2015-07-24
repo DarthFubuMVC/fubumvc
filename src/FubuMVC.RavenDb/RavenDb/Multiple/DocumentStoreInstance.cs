@@ -1,8 +1,6 @@
-﻿using System;
-using StructureMap;
-using StructureMap.Pipeline;
+﻿using StructureMap.Pipeline;
 
-namespace FubuPersistence.RavenDb.Multiple
+namespace FubuMVC.RavenDb.RavenDb.Multiple
 {
     public class DocumentStoreInstance<T> : LambdaInstance<DocumentStore<T>> where T : RavenDbSettings
     {

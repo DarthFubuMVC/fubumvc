@@ -2,7 +2,7 @@
 using FubuCore.Binding;
 using StructureMap;
 
-namespace FubuPersistence.InMemory
+namespace FubuMVC.RavenDb.InMemory
 {
     public class DelegatingTransaction : TransactionBase
     {

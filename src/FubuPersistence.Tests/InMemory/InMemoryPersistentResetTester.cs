@@ -1,4 +1,5 @@
-﻿using FubuPersistence.InMemory;
+﻿using FubuMVC.RavenDb;
+using FubuMVC.RavenDb.InMemory;
 using NUnit.Framework;
 using System.Linq;
 using Shouldly;

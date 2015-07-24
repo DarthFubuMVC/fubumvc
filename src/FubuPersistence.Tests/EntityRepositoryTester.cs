@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using FubuCore.Dates;
+using FubuMVC.RavenDb;
 using Shouldly;
 using NUnit.Framework;
 

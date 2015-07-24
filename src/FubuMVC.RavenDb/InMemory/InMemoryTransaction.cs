@@ -3,7 +3,7 @@ using FubuCore.Binding;
 using StructureMap;
 using StructureMap.Pipeline;
 
-namespace FubuPersistence.InMemory
+namespace FubuMVC.RavenDb.InMemory
 {
     public class InMemoryTransaction : TransactionBase
     {

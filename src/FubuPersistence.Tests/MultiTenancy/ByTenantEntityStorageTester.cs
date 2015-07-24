@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
-using FubuPersistence.InMemory;
-using FubuPersistence.MultiTenancy;
-using FubuPersistence.Storage;
+using FubuMVC.RavenDb.InMemory;
+using FubuMVC.RavenDb.MultiTenancy;
+using FubuMVC.RavenDb.Storage;
 using NUnit.Framework;
 using Shouldly;
 using System.Linq;

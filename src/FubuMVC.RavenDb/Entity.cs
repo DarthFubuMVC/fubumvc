@@ -1,7 +1,6 @@
 using System;
-using FubuCore.Dates;
 
-namespace FubuPersistence
+namespace FubuMVC.RavenDb
 {
     public abstract class Entity : IEntity
     {

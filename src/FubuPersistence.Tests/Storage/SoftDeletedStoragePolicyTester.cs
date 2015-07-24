@@ -1,5 +1,6 @@
 ﻿using FubuCore.Dates;
-using FubuPersistence.Storage;
+using FubuMVC.RavenDb;
+using FubuMVC.RavenDb.Storage;
 using NUnit.Framework;
 using Shouldly;
 

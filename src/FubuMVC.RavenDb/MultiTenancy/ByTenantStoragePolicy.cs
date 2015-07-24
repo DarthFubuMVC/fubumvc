@@ -1,8 +1,8 @@
 using System;
-using FubuPersistence.Storage;
 using FubuCore;
+using FubuMVC.RavenDb.Storage;
 
-namespace FubuPersistence.MultiTenancy
+namespace FubuMVC.RavenDb.MultiTenancy
 {
     public class ByTenantStoragePolicy : IEntityStoragePolicy
     {

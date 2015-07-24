@@ -1,4 +1,4 @@
-﻿using FubuPersistence.RavenDb;
+﻿using FubuMVC.RavenDb.RavenDb;
 using NUnit.Framework;
 using Raven.Client.Embedded;
 using Raven.Imports.Newtonsoft.Json;

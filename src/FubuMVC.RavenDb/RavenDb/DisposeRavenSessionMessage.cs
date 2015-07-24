@@ -3,7 +3,7 @@ using FubuCore;
 using FubuCore.Logging;
 using Raven.Client;
 
-namespace FubuPersistence.RavenDb
+namespace FubuMVC.RavenDb.RavenDb
 {
     public class DisposeRavenSessionMessage : LogRecord
     {

@@ -1,9 +1,9 @@
-﻿using NUnit.Framework;
+﻿using FubuMVC.RavenDb.RavenDb;
+using NUnit.Framework;
 using Raven.Client;
 using Raven.Client.Document;
 using StructureMap;
 using StructureMap.Configuration.DSL;
-using FubuPersistence.RavenDb;
 using Shouldly;
 
 namespace FubuPersistence.Tests.RavenDb

@@ -1,8 +1,9 @@
 ﻿using System;
 using FubuCore.Dates;
+using FubuMVC.RavenDb;
+using FubuMVC.RavenDb.InMemory;
+using FubuMVC.RavenDb.Storage;
 using FubuMVC.Tests.TestSupport;
-using FubuPersistence.InMemory;
-using FubuPersistence.Storage;
 using Shouldly;
 using NUnit.Framework;
 

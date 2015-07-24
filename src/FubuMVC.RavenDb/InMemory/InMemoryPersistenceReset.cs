@@ -1,7 +1,7 @@
-﻿using FubuPersistence.Reset;
-using FubuCore;
+﻿using FubuCore;
+using FubuMVC.RavenDb.Reset;
 
-namespace FubuPersistence.InMemory
+namespace FubuMVC.RavenDb.InMemory
 {
     public class InMemoryPersistenceReset : IPersistenceReset
     {

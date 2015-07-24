@@ -1,5 +1,5 @@
-﻿using FubuMVC.Tests.TestSupport;
-using FubuPersistence.Storage;
+﻿using FubuMVC.RavenDb.Storage;
+using FubuMVC.Tests.TestSupport;
 using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;

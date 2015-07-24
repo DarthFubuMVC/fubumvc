@@ -1,9 +1,9 @@
 using System;
-using FubuPersistence.RavenDb.Multiple;
+using FubuMVC.RavenDb.RavenDb.Multiple;
 using Raven.Client;
 using StructureMap.Configuration.DSL;
 
-namespace FubuPersistence.RavenDb
+namespace FubuMVC.RavenDb.RavenDb
 {
     public interface IDocumentStoreConfigurationAction
     {

@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Threading;
 using FubuMVC.Core.Registration.Nodes;
-using FubuPersistence.RavenDb;
-using FubuPersistence.RavenDb.Multiple;
-using FubuPersistence.Reset;
+using FubuMVC.RavenDb.RavenDb;
+using FubuMVC.RavenDb.RavenDb.Multiple;
+using FubuMVC.RavenDb.Reset;
 using FubuPersistence.Tests.RavenDb.Integration;
 using Shouldly;
 using NUnit.Framework;

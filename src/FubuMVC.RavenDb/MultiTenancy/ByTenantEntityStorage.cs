@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using FubuPersistence.Storage;
+using FubuMVC.RavenDb.Storage;
 
-namespace FubuPersistence.MultiTenancy
+namespace FubuMVC.RavenDb.MultiTenancy
 {
     public class ByTenantEntityStorage<T> : IEntityStorage<T> where T : class, ITenantedEntity
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace FubuPersistence.Storage
+namespace FubuMVC.RavenDb.Storage
 {
     public class StorageFactory : IStorageFactory
     {

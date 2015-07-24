@@ -1,15 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using FubuPersistence.RavenDb.Multiple;
-using FubuPersistence.Reset;
-using Raven.Client;
-using StructureMap;
 using System.Linq;
 using FubuCore;
-using System.Collections.Generic;
-using Wintellect.PowerCollections;
+using FubuMVC.RavenDb.RavenDb.Multiple;
+using FubuMVC.RavenDb.Reset;
+using Raven.Client;
+using StructureMap;
 
-namespace FubuPersistence.RavenDb
+namespace FubuMVC.RavenDb.RavenDb
 {
     public class RavenPersistenceReset : IPersistenceReset
     {

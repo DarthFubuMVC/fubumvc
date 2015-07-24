@@ -1,8 +1,8 @@
 ﻿using System;
-using FubuPersistence.MultiTenancy;
+using FubuMVC.RavenDb.MultiTenancy;
 using StructureMap;
 
-namespace FubuPersistence.InMemory
+namespace FubuMVC.RavenDb.InMemory
 {
     public class InMemoryUnitOfWork : IUnitOfWork
     {

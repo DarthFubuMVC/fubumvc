@@ -1,12 +1,12 @@
-using FubuPersistence.InMemory;
-using FubuPersistence.RavenDb.Multiple;
-using FubuPersistence.Reset;
+using FubuMVC.Core.Registration;
+using FubuMVC.RavenDb.InMemory;
+using FubuMVC.RavenDb.RavenDb.Multiple;
+using FubuMVC.RavenDb.Reset;
 using Raven.Client;
-using StructureMap.Configuration.DSL;
 
-namespace FubuPersistence.RavenDb
+namespace FubuMVC.RavenDb.RavenDb
 {
-    public class RavenDbRegistry : Registry
+    public class RavenDbRegistry : ServiceRegistry
     {
         public RavenDbRegistry()
         {

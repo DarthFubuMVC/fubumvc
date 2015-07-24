@@ -1,7 +1,7 @@
 ﻿using System.Security.Principal;
 using System.Threading;
 using FubuMVC.Core.Http.Owin;
-using FubuPersistence.RavenDb;
+using FubuMVC.RavenDb.RavenDb;
 using Shouldly;
 using NUnit.Framework;
 using Raven.Client;

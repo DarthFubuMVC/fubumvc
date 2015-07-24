@@ -1,7 +1,4 @@
-﻿using System;
-using FubuCore;
-
-namespace FubuPersistence.Storage
+﻿namespace FubuMVC.RavenDb.Storage
 {
     public interface IEntityStoragePolicy
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Raven.Client;
 
-namespace FubuPersistence.RavenDb
+namespace FubuMVC.RavenDb.RavenDb
 {
     public interface IDocumentStoreBuilder
     {

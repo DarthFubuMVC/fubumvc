@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FubuPersistence
+namespace FubuMVC.RavenDb
 {
     public interface IUnitOfWork
     {

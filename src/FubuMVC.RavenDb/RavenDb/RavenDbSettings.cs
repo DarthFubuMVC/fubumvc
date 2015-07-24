@@ -5,7 +5,7 @@ using Raven.Client;
 using Raven.Client.Document;
 using Raven.Client.Embedded;
 
-namespace FubuPersistence.RavenDb
+namespace FubuMVC.RavenDb.RavenDb
 {
     public class RavenDbSettings
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using FubuCore.Dates;
 
-namespace FubuPersistence
+namespace FubuMVC.RavenDb
 {
     // All this means is that it has an Id, nothing else
     public interface IEntity

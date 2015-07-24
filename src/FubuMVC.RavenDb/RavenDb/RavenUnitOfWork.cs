@@ -1,8 +1,8 @@
 ﻿using System;
-using FubuPersistence.MultiTenancy;
+using FubuMVC.RavenDb.MultiTenancy;
 using StructureMap;
 
-namespace FubuPersistence.RavenDb
+namespace FubuMVC.RavenDb.RavenDb
 {
     public class RavenUnitOfWork : IUnitOfWork, IDisposable
     {

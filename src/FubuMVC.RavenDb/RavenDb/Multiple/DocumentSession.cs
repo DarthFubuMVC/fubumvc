@@ -7,7 +7,7 @@ using Raven.Client.Document;
 using Raven.Client.Indexes;
 using Raven.Client.Linq;
 
-namespace FubuPersistence.RavenDb.Multiple
+namespace FubuMVC.RavenDb.RavenDb.Multiple
 {
     public class DocumentSession<TSettings> : IDocumentSession<TSettings> where TSettings : RavenDbSettings
     {

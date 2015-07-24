@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Linq;
+using FubuMVC.RavenDb;
+using FubuMVC.RavenDb.Storage;
 using FubuMVC.Tests.TestSupport;
-using FubuPersistence.Storage;
 using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;

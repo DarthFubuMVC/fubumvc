@@ -1,6 +1,7 @@
 ﻿using System;
-using FubuPersistence.RavenDb;
-using FubuPersistence.RavenDb.Multiple;
+using FubuMVC.RavenDb;
+using FubuMVC.RavenDb.RavenDb;
+using FubuMVC.RavenDb.RavenDb.Multiple;
 using Shouldly;
 using NUnit.Framework;
 using Raven.Client;

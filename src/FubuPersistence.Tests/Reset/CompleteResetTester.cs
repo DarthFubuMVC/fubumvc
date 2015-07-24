@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using FubuCore;
 using FubuCore.Logging;
-using FubuPersistence.Reset;
+using FubuMVC.RavenDb.Reset;
 using NUnit.Framework;
 using Rhino.Mocks;
 using Shouldly;

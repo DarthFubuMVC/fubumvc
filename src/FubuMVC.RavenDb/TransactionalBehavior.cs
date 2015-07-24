@@ -2,7 +2,7 @@
 using FubuCore.Logging;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
-using FubuPersistence.RavenDb;
+using FubuMVC.RavenDb.RavenDb;
 
 namespace FubuMVC.RavenDb
 {

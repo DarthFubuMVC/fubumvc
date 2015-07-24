@@ -1,7 +1,8 @@
 ﻿using System;
 using FubuCore.Dates;
-using FubuPersistence.InMemory;
-using FubuPersistence.MultiTenancy;
+using FubuMVC.RavenDb;
+using FubuMVC.RavenDb.InMemory;
+using FubuMVC.RavenDb.MultiTenancy;
 using NUnit.Framework;
 using StructureMap;
 using Shouldly;

@@ -1,6 +1,5 @@
 ﻿using System;
 using FubuMVC.Core.Security.Authentication.Auditing;
-using FubuPersistence;
 
 namespace FubuMVC.RavenDb.Membership
 {

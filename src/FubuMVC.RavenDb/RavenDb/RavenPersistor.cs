@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Raven.Client;
 
-namespace FubuPersistence.RavenDb
+namespace FubuMVC.RavenDb.RavenDb
 {
     public class RavenPersistor : IPersistor
     {

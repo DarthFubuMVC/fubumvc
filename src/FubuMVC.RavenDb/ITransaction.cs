@@ -1,8 +1,8 @@
 ﻿using System;
 using FubuCore.Binding;
-using FubuPersistence.MultiTenancy;
+using FubuMVC.RavenDb.MultiTenancy;
 
-namespace FubuPersistence
+namespace FubuMVC.RavenDb
 {
     public interface ITransaction
     {
