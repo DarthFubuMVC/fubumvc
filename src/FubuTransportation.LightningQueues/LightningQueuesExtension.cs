@@ -5,7 +5,6 @@ using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Delayed;
 using FubuTransportation.LightningQueues.Diagnostics;
 using LightningQueues.Model;
-using StructureMap.Pipeline;
 
 namespace FubuTransportation.LightningQueues
 {

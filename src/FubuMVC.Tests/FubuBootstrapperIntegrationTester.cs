@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web.Routing;
 using FubuCore;
@@ -65,6 +66,8 @@ namespace FubuMVC.Tests
         [Test]
         public void should_have_registered_behaviors_in_the_container()
         {
+            Debug.WriteLine(container.WhatDoIHave());
+
             (container.GetAllInstances<IActionBehavior>().Count() >= 6).ShouldBeTrue();
         }
 

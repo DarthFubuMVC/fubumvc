@@ -4,6 +4,7 @@ using FubuCore.Binding;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
 using StructureMap;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.StructureMap
 {
@@ -30,7 +31,8 @@ namespace FubuMVC.Core.StructureMap
 
         public T Build<T>(ServiceArguments arguments)
         {
-            return Container.GetInstance<T>(arguments.ToExplicitArgs());
+            var explicitArguments = arguments.ToExplicitArgs();
+            return Container.GetInstance<T>(explicitArguments);
         }
 
         public T Get<T>()

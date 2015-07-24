@@ -76,8 +76,16 @@ namespace FubuMVC.Core
             }
             else if (TraceLevel == TraceLevel.Production)
             {
-                registry.Services(_ => _.AddService<ILogListener, ProductionModeTraceListener>());
+                registry.Services<ProductionDiagnosticsServices>();
             }
+        }
+    }
+
+    public class ProductionDiagnosticsServices : ServiceRegistry
+    {
+        public ProductionDiagnosticsServices()
+        {
+            AddService<ILogListener, ProductionModeTraceListener>();
         }
     }
 

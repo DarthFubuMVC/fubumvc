@@ -38,6 +38,8 @@ namespace FubuMVC.Core.Registration
 
         public readonly IList<ISettingsAlteration> Settings = new List<ISettingsAlteration>();
 
+        public readonly ServiceRegistry ApplicationServices = new ServiceRegistry();
+
         public ConfigGraph(Assembly applicationAssembly)
         {
             _applicationAssembly = applicationAssembly;
@@ -161,15 +163,14 @@ namespace FubuMVC.Core.Registration
 
         public void RegisterServices(IContainer container, BehaviorGraph graph)
         {
-            var settingServices = new ServiceRegistry();
-            graph.Settings.Register(settingServices);
+            graph.Settings.Register(ApplicationServices);
 
             container.Configure(_ =>
             {
-                _.AddRegistry(settingServices);
-
                 DefaultServices().Each(_.AddRegistry);
                 AllServiceRegistrations().Each(_.AddRegistry);
+
+                _.AddRegistry(ApplicationServices);
 
                 _.For<BehaviorGraph>().Use(graph);
 

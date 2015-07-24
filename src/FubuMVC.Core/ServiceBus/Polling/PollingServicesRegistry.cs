@@ -1,5 +1,4 @@
 ﻿using FubuMVC.Core.Registration;
-using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.ServiceBus.Polling
 {
@@ -13,7 +12,8 @@ namespace FubuMVC.Core.ServiceBus.Polling
 
             SetServiceIfNone<IPollingJobs, PollingJobs>();
 
-            SetServiceIfNone(typeof(PollingJobLatch), new ObjectInstance(new PollingJobLatch()));
+
+            For<PollingJobLatch>().Singleton();
         }
     }
 }

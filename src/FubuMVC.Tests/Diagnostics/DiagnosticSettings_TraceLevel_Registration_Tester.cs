@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using FubuCore.Binding.InMemory;
 using FubuCore.Logging;
@@ -10,6 +11,7 @@ using FubuMVC.Core.Registration;
 using Shouldly;
 using NUnit.Framework;
 using StructureMap;
+using TraceLevel = FubuMVC.Core.TraceLevel;
 
 namespace FubuMVC.Tests.Diagnostics
 {
@@ -68,6 +70,8 @@ namespace FubuMVC.Tests.Diagnostics
         {
             withTraceLevel(TraceLevel.Verbose, c =>
             {
+                Debug.WriteLine(c.WhatDoIHave());
+
                 c.ShouldHaveRegistration<ILogListener, RequestTraceListener>();
                 c.ShouldNotHaveRegistration<ILogListener, ProductionModeTraceListener>();
 

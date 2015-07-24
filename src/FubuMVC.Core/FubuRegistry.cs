@@ -106,9 +106,7 @@ namespace FubuMVC.Core
         /// </summary>
         public void Services(Action<ServiceRegistry> configure)
         {
-            var registry = new ServiceRegistry();
-            configure(registry);
-            _config.Add(registry);
+            configure(_config.ApplicationServices);
         }
 
         /// <summary>

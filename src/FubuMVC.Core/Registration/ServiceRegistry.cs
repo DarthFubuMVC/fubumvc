@@ -64,8 +64,7 @@ namespace FubuMVC.Core.Registration
         /// <returns></returns>
         public Instance AddService<TService, TImplementation>() where TImplementation : TService
         {
-            var implementationType = typeof (TImplementation);
-            return AddService<TService>(implementationType);
+            return For<TService>().Add<TImplementation>();
         }
 
         /// <summary>
@@ -140,10 +139,5 @@ namespace FubuMVC.Core.Registration
             For(type).ClearAll();
             For(type).Use(@default);
         }
-    }
-
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-    public class SingletonAttribute : Attribute
-    {
     }
 }

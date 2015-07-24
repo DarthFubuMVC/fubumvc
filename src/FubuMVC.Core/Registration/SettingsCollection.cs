@@ -151,7 +151,7 @@ namespace FubuMVC.Core.Registration
             void Register(ServiceRegistry registry);
         }
 
-        public class Registrar<T> : IRegistrar
+        public class Registrar<T> : IRegistrar where T : class
         {
             private readonly Task<T> _task;
 
@@ -162,7 +162,7 @@ namespace FubuMVC.Core.Registration
 
             public void Register(ServiceRegistry registry)
             {
-                registry.SetServiceIfNone(typeof (T), new ObjectInstance(_task.Result));
+                registry.For<T>().ClearAll().Use(_task.Result);
             }
         }
     }

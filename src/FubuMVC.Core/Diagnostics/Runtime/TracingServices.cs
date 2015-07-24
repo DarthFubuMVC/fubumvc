@@ -10,7 +10,7 @@ namespace FubuMVC.Core.Diagnostics.Runtime
         {
             // does no harm
             ReplaceService<IBindingHistory, BindingHistory>();
-            SetServiceIfNone<IRequestHistoryCache, RequestHistoryCache>();
+            SetServiceIfNone<IRequestHistoryCache, RequestHistoryCache>().Singleton();
 
             AddService<IRequestTraceObserver, RequestHistoryObserver>();
 

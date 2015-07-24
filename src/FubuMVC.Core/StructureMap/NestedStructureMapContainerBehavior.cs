@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using FubuCore.Binding;
 using FubuMVC.Core.Behaviors;
 using StructureMap;
@@ -31,6 +32,7 @@ namespace FubuMVC.Core.StructureMap
         {
             _nested = _container.GetNestedContainer();
             _nested.Configure(x => _arguments.EachService((type, value) => x.For(type).Use(value)));
+
             var behavior = _nested.GetInstance<IActionBehavior>(_behaviorId.ToString());
             return behavior;
         }

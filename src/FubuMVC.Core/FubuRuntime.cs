@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Routing;
+using FubuCore;
 using FubuCore.Descriptions;
 using FubuCore.Logging;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.StructureMap;
 using StructureMap;
 
 namespace FubuMVC.Core
@@ -27,6 +29,14 @@ namespace FubuMVC.Core
             _container = container;
 
             _container.Inject(this);
+
+            // TODO -- Temporary? AND THIS HAS TO BE LAZY BUILT PER NESTED CONTAINER
+            _container.Configure(_ =>
+            {
+                _.For<IServiceLocator>().Use<StructureMapServiceLocator>();
+                _.For<FubuRuntime>().Use(this);
+                _.For<IServiceFactory>().Use(factory);
+            });
 
             _routes = routes;
         }

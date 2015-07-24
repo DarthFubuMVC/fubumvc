@@ -16,7 +16,7 @@ namespace FubuMVC.Core.Localization
                 CurrentUICulture = new CultureInfo("en-US")
             });
 
-            SetServiceIfNone<ILocalizationCache, LocalizationCache>();
+            SetServiceIfNone<ILocalizationCache, LocalizationCache>().Singleton();
             SetServiceIfNone<ILocalizationMissingHandler, LocalizationMissingHandler>();
             SetServiceIfNone<ILocalizationProviderFactory, LocalizationProviderFactory>();
             SetServiceIfNone<ILocalizationStorage, PackageAwareXmlLocalizationStorage>();

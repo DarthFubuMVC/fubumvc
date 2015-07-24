@@ -45,7 +45,7 @@ namespace FubuMVC.Core.Registration
             SetServiceIfNone<IRequestData, FubuMvcRequestData>();
             SetServiceIfNone(typeof (AppReloaded), new ObjectInstance(new AppReloaded()));
 
-            SetServiceIfNone<IDiagnosticAssets, DiagnosticAssetsCache>();
+            SetServiceIfNone<IDiagnosticAssets, DiagnosticAssetsCache>().Singleton();
 
             var stringifier = new Stringifier();
             SetServiceIfNone(stringifier);
@@ -66,12 +66,12 @@ namespace FubuMVC.Core.Registration
             SetServiceIfNone<IContinuationProcessor, ContinuationProcessor>();
 
             SetServiceIfNone<IDisplayFormatter, DisplayFormatter>();
-            SetServiceIfNone<IChainResolver, ChainResolutionCache>();
+            SetServiceIfNone<IChainResolver, ChainResolutionCache>().Singleton();
 
             SetServiceIfNone<IEndpointService, EndpointService>();
 
 
-            SetServiceIfNone<ITypeDescriptorCache, TypeDescriptorCache>();
+            SetServiceIfNone<ITypeDescriptorCache, TypeDescriptorCache>().Singleton();
 
             SetServiceIfNone<ISessionState, SimpleSessionState>();
 
@@ -128,9 +128,9 @@ namespace FubuMVC.Core.Registration
 
             SetServiceIfNone<IVisualizer, Visualizer>();
 
-            SetServiceIfNone<IAssetFinder, AssetFinderCache>();
+            SetServiceIfNone<IAssetFinder, AssetFinderCache>().Singleton();
 
-            SetServiceIfNone<IClientMessageCache, ClientMessageCache>();
+            SetServiceIfNone<IClientMessageCache, ClientMessageCache>().Singleton();
 
             SetServiceIfNone<IJsonSerializer, NewtonSoftJsonSerializer>();
 
