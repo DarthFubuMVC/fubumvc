@@ -1,6 +1,7 @@
 ﻿using System;
 using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.StructureMap;
 using Shouldly;
 using NUnit.Framework;
@@ -20,7 +21,7 @@ namespace FubuMVC.Tests.StructureMap
 
             using (var runtime = FubuApplication.For(registry).Bootstrap())
             {
-                var facility = runtime.Facility.As<StructureMapContainerFacility>();
+                var facility = runtime.Container.GetInstance<IServiceFactory>().As<StructureMapServiceFactory>();
 
                 facility.Get<ThingUser>().Thing.ShouldBeOfType<AThing>();
 

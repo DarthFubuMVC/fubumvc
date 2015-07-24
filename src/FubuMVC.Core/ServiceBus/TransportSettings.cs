@@ -67,7 +67,7 @@ namespace FubuMVC.Core.ServiceBus
 
                 registry.Services(x =>
                 {
-                    x.ClearAll<ITransport>();
+                    x.For<ITransport>().ClearAll();
                     x.AddService<ITransport, InMemoryTransport>();
 
                     SettingTypes.Each(settingType =>

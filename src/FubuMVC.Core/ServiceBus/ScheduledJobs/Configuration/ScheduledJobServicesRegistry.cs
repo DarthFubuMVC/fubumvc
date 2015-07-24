@@ -3,7 +3,6 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.ServiceBus.Monitoring;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Execution;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
-using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.ServiceBus.ScheduledJobs.Configuration
 {
@@ -11,8 +10,8 @@ namespace FubuMVC.Core.ServiceBus.ScheduledJobs.Configuration
     {
         public ScheduledJobServicesRegistry()
         {
-            SetServiceIfNone<IScheduledJobController, ScheduledJobController>(x => x.SetLifecycleTo<SingletonLifecycle>());
-            SetServiceIfNone<IJobTimer, JobTimer>(x => x.SetLifecycleTo<SingletonLifecycle>());
+            SetServiceIfNone<IScheduledJobController, ScheduledJobController>().Singleton();
+            SetServiceIfNone<IJobTimer, JobTimer>().Singleton();
 
             SetServiceIfNone<ISchedulePersistence>(new InMemorySchedulePersistence());
 

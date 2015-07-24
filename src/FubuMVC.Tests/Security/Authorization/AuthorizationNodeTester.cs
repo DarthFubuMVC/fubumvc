@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
 using FubuCore;
+using FubuMVC.Core;
+using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
@@ -39,10 +41,13 @@ namespace FubuMVC.Tests.Security.Authorization
 
         private AuthorizationBehavior toBehavior(AuthorizationNode node)
         {
-            var container = StructureMapContainerFacility.GetBasicFubuContainer();
-            return
-                container.GetInstance<AuthorizationBehavior>(
-                    node.As<IContainerModel>().ToInstance());
+            AuthorizationBehavior behavior = null;
+            using (var runtime = FubuApplication.DefaultPolicies().Bootstrap())
+            {
+                behavior = (AuthorizationBehavior) runtime.Container.GetInstance<IActionBehavior>(node.As<IContainerModel>().ToInstance());
+            }
+
+            return behavior;
         }
 
         [Test]

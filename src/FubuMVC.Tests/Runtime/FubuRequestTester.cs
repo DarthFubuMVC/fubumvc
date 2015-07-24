@@ -75,40 +75,6 @@ namespace FubuMVC.Tests.Runtime
         }
     }
 
-    [TestFixture]
-    public class when_fetching_a_type_that_has_an_infinite_recursion
-    {
-        private IFubuRequest _fubuRequest;
-
-        [SetUp]
-        public void beforeEach()
-        {
-            var container = StructureMapContainerFacility.GetBasicFubuContainer();
-            _fubuRequest = container.GetInstance<IFubuRequest>();
-        }
-
-        public class BinderKiller
-        {
-            public string Name { get; set; }
-            public BinderAccomplice Friend { get; set; }
-        }
-
-        public class BinderAccomplice
-        {
-            public BinderBystander Unlucky { get; set; }
-        }
-
-        public class BinderBystander
-        {
-            public BinderNarc Enemy { get; set; }
-        }
-
-        public class BinderNarc
-        {
-            public BinderAccomplice Guilty { get; set; }
-        }
-    }
-
 
     [TestFixture]
     public class when_finding_something_by_a_base_class : InteractionContext<FubuRequest>

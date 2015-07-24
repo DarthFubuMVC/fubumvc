@@ -620,7 +620,6 @@
     <Compile Include="Runtime\AspNetPassthroughConverterTester.cs" />
     <Compile Include="Runtime\BasicSessionTester.cs" />
     <Compile Include="Runtime\BehaviorInvokerTester.cs" />
-    <Compile Include="Runtime\FubuTupleBindingIntegrationTester.cs" />
     <Compile Include="Runtime\HeaderValueAttributeTester.cs" />
     <Compile Include="Runtime\must_be_descriptions_on_important_things.cs" />
     <Compile Include="Runtime\OutputWriterTester.cs" />
@@ -634,13 +633,11 @@
     <Compile Include="Security\Authorization\PrincipalRolesTester.cs" />
     <Compile Include="Security\Authorization\AuthorizationPolicyExecutorTester.cs" />
     <Compile Include="SpecificationExtensions.cs" />
-    <Compile Include="StructureMap\ContainerFacilitySource.cs" />
     <Compile Include="StructureMap\Internals\AppSettingProviderRegistrySmokeTester.cs" />
     <Compile Include="StructureMap\Internals\StructureMapServiceLocatorTester.cs" />
     <Compile Include="StructureMap\Internals\StubActivator.cs" />
     <Compile Include="StructureMap\Internals\TestController.cs" />
     <Compile Include="StructureMap\Internals\UsesTheIsSingletonPropertyTester.cs" />
-    <Compile Include="StructureMap\IServiceFactory_Compliance.cs" />
     <Compile Include="StructureMap\Settings\SettingIntegrationTester.cs" />
     <Compile Include="StructureMap\using_child_containers_for_isolated_overrides.cs" />
     <Compile Include="TagAttributeTester.cs" />
@@ -666,7 +663,8 @@
     <Compile Include="FubuBootstrapperIntegrationTester.cs" />
     <Compile Include="FubuRegistryTester.cs" />
     <Compile Include="HtmlGenerationTestExtensions.cs" />
-    <Compile Include="Registration\BehaviorGraphTester.cs"></Compile>
+    <Compile Include="Registration\BehaviorGraphTester.cs">
+    </Compile>
     <Compile Include="Registration\Conventions\ActionSourceTester.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConventionTester.cs" />
     <Compile Include="Registration\Conventions\CustomConventionIntegratedTester.cs" />

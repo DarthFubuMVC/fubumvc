@@ -17,7 +17,7 @@ namespace FubuMVC.Core.Registration
         {
             matchedTypes
                 .Where(t => _pluginType.IsAssignableFrom(t) && t.IsClass && !t.IsAbstract)
-                .Each(t => services.FillType(_pluginType, t));
+                .Each(t => services.AddType(_pluginType, t));
         }
     }
 }

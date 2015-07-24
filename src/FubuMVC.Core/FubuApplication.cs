@@ -11,7 +11,6 @@ using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Reflection;
 using FubuCore.Util;
-using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
@@ -19,7 +18,6 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Services;
 using FubuMVC.Core.StructureMap;
 using StructureMap;
-using StructureMap.Pipeline;
 
 namespace FubuMVC.Core
 {
@@ -122,11 +120,12 @@ namespace FubuMVC.Core
             var perfTimer = diagnostics.Timer;
             perfTimer.Start("FubuMVC Application Bootstrapping");
 
-            var packageAssemblies = perfTimer.Record("Searching for Assemblies marked with [FubuModule]", () => findModuleAssemblies(diagnostics).Where(x => x.HasAttribute<FubuModuleAttribute>()).ToArray());
+            var packageAssemblies = perfTimer.Record("Searching for Assemblies marked with [FubuModule]",
+                () => findModuleAssemblies(diagnostics).Where(x => x.HasAttribute<FubuModuleAttribute>()).ToArray());
 
             // TODO -- going to remove this
-            var containerFacility = new StructureMapContainerFacility(_registry.Value.ToContainer());
-            var runtime = bootstrapRuntime(perfTimer, diagnostics, packageAssemblies, containerFacility);
+            var container = _registry.Value.ToContainer();
+            var runtime = bootstrapRuntime(perfTimer, diagnostics, packageAssemblies, container);
 
             var activators = runtime.Factory.GetAll<IActivator>();
             diagnostics.LogExecutionOnEachInParallel(activators, (activator, log) => activator.Activate(log));
@@ -162,29 +161,29 @@ namespace FubuMVC.Core
                 }
                 catch (Exception)
                 {
-                    diagnostics.LogFor(typeof(FubuApplication)).Trace("Unable to load assembly from file " + file);
+                    diagnostics.LogFor(typeof (FubuApplication)).Trace("Unable to load assembly from file " + file);
                 }
 
                 if (assembly != null) yield return assembly;
             }
-
         }
 
 
         private FubuRuntime bootstrapRuntime(IPerfTimer perfTimer, IActivationDiagnostics diagnostics,
-            IEnumerable<Assembly> packageAssemblies, IContainerFacility containerFacility)
+            IEnumerable<Assembly> packageAssemblies, IContainer container)
         {
-            perfTimer.Record("Applying IFubuRegistryExtension's", () => applyFubuExtensionsFromPackages(diagnostics, packageAssemblies));
+            perfTimer.Record("Applying IFubuRegistryExtension's",
+                () => applyFubuExtensionsFromPackages(diagnostics, packageAssemblies));
 
             var graph = perfTimer.Record("Building the BehaviorGraph",
                 () => buildBehaviorGraph(perfTimer, packageAssemblies, diagnostics));
 
             perfTimer.Record("Registering services into the IoC Container",
-                () => bakeBehaviorGraphIntoContainer(graph, containerFacility));
+                () => _registry.Value.Config.RegisterServices(container, graph));
 
             // factory HAS to be spun up here.
             var factory = perfTimer.Record("Build the IServiceFactory",
-                () => containerFacility.BuildFactory(graph));
+                () => new StructureMapServiceFactory(container));
 
             var routeTask = perfTimer.RecordTask("Building Routes", () =>
             {
@@ -194,10 +193,8 @@ namespace FubuMVC.Core
                 return routes;
             });
 
-            var runtime = new FubuRuntime(factory, containerFacility, routeTask.Result);
 
-            containerFacility.Register(typeof (FubuRuntime), new ObjectInstance(runtime));
-            return runtime;
+            return new FubuRuntime(factory, container, routeTask.Result);
         }
 
         public static void SetupNamingStrategyForHttpHeaders()
@@ -205,13 +202,8 @@ namespace FubuMVC.Core
             BindingContext.AddNamingStrategy(HttpRequestHeaders.HeaderDictionaryNameForProperty);
         }
 
-        private void bakeBehaviorGraphIntoContainer(BehaviorGraph graph, IContainerFacility containerFacility)
-        {
-            graph.As<IRegisterable>().Register((serviceType, def) => containerFacility.Register(serviceType, def));
-            _registry.Value.Config.RegisterServices(containerFacility, graph);
-        }
-
-        private BehaviorGraph buildBehaviorGraph(IPerfTimer timer, IEnumerable<Assembly> assemblies, IActivationDiagnostics diagnostics)
+        private BehaviorGraph buildBehaviorGraph(IPerfTimer timer, IEnumerable<Assembly> assemblies,
+            IActivationDiagnostics diagnostics)
         {
             return BehaviorGraphBuilder.Build(_registry.Value, timer, assemblies, diagnostics);
         }
@@ -226,7 +218,8 @@ namespace FubuMVC.Core
             return routes;
         }
 
-        private void applyFubuExtensionsFromPackages(IActivationDiagnostics diagnostics, IEnumerable<Assembly> packageAssemblies)
+        private void applyFubuExtensionsFromPackages(IActivationDiagnostics diagnostics,
+            IEnumerable<Assembly> packageAssemblies)
         {
             // THIS IS NEW, ONLY ASSEMBLIES MARKED AS [FubuModule] will be scanned
             var importers = packageAssemblies.Where(a => a.HasAttribute<FubuModuleAttribute>()).Select(
@@ -291,17 +284,19 @@ namespace FubuMVC.Core
             var trace = new StackTrace(false);
 
             var thisAssembly = Assembly.GetExecutingAssembly().GetName().Name;
-            var fubuCore = typeof(IObjectResolver).Assembly.GetName().Name;
-            var bottles = typeof(IActivator).Assembly.GetName().Name;
+            var fubuCore = typeof (IObjectResolver).Assembly.GetName().Name;
+            var bottles = typeof (IActivator).Assembly.GetName().Name;
 
             Assembly callingAssembly = null;
-            for (int i = 0; i < trace.FrameCount; i++)
+            for (var i = 0; i < trace.FrameCount; i++)
             {
-                StackFrame frame = trace.GetFrame(i);
-                Assembly assembly = frame.GetMethod().DeclaringType.Assembly;
+                var frame = trace.GetFrame(i);
+                var assembly = frame.GetMethod().DeclaringType.Assembly;
                 var name = assembly.GetName().Name;
 
-                if (name != thisAssembly && name != fubuCore && name != bottles && name != "mscorlib" && name != "FubuMVC.Katana" && name != "Serenity" && name != "System.Core" && name != "FubuTransportation")
+                if (name != thisAssembly && name != fubuCore && name != bottles && name != "mscorlib" &&
+                    name != "FubuMVC.Katana" && name != "Serenity" && name != "System.Core" &&
+                    name != "FubuTransportation")
                 {
                     callingAssembly = assembly;
                     break;
@@ -310,7 +305,7 @@ namespace FubuMVC.Core
             return callingAssembly;
         }
 
-        public readonly static Cache<string, string> Properties = new Cache<string, string>(key => null); 
+        public static readonly Cache<string, string> Properties = new Cache<string, string>(key => null);
     }
 
     public static class DiagnosticsExtensions
@@ -344,7 +339,8 @@ namespace FubuMVC.Core
                     {
                         writer.WriteLine(o.ToString());
                         writer.WriteLine(log.FullTraceText());
-                        writer.WriteLine("------------------------------------------------------------------------------------------------");
+                        writer.WriteLine(
+                            "------------------------------------------------------------------------------------------------");
                     }
                 });
 

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using FubuCore;
+using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
@@ -23,7 +24,7 @@ namespace FubuMVC.Core.Registration
     /// <summary>
     ///   The complete behavior model of a fubu application
     /// </summary>
-    public class BehaviorGraph : IRegisterable, IChainImporter
+    public class BehaviorGraph : IChainImporter
     {
         private readonly List<BehaviorChain> _behaviors = new List<BehaviorChain>();
 
@@ -114,18 +115,17 @@ namespace FubuMVC.Core.Registration
 
         #endregion
 
-        #region IRegisterable Members
 
-        void IRegisterable.Register(Action<Type, Instance> action)
+
+        internal Registry ToRegistry()
         {
-            _behaviors.OfType<IRegisterable>().Each(chain => chain.Register(action));
+            var registry = new Registry();
+            _behaviors.OfType<IContainerModel>().Each(x => registry.For<IActionBehavior>().AddInstance(x.ToInstance()));
+            registry.For<BehaviorGraph>().Use(this);
 
-            action(typeof (BehaviorGraph), new ObjectInstance(this));
-            
+            return registry;
         }
 
-
-        #endregion
 
         public static BehaviorGraph BuildFrom(FubuRegistry registry, IPerfTimer timer = null)
         {
@@ -376,6 +376,8 @@ namespace FubuMVC.Core.Registration
         {
             return BuildFrom(new FubuRegistry());
         }
+
+
     }
 
 

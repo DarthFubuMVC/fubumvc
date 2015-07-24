@@ -25,7 +25,7 @@ namespace FubuTransportation.LightningQueues
         {
             AddService<ITransport, LightningQueuesTransport>();
             AddService<IQueueMessageRetrieval, QueueMessageRetrieval>(); // For diagnostics
-            SetServiceIfNone<IPersistentQueues, PersistentQueues>(x => x.SetLifecycleTo<SingletonLifecycle>());
+            SetServiceIfNone<IPersistentQueues, PersistentQueues>().Singleton();
             SetServiceIfNone<IDelayedMessageCache<MessageId>, DelayedMessageCache<MessageId>>();
         }
     }

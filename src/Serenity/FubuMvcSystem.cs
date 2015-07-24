@@ -257,8 +257,12 @@ namespace Serenity
                 _application = _hosting.Start(_settings, _runtime, browserLifecycle);
                 _applicationAlterations.ToArray().Each(x => x(_application));
 
-                _runtime.Facility.Register(typeof (IApplicationUnderTest), new ObjectInstance(_application));
-                _runtime.Facility.Register(typeof (IRemoteSubsystems), new ObjectInstance(this));
+                _runtime.Container.Configure(_ =>
+                {
+                    _.For<IApplicationUnderTest>().Use(_application);
+                    _.For<IRemoteSubsystems>().Use(this);
+                });
+
             });
         }
 

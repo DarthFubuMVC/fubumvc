@@ -18,7 +18,7 @@ namespace FubuMVC.Core.Registration
         {
             matchedTypes
                 .Where(t => t.Closes(_openType) && t.IsClass && !t.IsAbstract)
-                .Each(t => services.FillType(_openType, t));
+                .Each(t => services.AddType(_openType, t));
         }
     }
 }

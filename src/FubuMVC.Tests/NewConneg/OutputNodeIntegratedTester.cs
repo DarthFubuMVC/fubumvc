@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Http;
@@ -9,16 +10,12 @@ using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.Runtime.Formatters;
-using FubuMVC.Core.StructureMap;
 using NUnit.Framework;
 using Rhino.Mocks;
-using OutputNode = FubuMVC.Core.Resources.Conneg.OutputNode;
 using Shouldly;
-using System.Linq;
 
 namespace FubuMVC.Tests.NewConneg
 {
-
     [TestFixture]
     public class OutputNodeIntegratedTester
     {
@@ -36,16 +33,17 @@ namespace FubuMVC.Tests.NewConneg
             node.Add(new XmlFormatter());
             node.Add(new FakeAddressWriter(), new SomeConditional());
 
-            var container = StructureMapContainerFacility.GetBasicFubuContainer();
-            container.Configure(x =>
+            using (var runtime = FubuApplication.DefaultPolicies().Bootstrap())
             {
-                // Need a stand in value
-                x.For<IHttpRequest>().Use(MockRepository.GenerateMock<IHttpRequest>());
-            });
+                runtime.Container.Configure(x =>
+                {
+                    // Need a stand in value
+                    x.For<IHttpRequest>().Use(MockRepository.GenerateMock<IHttpRequest>());
+                });
 
-            var instance = node.As<IContainerModel>().ToInstance();
-
-            theInputBehavior = container.GetInstance<OutputBehavior<Address>>(instance);
+                theInputBehavior =
+                    runtime.Container.GetInstance<OutputBehavior<Address>>(node.As<IContainerModel>().ToInstance());
+            }
         }
 
         [Test]
@@ -60,16 +58,14 @@ namespace FubuMVC.Tests.NewConneg
             theInputBehavior.Media.First()
                 .ShouldBeOfType<Media<Address>>()
                 .Writer.ShouldBeOfType<FormatterWriter<Address>>();
-
         }
 
         [Test]
         public void second_media_has_the_xml_formatter()
         {
             theInputBehavior.Media.ElementAt(1)
-               .ShouldBeOfType<Media<Address>>()
-               .Writer.ShouldBeOfType<FormatterWriter<Address>>();
-
+                .ShouldBeOfType<Media<Address>>()
+                .Writer.ShouldBeOfType<FormatterWriter<Address>>();
         }
 
         [Test]

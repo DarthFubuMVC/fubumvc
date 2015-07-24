@@ -15,9 +15,9 @@ namespace FubuMVC.Core.StructureMap.Diagnostics
 
         public StructureMapFubuDiagnostics(IServiceFactory facility)
         {
-            if (facility is StructureMapContainerFacility)
+            if (facility is StructureMapServiceFactory)
             {
-                _container = facility.As<StructureMapContainerFacility>().Container;
+                _container = facility.As<StructureMapServiceFactory>().Container;
             }
             else
             {

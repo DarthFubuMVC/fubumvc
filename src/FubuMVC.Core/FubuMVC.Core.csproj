@@ -617,7 +617,6 @@
     <Compile Include="Registration\IAccessorRulesRegistration.cs" />
     <Compile Include="Registration\IChainSource.cs" />
     <Compile Include="Registration\IFeatureSettings.cs" />
-    <Compile Include="Registration\IRegisterable.cs" />
     <Compile Include="Registration\ISettingsAlteration.cs" />
     <Compile Include="Registration\Nodes\BehaviorChainExtensions.cs" />
     <Compile Include="Registration\Nodes\IModifiesChain.cs" />
@@ -861,7 +860,6 @@
     <Compile Include="Registration\Nodes\IContainerModel.cs" />
     <Compile Include="Registration\Querying\ChainSearch.cs" />
     <Compile Include="Registration\Nodes\AsyncContinueWithNode.cs" />
-    <Compile Include="Registration\ServiceGraph.cs" />
     <Compile Include="Registration\SingleTypeActionSource.cs" />
     <Compile Include="Registration\TypeRegistrationExtensions.cs" />
     <Compile Include="Runtime\AspNetPassthroughConverter.cs" />
@@ -912,7 +910,7 @@
     <Compile Include="StructureMap\NestedStructureMapContainerBehavior.cs" />
     <Compile Include="StructureMap\SettingsScanner.cs" />
     <Compile Include="StructureMap\Settings\SettingPolicy.cs" />
-    <Compile Include="StructureMap\StructureMapContainerFacility.cs" />
+    <Compile Include="StructureMap\StructureMapServiceFactory.cs" />
     <Compile Include="StructureMap\StructureMapFubuRegistry.cs" />
     <Compile Include="StructureMap\StructureMapServiceLocator.cs" />
     <Compile Include="Attributes\TagAttribute.cs" />
@@ -989,7 +987,6 @@
     <Compile Include="Behaviors\OneInOneOutActionInvoker.cs" />
     <Compile Include="Behaviors\OneInZeroOutActionInvoker.cs" />
     <Compile Include="Behaviors\ZeroInOneOutActionInvoker.cs" />
-    <Compile Include="Bootstrapping\IContainerFacility.cs" />
     <Compile Include="Registration\Conventions\IUrlPolicy.cs" />
     <Compile Include="Registration\DSL\TypeMethodPolicy.cs" />
     <Compile Include="Registration\IActionSource.cs" />

@@ -23,7 +23,7 @@ namespace FubuMVC.Core.Registration.Nodes
     ///   authorization rules
     ///   system
     /// </summary>
-    public class BehaviorChain : Chain<BehaviorNode, BehaviorChain>, IRegisterable, IContainerModel
+    public class BehaviorChain : Chain<BehaviorNode, BehaviorChain>, IContainerModel
     {
         public const string NoTracing = "NoTracing";
 
@@ -177,20 +177,6 @@ namespace FubuMVC.Core.Registration.Nodes
             return Top.As<IContainerModel>().ToInstance();
         }
 
-        void IRegisterable.Register(Action<Type, Instance> callback)
-        {
-            if (Top == null)
-            {
-                Console.WriteLine(
-                    "Some how or another me, a fully formed BehaviorChain, has no BehaviorNode's, so I'm a just gonna punt on registering services");
-                return;
-            }
-
-            var instance = this.As<IContainerModel>().ToInstance();
-
-
-            callback(typeof (IActionBehavior), instance);
-        }
 
         /// <summary>
         ///   Tests whether or not this chain has any output nodes

@@ -500,7 +500,7 @@ namespace FubuMVC.Core.ServiceBus.Configuration
                 _receiving = receiving;
 
                 parent.Services(r => {
-                    r.FillType(typeof(ISubscriptionRequirement), typeof(SubscriptionRequirements<T>));
+                    r.AddType(typeof(ISubscriptionRequirement), typeof(SubscriptionRequirements<T>));
                 });
             }
 

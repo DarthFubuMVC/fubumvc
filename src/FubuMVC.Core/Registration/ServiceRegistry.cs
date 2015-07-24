@@ -1,42 +1,22 @@
 using System;
-using System.Collections.Generic;
-using FubuCore;
 using FubuCore.Reflection;
+using StructureMap.Configuration.DSL;
 using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Registration
 {
-    public interface IServiceRegistration
+    public class ServiceRegistry : Registry
     {
-        void Apply(ServiceGraph services);
-    }
-
-
-    public class ServiceRegistry : IServiceRegistration
-    {
-        private readonly IList<Action<ServiceGraph>> _alterations = new List<Action<ServiceGraph>>();
-
-        // Yes, I know this makes Dru go haywire, but he can come back in and
-        // make the code uglier just to satisfy his own tastes
-        private Action<ServiceGraph> alter
-        {
-            set { _alterations.Add(value); }
-        }
-
-        void IServiceRegistration.Apply(ServiceGraph services)
-        {
-            _alterations.Each(x => x(services));
-        }
-
         /// <summary>
         /// Sets the instanceault implementation of a service if there is no
         /// previous registration
         /// </summary>
         /// <typeparam name="TService"></typeparam>
         /// <typeparam name="TImplementation"></typeparam>
-        public void SetServiceIfNone<TService, TImplementation>() where TImplementation : TService
+        public SmartInstance<TImplementation, TService> SetServiceIfNone<TService, TImplementation>()
+            where TImplementation : TService
         {
-            fill(typeof (TService), new ConfiguredInstance(typeof (TImplementation)));
+            return For<TService>().UseIfNone<TImplementation>();
         }
 
 
@@ -46,22 +26,9 @@ namespace FubuMVC.Core.Registration
         /// </summary>
         public void SetServiceIfNone(Type type, Instance instance)
         {
-            fill(type, instance);
+            For(type).Configure(x => x.Fallback = instance);
         }
 
-        /// <summary>
-        /// Sets the instanceault implementation of a service if there is no
-        /// previous registration, and allows you to customize the Instance created
-        /// </summary>
-        /// <typeparam name="TService"></typeparam>
-        /// <typeparam name="TImplementation"></typeparam>
-        public void SetServiceIfNone<TService, TImplementation>(Action<Instance> configure) where TImplementation : TService
-        {
-            var instance = new ConfiguredInstance(typeof (TImplementation));
-            configure(instance);
-
-            fill(typeof(TService), instance);
-        }
 
         /// <summary>
         /// Sets the instanceault implementation of a service if there is no
@@ -69,9 +36,9 @@ namespace FubuMVC.Core.Registration
         /// </summary>
         /// <typeparam name="TService"></typeparam>
         /// <param name="value"></param>
-        public void SetServiceIfNone<TService>(TService value)
+        public ObjectInstance SetServiceIfNone<TService>(TService value)
         {
-            fill(typeof (TService), new ObjectInstance(value));
+            return For<TService>().UseIfNone(value);
         }
 
         /// <summary>
@@ -83,9 +50,9 @@ namespace FubuMVC.Core.Registration
         /// <returns></returns>
         public Instance SetServiceIfNone(Type interfaceType, Type concreteType)
         {
-            var Instance = new ConfiguredInstance(concreteType);
-            fill(interfaceType, Instance);
-            return Instance;
+            var instance = new ConfiguredInstance(concreteType);
+            For(interfaceType).Configure(x => x.Fallback = instance);
+            return instance;
         }
 
         /// <summary>
@@ -110,11 +77,11 @@ namespace FubuMVC.Core.Registration
         /// <returns></returns>
         public Instance AddService<TService>(Type implementationType)
         {
-            var Instance = new ConfiguredInstance(implementationType);
+            var instance = new ConfiguredInstance(implementationType);
 
-            alter = x => x.AddService(typeof (TService), Instance);
+            For<TService>().AddInstance(instance);
 
-            return Instance;
+            return instance;
         }
 
         /// <summary>
@@ -123,11 +90,10 @@ namespace FubuMVC.Core.Registration
         /// </summary>
         /// <typeparam name="TService"></typeparam>
         /// <typeparam name="TImplementation"></typeparam>
-        public void ReplaceService<TService, TImplementation>() where TImplementation : TService
+        public SmartInstance<TImplementation, TService> ReplaceService<TService, TImplementation>()
+            where TImplementation : TService
         {
-            alter = x => x.Clear(typeof (TService));
-
-            AddService<TService, TImplementation>();
+            return For<TService>().ClearAll().Use<TImplementation>();
         }
 
         /// <summary>
@@ -136,10 +102,9 @@ namespace FubuMVC.Core.Registration
         /// </summary>
         /// <typeparam name="TService"></typeparam>
         /// <param name="value"></param>
-        public void ReplaceService<TService>(TService value)
+        public ObjectInstance<TService, TService> ReplaceService<TService>(TService value) where TService : class
         {
-            alter = x => x.Clear(typeof (TService));
-            AddService(value);
+            return For<TService>().ClearAll().Use(value);
         }
 
         /// <summary>
@@ -148,48 +113,20 @@ namespace FubuMVC.Core.Registration
         /// </summary>
         /// <typeparam name="TService"></typeparam>
         /// <param name="value"></param>
-        public void AddService<TService>(TService value)
+        public void AddService<TService>(TService value) where TService : class
         {
-            var instance = new ObjectInstance(value);
-
-            alter = x => x.AddService(typeof (TService), instance);
+            For<TService>().Add(value);
         }
 
         /// <summary>
         /// Removes any registrations for type T
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public void AddService(Type type, Instance Instance)
+        public void AddService(Type type, Instance instance)
         {
-            alter = x => x.AddService(type, Instance);
+            For(type).Add(instance);
         }
 
-        /// <summary>
-        /// Registers the concreteType against the interfaceType
-        /// if the registration does not already include the concreteType 
-        /// </summary>
-        /// <param name="interfaceType"></param>
-        /// <param name="concreteType"></param>
-        public void ClearAll<T>()
-        {
-            alter = x => x.Clear(typeof (T));
-        }
-
-        /// <summary>
-        /// Registers an *additional* implementation of a service.  Actual behavior varies by actual
-        /// IoC container
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="Instance"></param>
-        public void FillType(Type interfaceType, Type concreteType)
-        {
-            alter = x => x.FillType(interfaceType, concreteType);
-        }
-
-        private void fill(Type serviceType, Instance instance)
-        {
-            alter = x => x.SetServiceIfNone(serviceType, instance);
-        }
 
         public static bool ShouldBeSingleton(Type type)
         {
@@ -198,13 +135,10 @@ namespace FubuMVC.Core.Registration
             return type.Name.EndsWith("Cache") || type.HasAttribute<SingletonAttribute>();
         }
 
-        public void ReplaceService(Type type, Instance @instanceault)
+        public void ReplaceService(Type type, Instance @default)
         {
-            alter = x =>
-            {
-                x.Clear(type);
-                x.AddService(type, @instanceault);
-            };
+            For(type).ClearAll();
+            For(type).Use(@default);
         }
     }
 

@@ -88,7 +88,7 @@ namespace FubuMVC.Core.Registration
             SetServiceIfNone<ILogger, Logger>();
             AddService<ILogModifier, LogRecordModifier>();
 
-            SetServiceIfNone<IClock, Clock>(x => x.SetLifecycleTo<SingletonLifecycle>());
+            SetServiceIfNone<IClock, Clock>().Singleton();
             SetServiceIfNone<ITimeZoneContext, MachineTimeZoneContext>();
             SetServiceIfNone<ISystemTime, SystemTime>();
 

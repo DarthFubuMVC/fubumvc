@@ -2,14 +2,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using FubuCore;
-using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Services;
 using FubuMVC.Core.Security.Authorization;
+using StructureMap;
 
 namespace FubuMVC.Core.Registration
 {
@@ -17,7 +16,7 @@ namespace FubuMVC.Core.Registration
     {
         public readonly ConfigurationActionSet Policies = new ConfigurationActionSet();
         public readonly ConfigurationActionSet Explicits = new ConfigurationActionSet();
-        
+
         public readonly ConfigurationActionSet Reordering = new ConfigurationActionSet();
     }
 
@@ -158,27 +157,24 @@ namespace FubuMVC.Core.Registration
                 CategoryMustBeAfter = BehaviorCategory.Authorization,
                 CategoryMustBeBefore = BehaviorCategory.Authentication
             };
-
-
         }
 
-        public void RegisterServices(IContainerFacility container, BehaviorGraph graph)
+        public void RegisterServices(IContainer container, BehaviorGraph graph)
         {
-            var services = new ServiceGraph();
-
             var settingServices = new ServiceRegistry();
             graph.Settings.Register(settingServices);
 
-            settingServices.As<IServiceRegistration>().Apply(services);
+            container.Configure(_ =>
+            {
+                _.AddRegistry(settingServices);
 
-            AllServiceRegistrations().Union(DefaultServices())
-                .OfType<IServiceRegistration>()
-                .Each(x => x.Apply(services));
+                DefaultServices().Each(_.AddRegistry);
+                AllServiceRegistrations().Each(_.AddRegistry);
 
-            services.AddService(this);
+                _.For<BehaviorGraph>().Use(graph);
 
-            services.Each((serviceType, def) => container.Register(serviceType, def));
-
+                _.AddRegistry(graph.ToRegistry());
+            });
         }
 
         public static IEnumerable<ServiceRegistry> DefaultServices()
@@ -194,17 +190,15 @@ namespace FubuMVC.Core.Registration
             // Local policies will ONLY apply to chains built by this ConfigGraph,
             // and not to chains that are built by imports
 
-            var imports = UniqueImports().Select(x => {
-                return Task.Factory.StartNew(() => {
-                    return x.BuildChains(graph, timer);
-                });
-            }).ToArray();
+            var imports =
+                UniqueImports()
+                    .Select(x => { return Task.Factory.StartNew(() => { return x.BuildChains(graph, timer); }); })
+                    .ToArray();
 
-            var chainSources = Sources.Select(source => {
-                return Task.Factory.StartNew(() => {
-                    return source.BuildChains(graph, timer);
-                });
-            }).ToArray();
+            var chainSources =
+                Sources.Select(
+                    source => { return Task.Factory.StartNew(() => { return source.BuildChains(graph, timer); }); })
+                    .ToArray();
 
             Task.WaitAll(chainSources);
 
@@ -217,8 +211,6 @@ namespace FubuMVC.Core.Registration
             Task.WaitAll(imports);
 
             imports.Each(x => graph.AddChains(x.Result));
-
-
         }
 
         public void ImportGlobals(ConfigGraph config)

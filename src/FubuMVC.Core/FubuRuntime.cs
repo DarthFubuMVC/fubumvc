@@ -2,14 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Routing;
-using FubuCore;
 using FubuCore.Descriptions;
 using FubuCore.Logging;
-using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.StructureMap;
 using StructureMap;
 
 namespace FubuMVC.Core
@@ -19,35 +16,29 @@ namespace FubuMVC.Core
     /// </summary>
     public class FubuRuntime : IDisposable
     {
-        private readonly IContainerFacility _facility;
         private readonly IServiceFactory _factory;
+        private readonly IContainer _container;
         private readonly IList<RouteBase> _routes;
         private bool _disposed;
 
-        public FubuRuntime(IServiceFactory factory, IContainerFacility facility, IList<RouteBase> routes)
+        public FubuRuntime(IServiceFactory factory, IContainer container, IList<RouteBase> routes)
         {
             _factory = factory;
-            _facility = facility;
+            _container = container;
+
+            _container.Inject(this);
+
             _routes = routes;
         }
 
         public IContainer Container
         {
-            get
-            {
-                // TODO -- de-hackify this crap below when IContainerFacility is gone
-                return _facility.As<StructureMapContainerFacility>().Container;
-            }
+            get { return _container; }
         }
 
         public IServiceFactory Factory
         {
             get { return _factory; }
-        }
-
-        public IContainerFacility Facility
-        {
-            get { return _facility; }
         }
 
         public IList<RouteBase> Routes
@@ -97,7 +88,7 @@ namespace FubuMVC.Core
                 }
             });
 
-            Facility.Shutdown();
+            Container.Dispose();
         }
 
         ~FubuRuntime()
