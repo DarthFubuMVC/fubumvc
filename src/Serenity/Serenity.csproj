@@ -117,6 +117,9 @@
     <Compile Include="Fixtures\Handlers\TextboxElementHandler.cs" />
     <Compile Include="Fixtures\ScreenFixture.cs" />
     <Compile Include="Fixtures\WebDriverExtensions.cs" />
+    <Compile Include="Hosting\ExternalHosting.cs" />
+    <Compile Include="Hosting\KatanaHosting.cs" />
+    <Compile Include="Hosting\NowinHosting.cs" />
     <Compile Include="IAfterNavigation.cs" />
     <Compile Include="INavigationLogger.cs" />
     <Compile Include="NulloAfterNavigation.cs" />
@@ -147,7 +150,7 @@
     <Compile Include="IBrowserLifecycle.cs" />
     <Compile Include="IBrowserSessionInitializer.cs" />
     <Compile Include="InternetExplorerBrowser.cs" />
-    <Compile Include="ISerenityHosting.cs" />
+    <Compile Include="Hosting\ISerenityHosting.cs" />
     <Compile Include="ISubSystem.cs" />
     <Compile Include="Kill.cs" />
     <Compile Include="NavigationDriver.cs" />
@@ -248,6 +251,10 @@
     <ProjectReference Include="..\FubuMVC.Katana\FubuMVC.Katana.csproj">
       <Project>{48bc51c2-b759-48db-aae1-f4686cd6d02a}</Project>
       <Name>FubuMVC.Katana</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Nowin\FubuMVC.Nowin.csproj">
+      <Project>{b2d23037-7b43-4c8e-8f0c-bbf1d5f7fa82}</Project>
+      <Name>FubuMVC.Nowin</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
       <Project>{abfea520-820c-4b77-9015-6a09e24252fa}</Project>

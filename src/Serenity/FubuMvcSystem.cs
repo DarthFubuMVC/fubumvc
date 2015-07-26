@@ -12,6 +12,7 @@ using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration.ObjectGraph;
 using Serenity.Fixtures.Handlers;
+using Serenity.Hosting;
 using StoryTeller;
 using StoryTeller.Conversion;
 using StoryTeller.Engine;
@@ -31,7 +32,6 @@ namespace Serenity
     {
         private readonly ApplicationSettings _settings;
         private readonly Func<FubuRuntime> _runtimeSource;
-        private bool? _externalHosting;
 
         private readonly IList<Action<IApplicationUnderTest>> _applicationAlterations =
             new List<Action<IApplicationUnderTest>>();
@@ -98,6 +98,12 @@ namespace Serenity
             _subSystems.Add(subSystem);
         }
 
+        public void UseHosting<THosting>()
+            where THosting : ISerenityHosting, new()
+        {
+            _hosting = new THosting();
+        }
+
         public void StartListeningForMessages()
         {
             MessageHistory.StartListening(_remoteSubSystems.Select(x => x.Runner).ToArray());
@@ -125,7 +131,7 @@ namespace Serenity
         }
 
         /// <summary>
-        /// Catch all method to perform any action from the running application when 
+        /// Catch all method to perform any action from the running application when
         /// the application restarts
         /// </summary>
         /// <param name="action"></param>
@@ -254,7 +260,8 @@ namespace Serenity
                 _runtime = _runtimeSource();
 
                 var browserLifecycle = WebDriverSettings.GetBrowserLifecyle(ChooseBrowserType());
-                SetupApplicationHost();
+                if(_hosting == null)
+                    throw new InvalidOperationException("Hosting must be specified via UseHosting<THosting>()");
 
                 _application = _hosting.Start(_settings, _runtime, browserLifecycle);
                 _applicationAlterations.ToArray().Each(x => x(_application));
@@ -262,16 +269,6 @@ namespace Serenity
                 _runtime.Facility.Register(typeof (IApplicationUnderTest), ObjectDef.ForValue(_application));
                 _runtime.Facility.Register(typeof (IRemoteSubsystems), ObjectDef.ForValue(this));
             });
-        }
-
-        private void SetupApplicationHost()
-        {
-            if (_externalHosting == null)
-            {
-                _externalHosting = !_settings.RootUrl.IsEmpty();
-            }
-
-            _hosting = _externalHosting.Value ? (ISerenityHosting) new ExternalHosting() : new KatanaHosting();
         }
 
         Task ISubSystem.Stop()
@@ -312,7 +309,7 @@ namespace Serenity
         }
 
         /// <summary>
-        /// Perform an action using a service resolved from the application 
+        /// Perform an action using a service resolved from the application
         /// immediately after a new execution context
         /// is created immediately before the test itself is executed
         /// </summary>
@@ -337,7 +334,7 @@ namespace Serenity
     public class FubuMvcSystem<T> : FubuMvcSystem where T : IApplicationSource, new()
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="parallelDirectory">Use to override the physical root path of the web application to a directory parallel to the testing project if it cannot be derived from the assembly name of the application source type.</param>
         /// <param name="physicalPath">Use to override the physical root path of the web application if it cannot be derived from the assembly name of the application source type.</param>
