@@ -39,7 +39,7 @@ namespace Serenity
 
         /// <summary>
         /// Sends a message to a remote SubSystem w/ the 
-        /// Bottles EventAggregator
+        /// remote EventAggregator
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="message"></param>

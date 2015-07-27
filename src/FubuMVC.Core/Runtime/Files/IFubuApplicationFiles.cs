@@ -5,8 +5,7 @@ using FubuMVC.Core.Registration;
 namespace FubuMVC.Core.Runtime.Files
 {
     /// <summary>
-    /// Provides an abstraction to find files across the main application and all
-    /// Bottles loaded into this application
+    /// Provides an abstraction to find files across the main application
     /// </summary>
     [ApplicationLevel]
     public interface IFubuApplicationFiles
@@ -18,14 +17,14 @@ namespace FubuMVC.Core.Runtime.Files
         string GetApplicationPath();
 
         /// <summary>
-        /// Find files by FileSet across the application and all Bottles
+        /// Find files by FileSet across the application
         /// </summary>
         /// <param name="fileSet"></param>
         /// <returns></returns>
         IEnumerable<IFubuFile> FindFiles(FileSet fileSet);
 
         /// <summary>
-        /// Finds a file by relative name across the application and all Bottles
+        /// Finds a file by relative name across the application
         /// </summary>
         /// <param name="relativeName"></param>
         /// <returns></returns>

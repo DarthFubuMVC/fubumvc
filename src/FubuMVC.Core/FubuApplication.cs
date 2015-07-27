@@ -285,7 +285,6 @@ namespace FubuMVC.Core
 
             var thisAssembly = Assembly.GetExecutingAssembly().GetName().Name;
             var fubuCore = typeof (IObjectResolver).Assembly.GetName().Name;
-            var bottles = typeof (IActivator).Assembly.GetName().Name;
 
             Assembly callingAssembly = null;
             for (var i = 0; i < trace.FrameCount; i++)
@@ -294,7 +293,7 @@ namespace FubuMVC.Core
                 var assembly = frame.GetMethod().DeclaringType.Assembly;
                 var name = assembly.GetName().Name;
 
-                if (name != thisAssembly && name != fubuCore && name != bottles && name != "mscorlib" &&
+                if (name != thisAssembly && name != fubuCore && name != "mscorlib" &&
                     name != "FubuMVC.Katana" && name != "Serenity" && name != "System.Core" &&
                     name != "FubuTransportation")
                 {

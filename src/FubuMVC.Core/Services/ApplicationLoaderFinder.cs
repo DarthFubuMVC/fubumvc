@@ -37,7 +37,7 @@ namespace FubuMVC.Core.Services
         {
             var list = new List<Type>();
 
-            AssemblyFinder.FindAssemblies(a => !a.IsDynamic && a.GetName().Name != "Bottles").Each(assem => {
+            AssemblyFinder.FindAssemblies(a => !a.IsDynamic && a.GetName().Name != "FubuMVC.Core").Each(assem => {
                 try
                 {
                     list.AddRange(assem.GetExportedTypes().Where(IsLoaderTypeCandidate));

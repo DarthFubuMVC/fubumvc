@@ -140,7 +140,7 @@ namespace FubuMVC.Tests.Services.Remote
         }
 
         [Test]
-        public void start_with_only_the_folder_name_with_an_IBottleService()
+        public void start_with_only_the_folder_name_with_an_IActivator()
         {
             var servicePath = ".".ToFullPath().ParentDirectory().ParentDirectory().ParentDirectory().AppendPath("SampleService");
             using (var runner = new RemoteServiceRunner(servicePath))

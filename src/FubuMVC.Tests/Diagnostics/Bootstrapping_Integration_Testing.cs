@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.Diagnostics
         }
 
         [Test]
-        public void find_the_routes_and_chains_from_bottles()
+        public void find_the_routes_and_chains_from_extensions()
         {
             runtime.Behaviors.BehaviorFor<StructureMapFubuDiagnostics>(x => x.get_search_options())
                 .ShouldNotBeNull();

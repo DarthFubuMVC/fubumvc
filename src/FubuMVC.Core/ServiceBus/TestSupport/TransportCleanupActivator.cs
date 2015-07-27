@@ -13,8 +13,8 @@ namespace FubuMVC.Core.ServiceBus.TestSupport
 
         public void Activate(IActivationLog log)
         {
-            log.Trace("Adding TransportCleanup to the Bottles EventAggregator");
-            FubuMVC.Core.Services.Messaging.EventAggregator.Messaging.AddListener(_cleanup);
+            log.Trace("Adding TransportCleanup to the remote EventAggregator");
+            Services.Messaging.EventAggregator.Messaging.AddListener(_cleanup);
         }
     }
 }

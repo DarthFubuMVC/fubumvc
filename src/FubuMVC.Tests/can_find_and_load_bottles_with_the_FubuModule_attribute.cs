@@ -9,7 +9,7 @@ namespace FubuMVC.Tests
     public class can_find_and_load_extensions_with_the_FubuModule_attribute
     {
         [Test]
-        public void find_assembly_bottles()
+        public void find_assembly_extensions()
         {
             using (var runtime = FubuApplication.For(new FubuRegistry()).Bootstrap())
             {
