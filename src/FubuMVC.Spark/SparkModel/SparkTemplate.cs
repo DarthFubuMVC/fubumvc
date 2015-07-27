@@ -24,8 +24,8 @@ namespace FubuMVC.Spark.SparkModel
         private readonly WatchedSparkEntry _partialViewEntry;
         private readonly SparkEngineSettings _settings;
 
-        public SparkTemplate(IFubuFile file, ISparkViewEngine engine, SparkEngineSettings settings)
-            : base(file)
+        public SparkTemplate(IFubuApplicationFiles files, IFubuFile file, ISparkViewEngine engine, SparkEngineSettings settings)
+            : base(file, files)
         {
             _settings = settings;
             _full = new Lazy<SparkViewDescriptor>(() => createSparkDescriptor(true));
@@ -33,10 +33,6 @@ namespace FubuMVC.Spark.SparkModel
 
             _viewEntry = new WatchedSparkEntry(() => engine.CreateEntry(_full.Value));
             _partialViewEntry = new WatchedSparkEntry(() => engine.CreateEntry(_partial.Value));
-        }
-
-        public SparkTemplate(string filepath, SparkEngineSettings settings) : this(new FubuFile(filepath), new SparkViewEngine(), settings)
-        {
         }
 
         public override IRenderableView GetView()
@@ -50,7 +46,7 @@ namespace FubuMVC.Spark.SparkModel
         }
 
 
-        protected override Parsing createParsing()
+        protected override Parsing createParsing(IFubuApplicationFiles files)
         {
             if (RelativePath().IsEmpty())
             {
@@ -64,7 +60,7 @@ namespace FubuMVC.Spark.SparkModel
 
             try
             {
-                var chunk = Retry.Times(_settings.RetryViewLoadingCount, () => Loader.Load(this)).ToList();
+                var chunk = Retry.Times(_settings.RetryViewLoadingCount, () => Loader.Load(this, files)).ToList();
 
                 return new Parsing
                 {

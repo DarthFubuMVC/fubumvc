@@ -6,16 +6,18 @@ namespace FubuMVC.Core.Diagnostics
     {
         private readonly AppReloaded _reloaded;
         private readonly BehaviorGraph _graph;
+        private readonly FubuRuntime _runtime;
 
-        public AboutFubuDiagnostics(AppReloaded reloaded, BehaviorGraph graph)
+        public AboutFubuDiagnostics(AppReloaded reloaded, BehaviorGraph graph, FubuRuntime runtime)
         {
             _reloaded = reloaded;
             _graph = graph;
+            _runtime = runtime;
         }
 
         public string get_about()
         {
-            return FubuApplicationDescriber.WriteDescription(_graph.Diagnostics);
+            return FubuApplicationDescriber.WriteDescription(_graph.Diagnostics, _runtime);
         }
 
         public string get_loaded()

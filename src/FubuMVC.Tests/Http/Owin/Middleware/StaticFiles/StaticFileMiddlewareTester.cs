@@ -239,9 +239,9 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
             return new FubuFile(path);
         }
 
-        public string GetApplicationPath()
+        public string RootPath
         {
-            throw new System.NotImplementedException();
+            get { throw new System.NotImplementedException(); }
         }
 
         public IEnumerable<IFubuFile> FindFiles(FileSet fileSet)

@@ -14,7 +14,7 @@ namespace FubuMVC.Razor
 {
     public class RazorViewFacility : ViewFacility<RazorTemplate>
     {
-        public override Func<IFubuFile, RazorTemplate> CreateBuilder(SettingsCollection settings)
+        public override Func<IFubuFile, RazorTemplate> CreateBuilder(SettingsCollection settings, IFubuApplicationFiles files)
         {
             var razorSettings = settings.Get<RazorEngineSettings>();
             var namespaces = settings.Get<CommonViewNamespaces>();
@@ -22,7 +22,7 @@ namespace FubuMVC.Razor
             var factory = new TemplateFactoryCache(namespaces, razorSettings, new TemplateCompiler(),
                 new RazorTemplateGenerator());
 
-            return file => new RazorTemplate(file, factory);
+            return file => new RazorTemplate(files, file, factory);
         }
 
         public override FileSet FindMatching(SettingsCollection settings)

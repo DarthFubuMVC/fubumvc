@@ -15,7 +15,7 @@ namespace FubuMVC.Core.View.Model
         private List<T> _views = new List<T>();
         private ViewCollection<T> _bottle;
 
-        public abstract Func<IFubuFile, T> CreateBuilder(SettingsCollection settings);
+        public abstract Func<IFubuFile, T> CreateBuilder(SettingsCollection settings, IFubuApplicationFiles files);
 
         public abstract FileSet FindMatching(SettingsCollection settings);
 
@@ -37,7 +37,7 @@ namespace FubuMVC.Core.View.Model
 
         public virtual void Fill(ViewEngineSettings settings, BehaviorGraph graph, IPerfTimer timer, IFubuApplicationFiles files)
         {
-            var builder = CreateBuilder(graph.Settings);
+            var builder = CreateBuilder(graph.Settings, files);
             var match = FindMatching(graph.Settings);
 
             // HAS TO BE SHALLOW

@@ -42,7 +42,7 @@ namespace FubuMVC.Tests.Runtime.Files
         [Test]
         public void get_application_path_delegates_to_fubumvc_package_facility()
         {
-            theFiles.GetApplicationPath().ShouldBe(FubuApplication.GetApplicationPath());
+            theFiles.RootPath.ShouldBe(FubuApplication.GetApplicationPath());
         }
     }
 }

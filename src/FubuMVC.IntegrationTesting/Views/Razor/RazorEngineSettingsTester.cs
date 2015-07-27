@@ -40,8 +40,8 @@ namespace FubuMVC.IntegrationTesting.Views.Razor
 
             var path = System.Reflection.Assembly.GetExecutingAssembly().Location;
 
-            var ex = ClassUnderTest.Search.ExcludedFilesFor(faf.GetApplicationPath());
-            var inc = ClassUnderTest.Search.IncludedFilesFor(faf.GetApplicationPath());
+            var ex = ClassUnderTest.Search.ExcludedFilesFor(faf.RootPath);
+            var inc = ClassUnderTest.Search.IncludedFilesFor(faf.RootPath);
 
             var files = faf.FindFiles(ClassUnderTest.Search);
 

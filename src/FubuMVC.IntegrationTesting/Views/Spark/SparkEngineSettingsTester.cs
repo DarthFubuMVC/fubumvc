@@ -45,8 +45,8 @@ namespace FubuMVC.IntegrationTesting.Views.Spark
             ClassUnderTest.Search.AppendExclude("*A3.cshtml");
             ClassUnderTest.Search.AppendExclude("Templates/*.*");
 
-            ClassUnderTest.Search.ExcludedFilesFor(faf.GetApplicationPath());
-            ClassUnderTest.Search.IncludedFilesFor(faf.GetApplicationPath());
+            ClassUnderTest.Search.ExcludedFilesFor(faf.RootPath);
+            ClassUnderTest.Search.IncludedFilesFor(faf.RootPath);
 
             var files = faf.FindFiles(ClassUnderTest.Search).ToArray();
 

@@ -27,13 +27,13 @@ namespace FubuMVC.Core.View.Model
             _settings = settings;
             _match = match;
 
-            _top = buildFolder(_files.GetApplicationPath());
+            _top = buildFolder(_files.RootPath);
         }
 
 
         private ViewFolder<T> buildFolder(string path)
         {
-            var applicationPath = _files.GetApplicationPath();
+            var applicationPath = _files.RootPath;
             var views = ViewEngineSettings.FileSystem.FindFiles(path, _match).Select(x =>
             {
                 return new FubuFile(x)

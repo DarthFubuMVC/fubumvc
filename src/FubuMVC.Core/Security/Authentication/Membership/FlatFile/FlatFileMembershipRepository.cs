@@ -15,7 +15,7 @@ namespace FubuMVC.Core.Security.Authentication.Membership.FlatFile
         // TODO -- if anyone starts to care, we'll make the location be variable
         public FlatFileMembershipRepository(IFubuApplicationFiles files)
         {
-            _passwordConfigFile = files.GetApplicationPath().AppendPath("fubu.auth.config");
+            _passwordConfigFile = files.RootPath.AppendPath("fubu.auth.config");
             _users = new Lazy<IList<UserInfo>>(() =>
             {
                 return ReadFromFile(_passwordConfigFile);

@@ -9,11 +9,11 @@ namespace FubuMVC.Core.Diagnostics
 {
     public static class FubuApplicationDescriber
     {
-        public static string WriteDescription(IActivationDiagnostics diagnostics)
+        public static string WriteDescription(IActivationDiagnostics diagnostics, FubuRuntime runtime)
         {
             var writer = new System.IO.StringWriter();
 
-            writeProperties(writer);
+            writeProperties(writer, runtime);
 
             writeErrors(writer, diagnostics);
 
@@ -98,14 +98,14 @@ namespace FubuMVC.Core.Diagnostics
             }
         }
 
-        private static void writeProperties(StringWriter writer)
+        private static void writeProperties(StringWriter writer, FubuRuntime runtime)
         {
             var report = new TextReport();
             report.StartColumns(2);
 
             if (FubuApplication.Restarted.HasValue)
                 report.AddColumnData("Restarted", FubuApplication.Restarted.ToString());
-            report.AddColumnData("Application Path", FubuApplication.GetApplicationPath());
+            report.AddColumnData("Application Path", runtime.Files.RootPath);
 
             report.Write(writer);
 

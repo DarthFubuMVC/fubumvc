@@ -91,7 +91,7 @@ namespace FubuMVC.Core.Assets
         /// <returns></returns>
         public string DeterminePublicFolder(IFubuApplicationFiles files)
         {
-            var candidate = files.GetApplicationPath().AppendPath(PublicFolder);
+            var candidate = files.RootPath.AppendPath(PublicFolder);
 
             if (Version.IsNotEmpty())
             {
@@ -229,7 +229,7 @@ namespace FubuMVC.Core.Assets
 
         public FileWatcherManifest CreateFileWatcherManifest(IFubuApplicationFiles files)
         {
-            var manifest = new FileWatcherManifest(files.GetApplicationPath(), FubuApplication.FindBinPath());
+            var manifest = new FileWatcherManifest(files.RootPath, FubuApplication.FindBinPath());
 
             if (Mode == SearchMode.PublicFolderOnly)
             {

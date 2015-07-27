@@ -15,7 +15,7 @@ namespace FubuMVC.Razor.RazorModel
         private static readonly IViewParser ViewParser = new ViewParser();
         private readonly Guid _generatedViewId = Guid.NewGuid();
 
-        public RazorTemplate(IFubuFile file, ITemplateFactory factory) : base(file)
+        public RazorTemplate(IFubuApplicationFiles files, IFubuFile file, ITemplateFactory factory) : base(file, files)
         {
             _factory = factory;
         }
@@ -27,7 +27,7 @@ namespace FubuMVC.Razor.RazorModel
 
 
         // TODO -- some commonality here between RazorTemplate and SparkTemplate!
-        protected override Parsing createParsing()
+        protected override Parsing createParsing(IFubuApplicationFiles files)
         {
             var chunks = ViewParser.Parse(FilePath).ToList();
 

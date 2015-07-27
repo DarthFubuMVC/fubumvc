@@ -152,7 +152,7 @@ namespace FubuMVC.Nowin
 
         public string PhysicalPath
         {
-            get { return _runtime.Files.GetApplicationPath(); }
+            get { return _runtime.Files.RootPath; }
         }
 
         public void Dispose()

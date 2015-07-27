@@ -18,9 +18,12 @@ namespace FubuMVC.Core.Runtime.Files
             _files = new Cache<string, IFubuFile>(findFile);
         }
 
-        public string GetApplicationPath()
+        /// <summary>
+        /// The root physical path of this FubuMVC Application
+        /// </summary>
+        public string RootPath
         {
-            return _root;
+            get { return _root; }
         }
 
         // I'm okay with this finding nulls

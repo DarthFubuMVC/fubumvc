@@ -42,7 +42,7 @@ namespace FubuMVC.Tests
         {
             using (var runtime = FubuApplication.DefaultPolicies().Bootstrap())
             {
-                var description = FubuApplicationDescriber.WriteDescription(runtime.Behaviors.Diagnostics);
+                var description = FubuApplicationDescriber.WriteDescription(runtime.Behaviors.Diagnostics, runtime);
 
                 Console.WriteLine(description);
             }

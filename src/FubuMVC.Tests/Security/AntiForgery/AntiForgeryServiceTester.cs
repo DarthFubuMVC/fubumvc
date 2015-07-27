@@ -15,7 +15,7 @@ namespace FubuMVC.Tests.Security.AntiForgery
     {
         protected override void beforeEach()
         {
-            MockFor<IFubuApplicationFiles>().Stub(r => r.GetApplicationPath()).Return("Path");
+            MockFor<IFubuApplicationFiles>().Stub(r => r.RootPath).Return("Path");
             MockFor<ICookies>().Stub(r => r.Get("Cookies")).Return(new Cookie());
 
             MockFor<IAntiForgeryTokenProvider>().Stub(x => x.GetTokenName("Path")).Return("CookieName");

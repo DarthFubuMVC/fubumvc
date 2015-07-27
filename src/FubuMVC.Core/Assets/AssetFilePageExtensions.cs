@@ -145,7 +145,7 @@ namespace FubuMVC.Core.Assets
             if (settings.PublicAssetFolder.IsEmpty())
             {
                 var directory = settings.DeterminePublicFolder(files);
-                var relativePath = directory.PathRelativeTo(files.GetApplicationPath())
+                var relativePath = directory.PathRelativeTo(files.RootPath)
                     .Replace('\\', '/');
 
                 settings.PublicAssetFolder = page.Get<IHttpRequest>().ToFullUrl(relativePath);

@@ -52,9 +52,9 @@ namespace FubuMVC.Spark
             });
         }
 
-        public override Func<IFubuFile, SparkTemplate> CreateBuilder(SettingsCollection settings)
+        public override Func<IFubuFile, SparkTemplate> CreateBuilder(SettingsCollection settings, IFubuApplicationFiles files)
         {
-            return file => new SparkTemplate(file, _engine, settings.Get<SparkEngineSettings>());
+            return file => new SparkTemplate(files, file, _engine, settings.Get<SparkEngineSettings>());
         }
 
         public override FileSet FindMatching(SettingsCollection settings)
@@ -70,7 +70,7 @@ namespace FubuMVC.Spark
 
             var bindingTemplates = files
                 .FindFiles(FileSet.Shallow("Shared/bindings.xml"))
-                .Select(x => new SparkTemplate(x, _engine, graph.Settings.Get<SparkEngineSettings>())).ToArray();
+                .Select(x => new SparkTemplate(files, x, _engine, graph.Settings.Get<SparkEngineSettings>())).ToArray();
 
             _engine.ViewFolder = new TemplateViewFolder(AllTemplates());
             _engine.DefaultPageBaseType = typeof (FubuSparkView).FullName;

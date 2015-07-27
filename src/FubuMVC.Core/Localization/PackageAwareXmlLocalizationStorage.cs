@@ -5,7 +5,7 @@ namespace FubuMVC.Core.Localization
 {
     public class PackageAwareXmlLocalizationStorage : XmlDirectoryLocalizationStorage
     {
-        public PackageAwareXmlLocalizationStorage(IFubuApplicationFiles files) : base(new []{files.GetApplicationPath()})
+        public PackageAwareXmlLocalizationStorage(IFubuApplicationFiles files) : base(new []{files.RootPath})
         {
         }
     }

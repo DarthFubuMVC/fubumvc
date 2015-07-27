@@ -17,6 +17,7 @@ namespace FubuMVC.Tests.Assets
     public class AssetSettingsTester
     {
         private IStaticFileRule theRule;
+        private static readonly string PublicFolder = FubuApplication.GetApplicationPath().AppendPath("public");
 
         [SetUp]
         public void SetUp()
@@ -152,7 +153,7 @@ namespace FubuMVC.Tests.Assets
         public void determine_the_public_folder_with_no_version()
         {
             new FileSystem().CreateDirectory(
-                FubuApplication.GetApplicationPath().AppendPath("public").ToFullPath());
+                PublicFolder.ToFullPath());
 
             var settings = new AssetSettings
             {
@@ -160,14 +161,14 @@ namespace FubuMVC.Tests.Assets
             };
 
             settings.DeterminePublicFolder(FubuApplicationFiles.ForDefault())
-                .ShouldBe(FubuApplication.GetApplicationPath().AppendPath("public"));
+                .ShouldBe(PublicFolder);
         }
 
         [Test]
         public void determine_the_public_folder_with_a_non_null_but_nonexistent_version()
         {
             new FileSystem().CreateDirectory(
-                FubuApplication.GetApplicationPath().AppendPath("public").ToFullPath());
+                PublicFolder.ToFullPath());
 
             var settings = new AssetSettings
             {
@@ -175,14 +176,14 @@ namespace FubuMVC.Tests.Assets
             };
 
             settings.DeterminePublicFolder(FubuApplicationFiles.ForDefault())
-                .ShouldBe(FubuApplication.GetApplicationPath().AppendPath("public").ToFullPath());
+                .ShouldBe(PublicFolder.ToFullPath());
         }
 
         [Test]
         public void determine_the_public_folder_when_the_version_does_exist()
         {
             new FileSystem().CreateDirectory(
-                FubuApplication.GetApplicationPath().AppendPath("public").ToFullPath());
+                PublicFolder.ToFullPath());
             new FileSystem().CreateDirectory(
                 FubuApplication.GetApplicationPath().AppendPath("public", "1.0.1").ToFullPath());
 

@@ -13,8 +13,8 @@ namespace FubuMVC.Core.Runtime.Files
         /// <summary>
         /// Tells you the directory of the main application
         /// </summary>
-        /// <returns></returns>
-        string GetApplicationPath();
+        /// <value></value>
+        string RootPath { get; }
 
         /// <summary>
         /// Find files by FileSet across the application

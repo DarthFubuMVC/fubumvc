@@ -22,7 +22,7 @@ namespace FubuMVC.Core.Diagnostics
             var dict = new Dictionary<string, object>
             {
                 {"reloaded", _reloaded.Timestamp.ToLocalTime().ToString()},
-                {"fubuPath", _files.GetApplicationPath()},
+                {"fubuPath", _files.RootPath},
                 {"baseDirectory", AppDomain.CurrentDomain.BaseDirectory},
                 {"binPath", FubuApplication.FindBinPath()},
                 {"config", AppDomain.CurrentDomain.SetupInformation.ConfigurationFile}

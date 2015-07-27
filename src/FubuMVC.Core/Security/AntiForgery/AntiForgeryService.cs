@@ -30,7 +30,7 @@ namespace FubuMVC.Core.Security.AntiForgery
 
         public AntiForgeryData SetCookieToken(string path, string domain)
         {
-            var applicationPath = _fubuApplicationFiles.GetApplicationPath();
+            var applicationPath = _fubuApplicationFiles.RootPath;
             AntiForgeryData token = GetCookieToken();
             string name = _tokenProvider.GetTokenName(applicationPath);
             string cookieValue = _serializer.Serialize(token);
@@ -63,7 +63,7 @@ namespace FubuMVC.Core.Security.AntiForgery
 
         public AntiForgeryData GetCookieToken()
         {
-            var applicationPath = _fubuApplicationFiles.GetApplicationPath();
+            var applicationPath = _fubuApplicationFiles.RootPath;
             string name = _tokenProvider.GetTokenName(applicationPath);
             Cookie cookie = _cookies.Get(name);
             AntiForgeryData cookieToken = null;

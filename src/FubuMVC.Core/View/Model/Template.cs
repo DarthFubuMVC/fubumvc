@@ -11,12 +11,12 @@ namespace FubuMVC.Core.View.Model
         private readonly Lazy<Parsing> _parsing;
         private ITemplateFile _master;
 
-        public Template(IFubuFile file)
+        public Template(IFubuFile file, IFubuApplicationFiles files)
         {
             _file = file;
 
 
-            _parsing = new Lazy<Parsing>(createParsing);
+            _parsing = new Lazy<Parsing>(() => createParsing(files));
 
 
             _relativeDirectoryPath = _file.RelativePath.ParentDirectory().Replace('\\', '/');
@@ -27,7 +27,7 @@ namespace FubuMVC.Core.View.Model
             get { return _parsing.Value; }
         }
 
-        protected abstract Parsing createParsing();
+        protected abstract Parsing createParsing(IFubuApplicationFiles files);
 
         public string FilePath
         {

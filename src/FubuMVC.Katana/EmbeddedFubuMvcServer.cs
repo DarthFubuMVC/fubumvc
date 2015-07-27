@@ -182,7 +182,7 @@ namespace FubuMVC.Katana
 
         public string PhysicalPath
         {
-            get { return FubuApplication.GetApplicationPath(); }
+            get { return Runtime.Files.RootPath; }
         }
 
         public void Dispose()

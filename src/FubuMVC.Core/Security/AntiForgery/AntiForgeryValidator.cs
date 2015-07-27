@@ -30,7 +30,7 @@ namespace FubuMVC.Core.Security.AntiForgery
 
         public bool Validate(string salt)
         {
-            var applicationPath = _fubuApplicationFiles.GetApplicationPath();
+            var applicationPath = _fubuApplicationFiles.RootPath;
             var fieldName = _tokenProvider.GetTokenName();
             var cookieName = _tokenProvider.GetTokenName(applicationPath);
 

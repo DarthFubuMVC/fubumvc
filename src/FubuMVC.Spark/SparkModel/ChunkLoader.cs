@@ -4,6 +4,7 @@ using System.Linq;
 using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core;
+using FubuMVC.Core.Runtime.Files;
 using Spark;
 using Spark.Compiler;
 using Spark.FileSystem;
@@ -14,7 +15,7 @@ namespace FubuMVC.Spark.SparkModel
 {
     public interface IChunkLoader
     {
-        IEnumerable<Chunk> Load(ISparkTemplate template);
+        IEnumerable<Chunk> Load(ISparkTemplate template, IFubuApplicationFiles files);
     }
 
     public class ChunkLoader : IChunkLoader
@@ -32,7 +33,7 @@ namespace FubuMVC.Spark.SparkModel
             _loaders = new Cache<string, ViewLoader>(defaultLoaderByRoot);
         }
 
-        public IEnumerable<Chunk> Load(ISparkTemplate template)
+        public IEnumerable<Chunk> Load(ISparkTemplate template, IFubuApplicationFiles files)
         {
             if (template.RelativePath().IsEmpty())
             {
@@ -41,7 +42,7 @@ namespace FubuMVC.Spark.SparkModel
 
             try
             {
-                var viewLoader = _loaders[FubuApplication.GetApplicationPath()];
+                var viewLoader = _loaders[files.RootPath];
                 var chunks = viewLoader.Load(template.RelativePath());
                 if (chunks == null)
                 {
