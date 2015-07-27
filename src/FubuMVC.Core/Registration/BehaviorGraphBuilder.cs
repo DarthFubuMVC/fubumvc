@@ -7,6 +7,7 @@ using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Attachment;
 
@@ -15,8 +16,7 @@ namespace FubuMVC.Core.Registration
     internal static class BehaviorGraphBuilder
     {
         // TOOD -- clean this up a little bit
-        public static BehaviorGraph Build(FubuRegistry registry, IPerfTimer perfTimer,
-            IEnumerable<Assembly> packageAssemblies, IActivationDiagnostics diagnostics)
+        public static BehaviorGraph Build(FubuRegistry registry, IPerfTimer perfTimer, IEnumerable<Assembly> packageAssemblies, IActivationDiagnostics diagnostics, IFubuApplicationFiles files)
         {
             var featureLoader = new FeatureLoader();
             featureLoader.LookForFeatures();
@@ -31,7 +31,7 @@ namespace FubuMVC.Core.Registration
 
             perfTimer.Record("Applying Settings", () => applySettings(config, graph));
 
-            var viewDiscovery = graph.Settings.Get<ViewEngineSettings>().BuildViewBag(graph, perfTimer);
+            var viewDiscovery = graph.Settings.Get<ViewEngineSettings>().BuildViewBag(graph, perfTimer, files);
             var layoutAttachmentTasks =
                 viewDiscovery.ContinueWith(
                     t => graph.Settings.Get<ViewEngineSettings>().Facilities.Select(x => x.LayoutAttachment).ToArray());

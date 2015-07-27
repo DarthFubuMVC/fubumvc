@@ -16,7 +16,7 @@ namespace FubuMVC.Tests.Security.Authentication.Membership.FlatFile
         [SetUp]
         public void SetUp()
         {
-            var files = new FubuApplicationFiles();
+            var files = FubuApplicationFiles.ForDefault();
 
             theRepository = new FlatFileMembershipRepository(files);
         }
@@ -65,7 +65,7 @@ namespace FubuMVC.Tests.Security.Authentication.Membership.FlatFile
 
             theRepository.Write(new UserInfo[] { user1, user2 });
 
-            var secondRepository = new FlatFileMembershipRepository(new FubuApplicationFiles());
+            var secondRepository = new FlatFileMembershipRepository(FubuApplicationFiles.ForDefault());
 
             secondRepository.FindByName("Josh").ShouldNotBeNull();
             secondRepository.FindByName("Josh").Roles.ShouldHaveTheSameElementsAs("C", "D");

@@ -35,7 +35,7 @@ namespace FubuMVC.Core.View.Model
 
         protected abstract void registerServices(ServiceRegistry services);
 
-        public virtual void Fill(ViewEngineSettings settings, BehaviorGraph graph, IPerfTimer timer)
+        public virtual void Fill(ViewEngineSettings settings, BehaviorGraph graph, IPerfTimer timer, IFubuApplicationFiles files)
         {
             var builder = CreateBuilder(graph.Settings);
             var match = FindMatching(graph.Settings);
@@ -43,7 +43,7 @@ namespace FubuMVC.Core.View.Model
             // HAS TO BE SHALLOW
             match.DeepSearch = false;
 
-            _bottle = new ViewCollection<T>(this, graph.Files, builder, settings, match);
+            _bottle = new ViewCollection<T>(this, files, builder, settings, match);
 
 
             LayoutAttachment = timer.RecordTask("Attaching Layouts for " + GetType().Name,

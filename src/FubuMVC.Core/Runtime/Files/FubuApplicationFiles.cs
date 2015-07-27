@@ -8,29 +8,30 @@ namespace FubuMVC.Core.Runtime.Files
 {
     public class FubuApplicationFiles : IFubuApplicationFiles
     {
+        private readonly string _root;
         private readonly Cache<string, IFubuFile> _files;
         private readonly static IFileSystem _fileSystem = new FileSystem();
 
-        public FubuApplicationFiles()
+        public FubuApplicationFiles(string root)
         {
+            _root = root.ToFullPath();
             _files = new Cache<string, IFubuFile>(findFile);
         }
 
         public string GetApplicationPath()
         {
-            return FubuApplication.GetApplicationPath();
+            return _root;
         }
 
         // I'm okay with this finding nulls
 
         public IEnumerable<IFubuFile> FindFiles(FileSet fileSet)
         {
-            var applicationPath = GetApplicationPath();
-            return _fileSystem.FindFiles(applicationPath, fileSet).Select(file =>
+            return _fileSystem.FindFiles(_root, fileSet).Select(file =>
             {
                 var fubuFile = new FubuFile(file)
                 {
-                    RelativePath = file.PathRelativeTo(applicationPath).Replace("\\", "/")
+                    RelativePath = file.PathRelativeTo(_root).Replace("\\", "/")
                 };
 
                 if (fubuFile.RelativePath.IsEmpty())
@@ -73,6 +74,11 @@ namespace FubuMVC.Core.Runtime.Files
             };
 
             return FindFiles(fileSet).FirstOrDefault();
+        }
+
+        public static IFubuApplicationFiles ForDefault()
+        {
+            return new FubuApplicationFiles(FubuApplication.GetApplicationPath());
         }
     }
 }

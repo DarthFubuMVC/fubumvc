@@ -40,7 +40,7 @@ namespace FubuMVC.IntegrationTesting.Views.Spark
         [Test]
         public void ignores_excluded_folders()
         {
-            var faf = new FubuApplicationFiles();
+            var faf = FubuApplicationFiles.ForDefault();
 
             ClassUnderTest.Search.AppendExclude("*A3.cshtml");
             ClassUnderTest.Search.AppendExclude("Templates/*.*");

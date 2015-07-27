@@ -62,15 +62,13 @@ namespace FubuMVC.Spark
             return settings.Get<SparkEngineSettings>().Search;
         }
 
-        public override void Fill(ViewEngineSettings settings, BehaviorGraph graph, IPerfTimer timer)
+        public override void Fill(ViewEngineSettings settings, BehaviorGraph graph, IPerfTimer timer, IFubuApplicationFiles files)
         {
             configureNamespaces(graph);
 
+            base.Fill(settings, graph, timer, files);
 
-
-            base.Fill(settings, graph, timer);
-
-            var bindingTemplates = graph.Files
+            var bindingTemplates = files
                 .FindFiles(FileSet.Shallow("Shared/bindings.xml"))
                 .Select(x => new SparkTemplate(x, _engine, graph.Settings.Get<SparkEngineSettings>())).ToArray();
 

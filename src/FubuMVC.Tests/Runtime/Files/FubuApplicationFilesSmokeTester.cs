@@ -15,9 +15,7 @@ namespace FubuMVC.Tests.Runtime.Files
         [SetUp]
         public void SetUp()
         {
-            FubuApplication.PhysicalRootPath = AppDomain.CurrentDomain.BaseDirectory.ParentDirectory().ParentDirectory();
-
-            theFiles = new FubuApplicationFiles();
+            theFiles = new FubuApplicationFiles(AppDomain.CurrentDomain.BaseDirectory.ParentDirectory().ParentDirectory());
         }
 
         [Test]

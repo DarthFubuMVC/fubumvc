@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View.Model;
 
 namespace FubuMVC.Core.View
@@ -14,7 +15,7 @@ namespace FubuMVC.Core.View
     /// </summary>
     public interface IViewFacility
     {
-        void Fill(ViewEngineSettings settings, BehaviorGraph graph, IPerfTimer timer);
+        void Fill(ViewEngineSettings settings, BehaviorGraph graph, IPerfTimer timer, IFubuApplicationFiles files);
         IEnumerable<IViewToken> AllViews();
 
         ITemplateFile FindInShared(string viewName);

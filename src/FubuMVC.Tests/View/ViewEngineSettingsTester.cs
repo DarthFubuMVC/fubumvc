@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Rendering;
@@ -193,7 +194,7 @@ namespace FubuMVC.Tests.View
                 return null;
             }
 
-            public void Fill(ViewEngineSettings settings, BehaviorGraph graph, IPerfTimer timer)
+            public void Fill(ViewEngineSettings settings, BehaviorGraph graph, IPerfTimer timer, IFubuApplicationFiles files)
             {
                 throw new NotImplementedException();
             }

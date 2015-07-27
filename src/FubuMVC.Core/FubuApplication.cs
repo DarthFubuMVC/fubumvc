@@ -15,6 +15,7 @@ using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Services;
 using FubuMVC.Core.StructureMap;
 using StructureMap;
@@ -123,9 +124,12 @@ namespace FubuMVC.Core
             var packageAssemblies = perfTimer.Record("Searching for Assemblies marked with [FubuModule]",
                 () => findModuleAssemblies(diagnostics).Where(x => x.HasAttribute<FubuModuleAttribute>()).ToArray());
 
+            // TODO -- this needs to be fed at runtime
+            var files = new FubuApplicationFiles(GetApplicationPath());
+
             // TODO -- going to remove this
             var container = _registry.Value.ToContainer();
-            var runtime = bootstrapRuntime(perfTimer, diagnostics, packageAssemblies, container);
+            var runtime = bootstrapRuntime(perfTimer, diagnostics, packageAssemblies, container, files);
 
             var activators = runtime.Factory.GetAll<IActivator>();
             diagnostics.LogExecutionOnEachInParallel(activators, (activator, log) => activator.Activate(log));
@@ -169,14 +173,13 @@ namespace FubuMVC.Core
         }
 
 
-        private FubuRuntime bootstrapRuntime(IPerfTimer perfTimer, IActivationDiagnostics diagnostics,
-            IEnumerable<Assembly> packageAssemblies, IContainer container)
+        private FubuRuntime bootstrapRuntime(IPerfTimer perfTimer, IActivationDiagnostics diagnostics, IEnumerable<Assembly> packageAssemblies, IContainer container, IFubuApplicationFiles files)
         {
             perfTimer.Record("Applying IFubuRegistryExtension's",
                 () => applyFubuExtensionsFromPackages(diagnostics, packageAssemblies));
 
             var graph = perfTimer.Record("Building the BehaviorGraph",
-                () => buildBehaviorGraph(perfTimer, packageAssemblies, diagnostics));
+                () => buildBehaviorGraph(perfTimer, packageAssemblies, diagnostics, files));
 
             perfTimer.Record("Registering services into the IoC Container",
                 () => _registry.Value.Config.RegisterServices(container, graph));
@@ -194,7 +197,7 @@ namespace FubuMVC.Core
             });
 
 
-            return new FubuRuntime(factory, container, routeTask.Result);
+            return new FubuRuntime(factory, container, routeTask.Result, files);
         }
 
         public static void SetupNamingStrategyForHttpHeaders()
@@ -202,10 +205,9 @@ namespace FubuMVC.Core
             BindingContext.AddNamingStrategy(HttpRequestHeaders.HeaderDictionaryNameForProperty);
         }
 
-        private BehaviorGraph buildBehaviorGraph(IPerfTimer timer, IEnumerable<Assembly> assemblies,
-            IActivationDiagnostics diagnostics)
+        private BehaviorGraph buildBehaviorGraph(IPerfTimer timer, IEnumerable<Assembly> assemblies, IActivationDiagnostics diagnostics, IFubuApplicationFiles files)
         {
-            return BehaviorGraphBuilder.Build(_registry.Value, timer, assemblies, diagnostics);
+            return BehaviorGraphBuilder.Build(_registry.Value, timer, assemblies, diagnostics, files);
         }
 
         // Build route objects from route definitions on graph + add packaging routes

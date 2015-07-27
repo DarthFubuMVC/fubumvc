@@ -8,6 +8,7 @@ using FubuCore.Logging;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.StructureMap;
 using FubuMVC.Core.StructureMap.Settings;
 using StructureMap;
@@ -24,7 +25,7 @@ namespace FubuMVC.Core
         private readonly IList<RouteBase> _routes;
         private bool _disposed;
 
-        public FubuRuntime(IServiceFactory factory, IContainer container, IList<RouteBase> routes)
+        public FubuRuntime(IServiceFactory factory, IContainer container, IList<RouteBase> routes, IFubuApplicationFiles files)
         {
             _factory = factory;
             _container = container;
@@ -34,6 +35,7 @@ namespace FubuMVC.Core
             {
                 _.Policies.OnMissingFamily<SettingPolicy>();
 
+                _.For<IFubuApplicationFiles>().Use(files);
                 _.For<IServiceLocator>().Use<StructureMapServiceLocator>();
                 _.For<FubuRuntime>().Use(this);
                 _.For<IServiceFactory>().Use(factory);

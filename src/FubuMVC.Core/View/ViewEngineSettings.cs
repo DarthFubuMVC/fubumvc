@@ -7,6 +7,7 @@ using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View.Attachment;
 using FubuMVC.Core.View.Model;
 
@@ -77,14 +78,14 @@ namespace FubuMVC.Core.View
             return IfTheViewMatches(combined);
         }
 
-        public Task<ViewBag> BuildViewBag(BehaviorGraph graph, IPerfTimer timer)
+        public Task<ViewBag> BuildViewBag(BehaviorGraph graph, IPerfTimer timer, IFubuApplicationFiles files)
         {
             return timer.RecordTask("Building the View Bag", () => {
                 var viewFinders = _facilities.Select(x =>
                 {
                     return Task.Factory.StartNew(() =>
                     {
-                        x.Fill(this, graph, timer);
+                        x.Fill(this, graph, timer, files);
                         return x.AllViews();
                     });
                 });
