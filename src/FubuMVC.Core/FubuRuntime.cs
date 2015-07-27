@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting;
 using System.Web.Routing;
 using FubuCore;
 using FubuCore.Descriptions;
@@ -24,7 +25,7 @@ namespace FubuMVC.Core
         private readonly IContainer _container;
         private readonly IList<RouteBase> _routes;
         private bool _disposed;
-        private IFubuApplicationFiles _files;
+        private readonly IFubuApplicationFiles _files;
 
         public FubuRuntime(IServiceFactory factory, IContainer container, IList<RouteBase> routes, IFubuApplicationFiles files)
         {
@@ -44,6 +45,11 @@ namespace FubuMVC.Core
             });
 
             _routes = routes;
+        }
+
+        internal void Activate()
+        {
+            
         }
 
         public IFubuApplicationFiles Files
