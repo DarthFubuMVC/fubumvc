@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading;
+using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Events;
@@ -35,7 +36,7 @@ namespace FubuMVC.Tests.ServiceBus.Events
         {
             FubuTransport.SetupForInMemoryTesting();
 
-            using (var runtime = FubuTransport.For<DelayedRegistry>()
+            using (var runtime = FubuApplication.For<DelayedRegistry>()
                 .Bootstrap())
             {
                 runtime.Factory.Get<IPollingJobs>()

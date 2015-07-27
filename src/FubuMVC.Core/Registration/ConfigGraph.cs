@@ -8,6 +8,8 @@ using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Services;
 using FubuMVC.Core.Security.Authorization;
+using FubuMVC.Core.ServiceBus.Configuration;
+using FubuMVC.Core.ServiceBus.Registration;
 using StructureMap;
 
 namespace FubuMVC.Core.Registration
@@ -31,6 +33,7 @@ namespace FubuMVC.Core.Registration
         private readonly IList<ServiceRegistry> _services = new List<ServiceRegistry>();
 
         private readonly ActionSourceAggregator _actionSourceAggregator;
+        private readonly HandlerGraphSource _handlers = new HandlerGraphSource();
         private readonly IList<IChainSource> _sources = new List<IChainSource>();
 
         public readonly PolicyGraph Global = new PolicyGraph();
@@ -46,6 +49,7 @@ namespace FubuMVC.Core.Registration
             _actionSourceAggregator = new ActionSourceAggregator(_applicationAssembly);
 
             _sources.Add(_actionSourceAggregator);
+            _sources.Add(_handlers);
         }
 
         public Assembly ApplicationAssembly
@@ -106,6 +110,10 @@ namespace FubuMVC.Core.Registration
             }
         }
 
+        public HandlerGraphSource Handlers
+        {
+            get { return _handlers; }
+        }
 
         public void Add(IChainSource source)
         {
@@ -115,6 +123,11 @@ namespace FubuMVC.Core.Registration
         public void Add(ServiceRegistry services)
         {
             _services.Add(services);
+        }
+
+        public void Add(IHandlerSource source)
+        {
+            _handlers.HandlerSources.Add(source);
         }
 
         public void Add(IActionSource source)
@@ -193,12 +206,12 @@ namespace FubuMVC.Core.Registration
 
             var imports =
                 UniqueImports()
-                    .Select(x => { return Task.Factory.StartNew(() => { return x.BuildChains(graph, timer); }); })
+                    .Select(x => Task.Factory.StartNew(() => x.BuildChains(graph, timer)))
                     .ToArray();
 
             var chainSources =
                 Sources.Select(
-                    source => { return Task.Factory.StartNew(() => { return source.BuildChains(graph, timer); }); })
+                    source => Task.Factory.StartNew(() => source.BuildChains(graph, timer)))
                     .ToArray();
 
             Task.WaitAll(chainSources);

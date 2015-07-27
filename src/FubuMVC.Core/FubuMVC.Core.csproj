@@ -94,7 +94,7 @@
     <Compile Include="ServiceBus\Configuration\HandlerChain.cs" />
     <Compile Include="ServiceBus\Configuration\HandlerChainPolicy.cs" />
     <Compile Include="ServiceBus\Configuration\HandlerGraph.cs" />
-    <Compile Include="ServiceBus\Configuration\HandlerPolicies.cs" />
+    <Compile Include="ServiceBus\Configuration\HandlerGraphSource.cs" />
     <Compile Include="ServiceBus\Configuration\HealthMonitoringExpression.cs" />
     <Compile Include="ServiceBus\Configuration\ISettingsAware.cs" />
     <Compile Include="ServiceBus\Configuration\PoliciesExpression.cs" />
@@ -150,7 +150,7 @@
     <Compile Include="ServiceBus\FubuTransportServiceRegistry.cs" />
     <Compile Include="ServiceBus\HandlerExtensions.cs" />
     <Compile Include="ServiceBus\IFubuTransportActivator.cs" />
-    <Compile Include="ServiceBus\ImportHandlers.cs" />
+    <Compile Include="ServiceBus\SystemLevelHandlers.cs" />
     <Compile Include="ServiceBus\InMemory\InMemoryChannel.cs" />
     <Compile Include="ServiceBus\InMemory\InMemoryQueue.cs" />
     <Compile Include="ServiceBus\InMemory\InMemoryQueueManager.cs" />

@@ -5,9 +5,9 @@ namespace FubuMVC.Core.ServiceBus.Configuration
 {
     public class HealthMonitoringExpression
     {
-        private readonly FubuTransportRegistry _parent;
+        private readonly FubuRegistry _parent;
 
-        public HealthMonitoringExpression(FubuTransportRegistry parent)
+        public HealthMonitoringExpression(FubuRegistry parent)
         {
             _parent = parent;
         }

@@ -2,6 +2,7 @@
 using System.Data;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
+using FubuMVC.Katana;
 
 
 namespace DiagnosticsHarness
@@ -13,10 +14,15 @@ namespace DiagnosticsHarness
             //Comment out in order to test with LightningQueues
             //EnableInMemoryTransport();
 
+            AlterSettings<KatanaSettings>(x =>
+            {
+                x.AutoHostingEnabled = true;
+            });
+
             // TODO -- publish everything option in the FI?
             Channel(x => x.Channel).ReadIncoming().AcceptsMessages(x => true).DefaultSerializer<XmlMessageSerializer>();
 
-            Global.Policy<ErrorHandlingPolicy>();
+            Policies.Global.Add<ErrorHandlingPolicy>();
 
             SubscribeLocally().ToSource(x => x.Publisher)
                 .ToMessage<NumberMessage>();

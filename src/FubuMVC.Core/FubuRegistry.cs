@@ -5,8 +5,16 @@ using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Registration.Routes;
+using FubuMVC.Core.ServiceBus;
+using FubuMVC.Core.ServiceBus.Configuration;
+using FubuMVC.Core.ServiceBus.InMemory;
+using FubuMVC.Core.ServiceBus.Polling;
+using FubuMVC.Core.ServiceBus.Registration;
+using FubuMVC.Core.ServiceBus.Runtime.Serializers;
+using FubuMVC.Core.ServiceBus.Sagas;
 using StructureMap;
 using StructureMap.Configuration.DSL;
+using PoliciesExpression = FubuMVC.Core.Registration.DSL.PoliciesExpression;
 
 namespace FubuMVC.Core
 {
@@ -29,9 +37,14 @@ namespace FubuMVC.Core
         private readonly Assembly _applicationAssembly;
         private readonly ConfigGraph _config;
 
+        private string _name;
+
         public FubuRegistry()
         {
             var type = GetType();
+
+            _name = type.Name.Replace("TransportRegistry", "").Replace("Registry", "").ToLower();
+            
             if (type == typeof (FubuRegistry) || type == typeof (FubuPackageRegistry))
             {
                 _applicationAssembly = FubuApplication.FindTheCallingAssembly();
@@ -42,6 +55,16 @@ namespace FubuMVC.Core
             }
 
             _config = new ConfigGraph(_applicationAssembly);
+
+
+
+            AlterSettings<ChannelGraph>(x =>
+            {
+                if (x.Name.IsEmpty())
+                {
+                    x.Name = _name;
+                }
+            });
         }
 
         public FubuRegistry(Action<FubuRegistry> configure) : this()
@@ -59,7 +82,19 @@ namespace FubuMVC.Core
             _config = new ConfigGraph(_applicationAssembly);
         }
 
-        
+
+        public string NodeName
+        {
+            set
+            {
+                _name = value;
+                AlterSettings<ChannelGraph>(x => x.Name = value);
+            }
+            get
+            {
+                return _name;
+            }
+        }
 
         internal ConfigGraph Config
         {
@@ -236,6 +271,67 @@ namespace FubuMVC.Core
         }
 
 
+
+
+
+        public HandlersExpression Handlers
+        {
+            get { return new HandlersExpression(this); }
+        }
+
+        public class HandlersExpression
+        {
+            private readonly FubuRegistry _parent;
+
+            public HandlersExpression(FubuRegistry parent)
+            {
+                _parent = parent;
+            }
+
+            public void Include(params Type[] types)
+            {
+                _parent.Config.Add(new ExplicitTypeHandlerSource(types));
+            }
+
+            public void Include<T>()
+            {
+                Include(typeof(T));
+            }
+
+            public void FindBy(Action<HandlerSource> configuration)
+            {
+                var source = new HandlerSource();
+                configuration(source);
+
+                _parent.Config.Add(source);
+            }
+
+            public void FindBy<T>() where T : IHandlerSource, new()
+            {
+                _parent.Config.Add(new T());
+            }
+
+            public void FindBy(IHandlerSource source)
+            {
+                _parent.Config.Add(source);
+            }
+
+            /// <summary>
+            /// Completely remove the default handler finding
+            /// logic.  This is probably only applicable to 
+            /// retrofitting FubuTransportation to existing 
+            /// systems with a very different nomenclature
+            /// than the defaults
+            /// </summary>
+            public void DisableDefaultHandlerSource()
+            {
+                _parent.Config.Handlers.HandlerSources.RemoveAll(x => x is DefaultHandlerSource);
+            }
+        }
+
+
+
+
         private Func<IContainer> _containerSource = () => new Container();
 
         public void StructureMap(IContainer existing)
@@ -257,5 +353,65 @@ namespace FubuMVC.Core
         {
             return _containerSource == null ? new Container() : _containerSource();
         }
+
+        /// <summary>
+        /// A shortcut to programmatically set the NodeId
+        /// Useful for testing or running multiples of the same
+        /// configured Node on one box
+        /// </summary>
+        public string NodeId
+        {
+            set
+            {
+                AlterSettings<ChannelGraph>(x => x.NodeId = value);
+            }
+        }
+
+
+        public void DefaultSerializer<T>() where T : IMessageSerializer, new()
+        {
+            AlterSettings<ChannelGraph>(graph => graph.DefaultContentType = new T().ContentType);
+        }
+
+        public void DefaultContentType(string contentType)
+        {
+            AlterSettings<ChannelGraph>(graph => graph.DefaultContentType = contentType);
+        }
+
+
+        public void SagaStorage<T>() where T : ISagaStorage, new()
+        {
+            AlterSettings<TransportSettings>(x => x.SagaStorageProviders.Add(new T()));
+        }
+
+        /// <summary>
+        /// Enable the in memory transport
+        /// </summary>
+        public void EnableInMemoryTransport(Uri replyUri = null)
+        {
+            AlterSettings<TransportSettings>(x => x.EnableInMemoryTransport = true);
+
+            if (replyUri != null)
+            {
+                AlterSettings<MemoryTransportSettings>(x => x.ReplyUri = replyUri);
+            }
+        }
+
+        public PollingJobExpression Polling
+        {
+            get { return new PollingJobExpression(this); }
+        }
+
+
+
+        public HealthMonitoringExpression HealthMonitoring
+        {
+            get
+            {
+                return new HealthMonitoringExpression(this);
+            }
+        }
+
+
     }
 }

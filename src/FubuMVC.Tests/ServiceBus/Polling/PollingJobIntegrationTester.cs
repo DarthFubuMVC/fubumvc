@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.ServiceBus.Polling
         {
             OneJob.Executed = TwoJob.Executed = ThreeJob.Executed = 0;
 
-            theRuntime = FubuTransport.For<PollingRegistry>()
+            theRuntime = FubuApplication.For<PollingRegistry>()
                                       .Bootstrap();
 
             container = theRuntime.Factory.Get<IContainer>();
@@ -111,10 +111,12 @@ namespace FubuMVC.Tests.ServiceBus.Polling
         }
     }
 
-    public class PollingRegistry : FubuTransportRegistry
+    public class PollingRegistry : FubuRegistry
     {
         public PollingRegistry()
         {
+            Features.ServiceBus.Enable(true);
+
             EnableInMemoryTransport();
 
             Polling.RunJob<OneJob>().ScheduledAtInterval<PollingSettings>(x => x.OneInterval);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Sagas;
 using StructureMap.Pipeline;
@@ -8,12 +9,12 @@ using StructureMap.Pipeline;
 namespace FubuMVC.Tests.ServiceBus.Docs.Sagas
 {
     // SAMPLE: SagaRepositorySample
-    public class SagaRepositorySampleTransportRegistry : FubuTransportRegistry
+    public class SagaRepositorySampleTransportRegistry : FubuRegistry
     {
         public SagaRepositorySampleTransportRegistry()
         {
             //if overriding the repository of a specific chain
-            Local.Policy<AlternativeRepositoryPolicy>();
+            Policies.Local.Add<AlternativeRepositoryPolicy>();
 
             //or if globally overriding all saga persistence
             SagaStorage<AlternativeSagaStorage>();

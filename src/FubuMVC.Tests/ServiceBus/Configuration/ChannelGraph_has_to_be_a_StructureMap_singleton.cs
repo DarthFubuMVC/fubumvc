@@ -10,7 +10,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
         [Test]
         public void must_be_a_singleton()
         {
-            using (var runtime = FubuTransport.For(x => x.EnableInMemoryTransport()).Bootstrap()
+            using (var runtime = FubuTransport.DefaultPolicies().Bootstrap()
                 )
             {
                 var graph1 = runtime.Container.GetInstance<ChannelGraph>();

@@ -11,11 +11,16 @@ namespace FubuMVC.Core.ServiceBus.ScheduledJobs.Configuration
 {
     public class ScheduledJobHandlerSource : IHandlerSource
     {
-        public readonly IList<Type> JobTypes = new List<Type>(); 
+        private readonly Type[] _jobTypes;
+
+        public ScheduledJobHandlerSource(Type[] jobTypes)
+        {
+            _jobTypes = jobTypes;
+        }
 
         public IEnumerable<HandlerCall> FindCalls(Assembly applicationAssembly)
         {
-            return JobTypes.SelectMany(handlersForJob).ToArray();
+            return _jobTypes.SelectMany(handlersForJob).ToArray();
 
         }
 

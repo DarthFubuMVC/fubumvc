@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core.ServiceBus.Configuration;
+﻿using FubuMVC.Core;
+using FubuMVC.Core.ServiceBus.Configuration;
 using NUnit.Framework;
 using Shouldly;
 
@@ -10,12 +11,12 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
         [Test]
         public void able_to_derive_the_node_name_from_fubu_transport_registry_name()
         {
-            using (var runtime = FubuTransport.For<CustomTransportRegistry>().Bootstrap())
+            using (var runtime = FubuApplication.For<CustomTransportRegistry>().Bootstrap())
             {
                 runtime.Factory.Get<ChannelGraph>().Name.ShouldBe("custom");
             }
 
-            using (var fubuRuntime = FubuTransport.For<OtherRegistry>().Bootstrap())
+            using (var fubuRuntime = FubuApplication.For<OtherRegistry>().Bootstrap())
             {
                 fubuRuntime
                     .Factory.Get<ChannelGraph>().Name.ShouldBe("other");
@@ -25,10 +26,10 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
         [Test]
         public void can_set_the_node_name_programmatically()
         {
-            using (var fubuRuntime = FubuTransport.For(x => {
-                x.NodeName = "MyNode";
-                x.EnableInMemoryTransport();
-            }).Bootstrap())
+            var registry = new FubuRegistry {NodeName = "MyNode"};
+
+
+            using (var fubuRuntime = FubuApplication.For(registry).Bootstrap())
             {
                 fubuRuntime
                     .Factory.Get<ChannelGraph>().Name.ShouldBe("MyNode");
@@ -36,18 +37,20 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
         }
     }
 
-    public class CustomTransportRegistry : FubuTransportRegistry
+    public class CustomTransportRegistry : FubuRegistry
     {
         public CustomTransportRegistry()
         {
+            Features.ServiceBus.Enable(true);
             EnableInMemoryTransport();
         }
     }
 
-    public class OtherRegistry : FubuTransportRegistry
+    public class OtherRegistry : FubuRegistry
     {
         public OtherRegistry()
         {
+            Features.ServiceBus.Enable(true);
             EnableInMemoryTransport();
         }
     }

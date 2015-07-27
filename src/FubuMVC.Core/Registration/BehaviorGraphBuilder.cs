@@ -44,7 +44,6 @@ namespace FubuMVC.Core.Registration
             featureLoading.Wait();
             Task.WaitAll(featureLoading.Result);
 
-
             perfTimer.Record("Local Application BehaviorGraph", () => config.BuildLocal(graph, perfTimer));
 
             // TODO -- undo the R# change to something. Or other.
@@ -53,6 +52,9 @@ namespace FubuMVC.Core.Registration
                 var attacher = new ViewAttachmentWorker(t.Result, graph.Settings.Get<ViewAttachmentPolicy>());
                 attacher.Configure(graph);
             }))(t1))).Wait();
+
+
+            
 
 
             perfTimer.Record("Explicit Configuration", () => config.Global.Explicits.RunActions(graph));

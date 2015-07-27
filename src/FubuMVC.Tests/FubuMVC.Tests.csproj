@@ -172,6 +172,7 @@
     <Compile Include="Http\Owin\OwnCurrentHttpRequestTester.cs" />
     <Compile Include="Http\Owin\OwnHttpWriterTester.cs" />
     <Compile Include="Http\StreamExtensions.cs" />
+    <Compile Include="ServiceBus\Registration\HandlerGraphSource.cs" />
     <Compile Include="TestSupport\GenericVoidMethod.cs" />
     <Compile Include="TestSupport\InteractionContext.cs" />
     <Compile Include="Json\ComplexType.cs" />
@@ -330,7 +331,6 @@
     <Compile Include="ServiceBus\Docs\GettingStarted\GettingStartedTransportRegistry.cs" />
     <Compile Include="ServiceBus\Docs\GettingStarted\Handlers.cs" />
     <Compile Include="ServiceBus\Docs\Instrumentation\FubuEmbeddedApplicationSource.cs" />
-    <Compile Include="ServiceBus\Docs\Instrumentation\FubuEmbeddedRegistry.cs" />
     <Compile Include="ServiceBus\Docs\Polling\PollingJobSamples.cs" />
     <Compile Include="ServiceBus\Docs\Sagas\SagaRepositorySample.cs" />
     <Compile Include="ServiceBus\Docs\Sagas\SimpleSaga.cs" />

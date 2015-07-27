@@ -1,4 +1,5 @@
 ﻿using System;
+using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
@@ -19,7 +20,7 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
             MessageThatThrowsHandler.Successful = null;
             CounterContinuation.Counter = 0;
 
-            using (var runtime = FubuTransport.For<CountAndRetryOnExceptionRegistry>()
+            using (var runtime = FubuApplication.For<CountAndRetryOnExceptionRegistry>()
                         
                         .Bootstrap())
             {
@@ -33,12 +34,13 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
         }
     }
 
-    public class CountAndRetryOnExceptionRegistry : FubuTransportRegistry
+    public class CountAndRetryOnExceptionRegistry : FubuRegistry
     {
         public CountAndRetryOnExceptionRegistry()
         {
+            Features.ServiceBus.Enable(true);
             EnableInMemoryTransport();
-            Local.Policy<CountAndRetryOnExceptionPolicy>();
+            Policies.Local.Add<CountAndRetryOnExceptionPolicy>();
         }
     }
 

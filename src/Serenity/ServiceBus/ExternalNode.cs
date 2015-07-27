@@ -36,7 +36,7 @@ namespace Serenity.ServiceBus
 
         private bool IsValidRegistryType(Type type)
         {
-            return type.IsConcreteTypeOf<FubuTransportRegistry>();
+            return type.IsConcreteTypeOf<FubuRegistry>();
         }
 
         public FubuRuntime Runtime { get; private set; }
@@ -135,7 +135,7 @@ namespace Serenity.ServiceBus
                 return;
             _isStarted = true;
 
-            var registry = Activator.CreateInstance(_registryType).As<FubuTransportRegistry>();
+            var registry = Activator.CreateInstance(_registryType).As<FubuRegistry>();
             registry.NodeName = _name;
             registry.EnableInMemoryTransport();
             registry.Services(x => x.ReplaceService<IEnvelopeHandler, ExternalNodeEnvelopeHandler>());
@@ -148,7 +148,9 @@ namespace Serenity.ServiceBus
                 x.Forward<IMessageRecorder, IListener>();
             });
 
-            Runtime = FubuTransport.For(registry, container).Bootstrap();
+            registry.StructureMap(container);
+
+            Runtime = FubuApplication.For(registry).Bootstrap();
             Uri = Runtime.Factory.Get<ChannelGraph>().ReplyUriList().First();
             _recorder = Runtime.Factory.Get<IMessageRecorder>();
 

@@ -11,11 +11,13 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
         [Test]
         public void handler_calls_are_registered_by_default()
         {
-            var graph = FubuTransportRegistry.HandlerGraphFor(x => { });
+            using (var runtime = FubuTransport.DefaultPolicies().Bootstrap())
+            {
+                runtime.Behaviors.HandlerChainFor<TakeOwnershipRequest>().ShouldNotBeNull();
+                runtime.Behaviors.HandlerChainFor<TaskHealthRequest>().ShouldNotBeNull();
+                runtime.Behaviors.HandlerChainFor<TaskDeactivation>().ShouldNotBeNull();
+            }
 
-            graph.ChainFor<TakeOwnershipRequest>().ShouldNotBeNull();
-            graph.ChainFor<TaskHealthRequest>().ShouldNotBeNull();
-            graph.ChainFor<TaskDeactivation>().ShouldNotBeNull();
         }
     }
 }

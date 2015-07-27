@@ -36,11 +36,11 @@ namespace FubuMVC.LightningQueues.Testing
             };
             var lightningUri = settings.Downstream.ToLightningUri();
 
-            var container = new Container();
-            container.Inject(settings);
 
-
-            _runtime = FubuTransport.For<ErrorRegistry>(container)
+            _runtime = FubuApplication.For<ErrorRegistry>(x =>
+            {
+                x.Services(_ => _.For<BusSettings>().Use(settings));
+            })
                 .Bootstrap();
             //_runtime.Factory.Get<IPersistentQueues>().ClearAll();
 
@@ -87,7 +87,7 @@ namespace FubuMVC.LightningQueues.Testing
             Channel(x => x.Downstream)
                 .ReadIncoming(ByTasks(x => x.DownstreamCount))
                 .AcceptsMessagesInAssemblyContainingType<OneMessage>();
-            Global.Policy<ErrorPolicy>();
+            Policies.Global.Add<ErrorPolicy>();
         }
     }
 

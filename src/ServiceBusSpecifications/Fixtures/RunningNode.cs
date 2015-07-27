@@ -37,7 +37,7 @@ namespace ServiceBusSpecifications.Fixtures
 
             _registryType =
                 Assembly.GetExecutingAssembly()
-                    .ExportedTypes.Where(x => x.IsConcreteTypeOf<FubuTransportRegistry>())
+                    .ExportedTypes.Where(x => x.IsConcreteTypeOf<FubuRegistry>())
                     .FirstOrDefault(x => x.Name.EqualsIgnoreCase(typeName));
 
             var file =
@@ -52,7 +52,7 @@ namespace ServiceBusSpecifications.Fixtures
 
         public void Start()
         {
-            var registry = Activator.CreateInstance(_registryType).As<FubuTransportRegistry>();
+            var registry = Activator.CreateInstance(_registryType).As<FubuRegistry>();
             registry.Services(x =>
             {
                 _persistence = Subscriptions[registry.NodeName];
@@ -64,7 +64,7 @@ namespace ServiceBusSpecifications.Fixtures
 
             registry.EnableInMemoryTransport(_replyUri);
 
-            _runtime = FubuTransport.For(registry).Bootstrap();
+            _runtime = FubuApplication.For(registry).Bootstrap();
         }
 
         public InMemorySubscriptionPersistence Persistence

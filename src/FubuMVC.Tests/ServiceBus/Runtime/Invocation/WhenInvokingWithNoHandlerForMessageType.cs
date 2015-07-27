@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core.ServiceBus.Configuration;
+﻿using FubuMVC.Core.Registration;
+using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
@@ -11,11 +12,11 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
     [TestFixture]
     public class WhenInvokingWithNoHandlerForMessageType : InteractionContext<HandlerPipeline>
     {
-        private HandlerGraph theGraph;
+        private BehaviorGraph theGraph;
 
         protected override void beforeEach()
         {
-            theGraph = FubuTransportRegistry.HandlerGraphFor(x =>
+            theGraph = FubuTransport.BehaviorGraphFor(x =>
             {
                 x.Handlers.DisableDefaultHandlerSource();
                 x.Handlers.Include<OneHandler>();
@@ -24,7 +25,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
                 x.Handlers.Include<FourHandler>();
             });
 
-            Services.Inject<HandlerGraph>(theGraph);
+            Services.Inject(theGraph);
         }
 
 

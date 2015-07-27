@@ -10,6 +10,7 @@ using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Runtime.Files;
+using FubuMVC.Core.ServiceBus.Configuration;
 using StructureMap.Configuration.DSL;
 
 namespace FubuMVC.Core.Registration
@@ -83,6 +84,11 @@ namespace FubuMVC.Core.Registration
         {
             get { return _behaviors.OfType<RoutedChain>().Select(x => x.Route); }
         }
+
+        public IEnumerable<HandlerChain> Handlers
+        {
+            get { return _behaviors.OfType<HandlerChain>(); }
+        } 
 
         /// <summary>
         ///   All the BehaviorChain's
@@ -370,6 +376,15 @@ namespace FubuMVC.Core.Registration
         }
 
 
+        public HandlerChain HandlerChainFor<T>()
+        {
+            return Handlers.FirstOrDefault(x => x.InputType() == typeof (T));
+        }
+
+        public BehaviorChain ChainFor(Type type)
+        {
+            return Behaviors.FirstOrDefault(x => x.InputType() == type);
+        }
     }
 
 

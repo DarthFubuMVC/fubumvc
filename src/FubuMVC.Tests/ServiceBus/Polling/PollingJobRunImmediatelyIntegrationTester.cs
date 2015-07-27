@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.ServiceBus.Polling
         {
             ImmediateJob.Executed = DelayJob.Executed = DisabledJob.Executed = 0;
 
-            theRuntime = FubuTransport.For<PollingImmediateRegistry>()
+            theRuntime = FubuApplication.For<PollingImmediateRegistry>()
                                       
                                       .Bootstrap();
         }
@@ -49,10 +49,12 @@ namespace FubuMVC.Tests.ServiceBus.Polling
         }
     }
 
-    public class PollingImmediateRegistry : FubuTransportRegistry
+    public class PollingImmediateRegistry : FubuRegistry
     {
         public PollingImmediateRegistry()
         {
+            Features.ServiceBus.Enable(true);
+
             EnableInMemoryTransport();
 
             Polling.RunJob<ImmediateJob>().ScheduledAtInterval<PollingImmediateSettings>(x => x.ImmediateInterval).RunImmediately();

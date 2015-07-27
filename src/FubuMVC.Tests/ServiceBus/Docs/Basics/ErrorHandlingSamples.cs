@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 
 namespace FubuMVC.Tests.ServiceBus.Docs.Basics
@@ -34,15 +35,15 @@ namespace FubuMVC.Tests.ServiceBus.Docs.Basics
     // ENDSAMPLE
 
     // SAMPLE: ErrorHandlingTransportSample
-    public class TransportRegistryWithErrorPolicy : FubuTransportRegistry
+    public class TransportRegistryWithErrorPolicy : FubuRegistry
     {
         public TransportRegistryWithErrorPolicy()
         {
             //applies to all handler chains
-            Global.Policy<ErrorHandlingPolicy>();
+            Policies.Global.Add<ErrorHandlingPolicy>();
 
             //applies policy only to chains created from this registry
-            Local.Policy<ErrorHandlingPolicy>();
+            Policies.Local.Add<ErrorHandlingPolicy>();
         }
     }
     // ENDSAMPLE

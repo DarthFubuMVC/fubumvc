@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
             BJob.Reset();
             CJob.Reset();
 
-            theRuntime = FubuTransport.For<ScheduledJobRegistry>()
+            theRuntime = FubuApplication.For<ScheduledJobRegistry>()
                 
                 .Bootstrap();
         }

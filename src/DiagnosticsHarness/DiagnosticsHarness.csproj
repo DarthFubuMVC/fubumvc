@@ -79,7 +79,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FubuHarnessRegistry.cs" />
     <Compile Include="HarnessApplication.cs" />
     <Compile Include="HarnessRegistry.cs" />
     <Compile Include="HarnessSettings.cs" />

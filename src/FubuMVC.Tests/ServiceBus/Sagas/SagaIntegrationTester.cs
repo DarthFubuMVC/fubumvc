@@ -38,7 +38,10 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
                 x.For<IListener>().Add<MessageWatcher>();
             });
 
-            theRuntime = FubuTransport.For<SagaTestRegistry>(theContainer).Bootstrap();
+            var registry = new SagaTestRegistry();
+            registry.StructureMap(theContainer);
+
+            theRuntime = FubuApplication.For(registry).Bootstrap();
 
             MessageHistory.StartListening();
         }
@@ -105,7 +108,10 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
                 x.For<IListener>().Add<MessageWatcher>();
             });
 
-            theRuntime = FubuTransport.For<SagaTestRegistry>(theContainer).Bootstrap();
+            var registry = new SagaTestRegistry();
+            registry.StructureMap(theContainer);
+
+            theRuntime = FubuApplication.For(registry).Bootstrap();
 
             MessageHistory.ClearAll();
         }

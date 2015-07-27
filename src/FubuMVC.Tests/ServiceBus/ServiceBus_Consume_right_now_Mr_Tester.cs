@@ -1,6 +1,6 @@
 ﻿using System.Linq;
+using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus;
-using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using NUnit.Framework;
 using Shouldly;
@@ -14,8 +14,9 @@ namespace FubuMVC.Tests.ServiceBus
         public void send_now_is_handled_right_now()
         {
 
-            using (var runtime = FubuTransport.For(x =>
+            using (var runtime = FubuApplication.For<FubuRegistry>(x =>
             {
+                x.Features.ServiceBus.Enable(true);
                 x.EnableInMemoryTransport();
                 x.Handlers.DisableDefaultHandlerSource();
                 x.Handlers.Include<SimpleHandler<OneMessage>>();

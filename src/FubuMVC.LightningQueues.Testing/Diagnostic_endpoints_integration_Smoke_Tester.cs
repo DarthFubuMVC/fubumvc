@@ -28,10 +28,7 @@ namespace FubuMVC.LightningQueues.Testing
     {
         public FubuApplication BuildApplication()
         {
-            var registry = new FubuRegistry();
-            registry.Import<LightningQueuesDiagnosticsTransportRegistry>();
-
-            return FubuApplication.For(registry);
+            return FubuApplication.For<LightningQueuesDiagnosticsTransportRegistry>();
         }
     }
 

@@ -44,6 +44,7 @@ namespace FubuMVC.Tests.ServiceBus.ScenarioSupport
             var nodeName = ReflectionHelper.GetProperty(_expression).Name;
             registry.NodeName = nodeName;
 
+
             registry.Channel(_expression).ReadIncoming(new ThreadScheduler(2));
 
             registry.Handlers.DisableDefaultHandlerSource();
@@ -51,6 +52,7 @@ namespace FubuMVC.Tests.ServiceBus.ScenarioSupport
             registry.AlterSettings<TransportSettings>(x => x.DebugEnabled = true);
 
             var container = new Container();
+            registry.StructureMap(container);
 
             // Make it all be 
             var harnessSettings = InMemoryTransport.ToInMemory<HarnessSettings>();
@@ -62,7 +64,7 @@ namespace FubuMVC.Tests.ServiceBus.ScenarioSupport
 
             _uri = (Uri) ReflectionHelper.GetAccessor(_expression).GetValue(harnessSettings);
 
-            _runtime = FubuTransport.For(registry, container).Bootstrap();
+            _runtime = FubuApplication.For(registry).Bootstrap();
             _serviceBus = container.GetInstance<IServiceBus>();
         }
 

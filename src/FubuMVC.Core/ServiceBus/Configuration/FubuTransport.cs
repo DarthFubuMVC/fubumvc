@@ -1,5 +1,6 @@
 ﻿using System;
 using FubuCore;
+using FubuMVC.Core.Registration;
 using StructureMap;
 
 namespace FubuMVC.Core.ServiceBus.Configuration
@@ -10,54 +11,27 @@ namespace FubuMVC.Core.ServiceBus.Configuration
     /// </summary>
     public static class FubuTransport
     {
-        public static FubuApplication For<T>(Action<T> customize = null, IContainer container = null) where T : FubuTransportRegistry, new()
+        public static BehaviorGraph BehaviorGraphFor(Action<FubuRegistry> configuration)
         {
-            var extension = new T();
-            if (customize != null)
+            return BehaviorGraph.BuildFrom(x =>
             {
-                customize(extension);
-            }
-
-            return For(extension, container);
-        }
-
-        public static FubuApplication For<T>(IContainer container) where T : FubuTransportRegistry, new()
-        {
-            var registry = new FubuRegistry();
-            registry.Features.ServiceBus.Enable(true);
-
-            registry.StructureMap(container);
-            var extension = new T();
-            extension.As<IFubuRegistryExtension>().Configure(registry);
-            return FubuApplication.For(registry);
-        }
-
-        public static FubuApplication For(FubuTransportRegistry extension, IContainer container = null)
-        {
-            var registry = new FubuRegistry();
-            registry.Features.ServiceBus.Enable(true);
-
-            if (container != null)
-            {
-                registry.StructureMap(container);
-            }
-
-            extension.As<IFubuRegistryExtension>().Configure(registry);
-            return FubuApplication.For(registry);
-        }
-
-        public static FubuApplication For(Action<FubuTransportRegistry> configuration, IContainer container = null)
-        {
-            var extension = FubuTransportRegistry.For(configuration);
-            return For(extension, container);
- 
+                x.Features.ServiceBus.Enable(true);
+                configuration(x);
+            });
         }
 
         public static FubuApplication DefaultPolicies(IContainer container = null)
         {
-            return For(x => {
-                x.EnableInMemoryTransport();
-            }, container);
+            var registry = new FubuRegistry();
+            registry.StructureMap(container);
+
+            registry.Features.ServiceBus.Configure(x =>
+            {
+                x.Enabled = true;
+                x.EnableInMemoryTransport = true;
+            });
+
+            return FubuApplication.For(registry);
         }
 
         static FubuTransport()

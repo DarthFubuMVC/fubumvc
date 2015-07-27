@@ -4,6 +4,7 @@ using System.Linq;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.ServiceBus.Polling;
+using FubuMVC.Core.ServiceBus.ScheduledJobs.Configuration;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Execution;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
 using StructureMap.Pipeline;
@@ -45,6 +46,8 @@ namespace FubuMVC.Core.ServiceBus.ScheduledJobs
 
         void IFeatureSettings.Apply(FubuRegistry registry)
         {
+            registry.Config.Add(new ScheduledJobHandlerSource(Jobs.Select(x => x.JobType).ToArray()));
+
             registry.Services(_ =>
             {
                 Jobs.Each(x =>

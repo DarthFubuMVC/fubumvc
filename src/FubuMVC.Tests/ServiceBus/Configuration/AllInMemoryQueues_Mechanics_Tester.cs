@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
@@ -20,8 +21,12 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
             FubuTransport.AllQueuesInMemory = true;
 
             var registry = new FubuRegistry();
-            registry.Import<AllInMemoryRegistry>();
-            registry.Import<AnotherRegistry>();
+            registry.AlterSettings<TransportSettings>(x =>
+            {
+                x.SettingTypes.Fill(typeof (BusSettings));
+                x.SettingTypes.Fill(typeof (AnotherSettings));
+            });
+
             registry.Features.ServiceBus.Enable(true);
 
             runtime = FubuApplication.For(registry).Bootstrap();

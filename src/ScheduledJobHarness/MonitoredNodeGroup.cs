@@ -48,7 +48,11 @@ namespace ScheduledJobHarness
 
             ReplaceSettings(RavenDbSettings.InMemory());
 
-            Import<MonitoredTransportRegistry>();
+            Features.ServiceBus.Configure(x =>
+            {
+                x.Enabled = true;
+                x.EnableInMemoryTransport = true;
+            });
 
             container = new Container(_ => _.ForSingletonOf<MonitoredNodeGroup>().Use(this));
             this.StructureMap(container);
@@ -59,14 +63,6 @@ namespace ScheduledJobHarness
             _subscriptions = _runtime.Factory.Get<ISubscriptionPersistence>();
             _schedules = _runtime.Factory.Get<ISchedulePersistence>();
             _store = _runtime.Factory.Get<IDocumentStore>();
-        }
-
-        public class MonitoredTransportRegistry : FubuTransportRegistry
-        {
-            public MonitoredTransportRegistry()
-            {
-                EnableInMemoryTransport();
-            }
         }
 
         public System.Collections.Generic.IEnumerable<MonitoredNode> Nodes()

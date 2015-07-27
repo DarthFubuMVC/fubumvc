@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Threading;
+using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Polling;
 
 namespace FubuMVC.Tests.ServiceBus.Docs.Polling
 {
     // SAMPLE: PollingJobSamples
-    public class PollingJobSampleTransportRegistry : FubuTransportRegistry
+    public class PollingJobSampleTransportRegistry : FubuRegistry
     {
         public PollingJobSampleTransportRegistry()
         {

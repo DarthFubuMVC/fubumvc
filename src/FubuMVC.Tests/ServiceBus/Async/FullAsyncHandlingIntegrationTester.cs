@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Tests.TestSupport;
@@ -20,7 +23,7 @@ namespace FubuMVC.Tests.ServiceBus.Async
         {
             AsyncWatcher.Clear();
 
-            using (var runtime = FubuTransport.For<AsyncRegistry>().Bootstrap())
+            using (var runtime = FubuApplication.For<AsyncRegistry>().Bootstrap())
             {
                 var invoker = runtime.Factory.Get<IChainInvoker>();
                 var message = new Foo {Name = "Buck Rogers"};
@@ -37,13 +40,23 @@ namespace FubuMVC.Tests.ServiceBus.Async
         }
     }
 
-    public class AsyncRegistry : FubuTransportRegistry
+    public class AsyncRegistry : FubuRegistry
     {
         public AsyncRegistry()
         {
+            Features.ServiceBus.Enable(true);
+
             EnableInMemoryTransport();
 
-            Local.WrapWith<FooWrapper>();
+            Policies.Local.Add<WrapWithFoo>();
+        }
+    }
+
+    public class WrapWithFoo : IConfigurationAction
+    {
+        public void Configure(BehaviorGraph graph)
+        {
+            graph.Handlers.Each(x => x.InsertFirst(Wrapper.For<FooWrapper>()));
         }
     }
 

@@ -80,10 +80,10 @@ namespace ServiceBusSpecifications.Fixtures.Monitoring
                     : ScheduledExecution.Disabled)
                 .IntervalSeed(3);
 
-            _runtime = FubuTransport.For(this).Bootstrap();
+            _runtime = FubuApplication.For(this).Bootstrap();
             var controller = _runtime.Factory.Get<IPersistentTaskController>();
 
-            _initialTasks.Each(subject => { controller.TakeOwnership(subject).Wait(1.Seconds()); });
+            _initialTasks.Each(subject => controller.TakeOwnership(subject).Wait(1.Seconds()));
         }
 
         void IDisposable.Dispose()

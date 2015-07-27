@@ -2,6 +2,7 @@
 using System.Reflection;
 using FubuCore;
 using FubuCore.Util;
+using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
@@ -21,7 +22,7 @@ namespace ServiceBusSpecifications.Fixtures.Subscriptions
         {
             AddSelectionValues("FubuTransportRegistries",
                 Assembly.GetExecutingAssembly()
-                    .ExportedTypes.Where(x => x.IsConcreteTypeOf<FubuTransportRegistry>())
+                    .ExportedTypes.Where(x => x.IsConcreteTypeOf<FubuRegistry>())
                     .Select(x => x.Name)
                     .ToArray());
         }

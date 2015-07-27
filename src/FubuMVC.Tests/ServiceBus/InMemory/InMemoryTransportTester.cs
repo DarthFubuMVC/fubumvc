@@ -1,4 +1,5 @@
 ﻿using System;
+using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
@@ -23,7 +24,7 @@ namespace FubuMVC.Tests.ServiceBus.InMemory
         public void to_in_memory_with_default_settings()
         {
             FubuTransport.SetupForInMemoryTesting<DefaultSettings>();
-            using (var runtime = FubuTransport.For<DefaultRegistry>().Bootstrap())
+            using (var runtime = FubuApplication.For<DefaultRegistry>().Bootstrap())
             {
                 var settings = InMemoryTransport.ToInMemory<NodeSettings>();
                 settings.Inbound.ShouldBe(new Uri("memory://default/inbound"));
@@ -34,9 +35,7 @@ namespace FubuMVC.Tests.ServiceBus.InMemory
         [Test]
         public void default_reply_uri()
         {
-            using (var runtime = FubuTransport.For(x => {
-                x.EnableInMemoryTransport();
-            }).Bootstrap())
+            using (var runtime = FubuTransport.DefaultPolicies().Bootstrap())
             {
                 runtime.Factory.Get<ChannelGraph>().ReplyChannelFor(InMemoryChannel.Protocol)
                     .ShouldBe("memory://localhost/fubu/replies".ToUri());
@@ -46,10 +45,10 @@ namespace FubuMVC.Tests.ServiceBus.InMemory
         [Test]
         public void override_the_reply_uri()
         {
-            using (var runtime = FubuTransport.For(x =>
-            {
-                x.EnableInMemoryTransport("memory://special".ToUri());
-            }).Bootstrap())
+            var registry = new FubuRegistry();
+            registry.EnableInMemoryTransport("memory://special".ToUri());
+
+            using (var runtime = FubuApplication.For(registry).Bootstrap())
             {
                 runtime.Factory.Get<ChannelGraph>().ReplyChannelFor(InMemoryChannel.Protocol)
                     .ShouldBe("memory://special".ToUri());

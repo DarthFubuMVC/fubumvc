@@ -3,7 +3,6 @@ using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Polling;
 using ServiceNode;
-using StructureMap;
 
 namespace WebsiteNode
 {
@@ -11,9 +10,11 @@ namespace WebsiteNode
     {
         public FubuApplication BuildApplication()
         {
-            var container = new Container(x => { x.For<MessageRecorder>().Singleton(); });
-
-            return FubuTransport.For<WebsiteRegistry>(container);
+            return FubuApplication.For<FubuRegistry>(x =>
+            {
+                x.Services(_ => _.For<MessageRecorder>().Singleton());
+                x.Features.ServiceBus.Enable(true);
+            });
         }
     }
 

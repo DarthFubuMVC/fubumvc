@@ -39,7 +39,7 @@ namespace ScheduledJobHarness
 
         public MonitoredNode(string nodeId, Uri incoming, IDocumentStore store)
         {
-            Local.Policy<ErrorHandlingPolicy>();
+            Policies.Local.Add<ErrorHandlingPolicy>();
 
             AlterSettings<MonitoringSettings>(x => x.Incoming = "memory://jobs".ToUri());
 
@@ -87,7 +87,7 @@ namespace ScheduledJobHarness
                 _.ReplaceService(schedules);
             });
 
-            _runtime = FubuTransport.For(this).Bootstrap();
+            _runtime = FubuApplication.For(this).Bootstrap();
         }
 
         void IDisposable.Dispose()

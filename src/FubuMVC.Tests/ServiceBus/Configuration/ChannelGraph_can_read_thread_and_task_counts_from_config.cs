@@ -34,7 +34,10 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
                 x.For<ConfiguredSettings>().Use(theSettings);
             });
 
-            theRuntime = FubuTransport.For<ConfiguredFubuRegistry>(theContainer)
+            var registry = new ConfiguredFubuRegistry();
+            registry.StructureMap(theContainer);
+
+            theRuntime = FubuApplication.For(registry)
                 .Bootstrap();
 
             theGraph = theContainer.GetInstance<ChannelGraph>();

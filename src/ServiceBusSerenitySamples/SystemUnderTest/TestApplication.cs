@@ -1,6 +1,4 @@
 ﻿using FubuMVC.Core;
-using FubuMVC.Core.ServiceBus.Configuration;
-using StructureMap;
 
 namespace ServiceBusSerenitySamples.SystemUnderTest
 {
@@ -8,12 +6,7 @@ namespace ServiceBusSerenitySamples.SystemUnderTest
     {
         public FubuApplication BuildApplication()
         {
-            var container = new Container(x =>
-            {
-                x.For<MessageRecorder>().Singleton();
-            });
-
-            return FubuTransport.For<TestRegistry>(container);
+            return FubuApplication.For<TestRegistry>(x => { x.Services(_ => _.For<MessageRecorder>().Singleton()); });
         }
     }
 }

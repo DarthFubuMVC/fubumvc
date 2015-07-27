@@ -12,7 +12,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 {
     public abstract class InvocationContext
     {
-        private FubuTransportRegistry theTransportRegistry;
+        private FubuRegistry theTransportRegistry;
         private Lazy<IChainInvoker> _invoker;
 
         protected IMessageCallback theCallback;
@@ -24,14 +24,16 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
         [SetUp]
         public void SetUp()
         {
-            theTransportRegistry = FubuTransportRegistry.Empty();
+            theTransportRegistry = new FubuRegistry();
+            theTransportRegistry.Features.ServiceBus.Enable(true);
+
             theTransportRegistry.Handlers.DisableDefaultHandlerSource();
             theTransportRegistry.EnableInMemoryTransport();
 
             TestMessageRecorder.Clear();
 
             _invoker = new Lazy<IChainInvoker>(() => {
-                theRuntime = FubuTransport.For(theTransportRegistry).Bootstrap();
+                theRuntime = FubuApplication.For(theTransportRegistry).Bootstrap();
 
                 return theRuntime.Factory.Get<IChainInvoker>();
             });

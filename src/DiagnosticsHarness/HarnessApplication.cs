@@ -9,7 +9,7 @@ namespace DiagnosticsHarness
         {
             var container = new Container(x => x.ForSingletonOf<INumberCache>().Use<NumberCache>());
 
-            return FubuApplication.For<FubuHarnessRegistry>(_ => _.StructureMap(container));
+            return FubuApplication.For<HarnessRegistry>(_ => _.StructureMap(container));
         }
     }
 }

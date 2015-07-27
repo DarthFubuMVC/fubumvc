@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
@@ -18,7 +19,7 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
             MessageThatBombsHandler.Attempts = 0;
             MessageThatBombsHandler.Successful = null;
 
-            using (var runtime = FubuTransport.For<RetryNoOnDbConcurrencyRegistry>()
+            using (var runtime = FubuApplication.For<RetryNoOnDbConcurrencyRegistry>()
                         
                         .Bootstrap())
             {
@@ -31,12 +32,13 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
         }
     }
 
-    public class RetryNoOnDbConcurrencyRegistry : FubuTransportRegistry
+    public class RetryNoOnDbConcurrencyRegistry : FubuRegistry
     {
         public RetryNoOnDbConcurrencyRegistry()
         {
+            Features.ServiceBus.Enable(true);
             EnableInMemoryTransport();
-            Local.Policy<RetryNowOnDbConcurrencyException>();
+            Policies.Local.Add<RetryNowOnDbConcurrencyException>();
         }
     }
 

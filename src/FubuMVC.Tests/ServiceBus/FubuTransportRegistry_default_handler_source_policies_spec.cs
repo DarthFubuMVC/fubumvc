@@ -15,7 +15,7 @@ namespace FubuMVC.Tests.ServiceBus
         [Test]
         public void should_automatically_pick_up_classes_suffixed_with_Handler()
         {
-            FubuTransportRegistry.HandlerGraphFor(r => {})
+            FubuTransport.BehaviorGraphFor(r => {})
                 .ChainFor(typeof(Message1)).OfType<HandlerCall>().Any(x => x.HandlerType == typeof(MyNewHandler))
                 .ShouldBeTrue();
         }
@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.ServiceBus
         [Test]
         public void should_automatically_pick_up_classes_suffixed_with_Consumer()
         {
-            FubuTransportRegistry.HandlerGraphFor(r => { })
+            FubuTransport.BehaviorGraphFor(r => { })
                 .ChainFor(typeof(Message1)).OfType<HandlerCall>().Any(x => x.HandlerType == typeof(MyNewConsumer))
                 .ShouldBeTrue();
         }
@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.ServiceBus
         [Test]
         public void default_handler_sources_are_not_used_if_a_custom_one_is_registered_and_disabled()
         {
-            var graph = FubuTransportRegistry.HandlerGraphFor(r => {
+            var graph = FubuTransport.BehaviorGraphFor(r => {
                 r.Handlers.DisableDefaultHandlerSource();
                 r.Handlers.FindBy<MyFunkyHandlerSource>();
             });
@@ -45,7 +45,7 @@ namespace FubuMVC.Tests.ServiceBus
         [Test]
         public void default_handler_sources_are_not_used_if_a_custom_one_is_registered_2_and_disabled()
         {
-            var graph = FubuTransportRegistry.HandlerGraphFor(r =>
+            var graph = FubuTransport.BehaviorGraphFor(r =>
             {
                 r.Handlers.FindBy(new MyFunkyHandlerSource());
                 r.Handlers.DisableDefaultHandlerSource();
@@ -60,7 +60,7 @@ namespace FubuMVC.Tests.ServiceBus
         [Test]
         public void can_override_the_default_handler_source_by_explicits_and_disabled()
         {
-            var graph = FubuTransportRegistry.HandlerGraphFor(r =>
+            var graph = FubuTransport.BehaviorGraphFor(r =>
             {
                 
                 r.Handlers.FindBy(x => {

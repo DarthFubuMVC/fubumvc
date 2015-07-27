@@ -38,7 +38,7 @@ namespace FubuMVC.Tests.ServiceBus.InMemory
             MessageHistory.ClearAll();
             InMemoryQueueManager.ClearAll();
 
-            theRuntime = FubuTransport.For<DelayedRegistry>()
+            theRuntime = FubuApplication.For<DelayedRegistry>()
                                        .Bootstrap();
 
             // Disable polling!

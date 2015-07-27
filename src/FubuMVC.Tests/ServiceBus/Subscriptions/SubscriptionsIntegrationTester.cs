@@ -22,11 +22,15 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
         [SetUp]
         public void SetUp()
         {
+            var registry = new RoutedRegistry();
+
             var container = new Container();
             settings = InMemoryTransport.ToInMemory<HarnessSettings>();
             container.Inject(settings);
 
-            runtime = FubuTransport.For<RoutedRegistry>(container).Bootstrap();
+            registry.StructureMap(container);
+
+            runtime = FubuApplication.For(registry).Bootstrap();
 
             theRouter = runtime.Factory.Get<ISubscriptionCache>();
         }

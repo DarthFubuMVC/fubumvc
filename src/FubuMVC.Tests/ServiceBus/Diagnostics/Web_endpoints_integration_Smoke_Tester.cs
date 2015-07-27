@@ -72,25 +72,23 @@ namespace FubuMVC.Tests.ServiceBus.Diagnostics
         }
     }
 
-    public class DiagnosticApplication : FubuTransportRegistry, IApplicationSource
+    public class DiagnosticApplication : FubuRegistry, IApplicationSource
     {
         public DiagnosticApplication()
         {
             EnableInMemoryTransport();
-        }
+            Features.ServiceBus.Enable(true);
 
-        public FubuApplication BuildApplication()
-        {
-            var registry = new FubuRegistry();
-            registry.Import<DiagnosticApplication>();
-
-            registry.AlterSettings<TransportSettings>(x =>
+            AlterSettings<TransportSettings>(x =>
             {
                 x.DelayMessagePolling = Int32.MaxValue;
                 x.ListenerCleanupPolling = Int32.MaxValue;
             });
+        }
 
-            return FubuApplication.For(registry);
+        public FubuApplication BuildApplication()
+        {
+            return FubuApplication.For<DiagnosticApplication>();
         }
     }
 }

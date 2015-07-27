@@ -26,14 +26,14 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
         [Test]
         public void can_find_chain_for_input_type()
         {
-            var graph = FubuTransportRegistry.HandlerGraphFor(x => {
+            var graph = FubuTransport.BehaviorGraphFor(x => {
                 x.Handlers.Include<OneHandler>();
                 x.Handlers.Include<TwoHandler>();
 
                 x.Handlers.DisableDefaultHandlerSource();
             });
 
-            var invoker = new ChainInvoker(null, graph, null, null, null, null);
+            var invoker = new ChainInvoker(null, graph, null, null, null);
 
             invoker.FindChain(new Envelope {Message = new OneMessage()})
                    .OfType<HandlerCall>().Single()

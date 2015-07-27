@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
@@ -22,7 +23,7 @@ namespace FubuMVC.Tests.ServiceBus
             {
                 x.Import<BlueRegistry>();
                 x.Import<GreenRegistry>();
-                x.Policies.ChainSource<ImportHandlers>(); // This would be here by extensions normally
+                x.Policies.ChainSource<SystemLevelHandlers>(); // This would be here by extensions normally
             });
 
             var cache = new ChainResolutionCache(graph);
@@ -53,7 +54,7 @@ namespace FubuMVC.Tests.ServiceBus
                 x.Import<GreenRegistry>();
                 x.Import<RedRegistry>();
 
-                x.Policies.ChainSource<ImportHandlers>(); 
+                x.Policies.ChainSource<SystemLevelHandlers>(); 
             });
 
             graph.Behaviors.Any(x => x is HandlerChain).ShouldBeTrue();
@@ -70,7 +71,7 @@ namespace FubuMVC.Tests.ServiceBus
                 x.Import<GreenRegistry>();
                 x.Import<RedRegistry>();
 
-                x.Policies.ChainSource<ImportHandlers>(); 
+                x.Policies.ChainSource<SystemLevelHandlers>(); 
             });
 
             graph.BehaviorFor<SomethingEndpoint>(x => x.get_hello())
@@ -79,31 +80,31 @@ namespace FubuMVC.Tests.ServiceBus
         }
     }
 
-    public class RedRegistry : FubuTransportRegistry
+    public class RedRegistry : FubuPackageRegistry
     {
         public RedRegistry()
         {
-            Global.Policy<WrapPolicy<RedWrapper>>();
+            Policies.Global.Add<WrapPolicy<RedWrapper>>();
         }
     }
 
-    public class GreenRegistry : FubuTransportRegistry
+    public class GreenRegistry : FubuPackageRegistry
     {
         public GreenRegistry()
         {
             Handlers.DisableDefaultHandlerSource();
             Handlers.Include<GreenHandler>();
-            Local.Policy<WrapPolicy<GreenWrapper>>();
+            Policies.Local.Add<WrapPolicy<GreenWrapper>>();
         }
     }
 
-    public class BlueRegistry : FubuTransportRegistry
+    public class BlueRegistry : FubuPackageRegistry
     {
         public BlueRegistry()
         {
             Handlers.DisableDefaultHandlerSource();
             Handlers.Include<BlueHandler>();
-            Local.Policy<WrapPolicy<BlueWrapper>>();
+            Policies.Local.Add<WrapPolicy<BlueWrapper>>();
         }
     }
 

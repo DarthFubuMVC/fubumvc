@@ -38,13 +38,17 @@ namespace FubuMVC.LightningQueues.Testing
             };
 
 
-            var container = new Container();
-            container.Inject(settings);
             theClock = new SettableClock();
-            container.Inject<ISystemTime>(theClock);
 
 
-            _runtime = FubuTransport.For<DelayedRegistry>(container)
+            _runtime = FubuApplication.For<DelayedRegistry>(_ =>
+            {
+                _.Services(x =>
+                {
+                    x.ReplaceService(settings);
+                    x.ReplaceService<ISystemTime>(theClock);
+                });
+            })
                 .Bootstrap();
 
             theServiceBus = _runtime.Factory.Get<IServiceBus>();

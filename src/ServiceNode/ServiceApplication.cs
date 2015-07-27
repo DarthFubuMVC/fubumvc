@@ -8,7 +8,7 @@ namespace ServiceNode
     {
         public FubuApplication BuildApplication()
         {
-            return FubuTransport.For<ServiceRegistry>();
+            return FubuApplication.For<ServiceRegistry>();
         }
     }
 
@@ -16,6 +16,7 @@ namespace ServiceNode
     {
         public ServiceRegistry()
         {
+            Features.ServiceBus.Enable(true);
             Channel(x => x.Service).ReadIncoming();
             HealthMonitoring.ScheduledExecution(ScheduledExecution.Disabled);
         }

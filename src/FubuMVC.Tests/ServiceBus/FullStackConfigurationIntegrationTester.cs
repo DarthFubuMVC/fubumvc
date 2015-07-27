@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.ServiceBus.Configuration;
 using Shouldly;
 using NUnit.Framework;
 
@@ -13,7 +12,7 @@ namespace FubuMVC.Tests.ServiceBus
         [Test]
         public void has_all_the_chains_we_expect()
         {
-            using (var runtime = FubuTransport.For<MyFirstTransport>().Bootstrap())
+            using (var runtime = FubuApplication.For<MyFirstTransport>().Bootstrap())
             {
 
                 var graph = runtime.Factory.Get<BehaviorGraph>();
@@ -28,11 +27,7 @@ namespace FubuMVC.Tests.ServiceBus
         [Test]
         public void has_all_the_chains_we_expect_through_FubuApplication()
         {
-            var registry = new FubuRegistry();
-            registry.Import<MyFirstTransport>();
-            registry.Features.ServiceBus.Enable(true);
-
-            using (var runtime = FubuApplication.For(registry).Bootstrap())
+            using (var runtime = FubuApplication.For<MyFirstTransport>().Bootstrap())
             {
 
                 var graph = runtime.Factory.Get<BehaviorGraph>();
@@ -46,11 +41,12 @@ namespace FubuMVC.Tests.ServiceBus
     }
 
 
-    public class MyFirstTransport : FubuTransportRegistry
+    public class MyFirstTransport : FubuRegistry
     {
         public MyFirstTransport()
         {
             EnableInMemoryTransport();
+            Features.ServiceBus.Enable(true);
         }
     }
 

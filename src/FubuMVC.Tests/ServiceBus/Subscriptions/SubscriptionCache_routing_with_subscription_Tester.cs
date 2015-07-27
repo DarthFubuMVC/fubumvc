@@ -25,7 +25,10 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
                 x.For<SubscriptionSettings>().Use(theSettings);
             });
 
-            _runtime = FubuTransport.For<SubscriptionRegistry>(container).Bootstrap();
+            var registry = new SubscriptionRegistry();
+            registry.StructureMap(container);
+
+            _runtime = FubuApplication.For(registry).Bootstrap();
 
             theCache = _runtime.Factory.Get<ISubscriptionCache>().As<SubscriptionCache>();
         }

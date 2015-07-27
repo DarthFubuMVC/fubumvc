@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Linq.Expressions;
-using FubuMVC.Core.ServiceBus.Configuration;
 
 namespace FubuMVC.Core.ServiceBus.Polling
 {
     public class PollingJobExpression
     {
-        private readonly FubuTransportRegistry _parent;
+        private readonly FubuRegistry _parent;
 
-        public PollingJobExpression(FubuTransportRegistry parent)
+        public PollingJobExpression(FubuRegistry parent)
         {
             _parent = parent;
         }
@@ -41,9 +40,9 @@ namespace FubuMVC.Core.ServiceBus.Polling
 
             public class ScheduledExecutionExpression
             {
-                private readonly FubuTransportRegistry _registry;
+                private readonly FubuRegistry _registry;
 
-                public ScheduledExecutionExpression(FubuTransportRegistry registry)
+                public ScheduledExecutionExpression(FubuRegistry registry)
                 {
                     _registry = registry;
                 }

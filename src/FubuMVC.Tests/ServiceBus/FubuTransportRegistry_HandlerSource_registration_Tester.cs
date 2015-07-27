@@ -12,7 +12,7 @@ namespace FubuMVC.Tests.ServiceBus
         [Test]
         public void can_register_a_handler_source_by_explicit_config()
         {
-            var graph = FubuTransportRegistry.HandlerGraphFor(x => {
+            var graph = FubuTransport.BehaviorGraphFor(x => {
                 x.Handlers.DisableDefaultHandlerSource();
                 x.Handlers.FindBy(source => {
                     source.UseThisAssembly();
@@ -20,7 +20,7 @@ namespace FubuMVC.Tests.ServiceBus
                 });
             });
 
-            graph.SelectMany(x => x.OfType<HandlerCall>()).Where(x => x.HandlerType.Assembly != typeof(HandlerCall).Assembly).Select(x => x.HandlerType).OrderBy(x => x.Name)
+            graph.Behaviors.SelectMany(x => x.OfType<HandlerCall>()).Where(x => x.HandlerType.Assembly != typeof(HandlerCall).Assembly).Select(x => x.HandlerType).OrderBy(x => x.Name)
                 .ShouldHaveTheSameElementsAs(typeof(MyFooHandler), typeof(MyOtherFooHandler));
 
         }
@@ -28,12 +28,12 @@ namespace FubuMVC.Tests.ServiceBus
         [Test]
         public void extra_handler_sources_are_additive()
         {
-            var graph = FubuTransportRegistry.HandlerGraphFor(x =>
+            var graph = FubuTransport.BehaviorGraphFor(x =>
             {
                 x.Handlers.Include<RandomThing>();
             });
 
-            var handlerTypes = graph.SelectMany(x => x.OfType<HandlerCall>()).Select(x => x.HandlerType).ToArray();
+            var handlerTypes = graph.Behaviors.SelectMany(x => x.OfType<HandlerCall>()).Select(x => x.HandlerType).ToArray();
             handlerTypes.ShouldContain(typeof(MyOtherConsumer));
             handlerTypes.ShouldContain(typeof(MyFooHandler));
             handlerTypes.ShouldContain(typeof(RandomThing));

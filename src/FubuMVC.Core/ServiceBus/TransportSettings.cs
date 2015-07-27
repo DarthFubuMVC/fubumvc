@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.ServiceBus.Async;
 using FubuMVC.Core.ServiceBus.Configuration;
+using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Monitoring;
 using FubuMVC.Core.ServiceBus.Polling;
@@ -52,7 +54,7 @@ namespace FubuMVC.Core.ServiceBus
             registry.Policies.Global.Add<ApplyScheduledJobRouting>();
             registry.Services<ScheduledJobServicesRegistry>();
             registry.Services<MonitoringServiceRegistry>();
-            registry.Policies.ChainSource<ImportHandlers>();
+            registry.Policies.ChainSource<SystemLevelHandlers>();
             registry.Services<FubuTransportServiceRegistry>();
             registry.Services<PollingServicesRegistry>();
             registry.Policies.Global.Add<StatefulSagaConvention>();
@@ -60,11 +62,26 @@ namespace FubuMVC.Core.ServiceBus
 
             // Just forcing it to get spun up.
             registry.AlterSettings<ChannelGraph>(x => {});
+            registry.Handlers.Include<SystemLevelHandlers>();
+
+            registry.Configure(graph =>
+            {
+                graph.Handlers.Each(chain =>
+                {
+                    // Apply the error handling node
+                    chain.InsertFirst(new ExceptionHandlerNode(chain));
+
+                    // Hate how we're doing this, but disable tracing
+                    // on the polling job requests here.
+                    if (chain.InputType().Closes(typeof (JobRequest<>)))
+                    {
+                        chain.Tags.Add(BehaviorChain.NoTracing);
+                    }
+                });
+            });
 
             if (FubuTransport.AllQueuesInMemory)
             {
-
-
                 registry.Services(x =>
                 {
                     x.For<ITransport>().ClearAll();
@@ -94,6 +111,7 @@ namespace FubuMVC.Core.ServiceBus
             });
         }
 
+        
 
         public interface SetInMemory
         {

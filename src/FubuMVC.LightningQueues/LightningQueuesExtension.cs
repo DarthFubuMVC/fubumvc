@@ -13,8 +13,8 @@ namespace FubuMVC.LightningQueues
         public void Configure(FubuRegistry registry)
         {
             registry.Services<LightningQueuesServiceRegistry>();
-
-            registry.Import<LightningQueuesJobRegistry>();
+            registry.Polling.RunJob<PurgeQueuesJob>()
+                .ScheduledAtInterval<LightningQueueSettings>(x => x.PurgeQueuesPolling);
         }
     }
 
@@ -29,13 +29,5 @@ namespace FubuMVC.LightningQueues
         }
     }
 
-    public class LightningQueuesJobRegistry : FubuTransportRegistry
-    {
-        public LightningQueuesJobRegistry()
-        {
-            Handlers.DisableDefaultHandlerSource();
-            Polling.RunJob<PurgeQueuesJob>()
-                .ScheduledAtInterval<LightningQueueSettings>(x => x.PurgeQueuesPolling);
-        }
-    }
+
 }

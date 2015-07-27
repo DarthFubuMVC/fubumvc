@@ -1,5 +1,4 @@
 ﻿using FubuMVC.Core;
-using FubuMVC.Core.ServiceBus.Configuration;
 
 namespace FubuMVC.Tests.ServiceBus.Docs.GettingStarted
 {
@@ -8,7 +7,7 @@ namespace FubuMVC.Tests.ServiceBus.Docs.GettingStarted
     {
         public FubuApplication BuildApplication()
         {
-            return FubuTransport.For<GettingStartedTransportRegistry>()
+            return FubuApplication.For<GettingStartedTransportRegistry>()
                 ;
         }
     }

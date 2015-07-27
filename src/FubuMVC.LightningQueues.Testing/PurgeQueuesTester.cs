@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
@@ -19,7 +20,7 @@ namespace FubuMVC.LightningQueues.Testing
         [Test]
         public void PurgeQueuesJob_is_registered()
         {
-            using (var runtime = FubuTransport.For<TestRegistry>().Bootstrap())
+            using (var runtime = FubuApplication.For<TestRegistry>().Bootstrap())
             {
                 runtime.Factory.Get<IPollingJobs>().Any(x => x is PollingJob<PurgeQueuesJob, LightningQueueSettings>)
                     .ShouldBeTrue();

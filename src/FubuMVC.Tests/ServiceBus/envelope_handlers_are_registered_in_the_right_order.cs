@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core.ServiceBus.Configuration;
+﻿using FubuMVC.Core;
+using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using NUnit.Framework;
 using Shouldly;
@@ -11,7 +12,7 @@ namespace FubuMVC.Tests.ServiceBus
         [Test]
         public void the_order()
         {
-            using (var runtime = FubuTransport.For<Defaults>().Bootstrap())
+            using (var runtime = FubuApplication.For<Defaults>().Bootstrap())
             {
                 var handlers = runtime.Factory.Get<IHandlerPipeline>().ShouldBeOfType<HandlerPipeline>().Handlers;
 
@@ -23,10 +24,11 @@ namespace FubuMVC.Tests.ServiceBus
             }
         }
 
-        public class Defaults : FubuTransportRegistry
+        public class Defaults : FubuRegistry
         {
             public Defaults()
             {
+                Features.ServiceBus.Enable(true);
                 EnableInMemoryTransport();
             }
         }

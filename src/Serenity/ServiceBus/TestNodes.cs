@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using FubuCore;
+using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 
 namespace Serenity.ServiceBus
 {
     public static class TestNodes
     {
-        internal static readonly IList<Action<FubuTransportRegistry>> Alterations = new List<Action<FubuTransportRegistry>>(); 
+        internal static readonly IList<Action<FubuRegistry>> Alterations = new List<Action<FubuRegistry>>(); 
         private static readonly IDictionary<string, ExternalNode> Nodes = new Dictionary<string, ExternalNode>();
 
         public static string[] Registries
@@ -17,7 +18,7 @@ namespace Serenity.ServiceBus
             get
             {
                 return Assembly.GetExecutingAssembly()
-                    .ExportedTypes.Where(x => x.IsConcreteTypeOf<FubuTransportRegistry>())
+                    .ExportedTypes.Where(x => x.IsConcreteTypeOf<FubuRegistry>())
                     .Select(x => x.Name)
                     .ToArray();
             }
@@ -45,7 +46,7 @@ namespace Serenity.ServiceBus
             Nodes.Clear();
         }
 
-        public static void OnNodeCreation(Action<FubuTransportRegistry> alteration)
+        public static void OnNodeCreation(Action<FubuRegistry> alteration)
         {
             Alterations.Add(alteration);
         }

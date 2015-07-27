@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
-using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Execution;
 
@@ -9,13 +8,11 @@ namespace FubuMVC.Core.ServiceBus.ScheduledJobs.Configuration
 {
     public class ScheduledJobExpression<T>
     {
-        private readonly FubuTransportRegistry _parent;
-        private readonly ScheduledJobHandlerSource _scheduledJobs;
+        private readonly FubuRegistry _parent;
 
-        public ScheduledJobExpression(FubuTransportRegistry parent, ScheduledJobHandlerSource scheduledJobs)
+        public ScheduledJobExpression(FubuRegistry parent)
         {
             _parent = parent;
-            _scheduledJobs = scheduledJobs;
         }
 
         public ScheduleExpression<TJob> RunJob<TJob>() where TJob : IJob
@@ -50,7 +47,6 @@ namespace FubuMVC.Core.ServiceBus.ScheduledJobs.Configuration
             {
                 var job = new ScheduledJob<TJob>(rule);
 
-                _parent._scheduledJobs.JobTypes.Add(typeof(TJob));
                 _parent._parent.AlterSettings<ScheduledJobGraph>(x => x.Jobs.Add(job));
 
                 return new ChannelExpression(job);

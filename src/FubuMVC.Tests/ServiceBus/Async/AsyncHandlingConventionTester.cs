@@ -15,7 +15,7 @@ namespace FubuMVC.Tests.ServiceBus.Async
         [Test]
         public void async_handling_node_should_be_right_before_any_calls()
         {
-            var graph = FubuTransportRegistry.HandlerGraphFor(x => { });
+            var graph = FubuTransport.BehaviorGraphFor(x => { });
 
             graph.ChainFor(typeof (Message)).OfType<HandlerCall>()
                 .First().Previous.ShouldBeOfType<AsyncHandlingNode>();

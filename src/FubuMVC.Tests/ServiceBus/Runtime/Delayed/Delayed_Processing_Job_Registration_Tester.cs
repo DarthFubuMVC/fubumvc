@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Delayed
         {
             FubuTransport.SetupForInMemoryTesting();
 
-            runtime = FubuTransport.For<DelayedRegistry>()
+            runtime = FubuApplication.For<DelayedRegistry>()
                            .Bootstrap();
 
             runtime.Factory.Get<IPollingJobs>().Any(x => x is PollingJob<DelayedEnvelopeProcessor, TransportSettings>)

@@ -1,5 +1,6 @@
 ﻿using System;
 using FubuCore;
+using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Tests.ServiceBus;
 using NUnit.Framework;
@@ -15,7 +16,7 @@ namespace FubuMVC.LightningQueues.Testing
         {
             var message =
                 Exception<FubuException>.ShouldBeThrownBy(
-                    () => { FubuTransport.For<BadTransportRegistry>().Bootstrap(); }).Message;
+                    () => FubuApplication.For<BadTransportRegistry>().Bootstrap()).Message;
 
             message.ShouldContain("You must have at least one incoming Lightning Queue channel for accepting replies");
         }

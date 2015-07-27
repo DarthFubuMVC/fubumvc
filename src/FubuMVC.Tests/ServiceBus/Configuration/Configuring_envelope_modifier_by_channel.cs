@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Runtime;
@@ -13,7 +14,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
         [Test]
         public void can_register_modifiers_by_channel()
         {
-            using (var runtime = FubuTransport.For<ModifyingChannelRegistry>().Bootstrap())
+            using (var runtime = FubuApplication.For<ModifyingChannelRegistry>().Bootstrap())
             {
                 var graph = runtime.Factory.Get<ChannelGraph>();
 
@@ -28,6 +29,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
     {
         public ModifyingChannelRegistry()
         {
+            Features.ServiceBus.Enable(true);
             EnableInMemoryTransport();
 
             Services(x => {

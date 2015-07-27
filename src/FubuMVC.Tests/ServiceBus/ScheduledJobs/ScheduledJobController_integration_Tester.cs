@@ -32,7 +32,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
         {
             FubuTransport.AllQueuesInMemory = true;
 
-            runtime = FubuTransport.For<TestingJobRegistry>().Bootstrap();
+            runtime = FubuApplication.For<TestingJobRegistry>().Bootstrap();
 
             history = runtime.Factory.Get<JobHistory>();
             clock = runtime.Factory.Get<ISystemTime>().As<RewindableClock>();

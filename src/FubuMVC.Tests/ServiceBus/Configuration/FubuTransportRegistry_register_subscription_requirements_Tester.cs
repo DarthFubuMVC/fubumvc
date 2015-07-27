@@ -24,11 +24,8 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
                 x.For<BusSettings>().Use(theSettings);
             });
 
-            var registry = new FubuRegistry();
+            var registry = new SubscribedRegistry();
             registry.StructureMap(container);
-            registry.Import<SubscribedRegistry>();
-            registry.Features.ServiceBus.Enable(true);
-
             runtime = FubuApplication.For(registry).Bootstrap();
         }
 

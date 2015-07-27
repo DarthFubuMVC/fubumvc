@@ -12,9 +12,9 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
         [Test]
         public void should_have_an_error_behavior_on_each_chain()
         {
-            var graph = FubuTransportRegistry.HandlerGraphFor(x => { });
+            var graph = FubuTransport.BehaviorGraphFor(x => { });
 
-            foreach (HandlerChain chain in graph)
+            foreach (HandlerChain chain in graph.Handlers)
             {
                 chain.First().ShouldBeOfType<ExceptionHandlerNode>()
                      .Chain.ShouldBeTheSameAs(chain);

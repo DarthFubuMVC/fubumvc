@@ -179,12 +179,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
     {
         public FubuApplication BuildApplication()
         {
-            var container = new Container(x =>
-            {
-                x.ForSingletonOf<MessageRecorder>();
-            });
-
-            return FubuTransport.For<ChainInvokerTransportRegistry>(container);
+            return FubuApplication.For<ChainInvokerTransportRegistry>();
         }
     }
 
@@ -192,13 +187,15 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
     {
         public ChainInvokerTransportRegistry()
         {
+            Services(x => x.ForSingletonOf<MessageRecorder>());
+
             AlterSettings<TransportSettings>(x =>
             {
                 x.EnableInMemoryTransport = true;
                 x.DebugEnabled = true;
             });
 
-            Global.Policy<ErrorHandlingPolicy>();
+            Policies.Global.Add<ErrorHandlingPolicy>();
 
             Channel(x => x.Incoming).AcceptsMessages(t => true).ReadIncoming();
         }
