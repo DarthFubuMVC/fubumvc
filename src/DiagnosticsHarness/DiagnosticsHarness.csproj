@@ -100,9 +100,9 @@
       <Project>{48bc51c2-b759-48db-aae1-f4686cd6d02a}</Project>
       <Name>FubuMVC.Katana</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuTransportation.LightningQueues\FubuTransportation.LightningQueues.csproj">
+    <ProjectReference Include="..\FubuMVC.LightningQueues\FubuMVC.LightningQueues.csproj">
       <Project>{f151167c-4736-4c67-9697-7876574c05d0}</Project>
-      <Name>FubuTransportation.LightningQueues</Name>
+      <Name>FubuMVC.LightningQueues</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

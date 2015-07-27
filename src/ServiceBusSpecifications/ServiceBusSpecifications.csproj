@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A668016A-282F-4EDF-930B-0CCBFD744EC5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ServiceBusSpecifications</RootNamespace>
+    <AssemblyName>ServiceBusSpecifications</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Esent.Interop">
+      <HintPath>..\packages\ManagedEsent\lib\net40\Esent.Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuCore">
+      <HintPath>..\packages\FubuCore\lib\FubuCore.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuLocalization">
+      <HintPath>..\packages\FubuLocalization\lib\FubuLocalization.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlTags">
+      <HintPath>..\packages\HtmlTags\lib\4.0\HtmlTags.dll</HintPath>
+    </Reference>
+    <Reference Include="LightningQueues">
+      <HintPath>..\packages\LightningQueues\lib\LightningQueues.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\FubuMVC.Katana\lib\net40\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.HttpListener">
+      <HintPath>..\packages\FubuMVC.Katana\lib\net40\Microsoft.Owin.Host.HttpListener.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Hosting">
+      <HintPath>..\packages\FubuMVC.Katana\lib\net40\Microsoft.Owin.Hosting.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Selenium.WebDriverBackedSelenium">
+      <HintPath>..\packages\Selenium.WebDriverBackedSelenium\lib\net40\Selenium.WebDriverBackedSelenium.dll</HintPath>
+    </Reference>
+    <Reference Include="Spark">
+      <HintPath>..\packages\Spark\lib\NET40\Spark.dll</HintPath>
+    </Reference>
+    <Reference Include="StoryTeller">
+      <HintPath>..\packages\Storyteller\lib\net45\StoryTeller.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\packages\structuremap\lib\net40\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.Net4">
+      <HintPath>..\packages\structuremap\lib\net40\StructureMap.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="ThoughtWorks.Selenium.Core">
+      <HintPath>..\packages\Selenium.RC\lib\net40\ThoughtWorks.Selenium.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="WebDriver">
+      <HintPath>..\packages\Selenium.WebDriver\lib\net40\WebDriver.dll</HintPath>
+    </Reference>
+    <Reference Include="WebDriver.Support">
+      <HintPath>..\packages\Selenium.Support\lib\net40\WebDriver.Support.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Fixtures\BatchMessageFixture.cs" />
+    <Compile Include="Fixtures\Monitoring\FakePersistentTask.cs" />
+    <Compile Include="Fixtures\Monitoring\FakePersistentTaskSource.cs" />
+    <Compile Include="Fixtures\Monitoring\MonitoredNode.cs" />
+    <Compile Include="Fixtures\Monitoring\MonitoredNodeGroup.cs" />
+    <Compile Include="Fixtures\Monitoring\MonitoringFixture.cs" />
+    <Compile Include="Fixtures\Monitoring\MonitoringSettings.cs" />
+    <Compile Include="Fixtures\Monitoring\MonitoringSetupFixture.cs" />
+    <Compile Include="Fixtures\Monitoring\PersistentTaskMessageListener.cs" />
+    <Compile Include="Fixtures\Subscriptions\HasGlobalSubscriptionsRegistry.cs" />
+    <Compile Include="Fixtures\Subscriptions\HasLocalSubscriptionsRegistry.cs" />
+    <Compile Include="Fixtures\Subscriptions\PublishingRegistry.cs" />
+    <Compile Include="Fixtures\Subscriptions\SubscriptionsFixture.cs" />
+    <Compile Include="Fixtures\RunningNode.cs" />
+    <Compile Include="Fixtures\SendAndAwaitFixture.cs" />
+    <Compile Include="ServiceBusStorytellerSystem.cs" />
+    <Compile Include="HarnessSettings.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Support\FourMessage.cs" />
+    <Compile Include="Support\Message.cs" />
+    <Compile Include="Support\OneMessage.cs" />
+    <Compile Include="Support\ThreeMessage.cs" />
+    <Compile Include="Support\TwoMessage.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tests\LightningQueues\SendAndAwait\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
+      <Project>{e18fd922-0e7a-49cd-b89f-473826077b9d}</Project>
+      <Name>FubuMVC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Katana\FubuMVC.Katana.csproj">
+      <Project>{48bc51c2-b759-48db-aae1-f4686cd6d02a}</Project>
+      <Name>FubuMVC.Katana</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.LightningQueues\FubuMVC.LightningQueues.csproj">
+      <Project>{f151167c-4736-4c67-9697-7876574c05d0}</Project>
+      <Name>FubuMVC.LightningQueues</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Serenity\Serenity.csproj">
+      <Project>{900a0419-3579-4dae-85be-71a3e4b34239}</Project>
+      <Name>Serenity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Serenity\Serenity.csproj">
+      <Project>{900a0419-3579-4dae-85be-71a3e4b34239}</Project>
+      <Name>Serenity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServiceNode\ServiceNode.csproj">
+      <Project>{c71136ae-8197-4a9a-aa5f-9102f657c502}</Project>
+      <Name>ServiceNode</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebsiteNode\WebsiteNode.csproj">
+      <Project>{988142c2-5518-404d-a6ef-36c551086912}</Project>
+      <Name>WebsiteNode</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

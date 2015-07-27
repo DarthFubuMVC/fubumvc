@@ -68,9 +68,9 @@
       <Project>{e18fd922-0e7a-49cd-b89f-473826077b9d}</Project>
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuTransportation.LightningQueues\FubuTransportation.LightningQueues.csproj">
+    <ProjectReference Include="..\FubuMVC.LightningQueues\FubuMVC.LightningQueues.csproj">
       <Project>{f151167c-4736-4c67-9697-7876574c05d0}</Project>
-      <Name>FubuTransportation.LightningQueues</Name>
+      <Name>FubuMVC.LightningQueues</Name>
     </ProjectReference>
     <ProjectReference Include="..\ServiceNode\ServiceNode.csproj">
       <Project>{c71136ae-8197-4a9a-aa5f-9102f657c502}</Project>

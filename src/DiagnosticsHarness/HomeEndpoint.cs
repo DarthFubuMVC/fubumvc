@@ -5,7 +5,6 @@ using FubuCore;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.View;
-using FubuTransportation;
 using HtmlTags;
 
 namespace DiagnosticsHarness
@@ -44,7 +43,7 @@ namespace DiagnosticsHarness
 
         public HtmlDocument Index()
         {
-            _document.Title = "FubuTransportation Diagnostics Harness";
+            _document.Title = "Diagnostics Harness";
 
             _document.Add("a").Attr("href", "/_fubu").Text("Diagnostics");
 

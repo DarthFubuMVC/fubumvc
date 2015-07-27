@@ -91,7 +91,6 @@ namespace FubuMVC.RavenDb.RavenDb
             WithOpenSession(s => s.Dispose());
             _session = new Lazy<IDocumentSession>(() =>
             {
-                Debug.WriteLine("Opening a new DocumentSession");
                 return _store.OpenSession();
             });
         }
