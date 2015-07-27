@@ -1,7 +1,9 @@
-﻿using FubuMVC.Core;
+﻿using System.Collections.Generic;
+using System.Linq;
+using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.RavenDb.RavenDb;
-using StructureMap.Configuration.DSL;
 
 namespace FubuMVC.RavenDb
 {
@@ -13,12 +15,16 @@ namespace FubuMVC.RavenDb
         }
     }
 
-    public class TransactionalBehaviorPolicy : Policy
+    public class TransactionalBehaviorPolicy : IConfigurationAction
     {
-        public TransactionalBehaviorPolicy()
+        public void Configure(BehaviorGraph graph)
         {
-            Where.RespondsToHttpMethod("POST", "PUT", "DELETE");
-            Wrap.WithBehavior<TransactionalBehavior>();
+            graph.Behaviors.OfType<RoutedChain>()
+                .Where(
+                    x =>
+                        x.Route.RespondsToMethod("POST") || x.Route.RespondsToMethod("PUT") ||
+                        x.Route.RespondsToMethod("DELETE"))
+                .Each(x => x.InsertFirst(Wrapper.For<TransactionalBehavior>()));
         }
     }
 }
