@@ -24,11 +24,13 @@ namespace FubuMVC.Core
         private readonly IContainer _container;
         private readonly IList<RouteBase> _routes;
         private bool _disposed;
+        private IFubuApplicationFiles _files;
 
         public FubuRuntime(IServiceFactory factory, IContainer container, IList<RouteBase> routes, IFubuApplicationFiles files)
         {
             _factory = factory;
             _container = container;
+            _files = files;
 
             // TODO -- Temporary? AND THIS HAS TO BE LAZY BUILT PER NESTED CONTAINER
             _container.Configure(_ =>
@@ -43,6 +45,12 @@ namespace FubuMVC.Core
 
             _routes = routes;
         }
+
+        public IFubuApplicationFiles Files
+        {
+            get { return _files; }
+        }
+
 
         public IContainer Container
         {

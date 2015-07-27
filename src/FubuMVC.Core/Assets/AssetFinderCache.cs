@@ -85,8 +85,8 @@ namespace FubuMVC.Core.Assets
         {
             if (_settings.Mode == SearchMode.PublicFolderOnly)
             {
-                var publicFolder = _settings.DeterminePublicFolder();
-                var appFolder = FubuApplication.GetApplicationPath();
+                var publicFolder = _settings.DeterminePublicFolder(_files);
+                var appFolder = _files.GetApplicationPath();
 
                 return new FileSystem().FindFiles(publicFolder, FileSet.Deep(filename))
                     .Select(x =>
@@ -129,8 +129,8 @@ namespace FubuMVC.Core.Assets
 
             if (_settings.Mode == SearchMode.PublicFolderOnly)
             {
-                var publicFolder = _settings.DeterminePublicFolder();
-                var appFolder = FubuApplication.GetApplicationPath();
+                var publicFolder = _settings.DeterminePublicFolder(_files);
+                var appFolder = _files.GetApplicationPath();
 
                 return new FileSystem().FindFiles(publicFolder, search)
                     .Select(x =>

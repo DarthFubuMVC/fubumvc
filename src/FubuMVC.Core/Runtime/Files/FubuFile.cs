@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using FubuCore;
-using FubuCore.Logging;
 
 namespace FubuMVC.Core.Runtime.Files
 {

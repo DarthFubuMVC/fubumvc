@@ -38,7 +38,7 @@ namespace Fubu.Running
                     ApplicationName = _applicationSource.GetType().Name,
                     HomeAddress = _server.BaseAddress,
                     Timestamp = DateTime.Now,
-                    Watcher = runtime.Factory.Get<AssetSettings>().CreateFileWatcherManifest()
+                    Watcher = runtime.Factory.Get<AssetSettings>().CreateFileWatcherManifest(runtime.Files)
                 });
             }
             catch (KatanaRightsException e)

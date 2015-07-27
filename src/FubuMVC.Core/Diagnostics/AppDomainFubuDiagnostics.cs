@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using FubuMVC.Core.Runtime.Files;
 
 namespace FubuMVC.Core.Diagnostics
 {
     public class AppDomainFubuDiagnostics
     {
         private readonly AppReloaded _reloaded;
+        private readonly IFubuApplicationFiles _files;
 
-        public AppDomainFubuDiagnostics(AppReloaded reloaded)
+        public AppDomainFubuDiagnostics(AppReloaded reloaded, IFubuApplicationFiles files)
         {
             _reloaded = reloaded;
+            _files = files;
         }
 
         public Dictionary<string, object> get_appdomain()
@@ -19,7 +22,7 @@ namespace FubuMVC.Core.Diagnostics
             var dict = new Dictionary<string, object>
             {
                 {"reloaded", _reloaded.Timestamp.ToLocalTime().ToString()},
-                {"fubuPath", FubuApplication.GetApplicationPath()},
+                {"fubuPath", _files.GetApplicationPath()},
                 {"baseDirectory", AppDomain.CurrentDomain.BaseDirectory},
                 {"binPath", FubuApplication.FindBinPath()},
                 {"config", AppDomain.CurrentDomain.SetupInformation.ConfigurationFile}

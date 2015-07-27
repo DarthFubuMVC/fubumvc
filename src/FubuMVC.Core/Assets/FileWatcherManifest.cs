@@ -16,11 +16,16 @@ namespace FubuMVC.Core.Assets
 
         public string[] AssetExtensions = new string[0];
 
-        public string ApplicationPath = FubuApplication.GetApplicationPath();
-        public string BinPath = FubuApplication.FindBinPath();
+        public readonly string ApplicationPath;
+        public readonly string BinPath;
 
         private readonly IList<FileSystemWatcher> _watchers = new List<FileSystemWatcher>();
 
+        public FileWatcherManifest(string applicationPath, string binPath)
+        {
+            ApplicationPath = applicationPath;
+            BinPath = binPath;
+        }
 
         public void Watch(bool refreshContent, IApplicationObserver observer)
         {

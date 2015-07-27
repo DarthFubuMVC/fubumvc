@@ -87,10 +87,11 @@ namespace FubuMVC.Core.Assets
         /// Used internally to determine the public folder if the mode is set to
         /// PublicFolderOnly
         /// </summary>
+        /// <param name="files"></param>
         /// <returns></returns>
-        public string DeterminePublicFolder()
+        public string DeterminePublicFolder(IFubuApplicationFiles files)
         {
-            var candidate = FubuApplication.GetApplicationPath().AppendPath(PublicFolder);
+            var candidate = files.GetApplicationPath().AppendPath(PublicFolder);
 
             if (Version.IsNotEmpty())
             {
@@ -226,19 +227,13 @@ namespace FubuMVC.Core.Assets
         /// </summary>
         public readonly IList<string> ContentMatches = new List<string> {".txt", ".htm", ".html"};
 
-        public FileWatcherManifest CreateFileWatcherManifest()
+        public FileWatcherManifest CreateFileWatcherManifest(IFubuApplicationFiles files)
         {
-            var manifest = new FileWatcherManifest();
-
-            /*TODO
-             * - has public folder
-             * - does not have public folder
-             * - all content matches
-             */
+            var manifest = new FileWatcherManifest(files.GetApplicationPath(), FubuApplication.FindBinPath());
 
             if (Mode == SearchMode.PublicFolderOnly)
             {
-                manifest.PublicAssetFolder = DeterminePublicFolder().Replace('\\', '/');
+                manifest.PublicAssetFolder = DeterminePublicFolder(files).Replace('\\', '/');
             }
 
             manifest.AssetExtensions =
@@ -256,7 +251,9 @@ namespace FubuMVC.Core.Assets
 
             _.Properties["Search Mode"] = Mode.ToString();
             _.Properties["Version"] = Version;
-            _.Properties["Public Asset Folder"] = DeterminePublicFolder();
+            
+            // TODO -- bring this back some how.
+            //_.Properties["Public Asset Folder"] = DeterminePublicFolder(AppplicationPath);
             _.Properties["Excluded Files"] = Exclusions;
             _.Properties["Whitelisted file extensions"] = AllowableExtensions.Join(", ");
             _.Properties["File extensions considered to be content"] = ContentMatches.Join(", ");

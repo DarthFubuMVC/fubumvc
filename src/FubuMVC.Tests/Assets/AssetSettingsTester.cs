@@ -159,7 +159,7 @@ namespace FubuMVC.Tests.Assets
                 Version = null
             };
 
-            settings.DeterminePublicFolder()
+            settings.DeterminePublicFolder(FubuApplicationFiles.ForDefault())
                 .ShouldBe(FubuApplication.GetApplicationPath().AppendPath("public"));
         }
 
@@ -174,7 +174,7 @@ namespace FubuMVC.Tests.Assets
                 Version = Guid.NewGuid().ToString()
             };
 
-            settings.DeterminePublicFolder()
+            settings.DeterminePublicFolder(FubuApplicationFiles.ForDefault())
                 .ShouldBe(FubuApplication.GetApplicationPath().AppendPath("public").ToFullPath());
         }
 
@@ -191,7 +191,7 @@ namespace FubuMVC.Tests.Assets
                 Version = "1.0.1"
             };
 
-            settings.DeterminePublicFolder()
+            settings.DeterminePublicFolder(FubuApplicationFiles.ForDefault())
                 .ShouldBe(FubuApplication.GetApplicationPath().AppendPath("public", "1.0.1").ToFullPath());
         }
 
@@ -323,7 +323,7 @@ namespace FubuMVC.Tests.Assets
                 PublicFolder = "public"
             };
 
-            var manifest = settings.CreateFileWatcherManifest();
+            var manifest = settings.CreateFileWatcherManifest(FubuApplicationFiles.ForDefault());
 
             manifest.PublicAssetFolder.ShouldBe(
                 FubuApplication.GetApplicationPath().AppendPath("public").Replace('\\', '/'));
@@ -337,7 +337,7 @@ namespace FubuMVC.Tests.Assets
                 Mode = SearchMode.Anywhere
             };
 
-            settings.CreateFileWatcherManifest().PublicAssetFolder.ShouldBeEmpty();
+            settings.CreateFileWatcherManifest(FubuApplicationFiles.ForDefault()).PublicAssetFolder.ShouldBeEmpty();
         }
 
         [Test]
@@ -346,7 +346,7 @@ namespace FubuMVC.Tests.Assets
             var settings = new AssetSettings();
             settings.ContentMatches.Add(".foo");
 
-            var manifest = settings.CreateFileWatcherManifest();
+            var manifest = settings.CreateFileWatcherManifest(FubuApplicationFiles.ForDefault());
 
             manifest.ContentMatches.ShouldContain(".foo");
             manifest.ContentMatches.ShouldContain(".htm");
@@ -357,7 +357,7 @@ namespace FubuMVC.Tests.Assets
         public void adds_all_the_default_asset_extensions()
         {
             var settings = new AssetSettings();
-            var manifest = settings.CreateFileWatcherManifest();
+            var manifest = settings.CreateFileWatcherManifest(FubuApplicationFiles.ForDefault());
 
             manifest.AssetExtensions.ShouldContain(".js");
             manifest.AssetExtensions.ShouldContain(".css");
@@ -370,7 +370,7 @@ namespace FubuMVC.Tests.Assets
         public void adds_the_user_supplied_extensions()
         {
             var settings = new AssetSettings();
-            var manifest = settings.CreateFileWatcherManifest();
+            var manifest = settings.CreateFileWatcherManifest(FubuApplicationFiles.ForDefault());
 
             manifest.AssetExtensions.ShouldContain(".svg");
             manifest.AssetExtensions.ShouldContain(".ttf");

@@ -3,6 +3,7 @@ using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Assets.JavascriptRouting;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View;
 using HtmlTags;
 
@@ -139,10 +140,12 @@ namespace FubuMVC.Core.Assets
         public static string PublicAssetFolder(this IFubuPage page)
         {
             var settings = page.Get<AssetSettings>();
+            var files = page.Get<IFubuApplicationFiles>();
+
             if (settings.PublicAssetFolder.IsEmpty())
             {
-                var directory = settings.DeterminePublicFolder();
-                var relativePath = directory.PathRelativeTo(FubuApplication.GetApplicationPath())
+                var directory = settings.DeterminePublicFolder(files);
+                var relativePath = directory.PathRelativeTo(files.GetApplicationPath())
                     .Replace('\\', '/');
 
                 settings.PublicAssetFolder = page.Get<IHttpRequest>().ToFullUrl(relativePath);
