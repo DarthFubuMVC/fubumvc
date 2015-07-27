@@ -6,10 +6,10 @@ using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing.ErrorHandling
+namespace FubuMVC.Tests.ServiceBus.ErrorHandling
 {
     [TestFixture]
     public class ErrorHandling_services_have_descriptions_for_diagnostics

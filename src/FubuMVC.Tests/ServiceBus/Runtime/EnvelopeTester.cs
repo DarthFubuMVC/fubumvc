@@ -1,14 +1,14 @@
 ﻿using System;
+using FubuCore;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Headers;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
-using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
-using FubuCore;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Runtime
+namespace FubuMVC.Tests.ServiceBus.Runtime
 {
     [TestFixture]
     public class EnvelopeTester

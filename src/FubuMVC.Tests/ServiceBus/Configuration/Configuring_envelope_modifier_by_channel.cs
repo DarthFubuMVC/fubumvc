@@ -2,11 +2,10 @@
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Runtime;
-using FubuMVC.Core.StructureMap;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Configuration
+namespace FubuMVC.Tests.ServiceBus.Configuration
 {
     [TestFixture]
     public class Configuring_envelope_modifier_by_channel

@@ -1,7 +1,5 @@
-﻿using System;
-using FubuCore.Logging;
+﻿using FubuCore.Logging;
 using FubuMVC.Core;
-using FubuMVC.Core.Registration;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Async;
 using FubuMVC.Core.ServiceBus.Configuration;
@@ -15,12 +13,10 @@ using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 using FubuMVC.Core.ServiceBus.Subscriptions;
 using FubuMVC.Core.ServiceBus.TestSupport;
-using FubuMVC.Tests;
-using Shouldly;
 using NUnit.Framework;
-using System.Linq;
+using Shouldly;
 
-namespace FubuTransportation.Testing
+namespace FubuMVC.Tests.ServiceBus
 {
     [TestFixture]
     public class FubuTransportServiceRegistry_spec
@@ -40,7 +36,7 @@ namespace FubuTransportation.Testing
                 c.DefaultSingletonIs<ISagaStateCacheFactory, SagaStateCacheFactory>();
                 c.DefaultSingletonIs<IEventAggregator, EventAggregator>();
 
-                c.DefaultRegistrationIs<IServiceBus, ServiceBus>();
+                c.DefaultRegistrationIs<IServiceBus, Core.ServiceBus.ServiceBus>();
                 c.DefaultRegistrationIs<IEnvelopeSender, EnvelopeSender>();
                 c.DefaultRegistrationIs<IEnvelopeSerializer, EnvelopeSerializer>();
                 c.DefaultRegistrationIs<IChainInvoker, ChainInvoker>();

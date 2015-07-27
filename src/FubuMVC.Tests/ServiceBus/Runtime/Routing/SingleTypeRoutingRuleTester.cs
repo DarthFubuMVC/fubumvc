@@ -1,8 +1,8 @@
 ﻿using FubuMVC.Core.ServiceBus.Runtime.Routing;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Runtime.Routing
+namespace FubuMVC.Tests.ServiceBus.Runtime.Routing
 {
     [TestFixture]
     public class SingleTypeRoutingRuleTester

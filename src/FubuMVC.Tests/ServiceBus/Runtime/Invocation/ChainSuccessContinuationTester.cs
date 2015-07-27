@@ -1,20 +1,17 @@
 ﻿using System;
+using System.Linq;
 using FubuCore;
 using FubuCore.Logging;
-using FubuMVC.Core.Runtime.Logging;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.ServiceBus.Logging;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
-using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
-using System.Linq;
-using System.Collections.Generic;
-using ExceptionReport = FubuCore.Logging.ExceptionReport;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Runtime.Invocation
+namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 {
     [TestFixture]
     public class ChainSuccessContinuationTester

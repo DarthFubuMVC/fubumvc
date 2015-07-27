@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Linq;
+using FubuCore;
 using FubuMVC.Core;
-using FubuMVC.Core.Registration;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Events;
@@ -11,16 +11,12 @@ using FubuMVC.Core.ServiceBus.Sagas;
 using FubuMVC.Core.ServiceBus.Scheduling;
 using FubuMVC.Core.ServiceBus.TestSupport;
 using FubuMVC.Core.Services.Messaging.Tracking;
-using FubuMVC.Core.StructureMap;
 using FubuMVC.Tests.TestSupport;
 using NUnit.Framework;
-using FubuCore;
-using StructureMap;
 using Shouldly;
-using System.Linq;
-using StructureMap.Graph;
+using StructureMap;
 
-namespace FubuTransportation.Testing.Sagas
+namespace FubuMVC.Tests.ServiceBus.Sagas
 {
     [TestFixture]
     public class SagaIntegrationTester

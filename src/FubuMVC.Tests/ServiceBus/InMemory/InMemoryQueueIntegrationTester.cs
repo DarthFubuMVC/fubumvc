@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Logging;
@@ -8,10 +9,9 @@ using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Headers;
 using FubuMVC.Tests.TestSupport;
 using NUnit.Framework;
-using System.Linq;
 using Shouldly;
 
-namespace FubuTransportation.Testing.InMemory
+namespace FubuMVC.Tests.ServiceBus.InMemory
 {
     [TestFixture]
     public class InMemoryQueueIntegrationTester

@@ -13,7 +13,6 @@ using FubuMVC.Core.Services.Messaging.Tracking;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using FubuMVC.Tests.TestSupport;
 using Shouldly;
-using FubuTransportation.Testing;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.ServiceBus.InMemory

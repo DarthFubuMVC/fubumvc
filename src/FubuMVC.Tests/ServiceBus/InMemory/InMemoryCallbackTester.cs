@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Linq;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Runtime;
 using NUnit.Framework;
-using System.Linq;
 using Shouldly;
 
-namespace FubuTransportation.Testing.InMemory
+namespace FubuMVC.Tests.ServiceBus.InMemory
 {
     [TestFixture]
     public class InMemoryCallbackTester

@@ -2,10 +2,10 @@
 using System.Linq;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Monitoring;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Monitoring
+namespace FubuMVC.Tests.ServiceBus.Monitoring
 {
     [TestFixture]
     public class TaskHealthResponseTester

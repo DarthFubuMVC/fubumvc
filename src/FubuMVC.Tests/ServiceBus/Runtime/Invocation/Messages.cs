@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using FubuMVC.Core.ServiceBus.Runtime.Cascading;
 
-namespace FubuTransportation.Testing.Runtime.Invocation
+namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 {
     public class WebMessage
     {

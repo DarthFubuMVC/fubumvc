@@ -4,7 +4,7 @@ using FubuMVC.Core.ServiceBus.Runtime.Headers;
 using NUnit.Framework;
 using Shouldly;
 
-namespace FubuTransportation.Testing.Runtime.Headers
+namespace FubuMVC.Tests.ServiceBus.Runtime.Headers
 {
     [TestFixture]
     public class Headers_testing

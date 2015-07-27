@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using FubuMVC.Core.ServiceBus.Configuration;
 
-namespace FubuTransportation.Testing.Docs.Basics
+namespace FubuMVC.Tests.ServiceBus.Docs.Basics
 {
     // SAMPLE: CustomHandlerNamingSample
     public class CustomHandlerTransportRegistry : FubuTransportRegistry

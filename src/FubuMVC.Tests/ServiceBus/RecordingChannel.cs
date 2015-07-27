@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Headers;
 
-namespace FubuTransportation.Testing
+namespace FubuMVC.Tests.ServiceBus
 {
     public class RecordingChannel : IChannel
     {

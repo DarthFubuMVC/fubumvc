@@ -2,10 +2,10 @@
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation.Batching;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Runtime.Invocation
+namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 {
     [TestFixture]
     public class handling_a_batch_of_messages : InvocationContext

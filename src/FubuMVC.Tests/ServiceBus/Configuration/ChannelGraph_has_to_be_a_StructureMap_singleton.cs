@@ -1,10 +1,8 @@
 ﻿using FubuMVC.Core.ServiceBus.Configuration;
-using Shouldly;
 using NUnit.Framework;
-using StructureMap;
-using StructureMap.Pipeline;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Configuration
+namespace FubuMVC.Tests.ServiceBus.Configuration
 {
     [TestFixture]
     public class ChannelGraph_has_to_be_a_StructureMap_singleton

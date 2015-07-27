@@ -4,12 +4,11 @@ using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Subscriptions;
-using FubuMVC.Core.StructureMap;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 using StructureMap;
 
-namespace FubuTransportation.Testing.Configuration
+namespace FubuMVC.Tests.ServiceBus.Configuration
 {
     [TestFixture]
     public class FubuTransportRegistry_register_subscription_requirements_Tester

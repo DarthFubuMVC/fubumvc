@@ -1,10 +1,10 @@
 ﻿using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
-using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Runtime.Invocation
+namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 {
     [TestFixture]
     public class when_handling_a_message

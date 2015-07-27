@@ -1,9 +1,9 @@
 ﻿using FubuMVC.Core.ServiceBus.Scheduling;
 using FubuMVC.Tests.TestSupport;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Scheduling
+namespace FubuMVC.Tests.ServiceBus.Scheduling
 {
     public class TaskSchedulerTester
     {

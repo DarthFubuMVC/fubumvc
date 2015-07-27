@@ -3,11 +3,11 @@ using FubuCore;
 using FubuCore.Logging;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.ServiceBus.Runtime;
-using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
+using Shouldly;
 
-namespace FubuTransportation.Testing.ErrorHandling
+namespace FubuMVC.Tests.ServiceBus.ErrorHandling
 {
     [TestFixture]
     public class when_the_move_to_error_queue_continuation_executes

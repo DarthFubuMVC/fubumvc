@@ -1,18 +1,17 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using FubuCore;
-using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Events;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Tests.TestSupport;
-using Shouldly;
 using NUnit.Framework;
-using System.Linq;
 using Rhino.Mocks;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Runtime
+namespace FubuMVC.Tests.ServiceBus.Runtime
 {
     [TestFixture]
-    public class when_requesting_a_response : InteractionContext<ServiceBus>
+    public class when_requesting_a_response : InteractionContext<Core.ServiceBus.ServiceBus>
     {
         private RecordingEnvelopeSender theSender;
         private Message1 theRequest;

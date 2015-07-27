@@ -1,7 +1,7 @@
 ﻿using System;
 using FubuMVC.Core.ServiceBus;
 
-namespace FubuTransportation.Testing.Docs.GettingStarted
+namespace FubuMVC.Tests.ServiceBus.Docs.GettingStarted
 {
     // SAMPLE: GettingStartedSettings
     public class GettingStartedSettings

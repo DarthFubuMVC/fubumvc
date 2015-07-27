@@ -1,10 +1,10 @@
 ﻿using System;
 using FubuCore;
 using FubuMVC.Core.ServiceBus.Registration;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Registration
+namespace FubuMVC.Tests.ServiceBus.Registration
 {
     [TestFixture]
     public class FuncBuilderTester

@@ -4,10 +4,10 @@ using System.Reflection;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Registration;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing
+namespace FubuMVC.Tests.ServiceBus
 {
     [TestFixture]
     public class FubuTransportRegistry_default_handler_source_policies_spec

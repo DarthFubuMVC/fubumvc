@@ -4,7 +4,7 @@ using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuTransportation.Testing.Async
+namespace FubuMVC.Tests.ServiceBus.Async
 {
     [TestFixture]
     public class AsyncChainExecutionContinuationTester

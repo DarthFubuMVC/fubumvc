@@ -1,9 +1,9 @@
 ﻿using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing
+namespace FubuMVC.Tests.ServiceBus
 {
     [TestFixture]
     public class envelope_handlers_are_registered_in_the_right_order

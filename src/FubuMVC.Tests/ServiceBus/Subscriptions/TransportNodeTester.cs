@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Linq;
-using System.Runtime.InteropServices;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Subscriptions;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Subscriptions
+namespace FubuMVC.Tests.ServiceBus.Subscriptions
 {
     [TestFixture]
     public class TransportNodeTester

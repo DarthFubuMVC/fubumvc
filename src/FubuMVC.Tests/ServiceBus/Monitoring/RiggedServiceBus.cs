@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using FubuMVC.Core.ServiceBus;
 using NUnit.Framework;
 
-namespace FubuTransportation.Testing.Monitoring
+namespace FubuMVC.Tests.ServiceBus.Monitoring
 {
     public class RiggedServiceBus : IServiceBus
     {

@@ -4,11 +4,11 @@ using FubuCore.Descriptions;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Tests.TestSupport;
-using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Polling
+namespace FubuMVC.Tests.ServiceBus.Polling
 {
     [System.ComponentModel.Description("A polling job just for testing purposes")]
     public class APollingJob : IJob

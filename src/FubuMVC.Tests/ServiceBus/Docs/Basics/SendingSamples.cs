@@ -5,7 +5,7 @@ using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Runtime.Cascading;
 using FubuMVC.Core.ServiceBus.Web;
 
-namespace FubuTransportation.Testing.Docs.Basics
+namespace FubuMVC.Tests.ServiceBus.Docs.Basics
 {
     // SAMPLE: SendingSamples
     public class SendingSamples

@@ -6,7 +6,7 @@ using FubuCore.Util;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Monitoring;
 
-namespace FubuTransportation.Testing.Monitoring
+namespace FubuMVC.Tests.ServiceBus.Monitoring
 {
     public class FakePersistentTaskSource : IPersistentTaskSource
     {

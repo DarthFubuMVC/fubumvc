@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Linq;
 using FubuCore.Logging;
 using FubuCore.Reflection;
-using FubuMVC.Core.Runtime.Logging;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Logging;
@@ -12,12 +12,11 @@ using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 using FubuMVC.Core.ServiceBus.Scheduling;
 using NUnit.Framework;
 using Rhino.Mocks;
-using TestMessages;
 using Shouldly;
-using System.Linq;
+using TestMessages;
 using Is = Rhino.Mocks.Constraints.Is;
 
-namespace FubuTransportation.Testing.Configuration
+namespace FubuMVC.Tests.ServiceBus.Configuration
 {
     [TestFixture]
     public class ChannelNodeTester

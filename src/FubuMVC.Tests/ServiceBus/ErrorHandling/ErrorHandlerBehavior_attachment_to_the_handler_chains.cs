@@ -1,11 +1,10 @@
-﻿using FubuMVC.Core.ServiceBus.Configuration;
+﻿using System.Linq;
+using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
 using NUnit.Framework;
-using System.Collections.Generic;
-using System.Linq;
 using Shouldly;
 
-namespace FubuTransportation.Testing.ErrorHandling
+namespace FubuMVC.Tests.ServiceBus.ErrorHandling
 {
     [TestFixture]
     public class ErrorHandlerBehavior_attachment_to_the_handler_chains

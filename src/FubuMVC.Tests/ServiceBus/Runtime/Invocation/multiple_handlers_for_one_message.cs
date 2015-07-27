@@ -1,9 +1,9 @@
-﻿using FubuMVC.Tests.ServiceBus.ScenarioSupport;
+﻿using System.Linq;
+using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using NUnit.Framework;
-using System.Linq;
 using Shouldly;
 
-namespace FubuTransportation.Testing.Runtime.Invocation
+namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 {
     [TestFixture]
     public class multiple_handlers_for_one_message : InvocationContext

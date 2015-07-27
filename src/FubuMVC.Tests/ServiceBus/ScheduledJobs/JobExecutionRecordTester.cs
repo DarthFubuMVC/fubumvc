@@ -1,9 +1,9 @@
 ﻿using System;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing.ScheduledJobs
+namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
 {
     [TestFixture]
     public class JobExecutionRecordTester

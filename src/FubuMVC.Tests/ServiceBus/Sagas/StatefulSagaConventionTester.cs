@@ -8,11 +8,11 @@ using FubuMVC.Core.ServiceBus.Registration.Nodes;
 using FubuMVC.Core.ServiceBus.Sagas;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using NUnit.Framework;
-using Shouldly;
 using Rhino.Mocks;
+using Shouldly;
 using StructureMap.Pipeline;
 
-namespace FubuTransportation.Testing.Sagas
+namespace FubuMVC.Tests.ServiceBus.Sagas
 {
     [TestFixture]
     public class StatefulSagaConventionTester

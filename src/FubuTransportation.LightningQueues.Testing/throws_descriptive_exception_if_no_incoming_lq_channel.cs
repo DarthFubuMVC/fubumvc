@@ -1,10 +1,9 @@
 ﻿using System;
 using FubuCore;
 using FubuMVC.Core.ServiceBus.Configuration;
-using FubuMVC.Core.StructureMap;
-using Shouldly;
-using FubuTransportation.Testing;
+using FubuMVC.Tests.ServiceBus;
 using NUnit.Framework;
+using Shouldly;
 
 namespace FubuTransportation.LightningQueues.Testing
 {
@@ -14,7 +13,7 @@ namespace FubuTransportation.LightningQueues.Testing
         [Test]
         public void should_throw_invalid_transport_exception_because_there_are_no_incoming_lq_transports()
         {
-            string message =
+            var message =
                 Exception<FubuException>.ShouldBeThrownBy(
                     () => { FubuTransport.For<BadTransportRegistry>().Bootstrap(); }).Message;
 

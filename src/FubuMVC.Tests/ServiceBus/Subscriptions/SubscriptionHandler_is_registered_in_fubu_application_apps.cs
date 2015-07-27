@@ -1,11 +1,9 @@
-﻿using System.Web.UI;
-using FubuMVC.Core.ServiceBus.Configuration;
+﻿using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Subscriptions;
-using FubuMVC.Core.StructureMap;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Subscriptions
+namespace FubuMVC.Tests.ServiceBus.Subscriptions
 {
     [TestFixture]
     public class SubscriptionHandler_is_registered_in_fubu_application_apps

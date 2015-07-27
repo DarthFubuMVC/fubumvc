@@ -4,7 +4,7 @@ using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 using NUnit.Framework;
 using Shouldly;
 
-namespace FubuTransportation.Testing.Runtime.Serializers
+namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
 {
     [TestFixture]
     public class BasicJsonMessageSerializerTester

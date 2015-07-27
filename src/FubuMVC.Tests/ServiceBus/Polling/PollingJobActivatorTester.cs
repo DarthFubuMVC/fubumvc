@@ -1,14 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.ServiceBus.Polling;
+using FubuMVC.Tests.ServiceBus.ScheduledJobs;
 using FubuMVC.Tests.TestSupport;
-using Shouldly;
-using FubuTransportation.Testing.ScheduledJobs;
 using NUnit.Framework;
 using Rhino.Mocks;
-using System.Collections.Generic;
 
-namespace FubuTransportation.Testing.Polling
+namespace FubuMVC.Tests.ServiceBus.Polling
 {
     [TestFixture]
     public class PollingJobActivatorTester : InteractionContext<PollingJobActivator>

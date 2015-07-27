@@ -1,7 +1,7 @@
 ﻿using System;
 using FubuMVC.Core.ServiceBus.Configuration;
 
-namespace FubuTransportation.Testing.Docs.Basics
+namespace FubuMVC.Tests.ServiceBus.Docs.Basics
 {
     // SAMPLE: PubSubRoutingSample
     public class AllEndpointsSettings

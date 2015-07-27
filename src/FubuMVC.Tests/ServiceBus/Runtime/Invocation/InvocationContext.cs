@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
-using FubuMVC.Core.StructureMap;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
-using StructureMap;
-using System.Linq;
-using FubuCore;
 
-namespace FubuTransportation.Testing.Runtime.Invocation
+namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 {
     public abstract class InvocationContext
     {

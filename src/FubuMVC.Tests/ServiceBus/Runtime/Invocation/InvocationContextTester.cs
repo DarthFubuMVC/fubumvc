@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.Linq;
+﻿using System.Linq;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.ServiceBus.Configuration;
@@ -8,7 +7,7 @@ using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using NUnit.Framework;
 using Shouldly;
 
-namespace FubuTransportation.Testing.Runtime.Invocation
+namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 {
     [TestFixture]
     public class InvocationContextTester

@@ -6,7 +6,7 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.ServiceBus.Configuration;
 using Shouldly;
 
-namespace FubuTransportation.Testing.Runtime.Invocation
+namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 {
     public class StubServiceFactory : IServiceFactory
     {

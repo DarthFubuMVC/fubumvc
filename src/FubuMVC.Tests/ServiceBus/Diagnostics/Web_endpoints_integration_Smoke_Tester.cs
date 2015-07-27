@@ -6,17 +6,16 @@ using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Diagnostics.Visualization;
 using FubuMVC.Core.ServiceBus.InMemory;
-using FubuMVC.Core.StructureMap;
 using FubuMVC.Katana;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Diagnostics
+namespace FubuMVC.Tests.ServiceBus.Diagnostics
 {
     [TestFixture, Explicit("Will bring this back later")]
     public class Web_endpoints_integration_Smoke_Tester
     {
-        private readonly string appPath = Environment.CurrentDirectory
+        private readonly string appPath = System.Environment.CurrentDirectory
             .ParentDirectory().ParentDirectory().ParentDirectory()
             .AppendPath("FubuTransportation");
 

@@ -10,11 +10,10 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Execution;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
-using FubuMVC.Core.StructureMap;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing.ScheduledJobs
+namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
 {
     [TestFixture, Explicit("This test is necessarily *slow*")]
     public class ScheduledJobController_integration_Tester
@@ -208,7 +207,7 @@ namespace FubuTransportation.Testing.ScheduledJobs
 
             if (list.Any())
             {
-                var message = list.Join(Environment.NewLine);
+                var message = list.Join(System.Environment.NewLine);
                 Assert.Fail(message);
             }
         }

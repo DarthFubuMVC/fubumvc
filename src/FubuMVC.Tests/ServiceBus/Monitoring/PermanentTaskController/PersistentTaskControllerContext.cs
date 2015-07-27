@@ -9,11 +9,11 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.ServiceBus.Monitoring;
 using FubuMVC.Core.ServiceBus.Subscriptions;
-using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Monitoring.PermanentTaskController
+namespace FubuMVC.Tests.ServiceBus.Monitoring.PermanentTaskController
 {
     [TestFixture]
     public abstract class PersistentTaskControllerContext : ITaskMonitoringSource

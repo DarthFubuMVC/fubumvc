@@ -3,7 +3,7 @@ using FubuMVC.Core.ServiceBus.Polling;
 using NUnit.Framework;
 using Shouldly;
 
-namespace FubuTransportation.Testing.Polling
+namespace FubuMVC.Tests.ServiceBus.Polling
 {
     [TestFixture]
     public class DefaultTimerTester

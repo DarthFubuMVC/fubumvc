@@ -6,11 +6,11 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Subscriptions;
 using FubuMVC.Tests.TestSupport;
-using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Subscriptions
+namespace FubuMVC.Tests.ServiceBus.Subscriptions
 {
     [TestFixture]
     public class when_handling_subscriptions_changed : InteractionContext<SubscriptionsHandler>

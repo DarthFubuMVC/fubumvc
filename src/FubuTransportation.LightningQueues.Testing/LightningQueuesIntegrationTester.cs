@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Logging;
-using FubuMVC.Core.Runtime.Logging;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Delayed;
+using FubuMVC.Tests.ServiceBus;
 using FubuMVC.Tests.TestSupport;
-using Shouldly;
-using FubuTransportation.Testing;
 using LightningQueues.Model;
 using NUnit.Framework;
+using Shouldly;
 
 namespace FubuTransportation.LightningQueues.Testing
 {
@@ -75,7 +71,7 @@ namespace FubuTransportation.LightningQueues.Testing
         [Platform(Exclude = "Mono", Reason = "Esent won't work on linux / mono")]
         public void send_a_message_and_get_it_back()
         {
-            var envelope = new Envelope() {Data = new byte[] {1, 2, 3, 4, 5}};
+            var envelope = new Envelope {Data = new byte[] {1, 2, 3, 4, 5}};
             envelope.Headers["foo"] = "bar";
 
             var receiver = new RecordingReceiver();
@@ -90,7 +86,7 @@ namespace FubuTransportation.LightningQueues.Testing
 
             receiver.Received.Any().ShouldBeTrue();
 
-            Envelope actual = receiver.Received.Single();
+            var actual = receiver.Received.Single();
             actual.Data.ShouldBe(envelope.Data);
             actual.Headers["foo"].ShouldBe("bar");
         }

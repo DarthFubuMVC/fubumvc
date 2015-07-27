@@ -1,8 +1,7 @@
-﻿using System.Threading;
-using FubuMVC.Core.ServiceBus;
+﻿using FubuMVC.Core.ServiceBus;
 using NUnit.Framework;
 
-namespace FubuTransportation.Testing.Docs.GettingStarted
+namespace FubuMVC.Tests.ServiceBus.Docs.GettingStarted
 {
     // SAMPLE: GettingStartedTest 
     [TestFixture]

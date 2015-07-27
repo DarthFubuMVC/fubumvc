@@ -2,13 +2,11 @@
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
-using FubuMVC.Core.StructureMap;
-using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
-using StructureMap;
+using Shouldly;
 
-namespace FubuTransportation.Testing.ErrorHandling
+namespace FubuMVC.Tests.ServiceBus.ErrorHandling
 {
     [TestFixture]
     public class RetryNow_integration_testing

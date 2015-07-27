@@ -1,10 +1,10 @@
 ﻿using System;
 using FubuMVC.Core.ServiceBus.Diagnostics;
 using FubuMVC.Core.ServiceBus.Runtime;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Diagnostics
+namespace FubuMVC.Tests.ServiceBus.Diagnostics
 {
     [TestFixture]
     public class when_creating_a_message_record_from_envelope_token

@@ -3,11 +3,10 @@ using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using FubuMVC.Tests.TestSupport;
-using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuTransportation.Testing.Runtime.Invocation
+namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 {
     [TestFixture]
     public class WhenInvokingWithNoHandlerForMessageType : InteractionContext<HandlerPipeline>

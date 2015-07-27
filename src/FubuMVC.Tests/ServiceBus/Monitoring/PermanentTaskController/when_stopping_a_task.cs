@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.ServiceBus.Monitoring;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Monitoring.PermanentTaskController
+namespace FubuMVC.Tests.ServiceBus.Monitoring.PermanentTaskController
 {
     [TestFixture]
     public class when_trying_to_stop_a_task_that_does_not_exist : PersistentTaskControllerContext

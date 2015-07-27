@@ -1,9 +1,8 @@
-﻿using FubuMVC.Core.Runtime.Logging;
-using FubuMVC.Core.ServiceBus.ErrorHandling;
+﻿using FubuMVC.Core.ServiceBus.ErrorHandling;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuTransportation.Testing.ErrorHandling
+namespace FubuMVC.Tests.ServiceBus.ErrorHandling
 {
     [TestFixture]
     public class RequeueContinuationTester

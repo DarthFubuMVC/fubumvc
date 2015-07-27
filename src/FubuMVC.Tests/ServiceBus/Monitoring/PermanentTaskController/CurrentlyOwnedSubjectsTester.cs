@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using FubuMVC.Core.ServiceBus;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Monitoring.PermanentTaskController
+namespace FubuMVC.Tests.ServiceBus.Monitoring.PermanentTaskController
 {
     [TestFixture]
     public class CurrentlyOwnedSubjectsTester : PersistentTaskControllerContext

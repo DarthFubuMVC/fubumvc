@@ -1,10 +1,9 @@
-﻿using FubuMVC.Core.ServiceBus.ErrorHandling;
+﻿using FubuCore;
+using FubuMVC.Core.ServiceBus.ErrorHandling;
 using NUnit.Framework;
-using FubuCore;
-using Shouldly;
 using Rhino.Mocks;
 
-namespace FubuTransportation.Testing.ErrorHandling
+namespace FubuMVC.Tests.ServiceBus.ErrorHandling
 {
     [TestFixture]
     public class DelayedRetryContinuationTester

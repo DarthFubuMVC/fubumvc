@@ -4,12 +4,11 @@ using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Scheduling;
-using FubuMVC.Core.StructureMap;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 using StructureMap;
 
-namespace FubuTransportation.Testing.Configuration
+namespace FubuMVC.Tests.ServiceBus.Configuration
 {
     [TestFixture]
     public class ChannelGraph_can_read_thread_and_task_counts_from_config

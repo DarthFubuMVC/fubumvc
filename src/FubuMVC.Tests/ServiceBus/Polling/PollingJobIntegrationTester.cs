@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using FubuCore;
 using FubuMVC.Core;
@@ -7,14 +8,12 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Polling;
-using FubuMVC.Core.StructureMap;
 using FubuMVC.Tests.TestSupport;
 using NUnit.Framework;
-using StructureMap;
-using System.Linq;
 using Shouldly;
+using StructureMap;
 
-namespace FubuTransportation.Testing.Polling
+namespace FubuMVC.Tests.ServiceBus.Polling
 {
     [TestFixture]
     public class PollingJobIntegrationTester

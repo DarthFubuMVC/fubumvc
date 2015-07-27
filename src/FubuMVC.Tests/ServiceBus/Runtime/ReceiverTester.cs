@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using FubuCore.Logging;
 using FubuMVC.Core.ServiceBus.Configuration;
@@ -8,12 +7,11 @@ using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Headers;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Tests.TestSupport;
-using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
-using System.Linq;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Runtime
+namespace FubuMVC.Tests.ServiceBus.Runtime
 {
     [TestFixture]
     public class ReceiverContentTypeHandling

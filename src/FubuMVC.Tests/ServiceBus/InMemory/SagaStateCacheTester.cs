@@ -4,7 +4,7 @@ using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using NUnit.Framework;
 using Shouldly;
 
-namespace FubuTransportation.Testing.InMemory
+namespace FubuMVC.Tests.ServiceBus.InMemory
 {
     [TestFixture]
     public class SagaStateCacheTester

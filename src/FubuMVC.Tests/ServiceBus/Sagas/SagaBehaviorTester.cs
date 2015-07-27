@@ -3,12 +3,10 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.ServiceBus.Sagas;
 using FubuMVC.Tests.TestSupport;
-using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
-using Message1 = FubuTransportation.Testing.Message1;
 
-namespace FubuTransportation.Testing.Sagas
+namespace FubuMVC.Tests.ServiceBus.Sagas
 {
     [TestFixture]
     public class when_the_state_can_be_found_and_not_completed : SagaBehaviorContext

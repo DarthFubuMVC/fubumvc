@@ -2,7 +2,7 @@
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Scheduling;
 
-namespace FubuTransportation.Testing.Docs.Transports
+namespace FubuMVC.Tests.ServiceBus.Docs.Transports
 {
     // SAMPLE: LQMultipleChannelsSample
     public class LQSettings

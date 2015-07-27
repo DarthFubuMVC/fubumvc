@@ -1,10 +1,10 @@
-﻿using FubuMVC.Tests.ServiceBus.ScenarioSupport;
-using FubuTransportation.Testing.Runtime.Invocation;
+﻿using System.Linq;
+using FubuMVC.Tests.ServiceBus.Runtime.Invocation;
+using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using NUnit.Framework;
-using System.Linq;
 using Shouldly;
 
-namespace FubuTransportation.Testing.Runtime
+namespace FubuMVC.Tests.ServiceBus.Runtime
 {
     [TestFixture]
     public class generic_handlers_are_called_for_messages_that_match : InvocationContext

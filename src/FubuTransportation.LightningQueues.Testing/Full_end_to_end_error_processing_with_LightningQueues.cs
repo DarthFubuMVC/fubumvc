@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
-using FubuMVC.Core.StructureMap;
+using FubuMVC.Tests.ServiceBus;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using FubuMVC.Tests.TestSupport;
-using Shouldly;
-using FubuTransportation.Testing;
 using LightningQueues;
-using LightningQueues.Model;
 using NUnit.Framework;
+using Shouldly;
 using StructureMap;
-using Message = FubuMVC.Tests.ServiceBus.ScenarioSupport.Message;
 
 namespace FubuTransportation.LightningQueues.Testing
 {
@@ -43,7 +39,6 @@ namespace FubuTransportation.LightningQueues.Testing
             var container = new Container();
             container.Inject(settings);
 
-            
 
             _runtime = FubuTransport.For<ErrorRegistry>(container)
                 .Bootstrap();

@@ -3,10 +3,10 @@ using System.Threading;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.ServiceBus.ScheduledJobs;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing.ScheduledJobs
+namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
 {
 
     [TestFixture]

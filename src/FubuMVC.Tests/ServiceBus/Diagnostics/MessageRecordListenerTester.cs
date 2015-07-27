@@ -1,9 +1,9 @@
 ﻿using FubuMVC.Core.ServiceBus.Diagnostics;
 using FubuMVC.Core.ServiceBus.Logging;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Diagnostics
+namespace FubuMVC.Tests.ServiceBus.Diagnostics
 {
     [TestFixture]
     public class MessageRecordListenerTester

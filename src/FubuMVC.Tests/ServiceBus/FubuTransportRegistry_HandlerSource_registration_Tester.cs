@@ -1,11 +1,10 @@
 ﻿using System.Linq;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
-using FubuMVC.Tests.ServiceBus;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing
+namespace FubuMVC.Tests.ServiceBus
 {
     [TestFixture]
     public class FubuTransportRegistry_HandlerSource_registration_Tester

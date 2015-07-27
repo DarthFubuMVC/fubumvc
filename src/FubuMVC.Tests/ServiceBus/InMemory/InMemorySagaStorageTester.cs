@@ -1,13 +1,10 @@
 ﻿using System;
-using FubuCore;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Sagas;
 using NUnit.Framework;
 using Shouldly;
-using StructureMap.Pipeline;
-using Message1 = FubuTransportation.Testing.Message1;
 
-namespace FubuTransportation.Testing.InMemory
+namespace FubuMVC.Tests.ServiceBus.InMemory
 {
 
 

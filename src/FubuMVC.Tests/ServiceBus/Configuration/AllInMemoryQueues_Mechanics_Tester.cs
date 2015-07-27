@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
-using FubuMVC.Core.StructureMap;
 using NUnit.Framework;
-using StructureMap;
 using Shouldly;
+using StructureMap;
 
-namespace FubuTransportation.Testing.Configuration
+namespace FubuMVC.Tests.ServiceBus.Configuration
 {
     [TestFixture]
     public class AllInMemoryQueues_Mechanics_Tester

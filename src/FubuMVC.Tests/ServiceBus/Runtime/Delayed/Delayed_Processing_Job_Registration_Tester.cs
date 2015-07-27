@@ -1,17 +1,15 @@
-﻿using FubuCore.Dates;
+﻿using System.Linq;
+using FubuCore.Dates;
 using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.ServiceBus.Runtime.Delayed;
-using FubuMVC.Core.StructureMap;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using NUnit.Framework;
-using StructureMap;
-using System.Linq;
 using Shouldly;
 
-namespace FubuTransportation.Testing.Runtime.Delayed
+namespace FubuMVC.Tests.ServiceBus.Runtime.Delayed
 {
     [TestFixture]
     public class Delayed_Processing_Job_Registration_Tester

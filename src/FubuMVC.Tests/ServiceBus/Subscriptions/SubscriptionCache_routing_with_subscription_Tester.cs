@@ -5,12 +5,11 @@ using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Subscriptions;
-using FubuMVC.Core.StructureMap;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 using StructureMap;
 
-namespace FubuTransportation.Testing.Subscriptions
+namespace FubuMVC.Tests.ServiceBus.Subscriptions
 {
     [TestFixture]
     public class SubscriptionCache_routing_with_subscription_Tester

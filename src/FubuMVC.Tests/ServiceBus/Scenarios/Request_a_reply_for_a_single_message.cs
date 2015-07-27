@@ -1,6 +1,6 @@
 ﻿using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 
-namespace FubuTransportation.Testing.Scenarios
+namespace FubuMVC.Tests.ServiceBus.Scenarios
 {
     public class Request_a_reply_for_a_single_message : Scenario
     {

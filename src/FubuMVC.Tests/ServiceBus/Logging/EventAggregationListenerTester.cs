@@ -2,11 +2,11 @@
 using FubuMVC.Core.ServiceBus.Events;
 using FubuMVC.Core.ServiceBus.Logging;
 using FubuMVC.Tests.TestSupport;
-using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Logging
+namespace FubuMVC.Tests.ServiceBus.Logging
 {
     [TestFixture]
     public class EventAggregationListenerTester : InteractionContext<EventAggregationListener>

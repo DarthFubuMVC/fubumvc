@@ -2,10 +2,10 @@
 using FubuCore;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Monitoring;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Monitoring.PermanentTaskController
+namespace FubuMVC.Tests.ServiceBus.Monitoring.PermanentTaskController
 {
     [TestFixture]
     public class when_checking_status : PersistentTaskControllerContext

@@ -2,11 +2,11 @@
 using System.Threading;
 using FubuCore;
 using FubuMVC.Core.ServiceBus;
-using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
+using Shouldly;
 
-namespace FubuTransportation.Testing
+namespace FubuMVC.Tests.ServiceBus
 {
     [TestFixture]
     public class TimeoutRunnerTester

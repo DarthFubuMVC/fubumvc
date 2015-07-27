@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Linq;
 using FubuCore;
-using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Events;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Tests.TestSupport;
-using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
+using Shouldly;
 
-namespace FubuTransportation.Testing
+namespace FubuMVC.Tests.ServiceBus
 {
     [TestFixture]
-    public class ServiceBus_Send_to_destination_Tester : InteractionContext<ServiceBus>
+    public class ServiceBus_Send_to_destination_Tester : InteractionContext<Core.ServiceBus.ServiceBus>
     {
         private Envelope theLastEnvelopeSent
         {

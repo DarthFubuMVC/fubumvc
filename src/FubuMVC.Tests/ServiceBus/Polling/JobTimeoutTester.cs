@@ -2,10 +2,10 @@
 using System.Threading;
 using FubuCore;
 using FubuMVC.Core.ServiceBus.Polling;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Polling
+namespace FubuMVC.Tests.ServiceBus.Polling
 {
     [TestFixture]
     public class JobTimeoutTester

@@ -1,11 +1,8 @@
-﻿using System.Reflection;
-using FubuMVC.Core.ServiceBus.Configuration;
-using FubuMVC.Core.StructureMap;
-using Shouldly;
+﻿using FubuMVC.Core.ServiceBus.Configuration;
 using NUnit.Framework;
-using StructureMap;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Configuration
+namespace FubuMVC.Tests.ServiceBus.Configuration
 {
     [TestFixture]
     public class FubuTransportRegistryTester

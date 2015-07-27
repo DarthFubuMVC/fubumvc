@@ -2,11 +2,10 @@
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
-using FubuMVC.Core.StructureMap;
 using NUnit.Framework;
 using Shouldly;
 
-namespace FubuTransportation.Testing.InMemory
+namespace FubuMVC.Tests.ServiceBus.InMemory
 {
     [TestFixture]
     public class InMemoryTransportTester

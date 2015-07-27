@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Linq;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Monitoring;
 using FubuMVC.Tests.TestSupport;
-using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Monitoring
+namespace FubuMVC.Tests.ServiceBus.Monitoring
 {
     [TestFixture]
     public class PersistentTaskAgentTester : InteractionContext<PersistentTaskAgent>

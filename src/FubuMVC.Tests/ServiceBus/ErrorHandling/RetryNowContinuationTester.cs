@@ -3,7 +3,7 @@ using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuTransportation.Testing.ErrorHandling
+namespace FubuMVC.Tests.ServiceBus.ErrorHandling
 {
     [TestFixture]
     public class RetryNowContinuationTester

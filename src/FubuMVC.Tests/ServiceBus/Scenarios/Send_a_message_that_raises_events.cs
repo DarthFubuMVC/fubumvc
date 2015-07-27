@@ -1,6 +1,6 @@
 ﻿using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 
-namespace FubuTransportation.Testing.Scenarios
+namespace FubuMVC.Tests.ServiceBus.Scenarios
 {
     public class Send_a_message_that_raises_events : Scenario
     {

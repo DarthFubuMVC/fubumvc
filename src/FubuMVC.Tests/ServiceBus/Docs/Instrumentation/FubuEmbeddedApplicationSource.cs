@@ -1,6 +1,6 @@
 ﻿using FubuMVC.Core;
 
-namespace FubuTransportation.Testing.Docs.Instrumentation
+namespace FubuMVC.Tests.ServiceBus.Docs.Instrumentation
 {
     // SAMPLE: FubuEmbeddedApplicationSourceSample
     public class FubuEmbeddedApplicationSource : IApplicationSource

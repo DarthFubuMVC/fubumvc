@@ -1,8 +1,8 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Katana;
-using FubuTransportation.Testing.Docs.GettingStarted;
+using FubuMVC.Tests.ServiceBus.Docs.GettingStarted;
 
-namespace FubuTransportation.Testing.Docs.Instrumentation
+namespace FubuMVC.Tests.ServiceBus.Docs.Instrumentation
 {
     // SAMPLE: FubuEmbeddedRegistrySample
     public class FubuEmbeddedRegistry : FubuRegistry

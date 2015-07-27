@@ -4,11 +4,11 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Web;
 using FubuMVC.Tests.TestSupport;
-using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Publishing
+namespace FubuMVC.Tests.ServiceBus.Publishing
 {
     [TestFixture]
     public class publishing_a_message_successfully : InteractionContext<SendMessageBehavior<Message1>>

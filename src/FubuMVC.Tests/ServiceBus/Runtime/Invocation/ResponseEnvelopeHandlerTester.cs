@@ -1,11 +1,10 @@
 ﻿using System;
-using FubuMVC.Core.Runtime.Logging;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using NUnit.Framework;
-using Shouldly;
 using Rhino.Mocks;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Runtime.Invocation
+namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 {
     [TestFixture]
     public class ResponseEnvelopeHandlerTester

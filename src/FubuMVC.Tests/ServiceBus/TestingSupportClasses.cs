@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using FubuMVC.Core.ServiceBus.Events;
 
-namespace FubuTransportation.Testing
+namespace FubuMVC.Tests.ServiceBus
 {
 
     public class StubListener<T> : IListener<T>

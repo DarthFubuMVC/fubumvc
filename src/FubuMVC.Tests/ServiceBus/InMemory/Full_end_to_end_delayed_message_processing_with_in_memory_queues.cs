@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using FubuCore;
 using FubuCore.Dates;
@@ -8,15 +7,12 @@ using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.Services.Messaging.Tracking;
-using FubuMVC.Core.StructureMap;
-using FubuMVC.Tests.ServiceBus.InMemory;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using FubuMVC.Tests.TestSupport;
-using Shouldly;
 using NUnit.Framework;
-using StructureMap;
+using Shouldly;
 
-namespace FubuTransportation.Testing.InMemory
+namespace FubuMVC.Tests.ServiceBus.InMemory
 {
     [TestFixture, Explicit("Damn thing is too unreliable on the CI server")]
     public class Full_end_to_end_delayed_message_processing_with_in_memory_queues

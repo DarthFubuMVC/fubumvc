@@ -7,10 +7,10 @@ using FubuMVC.Core.ServiceBus.Async;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Registration.Nodes
+namespace FubuMVC.Tests.ServiceBus.Registration.Nodes
 {
     [TestFixture]
     public class HandlerCallTester

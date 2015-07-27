@@ -1,13 +1,13 @@
 ﻿using System;
+using System.Linq;
 using FubuMVC.Core.ServiceBus.Logging;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.TestSupport;
 using FubuMVC.Core.Services.Messaging.Tracking;
 using NUnit.Framework;
-using System.Linq;
 using Shouldly;
 
-namespace FubuTransportation.Testing.TestSupport
+namespace FubuMVC.Tests.ServiceBus.TestSupport
 {
     [TestFixture]
     public class MessageWatcherTester

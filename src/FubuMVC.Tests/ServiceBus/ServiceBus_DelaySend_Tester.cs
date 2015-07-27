@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Linq;
 using FubuCore;
-using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Tests.TestSupport;
-using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
+using Shouldly;
 
-namespace FubuTransportation.Testing
+namespace FubuMVC.Tests.ServiceBus
 {
     [TestFixture]
-    public class ServiceBus_DelaySend_Tester : InteractionContext<ServiceBus>
+    public class ServiceBus_DelaySend_Tester : InteractionContext<Core.ServiceBus.ServiceBus>
     {
         protected override void beforeEach()
         {

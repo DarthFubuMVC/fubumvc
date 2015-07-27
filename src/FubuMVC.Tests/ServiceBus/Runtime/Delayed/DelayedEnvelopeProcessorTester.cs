@@ -1,16 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using FubuCore.Logging;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Delayed;
 using FubuMVC.Tests.TestSupport;
-using Shouldly;
 using NUnit.Framework;
-using System.Collections.Generic;
 using Rhino.Mocks;
-using FubuCore;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Runtime.Delayed
+namespace FubuMVC.Tests.ServiceBus.Runtime.Delayed
 {
     [TestFixture]
     public class DelayedEnvelopeProcessorTester : InteractionContext<DelayedEnvelopeProcessor>

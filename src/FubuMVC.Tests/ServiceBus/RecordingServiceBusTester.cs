@@ -2,10 +2,10 @@
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.ServiceBus;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing
+namespace FubuMVC.Tests.ServiceBus
 {
     [TestFixture]
     public class RecordingServiceBusTester

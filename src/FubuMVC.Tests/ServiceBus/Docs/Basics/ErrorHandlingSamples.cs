@@ -2,7 +2,7 @@
 using System.IO;
 using FubuMVC.Core.ServiceBus.Configuration;
 
-namespace FubuTransportation.Testing.Docs.Basics
+namespace FubuMVC.Tests.ServiceBus.Docs.Basics
 {
     // SAMPLE: ErrorHandlingPolicySample
     public class ErrorHandlingPolicy : HandlerChainPolicy

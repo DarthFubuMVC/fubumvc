@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FubuTransportation.Testing.Docs.GettingStarted
+namespace FubuMVC.Tests.ServiceBus.Docs.GettingStarted
 {
     // SAMPLE: GettingStartedHandlers
     public class StartPingHandler 

@@ -59,7 +59,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
         [Test]
         public void can_round_trip_object_array()
         {
-            var messages = new object[] {sample, sample2, new FubuTransportation.Testing.Runtime.Serializers.Address {City = "SLC", State = "Utah"}};
+            var messages = new object[] {sample, sample2, new Address {City = "SLC", State = "Utah"}};
 
             var serializer = new XmlMessageSerializer();
             var stream = new MemoryStream();
@@ -70,7 +70,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
             var actual = serializer.Deserialize(stream).ShouldBeOfType<object[]>();
             actual[0].ShouldBeOfType<Order>();
             actual[1].ShouldBeOfType<Order>();
-            actual[2].ShouldBeOfType<FubuTransportation.Testing.Runtime.Serializers.Address>();
+            actual[2].ShouldBeOfType<Address>();
 
         }
 

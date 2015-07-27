@@ -1,9 +1,9 @@
 ﻿using System;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing.ErrorHandling
+namespace FubuMVC.Tests.ServiceBus.ErrorHandling
 {
     [TestFixture]
     public class ExceptionTypeMatchTester

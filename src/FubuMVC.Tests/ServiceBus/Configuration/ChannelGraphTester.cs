@@ -1,21 +1,18 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
 using FubuCore;
-using FubuCore.Logging;
+using FubuCore.Reflection;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Headers;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
-using FubuTransportation.Testing.ErrorHandling;
 using NUnit.Framework;
-using Shouldly;
-using System.Collections.Generic;
 using Rhino.Mocks;
-using FubuCore.Reflection;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Configuration
+namespace FubuMVC.Tests.ServiceBus.Configuration
 {
     [TestFixture]
     public class ChannelGraphTester

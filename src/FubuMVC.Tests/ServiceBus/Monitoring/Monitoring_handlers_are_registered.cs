@@ -1,9 +1,9 @@
 ﻿using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Monitoring;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Monitoring
+namespace FubuMVC.Tests.ServiceBus.Monitoring
 {
     [TestFixture]
     public class Monitoring_handlers_are_registered

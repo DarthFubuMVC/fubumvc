@@ -1,13 +1,11 @@
-﻿using FubuMVC.Core.ServiceBus;
+﻿using System.Linq;
+using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
-using FubuMVC.Core.StructureMap;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using NUnit.Framework;
-using StructureMap;
-using System.Linq;
 using Shouldly;
 
-namespace FubuTransportation.Testing
+namespace FubuMVC.Tests.ServiceBus
 {
     [TestFixture]
     public class ServiceBus_Consume_right_now_Tester

@@ -2,11 +2,11 @@
 using FubuMVC.Core.ServiceBus.ScheduledJobs;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Execution;
 using FubuMVC.Tests.TestSupport;
-using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
+using Shouldly;
 
-namespace FubuTransportation.Testing.ScheduledJobs
+namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
 {
     [TestFixture]
     public class ScheduledJobPersistentTaskTester : InteractionContext<ScheduledJobPersistentTask>

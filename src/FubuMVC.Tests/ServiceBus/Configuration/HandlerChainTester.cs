@@ -5,7 +5,7 @@ using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using NUnit.Framework;
 using Shouldly;
 
-namespace FubuTransportation.Testing.Configuration
+namespace FubuMVC.Tests.ServiceBus.Configuration
 {
     [TestFixture]
     public class HandlerChainTester

@@ -1,6 +1,6 @@
 ﻿using FubuMVC.Core.ServiceBus.Configuration;
 
-namespace FubuTransportation.Testing.Docs.GettingStarted
+namespace FubuMVC.Tests.ServiceBus.Docs.GettingStarted
 {
     // SAMPLE: GettingStartedTransportRegistry
     public class GettingStartedTransportRegistry : FubuTransportRegistry<GettingStartedSettings>

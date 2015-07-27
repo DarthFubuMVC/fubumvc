@@ -3,11 +3,11 @@ using FubuCore.Logging;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Events;
 using FubuMVC.Tests.TestSupport;
-using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Events
+namespace FubuMVC.Tests.ServiceBus.Events
 {
     [TestFixture]
     public class EventAggregatorTester

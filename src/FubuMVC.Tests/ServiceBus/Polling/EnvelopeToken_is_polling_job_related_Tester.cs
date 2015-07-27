@@ -1,9 +1,9 @@
 ﻿using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.ServiceBus.Runtime;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Polling
+namespace FubuMVC.Tests.ServiceBus.Polling
 {
     [TestFixture]
     public class EnvelopeToken_is_polling_job_related_Tester

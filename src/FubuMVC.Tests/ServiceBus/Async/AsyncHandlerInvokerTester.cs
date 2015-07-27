@@ -4,11 +4,10 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.ServiceBus.Async;
 using FubuMVC.Tests.TestSupport;
-using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuTransportation.Testing.Async
+namespace FubuMVC.Tests.ServiceBus.Async
 {
     [TestFixture]
     public class when_invoking : InteractionContext<AsyncHandlerInvoker<when_invoking.AsyncAction, Message1>>

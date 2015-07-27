@@ -1,9 +1,7 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
-using FubuMVC.Core.StructureMap;
-using StructureMap;
 
-namespace FubuTransportation.Testing.Docs.GettingStarted
+namespace FubuMVC.Tests.ServiceBus.Docs.GettingStarted
 {
     // SAMPLE: GettingStartedApplicationSource
     public class GettingStartedApplicationSource : IApplicationSource

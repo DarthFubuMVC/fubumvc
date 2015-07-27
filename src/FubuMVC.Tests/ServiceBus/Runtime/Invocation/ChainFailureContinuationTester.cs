@@ -1,13 +1,13 @@
 ﻿using System;
+using System.Linq;
 using FubuMVC.Core.ServiceBus.Logging;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using NUnit.Framework;
 using Rhino.Mocks;
-using System.Linq;
 using Shouldly;
 
-namespace FubuTransportation.Testing.Runtime.Invocation
+namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 {
     [TestFixture]
     public class when_the_ChainFailureContinuation_Executes

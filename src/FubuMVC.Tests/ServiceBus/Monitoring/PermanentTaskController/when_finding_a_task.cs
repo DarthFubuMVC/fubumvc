@@ -1,9 +1,8 @@
-﻿using System;
-using FubuMVC.Core.ServiceBus;
-using Shouldly;
+﻿using FubuMVC.Core.ServiceBus;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Monitoring.PermanentTaskController
+namespace FubuMVC.Tests.ServiceBus.Monitoring.PermanentTaskController
 {
     [TestFixture]
     public class when_finding_a_task : PersistentTaskControllerContext

@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace FubuTransportation.Testing.ScheduledJobs
+namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
 {
     [TestFixture]
     public class ScheduleRepositoryTester

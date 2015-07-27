@@ -1,7 +1,7 @@
 ﻿using System;
 using FubuMVC.Core.ServiceBus.Sagas;
 
-namespace FubuTransportation.Testing.Docs.Sagas
+namespace FubuMVC.Tests.ServiceBus.Docs.Sagas
 {
     // SAMPLE: OverviewSagaSample
     public class SimpleSagaHandler : IStatefulSaga<SimpleSagaState>

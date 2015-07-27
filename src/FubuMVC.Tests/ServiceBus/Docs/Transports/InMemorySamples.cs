@@ -1,6 +1,6 @@
 ﻿using FubuMVC.Core.ServiceBus.Configuration;
 
-namespace FubuTransportation.Testing.Docs.Transports
+namespace FubuMVC.Tests.ServiceBus.Docs.Transports
 {
     public class InMemorySamples
     {

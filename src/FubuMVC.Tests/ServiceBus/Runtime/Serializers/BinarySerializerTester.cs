@@ -1,9 +1,9 @@
 ﻿using System.IO;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Runtime.Serializers
+namespace FubuMVC.Tests.ServiceBus.Runtime.Serializers
 {
     [TestFixture]
     public class BinarySerializerTester

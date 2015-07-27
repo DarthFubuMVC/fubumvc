@@ -1,6 +1,6 @@
 ﻿using FubuMVC.Core.ServiceBus.Runtime.Cascading;
 
-namespace FubuTransportation.Testing
+namespace FubuMVC.Tests.ServiceBus
 {
 
     public interface ITargetHandler

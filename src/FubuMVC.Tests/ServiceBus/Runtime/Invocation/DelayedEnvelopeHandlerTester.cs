@@ -1,14 +1,14 @@
 ﻿using System;
+using System.Linq;
 using FubuCore.Dates;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Delayed;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using NUnit.Framework;
-using Shouldly;
 using Rhino.Mocks;
-using System.Linq;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Runtime.Invocation
+namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 {
     [TestFixture]
     public class DelayedEnvelopeHandlerTester

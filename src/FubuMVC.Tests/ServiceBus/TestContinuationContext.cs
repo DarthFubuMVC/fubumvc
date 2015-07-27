@@ -5,7 +5,7 @@ using FubuCore.Logging;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using Rhino.Mocks;
 
-namespace FubuTransportation.Testing
+namespace FubuMVC.Tests.ServiceBus
 {
     public class TestContinuationContext : ContinuationContext
     {

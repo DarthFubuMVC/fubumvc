@@ -1,9 +1,9 @@
 ﻿using System;
 using FubuMVC.Core.ServiceBus.Sagas;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Sagas
+namespace FubuMVC.Tests.ServiceBus.Sagas
 {
     [TestFixture]
     public class SagaTypesTester

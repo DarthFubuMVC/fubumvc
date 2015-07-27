@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using FubuCore;
@@ -7,12 +6,11 @@ using FubuCore.Dates;
 using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
-using FubuMVC.Core.StructureMap;
+using FubuMVC.Tests.ServiceBus;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using FubuMVC.Tests.TestSupport;
-using Shouldly;
-using FubuTransportation.Testing;
 using NUnit.Framework;
+using Shouldly;
 using StructureMap;
 
 namespace FubuTransportation.LightningQueues.Testing
@@ -47,7 +45,7 @@ namespace FubuTransportation.LightningQueues.Testing
 
 
             _runtime = FubuTransport.For<DelayedRegistry>(container)
-                                       .Bootstrap();
+                .Bootstrap();
 
             theServiceBus = _runtime.Factory.Get<IServiceBus>();
             //_runtime.Factory.Get<IPersistentQueues>().ClearAll();
@@ -63,7 +61,6 @@ namespace FubuTransportation.LightningQueues.Testing
             theServiceBus.DelaySend(message2, theClock.UtcNow().AddHours(1));
             theServiceBus.DelaySend(message3, theClock.UtcNow().AddHours(2));
             theServiceBus.DelaySend(message4, theClock.UtcNow().AddHours(2));
-
         }
 
         [Test, Explicit("This is being problematic. Going to replace w/ an ST spec")]
@@ -97,7 +94,6 @@ namespace FubuTransportation.LightningQueues.Testing
         {
             _runtime.Dispose();
             FubuTransport.Reset();
-            
         }
     }
 

@@ -3,7 +3,7 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using NUnit.Framework;
 using Shouldly;
 
-namespace FubuTransportation.Testing
+namespace FubuMVC.Tests.ServiceBus
 {
     [TestFixture]
     public class FubuTransport_default_options_Tester

@@ -5,7 +5,7 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Sagas;
 using StructureMap.Pipeline;
 
-namespace FubuTransportation.Testing.Docs.Sagas
+namespace FubuMVC.Tests.ServiceBus.Docs.Sagas
 {
     // SAMPLE: SagaRepositorySample
     public class SagaRepositorySampleTransportRegistry : FubuTransportRegistry

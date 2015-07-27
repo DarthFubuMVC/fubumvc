@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using FubuCore.Util;
 using FubuMVC.Core.ServiceBus.Monitoring;
 
-namespace FubuTransportation.Testing.Monitoring
+namespace FubuMVC.Tests.ServiceBus.Monitoring
 {
     public class FakePersistentTasks : IPersistentTasks
     {

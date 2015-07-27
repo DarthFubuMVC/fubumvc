@@ -1,15 +1,12 @@
-﻿using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Polling;
-using FubuMVC.Core.StructureMap;
 using FubuMVC.Tests.TestSupport;
-using Shouldly;
 using NUnit.Framework;
-using StructureMap;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Polling
+namespace FubuMVC.Tests.ServiceBus.Polling
 {
     [TestFixture]
     public class PollingJobRunImmediatelyIntegrationTester

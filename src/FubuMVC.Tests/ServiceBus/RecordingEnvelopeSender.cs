@@ -2,7 +2,7 @@
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Cascading;
 
-namespace FubuTransportation.Testing
+namespace FubuMVC.Tests.ServiceBus
 {
     public class RecordingEnvelopeSender : IEnvelopeSender, IOutgoingSender
     {

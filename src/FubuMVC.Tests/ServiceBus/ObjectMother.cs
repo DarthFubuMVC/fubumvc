@@ -1,6 +1,5 @@
 ﻿using System;
 using FubuCore;
-using FubuCore.Logging;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime;
@@ -10,7 +9,7 @@ using FubuMVC.Core.ServiceBus.Subscriptions;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using Rhino.Mocks;
 
-namespace FubuTransportation.Testing
+namespace FubuMVC.Tests.ServiceBus
 {
     public static class ObjectMother
     {

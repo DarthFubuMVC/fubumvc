@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Threading;
 using FubuCore;
 using FubuCore.Dates;
 using FubuCore.Logging;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Execution;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing.ScheduledJobs
+namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
 {
     [TestFixture]
     public class JobTimerIntegratedTester

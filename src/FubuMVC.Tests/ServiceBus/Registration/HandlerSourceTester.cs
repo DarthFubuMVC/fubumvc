@@ -2,10 +2,10 @@
 using FubuCore;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Registration;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Registration
+namespace FubuMVC.Tests.ServiceBus.Registration
 {
     [TestFixture]
     public class HandlerSourceTester
@@ -14,7 +14,7 @@ namespace FubuTransportation.Testing.Registration
         public void apply_to_single_assembly_looking_for_Handler()
         {
             var source = new HandlerSource();
-            source.ExcludeTypes(x => x.Namespace != "FubuTransportation.Testing.Registration");
+            source.ExcludeTypes(x => x.Namespace != "FubuMVC.Tests.ServiceBus.Registration");
 
             source.UseThisAssembly();
             source.IncludeClassesSuffixedWithConsumer();
@@ -34,7 +34,7 @@ namespace FubuTransportation.Testing.Registration
         public void uses_the_containing_assembly_by_default()
         {
             var source = new HandlerSource();
-            source.ExcludeTypes(x => x.Namespace != "FubuTransportation.Testing.Registration");
+            source.ExcludeTypes(x => x.Namespace != "FubuMVC.Tests.ServiceBus.Registration");
 
             source.IncludeClassesSuffixedWithConsumer();
 
@@ -53,7 +53,7 @@ namespace FubuTransportation.Testing.Registration
         public void custom_type_filter_on_excludes()
         {
             var source = new HandlerSource();
-            source.ExcludeTypes(x => x.Namespace != "FubuTransportation.Testing.Registration");
+            source.ExcludeTypes(x => x.Namespace != "FubuMVC.Tests.ServiceBus.Registration");
 
             source.IncludeClassesSuffixedWithConsumer();
             source.ExcludeTypes(x => x.Name == "MyOtherConsumer");
@@ -70,7 +70,7 @@ namespace FubuTransportation.Testing.Registration
         public void custom_type_filter_on_includeds()
         {
             var source = new HandlerSource();
-            source.ExcludeTypes(x => x.Namespace != "FubuTransportation.Testing.Registration");
+            source.ExcludeTypes(x => x.Namespace != "FubuMVC.Tests.ServiceBus.Registration");
             source.IncludeTypes(x => x.Name == "MyConsumer");
 
             var descriptions = source.As<IHandlerSource>().FindCalls(GetType().Assembly).Select(x => x.Description);
@@ -85,7 +85,7 @@ namespace FubuTransportation.Testing.Registration
         public void custom_method_inclusion()
         {
             var source = new HandlerSource();
-            source.ExcludeTypes(x => x.Namespace != "FubuTransportation.Testing.Registration");
+            source.ExcludeTypes(x => x.Namespace != "FubuMVC.Tests.ServiceBus.Registration");
             source.IncludeClassesSuffixedWithConsumer();
             source.IncludeMethods(x => x.Name == "M2");
 
@@ -100,7 +100,7 @@ namespace FubuTransportation.Testing.Registration
         public void custom_method_exclusion()
         {
             var source = new HandlerSource();
-            source.ExcludeTypes(x => x.Namespace != "FubuTransportation.Testing.Registration");
+            source.ExcludeTypes(x => x.Namespace != "FubuMVC.Tests.ServiceBus.Registration");
             source.IncludeClassesSuffixedWithConsumer();
             source.ExcludeMethods(x => x.Name == "M2");
 

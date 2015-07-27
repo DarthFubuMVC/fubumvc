@@ -1,10 +1,10 @@
-﻿using FubuMVC.Core.ServiceBus.Configuration;
+﻿using System.Linq;
+using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
 using NUnit.Framework;
 using Shouldly;
-using System.Linq;
 
-namespace FubuTransportation.Testing.Configuration
+namespace FubuMVC.Tests.ServiceBus.Configuration
 {
     [TestFixture]
     public class HandlerGraphTester

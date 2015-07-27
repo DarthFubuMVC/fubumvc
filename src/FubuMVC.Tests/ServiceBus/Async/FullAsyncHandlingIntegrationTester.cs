@@ -1,20 +1,16 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
-using FubuMVC.Core.StructureMap;
 using FubuMVC.Tests.TestSupport;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Async
+namespace FubuMVC.Tests.ServiceBus.Async
 {
     [TestFixture]
     public class FullAsyncHandlingIntegrationTester

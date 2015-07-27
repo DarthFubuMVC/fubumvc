@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FubuMVC.Core.ServiceBus.Async;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
-namespace FubuTransportation.Testing.Async
+namespace FubuMVC.Tests.ServiceBus.Async
 {
     [TestFixture]
     public class AsynchHandlingTester

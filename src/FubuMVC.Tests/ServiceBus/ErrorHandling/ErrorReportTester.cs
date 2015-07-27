@@ -3,9 +3,8 @@ using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.ServiceBus.Runtime;
 using NUnit.Framework;
 using Shouldly;
-using Message1 = FubuTransportation.Testing.Message1;
 
-namespace FubuTransportation.Testing.ErrorHandling
+namespace FubuMVC.Tests.ServiceBus.ErrorHandling
 {
     [TestFixture]
     public class when_creating_an_error_report_from_the_exception_and_envelope
