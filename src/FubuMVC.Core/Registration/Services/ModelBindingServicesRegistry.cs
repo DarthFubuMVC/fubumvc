@@ -11,7 +11,6 @@ namespace FubuMVC.Core.Registration.Services
     {
         public ModelBindingServicesRegistry()
         {
-            AddService<IModelBinder, FubuTupleBinder>();
             AddService<IModelBinder>(new CurrentMimeTypeModelBinder());
             AddService<IModelBinder, ResourcePathBinder>();
             SetServiceIfNone<ISetterBinder, SetterBinder>();
