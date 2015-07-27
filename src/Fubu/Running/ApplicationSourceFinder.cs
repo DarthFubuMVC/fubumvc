@@ -6,6 +6,7 @@ using System.Reflection;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using StructureMap;
 
 namespace Fubu.Running
 {

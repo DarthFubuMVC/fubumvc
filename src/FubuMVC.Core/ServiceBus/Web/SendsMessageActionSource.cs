@@ -5,6 +5,7 @@ using System.Reflection;
 using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using StructureMap;
 
 namespace FubuMVC.Core.ServiceBus.Web
 {

@@ -4,6 +4,7 @@ using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View.Registration;
+using StructureMap;
 
 namespace FubuMVC.Core.View.Model
 {

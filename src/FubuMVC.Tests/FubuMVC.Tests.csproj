@@ -233,7 +233,6 @@
     <Compile Include="Registration\Registration\FubuPackageRegistry_Importing_Mechanics_Specs.cs" />
     <Compile Include="Registration\SettingsCollectionTester.cs" />
     <Compile Include="Registration\SettingsCollection_creates_with_the_app_setting_provider_Tester.cs" />
-    <Compile Include="Registration\TypeRepositoryTester.cs" />
     <Compile Include="Registration\when_importing_urls.cs" />
     <Compile Include="required_service_registrations.cs" />
     <Compile Include="Resources\Conneg\ConnegGraphTester.cs" />

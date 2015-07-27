@@ -647,7 +647,6 @@
     <Compile Include="Registration\SettingAlteration.cs" />
     <Compile Include="Registration\SettingReplacement.cs" />
     <Compile Include="Registration\SettingsCollection.cs" />
-    <Compile Include="Registration\TypeRepository.cs" />
     <Compile Include="Resources\Conneg\AjaxContinuations.cs" />
     <Compile Include="Resources\Conneg\ConnegGraph.cs" />
     <Compile Include="Resources\Conneg\ConnegRule.cs" />

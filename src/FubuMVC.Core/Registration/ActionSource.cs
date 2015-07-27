@@ -9,6 +9,7 @@ using FubuCore.Util;
 using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Registration.Nodes;
 using System.Linq;
+using StructureMap;
 
 namespace FubuMVC.Core.Registration
 {

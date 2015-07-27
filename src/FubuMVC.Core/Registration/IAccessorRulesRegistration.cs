@@ -4,6 +4,7 @@ using System.Linq;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Diagnostics.Packaging;
+using StructureMap;
 
 namespace FubuMVC.Core.Registration
 {
