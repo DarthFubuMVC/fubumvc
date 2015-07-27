@@ -355,7 +355,6 @@
     <Compile Include="ServiceBus\ErrorHandling\RetryNow_integration_testing.cs" />
     <Compile Include="ServiceBus\Events\EventAggregatorTester.cs" />
     <Compile Include="ServiceBus\Events\ExpiringListenerCleanupTester.cs" />
-    <Compile Include="ServiceBus\Extension_importing_tester.cs" />
     <Compile Include="ServiceBus\FakeHandlers.cs" />
     <Compile Include="ServiceBus\FubuTransportRegistry_application_of_policies_Tester.cs" />
     <Compile Include="ServiceBus\FubuTransportRegistry_default_handler_source_policies_spec.cs" />

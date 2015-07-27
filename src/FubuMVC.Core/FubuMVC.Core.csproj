@@ -96,7 +96,6 @@
     <Compile Include="ServiceBus\Configuration\HandlerGraph.cs" />
     <Compile Include="ServiceBus\Configuration\HandlerPolicies.cs" />
     <Compile Include="ServiceBus\Configuration\HealthMonitoringExpression.cs" />
-    <Compile Include="ServiceBus\Configuration\IFubuTransportRegistryExtension.cs" />
     <Compile Include="ServiceBus\Configuration\ISettingsAware.cs" />
     <Compile Include="ServiceBus\Configuration\PoliciesExpression.cs" />
     <Compile Include="ServiceBus\Configuration\SchedulerMaker.cs" />
