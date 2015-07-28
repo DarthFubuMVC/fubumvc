@@ -23,7 +23,7 @@ namespace FubuMVC.Core.ServiceBus.Configuration
         public static FubuApplication DefaultPolicies(IContainer container = null)
         {
             var registry = new FubuRegistry();
-            registry.StructureMap(container);
+            if (container != null) registry.StructureMap(container);
 
             registry.Features.ServiceBus.Configure(x =>
             {

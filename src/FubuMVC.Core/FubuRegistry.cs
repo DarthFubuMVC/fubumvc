@@ -336,6 +336,8 @@ namespace FubuMVC.Core
 
         public void StructureMap(IContainer existing)
         {
+            if (existing == null) throw new ArgumentNullException("existing");
+
             _containerSource = () => existing;
         }
 

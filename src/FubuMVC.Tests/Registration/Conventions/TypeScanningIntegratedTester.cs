@@ -6,6 +6,7 @@ using FubuCore.Reflection;
 using FubuCore.Util;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.DSL;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Tests.Behaviors;
 using Shouldly;
 using NUnit.Framework;
@@ -40,6 +41,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             graph.Behaviors.Count().ShouldBeGreaterThan(0);
 
             graph.Behaviors
+                .Where(x => x.Calls.Any())
                 .Where(x => x.FirstCall().HandlerType.Assembly != typeof (BehaviorGraph).Assembly)
                 .Each(x =>
                 {
@@ -51,10 +53,10 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void pick_up_behaviors_from_this_assembly()
         {
-            var graph = BehaviorGraph.BuildFrom(x => { x.Actions.IncludeClassesSuffixedWithController(); });
+            var graph = BehaviorGraph.BuildFrom(x => x.Actions.IncludeClassesSuffixedWithController());
 
             graph.Behaviors.Count().ShouldBeGreaterThan(0);
-            graph.Behaviors.Each(x => x.Calls.First().HandlerType.Name.EndsWith("Controller"));
+            graph.Behaviors.OfType<RoutedChain>().Each(x => x.Calls.First().HandlerType.Name.EndsWith("Controller"));
         }
 
         [Test]

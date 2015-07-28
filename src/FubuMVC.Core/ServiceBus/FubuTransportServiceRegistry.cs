@@ -71,7 +71,7 @@ namespace FubuMVC.Core.ServiceBus
             SetServiceIfNone<IMessageExecutor, MessageExecutor>();
             SetServiceIfNone<IOutgoingSender, OutgoingSender>();
 
-            SetServiceIfNone<IAsyncHandling, AsyncHandling>();
+            
 
             subscriptions();
         }

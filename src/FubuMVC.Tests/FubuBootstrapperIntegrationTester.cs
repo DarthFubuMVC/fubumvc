@@ -68,7 +68,7 @@ namespace FubuMVC.Tests
         {
             Debug.WriteLine(container.WhatDoIHave());
 
-            (container.GetAllInstances<IActionBehavior>().Count() >= 6).ShouldBeTrue();
+            (container.Model.For<IActionBehavior>().Instances.Count() >= 6).ShouldBeTrue();
         }
 
         [Test]

@@ -30,8 +30,8 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void should_have_a_call_in_each_behavior_chain()
         {
-            int callCount = graph.Behaviors.SelectMany(x => x.Calls).Count();
-            callCount.ShouldBe(graph.Behaviors.Count());
+            int callCount = graph.Behaviors.OfType<RoutedChain>().SelectMany(x => x.Calls).Count();
+            callCount.ShouldBe(6);
         }
 
         [Test]
