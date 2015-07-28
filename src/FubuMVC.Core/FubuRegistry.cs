@@ -322,7 +322,7 @@ namespace FubuMVC.Core
             /// <summary>
             /// Completely remove the default handler finding
             /// logic.  This is probably only applicable to 
-            /// retrofitting FubuTransportation to existing 
+            /// retrofitting the ServiceBus feature to existing 
             /// systems with a very different nomenclature
             /// than the defaults
             /// </summary>

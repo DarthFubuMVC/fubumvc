@@ -23,7 +23,7 @@ namespace FubuMVC.Core.ServiceBus.Subscriptions
             if (!transports.Any())
             {
                 throw new Exception(
-                    "No transports are registered.  FubuTransportation cannot function without at least one ITransport");
+                    "No transports are registered.  FubuMVC's ServiceBus cannot function without at least one ITransport");
             }
 
             _graph = graph;

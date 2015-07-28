@@ -25,20 +25,13 @@ namespace FubuMVC.Tests.ServiceBus
                 return BehaviorGraph.BuildFrom(theRegistry);
             });
 
-            _handlers = new Lazy<HandlerGraph>(() => _behaviors.Value.Settings.Get<HandlerGraph>());
             _channels = new Lazy<ChannelGraph>(() => _behaviors.Value.Settings.Get<ChannelGraph>());
         }
 
         private BusRegistry theRegistry;
-        private Lazy<HandlerGraph> _handlers;
         private Lazy<ChannelGraph> _channels;
         private Lazy<BehaviorGraph> _behaviors;
 
-
-        public HandlerGraph theHandlers
-        {
-            get { return _handlers.Value; }
-        }
 
         public ChannelGraph theChannels
         {

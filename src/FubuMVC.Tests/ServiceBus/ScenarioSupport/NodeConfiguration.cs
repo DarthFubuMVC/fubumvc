@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Events;
@@ -196,8 +197,8 @@ namespace FubuMVC.Tests.ServiceBus.ScenarioSupport
                     }
                 });
 
-                var handlers = _runtime.Factory.Get<HandlerGraph>();
-                var inputs = handlers.Select(x => x.InputType()).Where(x => x != typeof(object[]));
+                var handlers = _runtime.Factory.Get<BehaviorGraph>();
+                var inputs = handlers.Handlers.Select(x => x.InputType()).Where(x => x != typeof(object[]));
                 if (inputs.Any())
                 {
                     writer.WriteLine("Handles " + inputs.Select(x => x.Name).Join(", "));

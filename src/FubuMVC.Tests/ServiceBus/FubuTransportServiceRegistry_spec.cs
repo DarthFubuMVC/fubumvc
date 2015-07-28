@@ -49,7 +49,7 @@ namespace FubuMVC.Tests.ServiceBus
 
 
 
-                c.ShouldHaveRegistration<IActivator, FubuTransportationActivator>();
+                c.ShouldHaveRegistration<IActivator, ServiceBusActivator>();
                 c.ShouldHaveRegistration<ILogListener, EventAggregationListener>();
 
                 c.ShouldNotHaveRegistration<IActivator, TransportCleanupActivator>();

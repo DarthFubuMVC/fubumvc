@@ -96,7 +96,7 @@ namespace FubuMVC.Core.ServiceBus.Registration.Nodes
             }
 
             throw new FubuException(1005,
-                                    "The action '{0}' is invalid. Only methods that support the '1 in 1 out' or '1 in 0 out' patterns are valid as FubuTransportation handlers",
+                                    "The action '{0}' is invalid. Only methods that support the '1 in 1 out' or '1 in 0 out' patterns are valid as FubuMVC message handlers",
                                     Description);
 
         }

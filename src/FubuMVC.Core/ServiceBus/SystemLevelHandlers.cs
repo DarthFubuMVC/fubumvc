@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
-using FubuCore;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.ServiceBus.Configuration;
-using FubuMVC.Core.ServiceBus.ErrorHandling;
 using FubuMVC.Core.ServiceBus.Monitoring;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
@@ -17,29 +15,29 @@ namespace FubuMVC.Core.ServiceBus
     {
         public IEnumerable<BehaviorChain> BuildChains(BehaviorGraph graph, IPerfTimer timer)
         {
-            return timer.Record("Building FubuTransportation Chains", () => buildChains(graph));
+            return timer.Record("Building System Level Handler Chains", () => buildChains(graph));
         }
 
         private static IEnumerable<BehaviorChain> buildChains(BehaviorGraph graph)
         {
-            var handlers = graph.Settings.Get<HandlerGraph>();
-
-            // TODO -- move this to a HandlerSource after we fix the duplicate calls
-            // across HandlerSource problem.
-            handlers.Add(HandlerCall.For<SubscriptionsHandler>(x => x.Handle(new SubscriptionRequested())));
-            handlers.Add(HandlerCall.For<SubscriptionsHandler>(x => x.Handle(new SubscriptionsChanged())));
-            handlers.Add(HandlerCall.For<SubscriptionsHandler>(x => x.Handle(new SubscriptionsRemoved())));
-            handlers.Add(HandlerCall.For<MonitoringControlHandler>(x => x.Handle(new TakeOwnershipRequest())));
-            handlers.Add(HandlerCall.For<MonitoringControlHandler>(x => x.Handle(new TaskHealthRequest())));
-            handlers.Add(HandlerCall.For<MonitoringControlHandler>(x => x.Handle(new TaskDeactivation())));
+            var handlers = new HandlerGraph
+            {
+                HandlerCall.For<SubscriptionsHandler>(x => x.Handle(new SubscriptionRequested())),
+                HandlerCall.For<SubscriptionsHandler>(x => x.Handle(new SubscriptionsChanged())),
+                HandlerCall.For<SubscriptionsHandler>(x => x.Handle(new SubscriptionsRemoved())),
+                HandlerCall.For<MonitoringControlHandler>(x => x.Handle(new TakeOwnershipRequest())),
+                HandlerCall.For<MonitoringControlHandler>(x => x.Handle(new TaskHealthRequest())),
+                HandlerCall.For<MonitoringControlHandler>(x => x.Handle(new TaskDeactivation()))
+            };
 
             var jobs = graph.Settings.Get<PollingJobSettings>();
             jobs.Jobs.Each(x =>
             {
-                var handlerType = typeof(JobRunner<>).MakeGenericType(x.JobType);
+                var handlerType = typeof (JobRunner<>).MakeGenericType(x.JobType);
                 var method = handlerType.GetMethod("Run");
 
-                handlers.Add(new HandlerCall(handlerType, method)); ;
+                handlers.Add(new HandlerCall(handlerType, method));
+                ;
             });
 
 

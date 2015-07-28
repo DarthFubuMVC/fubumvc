@@ -37,7 +37,7 @@ namespace FubuMVC.Core.ServiceBus
             SetServiceIfNone<IEnvelopeSender, EnvelopeSender>();
             AddService<IMessageSerializer, XmlMessageSerializer>();
 
-            AddService<IActivator, FubuTransportationActivator>();
+            AddService<IActivator, ServiceBusActivator>();
 
             SetServiceIfNone<IServiceBus, ServiceBus>();
 

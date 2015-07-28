@@ -27,7 +27,7 @@ namespace Serenity.ServiceBus
 
         public string ShortTitle
         {
-            get { return "FubuTransportation"; }
+            get { return "ServiceBus"; }
         }
 
         public int Count

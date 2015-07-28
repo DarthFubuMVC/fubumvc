@@ -28,7 +28,7 @@ namespace FubuMVC.Core.ServiceBus.Scheduling
                 var thread = new Thread(() => action())
                 {
                     IsBackground = true,
-                    Name = "FubuTransportation Receiving Thread",
+                    Name = "FubuMVC Receiving Thread",
                 };
                 thread.Start();
                 _threads[i] = thread;

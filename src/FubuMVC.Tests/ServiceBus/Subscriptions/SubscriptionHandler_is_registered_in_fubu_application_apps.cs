@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core.ServiceBus.Configuration;
+﻿using FubuMVC.Core.Registration;
+using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Subscriptions;
 using NUnit.Framework;
 using Shouldly;
@@ -13,7 +14,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
         {
             using (var runtime = FubuTransport.DefaultPolicies().Bootstrap())
             {
-                var graph = runtime.Factory.Get<HandlerGraph>();
+                var graph = runtime.Factory.Get<BehaviorGraph>();
                 graph.ChainFor(typeof (SubscriptionRequested)).ShouldNotBeNull();
                 graph.ChainFor(typeof (SubscriptionsChanged)).ShouldNotBeNull();
             }

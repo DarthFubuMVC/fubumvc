@@ -8,7 +8,6 @@ using FubuMVC.Core.ServiceBus.Registration.Nodes;
 
 namespace FubuMVC.Core.ServiceBus.Configuration
 {
-    [ApplicationLevel]
     public class HandlerGraph : IEnumerable<HandlerChain>
     {
         private readonly IDictionary<Type, HandlerChain> _chains = new Dictionary<Type, HandlerChain>(); 

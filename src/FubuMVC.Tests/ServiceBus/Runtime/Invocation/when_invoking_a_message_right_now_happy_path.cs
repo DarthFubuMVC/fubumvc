@@ -13,7 +13,6 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
     public class when_invoking_a_message_right_now_happy_path : InteractionContext<ChainInvoker>
     {
         private OneMessage theMessage;
-        private HandlerGraph theGraph;
         private HandlerChain theExpectedChain;
         private StubServiceFactory theFactory;
         private object[] cascadingMessages;
