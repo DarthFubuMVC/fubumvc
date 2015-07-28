@@ -2,14 +2,50 @@ using System;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Behaviors;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Registration.Nodes
 {
     /// <summary>
     ///   BehaviorNode models a single Behavior in the FubuMVC configuration model
     /// </summary>
-    public abstract partial class BehaviorNode : Node<BehaviorNode, BehaviorChain>, IContainerModel
+    public abstract class BehaviorNode : Node<BehaviorNode, BehaviorChain>, IContainerModel
     {
+        protected BehaviorNode()
+        {
+            UniqueId = Guid.NewGuid();
+        }
+
+        public virtual Guid UniqueId { get; protected set; }
+
+        Instance IContainerModel.ToInstance()
+        {
+            var instance = toInstance();
+            instance.Name = UniqueId.ToString();
+
+            return instance.As<Instance>();
+        }
+
+        protected IConfiguredInstance toInstance()
+        {
+            var instance = buildInstance();
+
+            if (Next != null)
+            {
+                var next = Next.As<IContainerModel>().ToInstance();
+                instance.Dependencies.Add(typeof(IActionBehavior), next);
+            }
+
+            return instance;
+        }
+
+        protected abstract IConfiguredInstance buildInstance();
+
+        public Type BehaviorType
+        {
+            get { return buildInstance().PluggedType; }
+        }
+
         public abstract BehaviorCategory Category { get; }
 
         public virtual string Description

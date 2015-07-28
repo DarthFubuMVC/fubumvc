@@ -942,7 +942,6 @@
     <Compile Include="Http\MimeTypeList.cs" />
     <Compile Include="Http\RequestDataSource.cs" />
     <Compile Include="Registration\Nodes\ActionCallBase.cs" />
-    <Compile Include="Registration\Nodes\BehaviorNode.ObjectDef.cs" />
     <Compile Include="Registration\Nodes\Process.cs" />
     <Compile Include="Http\Headers\Header.cs" />
     <Compile Include="Runtime\Formatters\IFormatter.cs" />
