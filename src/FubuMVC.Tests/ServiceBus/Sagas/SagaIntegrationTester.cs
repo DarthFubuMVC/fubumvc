@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Events;
@@ -126,7 +127,7 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
         [Test]
         public void got_the_handler_chains_for_the_saga()
         {
-            var graph = theContainer.GetInstance<HandlerGraph>();
+            var graph = theContainer.GetInstance<BehaviorGraph>();
             graph.ChainFor(typeof(TestSagaStart)).ShouldNotBeNull();
             graph.ChainFor(typeof(TestSagaUpdate)).ShouldNotBeNull();
             graph.ChainFor(typeof(TestSagaFinish)).ShouldNotBeNull();
@@ -135,7 +136,7 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
         [Test]
         public void there_is_a_saga_node_with_object_def_for_saga_repository()
         {
-            var graph = theContainer.GetInstance<HandlerGraph>();
+            var graph = theContainer.GetInstance<BehaviorGraph>();
             graph.ChainFor(typeof(TestSagaStart)).OfType<StatefulSagaNode>().Single().Repository.ShouldNotBeNull();
             graph.ChainFor(typeof(TestSagaUpdate)).OfType<StatefulSagaNode>().Single().Repository.ShouldNotBeNull();
             graph.ChainFor(typeof(TestSagaFinish)).OfType<StatefulSagaNode>().Single().Repository.ShouldNotBeNull();

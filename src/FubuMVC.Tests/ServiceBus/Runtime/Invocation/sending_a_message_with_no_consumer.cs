@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core.ServiceBus.Configuration;
+﻿using FubuMVC.Core.Registration.Querying;
+using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
@@ -32,12 +33,12 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             var fakeMessage = new FakeMessage();
             var consumerCalled = false;
             var fakeEnvelope = new Envelope();
-            var fakeGraph = new HandlerGraph
-                {
-                    new HandlerCall(typeof (FakeMessage), typeof (FakeHandler).GetMethod("FakeMethod"))
-                };
 
-            Services.Inject(fakeGraph);
+
+            var chain = HandlerChain.For<FakeHandler>(x => x.FakeMethod(null));
+            MockFor<IChainResolver>().Stub(x => x.FindUniqueByType(typeof (FakeMessage))).Return(chain);
+
+            
             Services.Inject(fakeEnvelope);
             Services.PartialMockTheClassUnderTest();
             ClassUnderTest.Expect(x => x.Execute(fakeMessage));

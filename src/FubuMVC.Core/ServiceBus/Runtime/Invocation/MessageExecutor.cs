@@ -1,6 +1,7 @@
 ﻿using System;
 using FubuCore;
 using FubuCore.Logging;
+using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Diagnostics;
@@ -13,15 +14,15 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
     {
         private readonly IPartialFactory _factory;
         private readonly IFubuRequest _request;
-        private readonly HandlerGraph _graph;
+        private readonly IChainResolver _resolver;
         private readonly ILogger _logger;
         private readonly Envelope _envelope;
 
-        public MessageExecutor(IPartialFactory factory, IFubuRequest request, HandlerGraph graph, ILogger logger, Envelope envelope)
+        public MessageExecutor(IPartialFactory factory, IFubuRequest request, IChainResolver resolver, ILogger logger, Envelope envelope)
         {
             _factory = factory;
             _request = request;
-            _graph = graph;
+            _resolver = resolver;
             _logger = logger;
             _envelope = envelope;
         }
@@ -30,7 +31,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
         {
             var inputType = message.GetType();
 
-            var chain = _graph.ChainFor(inputType);
+            var chain = _resolver.FindUniqueByType(inputType);
 
             if (chain == null)
             {
@@ -47,7 +48,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
             var inputType = message.GetType();
             _request.Set(inputType, message);
 
-            var chain = _graph.ChainFor(inputType);
+            var chain = _resolver.FindUniqueByType(inputType);
 
             if (chain == null)
             {
