@@ -38,6 +38,7 @@ namespace FubuMVC.Core.ServiceBus
         public bool Enabled { get; set; }
 
         public bool EnableInMemoryTransport { get; set; }
+        public Uri InMemoryReplyUri { get; set; }
 
         public bool DebugEnabled { get; set; }
         public double DelayMessagePolling { get; set; }

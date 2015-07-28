@@ -80,13 +80,11 @@ namespace FubuMVC.Core.Registration.DSL
             Configure(x =>
             {
                 x.EnableInMemoryTransport = true;
-
+                if (replyUri != null)
+                {
+                    x.InMemoryReplyUri = replyUri;
+                }
             });
-
-            if (replyUri != null)
-            {
-                _parent.AlterSettings<MemoryTransportSettings>(x => x.ReplyUri = replyUri);
-            }
         }
 
 

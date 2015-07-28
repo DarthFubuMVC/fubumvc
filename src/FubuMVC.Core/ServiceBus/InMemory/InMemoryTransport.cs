@@ -11,24 +11,18 @@ using FubuMVC.Core.ServiceBus.Runtime;
 
 namespace FubuMVC.Core.ServiceBus.InMemory
 {
-    [ApplicationLevel]
-    public class MemoryTransportSettings
-    {
-        public Uri ReplyUri { get; set; }
-    }
-
     [Description("A simple in memory transport suitable for automated testing or development")]
     [Title("In Memory Transport")]
     public class InMemoryTransport : TransportBase, ITransport
     {
-        private MemoryTransportSettings _settings;
+        private TransportSettings _settings;
 
-        public InMemoryTransport(MemoryTransportSettings settings)
+        public InMemoryTransport(TransportSettings settings)
         {
             _settings = settings;
         }
 
-        public InMemoryTransport() : this(new MemoryTransportSettings())
+        public InMemoryTransport() : this(new TransportSettings())
         {
         }
 
@@ -69,7 +63,7 @@ namespace FubuMVC.Core.ServiceBus.InMemory
 
         protected override Uri getReplyUri(ChannelGraph graph)
         {
-            var uri = _settings.ReplyUri ?? ReplyUriForGraph(graph);
+            var uri = _settings.InMemoryReplyUri ?? ReplyUriForGraph(graph);
             var replyNode = new ChannelNode
             {
                 Uri = uri,
