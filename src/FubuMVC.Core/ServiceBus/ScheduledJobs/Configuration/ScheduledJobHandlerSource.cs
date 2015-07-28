@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using FubuCore;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.ServiceBus.Registration;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Messages;
@@ -18,10 +20,9 @@ namespace FubuMVC.Core.ServiceBus.ScheduledJobs.Configuration
             _jobTypes = jobTypes;
         }
 
-        public IEnumerable<HandlerCall> FindCalls(Assembly applicationAssembly)
+        public Task<HandlerCall[]> FindCalls(Assembly applicationAssembly)
         {
-            return _jobTypes.SelectMany(handlersForJob).ToArray();
-
+            return Task.Factory.StartNew(() => _jobTypes.SelectMany(handlersForJob).ToArray());
         }
 
         private IEnumerable<HandlerCall> handlersForJob(Type jobType)

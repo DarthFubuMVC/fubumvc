@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Registration;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
@@ -81,9 +82,11 @@ namespace FubuMVC.Tests.ServiceBus
 
     public class MyFunkyHandlerSource : IHandlerSource
     {
-        public IEnumerable<HandlerCall> FindCalls(Assembly applicationAssembly)
+        public Task<HandlerCall[]> FindCalls(Assembly applicationAssembly)
         {
-            yield return HandlerCall.For<MyFunkySpaceAgeProcessor>(x => x.Go(null));
+            return Task.Factory.StartNew(() => new [] { HandlerCall.For<MyFunkySpaceAgeProcessor>(x => x.Go(null)) });
+
+            
         }
     }
 

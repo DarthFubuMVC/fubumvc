@@ -63,7 +63,7 @@ namespace FubuMVC.Tests.Registration
             });
 
             theImport.InitializeSettings(graph2);
-            graph2.As<IChainImporter>().Import(theImport.BuildChains(graph2, new PerfTimer()));
+            graph2.As<IChainImporter>().Import(theImport.BuildChains(graph2, new PerfTimer()).Result());
         }
 
         #endregion

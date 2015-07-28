@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics.Packaging;
@@ -9,11 +11,19 @@ namespace FubuMVC.Core.Diagnostics
 {
     public class DiagnosticChainsSource : IChainSource
     {
-        public IEnumerable<BehaviorChain> BuildChains(BehaviorGraph graph, IPerfTimer timer)
+        public Task<BehaviorChain[]> BuildChains(BehaviorGraph graph, IPerfTimer timer)
         {
             var settings = graph.Settings.Get<DiagnosticsSettings>();
 
-            foreach (var action in findActions(graph))
+            return findActions(graph).ContinueWith(t =>
+            {
+                return fromActions(settings, t.Result).ToArray();
+            });
+        }
+
+        private IEnumerable<BehaviorChain> fromActions(DiagnosticsSettings settings, IEnumerable<ActionCall> calls)
+        {
+            foreach (var action in calls)
             {
                 if (action.Method.Name.StartsWith("Visualize"))
                 {
@@ -33,9 +43,9 @@ namespace FubuMVC.Core.Diagnostics
                     yield return diagnosticChain;
                 }
             }
-        }
+        } 
 
-        private IEnumerable<ActionCall> findActions(BehaviorGraph graph)
+        private Task<ActionCall[]> findActions(BehaviorGraph graph)
         {
             var source = new ActionSource();
 
@@ -46,5 +56,7 @@ namespace FubuMVC.Core.Diagnostics
 
             return source.As<IActionSource>().FindActions(null);
         }
+
+
     }
 }

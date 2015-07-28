@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
 
 namespace FubuMVC.Core.ServiceBus.Registration
@@ -15,15 +16,16 @@ namespace FubuMVC.Core.ServiceBus.Registration
             _types.Fill(types);
         }
 
-        public IEnumerable<HandlerCall> FindCalls(Assembly applicationAssembly)
+        public Task<HandlerCall[]> FindCalls(Assembly applicationAssembly)
         {
-            foreach (var type in _types)
+            return Task.Factory.StartNew(() =>
             {
-                foreach (var method in type.GetMethods().Where(HandlerCall.IsCandidate))
+                return _types.SelectMany(type =>
                 {
-                    yield return new HandlerCall(type, method);
-                }
-            }
+                    return type.GetMethods().Where(HandlerCall.IsCandidate)
+                        .Select(method => new HandlerCall(type, method));
+                }).ToArray();
+            });
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
@@ -12,15 +13,21 @@ namespace FubuMVC.Core.ServiceBus.Configuration
     {
         public readonly IList<IHandlerSource> HandlerSources = new List<IHandlerSource>{new DefaultHandlerSource()};
 
-        public IEnumerable<BehaviorChain> BuildChains(BehaviorGraph graph, IPerfTimer timer)
+        public Task<BehaviorChain[]> BuildChains(BehaviorGraph graph, IPerfTimer timer)
         {
-            var handlers = new HandlerGraph();
-            var allCalls = HandlerSources.SelectMany(x => x.FindCalls(graph.ApplicationAssembly));
-            handlers.Add(allCalls);
+            var finders = HandlerSources.Select(x => x.FindCalls(graph.ApplicationAssembly)).ToArray();
+            return Task.WhenAll(finders).ContinueWith(all =>
+            {
+                var handlers = new HandlerGraph();
 
-            handlers.ApplyGeneralizedHandlers();
+                var allCalls = all.Result.SelectMany(x => x).Distinct();
 
-            return handlers;
+                handlers.Add(allCalls);
+
+                handlers.ApplyGeneralizedHandlers();
+
+                return handlers.OfType<BehaviorChain>().ToArray();
+            });
         }
     }
 }

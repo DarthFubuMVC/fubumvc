@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration;
@@ -259,9 +260,9 @@ namespace FubuMVC.Core.ServiceBus.Configuration
 
     public class NulloHandlerSource : IHandlerSource
     {
-        public IEnumerable<HandlerCall> FindCalls(Assembly applicationAssembly)
+        public Task<HandlerCall[]> FindCalls(Assembly applicationAssembly)
         {
-            yield break;
+            return Task.FromResult(new HandlerCall[0]);
         }
     }
 }

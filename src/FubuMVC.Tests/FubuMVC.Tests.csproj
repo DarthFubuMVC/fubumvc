@@ -172,7 +172,6 @@
     <Compile Include="Http\Owin\OwnCurrentHttpRequestTester.cs" />
     <Compile Include="Http\Owin\OwnHttpWriterTester.cs" />
     <Compile Include="Http\StreamExtensions.cs" />
-    <Compile Include="ServiceBus\Registration\HandlerGraphSource.cs" />
     <Compile Include="TestSupport\GenericVoidMethod.cs" />
     <Compile Include="TestSupport\InteractionContext.cs" />
     <Compile Include="Json\ComplexType.cs" />

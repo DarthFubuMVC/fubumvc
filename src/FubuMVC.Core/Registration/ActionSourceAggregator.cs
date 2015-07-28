@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
@@ -20,14 +22,17 @@ namespace FubuMVC.Core.Registration
             
         }
 
-        public IEnumerable<BehaviorChain> BuildChains(BehaviorGraph graph, IPerfTimer timer)
+        public Task<BehaviorChain[]> BuildChains(BehaviorGraph graph, IPerfTimer timer)
         {
-            var actions = Sources.SelectMany(x => x.FindActions(_applicationAssembly)).ToArray()
-                .Distinct();
-
             var urlPolicies = graph.Settings.Get<UrlPolicies>();
 
-            return actions.Select(x => x.BuildChain(urlPolicies)).ToArray();
+            var actions = Sources.Select(x => x.FindActions(graph.ApplicationAssembly));
+
+            return Task.WhenAll(actions).ContinueWith(t =>
+            {
+                return t.Result.SelectMany(x => x).Distinct()
+                    .Select(call => call.BuildChain(urlPolicies)).ToArray();
+            });
         }
 
         public Assembly ApplicationAssembly

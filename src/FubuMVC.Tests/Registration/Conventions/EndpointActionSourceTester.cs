@@ -1,12 +1,10 @@
-using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
+using FubuCore;
 using FubuMVC.Core.Registration;
 using HtmlTags;
 using NUnit.Framework;
-using System.Linq;
 using Shouldly;
-using System.Collections.Generic;
-using FubuCore;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
@@ -16,9 +14,10 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void only_finds_methods_that_follow_the_right_pattern_and_are_not_on_object()
         {
-            var actions = new EndpointActionSource().As<IActionSource>().FindActions(Assembly.GetExecutingAssembly());
+            var actions =
+                new EndpointActionSource().As<IActionSource>().FindActions(Assembly.GetExecutingAssembly()).Result();
 
-            var matching = actions.Where(x => x.HandlerType == typeof(HomeEndpoint)).Select(x => x.Description);
+            var matching = actions.Where(x => x.HandlerType == typeof (HomeEndpoint)).Select(x => x.Description);
             matching
                 .ShouldHaveTheSameElementsAs("HomeEndpoint.Index() : HtmlDocument");
         }
@@ -28,7 +27,8 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             var actions = new EndpointActionSource().As<IActionSource>().FindActions(Assembly.GetExecutingAssembly());
 
-            var matching = actions.Where(x => x.HandlerType == typeof(WeirdEndPoint)).Select(x => x.Description);
+            var matching =
+                actions.Result().Where(x => x.HandlerType == typeof (WeirdEndPoint)).Select(x => x.Description);
 
             matching
                 .ShouldHaveTheSameElementsAs("WeirdEndPoint.get_something() : String");

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Registration.Nodes;
 
@@ -18,10 +19,13 @@ namespace FubuMVC.Core.Registration
             _methodFilter = methodFilter;
         }
 
-        public IEnumerable<ActionCall> FindActions(Assembly applicationAssembly)
+        public Task<ActionCall[]> FindActions(Assembly applicationAssembly)
         {
-            return _actionType.PublicInstanceMethods().Where(_methodFilter.Matches)
-                .Select(method => new ActionCall(_actionType, method));
+            return Task.Factory.StartNew(() =>
+            {
+                return _actionType.PublicInstanceMethods().Where(_methodFilter.Matches)
+                    .Select(method => new ActionCall(_actionType, method)).ToArray();
+            });
         }
 
         public void Describe(Description description)

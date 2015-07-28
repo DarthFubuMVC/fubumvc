@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
+﻿using System.Reflection;
+using System.Threading.Tasks;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
 
 namespace FubuMVC.Core.ServiceBus.Registration
 {
     public interface IHandlerSource
     {
-        IEnumerable<HandlerCall> FindCalls(Assembly applicationAssembly);
+        Task<HandlerCall[]> FindCalls(Assembly applicationAssembly);
     }
 }

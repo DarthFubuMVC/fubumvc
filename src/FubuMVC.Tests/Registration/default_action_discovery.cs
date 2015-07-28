@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
@@ -69,9 +71,9 @@ namespace FubuMVC.Tests.Registration
 
     public class FakeActionSource : IActionSource
     {
-        public IEnumerable<ActionCall> FindActions(Assembly applicationAssembly)
+        public Task<ActionCall[]> FindActions(Assembly applicationAssembly)
         {
-            yield break;
+            return Task.FromResult(new ActionCall[0]);
         }
     }
 

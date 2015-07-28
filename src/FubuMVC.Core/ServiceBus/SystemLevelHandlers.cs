@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
@@ -13,9 +15,12 @@ namespace FubuMVC.Core.ServiceBus
     // needs to be done AFTER authentication, so this is good
     public class SystemLevelHandlers : IChainSource
     {
-        public IEnumerable<BehaviorChain> BuildChains(BehaviorGraph graph, IPerfTimer timer)
+        public Task<BehaviorChain[]> BuildChains(BehaviorGraph graph, IPerfTimer timer)
         {
-            return timer.Record("Building System Level Handler Chains", () => buildChains(graph));
+            return Task.Factory.StartNew(() =>
+            {
+                return timer.Record("Building System Level Handler Chains", () => buildChains(graph).ToArray());
+            });
         }
 
         private static IEnumerable<BehaviorChain> buildChains(BehaviorGraph graph)

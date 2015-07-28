@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuCore.Util;
@@ -56,11 +57,11 @@ namespace FubuMVC.Core.Registration
         }
 
 
-        IEnumerable<ActionCall> IActionSource.FindActions(Assembly applicationAssembly)
+        Task<ActionCall[]> IActionSource.FindActions(Assembly applicationAssembly)
         {
             var assemblies = _applies.Assemblies.Any() ? _applies.Assemblies : new Assembly[]{applicationAssembly};
             return TypeRepository.FindTypes(assemblies, TypeClassification.Concretes, _typeFilters.Matches)
-                .ContinueWith(x => x.Result.SelectMany(actionsFromType)).Result;
+                .ContinueWith(x => x.Result.SelectMany(actionsFromType).ToArray());
         }
 
         private IEnumerable<ActionCall> actionsFromType(Type type)

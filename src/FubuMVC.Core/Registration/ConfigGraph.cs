@@ -210,15 +210,12 @@ namespace FubuMVC.Core.Registration
             // Local policies will ONLY apply to chains built by this ConfigGraph,
             // and not to chains that are built by imports
 
-            var imports =
-                UniqueImports()
-                    .Select(x => Task.Factory.StartNew(() => x.BuildChains(graph, timer)))
-                    .ToArray();
+            var imports = UniqueImports().Select(x => x.BuildChains(graph, timer)).ToArray();
+
 
             var chainSources =
                 Sources.Select(
-                    source => Task.Factory.StartNew(() => source.BuildChains(graph, timer)))
-                    .ToArray();
+                    source => source.BuildChains(graph, timer)).ToArray();
 
             Task.WaitAll(chainSources);
 

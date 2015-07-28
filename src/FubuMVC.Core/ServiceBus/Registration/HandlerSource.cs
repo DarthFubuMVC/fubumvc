@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuCore.Reflection;
@@ -42,14 +43,16 @@ namespace FubuMVC.Core.ServiceBus.Registration
             UseAssembly(FubuApplication.FindTheCallingAssembly());
         }
 
-        IEnumerable<HandlerCall> IHandlerSource.FindCalls(Assembly applicationAssembly)
+        Task<HandlerCall[]> IHandlerSource.FindCalls(Assembly applicationAssembly)
         {
             var types = _assemblies.Any()
                 ? TypeRepository.FindTypes(_assemblies, TypeClassification.Concretes, _typeFilters.Matches)
                 : TypeRepository.FindTypes(applicationAssembly, TypeClassification.Concretes, _typeFilters.Matches);
 
-            return types.Result().SelectMany(actionsFromType);
-
+            return types.ContinueWith(x =>
+            {
+                return x.Result.SelectMany(actionsFromType).ToArray();
+            });
         }
 
         private IEnumerable<HandlerCall> actionsFromType(Type type)
