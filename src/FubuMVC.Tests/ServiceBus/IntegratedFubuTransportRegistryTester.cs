@@ -22,11 +22,7 @@ namespace FubuMVC.Tests.ServiceBus
             theRegistry = new BusRegistry();
             _behaviors = new Lazy<BehaviorGraph>(() =>
             {
-                return BehaviorGraph.BuildFrom(registry =>
-                {
-                    registry.Features.ServiceBus.Enable(true);
-                    theRegistry.As<IFubuRegistryExtension>().Configure(registry);
-                });
+                return BehaviorGraph.BuildFrom(theRegistry);
             });
 
             _handlers = new Lazy<HandlerGraph>(() => _behaviors.Value.Settings.Get<HandlerGraph>());

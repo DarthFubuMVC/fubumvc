@@ -21,6 +21,8 @@ namespace FubuMVC.Tests.ServiceBus
         {
             var graph = BehaviorGraph.BuildFrom(x =>
             {
+                x.Handlers.DisableDefaultHandlerSource();
+
                 x.Import<BlueRegistry>();
                 x.Import<GreenRegistry>();
                 x.Policies.ChainSource<SystemLevelHandlers>(); // This would be here by extensions normally
@@ -50,6 +52,8 @@ namespace FubuMVC.Tests.ServiceBus
         {
             var graph = BehaviorGraph.BuildFrom(x =>
             {
+                x.Handlers.DisableDefaultHandlerSource();
+
                 x.Import<BlueRegistry>();
                 x.Import<GreenRegistry>();
                 x.Import<RedRegistry>();
@@ -67,6 +71,8 @@ namespace FubuMVC.Tests.ServiceBus
         {
             var graph = BehaviorGraph.BuildFrom(x =>
             {
+                x.Handlers.DisableDefaultHandlerSource();
+
                 x.Import<BlueRegistry>();
                 x.Import<GreenRegistry>();
                 x.Import<RedRegistry>();
@@ -84,6 +90,7 @@ namespace FubuMVC.Tests.ServiceBus
     {
         public RedRegistry()
         {
+            Actions.FindBy(x => x.ExcludeTypes(_ => true));
             Policies.Global.Add<WrapPolicy<RedWrapper>>();
         }
     }
@@ -92,6 +99,7 @@ namespace FubuMVC.Tests.ServiceBus
     {
         public GreenRegistry()
         {
+            Actions.FindBy(x => x.ExcludeTypes(_ => true));
             Handlers.DisableDefaultHandlerSource();
             Handlers.Include<GreenHandler>();
             Policies.Local.Add<WrapPolicy<GreenWrapper>>();
@@ -102,6 +110,7 @@ namespace FubuMVC.Tests.ServiceBus
     {
         public BlueRegistry()
         {
+            Actions.FindBy(x => x.ExcludeTypes(_ => true));
             Handlers.DisableDefaultHandlerSource();
             Handlers.Include<BlueHandler>();
             Policies.Local.Add<WrapPolicy<BlueWrapper>>();

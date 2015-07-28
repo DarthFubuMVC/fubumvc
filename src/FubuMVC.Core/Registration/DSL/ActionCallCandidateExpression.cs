@@ -71,5 +71,6 @@ namespace FubuMVC.Core.Registration.DSL
         {
             return FindWith(new EndpointActionSource());
         }
+
     }
 }
