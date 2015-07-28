@@ -12,7 +12,7 @@ namespace WebsiteNode
         {
             return FubuApplication.For<FubuRegistry>(x =>
             {
-                x.Services(_ => _.For<MessageRecorder>().Singleton());
+                x.Services.For<MessageRecorder>().Singleton();
                 x.ServiceBus.Enable(true);
             });
         }

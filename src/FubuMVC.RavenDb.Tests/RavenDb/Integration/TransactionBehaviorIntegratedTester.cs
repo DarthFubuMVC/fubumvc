@@ -45,7 +45,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
     {
         public NamedEntityRegistry()
         {
-            Services(x => x.ReplaceService(new RavenDbSettings { RunInMemory = true}));
+            Services.ReplaceService(new RavenDbSettings { RunInMemory = true});
             Policies.Local.Add<TransactionalBehaviorPolicy>();
         }
     }

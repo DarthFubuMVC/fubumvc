@@ -40,7 +40,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Delayed
     {
         public DelayedRegistry()
         {
-            Services(x => x.ReplaceService<ISystemTime>(new SettableClock()));
+            Services.ReplaceService<ISystemTime>(new SettableClock());
             Handlers.Include<SimpleHandler<OneMessage>>();
             Channel(x => x.Downstream).ReadIncoming().AcceptsMessagesInAssemblyContainingType<OneMessage>();
         }

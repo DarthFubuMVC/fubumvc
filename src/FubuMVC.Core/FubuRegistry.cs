@@ -151,14 +151,12 @@ namespace FubuMVC.Core
             get { return new ActionCallCandidateExpression(_config); }
         }
 
-        /// <summary>
-        ///   Configures the <see cref = "IServiceRegistry" /> to specify dependencies. 
-        ///   This is an IoC-agnostic method of dependency configuration that will be consumed by the underlying implementation (e.g., StructureMap)
-        /// </summary>
-        public void Services(Action<ServiceRegistry> configure)
+        public ServiceRegistry Services
         {
-            configure(_config.ApplicationServices);
+            get { return _config.ApplicationServices; }
         }
+
+
 
         /// <summary>
         ///   Imports the specified <see cref = "FubuRegistry" />. 
@@ -215,10 +213,6 @@ namespace FubuMVC.Core
         }
 
 
-        public void Services<T>() where T : ServiceRegistry, new()
-        {
-            _config.Add(new T());
-        }
 
         /// <summary>
         ///   Imports an IFubuRegistryExtension. The most

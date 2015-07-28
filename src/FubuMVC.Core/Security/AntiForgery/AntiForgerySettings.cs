@@ -39,7 +39,7 @@ namespace FubuMVC.Core.Security.AntiForgery
         {
             if (!Enabled) return;
 
-            registry.Services<AntiForgeryServiceRegistry>();
+            registry.Services.IncludeRegistry<AntiForgeryServiceRegistry>();
             registry.Policies.Global.Add<AntiForgeryPolicy>();
 
         }

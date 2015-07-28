@@ -89,7 +89,7 @@ namespace FubuMVC.Tests.Docs.Examples
 
             // You *can* also declare IoC service
             // registrations in your FubuRegistry
-            Services(x => { x.AddService<IActivator, MyCustomActivator>(); });
+            Services.AddService<IActivator, MyCustomActivator>();
         }
     }
 

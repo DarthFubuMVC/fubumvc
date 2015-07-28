@@ -12,10 +12,10 @@ namespace FubuMVC.Core.Localization
         {
             if (!Enabled) return;
             
-            registry.Services<BasicLocalizationServices>();
+            registry.Services.IncludeRegistry<BasicLocalizationServices>();
             if (DefaultCulture != null)
             {
-                registry.Services(x => x.ReplaceService(DefaultCulture));
+                registry.Services.ReplaceService(DefaultCulture);
             }
         }
     }

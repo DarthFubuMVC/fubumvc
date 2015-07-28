@@ -53,12 +53,10 @@ namespace ServiceBusSpecifications.Fixtures
         public void Start()
         {
             var registry = Activator.CreateInstance(_registryType).As<FubuRegistry>();
-            registry.Services(x =>
-            {
-                _persistence = Subscriptions[registry.NodeName];
-                x.ReplaceService<ISubscriptionPersistence>(_persistence);
-                x.ReplaceService(Settings);
-            });
+
+            _persistence = Subscriptions[registry.NodeName];
+            registry.Services.ReplaceService<ISubscriptionPersistence>(_persistence);
+            registry.Services.ReplaceService(Settings);
 
             registry.AlterSettings<LightningQueueSettings>(x => x.Disabled = true);
 

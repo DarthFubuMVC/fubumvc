@@ -11,7 +11,6 @@ using FubuMVC.Tests.ServiceBus.ScenarioSupport;
 using FubuMVC.Tests.TestSupport;
 using NUnit.Framework;
 using Shouldly;
-using StructureMap;
 
 namespace FubuMVC.LightningQueues.Testing
 {
@@ -43,11 +42,8 @@ namespace FubuMVC.LightningQueues.Testing
 
             _runtime = FubuApplication.For<DelayedRegistry>(_ =>
             {
-                _.Services(x =>
-                {
-                    x.ReplaceService(settings);
-                    x.ReplaceService<ISystemTime>(theClock);
-                });
+                _.Services.ReplaceService(settings);
+                _.Services.ReplaceService<ISystemTime>(theClock);
             })
                 .Bootstrap();
 
@@ -111,7 +107,7 @@ namespace FubuMVC.LightningQueues.Testing
             // Need this to be fast for the tests
             AlterSettings<TransportSettings>(x => x.DelayMessagePolling = 100);
 
-            Services(x => x.ReplaceService<ISystemTime>(new SettableClock()));
+            Services.ReplaceService<ISystemTime>(new SettableClock());
             Handlers.Include<SimpleHandler<OneMessage>>();
             Channel(x => x.Downstream).ReadIncoming().AcceptsMessagesInAssemblyContainingType<OneMessage>();
         }

@@ -22,7 +22,7 @@ namespace FubuMVC.Core.View.Model
         public void Configure(FubuRegistry registry)
         {
             registry.AlterSettings<ViewEngineSettings>(x => x.AddFacility(this));
-            registry.Services(registerServices);
+            registerServices(registry.Services);
 
             registry.AlterSettings<CommonViewNamespaces>(addNamespacesForViews);
 

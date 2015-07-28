@@ -32,9 +32,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
             ServiceBus.Enable(true);
             ServiceBus.EnableInMemoryTransport();
 
-            Services(x => {
-                x.ReplaceService(InMemoryTransport.ToInMemory<BusSettings>());
-            });
+            Services.ReplaceService(InMemoryTransport.ToInMemory<BusSettings>());
 
             Channel(x => x.Downstream).ModifyWith<FooModifier>();
 

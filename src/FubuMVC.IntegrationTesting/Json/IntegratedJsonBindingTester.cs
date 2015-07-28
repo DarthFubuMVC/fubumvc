@@ -107,7 +107,7 @@ namespace FubuMVC.IntegrationTesting.Json
                 Actions.IncludeType<IntegratedJsonBindingEndpoint>();
                 Models.BindPropertiesWith<CurrentTimePropertyBinder>();
 
-                Services(x => x.ReplaceService(time));
+                Services.ReplaceService(time);
             }
         }
 

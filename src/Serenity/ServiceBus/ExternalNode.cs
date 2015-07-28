@@ -138,7 +138,7 @@ namespace Serenity.ServiceBus
             var registry = Activator.CreateInstance(_registryType).As<FubuRegistry>();
             registry.NodeName = _name;
             registry.ServiceBus.EnableInMemoryTransport();
-            registry.Services(x => x.ReplaceService<IEnvelopeHandler, ExternalNodeEnvelopeHandler>());
+            registry.Services.ReplaceService<IEnvelopeHandler, ExternalNodeEnvelopeHandler>();
             TestNodes.Alterations.Each(x => x(registry));
 
 

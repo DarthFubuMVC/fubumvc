@@ -67,7 +67,7 @@ namespace FubuMVC.IntegrationTesting.Authorization
         public void custom_auth_handler()
         {
             var registry = new FubuRegistry();
-            registry.Services(x => x.ReplaceService<IAuthorizationFailureHandler, CustomAuthHandler>());
+            registry.Services.ReplaceService<IAuthorizationFailureHandler, CustomAuthHandler>();
 
             AuthorizationCheck.IsAuthorized = false;
             using (var server = FubuApplication.For(registry).RunEmbeddedWithAutoPort())

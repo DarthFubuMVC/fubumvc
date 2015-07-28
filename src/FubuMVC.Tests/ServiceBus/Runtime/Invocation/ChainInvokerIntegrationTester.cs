@@ -187,7 +187,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
     {
         public ChainInvokerTransportRegistry()
         {
-            Services(x => x.ForSingletonOf<MessageRecorder>());
+            Services.ForSingletonOf<MessageRecorder>();
 
             AlterSettings<TransportSettings>(x =>
             {

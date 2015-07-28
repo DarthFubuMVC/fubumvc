@@ -108,7 +108,7 @@ namespace FubuMVC.Tests.ServiceBus.InMemory
             // Need this to be fast for the tests
             AlterSettings<TransportSettings>(x => x.DelayMessagePolling = 100);
 
-            Services(x => x.ReplaceService<ISystemTime>(new SettableClock()));
+            Services.ReplaceService<ISystemTime>(new SettableClock());
             Handlers.Include<SimpleHandler<OneMessage>>();
             Channel(x => x.Downstream).ReadIncoming().AcceptsMessagesInAssemblyContainingType<OneMessage>();
         }

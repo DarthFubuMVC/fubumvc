@@ -62,21 +62,18 @@ namespace FubuMVC.Core
             if (FubuMode.InDevelopment() || TraceLevel != TraceLevel.None)
             {
                 registry.Policies.ChainSource<DiagnosticChainsSource>();
-                registry.Services<TracingServices>();
+                registry.Services.IncludeRegistry<TracingServices>();
             }
 
             if (FubuMode.InDevelopment() || TraceLevel == TraceLevel.Verbose)
             {
-                registry.Services(_ =>
-                {
-                    _.ReplaceService<IBindingLogger, RecordingBindingLogger>();
-                    _.ReplaceService<IBindingHistory, BindingHistory>();
-                    _.AddService<ILogListener, RequestTraceListener>();
-                });
+                registry.Services.ReplaceService<IBindingLogger, RecordingBindingLogger>();
+                registry.Services.ReplaceService<IBindingHistory, BindingHistory>();
+                registry.Services.AddService<ILogListener, RequestTraceListener>();
             }
             else if (TraceLevel == TraceLevel.Production)
             {
-                registry.Services<ProductionDiagnosticsServices>();
+                registry.Services.IncludeRegistry<ProductionDiagnosticsServices>();
             }
         }
     }

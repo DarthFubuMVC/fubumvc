@@ -213,8 +213,7 @@ namespace FubuMVC.Core.ServiceBus.Configuration
                 _parent = parent;
                 _receiving = receiving;
 
-                parent.Services(
-                    r => { r.AddType(typeof (ISubscriptionRequirement), typeof (SubscriptionRequirements<T>)); });
+                parent.Services.AddType(typeof (ISubscriptionRequirement), typeof (SubscriptionRequirements<T>));
             }
 
             /// <summary>
@@ -228,7 +227,7 @@ namespace FubuMVC.Core.ServiceBus.Configuration
                     ? (ISubscriptionRequirement<T>) new LocalSubscriptionRequirement<T>(sourceProperty)
                     : new GroupSubscriptionRequirement<T>(sourceProperty, _receiving);
 
-                _parent.Services(x => x.AddService(requirement));
+                _parent.Services.AddService(requirement);
 
                 return new TypeSubscriptionExpression(requirement);
             }

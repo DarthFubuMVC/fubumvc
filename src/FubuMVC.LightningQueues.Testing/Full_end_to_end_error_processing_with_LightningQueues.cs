@@ -39,7 +39,7 @@ namespace FubuMVC.LightningQueues.Testing
 
             _runtime = FubuApplication.For<ErrorRegistry>(x =>
             {
-                x.Services(_ => _.For<BusSettings>().Use(settings));
+                x.Services.For<BusSettings>().Use(settings);
             })
                 .Bootstrap();
             //_runtime.Factory.Get<IPersistentQueues>().ClearAll();

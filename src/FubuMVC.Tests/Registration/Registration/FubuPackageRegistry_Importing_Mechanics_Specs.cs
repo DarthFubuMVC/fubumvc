@@ -118,9 +118,7 @@ namespace FubuMVC.Tests.Registration.Registration
                 x.Wrap.WithBehavior<GlobalAppWrapper>();
             });
 
-            Services(x => {
-                x.ReplaceService<IAppService, AppService>();
-            });
+            Services.ReplaceService<IAppService, AppService>();
         }
     }
 
@@ -139,10 +137,7 @@ namespace FubuMVC.Tests.Registration.Registration
                 x.Wrap.WithBehavior<GlobalPakWrapper>();
             });
 
-            Services(x =>
-            {
-                x.ReplaceService<IAppService, PackageService>();
-            });
+            Services.ReplaceService<IAppService, PackageService>();
         }
     }
 

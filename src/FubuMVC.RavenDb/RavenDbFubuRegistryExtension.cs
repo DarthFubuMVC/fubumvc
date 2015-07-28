@@ -11,7 +11,7 @@ namespace FubuMVC.RavenDb
     {
         public void Configure(FubuRegistry registry)
         {
-            registry.Services<RavenDbRegistry>();
+            registry.Services.IncludeRegistry<RavenDbRegistry>();
         }
     }
 

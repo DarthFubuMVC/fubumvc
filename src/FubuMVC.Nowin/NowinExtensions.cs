@@ -6,10 +6,8 @@ namespace FubuMVC.Nowin
     {
         public void Configure(FubuRegistry registry)
         {
-            registry.Services(x => {
-                x.AddService<IActivator, NowinHostingActivator>();
-                x.AddService<IDeactivator, KatanaHostingDeactivator>();
-            });
+            registry.Services.AddService<IActivator, NowinHostingActivator>();
+            registry.Services.AddService<IDeactivator, KatanaHostingDeactivator>();
         }
     }
 }

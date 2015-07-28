@@ -121,10 +121,8 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
             ScheduledJob.RunJob<Job2>().ScheduledBy(new AtSecondsAfterTheMinute(10));
             ScheduledJob.RunJob<Job3>().ScheduledBy(new AtSecondsAfterTheMinute(15));
 
-            Services(x => {
-                x.ReplaceService(new JobHistory());
-                x.ReplaceService<ISystemTime>(new RewindableClock());
-            });
+            Services.ReplaceService(new JobHistory());
+            Services.ReplaceService<ISystemTime>(new RewindableClock());
         }
     }
 

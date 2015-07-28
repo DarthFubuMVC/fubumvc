@@ -6,38 +6,37 @@ namespace FubuMVC.Core.Registration.DSL
 {
     public class ModelsExpression
     {
-        private readonly Action<Action<ServiceRegistry>> _callback;
+        private readonly ServiceRegistry _registry;
 
-        public ModelsExpression(Action<Action<ServiceRegistry>> callback)
+        public ModelsExpression(ServiceRegistry registry)
         {
-            _callback = callback;
-        }
-
-        private ModelsExpression add(Action<ServiceRegistry> configuration)
-        {
-            _callback(configuration);
-            return this;
+            _registry = registry;
         }
 
         public ModelsExpression ConvertUsing<T>() where T : IConverterFamily
         {
-            return add(x => x.AddService<IConverterFamily, T>());
+            _registry.AddService<IConverterFamily, T>();
+            return this;
         }
 
         public ModelsExpression BindPropertiesWith<T>() where T : IPropertyBinder
         {
-            return add(x => x.AddService<IPropertyBinder, T>());
+            _registry.AddService<IPropertyBinder, T>();
+            return this;
         }
 
         public ModelsExpression BindModelsWith<T>() where T : IModelBinder
         {
-            return add(x => x.AddService<IModelBinder, T>());
+            _registry.AddService<IModelBinder, T>();
+            return this;
         }
 
         public ModelsExpression IgnoreProperties(Func<PropertyInfo, bool> filter)
         {
             var binder = new IgnorePropertyBinder(filter);
-            return add(x => x.AddService<IPropertyBinder>(binder));
+            _registry.AddService<IPropertyBinder>(binder);
+
+            return this;
         }
     }
 }

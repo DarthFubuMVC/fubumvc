@@ -53,11 +53,11 @@ namespace FubuMVC.Core.ServiceBus
             registry.Policies.Global.Add<SendsMessageConvention>();
 
             registry.Policies.Global.Add<ApplyScheduledJobRouting>();
-            registry.Services<ScheduledJobServicesRegistry>();
-            registry.Services<MonitoringServiceRegistry>();
+            registry.Services.IncludeRegistry<ScheduledJobServicesRegistry>();
+            registry.Services.IncludeRegistry<MonitoringServiceRegistry>();
             registry.Policies.ChainSource<SystemLevelHandlers>();
-            registry.Services<FubuTransportServiceRegistry>();
-            registry.Services<PollingServicesRegistry>();
+            registry.Services.IncludeRegistry<FubuTransportServiceRegistry>();
+            registry.Services.IncludeRegistry<PollingServicesRegistry>();
             registry.Policies.Global.Add<StatefulSagaConvention>();
             registry.Policies.Global.Add<AsyncHandlingConvention>();
 
@@ -83,27 +83,20 @@ namespace FubuMVC.Core.ServiceBus
 
             if (FubuTransport.AllQueuesInMemory)
             {
-                registry.Services(x =>
-                {
-                    x.For<ITransport>().ClearAll();
-                    x.AddService<ITransport, InMemoryTransport>();
+                registry.Services.For<ITransport>().ClearAll();
+                registry.Services.AddService<ITransport, InMemoryTransport>();
 
-                    SettingTypes.Each(settingType =>
-                    {
-                        var settings = InMemoryTransport.ToInMemory(settingType);
-                        x.ReplaceService(settingType, new ObjectInstance(settings));
-                    });
+                SettingTypes.Each(settingType =>
+                {
+                    var settings = InMemoryTransport.ToInMemory(settingType);
+                    registry.Services.ReplaceService(settingType, new ObjectInstance(settings));
                 });
             }
 
             if (FubuTransport.AllQueuesInMemory || EnableInMemoryTransport)
             {
-                registry.Services(_ => _.AddService<ITransport, InMemoryTransport>());
+                registry.Services.AddService<ITransport, InMemoryTransport>();
             }
-
-
-
-
 
             registry.Policies.Global.Add<ReorderBehaviorsPolicy>(x =>
             {

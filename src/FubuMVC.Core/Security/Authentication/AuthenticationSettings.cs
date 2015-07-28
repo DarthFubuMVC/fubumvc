@@ -77,7 +77,7 @@ namespace FubuMVC.Core.Security.Authentication
             registry.Actions.IncludeType<LoginController>();
             registry.Actions.IncludeType<LogoutController>();
 
-            registry.Services<AuthenticationServiceRegistry>();
+            registry.Services.IncludeRegistry<AuthenticationServiceRegistry>();
 
             registry.Policies.Global.Add(new ApplyAuthenticationPolicy());
             registry.Policies.Global.Add<ApplyPassThroughAuthenticationPolicy>();
@@ -90,18 +90,12 @@ namespace FubuMVC.Core.Security.Authentication
                 }
             }
 
-            registry.Services(_ =>
+            foreach (IContainerModel strategy in Strategies)
             {
-                foreach (IContainerModel strategy in Strategies)
-                {
-                    var def = strategy.ToInstance();
+                var instance = strategy.ToInstance();
 
-                    _.AddService(typeof(IAuthenticationStrategy), def);
-                }
-            });
-
-
-
+                registry.Services.AddService(typeof(IAuthenticationStrategy), instance);
+            }
         }
     }
 

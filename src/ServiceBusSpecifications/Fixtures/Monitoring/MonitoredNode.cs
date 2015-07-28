@@ -42,7 +42,7 @@ namespace ServiceBusSpecifications.Fixtures.Monitoring
 
             ServiceBus.EnableInMemoryTransport(incoming);
 
-            Services(_ => _.AddService<ILogListener>(listener));
+            Services.AddService<ILogListener>(listener);
 
             AlterSettings<HealthMonitoringSettings>(_ =>
             {
@@ -72,8 +72,9 @@ namespace ServiceBusSpecifications.Fixtures.Monitoring
         {
             AlterSettings<LightningQueueSettings>(x => x.DisableIfNoChannels = true);
 
-            Services(_ => _sources.Each(_.AddService<IPersistentTaskSource>));
-            Services(_ => _.ReplaceService(persistence));
+            _sources.Each(x => Services.AddService<IPersistentTaskSource>(x));
+
+            Services.ReplaceService(persistence);
             ServiceBus.HealthMonitoring
                 .ScheduledExecution(monitoringEnabled
                     ? ScheduledExecution.WaitUntilInterval

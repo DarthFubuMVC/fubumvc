@@ -66,7 +66,7 @@ namespace FubuMVC.Tests.StructureMap.Settings
         [Test]
         public void do_not_override_a_setting_class_that_is_configured_inside_the_fubu_registry()
         {
-            registry.Services(x => { x.ReplaceService(new BarSettings {Direction = "West"}); });
+            registry.Services.ReplaceService(new BarSettings {Direction = "West"});
 
             container.Value.GetInstance<BarSettings>().Direction.ShouldBe("West");
         }

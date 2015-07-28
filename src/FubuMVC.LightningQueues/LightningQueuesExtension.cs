@@ -1,6 +1,5 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Delayed;
 using FubuMVC.LightningQueues.Diagnostics;
@@ -12,7 +11,7 @@ namespace FubuMVC.LightningQueues
     {
         public void Configure(FubuRegistry registry)
         {
-            registry.Services<LightningQueuesServiceRegistry>();
+            registry.Services.IncludeRegistry<LightningQueuesServiceRegistry>();
             registry.Polling.RunJob<PurgeQueuesJob>()
                 .ScheduledAtInterval<LightningQueueSettings>(x => x.PurgeQueuesPolling);
         }

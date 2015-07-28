@@ -125,7 +125,7 @@ namespace FubuMVC.Tests.ServiceBus.Polling
 
             Polling.RunJob<DisabledJob>().ScheduledAtInterval<PollingSettings>(x => x.DisabledInterval).Disabled();
 
-            Services(x => x.ReplaceService<IPollingJobLogger, RecordingPollingJobLogger>());
+            Services.ReplaceService<IPollingJobLogger, RecordingPollingJobLogger>();
         }
     }
 

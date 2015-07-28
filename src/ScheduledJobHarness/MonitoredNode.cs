@@ -52,14 +52,12 @@ namespace ScheduledJobHarness
 
             ServiceBus.EnableInMemoryTransport(incoming);
 
-            Services(_ =>
-            {
-                _.ReplaceService<ISubscriptionPersistence, RavenDbSubscriptionPersistence>();
-                _.ReplaceService<ISchedulePersistence, RavenDbSchedulePersistence>();
-                _.ReplaceService(store);
 
-                _.AddService<ILogListener, ScheduledJobListener>();
-            });
+            Services.ReplaceService<ISubscriptionPersistence, RavenDbSubscriptionPersistence>();
+            Services.ReplaceService<ISchedulePersistence, RavenDbSchedulePersistence>();
+            Services.ReplaceService(store);
+
+            Services.AddService<ILogListener, ScheduledJobListener>();
 
 
             ScheduledJob.DefaultJobChannel(x => x.Incoming);
@@ -81,11 +79,8 @@ namespace ScheduledJobHarness
 
         public void Startup(ISubscriptionPersistence subscriptions, ISchedulePersistence schedules)
         {
-            Services(_ =>
-            {
-                _.ReplaceService(subscriptions);
-                _.ReplaceService(schedules);
-            });
+            Services.ReplaceService(subscriptions);
+            Services.ReplaceService(schedules);
 
             _runtime = FubuApplication.For(this).Bootstrap();
         }

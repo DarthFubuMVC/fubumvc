@@ -48,14 +48,11 @@ namespace FubuMVC.Core.ServiceBus.ScheduledJobs
         {
             registry.Config.Add(new ScheduledJobHandlerSource(Jobs.Select(x => x.JobType).ToArray()));
 
-            registry.Services(_ =>
+            Jobs.Each(x =>
             {
-                Jobs.Each(x =>
-                {
-                    Type jobType = typeof(IScheduledJob<>).MakeGenericType(x.JobType);
-                    _.AddService(jobType, new ObjectInstance(x));
+                Type jobType = typeof(IScheduledJob<>).MakeGenericType(x.JobType);
+                registry.Services.AddService(jobType, new ObjectInstance(x));
 
-                });
             });
         }
     }

@@ -6,7 +6,7 @@ namespace ServiceBusSerenitySamples.SystemUnderTest
     {
         public FubuApplication BuildApplication()
         {
-            return FubuApplication.For<TestRegistry>(x => { x.Services(_ => _.For<MessageRecorder>().Singleton()); });
+            return FubuApplication.For<TestRegistry>(x => x.Services.For<MessageRecorder>().Singleton());
         }
     }
 }

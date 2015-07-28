@@ -43,8 +43,8 @@ namespace FubuMVC.Core.ServiceBus.Polling
 
         void IFeatureSettings.Apply(FubuRegistry registry)
         {
-            registry.Services(_ => Jobs.Select(x => x.ToInstance())
-                .Each(x => _.AddService(typeof (IPollingJob), x)));
+            Jobs.Select(x => x.ToInstance())
+                .Each(x => registry.Services.AddService(typeof (IPollingJob), x));
         }
     }
 }

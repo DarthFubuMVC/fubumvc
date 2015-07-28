@@ -39,11 +39,8 @@ namespace ScheduledJobHarness
                 _.Port = _port;
             });
 
-            Services(_ =>
-            {
-                _.ReplaceService<ISchedulePersistence, RavenDbSchedulePersistence>();
-                _.ReplaceService<ISubscriptionPersistence, RavenDbSubscriptionPersistence>();
-            });
+            Services.ReplaceService<ISchedulePersistence, RavenDbSchedulePersistence>();
+            Services.ReplaceService<ISubscriptionPersistence, RavenDbSubscriptionPersistence>();
 
 
             ReplaceSettings(RavenDbSettings.InMemory());

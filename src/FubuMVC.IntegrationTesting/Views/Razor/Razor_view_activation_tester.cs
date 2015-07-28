@@ -20,7 +20,7 @@ namespace FubuMVC.IntegrationTesting.Views.Razor
         {
             public ActivationRegistry()
             {
-                Services(x => x.SetServiceIfNone<IActivationRenderer, ActivationRenderer>());
+                Services.SetServiceIfNone<IActivationRenderer, ActivationRenderer>();
             }
         }
 

@@ -6,10 +6,8 @@ namespace FubuMVC.Katana
     {
         public void Configure(FubuRegistry registry)
         {
-            registry.Services(x => {
-                x.AddService<IActivator, KatanaHostingActivator>();
-                x.AddService<IDeactivator, KatanaHostingDeactivator>();
-            });
+            registry.Services.AddService<IActivator, KatanaHostingActivator>();
+            registry.Services.AddService<IDeactivator, KatanaHostingDeactivator>();
         }
     }
 }

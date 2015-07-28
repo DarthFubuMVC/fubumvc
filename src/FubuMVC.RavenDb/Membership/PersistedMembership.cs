@@ -11,12 +11,9 @@ namespace FubuMVC.RavenDb.Membership
     {
         public void Configure(FubuRegistry registry)
         {
-            registry.Services(x =>
-            {
-                x.ReplaceService<IMembershipRepository, MembershipRepository<T>>();
-                x.SetServiceIfNone<IPasswordHash, PasswordHash>();
-                x.SetServiceIfNone<ILoginAuditor, PersistedLoginAuditor>();
-            });
+            registry.Services.ReplaceService<IMembershipRepository, MembershipRepository<T>>();
+            registry.Services.SetServiceIfNone<IPasswordHash, PasswordHash>();
+            registry.Services.SetServiceIfNone<ILoginAuditor, PersistedLoginAuditor>();
 
             registry.AlterSettings<AuthenticationSettings>(x =>
             {

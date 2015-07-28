@@ -11,6 +11,7 @@ using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Registration;
 using StructureMap;
+using StructureMap.Configuration.DSL;
 
 namespace FubuMVC.Core.Registration
 {
@@ -30,7 +31,7 @@ namespace FubuMVC.Core.Registration
         private readonly Assembly _applicationAssembly;
 
         private readonly IList<RegistryImport> _imports = new List<RegistryImport>();
-        private readonly IList<ServiceRegistry> _services = new List<ServiceRegistry>();
+        private readonly IList<Registry> _services = new List<Registry>();
 
         private readonly ActionSourceAggregator _actionSourceAggregator;
         private readonly HandlerGraphSource _handlers = new HandlerGraphSource();
@@ -120,7 +121,7 @@ namespace FubuMVC.Core.Registration
             _sources.Add(source);
         }
 
-        public void Add(ServiceRegistry services)
+        public void Add(Registry services)
         {
             _services.Add(services);
         }
@@ -135,7 +136,7 @@ namespace FubuMVC.Core.Registration
             _actionSourceAggregator.Add(source);
         }
 
-        public IEnumerable<ServiceRegistry> AllServiceRegistrations()
+        public IEnumerable<Registry> AllServiceRegistrations()
         {
             foreach (var import in UniqueImports())
             {
