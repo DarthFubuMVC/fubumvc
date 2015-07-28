@@ -38,7 +38,7 @@ namespace FubuMVC.Core.Registration
 
             graph.Settings.Replace(viewDiscovery);
 
-            AccessorRulesCompiler.Compile(graph, perfTimer);
+            var accessorRules = AccessorRulesCompiler.Compile(graph, perfTimer);
 
             var featureLoading = featureLoader.ApplyAll(graph.Settings, registry);
             featureLoading.Wait();
@@ -72,6 +72,8 @@ namespace FubuMVC.Core.Registration
             layoutAttachmentTasks.Wait();
             Task.WaitAll(layoutAttachmentTasks.Result);
 
+            accessorRules.Wait();
+
             new AutoImportModelNamespacesConvention().Configure(graph);
 
             return graph;
@@ -92,7 +94,7 @@ namespace FubuMVC.Core.Registration
         {
             config.Imports.Each(x => x.InitializeSettings(graph));
             config.Settings.Each(x => x.Alter(graph.Settings));
-            graph.Settings.Alter<ConnegSettings>(x => x.Graph = ConnegGraph.Build(graph));
+            graph.Settings.Alter<ConnegSettings>(x => x.ReadConnegGraph(graph));
         }
     }
 }

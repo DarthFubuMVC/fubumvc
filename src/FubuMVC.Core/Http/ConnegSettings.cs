@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Json;
@@ -44,7 +45,22 @@ namespace FubuMVC.Core.Http
 
         }
 
-        public ConnegGraph Graph { get; set; }
+        public void ReadConnegGraph(BehaviorGraph graph)
+        {
+            _graph = ConnegGraph.Build(graph);
+        }
+
+        public ConnegGraph Graph
+        {
+            get
+            {
+                // This makes UT's run cleanly
+                if (_graph == null) return null;
+
+                _graph.Wait(5.Seconds());
+                return _graph.Result;
+            }
+        }
 
         public void ApplyRules(InputNode node)
         {
@@ -70,6 +86,7 @@ namespace FubuMVC.Core.Http
         }; 
 
         public readonly IList<IMimetypeCorrection> Corrections = new List<IMimetypeCorrection>();
+        private Task<ConnegGraph> _graph;
 
         public void InterpretQuerystring(CurrentMimeType mimeType, IHttpRequest request)
         {

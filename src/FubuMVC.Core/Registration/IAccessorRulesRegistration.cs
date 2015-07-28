@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Diagnostics.Packaging;
@@ -20,21 +21,21 @@ namespace FubuMVC.Core.Registration
             return type.IsConcreteWithDefaultCtor() && type.CanBeCastTo<IAccessorRulesRegistration>();
         }
 
-        public static void Compile(BehaviorGraph graph, IPerfTimer timer)
+        public static Task Compile(BehaviorGraph graph, IPerfTimer timer)
         {
-            graph.Settings.Replace(() => {
-                return timer.Record("Finding AccessorRules", () => {
+            return TypeRepository.FindTypes(graph.AllAssemblies(),
+                TypeClassification.Concretes | TypeClassification.Closed, IsAccessorRule)
+                .ContinueWith(t =>
+                {
                     var rules = new AccessorRules();
-
-                    TypeRepository.FindTypes(graph.AllAssemblies(), TypeClassification.Concretes | TypeClassification.Closed, IsAccessorRule).Result().Distinct()
+                    t.Result.Distinct()                        
                         .Select(x => Activator.CreateInstance(x).As<IAccessorRulesRegistration>())
                         .Each(x => x.AddRules(rules));
 
-                    return rules;
+                    graph.Settings.Replace(rules);
                 });
 
 
-            });
         }
     }
 }

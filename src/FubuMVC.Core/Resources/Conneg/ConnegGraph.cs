@@ -14,7 +14,7 @@ namespace FubuMVC.Core.Resources.Conneg
         public readonly IList<Type> Writers = new List<Type>();
         public readonly IList<Type> Readers = new List<Type>{typeof(AggregatedQueryReader)};
 
-        public static ConnegGraph Build(BehaviorGraph behaviorGraph)
+        public static Task<ConnegGraph> Build(BehaviorGraph behaviorGraph)
         {
             var graph = new ConnegGraph();
 
@@ -26,9 +26,7 @@ namespace FubuMVC.Core.Resources.Conneg
                 TypeClassification.Concretes | TypeClassification.Closed, x => x.Closes(typeof(IReader<>)))
                 .ContinueWith(t => graph.Readers.AddRange(t.Result));
 
-            Task.WaitAll(writers, readers);
-
-            return graph;
+            return Task.WhenAll(writers, readers).ContinueWith(t => graph);
         }
 
         public IEnumerable<Type> ReaderTypesFor(Type inputType)
