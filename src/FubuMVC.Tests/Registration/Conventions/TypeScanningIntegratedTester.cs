@@ -31,6 +31,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             var graph = BehaviorGraph.BuildFrom(x =>
             {
+                x.Actions.DisableDefaultActionSource();
                 x.Actions.FindBy(o =>
                 {
                     o.Applies.ToAssemblyContainingType<ClassInAnotherAssembly>();

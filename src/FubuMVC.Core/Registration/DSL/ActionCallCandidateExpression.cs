@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using FubuCore;
 using FubuCore.Util;
+using FubuMVC.Core.ServiceBus.Web;
 
 namespace FubuMVC.Core.Registration.DSL
 {
@@ -70,6 +71,12 @@ namespace FubuMVC.Core.Registration.DSL
         public ActionCallCandidateExpression IncludeClassesSuffixedWithEndpoint()
         {
             return FindWith(new EndpointActionSource());
+        }
+
+        public ActionCallCandidateExpression DisableDefaultActionSource()
+        {
+            _configuration.Actions.Sources.RemoveAll(x => x is EndpointActionSource || x is SendsMessageActionSource);
+            return this;
         }
 
     }

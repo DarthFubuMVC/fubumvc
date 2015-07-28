@@ -4,39 +4,30 @@ using System.Reflection;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.ServiceBus.Web;
 
 namespace FubuMVC.Core.Registration
 {
     public class ActionSourceAggregator : IChainSource
     {
         private readonly Assembly _applicationAssembly;
-        private readonly IList<IActionSource> _sources = new List<IActionSource>(); 
+        public readonly IList<IActionSource> Sources = new List<IActionSource>{new EndpointActionSource(), new SendsMessageActionSource()}; 
 
         public ActionSourceAggregator(Assembly applicationAssembly)
         {
             _applicationAssembly = applicationAssembly;
+
+            
         }
 
         public IEnumerable<BehaviorChain> BuildChains(BehaviorGraph graph, IPerfTimer timer)
         {
-            var sources = _sources.Any() ? _sources : new IActionSource[] {new EndpointActionSource()};
-
-            var actions = sources.SelectMany(x => x.FindActions(_applicationAssembly)).ToArray()
+            var actions = Sources.SelectMany(x => x.FindActions(_applicationAssembly)).ToArray()
                 .Distinct();
 
             var urlPolicies = graph.Settings.Get<UrlPolicies>();
 
             return actions.Select(x => x.BuildChain(urlPolicies)).ToArray();
-        }
-
-        public void Add(IActionSource source)
-        {
-            _sources.Add(source);
-        }
-
-        public IEnumerable<IActionSource> Sources
-        {
-            get { return _sources; }
         }
 
         public Assembly ApplicationAssembly

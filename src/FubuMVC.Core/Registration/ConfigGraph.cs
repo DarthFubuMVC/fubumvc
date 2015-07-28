@@ -116,6 +116,11 @@ namespace FubuMVC.Core.Registration
             get { return _handlers; }
         }
 
+        public ActionSourceAggregator Actions
+        {
+            get { return _actionSourceAggregator; }
+        }
+
         public void Add(IChainSource source)
         {
             _sources.Add(source);
@@ -133,7 +138,7 @@ namespace FubuMVC.Core.Registration
 
         public void Add(IActionSource source)
         {
-            _actionSourceAggregator.Add(source);
+            _actionSourceAggregator.Sources.Add(source);
         }
 
         public IEnumerable<Registry> AllServiceRegistrations()

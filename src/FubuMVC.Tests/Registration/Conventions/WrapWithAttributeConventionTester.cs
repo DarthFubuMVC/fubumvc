@@ -20,6 +20,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<WrapWithAttributeController>();
+            registry.Actions.DisableDefaultActionSource();
 
             graph = BehaviorGraph.BuildFrom(registry);
 

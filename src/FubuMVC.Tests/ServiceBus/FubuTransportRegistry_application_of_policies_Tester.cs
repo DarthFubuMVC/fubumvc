@@ -90,6 +90,8 @@ namespace FubuMVC.Tests.ServiceBus
     {
         public RedRegistry()
         {
+            Actions.DisableDefaultActionSource();
+
             Actions.FindBy(x => x.ExcludeTypes(_ => true));
             Policies.Global.Add<WrapPolicy<RedWrapper>>();
         }
@@ -99,6 +101,8 @@ namespace FubuMVC.Tests.ServiceBus
     {
         public GreenRegistry()
         {
+            Actions.DisableDefaultActionSource();
+
             Actions.FindBy(x => x.ExcludeTypes(_ => true));
             Handlers.DisableDefaultHandlerSource();
             Handlers.Include<GreenHandler>();
@@ -111,6 +115,8 @@ namespace FubuMVC.Tests.ServiceBus
         public BlueRegistry()
         {
             Actions.FindBy(x => x.ExcludeTypes(_ => true));
+            Actions.DisableDefaultActionSource();
+
             Handlers.DisableDefaultHandlerSource();
             Handlers.Include<BlueHandler>();
             Policies.Local.Add<WrapPolicy<BlueWrapper>>();

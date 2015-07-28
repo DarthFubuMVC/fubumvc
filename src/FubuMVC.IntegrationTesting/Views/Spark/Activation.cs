@@ -20,6 +20,7 @@ namespace FubuMVC.IntegrationTesting.Views.Spark
             public MyRegistry()
             {
                 Actions.IncludeType<ActivationEndpoint>();
+                Actions.DisableDefaultActionSource();
                 Services.SetServiceIfNone<IActivationRenderer, ActivationRenderer>();
 
                 AlterSettings<CommonViewNamespaces>(x => x.AddForType<ActivationEndpoint>());

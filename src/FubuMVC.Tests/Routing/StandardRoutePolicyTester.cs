@@ -130,6 +130,7 @@ namespace FubuMVC.Tests.Routing
             registry.Actions.IncludeType<Action1>();
             registry.Actions.IncludeType<Action2>();
             registry.Actions.IncludeType<Action3>();
+            registry.Actions.DisableDefaultActionSource();
 
             registry.Configure(x => {
                 var routeDefinition = new RouteDefinition("{Client}/");

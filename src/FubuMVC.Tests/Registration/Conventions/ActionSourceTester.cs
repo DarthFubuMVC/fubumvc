@@ -22,7 +22,11 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             source = new ActionSource();
             _graph =
-                new Lazy<BehaviorGraph>(() => BehaviorGraph.BuildFrom(r => r.Actions.FindWith(source)));
+                new Lazy<BehaviorGraph>(() => BehaviorGraph.BuildFrom(r =>
+                {
+                    r.Actions.DisableDefaultActionSource();
+                    r.Actions.FindWith(source);
+                }));
         }
 
         private BehaviorGraph theResultingGraph

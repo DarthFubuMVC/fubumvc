@@ -67,7 +67,11 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void find_home_is_not_set()
         {
-            var graph = BehaviorGraph.BuildFrom(x => { x.Actions.IncludeClassesSuffixedWithController(); });
+            var graph = BehaviorGraph.BuildFrom(x =>
+            {
+                x.Actions.DisableDefaultActionSource();
+                x.Actions.IncludeClassesSuffixedWithController();
+            });
 
             graph.FindHomeChain().ShouldBeNull();
         }

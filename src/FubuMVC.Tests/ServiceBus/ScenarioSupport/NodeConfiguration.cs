@@ -48,6 +48,7 @@ namespace FubuMVC.Tests.ServiceBus.ScenarioSupport
 
             registry.Channel(_expression).ReadIncoming(new ThreadScheduler(2));
 
+            registry.Actions.DisableDefaultActionSource();
             registry.Handlers.DisableDefaultHandlerSource();
             registry.Handlers.Include<SourceRecordingHandler>();
             registry.AlterSettings<TransportSettings>(x => x.DebugEnabled = true);

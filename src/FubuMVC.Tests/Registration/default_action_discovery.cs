@@ -29,6 +29,7 @@ namespace FubuMVC.Tests.Registration
         {
             var graph = BehaviorGraph.BuildFrom(x =>
             {
+                x.Actions.DisableDefaultActionSource();
                 x.Actions.IncludeClassesSuffixedWithController();
             });
 
@@ -42,6 +43,7 @@ namespace FubuMVC.Tests.Registration
         {
             var graph = BehaviorGraph.BuildFrom(x =>
             {
+                x.Actions.DisableDefaultActionSource();
                 x.Actions.FindWith(new FakeActionSource());
             });
 
