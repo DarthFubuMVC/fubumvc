@@ -66,7 +66,7 @@ namespace FubuMVC.Tests.ServiceBus
         [Test]
         public void set_the_default_content_type_by_serializer_type()
         {
-            theRegistry.DefaultSerializer<BinarySerializer>();
+            theRegistry.ServiceBus.DefaultSerializer<BinarySerializer>();
 
             theChannels.DefaultContentType.ShouldBe(new BinarySerializer().ContentType);
         }
@@ -74,7 +74,7 @@ namespace FubuMVC.Tests.ServiceBus
         [Test]
         public void set_the_default_content_type_by_string()
         {
-            theRegistry.DefaultContentType("application/json");
+            theRegistry.ServiceBus.DefaultContentType("application/json");
             theChannels.DefaultContentType.ShouldBe("application/json");
         }
 

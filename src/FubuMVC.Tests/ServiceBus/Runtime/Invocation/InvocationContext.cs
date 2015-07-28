@@ -25,10 +25,10 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
         public void SetUp()
         {
             theTransportRegistry = new FubuRegistry();
-            theTransportRegistry.Features.ServiceBus.Enable(true);
+            theTransportRegistry.ServiceBus.Enable(true);
 
             theTransportRegistry.Handlers.DisableDefaultHandlerSource();
-            theTransportRegistry.EnableInMemoryTransport();
+            theTransportRegistry.ServiceBus.EnableInMemoryTransport();
 
             TestMessageRecorder.Clear();
 

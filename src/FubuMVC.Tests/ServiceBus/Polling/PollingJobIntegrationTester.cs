@@ -115,9 +115,9 @@ namespace FubuMVC.Tests.ServiceBus.Polling
     {
         public PollingRegistry()
         {
-            Features.ServiceBus.Enable(true);
+            ServiceBus.Enable(true);
 
-            EnableInMemoryTransport();
+            ServiceBus.EnableInMemoryTransport();
 
             Polling.RunJob<OneJob>().ScheduledAtInterval<PollingSettings>(x => x.OneInterval);
             Polling.RunJob<TwoJob>().ScheduledAtInterval<PollingSettings>(x => x.TwoInterval);

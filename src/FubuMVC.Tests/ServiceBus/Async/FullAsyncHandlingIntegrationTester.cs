@@ -44,9 +44,9 @@ namespace FubuMVC.Tests.ServiceBus.Async
     {
         public AsyncRegistry()
         {
-            Features.ServiceBus.Enable(true);
+            ServiceBus.Enable(true);
 
-            EnableInMemoryTransport();
+            ServiceBus.EnableInMemoryTransport();
 
             Policies.Local.Add<WrapWithFoo>();
         }

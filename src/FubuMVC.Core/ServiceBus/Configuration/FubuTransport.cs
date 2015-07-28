@@ -15,7 +15,7 @@ namespace FubuMVC.Core.ServiceBus.Configuration
         {
             return BehaviorGraph.BuildFrom(x =>
             {
-                x.Features.ServiceBus.Enable(true);
+                x.ServiceBus.Enable(true);
                 configuration(x);
             });
         }
@@ -25,7 +25,7 @@ namespace FubuMVC.Core.ServiceBus.Configuration
             var registry = new FubuRegistry();
             if (container != null) registry.StructureMap(container);
 
-            registry.Features.ServiceBus.Configure(x =>
+            registry.ServiceBus.Configure(x =>
             {
                 x.Enabled = true;
                 x.EnableInMemoryTransport = true;

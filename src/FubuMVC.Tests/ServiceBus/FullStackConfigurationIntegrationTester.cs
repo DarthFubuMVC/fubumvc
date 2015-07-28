@@ -45,8 +45,8 @@ namespace FubuMVC.Tests.ServiceBus
     {
         public MyFirstTransport()
         {
-            EnableInMemoryTransport();
-            Features.ServiceBus.Enable(true);
+            ServiceBus.EnableInMemoryTransport();
+            ServiceBus.Enable(true);
         }
     }
 

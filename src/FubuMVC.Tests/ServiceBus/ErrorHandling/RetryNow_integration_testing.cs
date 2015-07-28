@@ -36,8 +36,8 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
     {
         public RetryNoOnDbConcurrencyRegistry()
         {
-            Features.ServiceBus.Enable(true);
-            EnableInMemoryTransport();
+            ServiceBus.Enable(true);
+            ServiceBus.EnableInMemoryTransport();
             Policies.Local.Add<RetryNowOnDbConcurrencyException>();
         }
     }

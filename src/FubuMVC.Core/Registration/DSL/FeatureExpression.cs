@@ -1,7 +1,12 @@
-﻿using FubuMVC.Core.Localization;
+﻿using System;
+using FubuMVC.Core.Localization;
 using FubuMVC.Core.Security.AntiForgery;
 using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.ServiceBus;
+using FubuMVC.Core.ServiceBus.Configuration;
+using FubuMVC.Core.ServiceBus.InMemory;
+using FubuMVC.Core.ServiceBus.Runtime.Serializers;
+using FubuMVC.Core.ServiceBus.Sagas;
 
 namespace FubuMVC.Core.Registration.DSL
 {
@@ -58,15 +63,58 @@ namespace FubuMVC.Core.Registration.DSL
             }
         }
 
+    }
+
+    public class ServiceBusFeature : Feature<TransportSettings, bool>
+    {
+        public ServiceBusFeature(FubuRegistry parent)
+            : base(parent, (settings, enabled) => settings.Enabled = enabled)
+        {
+        }
+
         /// <summary>
-        /// Configure and enable the service bus features of FubuMVC
+        /// Enable the in memory transport
         /// </summary>
-        public Feature<TransportSettings, bool> ServiceBus
+        public void EnableInMemoryTransport(Uri replyUri = null)
+        {
+            Configure(x =>
+            {
+                x.EnableInMemoryTransport = true;
+
+            });
+
+            if (replyUri != null)
+            {
+                _parent.AlterSettings<MemoryTransportSettings>(x => x.ReplyUri = replyUri);
+            }
+        }
+
+
+        public void SagaStorage<T>() where T : ISagaStorage, new()
+        {
+            Configure(x => x.SagaStorageProviders.Add(new T()));
+        }
+
+        public void DefaultSerializer<T>() where T : IMessageSerializer, new()
+        {
+            _parent.AlterSettings<ChannelGraph>(graph => graph.DefaultContentType = new T().ContentType);
+        }
+
+        public void DefaultContentType(string contentType)
+        {
+            _parent.AlterSettings<ChannelGraph>(graph => graph.DefaultContentType = contentType);
+        }
+
+
+
+        public HealthMonitoringExpression HealthMonitoring
         {
             get
             {
-                return new Feature<TransportSettings, bool>(_parent, (settings, enabled) => settings.Enabled = enabled);
+                return new HealthMonitoringExpression(_parent);
             }
-        } 
+        }
+
+
     }
 }

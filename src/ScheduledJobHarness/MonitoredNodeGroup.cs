@@ -48,7 +48,7 @@ namespace ScheduledJobHarness
 
             ReplaceSettings(RavenDbSettings.InMemory());
 
-            Features.ServiceBus.Configure(x =>
+            ServiceBus.Configure(x =>
             {
                 x.Enabled = true;
                 x.EnableInMemoryTransport = true;

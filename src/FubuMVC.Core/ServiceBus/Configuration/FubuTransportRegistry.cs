@@ -21,7 +21,7 @@ namespace FubuMVC.Core.ServiceBus.Configuration
     {
         protected FubuTransportRegistry()
         {
-            Features.ServiceBus.Enable(true);
+            ServiceBus.Enable(true);
 
             AlterSettings<TransportSettings>(x => x.SettingTypes.Fill(typeof (T)));
 

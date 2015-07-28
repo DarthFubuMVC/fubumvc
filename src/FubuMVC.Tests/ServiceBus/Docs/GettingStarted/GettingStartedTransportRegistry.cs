@@ -10,7 +10,7 @@ namespace FubuMVC.Tests.ServiceBus.Docs.GettingStarted
         {
             // You have to have at least one transport registered,
             // so we're enabling the in memory transport for this sample;)
-            EnableInMemoryTransport();
+            ServiceBus.EnableInMemoryTransport();
 
             Channel(x => x.Uri)
                 //Routes messages in the in the getting started namespace to this channel

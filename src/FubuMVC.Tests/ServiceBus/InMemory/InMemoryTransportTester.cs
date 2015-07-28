@@ -46,8 +46,8 @@ namespace FubuMVC.Tests.ServiceBus.InMemory
         public void override_the_reply_uri()
         {
             var registry = new FubuRegistry();
-            registry.EnableInMemoryTransport("memory://special".ToUri());
-            registry.Features.ServiceBus.Enable(true);
+            registry.ServiceBus.EnableInMemoryTransport("memory://special".ToUri());
+            registry.ServiceBus.Enable(true);
 
             using (var runtime = FubuApplication.For(registry).Bootstrap())
             {

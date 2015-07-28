@@ -38,7 +38,7 @@ namespace FubuMVC.Tests.ServiceBus.InMemory
             FubuTransport.Reset();
 
             var registry = new FubuRegistry();
-            registry.Features.ServiceBus.Configure(_ =>
+            registry.ServiceBus.Configure(_ =>
             {
                 _.EnableInMemoryTransport = true;
                 _.Enabled = true;

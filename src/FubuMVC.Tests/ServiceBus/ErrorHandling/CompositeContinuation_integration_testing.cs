@@ -38,8 +38,8 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
     {
         public CountAndRetryOnExceptionRegistry()
         {
-            Features.ServiceBus.Enable(true);
-            EnableInMemoryTransport();
+            ServiceBus.Enable(true);
+            ServiceBus.EnableInMemoryTransport();
             Policies.Local.Add<CountAndRetryOnExceptionPolicy>();
         }
     }

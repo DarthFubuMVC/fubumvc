@@ -81,7 +81,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
         {
             public ConfiguredFubuRegistry()
             {
-                EnableInMemoryTransport();
+                ServiceBus.EnableInMemoryTransport();
 
                 Channel(x => x.Outbound).ReadIncoming(ByTasks(x => x.OutboundCount));
                 Channel(x => x.Upstream).ReadIncoming(ByThreads(x => x.UpstreamCount));

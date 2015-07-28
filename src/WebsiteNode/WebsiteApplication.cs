@@ -13,7 +13,7 @@ namespace WebsiteNode
             return FubuApplication.For<FubuRegistry>(x =>
             {
                 x.Services(_ => _.For<MessageRecorder>().Singleton());
-                x.Features.ServiceBus.Enable(true);
+                x.ServiceBus.Enable(true);
             });
         }
     }
@@ -25,7 +25,7 @@ namespace WebsiteNode
             Channel(x => x.Website).ReadIncoming();
             Channel(x => x.Service).AcceptsMessagesInAssemblyContainingType<ServiceApplication>();
 
-            HealthMonitoring.ScheduledExecution(ScheduledExecution.Disabled);
+            ServiceBus.HealthMonitoring.ScheduledExecution(ScheduledExecution.Disabled);
         }
     }
 

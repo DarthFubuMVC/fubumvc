@@ -40,7 +40,7 @@ namespace FubuMVC.IntegrationTesting.ServiceBus.Publishing
             theServiceBus = MockRepository.GenerateMock<IServiceBus>();
 
             var registry = new FubuRegistry();
-            registry.Features.ServiceBus.Enable(true);
+            registry.ServiceBus.Enable(true);
             registry.Actions.IncludeType<MessageOnePublisher>();
             registry.StructureMap(container);
 

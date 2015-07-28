@@ -28,8 +28,8 @@ namespace FubuMVC.Tests.ServiceBus
         {
             public Defaults()
             {
-                Features.ServiceBus.Enable(true);
-                EnableInMemoryTransport();
+                ServiceBus.Enable(true);
+                ServiceBus.EnableInMemoryTransport();
             }
         }
     }

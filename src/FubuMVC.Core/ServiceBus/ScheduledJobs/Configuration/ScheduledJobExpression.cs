@@ -82,7 +82,7 @@ namespace FubuMVC.Core.ServiceBus.ScheduledJobs.Configuration
         /// <returns></returns>
         public ScheduledJobExpression<T> ActivatedOnStartup(bool shouldActivate)
         {
-            _parent.HealthMonitoring.ScheduledExecution(shouldActivate ? ScheduledExecution.RunImmediately : ScheduledExecution.Disabled);
+            _parent.ServiceBus.HealthMonitoring.ScheduledExecution(shouldActivate ? ScheduledExecution.RunImmediately : ScheduledExecution.Disabled);
             return this;
         }
     }

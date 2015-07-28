@@ -62,7 +62,7 @@ namespace ServiceBusSpecifications.Fixtures
 
             registry.AlterSettings<LightningQueueSettings>(x => x.Disabled = true);
 
-            registry.EnableInMemoryTransport(_replyUri);
+            registry.ServiceBus.EnableInMemoryTransport(_replyUri);
 
             _runtime = FubuApplication.For(registry).Bootstrap();
         }

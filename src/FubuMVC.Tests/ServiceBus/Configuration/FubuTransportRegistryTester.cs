@@ -41,8 +41,8 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
     {
         public CustomTransportRegistry()
         {
-            Features.ServiceBus.Enable(true);
-            EnableInMemoryTransport();
+            ServiceBus.Enable(true);
+            ServiceBus.EnableInMemoryTransport();
         }
     }
 
@@ -50,8 +50,8 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
     {
         public OtherRegistry()
         {
-            Features.ServiceBus.Enable(true);
-            EnableInMemoryTransport();
+            ServiceBus.Enable(true);
+            ServiceBus.EnableInMemoryTransport();
         }
     }
 }

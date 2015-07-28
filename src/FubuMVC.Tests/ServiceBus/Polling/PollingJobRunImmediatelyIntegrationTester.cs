@@ -53,9 +53,9 @@ namespace FubuMVC.Tests.ServiceBus.Polling
     {
         public PollingImmediateRegistry()
         {
-            Features.ServiceBus.Enable(true);
+            ServiceBus.Enable(true);
 
-            EnableInMemoryTransport();
+            ServiceBus.EnableInMemoryTransport();
 
             Polling.RunJob<ImmediateJob>().ScheduledAtInterval<PollingImmediateSettings>(x => x.ImmediateInterval).RunImmediately();
             Polling.RunJob<DelayJob>().ScheduledAtInterval<PollingImmediateSettings>(x => x.DelayInterval);

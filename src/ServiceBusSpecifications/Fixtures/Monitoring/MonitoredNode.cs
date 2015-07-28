@@ -40,7 +40,7 @@ namespace ServiceBusSpecifications.Fixtures.Monitoring
 
             _nodeId = nodeId;
 
-            EnableInMemoryTransport(incoming);
+            ServiceBus.EnableInMemoryTransport(incoming);
 
             Services(_ => _.AddService<ILogListener>(listener));
 
@@ -74,7 +74,7 @@ namespace ServiceBusSpecifications.Fixtures.Monitoring
 
             Services(_ => _sources.Each(_.AddService<IPersistentTaskSource>));
             Services(_ => _.ReplaceService(persistence));
-            HealthMonitoring
+            ServiceBus.HealthMonitoring
                 .ScheduledExecution(monitoringEnabled
                     ? ScheduledExecution.WaitUntilInterval
                     : ScheduledExecution.Disabled)

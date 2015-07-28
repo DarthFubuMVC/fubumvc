@@ -115,7 +115,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
     {
         public ScheduledJobRegistry()
         {
-            EnableInMemoryTransport();
+            ServiceBus.EnableInMemoryTransport();
 
             ScheduledJob.DefaultJobChannel(x => x.Downstream);
             ScheduledJob.RunJob<AJob>().ScheduledBy<DummyScheduleRule>().Channel(x => x.Upstream);

@@ -50,7 +50,7 @@ namespace ScheduledJobHarness
 
             _nodeId = nodeId;
 
-            EnableInMemoryTransport(incoming);
+            ServiceBus.EnableInMemoryTransport(incoming);
 
             Services(_ =>
             {

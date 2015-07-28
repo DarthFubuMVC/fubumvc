@@ -76,8 +76,8 @@ namespace FubuMVC.Tests.ServiceBus.Diagnostics
     {
         public DiagnosticApplication()
         {
-            EnableInMemoryTransport();
-            Features.ServiceBus.Enable(true);
+            ServiceBus.EnableInMemoryTransport();
+            ServiceBus.Enable(true);
 
             AlterSettings<TransportSettings>(x =>
             {

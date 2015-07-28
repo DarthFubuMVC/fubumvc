@@ -106,7 +106,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
         {
             public SubscriptionRegistry()
             {
-                EnableInMemoryTransport();
+                ServiceBus.EnableInMemoryTransport();
 
                 Channel(x => x.Q1)
                     .AcceptsMessage<Message1>()

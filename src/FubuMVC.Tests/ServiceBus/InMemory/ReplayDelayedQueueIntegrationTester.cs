@@ -103,7 +103,7 @@ namespace FubuMVC.Tests.ServiceBus.InMemory
         public DelayedRegistry()
         {
             Handlers.DisableDefaultHandlerSource();
-            EnableInMemoryTransport();
+            ServiceBus.EnableInMemoryTransport();
 
             // Need this to be fast for the tests
             AlterSettings<TransportSettings>(x => x.DelayMessagePolling = 100);

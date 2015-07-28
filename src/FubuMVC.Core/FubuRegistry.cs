@@ -99,6 +99,19 @@ namespace FubuMVC.Core
             }
         }
 
+        /// <summary>
+        /// A shortcut to programmatically set the NodeId
+        /// Useful for testing or running multiples of the same
+        /// configured Node on one box
+        /// </summary>
+        public string NodeId
+        {
+            set
+            {
+                AlterSettings<ChannelGraph>(x => x.NodeId = value);
+            }
+        }
+
         internal ConfigGraph Config
         {
             get { return _config; }
@@ -359,48 +372,16 @@ namespace FubuMVC.Core
             return _containerSource == null ? new Container() : _containerSource();
         }
 
-        /// <summary>
-        /// A shortcut to programmatically set the NodeId
-        /// Useful for testing or running multiples of the same
-        /// configured Node on one box
-        /// </summary>
-        public string NodeId
+
+
+        public ServiceBusFeature ServiceBus
         {
-            set
+            get
             {
-                AlterSettings<ChannelGraph>(x => x.NodeId = value);
+                return new ServiceBusFeature(this);
             }
         }
 
-
-        public void DefaultSerializer<T>() where T : IMessageSerializer, new()
-        {
-            AlterSettings<ChannelGraph>(graph => graph.DefaultContentType = new T().ContentType);
-        }
-
-        public void DefaultContentType(string contentType)
-        {
-            AlterSettings<ChannelGraph>(graph => graph.DefaultContentType = contentType);
-        }
-
-
-        public void SagaStorage<T>() where T : ISagaStorage, new()
-        {
-            AlterSettings<TransportSettings>(x => x.SagaStorageProviders.Add(new T()));
-        }
-
-        /// <summary>
-        /// Enable the in memory transport
-        /// </summary>
-        public void EnableInMemoryTransport(Uri replyUri = null)
-        {
-            AlterSettings<TransportSettings>(x => x.EnableInMemoryTransport = true);
-
-            if (replyUri != null)
-            {
-                AlterSettings<MemoryTransportSettings>(x => x.ReplyUri = replyUri);
-            }
-        }
 
         public PollingJobExpression Polling
         {
@@ -409,13 +390,6 @@ namespace FubuMVC.Core
 
 
 
-        public HealthMonitoringExpression HealthMonitoring
-        {
-            get
-            {
-                return new HealthMonitoringExpression(this);
-            }
-        }
 
 
     }

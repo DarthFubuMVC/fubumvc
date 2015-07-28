@@ -27,7 +27,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
                 x.SettingTypes.Fill(typeof (AnotherSettings));
             });
 
-            registry.Features.ServiceBus.Enable(true);
+            registry.ServiceBus.Enable(true);
 
             runtime = FubuApplication.For(registry).Bootstrap();
             container = runtime.Factory.Get<IContainer>();

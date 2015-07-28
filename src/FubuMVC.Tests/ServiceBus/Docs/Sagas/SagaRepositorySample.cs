@@ -17,7 +17,7 @@ namespace FubuMVC.Tests.ServiceBus.Docs.Sagas
             Policies.Local.Add<AlternativeRepositoryPolicy>();
 
             //or if globally overriding all saga persistence
-            SagaStorage<AlternativeSagaStorage>();
+            ServiceBus.SagaStorage<AlternativeSagaStorage>();
         }
     }
 

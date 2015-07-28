@@ -16,8 +16,8 @@ namespace FubuMVC.Tests.ServiceBus
 
             using (var runtime = FubuApplication.For<FubuRegistry>(x =>
             {
-                x.Features.ServiceBus.Enable(true);
-                x.EnableInMemoryTransport();
+                x.ServiceBus.Enable(true);
+                x.ServiceBus.EnableInMemoryTransport();
                 x.Handlers.DisableDefaultHandlerSource();
                 x.Handlers.Include<SimpleHandler<OneMessage>>();
             }).Bootstrap())

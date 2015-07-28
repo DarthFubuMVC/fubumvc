@@ -61,7 +61,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
         {
             public SubscribedRegistry()
             {
-                EnableInMemoryTransport();
+                ServiceBus.EnableInMemoryTransport();
                 NodeName = "SubscribedService";
 
                 Channel(x => x.Inbound).ReadIncoming();

@@ -192,7 +192,7 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
         public void use_the_special_storage_just_fine()
         {
             var graph = FubuTransport.BehaviorGraphFor(x => {
-                x.SagaStorage<SpecialSagaStorage>();
+                x.ServiceBus.SagaStorage<SpecialSagaStorage>();
             });
 
             var chain = graph.ChainFor(typeof (SagaMessageOne));
@@ -205,7 +205,7 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
         public void the_saga_node_is_before_the_handler_calls()
         {
             var graph = FubuTransport.BehaviorGraphFor(x => {
-                x.SagaStorage<SpecialSagaStorage>();
+                x.ServiceBus.SagaStorage<SpecialSagaStorage>();
             });
 
             var chain = graph.ChainFor(typeof (SagaMessageOne));

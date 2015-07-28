@@ -16,9 +16,9 @@ namespace ServiceNode
     {
         public ServiceRegistry()
         {
-            Features.ServiceBus.Enable(true);
+            ServiceBus.Enable(true);
             Channel(x => x.Service).ReadIncoming();
-            HealthMonitoring.ScheduledExecution(ScheduledExecution.Disabled);
+            ServiceBus.HealthMonitoring.ScheduledExecution(ScheduledExecution.Disabled);
         }
     }
 }

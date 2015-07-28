@@ -4,7 +4,7 @@ namespace FubuMVC.Core.Registration.DSL
 {
     public class Feature<TSettings, TEnabled> where TSettings : class, new()
     {
-        private readonly FubuRegistry _parent;
+        protected readonly FubuRegistry _parent;
         private readonly Action<TSettings, TEnabled> _onEnabled;
 
         public Feature(FubuRegistry parent, Action<TSettings, TEnabled> onEnabled)
