@@ -72,7 +72,7 @@ namespace FubuMVC.Tests.Diagnostics
             _time = time;
         }
 
-        public void Activate(IActivationLog log)
+        public void Activate(IActivationLog log, IPerfTimer timer)
         {
             Thread.Sleep(_time);
         }

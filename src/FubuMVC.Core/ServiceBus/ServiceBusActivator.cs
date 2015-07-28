@@ -24,7 +24,7 @@ namespace FubuMVC.Core.ServiceBus
             _settings = settings;
         }
 
-        public void Activate(IActivationLog log)
+        public void Activate(IActivationLog log, IPerfTimer timer)
         {
             if (!_settings.Enabled)
             {
@@ -32,18 +32,9 @@ namespace FubuMVC.Core.ServiceBus
                 return;
             }
 
-            _transports.Activate(log);
-            _subscriptions.Activate(log);
-            _pollingJobs.Activate(log);
-
-            /* TODO -- add timings back here!
-            PackageRegistry.Timer.Record("Activating Transports and Starting Listening",
-                () => _transports.Activate(packages, log));
-
-            PackageRegistry.Timer.Record("Activating Subscriptions", () => _subscriptions.Activate(packages, log));
-
-            PackageRegistry.Timer.Record("Activating Polling Jobs", () => _pollingJobs.Activate(packages, log));
-             * */
+            timer.Record("Activating Transports and Starting Listening", () => _transports.Activate(log, timer));
+            timer.Record("Activating Subscriptions", () => _subscriptions.Activate(log, timer));
+            timer.Record("Activating Polling Jobs", () => _pollingJobs.Activate(log, timer));
         }
 
         public void Deactivate(IActivationLog log)

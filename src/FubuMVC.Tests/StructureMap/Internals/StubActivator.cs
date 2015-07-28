@@ -7,7 +7,7 @@ namespace FubuMVC.Tests.StructureMap.Internals
     {
         private IActivationLog _log;
 
-        public void Activate(IActivationLog log)
+        public void Activate(IActivationLog log, IPerfTimer timer)
         {
             _log = log;
         }

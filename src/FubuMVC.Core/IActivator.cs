@@ -13,6 +13,6 @@ namespace FubuMVC.Core
     /// </summary>
     public interface IActivator
     {
-        void Activate(IActivationLog log);
+        void Activate(IActivationLog log, IPerfTimer timer);
     }
 }

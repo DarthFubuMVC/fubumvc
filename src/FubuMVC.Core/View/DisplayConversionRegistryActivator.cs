@@ -16,7 +16,7 @@ namespace FubuMVC.Core.View
             _stringifier = stringifier;
         }
 
-        public void Activate(IActivationLog log)
+        public void Activate(IActivationLog log, IPerfTimer timer)
         {
             _registries.Each(r =>
             {

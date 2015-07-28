@@ -14,7 +14,7 @@ namespace FubuMVC.Core.Runtime
             _action = action;
         }
 
-        public void Activate(IActivationLog log)
+        public void Activate(IActivationLog log, IPerfTimer timer)
         {
             _action();
         }

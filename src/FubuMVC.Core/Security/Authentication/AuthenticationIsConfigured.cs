@@ -13,7 +13,7 @@ namespace FubuMVC.Core.Security.Authentication
             _strategies = strategies;
         }
 
-        public void Activate(IActivationLog log)
+        public void Activate(IActivationLog log, IPerfTimer timer)
         {
             if (!_strategies.Any())
             {

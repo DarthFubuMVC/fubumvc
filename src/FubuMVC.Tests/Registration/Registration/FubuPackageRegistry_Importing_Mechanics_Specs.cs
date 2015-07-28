@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using Shouldly;
@@ -138,6 +140,16 @@ namespace FubuMVC.Tests.Registration.Registration
             });
 
             Services.ReplaceService<IAppService, PackageService>();
+
+            Services.AddService<IDeactivator, PackageDeactivator>();
+        }
+    }
+
+    public class PackageDeactivator : IDeactivator
+    {
+        public void Deactivate(IActivationLog log)
+        {
+            throw new NotImplementedException();
         }
     }
 

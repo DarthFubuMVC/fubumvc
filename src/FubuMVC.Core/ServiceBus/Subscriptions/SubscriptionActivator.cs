@@ -28,7 +28,7 @@ namespace FubuMVC.Core.ServiceBus.Subscriptions
             _settings = settings;
         }
 
-        public void Activate(IActivationLog log)
+        public void Activate(IActivationLog log, IPerfTimer timer)
         {
             log.Trace("Determining subscriptions for node " + _cache.NodeName);
 

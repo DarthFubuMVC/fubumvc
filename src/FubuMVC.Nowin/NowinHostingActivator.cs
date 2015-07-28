@@ -16,7 +16,7 @@ namespace FubuMVC.Nowin
             _settings = settings;
         }
 
-        public void Activate(IActivationLog log)
+        public void Activate(IActivationLog log, IPerfTimer timer)
         {
             if (!_settings.AutoHostingEnabled)
             {

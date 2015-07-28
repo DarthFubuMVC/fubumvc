@@ -15,7 +15,7 @@ namespace FubuMVC.Core.ServiceBus.Polling
             _jobs = jobs;
         }
 
-        public void Activate(IActivationLog log)
+        public void Activate(IActivationLog log, IPerfTimer timer)
         {
             _jobs.Where(x => x.ScheduledExecution != ScheduledExecution.Disabled).Each(x => {
                 try

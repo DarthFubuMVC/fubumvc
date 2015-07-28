@@ -71,7 +71,7 @@ namespace SampleService
             _dependency = dependency;
         }
 
-        public void Activate(IActivationLog log)
+        public void Activate(IActivationLog log, IPerfTimer timer)
         {
             Write("Starting SampleService...");
 
@@ -100,7 +100,7 @@ namespace SampleService
 
     public class RemoteService : IActivator, IDeactivator, IListener<TestSignal>
     {
-        public void Activate(IActivationLog log)
+        public void Activate(IActivationLog log, IPerfTimer timer)
         {
             EventAggregator.Messaging.AddListener(this);
         }

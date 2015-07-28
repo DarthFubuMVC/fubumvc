@@ -35,7 +35,7 @@ namespace FubuMVC.Tests.ServiceBus.Polling
             theJobs[1].Expect(x => x.Start()).Throw(ex1);
             theJobs[2].Expect(x => x.Start()).Throw(ex2);
 
-            ClassUnderTest.Activate(theLog);
+            ClassUnderTest.Activate(theLog, null);
         }
 
         [Test]

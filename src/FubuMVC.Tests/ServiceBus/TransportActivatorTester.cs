@@ -30,7 +30,7 @@ namespace FubuMVC.Tests.ServiceBus
              ClassUnderTest.Stub(x => x.OpenChannels());
             ClassUnderTest.Stub(x => x.ExecuteActivators());
 
-            ClassUnderTest.Activate(new ActivationLog());
+            ClassUnderTest.Activate(new ActivationLog(), null);
         }
 
         [Test]

@@ -2,7 +2,6 @@ using FubuLocalization.Basic;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Localization;
 using FubuMVC.Tests.TestSupport;
-using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
 using Is = Rhino.Mocks.Constraints.Is;
@@ -14,7 +13,7 @@ namespace FubuMVC.Tests.Localization
     {
         protected override void beforeEach()
         {
-            ClassUnderTest.Activate(MockFor<IActivationLog>());
+            ClassUnderTest.Activate(MockFor<IActivationLog>(), null);
         }
 
         [Test]

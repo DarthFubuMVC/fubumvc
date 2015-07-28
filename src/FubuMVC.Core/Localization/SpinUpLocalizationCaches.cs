@@ -12,7 +12,7 @@ namespace FubuMVC.Core.Localization
             _factory = factory;
         }
 
-        public void Activate(IActivationLog log)
+        public void Activate(IActivationLog log, IPerfTimer timer)
         {
             _factory.LoadAll(text => log.Trace(text));
             _factory.ApplyToLocalizationManager();

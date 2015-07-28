@@ -27,7 +27,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime
             _fubuTransportActivators = fubuTransportActivators;
         }
 
-        public void Activate(IActivationLog log)
+        public void Activate(IActivationLog log, IPerfTimer timer)
         {
             _graph.ReadSettings(_services);
             OpenChannels();

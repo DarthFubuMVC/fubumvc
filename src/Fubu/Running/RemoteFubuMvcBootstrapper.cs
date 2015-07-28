@@ -61,7 +61,7 @@ namespace Fubu.Running
             _activator.Recycle();
         }
 
-        void IActivator.Activate(IActivationLog log)
+        void IActivator.Activate(IActivationLog log, IPerfTimer timer)
         {
         }
     }
