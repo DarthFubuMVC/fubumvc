@@ -1,6 +1,5 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
-using HtmlTags;
 
 namespace AssemblyPackage
 {

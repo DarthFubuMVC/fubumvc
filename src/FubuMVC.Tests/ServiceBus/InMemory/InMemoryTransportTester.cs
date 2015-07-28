@@ -47,6 +47,7 @@ namespace FubuMVC.Tests.ServiceBus.InMemory
         {
             var registry = new FubuRegistry();
             registry.EnableInMemoryTransport("memory://special".ToUri());
+            registry.Features.ServiceBus.Enable(true);
 
             using (var runtime = FubuApplication.For(registry).Bootstrap())
             {

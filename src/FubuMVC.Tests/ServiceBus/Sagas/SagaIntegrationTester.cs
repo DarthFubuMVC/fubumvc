@@ -110,6 +110,7 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
 
             var registry = new SagaTestRegistry();
             registry.StructureMap(theContainer);
+            
 
             theRuntime = FubuApplication.For(registry).Bootstrap();
 

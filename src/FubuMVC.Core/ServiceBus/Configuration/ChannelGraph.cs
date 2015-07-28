@@ -47,12 +47,19 @@ namespace FubuMVC.Core.ServiceBus.Configuration
                 _nodeId = value;
             }
         }
-        
+
 
         /// <summary>
         /// Used to identify the instance of the running FT node
         /// </summary>
-        public string Name { get; set; }
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                _name = value;
+            }
+        }
 
         /// <summary>
         /// The default content type to use for serialization if none is specified at
@@ -139,6 +146,7 @@ namespace FubuMVC.Core.ServiceBus.Configuration
         }
 
         private bool _wasDisposed;
+        private string _name;
 
         public void Dispose()
         {

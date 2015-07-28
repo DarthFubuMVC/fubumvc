@@ -29,24 +29,13 @@ namespace FubuMVC.Core
     /// </summary>
     public class FubuApplication : IApplication<FubuRuntime>
     {
-        private readonly Lazy<FubuRegistry> _registry;
+        private readonly FubuRegistry _registry;
 
-        private FubuApplication(Func<FubuRegistry> registryBuilder)
+        private FubuApplication(FubuRegistry registry)
         {
-            _registry = new Lazy<FubuRegistry>(registryBuilder);
+            _registry = registry;
         }
 
-        /// <summary>
-        /// Use the policies and conventions specified by the FubuRegistry built by the specified lambda.  
-        /// Use this overload if the FubuRegistry type needs to use the scanned Bottle assemblies and packages 
-        /// hanging off of PackageRegistry
-        /// </summary>
-        /// <param name="registry"></param>
-        /// <returns></returns>
-        public static FubuApplication For(Func<FubuRegistry> registry)
-        {
-            return new FubuApplication(registry);
-        }
 
         /// <summary>
         /// Use the policies and conventions specified by the registry
@@ -55,7 +44,7 @@ namespace FubuMVC.Core
         /// <returns></returns>
         public static FubuApplication For(FubuRegistry registry)
         {
-            return new FubuApplication(() => registry);
+            return new FubuApplication(registry);
         }
 
         /// <summary>
@@ -65,17 +54,14 @@ namespace FubuMVC.Core
         public static FubuApplication DefaultPolicies(IContainer container = null)
         {
             var assembly = FindTheCallingAssembly();
-            return new FubuApplication(() =>
+            var registry = new FubuRegistry(assembly);
+            if (container != null)
             {
-                var registry = new FubuRegistry(assembly);
-                if (container != null)
-                {
-                    registry.StructureMap(container);
-                }
+                registry.StructureMap(container);
+            }
 
+            return new FubuApplication(registry);
 
-                return registry;
-            });
         }
 
         /// <summary>
@@ -85,16 +71,13 @@ namespace FubuMVC.Core
         /// <returns></returns>
         public static FubuApplication For<T>(Action<T> customize = null) where T : FubuRegistry, new()
         {
-            return For(() =>
+            var registry = new T();
+            if (customize != null)
             {
-                var registry = new T();
-                if (customize != null)
-                {
-                    customize(registry);
-                }
+                customize(registry);
+            }
 
-                return registry;
-            });
+            return new FubuApplication(registry);
         }
 
 
@@ -128,7 +111,7 @@ namespace FubuMVC.Core
             var files = new FubuApplicationFiles(GetApplicationPath());
 
             // TODO -- going to remove this
-            var container = _registry.Value.ToContainer();
+            var container = _registry.ToContainer();
             var runtime = bootstrapRuntime(perfTimer, diagnostics, packageAssemblies, container, files);
 
             var activators = runtime.Factory.GetAll<IActivator>();
@@ -182,7 +165,7 @@ namespace FubuMVC.Core
                 () => buildBehaviorGraph(perfTimer, packageAssemblies, diagnostics, files));
 
             perfTimer.Record("Registering services into the IoC Container",
-                () => _registry.Value.Config.RegisterServices(container, graph));
+                () => _registry.Config.RegisterServices(container, graph));
 
             // factory HAS to be spun up here.
             var factory = perfTimer.Record("Build the IServiceFactory",
@@ -207,7 +190,7 @@ namespace FubuMVC.Core
 
         private BehaviorGraph buildBehaviorGraph(IPerfTimer timer, IEnumerable<Assembly> assemblies, IActivationDiagnostics diagnostics, IFubuApplicationFiles files)
         {
-            return BehaviorGraphBuilder.Build(_registry.Value, timer, assemblies, diagnostics, files);
+            return BehaviorGraphBuilder.Build(_registry, timer, assemblies, diagnostics, files);
         }
 
         // Build route objects from route definitions on graph + add packaging routes
@@ -229,7 +212,7 @@ namespace FubuMVC.Core
 
             Task.WaitAll(importers);
 
-            importers.SelectMany(x => x.Result).Each(x => x.Apply(_registry.Value));
+            importers.SelectMany(x => x.Result).Each(x => x.Apply(_registry));
         }
 
         public static string PhysicalRootPath { get; set; }

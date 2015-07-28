@@ -56,15 +56,18 @@ namespace FubuMVC.Core
 
             _config = new ConfigGraph(_applicationAssembly);
 
-
-
-            AlterSettings<ChannelGraph>(x =>
+            if (!this.GetType().CanBeCastTo<FubuPackageRegistry>())
             {
-                if (x.Name.IsEmpty())
+                // TODO: Hokey. Gotta be a better way to do this
+                AlterSettings<ChannelGraph>(x =>
                 {
-                    x.Name = _name;
-                }
-            });
+                    if (x.Name.IsEmpty())
+                    {
+                        x.Name = _name;
+                    }
+                });
+            }
+
         }
 
         public FubuRegistry(Action<FubuRegistry> configure) : this()

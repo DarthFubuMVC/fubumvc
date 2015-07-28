@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core.ServiceBus.Configuration;
+﻿using FubuMVC.Core.Registration;
+using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Tests.ServiceBus.ScenarioSupport;
@@ -20,6 +21,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
         protected override void beforeEach()
         {
             theMessage = new OneMessage();
+            Services.Inject(new BehaviorGraph());
 
             ClassUnderTest.InvokeNow(theMessage);
         }

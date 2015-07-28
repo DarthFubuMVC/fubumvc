@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace FubuMVC.Tests.ServiceBus.Docs.GettingStarted
 {
     // SAMPLE: GettingStartedTest 
-    [TestFixture]
+    [TestFixture, Explicit]
     public class GettingStartedTester
     {
         [Test]

@@ -2,6 +2,7 @@
 using System.Linq;
 using FubuCore.Logging;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
@@ -59,7 +60,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             MockFor<IServiceFactory>().Stub(x => x.BuildBehavior(_invocationContext, theChain.UniqueId))
                 .Return(theBehavior);
 
-
+            Services.Inject(new BehaviorGraph());
 
             ClassUnderTest.ExecuteChain(theEnvelope, theChain);
         }
@@ -106,6 +107,8 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             theEnvelope.Message.ShouldBeTheSameAs(theMessage);
 
             Services.Inject<ILogger>(theLogger);
+
+            Services.Inject(new BehaviorGraph());
 
             Services.PartialMockTheClassUnderTest();
             theContextIs();
