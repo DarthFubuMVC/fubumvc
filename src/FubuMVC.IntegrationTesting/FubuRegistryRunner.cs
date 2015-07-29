@@ -5,6 +5,7 @@ using System.Xml;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Endpoints;
+using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Runtime;
 using FubuMVC.IntegrationTesting.Querying;
 using FubuMVC.Katana;
@@ -110,8 +111,10 @@ namespace FubuMVC.IntegrationTesting
 
         public Harness(FubuRuntime runtime, int port)
         {
+            FubuApplication.PhysicalRootPath = GetApplicationDirectory();
+
             _port = PortFinder.FindPort(port);
-            _server = new EmbeddedFubuMvcServer(runtime, GetApplicationDirectory(), _port);
+            _server = new EmbeddedFubuMvcServer(runtime, new KatanaHost(), _port);
             _port = port;
 
             _remote = new Lazy<RemoteBehaviorGraph>(() => { return new RemoteBehaviorGraph(_server.BaseAddress); });

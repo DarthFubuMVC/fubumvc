@@ -67,12 +67,8 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="EmbeddedFubuMvcServer.cs" />
     <Compile Include="FubuApplicationExtensions.cs" />
-    <Compile Include="NowinExtensions.cs" />
-    <Compile Include="NowinHostingActivator.cs" />
-    <Compile Include="KatanaHostingDeactivator.cs" />
-    <Compile Include="NowinSettings.cs" />
+    <Compile Include="NowinHost.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

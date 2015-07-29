@@ -7,4 +7,3 @@ using System.Runtime.InteropServices;
 using FubuMVC.Core;
 
 [assembly: AssemblyTitle("FubuMVC.Nowin")]
-[assembly: FubuModule]

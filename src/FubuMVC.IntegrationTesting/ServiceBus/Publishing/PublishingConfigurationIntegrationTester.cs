@@ -2,6 +2,7 @@
 using System.Net;
 using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
+using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
@@ -61,7 +62,7 @@ namespace FubuMVC.IntegrationTesting.ServiceBus.Publishing
         [Test]
         public void end_to_end_test()
         {
-            using (var server = new EmbeddedFubuMvcServer(theRuntime, port: PortFinder.FindPort(5505)))
+            using (var server = new EmbeddedFubuMvcServer(theRuntime, new KatanaHost(), port: PortFinder.FindPort(5505)))
             {
                 var response = server.Endpoints.PostJson(new Message1Input());
 

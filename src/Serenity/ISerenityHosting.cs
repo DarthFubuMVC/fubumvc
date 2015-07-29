@@ -1,5 +1,6 @@
 using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Katana;
 
@@ -36,7 +37,7 @@ namespace Serenity
             IBrowserLifecycle lifecycle)
         {
             var port = PortFinder.FindPort(settings.Port);
-            _server = new EmbeddedFubuMvcServer(runtime, settings.PhysicalPath, port);
+            _server = new EmbeddedFubuMvcServer(runtime, new KatanaHost(), port);
 
             settings.RootUrl = _server.BaseAddress;
 

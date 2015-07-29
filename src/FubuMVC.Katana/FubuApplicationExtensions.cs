@@ -1,4 +1,5 @@
 ﻿using FubuMVC.Core;
+using FubuMVC.Core.Http.Hosting;
 
 namespace FubuMVC.Katana
 {
@@ -14,7 +15,7 @@ namespace FubuMVC.Katana
         public static EmbeddedFubuMvcServer RunEmbedded(this FubuApplication application, string physicalPath = null,
             int port = 5500)
         {
-            return new EmbeddedFubuMvcServer(application.Bootstrap(), physicalPath, port);
+            return new EmbeddedFubuMvcServer(application.Bootstrap(), new KatanaHost(), port);
         }
 
         /// <summary>
@@ -24,9 +25,9 @@ namespace FubuMVC.Katana
         /// <param name="application"></param>
         /// <param name="physicalPath">The physical path of the web server path.  This only needs to be set if the location for application content like scripts or views is at a different place than the current AppDomain base directory</param>
         /// <returns></returns>
-        public static EmbeddedFubuMvcServer RunEmbeddedWithAutoPort(this FubuApplication application, string physicalPath = null)
+        public static EmbeddedFubuMvcServer RunEmbeddedWithAutoPort(this FubuApplication application)
         {
-            return new EmbeddedFubuMvcServer(application.Bootstrap(), physicalPath, 0);
+            return new EmbeddedFubuMvcServer(application.Bootstrap(), new KatanaHost(), 0);
         }
     }
 }

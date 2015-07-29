@@ -171,7 +171,9 @@ namespace FubuMVC.IntegrationTesting
             var port = PortFinder.FindPort(5500);
             var runtime = bootstrapRuntime();
 
-            _server = new EmbeddedFubuMvcServer(runtime, GetRootDirectory(), port);
+            FubuApplication.PhysicalRootPath = GetRootDirectory();
+
+            _server = new EmbeddedFubuMvcServer(runtime, new KatanaHost(), port);
             _host = new InMemoryHost(runtime);
         }
 

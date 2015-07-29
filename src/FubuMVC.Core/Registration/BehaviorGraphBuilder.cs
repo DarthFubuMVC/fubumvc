@@ -32,9 +32,6 @@ namespace FubuMVC.Core.Registration
 
             perfTimer.Record("Applying Settings", () => applySettings(config, graph, perfTimer, files));
 
-
-            
-
             var featureLoading = featureLoader.ApplyAll(graph.Settings, registry);
 
             featureLoading.Wait();

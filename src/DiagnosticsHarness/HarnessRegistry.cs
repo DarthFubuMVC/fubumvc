@@ -14,11 +14,6 @@ namespace DiagnosticsHarness
             //Comment out in order to test with LightningQueues
             //EnableInMemoryTransport();
 
-            AlterSettings<KatanaSettings>(x =>
-            {
-                x.AutoHostingEnabled = true;
-            });
-
             // TODO -- publish everything option in the FI?
             Channel(x => x.Channel).ReadIncoming().AcceptsMessages(x => true).DefaultSerializer<XmlMessageSerializer>();
 

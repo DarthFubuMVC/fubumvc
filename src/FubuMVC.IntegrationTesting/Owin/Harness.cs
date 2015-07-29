@@ -5,6 +5,7 @@ using System.Xml;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Endpoints;
+using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Katana;
 using Shouldly;
@@ -37,7 +38,7 @@ namespace FubuMVC.IntegrationTesting.Owin
 
         public static void Run(Action<EndpointDriver> action)
         {
-            using (var server = EmbeddedFubuMvcServer.For<HarnessApplication>(port: PortFinder.FindPort(5502)))
+            using (var server = EmbeddedFubuMvcServer.For<HarnessApplication, KatanaHost>(port: PortFinder.FindPort(5502)))
             {
                 action(server.Endpoints);
             }
@@ -65,7 +66,7 @@ namespace FubuMVC.IntegrationTesting.Owin
 
             var port = PortFinder.FindPort(5501);
 
-            _server = EmbeddedFubuMvcServer.For<HarnessApplication>(GetRootDirectory(), port);
+            _server = EmbeddedFubuMvcServer.For<HarnessApplication, KatanaHost>(GetRootDirectory(), port);
         }
 
         public static string GetRootDirectory()

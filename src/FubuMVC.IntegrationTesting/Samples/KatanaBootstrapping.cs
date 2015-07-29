@@ -2,6 +2,7 @@
 using System.Net;
 using FubuCore.Binding;
 using FubuMVC.Core;
+using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Katana;
 using Shouldly;
 
@@ -24,7 +25,7 @@ namespace FubuMVC.IntegrationTesting.Samples
         // to contain your bootstrapping code
         public static void WithApplicationSource()
         {
-            using (var server = EmbeddedFubuMvcServer.For<SimpleApplication>())
+            using (var server = EmbeddedFubuMvcServer.For<SimpleApplication, KatanaHost>())
             {
                 var greeting = server.Endpoints.Get<HelloEndpoint>(x => x.get_greeting());
                 Console.WriteLine(greeting);
@@ -59,7 +60,7 @@ namespace FubuMVC.IntegrationTesting.Samples
         public static void WithSpecialPort()
         {
             // SAMPLE: katana-with-explicit-port
-            using (var server = EmbeddedFubuMvcServer.For<SimpleApplication>(port: 6000))
+            using (var server = EmbeddedFubuMvcServer.For<SimpleApplication, KatanaHost>(port: 6000))
             {
             }
             // ENDSAMPLE
@@ -68,7 +69,7 @@ namespace FubuMVC.IntegrationTesting.Samples
         public static void WithSpecialPath()
         {
             // SAMPLE: katana-with-explicit-path
-            using (var server = EmbeddedFubuMvcServer.For<SimpleApplication>("../../../SimpleApplication"))
+            using (var server = EmbeddedFubuMvcServer.For<SimpleApplication, KatanaHost>("../../../SimpleApplication"))
             {
             }
             // ENDSAMPLE
@@ -77,7 +78,7 @@ namespace FubuMVC.IntegrationTesting.Samples
         public static void InsideTesting()
         {
             // SAMPLE: katana-and-testing
-            using (var server = EmbeddedFubuMvcServer.For<SimpleApplication>())
+            using (var server = EmbeddedFubuMvcServer.For<SimpleApplication, KatanaHost>())
             {
                 // Access to the IServiceFactory for the running application
                 var resolver = server.Services.Get<IObjectResolver>();

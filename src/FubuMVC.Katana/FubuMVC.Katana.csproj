@@ -68,12 +68,9 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="EmbeddedFubuMvcServer.cs" />
+    <Compile Include="KatanaHost.cs" />
     <Compile Include="FubuApplicationExtensions.cs" />
-    <Compile Include="KatanaExtensions.cs" />
-    <Compile Include="KatanaHostingActivator.cs" />
-    <Compile Include="KatanaHostingDeactivator.cs" />
-    <Compile Include="KatanaSettings.cs" />
+    <Compile Include="KatanaRightsException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -24,7 +24,7 @@ namespace Fubu.Running
         {
             _runner = RemoteServiceRunner.For<RemoteFubuMvcBootstrapper>(x =>
             {
-                x.RequireAssemblyContainingType<EmbeddedFubuMvcServer>(AssemblyCopyMode.SemVerCompatible);
+                x.RequireAssemblyContainingType<KatanaHost>(AssemblyCopyMode.SemVerCompatible);
                 x.RequireAssemblyContainingType<RemoteFubuMvcProxy>(AssemblyCopyMode.SemVerCompatible);
                 x.RequireAssemblyContainingType<IAppBuilder>();
                 x.RequireAssemblyContainingType<IModelBinder>(); // FubuCore

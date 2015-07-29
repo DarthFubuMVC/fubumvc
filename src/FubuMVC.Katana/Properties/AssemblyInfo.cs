@@ -6,5 +6,4 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 using FubuMVC.Core;
 
-[assembly: AssemblyTitle("FubuMVC.Katana")]
 [assembly: FubuModule]

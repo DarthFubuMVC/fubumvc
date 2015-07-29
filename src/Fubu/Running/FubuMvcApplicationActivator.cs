@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets;
+using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Services.Messaging;
 using FubuMVC.Katana;
+using KatanaRightsException = FubuMVC.Katana.KatanaRightsException;
 
 namespace Fubu.Running
 {
@@ -29,9 +31,10 @@ namespace Fubu.Running
         {
             try
             {
+                FubuApplication.PhysicalRootPath = _physicalPath;
                 var application = _applicationSource.BuildApplication();
                 var runtime = application.Bootstrap();
-                _server = new EmbeddedFubuMvcServer(runtime, _physicalPath, _port);
+                _server = new EmbeddedFubuMvcServer(runtime, new KatanaHost(), _port);
 
                 EventAggregator.SendMessage(new ApplicationStarted
                 {

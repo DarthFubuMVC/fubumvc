@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using FubuCore;
 using FubuCore.Util;
@@ -8,7 +9,6 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.ScheduledJobs;
 using FubuMVC.Core.ServiceBus.ScheduledJobs.Persistence;
 using FubuMVC.Core.ServiceBus.Subscriptions;
-using FubuMVC.Katana;
 using FubuMVC.RavenDb.RavenDb;
 using FubuMVC.RavenDb.ServiceBus;
 using Raven.Client;
@@ -33,11 +33,15 @@ namespace ScheduledJobHarness
         {
             _port = PortFinder.FindPort(5500);
 
+            throw new Exception("Change this below");
+
+            /*
             AlterSettings<KatanaSettings>(_ =>
             {
                 _.AutoHostingEnabled = true;
                 _.Port = _port;
             });
+             */
 
             Services.ReplaceService<ISchedulePersistence, RavenDbSchedulePersistence>();
             Services.ReplaceService<ISubscriptionPersistence, RavenDbSubscriptionPersistence>();
@@ -62,7 +66,7 @@ namespace ScheduledJobHarness
             _store = _runtime.Factory.Get<IDocumentStore>();
         }
 
-        public System.Collections.Generic.IEnumerable<MonitoredNode> Nodes()
+        public IEnumerable<MonitoredNode> Nodes()
         {
             return _nodes;
         }

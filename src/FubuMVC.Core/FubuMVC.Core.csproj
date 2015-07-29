@@ -77,6 +77,8 @@
     <Compile Include="ApplicationSettings.cs" />
     <Compile Include="Attributes\ViewSubjectAttribute.cs" />
     <Compile Include="DiagnosticsExtensions.cs" />
+    <Compile Include="Http\Hosting\EmbeddedFubuMvcServer.cs" />
+    <Compile Include="Http\Hosting\IHost.cs" />
     <Compile Include="Registration\ActionlessViewChainSource.cs" />
     <Compile Include="Registration\SingletonAttribute.cs" />
     <Compile Include="Resources\Conneg\ViewAttachment.cs" />

@@ -16,12 +16,6 @@ namespace FubuMVC.Tests.ServiceBus.Docs.GettingStarted
                 //Routes messages in the in the getting started namespace to this channel
                 .AcceptsMessages(x => typeof(GettingStartedSettings).Namespace.Equals(x.Namespace))
                 .ReadIncoming();
-
-            AlterSettings<KatanaSettings>(x =>
-            {
-                x.Port = 5500;
-                x.AutoHostingEnabled = true;
-            });
         }
     }
     // ENDSAMPLE

@@ -115,8 +115,6 @@
     <Compile Include="Assets\Tag_building_with_required_scripts.cs" />
     <Compile Include="Async\AsyncRouteIntegrationTester.cs" />
     <Compile Include="Authorization\end_to_end_authorization_tester.cs" />
-    <Compile Include="Auto_Katana_Hosting_Integration_Tester.cs" />
-    <Compile Include="Auto_Nowin_Hosting_Integration_Tester.cs" />
     <Compile Include="can_register_and_use_OWIN_middleware_from_a_package.cs" />
     <Compile Include="CommandLine\ModeCommandTester.cs" />
     <Compile Include="CommandLine\Running\RemoteFubuMvcBootstrapperTester.cs" />
@@ -570,7 +568,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent></PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

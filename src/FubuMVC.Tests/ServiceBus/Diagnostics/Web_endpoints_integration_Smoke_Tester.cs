@@ -2,8 +2,8 @@
 using System.Net;
 using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.ServiceBus;
-using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Diagnostics.Visualization;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Katana;
@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.ServiceBus.Diagnostics
         [Test]
         public void the_message_handlers_visualization_can_be_shown()
         {
-            using (var server = EmbeddedFubuMvcServer.For<DiagnosticApplication>(appPath))
+            using (var server = EmbeddedFubuMvcServer.For<DiagnosticApplication, KatanaHost>(appPath))
             {
                 server.Endpoints.Get<MessagesFubuDiagnostics>(x => x.get_messages())
                     .StatusCode.ShouldBe(HttpStatusCode.OK);
@@ -35,7 +35,7 @@ namespace FubuMVC.Tests.ServiceBus.Diagnostics
         [Test]
         public void the_channel_graph_visualization_can_be_shown()
         {
-            using (var server = EmbeddedFubuMvcServer.For<DiagnosticApplication>(appPath))
+            using (var server = EmbeddedFubuMvcServer.For<DiagnosticApplication, KatanaHost>(appPath))
             {
                 server.Endpoints.Get<ChannelGraphFubuDiagnostics>(x => x.get_channels())
                     .StatusCode.ShouldBe(HttpStatusCode.OK);
@@ -47,7 +47,7 @@ namespace FubuMVC.Tests.ServiceBus.Diagnostics
         [Test, Explicit("Gets knocked out on CI, think because of pathing")]
         public void the_subscriptions_visualization_can_be_shown()
         {
-            using (var server = EmbeddedFubuMvcServer.For<DiagnosticApplication>(appPath))
+            using (var server = EmbeddedFubuMvcServer.For<DiagnosticApplication, KatanaHost>(appPath))
             {
                 var httpResponse = server.Endpoints.Get<SubscriptionsFubuDiagnostics>(x => x.get_subscriptions());
                 if (httpResponse.StatusCode != HttpStatusCode.OK)
@@ -62,7 +62,7 @@ namespace FubuMVC.Tests.ServiceBus.Diagnostics
         [Test]
         public void the_scheduled_job_visualization_can_be_shown()
         {
-            using (var server = EmbeddedFubuMvcServer.For<DiagnosticApplication>(appPath))
+            using (var server = EmbeddedFubuMvcServer.For<DiagnosticApplication, KatanaHost>(appPath))
             {
                 server.Endpoints.Get<ScheduledJobsFubuDiagnostics>(x => x.get_scheduled_jobs())
                     .StatusCode.ShouldBe(HttpStatusCode.OK);

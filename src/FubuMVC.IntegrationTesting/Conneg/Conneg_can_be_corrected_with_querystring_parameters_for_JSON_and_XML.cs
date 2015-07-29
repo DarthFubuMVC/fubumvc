@@ -50,7 +50,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
         public void with_Katana_and_EndpointDriver()
         {
             using (var server = EmbeddedFubuMvcServer
-                .For<SampleApplication>(port: 5700))
+                .For<SampleApplication, KatanaHost>(port: 5700))
             {
                 server.Endpoints.Get("conneg/override/Foo?format=json", "text/html")
                     .ContentTypeShouldBe(MimeType.Json)

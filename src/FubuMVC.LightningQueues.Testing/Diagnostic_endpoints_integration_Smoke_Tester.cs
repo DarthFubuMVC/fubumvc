@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using FubuMVC.Core;
+using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Katana;
 using FubuMVC.LightningQueues.Diagnostics;
@@ -16,7 +17,7 @@ namespace FubuMVC.LightningQueues.Testing
         {
             // If this test fails on you, try a quick "git clean -xfd" to get rid of the old fubu-content folders,
             // then rake compile to regenerate the bottle content
-            using (var server = EmbeddedFubuMvcServer.For<LightningQueuesDiagnosticsApplication>())
+            using (var server = EmbeddedFubuMvcServer.For<LightningQueuesDiagnosticsApplication, KatanaHost>())
             {
                 server.Endpoints.Get<LightningQueuesFubuDiagnostics>(x => x.get_queue__managers())
                     .StatusCode.ShouldBe(HttpStatusCode.OK);
