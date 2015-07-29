@@ -172,6 +172,7 @@
     <Compile Include="Http\Owin\OwnCurrentHttpRequestTester.cs" />
     <Compile Include="Http\Owin\OwnHttpWriterTester.cs" />
     <Compile Include="Http\StreamExtensions.cs" />
+    <Compile Include="Registration\ActionLessView_chain_source_specs.cs" />
     <Compile Include="TestSupport\GenericVoidMethod.cs" />
     <Compile Include="TestSupport\InteractionContext.cs" />
     <Compile Include="Json\ComplexType.cs" />
@@ -644,6 +645,7 @@
     <Compile Include="TestSupport\SelfMockingServiceLocator.cs" />
     <Compile Include="TestSupport\VoidMethod.cs" />
     <Compile Include="TestSupport\Wait.cs" />
+    <Compile Include="View\Attachment\FakeViewToken.cs" />
     <Compile Include="View\AuthorizationOnPageExtensionsTester.cs" />
     <Compile Include="View\AuthorizedLinkExpressionsTester.cs" />
     <Compile Include="View\Bootstrap\Tags\DetailTableBuilderTester.cs" />
@@ -689,12 +691,10 @@
     <Compile Include="Urls\UrlRegistryIntegrationTester.cs" />
     <Compile Include="View\Attachment\DefaultProfileTester.cs" />
     <Compile Include="View\Attachment\ProfileViewTokenTester.cs" />
-    <Compile Include="View\Attachment\ViewAttacherTester.cs" />
     <Compile Include="View\Attachment\ViewExclusionTester.cs" />
     <Compile Include="View\Attachment\ViewTokenExtensionsTester.cs" />
     <Compile Include="View\AutoImportModelNamespacesConventionTester.cs" />
     <Compile Include="View\CommonViewNamespaces_is_registered.cs" />
-    <Compile Include="View\Default_ViewAttachment_Filters_Convention_Tester.cs" />
     <Compile Include="View\FakeViews\Folder1\A.aspx.cs">
       <DependentUpon>A.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -704,12 +704,10 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="View\FakeViews\ModelsAndControllers.cs" />
-    <Compile Include="View\must_be_a_description_on_imporant_things.cs" />
     <Compile Include="View\OutputNodeExtensionsTester.cs" />
     <Compile Include="View\Registration\GenericParserTester.cs" />
     <Compile Include="View\SimplePage.cs" />
     <Compile Include="View\ViewEngineSettingsTester.cs" />
-    <Compile Include="View\ViewsForActionFiltersTester.cs" />
     <Compile Include="Security\WebAuthenticationContextTester.cs" />
   </ItemGroup>
   <ItemGroup>

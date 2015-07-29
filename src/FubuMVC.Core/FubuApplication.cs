@@ -101,6 +101,7 @@ namespace FubuMVC.Core
             SetupNamingStrategyForHttpHeaders();
 
             var diagnostics = new ActivationDiagnostics();
+
             var perfTimer = diagnostics.Timer;
             perfTimer.Start("FubuMVC Application Bootstrapping");
 
@@ -110,9 +111,33 @@ namespace FubuMVC.Core
             // TODO -- this needs to be fed at runtime
             var files = new FubuApplicationFiles(GetApplicationPath());
 
+            perfTimer.Record("Applying IFubuRegistryExtension's",
+                () => applyFubuExtensionsFromPackages(diagnostics, packageAssemblies));
+
+
             // TODO -- going to remove this
             var container = _registry.ToContainer();
-            var runtime = bootstrapRuntime(perfTimer, diagnostics, packageAssemblies, container, files);
+
+
+            var graph = perfTimer.Record("Building the BehaviorGraph",
+                () => BehaviorGraphBuilder.Build(_registry, perfTimer, packageAssemblies, diagnostics, files));
+
+            perfTimer.Record("Registering services into the IoC Container",
+                () => _registry.Config.RegisterServices(container, graph));
+
+            // factory HAS to be spun up here.
+            var factory = perfTimer.Record("Build the IServiceFactory",
+                () => new StructureMapServiceFactory(container));
+
+            var routeTask = perfTimer.RecordTask("Building Routes", () =>
+            {
+                var routes = buildRoutes(factory, graph);
+                routes.Each(r => RouteTable.Routes.Add(r));
+
+                return routes;
+            });
+
+            var runtime = new FubuRuntime(factory, container, routeTask.Result, files);
 
             var activators = runtime.Factory.GetAll<IActivator>();
             diagnostics.LogExecutionOnEachInParallel(activators, (activator, log) => activator.Activate(log, perfTimer));
@@ -156,41 +181,9 @@ namespace FubuMVC.Core
         }
 
 
-        private FubuRuntime bootstrapRuntime(IPerfTimer perfTimer, IActivationDiagnostics diagnostics, IEnumerable<Assembly> packageAssemblies, IContainer container, IFubuApplicationFiles files)
-        {
-            perfTimer.Record("Applying IFubuRegistryExtension's",
-                () => applyFubuExtensionsFromPackages(diagnostics, packageAssemblies));
-
-            var graph = perfTimer.Record("Building the BehaviorGraph",
-                () => buildBehaviorGraph(perfTimer, packageAssemblies, diagnostics, files));
-
-            perfTimer.Record("Registering services into the IoC Container",
-                () => _registry.Config.RegisterServices(container, graph));
-
-            // factory HAS to be spun up here.
-            var factory = perfTimer.Record("Build the IServiceFactory",
-                () => new StructureMapServiceFactory(container));
-
-            var routeTask = perfTimer.RecordTask("Building Routes", () =>
-            {
-                var routes = buildRoutes(factory, graph);
-                routes.Each(r => RouteTable.Routes.Add(r));
-
-                return routes;
-            });
-
-
-            return new FubuRuntime(factory, container, routeTask.Result, files);
-        }
-
         public static void SetupNamingStrategyForHttpHeaders()
         {
             BindingContext.AddNamingStrategy(HttpRequestHeaders.HeaderDictionaryNameForProperty);
-        }
-
-        private BehaviorGraph buildBehaviorGraph(IPerfTimer timer, IEnumerable<Assembly> assemblies, IActivationDiagnostics diagnostics, IFubuApplicationFiles files)
-        {
-            return BehaviorGraphBuilder.Build(_registry, timer, assemblies, diagnostics, files);
         }
 
         // Build route objects from route definitions on graph + add packaging routes

@@ -57,7 +57,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             var graph = BehaviorGraph.BuildFrom(x => x.Actions.IncludeClassesSuffixedWithController());
 
             graph.Behaviors.Count().ShouldBeGreaterThan(0);
-            graph.Behaviors.OfType<RoutedChain>().Each(x => x.Calls.First().HandlerType.Name.EndsWith("Controller"));
+            graph.Behaviors.OfType<RoutedChain>().Where(x => x.Calls.Any()).Each(x => x.Calls.First().HandlerType.Name.EndsWith("Controller"));
         }
 
         [Test]

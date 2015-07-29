@@ -51,6 +51,7 @@ namespace FubuMVC.Core.Registration
 
             _sources.Add(_actionSourceAggregator);
             _sources.Add(_handlers);
+            _sources.Add(new ActionlessViewChainSource());
         }
 
         public Assembly ApplicationAssembly

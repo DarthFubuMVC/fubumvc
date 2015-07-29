@@ -14,27 +14,10 @@ namespace FubuMVC.Core.View.Attachment
     public class ViewAttachmentPolicy
     {
         private readonly IList<Func<IViewToken, bool>> _defaultExcludes = new List<Func<IViewToken, bool>>();
-        private readonly IList<IViewsForActionFilter> _filters = new List<IViewsForActionFilter>();
         private readonly IList<IViewProfile> _profiles = new List<IViewProfile>();
 
-        private static IEnumerable<IViewsForActionFilter> defaultFilters()
-        {
-            yield return new ActionWithSameNameAndFolderAsViewReturnsViewModelType();
-            yield return new ActionInSameFolderAsViewReturnsViewModelType();
-            yield return new ActionReturnsViewModelType();
-        }
 
-        public IEnumerable<IViewsForActionFilter> Filters()
-        {
-            return _filters.Any() ? _filters : defaultFilters().ToArray();
-        }
-
-        public IEnumerable<IViewsForActionFilter> ActiveFilters
-        {
-            get { return Filters(); }
-        }
-
-        internal IEnumerable<ProfileViewBag> Profiles(ViewBag views)
+        public IEnumerable<ProfileViewBag> Profiles(ViewBag views)
         {
             if (_profiles.Any())
             {
@@ -73,87 +56,8 @@ namespace FubuMVC.Core.View.Attachment
             return profile;
         }
 
-        /// <summary>
-        /// Add a new strategy for attaching views to actions
-        /// </summary>
-        /// <param name="filter"></param>
-        public void AddFilter(IViewsForActionFilter filter)
-        {
-            _filters.Add(filter);
-        }
 
-        public class ProfileViewBag
-        {
-            public ProfileViewBag(IViewProfile profile, ViewBag views)
-            {
-                Profile = profile;
-                Views = profile.Filter(views);
-            }
 
-            public ViewBag Views { get; private set; }
-            public IViewProfile Profile { get; private set; }
-        }
-
-        /// <summary>
-        /// Explicitly define your attachment policy strategies in order
-        /// </summary>
-        /// <param name="configure"></param>
-        public void TryToAttach(Action<ViewsForActionFilterExpression> configure)
-        {
-            var expression = new ViewsForActionFilterExpression(this);
-            configure(expression);
-        }
-
-        public class ViewsForActionFilterExpression
-        {
-            private readonly ViewAttachmentPolicy _policy;
-
-            public ViewsForActionFilterExpression(ViewAttachmentPolicy policy)
-            {
-                _policy = policy;
-            }
-
-            /// <summary>
-            /// views are matched to actions based on same namespace and the Action's underlying method name
-            /// </summary>
-            public void by_ViewModel_and_Namespace_and_MethodName()
-            {
-                @by<ActionWithSameNameAndFolderAsViewReturnsViewModelType>();
-            }
-
-            /// <summary>
-            /// views are matched to Actions based on the view model (Action's output model -> view's ViewModel)
-            /// and same namespace
-            /// </summary>
-            public void by_ViewModel_and_Namespace()
-            {
-                @by<ActionInSameFolderAsViewReturnsViewModelType>();
-            }
-
-            /// <summary>
-            /// views are matched to Actions solely based on the view model (Action's output model -> view's ViewModel)
-            /// </summary>
-            public void by_ViewModel()
-            {
-                @by<ActionReturnsViewModelType>();
-            }
-
-            /// <summary>
-            /// Specify your custom strategy to find attach views to Actions.
-            /// </summary>
-            public void @by<TFilter>() where TFilter : IViewsForActionFilter, new()
-            {
-                @by(new TFilter());
-            }
-
-            /// <summary>
-            /// Specify your custom strategy to find attach views to Actions.
-            /// </summary>
-            public void @by(IViewsForActionFilter strategy)
-            {
-                _policy.AddFilter(strategy);
-            }
-        }
 
         /// <summary>
         ///   This creates a view profile for the view attachment.  Used for scenarios like
@@ -176,25 +80,17 @@ namespace FubuMVC.Core.View.Attachment
         }
     }
 
-    public class PageActivationExpression
+    public class ProfileViewBag 
     {
-        private readonly ViewEngineSettings _parent;
-        private readonly Func<IViewToken, bool> _filter;
 
-        public PageActivationExpression(ViewEngineSettings parent, Func<IViewToken, bool> filter)
+        public ProfileViewBag(IViewProfile profile, ViewBag views)
         {
-            _parent = parent;
-            _filter = filter;
+            Condition = profile.Condition;
+            Views = profile.Filter(views);
         }
 
-        /// <summary>
-        /// Sets the profile name for Html conventions
-        /// </summary>
-        /// <param name="profileName"></param>
-        public void SetTagProfileTo(string profileName)
-        {
-            var description = "Profile = " + profileName;
-            _parent.AddPolicy(new ViewTokenPolicy(_filter, token => token.ProfileName = profileName, description));
-        }
+        public ViewBag Views { get; private set; }
+        public IConditional Condition { get; private set; }
+
     }
 }

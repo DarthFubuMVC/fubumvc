@@ -9,6 +9,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Formatters;
+using FubuMVC.Core.View.Attachment;
 
 namespace FubuMVC.Core.Http
 {
@@ -23,6 +24,7 @@ namespace FubuMVC.Core.Http
             Rules.AddToEnd<StringOutput>();
             Rules.AddToEnd<HtmlTagsRule>();
             Rules.AddToEnd<CustomReadersAndWriters>();
+            Rules.AddToEnd<ViewAttachment>();
             Rules.AddToEnd<DefaultReadersAndWriters>();
         }
 
@@ -42,13 +44,20 @@ namespace FubuMVC.Core.Http
             {
                 _.AddList("Mimetype Corrections", Corrections);
             }
-
         }
 
         public void ReadConnegGraph(BehaviorGraph graph)
         {
             _graph = ConnegGraph.Build(graph);
         }
+
+        public void StoreViews(Task<IEnumerable<ProfileViewBag>> views, ViewAttachmentPolicy attachment)
+        {
+            ViewAttachmentPolicy = attachment;
+            _views = views;
+        }
+
+        public ViewAttachmentPolicy ViewAttachmentPolicy { get; private set; }
 
         public ConnegGraph Graph
         {
@@ -59,6 +68,17 @@ namespace FubuMVC.Core.Http
 
                 _graph.Wait(5.Seconds());
                 return _graph.Result;
+            }
+        }
+
+        public IEnumerable<ProfileViewBag> Views
+        {
+            get
+            {
+                if (_views == null) return Enumerable.Empty<ProfileViewBag>();
+
+                _views.Wait(5.Seconds());
+                return _views.Result;
             }
         }
 
@@ -83,10 +103,11 @@ namespace FubuMVC.Core.Http
         {
             new NewtonsoftJsonFormatter(),
             new XmlFormatter()
-        }; 
+        };
 
         public readonly IList<IMimetypeCorrection> Corrections = new List<IMimetypeCorrection>();
         private Task<ConnegGraph> _graph;
+        private Task<IEnumerable<ProfileViewBag>> _views;
 
         public void InterpretQuerystring(CurrentMimeType mimeType, IHttpRequest request)
         {
@@ -111,7 +132,5 @@ namespace FubuMVC.Core.Http
         {
             Formatters.Insert(0, formatter);
         }
-
-
     }
 }

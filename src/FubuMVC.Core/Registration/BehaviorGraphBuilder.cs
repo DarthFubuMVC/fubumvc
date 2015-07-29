@@ -1,12 +1,9 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Http;
-using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Attachment;
@@ -16,7 +13,8 @@ namespace FubuMVC.Core.Registration
     internal static class BehaviorGraphBuilder
     {
         // TOOD -- clean this up a little bit
-        public static BehaviorGraph Build(FubuRegistry registry, IPerfTimer perfTimer, IEnumerable<Assembly> packageAssemblies, IActivationDiagnostics diagnostics, IFubuApplicationFiles files)
+        public static BehaviorGraph Build(FubuRegistry registry, IPerfTimer perfTimer,
+            IEnumerable<Assembly> packageAssemblies, IActivationDiagnostics diagnostics, IFubuApplicationFiles files)
         {
             var featureLoader = new FeatureLoader();
             featureLoader.LookForFeatures();
@@ -29,14 +27,8 @@ namespace FubuMVC.Core.Registration
             };
             var config = registry.Config;
 
-            perfTimer.Record("Applying Settings", () => applySettings(config, graph));
+            perfTimer.Record("Applying Settings", () => applySettings(config, graph, perfTimer, files));
 
-            var viewDiscovery = graph.Settings.Get<ViewEngineSettings>().BuildViewBag(graph, perfTimer, files);
-            var layoutAttachmentTasks =
-                viewDiscovery.ContinueWith(
-                    t => graph.Settings.Get<ViewEngineSettings>().Facilities.Select(x => x.LayoutAttachment).ToArray());
-
-            graph.Settings.Replace(viewDiscovery);
 
             var accessorRules = AccessorRulesCompiler.Compile(graph, perfTimer);
 
@@ -45,17 +37,6 @@ namespace FubuMVC.Core.Registration
             Task.WaitAll(featureLoading.Result);
 
             perfTimer.Record("Local Application BehaviorGraph", () => config.BuildLocal(graph, perfTimer));
-
-            // TODO -- undo the R# change to something. Or other.
-            viewDiscovery.ContinueWith(t1 => perfTimer.Record("View Attachment", () => ((Action<Task<ViewBag>>) (t =>
-            {
-                var attacher = new ViewAttachmentWorker(t.Result, graph.Settings.Get<ViewAttachmentPolicy>());
-                attacher.Configure(graph);
-            }))(t1))).Wait();
-
-
-            
-
 
             perfTimer.Record("Explicit Configuration", () => config.Global.Explicits.RunActions(graph));
             perfTimer.Record("Global Policies", () => config.Global.Policies.RunActions(graph));
@@ -67,10 +48,6 @@ namespace FubuMVC.Core.Registration
 
 
             perfTimer.Record("Applying Tracing", () => applyTracing(graph));
-
-            // TODO -- just make this all async
-            layoutAttachmentTasks.Wait();
-            Task.WaitAll(layoutAttachmentTasks.Result);
 
             accessorRules.Wait();
 
@@ -90,11 +67,25 @@ namespace FubuMVC.Core.Registration
             graph.Behaviors.Each(x => x.InsertNodes(graph.Settings.Get<ConnegSettings>()));
         }
 
-        private static void applySettings(ConfigGraph config, BehaviorGraph graph)
+        private static void applySettings(ConfigGraph config, BehaviorGraph graph, IPerfTimer timer, IFubuApplicationFiles files)
         {
+            // Might come back to this.
             config.Imports.Each(x => x.InitializeSettings(graph));
             config.Settings.Each(x => x.Alter(graph.Settings));
-            graph.Settings.Alter<ConnegSettings>(x => x.ReadConnegGraph(graph));
+
+            var attachment = graph.Settings.Get<ViewAttachmentPolicy>();
+            var views = graph.Settings
+                .Get<ViewEngineSettings>().BuildViewBag(graph, timer, files)
+                .ContinueWith(t =>
+                {
+                    return attachment.Profiles(t.Result);
+                });
+
+            var conneg = graph.Settings.Get<ConnegSettings>();
+            
+
+            conneg.ReadConnegGraph(graph);
+            conneg.StoreViews(views, attachment);
         }
     }
 }

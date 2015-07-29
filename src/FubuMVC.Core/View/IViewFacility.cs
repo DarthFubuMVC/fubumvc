@@ -22,10 +22,10 @@ namespace FubuMVC.Core.View
         ViewEngineSettings Settings { get; set; }
 
         Type TemplateType { get; }
-        Task LayoutAttachment { get; }
 
         void AttachViewModels(ViewTypePool types, ITemplateLogger logger);
 
         void ReadSharedNamespaces(CommonViewNamespaces namespaces);
+        void AttachLayouts(ViewEngineSettings settings);
     }
 }

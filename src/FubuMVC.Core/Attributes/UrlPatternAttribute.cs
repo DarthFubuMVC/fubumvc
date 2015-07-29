@@ -75,7 +75,7 @@ namespace FubuMVC.Core
     /// as its ActionCall.  Supports inputs like "folder/find/{Id}"
     /// </summary>
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
-    public class UrlPatternAttribute : Attribute
+    public class UrlPatternAttribute : ViewSubjectAttribute
     {
         private readonly string _pattern;
 

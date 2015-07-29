@@ -32,7 +32,7 @@ namespace FubuMVC.Tests.View.Attachment
             var graph = BehaviorGraph.BuildFrom(registry);
             var views = graph.Settings.Get<ViewEngineSettings>().BuildViewBag(graph, new PerfTimer(), FubuApplicationFiles.ForDefault());
 
-            views.Result.Views.OrderBy(x => x.Name()).Select(x => x.Name())
+            views.Result.OrderBy(x => x.Name()).Select(x => x.Name())
                 .ShouldHaveTheSameElementsAs("B1", "B2", "B3", "B4", "B5", "B6");
         }
     }
@@ -54,6 +54,12 @@ namespace FubuMVC.Tests.View.Attachment
             yield return new FakeViewToken {ViewName = "C3"};
             yield return new FakeViewToken {ViewName = "C4"};
         }
+
+        public void AttachLayouts(ViewEngineSettings settings)
+        {
+            
+        }
+
 
         public void Fill(ViewEngineSettings settings, BehaviorGraph graph, IPerfTimer timer, IFubuApplicationFiles files)
         {
@@ -141,6 +147,11 @@ namespace FubuMVC.Tests.View.Attachment
 
         public void ReadSharedNamespaces(CommonViewNamespaces namespaces)
         {
+        }
+
+        public void AttachLayouts(ViewEngineSettings settings)
+        {
+            
         }
     }
 }

@@ -45,10 +45,6 @@ namespace FubuMVC.Core.View.Model
 
             _bottle = new ViewCollection<T>(this, files, builder, settings, match);
 
-
-            LayoutAttachment = timer.RecordTask("Attaching Layouts for " + GetType().Name,
-                () => AttachLayouts(settings));
-
             _views = _bottle.AllViews().ToList();
         }
 
@@ -57,7 +53,6 @@ namespace FubuMVC.Core.View.Model
             // do nothing
         }
 
-        public Task LayoutAttachment { get; private set; }
 
         public void AttachViewModels(ViewTypePool types, ITemplateLogger logger)
         {

@@ -80,7 +80,8 @@ namespace FubuMVC.Core.View
 
         public Task<ViewBag> BuildViewBag(BehaviorGraph graph, IPerfTimer timer, IFubuApplicationFiles files)
         {
-            return timer.RecordTask("Building the View Bag", () => {
+            return timer.RecordTask("Building the View Bag", () =>
+            {
                 var viewFinders = _facilities.Select(x =>
                 {
                     return Task.Factory.StartNew(() =>
@@ -99,6 +100,8 @@ namespace FubuMVC.Core.View
                 // Attaching the view models
 
                 _facilities.Each(x => x.AttachViewModels(types, logger));
+
+                _facilities.Each(x => x.AttachLayouts(this));
 
                 return new ViewBag(views);
             });

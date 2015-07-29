@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Http.Scenarios;
 using FubuMVC.Core.Registration;
@@ -26,6 +27,7 @@ namespace FubuMVC.IntegrationTesting.Views
         private InMemoryHost _host;
         private readonly string _applicationDirectory;
         protected Scenario Scenario;
+        private Lazy<ViewBag> _views;
 
         public ViewIntegrationContext()
         {
@@ -50,6 +52,12 @@ namespace FubuMVC.IntegrationTesting.Views
                 .Bootstrap();
 
             _host = new InMemoryHost(runtime);
+
+            _views = new Lazy<ViewBag>(() =>
+            {
+                var allViews = _host.Services.GetInstance<ConnegSettings>().Views.SelectMany(x => x.Views);
+                return new ViewBag(allViews);
+            });
         }
 
         private FubuRegistry determineRegistry()
@@ -137,7 +145,11 @@ namespace FubuMVC.IntegrationTesting.Views
 
         protected ViewBag Views
         {
-            get { return _host.Services.GetInstance<ViewBag>(); }
+            get
+            {
+                return _views.Value;
+
+            }
         }
 
         protected RazorViewFacility RazorViews

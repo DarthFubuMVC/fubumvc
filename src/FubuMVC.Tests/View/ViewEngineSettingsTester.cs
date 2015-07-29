@@ -222,6 +222,11 @@ namespace FubuMVC.Tests.View
             {
                 throw new NotImplementedException();
             }
+
+            public void AttachLayouts(ViewEngineSettings settings)
+            {
+                
+            }
         }
     }
 }

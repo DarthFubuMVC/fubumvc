@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using FubuMVC.Core;
+using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Views.Spark
 {
@@ -54,12 +55,14 @@ namespace FubuMVC.IntegrationTesting.Views.Spark
         }
     }
 
+    [ViewSubject]
     public class PartialInput
     {
         public string Name { get; set; }
         public MoreInput NestedInput { get; set; }
     }
 
+    [ViewSubject]
     public class MoreInput
     {
         public string Description { get; set; }

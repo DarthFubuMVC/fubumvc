@@ -88,6 +88,7 @@ I am in the view w/ partials
     {
     }
 
+    [ViewSubject]
     public class ActionlessView3
     {
     }

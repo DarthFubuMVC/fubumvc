@@ -24,7 +24,7 @@ namespace FubuMVC.Core.View.Attachment
 
         public ViewBag Filter(ViewBag bag)
         {
-            var views = bag.Views.Where(_filter).Select(x => new ProfileViewToken(x, _getName(x)));
+            var views = bag.Where(_filter).Select(x => new ProfileViewToken(x, _getName(x)));
             return new ViewBag(views);
         }
         

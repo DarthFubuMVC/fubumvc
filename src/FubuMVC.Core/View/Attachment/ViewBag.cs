@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI;
@@ -10,7 +11,7 @@ namespace FubuMVC.Core.View.Attachment
     /// <summary>
     /// Represent a collection of <see cref="IViewToken"/>s.
     /// </summary>
-    public class ViewBag
+    public class ViewBag : IEnumerable<IViewToken>
     {
         private readonly IEnumerable<IViewToken> _views;
 
@@ -33,11 +34,19 @@ namespace FubuMVC.Core.View.Attachment
             return _viewsByType[viewModelType];
         }
 
-        public IEnumerable<IViewToken> Views { get { return _views; } }
-
         public IEnumerable<T> Templates<T>() where T : ITemplateFile
         {
             return _views.OfType<T>();
+        }
+
+        public IEnumerator<IViewToken> GetEnumerator()
+        {
+            return _views.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

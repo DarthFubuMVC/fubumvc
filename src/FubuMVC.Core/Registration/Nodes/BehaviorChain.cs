@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -334,6 +335,7 @@ namespace FubuMVC.Core.Registration.Nodes
         {
             var chain = new BehaviorChain();
             chain._output = new Lazy<OutputNode>(() => new OutputNode(resourceType));
+            if (chain._output.Value.ResourceType != resourceType) throw new Exception("Just forcing this to evaluate");
 
             return chain;
         }
