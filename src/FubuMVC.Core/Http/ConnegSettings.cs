@@ -51,13 +51,10 @@ namespace FubuMVC.Core.Http
             _graph = ConnegGraph.Build(graph);
         }
 
-        public void StoreViews(Task<IEnumerable<ProfileViewBag>> views, ViewAttachmentPolicy attachment)
+        public void StoreViews(Task<IEnumerable<ProfileViewBag>> views)
         {
-            ViewAttachmentPolicy = attachment;
             _views = views;
         }
-
-        public ViewAttachmentPolicy ViewAttachmentPolicy { get; private set; }
 
         public ConnegGraph Graph
         {

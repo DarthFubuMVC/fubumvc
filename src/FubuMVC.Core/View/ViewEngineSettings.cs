@@ -7,6 +7,7 @@ using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Runtime.Conditionals;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View.Attachment;
 using FubuMVC.Core.View.Model;
@@ -40,7 +41,7 @@ namespace FubuMVC.Core.View
         /// List of folder names that should be treated as shared layout folders of views.
         /// Default is ["Shared"]
         /// </summary>
-        public readonly IList<string> SharedLayoutFolders = new List<string>{"Shared"};
+        public readonly IList<string> SharedLayoutFolders = new List<string> {"Shared"};
 
         /// <summary>
         /// The name of the default layout file for the application.
@@ -124,7 +125,7 @@ namespace FubuMVC.Core.View
         /// <param name="facility"></param>
         public void AddFacility(IViewFacility facility)
         {
-            Type typeOfFacility = facility.GetType();
+            var typeOfFacility = facility.GetType();
             if (_facilities.Any(f => f.GetType() == typeOfFacility)) return;
 
             facility.Settings = this;
@@ -160,12 +161,79 @@ namespace FubuMVC.Core.View
         }
 
 
-        private readonly string[] _ignoredFolders = new[] { "bin", "obj", "fubu-content", "node_modules", "debug", "release" };
+        private readonly string[] _ignoredFolders = {"bin", "obj", "fubu-content", "node_modules", "debug", "release"};
+
         public bool FolderShouldBeIgnored(string folder)
         {
             var segment = folder.Replace('\\', '/').Trim('/').Split('/').Last();
 
             return _ignoredFolders.Any(x => x.EqualsIgnoreCase(segment));
+        }
+
+
+        private readonly IList<Func<IViewToken, bool>> _defaultExcludes = new List<Func<IViewToken, bool>>();
+        private readonly IList<IViewProfile> _profiles = new List<IViewProfile>();
+
+
+        public IEnumerable<ProfileViewBag> Profiles(ViewBag views)
+        {
+            if (_profiles.Any())
+            {
+                foreach (var profile in _profiles)
+                {
+                    yield return new ProfileViewBag(profile, views);
+                }
+
+                Func<IViewToken, bool> defaultFilter = x => !_defaultExcludes.Any(test => test(x));
+                var defaultProfile = new ViewProfile(Always.Flyweight, defaultFilter, x => x.Name());
+
+                yield return new ProfileViewBag(defaultProfile, views);
+            }
+            else
+            {
+                yield return new ProfileViewBag(new DefaultProfile(), views);
+            }
+        }
+
+        /// <summary>
+        /// Create an attachment profile based on a runtime condition.  The original intent of view profiles
+        /// was to enable multiple views per action based on the detected device of the user (desktop, tablet, smartphone),
+        /// but is not limited to that functionality
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <param name="filter"></param>
+        /// <param name="nameCorrection"></param>
+        /// <returns></returns>
+        public IViewProfile Profile(IConditional condition, Func<IViewToken, bool> filter,
+            Func<IViewToken, string> nameCorrection)
+        {
+            _defaultExcludes.Add(filter);
+            var profile = new ViewProfile(condition, filter, nameCorrection);
+            _profiles.Add(profile);
+
+            return profile;
+        }
+
+
+        /// <summary>
+        ///   This creates a view profile for the view attachment.  Used for scenarios like
+        ///   attaching multiple views to the same chain for different devices.
+        /// </summary>
+        /// <typeparam name = "T"></typeparam>
+        /// <param name = "prefix"></param>
+        /// <example>
+        ///   Profile<IsMobile>("m.") -- where "m" would mean look for views that are named "m.something"
+        /// </example>
+        /// <returns></returns>
+        public void Profile<T>(string prefix) where T : IConditional, new()
+        {
+            Func<IViewToken, string> naming = view =>
+            {
+                var name = view.Name();
+                return name.Substring(prefix.Length);
+            };
+
+            Profile(new T(), x => x.Name().StartsWith(prefix), naming);
         }
     }
 
@@ -199,11 +267,10 @@ namespace FubuMVC.Core.View
             views.Where(_filter).Each(_alteration);
         }
 
+
         public override string ToString()
         {
             return string.Format("ViewTokenPolicy: {0}", _description);
         }
-
-
     }
 }

@@ -73,19 +73,20 @@ namespace FubuMVC.Core.Registration
             config.Imports.Each(x => x.InitializeSettings(graph));
             config.Settings.Each(x => x.Alter(graph.Settings));
 
-            var attachment = graph.Settings.Get<ViewAttachmentPolicy>();
-            var views = graph.Settings
-                .Get<ViewEngineSettings>().BuildViewBag(graph, timer, files)
+            var viewSettings = graph.Settings.Get<ViewEngineSettings>();
+            
+
+            var views = viewSettings.BuildViewBag(graph, timer, files)
                 .ContinueWith(t =>
                 {
-                    return attachment.Profiles(t.Result);
+                    return viewSettings.Profiles(t.Result);
                 });
 
             var conneg = graph.Settings.Get<ConnegSettings>();
             
 
             conneg.ReadConnegGraph(graph);
-            conneg.StoreViews(views, attachment);
+            conneg.StoreViews(views);
         }
     }
 }
