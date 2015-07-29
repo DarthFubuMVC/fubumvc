@@ -351,16 +351,6 @@ namespace FubuMVC.Core
             _containerSource = () => existing;
         }
 
-        public void StructureMap<T>() where T : Registry, new()
-        {
-            _containerSource = Container.For<T>;
-        }
-
-        public void StructureMap(Registry registry)
-        {
-            _containerSource = () => new Container(registry);
-        }
-
         internal IContainer ToContainer()
         {
             return _containerSource == null ? new Container() : _containerSource();

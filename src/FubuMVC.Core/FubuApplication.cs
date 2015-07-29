@@ -114,10 +114,7 @@ namespace FubuMVC.Core
             perfTimer.Record("Applying IFubuRegistryExtension's",
                 () => applyFubuExtensionsFromPackages(diagnostics, packageAssemblies));
 
-
-            // TODO -- going to remove this
             var container = _registry.ToContainer();
-
 
             var graph = perfTimer.Record("Building the BehaviorGraph",
                 () => BehaviorGraphBuilder.Build(_registry, perfTimer, packageAssemblies, diagnostics, files));
@@ -125,9 +122,7 @@ namespace FubuMVC.Core
             perfTimer.Record("Registering services into the IoC Container",
                 () => _registry.Config.RegisterServices(container, graph));
 
-            // factory HAS to be spun up here.
-            var factory = perfTimer.Record("Build the IServiceFactory",
-                () => new StructureMapServiceFactory(container));
+            var factory = new StructureMapServiceFactory(container);
 
             var routeTask = perfTimer.RecordTask("Building Routes", () =>
             {
@@ -145,6 +140,8 @@ namespace FubuMVC.Core
             diagnostics.AssertNoFailures();
 
             diagnostics.Timer.Stop();
+
+            routeTask.Wait();
 
             Restarted = DateTime.Now;
 

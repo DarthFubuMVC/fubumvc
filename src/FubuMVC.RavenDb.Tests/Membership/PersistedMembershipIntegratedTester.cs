@@ -20,7 +20,7 @@ namespace FubuMVC.RavenDb.Tests.Membership
                 .For<FubuRepoWithPersistedMembership>(_ =>
                 {
                     _.Features.Authentication.Enable(true);
-                    _.StructureMap<InMemoryPersistenceRegistry>();
+                    _.Services.IncludeRegistry<InMemoryPersistenceRegistry>();
                 })
                 .Bootstrap())
             {

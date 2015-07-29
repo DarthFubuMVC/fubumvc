@@ -6,7 +6,6 @@ using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.View;
-using FubuMVC.Core.View.Attachment;
 
 namespace FubuMVC.Core.Registration
 {
@@ -25,14 +24,19 @@ namespace FubuMVC.Core.Registration
                 PackageAssemblies = packageAssemblies,
                 Diagnostics = diagnostics
             };
+
+            var accessorRules = AccessorRulesCompiler.Compile(graph, perfTimer);
+
+
             var config = registry.Config;
 
             perfTimer.Record("Applying Settings", () => applySettings(config, graph, perfTimer, files));
 
 
-            var accessorRules = AccessorRulesCompiler.Compile(graph, perfTimer);
+            
 
             var featureLoading = featureLoader.ApplyAll(graph.Settings, registry);
+
             featureLoading.Wait();
             Task.WaitAll(featureLoading.Result);
 

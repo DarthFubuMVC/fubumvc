@@ -17,7 +17,7 @@ namespace FubuMVC.Tests.StructureMap
         public void override_services()
         {
             var registry = new FubuRegistry();
-            registry.StructureMap<ThingRegistry>();
+            registry.Services.IncludeRegistry<ThingRegistry>();
 
             using (var runtime = FubuApplication.For(registry).Bootstrap())
             {
