@@ -1,5 +1,4 @@
 using System;
-using System.Reflection;
 using FubuMVC.Core.View.Model;
 
 namespace FubuMVC.Core.View
@@ -8,7 +7,6 @@ namespace FubuMVC.Core.View
     {
         string Namespace { get; }
         Type ViewModel { get;  }
-        string ProfileName { get; set; }
 
         string Name();
         void AttachViewModels(ViewTypePool types, ITemplateLogger logger);

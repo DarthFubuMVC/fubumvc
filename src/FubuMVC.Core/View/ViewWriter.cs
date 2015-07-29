@@ -32,22 +32,10 @@ namespace FubuMVC.Core.View
 
         public void Write(string mimeType, IFubuRequestContext context, T resource)
         {
-            IRenderableView view = BuildView(context);
+            var view = BuildView(context);
             view.Page.ServiceLocator = context.Services;
             view.Page.As<IFubuPage<T>>().Model = resource;
-
-            // TODO -- clean this up.
-            if (_view.ProfileName.IsNotEmpty())
-            {
-                view.Page.Get<ActiveProfile>().Push(_view.ProfileName);
-            }
-
             view.Render(context);
-
-            if (_view.ProfileName.IsNotEmpty())
-            {
-                view.Page.Get<ActiveProfile>().Pop();
-            }
         }
 
 
