@@ -29,11 +29,10 @@ namespace FubuMVC.Tests
             var floor = DateTime.Now.AddSeconds(-5);
             var ceiling = DateTime.Now.AddSeconds(5);
 
-            FubuApplication.Restarted = null;
 
             using (var runtime = FubuApplication.For(new FubuRegistry()).Bootstrap())
             {
-                (floor < FubuApplication.Restarted && FubuApplication.Restarted < ceiling).ShouldBeTrue();
+                (floor < runtime.Restarted && runtime.Restarted < ceiling).ShouldBeTrue();
             }
         }
 

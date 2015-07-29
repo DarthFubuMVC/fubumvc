@@ -132,18 +132,12 @@ namespace FubuMVC.Core
                 return routes;
             });
 
-            var runtime = new FubuRuntime(factory, container, routeTask.Result, files);
-
-            var activators = runtime.Factory.GetAll<IActivator>();
-            diagnostics.LogExecutionOnEachInParallel(activators, (activator, log) => activator.Activate(log, perfTimer));
-
-            diagnostics.AssertNoFailures();
-
-            diagnostics.Timer.Stop();
+            var runtime = new FubuRuntime(factory, container, routeTask.Result, files, diagnostics, perfTimer);
+            runtime.Activate();
 
             routeTask.Wait();
 
-            Restarted = DateTime.Now;
+            
 
             return runtime;
         }
@@ -226,9 +220,6 @@ namespace FubuMVC.Core
 
             return null;
         }
-
-
-        public static DateTime? Restarted { get; set; }
 
         private static string determineApplicationPathFromAppDomain()
         {

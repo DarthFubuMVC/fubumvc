@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting;
 using System.Web.Routing;
 using FubuCore;
 using FubuCore.Descriptions;
@@ -26,14 +25,17 @@ namespace FubuMVC.Core
         private readonly IList<RouteBase> _routes;
         private bool _disposed;
         private readonly IFubuApplicationFiles _files;
+        private readonly ActivationDiagnostics _diagnostics;
+        private readonly PerfTimer _perfTimer;
 
-        public FubuRuntime(IServiceFactory factory, IContainer container, IList<RouteBase> routes, IFubuApplicationFiles files)
+        public FubuRuntime(IServiceFactory factory, IContainer container, IList<RouteBase> routes, IFubuApplicationFiles files, ActivationDiagnostics diagnostics, PerfTimer perfTimer)
         {
             _factory = factory;
             _container = container;
             _files = files;
+            _diagnostics = diagnostics;
+            _perfTimer = perfTimer;
 
-            // TODO -- Temporary? AND THIS HAS TO BE LAZY BUILT PER NESTED CONTAINER
             _container.Configure(_ =>
             {
                 _.Policies.OnMissingFamily<SettingPolicy>();
@@ -47,9 +49,9 @@ namespace FubuMVC.Core
             _routes = routes;
         }
 
-        internal void Activate()
+        public ActivationDiagnostics ActivationDiagnostics
         {
-            
+            get { return _diagnostics; }
         }
 
         public IFubuApplicationFiles Files
@@ -75,10 +77,7 @@ namespace FubuMVC.Core
 
         public BehaviorGraph Behaviors
         {
-            get
-            {
-                return Factory.Get<BehaviorGraph>();
-            }
+            get { return Factory.Get<BehaviorGraph>(); }
         }
 
         public void Dispose()
@@ -89,15 +88,16 @@ namespace FubuMVC.Core
 
         private void dispose()
         {
-             if (_disposed) return;
+            if (_disposed) return;
 
             _disposed = true;
 
             var logger = _factory.Get<ILogger>();
             var deactivators = _factory.GetAll<IDeactivator>().ToArray();
-            
 
-            deactivators.Each(x => {
+
+            deactivators.Each(x =>
+            {
                 var log = Behaviors.Diagnostics.LogFor(x);
 
                 try
@@ -111,7 +111,7 @@ namespace FubuMVC.Core
                 }
                 finally
                 {
-                    logger.InfoMessage(() => new DeactivatorExecuted { Deactivator = x.ToString(), Log = log});
+                    logger.InfoMessage(() => new DeactivatorExecuted {Deactivator = x.ToString(), Log = log});
                 }
             });
 
@@ -129,12 +129,27 @@ namespace FubuMVC.Core
                 Console.WriteLine("An error occurred in the finalizer {0}", ex);
             }
         }
+
+        internal void Activate()
+        {
+            var activators = Container.GetAllInstances<IActivator>();
+            _diagnostics.LogExecutionOnEachInParallel(activators, (activator, log) => activator.Activate(log, _perfTimer));
+
+            _diagnostics.AssertNoFailures();
+
+            _diagnostics.Timer.Stop();
+
+            Restarted = DateTime.Now;
+        }
+
+        public DateTime? Restarted { get; private set; }
     }
 
     public class DeactivatorExecuted : LogRecord, DescribesItself
     {
         public string Deactivator { get; set; }
         public IActivationLog Log { get; set; }
+
         public void Describe(Description description)
         {
             description.Title = "Deactivator: " + Deactivator;

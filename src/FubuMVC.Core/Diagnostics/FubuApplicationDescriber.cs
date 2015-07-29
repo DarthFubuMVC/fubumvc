@@ -103,8 +103,8 @@ namespace FubuMVC.Core.Diagnostics
             var report = new TextReport();
             report.StartColumns(2);
 
-            if (FubuApplication.Restarted.HasValue)
-                report.AddColumnData("Restarted", FubuApplication.Restarted.ToString());
+            if (runtime.Restarted.HasValue)
+                report.AddColumnData("Restarted", runtime.Restarted.ToString());
             report.AddColumnData("Application Path", runtime.Files.RootPath);
 
             report.Write(writer);
