@@ -25,7 +25,7 @@ namespace Serenity.Testing
         [Test]
         public void registers_the_IRemoveSubsystems_with_the_container()
         {
-            FubuApplication.PhysicalRootPath = ".".ToFullPath();
+            FubuApplication.RootPath = ".".ToFullPath();
 
             using (var system = new FubuMvcSystem<TargetApplication>())
             {

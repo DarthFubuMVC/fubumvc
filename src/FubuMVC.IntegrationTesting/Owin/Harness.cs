@@ -62,7 +62,7 @@ namespace FubuMVC.IntegrationTesting.Owin
 
         public static void Start()
         {
-            FubuApplication.PhysicalRootPath = GetRootDirectory();
+            FubuApplication.RootPath = GetRootDirectory();
 
             var port = PortFinder.FindPort(5501);
 

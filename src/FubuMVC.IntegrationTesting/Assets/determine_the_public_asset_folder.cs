@@ -13,7 +13,7 @@ namespace FubuMVC.IntegrationTesting.Assets
         [TestFixtureSetUp]
         public void SetUp()
         {
-            FubuApplication.PhysicalRootPath = null;
+            FubuApplication.RootPath = null;
         }
 
         [Test]

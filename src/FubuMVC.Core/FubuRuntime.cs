@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Routing;
 using FubuCore;
+using FubuCore.Binding;
 using FubuCore.Descriptions;
 using FubuCore.Logging;
 using FubuMVC.Core.Diagnostics.Packaging;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Files;
@@ -27,6 +29,11 @@ namespace FubuMVC.Core
         private readonly IFubuApplicationFiles _files;
         private readonly ActivationDiagnostics _diagnostics;
         private readonly PerfTimer _perfTimer;
+
+        static FubuRuntime()
+        {
+            BindingContext.AddNamingStrategy(HttpRequestHeaders.HeaderDictionaryNameForProperty);
+        }
 
         public FubuRuntime(IServiceFactory factory, IContainer container, IList<RouteBase> routes, IFubuApplicationFiles files, ActivationDiagnostics diagnostics, PerfTimer perfTimer)
         {

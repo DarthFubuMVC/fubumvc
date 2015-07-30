@@ -46,7 +46,7 @@ namespace FubuMVC.IntegrationTesting.Views
 
             Thread.Sleep(100); // let the file system cool off a bit first
 
-            FubuApplication.PhysicalRootPath = _applicationDirectory;
+            FubuApplication.RootPath = _applicationDirectory;
 
             var runtime = FubuApplication.For(determineRegistry())
                 .Bootstrap();

@@ -240,7 +240,7 @@ namespace FubuMVC.Tests.Assets
         [SetUp]
         public void SetUp()
         {
-            FubuApplication.PhysicalRootPath =
+            FubuApplication.RootPath =
                 AppDomain.CurrentDomain.BaseDirectory.ParentDirectory().ParentDirectory();
         }
 

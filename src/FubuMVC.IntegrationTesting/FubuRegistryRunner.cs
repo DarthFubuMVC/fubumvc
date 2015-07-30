@@ -111,7 +111,7 @@ namespace FubuMVC.IntegrationTesting
 
         public Harness(FubuRuntime runtime, int port)
         {
-            FubuApplication.PhysicalRootPath = GetApplicationDirectory();
+            FubuApplication.RootPath = GetApplicationDirectory();
 
             _port = PortFinder.FindPort(port);
             _server = new EmbeddedFubuMvcServer(runtime, new KatanaHost(), _port);
@@ -148,7 +148,7 @@ namespace FubuMVC.IntegrationTesting
         public static Harness Run(Action<FubuRegistry> configure, IContainer container)
         {
             var applicationDirectory = GetApplicationDirectory();
-            FubuApplication.PhysicalRootPath = applicationDirectory;
+            FubuApplication.RootPath = applicationDirectory;
 
 
             var simpleSource = new SimpleSource(configure, container);

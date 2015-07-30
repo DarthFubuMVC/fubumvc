@@ -25,7 +25,7 @@ namespace FubuMVC.Core.Http.Hosting
         {
             if (directory.IsNotEmpty())
             {
-                FubuApplication.PhysicalRootPath = directory;
+                FubuApplication.RootPath = directory;
             }
 
             var runtime = new T().BuildApplication().Bootstrap();
@@ -105,7 +105,7 @@ namespace FubuMVC.Core.Http.Hosting
         {
             if (directory.IsNotEmpty())
             {
-                FubuApplication.PhysicalRootPath = directory;
+                FubuApplication.RootPath = directory;
             }
 
             return new InMemoryHost(application.Bootstrap());

@@ -94,7 +94,7 @@ namespace FubuMVC.Core.Http.Hosting
 
         private void startServer(OwinSettings settings, string physicalPath, int port)
         {
-            if (physicalPath != null) FubuApplication.PhysicalRootPath = physicalPath;
+            if (physicalPath != null) FubuApplication.RootPath = physicalPath;
 
             var appfunc = FubuOwinHost.ToAppFunc(_runtime, settings);
             settings.EnvironmentData[OwinConstants.AppMode] = FubuMode.Mode().ToLower();

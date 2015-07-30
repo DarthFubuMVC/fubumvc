@@ -33,7 +33,7 @@ namespace FubuMVC.Tests
                 x.For<IHttpRequest>().Use(OwinHttpRequest.ForTesting());
             });
 
-            FubuApplication.PhysicalRootPath = AppDomain.CurrentDomain.BaseDirectory;
+            FubuApplication.RootPath = AppDomain.CurrentDomain.BaseDirectory;
             registry.StructureMap(container);
 
             routes = FubuApplication.For(registry)
@@ -50,7 +50,7 @@ namespace FubuMVC.Tests
         [TearDown]
         public void TearDown()
         {
-            FubuApplication.PhysicalRootPath = null;
+            FubuApplication.RootPath = null;
         }
 
         private FubuRegistry registry;

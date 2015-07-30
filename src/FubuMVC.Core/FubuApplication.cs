@@ -98,7 +98,6 @@ namespace FubuMVC.Core
         public FubuRuntime Bootstrap()
         {
             RouteTable.Routes.Clear();
-            SetupNamingStrategyForHttpHeaders();
 
             var diagnostics = new ActivationDiagnostics();
 
@@ -172,11 +171,6 @@ namespace FubuMVC.Core
         }
 
 
-        public static void SetupNamingStrategyForHttpHeaders()
-        {
-            BindingContext.AddNamingStrategy(HttpRequestHeaders.HeaderDictionaryNameForProperty);
-        }
-
         // Build route objects from route definitions on graph + add packaging routes
         private IList<RouteBase> buildRoutes(IServiceFactory factory, BehaviorGraph graph)
         {
@@ -199,12 +193,12 @@ namespace FubuMVC.Core
             importers.SelectMany(x => x.Result).Each(x => x.Apply(_registry));
         }
 
-        public static string PhysicalRootPath { get; set; }
+        public static string RootPath { get; set; }
 
 
         public static string GetApplicationPath()
         {
-            return PhysicalRootPath ??
+            return RootPath ??
                    HostingEnvironment.ApplicationPhysicalPath ?? determineApplicationPathFromAppDomain();
         }
 
