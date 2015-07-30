@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime.Files;
 
 namespace FubuMVC.Core.Diagnostics
@@ -24,7 +25,7 @@ namespace FubuMVC.Core.Diagnostics
                 {"reloaded", _reloaded.Timestamp.ToLocalTime().ToString()},
                 {"fubuPath", _files.RootPath},
                 {"baseDirectory", AppDomain.CurrentDomain.BaseDirectory},
-                {"binPath", FubuApplication.FindBinPath()},
+                {"binPath", FubuModuleFinder.FindBinPath()},
                 {"config", AppDomain.CurrentDomain.SetupInformation.ConfigurationFile}
             };
 

@@ -1,7 +1,21 @@
-﻿using FubuMVC.Core.Http.Hosting;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using FubuCore;
+using FubuCore.Reflection;
+using FubuMVC.Core.Diagnostics.Packaging;
+using FubuMVC.Core.Http.Hosting;
 
 namespace FubuMVC.Core
 {
+    public interface IApplication
+    {
+        
+    }
+
     public class Application<T> where T : FubuRegistry, new()
     {
          public readonly T Registry;
@@ -21,6 +35,8 @@ namespace FubuMVC.Core
         //public IHost Host;
         //public string Mode;
 
+        // Later, add this as a whilelist override
+        //public Assembly[] PackageAssemblies { get; set; }
 
     }
 
@@ -33,5 +49,7 @@ namespace FubuMVC.Core
         public BasicApplication()
         {
         }
+
+
     }
 }

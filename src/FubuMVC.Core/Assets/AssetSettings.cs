@@ -9,6 +9,7 @@ using FubuCore.Descriptions;
 using FubuCore.Util;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Security;
@@ -229,7 +230,7 @@ namespace FubuMVC.Core.Assets
 
         public FileWatcherManifest CreateFileWatcherManifest(IFubuApplicationFiles files)
         {
-            var manifest = new FileWatcherManifest(files.RootPath, FubuApplication.FindBinPath());
+            var manifest = new FileWatcherManifest(files.RootPath, FubuModuleFinder.FindBinPath());
 
             if (Mode == SearchMode.PublicFolderOnly)
             {
