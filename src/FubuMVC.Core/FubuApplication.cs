@@ -106,75 +106,16 @@ namespace FubuMVC.Core
         {
             RouteTable.Routes.Clear();
 
-            var diagnostics = new ActivationDiagnostics();
-
-            var perfTimer = diagnostics.Timer;
-            perfTimer.Start("FubuMVC Application Bootstrapping");
-
             var application = new BasicApplication(_registry)
             {
                 RootPath = RootPath
             };
 
-            var packageAssemblies = FubuModuleFinder.FindModuleAssemblies(diagnostics);
-
-            // TODO -- this needs to be fed at runtime
-            var files = new FubuApplicationFiles(application.GetApplicationPath());
-
-            perfTimer.Record("Applying IFubuRegistryExtension's",
-                () => applyFubuExtensionsFromPackages(diagnostics, packageAssemblies));
-
-            var container = _registry.ToContainer();
-
-            var graph = perfTimer.Record("Building the BehaviorGraph",
-                () => BehaviorGraphBuilder.Build(_registry, perfTimer, packageAssemblies, diagnostics, files));
-
-            perfTimer.Record("Registering services into the IoC Container",
-                () => _registry.Config.RegisterServices(container, graph));
-
-            var factory = new StructureMapServiceFactory(container);
-
-            var routeTask = perfTimer.RecordTask("Building Routes", () =>
-            {
-                var routes = buildRoutes(factory, graph);
-                routes.Each(r => RouteTable.Routes.Add(r));
-
-                return routes;
-            });
-
-            var runtime = new FubuRuntime(factory, container, routeTask.Result, files, diagnostics, perfTimer);
-            runtime.Activate();
-
-            routeTask.Wait();
-
-            
-
-            return runtime;
+            return new FubuRuntime(application);
         }
 
 
 
-        // Build route objects from route definitions on graph + add packaging routes
-        private IList<RouteBase> buildRoutes(IServiceFactory factory, BehaviorGraph graph)
-        {
-            var routes = new List<RouteBase>();
-
-            graph.RoutePolicy.BuildRoutes(graph, factory).Each(routes.Add);
-
-            return routes;
-        }
-
-        private void applyFubuExtensionsFromPackages(IActivationDiagnostics diagnostics,
-            IEnumerable<Assembly> packageAssemblies)
-        {
-            // THIS IS NEW, ONLY ASSEMBLIES MARKED AS [FubuModule] will be scanned
-            var importers = packageAssemblies.Where(a => a.HasAttribute<FubuModuleAttribute>()).Select(
-                assem => Task.Factory.StartNew(() => assem.FindAllExtensions(diagnostics))).ToArray();
-
-            Task.WaitAll(importers);
-
-            importers.SelectMany(x => x.Result).Each(x => x.Apply(_registry));
-        }
 
         /// <summary>
         ///   Finds the currently executing assembly.

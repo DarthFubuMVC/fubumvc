@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
 using System.Web.Routing;
 using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Logging;
+using FubuCore.Reflection;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
@@ -27,6 +30,7 @@ namespace FubuMVC.Core
         private bool _disposed;
         private readonly IFubuApplicationFiles _files;
         private readonly ActivationDiagnostics _diagnostics;
+        private readonly FubuRegistry _registry;
         private readonly PerfTimer _perfTimer;
 
         static FubuRuntime()
@@ -34,26 +38,84 @@ namespace FubuMVC.Core
             BindingContext.AddNamingStrategy(HttpRequestHeaders.HeaderDictionaryNameForProperty);
         }
 
-        public FubuRuntime(IServiceFactory factory, IContainer container, IList<RouteBase> routes, IFubuApplicationFiles files, ActivationDiagnostics diagnostics, PerfTimer perfTimer)
+        public FubuRuntime(IApplication application)
         {
-            _factory = factory;
-            _container = container;
-            _files = files;
-            _diagnostics = diagnostics;
-            _perfTimer = perfTimer;
+            _diagnostics = new ActivationDiagnostics();
+
+            _perfTimer = _diagnostics.Timer;
+            _perfTimer.Start("FubuRuntime Bootstrapping");
+
+            _registry = application.ToRegistry();
+
+            // TODO -- move to doing from within IApplication?
+            var packageAssemblies = FubuModuleFinder.FindModuleAssemblies(_diagnostics);
+
+            // TODO -- this needs to be fed at runtime
+            _files = new FubuApplicationFiles(application.GetApplicationPath());
+
+            _perfTimer.Record("Applying IFubuRegistryExtension's",
+                () => applyFubuExtensionsFromPackages(_diagnostics, packageAssemblies));
+
+            _container = _registry.ToContainer();
+
+            var graph = _perfTimer.Record("Building the BehaviorGraph",
+                () => BehaviorGraphBuilder.Build(_registry, _perfTimer, packageAssemblies, _diagnostics, _files));
+
+            _perfTimer.Record("Registering services into the IoC Container",
+                () => _registry.Config.RegisterServices(_container, graph));
+
+            _factory = new StructureMapServiceFactory(_container);
+
+            var routeTask = _perfTimer.RecordTask("Building Routes", () =>
+            {
+                var routes = buildRoutes(_factory, graph);
+                routes.Each(r => RouteTable.Routes.Add(r));
+
+                return routes;
+            });
 
             _container.Configure(_ =>
             {
                 _.Policies.OnMissingFamily<SettingPolicy>();
 
-                _.For<IFubuApplicationFiles>().Use(files);
+                _.For<IFubuApplicationFiles>().Use(_files);
                 _.For<IServiceLocator>().Use<StructureMapServiceLocator>();
                 _.For<FubuRuntime>().Use(this);
-                _.For<IServiceFactory>().Use(factory);
+                _.For<IServiceFactory>().Use(_factory);
             });
 
-            _routes = routes;
+            Activate();
+
+            _routes = routeTask.Result();
+
+            _perfTimer.Stop();
+            Restarted = DateTime.Now;
+
+            _diagnostics.AssertNoFailures();
         }
+
+        // Build route objects from route definitions on graph + add packaging routes
+        private IList<RouteBase> buildRoutes(IServiceFactory factory, BehaviorGraph graph)
+        {
+            var routes = new List<RouteBase>();
+
+            graph.RoutePolicy.BuildRoutes(graph, factory).Each(routes.Add);
+
+            return routes;
+        }
+
+        private void applyFubuExtensionsFromPackages(IActivationDiagnostics diagnostics,
+            IEnumerable<Assembly> packageAssemblies)
+        {
+            // THIS IS NEW, ONLY ASSEMBLIES MARKED AS [FubuModule] will be scanned
+            var importers = packageAssemblies.Where(a => a.HasAttribute<FubuModuleAttribute>()).Select(
+                assem => Task.Factory.StartNew(() => assem.FindAllExtensions(diagnostics))).ToArray();
+
+            Task.WaitAll(importers);
+
+            importers.SelectMany(x => x.Result).Each(x => x.Apply(_registry));
+        }
+
 
         public ActivationDiagnostics ActivationDiagnostics
         {
