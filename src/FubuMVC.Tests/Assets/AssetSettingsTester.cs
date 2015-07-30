@@ -17,7 +17,8 @@ namespace FubuMVC.Tests.Assets
     public class AssetSettingsTester
     {
         private IStaticFileRule theRule;
-        private static readonly string PublicFolder = FubuApplication.GetApplicationPath().AppendPath("public");
+        private static readonly string PublicFolder = AppDomain.CurrentDomain.BaseDirectory
+            .ParentDirectory().ParentDirectory().AppendPath("public");
 
         [SetUp]
         public void SetUp()
@@ -184,8 +185,11 @@ namespace FubuMVC.Tests.Assets
         {
             new FileSystem().CreateDirectory(
                 PublicFolder.ToFullPath());
+            var expectedPath = AppDomain.CurrentDomain.BaseDirectory
+                .ParentDirectory().ParentDirectory().AppendPath("public", "1.0.1").ToFullPath();
+
             new FileSystem().CreateDirectory(
-                FubuApplication.GetApplicationPath().AppendPath("public", "1.0.1").ToFullPath());
+                expectedPath);
 
             var settings = new AssetSettings
             {
@@ -193,7 +197,7 @@ namespace FubuMVC.Tests.Assets
             };
 
             settings.DeterminePublicFolder(FubuApplicationFiles.ForDefault())
-                .ShouldBe(FubuApplication.GetApplicationPath().AppendPath("public", "1.0.1").ToFullPath());
+                .ShouldBe(expectedPath);
         }
 
         [Test]
@@ -327,7 +331,7 @@ namespace FubuMVC.Tests.Assets
             var manifest = settings.CreateFileWatcherManifest(FubuApplicationFiles.ForDefault());
 
             manifest.PublicAssetFolder.ShouldBe(
-                FubuApplication.GetApplicationPath().AppendPath("public").Replace('\\', '/'));
+                AppDomain.CurrentDomain.BaseDirectory.ParentDirectory().ParentDirectory().AppendPath("public").Replace('\\', '/'));
         }
 
         [Test]

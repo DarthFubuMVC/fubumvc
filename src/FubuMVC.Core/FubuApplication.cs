@@ -12,7 +12,6 @@ using FubuCore.Binding;
 using FubuCore.Reflection;
 using FubuCore.Util;
 using FubuMVC.Core.Diagnostics.Packaging;
-using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Files;

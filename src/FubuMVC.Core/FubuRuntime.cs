@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web.Routing;
 using FubuCore;
 using FubuCore.Binding;
-using FubuCore.Descriptions;
 using FubuCore.Logging;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Http;
@@ -150,17 +149,9 @@ namespace FubuMVC.Core
         }
 
         public DateTime? Restarted { get; private set; }
-    }
 
-    public class DeactivatorExecuted : LogRecord, DescribesItself
-    {
-        public string Deactivator { get; set; }
-        public IActivationLog Log { get; set; }
 
-        public void Describe(Description description)
-        {
-            description.Title = "Deactivator: " + Deactivator;
-            description.LongDescription = Log.FullTraceText();
-        }
+
+
     }
 }
