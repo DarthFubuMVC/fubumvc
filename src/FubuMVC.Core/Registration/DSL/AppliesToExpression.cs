@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using FubuMVC.Core.Services;
 
 namespace FubuMVC.Core.Registration.DSL
 {
@@ -19,7 +20,7 @@ namespace FubuMVC.Core.Registration.DSL
         /// </summary>
         public void ToThisAssembly()
         {
-            ToAssembly(FubuApplication.FindTheCallingAssembly());
+            ToAssembly(AssemblyFinder.FindTheCallingAssembly());
         }
 
         /// <summary>

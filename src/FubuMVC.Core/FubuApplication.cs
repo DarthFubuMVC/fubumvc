@@ -1,22 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using System.Web.Hosting;
 using System.Web.Routing;
-using FubuCore;
-using FubuCore.Binding;
-using FubuCore.Reflection;
 using FubuCore.Util;
-using FubuMVC.Core.Diagnostics.Packaging;
-using FubuMVC.Core.Registration;
-using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Services;
-using FubuMVC.Core.StructureMap;
 using StructureMap;
 
 namespace FubuMVC.Core
@@ -57,7 +42,7 @@ namespace FubuMVC.Core
         /// <returns></returns>
         public static FubuApplication DefaultPolicies(IContainer container = null)
         {
-            var assembly = FindTheCallingAssembly();
+            var assembly = AssemblyFinder.FindTheCallingAssembly();
             var registry = new FubuRegistry(assembly);
             if (container != null)
             {
@@ -65,7 +50,6 @@ namespace FubuMVC.Core
             }
 
             return new FubuApplication(registry);
-
         }
 
         /// <summary>
@@ -73,7 +57,8 @@ namespace FubuMVC.Core
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static FubuApplication For<T>(Action<T> customize = null, string rootPath = null) where T : FubuRegistry, new()
+        public static FubuApplication For<T>(Action<T> customize = null, string rootPath = null)
+            where T : FubuRegistry, new()
         {
             var registry = new T();
             if (customize != null)
@@ -114,36 +99,6 @@ namespace FubuMVC.Core
             return new FubuRuntime(application);
         }
 
-
-
-
-        /// <summary>
-        ///   Finds the currently executing assembly.
-        /// </summary>
-        /// <returns></returns>
-        public static Assembly FindTheCallingAssembly()
-        {
-            var trace = new StackTrace(false);
-
-            var thisAssembly = Assembly.GetExecutingAssembly().GetName().Name;
-            var fubuCore = typeof (IObjectResolver).Assembly.GetName().Name;
-
-            Assembly callingAssembly = null;
-            for (var i = 0; i < trace.FrameCount; i++)
-            {
-                var frame = trace.GetFrame(i);
-                var assembly = frame.GetMethod().DeclaringType.Assembly;
-                var name = assembly.GetName().Name;
-
-                if (name != thisAssembly && name != fubuCore && name != "mscorlib" &&
-                    name != "FubuMVC.Katana" && name != "FubuMVC.NOWIN" && name != "Serenity" && name != "System.Core")
-                {
-                    callingAssembly = assembly;
-                    break;
-                }
-            }
-            return callingAssembly;
-        }
 
         public static readonly Cache<string, string> Properties = new Cache<string, string>(key => null);
     }

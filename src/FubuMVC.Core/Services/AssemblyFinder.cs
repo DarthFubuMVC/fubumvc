@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using FubuCore;
+using FubuCore.Binding;
 
 namespace FubuMVC.Core.Services
 {
@@ -77,6 +79,35 @@ namespace FubuMVC.Core.Services
                     yield return assembly;
                 }
             }
+        }
+
+        /// <summary>
+        ///   Finds the currently executing assembly.
+        /// </summary>
+        /// <returns></returns>
+        public static Assembly FindTheCallingAssembly()
+        {
+            var trace = new StackTrace(false);
+
+            var thisAssembly = Assembly.GetExecutingAssembly().GetName().Name;
+            var fubuCore = typeof (IObjectResolver).Assembly.GetName().Name;
+
+            Assembly callingAssembly = null;
+            for (var i = 0; i < trace.FrameCount; i++)
+            {
+                var frame = trace.GetFrame(i);
+                var assembly = frame.GetMethod().DeclaringType.Assembly;
+                var name = assembly.GetName().Name;
+
+                if (name != thisAssembly && name != fubuCore && name != "mscorlib" &&
+                    name != "FubuMVC.Katana" && name != "FubuMVC.NOWIN" && name != "Serenity" && name != "System.Core")
+                {
+                    callingAssembly = assembly;
+                    break;
+                }
+            }
+
+            return callingAssembly;
         }
     }
 }

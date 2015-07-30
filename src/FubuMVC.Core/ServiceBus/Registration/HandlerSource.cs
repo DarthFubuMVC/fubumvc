@@ -12,6 +12,7 @@ using FubuCore.Util;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
 using FubuMVC.Core.ServiceBus.Sagas;
+using FubuMVC.Core.Services;
 using StructureMap;
 
 namespace FubuMVC.Core.ServiceBus.Registration
@@ -40,7 +41,7 @@ namespace FubuMVC.Core.ServiceBus.Registration
 
         public void UseThisAssembly()
         {
-            UseAssembly(FubuApplication.FindTheCallingAssembly());
+            UseAssembly(AssemblyFinder.FindTheCallingAssembly());
         }
 
         Task<HandlerCall[]> IHandlerSource.FindCalls(Assembly applicationAssembly)

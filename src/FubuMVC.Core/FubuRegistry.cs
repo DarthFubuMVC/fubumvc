@@ -12,6 +12,7 @@ using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.ServiceBus.Registration;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 using FubuMVC.Core.ServiceBus.Sagas;
+using FubuMVC.Core.Services;
 using StructureMap;
 using StructureMap.Configuration.DSL;
 using PoliciesExpression = FubuMVC.Core.Registration.DSL.PoliciesExpression;
@@ -47,7 +48,7 @@ namespace FubuMVC.Core
             
             if (type == typeof (FubuRegistry) || type == typeof (FubuPackageRegistry))
             {
-                _applicationAssembly = FubuApplication.FindTheCallingAssembly();
+                _applicationAssembly = AssemblyFinder.FindTheCallingAssembly();
             }
             else
             {
