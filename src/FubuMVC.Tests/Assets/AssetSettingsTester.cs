@@ -241,13 +241,6 @@ namespace FubuMVC.Tests.Assets
     {
         private readonly FileSet search = new AssetSettings().CreateAssetSearch();
 
-        [SetUp]
-        public void SetUp()
-        {
-            FubuApplication.RootPath =
-                AppDomain.CurrentDomain.BaseDirectory.ParentDirectory().ParentDirectory();
-        }
-
         [Test]
         public void exclude_should_include_node_modules()
         {

@@ -5,7 +5,7 @@ namespace SerenityDemonstrator
 {
     public class DemonstratorApplication : IApplicationSource
     {
-        public FubuApplication BuildApplication()
+        public FubuApplication BuildApplication(string directory)
         {
             FubuMode.SetUpForDevelopmentMode();
             return FubuApplication.DefaultPolicies();

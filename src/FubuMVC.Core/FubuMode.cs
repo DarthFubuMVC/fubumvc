@@ -25,50 +25,6 @@ namespace FubuMVC.Core
         }
     }
 
-    public class FubuModeFileDetector : IModeDetector
-    {
-        public static readonly string File = ".fubumode";
-
-        private static string filename()
-        {
-            return FubuApplication.GetApplicationPath().AppendPath(File);
-        }
-
-        public string GetMode()
-        {
-            var system = new FileSystem();
-            var file = filename();
-            if (system.FileExists(file))
-            {
-                return (system.ReadStringFromFile(file) ?? "").Trim();
-            }
-
-            return string.Empty;
-        }
-
-        public void SetMode(string mode)
-        {
-            var fileSystem = new FileSystem();
-            var file = filename();
-            if (mode.IsEmpty())
-            {
-                fileSystem.DeleteFile(file);
-            }
-            else
-            {
-                fileSystem.WriteStringToFile(file, mode);
-            }
-        }
-
-        public static void Clear()
-        {
-            var fileSystem = new FileSystem();
-            var file = filename();
-
-            fileSystem.DeleteFile(file);
-        }
-    }
-
     /// <summary>
     /// Detects the machine or environment "mode" of a FubuMVC application.  Generally used
     /// to latch development features
@@ -91,11 +47,6 @@ namespace FubuMVC.Core
             }
         }
 
-        public static bool IsRunningOnMono()
-        {
-            return Type.GetType("Mono.Runtime") != null;
-        }
-
         static FubuMode()
         {
             Reset();
@@ -108,14 +59,8 @@ namespace FubuMVC.Core
         /// </summary>
         public static void Reset()
         {
-            if (IsRunningOnMono())
-            {
-                Detector = new FubuModeFileDetector();
-            }
-            else
-            {
+
                 Detector = new EnvironmentVariableDetector();
-            }
         }
 
         private static Lazy<string> _determineMode;

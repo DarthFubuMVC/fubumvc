@@ -66,42 +66,6 @@ namespace FubuMVC.IntegrationTesting
 
 
         [Test]
-        public void DevMode_as_is_is_true_with_file()
-        {
-            Environment.SetEnvironmentVariable("FubuMode", "", EnvironmentVariableTarget.Machine);
-
-            FubuMode.Detector = new FubuModeFileDetector();
-
-            FubuMode.Detector.SetMode("Development");
-
-            FubuMode.InDevelopment().ShouldBeTrue();
-
-            FubuMode.Mode().ShouldBe("Development");
-        }
-
-        [Test]
-        public void DevMode_is_false_with_file()
-        {
-            Environment.SetEnvironmentVariable("FubuMode", "Development", EnvironmentVariableTarget.Machine);
-
-            FubuMode.Detector = new FubuModeFileDetector();
-            FubuMode.Detector.SetMode("Production");
-
-            FubuMode.InDevelopment().ShouldBeFalse();
-
-            FubuMode.Mode().ShouldBe("Production");
-        }
-
-        [Test]
-        public void fubu_mode_should_default_to_false_if_environment_doesnt_exist_with_file()
-        {
-            FubuMode.Detector = new FubuModeFileDetector();
-            FubuModeFileDetector.Clear();
-
-            FubuMode.InDevelopment().ShouldBeFalse();
-        }
-
-        [Test]
         public void in_testing_mode_if_package_registry_is_set()
         {
             FubuApplication.Properties[FubuMode.Testing] = true.ToString();

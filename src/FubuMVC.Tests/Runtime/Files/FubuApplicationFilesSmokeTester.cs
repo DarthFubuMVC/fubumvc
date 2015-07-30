@@ -39,10 +39,5 @@ namespace FubuMVC.Tests.Runtime.Files
                 .Trim().ShouldBe("some text from a.txt");
         }
 
-        [Test]
-        public void get_application_path_delegates_to_fubumvc_package_facility()
-        {
-            theFiles.RootPath.ShouldBe(FubuApplication.GetApplicationPath());
-        }
     }
 }

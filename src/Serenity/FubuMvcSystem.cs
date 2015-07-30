@@ -248,7 +248,6 @@ namespace Serenity
         {
             return Task.Factory.StartNew(() =>
             {
-                FubuApplication.RootPath = _settings.PhysicalPath;
                 _runtime = _runtimeSource();
 
                 var browserLifecycle = WebDriverSettings.GetBrowserLifecyle(ChooseBrowserType());

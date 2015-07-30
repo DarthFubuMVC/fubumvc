@@ -122,7 +122,7 @@ namespace FubuMVC.IntegrationTesting.CommandLine.Running
 
     public class App1 : IApplicationSource
     {
-        public FubuApplication BuildApplication()
+        public FubuApplication BuildApplication(string directory)
         {
             throw new System.NotImplementedException();
         }
@@ -130,7 +130,7 @@ namespace FubuMVC.IntegrationTesting.CommandLine.Running
 
     public class App2 : IApplicationSource
     {
-        public FubuApplication BuildApplication()
+        public FubuApplication BuildApplication(string directory)
         {
             throw new System.NotImplementedException();
         }
@@ -138,7 +138,7 @@ namespace FubuMVC.IntegrationTesting.CommandLine.Running
 
     public class App3 : IApplicationSource
     {
-        public FubuApplication BuildApplication()
+        public FubuApplication BuildApplication(string directory)
         {
             throw new System.NotImplementedException();
         }

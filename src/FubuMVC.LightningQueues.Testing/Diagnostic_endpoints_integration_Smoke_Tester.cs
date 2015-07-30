@@ -27,7 +27,7 @@ namespace FubuMVC.LightningQueues.Testing
 
     public class LightningQueuesDiagnosticsApplication : IApplicationSource
     {
-        public FubuApplication BuildApplication()
+        public FubuApplication BuildApplication(string directory)
         {
             return FubuApplication.For<LightningQueuesDiagnosticsTransportRegistry>();
         }

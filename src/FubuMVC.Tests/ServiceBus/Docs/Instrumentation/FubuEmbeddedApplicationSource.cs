@@ -6,7 +6,7 @@ namespace FubuMVC.Tests.ServiceBus.Docs.Instrumentation
     // SAMPLE: FubuEmbeddedApplicationSourceSample
     public class FubuEmbeddedApplicationSource : IApplicationSource
     {
-        public FubuApplication BuildApplication()
+        public FubuApplication BuildApplication(string directory)
         {
             return FubuApplication.For<GettingStartedTransportRegistry>();
         }

@@ -141,7 +141,7 @@ namespace FubuMVC.Tests.Services
 
     public class GoodApplicationSource : IApplicationSource<Application, IDisposable>
     {
-        public Application BuildApplication()
+        public Application BuildApplication(string directory)
         {
             throw new NotImplementedException();
         }
@@ -149,7 +149,7 @@ namespace FubuMVC.Tests.Services
 
     public abstract class AbstractApplicationSource : IApplicationSource<Application, IDisposable>
     {
-        public Application BuildApplication()
+        public Application BuildApplication(string directory)
         {
             throw new NotImplementedException();
         }
@@ -161,7 +161,7 @@ namespace FubuMVC.Tests.Services
         {
         }
 
-        public Application BuildApplication()
+        public Application BuildApplication(string directory)
         {
             throw new NotImplementedException();
         }

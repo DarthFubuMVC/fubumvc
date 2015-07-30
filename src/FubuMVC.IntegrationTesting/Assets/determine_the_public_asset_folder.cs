@@ -10,11 +10,6 @@ namespace FubuMVC.IntegrationTesting.Assets
     [TestFixture]
     public class determine_the_public_asset_folder
     {
-        [TestFixtureSetUp]
-        public void SetUp()
-        {
-            FubuApplication.RootPath = null;
-        }
 
         [Test]
         public void public_folder_only()

@@ -11,7 +11,7 @@ namespace FubuMVC.IntegrationTesting.Samples
     // SAMPLE: bootstrapping-with-katana
     public class SimpleApplication : IApplicationSource
     {
-        public FubuApplication BuildApplication()
+        public FubuApplication BuildApplication(string directory)
         {
             return FubuApplication
                 .DefaultPolicies()

@@ -30,20 +30,25 @@ namespace FubuMVC.Core
     {
         private readonly FubuRegistry _registry;
 
-        private FubuApplication(FubuRegistry registry)
+        private FubuApplication(FubuRegistry registry, string rootPath = null)
         {
             _registry = registry;
+            RootPath = rootPath;
         }
 
+        public string RootPath { get; set; }
 
         /// <summary>
         /// Use the policies and conventions specified by the registry
         /// </summary>
         /// <param name="registry"></param>
         /// <returns></returns>
-        public static FubuApplication For(FubuRegistry registry)
+        public static FubuApplication For(FubuRegistry registry, string rootPath = null)
         {
-            return new FubuApplication(registry);
+            return new FubuApplication(registry)
+            {
+                RootPath = rootPath
+            };
         }
 
         /// <summary>
@@ -68,7 +73,7 @@ namespace FubuMVC.Core
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static FubuApplication For<T>(Action<T> customize = null) where T : FubuRegistry, new()
+        public static FubuApplication For<T>(Action<T> customize = null, string rootPath = null) where T : FubuRegistry, new()
         {
             var registry = new T();
             if (customize != null)
@@ -76,7 +81,10 @@ namespace FubuMVC.Core
                 customize(registry);
             }
 
-            return new FubuApplication(registry);
+            return new FubuApplication(registry)
+            {
+                RootPath = rootPath
+            };
         }
 
 
@@ -103,11 +111,15 @@ namespace FubuMVC.Core
             var perfTimer = diagnostics.Timer;
             perfTimer.Start("FubuMVC Application Bootstrapping");
 
-            var application = new BasicApplication(_registry);
+            var application = new BasicApplication(_registry)
+            {
+                RootPath = RootPath
+            };
+
             var packageAssemblies = FubuModuleFinder.FindModuleAssemblies(diagnostics);
 
             // TODO -- this needs to be fed at runtime
-            var files = new FubuApplicationFiles(GetApplicationPath());
+            var files = new FubuApplicationFiles(application.GetApplicationPath());
 
             perfTimer.Record("Applying IFubuRegistryExtension's",
                 () => applyFubuExtensionsFromPackages(diagnostics, packageAssemblies));
@@ -162,37 +174,6 @@ namespace FubuMVC.Core
             Task.WaitAll(importers);
 
             importers.SelectMany(x => x.Result).Each(x => x.Apply(_registry));
-        }
-
-        public static string RootPath { get; set; }
-
-
-        public static string GetApplicationPath()
-        {
-            return RootPath ??
-                   HostingEnvironment.ApplicationPhysicalPath ?? determineApplicationPathFromAppDomain();
-        }
-
-
-
-        private static string determineApplicationPathFromAppDomain()
-        {
-            var basePath = AppDomain.CurrentDomain.BaseDirectory.TrimEnd(Path.DirectorySeparatorChar);
-            if (basePath.EndsWith("bin"))
-            {
-                basePath = basePath.Substring(0, basePath.Length - 3).TrimEnd(Path.DirectorySeparatorChar);
-            }
-
-            var segments = basePath.Split(Path.DirectorySeparatorChar);
-            if (segments.Length > 2)
-            {
-                if (segments[segments.Length - 2].EqualsIgnoreCase("bin"))
-                {
-                    return basePath.ParentDirectory().ParentDirectory();
-                }
-            }
-
-            return basePath;
         }
 
         /// <summary>

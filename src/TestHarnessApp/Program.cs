@@ -31,9 +31,9 @@ namespace TestHarnessApp
 
     public class TestHarnessApplication : IApplicationSource
     {
-        public FubuApplication BuildApplication()
+        public FubuApplication BuildApplication(string directory = null)
         {
-            return FubuApplication.For<TestHarnessRegistry>();
+            return FubuApplication.For<TestHarnessRegistry>(rootPath:directory);
         }
     }
 

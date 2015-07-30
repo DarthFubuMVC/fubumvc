@@ -25,7 +25,7 @@ namespace Serenity.Testing
         [Test]
         public void registers_the_IRemoveSubsystems_with_the_container()
         {
-            FubuApplication.RootPath = ".".ToFullPath();
+            //FubuApplication.RootPath = ".".ToFullPath();
 
             using (var system = new FubuMvcSystem<TargetApplication>())
             {
@@ -94,7 +94,7 @@ namespace Serenity.Testing
 
     public class TargetApplication : IApplicationSource
     {
-        public FubuApplication BuildApplication()
+        public FubuApplication BuildApplication(string directory)
         {
             var container = new Container(x => { x.For<IColor>().Use<Red>(); });
 

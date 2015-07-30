@@ -91,7 +91,7 @@ namespace FubuMVC.IntegrationTesting
             _container = container;
         }
 
-        public FubuApplication BuildApplication()
+        public FubuApplication BuildApplication(string directory = null)
         {
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<GraphQuery>();
@@ -99,7 +99,7 @@ namespace FubuMVC.IntegrationTesting
 
             _configuration(registry);
 
-            return FubuApplication.For(registry);
+            return FubuApplication.For(registry, directory);
         }
     }
 
@@ -111,8 +111,6 @@ namespace FubuMVC.IntegrationTesting
 
         public Harness(FubuRuntime runtime, int port)
         {
-            FubuApplication.RootPath = GetApplicationDirectory();
-
             _port = PortFinder.FindPort(port);
             _server = new EmbeddedFubuMvcServer(runtime, new KatanaHost(), _port);
             _port = port;
@@ -148,11 +146,10 @@ namespace FubuMVC.IntegrationTesting
         public static Harness Run(Action<FubuRegistry> configure, IContainer container)
         {
             var applicationDirectory = GetApplicationDirectory();
-            FubuApplication.RootPath = applicationDirectory;
 
 
             var simpleSource = new SimpleSource(configure, container);
-            var runtime = simpleSource.BuildApplication().Bootstrap();
+            var runtime = simpleSource.BuildApplication(applicationDirectory).Bootstrap();
 
             var harness = new Harness(runtime, PortFinder.FindPort(_port++));
 

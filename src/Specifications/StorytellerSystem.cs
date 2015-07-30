@@ -8,7 +8,7 @@ namespace Specifications
 {
     public class AuthenticationStorytellerApplication : IApplicationSource
     {
-        public FubuApplication BuildApplication()
+        public FubuApplication BuildApplication(string directory)
         {
             return FubuApplication.For<StorytellerFubuRegistry>();
         }

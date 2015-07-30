@@ -86,7 +86,7 @@ namespace FubuMVC.Tests.ServiceBus.Diagnostics
             });
         }
 
-        public FubuApplication BuildApplication()
+        public FubuApplication BuildApplication(string directory)
         {
             return FubuApplication.For<DiagnosticApplication>();
         }

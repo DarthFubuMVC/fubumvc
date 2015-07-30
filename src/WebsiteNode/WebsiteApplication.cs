@@ -8,7 +8,7 @@ namespace WebsiteNode
 {
     public class WebsiteApplication : IApplicationSource
     {
-        public FubuApplication BuildApplication()
+        public FubuApplication BuildApplication(string directory)
         {
             return FubuApplication.For<FubuRegistry>(x =>
             {

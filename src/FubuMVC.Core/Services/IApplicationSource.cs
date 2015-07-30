@@ -6,6 +6,6 @@ namespace FubuMVC.Core.Services
         where TApplication : IApplication<TRuntime>
         where TRuntime : IDisposable
     {
-        TApplication BuildApplication();
+        TApplication BuildApplication(string directory = null);
     }
 }

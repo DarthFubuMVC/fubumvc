@@ -112,7 +112,7 @@ namespace Serenity.Testing.FakeSystem
 
     public class FakeSerenitySource : IApplicationSource
     {
-        public FubuApplication BuildApplication()
+        public FubuApplication BuildApplication(string directory)
         {
             return FubuApplication.For<FakeSerenityRegistry>();
         }

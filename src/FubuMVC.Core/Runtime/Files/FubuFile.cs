@@ -89,7 +89,7 @@ namespace FubuMVC.Core.Runtime.Files
 
         public static IFubuFile Load(string relativePath)
         {
-            return new FubuApplicationFiles(FubuApplication.GetApplicationPath()).Find(relativePath);
+            return new FubuApplicationFiles(new BasicApplication().GetApplicationPath()).Find(relativePath);
         }
     }
 }

@@ -31,7 +31,7 @@ namespace FubuMVC.IntegrationTesting.Owin
 
     public class HarnessApplication : IApplicationSource
     {
-        public FubuApplication BuildApplication()
+        public FubuApplication BuildApplication(string directory)
         {
             return FubuApplication.For<HarnessRegistry>();
         }
@@ -62,8 +62,6 @@ namespace FubuMVC.IntegrationTesting.Owin
 
         public static void Start()
         {
-            FubuApplication.RootPath = GetRootDirectory();
-
             var port = PortFinder.FindPort(5501);
 
             _server = EmbeddedFubuMvcServer.For<HarnessApplication, KatanaHost>(GetRootDirectory(), port);

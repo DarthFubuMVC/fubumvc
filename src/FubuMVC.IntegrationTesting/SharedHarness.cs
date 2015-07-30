@@ -19,9 +19,6 @@ namespace FubuMVC.IntegrationTesting
         private static readonly Lazy<InMemoryHost> _host =
             new Lazy<InMemoryHost>(() =>
             {
-                FubuApplication.RootPath =
-                    AppDomain.CurrentDomain.BaseDirectory.ParentDirectory().ParentDirectory();
-
                 var registry = new FubuRegistry();
                 registry.Features.Diagnostics.Enable(TraceLevel.Verbose);
 
@@ -171,15 +168,13 @@ namespace FubuMVC.IntegrationTesting
             var port = PortFinder.FindPort(5500);
             var runtime = bootstrapRuntime();
 
-            FubuApplication.RootPath = GetRootDirectory();
-
             _server = new EmbeddedFubuMvcServer(runtime, new KatanaHost(), port);
             _host = new InMemoryHost(runtime);
         }
 
         private static FubuRuntime bootstrapRuntime()
         {
-            return FubuApplication.For<HarnessRegistry>().Bootstrap();
+            return FubuApplication.For<HarnessRegistry>(rootPath:GetRootDirectory()).Bootstrap();
         }
     }
 

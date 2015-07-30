@@ -6,7 +6,7 @@ namespace ServiceNode
 {
     public class ServiceApplication : IApplicationSource
     {
-        public FubuApplication BuildApplication()
+        public FubuApplication BuildApplication(string directory)
         {
             return FubuApplication.For<ServiceRegistry>();
         }

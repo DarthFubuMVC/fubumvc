@@ -81,7 +81,7 @@ namespace FubuMVC.Core.Runtime.Files
 
         public static IFubuApplicationFiles ForDefault()
         {
-            return new FubuApplicationFiles(FubuApplication.GetApplicationPath());
+            return new FubuApplicationFiles(new BasicApplication().GetApplicationPath());
         }
     }
 }

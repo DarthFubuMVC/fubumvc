@@ -83,7 +83,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
 
     public class SampleApplication : IApplicationSource
     {
-        public FubuApplication BuildApplication()
+        public FubuApplication BuildApplication(string directory)
         {
             return FubuApplication.DefaultPolicies();
         }

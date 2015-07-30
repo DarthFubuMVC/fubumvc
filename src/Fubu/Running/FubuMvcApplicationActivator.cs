@@ -31,8 +31,7 @@ namespace Fubu.Running
         {
             try
             {
-                FubuApplication.RootPath = _physicalPath;
-                var application = _applicationSource.BuildApplication();
+                var application = _applicationSource.BuildApplication(_physicalPath);
                 var runtime = application.Bootstrap();
                 _server = new EmbeddedFubuMvcServer(runtime, new KatanaHost(), _port);
 

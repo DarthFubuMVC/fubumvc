@@ -46,9 +46,7 @@ namespace FubuMVC.IntegrationTesting.Views
 
             Thread.Sleep(100); // let the file system cool off a bit first
 
-            FubuApplication.RootPath = _applicationDirectory;
-
-            var runtime = FubuApplication.For(determineRegistry())
+            var runtime = FubuApplication.For(determineRegistry(), _applicationDirectory)
                 .Bootstrap();
 
             _host = new InMemoryHost(runtime);

@@ -177,7 +177,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 
     public class ChainInvokerApplication : IApplicationSource
     {
-        public FubuApplication BuildApplication()
+        public FubuApplication BuildApplication(string directory)
         {
             return FubuApplication.For<ChainInvokerTransportRegistry>();
         }

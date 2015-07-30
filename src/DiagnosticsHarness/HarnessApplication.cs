@@ -5,7 +5,7 @@ namespace DiagnosticsHarness
 {
     public class HarnessApplication : IApplicationSource
     {
-        public FubuApplication BuildApplication()
+        public FubuApplication BuildApplication(string directory)
         {
             var container = new Container(x => x.ForSingletonOf<INumberCache>().Use<NumberCache>());
 

@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.Docs.Examples
     // SAMPLE: bootstrapping-simplest-possible
     public class SimpleApplicationSource : IApplicationSource
     {
-        public FubuApplication BuildApplication()
+        public FubuApplication BuildApplication(string directory)
         {
             return FubuApplication
                 .DefaultPolicies()
@@ -67,7 +67,7 @@ namespace FubuMVC.Tests.Docs.Examples
     // SAMPLE: bootstrapping-custom-policies
     public class CustomApplication : IApplicationSource
     {
-        public FubuApplication BuildApplication()
+        public FubuApplication BuildApplication(string directory)
         {
             return FubuApplication
                 .For<CustomFubuRegistry>()

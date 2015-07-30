@@ -90,7 +90,7 @@ namespace FubuMVC.IntegrationTesting.Json
                 _time = time;
             }
 
-            public FubuApplication BuildApplication()
+            public FubuApplication BuildApplication(string directory = null)
             {
                 var container = new Container(x => x.For<Recorder>().Use(_recorder));
                 var registry = new IntegrationJsonBindingRegistry(_time);

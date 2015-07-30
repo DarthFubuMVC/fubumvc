@@ -38,9 +38,7 @@ namespace FubuMVC.IntegrationTesting.Assets
 
             _streams.Each(x => x.DumpContents());
 
-            FubuApplication.RootPath = _applicationDirectory;
-
-            var runtime = FubuApplication.For(determineRegistry()).Bootstrap();
+            var runtime = FubuApplication.For(determineRegistry(), _applicationDirectory).Bootstrap();
 
             _host = new InMemoryHost(runtime);
 

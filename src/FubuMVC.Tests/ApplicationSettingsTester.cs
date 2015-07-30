@@ -97,7 +97,7 @@ namespace FubuMVC.Tests
 
     public class KayakApplication : IApplicationSource
     {
-        public FubuApplication BuildApplication()
+        public FubuApplication BuildApplication(string directory)
         {
             return FubuApplication
                 .For<KayakRegistry>()

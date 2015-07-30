@@ -23,12 +23,7 @@ namespace FubuMVC.Core.Http.Hosting
 
         public static InMemoryHost For<T>(string directory = null) where T : IApplicationSource, new()
         {
-            if (directory.IsNotEmpty())
-            {
-                FubuApplication.RootPath = directory;
-            }
-
-            var runtime = new T().BuildApplication().Bootstrap();
+            var runtime = new T().BuildApplication(directory).Bootstrap();
             return new InMemoryHost(runtime);
         }
 
@@ -105,7 +100,7 @@ namespace FubuMVC.Core.Http.Hosting
         {
             if (directory.IsNotEmpty())
             {
-                FubuApplication.RootPath = directory;
+                application.RootPath = directory;
             }
 
             return new InMemoryHost(application.Bootstrap());

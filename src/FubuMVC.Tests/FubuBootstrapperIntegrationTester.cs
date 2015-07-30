@@ -33,10 +33,9 @@ namespace FubuMVC.Tests
                 x.For<IHttpRequest>().Use(OwinHttpRequest.ForTesting());
             });
 
-            FubuApplication.RootPath = AppDomain.CurrentDomain.BaseDirectory;
             registry.StructureMap(container);
 
-            routes = FubuApplication.For(registry)
+            routes = FubuApplication.For(registry, AppDomain.CurrentDomain.BaseDirectory)
                 .Bootstrap()
                 .Routes
                 .Where(r => !r.As<Route>().Url.StartsWith("_content"))
@@ -46,12 +45,6 @@ namespace FubuMVC.Tests
         }
 
         #endregion
-
-        [TearDown]
-        public void TearDown()
-        {
-            FubuApplication.RootPath = null;
-        }
 
         private FubuRegistry registry;
         private Container container;

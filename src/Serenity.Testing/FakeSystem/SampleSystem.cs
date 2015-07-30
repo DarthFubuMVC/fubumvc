@@ -10,7 +10,7 @@ namespace Serenity.Testing.FakeSystem
 
     public class MyApplication : IApplicationSource
     {
-        public FubuApplication BuildApplication()
+        public FubuApplication BuildApplication(string directory)
         {
             throw new System.NotImplementedException();
         }

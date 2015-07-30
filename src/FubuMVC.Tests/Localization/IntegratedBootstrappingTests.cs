@@ -16,7 +16,7 @@ namespace FubuMVC.Tests.Localization
 
         public class LocalizationApplication : IApplicationSource
         {
-            public FubuApplication BuildApplication()
+            public FubuApplication BuildApplication(string directory = null)
             {
                 return FubuApplication
                     .For<LocalizationRegistry>();
