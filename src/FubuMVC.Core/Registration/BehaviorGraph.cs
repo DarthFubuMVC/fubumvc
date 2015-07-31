@@ -42,7 +42,6 @@ namespace FubuMVC.Core.Registration
             _settings = new SettingsCollection(null);
             _settings.Replace(SessionStateRequirement.RequiresSessionState);
 
-            RouteIterator = new SortByRouteRankIterator(); // can override in a registry
         }
 
         public Assembly ApplicationAssembly { get; set; }
@@ -97,12 +96,6 @@ namespace FubuMVC.Core.Registration
         {
             get { return _behaviors; }
         }
-
-        /// <summary>
-        ///   RouteIterator is used to order Routes within the Routing table
-        /// </summary>
-        public IRouteIterator RouteIterator { get; set; }
-
 
         void IChainImporter.Import(IEnumerable<BehaviorChain> chains)
         {
@@ -296,21 +289,4 @@ namespace FubuMVC.Core.Registration
     }
 
 
-    public class SortByRouteRankIterator : IRouteIterator
-    {
-        #region IRouteIterator Members
-
-        public IEnumerable<RoutedChain> Over(IEnumerable<RoutedChain> behaviors)
-        {
-            return behaviors.OrderBy(b => b.Rank);
-        }
-
-        #endregion
-    }
-
-
-    public interface IRouteIterator
-    {
-        IEnumerable<RoutedChain> Over(IEnumerable<RoutedChain> behaviors);
-    }
 }
