@@ -28,8 +28,8 @@ namespace Serenity
         public ApplicationUnderTest(IApplicationSource source, ApplicationSettings settings, IBrowserLifecycle browser)
             : this(source.GetType().Name, settings.RootUrl, browser, () =>
             {
-                var app = source.BuildApplication();
-                return app.Bootstrap().Factory;
+                var app = source.BuildApplication().Bootstrap();
+                return app.Factory;
             })
         {
         }

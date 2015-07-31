@@ -19,9 +19,9 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
             MessageThatBombsHandler.Attempts = 0;
             MessageThatBombsHandler.Successful = null;
 
-            using (var runtime = FubuApplication.For<RetryNoOnDbConcurrencyRegistry>()
+            using (var runtime = FubuRuntime.For<RetryNoOnDbConcurrencyRegistry>()
                         
-                        .Bootstrap())
+                        )
             {
                 var pipeline = runtime.Factory.Get<IHandlerPipeline>();
                 pipeline.Invoke(new Envelope {Message = new MessageThatBombs(), Callback = MockRepository.GenerateMock<IMessageCallback>()});

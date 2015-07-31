@@ -11,7 +11,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
         [Test]
         public void handler_calls_are_registered_by_default()
         {
-            using (var runtime = FubuTransport.DefaultPolicies().Bootstrap())
+            using (var runtime = FubuTransport.DefaultPolicies())
             {
                 runtime.Behaviors.HandlerChainFor<TakeOwnershipRequest>().ShouldNotBeNull();
                 runtime.Behaviors.HandlerChainFor<TaskHealthRequest>().ShouldNotBeNull();

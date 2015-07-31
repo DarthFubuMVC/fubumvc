@@ -37,11 +37,11 @@ namespace FubuMVC.LightningQueues.Testing
             var lightningUri = settings.Downstream.ToLightningUri();
 
 
-            _runtime = FubuApplication.For<ErrorRegistry>(x =>
+            _runtime = FubuRuntime.For<ErrorRegistry>(x =>
             {
                 x.Services.For<BusSettings>().Use(settings);
             })
-                .Bootstrap();
+                ;
             //_runtime.Factory.Get<IPersistentQueues>().ClearAll();
 
             theServiceBus = _runtime.Factory.Get<IServiceBus>();

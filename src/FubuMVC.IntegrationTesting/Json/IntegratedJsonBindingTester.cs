@@ -97,7 +97,7 @@ namespace FubuMVC.IntegrationTesting.Json
                 registry.StructureMap(container);
 
                 throw new Exception("NWO");
-                //return FubuApplication.For(registry);
+                //return FubuRuntime.For(registry);
             }
         }
 

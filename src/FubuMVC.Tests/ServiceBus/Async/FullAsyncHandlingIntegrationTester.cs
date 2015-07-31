@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.ServiceBus.Async
         {
             AsyncWatcher.Clear();
 
-            using (var runtime = FubuApplication.For<AsyncRegistry>().Bootstrap())
+            using (var runtime = FubuRuntime.For<AsyncRegistry>())
             {
                 var invoker = runtime.Factory.Get<IChainInvoker>();
                 var message = new Foo {Name = "Buck Rogers"};

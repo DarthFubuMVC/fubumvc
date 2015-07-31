@@ -11,12 +11,12 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
         [Test]
         public void able_to_derive_the_node_name_from_fubu_transport_registry_name()
         {
-            using (var runtime = FubuApplication.For<CustomTransportRegistry>().Bootstrap())
+            using (var runtime = FubuRuntime.For<CustomTransportRegistry>())
             {
                 runtime.Factory.Get<ChannelGraph>().Name.ShouldBe("custom");
             }
 
-            using (var fubuRuntime = FubuApplication.For<OtherRegistry>().Bootstrap())
+            using (var fubuRuntime = FubuRuntime.For<OtherRegistry>())
             {
                 fubuRuntime
                     .Factory.Get<ChannelGraph>().Name.ShouldBe("other");

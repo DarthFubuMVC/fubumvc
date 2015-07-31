@@ -11,7 +11,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
         [Test]
         public void registrations()
         {
-            using (var runtime = FubuTransport.DefaultPolicies().Bootstrap())
+            using (var runtime = FubuTransport.DefaultPolicies())
             {
                 runtime.Container.ShouldHaveRegistration<ILogModifier, PersistentTaskMessageModifier>();
 

@@ -31,9 +31,9 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
             BJob.Reset();
             CJob.Reset();
 
-            theRuntime = FubuApplication.For<ScheduledJobRegistry>()
+            theRuntime = FubuRuntime.For<ScheduledJobRegistry>()
                 
-                .Bootstrap();
+                ;
         }
 
         [TestFixtureTearDown]

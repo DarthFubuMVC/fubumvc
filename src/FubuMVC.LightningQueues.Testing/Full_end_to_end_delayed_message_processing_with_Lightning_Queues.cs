@@ -40,12 +40,11 @@ namespace FubuMVC.LightningQueues.Testing
             theClock = new SettableClock();
 
 
-            _runtime = FubuApplication.For<DelayedRegistry>(_ =>
+            _runtime = FubuRuntime.For<DelayedRegistry>(_ =>
             {
                 _.Services.ReplaceService(settings);
                 _.Services.ReplaceService<ISystemTime>(theClock);
-            })
-                .Bootstrap();
+            });
 
             theServiceBus = _runtime.Factory.Get<IServiceBus>();
             //_runtime.Factory.Get<IPersistentQueues>().ClearAll();

@@ -36,8 +36,8 @@ namespace FubuMVC.Tests.ServiceBus.Events
         {
             FubuTransport.SetupForInMemoryTesting();
 
-            using (var runtime = FubuApplication.For<DelayedRegistry>()
-                .Bootstrap())
+            using (var runtime = FubuRuntime.For<DelayedRegistry>()
+                )
             {
                 runtime.Factory.Get<IPollingJobs>()
                     .Any(x => x is PollingJob<ExpiringListenerCleanup, TransportSettings>)

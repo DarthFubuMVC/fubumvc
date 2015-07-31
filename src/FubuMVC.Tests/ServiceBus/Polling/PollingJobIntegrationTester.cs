@@ -26,8 +26,8 @@ namespace FubuMVC.Tests.ServiceBus.Polling
         {
             OneJob.Executed = TwoJob.Executed = ThreeJob.Executed = 0;
 
-            theRuntime = FubuApplication.For<PollingRegistry>()
-                                      .Bootstrap();
+            theRuntime = FubuRuntime.For<PollingRegistry>()
+                                      ;
 
             container = theRuntime.Factory.Get<IContainer>();
 

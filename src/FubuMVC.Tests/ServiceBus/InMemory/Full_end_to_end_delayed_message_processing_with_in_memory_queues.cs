@@ -34,8 +34,8 @@ namespace FubuMVC.Tests.ServiceBus.InMemory
             MessageHistory.ClearAll();
             InMemoryQueueManager.ClearAll();
 
-            runtime = FubuApplication.For<DelayedRegistry>()
-                                       .Bootstrap();
+            runtime = FubuRuntime.For<DelayedRegistry>()
+                                       ;
 
             theServiceBus = runtime.Factory.Get<IServiceBus>();
 

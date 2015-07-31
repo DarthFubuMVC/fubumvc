@@ -11,7 +11,7 @@ namespace FubuMVC.Tests.ServiceBus.Polling
         [Test]
         public void service_registrations()
         {
-            using (var runtime = FubuTransport.DefaultPolicies().Bootstrap())
+            using (var runtime = FubuTransport.DefaultPolicies())
             {
                 runtime.Container.DefaultRegistrationIs<ITimer, DefaultTimer>();
                 runtime.Container.DefaultRegistrationIs<IPollingJobLogger, PollingJobLogger>();

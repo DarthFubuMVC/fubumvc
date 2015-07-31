@@ -11,7 +11,7 @@ namespace FubuMVC.Tests.Localization
         {
             new LocalizationApplication()
                 .BuildApplication()
-                .Bootstrap();
+                ;
         }
 
         public class LocalizationApplication : IApplicationSource

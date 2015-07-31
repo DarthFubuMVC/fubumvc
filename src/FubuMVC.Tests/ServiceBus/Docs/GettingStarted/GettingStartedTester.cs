@@ -11,8 +11,8 @@ namespace FubuMVC.Tests.ServiceBus.Docs.GettingStarted
         public void can_run_getting_started()
         {
             var applicationSource = new GettingStartedApplicationSource();
-            var application = applicationSource.BuildApplication();
-            var runtime = application.Bootstrap();
+            var application = applicationSource.BuildApplication().Bootstrap();
+            var runtime = application;
             var bus = runtime.Factory.Get<IServiceBus>();
             bus.Send(new StartPing());
             //Thread.Sleep(10000); //to hit breakpoints, etc. not meant to be an integration test

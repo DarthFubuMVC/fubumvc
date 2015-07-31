@@ -20,9 +20,9 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
             MessageThatThrowsHandler.Successful = null;
             CounterContinuation.Counter = 0;
 
-            using (var runtime = FubuApplication.For<CountAndRetryOnExceptionRegistry>()
+            using (var runtime = FubuRuntime.For<CountAndRetryOnExceptionRegistry>()
                         
-                        .Bootstrap())
+                        )
             {
                 var pipeline = runtime.Factory.Get<IHandlerPipeline>();
                 pipeline.Invoke(new Envelope {Message = new MessageThatThrows(), Callback = MockRepository.GenerateMock<IMessageCallback>()});

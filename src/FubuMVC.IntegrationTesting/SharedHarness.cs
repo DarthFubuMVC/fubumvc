@@ -72,7 +72,7 @@ namespace FubuMVC.IntegrationTesting
 
         public static void Scenario<T>(Action<Scenario> configuration) where T : FubuRegistry, new()
         {
-            using (var host = FubuApplication.For<T>().RunInMemory())
+            using (var host = FubuRuntime.For<T>().RunInMemory())
             {
                 host.Scenario(configuration);
             }
@@ -174,7 +174,8 @@ namespace FubuMVC.IntegrationTesting
 
         private static FubuRuntime bootstrapRuntime()
         {
-            return FubuApplication.For<HarnessRegistry>(rootPath:GetRootDirectory()).Bootstrap();
+            var registry = new HarnessRegistry {RootPath = GetRootDirectory()};
+            return registry.ToRuntime();
         }
     }
 

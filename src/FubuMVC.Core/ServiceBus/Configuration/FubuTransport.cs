@@ -20,7 +20,7 @@ namespace FubuMVC.Core.ServiceBus.Configuration
             });
         }
 
-        public static FubuApplication DefaultPolicies(IContainer container = null)
+        public static FubuRuntime DefaultPolicies(IContainer container = null)
         {
             var registry = new FubuRegistry();
             if (container != null) registry.StructureMap(container);
@@ -31,7 +31,7 @@ namespace FubuMVC.Core.ServiceBus.Configuration
                 x.EnableInMemoryTransport = true;
             });
 
-            return new FubuApplication(registry);
+            return registry.ToRuntime();
         }
 
         static FubuTransport()

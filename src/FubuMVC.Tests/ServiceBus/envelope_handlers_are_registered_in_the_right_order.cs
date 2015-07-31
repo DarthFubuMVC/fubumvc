@@ -12,7 +12,7 @@ namespace FubuMVC.Tests.ServiceBus
         [Test]
         public void the_order()
         {
-            using (var runtime = FubuApplication.For<Defaults>().Bootstrap())
+            using (var runtime = FubuRuntime.For<Defaults>())
             {
                 var handlers = runtime.Factory.Get<IHandlerPipeline>().ShouldBeOfType<HandlerPipeline>().Handlers;
 

@@ -74,13 +74,8 @@ namespace FubuMVC.Core.Services
         {
             if (type.CanBeCastTo<IApplicationLoader>()) return type;
 
-
-            var @interface = type.FindInterfaceThatCloses(typeof (IApplicationSource<,>));
-            if (@interface == null) throw new ArgumentOutOfRangeException("type must implement either IApplicationLoader, or IApplicationSource<TApplication,TRuntime> (FubuMVC's IApplicationSource)");
-
-            var genericArguments = @interface.GetGenericArguments();
-            return typeof (ApplicationLoader<,,>)
-                .MakeGenericType(type, genericArguments.First(), genericArguments.Last());
+            throw new ArgumentOutOfRangeException("type", "Only IApplicationLoader types can be used here");
+             
         }
     }
 }

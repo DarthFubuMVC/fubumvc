@@ -17,7 +17,7 @@ namespace FubuMVC.RavenDb.Tests.Membership
             var container = new Container(new InMemoryPersistenceRegistry());
             using (
                 var application =
-                    FubuApplication.For<FubuRepoWithPersistedMembership>(_ => _.StructureMap(container)).Bootstrap())
+                    FubuRuntime.For<FubuRepoWithPersistedMembership>(_ => _.StructureMap(container)))
             {
                 application.Factory.Get<ILoginAuditor>().ShouldBeOfType<PersistedLoginAuditor>();
             }

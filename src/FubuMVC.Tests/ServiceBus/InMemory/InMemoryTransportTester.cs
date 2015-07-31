@@ -24,7 +24,7 @@ namespace FubuMVC.Tests.ServiceBus.InMemory
         public void to_in_memory_with_default_settings()
         {
             FubuTransport.SetupForInMemoryTesting<DefaultSettings>();
-            using (var runtime = FubuApplication.For<DefaultRegistry>().Bootstrap())
+            using (var runtime = FubuRuntime.For<DefaultRegistry>())
             {
                 var settings = InMemoryTransport.ToInMemory<NodeSettings>();
                 settings.Inbound.ShouldBe(new Uri("memory://default/inbound"));
@@ -35,7 +35,7 @@ namespace FubuMVC.Tests.ServiceBus.InMemory
         [Test]
         public void default_reply_uri()
         {
-            using (var runtime = FubuTransport.DefaultPolicies().Bootstrap())
+            using (var runtime = FubuTransport.DefaultPolicies())
             {
                 runtime.Factory.Get<ChannelGraph>().ReplyChannelFor(InMemoryChannel.Protocol)
                     .ShouldBe("memory://localhost/fubu/replies".ToUri());

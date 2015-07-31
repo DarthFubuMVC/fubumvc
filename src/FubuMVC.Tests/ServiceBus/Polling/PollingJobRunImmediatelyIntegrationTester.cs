@@ -18,9 +18,9 @@ namespace FubuMVC.Tests.ServiceBus.Polling
         {
             ImmediateJob.Executed = DelayJob.Executed = DisabledJob.Executed = 0;
 
-            theRuntime = FubuApplication.For<PollingImmediateRegistry>()
+            theRuntime = FubuRuntime.For<PollingImmediateRegistry>()
                                       
-                                      .Bootstrap();
+                                      ;
         }
 
         [TestFixtureTearDown]

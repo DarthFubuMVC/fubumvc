@@ -38,8 +38,8 @@ namespace FubuMVC.Tests.ServiceBus.InMemory
             MessageHistory.ClearAll();
             InMemoryQueueManager.ClearAll();
 
-            theRuntime = FubuApplication.For<DelayedRegistry>()
-                                       .Bootstrap();
+            theRuntime = FubuRuntime.For<DelayedRegistry>()
+                                       ;
 
             // Disable polling!
             theRuntime.Factory.Get<IPollingJobs>().Each(x => x.Stop());

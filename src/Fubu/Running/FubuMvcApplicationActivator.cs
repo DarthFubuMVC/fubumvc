@@ -16,7 +16,7 @@ namespace Fubu.Running
         private IApplicationSource _applicationSource;
         private int _port;
         private string _physicalPath;
-        private EmbeddedFubuMvcServer _server;
+        private EmbeddedFubuMvcServer _server = null;
 
         public void Initialize(Type applicationType, int port, string physicalPath)
         {
@@ -29,10 +29,15 @@ namespace Fubu.Running
 
         public void StartUp()
         {
+            throw new Exception("NWO");
+
+            /*
+
             try
             {
+                
                 var application = _applicationSource.BuildApplication(_physicalPath);
-                var runtime = application.Bootstrap();
+                var runtime = application;
                 _server = new EmbeddedFubuMvcServer(runtime, new KatanaHost(), _port);
 
                 EventAggregator.SendMessage(new ApplicationStarted
@@ -59,6 +64,7 @@ namespace Fubu.Running
                     Message = "Bootstrapping {0} Failed!".ToFormat(_applicationSource.GetType().Name)
                 });
             }
+             * */
         }
 
         public void ShutDown()

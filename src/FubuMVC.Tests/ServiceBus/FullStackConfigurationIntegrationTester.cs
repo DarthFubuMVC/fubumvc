@@ -12,7 +12,7 @@ namespace FubuMVC.Tests.ServiceBus
         [Test]
         public void has_all_the_chains_we_expect()
         {
-            using (var runtime = FubuApplication.For<MyFirstTransport>().Bootstrap())
+            using (var runtime = FubuRuntime.For<MyFirstTransport>())
             {
 
                 var graph = runtime.Factory.Get<BehaviorGraph>();
@@ -27,7 +27,7 @@ namespace FubuMVC.Tests.ServiceBus
         [Test]
         public void has_all_the_chains_we_expect_through_FubuApplication()
         {
-            using (var runtime = FubuApplication.For<MyFirstTransport>().Bootstrap())
+            using (var runtime = FubuRuntime.For<MyFirstTransport>())
             {
 
                 var graph = runtime.Factory.Get<BehaviorGraph>();

@@ -21,8 +21,8 @@ namespace FubuMVC.RavenDb.Tests.Membership
                 {
                     _.Features.Authentication.Enable(true);
                     _.Services.IncludeRegistry<InMemoryPersistenceRegistry>();
-                })
-                .Bootstrap())
+                }).Bootstrap()
+                )
             {
                 var container = runtime.Factory.Get<IContainer>();
 

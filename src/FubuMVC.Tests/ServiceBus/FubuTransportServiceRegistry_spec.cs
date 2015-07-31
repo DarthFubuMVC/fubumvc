@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.ServiceBus
         {
             FubuTransport.Reset();
 
-            using (var runtime = FubuTransport.DefaultPolicies().Bootstrap())
+            using (var runtime = FubuTransport.DefaultPolicies())
             {
                 var c = runtime.Container;
 
@@ -64,7 +64,7 @@ namespace FubuMVC.Tests.ServiceBus
         {
             FubuTransport.UseSynchronousLogging = true;
 
-            using (var runtime = FubuTransport.DefaultPolicies().Bootstrap())
+            using (var runtime = FubuTransport.DefaultPolicies())
             {
                 var c = runtime.Container;
 
@@ -79,7 +79,7 @@ namespace FubuMVC.Tests.ServiceBus
         {
             FubuTransport.ApplyMessageHistoryWatching = true;
 
-            using (var runtime = FubuTransport.DefaultPolicies().Bootstrap())
+            using (var runtime = FubuTransport.DefaultPolicies())
             {
                 var c = runtime.Container;
 
@@ -96,7 +96,7 @@ namespace FubuMVC.Tests.ServiceBus
         {
             FubuTransport.ApplyMessageHistoryWatching = false;
 
-            using (var runtime = FubuTransport.DefaultPolicies().Bootstrap())
+            using (var runtime = FubuTransport.DefaultPolicies())
             {
                 var c = runtime.Container;
 
@@ -111,7 +111,7 @@ namespace FubuMVC.Tests.ServiceBus
         {
             FubuMode.SetupForTestingMode();
 
-            using (var runtime = FubuTransport.DefaultPolicies().Bootstrap())
+            using (var runtime = FubuTransport.DefaultPolicies())
             {
                 runtime.Container.ShouldHaveRegistration<IActivator, TransportCleanupActivator>();
             }

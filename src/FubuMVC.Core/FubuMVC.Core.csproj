@@ -873,7 +873,6 @@
     <Compile Include="Runtime\IFubuRouteHandler.cs" />
     <Compile Include="Security\Authorization\SecurityServicesRegistry.cs" />
     <Compile Include="Security\Authorization\SecuritySettings.cs" />
-    <Compile Include="Services\ApplicationLoader.cs" />
     <Compile Include="Services\ApplicationLoaderFinder.cs" />
     <Compile Include="Services\IApplication.cs" />
     <Compile Include="Services\IApplicationLoader.cs" />

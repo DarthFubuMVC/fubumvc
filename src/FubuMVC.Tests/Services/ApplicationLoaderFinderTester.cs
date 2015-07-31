@@ -58,14 +58,6 @@ namespace FubuMVC.Tests.Services
         }
 
         [Test]
-        public void building_an_application_loader_for_application_source()
-        {
-            ApplicationLoaderFinder.BuildApplicationLoader(typeof (GoodApplicationSource))
-                .ShouldBeOfType<ApplicationLoader<GoodApplicationSource, Application, IDisposable>>();
-        }
-
-
-        [Test]
         public void building_an_activation_loader_for_a_bad_type_thows()
         {
             Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(
@@ -85,13 +77,6 @@ namespace FubuMVC.Tests.Services
         {
             ApplicationLoaderFinder.FindLoader(typeof (FakeApplicationLoader).AssemblyQualifiedName)
                 .ShouldBeOfType<FakeApplicationLoader>();
-        }
-
-        [Test]
-        public void finds_bootstrapper_by_name_for_a_source()
-        {
-            ApplicationLoaderFinder.FindLoader(typeof (GoodApplicationSource).AssemblyQualifiedName)
-                .ShouldBeOfType<ApplicationLoader<GoodApplicationSource, Application, IDisposable>>();
         }
 
         [Test]
