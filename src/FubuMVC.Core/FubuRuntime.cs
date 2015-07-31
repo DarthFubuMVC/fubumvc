@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Web.Hosting;
 using System.Web.Routing;
 using FubuCore;
 using FubuCore.Binding;
@@ -30,39 +32,60 @@ namespace FubuMVC.Core
         private bool _disposed;
         private readonly IFubuApplicationFiles _files;
         private readonly ActivationDiagnostics _diagnostics;
-        private readonly FubuRegistry _registry;
         private readonly PerfTimer _perfTimer;
+
+        public static FubuRuntime Basic(Action<FubuRegistry> configure = null)
+        {
+            var registry = new FubuRegistry();
+            if (configure != null)
+            {
+                configure(registry);
+            }
+
+            return new FubuRuntime(registry);
+        }
+
+        public static FubuRuntime For<T>(Action<FubuRegistry> configure = null) where T : FubuRegistry, new()
+        {
+            var registry = new T();
+            if (configure != null)
+            {
+                configure(registry);
+            }
+
+            return new FubuRuntime(registry);
+        }
 
         static FubuRuntime()
         {
             BindingContext.AddNamingStrategy(HttpRequestHeaders.HeaderDictionaryNameForProperty);
         }
 
-        public FubuRuntime(IApplication application)
+        public FubuRuntime(FubuRegistry registry)
         {
+            RouteTable.Routes.Clear();
+
             _diagnostics = new ActivationDiagnostics();
 
             _perfTimer = _diagnostics.Timer;
             _perfTimer.Start("FubuRuntime Bootstrapping");
 
-            _registry = application.ToRegistry();
 
-            // TODO -- move to doing from within IApplication?
             var packageAssemblies = FubuModuleFinder.FindModuleAssemblies(_diagnostics);
 
-            // TODO -- this needs to be fed at runtime
-            _files = new FubuApplicationFiles(application.GetApplicationPath());
+            var applicationPath = registry.RootPath ?? DefaultApplicationPath();
+            _files = new FubuApplicationFiles(applicationPath);
 
             _perfTimer.Record("Applying IFubuRegistryExtension's",
-                () => applyFubuExtensionsFromPackages(_diagnostics, packageAssemblies));
+                () => applyFubuExtensionsFromPackages(_diagnostics, packageAssemblies, registry));
 
-            _container = _registry.ToContainer();
+            _container = registry.ToContainer();
 
             var graph = _perfTimer.Record("Building the BehaviorGraph",
-                () => BehaviorGraphBuilder.Build(_registry, _perfTimer, packageAssemblies, _diagnostics, _files));
+                () => BehaviorGraphBuilder.Build(registry, _perfTimer, packageAssemblies, _diagnostics, _files));
 
             _perfTimer.Record("Registering services into the IoC Container",
-                () => _registry.Config.RegisterServices(_container, graph));
+                () => registry.Config.RegisterServices(_container, graph));
 
             _factory = new StructureMapServiceFactory(_container);
 
@@ -104,8 +127,7 @@ namespace FubuMVC.Core
             return routes;
         }
 
-        private void applyFubuExtensionsFromPackages(IActivationDiagnostics diagnostics,
-            IEnumerable<Assembly> packageAssemblies)
+        private void applyFubuExtensionsFromPackages(IActivationDiagnostics diagnostics, IEnumerable<Assembly> packageAssemblies, FubuRegistry registry)
         {
             // THIS IS NEW, ONLY ASSEMBLIES MARKED AS [FubuModule] will be scanned
             var importers = packageAssemblies.Where(a => a.HasAttribute<FubuModuleAttribute>()).Select(
@@ -113,7 +135,7 @@ namespace FubuMVC.Core
 
             Task.WaitAll(importers);
 
-            importers.SelectMany(x => x.Result).Each(x => x.Apply(_registry));
+            importers.SelectMany(x => x.Result).Each(x => x.Apply(registry));
         }
 
 
@@ -213,7 +235,30 @@ namespace FubuMVC.Core
         public DateTime? Restarted { get; private set; }
 
 
+        public static string DefaultApplicationPath()
+        {
+            return 
+                HostingEnvironment.ApplicationPhysicalPath ?? determineApplicationPathFromAppDomain();
+        }
 
+        private static string determineApplicationPathFromAppDomain()
+        {
+            var basePath = AppDomain.CurrentDomain.BaseDirectory.TrimEnd(Path.DirectorySeparatorChar);
+            if (basePath.EndsWith("bin"))
+            {
+                basePath = basePath.Substring(0, basePath.Length - 3).TrimEnd(Path.DirectorySeparatorChar);
+            }
 
+            var segments = basePath.Split(Path.DirectorySeparatorChar);
+            if (segments.Length > 2)
+            {
+                if (segments[segments.Length - 2].EqualsIgnoreCase("bin"))
+                {
+                    return basePath.ParentDirectory().ParentDirectory();
+                }
+            }
+
+            return basePath;
+        }
     }
 }

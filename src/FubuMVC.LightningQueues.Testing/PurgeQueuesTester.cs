@@ -20,7 +20,7 @@ namespace FubuMVC.LightningQueues.Testing
         [Test]
         public void PurgeQueuesJob_is_registered()
         {
-            using (var runtime = FubuApplication.For<TestRegistry>().Bootstrap())
+            using (var runtime = FubuRuntime.For<TestRegistry>())
             {
                 runtime.Factory.Get<IPollingJobs>().Any(x => x is PollingJob<PurgeQueuesJob, LightningQueueSettings>)
                     .ShouldBeTrue();

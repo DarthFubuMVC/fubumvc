@@ -5,16 +5,11 @@ using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Registration.Routes;
-using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
-using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.ServiceBus.Registration;
-using FubuMVC.Core.ServiceBus.Runtime.Serializers;
-using FubuMVC.Core.ServiceBus.Sagas;
 using FubuMVC.Core.Services;
 using StructureMap;
-using StructureMap.Configuration.DSL;
 using PoliciesExpression = FubuMVC.Core.Registration.DSL.PoliciesExpression;
 
 namespace FubuMVC.Core
@@ -45,7 +40,7 @@ namespace FubuMVC.Core
             var type = GetType();
 
             _name = type.Name.Replace("TransportRegistry", "").Replace("Registry", "").ToLower();
-            
+
             if (type == typeof (FubuRegistry) || type == typeof (FubuPackageRegistry))
             {
                 _applicationAssembly = AssemblyFinder.FindTheCallingAssembly();
@@ -68,7 +63,6 @@ namespace FubuMVC.Core
                     }
                 });
             }
-
         }
 
         public FubuRegistry(Action<FubuRegistry> configure) : this()
@@ -76,15 +70,26 @@ namespace FubuMVC.Core
             configure(this);
         }
 
+        public FubuRuntime ToRuntime()
+        {
+            return new FubuRuntime(this);
+        }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="assembly">The primary assembly for this application used in type scanning conventions and policies</param>
-        public FubuRegistry(Assembly assembly) 
+        public FubuRegistry(Assembly assembly)
         {
             _applicationAssembly = assembly;
             _config = new ConfigGraph(_applicationAssembly);
         }
+
+        /// <summary>
+        /// If set, overrides the automatic determination of where FubuMVC loads
+        /// content files like views, scripts, and stylesheets
+        /// </summary>
+        public string RootPath;
 
 
         public string NodeName
@@ -94,10 +99,7 @@ namespace FubuMVC.Core
                 _name = value;
                 AlterSettings<ChannelGraph>(x => x.Name = value);
             }
-            get
-            {
-                return _name;
-            }
+            get { return _name; }
         }
 
         /// <summary>
@@ -107,10 +109,7 @@ namespace FubuMVC.Core
         /// </summary>
         public string NodeId
         {
-            set
-            {
-                AlterSettings<ChannelGraph>(x => x.NodeId = value);
-            }
+            set { AlterSettings<ChannelGraph>(x => x.NodeId = value); }
         }
 
         internal ConfigGraph Config
@@ -156,7 +155,6 @@ namespace FubuMVC.Core
         {
             get { return _config.ApplicationServices; }
         }
-
 
 
         /// <summary>
@@ -214,7 +212,6 @@ namespace FubuMVC.Core
         }
 
 
-
         /// <summary>
         ///   Imports an IFubuRegistryExtension. The most
         ///   prominent Extensions you will care to add are those that set up
@@ -224,7 +221,6 @@ namespace FubuMVC.Core
         public void Import<T>() where T : IFubuRegistryExtension, new()
         {
             if (_importedTypes.Contains(typeof (T))) return;
-
 
 
             var extension = new T();
@@ -258,10 +254,7 @@ namespace FubuMVC.Core
         /// </summary>
         public FeatureExpression Features
         {
-            get
-            {
-                return new FeatureExpression(this);
-            }
+            get { return new FeatureExpression(this); }
         }
 
 
@@ -280,9 +273,6 @@ namespace FubuMVC.Core
         {
             Configure(x => x.RoutePolicy = new T());
         }
-
-
-
 
 
         public HandlersExpression Handlers
@@ -306,7 +296,7 @@ namespace FubuMVC.Core
 
             public void Include<T>()
             {
-                Include(typeof(T));
+                Include(typeof (T));
             }
 
             public void FindBy(Action<HandlerSource> configuration)
@@ -341,8 +331,6 @@ namespace FubuMVC.Core
         }
 
 
-
-
         private Func<IContainer> _containerSource = () => new Container();
 
         public void StructureMap(IContainer existing)
@@ -358,13 +346,9 @@ namespace FubuMVC.Core
         }
 
 
-
         public ServiceBusFeature ServiceBus
         {
-            get
-            {
-                return new ServiceBusFeature(this);
-            }
+            get { return new ServiceBusFeature(this); }
         }
 
 
@@ -372,10 +356,5 @@ namespace FubuMVC.Core
         {
             get { return new PollingJobExpression(this); }
         }
-
-
-
-
-
     }
 }

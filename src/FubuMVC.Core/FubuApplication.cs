@@ -91,12 +91,9 @@ namespace FubuMVC.Core
         {
             RouteTable.Routes.Clear();
 
-            var application = new BasicApplication(_registry)
-            {
-                RootPath = RootPath
-            };
+            _registry.RootPath = RootPath;
 
-            return new FubuRuntime(application);
+            return new FubuRuntime(_registry);
         }
 
 
