@@ -79,7 +79,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HarnessApplication.cs" />
     <Compile Include="HarnessRegistry.cs" />
     <Compile Include="HarnessSettings.cs" />
     <Compile Include="HomeEndpoint.cs" />

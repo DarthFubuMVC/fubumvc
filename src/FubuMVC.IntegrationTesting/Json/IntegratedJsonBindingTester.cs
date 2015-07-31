@@ -32,7 +32,7 @@ namespace FubuMVC.IntegrationTesting.Json
             var time = MockRepository.GenerateStub<ISystemTime>();
             time.Stub(x => x.UtcNow()).Return(now);
 
-            using (var server = new IntegratedJsonBindingApplication(recorder, time).BuildApplication().RunEmbedded(port:PortFinder.FindPort(5502)))
+            using (var server = new IntegrationJsonBindingRegistry(recorder, time).RunEmbedded())
             {
                 var url = server.Urls.UrlFor(typeof (IntegratedJsonBindingTarget));
                 var response = post(url.ToAbsoluteUrl(server.BaseAddress),
@@ -79,32 +79,13 @@ namespace FubuMVC.IntegrationTesting.Json
             }
         }
 
-        public class IntegratedJsonBindingApplication : IApplicationSource
-        {
-            private readonly Recorder _recorder;
-            private readonly ISystemTime _time;
-
-            public IntegratedJsonBindingApplication(Recorder recorder, ISystemTime time)
-            {
-                _recorder = recorder;
-                _time = time;
-            }
-
-            public FubuApplication BuildApplication(string directory = null)
-            {
-                var container = new Container(x => x.For<Recorder>().Use(_recorder));
-                var registry = new IntegrationJsonBindingRegistry(_time);
-                registry.StructureMap(container);
-
-                throw new Exception("NWO");
-                //return FubuRuntime.For(registry);
-            }
-        }
 
         public class IntegrationJsonBindingRegistry : FubuRegistry
         {
-            public IntegrationJsonBindingRegistry(ISystemTime time)
+            public IntegrationJsonBindingRegistry(Recorder recorder, ISystemTime time)
             {
+                Services.For<Recorder>().Use(recorder);
+
                 Actions.IncludeType<IntegratedJsonBindingEndpoint>();
                 Models.BindPropertiesWith<CurrentTimePropertyBinder>();
 

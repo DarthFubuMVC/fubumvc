@@ -50,8 +50,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
         [Test]
         public void with_Katana_and_EndpointDriver()
         {
-            using (var server = EmbeddedFubuMvcServer
-                .For<SampleApplication, KatanaHost>(port: 5700))
+            using (var server = FubuRuntime.Basic().RunEmbedded())
             {
                 server.Endpoints.Get("conneg/override/Foo?format=json", "text/html")
                     .ContentTypeShouldBe(MimeType.Json)
@@ -67,7 +66,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
             // so I never got around to creating more convenience
             // methods for common things like deserializing JSON
             // into .Net objects from the response body
-            using (var host = InMemoryHost.For<SampleApplication>())
+            using (var host = FubuRuntime.Basic().RunInMemory())
             {
                 host.Scenario(_ =>
                 {
@@ -79,14 +78,6 @@ namespace FubuMVC.IntegrationTesting.Conneg
                         .ShouldBe("{\"Name\":\"Foo\"}");
                 });
             }
-        }
-    }
-
-    public class SampleApplication : IApplicationSource
-    {
-        public FubuApplication BuildApplication(string directory)
-        {
-            throw new Exception("NWO");
         }
     }
 

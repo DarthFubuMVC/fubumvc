@@ -14,6 +14,8 @@ namespace DiagnosticsHarness
             //Comment out in order to test with LightningQueues
             //EnableInMemoryTransport();
 
+            Services.ForSingletonOf<INumberCache>().Use<NumberCache>();
+
             // TODO -- publish everything option in the FI?
             Channel(x => x.Channel).ReadIncoming().AcceptsMessages(x => true).DefaultSerializer<XmlMessageSerializer>();
 

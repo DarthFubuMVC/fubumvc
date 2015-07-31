@@ -29,16 +29,12 @@ namespace FubuMVC.IntegrationTesting.Owin
         }
     }
 
-    public class HarnessApplication : IApplicationSource
+    public class HarnessApplication
     {
-        public FubuApplication BuildApplication(string directory)
-        {
-            return FubuApplication.For<HarnessRegistry>();
-        }
 
         public static void Run(Action<EndpointDriver> action)
         {
-            using (var server = EmbeddedFubuMvcServer.For<HarnessApplication, KatanaHost>(port: PortFinder.FindPort(5502)))
+            using (var server = new HarnessRegistry().RunEmbedded())
             {
                 action(server.Endpoints);
             }
@@ -62,9 +58,7 @@ namespace FubuMVC.IntegrationTesting.Owin
 
         public static void Start()
         {
-            var port = PortFinder.FindPort(5501);
-
-            _server = EmbeddedFubuMvcServer.For<HarnessApplication, KatanaHost>(GetRootDirectory(), port);
+            _server = FubuRuntime.Basic(_ => _.RootPath = GetRootDirectory()).RunEmbedded();
         }
 
         public static string GetRootDirectory()

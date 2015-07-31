@@ -7,6 +7,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Runtime;
+using FubuMVC.IntegrationTesting;
 using FubuMVC.IntegrationTesting.Querying;
 using FubuMVC.Katana;
 using Shouldly;
@@ -80,29 +81,11 @@ namespace FubuMVC.IntegrationTesting
     }
 
 
-    public class SimpleSource : IApplicationSource
+    public class SimpleRegistry : FubuRegistry
     {
-        private readonly Action<FubuRegistry> _configuration;
-        private readonly IContainer _container;
-
-        public SimpleSource(Action<FubuRegistry> configuration, IContainer container)
+        public SimpleRegistry()
         {
-            _configuration = configuration;
-            _container = container;
-        }
-
-        public FubuApplication BuildApplication(string directory = null)
-        {
-            var registry = new FubuRegistry();
-            registry.Actions.IncludeType<GraphQuery>();
-            registry.StructureMap(_container);
-            registry.RootPath = directory;
-
-            _configuration(registry);
-
-            
-
-            throw new Exception("NWO");
+            Actions.IncludeType<GraphQuery>();
         }
     }
 
@@ -151,8 +134,12 @@ namespace FubuMVC.IntegrationTesting
             var applicationDirectory = GetApplicationDirectory();
 
 
-            var simpleSource = new SimpleSource(configure, container);
-            var runtime = simpleSource.BuildApplication(applicationDirectory).Bootstrap();
+            var registry = new SimpleRegistry();
+            configure(registry);
+            registry.StructureMap(container);
+            registry.RootPath = applicationDirectory;
+
+            var runtime = registry.ToRuntime();
 
             var harness = new Harness(runtime, PortFinder.FindPort(_port++));
 

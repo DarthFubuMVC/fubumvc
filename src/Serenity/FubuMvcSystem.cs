@@ -28,7 +28,6 @@ namespace Serenity
 
     public class FubuMvcSystem : ISystem, ISubSystem, IRemoteSubsystems
     {
-        private readonly ApplicationSettings _settings;
         private readonly Func<FubuRuntime> _runtimeSource;
         private bool? _externalHosting;
 
@@ -39,9 +38,8 @@ namespace Serenity
 
         public readonly CellHandling CellHandling = new CellHandling(new EquivalenceChecker(), new Conversions());
 
-        public FubuMvcSystem(ApplicationSettings settings, Func<FubuRuntime> runtimeSource)
+        public FubuMvcSystem(Func<FubuRuntime> runtimeSource)
         {
-            _settings = settings;
             _runtimeSource = runtimeSource;
 
             _subSystems.Add(this);
@@ -253,7 +251,7 @@ namespace Serenity
                 var browserLifecycle = WebDriverSettings.GetBrowserLifecyle(ChooseBrowserType());
                 SetupApplicationHost();
 
-                _application = _hosting.Start(_settings, _runtime, browserLifecycle);
+                _application = _hosting.Start(_runtime, browserLifecycle);
                 _applicationAlterations.ToArray().Each(x => x(_application));
 
                 _runtime.Container.Configure(_ =>
@@ -267,12 +265,15 @@ namespace Serenity
 
         private void SetupApplicationHost()
         {
+            throw new NotImplementedException("NWO");
+            /*
             if (_externalHosting == null)
             {
                 _externalHosting = !_settings.RootUrl.IsEmpty();
             }
 
             _hosting = _externalHosting.Value ? (ISerenityHosting) new ExternalHosting() : new KatanaHosting();
+             * */
         }
 
         Task ISubSystem.Stop()
@@ -323,11 +324,6 @@ namespace Serenity
             _contextCreationActions.Add(() => action(Application.Services.GetInstance<T>()));
         }
 
-        public ApplicationSettings Settings
-        {
-            get { return _settings; }
-        }
-
         // TODO -- remove this when both FT and FubuMVC are merged together
         public virtual void ApplyLogging(ISpecContext context)
         {
@@ -335,54 +331,5 @@ namespace Serenity
         }
     }
 
-    public class FubuMvcSystem<T> : FubuMvcSystem where T : IApplicationSource, new()
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="parallelDirectory">Use to override the physical root path of the web application to a directory parallel to the testing project if it cannot be derived from the assembly name of the application source type.</param>
-        /// <param name="physicalPath">Use to override the physical root path of the web application if it cannot be derived from the assembly name of the application source type.</param>
-        public FubuMvcSystem(string parallelDirectory = null, string physicalPath = null)
-            : base(DetermineSettings(parallelDirectory, physicalPath), () => new T().BuildApplication().Bootstrap())
-        {
-        }
 
-        public FubuMvcSystem(ApplicationSettings settings)
-            : base(settings, () => new T().BuildApplication().Bootstrap())
-        {
-        }
-
-        public static ApplicationSettings DetermineSettings(string parallelDirectory = null, string physicalPath = null)
-        {
-            try
-            {
-                return ApplicationSettings.ReadFor<T>() ?? DefaultSettings(parallelDirectory, physicalPath);
-            }
-                // So wrong...
-            catch (ArgumentOutOfRangeException)
-            {
-                return DefaultSettings();
-            }
-        }
-
-        private static ApplicationSettings DefaultSettings(string parallelDirectory = null, string physicalPath = null)
-        {
-            if (physicalPath.IsEmpty())
-            {
-                // Storyteller now puts the AppDomain at the project root just like .Net does naturally
-                // for web projects. So only go up one to get to the /src directory
-                var sourceFolder =
-                    AppDomain.CurrentDomain.BaseDirectory.ParentDirectory();
-                physicalPath = sourceFolder.AppendPath(parallelDirectory ?? typeof (T).Assembly.GetName().Name);
-            }
-
-
-            return new ApplicationSettings
-            {
-                ApplicationSourceName = typeof (T).AssemblyQualifiedName,
-                PhysicalPath = physicalPath,
-                Port = PortFinder.FindPort(5500) // just a starting point
-            };
-        }
-    }
 }

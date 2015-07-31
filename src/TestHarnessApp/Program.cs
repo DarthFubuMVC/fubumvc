@@ -18,7 +18,7 @@ namespace TestHarnessApp
     {
         static void Main(string[] args)
         {
-            using (var server = new TestHarnessApplication().BuildApplication().RunEmbeddedWithAutoPort())
+            using (var server = FubuRuntime.For<TestHarnessRegistry>().RunEmbedded())
             {
                 Process.Start(server.BaseAddress);
 

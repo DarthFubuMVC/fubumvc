@@ -8,16 +8,15 @@ namespace Serenity
 {
     public interface ISerenityHosting
     {
-        IApplicationUnderTest Start(ApplicationSettings settings, FubuRuntime runtime, IBrowserLifecycle lifecycle);
+        IApplicationUnderTest Start(FubuRuntime runtime, IBrowserLifecycle lifecycle);
         void Shutdown();
     }
 
     public class ExternalHosting : ISerenityHosting
     {
-        public IApplicationUnderTest Start(ApplicationSettings settings, FubuRuntime runtime,
-            IBrowserLifecycle lifecycle)
+        public IApplicationUnderTest Start(FubuRuntime runtime, IBrowserLifecycle lifecycle)
         {
-            var application = new ApplicationUnderTest(runtime, settings, lifecycle);
+            var application = new ApplicationUnderTest(runtime, lifecycle);
             application.Ping();
 
             return application;
@@ -33,15 +32,14 @@ namespace Serenity
     {
         private EmbeddedFubuMvcServer _server;
 
-        public IApplicationUnderTest Start(ApplicationSettings settings, FubuRuntime runtime,
-            IBrowserLifecycle lifecycle)
+        public IApplicationUnderTest Start(FubuRuntime runtime, IBrowserLifecycle lifecycle)
         {
             var port = PortFinder.FindPort(settings.Port);
             _server = new EmbeddedFubuMvcServer(runtime, new KatanaHost(), port);
 
             settings.RootUrl = _server.BaseAddress;
 
-            return new ApplicationUnderTest(runtime, settings, lifecycle);
+            return new ApplicationUnderTest(runtime, lifecycle);
         }
 
         public void Shutdown()

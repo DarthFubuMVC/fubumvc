@@ -16,7 +16,7 @@ namespace Serenity.Testing
         [Test]
         public void register_a_remote_subsystem()
         {
-            var system = new FubuMvcSystem(null, () => null);
+            var system = new FubuMvcSystem(() => null);
             system.AddRemoteSubSystem("foo", x => { });
 
             system.RemoteSubSystemFor("foo").ShouldNotBeNull();

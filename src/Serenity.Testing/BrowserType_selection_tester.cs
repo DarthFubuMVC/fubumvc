@@ -13,7 +13,7 @@ namespace Serenity.Testing
         [SetUp]
         public void SetUp()
         {
-            theSystem = new FubuMvcSystem(new ApplicationSettings(), () => { return null; });
+            theSystem = new FubuMvcSystem(() => { return null; });
             theSystem.DefaultBrowser = BrowserType.Chrome;
         }
 

@@ -20,7 +20,7 @@ namespace Serenity
         private readonly Lazy<NavigationDriver> _navigation;
 
 
-        public ApplicationUnderTest(FubuRuntime runtime, ApplicationSettings settings, IBrowserLifecycle browser)
+        public ApplicationUnderTest(FubuRuntime runtime, IBrowserLifecycle browser)
             : this(settings.Name, settings.RootUrl, browser, () => runtime.Factory)
         {
         }

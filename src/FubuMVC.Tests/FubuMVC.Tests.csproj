@@ -86,7 +86,6 @@
     <Compile Include="AjaxExtensionsTester.cs" />
     <Compile Include="Ajax\AjaxContinuationPolicyIntegratedTester.cs" />
     <Compile Include="Ajax\AjaxContinuationTester.cs" />
-    <Compile Include="ApplicationSettingsTester.cs" />
     <Compile Include="Assets\AssetSettingsTester.cs" />
     <Compile Include="Assets\JavascriptRouterTester.cs" />
     <Compile Include="Assets\ScriptTagTester.cs" />
@@ -324,12 +323,9 @@
     <Compile Include="ServiceBus\Docs\Basics\PubSubSamples.cs" />
     <Compile Include="ServiceBus\Docs\Basics\ReceivingSamples.cs" />
     <Compile Include="ServiceBus\Docs\Basics\SendingSamples.cs" />
-    <Compile Include="ServiceBus\Docs\GettingStarted\GettingStartedApplicationSource.cs" />
     <Compile Include="ServiceBus\Docs\GettingStarted\GettingStartedSettings.cs" />
-    <Compile Include="ServiceBus\Docs\GettingStarted\GettingStartedTester.cs" />
     <Compile Include="ServiceBus\Docs\GettingStarted\GettingStartedTransportRegistry.cs" />
     <Compile Include="ServiceBus\Docs\GettingStarted\Handlers.cs" />
-    <Compile Include="ServiceBus\Docs\Instrumentation\FubuEmbeddedApplicationSource.cs" />
     <Compile Include="ServiceBus\Docs\Polling\PollingJobSamples.cs" />
     <Compile Include="ServiceBus\Docs\Sagas\SagaRepositorySample.cs" />
     <Compile Include="ServiceBus\Docs\Sagas\SimpleSaga.cs" />

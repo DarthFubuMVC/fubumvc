@@ -27,7 +27,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
         public void invoking_a_chain_will_execute_completely_with_cascading_messages()
         {
             FubuTransport.SetupForInMemoryTesting();
-            using (var runtime = FubuApplication.BootstrapApplication<ChainInvokerApplication>())
+            using (var runtime = FubuRuntime.For<ChainInvokerTransportRegistry>())
             {
                 var recorder = runtime.Factory.Get<MessageRecorder>();
 
@@ -54,7 +54,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
         public void invoking_a_chain_will_execute_with_failure_does_not_send_off_cascading_messages()
         {
             FubuTransport.SetupForInMemoryTesting();
-            using (var runtime = FubuApplication.BootstrapApplication<ChainInvokerApplication>())
+            using (var runtime = FubuRuntime.For<ChainInvokerTransportRegistry>())
             {
                 var recorder = runtime.Factory.Get<MessageRecorder>();
 
@@ -81,7 +81,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
         public void invoking_a_chain_will_execute_completely_with_cascading_immediate_continuations()
         {
             FubuTransport.SetupForInMemoryTesting();
-            using (var runtime = FubuApplication.BootstrapApplication<ChainInvokerApplication>())
+            using (var runtime = FubuRuntime.For<ChainInvokerTransportRegistry>())
             {
                 var recorder = runtime.Factory.Get<MessageRecorder>();
 
@@ -109,7 +109,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
         public void invoking_a_chain_will_execute_completely_with_cascading_immediate_continuations_even_if_the_continuation_messages_fail()
         {
             FubuTransport.SetupForInMemoryTesting();
-            using (var runtime = FubuApplication.BootstrapApplication<ChainInvokerApplication>())
+            using (var runtime = FubuRuntime.For<ChainInvokerTransportRegistry>())
             {
                 var recorder = runtime.Factory.Get<MessageRecorder>();
 
@@ -134,7 +134,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
         public void invoking_a_chain_will_execute_completely_with_cascading_immediate_continuations_even_if_the_continuation_messages_fail_and_retry_immediately()
         {
             FubuTransport.SetupForInMemoryTesting();
-            using (var runtime = FubuApplication.BootstrapApplication<ChainInvokerApplication>())
+            using (var runtime = FubuRuntime.For<ChainInvokerTransportRegistry>())
             {
                 var recorder = runtime.Factory.Get<MessageRecorder>();
 
@@ -173,14 +173,6 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
     public class ChainInvokerSettings
     {
         public Uri Incoming { get; set; }
-    }
-
-    public class ChainInvokerApplication : IApplicationSource
-    {
-        public FubuApplication BuildApplication(string directory)
-        {
-            return FubuApplication.For<ChainInvokerTransportRegistry>();
-        }
     }
 
     public class ChainInvokerTransportRegistry : FubuTransportRegistry<ChainInvokerSettings>

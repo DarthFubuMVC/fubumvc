@@ -9,25 +9,7 @@ namespace FubuMVC.Tests.Localization
         [Test]
         public void smoke()
         {
-            new LocalizationApplication()
-                .BuildApplication()
-                ;
-        }
-
-        public class LocalizationApplication : IApplicationSource
-        {
-            public FubuApplication BuildApplication(string directory = null)
-            {
-                return FubuApplication
-                    .For<LocalizationRegistry>();
-            }
-        }
-        public class LocalizationRegistry : FubuRegistry
-        {
-            public LocalizationRegistry()
-            {
-                Features.Localization.Enable(true);
-            }
+            using (FubuRuntime.Basic(_ => _.Features.Localization.Enable(true))) ;
         }
     }
 }
