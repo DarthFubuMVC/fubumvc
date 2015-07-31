@@ -62,7 +62,7 @@ namespace ServiceBusSpecifications.Fixtures
 
             registry.ServiceBus.EnableInMemoryTransport(_replyUri);
 
-            _runtime = FubuApplication.For(registry).Bootstrap();
+            _runtime = registry.ToRuntime();
         }
 
         public InMemorySubscriptionPersistence Persistence

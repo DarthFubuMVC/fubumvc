@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Security.AntiForgery
             registry.Actions.IncludeType<TestEndpoint>();
             registry.Features.AntiForgery.Enable(true);
 
-            using (var runtime = FubuApplication.For(registry).Bootstrap())
+            using (var runtime = registry.ToRuntime())
             {
                 var graph = runtime.Factory.Get<BehaviorGraph>();
 

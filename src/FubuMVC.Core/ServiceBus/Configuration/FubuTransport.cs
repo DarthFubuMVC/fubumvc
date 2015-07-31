@@ -31,7 +31,7 @@ namespace FubuMVC.Core.ServiceBus.Configuration
                 x.EnableInMemoryTransport = true;
             });
 
-            return FubuApplication.For(registry);
+            return new FubuApplication(registry);
         }
 
         static FubuTransport()

@@ -58,7 +58,7 @@ namespace ScheduledJobHarness
             container = new Container(_ => _.ForSingletonOf<MonitoredNodeGroup>().Use(this));
             this.StructureMap(container);
 
-            _runtime = FubuApplication.For(this).Bootstrap();
+            _runtime = ToRuntime();
 
             _runtime.Factory.Get<ChannelGraph>().Name = "Monitoring";
             _subscriptions = _runtime.Factory.Get<ISubscriptionPersistence>();

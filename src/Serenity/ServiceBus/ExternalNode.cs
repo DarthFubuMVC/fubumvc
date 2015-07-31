@@ -150,7 +150,7 @@ namespace Serenity.ServiceBus
 
             registry.StructureMap(container);
 
-            Runtime = FubuApplication.For(registry).Bootstrap();
+            Runtime = registry.ToRuntime();
             Uri = Runtime.Factory.Get<ChannelGraph>().ReplyUriList().First();
             _recorder = Runtime.Factory.Get<IMessageRecorder>();
 

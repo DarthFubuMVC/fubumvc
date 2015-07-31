@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             var threeSettings = new ThreeSettings();
             registry.ReplaceSettings(threeSettings);
 
-            using (var runtime = FubuApplication.For(registry).Bootstrap())
+            using (var runtime = registry.ToRuntime())
             {
                 runtime.Container.DefaultRegistrationIs(oneSettings);
                 runtime.Container.DefaultRegistrationIs(twoSettings);

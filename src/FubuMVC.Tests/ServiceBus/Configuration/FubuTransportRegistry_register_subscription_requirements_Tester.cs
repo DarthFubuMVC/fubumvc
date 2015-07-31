@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
 
             var registry = new SubscribedRegistry();
             registry.StructureMap(container);
-            runtime = FubuApplication.For(registry).Bootstrap();
+            runtime = registry.ToRuntime();
         }
 
         [TestFixtureTearDown]

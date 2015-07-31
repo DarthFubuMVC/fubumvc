@@ -96,10 +96,13 @@ namespace FubuMVC.IntegrationTesting
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<GraphQuery>();
             registry.StructureMap(_container);
+            registry.RootPath = directory;
 
             _configuration(registry);
 
-            return FubuApplication.For(registry, directory);
+            
+
+            throw new Exception("NWO");
         }
     }
 

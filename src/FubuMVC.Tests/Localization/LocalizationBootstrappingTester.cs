@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.Localization
             var registry = new FubuRegistry();
             registry.Features.Localization.Enable(true);
 
-            using (var runtime = FubuApplication.For(registry).Bootstrap())
+            using (var runtime = registry.ToRuntime())
             {
                 runtime.Container.GetInstance<CultureInfo>().Name.ShouldBe("en-US");
                 runtime.Container.DefaultRegistrationIs<ICurrentCultureContext, CurrentCultureContext>();
@@ -58,7 +58,7 @@ namespace FubuMVC.Tests.Localization
                 x.DefaultCulture = new CultureInfo("en-CA");
             });
 
-            using (var runtime = FubuApplication.For(registry).Bootstrap())
+            using (var runtime = registry.ToRuntime())
             {
                 runtime.Container.GetInstance<CultureInfo>().Name.ShouldBe("en-CA");
             }

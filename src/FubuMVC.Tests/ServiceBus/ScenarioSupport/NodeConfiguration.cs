@@ -66,7 +66,7 @@ namespace FubuMVC.Tests.ServiceBus.ScenarioSupport
 
             _uri = (Uri) ReflectionHelper.GetAccessor(_expression).GetValue(harnessSettings);
 
-            _runtime = FubuApplication.For(registry).Bootstrap();
+            _runtime = registry.ToRuntime();
             _serviceBus = container.GetInstance<IServiceBus>();
         }
 

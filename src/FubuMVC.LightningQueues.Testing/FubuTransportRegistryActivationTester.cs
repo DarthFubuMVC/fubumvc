@@ -30,8 +30,7 @@ namespace FubuMVC.LightningQueues.Testing
 
         private void BootstrapApplication()
         {
-            var application = FubuApplication.For(_registry);
-            application.Bootstrap();
+            var application = _registry.ToRuntime();
         }
     }
 }

@@ -63,7 +63,7 @@ namespace FubuMVC.Tests.Registration.Expressions
                 .ConvertUsing<ExampleConverter>();
 
 
-            using (var runtime = FubuApplication.For(registry).Bootstrap())
+            using (var runtime = registry.ToRuntime())
             {
                 runtime.Container.ShouldHaveRegistration<IConverterFamily, ExampleConverter>();
                 runtime.Container.ShouldHaveRegistration<IPropertyBinder, ExamplePropertyBinder>();

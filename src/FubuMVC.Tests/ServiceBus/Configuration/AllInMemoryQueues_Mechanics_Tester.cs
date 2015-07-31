@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
 
             registry.ServiceBus.Enable(true);
 
-            runtime = FubuApplication.For(registry).Bootstrap();
+            runtime = registry.ToRuntime();
             container = runtime.Factory.Get<IContainer>();
 
         }

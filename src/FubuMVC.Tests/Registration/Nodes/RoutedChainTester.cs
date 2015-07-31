@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             registry.Configure(
                 graph => { graph.Behaviors.OfType<RoutedChain>().Each(x => x.Authentication = new AuthNode()); });
 
-            using (var runtime = FubuApplication.For(registry).Bootstrap())
+            using (var runtime = registry.ToRuntime())
             {
                 runtime.Behaviors.BehaviorFor<AuthenticatedEndpoint>(x => x.get_hello())
                     .First().ShouldBeOfType<AuthNode>();

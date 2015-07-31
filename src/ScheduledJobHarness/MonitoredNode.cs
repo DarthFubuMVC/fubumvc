@@ -82,7 +82,7 @@ namespace ScheduledJobHarness
             Services.ReplaceService(subscriptions);
             Services.ReplaceService(schedules);
 
-            _runtime = FubuApplication.For(this).Bootstrap();
+            _runtime = ToRuntime();
         }
 
         void IDisposable.Dispose()

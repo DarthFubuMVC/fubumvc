@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.View
                 x.Add("Bar");
             });
 
-            using (var runtime = FubuApplication.For(registry).Bootstrap())
+            using (var runtime = registry.ToRuntime())
             {
                 var useNamespaces = runtime.Container.GetInstance<CommonViewNamespaces>();
 

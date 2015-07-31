@@ -30,7 +30,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
 
             registry.StructureMap(container);
 
-            runtime = FubuApplication.For(registry).Bootstrap();
+            runtime = registry.ToRuntime();
 
             theRouter = runtime.Factory.Get<ISubscriptionCache>();
         }

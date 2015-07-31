@@ -21,7 +21,7 @@ namespace FubuMVC.IntegrationTesting.Assets
                 x.Version = null;
             });
 
-            using (var runtime = FubuApplication.For(registry).RunInMemory())
+            using (var runtime = registry.RunInMemory())
             {
                 runtime.Scenario(_ =>
                 {
@@ -42,7 +42,7 @@ namespace FubuMVC.IntegrationTesting.Assets
                 x.Version = "1.0.1";
             });
 
-            using (var runtime = FubuApplication.For(registry).RunInMemory())
+            using (var runtime = registry.RunInMemory())
             {
                 runtime.Scenario(_ =>
                 {

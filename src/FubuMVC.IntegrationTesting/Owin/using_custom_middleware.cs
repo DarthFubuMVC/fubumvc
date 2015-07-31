@@ -20,7 +20,7 @@ namespace FubuMVC.IntegrationTesting.Owin
         {
             var registry = new FubuRegistry();
             registry.AlterSettings(action);
-            return FubuApplication.For(registry).RunEmbedded(port: 0);
+            return registry.RunEmbedded(port: 0);
         }
 
         [Test]

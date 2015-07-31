@@ -16,7 +16,7 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
             registry.AlterSettings<DiagnosticsSettings>(x => x.TraceLevel = TraceLevel.Verbose);
 
 
-            using (var runtime = FubuApplication.For(registry).Bootstrap())
+            using (var runtime = registry.ToRuntime())
             {
                 var container = runtime.Factory.Get<IContainer>();
 

@@ -42,7 +42,7 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
             var registry = new SagaTestRegistry();
             registry.StructureMap(theContainer);
 
-            theRuntime = FubuApplication.For(registry).Bootstrap();
+            theRuntime = registry.ToRuntime();
 
             MessageHistory.StartListening();
         }
@@ -113,7 +113,7 @@ namespace FubuMVC.Tests.ServiceBus.Sagas
             registry.StructureMap(theContainer);
             
 
-            theRuntime = FubuApplication.For(registry).Bootstrap();
+            theRuntime = registry.ToRuntime();
 
             MessageHistory.ClearAll();
         }

@@ -32,8 +32,9 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 
             TestMessageRecorder.Clear();
 
-            _invoker = new Lazy<IChainInvoker>(() => {
-                theRuntime = FubuApplication.For(theTransportRegistry).Bootstrap();
+            _invoker = new Lazy<IChainInvoker>(() =>
+            {
+                theRuntime = theTransportRegistry.ToRuntime();
 
                 return theRuntime.Factory.Get<IChainInvoker>();
             });

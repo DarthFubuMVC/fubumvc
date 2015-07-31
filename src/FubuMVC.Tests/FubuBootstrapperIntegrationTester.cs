@@ -34,9 +34,10 @@ namespace FubuMVC.Tests
             });
 
             registry.StructureMap(container);
+            registry.RootPath = AppDomain.CurrentDomain.BaseDirectory;
 
-            routes = FubuApplication.For(registry, AppDomain.CurrentDomain.BaseDirectory)
-                .Bootstrap()
+            fubuRuntime = registry.ToRuntime();
+            routes = fubuRuntime
                 .Routes
                 .Where(r => !r.As<Route>().Url.StartsWith("_content"))
                 .ToList();
@@ -44,11 +45,18 @@ namespace FubuMVC.Tests
             container.Configure(x => x.For<IOutputWriter>().Use(new InMemoryOutputWriter()));
         }
 
+        [TearDown]
+        public void TearDown()
+        {
+            fubuRuntime.Dispose();
+        }
+
         #endregion
 
         private FubuRegistry registry;
         private Container container;
         private IList<RouteBase> routes;
+        private FubuRuntime fubuRuntime;
 
         [Test]
         public void should_have_a_route_in_the_RouteCollection_with_a_Fubu_RouteHandler_for_each_route_in_the_registry()

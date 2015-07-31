@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Security.Authentication
             registry.Actions.IncludeType<NothingEndpoint>(); // Have to do this to make it an isolated test
             registry.Features.Authentication.Enable(true);
 
-            using (var runtime = FubuApplication.For(registry).Bootstrap())
+            using (var runtime = registry.ToRuntime())
             {
                 var theGraphWithBasicAuthentication = runtime.Behaviors;
 

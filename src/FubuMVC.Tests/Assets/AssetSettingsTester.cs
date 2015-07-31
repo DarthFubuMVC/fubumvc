@@ -281,7 +281,7 @@ namespace FubuMVC.Tests.Assets
             var registry = new FubuRegistry();
             registry.AlterSettings<AssetSettings>(x => { x.Mode = SearchMode.PublicFolderOnly; });
 
-            using (var runtime = FubuApplication.For(registry).Bootstrap())
+            using (var runtime = registry.ToRuntime())
             {
                 var graph = runtime.Factory.Get<IAssetFinder>().FindAll();
                 graph.Assets.OrderBy(x => x.Url).Select(x => x.Url)
@@ -300,7 +300,7 @@ namespace FubuMVC.Tests.Assets
                 x.Version = "1.0.1";
             });
 
-            using (var runtime = FubuApplication.For(registry).Bootstrap())
+            using (var runtime = registry.ToRuntime())
             {
                 var graph = runtime.Factory.Get<IAssetFinder>().FindAll();
                 graph.Assets.OrderBy(x => x.Url).Select(x => x.Url)

@@ -49,7 +49,7 @@ namespace FubuMVC.Tests.ServiceBus.InMemory
             registry.ServiceBus.EnableInMemoryTransport("memory://special".ToUri());
             registry.ServiceBus.Enable(true);
 
-            using (var runtime = FubuApplication.For(registry).Bootstrap())
+            using (var runtime = registry.ToRuntime())
             {
                 runtime.Factory.Get<ChannelGraph>().ReplyChannelFor(InMemoryChannel.Protocol)
                     .ShouldBe("memory://special".ToUri());

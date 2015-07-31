@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.StructureMap.Settings
 
                 registry.StructureMap(c);
 
-                FubuApplication.For(registry).Bootstrap();
+                registry.ToRuntime();
 
                 return c;
             });

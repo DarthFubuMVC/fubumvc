@@ -27,8 +27,7 @@ namespace FubuMVC.IntegrationTesting.Async
                 x.Policies.Local.Add<EarlyReturnConvention>();
             });
 
-            _server = FubuApplication.For(registry)
-                .RunEmbedded(port: PortFinder.FindPort(5500));
+            _server = registry.RunEmbedded(port: PortFinder.FindPort(5500));
         }
 
         [TearDown]

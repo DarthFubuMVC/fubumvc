@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
             var registry = new FubuRegistry {NodeName = "MyNode"};
 
 
-            using (var fubuRuntime = FubuApplication.For(registry).Bootstrap())
+            using (var fubuRuntime = registry.ToRuntime())
             {
                 fubuRuntime
                     .Factory.Get<ChannelGraph>().Name.ShouldBe("MyNode");

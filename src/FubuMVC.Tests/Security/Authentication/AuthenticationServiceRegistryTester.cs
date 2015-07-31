@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Security.Authentication
             var registry = new FubuRegistry();
             registry.Features.Authentication.Enable(true);
 
-            using (var runtime = FubuApplication.For(registry).Bootstrap())
+            using (var runtime = registry.ToRuntime())
             {
                 runtime.Container.DefaultRegistrationIs<ILockedOutRule, LockedOutRule>();
                 runtime.Container.DefaultRegistrationIs<IAuthenticationService, AuthenticationService>();

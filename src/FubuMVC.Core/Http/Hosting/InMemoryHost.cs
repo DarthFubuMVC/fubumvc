@@ -96,6 +96,12 @@ namespace FubuMVC.Core.Http.Hosting
 
     public static class InMemoryHostExtensions
     {
+        public static InMemoryHost RunInMemory(this FubuRegistry registry)
+        {
+            var runtime = new FubuRuntime(registry);
+            return new InMemoryHost(runtime);
+        }
+
         public static InMemoryHost RunInMemory(this FubuApplication application, string directory = null)
         {
             if (directory.IsNotEmpty())

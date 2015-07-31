@@ -11,7 +11,7 @@ namespace FubuMVC.Tests
         [Test]
         public void find_assembly_extensions()
         {
-            using (var runtime = FubuApplication.For(new FubuRegistry()).Bootstrap())
+            using (var runtime = FubuRuntime.Basic())
             {
                 var assembly = typeof (AssemblyPackageMarker).Assembly;
 

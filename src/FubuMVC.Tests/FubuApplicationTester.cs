@@ -30,7 +30,7 @@ namespace FubuMVC.Tests
             var ceiling = DateTime.Now.AddSeconds(5);
 
 
-            using (var runtime = FubuApplication.For(new FubuRegistry()).Bootstrap())
+            using (var runtime = FubuRuntime.Basic())
             {
                 (floor < runtime.Restarted && runtime.Restarted < ceiling).ShouldBeTrue();
             }

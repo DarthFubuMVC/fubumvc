@@ -58,7 +58,7 @@ namespace FubuMVC.Tests.Diagnostics
             var registry = new FubuRegistry();
             registry.Features.Diagnostics.Enable(level);
 
-            using (var runtime = FubuApplication.For(registry).Bootstrap())
+            using (var runtime = registry.ToRuntime())
             {
                 var container = runtime.Factory.Get<IContainer>();
                 action(container);

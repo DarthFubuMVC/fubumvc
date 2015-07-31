@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.StructureMap
             var registry = new FubuRegistry();
             registry.Services.IncludeRegistry<ThingRegistry>();
 
-            using (var runtime = FubuApplication.For(registry).Bootstrap())
+            using (var runtime = registry.ToRuntime())
             {
                 var facility = runtime.Container.GetInstance<IServiceFactory>().As<StructureMapServiceFactory>();
 

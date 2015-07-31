@@ -45,7 +45,7 @@ namespace FubuMVC.IntegrationTesting.ServiceBus.Publishing
             registry.Actions.IncludeType<MessageOnePublisher>();
             registry.StructureMap(container);
 
-            theRuntime = FubuApplication.For(registry).Bootstrap();
+            theRuntime = registry.ToRuntime();
             theGraph = theRuntime.Factory.Get<BehaviorGraph>();
             chain = theGraph.BehaviorFor<MessageOnePublisher>(x => x.post_message1(null));
 

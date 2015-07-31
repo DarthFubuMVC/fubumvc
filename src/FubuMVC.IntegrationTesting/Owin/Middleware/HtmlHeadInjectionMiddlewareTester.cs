@@ -28,7 +28,7 @@ namespace FubuMVC.IntegrationTesting.Owin.Middleware
                 });
             });
 
-            using (var server = FubuApplication.For(registry).RunInMemory())
+            using (var server = registry.RunInMemory())
             {
                 server.Scenario(_ =>
                 {

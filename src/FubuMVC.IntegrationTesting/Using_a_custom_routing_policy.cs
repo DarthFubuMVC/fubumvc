@@ -20,7 +20,7 @@ namespace FubuMVC.IntegrationTesting
             var registry = new FubuRegistry();
             registry.RoutePolicy<FakeRoutePolicy>();
 
-            using (var runtime = FubuApplication.For(registry).Bootstrap())
+            using (var runtime = registry.ToRuntime())
             {
             }
 

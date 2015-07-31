@@ -22,7 +22,7 @@ namespace FubuMVC.IntegrationTesting
                 var registry = new FubuRegistry();
                 registry.Features.Diagnostics.Enable(TraceLevel.Verbose);
 
-                return FubuApplication.For(registry).RunInMemory();
+                return registry.RunInMemory();
             });
 
         public static ManualResetEvent Finish = new ManualResetEvent(false);

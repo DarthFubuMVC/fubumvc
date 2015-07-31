@@ -81,7 +81,7 @@ namespace ServiceBusSpecifications.Fixtures.Monitoring
                     : ScheduledExecution.Disabled)
                 .IntervalSeed(3);
 
-            _runtime = FubuApplication.For(this).Bootstrap();
+            _runtime = ToRuntime();
             var controller = _runtime.Factory.Get<IPersistentTaskController>();
 
             _initialTasks.Each(subject => controller.TakeOwnership(subject).Wait(1.Seconds()));

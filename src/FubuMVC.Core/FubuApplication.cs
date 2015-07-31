@@ -15,7 +15,7 @@ namespace FubuMVC.Core
     {
         private readonly FubuRegistry _registry;
 
-        private FubuApplication(FubuRegistry registry, string rootPath = null)
+        internal FubuApplication(FubuRegistry registry, string rootPath = null)
         {
             _registry = registry;
             RootPath = rootPath;
@@ -23,18 +23,6 @@ namespace FubuMVC.Core
 
         public string RootPath { get; set; }
 
-        /// <summary>
-        /// Use the policies and conventions specified by the registry
-        /// </summary>
-        /// <param name="registry"></param>
-        /// <returns></returns>
-        public static FubuApplication For(FubuRegistry registry, string rootPath = null)
-        {
-            return new FubuApplication(registry)
-            {
-                RootPath = rootPath
-            };
-        }
 
         /// <summary>
         /// Use only the default FubuMVC policies and conventions
