@@ -17,7 +17,7 @@ namespace FubuMVC.IntegrationTesting.Projections
         [TestFixtureSetUp]
         public void FixtureSetUp()
         {
-            _host = FubuApplication
+            _host = FubuRuntime
                 .For<JsonSerializationFubuRegistry>()
                 .RunInMemory();
         }

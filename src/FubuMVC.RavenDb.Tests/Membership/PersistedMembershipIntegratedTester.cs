@@ -16,12 +16,12 @@ namespace FubuMVC.RavenDb.Tests.Membership
         [Test]
         public void build_application_with_persisted_membership()
         {
-            using (var runtime = FubuApplication
+            using (var runtime = FubuRuntime
                 .For<FubuRepoWithPersistedMembership>(_ =>
                 {
                     _.Features.Authentication.Enable(true);
                     _.Services.IncludeRegistry<InMemoryPersistenceRegistry>();
-                }).Bootstrap()
+                })
                 )
             {
                 var container = runtime.Factory.Get<IContainer>();

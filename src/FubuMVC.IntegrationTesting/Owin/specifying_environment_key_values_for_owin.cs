@@ -13,7 +13,7 @@ namespace FubuMVC.IntegrationTesting.Owin
         [Test]
         public void can_inject_environment_keys_from_the_fubu_registry()
         {
-            using (var server = FubuApplication
+            using (var server = FubuRuntime
                 .For<OverriddenEnvironmentRegistry>()
                 .RunEmbedded(port: 0))
             {
