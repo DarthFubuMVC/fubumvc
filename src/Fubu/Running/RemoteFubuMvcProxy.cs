@@ -28,7 +28,7 @@ namespace Fubu.Running
                 x.RequireAssemblyContainingType<RemoteFubuMvcProxy>(AssemblyCopyMode.SemVerCompatible);
                 x.RequireAssemblyContainingType<IAppBuilder>();
                 x.RequireAssemblyContainingType<IModelBinder>(); // FubuCore
-                x.RequireAssemblyContainingType<FubuApplication>(AssemblyCopyMode.SemVerCompatible); // FubuMVC.Core
+                x.RequireAssemblyContainingType<FubuRuntime>(AssemblyCopyMode.SemVerCompatible); // FubuMVC.Core
                 x.RequireAssemblyContainingType<HtmlTag>(AssemblyCopyMode.SemVerCompatible); // HtmlTags
 
                 x.RequireAssembly("Microsoft.Owin.Hosting");

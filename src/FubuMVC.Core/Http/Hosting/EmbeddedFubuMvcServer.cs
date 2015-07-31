@@ -23,25 +23,6 @@ namespace FubuMVC.Core.Http.Hosting
         private readonly FubuRuntime _runtime;
         private IHost _host;
 
-        /// <summary>
-        /// Creates an embedded FubuMVC server for the designated application source
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <typeparam name="THost"></typeparam>
-        /// <param name="physicalPath">The physical path of the web server path.  This only needs to be set if the location for application content like scripts or views is at a different place than the current AppDomain base directory.  If this value is blank, the embedded server will attempt to find a folder with the same name as the assembly that contains the IApplicationSource</param>
-        /// <param name="port">The port to run the web server at.  The web server will try other port numbers starting at this point if it is unable to bind to this specific port</param>
-        /// <returns></returns>
-        public static EmbeddedFubuMvcServer For<T, THost>(string physicalPath = null, int port = 5500)
-            where T : IApplicationSource, new()
-            where THost : IHost, new()
-        {
-            if (physicalPath.IsEmpty())
-            {
-                physicalPath = TryToGuessApplicationPath(typeof (T)) ?? AppDomain.CurrentDomain.BaseDirectory;
-            }
-
-            return new EmbeddedFubuMvcServer(new T().BuildApplication().Bootstrap(), new THost(), port: port);
-        }
 
         public static string TryToGuessApplicationPath(Type type)
         {

@@ -4,14 +4,6 @@ using FubuMVC.Core.ServiceBus.Polling;
 
 namespace ServiceNode
 {
-    public class ServiceApplication : IApplicationSource
-    {
-        public FubuApplication BuildApplication(string directory)
-        {
-            return FubuApplication.For<ServiceRegistry>();
-        }
-    }
-
     public class ServiceRegistry : FubuTransportRegistry<TestBusSettings>
     {
         public ServiceRegistry()

@@ -6,24 +6,12 @@ using ServiceNode;
 
 namespace WebsiteNode
 {
-    public class WebsiteApplication : IApplicationSource
-    {
-        public FubuApplication BuildApplication(string directory)
-        {
-            return FubuApplication.For<FubuRegistry>(x =>
-            {
-                x.Services.For<MessageRecorder>().Singleton();
-                x.ServiceBus.Enable(true);
-            });
-        }
-    }
-
     public class WebsiteRegistry : FubuTransportRegistry<TestBusSettings>
     {
         public WebsiteRegistry()
         {
             Channel(x => x.Website).ReadIncoming();
-            Channel(x => x.Service).AcceptsMessagesInAssemblyContainingType<ServiceApplication>();
+            Channel(x => x.Service).AcceptsMessagesInAssemblyContainingType<ServiceRegistry>();
 
             ServiceBus.HealthMonitoring.ScheduledExecution(ScheduledExecution.Disabled);
         }

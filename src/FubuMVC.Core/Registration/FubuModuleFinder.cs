@@ -38,7 +38,7 @@ namespace FubuMVC.Core.Registration
                 }
                 catch (Exception)
                 {
-                    diagnostics.LogFor(typeof (FubuApplication)).Trace("Unable to load assembly from file " + file);
+                    diagnostics.LogFor(typeof (FubuRuntime)).Trace("Unable to load assembly from file " + file);
                 }
 
                 if (assembly != null) yield return assembly;

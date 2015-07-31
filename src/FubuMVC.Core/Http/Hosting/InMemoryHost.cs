@@ -20,13 +20,6 @@ namespace FubuMVC.Core.Http.Hosting
         private readonly IServiceLocator _services;
         private readonly AppFunc _func;
 
-
-        public static InMemoryHost For<T>(string directory = null) where T : IApplicationSource, new()
-        {
-            var runtime = new T().BuildApplication(directory).Bootstrap();
-            return new InMemoryHost(runtime);
-        }
-
         public InMemoryHost(FubuRuntime runtime)
         {
             _runtime = runtime;
@@ -113,14 +106,5 @@ namespace FubuMVC.Core.Http.Hosting
             return new InMemoryHost(runtime);
         }
 
-        public static InMemoryHost RunInMemory(this FubuApplication application, string directory = null)
-        {
-            if (directory.IsNotEmpty())
-            {
-                application.RootPath = directory;
-            }
-
-            return new InMemoryHost(application.Bootstrap());
-        }
     }
 }

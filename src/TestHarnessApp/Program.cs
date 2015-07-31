@@ -29,14 +29,6 @@ namespace TestHarnessApp
         }
     }
 
-    public class TestHarnessApplication : IApplicationSource
-    {
-        public FubuApplication BuildApplication(string directory = null)
-        {
-            return FubuApplication.For<TestHarnessRegistry>(rootPath:directory);
-        }
-    }
-
     public class TestHarnessRegistry : FubuRegistry
     {
         public TestHarnessRegistry()

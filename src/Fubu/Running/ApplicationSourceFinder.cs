@@ -33,7 +33,7 @@ namespace Fubu.Running
 
             return
                 TypeRepository.FindTypes(assemblies, TypeClassification.Concretes,
-                    x => x.IsConcreteTypeOf<IApplicationSource>() && x.IsConcreteWithDefaultCtor()).Result();
+                    x => x.IsConcreteTypeOf<FubuRegistry>() && x.IsConcreteWithDefaultCtor()).Result();
 
         }
 

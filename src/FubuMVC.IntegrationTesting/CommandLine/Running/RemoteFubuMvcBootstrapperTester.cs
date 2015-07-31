@@ -30,7 +30,7 @@ namespace FubuMVC.IntegrationTesting.CommandLine.Running
                                                .Return(types);
         }
 
-        private void shouldHaveStartedApp<T>() where T : IApplicationSource
+        private void shouldHaveStartedApp<T>() where T : FubuRegistry
         {
             MockFor<IFubuMvcApplicationActivator>()
                 .AssertWasCalled(x => x.Initialize(typeof(T), startMessage.PortNumber, startMessage.PhysicalPath));
@@ -120,27 +120,18 @@ namespace FubuMVC.IntegrationTesting.CommandLine.Running
         }
     }
 
-    public class App1 : IApplicationSource
+    public class App1 : FubuRegistry
     {
-        public FubuApplication BuildApplication(string directory)
-        {
-            throw new System.NotImplementedException();
-        }
+
     }
 
-    public class App2 : IApplicationSource
+    public class App2 : FubuRegistry
     {
-        public FubuApplication BuildApplication(string directory)
-        {
-            throw new System.NotImplementedException();
-        }
+
     }
 
-    public class App3 : IApplicationSource
+    public class App3 : FubuRegistry
     {
-        public FubuApplication BuildApplication(string directory)
-        {
-            throw new System.NotImplementedException();
-        }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using FubuMVC.Core;
 using FubuMVC.Core.Services;
 using Shouldly;
 using NUnit.Framework;
@@ -116,7 +117,7 @@ namespace FubuMVC.Tests.Services
         }
     }
 
-    public class Application : IApplication<IDisposable>
+    public class Application : FubuRegistry
     {
         public IDisposable Bootstrap()
         {
@@ -124,7 +125,7 @@ namespace FubuMVC.Tests.Services
         }
     }
 
-    public class GoodApplicationSource : IApplicationSource<Application, IDisposable>
+    public class GoodApplicationSource : FubuRegistry
     {
         public Application BuildApplication(string directory)
         {
@@ -132,7 +133,7 @@ namespace FubuMVC.Tests.Services
         }
     }
 
-    public abstract class AbstractApplicationSource : IApplicationSource<Application, IDisposable>
+    public abstract class AbstractApplicationSource : FubuRegistry
     {
         public Application BuildApplication(string directory)
         {
@@ -140,7 +141,7 @@ namespace FubuMVC.Tests.Services
         }
     }
 
-    public class TemplatedApplicationSource : IApplicationSource<Application, IDisposable>
+    public class TemplatedApplicationSource : FubuRegistry
     {
         public TemplatedApplicationSource(string name)
         {

@@ -41,7 +41,7 @@ namespace Fubu.Running
         {
             Console.WriteLine("Trying to start application " + message);
 
-            FubuApplication.Properties[HtmlHeadInjectionMiddleware.TEXT_PROPERTY] = message.HtmlHeadInjectedText;
+            FubuRuntime.Properties[HtmlHeadInjectionMiddleware.TEXT_PROPERTY] = message.HtmlHeadInjectedText;
 
             if (message.Mode.IsNotEmpty())
             {

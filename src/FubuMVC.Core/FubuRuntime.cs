@@ -10,6 +10,7 @@ using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Logging;
 using FubuCore.Reflection;
+using FubuCore.Util;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
@@ -262,5 +263,7 @@ namespace FubuMVC.Core
 
             return basePath;
         }
+
+        public static readonly Cache<string, string> Properties = new Cache<string, string>(key => null);
     }
 }

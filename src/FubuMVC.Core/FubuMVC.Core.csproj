@@ -570,7 +570,6 @@
     <Compile Include="Http\Owin\Readers\IOwinRequestReader.cs" />
     <Compile Include="Http\Owin\Readers\MediaTypeReader.cs" />
     <Compile Include="Http\Owin\Readers\OwinRequestReader.cs" />
-    <Compile Include="IApplicationSource.cs" />
     <Compile Include="View\Attachment\ProfileViewBag.cs" />
     <Compile Include="View\ImageTag.cs" />
     <Compile Include="Runtime\IFubuRequestContext.cs" />
@@ -873,9 +872,7 @@
     <Compile Include="Security\Authorization\SecurityServicesRegistry.cs" />
     <Compile Include="Security\Authorization\SecuritySettings.cs" />
     <Compile Include="Services\ApplicationLoaderFinder.cs" />
-    <Compile Include="Services\IApplication.cs" />
     <Compile Include="Services\IApplicationLoader.cs" />
-    <Compile Include="Services\IApplicationSource.cs" />
     <Compile Include="Services\JsonSerialization.cs" />
     <Compile Include="Services\Messaging\EventAggregator.cs" />
     <Compile Include="Services\Messaging\IListener.cs" />
@@ -958,7 +955,6 @@
     <Compile Include="Continuations\ContinuationType.cs" />
     <Compile Include="Continuations\IContinuationDirector.cs" />
     <Compile Include="Runtime\EndpointService.cs" />
-    <Compile Include="FubuApplication.cs" />
     <Compile Include="Registration\FubuExtensionFinder.cs" />
     <Compile Include="FubuPackageRegistry.cs" />
     <Compile Include="IFubuRegistryExtension.cs" />

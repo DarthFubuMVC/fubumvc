@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.Services.Remote
 
         public IDisposable Load()
         {
-            Color = FubuApplication.Properties["Color"];
+            Color = FubuRuntime.Properties["Color"];
             return this;
         }
 

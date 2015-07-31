@@ -58,7 +58,7 @@ namespace FubuMVC.Core.Services
 
             if (!type.IsConcreteWithDefaultCtor()) return false;
 
-            if (type.Closes(typeof (IApplicationSource<,>))) return true;
+            if (type.CanBeCastTo<FubuRegistry>()) return true;
 
             return type.CanBeCastTo<IApplicationLoader>();
         }

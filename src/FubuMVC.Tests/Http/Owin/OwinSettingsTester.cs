@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.Http.Owin
         [Test]
         public void create_with_no_html_head_injection()
         {
-            FubuApplication.Properties.ClearAll();
+            FubuRuntime.Properties.ClearAll();
 
             var settings = new OwinSettings();
             settings.Middleware.OfType<MiddlewareNode<HtmlHeadInjectionMiddleware>>()
@@ -37,7 +37,7 @@ namespace FubuMVC.Tests.Http.Owin
         {
             FubuMode.SetUpForDevelopmentMode();
 
-            FubuApplication.Properties[HtmlHeadInjectionMiddleware.TEXT_PROPERTY] =
+            FubuRuntime.Properties[HtmlHeadInjectionMiddleware.TEXT_PROPERTY] =
                 new HtmlTag("script").Attr("foo", "bar").ToString();
 
             var settings = new OwinSettings();

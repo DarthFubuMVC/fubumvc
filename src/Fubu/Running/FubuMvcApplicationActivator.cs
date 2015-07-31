@@ -1,26 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using FubuCore;
-using FubuMVC.Core;
-using FubuMVC.Core.Assets;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Services.Messaging;
-using FubuMVC.Katana;
-using KatanaRightsException = FubuMVC.Katana.KatanaRightsException;
 
 namespace Fubu.Running
 {
     public class FubuMvcApplicationActivator : IFubuMvcApplicationActivator
     {
-        private IApplicationSource _applicationSource;
         private int _port;
         private string _physicalPath;
-        private EmbeddedFubuMvcServer _server = null;
+        private readonly EmbeddedFubuMvcServer _server = null;
 
         public void Initialize(Type applicationType, int port, string physicalPath)
         {
-            _applicationSource = Activator.CreateInstance(applicationType).As<IApplicationSource>();
+            //_applicationSource = Activator.CreateInstance(applicationType).As<FubuRegistry>();
             _port = PortFinder.FindPort(port);
             _physicalPath = physicalPath;
 
@@ -77,6 +70,5 @@ namespace Fubu.Running
             ShutDown();
             StartUp();
         }
-
     }
 }
