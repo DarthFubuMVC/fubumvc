@@ -1,15 +1,14 @@
 using System.Collections.Generic;
-using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.Diagnostics.Packaging
 {
     public class PackageLogFubuDiagnostics
     {
-        private readonly BehaviorGraph _graph;
+        private readonly FubuRuntime _runtime;
 
-        public PackageLogFubuDiagnostics(BehaviorGraph graph)
+        public PackageLogFubuDiagnostics(FubuRuntime runtime)
         {
-            _graph = graph;
+            _runtime = runtime;
         }
 
         [System.ComponentModel.Description("Application Startup")]
@@ -19,8 +18,8 @@ namespace FubuMVC.Core.Diagnostics.Packaging
             var logs = new List<PackageDiagnosticsLogModel>();
 
             // Nothing really gained here by mocking this so let's hit it directly
-            _graph
-                .Diagnostics
+            _runtime
+                .ActivationDiagnostics
                 .EachLog((target, log) => logs.Add(new PackageDiagnosticsLogModel{
                     Type = ActivationDiagnostics.GetTypeName(target),
                     Description = target.ToString(),

@@ -12,7 +12,7 @@ namespace FubuMVC.IntegrationTesting
         {
             using (var runtime = FubuRuntime.Basic())
             {
-                Debug.WriteLine(runtime.Behaviors.Diagnostics.Timer.DisplayTimings());
+                Debug.WriteLine(runtime.ActivationDiagnostics.Timer.DisplayTimings());
             }
         }
     }

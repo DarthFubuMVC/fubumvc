@@ -194,7 +194,7 @@ namespace FubuMVC.Core.Registration
 
                 _.For<BehaviorGraph>().Use(graph);
 
-                _.AddRegistry(graph.ToRegistry());
+                _.AddRegistry(graph.ToStructureMapRegistry());
             });
         }
 

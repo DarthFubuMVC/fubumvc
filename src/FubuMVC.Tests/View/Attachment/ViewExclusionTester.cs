@@ -30,7 +30,7 @@ namespace FubuMVC.Tests.View.Attachment
             });
 
             var graph = BehaviorGraph.BuildFrom(registry);
-            var views = graph.Settings.Get<ViewEngineSettings>().BuildViewBag(graph, new PerfTimer(), FubuApplicationFiles.ForDefault());
+            var views = graph.Settings.Get<ViewEngineSettings>().BuildViewBag(graph, new ActivationDiagnostics(), FubuApplicationFiles.ForDefault());
 
             views.Result.OrderBy(x => x.Name()).Select(x => x.Name())
                 .ShouldHaveTheSameElementsAs("B1", "B2", "B3", "B4", "B5", "B6");

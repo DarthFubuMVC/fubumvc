@@ -11,7 +11,6 @@ namespace FubuMVC.Core.Registration
 {
     internal static class BehaviorGraphBuilder
     {
-        // TOOD -- clean this up a little bit
         public static BehaviorGraph Build(FubuRegistry registry, IPerfTimer perfTimer,
             IEnumerable<Assembly> packageAssemblies, IActivationDiagnostics diagnostics, IFubuApplicationFiles files)
         {
@@ -21,8 +20,7 @@ namespace FubuMVC.Core.Registration
             var graph = new BehaviorGraph
             {
                 ApplicationAssembly = registry.ApplicationAssembly,
-                PackageAssemblies = packageAssemblies,
-                Diagnostics = diagnostics
+                PackageAssemblies = packageAssemblies
             };
 
             var accessorRules = AccessorRulesCompiler.Compile(graph, perfTimer);
@@ -30,7 +28,7 @@ namespace FubuMVC.Core.Registration
 
             var config = registry.Config;
 
-            perfTimer.Record("Applying Settings", () => applySettings(config, graph, perfTimer, files));
+            perfTimer.Record("Applying Settings", () => applySettings(config, graph, diagnostics, files));
 
             var featureLoading = featureLoader.ApplyAll(graph.Settings, registry);
 
@@ -68,7 +66,7 @@ namespace FubuMVC.Core.Registration
             graph.Behaviors.Each(x => x.InsertNodes(graph.Settings.Get<ConnegSettings>()));
         }
 
-        private static void applySettings(ConfigGraph config, BehaviorGraph graph, IPerfTimer timer, IFubuApplicationFiles files)
+        private static void applySettings(ConfigGraph config, BehaviorGraph graph, IActivationDiagnostics diagnostics, IFubuApplicationFiles files)
         {
             // Might come back to this.
             config.Imports.Each(x => x.InitializeSettings(graph));
@@ -77,7 +75,7 @@ namespace FubuMVC.Core.Registration
             var viewSettings = graph.Settings.Get<ViewEngineSettings>();
             
 
-            var views = viewSettings.BuildViewBag(graph, timer, files)
+            var views = viewSettings.BuildViewBag(graph, diagnostics, files)
                 .ContinueWith(t =>
                 {
                     return viewSettings.Profiles(t.Result);

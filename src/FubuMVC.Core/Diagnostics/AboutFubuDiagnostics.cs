@@ -17,7 +17,7 @@ namespace FubuMVC.Core.Diagnostics
 
         public string get_about()
         {
-            return FubuApplicationDescriber.WriteDescription(_graph.Diagnostics, _runtime);
+            return FubuApplicationDescriber.WriteDescription(_runtime.ActivationDiagnostics, _runtime);
         }
 
         public string get_loaded()

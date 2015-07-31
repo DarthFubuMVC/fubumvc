@@ -57,15 +57,15 @@ namespace FubuMVC.Core.View
             get { return _facilities; }
         }
 
-        public Task<ViewBag> BuildViewBag(BehaviorGraph graph, IPerfTimer timer, IFubuApplicationFiles files)
+        public Task<ViewBag> BuildViewBag(BehaviorGraph graph, IActivationDiagnostics diagnostics, IFubuApplicationFiles files)
         {
-            return timer.RecordTask("Building the View Bag", () =>
+            return diagnostics.Timer.RecordTask("Building the View Bag", () =>
             {
                 var viewFinders = _facilities.Select(x =>
                 {
                     return Task.Factory.StartNew(() =>
                     {
-                        x.Fill(this, graph, timer, files);
+                        x.Fill(this, graph, diagnostics.Timer, files);
                         return x.AllViews();
                     });
                 });
@@ -73,7 +73,7 @@ namespace FubuMVC.Core.View
                 var views = viewFinders.SelectMany(x => x.Result).ToList();
                 _viewPolicies.Each(x => x.Alter(views));
 
-                var logger = TemplateLogger.Default(graph.Diagnostics);
+                var logger = TemplateLogger.Default(diagnostics);
                 var types = new ViewTypePool(graph);
 
                 // Attaching the view models

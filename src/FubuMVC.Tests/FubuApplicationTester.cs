@@ -41,7 +41,7 @@ namespace FubuMVC.Tests
         {
             using (var runtime = FubuRuntime.Basic())
             {
-                var description = FubuApplicationDescriber.WriteDescription(runtime.Behaviors.Diagnostics, runtime);
+                var description = FubuApplicationDescriber.WriteDescription(runtime.ActivationDiagnostics, runtime);
 
                 Console.WriteLine(description);
             }

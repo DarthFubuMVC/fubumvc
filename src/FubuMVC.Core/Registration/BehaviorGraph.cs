@@ -103,20 +103,13 @@ namespace FubuMVC.Core.Registration
         /// </summary>
         public IRouteIterator RouteIterator { get; set; }
 
-        public IActivationDiagnostics Diagnostics { get; set; }
-
-        #region IChainImporter Members
 
         void IChainImporter.Import(IEnumerable<BehaviorChain> chains)
         {
             chains.Each(AddChain);
         }
 
-        #endregion
-
-
-
-        internal Registry ToRegistry()
+        internal Registry ToStructureMapRegistry()
         {
             var registry = new Registry();
             _behaviors.OfType<IContainerModel>().Each(x => registry.For<IActionBehavior>().AddInstance(x.ToInstance()));
