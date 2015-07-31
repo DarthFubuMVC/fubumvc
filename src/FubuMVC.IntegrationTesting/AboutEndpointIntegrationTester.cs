@@ -21,7 +21,7 @@ namespace FubuMVC.IntegrationTesting
         {
             FubuMode.Mode(FubuMode.Development);
 
-            server = FubuApplication.DefaultPolicies().RunEmbedded(port: PortFinder.FindPort(5500));
+            server = FubuRuntime.Basic().RunEmbedded(port: PortFinder.FindPort(5500));
         }
 
         [TestFixtureTearDown]
@@ -47,13 +47,13 @@ namespace FubuMVC.IntegrationTesting
         {
             FubuMode.Mode(FubuMode.Development);
 
-            using (var server = FubuApplication.DefaultPolicies().RunEmbedded(port: 5601))
+            using (var server = FubuRuntime.Basic().RunEmbedded(port: 5601))
             {
                 Process.Start("http://localhost:5601/reloaded");
                 Thread.Sleep(20000);
             }
 
-            using (var server = FubuApplication.DefaultPolicies().RunEmbedded(port: 5601))
+            using (var server = FubuRuntime.Basic().RunEmbedded(port: 5601))
             {
                 Thread.Sleep(20000);
             }

@@ -21,7 +21,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
         {
             NonAdminHttp.EnsureCanListenToWhenInNonAdminContext(8080);
 
-            using (var application = FubuApplication.DefaultPolicies().Bootstrap())
+            using (var application = FubuRuntime.Basic())
             {
                 application.Behaviors.PackageAssemblies.Each(x => Debug.WriteLine(x.GetName().FullName));
 

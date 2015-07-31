@@ -38,7 +38,7 @@ namespace FubuMVC.Tests
         {
             FubuMode.Reset();
 
-            using (var runtime = FubuApplication.DefaultPolicies().Bootstrap())
+            using (var runtime = FubuRuntime.Basic())
             {
                 var _ = runtime.Container;
 
@@ -123,7 +123,7 @@ namespace FubuMVC.Tests
         {
             FubuMode.SetUpForDevelopmentMode();
 
-            using (var runtime = FubuApplication.DefaultPolicies().Bootstrap())
+            using (var runtime = FubuRuntime.Basic())
             {
                 runtime.Container.DefaultRegistrationIs<IAssetTagBuilder, DevelopmentModeAssetTagBuilder>();
             }

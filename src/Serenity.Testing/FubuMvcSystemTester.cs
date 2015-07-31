@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.StructureMap;
@@ -97,8 +98,8 @@ namespace Serenity.Testing
         public FubuApplication BuildApplication(string directory)
         {
             var container = new Container(x => { x.For<IColor>().Use<Red>(); });
-
-            return FubuApplication.DefaultPolicies(container);
+            throw new Exception("NWO");
+            //return FubuApplication.Basic(container);
         }
     }
 

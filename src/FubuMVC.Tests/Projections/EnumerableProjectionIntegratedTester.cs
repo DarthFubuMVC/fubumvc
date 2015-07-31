@@ -35,7 +35,7 @@ namespace FubuMVC.Tests.Projections
             var container = new Container();
             var registry = new FubuRegistry();
 
-            using (var runtime = FubuApplication.DefaultPolicies().Bootstrap())
+            using (var runtime = FubuRuntime.Basic())
             {
                 runner = runtime.Factory.Get<IProjectionRunner>();
             }

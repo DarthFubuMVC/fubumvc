@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Http.Hosting
         [TestFixtureSetUp]
         public void SetUp()
         {
-            host = newHost();
+            host = InMemoryHost.Basic();
         }
 
         [TestFixtureTearDown]
@@ -32,11 +32,6 @@ namespace FubuMVC.Tests.Http.Hosting
         {
             host.Send(r => r.RelativeUrl("memory/hello"))
                 .Body.ReadAsText().ShouldBe("hello from the in memory host");
-        }
-
-        private static InMemoryHost newHost()
-        {
-            return FubuApplication.DefaultPolicies().RunInMemory();
         }
 
         private ScenarioAssertionException fails(Action<Scenario> configuration)

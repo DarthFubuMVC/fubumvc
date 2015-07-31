@@ -151,7 +151,7 @@ namespace FubuMVC.IntegrationTesting.UI
         {
             var port = PortFinder.FindPort(5500);
 
-            _server = FubuApplication.DefaultPolicies().RunEmbedded(port: port);
+            _server = FubuRuntime.Basic().RunEmbedded(port: port);
         }
 
         [TestFixtureTearDown]

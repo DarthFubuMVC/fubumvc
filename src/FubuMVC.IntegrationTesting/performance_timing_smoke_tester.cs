@@ -10,7 +10,7 @@ namespace FubuMVC.IntegrationTesting
         [Test]
         public void see_what_it_looks_like()
         {
-            using (var runtime = FubuApplication.DefaultPolicies().Bootstrap())
+            using (var runtime = FubuRuntime.Basic())
             {
                 Debug.WriteLine(runtime.Behaviors.Diagnostics.Timer.DisplayTimings());
             }

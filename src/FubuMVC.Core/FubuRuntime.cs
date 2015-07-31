@@ -15,6 +15,7 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Files;
+using FubuMVC.Core.Services;
 using FubuMVC.Core.StructureMap;
 using FubuMVC.Core.StructureMap.Settings;
 using StructureMap;
@@ -36,7 +37,8 @@ namespace FubuMVC.Core
 
         public static FubuRuntime Basic(Action<FubuRegistry> configure = null)
         {
-            var registry = new FubuRegistry();
+            var assembly = AssemblyFinder.FindTheCallingAssembly();
+            var registry = new FubuRegistry(assembly);
             if (configure != null)
             {
                 configure(registry);

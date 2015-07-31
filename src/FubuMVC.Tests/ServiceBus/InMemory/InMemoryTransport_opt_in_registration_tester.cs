@@ -15,7 +15,7 @@ namespace FubuMVC.Tests.ServiceBus.InMemory
             FubuTransport.Reset();
             
 
-            using (var runtime = FubuApplication.DefaultPolicies().Bootstrap())
+            using (var runtime = FubuRuntime.Basic())
             {
                 runtime.Container.ShouldNotHaveRegistration<ITransport, InMemoryTransport>();
             }

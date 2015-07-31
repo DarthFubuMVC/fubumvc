@@ -126,7 +126,6 @@
     <Compile Include="Diagnostics\Runtime\Tracing_is_not_applied_to_chains_that_are_tagged_no_tracing.cs" />
     <Compile Include="Diagnostics\Visualization\Visualizers\BehaviorStartAndFinishEndpointsTester.cs" />
     <Compile Include="Diagnostics\Visualization\Visualizers\ModelBindingLogEndpointTester.cs" />
-    <Compile Include="Docs\Examples\Bootstrapping.cs" />
     <Compile Include="Docs\Introduction\Overview\HomeEndpoint.cs" />
     <Compile Include="Docs\Topics\Authorization\AuthorizationPolicyController.cs" />
     <Compile Include="Docs\Topics\Authorization\Controller.cs" />
@@ -770,6 +769,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Diagnostics\Shared\" />
+    <Folder Include="Docs\Examples\" />
     <Folder Include="Results\" />
     <Folder Include="View\FakeViews\Folder1\Folder2\Folder3\" />
     <Folder Include="View\Model\" />

@@ -12,7 +12,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
         [Test]
         public void can_replace_with_new_database()
         {
-            using (var runtime = FubuApplication.DefaultPolicies().Bootstrap())
+            using (var runtime = FubuRuntime.Basic())
             {
                 var original = runtime.Factory.Get<IDocumentStore>();
 

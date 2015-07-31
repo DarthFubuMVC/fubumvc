@@ -23,23 +23,6 @@ namespace FubuMVC.Core
 
         public string RootPath { get; set; }
 
-
-        /// <summary>
-        /// Use only the default FubuMVC policies and conventions
-        /// </summary>
-        /// <returns></returns>
-        public static FubuApplication DefaultPolicies(IContainer container = null)
-        {
-            var assembly = AssemblyFinder.FindTheCallingAssembly();
-            var registry = new FubuRegistry(assembly);
-            if (container != null)
-            {
-                registry.StructureMap(container);
-            }
-
-            return new FubuApplication(registry);
-        }
-
         /// <summary>
         /// Use the policies and conventions specified by a specific FubuRegistry of type "T"
         /// </summary>

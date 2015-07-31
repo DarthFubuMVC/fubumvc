@@ -33,7 +33,7 @@ namespace FubuMVC.Tests.NewConneg
             node.Add(new XmlFormatter());
             node.Add(new FakeAddressWriter(), new SomeConditional());
 
-            using (var runtime = FubuApplication.DefaultPolicies().Bootstrap())
+            using (var runtime = FubuRuntime.Basic())
             {
                 runtime.Container.Configure(x =>
                 {

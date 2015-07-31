@@ -20,7 +20,7 @@ namespace FubuMVC.IntegrationTesting.Assets
         [Test]
         public void can_write_the_javascript_routes_for_all_methods()
         {
-            using (var host = FubuApplication.DefaultPolicies().RunInMemory())
+            using (var host = FubuRuntime.Basic().RunInMemory())
             {
                 host.Scenario(x =>
                 {
@@ -46,9 +46,8 @@ namespace FubuMVC.IntegrationTesting.Assets
         [Test]
         public void can_swap_out_the_javascript_route_data()
         {
-            var container = new Container(_ => { _.For<IJavascriptRouteData>().Use<FakeJavascriptRouteData>(); });
 
-            using (var host = FubuApplication.DefaultPolicies(container).RunInMemory())
+            using (var host = FubuRuntime.Basic(x => x.Services.For<IJavascriptRouteData>().Use<FakeJavascriptRouteData>()).RunInMemory())
             {
                 host.Scenario(x =>
                 {

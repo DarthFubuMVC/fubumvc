@@ -11,7 +11,7 @@ namespace FubuMVC.IntegrationTesting
         [Test]
         public void has_all_the_namespaces_for_the_input_and_output_models()
         {
-            using (var runtime = FubuApplication.DefaultPolicies().Bootstrap())
+            using (var runtime = FubuRuntime.Basic())
             {
                 var namespaces = runtime.Factory.Get<CommonViewNamespaces>();
                 namespaces.Namespaces.ShouldContain("Red.Testing");

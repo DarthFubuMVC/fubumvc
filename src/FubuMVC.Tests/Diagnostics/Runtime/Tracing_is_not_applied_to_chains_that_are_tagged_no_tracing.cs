@@ -16,7 +16,7 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
         {
             FubuMode.SetUpForDevelopmentMode();
 
-            using (var runtime = FubuApplication.DefaultPolicies().Bootstrap())
+            using (var runtime = FubuRuntime.Basic())
             {
                 var graph = runtime.Factory.Get<BehaviorGraph>();
 

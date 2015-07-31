@@ -28,7 +28,7 @@ namespace FubuMVC.IntegrationTesting
         [Test]
         public void try_to_create_ISystemTime()
         {
-            using (var runtime = FubuApplication.DefaultPolicies().Bootstrap())
+            using (var runtime = FubuRuntime.Basic())
             {
                 runtime.Factory.Get<ISystemTime>().ShouldBeOfType<SystemTime>();
             }

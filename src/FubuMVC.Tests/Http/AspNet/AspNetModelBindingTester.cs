@@ -15,7 +15,7 @@ namespace FubuMVC.Tests.Http.AspNet
         [TestFixtureSetUp]
         public void SetUp()
         {
-            using (var runtime = FubuApplication.DefaultPolicies().Bootstrap())
+            using (var runtime = FubuRuntime.Basic())
             {
                 registry = runtime.Factory.Get<BindingRegistry>();
             }

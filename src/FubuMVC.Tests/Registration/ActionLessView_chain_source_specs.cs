@@ -14,7 +14,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void classes_marked_as_ViewSubject_are_partials()
         {
-            using (var runtime = FubuApplication.DefaultPolicies().Bootstrap())
+            using (var runtime = FubuRuntime.Basic())
             {
                 runtime.Behaviors.ChainFor(typeof(FooSubject)).IsPartialOnly.ShouldBeTrue();
                 runtime.Behaviors.ChainFor(typeof(BarSubject)).IsPartialOnly.ShouldBeTrue();

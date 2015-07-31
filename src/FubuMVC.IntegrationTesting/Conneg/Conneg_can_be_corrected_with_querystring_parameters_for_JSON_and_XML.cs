@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core;
+﻿using System;
+using FubuMVC.Core;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Katana;
@@ -85,7 +86,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
     {
         public FubuApplication BuildApplication(string directory)
         {
-            return FubuApplication.DefaultPolicies();
+            throw new Exception("NWO");
         }
     }
 

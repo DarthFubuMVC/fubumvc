@@ -10,7 +10,7 @@ namespace FubuMVC.Tests
         [Test]
         public void runtime_is_in_the_container_and_does_not_cause_a_stackoverflow_when_it_disposes()
         {
-            using (var runtime = FubuApplication.DefaultPolicies().Bootstrap())
+            using (var runtime = FubuRuntime.Basic())
             {
                 runtime.Factory.Get<FubuRuntime>()
                     .ShouldBeTheSameAs(runtime);

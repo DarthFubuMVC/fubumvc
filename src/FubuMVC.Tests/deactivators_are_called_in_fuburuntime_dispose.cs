@@ -22,8 +22,7 @@ namespace FubuMVC.Tests
                 x.For<IDeactivator>().Add(new FakeDeactivator("blue"));
             });
 
-            FubuApplication.DefaultPolicies(container)
-                .Bootstrap().Dispose();
+            FubuRuntime.Basic(x => x.StructureMap(container)).Dispose();
 
             FakeDeactivator.Messages.ShouldHaveTheSameElementsAs("red", "green", "blue");
         }

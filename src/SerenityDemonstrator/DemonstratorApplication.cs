@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core;
+﻿using System;
+using FubuMVC.Core;
 using FubuMVC.Core.StructureMap;
 
 namespace SerenityDemonstrator
@@ -8,7 +9,9 @@ namespace SerenityDemonstrator
         public FubuApplication BuildApplication(string directory)
         {
             FubuMode.SetUpForDevelopmentMode();
-            return FubuApplication.DefaultPolicies();
+            
+            throw new Exception("NWO");
+            //return FubuRuntime.Basic();
         }
     }
 }

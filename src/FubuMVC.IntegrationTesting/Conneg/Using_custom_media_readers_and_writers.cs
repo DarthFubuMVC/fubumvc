@@ -16,7 +16,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
         [Test]
         public void use_a_custom_media_reader()
         {
-            using (var host = FubuApplication.DefaultPolicies().RunInMemory())
+            using (var host = FubuRuntime.Basic().RunInMemory())
             {
                 host.Scenario(x =>
                 {
@@ -35,7 +35,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
         [Test]
         public void use_a_custom_projection_as_a_writer()
         {
-            using (var host = FubuApplication.DefaultPolicies().RunInMemory())
+            using (var host = FubuRuntime.Basic().RunInMemory())
             {
                 host.Scenario(x =>
                 {

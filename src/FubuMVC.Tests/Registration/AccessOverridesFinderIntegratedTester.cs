@@ -13,7 +13,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void accessor_rules_mechanics()
         {
-            using (var runtime = FubuApplication.DefaultPolicies().Bootstrap())
+            using (var runtime = FubuRuntime.Basic())
             {
                 runtime.Container.DefaultRegistrationIs<AccessorRules, AccessorRules>();
 

@@ -16,7 +16,7 @@ namespace FubuMVC.LightningQueues.Testing
             var registry = new FubuRegistry();
             registry.AlterSettings<LightningQueueSettings>(_ => _.DisableIfNoChannels = true);
 
-            using (var runtime = FubuApplication.DefaultPolicies().Bootstrap())
+            using (var runtime = FubuRuntime.Basic())
             {
                 runtime.Container.ShouldHaveRegistration<ITransport, LightningQueuesTransport>();
                 runtime.Container.DefaultRegistrationIs<IPersistentQueues, PersistentQueues>();

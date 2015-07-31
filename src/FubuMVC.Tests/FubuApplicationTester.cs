@@ -39,7 +39,7 @@ namespace FubuMVC.Tests
         [Test]
         public void description_smoke_tester()
         {
-            using (var runtime = FubuApplication.DefaultPolicies().Bootstrap())
+            using (var runtime = FubuRuntime.Basic())
             {
                 var description = FubuApplicationDescriber.WriteDescription(runtime.Behaviors.Diagnostics, runtime);
 
@@ -50,7 +50,7 @@ namespace FubuMVC.Tests
         [Test]
         public void can_use_the_default_policies()
         {
-            var application = FubuApplication.DefaultPolicies().Bootstrap();
+            var application = FubuRuntime.Basic();
             var graph = application.Factory.Get<BehaviorGraph>();
 
             graph.BehaviorFor<TargetEndpoint>(x => x.get_hello()).ShouldNotBeNull();

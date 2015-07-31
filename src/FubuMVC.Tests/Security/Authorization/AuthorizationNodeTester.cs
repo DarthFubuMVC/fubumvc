@@ -42,7 +42,7 @@ namespace FubuMVC.Tests.Security.Authorization
         private AuthorizationBehavior toBehavior(AuthorizationNode node)
         {
             AuthorizationBehavior behavior = null;
-            using (var runtime = FubuApplication.DefaultPolicies().Bootstrap())
+            using (var runtime = FubuRuntime.Basic())
             {
                 behavior = (AuthorizationBehavior) runtime.Container.GetInstance<IActionBehavior>(node.As<IContainerModel>().ToInstance());
             }
