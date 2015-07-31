@@ -150,7 +150,7 @@ namespace FubuMVC.Core.Registration
         /// </summary>
         /// <param name = "route"></param>
         /// <returns></returns>
-        public BehaviorChain BehaviorFor(IRouteDefinition route)
+        public BehaviorChain ChainFor(IRouteDefinition route)
         {
             var chain = _behaviors.OfType<RoutedChain>().FirstOrDefault(x => x.Route == route);
             if (chain == null)
@@ -207,7 +207,7 @@ namespace FubuMVC.Core.Registration
         /// <typeparam name = "T"></typeparam>
         /// <param name = "expression"></param>
         /// <returns></returns>
-        public BehaviorChain BehaviorFor<T>(Expression<Action<T>> expression)
+        public BehaviorChain ChainFor<T>(Expression<Action<T>> expression)
         {
             var call = ActionCall.For(expression);
             return _behaviors.Where(x => x.Calls.Contains(call)).FirstOrDefault();
@@ -220,7 +220,7 @@ namespace FubuMVC.Core.Registration
         /// <typeparam name = "T"></typeparam>
         /// <param name = "expression"></param>
         /// <returns></returns>
-        public BehaviorChain BehaviorFor<T>(Expression<Func<T, object>> expression)
+        public BehaviorChain ChainFor<T>(Expression<Func<T, object>> expression)
         {
             var call = ActionCall.For(expression);
             var chains = _behaviors.Where(x => x.Calls.Contains(call));
@@ -241,7 +241,6 @@ namespace FubuMVC.Core.Registration
             _behaviors.Each(x => Trace.WriteLine(x.ToString()));
         }
 
-        [Obsolete("Wanna make this go away in 2.0")]
         public void AddChain(BehaviorChain chain)
         {
             _behaviors.Add(chain);
@@ -276,93 +275,19 @@ namespace FubuMVC.Core.Registration
         /// </summary>
         /// <param name = "inputType"></param>
         /// <returns></returns>
-        public BehaviorChain BehaviorFor(Type inputType)
+        public BehaviorChain ChainFor(Type inputType)
         {
-            var chains = Behaviors.Where(x => x.InputType() == inputType);
-            if (chains.Count() == 1)
-            {
-                return chains.First();
-            }
-
-            if (chains.Count() == 0)
-            {
-                throw new FubuException(2150, "Could not find any behavior chains for input type {0}",
-                    inputType.AssemblyQualifiedName);
-            }
-
-            throw new FubuException(2151, "Found more than one behavior chain for input type {0}",
-                inputType.AssemblyQualifiedName);
+            return Behaviors.FirstOrDefault(x => x.InputType() == inputType);
         }
 
         /// <summary>
-        /// Finds the BehaviorChain for an ActionCall
+        /// Find the first BehaviorChain with InputType() == typeof(T)
         /// </summary>
-        /// <param name="call"></param>
+        /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public BehaviorChain BehaviorFor(ActionCall call)
+        public BehaviorChain ChainFor<T>()
         {
-            return BehaviorForActionCall(call);
-        }
-
-        /// <summary>
-        ///   Finds the Id of the single BehaviorChain
-        ///   that matches the inputType
-        /// </summary>
-        /// <param name = "inputType"></param>
-        /// <returns></returns>
-        public Guid IdForType(Type inputType)
-        {
-            return BehaviorFor(inputType).UniqueId;
-        }
-
-        /// <summary>
-        ///   Finds the Id of the BehaviorChain containing
-        ///   the ActionCall
-        /// </summary>
-        public Guid IdForCall(ActionCall call)
-        {
-            return BehaviorForActionCall(call).UniqueId;
-        }
-
-        private BehaviorChain BehaviorForActionCall(ActionCall call)
-        {
-            var chain = Behaviors.FirstOrDefault(x => x.FirstCall().Equals(call));
-
-            if (chain == null)
-            {
-                throw new FubuException(2152, "Could not find a behavior for action {0}", call.Description);
-            }
-            return chain;
-        }
-
-        /// <summary>
-        ///   Finds all the BehaviorChains for the designated handler T
-        /// </summary>
-        public HandlerActionsSet ActionsForHandler<T>()
-        {
-            return ActionsForHandler(typeof (T));
-        }
-
-        /// <summary>
-        ///   Finds all the BehaviorChain's for the designated handlerType
-        /// </summary>
-        public HandlerActionsSet ActionsForHandler(Type handlerType)
-        {
-            var actions = FirstActions().Where(x => x.HandlerType == handlerType);
-            return new HandlerActionsSet(actions, handlerType);
-        }
-
-        /// <summary>
-        ///   Finds HandlerActionSet's for all the handlers that match handlerFilter
-        /// </summary>
-        /// <param name = "handlerFilter"></param>
-        /// <returns></returns>
-        public IEnumerable<HandlerActionsSet> HandlerSetsFor(Func<Type, bool> handlerFilter)
-        {
-            return FirstActions()
-                .Where(call => handlerFilter(call.HandlerType))
-                .GroupBy(x => x.HandlerType)
-                .Select(group => new HandlerActionsSet(group, group.Key));
+            return ChainFor(typeof (T));
         }
 
         public BehaviorChain FindHomeChain()
@@ -375,16 +300,6 @@ namespace FubuMVC.Core.Registration
             return BuildFrom(new FubuRegistry());
         }
 
-
-        public HandlerChain HandlerChainFor<T>()
-        {
-            return Handlers.FirstOrDefault(x => x.InputType() == typeof (T));
-        }
-
-        public BehaviorChain ChainFor(Type type)
-        {
-            return Behaviors.FirstOrDefault(x => x.InputType() == type);
-        }
     }
 
 

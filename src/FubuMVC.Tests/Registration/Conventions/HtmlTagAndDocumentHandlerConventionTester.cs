@@ -33,7 +33,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void action_that_returns_HtmlDocument_should_output_to_html()
         {
-            var outputNode = graph.BehaviorFor<TagController>(x => x.BuildDoc()).Outputs.First().ShouldBeOfType<OutputNode>();
+            var outputNode = graph.ChainFor<TagController>(x => x.BuildDoc()).Outputs.First().ShouldBeOfType<OutputNode>();
             outputNode
                 .ResourceType.ShouldBe(typeof(HtmlDocument));
 
@@ -44,7 +44,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void action_that_returns_HtmlTag_should_output_to_html()
         {
             var outputNode =
-                graph.BehaviorFor<TagController>(x => x.BuildTag()).Outputs.First().ShouldBeOfType<OutputNode>();
+                graph.ChainFor<TagController>(x => x.BuildTag()).Outputs.First().ShouldBeOfType<OutputNode>();
             outputNode.Writes(MimeType.Html).ShouldBeTrue();
             outputNode.ResourceType.ShouldBe(typeof(HtmlTag));
         }

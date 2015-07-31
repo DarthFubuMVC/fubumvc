@@ -50,7 +50,7 @@ namespace FubuMVC.Tests.Registration
                 x.Actions.IncludeType<FilterTargetEndpoint>();
             });
 
-            var chain = graph.BehaviorFor<FilterTargetEndpoint>(x => x.get_hello());
+            var chain = graph.ChainFor<FilterTargetEndpoint>(x => x.get_hello());
 
             var filter = chain.OfType<ActionFilter>().Single();
             filter.HandlerType.ShouldBe(typeof (ValidFilter));

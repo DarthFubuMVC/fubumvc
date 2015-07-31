@@ -52,7 +52,7 @@ namespace FubuMVC.IntegrationTesting.Security.Authorization
         {
             userHasRoles("a");
             withAuthorizationRules(
-                graph => { graph.BehaviorFor<OneController>(x => x.M1(null)).Authorization.AddRole("a"); })
+                graph => { graph.ChainFor<OneController>(x => x.M1(null)).Authorization.AddRole("a"); })
                 .IsAuthorized(new Model1())
                 .ShouldBeTrue();
         }
@@ -71,7 +71,7 @@ namespace FubuMVC.IntegrationTesting.Security.Authorization
             userHasRoles("a");
             var service =
                 withAuthorizationRules(
-                    graph => { graph.BehaviorFor<OneController>(x => x.M1(null)).Authorization.AddRole("not a"); });
+                    graph => { graph.ChainFor<OneController>(x => x.M1(null)).Authorization.AddRole("not a"); });
 
             service.IsAuthorized(new Model1()).ShouldBeFalse();
         }
@@ -82,8 +82,8 @@ namespace FubuMVC.IntegrationTesting.Security.Authorization
             userHasRoles("b", "c");
             withAuthorizationRules(graph =>
             {
-                graph.BehaviorFor<OneController>(x => x.M1(null)).Authorization.AddRole("a");
-                graph.BehaviorFor<OneController>(x => x.M1(null)).Authorization.AddRole("b");
+                graph.ChainFor<OneController>(x => x.M1(null)).Authorization.AddRole("a");
+                graph.ChainFor<OneController>(x => x.M1(null)).Authorization.AddRole("b");
             }).IsAuthorized(new Model1()).ShouldBeTrue();
         }
 
@@ -94,7 +94,7 @@ namespace FubuMVC.IntegrationTesting.Security.Authorization
 
             var service =
                 withAuthorizationRules(
-                    graph => { graph.BehaviorFor<OneController>(x => x.M4(null)).Authorization.AddRole("a"); });
+                    graph => { graph.ChainFor<OneController>(x => x.M4(null)).Authorization.AddRole("a"); });
 
             service.IsAuthorized(new UrlModel(), "different").ShouldBeTrue();
         }
@@ -107,7 +107,7 @@ namespace FubuMVC.IntegrationTesting.Security.Authorization
 
             var service =
                 withAuthorizationRules(
-                    graph => { graph.BehaviorFor<OneController>(x => x.M4(null)).Authorization.AddRole("not a"); });
+                    graph => { graph.ChainFor<OneController>(x => x.M4(null)).Authorization.AddRole("not a"); });
 
             service.IsAuthorized(new UrlModel(), "different").ShouldBeFalse();
         }
@@ -119,7 +119,7 @@ namespace FubuMVC.IntegrationTesting.Security.Authorization
 
             var service =
                 withAuthorizationRules(
-                    graph => { graph.BehaviorFor<OneController>(x => x.M2()).Authorization.AddRole("a"); });
+                    graph => { graph.ChainFor<OneController>(x => x.M2()).Authorization.AddRole("a"); });
 
             service.IsAuthorized<OneController>(x => x.M2()).ShouldBeTrue();
         }
@@ -132,7 +132,7 @@ namespace FubuMVC.IntegrationTesting.Security.Authorization
 
             var service =
                 withAuthorizationRules(
-                    graph => { graph.BehaviorFor<OneController>(x => x.M2()).Authorization.AddRole("not a"); });
+                    graph => { graph.ChainFor<OneController>(x => x.M2()).Authorization.AddRole("not a"); });
 
             service.IsAuthorized<OneController>(x => x.M2()).ShouldBeFalse();
         }
@@ -144,7 +144,7 @@ namespace FubuMVC.IntegrationTesting.Security.Authorization
 
             var service =
                 withAuthorizationRules(
-                    graph => { graph.BehaviorFor<TwoController>(x => x.M2()).Authorization.AddRole("a"); });
+                    graph => { graph.ChainFor<TwoController>(x => x.M2()).Authorization.AddRole("a"); });
 
             service.IsAuthorizedForNew(typeof (UrlModel)).ShouldBeTrue();
         }
@@ -157,7 +157,7 @@ namespace FubuMVC.IntegrationTesting.Security.Authorization
 
             var service =
                 withAuthorizationRules(
-                    graph => { graph.BehaviorFor<TwoController>(x => x.M2()).Authorization.AddRole("not a"); });
+                    graph => { graph.ChainFor<TwoController>(x => x.M2()).Authorization.AddRole("not a"); });
 
             service.IsAuthorizedForNew(typeof (UrlModel)).ShouldBeFalse();
         }

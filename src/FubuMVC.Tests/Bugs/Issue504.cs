@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Bugs
 
             var graph = BehaviorGraph.BuildFrom(registry);
 
-            graph.BehaviorFor<FooEndpointClass>(x => x.get_some_foo())
+            graph.ChainFor<FooEndpointClass>(x => x.get_some_foo())
                 .As<RoutedChain>()
                  .GetRoutePattern().ShouldBe("moar/some/foo");
         }

@@ -37,27 +37,27 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void action_that_has_no_attribute_on_either_class_or_method_should_have_no_category()
         {
-            graph.BehaviorFor<UrlCategoryController3>(x => x.Go(null)).As<RoutedChain>().UrlCategory.Category.ShouldBeNull();
-            graph.BehaviorFor<UrlCategoryController3>(x => x.Comeback()).As<RoutedChain>().UrlCategory.Category.ShouldBeNull();
+            graph.ChainFor<UrlCategoryController3>(x => x.Go(null)).As<RoutedChain>().UrlCategory.Category.ShouldBeNull();
+            graph.ChainFor<UrlCategoryController3>(x => x.Comeback()).As<RoutedChain>().UrlCategory.Category.ShouldBeNull();
 
         }
 
         [Test]
         public void class_attribute_sets_the_category_if_there_is_no_method_level_attribute()
         {
-            graph.BehaviorFor<UrlCategoryController1>(x => x.Go(null)).As<RoutedChain>().UrlCategory.Category.ShouldBe("admin");
+            graph.ChainFor<UrlCategoryController1>(x => x.Go(null)).As<RoutedChain>().UrlCategory.Category.ShouldBe("admin");
         }
 
         [Test]
         public void method_attribute_has_precedence_over_class_attribute()
         {
-            graph.BehaviorFor<UrlCategoryController1>(x => x.Comeback()).As<RoutedChain>().UrlCategory.Category.ShouldBe("public");
+            graph.ChainFor<UrlCategoryController1>(x => x.Comeback()).As<RoutedChain>().UrlCategory.Category.ShouldBe("public");
         }
 
         [Test]
         public void method_attribute_without_class_attribute()
         {
-            graph.BehaviorFor<UrlCategoryController2>(x => x.DecoratedMethod()).As<RoutedChain>().UrlCategory.Category.ShouldBe("public");
+            graph.ChainFor<UrlCategoryController2>(x => x.DecoratedMethod()).As<RoutedChain>().UrlCategory.Category.ShouldBe("public");
         }
         
         [Test]

@@ -13,9 +13,9 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
         {
             using (var runtime = FubuTransport.DefaultPolicies())
             {
-                runtime.Behaviors.HandlerChainFor<TakeOwnershipRequest>().ShouldNotBeNull();
-                runtime.Behaviors.HandlerChainFor<TaskHealthRequest>().ShouldNotBeNull();
-                runtime.Behaviors.HandlerChainFor<TaskDeactivation>().ShouldNotBeNull();
+                runtime.Behaviors.ChainFor<TakeOwnershipRequest>().ShouldNotBeNull();
+                runtime.Behaviors.ChainFor<TaskHealthRequest>().ShouldNotBeNull();
+                runtime.Behaviors.ChainFor<TaskDeactivation>().ShouldNotBeNull();
             }
 
         }

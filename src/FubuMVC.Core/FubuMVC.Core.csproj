@@ -963,7 +963,6 @@
     <Compile Include="Registration\AddImplementationsServiceRegistrationConvention.cs" />
     <Compile Include="Registration\ConnectImplementationsServiceRegistrationConvention.cs" />
     <Compile Include="Registration\Conventions\MethodToUrlBuilder.cs" />
-    <Compile Include="Registration\HandlerActionsSet.cs" />
     <Compile Include="Registration\IServiceRegistrationConvention.cs" />
     <Compile Include="Registration\Nodes\BehaviorCategory.cs" />
     <Compile Include="Registration\Nodes\BehaviorSearch.cs" />

@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.Security.Authentication
                     .Count().ShouldBe(2);
 
                 // The logout endpoint was added
-                theGraphWithBasicAuthentication.BehaviorFor(typeof(LogoutRequest)).ShouldNotBeNull();
+                theGraphWithBasicAuthentication.ChainFor(typeof(LogoutRequest)).ShouldNotBeNull();
 
                 runtime.Container.DefaultRegistrationIs<ILoginSuccessHandler, LoginSuccessHandler>();
                 runtime.Container.DefaultRegistrationIs<ILogoutSuccessHandler, LogoutSuccessHandler>();

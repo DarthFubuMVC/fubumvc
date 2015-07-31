@@ -33,7 +33,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<SomeController>();
 
-            var chain = BehaviorGraph.BuildFrom(registry).BehaviorFor<SomeController>(x => x.Go(null));
+            var chain = BehaviorGraph.BuildFrom(registry).ChainFor<SomeController>(x => x.Go(null));
 
             chain.Output.Add(new NewtonsoftJsonFormatter());
             chain.Output.Add(new XmlFormatter());

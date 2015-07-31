@@ -53,7 +53,7 @@ namespace FubuMVC.Tests
             var application = FubuRuntime.Basic();
             var graph = application.Factory.Get<BehaviorGraph>();
 
-            graph.BehaviorFor<TargetEndpoint>(x => x.get_hello()).ShouldNotBeNull();
+            graph.ChainFor<TargetEndpoint>(x => x.get_hello()).ShouldNotBeNull();
         }
     }
 

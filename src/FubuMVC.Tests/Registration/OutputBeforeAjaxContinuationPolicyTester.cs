@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.Registration
                 x.Actions.IncludeType<AjaxController>();
             });
 
-            var chain = graph.BehaviorFor<AjaxController>(x => x.get_success());
+            var chain = graph.ChainFor<AjaxController>(x => x.get_success());
             chain.First().ShouldBeOfType<OutputNode>();
             chain.Last().ShouldBeOfType<ActionCall>();
         }
@@ -49,7 +49,7 @@ namespace FubuMVC.Tests.Registration
                 x.Actions.IncludeType<AjaxController>();
             });
 
-            var chain = graph.BehaviorFor<AjaxController>(x => x.get_with_input(null));
+            var chain = graph.ChainFor<AjaxController>(x => x.get_with_input(null));
             var nodes = chain.ToList();
             nodes[0].ShouldBeOfType<InputNode>();
             nodes[1].ShouldBeOfType<OutputNode>();

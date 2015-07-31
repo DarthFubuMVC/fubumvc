@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void should_apply_custom_conventions()
         {
             var behavior =
-                graph.BehaviorFor<JsonOutputAttachmentTesterController>(x => x.StringifyHtml()).Calls.First().Next;
+                graph.ChainFor<JsonOutputAttachmentTesterController>(x => x.StringifyHtml()).Calls.First().Next;
             behavior.ShouldBeOfType<OutputNode>();
         }
     }

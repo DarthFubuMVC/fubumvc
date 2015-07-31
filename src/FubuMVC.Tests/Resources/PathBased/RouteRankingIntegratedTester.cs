@@ -65,7 +65,7 @@ namespace FubuMVC.Tests.Resources.PathBased
 		[Test]
 		public void rank_me_last_inputs_should_rank_highly()
 		{
-			_graph.BehaviorFor<Controller1>(x => x.get_last_ranked(null))
+			_graph.ChainFor<Controller1>(x => x.get_last_ranked(null))
                 .As<RoutedChain>()
 			      .Route.Rank.ShouldBe(int.MaxValue);
 		}
@@ -73,7 +73,7 @@ namespace FubuMVC.Tests.Resources.PathBased
 		[Test]
 		public void no_route_inputs_should_rank_zero()
 		{
-			_graph.BehaviorFor<Controller1>(x => x.zero(null))
+			_graph.ChainFor<Controller1>(x => x.zero(null))
                 .As<RoutedChain>()
 				  .Route.Rank.ShouldBe(0);
 		}
@@ -81,7 +81,7 @@ namespace FubuMVC.Tests.Resources.PathBased
 		[Test]
 		public void one_route_input_should_as_one()
 		{
-			_graph.BehaviorFor<Controller1>(x => x.one(null))
+			_graph.ChainFor<Controller1>(x => x.one(null))
                 .As<RoutedChain>()
 			      .Route.Rank.ShouldBe(1);
 		}
@@ -89,7 +89,7 @@ namespace FubuMVC.Tests.Resources.PathBased
 		[Test]
 		public void two_route_inputs_should_as_one()
 		{
-			_graph.BehaviorFor<Controller1>(x => x.two(null))
+			_graph.ChainFor<Controller1>(x => x.two(null))
                 .As<RoutedChain>()
 				  .Route.Rank.ShouldBe(2);
 		}

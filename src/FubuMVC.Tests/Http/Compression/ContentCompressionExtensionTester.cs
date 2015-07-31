@@ -53,7 +53,7 @@ namespace FubuMVC.Tests.Http.Compression
         private bool chainHasFilter<T>(BehaviorGraph graph, Expression<Func<T, object>> expression)
         {
             return graph
-                .BehaviorFor(expression)
+                .ChainFor(expression)
                 .Filters
                 .Any(x => x.GetType() == typeof (HttpContentEncodingFilter));
         }

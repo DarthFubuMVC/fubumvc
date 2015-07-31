@@ -80,7 +80,7 @@ namespace FubuMVC.Tests.ServiceBus
                 x.Policies.ChainSource<SystemLevelHandlers>(); 
             });
 
-            graph.BehaviorFor<SomethingEndpoint>(x => x.get_hello())
+            graph.ChainFor<SomethingEndpoint>(x => x.get_hello())
                 .IsWrappedBy(typeof (RedWrapper))
                 .ShouldBeFalse();
         }

@@ -34,8 +34,8 @@ namespace FubuMVC.Tests.Urls
 				registry.Actions.IncludeType<ChainUrlResolverEndpoint>();
 			});
 
-			theSimpleChain = theGraph.BehaviorFor<ChainUrlResolverEndpoint>(x => x.get_index());
-			theChainWithRouteParams = theGraph.BehaviorFor(typeof(ChainUrlParams));
+			theSimpleChain = theGraph.ChainFor<ChainUrlResolverEndpoint>(x => x.get_index());
+			theChainWithRouteParams = theGraph.ChainFor(typeof(ChainUrlParams));
 		}
 
 		[TearDown]

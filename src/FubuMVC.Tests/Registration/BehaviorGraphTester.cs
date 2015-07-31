@@ -1,12 +1,10 @@
 using System;
 using System.Reflection;
-using FubuCore;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
 namespace FubuMVC.Tests.Registration
 {
@@ -81,7 +79,7 @@ namespace FubuMVC.Tests.Registration
         {
             var graph = BehaviorGraph.BuildFrom(x => { x.Actions.IncludeClassesSuffixedWithController(); });
 
-            var chain = graph.BehaviorFor<MyHomeController>(x => x.ThisIsHome());
+            var chain = graph.ChainFor<MyHomeController>(x => x.ThisIsHome());
             graph.RemoveChain(chain);
 
             graph
@@ -134,79 +132,6 @@ namespace FubuMVC.Tests.Registration
         public void InvokePartial()
         {
             throw new NotImplementedException();
-        }
-    }
-
-    [TestFixture]
-    public class when_finding_the_id_for_a_call
-    {
-        #region Setup/Teardown
-
-        [SetUp]
-        public void SetUp()
-        {
-            graph = new BehaviorGraph();
-
-            chain1 = BehaviorChain.For<ControllerTarget>(x => x.OneInOneOut(null));
-            graph.AddChain(chain1);
-
-            chain2 = BehaviorChain.For<ControllerTarget>(x => x.OneInZeroOut(null));
-            graph.AddChain(chain2);
-        }
-
-        #endregion
-
-        private BehaviorGraph graph;
-        private BehaviorChain chain1;
-        private BehaviorChain chain2;
-
-        [Test]
-        public void find_the_chain_matching_the_call()
-        {
-            graph.IdForCall(ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null))).ShouldBe(chain1.UniqueId);
-            graph.IdForCall(ActionCall.For<ControllerTarget>(x => x.OneInZeroOut(null))).ShouldBe(chain2.UniqueId);
-        }
-
-        [Test]
-        public void throw_2152_when_the_call_cannot_be_found()
-        {
-            Exception<FubuException>.ShouldBeThrownBy(
-                () => { graph.IdForCall(ActionCall.For<ControllerTarget>(x => x.ZeroInOneOut())); }).ErrorCode.
-                ShouldBe(2152);
-        }
-    }
-
-
-    [TestFixture]
-    public class when_finding_the_id_of_an_input_model
-    {
-        [Test]
-        public void should_throw_2150_if_the_input_type_cannot_be_found()
-        {
-            Exception<FubuException>.ShouldBeThrownBy(() => { new BehaviorGraph().IdForType(typeof (Model1)); }).
-                ErrorCode.ShouldBe(2150);
-        }
-
-        [Test]
-        public void should_throw_2151_if_the_input_type_has_multiple_possible_behavior_chains()
-        {
-            var graph = new BehaviorGraph();
-
-            graph.AddChain(BehaviorChain.For<ControllerTarget>(x => x.OneInOneOut(null)));
-            graph.AddChain(BehaviorChain.For<ControllerTarget>(x => x.OneInZeroOut(null)));
-
-            Exception<FubuException>.ShouldBeThrownBy(() => { graph.IdForType(typeof (Model1)); }).ErrorCode.ShouldBe
-                (2151);
-        }
-
-        [Test]
-        public void when_there_is_only_one_chain_for_that_input_model()
-        {
-            var graph = new BehaviorGraph();
-
-            var chain = BehaviorChain.For<ControllerTarget>(x => x.OneInOneOut(null));
-            graph.AddChain(chain);
-            graph.IdForType(typeof (Model1)).ShouldBe(chain.UniqueId);
         }
     }
 

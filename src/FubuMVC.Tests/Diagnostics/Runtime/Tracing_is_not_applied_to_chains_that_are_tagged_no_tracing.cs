@@ -20,38 +20,38 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
             {
                 var graph = runtime.Factory.Get<BehaviorGraph>();
 
-                graph.BehaviorFor<NotTracedEndpoint>(x => x.get_nothing())
+                graph.ChainFor<NotTracedEndpoint>(x => x.get_nothing())
                     .OfType<DiagnosticNode>()
                     .Any()
                     .ShouldBeFalse();
-                graph.BehaviorFor<NotTracedEndpoint>(x => x.get_nothing())
+                graph.ChainFor<NotTracedEndpoint>(x => x.get_nothing())
                     .OfType<BehaviorTracerNode>()
                     .Any()
                     .ShouldBeFalse();
 
-                graph.BehaviorFor<NotTracedEndpoint>(x => x.get_something())
+                graph.ChainFor<NotTracedEndpoint>(x => x.get_something())
                     .OfType<DiagnosticNode>()
                     .Any()
                     .ShouldBeFalse();
-                graph.BehaviorFor<NotTracedEndpoint>(x => x.get_something())
+                graph.ChainFor<NotTracedEndpoint>(x => x.get_something())
                     .OfType<BehaviorTracerNode>()
                     .Any()
                     .ShouldBeFalse();
 
-                graph.BehaviorFor<SomeTracingEndpoint>(x => x.get_tracing_no())
+                graph.ChainFor<SomeTracingEndpoint>(x => x.get_tracing_no())
                     .OfType<DiagnosticNode>()
                     .Any()
                     .ShouldBeFalse();
-                graph.BehaviorFor<SomeTracingEndpoint>(x => x.get_tracing_no())
+                graph.ChainFor<SomeTracingEndpoint>(x => x.get_tracing_no())
                     .OfType<BehaviorTracerNode>()
                     .Any()
                     .ShouldBeFalse();
 
-                graph.BehaviorFor<SomeTracingEndpoint>(x => x.get_tracing_yes())
+                graph.ChainFor<SomeTracingEndpoint>(x => x.get_tracing_yes())
                     .OfType<DiagnosticNode>()
                     .Any()
                     .ShouldBeTrue();
-                graph.BehaviorFor<SomeTracingEndpoint>(x => x.get_tracing_yes())
+                graph.ChainFor<SomeTracingEndpoint>(x => x.get_tracing_yes())
                     .OfType<BehaviorTracerNode>()
                     .Any()
                     .ShouldBeTrue();

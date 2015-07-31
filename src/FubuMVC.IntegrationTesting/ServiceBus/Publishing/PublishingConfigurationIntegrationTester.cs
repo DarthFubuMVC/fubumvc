@@ -47,7 +47,7 @@ namespace FubuMVC.IntegrationTesting.ServiceBus.Publishing
 
             theRuntime = registry.ToRuntime();
             theGraph = theRuntime.Factory.Get<BehaviorGraph>();
-            chain = theGraph.BehaviorFor<MessageOnePublisher>(x => x.post_message1(null));
+            chain = theGraph.ChainFor<MessageOnePublisher>(x => x.post_message1(null));
 
             container.Inject(theServiceBus);
         
@@ -79,7 +79,7 @@ namespace FubuMVC.IntegrationTesting.ServiceBus.Publishing
         public void should_find_the_IEventPublishers_loaded_into_memory()
         {
             chain.ShouldNotBeNull();
-            theGraph.BehaviorFor<MessageTwoPublisher>(x => x.post_message2(null))
+            theGraph.ChainFor<MessageTwoPublisher>(x => x.post_message2(null))
                 .ShouldNotBeNull();
         }
 

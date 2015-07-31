@@ -85,10 +85,10 @@ namespace FubuMVC.Tests.Registration.Policies
                 });
             });
 
-            graph.BehaviorFor<HttpMethodEndpoint>(x => x.put_something(null)).Any(x => x is FakeNode).ShouldBeTrue();
-            graph.BehaviorFor<HttpMethodEndpoint>(x => x.post_something(null)).Any(x => x is FakeNode).ShouldBeTrue();
-            graph.BehaviorFor<HttpMethodEndpoint>(x => x.delete_something(null)).Any(x => x is FakeNode).ShouldBeTrue();
-            graph.BehaviorFor<HttpMethodEndpoint>(x => x.get_something()).Any(x => x is FakeNode).ShouldBeFalse();
+            graph.ChainFor<HttpMethodEndpoint>(x => x.put_something(null)).Any(x => x is FakeNode).ShouldBeTrue();
+            graph.ChainFor<HttpMethodEndpoint>(x => x.post_something(null)).Any(x => x is FakeNode).ShouldBeTrue();
+            graph.ChainFor<HttpMethodEndpoint>(x => x.delete_something(null)).Any(x => x is FakeNode).ShouldBeTrue();
+            graph.ChainFor<HttpMethodEndpoint>(x => x.get_something()).Any(x => x is FakeNode).ShouldBeFalse();
         }
 
     }

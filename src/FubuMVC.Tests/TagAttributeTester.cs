@@ -12,7 +12,7 @@ namespace FubuMVC.Tests
         public void applies_the_tags()
         {
             var graph = BehaviorGraph.BuildFrom(x => x.Actions.IncludeType<TaggedEndpoint>());
-            graph.BehaviorFor<TaggedEndpoint>(x => x.get_tags())
+            graph.ChainFor<TaggedEndpoint>(x => x.get_tags())
                 .Tags.ShouldHaveTheSameElementsAs("foo", "bar");
         }
     }

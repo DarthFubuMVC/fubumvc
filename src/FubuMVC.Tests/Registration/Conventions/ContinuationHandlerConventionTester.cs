@@ -81,7 +81,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void should_attach_continuation_handlers_to_actions_that_return_an_IRedirectable()
         {
-            graph.BehaviorFor<ContinuationHandlerController>(x => x.RedirectedMethod())
+            graph.ChainFor<ContinuationHandlerController>(x => x.RedirectedMethod())
                 .Any(x => x is ContinuationNode)
                 .ShouldBeTrue();
         }
@@ -89,7 +89,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void should_not_attach_continuation_handlers_to_actions_that_do_not_return_continuations()
         {
-            graph.BehaviorFor<ContinuationHandlerController>(x => x.ZeroInOneOut()).Top.Any(x => x is ContinuationNode).
+            graph.ChainFor<ContinuationHandlerController>(x => x.ZeroInOneOut()).Top.Any(x => x is ContinuationNode).
                 ShouldBeFalse();
         }
 
@@ -98,9 +98,9 @@ namespace FubuMVC.Tests.Registration.Conventions
             the_actions_that_return_continuations_should_have_a_continuation_handler_right_behind_the_action_in_the_chain
             ()
         {
-            graph.BehaviorFor<ContinuationHandlerController>(x => x.GoNext()).FirstCall().Next.ShouldBeOfType
+            graph.ChainFor<ContinuationHandlerController>(x => x.GoNext()).FirstCall().Next.ShouldBeOfType
                 <ContinuationNode>();
-            graph.BehaviorFor<ContinuationHandlerController>(x => x.GoAfter(null)).FirstCall().Next.ShouldBeOfType
+            graph.ChainFor<ContinuationHandlerController>(x => x.GoAfter(null)).FirstCall().Next.ShouldBeOfType
                 <ContinuationNode>();
         }
     }

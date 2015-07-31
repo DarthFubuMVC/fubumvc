@@ -43,7 +43,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             theResultingGraph.ApplicationAssembly.GetName()
                 .Name.ShouldBe(Assembly.GetExecutingAssembly().GetName().Name);
 
-            theResultingGraph.BehaviorFor<OneController>(x => x.Query(null))
+            theResultingGraph.ChainFor<OneController>(x => x.Query(null))
                 .ShouldNotBeNull();
         }
 
@@ -52,7 +52,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             source.Applies.ToAssemblyContainingType<AssemblyEndpoint>();
 
-            theResultingGraph.BehaviorFor<OneController>(x => x.Query(null))
+            theResultingGraph.ChainFor<OneController>(x => x.Query(null))
                 .ShouldBeNull();
         }
 
@@ -62,7 +62,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             source.Applies.ToAssemblyContainingType<AssemblyEndpoint>();
             source.IncludeClassesSuffixedWithEndpoint();
 
-            theResultingGraph.BehaviorFor<AssemblyEndpoint>(x => x.get_hello())
+            theResultingGraph.ChainFor<AssemblyEndpoint>(x => x.get_hello())
                 .ShouldNotBeNull();
         }
 
@@ -71,8 +71,8 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             source.IncludeClassesSuffixedWithEndpoint();
 
-            theResultingGraph.BehaviorFor<OneEndpoint>(x => x.Report()).ShouldNotBeNull();
-            theResultingGraph.BehaviorFor<OneController>(x => x.Report()).ShouldBeNull();
+            theResultingGraph.ChainFor<OneEndpoint>(x => x.Report()).ShouldNotBeNull();
+            theResultingGraph.ChainFor<OneController>(x => x.Report()).ShouldBeNull();
         }
 
         [Test]
@@ -80,8 +80,8 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             source.IncludeClassesSuffixedWithController();
 
-            theResultingGraph.BehaviorFor<OneEndpoint>(x => x.Report()).ShouldBeNull();
-            theResultingGraph.BehaviorFor<OneController>(x => x.Report()).ShouldNotBeNull();
+            theResultingGraph.ChainFor<OneEndpoint>(x => x.Report()).ShouldBeNull();
+            theResultingGraph.ChainFor<OneController>(x => x.Report()).ShouldNotBeNull();
         }
 
         [Test]
@@ -89,9 +89,9 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             source.IncludeTypesNamed(x => x.StartsWith("One"));
 
-            theResultingGraph.BehaviorFor<OneEndpoint>(x => x.Report()).ShouldNotBeNull();
-            theResultingGraph.BehaviorFor<OneController>(x => x.Report()).ShouldNotBeNull();
-            theResultingGraph.BehaviorFor<TwoEndpoint>(x => x.Report()).ShouldBeNull();
+            theResultingGraph.ChainFor<OneEndpoint>(x => x.Report()).ShouldNotBeNull();
+            theResultingGraph.ChainFor<OneController>(x => x.Report()).ShouldNotBeNull();
+            theResultingGraph.ChainFor<TwoEndpoint>(x => x.Report()).ShouldBeNull();
         }
 
         [Test]
@@ -99,9 +99,9 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             source.IncludeTypes(x => x.Name.StartsWith("One"));
 
-            theResultingGraph.BehaviorFor<OneEndpoint>(x => x.Report()).ShouldNotBeNull();
-            theResultingGraph.BehaviorFor<OneController>(x => x.Report()).ShouldNotBeNull();
-            theResultingGraph.BehaviorFor<TwoEndpoint>(x => x.Report()).ShouldBeNull();
+            theResultingGraph.ChainFor<OneEndpoint>(x => x.Report()).ShouldNotBeNull();
+            theResultingGraph.ChainFor<OneController>(x => x.Report()).ShouldNotBeNull();
+            theResultingGraph.ChainFor<TwoEndpoint>(x => x.Report()).ShouldBeNull();
         }
 
         [Test]
@@ -109,7 +109,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             source.IncludeTypesImplementing<IPattern>();
 
-            theResultingGraph.BehaviorFor<DifferentPatternClass>(x => x.Report())
+            theResultingGraph.ChainFor<DifferentPatternClass>(x => x.Report())
                 .ShouldNotBeNull();
         }
 
@@ -119,8 +119,8 @@ namespace FubuMVC.Tests.Registration.Conventions
             source.IncludeClassesSuffixedWithController();
             source.IncludeMethods(x => x.Name.StartsWith("Q"));
 
-            theResultingGraph.BehaviorFor<OneController>(x => x.Query(null)).ShouldNotBeNull();
-            theResultingGraph.BehaviorFor<OneController>(x => x.Report()).ShouldBeNull();
+            theResultingGraph.ChainFor<OneController>(x => x.Query(null)).ShouldNotBeNull();
+            theResultingGraph.ChainFor<OneController>(x => x.Report()).ShouldBeNull();
         }
 
         [Test]
@@ -129,8 +129,8 @@ namespace FubuMVC.Tests.Registration.Conventions
             source.IncludeClassesSuffixedWithController();
             source.ExcludeTypes(x => x == typeof (TwoController));
 
-            theResultingGraph.BehaviorFor<OneController>(x => x.Query(null)).ShouldNotBeNull();
-            theResultingGraph.BehaviorFor<TwoController>(x => x.Query(null)).ShouldBeNull();
+            theResultingGraph.ChainFor<OneController>(x => x.Query(null)).ShouldNotBeNull();
+            theResultingGraph.ChainFor<TwoController>(x => x.Query(null)).ShouldBeNull();
         }
 
         [Test]
@@ -139,8 +139,8 @@ namespace FubuMVC.Tests.Registration.Conventions
             source.IncludeClassesSuffixedWithController();
             source.ExcludeMethods(x => x.Name.StartsWith("Q"));
 
-            theResultingGraph.BehaviorFor<OneController>(x => x.Query(null)).ShouldBeNull();
-            theResultingGraph.BehaviorFor<OneController>(x => x.Report()).ShouldNotBeNull();
+            theResultingGraph.ChainFor<OneController>(x => x.Query(null)).ShouldBeNull();
+            theResultingGraph.ChainFor<OneController>(x => x.Report()).ShouldNotBeNull();
         }
 
         [Test]
@@ -149,8 +149,8 @@ namespace FubuMVC.Tests.Registration.Conventions
             source.IncludeClassesSuffixedWithController();
             source.IgnoreMethodsDeclaredBy<OneController>();
 
-            theResultingGraph.BehaviorFor<ChildController>(x => x.Report()).ShouldBeNull();
-            theResultingGraph.BehaviorFor<ChildController>(x => x.ChildQuery(null)).ShouldNotBeNull();
+            theResultingGraph.ChainFor<ChildController>(x => x.Report()).ShouldBeNull();
+            theResultingGraph.ChainFor<ChildController>(x => x.ChildQuery(null)).ShouldNotBeNull();
         }
 
         [Test]
@@ -159,7 +159,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             source.IncludeTypes(x => x.CanBeCastTo<IPattern>());
             source.ExcludeNonConcreteTypes();
 
-            theResultingGraph.BehaviorFor<IPattern>(x => x.Query(null))
+            theResultingGraph.ChainFor<IPattern>(x => x.Query(null))
                 .ShouldBeNull();
         }
     }

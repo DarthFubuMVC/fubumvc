@@ -35,22 +35,22 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
         [Test]
         public void should_be_attached_to_normal_endpoints()
         {
-            theGraph.BehaviorFor<SomeEndpoints>(x => x.M1(null)).First().ShouldBeOfType<DiagnosticNode>();
-            theGraph.BehaviorFor<SomeEndpoints>(x => x.M2(null)).First().ShouldBeOfType<DiagnosticNode>();
+            theGraph.ChainFor<SomeEndpoints>(x => x.M1(null)).First().ShouldBeOfType<DiagnosticNode>();
+            theGraph.ChainFor<SomeEndpoints>(x => x.M2(null)).First().ShouldBeOfType<DiagnosticNode>();
         }
 
 
         [Test]
         public void should_not_attach_to_endpoints_marked_by_No_diagnostics_on_method()
         {
-            theGraph.BehaviorFor<SomeEndpoints>(x => x.M3(null)).First().ShouldNotBeOfType<DiagnosticNode>();
+            theGraph.ChainFor<SomeEndpoints>(x => x.M3(null)).First().ShouldNotBeOfType<DiagnosticNode>();
         }
 
         [Test]
         public void should_not_attach_to_endpoint_classes_marked_by_NoDiagnostics_on_class()
         {
-            theGraph.BehaviorFor<OtherEndpoints>(x => x.M1(null)).First().ShouldNotBeOfType<DiagnosticNode>();
-            theGraph.BehaviorFor<OtherEndpoints>(x => x.M2(null)).First().ShouldNotBeOfType<DiagnosticNode>();
+            theGraph.ChainFor<OtherEndpoints>(x => x.M1(null)).First().ShouldNotBeOfType<DiagnosticNode>();
+            theGraph.ChainFor<OtherEndpoints>(x => x.M2(null)).First().ShouldNotBeOfType<DiagnosticNode>();
         }
 
 

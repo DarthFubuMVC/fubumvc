@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                 x.Actions.IncludeType<MethodAction>();
             });
 
-            theChain = graph.BehaviorFor<MethodAction>(x => x.Get_cases_from_Start_to_End(null))
+            theChain = graph.ChainFor<MethodAction>(x => x.Get_cases_from_Start_to_End(null))
                 .As<RoutedChain>();
         }
 

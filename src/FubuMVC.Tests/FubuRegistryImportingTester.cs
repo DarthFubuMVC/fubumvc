@@ -149,8 +149,8 @@ namespace FubuMVC.Tests
 
             var graph = BehaviorGraph.BuildFrom(parent);
 
-            graph.BehaviorFor<Action1>(x => x.M1()).As<RoutedChain>().GetRoutePattern().ShouldBe("import/a/m1");
-            graph.BehaviorFor<Action1>(x => x.M2()).As<RoutedChain>().GetRoutePattern().ShouldBe("import/a/m2");
+            graph.ChainFor<Action1>(x => x.M1()).As<RoutedChain>().GetRoutePattern().ShouldBe("import/a/m1");
+            graph.ChainFor<Action1>(x => x.M2()).As<RoutedChain>().GetRoutePattern().ShouldBe("import/a/m2");
         }
 
         [Test]
@@ -161,8 +161,8 @@ namespace FubuMVC.Tests
 
             var graph = BehaviorGraph.BuildFrom(parent);
 
-            graph.BehaviorFor<Action1>(x => x.M1()).As<RoutedChain>().GetRoutePattern().ShouldBe("a/m1");
-            graph.BehaviorFor<Action1>(x => x.M2()).As<RoutedChain>().GetRoutePattern().ShouldBe("a/m2");
+            graph.ChainFor<Action1>(x => x.M1()).As<RoutedChain>().GetRoutePattern().ShouldBe("a/m1");
+            graph.ChainFor<Action1>(x => x.M2()).As<RoutedChain>().GetRoutePattern().ShouldBe("a/m2");
         }
 
         [Test]
@@ -179,15 +179,15 @@ namespace FubuMVC.Tests
             var graph = BehaviorGraph.BuildFrom(parent);
 
             // Chains from the import should have the wrapper
-            var chain = graph.BehaviorFor<Action1>(x => x.M1());
+            var chain = graph.ChainFor<Action1>(x => x.M1());
             chain.IsWrappedBy(typeof (Wrapper)).ShouldBeTrue();
 
-            graph.BehaviorFor<Action1>(x => x.M2()).IsWrappedBy(typeof (Wrapper)).ShouldBeTrue();
+            graph.ChainFor<Action1>(x => x.M2()).IsWrappedBy(typeof (Wrapper)).ShouldBeTrue();
 
 
             // Chains from the parent should not have the wrapper
-            graph.BehaviorFor<Action2>(x => x.M1()).IsWrappedBy(typeof (Wrapper)).ShouldBeFalse();
-            graph.BehaviorFor<Action2>(x => x.M2()).IsWrappedBy(typeof (Wrapper)).ShouldBeFalse();
+            graph.ChainFor<Action2>(x => x.M1()).IsWrappedBy(typeof (Wrapper)).ShouldBeFalse();
+            graph.ChainFor<Action2>(x => x.M2()).IsWrappedBy(typeof (Wrapper)).ShouldBeFalse();
         }
 
 
@@ -206,13 +206,13 @@ namespace FubuMVC.Tests
             var graph = BehaviorGraph.BuildFrom(parent);
 
             // Chains from the import should have the wrapper
-            graph.BehaviorFor<Action1>(x => x.M1()).IsWrappedBy(typeof (Wrapper)).ShouldBeTrue();
-            graph.BehaviorFor<Action1>(x => x.M2()).IsWrappedBy(typeof (Wrapper)).ShouldBeTrue();
+            graph.ChainFor<Action1>(x => x.M1()).IsWrappedBy(typeof (Wrapper)).ShouldBeTrue();
+            graph.ChainFor<Action1>(x => x.M2()).IsWrappedBy(typeof (Wrapper)).ShouldBeTrue();
 
 
             // Chains from the parent should also have the wrapper
-            graph.BehaviorFor<Action2>(x => x.M1()).IsWrappedBy(typeof (Wrapper)).ShouldBeTrue();
-            graph.BehaviorFor<Action2>(x => x.M2()).IsWrappedBy(typeof (Wrapper)).ShouldBeTrue();
+            graph.ChainFor<Action2>(x => x.M1()).IsWrappedBy(typeof (Wrapper)).ShouldBeTrue();
+            graph.ChainFor<Action2>(x => x.M2()).IsWrappedBy(typeof (Wrapper)).ShouldBeTrue();
         }
 
 

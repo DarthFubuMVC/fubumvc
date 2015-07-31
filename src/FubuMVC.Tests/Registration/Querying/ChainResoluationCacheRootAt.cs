@@ -33,7 +33,7 @@ namespace FubuMVC.Tests.Registration.Querying
                 theRouteDefinitionAlias.Input = MockRepository.GenerateMock<IRouteInput>();
                 theRouteDefinitionAlias.Input.Stub(_ => _.Rank).Return(5);
 
-                x.BehaviorFor<RouteAliasAction1>(_ => _.M1()).As<RoutedChain>().AddRouteAlias(theRouteDefinitionAlias);
+                x.ChainFor<RouteAliasAction1>(_ => _.M1()).As<RoutedChain>().AddRouteAlias(theRouteDefinitionAlias);
             });
 
             return BehaviorGraph.BuildFrom(registry);

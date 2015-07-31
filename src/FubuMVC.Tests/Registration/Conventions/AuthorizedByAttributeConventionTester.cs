@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.Registration.Conventions
 
         private BehaviorChain chainFor(Expression<Action<AuthorizedByAttributeConventionController>> action)
         {
-            return graph.BehaviorFor(action);
+            return graph.ChainFor(action);
         }
 
         [Test]
@@ -78,7 +78,7 @@ namespace FubuMVC.Tests.Registration.Conventions
 
         private BehaviorChain chainFor(Expression<Action<AuthorizedController2>> action)
         {
-            return graph.BehaviorFor(action);
+            return graph.ChainFor(action);
         }
 
         [Test]

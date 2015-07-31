@@ -37,19 +37,19 @@ namespace FubuMVC.Tests.Registration.Conventions
 
         private BehaviorChain chainFor(Expression<Action<JsonOutputAttachmentTesterController>> expression)
         {
-            return graph.BehaviorFor(expression);
+            return graph.ChainFor(expression);
         }
 
         private BehaviorChain chainFor(Expression<Func<JsonOutputAttachmentTesterController, object>> expression)
         {
-            return graph.BehaviorFor(expression);
+            return graph.ChainFor(expression);
         }
 
         [Test]
         public void automatically_output_methds_that_are_decorated_with_JsonEndpoint_to_json()
         {
             var behavior =
-                graph.BehaviorFor<JsonOutputAttachmentTesterController>(x => x.Decorated()).Calls.First().Next;
+                graph.ChainFor<JsonOutputAttachmentTesterController>(x => x.Decorated()).Calls.First().Next;
             behavior.ShouldBeOfType<OutputNode>().ResourceType.ShouldBe(typeof (ViewModel1));
         }
 
@@ -57,7 +57,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void automatically_output_methods_that_return_string_as_text_if_there_is_not_output()
         {
             var behavior =
-                graph.BehaviorFor<JsonOutputAttachmentTesterController>(x => x.Stringify()).Calls.First().Next;
+                graph.ChainFor<JsonOutputAttachmentTesterController>(x => x.Stringify()).Calls.First().Next;
 
             behavior.ShouldBeOfType<OutputNode>().Writes(MimeType.Text).ShouldBeTrue();
         }

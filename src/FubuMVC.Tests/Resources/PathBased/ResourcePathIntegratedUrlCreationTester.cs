@@ -42,7 +42,7 @@ namespace FubuMVC.Tests.Resources.PathBased
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<Controller1>();
 
-            BehaviorGraph.BuildFrom(registry).BehaviorFor<Controller1>(x => x.get_resource(null)).As<RoutedChain>().Route.CreateUrlFromInput(
+            BehaviorGraph.BuildFrom(registry).ChainFor<Controller1>(x => x.get_resource(null)).As<RoutedChain>().Route.CreateUrlFromInput(
                 new ResourcePath("something/else"))
                 .ShouldBe("resource/something/else");
         }
@@ -55,12 +55,12 @@ namespace FubuMVC.Tests.Resources.PathBased
 
             var graph = BehaviorGraph.BuildFrom(registry);
 
-            graph.BehaviorFor<Controller1>(x => x.get_resource(null))
+            graph.ChainFor<Controller1>(x => x.get_resource(null))
                 .As<RoutedChain>()
                 .Route.Pattern.ShouldBe(
                     "resource/{Part0}/{Part1}/{Part2}/{Part3}/{Part4}/{Part5}/{Part6}/{Part7}/{Part8}/{Part9}");
 
-            graph.BehaviorFor<Controller1>(x => x.get_special(null))
+            graph.ChainFor<Controller1>(x => x.get_special(null))
                 .As<RoutedChain>()
                 .Route.Pattern.ShouldBe(
                     "special/{Part0}/{Part1}/{Part2}/{Part3}/{Part4}/{Part5}/{Part6}/{Part7}/{Part8}/{Part9}");

@@ -85,7 +85,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void should_have_imported_the_behavior_chains_without_routes()
         {
-            graph2.BehaviorFor<RegistryImportEndpoint>(x => x.GoPartial(null))
+            graph2.ChainFor<RegistryImportEndpoint>(x => x.GoPartial(null))
                 .ShouldNotBeNull();
         }
     }

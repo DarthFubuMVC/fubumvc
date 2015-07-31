@@ -29,13 +29,13 @@ namespace FubuMVC.Tests.Registration.Conventions
 
         private IEnumerable<string> rolesFor<T>(Expression<Action<T>> method)
         {
-            var chain = graph.BehaviorFor(method);
+            var chain = graph.ChainFor(method);
             return chain.Authorization.AllowedRoles();
         }
 
         private void shouldBeNoRolesFor<T>(Expression<Action<T>> method)
         {
-            graph.BehaviorFor(method).Top.Any(x => x is AuthorizationNode).ShouldBeFalse();
+            graph.ChainFor(method).Top.Any(x => x is AuthorizationNode).ShouldBeFalse();
         }
 
         [Test]

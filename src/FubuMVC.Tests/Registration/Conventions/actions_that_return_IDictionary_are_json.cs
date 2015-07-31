@@ -27,10 +27,10 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void methods_that_return_an_IDictionary_string_object_should_be_asymmetric_json()
         {
-            var chain = theGraph.BehaviorFor<MyController>(x => x.ReturnsJson(null));
+            var chain = theGraph.ChainFor<MyController>(x => x.ReturnsJson(null));
             chain.Output.Writes(MimeType.Json).ShouldBeTrue();
 
-            var behaviorChain = theGraph.BehaviorFor<MyController>(x => x.ReturnOtherJson());
+            var behaviorChain = theGraph.ChainFor<MyController>(x => x.ReturnOtherJson());
             behaviorChain.Output.Writes(MimeType.Json).ShouldBeTrue();
         }
 

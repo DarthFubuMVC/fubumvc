@@ -19,8 +19,8 @@ namespace FubuMVC.Tests.Registration.Conventions
 
             var graph = BehaviorGraph.BuildFrom(registry);
 
-            graph.BehaviorFor<PartialController>(x => x.Go(null)).IsPartialOnly.ShouldBeFalse();
-            graph.BehaviorFor<PartialController>(x => x.GoPartial(null)).IsPartialOnly.ShouldBeTrue();
+            graph.ChainFor<PartialController>(x => x.Go(null)).IsPartialOnly.ShouldBeFalse();
+            graph.ChainFor<PartialController>(x => x.GoPartial(null)).IsPartialOnly.ShouldBeTrue();
         }
 
 

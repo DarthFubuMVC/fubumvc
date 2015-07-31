@@ -85,7 +85,7 @@ namespace FubuMVC.IntegrationTesting.Authorization
             registry.Configure(
                 x =>
                 {
-                    x.BehaviorFor<AuthorizedEndpoint>(_ => _.get_authorized_text())
+                    x.ChainFor<AuthorizedEndpoint>(_ => _.get_authorized_text())
                         .Authorization.FailureHandler<CustomAuthHandler>();
                 });
 

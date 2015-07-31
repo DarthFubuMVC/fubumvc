@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Bugs
 
             var graph = BehaviorGraph.BuildFrom(registry);
 
-            graph.BehaviorFor<SomeRandomClass>(x => x.get_some_data())
+            graph.ChainFor<SomeRandomClass>(x => x.get_some_data())
                 .As<RoutedChain>()
                 .GetRoutePattern().ShouldStartWith("mypak");
         }

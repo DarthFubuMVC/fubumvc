@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.NewConneg
         [Test]
         public void input_is_first_even_with_authorization()
         {
-            theGraph.BehaviorFor<PlacementController>(x => x.post_payload(null))
+            theGraph.ChainFor<PlacementController>(x => x.post_payload(null))
                 .Top.ShouldBeOfType<InputNode>()
                 .Next.ShouldBeOfType<AuthorizationNode>();
         }
@@ -36,7 +36,7 @@ namespace FubuMVC.Tests.NewConneg
         [Test]
         public void output_is_last()
         {
-            theGraph.BehaviorFor<PlacementController>(x => x.post_payload(null))
+            theGraph.ChainFor<PlacementController>(x => x.post_payload(null))
                 .Last().ShouldBeOfType<OutputNode>();
         }
     }

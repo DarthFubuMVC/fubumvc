@@ -12,7 +12,7 @@ namespace FubuMVC.IntegrationTesting.Owin
         [Test]
         public void read_querystring_values_from_current_request()
         {
-            TestHost.BehaviorGraph.BehaviorFor<ReadingQuerystringEndpoint>(x => x.get_querystring_Key(null))
+            TestHost.BehaviorGraph.ChainFor<ReadingQuerystringEndpoint>(x => x.get_querystring_Key(null))
                 .As<RoutedChain>()
                 .GetRoutePattern().ShouldBe("querystring/{Key}");
 

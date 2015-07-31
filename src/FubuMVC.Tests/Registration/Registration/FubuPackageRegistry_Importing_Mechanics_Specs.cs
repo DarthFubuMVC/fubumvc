@@ -25,8 +25,8 @@ namespace FubuMVC.Tests.Registration.Registration
             _runtime = FubuRuntime.For<ApplicationRegistry>();
             behaviors = _runtime.Factory.Get<BehaviorGraph>();
 
-            appChain = behaviors.BehaviorFor<ApplicationActions>(x => x.get_app_action());
-            pakChain = behaviors.BehaviorFor<PackageActions>(x => x.get_pak_action());
+            appChain = behaviors.ChainFor<ApplicationActions>(x => x.get_app_action());
+            pakChain = behaviors.ChainFor<PackageActions>(x => x.get_pak_action());
         }
 
         [TearDown]

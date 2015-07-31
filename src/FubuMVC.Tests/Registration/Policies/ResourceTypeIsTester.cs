@@ -21,21 +21,21 @@ namespace FubuMVC.Tests.Registration.Policies
         [Test]
         public void matches_positive()
         {
-            new ResourceTypeIs<string>().Matches(theGraph.BehaviorFor<ResourceTypeEndpoints>(x => x.get_hello()))
+            new ResourceTypeIs<string>().Matches(theGraph.ChainFor<ResourceTypeEndpoints>(x => x.get_hello()))
                 .ShouldBeTrue();
         }
 
         [Test]
         public void matches_negative()
         {
-            new ResourceTypeIs<string>().Matches(theGraph.BehaviorFor<ResourceTypeEndpoints>(x => x.get_goodbye()))
+            new ResourceTypeIs<string>().Matches(theGraph.ChainFor<ResourceTypeEndpoints>(x => x.get_goodbye()))
                 .ShouldBeFalse();
         }
 
         [Test]
         public void does_not_blow_up_if_The_resource_type_is_null()
         {
-            new ResourceTypeIs<string>().Matches(theGraph.BehaviorFor<ResourceTypeEndpoints>(x => x.post_name(null)))
+            new ResourceTypeIs<string>().Matches(theGraph.ChainFor<ResourceTypeEndpoints>(x => x.post_name(null)))
                 .ShouldBeFalse();
         }
     }

@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Registration
                 r.Actions.IncludeType<SomeEndpoint>();
 
                 r.Configure(g => {
-                    var chain = g.BehaviorFor<SomeEndpoint>(x => x.get_something(null));
+                    var chain = g.ChainFor<SomeEndpoint>(x => x.get_something(null));
                     chain.Prepend(ActionFilter.For<SomeEndpoint>(x => x.Filter(null)));
                 });
             });
@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void the_filter_does_not_count_toward_input_or_resource_type()
         {
-            var chain = theGraph.BehaviorFor<SomeEndpoint>(x => x.get_something(null));
+            var chain = theGraph.ChainFor<SomeEndpoint>(x => x.get_something(null));
 
             chain.InputType().ShouldBe(typeof (RealInput));
             chain.ResourceType().ShouldBe(typeof (RealOutput));
@@ -37,7 +37,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void still_get_the_continuation_director_behind_the_action_filter()
         {
-            var chain = theGraph.BehaviorFor<SomeEndpoint>(x => x.get_something(null));
+            var chain = theGraph.ChainFor<SomeEndpoint>(x => x.get_something(null));
             chain.FirstOrDefault(x => x is ActionFilter).Next
                 .ShouldBeOfType<ContinuationNode>();
         }
@@ -45,7 +45,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void does_not_impact_a_normal_action_call()
         {
-            var chain = theGraph.BehaviorFor<SomeEndpoint>(x => x.get_somewhere(null));
+            var chain = theGraph.ChainFor<SomeEndpoint>(x => x.get_somewhere(null));
             chain.ResourceType().ShouldBe(typeof (FubuContinuation));
             chain.InputType().ShouldBe(typeof (RealInput));
         }

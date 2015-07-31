@@ -38,14 +38,14 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void place_no_wrappers_on_actions_that_do_not_have_the_attribute()
         {
-            graph.BehaviorFor<WrapWithAttributeController>(x => x.MethodWithNoAttributes()).First()
+            graph.ChainFor<WrapWithAttributeController>(x => x.MethodWithNoAttributes()).First()
                 .ShouldNotBeOfType<Wrapper>();
         }
 
         [Test]
         public void place_wrapper_on_action_with_a_single_attribute()
         {
-            var chain = graph.BehaviorFor<WrapWithAttributeController>(x => x.MethodWithOneAttribute());
+            var chain = graph.ChainFor<WrapWithAttributeController>(x => x.MethodWithOneAttribute());
             chain.First()
                 .ShouldBeOfType<Wrapper>().BehaviorType.ShouldBe(typeof(Wrapper1));
         }
@@ -54,7 +54,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void place_wrapper_on_action_with_multiple_attributes()
         {
             var behaviors =
-                graph.BehaviorFor<WrapWithAttributeController>(x => x.MethodWithMultipleAttributes()).ToList();
+                graph.ChainFor<WrapWithAttributeController>(x => x.MethodWithMultipleAttributes()).ToList();
 
 
             behaviors[0].ShouldBeOfType<Wrapper>().BehaviorType.ShouldBe(typeof (Wrapper1));

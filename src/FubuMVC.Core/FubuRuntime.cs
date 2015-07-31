@@ -36,6 +36,7 @@ namespace FubuMVC.Core
         private readonly ActivationDiagnostics _diagnostics;
         private readonly PerfTimer _perfTimer;
 
+
         public static FubuRuntime Basic(Action<FubuRegistry> configure = null)
         {
             var assembly = AssemblyFinder.FindTheCallingAssembly();

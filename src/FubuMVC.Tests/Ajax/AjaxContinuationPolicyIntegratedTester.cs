@@ -33,7 +33,7 @@ namespace FubuMVC.Tests.Ajax
 
         private BehaviorChain chainFor(Expression<Action<Controller1>> method)
         {
-            return theGraph.BehaviorFor(method);
+            return theGraph.ChainFor(method);
         }
 
 

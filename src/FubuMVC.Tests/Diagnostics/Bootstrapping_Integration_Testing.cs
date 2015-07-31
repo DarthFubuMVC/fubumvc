@@ -31,17 +31,17 @@ namespace FubuMVC.Tests.Diagnostics
         [Test]
         public void find_the_routes_and_chains_from_extensions()
         {
-            runtime.Behaviors.BehaviorFor<StructureMapFubuDiagnostics>(x => x.get_search_options())
+            runtime.Behaviors.ChainFor<StructureMapFubuDiagnostics>(x => x.get_search_options())
                 .ShouldNotBeNull();
 
-            runtime.Behaviors.BehaviorFor<ModelBindingFubuDiagnostics>(x => x.get_binding_all())
+            runtime.Behaviors.ChainFor<ModelBindingFubuDiagnostics>(x => x.get_binding_all())
                 .ShouldNotBeNull();
         }
 
         [Test]
         public void builds_partials_for_Visualize_methods()
         {
-            var chain = runtime.Behaviors.BehaviorFor<ModelBindingFubuDiagnostics>(x => x.VisualizePartial(null));
+            var chain = runtime.Behaviors.ChainFor<ModelBindingFubuDiagnostics>(x => x.VisualizePartial(null));
 
             chain.GetType().ShouldBe(typeof (BehaviorChain));
 

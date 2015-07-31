@@ -25,14 +25,14 @@ namespace FubuMVC.Tests.Registration
 
                 x.Configure(g =>
                 {
-                    g.BehaviorFor<AuthorizedController>(c => c.Go(null)).Authorization.AddRole("RoleA");
+                    g.ChainFor<AuthorizedController>(c => c.Go(null)).Authorization.AddRole("RoleA");
                 });
             });
 
             graph = BehaviorGraph.BuildFrom(registry);
 
-            goChain = graph.BehaviorFor<AuthorizedController>(x => x.Go(null));
-            moveChain = graph.BehaviorFor<AuthorizedController>(x => x.Move(null));
+            goChain = graph.ChainFor<AuthorizedController>(x => x.Go(null));
+            moveChain = graph.ChainFor<AuthorizedController>(x => x.Move(null));
         }
 
 

@@ -20,7 +20,7 @@ namespace FubuMVC.Tests.Bugs
             graph.AddChain().AddToEnd(call2);
 
             Exception<FubuException>.ShouldBeThrownBy(() => {
-                graph.BehaviorFor<Issue101Endpoint>(x => x.get_hello());
+                graph.ChainFor<Issue101Endpoint>(x => x.get_hello());
             });
         }
     }

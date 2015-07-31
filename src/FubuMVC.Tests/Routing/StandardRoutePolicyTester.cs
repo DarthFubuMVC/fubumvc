@@ -137,7 +137,7 @@ namespace FubuMVC.Tests.Routing
                 routeDefinition.Input = MockRepository.GenerateMock<IRouteInput>();
                 routeDefinition.Input.Stub(_ => _.Rank).Return(5);
 
-                x.BehaviorFor<Action1>(_ => _.M1()).As<RoutedChain>().AddRouteAlias(routeDefinition);
+                x.ChainFor<Action1>(_ => _.M1()).As<RoutedChain>().AddRouteAlias(routeDefinition);
             });
 
             return BehaviorGraph.BuildFrom(registry);

@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.Registration.Nodes
 
             using (var runtime = registry.ToRuntime())
             {
-                runtime.Behaviors.BehaviorFor<AuthenticatedEndpoint>(x => x.get_hello())
+                runtime.Behaviors.ChainFor<AuthenticatedEndpoint>(x => x.get_hello())
                     .First().ShouldBeOfType<AuthNode>();
             }
 

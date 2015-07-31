@@ -29,7 +29,7 @@ namespace FubuMVC.Tests
             var route1 = new RouteDefinition("something/else");
             var route2 = new RouteDefinition("again/something/else");
 
-            var chain = theGraph.BehaviorFor<RouteAliasController>(x => x.get_something())
+            var chain = theGraph.ChainFor<RouteAliasController>(x => x.get_something())
                 .As<RoutedChain>();
             var routes = chain.AdditionalRoutes;
 

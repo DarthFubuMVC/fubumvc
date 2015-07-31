@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.Registration.Policies
 
         private BehaviorChain chainFor(Expression<Action<InputTypeEndpoints>> expression)
         {
-            return theGraph.BehaviorFor(expression);
+            return theGraph.ChainFor(expression);
         }
 
         [Test]

@@ -74,12 +74,12 @@ namespace FubuMVC.Tests.Registration.Querying
         [Test]
         public void find_by_input_model_and_category_fails_when_there_are_multiple_matching_chains()
         {
-            var routedChain = graph.BehaviorFor<ChainResolverController>(x => x.M2(null))
+            var routedChain = graph.ChainFor<ChainResolverController>(x => x.M2(null))
                 .As<RoutedChain>();
             routedChain
                 .UrlCategory.Category = Categories.NEW;
 
-            graph.BehaviorFor<ChainResolverController>(x => x.M3(null))
+            graph.ChainFor<ChainResolverController>(x => x.M3(null))
                 .As<RoutedChain>()
                 .UrlCategory.Category = Categories.NEW;
 
@@ -99,11 +99,11 @@ namespace FubuMVC.Tests.Registration.Querying
         [Test]
         public void find_by_input_model_and_category_success()
         {
-            graph.BehaviorFor<ChainResolverController>(x => x.M2(null))
+            graph.ChainFor<ChainResolverController>(x => x.M2(null))
                 .As<RoutedChain>()
                 .UrlCategory.Category = Categories.NEW;
 
-            graph.BehaviorFor<ChainResolverController>(x => x.M3(null))
+            graph.ChainFor<ChainResolverController>(x => x.M3(null))
                 .As<RoutedChain>()
                 .UrlCategory.Category = Categories.EDIT;
 
@@ -132,7 +132,7 @@ namespace FubuMVC.Tests.Registration.Querying
         [Test]
         public void find_creator_positive()
         {
-            var chain = graph.BehaviorFor<ChainResolverController>(x => x.M6(null));
+            var chain = graph.ChainFor<ChainResolverController>(x => x.M6(null));
             chain.As<RoutedChain>().UrlCategory.Creates.Add(typeof(Entity1));
             chain.As<RoutedChain>().UrlCategory.Creates.Add(typeof(Entity2));
 
@@ -144,7 +144,7 @@ namespace FubuMVC.Tests.Registration.Querying
         [Test]
         public void find_unique_can_revert_to_using_the_DEFAULT_category_if_it_exists()
         {
-            graph.BehaviorFor<ChainResolverController>(x => x.M3(null))
+            graph.ChainFor<ChainResolverController>(x => x.M3(null))
                 .As<RoutedChain>()
                 .UrlCategory.Category = Categories.DEFAULT;
 
@@ -154,11 +154,11 @@ namespace FubuMVC.Tests.Registration.Querying
         [Test]
         public void find_unique_can_succeed_with_multiple_options_if_all_but_one_are_categorized()
         {
-            graph.BehaviorFor<ChainResolverController>(x => x.M2(null))
+            graph.ChainFor<ChainResolverController>(x => x.M2(null))
                 .As<RoutedChain>()
                 .UrlCategory.Category = Categories.NEW;
 
-            graph.BehaviorFor<ChainResolverController>(x => x.M3(null))
+            graph.ChainFor<ChainResolverController>(x => x.M3(null))
                 .As<RoutedChain>()
                 .UrlCategory.Category = Categories.EDIT;
 

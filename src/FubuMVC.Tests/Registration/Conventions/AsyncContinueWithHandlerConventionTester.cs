@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void should_attach_async_node_to_actions_that_return_a_task_with_result()
         {
-            graph.BehaviorFor<TestControllerForAsync>(x => x.ActionWithInputWithOutputAsync(null))
+            graph.ChainFor<TestControllerForAsync>(x => x.ActionWithInputWithOutputAsync(null))
                 .Any(x => x is AsyncContinueWithNode)
                 .ShouldBeTrue();
         }
@@ -34,7 +34,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void should_attach_async_node_to_actions_that_return_a_task_with_no_result()
         {
-            graph.BehaviorFor<TestControllerForAsync>(x => x.ActionWithInputNoOutputAsync(null))
+            graph.ChainFor<TestControllerForAsync>(x => x.ActionWithInputNoOutputAsync(null))
                 .Any(x => x is AsyncContinueWithNode)
                 .ShouldBeTrue();
         }
@@ -42,7 +42,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void should_not_attach_async_node_to_actions_that_return_no_task()
         {
-            graph.BehaviorFor<TestControllerForAsync>(x => x.NotAsync()).Top
+            graph.ChainFor<TestControllerForAsync>(x => x.NotAsync()).Top
                 .Any(x => x is AsyncContinueWithNode)
                 .ShouldBeFalse();
         }
@@ -50,7 +50,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void the_actions_that_return_task_with_continuation_should_have_async_node_then_continuation_node()
         {
-            graph.BehaviorFor<TestControllerForAsync>(x => x.ActionWithContinuationAsync())
+            graph.ChainFor<TestControllerForAsync>(x => x.ActionWithContinuationAsync())
                 .FirstCall().Next.ShouldBeOfType<AsyncContinueWithNode>()
                 .Next.ShouldBeOfType<ContinuationNode>();
         }

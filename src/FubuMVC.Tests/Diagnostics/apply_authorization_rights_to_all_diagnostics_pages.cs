@@ -15,8 +15,8 @@ namespace FubuMVC.Tests.Diagnostics
             FubuMode.SetUpForDevelopmentMode();
             using (var runtime = FubuRuntime.For<AuthorizedRegistry>())
             {
-                runtime.Behaviors.BehaviorFor<FubuDiagnosticsEndpoint>(x => x.get__fubu()).Authorization.AllowedRoles().ShouldContain("admin");
-                runtime.Behaviors.BehaviorFor<EndpointExplorerFubuDiagnostics>(x => x.get_endpoints()).Authorization.AllowedRoles().ShouldContain("admin");
+                runtime.Behaviors.ChainFor<FubuDiagnosticsEndpoint>(x => x.get__fubu()).Authorization.AllowedRoles().ShouldContain("admin");
+                runtime.Behaviors.ChainFor<EndpointExplorerFubuDiagnostics>(x => x.get_endpoints()).Authorization.AllowedRoles().ShouldContain("admin");
             }
         }
     }

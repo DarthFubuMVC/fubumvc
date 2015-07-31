@@ -21,9 +21,9 @@ namespace FubuMVC.Tests.Registration
             var graph = BehaviorGraph.BuildEmptyGraph();
 
 
-            graph.BehaviorFor<MyEndpoint>(x => x.Go()).ShouldNotBeNull();
-            graph.BehaviorFor<MyEndpoints>(x => x.Go()).ShouldNotBeNull();
-            graph.BehaviorFor<MyEndpoints>(x => x.Go2()).ShouldNotBeNull();
+            graph.ChainFor<MyEndpoint>(x => x.Go()).ShouldNotBeNull();
+            graph.ChainFor<MyEndpoints>(x => x.Go()).ShouldNotBeNull();
+            graph.ChainFor<MyEndpoints>(x => x.Go2()).ShouldNotBeNull();
         }
 
         [Test]
@@ -35,9 +35,9 @@ namespace FubuMVC.Tests.Registration
                 x.Actions.IncludeClassesSuffixedWithController();
             });
 
-            graph.BehaviorFor<MyEndpoint>(x => x.Go()).ShouldBeNull();
-            graph.BehaviorFor<MyEndpoints>(x => x.Go()).ShouldBeNull();
-            graph.BehaviorFor<MyEndpoints>(x => x.Go2()).ShouldBeNull();
+            graph.ChainFor<MyEndpoint>(x => x.Go()).ShouldBeNull();
+            graph.ChainFor<MyEndpoints>(x => x.Go()).ShouldBeNull();
+            graph.ChainFor<MyEndpoints>(x => x.Go2()).ShouldBeNull();
         }
 
         [Test]
@@ -49,9 +49,9 @@ namespace FubuMVC.Tests.Registration
                 x.Actions.FindWith(new FakeActionSource());
             });
 
-            graph.BehaviorFor<MyEndpoint>(x => x.Go()).ShouldBeNull();
-            graph.BehaviorFor<MyEndpoints>(x => x.Go()).ShouldBeNull();
-            graph.BehaviorFor<MyEndpoints>(x => x.Go2()).ShouldBeNull();
+            graph.ChainFor<MyEndpoint>(x => x.Go()).ShouldBeNull();
+            graph.ChainFor<MyEndpoints>(x => x.Go()).ShouldBeNull();
+            graph.ChainFor<MyEndpoints>(x => x.Go2()).ShouldBeNull();
         }
 
         [Test]
@@ -63,9 +63,9 @@ namespace FubuMVC.Tests.Registration
                 x.Actions.IncludeClassesSuffixedWithEndpoint();
             });
 
-            graph.BehaviorFor<MyEndpoint>(x => x.Go()).ShouldNotBeNull();
-            graph.BehaviorFor<MyEndpoints>(x => x.Go()).ShouldNotBeNull();
-            graph.BehaviorFor<MyEndpoints>(x => x.Go2()).ShouldNotBeNull();
+            graph.ChainFor<MyEndpoint>(x => x.Go()).ShouldNotBeNull();
+            graph.ChainFor<MyEndpoints>(x => x.Go()).ShouldNotBeNull();
+            graph.ChainFor<MyEndpoints>(x => x.Go2()).ShouldNotBeNull();
         }
     }
 
