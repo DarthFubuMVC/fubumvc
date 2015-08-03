@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Reflection;
+﻿using System.Reflection;
 using FubuCore;
 
 namespace Fubu.Running
@@ -37,8 +35,8 @@ namespace Fubu.Running
         {
             if (ApplicationName.IsNotEmpty())
             {
-                return string.Format("ApplicationName: {0}, PortNumber: {1}, PhysicalPath: {2}", ApplicationName, PortNumber, PhysicalPath);
-                
+                return string.Format("ApplicationName: {0}, PortNumber: {1}, PhysicalPath: {2}", ApplicationName,
+                    PortNumber, PhysicalPath);
             }
 
             return "{0} with port number {1}".ToFormat(PhysicalPath, PortNumber);

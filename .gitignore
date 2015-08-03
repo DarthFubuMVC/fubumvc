@@ -79,3 +79,4 @@ UpgradeLog*.htm
 npm-debug.log
 content
 missing.locale.config
+*.esent.*

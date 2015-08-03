@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using FubuMVC.Core;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 
@@ -12,6 +13,8 @@ namespace DiagnosticsHarness
         {
             //Comment out in order to test with LightningQueues
             //EnableInMemoryTransport();
+
+            Features.Diagnostics.Enable(TraceLevel.Verbose);
 
             Services.ForSingletonOf<INumberCache>().Use<NumberCache>();
 

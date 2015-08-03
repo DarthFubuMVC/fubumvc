@@ -3,10 +3,13 @@ using FubuMVC.Core.ServiceBus;
 
 namespace DiagnosticsHarness
 {
+    
     public class HarnessSettings
     {
         public HarnessSettings()
         {
+            Console.WriteLine("Just being different again");
+
             //Channel = "memory://harness".ToUri();
             //Publisher = "memory://publisher".ToUri();
 

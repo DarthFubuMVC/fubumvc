@@ -1,8 +1,6 @@
 ﻿using System;
-using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Packaging;
-using FubuMVC.Core.Http.Owin.Middleware;
 using FubuMVC.Core.Services;
 using FubuMVC.Core.Services.Messaging;
 
@@ -44,9 +42,9 @@ namespace Fubu.Running
             Console.WriteLine("Trying to start application " + message);
 
 
-            var chooser = new ApplicationSourceChooser(_typeFinder, _messaging);
+            var chooser = new FubuRegistryChooser(_typeFinder, _messaging);
             chooser.Find(message,
-                applicationType => { _activator.Initialize(applicationType, message.PortNumber, message.PhysicalPath); });
+                applicationType => _activator.Initialize(applicationType, message.PortNumber, message.PhysicalPath, message.HtmlHeadInjectedText));
         }
 
         public void Receive(RecycleApplication message)

@@ -1,48 +1,54 @@
 ﻿using System;
 using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Http.Hosting;
+using FubuMVC.Core.Http.Owin;
+using FubuMVC.Core.Http.Owin.Middleware;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Services.Messaging;
 
 namespace Fubu.Running
 {
     public class FubuMvcApplicationActivator : IFubuMvcApplicationActivator
     {
-        private int _port;
-        private string _physicalPath;
-        private readonly FubuRuntime _server = null;
+        private FubuRuntime _server = null;
+        private FubuRegistry _registry;
 
-        public void Initialize(Type applicationType, int port, string physicalPath)
+        public void Initialize(Type applicationType, int port, string physicalPath, string htmlHeadInjectedText)
         {
-            //_applicationSource = Activator.CreateInstance(applicationType).As<FubuRegistry>();
-            _port = PortFinder.FindPort(port);
-            _physicalPath = physicalPath;
+            _registry = Activator.CreateInstance(applicationType).As<FubuRegistry>();
+            _registry.RootPath = physicalPath;
+            _registry.Port = PortFinder.FindPort(port);
+            
+            _registry.AlterSettings<OwinSettings>(owin =>
+            {
+                owin.AddMiddleware<HtmlHeadInjectionMiddleware>().Arguments.With(new InjectionOptions
+                {
+                    Content = c => htmlHeadInjectedText
+                });
+            });
+
+            if (_registry.Host == null) _registry.HostWith<Katana>();
 
             StartUp();
         }
 
         public void StartUp()
         {
-            throw new Exception("NWO");
-
-            /*
-
             try
             {
-                
-                var application = _applicationSource.BuildApplication(_physicalPath);
-                var runtime = application;
-                _server = new EmbeddedFubuMvcServer(runtime, new KatanaHost(), _port);
+                _server = _registry.ToRuntime();
 
                 EventAggregator.SendMessage(new ApplicationStarted
                 {
-                    ApplicationName = _applicationSource.GetType().Name,
+                    ApplicationName = _registry.GetType().Name,
                     HomeAddress = _server.BaseAddress,
                     Timestamp = DateTime.Now,
-                    Watcher = runtime.Get<AssetSettings>().CreateFileWatcherManifest(runtime.Files)
+                    Watcher = _server.Get<AssetSettings>().CreateFileWatcherManifest(_server.Files)
                 });
             }
-            catch (KatanaRightsException e)
+            catch (AdminRightsException e)
             {
                 EventAggregator.SendMessage(new InvalidApplication
                 {
@@ -55,10 +61,9 @@ namespace Fubu.Running
                 EventAggregator.SendMessage(new InvalidApplication
                 {
                     ExceptionText = e.ToString(),
-                    Message = "Bootstrapping {0} Failed!".ToFormat(_applicationSource.GetType().Name)
+                    Message = "Bootstrapping {0} Failed!".ToFormat(_registry.GetType().Name)
                 });
             }
-             * */
         }
 
         public void ShutDown()

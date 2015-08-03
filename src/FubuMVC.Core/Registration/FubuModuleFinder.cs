@@ -13,10 +13,18 @@ namespace FubuMVC.Core.Registration
     {
         public static IEnumerable<Assembly> FindModuleAssemblies(IActivationDiagnostics diagnostics)
         {
-            return findAssemblies(diagnostics).Where(x => x.HasAttribute<FubuModuleAttribute>()).ToArray();
+            return findAssemblies(file =>
+            {
+                diagnostics.LogFor(typeof(FubuRuntime)).Trace("Unable to load assembly from file " + file);
+            }).Where(x => x.HasAttribute<FubuModuleAttribute>()).ToArray();
         }
 
-        private static IEnumerable<Assembly> findAssemblies(IActivationDiagnostics diagnostics)
+        public static IEnumerable<Assembly> FindDependentAssemblies()
+        {
+            return findAssemblies(file => { }).Where(x => x.GetReferencedAssemblies().Any(assem => assem.Name == "FubuMVC.Core"));
+        } 
+
+        private static IEnumerable<Assembly> findAssemblies(Action<string> logFailure)
         {
             var assemblyPath = AppDomain.CurrentDomain.BaseDirectory;
             var binPath = FindBinPath();
@@ -38,7 +46,7 @@ namespace FubuMVC.Core.Registration
                 }
                 catch (Exception)
                 {
-                    diagnostics.LogFor(typeof (FubuRuntime)).Trace("Unable to load assembly from file " + file);
+                    logFailure(file);
                 }
 
                 if (assembly != null) yield return assembly;

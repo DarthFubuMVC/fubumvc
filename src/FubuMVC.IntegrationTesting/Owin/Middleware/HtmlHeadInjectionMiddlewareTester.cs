@@ -1,5 +1,4 @@
 ﻿using FubuMVC.Core;
-using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Owin.Middleware;
 using HtmlTags;
