@@ -48,7 +48,7 @@ namespace FubuMVC.Core.Http.Hosting
             {
                 if (e.InnerException != null && e.InnerException.Message.Contains("Access is denied"))
                 {
-                    throw new KatanaRightsException(e.InnerException);
+                    throw new AdminRightsException(e.InnerException);
                 }
 
                 throw;

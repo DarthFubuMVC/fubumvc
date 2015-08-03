@@ -13,7 +13,7 @@ namespace FubuMVC.IntegrationTesting.Security.Authentication
     public class AuthenticationHarness
     {
         private IContainer theContainer;
-        private EmbeddedFubuMvcServer server;
+        private FubuRuntime server;
 
         protected virtual void configure(FubuRegistry registry)
         {
@@ -37,9 +37,10 @@ namespace FubuMVC.IntegrationTesting.Security.Authentication
             configure(registry);
 
             registry.Features.Authentication.Enable(true);
+            registry.HostWith<Katana>();
 
-            server = registry.RunEmbedded();
-            theContainer = server.Runtime.Get<IContainer>();
+            server = registry.ToRuntime();
+            theContainer = server.Get<IContainer>();
 
             beforeEach();
         }

@@ -16,7 +16,7 @@ namespace FubuMVC.LightningQueues.Testing
         {
             // If this test fails on you, try a quick "git clean -xfd" to get rid of the old fubu-content folders,
             // then rake compile to regenerate the bottle content
-            using (var server = FubuRuntime.For<LightningQueuesDiagnosticsTransportRegistry>().RunEmbedded())
+            using (var server = FubuRuntime.For<LightningQueuesDiagnosticsTransportRegistry>())
             {
                 server.Endpoints.Get<LightningQueuesFubuDiagnostics>(x => x.get_queue__managers())
                     .StatusCode.ShouldBe(HttpStatusCode.OK);
@@ -28,6 +28,8 @@ namespace FubuMVC.LightningQueues.Testing
     {
         public LightningQueuesDiagnosticsTransportRegistry()
         {
+            HostWith<Katana>();
+
             Channel(x => x.Endpoint)
                 .ReadIncoming();
         }

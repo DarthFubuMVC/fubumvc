@@ -22,13 +22,17 @@ namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
             var container = new Container(new RavenDbRegistry());
             container.Inject(new RavenDbSettings{RunInMemory = true});
 
-            using (var application = FubuRuntime.For<NamedEntityRegistry>(_ => _.StructureMap(container)).RunEmbedded())
+            using (var application = FubuRuntime.For<NamedEntityRegistry>(_ =>
+            {
+                _.StructureMap(container);
+                _.HostWith<Katana>();
+            }))
             {
                 application.Endpoints.PostJson(new NamedEntity {Name = "Jeremy"}).StatusCode.ShouldBe(HttpStatusCode.OK);
                 application.Endpoints.PostJson(new NamedEntity {Name = "Josh"}).StatusCode.ShouldBe(HttpStatusCode.OK);
                 application.Endpoints.PostJson(new NamedEntity {Name = "Vyrak"}).StatusCode.ShouldBe(HttpStatusCode.OK);
             
-                application.Services.Get<ITransaction>().Execute<IDocumentSession>(session => {
+                application.Get<ITransaction>().Execute<IDocumentSession>(session => {
                     session.Query<NamedEntity>()
                            .Customize(x => x.WaitForNonStaleResults())
                            .Each(x => Debug.WriteLine(x.Name));

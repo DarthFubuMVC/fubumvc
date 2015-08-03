@@ -1,5 +1,6 @@
 ﻿using System;
 using FubuCore;
+using FubuMVC.Core;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Runtime;
 
@@ -9,7 +10,7 @@ namespace Fubu.Running
     {
         private int _port;
         private string _physicalPath;
-        private readonly EmbeddedFubuMvcServer _server = null;
+        private readonly FubuRuntime _server = null;
 
         public void Initialize(Type applicationType, int port, string physicalPath)
         {

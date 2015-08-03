@@ -78,10 +78,9 @@
     <Compile Include="DeactivatorExecuted.cs" />
     <Compile Include="DiagnosticsExtensions.cs" />
     <Compile Include="FubuModeExtensions.cs" />
-    <Compile Include="Http\Hosting\EmbeddedFubuMvcServer.cs" />
-    <Compile Include="Http\Hosting\FubuApplicationExtensions.cs" />
     <Compile Include="Http\Hosting\IHost.cs" />
     <Compile Include="Http\Hosting\Katana.cs" />
+    <Compile Include="Http\Hosting\AdminRightsException.cs" />
     <Compile Include="Http\Hosting\Nowin.cs" />
     <Compile Include="Http\Hosting\ReflectionExtensions.cs" />
     <Compile Include="Registration\ActionlessViewChainSource.cs" />

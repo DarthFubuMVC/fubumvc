@@ -12,6 +12,7 @@ using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Json;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Urls;
 using Shouldly;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -32,9 +33,9 @@ namespace FubuMVC.IntegrationTesting.Json
             var time = MockRepository.GenerateStub<ISystemTime>();
             time.Stub(x => x.UtcNow()).Return(now);
 
-            using (var server = new IntegrationJsonBindingRegistry(recorder, time).RunEmbedded())
+            using (var server = new IntegrationJsonBindingRegistry(recorder, time).ToRuntime())
             {
-                var url = server.Urls.UrlFor(typeof (IntegratedJsonBindingTarget));
+                var url = server.Get<IUrlRegistry>().UrlFor(typeof (IntegratedJsonBindingTarget));
                 var response = post(url.ToAbsoluteUrl(server.BaseAddress),
                     "{Name:'Josh',Child:{ChildName:'Joel'},DynamicData:{test:{name:'nested'}}}");
 
@@ -84,6 +85,8 @@ namespace FubuMVC.IntegrationTesting.Json
         {
             public IntegrationJsonBindingRegistry(Recorder recorder, ISystemTime time)
             {
+                HostWith<Katana>();
+
                 Services.For<Recorder>().Use(recorder);
 
                 Actions.IncludeType<IntegratedJsonBindingEndpoint>();

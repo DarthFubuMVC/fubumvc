@@ -43,6 +43,7 @@ namespace FubuMVC.IntegrationTesting.ServiceBus.Publishing
             registry.ServiceBus.Enable(true);
             registry.Actions.IncludeType<MessageOnePublisher>();
             registry.StructureMap(container);
+            registry.HostWith<Katana>();
 
             theRuntime = registry.ToRuntime();
             theGraph = theRuntime.Get<BehaviorGraph>();
@@ -61,17 +62,13 @@ namespace FubuMVC.IntegrationTesting.ServiceBus.Publishing
         [Test]
         public void end_to_end_test()
         {
-            using (var server = new EmbeddedFubuMvcServer(theRuntime, new Katana()))
-            {
-                var response = server.Endpoints.PostJson(new Message1Input());
+            var response = theRuntime.Endpoints.PostJson(new Message1Input());
 
-                theServiceBus.AssertWasCalled(x => x.Send(new Message1()), x => x.IgnoreArguments());
+            theServiceBus.AssertWasCalled(x => x.Send(new Message1()), x => x.IgnoreArguments());
 
 
-                response.StatusCode.ShouldBe(HttpStatusCode.OK);
-                response.ReadAsText().ShouldContain("\"success\":true");
-
-            }
+            response.StatusCode.ShouldBe(HttpStatusCode.OK);
+            response.ReadAsText().ShouldContain("\"success\":true");
         }
 
         [Test]

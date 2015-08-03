@@ -33,7 +33,7 @@ namespace FubuMVC.IntegrationTesting.Owin
 
         public static void Run(Action<EndpointDriver> action)
         {
-            using (var server = new HarnessRegistry().RunEmbedded())
+            using (var server = FubuRuntime.For<IntegrationTesting.HarnessRegistry>())
             {
                 action(server.Endpoints);
             }
@@ -42,7 +42,7 @@ namespace FubuMVC.IntegrationTesting.Owin
 
     public static class Harness
     {
-        private static EmbeddedFubuMvcServer _server;
+        private static FubuRuntime _server;
 
 
         public static string Root
@@ -57,7 +57,11 @@ namespace FubuMVC.IntegrationTesting.Owin
 
         public static void Start()
         {
-            _server = FubuRuntime.Basic(_ => _.RootPath = GetRootDirectory()).RunEmbedded();
+            _server = FubuRuntime.Basic(_ =>
+            {
+                _.RootPath = GetRootDirectory();
+                _.HostWith<Katana>();
+            });
         }
 
         public static string GetRootDirectory()

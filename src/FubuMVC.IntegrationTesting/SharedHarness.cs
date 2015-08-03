@@ -99,7 +99,6 @@ namespace FubuMVC.IntegrationTesting
 
     public static class SelfHostHarness
     {
-        private static EmbeddedFubuMvcServer _server;
         private static FubuRuntime _host;
 
         public static void Start()
@@ -112,21 +111,12 @@ namespace FubuMVC.IntegrationTesting
             return AppDomain.CurrentDomain.BaseDirectory.ParentDirectory().ParentDirectory();
         }
 
-        public static EmbeddedFubuMvcServer Server
-        {
-            get
-            {
-                if (_server == null) Recycle();
-
-                return _server;
-            }
-        }
 
         public static FubuRuntime Host
         {
             get
             {
-                if (_server == null) Recycle();
+                if (_host == null) Recycle();
 
                 return _host;
             }
@@ -136,9 +126,9 @@ namespace FubuMVC.IntegrationTesting
         {
             get
             {
-                if (_server == null) Recycle();
+                if (_host == null) Recycle();
 
-                return _server.BaseAddress;
+                return _host.BaseAddress;
             }
         }
 
@@ -146,27 +136,26 @@ namespace FubuMVC.IntegrationTesting
         {
             get
             {
-                if (_server == null) Recycle();
+                if (_host == null) Recycle();
 
-                return _server.Endpoints;
+                return _host.Endpoints;
             }
         }
 
         public static void Shutdown()
         {
-            if (_server != null) _server.SafeDispose();
+            if (_host != null) _host.SafeDispose();
         }
 
         public static void Recycle()
         {
-            if (_server != null)
+            if (_host != null)
             {
-                _server.Dispose();
+                _host.Dispose();
             }
 
             var runtime = bootstrapRuntime();
 
-            _server = new EmbeddedFubuMvcServer(runtime, new Katana());
             _host = runtime;
         }
 
@@ -179,6 +168,10 @@ namespace FubuMVC.IntegrationTesting
 
     public class HarnessRegistry : FubuRegistry
     {
+        public HarnessRegistry()
+        {
+            HostWith<Katana>();
+        }
     }
 
     public class QuitEndpoint

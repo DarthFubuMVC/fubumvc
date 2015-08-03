@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using FubuCore;
+using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Registration.Routes;
@@ -94,6 +95,14 @@ namespace FubuMVC.Core
 
 
         public int Port = PortFinder.FindPort(5500);
+        public IHost Host;
+
+        public void HostWith<T>(int port = 0) where T : IHost, new()
+        {
+            Host = new T();
+            if (port > 0) Port = port;
+        }
+
 
         public string NodeName
         {

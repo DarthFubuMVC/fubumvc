@@ -12,6 +12,7 @@ using FubuMVC.IntegrationTesting.Querying;
 using Shouldly;
 using NUnit.Framework;
 using StructureMap;
+using Nowin = FubuMVC.Core.Http.Hosting.Nowin;
 
 namespace FubuMVC.IntegrationTesting
 {
@@ -92,12 +93,12 @@ namespace FubuMVC.IntegrationTesting
     {
         private readonly Lazy<RemoteBehaviorGraph> _remote;
         private static int _port = 5550;
-        private readonly EmbeddedFubuMvcServer _server;
+        private readonly FubuRuntime _server;
 
         public Harness(FubuRuntime runtime, int port)
         {
             _port = PortFinder.FindPort(port);
-            _server = new EmbeddedFubuMvcServer(runtime, new FubuMVC.Core.Http.Hosting.Nowin());
+            _server = runtime;
             _port = port;
 
             _remote = new Lazy<RemoteBehaviorGraph>(() => { return new RemoteBehaviorGraph(_server.BaseAddress); });
@@ -137,6 +138,7 @@ namespace FubuMVC.IntegrationTesting
             configure(registry);
             registry.StructureMap(container);
             registry.RootPath = applicationDirectory;
+            registry.HostWith<Core.Http.Hosting.Nowin>();
 
             var runtime = registry.ToRuntime();
 

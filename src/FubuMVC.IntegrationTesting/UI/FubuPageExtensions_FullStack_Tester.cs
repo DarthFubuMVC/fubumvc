@@ -150,7 +150,7 @@ namespace FubuMVC.IntegrationTesting.UI
         {
             var port = PortFinder.FindPort(5500);
 
-            _server = FubuRuntime.Basic().RunEmbedded(port: port);
+            _server = FubuRuntime.Basic(_ => _.HostWith<Katana>());
         }
 
         [TestFixtureTearDown]
@@ -167,7 +167,7 @@ namespace FubuMVC.IntegrationTesting.UI
 
 
         protected string theResult;
-        private EmbeddedFubuMvcServer _server;
+        private FubuRuntime _server;
 
         public string BaseAddress
         {

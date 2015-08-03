@@ -13,7 +13,7 @@ namespace TestHarnessApp
     {
         private static void Main(string[] args)
         {
-            using (var server = FubuRuntime.For<TestHarnessRegistry>().RunEmbedded())
+            using (var server = FubuRuntime.For<TestHarnessRegistry>(_ => _.HostWith<Katana>()))
             {
                 Process.Start(server.BaseAddress);
 

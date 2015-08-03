@@ -3,10 +3,9 @@ using FubuMVC.Core;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Security;
 using FubuMVC.Core.Security.Authorization;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
 namespace FubuMVC.IntegrationTesting.Authorization
 {
@@ -16,7 +15,7 @@ namespace FubuMVC.IntegrationTesting.Authorization
         [TearDown]
         public void TearDown()
         {
-            SelfHostHarness.Server.Services.Get<SecuritySettings>().Reset();
+            SelfHostHarness.Host.Get<SecuritySettings>().Reset();
         }
 
         [Test]
@@ -68,9 +67,10 @@ namespace FubuMVC.IntegrationTesting.Authorization
         {
             var registry = new FubuRegistry();
             registry.Services.ReplaceService<IAuthorizationFailureHandler, CustomAuthHandler>();
+            registry.HostWith<Katana>();
 
             AuthorizationCheck.IsAuthorized = false;
-            using (var server = registry.RunEmbedded())
+            using (var server = registry.ToRuntime())
             {
                 server.Endpoints.Get<AuthorizedEndpoint>(x => x.get_authorized_text())
                     .StatusCodeShouldBe(HttpStatusCode.Forbidden)
@@ -82,6 +82,8 @@ namespace FubuMVC.IntegrationTesting.Authorization
         public void use_custom_auth_handler_on_only_one_endpoint()
         {
             var registry = new FubuRegistry();
+            registry.HostWith<Core.Http.Hosting.Nowin>();
+
             registry.Configure(
                 x =>
                 {
@@ -90,7 +92,7 @@ namespace FubuMVC.IntegrationTesting.Authorization
                 });
 
             AuthorizationCheck.IsAuthorized = false;
-            using (var server = registry.RunEmbedded())
+            using (var server = registry.ToRuntime())
             {
                 server.Endpoints.Get<AuthorizedEndpoint>(x => x.get_authorized_text())
                     .StatusCodeShouldBe(HttpStatusCode.Forbidden)

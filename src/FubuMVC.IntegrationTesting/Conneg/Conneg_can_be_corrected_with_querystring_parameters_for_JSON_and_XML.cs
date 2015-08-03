@@ -49,7 +49,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
         [Test]
         public void with_Katana_and_EndpointDriver()
         {
-            using (var server = FubuRuntime.Basic().RunEmbedded())
+            using (var server = FubuRuntime.Basic(_ => _.HostWith<Katana>()))
             {
                 server.Endpoints.Get("conneg/override/Foo?format=json", "text/html")
                     .ContentTypeShouldBe(MimeType.Json)

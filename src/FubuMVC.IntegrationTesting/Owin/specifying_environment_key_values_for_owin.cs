@@ -14,8 +14,7 @@ namespace FubuMVC.IntegrationTesting.Owin
         public void can_inject_environment_keys_from_the_fubu_registry()
         {
             using (var server = FubuRuntime
-                .For<OverriddenEnvironmentRegistry>()
-                .RunEmbedded(port: 0))
+                .For<OverriddenEnvironmentRegistry>())
             {
                 server.Endpoints.GetByInput(new KeyRequest {Key = "Foo"})
                     .ReadAsText().ShouldBe("1");
@@ -30,6 +29,8 @@ namespace FubuMVC.IntegrationTesting.Owin
     {
         public OverriddenEnvironmentRegistry()
         {
+            HostWith<Katana>();
+
             AlterSettings<OwinSettings>(x =>
             {
                 x.EnvironmentData["Foo"] = "1";

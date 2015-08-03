@@ -6,7 +6,6 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Runtime;
 using Shouldly;
 using NUnit.Framework;
 
@@ -15,7 +14,7 @@ namespace FubuMVC.IntegrationTesting.Async
     [TestFixture]
     public class AsyncRouteIntegrationTester
     {
-        private EmbeddedFubuMvcServer _server;
+        private FubuRuntime _server;
 
         [SetUp]
         public void SetUp()
@@ -24,9 +23,10 @@ namespace FubuMVC.IntegrationTesting.Async
             {
                 x.Actions.IncludeType<AsyncAction>();
                 x.Policies.Local.Add<EarlyReturnConvention>();
+                x.HostWith<Katana>();
             });
 
-            _server = registry.RunEmbedded(port: PortFinder.FindPort(5500));
+            _server = registry.ToRuntime();
         }
 
         [TearDown]

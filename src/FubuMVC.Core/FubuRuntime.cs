@@ -6,12 +6,15 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Hosting;
 using System.Web.Routing;
+using System.Web.UI.WebControls;
 using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Logging;
 using FubuCore.Reflection;
 using FubuMVC.Core.Diagnostics.Packaging;
+using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Scenarios;
 using FubuMVC.Core.Registration;
@@ -41,6 +44,13 @@ namespace FubuMVC.Core
         private readonly ActivationDiagnostics _diagnostics;
         private readonly PerfTimer _perfTimer;
         private readonly Lazy<AppFunc> _appFunc;
+        private IDisposable _server;
+        private string _baseAddress;
+
+        private Lazy<EndpointDriver> _endpoints = new Lazy<EndpointDriver>(() =>
+        {
+            throw new InvalidOperationException("This FubuRuntime has no configured host");
+        }); 
 
 
         public static FubuRuntime Basic(Action<FubuRegistry> configure = null)
@@ -122,19 +132,62 @@ namespace FubuMVC.Core
                 _.For<IServiceFactory>().Use(_factory);
             });
 
+
+
             Activate();
 
             _routes = routeTask.Result();
+
+            Host = registry.Host;
+
+            if (registry.Host != null)
+            {
+                startHosting();
+            }
 
             _perfTimer.Stop();
             Restarted = DateTime.Now;
 
             _diagnostics.AssertNoFailures();
+
+
         }
+
+        private void startHosting()
+        {
+            _baseAddress = "http://localhost:" + Port;
+
+            _endpoints = new Lazy<EndpointDriver>(() =>
+            {
+                return new EndpointDriver(Get<IUrlRegistry>(), _baseAddress);
+            });
+
+            _perfTimer.Record("Starting up the embedded host at " + _baseAddress, () =>
+            {
+                var settings = Get<OwinSettings>();
+                settings.EnvironmentData[OwinConstants.AppMode] = Mode == null ? string.Empty : Mode.ToLower();
+                var options = settings.EnvironmentData.ToDictionary();
+
+
+                _server = Host.Start(Port, _appFunc.Value, options);
+            });
+        }
+
+        public string BaseAddress
+        {
+            get { return _baseAddress; }
+        }
+
+        public IHost Host { get; private set; }
 
         public int Port { get; private set; }
 
         public string Mode { get; set; }
+
+        public EndpointDriver Endpoints
+        {
+            get { return _endpoints.Value; }
+        }
 
 
         // Build route objects from route definitions on graph + add packaging routes
@@ -196,6 +249,8 @@ namespace FubuMVC.Core
             if (_disposed) return;
 
             _disposed = true;
+
+            _server.SafeDispose();
 
             var logger = _factory.Get<ILogger>();
             var deactivators = _factory.GetAll<IDeactivator>().ToArray();

@@ -4,7 +4,6 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http.Hosting;
-using FubuMVC.Core.Runtime;
 using HtmlTags;
 using NUnit.Framework;
 
@@ -13,12 +12,16 @@ namespace FubuMVC.IntegrationTesting
     [TestFixture]
     public class AboutEndpointIntegrationTester
     {
-        private EmbeddedFubuMvcServer server;
+        private FubuRuntime server;
 
         [TestFixtureSetUp]
         public void SetUp()
         {
-            server = FubuRuntime.Basic(_ => _.Mode = "development").RunEmbedded(port: PortFinder.FindPort(5500));
+            server = FubuRuntime.Basic(_ =>
+            {
+                _.Mode = "development";
+                _.HostWith<Katana>();
+            });
         }
 
         [TestFixtureTearDown]
@@ -37,21 +40,6 @@ namespace FubuMVC.IntegrationTesting
             });
         }
 
-
-        [Test, Explicit]
-        public void manual_test_the_auto_reloading_tag()
-        {
-            using (var server = FubuRuntime.Basic(_ => _.Mode = "development").RunEmbedded(port: 5601))
-            {
-                Process.Start("http://localhost:5601/reloaded");
-                Thread.Sleep(20000);
-            }
-
-            using (var server = FubuRuntime.Basic(_ => _.Mode = "development").RunEmbedded(port: 5601))
-            {
-                Thread.Sleep(20000);
-            }
-        }
     }
 
 

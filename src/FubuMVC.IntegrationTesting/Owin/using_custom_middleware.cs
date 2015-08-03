@@ -15,11 +15,13 @@ namespace FubuMVC.IntegrationTesting.Owin
     [TestFixture]
     public class using_custom_middleware
     {
-        private EmbeddedFubuMvcServer serverFor(Action<OwinSettings> action)
+        private FubuRuntime serverFor(Action<OwinSettings> action)
         {
             var registry = new FubuRegistry();
             registry.AlterSettings(action);
-            return registry.RunEmbedded(port: 0);
+            registry.HostWith<Katana>();
+
+            return registry.ToRuntime();
         }
 
         [Test]

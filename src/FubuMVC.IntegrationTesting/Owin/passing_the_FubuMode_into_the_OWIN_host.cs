@@ -13,7 +13,11 @@ namespace FubuMVC.IntegrationTesting.Owin
         public void the_mode_is_passed_in()
         {
             // THIS HAS TO BE A KATANA TEST. 
-            using (var server = FubuRuntime.Basic(_ => _.Mode = "ReallyRandom").RunEmbedded(port: 0))
+            using (var server = FubuRuntime.Basic(_ =>
+            {
+                _.Mode = "ReallyRandom";
+                _.HostWith<Katana>();
+            }))
             {
                 server.Endpoints.Get<OwinAppModeEndpoint>(x => x.get_owin_mode())
                     .ReadAsText()
