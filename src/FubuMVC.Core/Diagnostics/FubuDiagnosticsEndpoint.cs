@@ -67,7 +67,7 @@ namespace FubuMVC.Core.Diagnostics
 
             var extensionFiles = _assets.JavascriptFiles().Where(x => x.AssemblyName != "FubuMVC.Core");
 
-            if (_runtime.Mode.EqualsIgnoreCase("diagnostics"))
+            if (_runtime.Mode.InDiagnostics())
             {
                 var names = _scripts.Union(extensionFiles.Select(x => x.Name));
                 var links = _tags.BuildScriptTags(names.Select(x => "fubu-diagnostics/" + x));

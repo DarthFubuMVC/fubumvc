@@ -333,8 +333,7 @@ namespace FubuMVC.Core
 
         private Func<IContainer> _containerSource = () => new Container();
         
-        // TODO -- won't always pull from FubuMode
-        public string Mode = FubuMode.Mode();
+        public string Mode = null;
 
         public void StructureMap(IContainer existing)
         {

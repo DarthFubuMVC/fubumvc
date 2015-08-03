@@ -10,7 +10,6 @@ namespace FubuMVC.IntegrationTesting.Assets
     {
         public asset_writing_headers_are_configurable()
         {
-            FubuMode.Reset();
             File("Foo.js").WriteLine("var x = 0;");
         }
 

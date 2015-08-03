@@ -56,7 +56,7 @@ namespace FubuMVC.Core.ServiceBus
             registry.Services.IncludeRegistry<ScheduledJobServicesRegistry>();
             registry.Services.IncludeRegistry<MonitoringServiceRegistry>();
             registry.Policies.ChainSource<SystemLevelHandlers>();
-            registry.Services.IncludeRegistry<FubuTransportServiceRegistry>();
+            registry.Services.IncludeRegistry(new FubuTransportServiceRegistry(registry.Mode));
             registry.Services.IncludeRegistry<PollingServicesRegistry>();
             registry.Policies.Global.Add<StatefulSagaConvention>();
             registry.Policies.Global.Add<AsyncHandlingConvention>();

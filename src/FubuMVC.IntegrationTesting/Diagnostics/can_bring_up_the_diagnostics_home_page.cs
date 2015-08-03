@@ -1,5 +1,4 @@
-﻿using FubuMVC.Core;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Diagnostics
 {
@@ -9,8 +8,6 @@ namespace FubuMVC.IntegrationTesting.Diagnostics
         [Test]
         public void get_the_200_in_normal_mode()
         {
-            FubuMode.Reset();
-
             TestHost.Scenario(_ =>
             {
                 _.Get.Url("_fubu");

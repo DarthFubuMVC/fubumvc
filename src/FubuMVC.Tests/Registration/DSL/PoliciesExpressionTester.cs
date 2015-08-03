@@ -3,7 +3,6 @@ using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Security;
 using FubuMVC.Core.Security.Authorization;
 using Shouldly;
 using NUnit.Framework;
@@ -19,8 +18,6 @@ namespace FubuMVC.Tests.Registration.DSL
         [SetUp]
         public void SetUp()
         {
-            FubuMode.Reset();
-
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<OrderingPolicyController>();
 
@@ -56,8 +53,6 @@ namespace FubuMVC.Tests.Registration.DSL
         [SetUp]
         public void SetUp()
         {
-            FubuMode.Reset();
-
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<OrderingPolicyController>();
 

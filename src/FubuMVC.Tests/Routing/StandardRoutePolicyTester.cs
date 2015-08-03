@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Routing;
@@ -13,7 +12,6 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Handlers;
-using FubuMVC.Core.Security;
 using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -124,8 +122,6 @@ namespace FubuMVC.Tests.Routing
 
         private BehaviorGraph setupActions()
         {
-            FubuMode.Mode("");
-
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<Action1>();
             registry.Actions.IncludeType<Action2>();

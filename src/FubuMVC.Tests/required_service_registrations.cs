@@ -36,8 +36,6 @@ namespace FubuMVC.Tests
         [Test]
         public void all_default_service_registrations()
         {
-            FubuMode.Reset();
-
             using (var runtime = FubuRuntime.Basic())
             {
                 var _ = runtime.Container;
@@ -121,9 +119,7 @@ namespace FubuMVC.Tests
         [Test]
         public void IAssetTagBuilder_is_registered_in_development_mode()
         {
-            FubuMode.SetUpForDevelopmentMode();
-
-            using (var runtime = FubuRuntime.Basic())
+            using (var runtime = FubuRuntime.Basic(_ => _.Mode = "development"))
             {
                 runtime.Container.DefaultRegistrationIs<IAssetTagBuilder, DevelopmentModeAssetTagBuilder>();
             }

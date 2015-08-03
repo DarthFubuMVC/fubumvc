@@ -19,15 +19,12 @@ namespace FubuMVC.IntegrationTesting
         [TestFixtureSetUp]
         public void SetUp()
         {
-            FubuMode.Mode(FubuMode.Development);
-
-            server = FubuRuntime.Basic().RunEmbedded(port: PortFinder.FindPort(5500));
+            server = FubuRuntime.Basic(_ => _.Mode = "development").RunEmbedded(port: PortFinder.FindPort(5500));
         }
 
         [TestFixtureTearDown]
         public void TearDown()
         {
-            FubuMode.Reset();
             server.SafeDispose();
         }
 
@@ -45,20 +42,16 @@ namespace FubuMVC.IntegrationTesting
         [Test, Explicit]
         public void manual_test_the_auto_reloading_tag()
         {
-            FubuMode.Mode(FubuMode.Development);
-
-            using (var server = FubuRuntime.Basic().RunEmbedded(port: 5601))
+            using (var server = FubuRuntime.Basic(_ => _.Mode = "development").RunEmbedded(port: 5601))
             {
                 Process.Start("http://localhost:5601/reloaded");
                 Thread.Sleep(20000);
             }
 
-            using (var server = FubuRuntime.Basic().RunEmbedded(port: 5601))
+            using (var server = FubuRuntime.Basic(_ => _.Mode = "development").RunEmbedded(port: 5601))
             {
                 Thread.Sleep(20000);
             }
-
-            FubuMode.Reset();
         }
     }
 

@@ -77,6 +77,7 @@
     <Compile Include="Attributes\ViewSubjectAttribute.cs" />
     <Compile Include="DeactivatorExecuted.cs" />
     <Compile Include="DiagnosticsExtensions.cs" />
+    <Compile Include="FubuModeExtensions.cs" />
     <Compile Include="Http\Hosting\EmbeddedFubuMvcServer.cs" />
     <Compile Include="Http\Hosting\IHost.cs" />
     <Compile Include="Registration\ActionlessViewChainSource.cs" />
@@ -834,7 +835,6 @@
     <Compile Include="Caching\WriteTextOutput.cs" />
     <Compile Include="Continuations\IRedirectable.cs" />
     <Compile Include="Registration\CoreServiceRegistry.cs" />
-    <Compile Include="FubuMode.cs" />
     <Compile Include="Http\CurrentRequestFullUrlPropertyBinder.cs" />
     <Compile Include="Http\CurrentRequestRelativeUrlPropertyBinder.cs" />
     <Compile Include="Http\AspNet\RequestPropertyValueSource.cs" />

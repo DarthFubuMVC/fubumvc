@@ -1,17 +1,15 @@
-﻿using System.Diagnostics;
-using FubuCore;
-using FubuMVC.Core;
+﻿using FubuCore;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Runtime.Files;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
 namespace FubuMVC.Tests.Assets
 {
     [TestFixture]
     public class ScriptTagTester
     {
-        private FubuFile theFile;
+        private readonly FubuFile theFile;
         private Asset theAsset;
 
         public ScriptTagTester()
@@ -25,7 +23,6 @@ namespace FubuMVC.Tests.Assets
         [SetUp]
         public void SetUp()
         {
-            FubuMode.Mode("Production");
             theAsset = new Asset(theFile);
         }
 
@@ -39,7 +36,7 @@ namespace FubuMVC.Tests.Assets
         [Test]
         public void uses_the_default_url_if_asset_is_null()
         {
-            new ScriptTag(null, x => x, null, defaultUrl: "http://server/foo.js")
+            new ScriptTag(null, x => x, null, "http://server/foo.js")
                 .ToString()
                 .ShouldBe("<script type=\"text/javascript\" src=\"http://server/foo.js\"></script>");
         }

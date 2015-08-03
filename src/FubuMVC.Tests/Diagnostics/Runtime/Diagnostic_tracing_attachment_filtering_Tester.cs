@@ -16,9 +16,10 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
         [SetUp]
         public void setup()
         {
-            FubuMode.SetUpForDevelopmentMode();
             theGraph = BehaviorGraph.BuildFrom(x =>
             {
+                x.Mode = "development";
+
                 x.Actions.IncludeType<SomeEndpoints>();
                 x.Actions.IncludeType<OtherEndpoints>();
                 x.Actions.IncludeType<EndpointExplorerFubuDiagnostics>();

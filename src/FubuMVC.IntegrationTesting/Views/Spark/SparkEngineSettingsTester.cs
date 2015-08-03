@@ -11,12 +11,6 @@ namespace FubuMVC.IntegrationTesting.Views.Spark
     [TestFixture]
     public class SparkEngineSettingsTester : InteractionContext<SparkEngineSettings>
     {
-        [TearDown]
-        public void TearDown()
-        {
-            FubuMode.Reset();
-        }
-
         [Test]
         public void includes_spark_views_and_bindings_by_default()
         {
@@ -68,10 +62,15 @@ namespace FubuMVC.IntegrationTesting.Views.Spark
         [Test]
         public void explicitly_do_not_precompile_views()
         {
-            ClassUnderTest.PrecompileViews = false;
-            FubuMode.Mode("Production");
-
-            ClassUnderTest.PrecompileViews.ShouldBeFalse();
+            using (var runtime = FubuRuntime.Basic(_ =>
+            {
+                _.Mode = "production";
+                _.AlterSettings<SparkEngineSettings>(x => x.PrecompileViews = false);
+            }))
+            {
+                runtime.Factory.Get<SparkEngineSettings>()
+                    .PrecompileViews.ShouldBeFalse();
+            }
         }
     }
 }

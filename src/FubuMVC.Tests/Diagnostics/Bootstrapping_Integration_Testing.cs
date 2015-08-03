@@ -16,8 +16,7 @@ namespace FubuMVC.Tests.Diagnostics
         [TestFixtureSetUp]
         public void SetUp()
         {
-            FubuMode.SetUpForDevelopmentMode();
-            runtime = FubuRuntime.Basic();
+            runtime = FubuRuntime.Basic(_ => _.Mode = "development");
 
             runtime.Factory.Get<FubuDiagnosticsEndpoint>().get__fubu();
         }

@@ -9,20 +9,11 @@ namespace FubuMVC.IntegrationTesting.Owin
     [TestFixture]
     public class passing_the_FubuMode_into_the_OWIN_host
     {
-        [TearDown]
-        public void TearDown()
-        {
-            FubuMode.Reset();
-        }
-
         [Test]
         public void the_mode_is_passed_in()
         {
-            FubuMode.Mode("ReallyRandom");
-            FubuMode.Mode().ShouldBe("ReallyRandom");
-
             // THIS HAS TO BE A KATANA TEST. 
-            using (var server = FubuRuntime.Basic().RunEmbedded(port: 0))
+            using (var server = FubuRuntime.Basic(_ => _.Mode = "ReallyRandom").RunEmbedded(port: 0))
             {
                 server.Endpoints.Get<OwinAppModeEndpoint>(x => x.get_owin_mode())
                     .ReadAsText()

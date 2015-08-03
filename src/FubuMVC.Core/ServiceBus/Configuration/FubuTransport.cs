@@ -73,7 +73,6 @@ namespace FubuMVC.Core.ServiceBus.Configuration
 
         public static void SetupForTesting()
         {
-            FubuMode.SetupForTestingMode();
             UseSynchronousLogging = true;
             ApplyMessageHistoryWatching = true;
         }

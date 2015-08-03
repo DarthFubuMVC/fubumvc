@@ -109,9 +109,15 @@ namespace FubuMVC.Tests.ServiceBus
         [Test]
         public void TransportCleanupActivator_is_registered_if_FubuTransport_testing_mode_is_on()
         {
-            FubuMode.SetupForTestingMode();
-
-            using (var runtime = FubuTransport.DefaultPolicies())
+            using (var runtime = FubuRuntime.Basic(_ =>
+            {
+                _.Mode = "testing";
+                _.ServiceBus.Configure(x =>
+                {
+                    x.Enabled = true;
+                    x.EnableInMemoryTransport = true;
+                });
+            }))
             {
                 runtime.Container.ShouldHaveRegistration<IActivator, TransportCleanupActivator>();
             }

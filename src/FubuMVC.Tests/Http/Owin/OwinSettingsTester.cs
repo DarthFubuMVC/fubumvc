@@ -35,14 +35,19 @@ namespace FubuMVC.Tests.Http.Owin
         [Test]
         public void create_with_html_head_injection()
         {
-            FubuMode.SetUpForDevelopmentMode();
-
             FubuRuntime.Properties[HtmlHeadInjectionMiddleware.TEXT_PROPERTY] =
                 new HtmlTag("script").Attr("foo", "bar").ToString();
 
-            var settings = new OwinSettings();
-            settings.Middleware.OfType<MiddlewareNode<HtmlHeadInjectionMiddleware>>()
-                .Any().ShouldBeTrue();
+            using (var runtime = FubuRuntime.Basic(_ => _.Mode = "development"))
+            {
+                var settings = runtime.Factory.Get<OwinSettings>();
+                settings.Middleware.OfType<MiddlewareNode<HtmlHeadInjectionMiddleware>>()
+                    .Any().ShouldBeTrue();
+            }
+
+
+
+
         }
     }
 }

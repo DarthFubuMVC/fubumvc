@@ -14,21 +14,6 @@ namespace FubuMVC.Core.Http.Owin.Middleware
     {
         public static readonly string TEXT_PROPERTY = "HTML-HEAD-INJECTION";
 
-        public static void ApplyInjection(OwinSettings settings)
-        {
-            if (FubuMode.InDevelopment() || FubuMode.Mode().EqualsIgnoreCase("diagnostics"))
-            {
-                var injectedContent = FubuRuntime.Properties[TEXT_PROPERTY];
-                if (injectedContent.IsNotEmpty())
-                {
-                    settings.AddMiddleware<HtmlHeadInjectionMiddleware>().Arguments.With(new InjectionOptions
-                    {
-                        Content = _ => injectedContent
-                    });
-                }
-            }
-        }
-
         private readonly AppFunc _inner;
         private readonly InjectionOptions _options;
 

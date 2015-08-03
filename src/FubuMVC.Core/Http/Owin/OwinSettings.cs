@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FubuCore;
 using FubuCore.Descriptions;
 using FubuCore.Util;
 using FubuMVC.Core.Http.Owin.Middleware;
@@ -15,14 +16,28 @@ namespace FubuMVC.Core.Http.Owin
     using AppFunc = Func<IDictionary<string, object>, Task>;
 
     [ApplicationLevel]
-    public class OwinSettings : DescribesItself
+    public class OwinSettings : DescribesItself, IFeatureSettings
     {
         public OwinSettings()
         {
             AddMiddleware<StaticFileMiddleware>();
-            HtmlHeadInjectionMiddleware.ApplyInjection(this);
 
             EnvironmentData.Fill(OwinConstants.HeaderSettings, Headers);
+        }
+
+        void IFeatureSettings.Apply(FubuRegistry registry)
+        {
+            if (registry.Mode.InDevelopment() || registry.Mode.InDiagnostics())
+            {
+                var injectedContent = FubuRuntime.Properties[HtmlHeadInjectionMiddleware.TEXT_PROPERTY];
+                if (injectedContent.IsNotEmpty())
+                {
+                    AddMiddleware<HtmlHeadInjectionMiddleware>().Arguments.With(new InjectionOptions
+                    {
+                        Content = _ => injectedContent
+                    });
+                }
+            }
         }
 
         public void Describe(Description description)
@@ -34,9 +49,7 @@ namespace FubuMVC.Core.Http.Owin
 
             EnvironmentData.Each((key, value) => description.Properties[key] = value.ToString());
 
-            var middleware = new BulletList();
-            middleware.Name = "Middleware";
-            middleware.Label = "Middleware";
+            var middleware = new BulletList {Name = "Middleware", Label = "Middleware"};
 
             Middleware.Each(x => middleware.Children.Add(x.ToDescription()));
 

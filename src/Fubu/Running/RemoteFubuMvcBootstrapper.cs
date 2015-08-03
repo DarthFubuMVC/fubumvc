@@ -44,15 +44,7 @@ namespace Fubu.Running
             Console.WriteLine("Trying to start application " + message);
 
             FubuRuntime.Properties[HtmlHeadInjectionMiddleware.TEXT_PROPERTY] = message.HtmlHeadInjectedText;
-            /* TODO -- look at this again
-            if (message.Mode.IsNotEmpty())
-            {
-                FubuMode.Mode(message.Mode);
-            }
-             
 
-            Console.WriteLine("FubuMode = " + FubuMode.Mode());
-             * */
 
             var chooser = new ApplicationSourceChooser(_typeFinder, _messaging);
             chooser.Find(message,

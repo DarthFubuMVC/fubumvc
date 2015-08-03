@@ -20,8 +20,6 @@ namespace FubuMVC.Tests.Registration.Registration
         [SetUp]
         public void SetUp()
         {
-            FubuMode.Reset();
-
             _runtime = FubuRuntime.For<ApplicationRegistry>();
             behaviors = _runtime.Factory.Get<BehaviorGraph>();
 

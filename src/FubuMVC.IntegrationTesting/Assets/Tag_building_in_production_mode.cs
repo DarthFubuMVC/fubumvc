@@ -12,8 +12,6 @@ namespace FubuMVC.IntegrationTesting.Assets
     {
         public Tag_building_in_production_mode()
         {
-            FubuMode.Reset();
-
             File("content/scripts/script1.js");
 
             File("content/styles/styles1.css");

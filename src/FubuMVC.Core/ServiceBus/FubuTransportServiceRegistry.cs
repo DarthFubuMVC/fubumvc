@@ -1,6 +1,6 @@
-﻿using FubuCore.Logging;
+﻿using FubuCore;
+using FubuCore.Logging;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.ServiceBus.Async;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Diagnostics;
 using FubuMVC.Core.ServiceBus.Events;
@@ -18,7 +18,7 @@ namespace FubuMVC.Core.ServiceBus
 {
     public class FubuTransportServiceRegistry : ServiceRegistry
     {
-        public FubuTransportServiceRegistry()
+        public FubuTransportServiceRegistry(string mode)
         {
             var eventAggregatorDef = FubuTransport.UseSynchronousLogging 
                 ? new SmartInstance<SynchronousEventAggregator>()
@@ -47,7 +47,7 @@ namespace FubuMVC.Core.ServiceBus
 
             AddService<ILogListener, EventAggregationListener>();
 
-            if (FubuTransport.ApplyMessageHistoryWatching || FubuMode.InTestingMode())
+            if (FubuTransport.ApplyMessageHistoryWatching || mode.InTesting())
             {
                 AddService<IListener, MessageWatcher>();
 
@@ -58,7 +58,7 @@ namespace FubuMVC.Core.ServiceBus
             }
 
 
-            if (FubuMode.InTestingMode())
+            if (mode.InTesting())
             {
                 AddService<IActivator, TransportCleanupActivator>();
             }

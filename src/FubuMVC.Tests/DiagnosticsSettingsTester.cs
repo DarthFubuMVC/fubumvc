@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using FubuMVC.Core;
-using FubuMVC.Core.Security;
 using FubuMVC.Core.Security.Authorization;
 using Shouldly;
 using NUnit.Framework;
@@ -10,12 +9,6 @@ namespace FubuMVC.Tests
     [TestFixture]
     public class DiagnosticsSettingsTester
     {
-        [SetUp]
-        public void SetUp()
-        {
-            FubuMode.Reset();
-        }
-
         [Test]
         public void default_request_count_is_200()
         {

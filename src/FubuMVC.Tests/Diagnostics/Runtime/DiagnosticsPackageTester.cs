@@ -11,8 +11,7 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
         [Test]
         public void diagnostics_should_be_enabled_in_development_mode()
         {
-            FubuMode.SetUpForDevelopmentMode();
-            using (var runtime = FubuRuntime.Basic())
+            using (var runtime = FubuRuntime.Basic(_ => _.Mode = "development"))
             {
                 runtime.Container.ShouldHaveRegistration<ILogListener, RequestTraceListener>();
             }

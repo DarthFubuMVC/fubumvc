@@ -134,7 +134,6 @@
     <Compile Include="Diagnostics\can_bring_up_the_diagnostics_home_page.cs" />
     <Compile Include="Diagnostics\serving_up_embedded_diagnostic_assets.cs" />
     <Compile Include="EndpointServiceIntegratedSmokeTester.cs" />
-    <Compile Include="FubuModeTester.cs" />
     <Compile Include="FubuRegistryRunner.cs" />
     <Compile Include="Http\partial_invocations.cs" />
     <Compile Include="Http\reading_and_writing_http_headers_and_responses_with_OWIN.cs" />

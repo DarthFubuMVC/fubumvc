@@ -53,8 +53,6 @@ namespace FubuMVC.Tests.Diagnostics
     {
         private void withTraceLevel(TraceLevel level, Action<IContainer> action)
         {
-            FubuMode.Reset();
-
             var registry = new FubuRegistry();
             registry.Features.Diagnostics.Enable(level);
 

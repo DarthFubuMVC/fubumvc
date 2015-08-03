@@ -9,17 +9,9 @@ namespace FubuMVC.Tests
     [TestFixture]
     public class AboutEndpointTester
     {
-        [TearDown]
-        public void TearDown()
-        {
-            FubuMode.Reset();
-        }
-
         [Test]
         public void no_about_endpoint_if_not_in_development_mode()
         {
-            FubuMode.Reset();
-
             var graph = BehaviorGraph.BuildEmptyGraph();
 
             graph.ChainFor<AboutFubuDiagnostics>(x => x.get_about())
@@ -29,9 +21,7 @@ namespace FubuMVC.Tests
         [Test]
         public void adds_the_about_endpoint_if_in_development_mode()
         {
-            FubuMode.Mode(FubuMode.Development);
-
-            var graph = BehaviorGraph.BuildEmptyGraph();
+            var graph = BehaviorGraph.BuildFrom(x => x.Mode = "development");
             graph.ChainFor<AboutFubuDiagnostics>(x => x.get_about())
                 .ShouldNotBeNull();
         }
