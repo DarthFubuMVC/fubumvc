@@ -12,14 +12,13 @@ namespace FubuMVC.IntegrationTesting.Projections
     [TestFixture]
     public class end_to_end_json_serialization
     {
-        private InMemoryHost _host;
+        private FubuRuntime _host;
 
         [TestFixtureSetUp]
         public void FixtureSetUp()
         {
             _host = FubuRuntime
-                .For<JsonSerializationFubuRegistry>()
-                .RunInMemory();
+                .For<JsonSerializationFubuRegistry>();
         }
 
         [TestFixtureTearDown]

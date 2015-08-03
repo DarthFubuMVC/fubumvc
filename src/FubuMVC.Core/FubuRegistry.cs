@@ -5,6 +5,7 @@ using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Registration.Routes;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.ServiceBus.Registration;
@@ -91,6 +92,8 @@ namespace FubuMVC.Core
         /// </summary>
         public string RootPath;
 
+
+        public int Port = PortFinder.FindPort(5500);
 
         public string NodeName
         {

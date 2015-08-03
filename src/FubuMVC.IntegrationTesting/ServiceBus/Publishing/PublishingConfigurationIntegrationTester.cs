@@ -61,7 +61,7 @@ namespace FubuMVC.IntegrationTesting.ServiceBus.Publishing
         [Test]
         public void end_to_end_test()
         {
-            using (var server = new EmbeddedFubuMvcServer(theRuntime, new Katana(), port: PortFinder.FindPort(5505)))
+            using (var server = new EmbeddedFubuMvcServer(theRuntime, new Katana()))
             {
                 var response = server.Endpoints.PostJson(new Message1Input());
 

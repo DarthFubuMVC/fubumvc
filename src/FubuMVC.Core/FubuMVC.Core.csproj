@@ -525,7 +525,6 @@
     <Compile Include="Http\EtagMatch.cs" />
     <Compile Include="Http\FubuMvcRequestData.cs" />
     <Compile Include="Http\HeaderValueSource.cs" />
-    <Compile Include="Http\Hosting\InMemoryHost.cs" />
     <Compile Include="Http\IMimetypeCorrection.cs" />
     <Compile Include="Http\Owin\FubuOwinHost.cs" />
     <Compile Include="Http\Owin\Middleware\FilteredOwinMiddleware.cs" />

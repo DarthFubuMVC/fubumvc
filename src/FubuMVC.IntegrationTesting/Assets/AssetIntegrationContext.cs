@@ -18,7 +18,7 @@ namespace FubuMVC.IntegrationTesting.Assets
         public static readonly string Application = "Application";
         private readonly string _directory;
         private readonly IList<ContentStream> _streams = new List<ContentStream>();
-        private InMemoryHost _host;
+        private FubuRuntime _host;
         private readonly string _applicationDirectory;
         protected Scenario Scenario;
         private Lazy<AssetGraph> _allAssets;
@@ -47,7 +47,7 @@ namespace FubuMVC.IntegrationTesting.Assets
 
             var runtime = registry.ToRuntime();
 
-            _host = new InMemoryHost(runtime);
+            _host = runtime;
 
             _allAssets = new Lazy<AssetGraph>(() => { return runtime.Factory.Get<IAssetFinder>().FindAll(); });
         }
@@ -93,13 +93,13 @@ namespace FubuMVC.IntegrationTesting.Assets
 
         public IAssetTagBuilder TagBuilder()
         {
-            return _host.Services.GetInstance<IAssetTagBuilder>();
+            return _host.Container.GetInstance<IAssetTagBuilder>();
         }
 
 
         public IAssetFinder Assets
         {
-            get { return _host.Services.GetInstance<IAssetFinder>(); }
+            get { return _host.Container.GetInstance<IAssetFinder>(); }
         }
     }
 }

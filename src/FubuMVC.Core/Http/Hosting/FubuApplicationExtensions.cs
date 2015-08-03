@@ -19,7 +19,7 @@ namespace FubuMVC.Core.Http.Hosting
                 port = PortFinder.FindPort(5500);
             }
 
-            return new EmbeddedFubuMvcServer(runtime, new Katana(), port);
+            return new EmbeddedFubuMvcServer(runtime, new Katana());
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace FubuMVC.Core.Http.Hosting
             {
                 registry.RootPath = physicalPath;
             }
-            return new EmbeddedFubuMvcServer(registry.ToRuntime(), new Katana(), port);
+            return new EmbeddedFubuMvcServer(registry.ToRuntime(), new Katana());
         }
 
     }

@@ -15,20 +15,20 @@ namespace FubuMVC.IntegrationTesting
 {
     public static class TestHost
     {
-        private static readonly Lazy<InMemoryHost> _host =
-            new Lazy<InMemoryHost>(() =>
+        private static readonly Lazy<FubuRuntime> _host =
+            new Lazy<FubuRuntime>(() =>
             {
                 var registry = new FubuRegistry();
                 registry.Features.Diagnostics.Enable(TraceLevel.Verbose);
 
-                return registry.RunInMemory();
+                return registry.ToRuntime();
             });
 
         public static ManualResetEvent Finish = new ManualResetEvent(false);
 
         public static T Service<T>()
         {
-            return _host.Value.Services.GetInstance<T>();
+            return _host.Value.Factory.Get<T>();
         }
 
         public static void Scenario(Action<Scenario> configuration)
@@ -71,7 +71,7 @@ namespace FubuMVC.IntegrationTesting
 
         public static void Scenario<T>(Action<Scenario> configuration) where T : FubuRegistry, new()
         {
-            using (var host = FubuRuntime.For<T>().RunInMemory())
+            using (var host = FubuRuntime.For<T>())
             {
                 host.Scenario(configuration);
             }
@@ -100,7 +100,7 @@ namespace FubuMVC.IntegrationTesting
     public static class SelfHostHarness
     {
         private static EmbeddedFubuMvcServer _server;
-        private static InMemoryHost _host;
+        private static FubuRuntime _host;
 
         public static void Start()
         {
@@ -122,7 +122,7 @@ namespace FubuMVC.IntegrationTesting
             }
         }
 
-        public static InMemoryHost Host
+        public static FubuRuntime Host
         {
             get
             {
@@ -164,11 +164,10 @@ namespace FubuMVC.IntegrationTesting
                 _server.Dispose();
             }
 
-            var port = PortFinder.FindPort(5500);
             var runtime = bootstrapRuntime();
 
-            _server = new EmbeddedFubuMvcServer(runtime, new Katana(), port);
-            _host = new InMemoryHost(runtime);
+            _server = new EmbeddedFubuMvcServer(runtime, new Katana());
+            _host = runtime;
         }
 
         private static FubuRuntime bootstrapRuntime()

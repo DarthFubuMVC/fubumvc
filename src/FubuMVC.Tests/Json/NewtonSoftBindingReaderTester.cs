@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Json
 
             JsonTargetEndpoint.LastTarget = null;
 
-            using (var server = InMemoryHost.Basic())
+            using (var server = FubuRuntime.Basic())
             {
                 server.Scenario(_ => {
                     _.Post.Input<JsonTarget>();

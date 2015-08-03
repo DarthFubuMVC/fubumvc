@@ -10,19 +10,24 @@ using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Logging;
 using FubuCore.Reflection;
-using FubuCore.Util;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Owin;
+using FubuMVC.Core.Http.Scenarios;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Files;
+using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.Services;
 using FubuMVC.Core.StructureMap;
 using FubuMVC.Core.StructureMap.Settings;
+using FubuMVC.Core.Urls;
 using StructureMap;
 
 namespace FubuMVC.Core
 {
+    using AppFunc = Func<IDictionary<string, object>, Task>;
+
     /// <summary>
     /// Represents a running FubuMVC application, with access to the key parts of the application
     /// </summary>
@@ -35,6 +40,7 @@ namespace FubuMVC.Core
         private readonly IFubuApplicationFiles _files;
         private readonly ActivationDiagnostics _diagnostics;
         private readonly PerfTimer _perfTimer;
+        private readonly Lazy<AppFunc> _appFunc;
 
 
         public static FubuRuntime Basic(Action<FubuRegistry> configure = null)
@@ -67,6 +73,9 @@ namespace FubuMVC.Core
 
         public FubuRuntime(FubuRegistry registry)
         {
+            _appFunc = new Lazy<AppFunc>(() => FubuOwinHost.ToAppFunc(this));
+
+            Port = registry.Port;
             Mode = registry.Mode;
 
             RouteTable.Routes.Clear();
@@ -123,7 +132,10 @@ namespace FubuMVC.Core
             _diagnostics.AssertNoFailures();
         }
 
+        public int Port { get; private set; }
+
         public string Mode { get; set; }
+
 
         // Build route objects from route definitions on graph + add packaging routes
         private IList<RouteBase> buildRoutes(IServiceFactory factory, BehaviorGraph graph)
@@ -135,7 +147,8 @@ namespace FubuMVC.Core
             return routes;
         }
 
-        private void applyFubuExtensionsFromPackages(IActivationDiagnostics diagnostics, IEnumerable<Assembly> packageAssemblies, FubuRegistry registry)
+        private void applyFubuExtensionsFromPackages(IActivationDiagnostics diagnostics,
+            IEnumerable<Assembly> packageAssemblies, FubuRegistry registry)
         {
             // THIS IS NEW, ONLY ASSEMBLIES MARKED AS [FubuModule] will be scanned
             var importers = packageAssemblies.Where(a => a.HasAttribute<FubuModuleAttribute>()).Select(
@@ -231,7 +244,8 @@ namespace FubuMVC.Core
         internal void Activate()
         {
             var activators = Container.GetAllInstances<IActivator>();
-            _diagnostics.LogExecutionOnEachInParallel(activators, (activator, log) => activator.Activate(log, _perfTimer));
+            _diagnostics.LogExecutionOnEachInParallel(activators,
+                (activator, log) => activator.Activate(log, _perfTimer));
 
             _diagnostics.AssertNoFailures();
 
@@ -245,7 +259,7 @@ namespace FubuMVC.Core
 
         public static string DefaultApplicationPath()
         {
-            return 
+            return
                 HostingEnvironment.ApplicationPhysicalPath ?? determineApplicationPathFromAppDomain();
         }
 
@@ -267,6 +281,48 @@ namespace FubuMVC.Core
             }
 
             return basePath;
+        }
+
+        public OwinHttpResponse Send(Action<OwinHttpRequest> configuration)
+        {
+            var request = OwinHttpRequest.ForTesting();
+            request.FullUrl("http://memory");
+
+            configuration(request);
+
+            return Send(request);
+        }
+
+        public OwinHttpResponse Send(OwinHttpRequest request)
+        {
+            // TODO -- make the wait be configurable?
+            request.RewindData();
+
+            _appFunc.Value(request.Environment).Wait(15.Seconds());
+
+            return new OwinHttpResponse(request.Environment);
+        }
+
+        public OwinHttpResponse Scenario(Action<Scenario> configuration)
+        {
+            var scenario = CreateScenario();
+            using (scenario)
+            {
+                configuration(scenario);
+
+                return scenario.Response;
+            }
+        }
+
+        public Scenario CreateScenario()
+        {
+            var request = OwinHttpRequest.ForTesting();
+            request.FullUrl("http://memory");
+
+            var securitySettings = Factory.Get<SecuritySettings>();
+            securitySettings.Reset();
+            var scenario = new Scenario(Factory.Get<IUrlRegistry>(), request, Send, securitySettings);
+            return scenario;
         }
     }
 }

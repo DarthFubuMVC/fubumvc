@@ -21,7 +21,7 @@ namespace FubuMVC.Core.Http.Hosting
         private EndpointDriver _endpoints;
         private string _baseAddress;
         private readonly FubuRuntime _runtime;
-        private IHost _host;
+        private readonly IHost _host;
 
 
         public static string TryToGuessApplicationPath(Type type)
@@ -36,39 +36,33 @@ namespace FubuMVC.Core.Http.Hosting
         }
 
 
-        public EmbeddedFubuMvcServer(FubuRuntime runtime, IHost host, int port = 5500)
+        public EmbeddedFubuMvcServer(FubuRuntime runtime, IHost host)
         {
-            if (port <= 0)
-            {
-                port = PortFinder.FindPort(5500);
-            }
-
             _runtime = runtime;
             _services = _runtime.Factory;
             _host = host;
 
-            startAllNew(runtime, port);
+            startAllNew(runtime);
 
 
-            buildEndpointDriver(port);
+            buildEndpointDriver();
         }
 
 
-        private void startAllNew(FubuRuntime runtime, int port)
+        private void startAllNew(FubuRuntime runtime)
         {
-            startServer(runtime.Factory.Get<OwinSettings>(), port);
+            startServer(runtime.Factory.Get<OwinSettings>(), runtime.Port);
 
             _urls = _runtime.Factory.Get<IUrlRegistry>();
             _services = _runtime.Factory.Get<IServiceFactory>();
 
-            buildEndpointDriver(port);
+            buildEndpointDriver();
         }
 
 
-        private void buildEndpointDriver(int port)
+        private void buildEndpointDriver()
         {
-            _baseAddress = "http://localhost:" + port;
-            UrlContext.Stub(_baseAddress);
+            _baseAddress = "http://localhost:" + _runtime.Port;
             _endpoints = new EndpointDriver(_urls, _baseAddress);
         }
 
@@ -110,7 +104,7 @@ namespace FubuMVC.Core.Http.Hosting
 
         public void Dispose()
         {
-            if (_runtime != null) _runtime.Dispose();
+            if (_runtime != null) _runtime.As<IDisposable>().Dispose();
             _server.Dispose();
         }
 

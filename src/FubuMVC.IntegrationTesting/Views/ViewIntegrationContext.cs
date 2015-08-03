@@ -24,7 +24,7 @@ namespace FubuMVC.IntegrationTesting.Views
         public static readonly string Application = "Application";
         private readonly string _directory;
         private readonly IList<ContentStream> _streams = new List<ContentStream>();
-        private InMemoryHost _host;
+        private FubuRuntime _host;
         private readonly string _applicationDirectory;
         protected Scenario Scenario;
         private Lazy<ViewBag> _views;
@@ -50,13 +50,11 @@ namespace FubuMVC.IntegrationTesting.Views
             var registry = determineRegistry();
             registry.RootPath = _applicationDirectory;
 
-            var runtime = registry.ToRuntime();
-
-            _host = new InMemoryHost(runtime);
+            _host = registry.ToRuntime();
 
             _views = new Lazy<ViewBag>(() =>
             {
-                var allViews = _host.Services.GetInstance<ConnegSettings>().Views.SelectMany(x => x.Views);
+                var allViews = _host.Container.GetInstance<ConnegSettings>().Views.SelectMany(x => x.Views);
                 return new ViewBag(allViews);
             });
         }
@@ -88,7 +86,7 @@ namespace FubuMVC.IntegrationTesting.Views
 
         protected IServiceLocator Services
         {
-            get { return _host.Services; }
+            get { return _host.Factory.Get<IServiceLocator>(); }
         }
 
         protected BehaviorGraph BehaviorGraph
@@ -157,7 +155,7 @@ namespace FubuMVC.IntegrationTesting.Views
         {
             get
             {
-                return _host.Services.GetInstance<ViewEngineSettings>().Facilities.OfType<RazorViewFacility>().Single();
+                return _host.Container.GetInstance<ViewEngineSettings>().Facilities.OfType<RazorViewFacility>().Single();
             }
         }
 

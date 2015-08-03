@@ -65,7 +65,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
             // so I never got around to creating more convenience
             // methods for common things like deserializing JSON
             // into .Net objects from the response body
-            using (var host = FubuRuntime.Basic().RunInMemory())
+            using (var host = FubuRuntime.Basic())
             {
                 host.Scenario(_ =>
                 {
