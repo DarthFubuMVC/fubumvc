@@ -20,7 +20,7 @@ namespace FubuMVC.Tests.ServiceBus.InMemory
             FubuTransport.AllQueuesInMemory = true;
 
             theRuntime = FubuTransport.DefaultPolicies();
-            graph = theRuntime.Factory.Get<ChannelGraph>();
+            graph = theRuntime.Get<ChannelGraph>();
 
             var uri = graph.ReplyChannelFor(InMemoryChannel.Protocol);
             theReplyNode = graph.Single(x => x.Channel.Address == uri);

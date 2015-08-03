@@ -32,7 +32,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
 
             runtime = registry.ToRuntime();
 
-            theRouter = runtime.Factory.Get<ISubscriptionCache>();
+            theRouter = runtime.Get<ISubscriptionCache>();
         }
 
         [TearDown]

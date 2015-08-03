@@ -51,7 +51,7 @@ namespace FubuMVC.Tests
         {
             using (var runtime = FubuRuntime.Basic(_ => _.Mode = "development"))
             {
-                runtime.Factory.Get<DiagnosticsSettings>()
+                runtime.Get<DiagnosticsSettings>()
                     .TraceLevel.ShouldBe(TraceLevel.Verbose);
             }
         }

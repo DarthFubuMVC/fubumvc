@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
 
             using (var runtime = registry.ToRuntime())
             {
-                var container = runtime.Factory.Get<IContainer>();
+                var container = runtime.Get<IContainer>();
 
                 container.DefaultSingletonIs<IRequestHistoryCache, RequestHistoryCache>();
                 container.DefaultRegistrationIs<IRequestTrace, RequestTrace>();

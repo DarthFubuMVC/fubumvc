@@ -15,7 +15,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
         {
             using (var runtime = FubuTransport.DefaultPolicies())
             {
-                runtime.Factory.Get<IPollingJobs>().Any(x => x is PollingJob<HealthMonitorPollingJob, HealthMonitoringSettings>)
+                runtime.Get<IPollingJobs>().Any(x => x is PollingJob<HealthMonitorPollingJob, HealthMonitoringSettings>)
                     .ShouldBeTrue();
             }
         }

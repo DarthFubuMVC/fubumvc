@@ -19,7 +19,7 @@ namespace FubuMVC.RavenDb.Tests.Membership
                 var application =
                     FubuRuntime.For<FubuRepoWithPersistedMembership>(_ => _.StructureMap(container)))
             {
-                application.Factory.Get<ILoginAuditor>().ShouldBeOfType<PersistedLoginAuditor>();
+                application.Get<ILoginAuditor>().ShouldBeOfType<PersistedLoginAuditor>();
             }
         }
     }

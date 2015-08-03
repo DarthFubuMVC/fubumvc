@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.Registration.Registration
         public void SetUp()
         {
             _runtime = FubuRuntime.For<ApplicationRegistry>();
-            behaviors = _runtime.Factory.Get<BehaviorGraph>();
+            behaviors = _runtime.Get<BehaviorGraph>();
 
             appChain = behaviors.ChainFor<ApplicationActions>(x => x.get_app_action());
             pakChain = behaviors.ChainFor<PackageActions>(x => x.get_pak_action());
@@ -36,7 +36,7 @@ namespace FubuMVC.Tests.Registration.Registration
         [Test]
         public void the_application_service_registrations_win()
         {
-            _runtime.Factory.Get<IAppService>().ShouldBeOfType<AppService>();
+            _runtime.Get<IAppService>().ShouldBeOfType<AppService>();
         }
 
         [Test]

@@ -13,7 +13,7 @@ namespace FubuMVC.IntegrationTesting
         public void chain_is_on_the_endpoint()
         {
             var runtime = FubuRuntime.For<SomeRegistry>();
-            var endpoint = runtime.Factory.Get<IEndpointService>().EndpointFor<SomeEndpoint>(x => x.get_hello());
+            var endpoint = runtime.Get<IEndpointService>().EndpointFor<SomeEndpoint>(x => x.get_hello());
 
             endpoint.Chain.Calls.Single().HandlerType.ShouldBe(typeof (SomeEndpoint));
         }

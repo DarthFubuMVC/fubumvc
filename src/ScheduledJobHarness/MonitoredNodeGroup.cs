@@ -60,10 +60,10 @@ namespace ScheduledJobHarness
 
             _runtime = ToRuntime();
 
-            _runtime.Factory.Get<ChannelGraph>().Name = "Monitoring";
-            _subscriptions = _runtime.Factory.Get<ISubscriptionPersistence>();
-            _schedules = _runtime.Factory.Get<ISchedulePersistence>();
-            _store = _runtime.Factory.Get<IDocumentStore>();
+            _runtime.Get<ChannelGraph>().Name = "Monitoring";
+            _subscriptions = _runtime.Get<ISubscriptionPersistence>();
+            _schedules = _runtime.Get<ISchedulePersistence>();
+            _store = _runtime.Get<IDocumentStore>();
         }
 
         public IEnumerable<MonitoredNode> Nodes()

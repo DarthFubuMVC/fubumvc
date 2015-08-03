@@ -16,7 +16,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
         {
             using (var runtime = FubuRuntime.For<ModifyingChannelRegistry>())
             {
-                var graph = runtime.Factory.Get<ChannelGraph>();
+                var graph = runtime.Get<ChannelGraph>();
 
                 graph.ChannelFor<BusSettings>(x => x.Downstream).Modifiers.Single().ShouldBeOfType<FooModifier>();
                 graph.ChannelFor<BusSettings>(x => x.Upstream).Modifiers.Single().ShouldBeOfType<BarModifier>();

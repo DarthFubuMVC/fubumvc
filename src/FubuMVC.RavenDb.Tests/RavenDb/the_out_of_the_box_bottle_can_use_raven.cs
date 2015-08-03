@@ -26,7 +26,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
                 application.Behaviors.PackageAssemblies.Each(x => Debug.WriteLine(x.GetName().FullName));
 
                 
-                application.Factory.Get<IDocumentStore>().ShouldNotBeNull();
+                application.Get<IDocumentStore>().ShouldNotBeNull();
             }
         }
 

@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.ServiceBus.Async
 
             using (var runtime = FubuRuntime.For<AsyncRegistry>())
             {
-                var invoker = runtime.Factory.Get<IChainInvoker>();
+                var invoker = runtime.Get<IChainInvoker>();
                 var message = new Foo {Name = "Buck Rogers"};
 
                 invoker.InvokeNow(message);

@@ -43,7 +43,7 @@ namespace FubuMVC.Tests.ServiceBus.Polling
         public void disabled_jobs_are_not_executed_or_started()
         {
             DisabledJob.Executed.ShouldBe(0);
-            theRuntime.Factory.Get<IPollingJobs>().IsActive<DisabledJob>()
+            theRuntime.Get<IPollingJobs>().IsActive<DisabledJob>()
                 .ShouldBeFalse();
 
         }

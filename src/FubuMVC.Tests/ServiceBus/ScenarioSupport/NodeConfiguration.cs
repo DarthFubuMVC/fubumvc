@@ -181,7 +181,7 @@ namespace FubuMVC.Tests.ServiceBus.ScenarioSupport
             if (!_registry.IsValueCreated) return;
 
             writer.WriteLine(Name);
-            var channels = _runtime.Factory.Get<ChannelGraph>();
+            var channels = _runtime.Get<ChannelGraph>();
             using (writer.Indent())
             {
                 channels.Where(x => x.Incoming)
@@ -198,7 +198,7 @@ namespace FubuMVC.Tests.ServiceBus.ScenarioSupport
                     }
                 });
 
-                var handlers = _runtime.Factory.Get<BehaviorGraph>();
+                var handlers = _runtime.Get<BehaviorGraph>();
                 var inputs = handlers.Handlers.Select(x => x.InputType()).Where(x => x != typeof(object[]));
                 if (inputs.Any())
                 {

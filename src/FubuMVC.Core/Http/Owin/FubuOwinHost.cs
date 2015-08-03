@@ -19,10 +19,10 @@ namespace FubuMVC.Core.Http.Owin
 
         public static AppFunc ToAppFunc(FubuRuntime runtime, OwinSettings settings = null)
         {
-            settings = settings ?? runtime.Factory.Get<OwinSettings>();
+            settings = settings ?? runtime.Get<OwinSettings>();
             var host = new FubuOwinHost(runtime.Routes);
             AppFunc inner = host.Invoke;
-            AppFunc appFunc = settings.BuildAppFunc(inner, runtime.Factory);
+            AppFunc appFunc = settings.BuildAppFunc(inner, runtime.Get<IServiceFactory>());
             return appFunc;
         }
 

@@ -22,9 +22,9 @@ namespace FubuMVC.RavenDb.Tests.ServiceBus
         public void SetUp()
         {
             runtime = FubuTransport.DefaultPolicies();
-            runtime.Factory.Get<IContainer>().UseInMemoryDatastore();
+            runtime.Get<IContainer>().UseInMemoryDatastore();
 
-            persistence = runtime.Factory.Get<RavenDbSubscriptionPersistence>();
+            persistence = runtime.Get<RavenDbSubscriptionPersistence>();
         }
 
         [TearDown]

@@ -39,7 +39,7 @@ namespace FubuMVC.IntegrationTesting.Security.Authentication
             registry.Features.Authentication.Enable(true);
 
             server = registry.RunEmbedded();
-            theContainer = server.Runtime.Factory.Get<IContainer>();
+            theContainer = server.Runtime.Get<IContainer>();
 
             beforeEach();
         }

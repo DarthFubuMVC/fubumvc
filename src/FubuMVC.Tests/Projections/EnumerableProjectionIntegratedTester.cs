@@ -37,7 +37,7 @@ namespace FubuMVC.Tests.Projections
 
             using (var runtime = FubuRuntime.Basic())
             {
-                runner = runtime.Factory.Get<IProjectionRunner>();
+                runner = runtime.Get<IProjectionRunner>();
             }
         }
 

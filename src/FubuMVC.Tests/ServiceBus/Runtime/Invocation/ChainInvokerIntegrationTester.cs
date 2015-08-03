@@ -29,9 +29,9 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             FubuTransport.SetupForInMemoryTesting();
             using (var runtime = FubuRuntime.For<ChainInvokerTransportRegistry>())
             {
-                var recorder = runtime.Factory.Get<MessageRecorder>();
+                var recorder = runtime.Get<MessageRecorder>();
 
-                var invoker = runtime.Factory.Get<IChainInvoker>();
+                var invoker = runtime.Get<IChainInvoker>();
 
                 MessageHistory.WaitForWorkToFinish(() =>
                 {
@@ -56,9 +56,9 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             FubuTransport.SetupForInMemoryTesting();
             using (var runtime = FubuRuntime.For<ChainInvokerTransportRegistry>())
             {
-                var recorder = runtime.Factory.Get<MessageRecorder>();
+                var recorder = runtime.Get<MessageRecorder>();
 
-                var invoker = runtime.Factory.Get<IChainInvoker>();
+                var invoker = runtime.Get<IChainInvoker>();
 
 
                 MessageHistory.WaitForWorkToFinish(() =>
@@ -83,9 +83,9 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             FubuTransport.SetupForInMemoryTesting();
             using (var runtime = FubuRuntime.For<ChainInvokerTransportRegistry>())
             {
-                var recorder = runtime.Factory.Get<MessageRecorder>();
+                var recorder = runtime.Get<MessageRecorder>();
 
-                var invoker = runtime.Factory.Get<IChainInvoker>();
+                var invoker = runtime.Get<IChainInvoker>();
 
                 MessageHistory.WaitForWorkToFinish(() =>
                 {
@@ -111,9 +111,9 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             FubuTransport.SetupForInMemoryTesting();
             using (var runtime = FubuRuntime.For<ChainInvokerTransportRegistry>())
             {
-                var recorder = runtime.Factory.Get<MessageRecorder>();
+                var recorder = runtime.Get<MessageRecorder>();
 
-                var invoker = runtime.Factory.Get<IChainInvoker>();
+                var invoker = runtime.Get<IChainInvoker>();
 
                 MessageHistory.WaitForWorkToFinish(() =>
                 {
@@ -136,9 +136,9 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             FubuTransport.SetupForInMemoryTesting();
             using (var runtime = FubuRuntime.For<ChainInvokerTransportRegistry>())
             {
-                var recorder = runtime.Factory.Get<MessageRecorder>();
+                var recorder = runtime.Get<MessageRecorder>();
 
-                var invoker = runtime.Factory.Get<IChainInvoker>();
+                var invoker = runtime.Get<IChainInvoker>();
 
                 MessageHistory.WaitForWorkToFinish(() =>
                 {

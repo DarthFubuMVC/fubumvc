@@ -134,7 +134,7 @@ namespace FubuMVC.Tests.Assets
         {
             using (var runtime = FubuRuntime.Basic(_ => _.Mode = ""))
             {
-                var settings = runtime.Factory.Get<AssetSettings>();
+                var settings = runtime.Get<AssetSettings>();
                 settings.Headers.GetAllKeys()
                     .ShouldHaveTheSameElementsAs(HttpGeneralHeaders.CacheControl, HttpGeneralHeaders.Expires);
 
@@ -150,7 +150,7 @@ namespace FubuMVC.Tests.Assets
         {
             using (var runtime = FubuRuntime.Basic(_ => _.Mode = "development"))
             {
-                runtime.Factory.Get<AssetSettings>()
+                runtime.Get<AssetSettings>()
                     .Headers.GetAllKeys().Any().ShouldBeFalse();
             }
         }
@@ -288,7 +288,7 @@ namespace FubuMVC.Tests.Assets
 
             using (var runtime = registry.ToRuntime())
             {
-                var graph = runtime.Factory.Get<IAssetFinder>().FindAll();
+                var graph = runtime.Get<IAssetFinder>().FindAll();
                 graph.Assets.OrderBy(x => x.Url).Select(x => x.Url)
                     .ShouldHaveTheSameElementsAs("public/1.0.1/d.js", "public/1.0.1/e.js", "public/1.0.1/f.js",
                         "public/javascript/a.js", "public/javascript/b.js", "public/javascript/c.js");
@@ -307,7 +307,7 @@ namespace FubuMVC.Tests.Assets
 
             using (var runtime = registry.ToRuntime())
             {
-                var graph = runtime.Factory.Get<IAssetFinder>().FindAll();
+                var graph = runtime.Get<IAssetFinder>().FindAll();
                 graph.Assets.OrderBy(x => x.Url).Select(x => x.Url)
                     .ShouldHaveTheSameElementsAs("public/1.0.1/d.js", "public/1.0.1/e.js", "public/1.0.1/f.js");
             }

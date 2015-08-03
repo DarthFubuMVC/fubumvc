@@ -45,7 +45,7 @@ namespace FubuMVC.IntegrationTesting.ServiceBus.Publishing
             registry.StructureMap(container);
 
             theRuntime = registry.ToRuntime();
-            theGraph = theRuntime.Factory.Get<BehaviorGraph>();
+            theGraph = theRuntime.Get<BehaviorGraph>();
             chain = theGraph.ChainFor<MessageOnePublisher>(x => x.post_message1(null));
 
             container.Inject(theServiceBus);

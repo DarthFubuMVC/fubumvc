@@ -39,7 +39,7 @@ namespace FubuMVC.Tests.ServiceBus.Events
             using (var runtime = FubuRuntime.For<DelayedRegistry>()
                 )
             {
-                runtime.Factory.Get<IPollingJobs>()
+                runtime.Get<IPollingJobs>()
                     .Any(x => x is PollingJob<ExpiringListenerCleanup, TransportSettings>)
                     .ShouldBeTrue();
             }

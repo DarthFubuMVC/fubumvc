@@ -24,7 +24,7 @@ namespace FubuMVC.RavenDb.Tests.Membership
                 })
                 )
             {
-                var container = runtime.Factory.Get<IContainer>();
+                var container = runtime.Get<IContainer>();
 
                 container.GetInstance<IMembershipRepository>()
                     .ShouldBeOfType<MembershipRepository<FubuMVC.RavenDb.Membership.User>>();

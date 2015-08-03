@@ -20,7 +20,7 @@ namespace FubuMVC.Tests.Security.AntiForgery
 
             using (var runtime = registry.ToRuntime())
             {
-                var graph = runtime.Factory.Get<BehaviorGraph>();
+                var graph = runtime.Get<BehaviorGraph>();
 
                 graph.ChainFor<TestEndpoint>(x => x.post_csrf(null))
                     .OfType<AntiForgeryNode>().Any()

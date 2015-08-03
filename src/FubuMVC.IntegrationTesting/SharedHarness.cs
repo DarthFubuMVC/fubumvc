@@ -28,7 +28,7 @@ namespace FubuMVC.IntegrationTesting
 
         public static T Service<T>()
         {
-            return _host.Value.Factory.Get<T>();
+            return _host.Value.Get<T>();
         }
 
         public static void Scenario(Action<Scenario> configuration)

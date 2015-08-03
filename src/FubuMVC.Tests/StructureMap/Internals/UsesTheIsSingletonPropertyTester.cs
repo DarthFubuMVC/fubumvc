@@ -15,7 +15,7 @@ namespace FubuMVC.Tests.StructureMap.Internals
         {
             using (var runtime = FubuRuntime.Basic())
             {
-                runtime.Factory.Get<IContainer>().Model.For<IClock>().Default.Lifecycle.ShouldBeOfType<SingletonLifecycle>();
+                runtime.Get<IContainer>().Model.For<IClock>().Default.Lifecycle.ShouldBeOfType<SingletonLifecycle>();
             }
         }
     }

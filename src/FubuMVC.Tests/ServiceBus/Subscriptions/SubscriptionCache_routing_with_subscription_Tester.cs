@@ -30,7 +30,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
 
             _runtime = registry.ToRuntime();
 
-            theCache = _runtime.Factory.Get<ISubscriptionCache>().As<SubscriptionCache>();
+            theCache = _runtime.Get<ISubscriptionCache>().As<SubscriptionCache>();
         }
 
         [TearDown]

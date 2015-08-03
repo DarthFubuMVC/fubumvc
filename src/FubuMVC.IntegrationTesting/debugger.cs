@@ -30,7 +30,7 @@ namespace FubuMVC.IntegrationTesting
         {
             using (var runtime = FubuRuntime.Basic())
             {
-                runtime.Factory.Get<ISystemTime>().ShouldBeOfType<SystemTime>();
+                runtime.Get<ISystemTime>().ShouldBeOfType<SystemTime>();
             }
         }
     }

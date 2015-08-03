@@ -86,7 +86,7 @@ namespace FubuMVC.IntegrationTesting.Views
 
         protected IServiceLocator Services
         {
-            get { return _host.Factory.Get<IServiceLocator>(); }
+            get { return _host.Get<IServiceLocator>(); }
         }
 
         protected BehaviorGraph BehaviorGraph

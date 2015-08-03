@@ -74,7 +74,7 @@ namespace ScheduledJobHarness
 
         public ScheduledJobGraph Jobs
         {
-            get { return _runtime.Factory.Get<ScheduledJobGraph>(); }
+            get { return _runtime.Get<ScheduledJobGraph>(); }
         }
 
         public void Startup(ISubscriptionPersistence subscriptions, ISchedulePersistence schedules)

@@ -42,11 +42,11 @@ namespace FubuMVC.Tests.ServiceBus.InMemory
                                        ;
 
             // Disable polling!
-            theRuntime.Factory.Get<IPollingJobs>().Each(x => x.Stop());
+            theRuntime.Get<IPollingJobs>().Each(x => x.Stop());
 
-            theServiceBus = theRuntime.Factory.Get<IServiceBus>();
+            theServiceBus = theRuntime.Get<IServiceBus>();
 
-            theClock = theRuntime.Factory.Get<ISystemTime>().As<SettableClock>();
+            theClock = theRuntime.Get<ISystemTime>().As<SettableClock>();
 
             message1 = new OneMessage();
             message2 = new OneMessage();
@@ -58,7 +58,7 @@ namespace FubuMVC.Tests.ServiceBus.InMemory
             theServiceBus.DelaySend(message3, theClock.UtcNow().AddHours(2));
             theServiceBus.DelaySend(message4, theClock.UtcNow().AddHours(2));
 
-            theProcessor = theRuntime.Factory.Get<DelayedEnvelopeProcessor>();
+            theProcessor = theRuntime.Get<DelayedEnvelopeProcessor>();
         }
 
         [Test]

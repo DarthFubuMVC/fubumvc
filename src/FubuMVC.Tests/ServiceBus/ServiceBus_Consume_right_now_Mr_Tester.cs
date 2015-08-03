@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.ServiceBus
                 x.Handlers.Include<SimpleHandler<OneMessage>>();
             }))
             {
-                var serviceBus = runtime.Factory.Get<IServiceBus>();
+                var serviceBus = runtime.Get<IServiceBus>();
 
                 TestMessageRecorder.Clear();
 

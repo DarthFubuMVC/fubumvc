@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Diagnostics
         {
             runtime = FubuRuntime.Basic(_ => _.Mode = "development");
 
-            runtime.Factory.Get<FubuDiagnosticsEndpoint>().get__fubu();
+            runtime.Get<FubuDiagnosticsEndpoint>().get__fubu();
         }
 
         [TestFixtureTearDown]
@@ -50,7 +50,7 @@ namespace FubuMVC.Tests.Diagnostics
         [Test]
         public void got_all_the_routes_in_the_diagnostic_javascript_router()
         {
-            var routes = runtime.Factory.Get<DiagnosticJavascriptRoutes>();
+            var routes = runtime.Get<DiagnosticJavascriptRoutes>();
             var names = routes.Routes().Select(x => x.Name).ToArray();
 
             names.ShouldContain("StructureMap:summary");

@@ -46,8 +46,8 @@ namespace FubuMVC.LightningQueues.Testing
                 _.Services.ReplaceService<ISystemTime>(theClock);
             });
 
-            theServiceBus = _runtime.Factory.Get<IServiceBus>();
-            //_runtime.Factory.Get<IPersistentQueues>().ClearAll();
+            theServiceBus = _runtime.Get<IServiceBus>();
+            //_runtime.Get<IPersistentQueues>().ClearAll();
 
             message1 = new OneMessage();
             message2 = new OneMessage();

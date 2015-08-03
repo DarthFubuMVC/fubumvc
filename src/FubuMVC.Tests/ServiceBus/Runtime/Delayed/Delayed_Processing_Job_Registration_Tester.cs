@@ -24,7 +24,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Delayed
             runtime = FubuRuntime.For<DelayedRegistry>()
                            ;
 
-            runtime.Factory.Get<IPollingJobs>().Any(x => x is PollingJob<DelayedEnvelopeProcessor, TransportSettings>)
+            runtime.Get<IPollingJobs>().Any(x => x is PollingJob<DelayedEnvelopeProcessor, TransportSettings>)
                 .ShouldBeTrue();
         }
 

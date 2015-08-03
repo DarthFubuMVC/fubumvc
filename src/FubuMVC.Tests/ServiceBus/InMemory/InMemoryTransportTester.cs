@@ -37,7 +37,7 @@ namespace FubuMVC.Tests.ServiceBus.InMemory
         {
             using (var runtime = FubuTransport.DefaultPolicies())
             {
-                runtime.Factory.Get<ChannelGraph>().ReplyChannelFor(InMemoryChannel.Protocol)
+                runtime.Get<ChannelGraph>().ReplyChannelFor(InMemoryChannel.Protocol)
                     .ShouldBe("memory://localhost/fubu/replies".ToUri());
             }
         }
@@ -51,7 +51,7 @@ namespace FubuMVC.Tests.ServiceBus.InMemory
 
             using (var runtime = registry.ToRuntime())
             {
-                runtime.Factory.Get<ChannelGraph>().ReplyChannelFor(InMemoryChannel.Protocol)
+                runtime.Get<ChannelGraph>().ReplyChannelFor(InMemoryChannel.Protocol)
                     .ShouldBe("memory://special".ToUri());
             }
         }

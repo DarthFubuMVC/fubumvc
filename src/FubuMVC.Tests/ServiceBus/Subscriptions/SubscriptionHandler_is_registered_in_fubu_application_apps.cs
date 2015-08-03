@@ -14,7 +14,7 @@ namespace FubuMVC.Tests.ServiceBus.Subscriptions
         {
             using (var runtime = FubuTransport.DefaultPolicies())
             {
-                var graph = runtime.Factory.Get<BehaviorGraph>();
+                var graph = runtime.Get<BehaviorGraph>();
                 graph.ChainFor(typeof (SubscriptionRequested)).ShouldNotBeNull();
                 graph.ChainFor(typeof (SubscriptionsChanged)).ShouldNotBeNull();
             }

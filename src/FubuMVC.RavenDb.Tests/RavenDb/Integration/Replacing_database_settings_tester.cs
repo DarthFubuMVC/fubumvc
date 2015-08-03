@@ -1,4 +1,5 @@
 ﻿using FubuMVC.Core;
+using FubuMVC.Core.Runtime;
 using NUnit.Framework;
 using Raven.Client;
 using Raven.Client.Embedded;
@@ -14,11 +15,11 @@ namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
         {
             using (var runtime = FubuRuntime.Basic())
             {
-                var original = runtime.Factory.Get<IDocumentStore>();
+                var original = runtime.Get<IDocumentStore>();
 
-                runtime.Factory.UseInMemoryDatastore();
+                runtime.Get<IServiceFactory>().UseInMemoryDatastore();
 
-                var current = runtime.Factory.Get<IDocumentStore>();
+                var current = runtime.Get<IDocumentStore>();
                 current
                     .ShouldBeOfType<EmbeddableDocumentStore>()
                     .RunInMemory.ShouldBeTrue();

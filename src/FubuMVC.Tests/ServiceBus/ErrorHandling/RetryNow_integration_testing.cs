@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
                         
                         )
             {
-                var pipeline = runtime.Factory.Get<IHandlerPipeline>();
+                var pipeline = runtime.Get<IHandlerPipeline>();
                 pipeline.Invoke(new Envelope {Message = new MessageThatBombs(), Callback = MockRepository.GenerateMock<IMessageCallback>()});
             }
 

@@ -37,9 +37,9 @@ namespace FubuMVC.Tests.ServiceBus.InMemory
             runtime = FubuRuntime.For<DelayedRegistry>()
                                        ;
 
-            theServiceBus = runtime.Factory.Get<IServiceBus>();
+            theServiceBus = runtime.Get<IServiceBus>();
 
-            theClock = runtime.Factory.Get<ISystemTime>().As<SettableClock>();
+            theClock = runtime.Get<ISystemTime>().As<SettableClock>();
 
             message1 = new OneMessage();
             message2 = new OneMessage();

@@ -13,7 +13,7 @@ namespace FubuMVC.IntegrationTesting
         {
             using (var runtime = FubuRuntime.Basic())
             {
-                var namespaces = runtime.Factory.Get<CommonViewNamespaces>();
+                var namespaces = runtime.Get<CommonViewNamespaces>();
                 namespaces.Namespaces.ShouldContain("Red.Testing");
                 namespaces.Namespaces.ShouldContain("Green.Testing");
                 namespaces.Namespaces.ShouldContain("Blue.Testing");

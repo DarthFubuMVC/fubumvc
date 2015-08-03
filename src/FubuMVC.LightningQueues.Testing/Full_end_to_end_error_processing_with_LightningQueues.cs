@@ -42,11 +42,11 @@ namespace FubuMVC.LightningQueues.Testing
                 x.Services.For<BusSettings>().Use(settings);
             })
                 ;
-            //_runtime.Factory.Get<IPersistentQueues>().ClearAll();
+            //_runtime.Get<IPersistentQueues>().ClearAll();
 
-            theServiceBus = _runtime.Factory.Get<IServiceBus>();
+            theServiceBus = _runtime.Get<IServiceBus>();
 
-            _queueManager = _runtime.Factory.Get<IPersistentQueues>().ManagerFor(lightningUri.Port, true);
+            _queueManager = _runtime.Get<IPersistentQueues>().ManagerFor(lightningUri.Port, true);
 
             message1 = new OneMessage();
 

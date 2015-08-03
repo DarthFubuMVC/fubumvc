@@ -36,7 +36,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             {
                 theRuntime = theTransportRegistry.ToRuntime();
 
-                return theRuntime.Factory.Get<IChainInvoker>();
+                return theRuntime.Get<IChainInvoker>();
             });
 
             theCallback = MockRepository.GenerateMock<IMessageCallback>();

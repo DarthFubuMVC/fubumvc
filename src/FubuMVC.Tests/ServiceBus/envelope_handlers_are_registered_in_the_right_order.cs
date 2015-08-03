@@ -14,7 +14,7 @@ namespace FubuMVC.Tests.ServiceBus
         {
             using (var runtime = FubuRuntime.For<Defaults>())
             {
-                var handlers = runtime.Factory.Get<IHandlerPipeline>().ShouldBeOfType<HandlerPipeline>().Handlers;
+                var handlers = runtime.Get<IHandlerPipeline>().ShouldBeOfType<HandlerPipeline>().Handlers;
 
 
                 handlers[0].ShouldBeOfType<DelayedEnvelopeHandler>();

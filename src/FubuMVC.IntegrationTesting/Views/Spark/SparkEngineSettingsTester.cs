@@ -53,7 +53,7 @@ namespace FubuMVC.IntegrationTesting.Views.Spark
         {
             using (var runtime = FubuRuntime.Basic(_ => _.Mode = "development"))
             {
-                runtime.Factory.Get<SparkEngineSettings>()
+                runtime.Get<SparkEngineSettings>()
                     .PrecompileViews.ShouldBeFalse();
             }
             
@@ -68,7 +68,7 @@ namespace FubuMVC.IntegrationTesting.Views.Spark
                 _.AlterSettings<SparkEngineSettings>(x => x.PrecompileViews = false);
             }))
             {
-                runtime.Factory.Get<SparkEngineSettings>()
+                runtime.Get<SparkEngineSettings>()
                     .PrecompileViews.ShouldBeFalse();
             }
         }

@@ -12,7 +12,7 @@ namespace FubuMVC.Tests
         {
             using (var runtime = FubuRuntime.Basic())
             {
-                runtime.Factory.Get<FubuRuntime>()
+                runtime.Get<FubuRuntime>()
                     .ShouldBeTheSameAs(runtime);
             }
         }

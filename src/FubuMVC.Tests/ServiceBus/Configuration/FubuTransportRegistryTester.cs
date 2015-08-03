@@ -13,13 +13,12 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
         {
             using (var runtime = FubuRuntime.For<CustomTransportRegistry>())
             {
-                runtime.Factory.Get<ChannelGraph>().Name.ShouldBe("custom");
+                runtime.Get<ChannelGraph>().Name.ShouldBe("custom");
             }
 
             using (var fubuRuntime = FubuRuntime.For<OtherRegistry>())
             {
-                fubuRuntime
-                    .Factory.Get<ChannelGraph>().Name.ShouldBe("other");
+                fubuRuntime.Get<ChannelGraph>().Name.ShouldBe("other");
             }
         }
 
@@ -31,8 +30,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
 
             using (var fubuRuntime = registry.ToRuntime())
             {
-                fubuRuntime
-                    .Factory.Get<ChannelGraph>().Name.ShouldBe("MyNode");
+                fubuRuntime.Get<ChannelGraph>().Name.ShouldBe("MyNode");
             }
         }
     }

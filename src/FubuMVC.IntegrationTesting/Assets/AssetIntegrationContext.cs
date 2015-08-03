@@ -49,7 +49,7 @@ namespace FubuMVC.IntegrationTesting.Assets
 
             _host = runtime;
 
-            _allAssets = new Lazy<AssetGraph>(() => { return runtime.Factory.Get<IAssetFinder>().FindAll(); });
+            _allAssets = new Lazy<AssetGraph>(() => { return runtime.Get<IAssetFinder>().FindAll(); });
         }
 
         private FubuRegistry determineRegistry()

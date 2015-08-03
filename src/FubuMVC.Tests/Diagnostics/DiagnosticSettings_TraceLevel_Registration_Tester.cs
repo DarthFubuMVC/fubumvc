@@ -58,7 +58,7 @@ namespace FubuMVC.Tests.Diagnostics
 
             using (var runtime = registry.ToRuntime())
             {
-                var container = runtime.Factory.Get<IContainer>();
+                var container = runtime.Get<IContainer>();
                 action(container);
             }
         }

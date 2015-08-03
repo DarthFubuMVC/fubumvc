@@ -24,9 +24,9 @@ namespace FubuMVC.RavenDb.Tests.ServiceBus
         public void SetUp()
         {
             runtime = FubuTransport.DefaultPolicies();
-            runtime.Factory.Get<IContainer>().UseInMemoryDatastore();
+            runtime.Get<IContainer>().UseInMemoryDatastore();
 
-            thePersistence = runtime.Factory.Get<RavenDbSchedulePersistence>();
+            thePersistence = runtime.Get<RavenDbSchedulePersistence>();
 
             foo1 = new JobStatusDTO {JobKey = "1", NodeName = "foo"};
             foo2 = new JobStatusDTO {JobKey = "2", NodeName = "foo"};

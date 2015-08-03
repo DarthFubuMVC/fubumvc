@@ -17,7 +17,7 @@ namespace FubuMVC.Tests.Http.AspNet
         {
             using (var runtime = FubuRuntime.Basic())
             {
-                registry = runtime.Factory.Get<BindingRegistry>();
+                registry = runtime.Get<BindingRegistry>();
             }
         }
 

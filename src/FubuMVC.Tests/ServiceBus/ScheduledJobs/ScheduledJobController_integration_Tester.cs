@@ -34,11 +34,11 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
 
             runtime = FubuRuntime.For<TestingJobRegistry>();
 
-            history = runtime.Factory.Get<JobHistory>();
-            clock = runtime.Factory.Get<ISystemTime>().As<RewindableClock>();
-            theController = runtime.Factory.Get<IScheduledJobController>();
-            thePersistence = runtime.Factory.Get<ISchedulePersistence>();
-            theTimer = runtime.Factory.Get<IJobTimer>();
+            history = runtime.Get<JobHistory>();
+            clock = runtime.Get<ISystemTime>().As<RewindableClock>();
+            theController = runtime.Get<IScheduledJobController>();
+            thePersistence = runtime.Get<ISchedulePersistence>();
+            theTimer = runtime.Get<IJobTimer>();
 
             theController.Deactivate();
             theTimer.ClearAll();

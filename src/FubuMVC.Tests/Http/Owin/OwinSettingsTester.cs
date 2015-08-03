@@ -47,7 +47,7 @@ namespace FubuMVC.Tests.Http.Owin
                 });
             }))
             {
-                var settings = runtime.Factory.Get<OwinSettings>();
+                var settings = runtime.Get<OwinSettings>();
                 settings.Middleware.OfType<MiddlewareNode<HtmlHeadInjectionMiddleware>>()
                     .Any().ShouldBeTrue();
             }

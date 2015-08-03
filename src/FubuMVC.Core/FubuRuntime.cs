@@ -175,11 +175,6 @@ namespace FubuMVC.Core
             return _container.GetInstance<T>();
         }
 
-        public IServiceFactory Factory
-        {
-            get { return _factory; }
-        }
-
         public IList<RouteBase> Routes
         {
             get { return _routes; }
@@ -187,7 +182,7 @@ namespace FubuMVC.Core
 
         public BehaviorGraph Behaviors
         {
-            get { return Factory.Get<BehaviorGraph>(); }
+            get { return Get<BehaviorGraph>(); }
         }
 
         public void Dispose()
@@ -318,9 +313,9 @@ namespace FubuMVC.Core
             var request = OwinHttpRequest.ForTesting();
             request.FullUrl("http://memory");
 
-            var securitySettings = Factory.Get<SecuritySettings>();
+            var securitySettings = Get<SecuritySettings>();
             securitySettings.Reset();
-            var scenario = new Scenario(Factory.Get<IUrlRegistry>(), request, Send, securitySettings);
+            var scenario = new Scenario(Get<IUrlRegistry>(), request, Send, securitySettings);
             return scenario;
         }
     }

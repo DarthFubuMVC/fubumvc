@@ -15,7 +15,7 @@ namespace FubuMVC.Tests.ServiceBus
             using (var runtime = FubuRuntime.For<MyFirstTransport>())
             {
 
-                var graph = runtime.Factory.Get<BehaviorGraph>();
+                var graph = runtime.Get<BehaviorGraph>();
 
                 graph.Behaviors.Count(x => typeof (Foo1) == x.InputType()).ShouldBe(1);
                 graph.Behaviors.Count(x => typeof (Foo2) == x.InputType()).ShouldBe(1);
@@ -30,7 +30,7 @@ namespace FubuMVC.Tests.ServiceBus
             using (var runtime = FubuRuntime.For<MyFirstTransport>())
             {
 
-                var graph = runtime.Factory.Get<BehaviorGraph>();
+                var graph = runtime.Get<BehaviorGraph>();
 
                 graph.Behaviors.Count(x => typeof(Foo1) == x.InputType()).ShouldBe(1);
                 graph.Behaviors.Count(x => typeof(Foo2) == x.InputType()).ShouldBe(1);

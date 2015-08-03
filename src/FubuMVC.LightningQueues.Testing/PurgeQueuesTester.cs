@@ -22,7 +22,7 @@ namespace FubuMVC.LightningQueues.Testing
         {
             using (var runtime = FubuRuntime.For<TestRegistry>())
             {
-                runtime.Factory.Get<IPollingJobs>().Any(x => x is PollingJob<PurgeQueuesJob, LightningQueueSettings>)
+                runtime.Get<IPollingJobs>().Any(x => x is PollingJob<PurgeQueuesJob, LightningQueueSettings>)
                     .ShouldBeTrue();
             }
         }

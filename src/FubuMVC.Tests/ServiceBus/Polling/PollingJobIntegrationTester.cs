@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.ServiceBus.Polling
             theRuntime = FubuRuntime.For<PollingRegistry>()
                                       ;
 
-            container = theRuntime.Factory.Get<IContainer>();
+            container = theRuntime.Get<IContainer>();
 
             Wait.Until(() => ThreeJob.Executed > 10, timeoutInMilliseconds: 6000);
         }
@@ -43,7 +43,7 @@ namespace FubuMVC.Tests.ServiceBus.Polling
         [Test]
         public void the_polling_job_chains_are_tagged_for_no_tracing()
         {
-            var graph = theRuntime.Factory.Get<BehaviorGraph>();
+            var graph = theRuntime.Get<BehaviorGraph>();
             var chains = graph.Behaviors.Where(x => x.InputType() != null && x.InputType().Closes(typeof(JobRequest<>)));
 
             chains.Each(x => x.IsTagged(BehaviorChain.NoTracing).ShouldBeTrue());
@@ -81,7 +81,7 @@ namespace FubuMVC.Tests.ServiceBus.Polling
         [Test]
         public void jobs_that_are_not_disabled_should_be_active()
         {
-            var pollingJobs = theRuntime.Factory.Get<IPollingJobs>();
+            var pollingJobs = theRuntime.Get<IPollingJobs>();
             pollingJobs.IsActive<TwoJob>().ShouldBeTrue();
             pollingJobs.IsActive<ThreeJob>().ShouldBeTrue();
         }
@@ -89,7 +89,7 @@ namespace FubuMVC.Tests.ServiceBus.Polling
         [Test]
         public void disabled_job_should_not_be_active()
         {
-            var pollingJobs = theRuntime.Factory.Get<IPollingJobs>();
+            var pollingJobs = theRuntime.Get<IPollingJobs>();
             pollingJobs
                 .IsActive<DisabledJob>().ShouldBeFalse();
         }
@@ -97,7 +97,7 @@ namespace FubuMVC.Tests.ServiceBus.Polling
         [Test]
         public void nonexistent_job_is_not_active()
         {
-            var pollingJobs = theRuntime.Factory.Get<IPollingJobs>();
+            var pollingJobs = theRuntime.Get<IPollingJobs>();
             pollingJobs
                 .IsActive<MissingJob>().ShouldBeFalse();
         }

@@ -39,7 +39,7 @@ namespace FubuMVC.Core.Http.Hosting
         public EmbeddedFubuMvcServer(FubuRuntime runtime, IHost host)
         {
             _runtime = runtime;
-            _services = _runtime.Factory;
+            _services = _runtime.Get<IServiceFactory>();
             _host = host;
 
             startAllNew(runtime);
@@ -51,10 +51,10 @@ namespace FubuMVC.Core.Http.Hosting
 
         private void startAllNew(FubuRuntime runtime)
         {
-            startServer(runtime.Factory.Get<OwinSettings>(), runtime.Port);
+            startServer(runtime.Get<OwinSettings>(), runtime.Port);
 
-            _urls = _runtime.Factory.Get<IUrlRegistry>();
-            _services = _runtime.Factory.Get<IServiceFactory>();
+            _urls = _runtime.Get<IUrlRegistry>();
+            _services = _runtime.Get<IServiceFactory>();
 
             buildEndpointDriver();
         }

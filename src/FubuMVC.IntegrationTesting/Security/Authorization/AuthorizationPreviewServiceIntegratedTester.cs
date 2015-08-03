@@ -37,7 +37,7 @@ namespace FubuMVC.IntegrationTesting.Security.Authorization
             _runtime = registry.ToRuntime();
 
 
-            return _runtime.Factory.Get<AuthorizationPreviewService>();
+            return _runtime.Get<AuthorizationPreviewService>();
         }
 
 

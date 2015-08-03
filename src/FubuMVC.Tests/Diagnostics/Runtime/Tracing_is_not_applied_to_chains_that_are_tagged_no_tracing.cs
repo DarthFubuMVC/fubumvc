@@ -16,7 +16,7 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
         {
             using (var runtime = FubuRuntime.Basic(_ => _.Mode = "development"))
             {
-                var graph = runtime.Factory.Get<BehaviorGraph>();
+                var graph = runtime.Get<BehaviorGraph>();
 
                 graph.ChainFor<NotTracedEndpoint>(x => x.get_nothing())
                     .OfType<DiagnosticNode>()
