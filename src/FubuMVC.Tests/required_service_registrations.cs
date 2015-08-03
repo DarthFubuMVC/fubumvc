@@ -27,6 +27,7 @@ using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using NUnit.Framework;
+using StructureMap;
 
 namespace FubuMVC.Tests
 {
@@ -38,7 +39,7 @@ namespace FubuMVC.Tests
         {
             using (var runtime = FubuRuntime.Basic())
             {
-                var _ = runtime.Container;
+                var _ = runtime.Get<IContainer>();
 
 
                 Debug.WriteLine(_.WhatDoIHave());
@@ -121,7 +122,7 @@ namespace FubuMVC.Tests
         {
             using (var runtime = FubuRuntime.Basic(_ => _.Mode = "development"))
             {
-                runtime.Container.DefaultRegistrationIs<IAssetTagBuilder, DevelopmentModeAssetTagBuilder>();
+                runtime.Get<IContainer>().DefaultRegistrationIs<IAssetTagBuilder, DevelopmentModeAssetTagBuilder>();
             }
         }
     }

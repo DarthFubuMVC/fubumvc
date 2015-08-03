@@ -3,6 +3,7 @@ using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
 using FubuMVC.Core.ServiceBus.Runtime;
 using NUnit.Framework;
+using StructureMap;
 
 namespace FubuMVC.Tests.ServiceBus.InMemory
 {
@@ -17,7 +18,8 @@ namespace FubuMVC.Tests.ServiceBus.InMemory
 
             using (var runtime = FubuRuntime.Basic())
             {
-                runtime.Container.ShouldNotHaveRegistration<ITransport, InMemoryTransport>();
+                var container = runtime.Get<IContainer>();
+                container.ShouldNotHaveRegistration<ITransport, InMemoryTransport>();
             }
         }
 
@@ -28,7 +30,8 @@ namespace FubuMVC.Tests.ServiceBus.InMemory
 
             using (var runtime = FubuTransport.DefaultPolicies())
             {
-                runtime.Container.ShouldHaveRegistration<ITransport, InMemoryTransport>();
+                var container = runtime.Get<IContainer>();
+                container.ShouldHaveRegistration<ITransport, InMemoryTransport>();
             }
         }
 
@@ -46,7 +49,8 @@ namespace FubuMVC.Tests.ServiceBus.InMemory
 
             using (var runtime = FubuTransport.DefaultPolicies())
             {
-                runtime.Container.ShouldHaveRegistration<ITransport, InMemoryTransport>();
+                var container = runtime.Get<IContainer>();
+                container.ShouldHaveRegistration<ITransport, InMemoryTransport>();
             }
         }
     }

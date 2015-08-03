@@ -2,6 +2,7 @@
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Polling;
 using NUnit.Framework;
+using StructureMap;
 
 namespace FubuMVC.Tests.ServiceBus.Polling
 {
@@ -13,12 +14,14 @@ namespace FubuMVC.Tests.ServiceBus.Polling
         {
             using (var runtime = FubuTransport.DefaultPolicies())
             {
-                runtime.Container.DefaultRegistrationIs<ITimer, DefaultTimer>();
-                runtime.Container.DefaultRegistrationIs<IPollingJobLogger, PollingJobLogger>();
+                var container = runtime.Get<IContainer>();
 
-                runtime.Container.ShouldHaveRegistration<IDeactivator, PollingJobDeactivator>();
+                container.DefaultRegistrationIs<ITimer, DefaultTimer>();
+                container.DefaultRegistrationIs<IPollingJobLogger, PollingJobLogger>();
 
-                runtime.Container.DefaultSingletonIs<IPollingJobs, PollingJobs>();
+                container.ShouldHaveRegistration<IDeactivator, PollingJobDeactivator>();
+
+                container.DefaultSingletonIs<IPollingJobs, PollingJobs>();
             }
         }
 

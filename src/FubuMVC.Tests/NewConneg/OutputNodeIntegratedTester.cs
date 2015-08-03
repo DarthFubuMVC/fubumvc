@@ -13,6 +13,7 @@ using FubuMVC.Core.Runtime.Formatters;
 using NUnit.Framework;
 using Rhino.Mocks;
 using Shouldly;
+using StructureMap;
 
 namespace FubuMVC.Tests.NewConneg
 {
@@ -33,14 +34,16 @@ namespace FubuMVC.Tests.NewConneg
 
             using (var runtime = FubuRuntime.Basic())
             {
-                runtime.Container.Configure(x =>
+                var container = runtime.Get<IContainer>();
+
+                container.Configure(x =>
                 {
                     // Need a stand in value
                     x.For<IHttpRequest>().Use(MockRepository.GenerateMock<IHttpRequest>());
                 });
 
                 theInputBehavior =
-                    runtime.Container.GetInstance<OutputBehavior<Address>>(node.As<IContainerModel>().ToInstance());
+                    container.GetInstance<OutputBehavior<Address>>(node.As<IContainerModel>().ToInstance());
             }
         }
 

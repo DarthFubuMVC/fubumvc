@@ -4,6 +4,7 @@ using FubuMVC.Core.ServiceBus.Runtime.Delayed;
 using FubuMVC.Tests;
 using LightningQueues.Model;
 using NUnit.Framework;
+using StructureMap;
 
 namespace FubuMVC.LightningQueues.Testing
 {
@@ -18,9 +19,11 @@ namespace FubuMVC.LightningQueues.Testing
 
             using (var runtime = FubuRuntime.Basic())
             {
-                runtime.Container.ShouldHaveRegistration<ITransport, LightningQueuesTransport>();
-                runtime.Container.DefaultRegistrationIs<IPersistentQueues, PersistentQueues>();
-                runtime.Container.DefaultSingletonIs<IDelayedMessageCache<MessageId>, DelayedMessageCache<MessageId>>();
+                var container = runtime.Get<IContainer>();
+
+                container.ShouldHaveRegistration<ITransport, LightningQueuesTransport>();
+                container.DefaultRegistrationIs<IPersistentQueues, PersistentQueues>();
+                container.DefaultSingletonIs<IDelayedMessageCache<MessageId>, DelayedMessageCache<MessageId>>();
             }
         }
     }

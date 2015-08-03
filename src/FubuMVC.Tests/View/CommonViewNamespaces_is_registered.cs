@@ -6,6 +6,7 @@ using FubuMVC.Core.View;
 using Shouldly;
 using HtmlTags;
 using NUnit.Framework;
+using StructureMap;
 
 namespace FubuMVC.Tests.View
 {
@@ -24,7 +25,9 @@ namespace FubuMVC.Tests.View
 
             using (var runtime = registry.ToRuntime())
             {
-                var useNamespaces = runtime.Container.GetInstance<CommonViewNamespaces>();
+                var container = runtime.Get<IContainer>();
+
+                var useNamespaces = container.GetInstance<CommonViewNamespaces>();
 
                 useNamespaces.Namespaces.ShouldContain(typeof (VirtualPathUtility).Namespace);
                 useNamespaces.Namespaces.ShouldContain(typeof (string).Namespace);

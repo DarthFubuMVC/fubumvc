@@ -2,6 +2,7 @@
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Monitoring;
 using NUnit.Framework;
+using StructureMap;
 
 namespace FubuMVC.Tests.ServiceBus.Monitoring
 {
@@ -13,10 +14,12 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
         {
             using (var runtime = FubuTransport.DefaultPolicies())
             {
-                runtime.Container.ShouldHaveRegistration<ILogModifier, PersistentTaskMessageModifier>();
+                var container = runtime.Get<IContainer>();
 
-                runtime.Container.DefaultRegistrationIs<IPersistentTaskController, PersistentTaskController>();
-                runtime.Container.DefaultRegistrationIs<ITaskMonitoringSource, TaskMonitoringSource>();
+                container.ShouldHaveRegistration<ILogModifier, PersistentTaskMessageModifier>();
+
+                container.DefaultRegistrationIs<IPersistentTaskController, PersistentTaskController>();
+                container.DefaultRegistrationIs<ITaskMonitoringSource, TaskMonitoringSource>();
             }
         }
     }

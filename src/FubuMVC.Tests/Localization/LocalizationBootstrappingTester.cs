@@ -1,15 +1,12 @@
-using System;
 using System.Globalization;
-using System.Linq;
-using FubuCore;
 using FubuLocalization;
 using FubuLocalization.Basic;
 using FubuMVC.Core;
-using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Localization;
 using FubuMVC.Core.Registration;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
+using StructureMap;
 
 namespace FubuMVC.Tests.Localization
 {
@@ -24,13 +21,15 @@ namespace FubuMVC.Tests.Localization
 
             using (var runtime = registry.ToRuntime())
             {
-                runtime.Container.GetInstance<CultureInfo>().Name.ShouldBe("en-US");
-                runtime.Container.DefaultRegistrationIs<ICurrentCultureContext, CurrentCultureContext>();
-                runtime.Container.DefaultRegistrationIs<ILocalizationMissingHandler, LocalizationMissingHandler>();
-                runtime.Container.DefaultRegistrationIs<ILocalizationProviderFactory, LocalizationProviderFactory>();
-                runtime.Container.DefaultSingletonIs<ILocalizationCache, LocalizationCache>();
+                var container = runtime.Get<IContainer>();
 
-                runtime.Container.ShouldHaveRegistration<IActivator, SpinUpLocalizationCaches>();
+                container.GetInstance<CultureInfo>().Name.ShouldBe("en-US");
+                container.DefaultRegistrationIs<ICurrentCultureContext, CurrentCultureContext>();
+                container.DefaultRegistrationIs<ILocalizationMissingHandler, LocalizationMissingHandler>();
+                container.DefaultRegistrationIs<ILocalizationProviderFactory, LocalizationProviderFactory>();
+                container.DefaultSingletonIs<ILocalizationCache, LocalizationCache>();
+
+                container.ShouldHaveRegistration<IActivator, SpinUpLocalizationCaches>();
             }
         }
 
@@ -47,24 +46,17 @@ namespace FubuMVC.Tests.Localization
         }
 
 
-
         [Test]
         public void register_a_non_default_culture_info()
         {
             var registry = new FubuRegistry();
             registry.Features.Localization.Enable(true);
-            registry.Features.Localization.Configure(x =>
-            {
-                x.DefaultCulture = new CultureInfo("en-CA");
-            });
+            registry.Features.Localization.Configure(x => { x.DefaultCulture = new CultureInfo("en-CA"); });
 
             using (var runtime = registry.ToRuntime())
             {
-                runtime.Container.GetInstance<CultureInfo>().Name.ShouldBe("en-CA");
+                runtime.Get<CultureInfo>().Name.ShouldBe("en-CA");
             }
         }
-
-
-
     }
 }

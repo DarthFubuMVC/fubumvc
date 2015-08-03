@@ -4,6 +4,7 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Security.Authentication;
 using Shouldly;
 using NUnit.Framework;
+using StructureMap;
 
 namespace FubuMVC.Tests.Security.Authentication
 {
@@ -21,6 +22,8 @@ namespace FubuMVC.Tests.Security.Authentication
 
             using (var runtime = registry.ToRuntime())
             {
+                var container = runtime.Get<IContainer>();
+
                 var theGraphWithBasicAuthentication = runtime.Behaviors;
 
                 // This login endpoint was added
@@ -30,8 +33,8 @@ namespace FubuMVC.Tests.Security.Authentication
                 // The logout endpoint was added
                 theGraphWithBasicAuthentication.ChainFor(typeof(LogoutRequest)).ShouldNotBeNull();
 
-                runtime.Container.DefaultRegistrationIs<ILoginSuccessHandler, LoginSuccessHandler>();
-                runtime.Container.DefaultRegistrationIs<ILogoutSuccessHandler, LogoutSuccessHandler>();
+                container.DefaultRegistrationIs<ILoginSuccessHandler, LoginSuccessHandler>();
+                container.DefaultRegistrationIs<ILogoutSuccessHandler, LogoutSuccessHandler>();
             }
 
         }

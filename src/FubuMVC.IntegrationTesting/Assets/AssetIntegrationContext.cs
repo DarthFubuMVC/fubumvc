@@ -93,13 +93,13 @@ namespace FubuMVC.IntegrationTesting.Assets
 
         public IAssetTagBuilder TagBuilder()
         {
-            return _host.Container.GetInstance<IAssetTagBuilder>();
+            return _host.Get<IAssetTagBuilder>();
         }
 
 
         public IAssetFinder Assets
         {
-            get { return _host.Container.GetInstance<IAssetFinder>(); }
+            get { return _host.Get<IAssetFinder>(); }
         }
     }
 }

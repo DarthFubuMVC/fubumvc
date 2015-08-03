@@ -11,6 +11,7 @@ using FubuMVC.Core.StructureMap;
 using Shouldly;
 using NUnit.Framework;
 using Rhino.Mocks;
+using StructureMap;
 using StructureMap.Pipeline;
 
 namespace FubuMVC.Tests.Security.Authorization
@@ -44,7 +45,7 @@ namespace FubuMVC.Tests.Security.Authorization
             AuthorizationBehavior behavior = null;
             using (var runtime = FubuRuntime.Basic())
             {
-                behavior = (AuthorizationBehavior) runtime.Container.GetInstance<IActionBehavior>(node.As<IContainerModel>().ToInstance());
+                behavior = (AuthorizationBehavior) runtime.Get<IContainer>().GetInstance<IActionBehavior>(node.As<IContainerModel>().ToInstance());
             }
 
             return behavior;

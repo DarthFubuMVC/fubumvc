@@ -4,6 +4,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using Shouldly;
 using NUnit.Framework;
+using StructureMap;
 
 namespace FubuMVC.Tests.Registration
 {
@@ -15,9 +16,11 @@ namespace FubuMVC.Tests.Registration
         {
             using (var runtime = FubuRuntime.Basic())
             {
-                runtime.Container.DefaultRegistrationIs<AccessorRules, AccessorRules>();
+                var container = runtime.Get<IContainer>();
 
-                var accessorRules = runtime.Container.GetInstance<AccessorRules>();
+                container.DefaultRegistrationIs<AccessorRules, AccessorRules>();
+
+                var accessorRules = container.GetInstance<AccessorRules>();
                 
                 accessorRules
                     .AllRulesFor<Target1, ColorRule>(x => x.Name)

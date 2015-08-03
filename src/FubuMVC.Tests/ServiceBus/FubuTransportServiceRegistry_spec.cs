@@ -15,6 +15,7 @@ using FubuMVC.Core.ServiceBus.Subscriptions;
 using FubuMVC.Core.ServiceBus.TestSupport;
 using NUnit.Framework;
 using Shouldly;
+using StructureMap;
 
 namespace FubuMVC.Tests.ServiceBus
 {
@@ -28,7 +29,7 @@ namespace FubuMVC.Tests.ServiceBus
 
             using (var runtime = FubuTransport.DefaultPolicies())
             {
-                var c = runtime.Container;
+                var c = runtime.Get<IContainer>();
 
 
 
@@ -66,7 +67,7 @@ namespace FubuMVC.Tests.ServiceBus
 
             using (var runtime = FubuTransport.DefaultPolicies())
             {
-                var c = runtime.Container;
+                var c = runtime.Get<IContainer>();
 
                 c.DefaultSingletonIs<IEventAggregator, SynchronousEventAggregator>();
 
@@ -81,7 +82,7 @@ namespace FubuMVC.Tests.ServiceBus
 
             using (var runtime = FubuTransport.DefaultPolicies())
             {
-                var c = runtime.Container;
+                var c = runtime.Get<IContainer>();
 
                 c.ShouldHaveRegistration<IListener, MessageWatcher>();
                 c.DefaultRegistrationIs<IMessagingSession, MessagingSession>();
@@ -98,7 +99,7 @@ namespace FubuMVC.Tests.ServiceBus
 
             using (var runtime = FubuTransport.DefaultPolicies())
             {
-                var c = runtime.Container;
+                var c = runtime.Get<IContainer>();
 
                 c.ShouldNotHaveRegistration<IListener, MessageWatcher>();
                 c.Model.HasImplementationsFor<IMessagingSession>().ShouldBeFalse();
@@ -111,6 +112,7 @@ namespace FubuMVC.Tests.ServiceBus
         {
             using (var runtime = FubuRuntime.Basic(_ =>
             {
+
                 _.Mode = "testing";
                 _.ServiceBus.Configure(x =>
                 {
@@ -119,7 +121,7 @@ namespace FubuMVC.Tests.ServiceBus
                 });
             }))
             {
-                runtime.Container.ShouldHaveRegistration<IActivator, TransportCleanupActivator>();
+                runtime.Get<IContainer>().ShouldHaveRegistration<IActivator, TransportCleanupActivator>();
             }
         }
 

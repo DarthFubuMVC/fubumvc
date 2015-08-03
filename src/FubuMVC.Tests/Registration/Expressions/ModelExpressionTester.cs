@@ -3,6 +3,7 @@ using System.Reflection;
 using FubuCore.Binding;
 using FubuMVC.Core;
 using NUnit.Framework;
+using StructureMap;
 
 namespace FubuMVC.Tests.Registration.Expressions
 {
@@ -65,9 +66,10 @@ namespace FubuMVC.Tests.Registration.Expressions
 
             using (var runtime = registry.ToRuntime())
             {
-                runtime.Container.ShouldHaveRegistration<IConverterFamily, ExampleConverter>();
-                runtime.Container.ShouldHaveRegistration<IPropertyBinder, ExamplePropertyBinder>();
-                runtime.Container.ShouldHaveRegistration<IModelBinder, ExampleModelBinder>();
+                var container = runtime.Get<IContainer>();
+                container.ShouldHaveRegistration<IConverterFamily, ExampleConverter>();
+                container.ShouldHaveRegistration<IPropertyBinder, ExamplePropertyBinder>();
+                container.ShouldHaveRegistration<IModelBinder, ExampleModelBinder>();
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using FubuMVC.Core;
 using NUnit.Framework;
+using StructureMap;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
@@ -20,9 +21,10 @@ namespace FubuMVC.Tests.Registration.Conventions
 
             using (var runtime = registry.ToRuntime())
             {
-                runtime.Container.DefaultRegistrationIs(oneSettings);
-                runtime.Container.DefaultRegistrationIs(twoSettings);
-                runtime.Container.DefaultRegistrationIs(threeSettings);
+                var container = runtime.Get<IContainer>();
+                container.DefaultRegistrationIs(oneSettings);
+                container.DefaultRegistrationIs(twoSettings);
+                container.DefaultRegistrationIs(threeSettings);
             }
         }
     }

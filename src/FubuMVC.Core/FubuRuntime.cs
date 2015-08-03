@@ -170,10 +170,9 @@ namespace FubuMVC.Core
             get { return _files; }
         }
 
-
-        public IContainer Container
+        public T Get<T>()
         {
-            get { return _container; }
+            return _container.GetInstance<T>();
         }
 
         public IServiceFactory Factory
@@ -226,7 +225,7 @@ namespace FubuMVC.Core
                 }
             });
 
-            Container.Dispose();
+            _container.Dispose();
         }
 
         ~FubuRuntime()
@@ -243,7 +242,7 @@ namespace FubuMVC.Core
 
         internal void Activate()
         {
-            var activators = Container.GetAllInstances<IActivator>();
+            var activators = _container.GetAllInstances<IActivator>();
             _diagnostics.LogExecutionOnEachInParallel(activators,
                 (activator, log) => activator.Activate(log, _perfTimer));
 

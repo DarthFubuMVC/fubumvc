@@ -2,6 +2,7 @@ using FubuCore.Logging;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Runtime;
 using NUnit.Framework;
+using StructureMap;
 
 namespace FubuMVC.Tests.Diagnostics.Runtime
 {
@@ -13,7 +14,8 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
         {
             using (var runtime = FubuRuntime.Basic(_ => _.Mode = "development"))
             {
-                runtime.Container.ShouldHaveRegistration<ILogListener, RequestTraceListener>();
+                var container = runtime.Get<IContainer>();
+                container.ShouldHaveRegistration<ILogListener, RequestTraceListener>();
             }
         }
     }

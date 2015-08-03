@@ -21,7 +21,9 @@ namespace FubuMVC.Tests.StructureMap
 
             using (var runtime = registry.ToRuntime())
             {
-                var facility = runtime.Container.GetInstance<IServiceFactory>().As<StructureMapServiceFactory>();
+                var container = runtime.Get<IContainer>();
+
+                var facility = container.GetInstance<IServiceFactory>().As<StructureMapServiceFactory>();
 
                 facility.Get<ThingUser>().Thing.ShouldBeOfType<AThing>();
 
