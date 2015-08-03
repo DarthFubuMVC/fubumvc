@@ -82,6 +82,7 @@
     <Compile Include="Http\Hosting\FubuApplicationExtensions.cs" />
     <Compile Include="Http\Hosting\IHost.cs" />
     <Compile Include="Http\Hosting\Katana.cs" />
+    <Compile Include="Http\Hosting\Nowin.cs" />
     <Compile Include="Http\Hosting\ReflectionExtensions.cs" />
     <Compile Include="Registration\ActionlessViewChainSource.cs" />
     <Compile Include="Registration\FubuModuleFinder.cs" />

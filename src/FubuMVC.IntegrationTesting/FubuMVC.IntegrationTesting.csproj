@@ -237,10 +237,6 @@
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.Nowin\FubuMVC.Nowin.csproj">
-      <Project>{b2d23037-7b43-4c8e-8f0c-bbf1d5f7fa82}</Project>
-      <Name>FubuMVC.Nowin</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Razor\FubuMVC.Razor.csproj">
       <Project>{a88246a6-2a7a-4964-902e-a5a7fdaaa9d4}</Project>
       <Name>FubuMVC.Razor</Name>

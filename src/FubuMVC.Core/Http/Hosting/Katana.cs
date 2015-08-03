@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Reflection;
 using System.Threading.Tasks;
 using FubuCore;
 
 namespace FubuMVC.Core.Http.Hosting
 {
-    public class Katana : IHost, IDisposable
+    public class Katana : IHost
     {
         public IDisposable Start(int port, Func<IDictionary<string, object>, Task> func,
             IDictionary<string, object> properties)
@@ -68,12 +67,6 @@ namespace FubuMVC.Core.Http.Hosting
         {
             var type = Type.GetType(typeName);
             return Activator.CreateInstance(type, args);
-        }
-
-
-        public void Dispose()
-        {
-            Debug.WriteLine("I was disposed");
         }
     }
 }
