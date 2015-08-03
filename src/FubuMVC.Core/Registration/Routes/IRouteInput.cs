@@ -20,6 +20,5 @@ namespace FubuMVC.Core.Registration.Routes
         void AddRouteInput(RouteParameter parameter, bool appendToUrl);
         RouteParameter RouteInputFor(string routeKey);
         RouteParameter QueryInputFor(string querystringKey);
-        string CreateTemplate(object input, Func<object, object>[] hash);
     }
 }

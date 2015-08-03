@@ -24,8 +24,6 @@ namespace FubuMVC.Core.Registration.Routes
 
         void RootUrlAt(string baseUrl);
 
-        string CreateTemplate(object input, Func<object, object>[] hash);
-
         void ApplyInputType(Type inputType);
 
         string CreateUrlFromInput(object input);

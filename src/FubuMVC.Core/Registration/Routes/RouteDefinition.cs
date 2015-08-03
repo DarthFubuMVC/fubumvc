@@ -59,11 +59,6 @@ namespace FubuMVC.Core.Registration.Routes
         public string Category { get; set; }
 
 
-        public virtual string CreateTemplate(object input, Func<object, object>[] hash)
-        {
-            return Input == null ? _pattern : Input.CreateTemplate(input, hash);
-        }
-
         public IRouteInput Input
         {
             get { return _input; }
