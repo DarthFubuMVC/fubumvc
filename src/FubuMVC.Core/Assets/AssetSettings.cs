@@ -14,6 +14,7 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.Security.Authorization;
+using FubuMVC.Core.Services;
 
 namespace FubuMVC.Core.Assets
 {
@@ -234,7 +235,7 @@ namespace FubuMVC.Core.Assets
 
         public FileWatcherManifest CreateFileWatcherManifest(IFubuApplicationFiles files)
         {
-            var manifest = new FileWatcherManifest(files.RootPath, FubuModuleFinder.FindBinPath());
+            var manifest = new FileWatcherManifest(files.RootPath, AssemblyFinder.FindBinPath());
 
             if (Mode == SearchMode.PublicFolderOnly)
             {

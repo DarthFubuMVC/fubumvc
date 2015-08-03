@@ -96,7 +96,7 @@ namespace FubuMVC.Core
             _perfTimer.Start("FubuRuntime Bootstrapping");
 
 
-            var packageAssemblies = FubuModuleFinder.FindModuleAssemblies(_diagnostics);
+            var packageAssemblies = AssemblyFinder.FindModuleAssemblies(_diagnostics);
 
             var applicationPath = registry.RootPath ?? DefaultApplicationPath();
             _files = new FubuApplicationFiles(applicationPath);

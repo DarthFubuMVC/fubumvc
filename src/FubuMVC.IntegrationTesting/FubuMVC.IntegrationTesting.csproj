@@ -262,7 +262,9 @@
       <Name>TestPackage1</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Razor\Templates\App\fubu-packages\Package1\WebContent\Handlers\Shared\bindings.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

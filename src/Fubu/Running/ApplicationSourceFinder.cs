@@ -12,7 +12,7 @@ namespace Fubu.Running
     {
         public IEnumerable<Type> Find()
         {
-            var assemblies = FubuModuleFinder.FindDependentAssemblies().ToArray();
+            var assemblies = AssemblyFinder.FindDependentAssemblies().ToArray();
 
             return
                 TypeRepository.FindTypes(assemblies, TypeClassification.Concretes,

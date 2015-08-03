@@ -60,6 +60,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.LightningQueues.Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.RavenDb.Tests", "FubuMVC.RavenDb.Tests\FubuMVC.RavenDb.Tests.csproj", "{E80DC8C6-3BC3-4F00-9939-12BA2B34A4EB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JasperService", "JasperService\JasperService.csproj", "{8C498075-DAFE-4DAB-91AB-4919BBF7365B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -388,6 +390,21 @@ Global
 		{E80DC8C6-3BC3-4F00-9939-12BA2B34A4EB}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{E80DC8C6-3BC3-4F00-9939-12BA2B34A4EB}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
 		{E80DC8C6-3BC3-4F00-9939-12BA2B34A4EB}.Retail|x86.ActiveCfg = Release|Any CPU
+		{8C498075-DAFE-4DAB-91AB-4919BBF7365B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C498075-DAFE-4DAB-91AB-4919BBF7365B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C498075-DAFE-4DAB-91AB-4919BBF7365B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{8C498075-DAFE-4DAB-91AB-4919BBF7365B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{8C498075-DAFE-4DAB-91AB-4919BBF7365B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8C498075-DAFE-4DAB-91AB-4919BBF7365B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C498075-DAFE-4DAB-91AB-4919BBF7365B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C498075-DAFE-4DAB-91AB-4919BBF7365B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8C498075-DAFE-4DAB-91AB-4919BBF7365B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{8C498075-DAFE-4DAB-91AB-4919BBF7365B}.Release|x86.ActiveCfg = Release|Any CPU
+		{8C498075-DAFE-4DAB-91AB-4919BBF7365B}.Retail|Any CPU.ActiveCfg = Release|Any CPU
+		{8C498075-DAFE-4DAB-91AB-4919BBF7365B}.Retail|Any CPU.Build.0 = Release|Any CPU
+		{8C498075-DAFE-4DAB-91AB-4919BBF7365B}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8C498075-DAFE-4DAB-91AB-4919BBF7365B}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
+		{8C498075-DAFE-4DAB-91AB-4919BBF7365B}.Retail|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
