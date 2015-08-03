@@ -1,5 +1,4 @@
 ﻿using FubuMVC.Core.ServiceBus.Configuration;
-using FubuMVC.Katana;
 
 namespace FubuMVC.Tests.ServiceBus.Docs.GettingStarted
 {

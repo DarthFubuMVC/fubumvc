@@ -9,7 +9,6 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Web;
-using FubuMVC.Katana;
 using FubuMVC.Tests.ServiceBus;
 using Shouldly;
 using NUnit.Framework;
@@ -62,7 +61,7 @@ namespace FubuMVC.IntegrationTesting.ServiceBus.Publishing
         [Test]
         public void end_to_end_test()
         {
-            using (var server = new EmbeddedFubuMvcServer(theRuntime, new KatanaHost(), port: PortFinder.FindPort(5505)))
+            using (var server = new EmbeddedFubuMvcServer(theRuntime, new Katana(), port: PortFinder.FindPort(5505)))
             {
                 var response = server.Endpoints.PostJson(new Message1Input());
 

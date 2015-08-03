@@ -3,7 +3,6 @@ using System.Net;
 using FubuMVC.Core;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.ServiceBus.Configuration;
-using FubuMVC.Katana;
 using FubuMVC.LightningQueues.Diagnostics;
 using NUnit.Framework;
 using Shouldly;

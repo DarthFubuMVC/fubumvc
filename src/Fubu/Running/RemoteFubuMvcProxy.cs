@@ -4,7 +4,6 @@ using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Services.Remote;
-using FubuMVC.Katana;
 using HtmlTags;
 using Owin;
 
@@ -24,7 +23,6 @@ namespace Fubu.Running
         {
             _runner = RemoteServiceRunner.For<RemoteFubuMvcBootstrapper>(x =>
             {
-                x.RequireAssemblyContainingType<KatanaHost>(AssemblyCopyMode.SemVerCompatible);
                 x.RequireAssemblyContainingType<RemoteFubuMvcProxy>(AssemblyCopyMode.SemVerCompatible);
                 x.RequireAssemblyContainingType<IAppBuilder>();
                 x.RequireAssemblyContainingType<IModelBinder>(); // FubuCore

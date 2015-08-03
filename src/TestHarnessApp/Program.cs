@@ -1,22 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets;
-using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.StructureMap;
+using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.View;
-using FubuMVC.Katana;
-using Process = System.Diagnostics.Process;
+using TraceLevel = FubuMVC.Core.TraceLevel;
 
 namespace TestHarnessApp
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             using (var server = FubuRuntime.For<TestHarnessRegistry>().RunEmbedded())
             {
@@ -25,7 +20,6 @@ namespace TestHarnessApp
                 Console.WriteLine("Press any key to quit");
                 Console.ReadLine();
             }
-
         }
     }
 
@@ -33,13 +27,16 @@ namespace TestHarnessApp
     {
         public TestHarnessRegistry()
         {
-            AlterSettings<DiagnosticsSettings>(x =>
-            {
-                x.TraceLevel = TraceLevel.Verbose;
-            });
+            AlterSettings<DiagnosticsSettings>(x => { x.TraceLevel = TraceLevel.Verbose; });
 
-            AlterSettings<AssetSettings>(x => {
-                x.CdnAssets.Add(new CdnAsset { Url = "http://code.jquery.com/all-wrong.js", Fallback = "typeof jQuery == 'undefined'", File = "jquery-2.1.0.min.js"});
+            AlterSettings<AssetSettings>(x =>
+            {
+                x.CdnAssets.Add(new CdnAsset
+                {
+                    Url = "http://code.jquery.com/all-wrong.js",
+                    Fallback = "typeof jQuery == 'undefined'",
+                    File = "jquery-2.1.0.min.js"
+                });
                 //x.CdnAssets.Add(new CdnAsset { Url = "http://code.jquery.com/jquery-2.1.0.min.js", Fallback = "typeof jQuery == 'undefined'" });
             });
         }
@@ -89,7 +86,4 @@ namespace TestHarnessApp
             return _document;
         }
     }
-
-
-
 }

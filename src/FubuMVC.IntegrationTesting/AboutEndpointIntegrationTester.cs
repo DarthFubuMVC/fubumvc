@@ -5,7 +5,6 @@ using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Katana;
 using HtmlTags;
 using NUnit.Framework;
 

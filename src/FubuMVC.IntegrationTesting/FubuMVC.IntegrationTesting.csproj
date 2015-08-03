@@ -237,10 +237,6 @@
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.Katana\FubuMVC.Katana.csproj">
-      <Project>{48BC51C2-B759-48DB-AAE1-F4686CD6D02A}</Project>
-      <Name>FubuMVC.Katana</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Nowin\FubuMVC.Nowin.csproj">
       <Project>{b2d23037-7b43-4c8e-8f0c-bbf1d5f7fa82}</Project>
       <Name>FubuMVC.Nowin</Name>

@@ -211,10 +211,6 @@
       <Project>{48bc51c2-b759-48db-aae1-f4686cd6d02a}</Project>
       <Name>FubuMVC.Katana</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.Katana\FubuMVC.Katana.csproj">
-      <Project>{48bc51c2-b759-48db-aae1-f4686cd6d02a}</Project>
-      <Name>FubuMVC.Katana</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.RavenDb\FubuMVC.RavenDb.csproj">
       <Project>{02441E35-668B-4713-9279-BD51948B95EB}</Project>
       <Name>FubuMVC.RavenDb</Name>

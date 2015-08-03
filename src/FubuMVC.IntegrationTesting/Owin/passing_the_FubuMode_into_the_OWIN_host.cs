@@ -1,6 +1,6 @@
 ﻿using FubuMVC.Core;
+using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Http.Owin;
-using FubuMVC.Katana;
 using Shouldly;
 using NUnit.Framework;
 

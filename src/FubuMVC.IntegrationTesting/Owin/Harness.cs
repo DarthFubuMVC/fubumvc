@@ -7,7 +7,6 @@ using FubuMVC.Core;
 using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Katana;
 using Shouldly;
 using NUnit.Framework;
 

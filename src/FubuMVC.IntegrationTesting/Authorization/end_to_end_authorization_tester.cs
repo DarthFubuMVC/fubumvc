@@ -1,10 +1,10 @@
 ﻿using System.Net;
 using FubuMVC.Core;
 using FubuMVC.Core.Continuations;
+using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.Security.Authorization;
-using FubuMVC.Katana;
 using Shouldly;
 using NUnit.Framework;
 

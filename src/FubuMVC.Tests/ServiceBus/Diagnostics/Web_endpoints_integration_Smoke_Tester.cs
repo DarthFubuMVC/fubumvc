@@ -6,7 +6,6 @@ using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Diagnostics.Visualization;
 using FubuMVC.Core.ServiceBus.InMemory;
-using FubuMVC.Katana;
 using NUnit.Framework;
 using Shouldly;
 

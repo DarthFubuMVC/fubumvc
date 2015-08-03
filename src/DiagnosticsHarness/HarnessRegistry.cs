@@ -2,7 +2,6 @@
 using System.Data;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
-using FubuMVC.Katana;
 
 
 namespace DiagnosticsHarness

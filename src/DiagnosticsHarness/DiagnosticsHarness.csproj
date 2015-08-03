@@ -94,10 +94,6 @@
       <Project>{e18fd922-0e7a-49cd-b89f-473826077b9d}</Project>
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.Katana\FubuMVC.Katana.csproj">
-      <Project>{48bc51c2-b759-48db-aae1-f4686cd6d02a}</Project>
-      <Name>FubuMVC.Katana</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.LightningQueues\FubuMVC.LightningQueues.csproj">
       <Project>{f151167c-4736-4c67-9697-7876574c05d0}</Project>
       <Name>FubuMVC.LightningQueues</Name>

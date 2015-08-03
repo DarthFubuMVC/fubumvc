@@ -9,7 +9,6 @@ using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Scenarios;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Katana;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting
@@ -168,7 +167,7 @@ namespace FubuMVC.IntegrationTesting
             var port = PortFinder.FindPort(5500);
             var runtime = bootstrapRuntime();
 
-            _server = new EmbeddedFubuMvcServer(runtime, new KatanaHost(), port);
+            _server = new EmbeddedFubuMvcServer(runtime, new Katana(), port);
             _host = new InMemoryHost(runtime);
         }
 
