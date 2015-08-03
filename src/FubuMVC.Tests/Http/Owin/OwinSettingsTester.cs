@@ -1,12 +1,11 @@
 ﻿using System.Linq;
-using System.Web;
 using FubuMVC.Core;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Owin.Middleware;
 using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
-using Shouldly;
 using HtmlTags;
 using NUnit.Framework;
+using Shouldly;
 
 namespace FubuMVC.Tests.Http.Owin
 {
@@ -25,8 +24,6 @@ namespace FubuMVC.Tests.Http.Owin
         [Test]
         public void create_with_no_html_head_injection()
         {
-            FubuRuntime.Properties.ClearAll();
-
             var settings = new OwinSettings();
             settings.Middleware.OfType<MiddlewareNode<HtmlHeadInjectionMiddleware>>()
                 .Any().ShouldBeFalse();
@@ -35,19 +32,25 @@ namespace FubuMVC.Tests.Http.Owin
         [Test]
         public void create_with_html_head_injection()
         {
-            FubuRuntime.Properties[HtmlHeadInjectionMiddleware.TEXT_PROPERTY] =
-                new HtmlTag("script").Attr("foo", "bar").ToString();
+            var html = new HtmlTag("script").Attr("foo", "bar").ToString();
 
-            using (var runtime = FubuRuntime.Basic(_ => _.Mode = "development"))
+
+            using (var runtime = FubuRuntime.Basic(_ =>
+            {
+                _.Mode = "development";
+                _.AlterSettings<OwinSettings>(x =>
+                {
+                    x.AddMiddleware<HtmlHeadInjectionMiddleware>().Arguments.With(new InjectionOptions
+                    {
+                        Content = c => html
+                    });
+                });
+            }))
             {
                 var settings = runtime.Factory.Get<OwinSettings>();
                 settings.Middleware.OfType<MiddlewareNode<HtmlHeadInjectionMiddleware>>()
                     .Any().ShouldBeTrue();
             }
-
-
-
-
         }
     }
 }

@@ -268,8 +268,5 @@ namespace FubuMVC.Core
 
             return basePath;
         }
-
-        // TODO -- this needs to be an instance property
-        public static readonly Cache<string, string> Properties = new Cache<string, string>(key => null);
     }
 }

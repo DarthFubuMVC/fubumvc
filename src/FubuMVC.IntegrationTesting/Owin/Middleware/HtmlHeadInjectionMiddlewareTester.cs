@@ -10,11 +10,6 @@ namespace FubuMVC.IntegrationTesting.Owin.Middleware
     [TestFixture]
     public class HtmlHeadInjectionMiddlewareTester
     {
-        [SetUp]
-        public void SetUp()
-        {
-            FubuRuntime.Properties[HtmlHeadInjectionMiddleware.TEXT_PROPERTY] = null;
-        }
 
         [Test]
         public void can_inject_the_right_html_on_GET_for_html_text()
