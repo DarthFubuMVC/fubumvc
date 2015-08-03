@@ -72,7 +72,18 @@ namespace FubuMVC.Core
         /// <returns></returns>
         public static bool InDevelopment()
         {
-            return Mode().Equals(Development, StringComparison.OrdinalIgnoreCase);
+            return Mode().InDevelopment();
+        }
+
+        /// <summary>
+        /// Is the "Development" mode detected?
+        /// </summary>
+        /// <returns></returns>
+        public static bool InDevelopment(this string mode)
+        {
+            if (mode.IsEmpty()) return false;
+
+            return mode.Equals(Development, StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>

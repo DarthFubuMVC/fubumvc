@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using FubuMVC.Core;
 using FubuCore;
+using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Http.Owin.Middleware;
 using FubuMVC.Core.Services;
@@ -9,17 +8,20 @@ using FubuMVC.Core.Services.Messaging;
 
 namespace Fubu.Running
 {
-    public class RemoteFubuMvcBootstrapper : IApplicationLoader, IActivator, IListener<StartApplication>, IListener<RecycleApplication>, IDisposable
+    public class RemoteFubuMvcBootstrapper : IApplicationLoader, IActivator, IListener<StartApplication>,
+        IListener<RecycleApplication>, IDisposable
     {
         private readonly IApplicationSourceFinder _typeFinder;
         private readonly IFubuMvcApplicationActivator _activator;
         private readonly IMessaging _messaging;
 
-        public RemoteFubuMvcBootstrapper() : this(new ApplicationSourceFinder(), new FubuMvcApplicationActivator(), new Messaging())
+        public RemoteFubuMvcBootstrapper()
+            : this(new ApplicationSourceFinder(), new FubuMvcApplicationActivator(), new Messaging())
         {
         }
 
-        public RemoteFubuMvcBootstrapper(IApplicationSourceFinder typeFinder, IFubuMvcApplicationActivator activator, IMessaging messaging)
+        public RemoteFubuMvcBootstrapper(IApplicationSourceFinder typeFinder, IFubuMvcApplicationActivator activator,
+            IMessaging messaging)
         {
             _typeFinder = typeFinder;
             _activator = activator;
@@ -42,18 +44,19 @@ namespace Fubu.Running
             Console.WriteLine("Trying to start application " + message);
 
             FubuRuntime.Properties[HtmlHeadInjectionMiddleware.TEXT_PROPERTY] = message.HtmlHeadInjectedText;
-
+            /* TODO -- look at this again
             if (message.Mode.IsNotEmpty())
             {
                 FubuMode.Mode(message.Mode);
             }
+             
 
             Console.WriteLine("FubuMode = " + FubuMode.Mode());
+             * */
 
             var chooser = new ApplicationSourceChooser(_typeFinder, _messaging);
-            chooser.Find(message, applicationType => {
-                _activator.Initialize(applicationType, message.PortNumber, message.PhysicalPath);
-            });
+            chooser.Find(message,
+                applicationType => { _activator.Initialize(applicationType, message.PortNumber, message.PhysicalPath); });
         }
 
         public void Receive(RecycleApplication message)

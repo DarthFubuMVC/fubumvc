@@ -9,13 +9,15 @@ namespace FubuMVC.Core.Assets
     public class DevelopmentModeAssetTagBuilder : IAssetTagBuilder
     {
         private readonly IAssetFinder _finder;
+        private readonly FubuRuntime _runtime;
         private readonly AssetTagBuilder _inner;
 
-        public DevelopmentModeAssetTagBuilder(IAssetFinder finder, IHttpRequest request)
+        public DevelopmentModeAssetTagBuilder(IAssetFinder finder, IHttpRequest request, FubuRuntime runtime)
         {
             _finder = finder;
+            _runtime = runtime;
 
-            _inner = new AssetTagBuilder(finder, request);
+            _inner = new AssetTagBuilder(finder, request, runtime);
         }
 
         public IEnumerable<HtmlTag> BuildScriptTags(IEnumerable<string> scripts)

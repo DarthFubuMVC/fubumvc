@@ -12,14 +12,16 @@ namespace FubuMVC.Core.Assets
     {
         private readonly IAssetFinder _finder;
         private readonly IHttpRequest _request;
+        private readonly FubuRuntime _runtime;
 
         private readonly Queue<Asset> _queuedScripts = new Queue<Asset>();
         private readonly IList<Asset> _writtenScripts = new List<Asset>(); 
 
-        public AssetTagBuilder(IAssetFinder finder, IHttpRequest request)
+        public AssetTagBuilder(IAssetFinder finder, IHttpRequest request, FubuRuntime runtime)
         {
             _finder = finder;
             _request = request;
+            _runtime = runtime;
         }
 
         public IEnumerable<HtmlTag> BuildScriptTags(IEnumerable<string> scripts)
@@ -33,7 +35,7 @@ namespace FubuMVC.Core.Assets
 
                 _writtenScripts.Add(asset);
 
-                yield return new ScriptTag(toFullUrl, asset);
+                yield return new ScriptTag(_runtime.Mode, toFullUrl, asset);
             }
 
             foreach (var x in scripts)
@@ -42,12 +44,12 @@ namespace FubuMVC.Core.Assets
 
                 if (asset == null)
                 {
-                    yield return new ScriptTag(toFullUrl, null, x);
+                    yield return new ScriptTag(_runtime.Mode, toFullUrl, null, defaultUrl: x);
                 }
                 else if (!_writtenScripts.Contains(asset))
                 {
                     _writtenScripts.Add(asset);
-                    yield return new ScriptTag(toFullUrl, asset, x);
+                    yield return new ScriptTag(_runtime.Mode, toFullUrl, asset, defaultUrl: x);
                 }
             }
 

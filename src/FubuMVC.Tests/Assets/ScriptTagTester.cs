@@ -32,14 +32,14 @@ namespace FubuMVC.Tests.Assets
         [Test]
         public void happy_path_prod_mode()
         {
-            new ScriptTag(x => x, theAsset).ToString()
+            new ScriptTag(null, x => x, theAsset).ToString()
                 .ShouldBe("<script type=\"text/javascript\" src=\"foo.js\"></script>");
         }
 
         [Test]
         public void uses_the_default_url_if_asset_is_null()
         {
-            new ScriptTag(x => x, null, defaultUrl: "http://server/foo.js")
+            new ScriptTag(null, x => x, null, defaultUrl: "http://server/foo.js")
                 .ToString()
                 .ShouldBe("<script type=\"text/javascript\" src=\"http://server/foo.js\"></script>");
         }
@@ -47,8 +47,7 @@ namespace FubuMVC.Tests.Assets
         [Test]
         public void happy_path_dev_mode()
         {
-            FubuMode.SetUpForDevelopmentMode();
-            new ScriptTag(x => x, theAsset).ToString()
+            new ScriptTag("development", x => x, theAsset).ToString()
                 .ShouldBe("<script type=\"text/javascript\" src=\"foo.js?Etag={0}\"></script>".ToFormat(theFile.Etag()));
         }
 
@@ -57,7 +56,7 @@ namespace FubuMVC.Tests.Assets
         {
             theAsset.CdnUrl = "http://cdn.me.com/foo.js";
 
-            new ScriptTag(x => x, theAsset).ToString()
+            new ScriptTag(null, x => x, theAsset).ToString()
                 .ShouldBe("<script type=\"text/javascript\" src=\"http://cdn.me.com/foo.js\"></script>");
         }
 
@@ -67,7 +66,7 @@ namespace FubuMVC.Tests.Assets
             theAsset.CdnUrl = "http://cdn.me.com/foo.js";
             theAsset.FallbackTest = "foo == null";
 
-            var tag = new ScriptTag(x => x, theAsset);
+            var tag = new ScriptTag(null, x => x, theAsset);
 
             tag.ToString().ShouldContain("<script>if (foo == null)");
         }

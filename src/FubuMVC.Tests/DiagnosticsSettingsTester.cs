@@ -56,9 +56,11 @@ namespace FubuMVC.Tests
         [Test]
         public void level_is_verbose_in_development()
         {
-            FubuMode.SetUpForDevelopmentMode();
-
-            new DiagnosticsSettings().TraceLevel.ShouldBe(TraceLevel.Verbose);
+            using (var runtime = FubuRuntime.Basic(_ => _.Mode = "development"))
+            {
+                runtime.Factory.Get<DiagnosticsSettings>()
+                    .TraceLevel.ShouldBe(TraceLevel.Verbose);
+            }
         }
     }
 }

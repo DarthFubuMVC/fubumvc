@@ -9,7 +9,7 @@ namespace FubuMVC.IntegrationTesting.Assets
     {
         public asset_writing_in_development()
         {
-            FubuMode.SetUpForDevelopmentMode();
+            Mode = "development";
             File("Foo.js").WriteLine("var x = 0;");
         }
 

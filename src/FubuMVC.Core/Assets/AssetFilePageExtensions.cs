@@ -81,9 +81,10 @@ namespace FubuMVC.Core.Assets
         {
             var finder = page.Get<IAssetFinder>();
             var request = page.Get<IHttpRequest>();
+            var mode = page.Get<FubuRuntime>().Mode;
 
             var tags = scripts.Select(finder.FindAsset).Where(x => x != null)
-                .Select(x => new ScriptTag(request.ToFullUrl, x)).ToArray();
+                .Select(x => new ScriptTag(mode, request.ToFullUrl, x)).ToArray();
 
             return new TagList(tags);
         }

@@ -61,19 +61,23 @@ namespace FubuMVC.Core.Assets
 
         public AssetSettings()
         {
-            if (!FubuMode.InDevelopment())
-            {
-                var cacheHeader = "private, max-age={0}".ToFormat(MaxAgeInSeconds);
-                Headers[HttpGeneralHeaders.CacheControl] = () => cacheHeader;
-                Headers[HttpGeneralHeaders.Expires] = () => DateTime.UtcNow.AddSeconds(MaxAgeInSeconds).ToString("R");
-            }
-
             Exclude("node_modules/*");
 
             Mode = SearchMode.Anywhere;
             PublicFolder = "public";
 
             TemplateDestination = "_templates";
+
+            var cacheHeader = "private, max-age={0}".ToFormat(MaxAgeInSeconds);
+
+            Headers[HttpGeneralHeaders.CacheControl] = () => cacheHeader;
+            Headers[HttpGeneralHeaders.Expires] = () => DateTime.UtcNow.AddSeconds(MaxAgeInSeconds).ToString("R");
+        }
+
+
+        public void SetupForDevelopment()
+        {
+            Headers.ClearAll();
         }
 
         internal string PublicAssetFolder;

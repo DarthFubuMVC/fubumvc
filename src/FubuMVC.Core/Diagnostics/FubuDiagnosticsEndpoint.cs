@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using FubuCore;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.JavascriptRouting;
 using FubuMVC.Core.Diagnostics.Assets;
@@ -21,17 +22,12 @@ namespace FubuMVC.Core.Diagnostics
         private readonly JavascriptRouteWriter _routeWriter;
         private readonly DiagnosticJavascriptRoutes _routes;
         private readonly IHttpRequest _request;
+        private readonly FubuRuntime _runtime;
 
         private static readonly string[] _styles = new[] {"bootstrap.min.css", "master.css", "bootstrap.overrides.css"};
         private static readonly string[] _scripts = new[] { "jquery.min.js", "typeahead.bundle.min.js", "root.js" };
 
-        public FubuDiagnosticsEndpoint(
-            IAssetTagBuilder tags, 
-            IHttpResponse response,
-            IDiagnosticAssets assets, 
-            JavascriptRouteWriter routeWriter, 
-            DiagnosticJavascriptRoutes routes,
-            IHttpRequest request)
+        public FubuDiagnosticsEndpoint(IAssetTagBuilder tags, IHttpResponse response, IDiagnosticAssets assets, JavascriptRouteWriter routeWriter, DiagnosticJavascriptRoutes routes, IHttpRequest request, FubuRuntime runtime)
         {
             _tags = tags;
             _response = response;
@@ -39,8 +35,7 @@ namespace FubuMVC.Core.Diagnostics
             _routeWriter = routeWriter;
             _routes = routes;
             _request = request;
-
-            
+            _runtime = runtime;
         }
 
         public HtmlDocument get__fubu()
@@ -72,7 +67,7 @@ namespace FubuMVC.Core.Diagnostics
 
             var extensionFiles = _assets.JavascriptFiles().Where(x => x.AssemblyName != "FubuMVC.Core");
 
-            if (FubuMode.Mode() == "diagnostics")
+            if (_runtime.Mode.EqualsIgnoreCase("diagnostics"))
             {
                 var names = _scripts.Union(extensionFiles.Select(x => x.Name));
                 var links = _tags.BuildScriptTags(names.Select(x => "fubu-diagnostics/" + x));

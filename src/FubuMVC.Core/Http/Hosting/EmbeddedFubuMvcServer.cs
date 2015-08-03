@@ -76,7 +76,7 @@ namespace FubuMVC.Core.Http.Hosting
         private void startServer(OwinSettings settings, int port)
         {
             var appfunc = FubuOwinHost.ToAppFunc(_runtime, settings);
-            settings.EnvironmentData[OwinConstants.AppMode] = FubuMode.Mode().ToLower();
+            settings.EnvironmentData[OwinConstants.AppMode] = _runtime.Mode.ToLower();
             var options = settings.EnvironmentData.ToDictionary();
 
 

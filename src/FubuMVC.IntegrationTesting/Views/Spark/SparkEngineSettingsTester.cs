@@ -57,16 +57,12 @@ namespace FubuMVC.IntegrationTesting.Views.Spark
         [Test]
         public void do_not_precompile_when_in_development_mode()
         {
-            FubuMode.Mode(FubuMode.Development);
-            ClassUnderTest.PrecompileViews.ShouldBeFalse();
+            using (var runtime = FubuRuntime.Basic(_ => _.Mode = "development"))
+            {
+                runtime.Factory.Get<SparkEngineSettings>()
+                    .PrecompileViews.ShouldBeFalse();
+            }
             
-        }
-
-        [Test]
-        public void precompile_views_not_in_development_mode()
-        {
-            FubuMode.Mode("Production");
-            ClassUnderTest.PrecompileViews.ShouldBeTrue();
         }
 
         [Test]

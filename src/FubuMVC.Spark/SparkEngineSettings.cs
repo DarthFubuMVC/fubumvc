@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core;
+using FubuMVC.Core.Registration;
 using Spark;
 
 namespace FubuMVC.Spark
@@ -16,7 +17,7 @@ namespace FubuMVC.Spark
         {
             defaultSearch();
 
-            _precompileViews = () => !FubuMode.InDevelopment();
+            _precompileViews = () => false;
             RetryViewLoadingCount = 5;
         }
 
@@ -64,5 +65,6 @@ namespace FubuMVC.Spark
             get { return _precompileViews(); }
             set { _precompileViews = () => value; }
         }
+
     }
 }

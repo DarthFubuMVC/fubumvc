@@ -23,6 +23,8 @@ namespace FubuMVC.IntegrationTesting.Assets
         protected Scenario Scenario;
         private Lazy<AssetGraph> _allAssets;
 
+        public string Mode = null;
+
         public AssetIntegrationContext()
         {
             _applicationDirectory = _directory = Folder.AppendPath(Application).ToFullPath();
@@ -39,6 +41,8 @@ namespace FubuMVC.IntegrationTesting.Assets
             _streams.Each(x => x.DumpContents());
 
             var registry = determineRegistry();
+            registry.Mode = Mode;
+            
             registry.RootPath = _applicationDirectory;
 
             var runtime = registry.ToRuntime();

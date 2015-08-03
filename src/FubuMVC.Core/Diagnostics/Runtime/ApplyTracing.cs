@@ -7,13 +7,10 @@ using FubuMVC.Core.Registration.Nodes;
 namespace FubuMVC.Core.Diagnostics.Runtime
 {
     [Description("Applies the runtime tracing behaviors to each chain")]
-    public class ApplyTracing : IConfigurationAction
+    public class ApplyTracing
     {
-        public void Configure(BehaviorGraph graph)
+        public static void Configure(BehaviorGraph graph)
         {
-            // Do nothing
-            if (graph.Settings.Get<DiagnosticsSettings>().TraceLevel == TraceLevel.None && !FubuMode.InDevelopment()) return;
-
             foreach (BehaviorChain chain in graph.Behaviors.Where(ShouldApply).ToArray())
             {
                 ApplyToChain(chain);

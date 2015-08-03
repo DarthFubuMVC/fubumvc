@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Http;
@@ -14,6 +15,12 @@ namespace FubuMVC.Core.Registration
         public static BehaviorGraph Build(FubuRegistry registry, IPerfTimer perfTimer,
             IEnumerable<Assembly> packageAssemblies, IActivationDiagnostics diagnostics, IFubuApplicationFiles files)
         {
+            if (registry.Mode.InDevelopment())
+            {
+                registry.AlterSettings<DiagnosticsSettings>(_ => _.TraceLevel = TraceLevel.Verbose);
+                registry.AlterSettings<AssetSettings>(_ => _.SetupForDevelopment());
+            }
+
             var featureLoader = new FeatureLoader();
             featureLoader.LookForFeatures();
 
@@ -46,7 +53,10 @@ namespace FubuMVC.Core.Registration
             perfTimer.Record("Applying Global Reorderings", () => config.ApplyGlobalReorderings(graph));
 
 
-            perfTimer.Record("Applying Tracing", () => applyTracing(graph));
+            if (registry.Mode.InDevelopment() || graph.Settings.Get<DiagnosticsSettings>().TraceLevel != TraceLevel.None)
+            {
+                perfTimer.Record("Applying Tracing", () => ApplyTracing.Configure(graph));
+            }
 
             accessorRules.Wait();
 
@@ -55,11 +65,6 @@ namespace FubuMVC.Core.Registration
             return graph;
         }
 
-
-        private static void applyTracing(BehaviorGraph graph)
-        {
-            new ApplyTracing().Configure(graph);
-        }
 
         private static void insertConnegAndAuthorizationNodes(BehaviorGraph graph)
         {

@@ -132,22 +132,27 @@ namespace FubuMVC.Tests.Assets
         [Test]
         public void headers_in_production_mode()
         {
-            FubuMode.Reset();
+            using (var runtime = FubuRuntime.Basic(_ => _.Mode = ""))
+            {
+                var settings = runtime.Factory.Get<AssetSettings>();
+                settings.Headers.GetAllKeys()
+                    .ShouldHaveTheSameElementsAs(HttpGeneralHeaders.CacheControl, HttpGeneralHeaders.Expires);
 
-            var settings = new AssetSettings();
-            settings.Headers.GetAllKeys()
-                .ShouldHaveTheSameElementsAs(HttpGeneralHeaders.CacheControl, HttpGeneralHeaders.Expires);
+                settings.Headers[HttpGeneralHeaders.CacheControl]().ShouldBe("private, max-age=86400");
+                settings.Headers[HttpGeneralHeaders.Expires]().ShouldNotBeNull();
+            }
 
-            settings.Headers[HttpGeneralHeaders.CacheControl]().ShouldBe("private, max-age=86400");
-            settings.Headers[HttpGeneralHeaders.Expires]().ShouldNotBeNull();
+
         }
 
         [Test]
         public void no_headers_in_development_mode()
         {
-            FubuMode.SetUpForDevelopmentMode();
-
-            new AssetSettings().Headers.GetAllKeys().Any().ShouldBeFalse();
+            using (var runtime = FubuRuntime.Basic(_ => _.Mode = "development"))
+            {
+                runtime.Factory.Get<AssetSettings>()
+                    .Headers.GetAllKeys().Any().ShouldBeFalse();
+            }
         }
 
         [Test]

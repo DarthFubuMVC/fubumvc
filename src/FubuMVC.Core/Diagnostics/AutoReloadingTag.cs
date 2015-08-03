@@ -4,14 +4,14 @@ namespace FubuMVC.Core.Diagnostics
 {
     public class AutoReloadingTag : HtmlTag
     {
-        public AutoReloadingTag() : this("/_loaded", 1000)
+        public AutoReloadingTag(string mode) : this(mode, "/_loaded", 1000)
         {
         }
 
-        public AutoReloadingTag(string url, int interval)
+        public AutoReloadingTag(string mode, string url, int interval)
             : base("script")
         {
-            if (!FubuMode.InDevelopment())
+            if (!mode.InDevelopment())
             {
                 Render(false);
             }

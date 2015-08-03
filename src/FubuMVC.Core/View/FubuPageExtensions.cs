@@ -12,7 +12,7 @@ namespace FubuMVC.Core.View
     {
         public static bool InDevelopment(this IFubuPage page)
         {
-            return FubuMode.InDevelopment();
+            return page.Get<FubuRuntime>().Mode.InDevelopment();
         }
 
         public static string Version(this IFubuPage page)

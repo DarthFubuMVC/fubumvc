@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using FubuCore.Binding.InMemory;
 using FubuCore.Descriptions;
 using FubuCore.Logging;
@@ -19,11 +18,6 @@ namespace FubuMVC.Core
         public DiagnosticsSettings()
         {
             MaxRequests = 200;
-
-            if (FubuMode.InDevelopment())
-            {
-                _traceLevel = TraceLevel.Verbose;
-            }
         }
 
         public readonly IList<IAuthorizationPolicy> AuthorizationRights = new List<IAuthorizationPolicy>();
@@ -59,13 +53,13 @@ namespace FubuMVC.Core
 
         void IFeatureSettings.Apply(FubuRegistry registry)
         {
-            if (FubuMode.InDevelopment() || TraceLevel != TraceLevel.None)
+            if (registry.Mode.InDevelopment() || TraceLevel != TraceLevel.None)
             {
                 registry.Policies.ChainSource<DiagnosticChainsSource>();
                 registry.Services.IncludeRegistry<TracingServices>();
             }
 
-            if (FubuMode.InDevelopment() || TraceLevel == TraceLevel.Verbose)
+            if (registry.Mode.InDevelopment() || TraceLevel == TraceLevel.Verbose)
             {
                 registry.Services.ReplaceService<IBindingLogger, RecordingBindingLogger>();
                 registry.Services.ReplaceService<IBindingHistory, BindingHistory>();

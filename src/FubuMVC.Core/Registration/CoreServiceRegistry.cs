@@ -27,7 +27,6 @@ using FubuMVC.Core.Runtime.SessionState;
 using FubuMVC.Core.ServiceBus.Async;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
-using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Registration
 {
@@ -36,7 +35,7 @@ namespace FubuMVC.Core.Registration
     /// </summary>
     public class CoreServiceRegistry : ServiceRegistry
     {
-        public CoreServiceRegistry()
+        public CoreServiceRegistry(string mode)
         {
             SetServiceIfNone<IAsyncHandling, AsyncHandling>();
 
@@ -109,7 +108,7 @@ namespace FubuMVC.Core.Registration
 
             SetServiceIfNone<ICookies, Cookies>();
 
-            if (FubuMode.InDevelopment())
+            if (mode.InDevelopment())
             {
                 SetServiceIfNone<IAssetTagBuilder, DevelopmentModeAssetTagBuilder>();
             }

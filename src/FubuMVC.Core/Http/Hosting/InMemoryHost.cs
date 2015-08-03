@@ -74,7 +74,7 @@ namespace FubuMVC.Core.Http.Hosting
             var request = OwinHttpRequest.ForTesting();
             request.FullUrl(RootUrl);
 
-            var securitySettings = _services.GetInstance<SecuritySettings>();
+            var securitySettings = _runtime.Factory.Get<SecuritySettings>();
             securitySettings.Reset();
             var scenario = new Scenario(_runtime.Factory.Get<IUrlRegistry>(), request, Send, securitySettings);
             return scenario;

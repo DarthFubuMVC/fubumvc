@@ -181,13 +181,13 @@ namespace FubuMVC.Core.Registration
             };
         }
 
-        public void RegisterServices(IContainer container, BehaviorGraph graph)
+        public void RegisterServices(string mode, IContainer container, BehaviorGraph graph)
         {
             graph.Settings.Register(ApplicationServices);
 
             container.Configure(_ =>
             {
-                DefaultServices().Each(_.AddRegistry);
+                DefaultServices(mode).Each(_.AddRegistry);
                 AllServiceRegistrations().Each(_.AddRegistry);
 
                 _.AddRegistry(ApplicationServices);
@@ -198,12 +198,12 @@ namespace FubuMVC.Core.Registration
             });
         }
 
-        public static IEnumerable<ServiceRegistry> DefaultServices()
+        public static IEnumerable<ServiceRegistry> DefaultServices(string mode)
         {
             yield return new ModelBindingServicesRegistry();
             yield return new SecurityServicesRegistry();
             yield return new HttpStandInServiceRegistry();
-            yield return new CoreServiceRegistry();
+            yield return new CoreServiceRegistry(mode);
         }
 
         public void BuildLocal(BehaviorGraph graph, IPerfTimer timer)

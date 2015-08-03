@@ -12,7 +12,7 @@ namespace FubuMVC.IntegrationTesting.Assets
     {
         public Tag_building_in_development_mode()
         {
-            FubuMode.SetUpForDevelopmentMode();
+            Mode = "development";
 
             File("content/scripts/script1.js");
 

@@ -66,10 +66,12 @@ namespace FubuMVC.IntegrationTesting
     public class ReloadingEndpoint
     {
         private readonly AppReloaded _reloaded;
+        private readonly FubuRuntime _runtime;
 
-        public ReloadingEndpoint(AppReloaded reloaded)
+        public ReloadingEndpoint(AppReloaded reloaded, FubuRuntime runtime)
         {
             _reloaded = reloaded;
+            _runtime = runtime;
         }
 
         public HtmlDocument get_reloaded()
@@ -78,7 +80,7 @@ namespace FubuMVC.IntegrationTesting
             document.Title = "Manual Test Harness for reloading";
             document.Add("h1").Text("Loaded at " + _reloaded.Timestamp);
 
-            document.Add(new AutoReloadingTag());
+            document.Add(new AutoReloadingTag(_runtime.Mode));
 
             return document;
         }

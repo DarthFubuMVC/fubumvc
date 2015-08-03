@@ -67,6 +67,8 @@ namespace FubuMVC.Core
 
         public FubuRuntime(FubuRegistry registry)
         {
+            Mode = registry.Mode;
+
             RouteTable.Routes.Clear();
 
             _diagnostics = new ActivationDiagnostics();
@@ -89,7 +91,7 @@ namespace FubuMVC.Core
                 () => BehaviorGraphBuilder.Build(registry, _perfTimer, packageAssemblies, _diagnostics, _files));
 
             _perfTimer.Record("Registering services into the IoC Container",
-                () => registry.Config.RegisterServices(_container, graph));
+                () => registry.Config.RegisterServices(Mode, _container, graph));
 
             _factory = new StructureMapServiceFactory(_container);
 
@@ -120,6 +122,8 @@ namespace FubuMVC.Core
 
             _diagnostics.AssertNoFailures();
         }
+
+        public string Mode { get; set; }
 
         // Build route objects from route definitions on graph + add packaging routes
         private IList<RouteBase> buildRoutes(IServiceFactory factory, BehaviorGraph graph)
@@ -265,6 +269,7 @@ namespace FubuMVC.Core
             return basePath;
         }
 
+        // TODO -- this needs to be an instance property
         public static readonly Cache<string, string> Properties = new Cache<string, string>(key => null);
     }
 }
