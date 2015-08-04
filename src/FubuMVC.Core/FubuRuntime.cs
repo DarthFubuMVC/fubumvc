@@ -250,8 +250,19 @@ namespace FubuMVC.Core
 
             _disposed = true;
 
-            _server.SafeDispose();
+            if (_server != null) _server.SafeDispose();
 
+            if (_factory != null)
+            {
+                runDeactivators();
+            }
+
+
+            if (_container != null) _container.Dispose();
+        }
+
+        private void runDeactivators()
+        {
             var logger = _factory.Get<ILogger>();
             var deactivators = _factory.GetAll<IDeactivator>().ToArray();
 
@@ -274,8 +285,6 @@ namespace FubuMVC.Core
                     logger.InfoMessage(() => new DeactivatorExecuted {Deactivator = x.ToString(), Log = log});
                 }
             });
-
-            _container.Dispose();
         }
 
         ~FubuRuntime()

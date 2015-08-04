@@ -32,14 +32,13 @@ namespace FubuMVC.Core.Registration
 
         public IRoutePolicy RoutePolicy = new StandardRoutePolicy();
 
-        public BehaviorGraph(SettingsCollection parent) : this()
+        public BehaviorGraph(SettingsCollection settings) 
         {
-            _settings = new SettingsCollection(parent);
+            _settings = settings;
         }
 
-        public BehaviorGraph()
+        public BehaviorGraph() : this(new SettingsCollection())
         {
-            _settings = new SettingsCollection(null);
             _settings.Replace(SessionStateRequirement.RequiresSessionState);
 
         }

@@ -10,7 +10,6 @@ using FubuMVC.Core.ServiceBus.Subscriptions;
 
 namespace FubuMVC.Core.ServiceBus.Polling
 {
-    [ApplicationLevel]
     public class PollingJobSettings : IFeatureSettings
     {
         private readonly Cache<Type, PollingJobDefinition> _jobs =

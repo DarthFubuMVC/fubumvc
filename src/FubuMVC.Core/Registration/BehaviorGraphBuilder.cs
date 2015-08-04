@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Reflection;
-using System.Threading.Tasks;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Diagnostics.Runtime;
@@ -15,14 +14,17 @@ namespace FubuMVC.Core.Registration
         public static BehaviorGraph Build(FubuRegistry registry, IPerfTimer perfTimer,
             IEnumerable<Assembly> packageAssemblies, IActivationDiagnostics diagnostics, IFubuApplicationFiles files)
         {
+            var featureLoader = new FeatureLoader();
+            featureLoader.LookForFeatures();
+
             if (registry.Mode.InDevelopment())
             {
                 registry.AlterSettings<DiagnosticsSettings>(_ => _.TraceLevel = TraceLevel.Verbose);
                 registry.AlterSettings<AssetSettings>(_ => _.SetupForDevelopment());
             }
 
-            var featureLoader = new FeatureLoader();
-            featureLoader.LookForFeatures();
+            
+            
 
             var graph = new BehaviorGraph
             {
@@ -33,14 +35,13 @@ namespace FubuMVC.Core.Registration
             var accessorRules = AccessorRulesCompiler.Compile(graph, perfTimer);
 
 
+
             var config = registry.Config;
 
             perfTimer.Record("Applying Settings", () => applySettings(config, graph, diagnostics, files));
 
-            var featureLoading = featureLoader.ApplyAll(graph.Settings, registry);
 
-            featureLoading.Wait();
-            Task.WaitAll(featureLoading.Result);
+            perfTimer.Record("Applying Feature Settings", () => featureLoader.ApplyAll(graph.Settings, registry).Wait());
 
             perfTimer.Record("Local Application BehaviorGraph", () => config.BuildLocal(graph, perfTimer));
 

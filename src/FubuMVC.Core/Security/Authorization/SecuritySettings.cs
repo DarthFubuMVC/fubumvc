@@ -1,8 +1,5 @@
-﻿using FubuMVC.Core.Registration;
-
-namespace FubuMVC.Core.Security.Authorization
+﻿namespace FubuMVC.Core.Security.Authorization
 {
-    [ApplicationLevel]
     public class SecuritySettings
     {
         public SecuritySettings()

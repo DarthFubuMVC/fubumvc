@@ -1,15 +1,15 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Configuration;
-using FubuCore.Reflection;
 using FubuCore.Util;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Polling;
 using FubuMVC.Core.ServiceBus.ScheduledJobs;
-using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Registration
 {
@@ -18,13 +18,11 @@ namespace FubuMVC.Core.Registration
         public static readonly Lazy<ISettingsProvider> SettingsProvider =
             new Lazy<ISettingsProvider>(() => new AppSettingsProvider(ObjectResolver.Basic()));
 
-        private readonly SettingsCollection _parent;
         private readonly Cache<Type, object> _settings = new Cache<Type, object>();
 
-        public SettingsCollection(SettingsCollection parent)
+        public SettingsCollection()
         {
             _settings.OnMissing = buildDefault;
-            _parent = parent;
 
             warmUp<ChannelGraph>();
             warmUp<PollingJobSettings>();
@@ -39,102 +37,29 @@ namespace FubuMVC.Core.Registration
 
         private static object buildDefault(Type type)
         {
-            var templateType = type.IsConcreteWithDefaultCtor()
-                ? typeof (AppSettingMaker<>)
-                : typeof (DefaultMaker<>);
-
-            return templateType.CloseAndBuildAs<IDefaultMaker>(type).MakeDefault();
+            return SettingsProvider.Value.SettingsFor(type);
         }
 
         public T Get<T>() where T : class
         {
-            var task = GetTask<T>();
-            task.Wait(10000);
-            return task.Result;
+            return _settings[typeof (T)].As<T>();
         }
 
-        public Task<T> GetTask<T>()
-        {
-            return selectSettings<T>()[typeof (T)].As<Task<T>>();
-        }
-
-        private Cache<Type, object> selectSettings<T>()
-        {
-            if (_parent != null && !HasExplicit<T>() &&
-                (_parent._settings.Has(typeof (T)) || typeof (T).HasAttribute<ApplicationLevelAttribute>()))
-            {
-                return _parent._settings;
-            }
-
-            return _settings;
-        }
 
         public void Alter<T>(Action<T> alteration) where T : class
         {
-            var settings = typeof (T).HasAttribute<ApplicationLevelAttribute>() && _parent != null
-                ? _parent._settings
-                : _settings;
-
-
-            var inner = settings[typeof (T)].As<Task<T>>();
-
-
-            settings[typeof (T)] = inner.ContinueWith(t =>
-            {
-                try
-                {
-                    alteration(t.Result);
-                }
-                catch (Exception e)
-                {
-                    throw new Exception(
-                        "Error while trying to process a Settings alteration on " + typeof (T).FullName, e);
-                }
-
-                return t.Result;
-            });
+            alteration(Get<T>());
         }
 
         public void Replace<T>(T settings) where T : class
         {
-            _settings[typeof (T)] = settings.ToTask();
+            _settings[typeof (T)] = settings;
         }
 
-        public void Replace<T>(Task<T> source)
-        {
-            _settings[typeof (T)] = source;
-        }
-
-        public void Replace<T>(Func<T> source)
-        {
-            _settings[typeof (T)] = Task.Factory.StartNew(source);
-        }
 
         public bool HasExplicit<T>()
         {
             return _settings.Has(typeof (T));
-        }
-
-
-        public interface IDefaultMaker
-        {
-            object MakeDefault();
-        }
-
-        public class DefaultMaker<T> : IDefaultMaker
-        {
-            public object MakeDefault()
-            {
-                return default(T).ToTask();
-            }
-        }
-
-        public class AppSettingMaker<T> : IDefaultMaker where T : class, new()
-        {
-            public object MakeDefault()
-            {
-                return Task.Factory.StartNew(() => SettingsProvider.Value.SettingsFor<T>());
-            }
         }
 
         public void Register(ServiceRegistry registry)
@@ -153,32 +78,28 @@ namespace FubuMVC.Core.Registration
 
         public class Registrar<T> : IRegistrar where T : class
         {
-            private readonly Task<T> _task;
+            private readonly T _settings;
 
-            public Registrar(Task<T> task)
+            public Registrar(T settings)
             {
-                _task = task;
+                _settings = settings;
             }
 
             public void Register(ServiceRegistry registry)
             {
-                registry.For<T>().ClearAll().Use(_task.Result);
+                registry.For<T>().ClearAll().Use(_settings);
             }
+        }
+
+        public object Get(Type type)
+        {
+            return _settings[type];
         }
     }
 
 
     public static class TaskExtensions
     {
-        public static Task<T> ToTask<T>(this T value)
-        {
-            var task = new TaskCompletionSource<T>();
-            task.SetResult(value);
-
-            return task.Task;
-        }
-
-
         public static T Result<T>(this Task<T> task)
         {
             task.Wait();

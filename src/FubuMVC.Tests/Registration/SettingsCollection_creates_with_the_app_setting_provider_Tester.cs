@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Registration
             AppSettingsProvider.GetValueFor<DiagnosticsSettings>(x => x.TraceLevel)
                 .ShouldBe(TraceLevel.None.ToString());
 
-            var collection = new SettingsCollection(null);
+            var collection = new SettingsCollection();
             collection.Get<DiagnosticsSettings>()
                 .TraceLevel.ShouldBe(TraceLevel.None);
         }

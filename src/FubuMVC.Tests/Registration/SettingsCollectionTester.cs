@@ -1,99 +1,10 @@
-using System;
 using System.Threading;
 using FubuMVC.Core.Registration;
-using FubuMVC.Tests.UI;
 using NUnit.Framework;
 using Shouldly;
-using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Registration
 {
-    [TestFixture]
-    public class SettingsCollection_with_a_parent_Tester
-    {
-        private SettingsCollection theSettings;
-        private SettingsCollection theParent;
-
-        [SetUp]
-        public void SetUp()
-        {
-            theParent = new SettingsCollection(null);
-            theSettings = new SettingsCollection(theParent);
-        }
-
-        [Test]
-        public void pull_defaults_from_the_parent_if_it_exists_if_it_is_missing_in_child()
-        {
-            theParent.Replace(new FakeSettings());
-
-            theSettings.Get<FakeSettings>().ShouldBeTheSameAs(theParent.Get<FakeSettings>());
-        }
-
-        [Test]
-        public void pull_defaults_from_parent_if_the_settings_is_marked_as_ApplicationLevel()
-        {
-            theParent.HasExplicit<AppSettings>().ShouldBeFalse();
-
-            // should force the parent to build it now
-            theSettings.Get<AppSettings>().ShouldBeTheSameAs(theParent.Get<AppSettings>());
-        }
-
-        [Test]
-        public void child_value_superceeds_the_parent()
-        {
-            theParent.Replace(new FakeSettings());
-            theSettings.Replace(new FakeSettings{Hometown = "Austin"});
-
-            theSettings.Get<FakeSettings>().ShouldNotBeTheSameAs(theParent.Get<FakeSettings>());
-            theSettings.Get<FakeSettings>().Hometown.ShouldBe("Austin");
-        }
-
-        [Test]
-        public void has_explicit_is_false_if_the_parent_has_it_but_the_child_does_not()
-        {
-            theSettings.HasExplicit<FakeSettings>().ShouldBeFalse();
-
-            theParent.Replace(new FakeSettings());
-
-            theSettings.HasExplicit<FakeSettings>().ShouldBeFalse();
-        }
-
-        [Test]
-        public void has_explicit_is_true_if_the_child_has_it()
-        {
-            theSettings.Replace(new FakeSettings());
-
-            theSettings.HasExplicit<FakeSettings>().ShouldBeTrue();
-        }
-
-        [Test]
-        public void replace_is_isolated_from_the_parent()
-        {
-            theSettings.Replace(new FakeSettings());
-
-            theSettings.Get<FakeSettings>().ShouldNotBeTheSameAs(theParent.Get<FakeSettings>());
-        }
-
-        [Test]
-        public void alter_is_isolated()
-        {
-            theParent.Replace(new FakeSettings());
-
-            theSettings.Alter<FakeSettings>(x => x.Hometown = "Austin");
-
-            theParent.Get<FakeSettings>().Hometown.ShouldNotBe("Austin");
-            theSettings.Get<FakeSettings>().Hometown.ShouldBe("Austin");
-        }
-
-        [Test]
-        public void alter_will_use_the_parent_for_application_level_settings()
-        {
-            theSettings.Alter<AppSettings>(fake => fake.Name = "Shiner");
-
-            theSettings.Get<AppSettings>().ShouldBeTheSameAs(theParent.Get<AppSettings>());
-            theSettings.Get<AppSettings>().Name.ShouldBe("Shiner");
-        }
-    }
 
 
     [TestFixture]
@@ -104,7 +15,7 @@ namespace FubuMVC.Tests.Registration
         [SetUp]
         public void SetUp()
         {
-            theSettings = new SettingsCollection(null);
+            theSettings = new SettingsCollection();
         }
 
         [Test]
@@ -116,9 +27,9 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void can_completely_replace_the_settings()
         {
-            theSettings.Replace(new FakeSettings{Name = "Lindsey", Hometown = "San Antonio"});
+            theSettings.Replace(new FakeSettings {Name = "Lindsey", Hometown = "San Antonio"});
 
-            theSettings.Get<FakeSettings>().ShouldBe(new FakeSettings { Name = "Lindsey", Hometown = "San Antonio" });
+            theSettings.Get<FakeSettings>().ShouldBe(new FakeSettings {Name = "Lindsey", Hometown = "San Antonio"});
         }
 
         [Test]
@@ -126,7 +37,8 @@ namespace FubuMVC.Tests.Registration
         {
             var original = theSettings.Get<FakeSettings>();
 
-            theSettings.Alter<FakeSettings>(x => {
+            theSettings.Alter<FakeSettings>(x =>
+            {
                 Thread.Sleep(500);
                 x.Name = "Max";
             });
@@ -144,12 +56,6 @@ namespace FubuMVC.Tests.Registration
 
             theSettings.HasExplicit<FakeSettings>().ShouldBeTrue();
         }
-    }
-
-    [ApplicationLevel]
-    public class AppSettings
-    {
-        public string Name { get; set; }
     }
 
     public class FakeSettings

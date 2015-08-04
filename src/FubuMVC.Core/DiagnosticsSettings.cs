@@ -9,7 +9,6 @@ using FubuMVC.Core.Security.Authorization;
 
 namespace FubuMVC.Core
 {
-    [ApplicationLevel]
     [Title("Diagnostic Tracing and Authorization Configuration")]
     public class DiagnosticsSettings : DescribesItself, IFeatureSettings
     {

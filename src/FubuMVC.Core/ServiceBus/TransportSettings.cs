@@ -19,7 +19,6 @@ using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.ServiceBus
 {
-    [ApplicationLevel]
     public class TransportSettings : IFeatureSettings
     {
         public readonly IList<ISagaStorage> SagaStorageProviders;

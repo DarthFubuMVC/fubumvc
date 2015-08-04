@@ -10,13 +10,6 @@ namespace FubuMVC.Tests.Security.Authorization
     public class SecuritySettingsTester
     {
         [Test]
-        public void is_application_level()
-        {
-            typeof(SecuritySettings).HasAttribute<ApplicationLevelAttribute>()
-                .ShouldBeTrue();
-        }
-
-        [Test]
         public void authentication_is_enabled_by_default()
         {
             new SecuritySettings().AuthenticationEnabled

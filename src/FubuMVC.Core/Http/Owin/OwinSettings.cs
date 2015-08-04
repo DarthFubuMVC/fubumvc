@@ -6,7 +6,6 @@ using FubuCore.Descriptions;
 using FubuCore.Util;
 using FubuMVC.Core.Http.Owin.Middleware;
 using FubuMVC.Core.Http.Owin.Middleware.StaticFiles;
-using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 
@@ -14,7 +13,6 @@ namespace FubuMVC.Core.Http.Owin
 {
     using AppFunc = Func<IDictionary<string, object>, Task>;
 
-    [ApplicationLevel]
     public class OwinSettings : DescribesItself
     {
         public OwinSettings()

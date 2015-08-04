@@ -1,13 +1,11 @@
 using System.Collections.Generic;
 using FubuCore;
-using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.Runtime.Files
 {
     /// <summary>
     /// Provides an abstraction to find files across the main application
     /// </summary>
-    [ApplicationLevel]
     public interface IFubuApplicationFiles
     {
         /// <summary>

@@ -6,13 +6,11 @@ using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuCore.Util;
-using FubuMVC.Core.Registration;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
 
 namespace FubuMVC.Core.ServiceBus.Configuration
 {
-    [ApplicationLevel]
     public class ChannelGraph : IEnumerable<ChannelNode>, IDisposable
     {
         private readonly Cache<string, ChannelNode> _channels =

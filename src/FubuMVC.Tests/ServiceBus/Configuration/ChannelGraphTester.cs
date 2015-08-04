@@ -127,11 +127,6 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
             }
         }
 
-        [Test]
-        public void channel_graph_has_to_be_application_level()
-        {
-            typeof(ChannelGraph).HasAttribute<ApplicationLevelAttribute>().ShouldBeTrue();
-        }
 
     }
 

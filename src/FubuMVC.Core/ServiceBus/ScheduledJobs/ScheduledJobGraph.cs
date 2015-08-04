@@ -11,7 +11,6 @@ using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.ServiceBus.ScheduledJobs
 {
-    [ApplicationLevel]
     public class ScheduledJobGraph : IFeatureSettings
     {
         public ScheduledJobGraph()

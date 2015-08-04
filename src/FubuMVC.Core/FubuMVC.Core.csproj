@@ -607,7 +607,6 @@
     <Compile Include="ReflectionExtensions.cs" />
     <Compile Include="Registration\AccessorRulesExpression.cs" />
     <Compile Include="Registration\ActionSourceAggregator.cs" />
-    <Compile Include="Registration\ApplicationLevelAttribute.cs" />
     <Compile Include="Http\Compression\ContentEncoding.cs" />
     <Compile Include="Http\Compression\GZipHttpContentEncoding.cs" />
     <Compile Include="Http\Compression\HttpContentEncodingFilter.cs" />

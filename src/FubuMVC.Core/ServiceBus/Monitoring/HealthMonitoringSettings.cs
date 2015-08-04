@@ -1,10 +1,8 @@
 ﻿using System;
 using FubuCore;
-using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.ServiceBus.Monitoring
 {
-    [ApplicationLevel]
     public class HealthMonitoringSettings
     {
         private bool _initial = true;

@@ -83,13 +83,6 @@ namespace FubuMVC.Tests.Http
         }
 
         [Test]
-        public void conneg_settings_needs_to_be_application_level()
-        {
-            typeof(ConnegSettings).HasAttribute<ApplicationLevelAttribute>()
-                .ShouldBeTrue();
-        }
-
-        [Test]
         public void the_default_formatters_are_json_then_xml()
         {
             new ConnegSettings().Formatters.Select(x => x.GetType())

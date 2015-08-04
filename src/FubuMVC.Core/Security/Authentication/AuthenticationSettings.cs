@@ -8,7 +8,6 @@ using FubuMVC.Core.Security.Authorization;
 
 namespace FubuMVC.Core.Security.Authentication
 {
-    [ApplicationLevel]
     public class AuthenticationSettings : IFeatureSettings
     {
         private Func<RoutedChain, bool> _exclusions = c => false;

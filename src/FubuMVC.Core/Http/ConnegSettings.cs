@@ -13,7 +13,6 @@ using FubuMVC.Core.View.Attachment;
 
 namespace FubuMVC.Core.Http
 {
-    [ApplicationLevel]
     public class ConnegSettings : DescribesItself
     {
         public readonly ConnegRules Rules = new ConnegRules();

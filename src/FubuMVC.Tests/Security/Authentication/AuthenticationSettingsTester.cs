@@ -20,12 +20,6 @@ namespace FubuMVC.Tests.Security.Authentication
             new AuthenticationSettings().Enabled.ShouldBeFalse();
         }
 
-        [Test]
-        public void has_to_be_application_level()
-        {
-            typeof(AuthenticationSettings).HasAttribute<ApplicationLevelAttribute>()
-                .ShouldBeTrue();
-        }
 
         [Test]
         public void membership_status_is_enabled_by_default()
