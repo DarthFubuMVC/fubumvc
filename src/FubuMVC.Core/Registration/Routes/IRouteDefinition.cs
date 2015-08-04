@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Web.Routing;
-using FubuCore.Util;
 
 namespace FubuMVC.Core.Registration.Routes
 {
@@ -10,7 +9,6 @@ namespace FubuMVC.Core.Registration.Routes
     {
         string Pattern { get; }
         int Rank { get; }
-        Indexer<string, IRouteConstraint> Constraints { get; }
         IRouteInput Input { get; }
         IList<string> AllowedHttpMethods { get; }
 
@@ -33,12 +31,6 @@ namespace FubuMVC.Core.Registration.Routes
         SessionStateRequirement SessionStateRequirement { get; set; }
 
         bool RespondsToMethod(string method);
-
-        /// <summary>
-        /// Provides metadata for the usage of this route definition. 
-        /// This is particularly useful when creating route aliases.
-        /// </summary>
-        string Category { get; set; }
     }
 
     public static class RouteDefinitionExtensions

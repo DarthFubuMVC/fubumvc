@@ -17,7 +17,8 @@ namespace FubuMVC.Core.Registration.Routes
             "POST",
             "GET",
             "PUT",
-            "DELETE"
+            "DELETE",
+            "HEAD"
         };
 
         public static readonly string HTTP_METHOD_CONSTRAINT = "HttpMethods";
@@ -55,8 +56,6 @@ namespace FubuMVC.Core.Registration.Routes
         }
 
         public SessionStateRequirement SessionStateRequirement { get; set; }
-
-        public string Category { get; set; }
 
 
         public IRouteInput Input
@@ -150,13 +149,6 @@ namespace FubuMVC.Core.Registration.Routes
             }
         }
 
-        public Indexer<string, IRouteConstraint> Constraints
-        {
-            get
-            {
-                return new Indexer<string, IRouteConstraint>(x => _constraints[x], (key, v) => _constraints[key] = v);
-            }
-        }
 
         public void AddHttpMethodConstraint(string method)
         {
