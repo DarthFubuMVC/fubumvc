@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using FubuCore.Util.TextWriting;
 using FubuMVC.Core.Diagnostics.Packaging;
@@ -73,7 +74,7 @@ namespace FubuMVC.Core.Diagnostics
             report.AddText("Assemblies");
             report.AddDivider('-');
 
-            AppDomain.CurrentDomain.GetAssemblies().Each(assem => {
+            AppDomain.CurrentDomain.GetAssemblies().Where(x => !x.IsDynamic).Each(assem => {
                 var assemblyName = assem.GetName();
                 var file = findCodebase(assem);
                 report.AddColumnData(assemblyName.Name, assemblyName.Version.ToString(), file);
