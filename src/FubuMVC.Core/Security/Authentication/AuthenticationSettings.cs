@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Security.Authentication.Endpoints;
@@ -25,7 +26,11 @@ namespace FubuMVC.Core.Security.Authentication
             _strategies = new AuthenticationChain();
         }
 
-        public bool Enabled = false;
+
+        public bool ExcludeDiagnostics { get; set; }
+
+
+        public bool Enabled { get; set; }
 
         /// <summary>
         ///     Register and orders the IAuthenticationStrategy's applied to this
@@ -67,6 +72,8 @@ namespace FubuMVC.Core.Security.Authentication
         {
             if (chain.Calls.Any(x => x.HasAttribute<NotAuthenticatedAttribute>())) return true;
             if (chain.Calls.Any(x => x.HasAttribute<PassThroughAuthenticationAttribute>())) return true;
+
+            if (ExcludeDiagnostics && chain is DiagnosticChain) return true;
 
             return _exclusions(chain);
         }

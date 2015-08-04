@@ -1,13 +1,12 @@
 ﻿using System.Linq;
-using FubuCore.Reflection;
-using FubuMVC.Core.Registration;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Endpoints;
 using FubuMVC.Core.Security.Authorization;
-using Shouldly;
 using HtmlTags;
 using NUnit.Framework;
+using Shouldly;
 
 namespace FubuMVC.Tests.Security.Authentication
 {
@@ -20,12 +19,34 @@ namespace FubuMVC.Tests.Security.Authentication
             new AuthenticationSettings().Enabled.ShouldBeFalse();
         }
 
+        [Test]
+        public void do_not_exclude_diagnostics_chains_by_default()
+        {
+            var chain = DiagnosticChain.For<AboutFubuDiagnostics>(_ => _.get_about());
+
+            new AuthenticationSettings().ShouldBeExcluded(chain)
+                .ShouldBeFalse();
+
+        }
+
+        [Test]
+        public void exclude_diagnostics_when_explicitly_chosen()
+        {
+            var chain = DiagnosticChain.For<AboutFubuDiagnostics>(_ => _.get_about());
+
+            new AuthenticationSettings
+            {
+                ExcludeDiagnostics = true
+            }.ShouldBeExcluded(chain)
+                .ShouldBeTrue();
+        }
+
 
         [Test]
         public void membership_status_is_enabled_by_default()
         {
             new AuthenticationSettings().MembershipEnabled
-                                        .ShouldBe(MembershipStatus.Enabled);
+                .ShouldBe(MembershipStatus.Enabled);
         }
 
         [Test]
@@ -56,10 +77,9 @@ namespace FubuMVC.Tests.Security.Authentication
 
             settings.ShouldBeExcluded(chain).ShouldBeFalse();
 
-            settings.ExcludeChains = c => typeof(HtmlTag) == c.ResourceType();
+            settings.ExcludeChains = c => typeof (HtmlTag) == c.ResourceType();
 
             settings.ShouldBeExcluded(chain).ShouldBeTrue();
-
         }
 
         [Test]
@@ -69,7 +89,7 @@ namespace FubuMVC.Tests.Security.Authentication
             var chain = new RoutedChain("foo");
             chain.AddToEnd(ActionCall.For<LoginController>(x => x.get_login(null)));
             settings.ShouldBeExcluded(chain).ShouldBeTrue();
-            
+
             settings.ExcludeChains = c => c.Calls.Count() == 5; // just need a fake
 
             settings.ShouldBeExcluded(chain).ShouldBeTrue();
@@ -87,17 +107,17 @@ namespace FubuMVC.Tests.Security.Authentication
             settings.ShouldBeExcluded(chain).ShouldBeTrue();
         }
 
-		[Test]
-		public void exclude_by_default_actions_marked_as_pass_through()
-		{
-			var chain = new RoutedChain("foo");
-			chain.AddToEnd(ActionCall.For<AuthenticatedEndpoints>(x => x.get_pass_through_authentication()));
+        [Test]
+        public void exclude_by_default_actions_marked_as_pass_through()
+        {
+            var chain = new RoutedChain("foo");
+            chain.AddToEnd(ActionCall.For<AuthenticatedEndpoints>(x => x.get_pass_through_authentication()));
 
 
-			var settings = new AuthenticationSettings();
+            var settings = new AuthenticationSettings();
 
-			settings.ShouldBeExcluded(chain).ShouldBeTrue();
-		}
+            settings.ShouldBeExcluded(chain).ShouldBeTrue();
+        }
     }
 
     public class AuthenticatedEndpoints
@@ -107,7 +127,7 @@ namespace FubuMVC.Tests.Security.Authentication
         {
             return "anything";
         }
-        
+
         public string get_authenticated()
         {
             return "else";
@@ -118,21 +138,19 @@ namespace FubuMVC.Tests.Security.Authentication
             return new HtmlTag("div");
         }
 
-		[PassThroughAuthentication]
-		public string get_pass_through_authentication()
-		{
-			return "hello, everybody";
-		}
+        [PassThroughAuthentication]
+        public string get_pass_through_authentication()
+        {
+            return "hello, everybody";
+        }
 
         public void post_something(NotAuthenticatedMessage message)
         {
-            
         }
     }
 
     [NotAuthenticated]
     public class NotAuthenticatedMessage
     {
-        
     }
 }
