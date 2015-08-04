@@ -219,7 +219,6 @@
     <Compile Include="Registration\Policies\AndChainFilterTester.cs" />
     <Compile Include="Registration\Policies\HttpMethodFilterTester.cs" />
     <Compile Include="Registration\Policies\InputTypeIsTester.cs" />
-    <Compile Include="Registration\Policies\LambdaChainModificationTester.cs" />
     <Compile Include="Registration\Policies\LastActionMatchTester.cs" />
     <Compile Include="Registration\Policies\ChainPredicateTester.cs" />
     <Compile Include="Registration\OutputBeforeAjaxContinuationPolicyTester.cs" />

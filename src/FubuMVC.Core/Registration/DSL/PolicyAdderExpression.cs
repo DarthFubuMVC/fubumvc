@@ -1,4 +1,5 @@
 using System;
+using FubuMVC.Core.Http.Compression;
 using FubuMVC.Core.Registration.Conventions;
 
 namespace FubuMVC.Core.Registration.DSL
@@ -12,6 +13,9 @@ namespace FubuMVC.Core.Registration.DSL
 
     public class PolicyAdderExpression
     {
+        public readonly static HttpContentEncodingFilter DefaultFilter = new HttpContentEncodingFilter(new HttpContentEncoders(new IHttpContentEncoding[] { new GZipHttpContentEncoding(), new DeflateHttpContentEncoding() }));
+
+
         protected PolicyGraph Configuration;
 
         public PolicyAdderExpression(PolicyGraph configuration)
@@ -49,13 +53,12 @@ namespace FubuMVC.Core.Registration.DSL
             return Add(action);
         }
 
-        public PolicyAdderExpression Add(Action<Policy> configuration)
+        public PolicyAdderExpression Configure(Action<BehaviorGraph> configuration)
         {
-            var policy = new Policy();
-            configuration(policy);
-
-            return Add(policy);
+            var action = new LambdaConfigurationAction(configuration);
+            return Add(action);
         }
+
 
         public PolicyAdderExpression Add(IConfigurationAction action)
         {
@@ -63,8 +66,5 @@ namespace FubuMVC.Core.Registration.DSL
 
             return this;
         }
-
-
-
     }
 }

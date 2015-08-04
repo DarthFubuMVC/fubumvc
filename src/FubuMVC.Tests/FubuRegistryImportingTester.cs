@@ -9,6 +9,7 @@ using FubuMVC.Core.Caching;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Tests.Registration.Conventions;
 using Shouldly;
 using NUnit.Framework;
 using Cookie = FubuMVC.Core.Http.Cookies.Cookie;
@@ -170,7 +171,7 @@ namespace FubuMVC.Tests
         {
             import.Actions.IncludeType<Action1>();
 
-            import.Policies.Local.Add(policy => policy.Wrap.WithBehavior<Wrapper>());
+            import.Policies.Local.Configure(g => g.WrapAllWith<Wrapper>());
 
             parent.Import(import, "import");
 
@@ -201,7 +202,7 @@ namespace FubuMVC.Tests
 
             parent.Actions.IncludeType<Action2>();
 
-            parent.Policies.Global.Add(policy => policy.Wrap.WithBehavior<Wrapper>());
+            parent.Policies.Global.Configure(g => g.WrapAllWith<Wrapper>());
 
             var graph = BehaviorGraph.BuildFrom(parent);
 

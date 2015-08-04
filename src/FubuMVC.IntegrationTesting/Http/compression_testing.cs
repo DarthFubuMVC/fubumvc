@@ -1,17 +1,19 @@
 ﻿using System.Net;
 using FubuMVC.Core;
+using FubuMVC.Core.Http.Compression;
 using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Http
 {
-    [TestFixture, Ignore("Broken in 2.0")]
+    [TestFixture]
     public class compression_testing : FubuRegistryHarness
     {
         protected override void configure(FubuRegistry registry)
         {
             registry.Actions.IncludeType<CompressionController>();
-            registry.Policies.Local.Add(policy => policy.ContentCompression.Apply());
+
+            registry.Policies.Local.Add<ApplyCompression>();
         }
 
         [Test]

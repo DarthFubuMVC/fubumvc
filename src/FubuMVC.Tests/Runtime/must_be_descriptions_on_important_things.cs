@@ -21,18 +21,6 @@ namespace FubuMVC.Tests.Runtime
     public class must_be_descriptions_on_important_things
     {
         [Test]
-        public void must_be_a_description_on_all_IChainModification_types()
-        {
-            var types = typeof (FubuRequest).Assembly.GetExportedTypes()
-                .Where(x => x.IsConcreteTypeOf<IChainModification>())
-                .Where(x => !Description.HasExplicitDescription(x));
-
-            types.Each(x => Console.WriteLine(x.Name));
-
-            types.Any().ShouldBeFalse();
-        }
-
-        [Test]
         public void must_be_a_description_on_all_IChainFilter_types()
         {
             var types = typeof (FubuRequest).Assembly.GetExportedTypes()

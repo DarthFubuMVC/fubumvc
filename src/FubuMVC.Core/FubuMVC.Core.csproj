@@ -78,6 +78,7 @@
     <Compile Include="DeactivatorExecuted.cs" />
     <Compile Include="DiagnosticsExtensions.cs" />
     <Compile Include="FubuModeExtensions.cs" />
+    <Compile Include="Http\Compression\ApplyCompression.cs" />
     <Compile Include="Http\Hosting\IHost.cs" />
     <Compile Include="Http\Hosting\Katana.cs" />
     <Compile Include="Http\Hosting\AdminRightsException.cs" />
@@ -106,7 +107,6 @@
     <Compile Include="ServiceBus\Configuration\HandlerGraphSource.cs" />
     <Compile Include="ServiceBus\Configuration\HealthMonitoringExpression.cs" />
     <Compile Include="ServiceBus\Configuration\ISettingsAware.cs" />
-    <Compile Include="ServiceBus\Configuration\PoliciesExpression.cs" />
     <Compile Include="ServiceBus\Configuration\SchedulerMaker.cs" />
     <Compile Include="ServiceBus\Configuration\UriExtensions.cs" />
     <Compile Include="ServiceBus\Diagnostics\IMessagingSession.cs" />
@@ -507,7 +507,6 @@
     <Compile Include="Attributes\FubuPartialAttribute.cs" />
     <Compile Include="FubuRuntime.cs" />
     <Compile Include="Http\CommaTokenParser.cs" />
-    <Compile Include="Http\Compression\ApplyContentCompression.cs" />
     <Compile Include="Http\Compression\DeflateHttpContentEncoding.cs" />
     <Compile Include="Http\Compression\DoNotCompressAttribute.cs" />
     <Compile Include="Http\ConnegQuerystring.cs" />
@@ -609,7 +608,6 @@
     <Compile Include="Registration\AccessorRulesExpression.cs" />
     <Compile Include="Registration\ActionSourceAggregator.cs" />
     <Compile Include="Registration\ApplicationLevelAttribute.cs" />
-    <Compile Include="Http\Compression\ContentCompressionActions.cs" />
     <Compile Include="Http\Compression\ContentEncoding.cs" />
     <Compile Include="Http\Compression\GZipHttpContentEncoding.cs" />
     <Compile Include="Http\Compression\HttpContentEncodingFilter.cs" />
@@ -628,14 +626,12 @@
     <Compile Include="Registration\IChainSource.cs" />
     <Compile Include="Registration\IFeatureSettings.cs" />
     <Compile Include="Registration\ISettingsAlteration.cs" />
-    <Compile Include="Registration\Nodes\BehaviorChainExtensions.cs" />
     <Compile Include="Registration\Nodes\IModifiesChain.cs" />
     <Compile Include="Registration\Nodes\RoutedChain.cs" />
     <Compile Include="Registration\Policies\AndChainFilter.cs" />
     <Compile Include="Registration\Policies\AnyActionMatch.cs" />
     <Compile Include="Registration\Policies\HttpMethodFilter.cs" />
     <Compile Include="Registration\Policies\IChainFilter.cs" />
-    <Compile Include="Registration\Policies\IChainModification.cs" />
     <Compile Include="Registration\Policies\InputTypeIs.cs" />
     <Compile Include="Registration\Policies\LambdaChainFilter.cs" />
     <Compile Include="Registration\Policies\LastActionMatch.cs" />
@@ -647,8 +643,6 @@
     <Compile Include="Registration\OverridesFor.cs" />
     <Compile Include="Registration\Policies\ResourceTypeImplements.cs" />
     <Compile Include="Registration\Policies\ResourceTypeIs.cs" />
-    <Compile Include="Registration\Policies\WrapWithExpression.cs" />
-    <Compile Include="Registration\Policy.cs" />
     <Compile Include="Registration\Routes\IMakeMyOwnUrl.cs" />
     <Compile Include="Registration\Routes\IRankMeLast.cs" />
     <Compile Include="Registration\Routes\SessionStateRequirement.cs" />

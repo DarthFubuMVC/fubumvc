@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Tests.Registration.Conventions;
 using Shouldly;
 using NUnit.Framework;
 
@@ -109,13 +111,14 @@ namespace FubuMVC.Tests.Registration.Registration
             Import<PackageRegistry>();
 
 
-            Policies.Local.Add(x => {
-                x.Wrap.WithBehavior<LocalAppWrapper>();
+            Policies.Local.Configure(graph =>
+            {
+                graph.WrapAllWith<LocalAppWrapper>();
             });
 
-            Policies.Global.Add(x =>
+            Policies.Global.Configure(graph =>
             {
-                x.Wrap.WithBehavior<GlobalAppWrapper>();
+                graph.WrapAllWith<GlobalAppWrapper>();
             });
 
             Services.ReplaceService<IAppService, AppService>();
@@ -128,13 +131,14 @@ namespace FubuMVC.Tests.Registration.Registration
         {
             Actions.IncludeType<PackageActions>();
 
-            Policies.Local.Add(x => {
-                x.Wrap.WithBehavior<LocalPakWrapper>();
+            Policies.Local.Configure(graph =>
+            {
+                graph.WrapAllWith<LocalPakWrapper>();
             });
 
-            Policies.Global.Add(x =>
+            Policies.Global.Configure(x =>
             {
-                x.Wrap.WithBehavior<GlobalPakWrapper>();
+                x.WrapAllWith<GlobalPakWrapper>();
             });
 
             Services.ReplaceService<IAppService, PackageService>();

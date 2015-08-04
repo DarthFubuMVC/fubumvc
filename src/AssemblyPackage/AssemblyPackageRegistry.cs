@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 
@@ -23,9 +25,11 @@ namespace AssemblyPackage
     {
         public void Configure(FubuRegistry registry)
         {
-            registry.Policies.Local.Add(policy => {
-                policy.Where.LastActionMatches(call => call.HandlerType == typeof (AssemblyEndpoint));
-                policy.Wrap.WithBehavior<BehaviorFromAssemblyPackage>();
+            registry.Policies.Local.Configure(graph =>
+            {
+                graph.Behaviors
+                    .Where(x => x.HandlerTypeIs<AssemblyEndpoint>())
+                    .Each(x => x.WrapWith<BehaviorFromAssemblyPackage>());
             });
         }
     }

@@ -4,6 +4,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Security.Authorization;
+using FubuMVC.Tests.Registration.Conventions;
 using Shouldly;
 using NUnit.Framework;
 using System.Linq;
@@ -21,9 +22,7 @@ namespace FubuMVC.Tests.Registration.DSL
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<OrderingPolicyController>();
 
-            registry.Policies.Local.Add(policy => {
-                policy.Wrap.WithBehavior<OPWrapper1>();
-            });
+            registry.Policies.Local.Configure(g => g.WrapAllWith<OPWrapper1>());
 
             registry.Policies.Global.Reorder(policy => {
                 policy.ThisWrapperBeBefore<OPWrapper1>();
@@ -56,9 +55,7 @@ namespace FubuMVC.Tests.Registration.DSL
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<OrderingPolicyController>();
 
-            registry.Policies.Local.Add(policy => {
-                policy.Wrap.WithBehavior<OPWrapper1>();
-            });
+            registry.Policies.Local.Configure(g => g.WrapAllWith<OPWrapper1>());
 
             registry.Policies.Global.Reorder(x =>
             {
