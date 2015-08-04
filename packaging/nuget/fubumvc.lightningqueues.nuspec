@@ -1,23 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
-    <id>FubuTransportation.LightningQueues</id>
+    <id>FubuMVC.LightningQueues</id>
     <version>0.0.0</version>
     <authors>Corey Kaylor, Jeremy D. Miller</authors>
     <owners>Jeremy D. Miller, Corey Kaylor</owners>
     <licenseUrl>https://github.com/DarthFubuMVC/fubutransportation/raw/master/license.txt</licenseUrl>
-    <projectUrl>https://github.com/DarthFubuMVC/FubuTransportation</projectUrl>
+    <projectUrl>https://github.com/DarthFubuMVC/FubuMVC</projectUrl>
     <iconUrl>https://github.com/DarthFubuMVC/fubu-collateral/raw/master/Icons/FubuMvc_256.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>LightningQueues integration for FubuTransporation projects</description>
+    <description>LightningQueues integration for FubuMVC Service Bus projects</description>
     <tags>fubumvc service bus</tags>
     <dependencies>
-      <dependency id="FubuTransportation" />
+      <dependency id="FubuMVC.Core" version="3.0" />
       <dependency id="LightningQueues" version="0.1.0.25" />
     </dependencies>
   </metadata>
   <files xmlns="">
-    <file src="..\..\src\FubuTransportation.LightningQueues\bin\release\FubuTransportation.LightningQueues.dll" target="lib\4.5" />
-    <file src="..\..\src\FubuTransportation.LightningQueues\bin\release\FubuTransportation.LightningQueues.pdb" target="lib\4.5" />
+    <file src="..\..\src\FubuMVC.LightningQueues\bin\release\FubuMVC.LightningQueues.dll" target="lib\4.5" />
+    <file src="..\..\src\FubuMVC.LightningQueues\bin\release\FubuMVC.LightningQueues.pdb" target="lib\4.5" />
   </files>
 </package>

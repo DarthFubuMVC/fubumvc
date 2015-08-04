@@ -4,23 +4,24 @@
     <id>FubuMVC.Core</id>
     <version>0.0.0</version>
     <authors>Jeremy D. Miller, Joshua Arnold, Corey Kaylor</authors>
-    <owners>Joshua Flanagan</owners>
+    <owners>Jeremy D. Miller, Corey Kaylor</owners>
     <licenseUrl>https://github.com/DarthFubuMVC/fubumvc/raw/master/license.txt</licenseUrl>
-    <projectUrl>http://mvc.fubu-project.org/</projectUrl>
+    <projectUrl>http://github.com/DarthFubuMVC/fubumvc</projectUrl>
     <iconUrl>https://github.com/DarthFubuMVC/fubu-collateral/raw/master/Icons/FubuMvc_256.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>FubuMVC.Core Library</description>
     <tags>web framework mvc fubumvc</tags>
     <dependencies>
-      <dependency id="Bottles" version="3.0.0.595" />
-      <dependency id="FubuCore" version="1.2.0.259" />
-      <dependency id="HtmlTags" version="1.1.0.114" />
+      <dependency id="FubuCore" version="2.0" />
+      <dependency id="HtmlTags" version="3.0" />
+      <dependency id="FubuLocalization" version="1.1" />
+      <dependency id="structuremap" version="3.2" />
     </dependencies>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Web" />
     </frameworkAssemblies>
   </metadata>
   <files xmlns="">
-    <file src="..\..\src\FubuMVC.Core\bin\release\FubuMVC.Core.*" target="lib\net40" />
+    <file src="..\..\src\FubuMVC.Core\bin\release\FubuMVC.Core.*" target="lib\net45" />
   </files>
 </package>

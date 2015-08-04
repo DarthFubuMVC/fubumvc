@@ -18,7 +18,6 @@
         <add namespace="FubuCore" />
         <add namespace="FubuCore.Reflection" />
         <add namespace="FubuLocalization" />
-		<add namespace="FubuMVC.ContentExtensions" />
         <add namespace="FubuMVC.Core.UI" />
 		<add namespace="FubuMVC.Core.Assets" />
         <add namespace="FubuMVC.Core.View" />
@@ -35,7 +34,6 @@
         <add namespace="FubuCore" />
         <add namespace="FubuCore.Reflection" />
         <add namespace="FubuLocalization" />
-		<add namespace="FubuMVC.ContentExtensions" />
         <add namespace="FubuMVC.Core.UI" />
 		<add namespace="FubuMVC.Core.Assets" />
         <add namespace="FubuMVC.Core.View" />

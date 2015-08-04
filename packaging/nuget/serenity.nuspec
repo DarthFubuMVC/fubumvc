@@ -6,19 +6,20 @@
     <authors>Jeremy D. Miller</authors>
     <owners>Jeremy D. Miller</owners>
     <licenseUrl>https://github.com/DarthFubuMVC/fubumvc/raw/master/license.txt</licenseUrl>
-    <projectUrl>http://mvc.fubu-project.org/</projectUrl>
+    <projectUrl>http://github.com/DarthFubuMVC/fubumvc</projectUrl>
     <iconUrl>https://github.com/DarthFubuMVC/fubu-collateral/raw/master/Icons/FubuMvc_256.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Giving you piece of mind by making it easy to integrate both Storyteller and Jasmine testing into your FubuMVC applications</description>
     <tags>web framework specification fubumvc</tags>
     <dependencies>
-      <dependency id="FubuMVC.Core" version="2.1" />
-      <dependency id="FubuMVC.Katana" version="2.1" />
+      <dependency id="FubuMVC.Core" version="3.0" />
+      <dependency id="Microsoft.Hosting.Owin" />
+      <dependency id="Microsoft.Owin.Host.HttpListener" />
       <dependency id="Storyteller" version="3.0.0" />
-      <dependency id="Selenium.RC" version="2.21.0" />
-      <dependency id="Selenium.Support" version="2.31.2" />
-      <dependency id="Selenium.WebDriver" version="2.31.2" />
-      <dependency id="Selenium.WebDriverBackedSelenium" version="2.31.2" />
+      <dependency id="Selenium.RC" version="2.46.0" />
+      <dependency id="Selenium.Support" version="2.46.0" />
+      <dependency id="Selenium.WebDriver" version="2.46.0" />
+      <dependency id="Selenium.WebDriverBackedSelenium" version="2.46.0" />
     </dependencies>
   </metadata>
   <files xmlns="">
