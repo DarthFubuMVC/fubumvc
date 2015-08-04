@@ -216,8 +216,6 @@
     <Compile Include="Registration\default_action_discovery.cs" />
     <Compile Include="Registration\FilterAttributeTester.cs" />
     <Compile Include="Registration\Nodes\RoutedChainTester.cs" />
-    <Compile Include="Registration\Policies\AndChainFilterTester.cs" />
-    <Compile Include="Registration\Policies\ChainPredicateTester.cs" />
     <Compile Include="Registration\OutputBeforeAjaxContinuationPolicyTester.cs" />
     <Compile Include="Registration\Querying\ChainResoluationCacheRootAt.cs" />
     <Compile Include="Registration\Registration\FubuPackageRegistry_Importing_Mechanics_Specs.cs" />

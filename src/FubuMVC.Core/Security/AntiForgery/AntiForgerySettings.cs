@@ -13,35 +13,18 @@ namespace FubuMVC.Core.Security.AntiForgery
 
         public bool Enabled { get; set; }
         
-        public AntiForgerySettings()
-        {
-            AppliesTo(x =>
-            {
-                x.ChainMatches(c => c.MatchesCategoryOrHttpMethod("POST") && c.InputType() != null);
-            });
-        }
-
-        public void AppliesTo(Action<ChainPredicate> configuration)
-        {
-            _filter = new ChainPredicate();
-            configuration(_filter);
-        }
+        public Func<RoutedChain, bool> Matches = c => c.MatchesCategoryOrHttpMethod("POST") && c.InputType() != null; 
 
 
         public string Path { get; set; }
         public string Domain { get; set; }
-       
-        public bool AppliesTo(BehaviorChain chain)
-        {
-            return _filter.As<IChainFilter>().Matches(chain);
-        }
 
         void IFeatureSettings.Apply(FubuRegistry registry)
         {
             if (!Enabled) return;
 
             registry.Services.IncludeRegistry<AntiForgeryServiceRegistry>();
-            registry.Policies.Global.Add<AntiForgeryPolicy>();
+            registry.Policies.Local.Add<AntiForgeryPolicy>();
 
         }
     }
