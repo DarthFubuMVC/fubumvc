@@ -38,13 +38,13 @@ namespace FubuMVC.Tests.Security.Authentication
         public void excludes_is_always_false_with_no_exclusions()
         {
             var settings = new AuthenticationSettings();
-            settings.ShouldBeExcluded(new BehaviorChain()).ShouldBeFalse();
+            settings.ShouldBeExcluded(new RoutedChain("foo")).ShouldBeFalse();
         }
 
         [Test]
         public void automatically_excludes_the_NotAuthenticated_attribute()
         {
-            var chain = new BehaviorChain();
+            var chain = new RoutedChain("foo");
             chain.AddToEnd(ActionCall.For<AuthenticatedEndpoints>(x => x.get_notauthenticated()));
 
             new AuthenticationSettings().ShouldBeExcluded(chain)
@@ -54,7 +54,7 @@ namespace FubuMVC.Tests.Security.Authentication
         [Test]
         public void apply_a_custom_exclusion()
         {
-            var chain = new BehaviorChain();
+            var chain = new RoutedChain("foo");
             chain.AddToEnd(ActionCall.For<AuthenticatedEndpoints>(x => x.get_tag()));
 
 
@@ -62,7 +62,7 @@ namespace FubuMVC.Tests.Security.Authentication
 
             settings.ShouldBeExcluded(chain).ShouldBeFalse();
 
-            settings.ExcludeChains.ChainMatches(c => typeof(HtmlTag) == c.ResourceType());
+            settings.ExcludeChains = c => typeof(HtmlTag) == c.ResourceType();
 
             settings.ShouldBeExcluded(chain).ShouldBeTrue();
 
@@ -72,11 +72,11 @@ namespace FubuMVC.Tests.Security.Authentication
         public void apply_a_custome_exclusion_and_it_does_not_apply_to_login_page()
         {
             var settings = new AuthenticationSettings();
-            var chain = new BehaviorChain();
+            var chain = new RoutedChain("foo");
             chain.AddToEnd(ActionCall.For<LoginController>(x => x.get_login(null)));
             settings.ShouldBeExcluded(chain).ShouldBeTrue();
             
-            settings.ExcludeChains.ChainMatches(c => c.Calls.Count() == 5); // just need a fake
+            settings.ExcludeChains = c => c.Calls.Count() == 5; // just need a fake
 
             settings.ShouldBeExcluded(chain).ShouldBeTrue();
         }
@@ -84,7 +84,7 @@ namespace FubuMVC.Tests.Security.Authentication
         [Test]
         public void exclude_by_default_if_the_input_type_is_marked_as_NotAuthenticated()
         {
-            var chain = new BehaviorChain();
+            var chain = new RoutedChain("bar");
             chain.AddToEnd(ActionCall.For<AuthenticatedEndpoints>(x => x.post_something(null)));
 
 
@@ -96,7 +96,7 @@ namespace FubuMVC.Tests.Security.Authentication
 		[Test]
 		public void exclude_by_default_actions_marked_as_pass_through()
 		{
-			var chain = new BehaviorChain();
+			var chain = new RoutedChain("foo");
 			chain.AddToEnd(ActionCall.For<AuthenticatedEndpoints>(x => x.get_pass_through_authentication()));
 
 

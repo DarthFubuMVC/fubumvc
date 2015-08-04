@@ -5,6 +5,7 @@ using FubuCore.Reflection;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http.Compression;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Security.Authorization;
 
 namespace FubuMVC.Core
 {

@@ -628,10 +628,6 @@
     <Compile Include="Registration\ISettingsAlteration.cs" />
     <Compile Include="Registration\Nodes\IModifiesChain.cs" />
     <Compile Include="Registration\Nodes\RoutedChain.cs" />
-    <Compile Include="Registration\Policies\AndChainFilter.cs" />
-    <Compile Include="Registration\Policies\IChainFilter.cs" />
-    <Compile Include="Registration\Policies\LambdaChainFilter.cs" />
-    <Compile Include="Registration\Policies\ChainPredicate.cs" />
     <Compile Include="Registration\Nodes\ActionFilter.cs" />
     <Compile Include="Registration\OverridesFor.cs" />
     <Compile Include="Registration\Routes\IMakeMyOwnUrl.cs" />
@@ -733,7 +729,6 @@
     <Compile Include="Security\AntiForgery\MachineKeyAntiForgeryEncoder.cs" />
     <Compile Include="Security\Authentication\AjaxAuthenticationRedirect.cs" />
     <Compile Include="Security\Authentication\ApplyAuthenticationPolicy.cs" />
-    <Compile Include="Security\Authentication\ApplyPassThroughAuthenticationPolicy.cs" />
     <Compile Include="Security\Authentication\Auditing\AuditMessage.cs" />
     <Compile Include="Security\Authentication\Auditing\ILoginAuditor.cs" />
     <Compile Include="Security\Authentication\Auditing\LoginFailure.cs" />
@@ -760,7 +755,6 @@
     <Compile Include="Security\Authentication\Endpoints\LoginController.cs" />
     <Compile Include="Security\Authentication\Endpoints\LoginKeys.cs" />
     <Compile Include="Security\Authentication\Endpoints\LogoutController.cs" />
-    <Compile Include="Security\Authentication\ExcludePassThroughAuthentication.cs" />
     <Compile Include="Security\Authentication\IAuthenticationRedirect.cs" />
     <Compile Include="Security\Authentication\IAuthenticationRedirector.cs" />
     <Compile Include="Security\Authentication\IAuthenticationService.cs" />
@@ -785,7 +779,6 @@
     <Compile Include="Security\Authentication\Membership\MembershipAuthentication.cs" />
     <Compile Include="Security\Authentication\Membership\MembershipNode.cs" />
     <Compile Include="Security\Authentication\Membership\UserInfo.cs" />
-    <Compile Include="Security\Authentication\NotAuthenticatedFilter.cs" />
     <Compile Include="Security\Authentication\PassThroughAuthenticationAttribute.cs" />
     <Compile Include="Security\Authentication\PassThroughAuthenticationFilter.cs" />
     <Compile Include="Security\Authentication\PasswordHash.cs" />

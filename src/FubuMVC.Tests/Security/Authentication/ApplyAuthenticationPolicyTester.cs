@@ -38,7 +38,7 @@ namespace FubuMVC.Tests.Security.Authentication
 
             // This is the filter set up that will explicitly exclude this chain
             graph.Settings.Get<AuthenticationSettings>()
-                .ExcludeChains.ChainMatches(x => typeof (AuthenticatedModel) == x.InputType());
+                .ExcludeChains = x => typeof (AuthenticatedModel) == x.InputType();
 
             thePolicy.Configure(graph);
 

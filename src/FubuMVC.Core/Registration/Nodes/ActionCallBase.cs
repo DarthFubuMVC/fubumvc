@@ -220,11 +220,15 @@ namespace FubuMVC.Core.Registration.Nodes
         {
             HandlerType.ForAttribute(action);
             Method.ForAttribute(action);
+            if (HasInput)
+            {
+                InputType().ForAttribute(action);
+            }
         }
 
         public bool HasAttribute<T>() where T : Attribute
         {
-            return HandlerType.HasAttribute<T>() || Method.HasAttribute<T>();
+            return HandlerType.HasAttribute<T>() || Method.HasAttribute<T>() || (HasInput && InputType().HasAttribute<T>());
         }
     }
 }

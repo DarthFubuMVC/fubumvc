@@ -248,7 +248,6 @@
     <Compile Include="Security\AntiForgery\MachineKeyAntiForgeryEncoderTester.cs" />
     <Compile Include="Security\Authentication\AjaxAuthenticationRedirectTester.cs" />
     <Compile Include="Security\Authentication\ApplyAuthenticationPolicyTester.cs" />
-    <Compile Include="Security\Authentication\ApplyPassThroughAuthenticationPolicyTester.cs" />
     <Compile Include="Security\Authentication\AuthenticationBootstrapperTests.cs" />
     <Compile Include="Security\Authentication\AuthenticationFilterNodeTester.cs" />
     <Compile Include="Security\Authentication\AuthenticationFilterTester.cs" />

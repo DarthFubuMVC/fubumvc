@@ -1,6 +1,7 @@
 using FubuCore;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Security.Authentication.Cookies;
+using FubuMVC.Core.Security.Authorization;
 
 namespace FubuMVC.Core.Security.Authentication.Endpoints
 {
@@ -20,6 +21,7 @@ namespace FubuMVC.Core.Security.Authentication.Endpoints
             _lockedOutRule = lockedOutRule;
         }
 
+        [NotAuthenticated]
         public FubuContinuation post_login(LoginRequest request)
         {
             bool authenticated = _service.Authenticate(request);
@@ -34,6 +36,7 @@ namespace FubuMVC.Core.Security.Authentication.Endpoints
             return FubuContinuation.TransferTo(request, "GET");
         }
 
+        [NotAuthenticated]
         public LoginRequest get_login(LoginRequest request)
         {
             if (request.Status == LoginStatus.NotAuthenticated)
