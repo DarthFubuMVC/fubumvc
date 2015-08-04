@@ -77,9 +77,9 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void should_have_all_the_routes_from_the_imported_graph()
         {
-            graph2.Routes.Any(x => x.Pattern == "area1/method1/{Name}/{Age}").ShouldBeTrue();
-            graph2.Routes.Any(x => x.Pattern == "area1/method2/{Name}/{Age}").ShouldBeTrue();
-            graph2.Routes.Any(x => x.Pattern == "area1/method3/{Name}/{Age}").ShouldBeTrue();
+            graph2.Routes.Any(x => x.GetRoutePattern() == "area1/method1/{Name}/{Age}").ShouldBeTrue();
+            graph2.Routes.Any(x => x.GetRoutePattern() == "area1/method2/{Name}/{Age}").ShouldBeTrue();
+            graph2.Routes.Any(x => x.GetRoutePattern() == "area1/method3/{Name}/{Age}").ShouldBeTrue();
         }
 
         [Test]

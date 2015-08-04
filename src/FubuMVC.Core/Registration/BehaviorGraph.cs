@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -35,6 +36,7 @@ namespace FubuMVC.Core.Registration
         public BehaviorGraph(SettingsCollection settings) 
         {
             _settings = settings;
+            Routes = new RouteCollection(this);
         }
 
         public BehaviorGraph() : this(new SettingsCollection())
@@ -78,10 +80,8 @@ namespace FubuMVC.Core.Registration
             get { return _settings; }
         }
 
-        public IEnumerable<IRouteDefinition> Routes
-        {
-            get { return _chains.OfType<RoutedChain>().Select(x => x.Route); }
-        }
+        public readonly RouteCollection Routes;
+
 
         public IEnumerable<HandlerChain> Handlers
         {
@@ -287,5 +287,68 @@ namespace FubuMVC.Core.Registration
 
     }
 
+    public class RouteCollection : IEnumerable<RoutedChain>
+    {
+        private readonly BehaviorGraph _graph;
 
+        public RouteCollection(BehaviorGraph graph)
+        {
+            _graph = graph;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public IEnumerator<RoutedChain> GetEnumerator()
+        {
+            return _graph.Chains.OfType<RoutedChain>().GetEnumerator();
+        }
+
+        public IEnumerable<RoutedChain> Gets
+        {
+            get { return this.Where(x => x.Route.RespondsToMethod("GET")); }
+        }
+
+
+        public IEnumerable<RoutedChain> Posts
+        {
+            get { return this.Where(x => x.Route.RespondsToMethod("POST")); }
+        }
+
+
+        public IEnumerable<RoutedChain> Puts
+        {
+            get { return this.Where(x => x.Route.RespondsToMethod("PUT")); }
+        }
+
+
+        public IEnumerable<RoutedChain> Deletes
+        {
+            get { return this.Where(x => x.Route.RespondsToMethod("DELETE")); }
+        }
+
+
+        public IEnumerable<RoutedChain> Heads
+        {
+            get { return this.Where(x => x.Route.RespondsToMethod("HEAD")); }
+        }
+
+        /// <summary>
+        /// Union of routed chains that respond to GET or HEAD
+        /// </summary>
+        public IEnumerable<RoutedChain> Resources
+        {
+            get { return Gets.Union(Heads); }
+        }
+
+        /// <summary>
+        /// Union of routed chains that respond to POST, PUT, or DELETE
+        /// </summary>
+        public IEnumerable<RoutedChain> Commands
+        {
+            get { return Posts.Union(Puts).Union(Deletes); }
+        } 
+    }
 }
