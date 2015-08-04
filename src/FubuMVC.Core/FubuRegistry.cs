@@ -93,6 +93,18 @@ namespace FubuMVC.Core
         /// </summary>
         public string RootPath;
 
+        /// <summary>
+        /// Sets the RootPath to the root directory of a named folder parallel
+        /// to the currently executing project
+        /// </summary>
+        /// <param name="directory"></param>
+        public void UseParallelDirectory(string directory)
+        {
+            var path = FubuRuntime.DefaultApplicationPath();
+
+            RootPath = path.ParentDirectory().AppendPath(directory);
+        }
+
 
         public int Port = PortFinder.FindPort(5500);
         public IHost Host;

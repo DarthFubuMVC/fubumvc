@@ -314,7 +314,6 @@ namespace FubuMVC.Core
 
         public DateTime? Restarted { get; private set; }
 
-
         public static string DefaultApplicationPath()
         {
             return

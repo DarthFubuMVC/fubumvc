@@ -67,6 +67,7 @@
     <Content Include="Data\1.txt" />
     <Content Include="Data\2.txt" />
     <Content Include="Data\3.txt" />
+    <Content Include="JavaScript1.js" />
     <Content Include="WebContent\content\images\aaa\ico-close.gif" />
     <Content Include="WebContent\content\images\icon-add-alt.png" />
     <Content Include="WebContent\content\scripts\Pak1-A.js" />
@@ -74,7 +75,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent></PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

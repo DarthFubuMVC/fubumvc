@@ -35,24 +35,7 @@ namespace FubuMVC.Core.Services.Remote
 
         public void UseParallelServiceDirectory(string directory)
         {
-            var path = AppDomain.CurrentDomain.BaseDirectory.ToFullPath();
-            if (path.EndsWith (Path.DirectorySeparatorChar.ToString(), StringComparison.InvariantCultureIgnoreCase) 
-                || path.EndsWith (Path.AltDirectorySeparatorChar.ToString(), StringComparison.InvariantCultureIgnoreCase))
-            {
-                path = path.Substring (0, path.Length - 1);
-            }
-
-            if (Path.GetFileName(path).EqualsIgnoreCase("Debug") || Path.GetFileName(path).EqualsIgnoreCase("Release"))
-            {
-                path = path.ParentDirectory();
-            }
-
-            if (Path.GetFileName(path).EqualsIgnoreCase("bin"))
-            {
-                path = path.ParentDirectory();
-            }
-
-            path = path.ParentDirectory(); // src directory
+            var path = FubuRuntime.DefaultApplicationPath();
 
             ServiceDirectory = path.AppendPath(directory);
         }
