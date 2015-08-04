@@ -40,14 +40,6 @@ namespace FubuMVC.Core.Registration
         }
 
         /// <summary>
-        /// Add additional nodes to the end of the BehaviorChain
-        /// </summary>
-        public AddToEndExpression Add
-        {
-            get { return new AddToEndExpression(this); }
-        }
-
-        /// <summary>
         /// Add additional "wrapping" behaviors to the beginning of a behavior chain
         /// </summary>
         public WrapWithExpression Wrap

@@ -631,7 +631,6 @@
     <Compile Include="Registration\Nodes\BehaviorChainExtensions.cs" />
     <Compile Include="Registration\Nodes\IModifiesChain.cs" />
     <Compile Include="Registration\Nodes\RoutedChain.cs" />
-    <Compile Include="Registration\Policies\AddToEndExpression.cs" />
     <Compile Include="Registration\Policies\AndChainFilter.cs" />
     <Compile Include="Registration\Policies\AnyActionMatch.cs" />
     <Compile Include="Registration\Policies\HttpMethodFilter.cs" />

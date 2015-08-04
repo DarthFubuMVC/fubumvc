@@ -115,20 +115,7 @@ namespace FubuMVC.IntegrationTesting.Samples
 
     // ENDSAMPLE
 
-    // SAMPLE: conneg-policies
-    public class MyConnegPolicy : Policy
-    {
-        public MyConnegPolicy()
-        {
-            // Apply some sort of matching
-            // filter.  
-            Where.ChainMatches(chain => true);
 
-            // TODO -- redo this.
-        }
-    }
-
-    // ENDSAMPLE
 
     // SAMPLE: writer-attribute-for-one-off
     // A formal version of this attribute will be in v1.3
@@ -275,18 +262,4 @@ namespace FubuMVC.IntegrationTesting.Samples
 
     // ENDSAMPLE
 
-    // SAMPLE: spoofing-mimetype-policy
-    public class CorrectMimetypePolicy : Policy
-    {
-        public CorrectMimetypePolicy()
-        {
-            // Any chain that has an Action where the handler class name
-            // contains the text "Ajax"
-            Where.AnyActionMatches(call => call.HandlerType.Name.Contains("Ajax"));
-
-            Wrap.WithBehavior<CorrectMimetypeForAjaxBehavior>();
-        }
-    }
-
-    // ENDSAMPLE
 }

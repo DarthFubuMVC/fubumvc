@@ -75,21 +75,6 @@ namespace FubuMVC.Tests.Registration.Policies
         }
 
 
-        [Test]
-        public void use_inside_policy()
-        {
-            var graph = BehaviorGraph.BuildFrom(x => {
-                x.Policies.Local.Add(policy => {
-                    policy.Where.RespondsToHttpMethod("PUT", "POST", "DELETE");
-                    policy.Wrap.WithNode<FakeNode>();
-                });
-            });
-
-            graph.ChainFor<HttpMethodEndpoint>(x => x.put_something(null)).Any(x => x is FakeNode).ShouldBeTrue();
-            graph.ChainFor<HttpMethodEndpoint>(x => x.post_something(null)).Any(x => x is FakeNode).ShouldBeTrue();
-            graph.ChainFor<HttpMethodEndpoint>(x => x.delete_something(null)).Any(x => x is FakeNode).ShouldBeTrue();
-            graph.ChainFor<HttpMethodEndpoint>(x => x.get_something()).Any(x => x is FakeNode).ShouldBeFalse();
-        }
 
     }
 

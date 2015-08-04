@@ -315,28 +315,6 @@ namespace FubuMVC.IntegrationTesting.Samples
 
     // ENDSAMPLE
 
-    // SAMPLE: offline-filter-policy
-    public class OfflineFilterPolicy : Policy
-    {
-        public OfflineFilterPolicy()
-        {
-            Where.RespondsToHttpMethod("GET");
-
-            ModifyBy(chain => { chain.InsertFirst(ActionFilter.For<OfflineFilter>(x => x.Filter())); });
-        }
-    }
-
-    // You would add the Policy above to the application's
-    // FubuRegistry class
-    public class MyOfflineFubuRegistry : FubuRegistry
-    {
-        public MyOfflineFubuRegistry()
-        {
-            Policies.Local.Add<OfflineFilterPolicy>();
-        }
-    }
-
-    // ENDSAMPLE
 
 
     // SAMPLE: continuation-up-the-stack
