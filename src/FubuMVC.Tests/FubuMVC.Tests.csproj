@@ -217,16 +217,8 @@
     <Compile Include="Registration\FilterAttributeTester.cs" />
     <Compile Include="Registration\Nodes\RoutedChainTester.cs" />
     <Compile Include="Registration\Policies\AndChainFilterTester.cs" />
-    <Compile Include="Registration\Policies\HttpMethodFilterTester.cs" />
-    <Compile Include="Registration\Policies\InputTypeIsTester.cs" />
-    <Compile Include="Registration\Policies\LastActionMatchTester.cs" />
     <Compile Include="Registration\Policies\ChainPredicateTester.cs" />
     <Compile Include="Registration\OutputBeforeAjaxContinuationPolicyTester.cs" />
-    <Compile Include="Registration\Policies\InputTypeImplementsTester.cs" />
-    <Compile Include="Registration\Policies\IsNotPartialTester.cs" />
-    <Compile Include="Registration\Policies\IsPartialTester.cs" />
-    <Compile Include="Registration\Policies\ResourceTypeImplementsTester.cs" />
-    <Compile Include="Registration\Policies\ResourceTypeIsTester.cs" />
     <Compile Include="Registration\Querying\ChainResoluationCacheRootAt.cs" />
     <Compile Include="Registration\Registration\FubuPackageRegistry_Importing_Mechanics_Specs.cs" />
     <Compile Include="Registration\SettingsCollectionTester.cs" />

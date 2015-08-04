@@ -15,9 +15,10 @@ namespace FubuMVC.Core.Security.AntiForgery
         
         public AntiForgerySettings()
         {
-            AppliesTo(filter => filter.RespondsToHttpMethod("POST")
-                        .And
-                        .ChainMatches(x => x.InputType() != null));
+            AppliesTo(x =>
+            {
+                x.ChainMatches(c => c.MatchesCategoryOrHttpMethod("POST") && c.InputType() != null);
+            });
         }
 
         public void AppliesTo(Action<ChainPredicate> configuration)

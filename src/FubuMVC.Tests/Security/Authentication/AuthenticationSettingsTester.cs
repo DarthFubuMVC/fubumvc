@@ -62,7 +62,7 @@ namespace FubuMVC.Tests.Security.Authentication
 
             settings.ShouldBeExcluded(chain).ShouldBeFalse();
 
-            settings.ExcludeChains.ResourceTypeIs<HtmlTag>();
+            settings.ExcludeChains.ChainMatches(c => typeof(HtmlTag) == c.ResourceType());
 
             settings.ShouldBeExcluded(chain).ShouldBeTrue();
 
