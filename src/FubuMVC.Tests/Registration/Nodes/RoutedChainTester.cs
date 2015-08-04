@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<AuthenticatedEndpoint>();
             registry.Configure(
-                graph => { graph.Behaviors.OfType<RoutedChain>().Each(x => x.Authentication = new AuthNode()); });
+                graph => { graph.Chains.OfType<RoutedChain>().Each(x => x.Authentication = new AuthNode()); });
 
             using (var runtime = registry.ToRuntime())
             {

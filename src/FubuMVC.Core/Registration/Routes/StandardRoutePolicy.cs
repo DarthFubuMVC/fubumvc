@@ -15,7 +15,7 @@ namespace FubuMVC.Core.Registration.Routes
         {
             var defaultSessionRequirement = graph.Settings.Get<SessionStateRequirement>();
             var orderedEnumerable = graph
-                .Behaviors.OfType<RoutedChain>()
+                .Chains.OfType<RoutedChain>()
                 .SelectMany(toRoutes)
                 .OrderBy(x => x.Route.Rank);
 

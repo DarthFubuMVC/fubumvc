@@ -18,7 +18,7 @@ namespace FubuMVC.IntegrationTesting.Querying
         {
             return new EndpointModel
             {
-                AllEndpoints = _graph.Behaviors.Select(x => new EndpointToken(x)).ToArray()
+                AllEndpoints = _graph.Chains.Select(x => new EndpointToken(x)).ToArray()
             };
         }
     }

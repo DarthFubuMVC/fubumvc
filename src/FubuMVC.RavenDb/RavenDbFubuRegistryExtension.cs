@@ -19,7 +19,7 @@ namespace FubuMVC.RavenDb
     {
         public void Configure(BehaviorGraph graph)
         {
-            graph.Behaviors.OfType<RoutedChain>()
+            graph.Chains.OfType<RoutedChain>()
                 .Where(
                     x =>
                         x.Route.RespondsToMethod("POST") || x.Route.RespondsToMethod("PUT") ||

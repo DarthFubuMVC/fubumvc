@@ -69,7 +69,7 @@ namespace FubuMVC.Core.Registration
 
         private static void insertConnegAndAuthorizationNodes(BehaviorGraph graph)
         {
-            graph.Behaviors.Each(x => x.InsertNodes(graph.Settings.Get<ConnegSettings>()));
+            graph.Chains.Each(x => x.InsertNodes(graph.Settings.Get<ConnegSettings>()));
         }
 
         private static void applySettings(ConfigGraph config, BehaviorGraph graph, IActivationDiagnostics diagnostics, IFubuApplicationFiles files)

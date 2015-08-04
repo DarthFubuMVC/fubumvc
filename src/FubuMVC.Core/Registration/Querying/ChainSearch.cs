@@ -111,17 +111,17 @@ namespace FubuMVC.Core.Registration.Querying
             if (TypeMode == TypeSearchMode.Any || TypeMode == TypeSearchMode.InputModelOnly)
             {
                 // TODO -- it's right here.  Need to use anything that has input
-                yield return methodFilter(graph.Behaviors.Where(chain => chain.InputType() == Type));
+                yield return methodFilter(graph.Chains.Where(chain => chain.InputType() == Type));
             }
 
             if (TypeMode == TypeSearchMode.Any || TypeMode == TypeSearchMode.HandlerOnly)
             {
-                yield return methodFilter(graph.Behaviors.Where(x => x.Calls.Any(c => c.HandlerType == Type)));
+                yield return methodFilter(graph.Chains.Where(x => x.Calls.Any(c => c.HandlerType == Type)));
             }
 
             if (TypeMode == TypeSearchMode.Any || TypeMode == TypeSearchMode.ResourceModelOnly)
             {
-                yield return methodFilter(graph.Behaviors.Where(x => x.Calls.Any(c => c.ResourceType() == Type)));
+                yield return methodFilter(graph.Chains.Where(x => x.Calls.Any(c => c.ResourceType() == Type)));
             }
         }
 

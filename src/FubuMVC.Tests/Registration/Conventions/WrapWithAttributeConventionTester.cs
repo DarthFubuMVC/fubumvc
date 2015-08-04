@@ -24,14 +24,14 @@ namespace FubuMVC.Tests.Registration.Conventions
 
             graph = BehaviorGraph.BuildFrom(registry);
 
-            graph.Behaviors.Count().ShouldBeGreaterThan(0);
+            graph.Chains.Count().ShouldBeGreaterThan(0);
 
         }
 
         [Test]
         public void should_have_a_call_in_each_behavior_chain()
         {
-            int callCount = graph.Behaviors.OfType<RoutedChain>().SelectMany(x => x.Calls).Count();
+            int callCount = graph.Chains.OfType<RoutedChain>().SelectMany(x => x.Calls).Count();
             callCount.ShouldBe(6);
         }
 

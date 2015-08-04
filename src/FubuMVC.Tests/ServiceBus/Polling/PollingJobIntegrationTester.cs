@@ -44,7 +44,7 @@ namespace FubuMVC.Tests.ServiceBus.Polling
         public void the_polling_job_chains_are_tagged_for_no_tracing()
         {
             var graph = theRuntime.Get<BehaviorGraph>();
-            var chains = graph.Behaviors.Where(x => x.InputType() != null && x.InputType().Closes(typeof(JobRequest<>)));
+            var chains = graph.Chains.Where(x => x.InputType() != null && x.InputType().Closes(typeof(JobRequest<>)));
 
             chains.Each(x => x.IsTagged(BehaviorChain.NoTracing).ShouldBeTrue());
         }

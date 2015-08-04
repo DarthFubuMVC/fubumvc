@@ -10,7 +10,7 @@ namespace FubuMVC.Core.Http.Compression
     {
         public void Configure(BehaviorGraph graph)
         {
-            graph.Behaviors
+            graph.Chains
                 .Where(chain => chain.Calls.Any(x => !x.HasAttribute<DoNotCompressAttribute>()))
                 .Each(chain => { chain.ApplyCompression(); });
         }

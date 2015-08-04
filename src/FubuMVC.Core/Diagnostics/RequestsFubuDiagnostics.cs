@@ -61,7 +61,7 @@ namespace FubuMVC.Core.Diagnostics
             if (log.RequestHeaders != null) request.AddHeaders("request-headers", log.RequestHeaders);
             if (log.ResponseHeaders != null) request.AddHeaders("response-headers", log.ResponseHeaders);
 
-            var chain = _graph.Behaviors.FirstOrDefault(x => x.GetHashCode() == log.Hash);
+            var chain = _graph.Chains.FirstOrDefault(x => x.GetHashCode() == log.Hash);
             request.Add("title", chain.Title());
 
             if (log.QueryString != null) request.AddNameValues("querystring", log.QueryString);

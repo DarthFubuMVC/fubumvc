@@ -26,7 +26,7 @@ namespace FubuMVC.Core.Registration
     /// </summary>
     public class BehaviorGraph : IChainImporter
     {
-        private readonly List<BehaviorChain> _behaviors = new List<BehaviorChain>();
+        private readonly List<BehaviorChain> _chains = new List<BehaviorChain>();
 
         private readonly SettingsCollection _settings;
 
@@ -80,20 +80,20 @@ namespace FubuMVC.Core.Registration
 
         public IEnumerable<IRouteDefinition> Routes
         {
-            get { return _behaviors.OfType<RoutedChain>().Select(x => x.Route); }
+            get { return _chains.OfType<RoutedChain>().Select(x => x.Route); }
         }
 
         public IEnumerable<HandlerChain> Handlers
         {
-            get { return _behaviors.OfType<HandlerChain>(); }
+            get { return _chains.OfType<HandlerChain>(); }
         } 
 
         /// <summary>
         ///   All the BehaviorChain's
         /// </summary>
-        public IEnumerable<BehaviorChain> Behaviors
+        public IEnumerable<BehaviorChain> Chains
         {
-            get { return _behaviors; }
+            get { return _chains; }
         }
 
         void IChainImporter.Import(IEnumerable<BehaviorChain> chains)
@@ -104,7 +104,7 @@ namespace FubuMVC.Core.Registration
         internal Registry ToStructureMapRegistry()
         {
             var registry = new Registry();
-            _behaviors.OfType<IContainerModel>().Each(x => registry.For<IActionBehavior>().AddInstance(x.ToInstance()));
+            _chains.OfType<IContainerModel>().Each(x => registry.For<IActionBehavior>().AddInstance(x.ToInstance()));
 
             return registry;
         }
@@ -137,11 +137,11 @@ namespace FubuMVC.Core.Registration
         /// <returns></returns>
         public BehaviorChain ChainFor(IRouteDefinition route)
         {
-            var chain = _behaviors.OfType<RoutedChain>().FirstOrDefault(x => x.Route == route);
+            var chain = _chains.OfType<RoutedChain>().FirstOrDefault(x => x.Route == route);
             if (chain == null)
             {
                 chain = new RoutedChain(route);
-                _behaviors.Fill(chain);
+                _chains.Fill(chain);
             }
 
             return chain;
@@ -164,7 +164,7 @@ namespace FubuMVC.Core.Registration
         /// <returns></returns>
         public IEnumerable<ActionCall> FirstActions()
         {
-            foreach (var chain in _behaviors)
+            foreach (var chain in _chains)
             {
                 var call = chain.FirstCall();
                 if (call != null)
@@ -176,7 +176,7 @@ namespace FubuMVC.Core.Registration
 
         private IEnumerable<ActionCall> allActions()
         {
-            foreach (var chain in _behaviors)
+            foreach (var chain in _chains)
             {
                 foreach (var call in chain.Calls)
                 {
@@ -195,7 +195,7 @@ namespace FubuMVC.Core.Registration
         public BehaviorChain ChainFor<T>(Expression<Action<T>> expression)
         {
             var call = ActionCall.For(expression);
-            return _behaviors.Where(x => x.Calls.Contains(call)).FirstOrDefault();
+            return _chains.Where(x => x.Calls.Contains(call)).FirstOrDefault();
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace FubuMVC.Core.Registration
         public BehaviorChain ChainFor<T>(Expression<Func<T, object>> expression)
         {
             var call = ActionCall.For(expression);
-            var chains = _behaviors.Where(x => x.Calls.Contains(call));
+            var chains = _chains.Where(x => x.Calls.Contains(call));
             if (chains.Count() > 1)
             {
                 throw new FubuException(1020,
@@ -223,22 +223,22 @@ namespace FubuMVC.Core.Registration
         /// </summary>
         public void Describe()
         {
-            _behaviors.Each(x => Trace.WriteLine(x.ToString()));
+            _chains.Each(x => Trace.WriteLine(x.ToString()));
         }
 
         public void AddChain(BehaviorChain chain)
         {
-            _behaviors.Add(chain);
+            _chains.Add(chain);
         }
 
         public void AddChains(IEnumerable<BehaviorChain> chains)
         {
-            _behaviors.AddRange(chains);
+            _chains.AddRange(chains);
         }
 
         public void RemoveChain(BehaviorChain chain)
         {
-            _behaviors.Remove(chain);
+            _chains.Remove(chain);
         }
 
 
@@ -262,7 +262,7 @@ namespace FubuMVC.Core.Registration
         /// <returns></returns>
         public BehaviorChain ChainFor(Type inputType)
         {
-            return Behaviors.FirstOrDefault(x => x.InputType() == inputType);
+            return Chains.FirstOrDefault(x => x.InputType() == inputType);
         }
 
         /// <summary>
@@ -277,7 +277,7 @@ namespace FubuMVC.Core.Registration
 
         public BehaviorChain FindHomeChain()
         {
-            return Behaviors.OfType<RoutedChain>().FirstOrDefault(x => x.Route.Pattern == string.Empty);
+            return Chains.OfType<RoutedChain>().FirstOrDefault(x => x.Route.Pattern == string.Empty);
         }
 
         public static BehaviorGraph BuildEmptyGraph()

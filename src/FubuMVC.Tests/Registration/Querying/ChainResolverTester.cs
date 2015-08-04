@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.Registration.Querying
         [SetUp]
         public void CleanUp()
         {
-            graph.Behaviors.OfType<RoutedChain>().Each(x => {
+            graph.Chains.OfType<RoutedChain>().Each(x => {
                 x.UrlCategory.Category = null;
                 x.UrlCategory.Creates.Clear();
             });

@@ -11,7 +11,7 @@ namespace FubuMVC.Core.Diagnostics.Runtime
     {
         public static void Configure(BehaviorGraph graph)
         {
-            foreach (BehaviorChain chain in graph.Behaviors.Where(ShouldApply).ToArray())
+            foreach (BehaviorChain chain in graph.Chains.Where(ShouldApply).ToArray())
             {
                 ApplyToChain(chain);
             }

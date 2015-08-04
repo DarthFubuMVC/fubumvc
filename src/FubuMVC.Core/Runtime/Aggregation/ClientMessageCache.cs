@@ -14,7 +14,7 @@ namespace FubuMVC.Core.Runtime.Aggregation
 
         public ClientMessageCache(BehaviorGraph graph)
         {
-            graph.Behaviors.Where(x => BehaviorChainExtensions.IsAggregatedChain(x)).Each(x =>
+            graph.Chains.Where(x => BehaviorChainExtensions.IsAggregatedChain(x)).Each(x =>
             {
                 if (x.InputType().IsClientMessage())
                 {

@@ -39,9 +39,9 @@ namespace FubuMVC.Tests.Registration.Conventions
                 });
             });
 
-            graph.Behaviors.Count().ShouldBeGreaterThan(0);
+            graph.Chains.Count().ShouldBeGreaterThan(0);
 
-            graph.Behaviors
+            graph.Chains
                 .Where(x => x.Calls.Any())
                 .Where(x => x.FirstCall().HandlerType.Assembly != typeof (BehaviorGraph).Assembly)
                 .Each(x =>
@@ -56,8 +56,8 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             var graph = BehaviorGraph.BuildFrom(x => x.Actions.IncludeClassesSuffixedWithController());
 
-            graph.Behaviors.Count().ShouldBeGreaterThan(0);
-            graph.Behaviors.OfType<RoutedChain>().Where(x => x.Calls.Any()).Each(x => x.Calls.First().HandlerType.Name.EndsWith("Controller"));
+            graph.Chains.Count().ShouldBeGreaterThan(0);
+            graph.Chains.OfType<RoutedChain>().Where(x => x.Calls.Any()).Each(x => x.Calls.First().HandlerType.Name.EndsWith("Controller"));
         }
 
         [Test]

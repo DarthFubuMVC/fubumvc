@@ -30,7 +30,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                 });
             });
 
-            var chain = graph.Behaviors.First(x => x.ResourceType() == typeof (Foo))
+            var chain = graph.Chains.First(x => x.ResourceType() == typeof (Foo))
                 .As<RoutedChain>();
             chain.Route.Pattern.ShouldBe("foo/{Name}");
 

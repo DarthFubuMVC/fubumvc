@@ -12,7 +12,7 @@ namespace FubuMVC.Core.Security.AntiForgery
         public void Configure(BehaviorGraph graph)
         {
             var antiForgerySettings = graph.Settings.Get<AntiForgerySettings>();
-            graph.Behaviors.OfType<RoutedChain>().Where(antiForgerySettings.Matches)
+            graph.Chains.OfType<RoutedChain>().Where(antiForgerySettings.Matches)
                 .Each(x => x.Prepend(new AntiForgeryNode(x.InputType().FullName)));
         }
     }

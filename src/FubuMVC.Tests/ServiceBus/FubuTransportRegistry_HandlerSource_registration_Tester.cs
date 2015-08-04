@@ -20,7 +20,7 @@ namespace FubuMVC.Tests.ServiceBus
                 });
             });
 
-            graph.Behaviors.SelectMany(x => x.OfType<HandlerCall>()).Where(x => x.HandlerType.Assembly != typeof(HandlerCall).Assembly).Select(x => x.HandlerType).OrderBy(x => x.Name)
+            graph.Chains.SelectMany(x => x.OfType<HandlerCall>()).Where(x => x.HandlerType.Assembly != typeof(HandlerCall).Assembly).Select(x => x.HandlerType).OrderBy(x => x.Name)
                 .ShouldHaveTheSameElementsAs(typeof(MyFooHandler), typeof(MyOtherFooHandler));
 
         }
@@ -33,7 +33,7 @@ namespace FubuMVC.Tests.ServiceBus
                 x.Handlers.Include<RandomThing>();
             });
 
-            var handlerTypes = graph.Behaviors.SelectMany(x => x.OfType<HandlerCall>()).Select(x => x.HandlerType).ToArray();
+            var handlerTypes = graph.Chains.SelectMany(x => x.OfType<HandlerCall>()).Select(x => x.HandlerType).ToArray();
             handlerTypes.ShouldContain(typeof(MyOtherConsumer));
             handlerTypes.ShouldContain(typeof(MyFooHandler));
             handlerTypes.ShouldContain(typeof(RandomThing));

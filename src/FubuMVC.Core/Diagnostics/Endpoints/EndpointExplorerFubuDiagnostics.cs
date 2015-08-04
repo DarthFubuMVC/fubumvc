@@ -21,7 +21,7 @@ namespace FubuMVC.Core.Diagnostics.Endpoints
         {
             return new EndpointList
             {
-                endpoints = _graph.Behaviors
+                endpoints = _graph.Chains
                     .Where(IsNotDiagnosticRoute)
                     .Select(EndpointReport.ForChain)
                     .OrderBy(x => x.Title)

@@ -24,7 +24,7 @@ namespace FubuMVC.Core.Registration.Querying
 
             _creators.OnMissing = type =>
             {
-                return behaviorGraph.Behaviors.OfType<RoutedChain>().SingleOrDefault(x => x.UrlCategory.Creates.Contains(type));
+                return behaviorGraph.Chains.OfType<RoutedChain>().SingleOrDefault(x => x.UrlCategory.Creates.Contains(type));
             };
         }
 
@@ -100,7 +100,7 @@ namespace FubuMVC.Core.Registration.Querying
 
         public void RootAt(string baseUrl)
         {
-            _behaviorGraph.Behaviors.OfType<RoutedChain>().Each(x =>
+            _behaviorGraph.Chains.OfType<RoutedChain>().Each(x =>
             {
                 x.Route.RootUrlAt(baseUrl);
                 x.AdditionalRoutes.Each(r => r.RootUrlAt(baseUrl));

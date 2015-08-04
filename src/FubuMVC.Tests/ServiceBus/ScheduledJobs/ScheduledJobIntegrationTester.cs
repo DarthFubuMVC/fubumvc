@@ -46,7 +46,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
         public void the_scheduled_job_chains_are_present()
         {
             var graph = theRuntime.Get<BehaviorGraph>();
-            var chains = graph.Behaviors.Where(x => x.InputType() != null && x.InputType().Closes(typeof (ExecuteScheduledJob<>)));
+            var chains = graph.Chains.Where(x => x.InputType() != null && x.InputType().Closes(typeof (ExecuteScheduledJob<>)));
 
             chains.ShouldHaveCount(3);
         }
@@ -55,7 +55,7 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
         public void the_chains_for_rescheduling_a_job_are_present()
         {
             var graph = theRuntime.Get<BehaviorGraph>();
-            var chains = graph.Behaviors.Where(x => x.InputType() != null && x.InputType().Closes(typeof(RescheduleRequest<>)));
+            var chains = graph.Chains.Where(x => x.InputType() != null && x.InputType().Closes(typeof(RescheduleRequest<>)));
 
             chains.ShouldHaveCount(3);
         }

@@ -27,7 +27,7 @@ namespace AssemblyPackage
         {
             registry.Policies.Local.Configure(graph =>
             {
-                graph.Behaviors
+                graph.Chains
                     .Where(x => x.HandlerTypeIs<AssemblyEndpoint>())
                     .Each(x => x.WrapWith<BehaviorFromAssemblyPackage>());
             });

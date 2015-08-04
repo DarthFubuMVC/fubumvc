@@ -61,8 +61,8 @@ namespace FubuMVC.Tests.ServiceBus
                 x.Policies.ChainSource<SystemLevelHandlers>(); 
             });
 
-            graph.Behaviors.Any(x => x is HandlerChain).ShouldBeTrue();
-            graph.Behaviors.OfType<HandlerChain>()
+            graph.Chains.Any(x => x is HandlerChain).ShouldBeTrue();
+            graph.Chains.OfType<HandlerChain>()
                 .Each(chain => { chain.IsWrappedBy(typeof (RedWrapper)).ShouldBeTrue(); });
         }
 

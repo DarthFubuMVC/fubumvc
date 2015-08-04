@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.Registration.Conventions
 
         public static void WrapAllWith<T>(this BehaviorGraph graph) where T : IActionBehavior
         {
-            graph.Behaviors.Each(x => x.WrapWith<T>());
+            graph.Chains.Each(x => x.WrapWith<T>());
         }
     }
 }

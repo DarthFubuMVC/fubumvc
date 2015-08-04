@@ -16,7 +16,7 @@ namespace FubuMVC.Core.Security.Authentication
         {
             var settings = graph.Settings.Get<AuthenticationSettings>();
 
-            graph.Behaviors.OfType<RoutedChain>()
+            graph.Chains.OfType<RoutedChain>()
                 .Where(x => !settings.ShouldBeExcluded(x))
                 .Each(x => x.Prepend(new AuthenticationFilterNode()));
         }

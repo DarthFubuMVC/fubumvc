@@ -17,7 +17,7 @@ namespace FubuMVC.Core.ServiceBus.Sagas
     {
         public void Configure(BehaviorGraph graph)
         {
-            var sagaHandlers = graph.Behaviors.SelectMany(x => x).OfType<HandlerCall>()
+            var sagaHandlers = graph.Chains.SelectMany(x => x).OfType<HandlerCall>()
                                     .Where(IsSagaHandler)
                                     .ToArray();
 

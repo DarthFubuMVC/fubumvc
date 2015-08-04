@@ -11,7 +11,7 @@ namespace FubuMVC.Core.ServiceBus.Configuration
     {
         public void Configure(BehaviorGraph graph)
         {
-            graph.Behaviors.OfType<HandlerChain>().Where(Matches).Each(Configure);
+            graph.Chains.OfType<HandlerChain>().Where(Matches).Each(Configure);
         }
 
         /// <summary>

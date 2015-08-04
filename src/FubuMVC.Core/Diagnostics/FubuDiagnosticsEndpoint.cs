@@ -125,7 +125,7 @@ namespace FubuMVC.Core.Diagnostics
     {
         public DiagnosticJavascriptRoutes(BehaviorGraph graph)
         {
-            graph.Behaviors.OfType<DiagnosticChain>().Where(x => x.Route.AllowedHttpMethods.Any()).Each(Add);
+            graph.Chains.OfType<DiagnosticChain>().Where(x => x.Route.AllowedHttpMethods.Any()).Each(Add);
 
             Get("icon").Action<FubuDiagnosticsEndpoint>(x => x.get__fubu_icon(null));
         }

@@ -34,10 +34,10 @@ namespace FubuMVC.Core.Registration
                     Registry.Config.BuildLocal(_behaviorGraph, timer);
                     if (Prefix.IsNotEmpty())
                     {
-                        _behaviorGraph.Behaviors.OfType<RoutedChain>().Each(x => x.Route.Prepend(Prefix));
+                        _behaviorGraph.Chains.OfType<RoutedChain>().Each(x => x.Route.Prepend(Prefix));
                     }
 
-                    return _behaviorGraph.Behaviors.ToArray();
+                    return _behaviorGraph.Chains.ToArray();
                 });
             });
         }

@@ -83,7 +83,7 @@ namespace FubuMVC.Tests.Registration
             graph.RemoveChain(chain);
 
             graph
-                .Behaviors
+                .Chains
                 .ShouldNotContain(chain);
         }
 

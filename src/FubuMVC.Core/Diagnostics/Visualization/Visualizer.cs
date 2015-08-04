@@ -21,7 +21,7 @@ namespace FubuMVC.Core.Diagnostics.Visualization
         public Visualizer(BehaviorGraph graph, FubuHtmlDocument document)
         {
             _document = document;
-            _hasVisualizer = new Cache<Type, bool>(type => graph.Behaviors.Any(x => type == x.InputType()));
+            _hasVisualizer = new Cache<Type, bool>(type => graph.Chains.Any(x => type == x.InputType()));
         }
 
         public BehaviorNodeViewModel ToVisualizationSubject(BehaviorNode node)
