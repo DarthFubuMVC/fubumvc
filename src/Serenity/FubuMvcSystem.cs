@@ -50,7 +50,6 @@ namespace Serenity
         public BrowserType? DefaultBrowser { get; set; }
 
         private readonly Cache<string, RemoteSubSystem> _remoteSubSystems = new Cache<string, RemoteSubSystem>();
-        private ISerenityHosting _hosting;
         protected IApplicationUnderTest _application;
 
         /// <summary>
@@ -76,7 +75,8 @@ namespace Serenity
         {
             var system = new RemoteSubSystem(() => new RemoteServiceRunner(x =>
             {
-                x.Properties[FubuMode.Testing] = true.ToString();
+                throw new Exception("REDO");
+                //x.Properties[FubuMode.Testing] = true.ToString();
                 configuration(x);
             }));
 
@@ -225,7 +225,8 @@ namespace Serenity
 
         protected virtual void startAll()
         {
-            FubuMode.SetUpForDevelopmentMode();
+            throw new Exception("REDO");
+            //FubuMode.SetUpForDevelopmentMode();
             Task.WaitAll(_subSystems.Select(x => x.Start()).ToArray());
         }
 
@@ -251,14 +252,16 @@ namespace Serenity
                 var browserLifecycle = WebDriverSettings.GetBrowserLifecyle(ChooseBrowserType());
                 SetupApplicationHost();
 
-                _application = _hosting.Start(_runtime, browserLifecycle);
                 _applicationAlterations.ToArray().Each(x => x(_application));
 
+                throw new Exception("REDO");
+                /*
                 _runtime.Container.Configure(_ =>
                 {
                     _.For<IApplicationUnderTest>().Use(_application);
                     _.For<IRemoteSubsystems>().Use(this);
                 });
+                 */
 
             });
         }
@@ -290,11 +293,7 @@ namespace Serenity
                     _application.Teardown();
                     _application = null;
                 }
-                if (_hosting != null)
-                {
-                    _hosting.Shutdown();
-                    _hosting = null;
-                }
+                
             });
         }
 
@@ -331,5 +330,10 @@ namespace Serenity
         }
     }
 
-
+    public class FubuMvcSystem<T> : FubuMvcSystem where T : FubuRegistry, new()
+    {
+        public FubuMvcSystem(Func<FubuRuntime> runtimeSource) : base(runtimeSource)
+        {
+        }
+    }
 }

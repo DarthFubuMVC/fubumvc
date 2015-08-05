@@ -7,18 +7,10 @@ using StoryTeller;
 
 namespace Serenity.ServiceBus
 {
-    public class FubuTransportSystem<T> : FubuMvcSystem<T> where T : IApplicationSource, new()
+    public class FubuTransportSystem<T> : FubuMvcSystem<T> where T : FubuRegistry, new()
     {
-        public FubuTransportSystem() : this(DetermineSettings())
-        {
-        }
 
-        public FubuTransportSystem(string parallelDirectory = null, string physicalPath = null)
-            : this(DetermineSettings(parallelDirectory, physicalPath))
-        {
-        }
-
-        public FubuTransportSystem(ApplicationSettings settings) : base(settings)
+        public FubuTransportSystem() : base(null)
         {
             FubuTransport.SetupForTesting(); // Uses FubuMode.SetUpTestingMode();
 

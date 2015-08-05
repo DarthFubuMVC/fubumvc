@@ -19,7 +19,7 @@ namespace Serenity
         private readonly Lazy<IServiceLocator> _services;
         private readonly Lazy<NavigationDriver> _navigation;
 
-
+        /*
         public ApplicationUnderTest(FubuRuntime runtime, IBrowserLifecycle browser)
             : this(settings.Name, settings.RootUrl, browser, () => runtime.Factory)
         {
@@ -33,6 +33,7 @@ namespace Serenity
             })
         {
         }
+         */
 
         private ApplicationUnderTest(string name, string rootUrl, IBrowserLifecycle browser,
             Func<IServiceFactory> factorySource)

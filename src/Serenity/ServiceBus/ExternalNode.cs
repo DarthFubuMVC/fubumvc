@@ -81,7 +81,7 @@ namespace Serenity.ServiceBus
                 throw new ArgumentException("Cannot find destination channel for message type {0}. Have you configured the channel with AcceptsMessage()?".ToFormat(typeof(T)), "message");
 
             Uri destination = channelNode.Uri;
-            var bus = Runtime.Factory.Get<IServiceBus>();
+            var bus = Runtime.Get<IServiceBus>();
             bus.Send(destination, message);
         }
 
@@ -117,7 +117,7 @@ namespace Serenity.ServiceBus
 
         private void SendResponseMessage(object message, EnvelopeToken request)
         {
-            var sender = Runtime.Factory.Get<IEnvelopeSender>();
+            var sender = Runtime.Get<IEnvelopeSender>();
             var response = new Envelope
             {
                 Message = message,
@@ -151,11 +151,11 @@ namespace Serenity.ServiceBus
             registry.StructureMap(container);
 
             Runtime = registry.ToRuntime();
-            Uri = Runtime.Factory.Get<ChannelGraph>().ReplyUriList().First();
-            _recorder = Runtime.Factory.Get<IMessageRecorder>();
+            Uri = Runtime.Get<ChannelGraph>().ReplyUriList().First();
+            _recorder = Runtime.Get<IMessageRecorder>();
 
             // Wireup the messaging session so the MessageHistory gets notified of messages on this node
-            _messageListener = Runtime.Factory.Get<IMessagingSession>();
+            _messageListener = Runtime.Get<IMessagingSession>();
             FubuMVC.Core.Services.Messaging.EventAggregator.Messaging.AddListener(_messageListener);
         }
     }
