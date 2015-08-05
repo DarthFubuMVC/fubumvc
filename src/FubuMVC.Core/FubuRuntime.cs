@@ -225,7 +225,10 @@ namespace FubuMVC.Core
 
         public T Get<T>()
         {
-            return _container.GetInstance<T>();
+            // This is important, do it from IServiceFactory so 
+            // that it's using the current "scope" in Serenity
+            // testing
+            return _factory.Get<T>();
         }
 
         public IList<RouteBase> Routes

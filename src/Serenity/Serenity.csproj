@@ -119,7 +119,9 @@
     <Compile Include="LoginScreenFixture.cs" />
     <Compile Include="NulloAfterNavigation.cs" />
     <Compile Include="NulloNavigationLogger.cs" />
+    <Compile Include="RequestReporter.cs" />
     <Compile Include="ScreenDriver.cs" />
+    <Compile Include="SerenitySystem.cs" />
     <Compile Include="ServiceBus\ExternalNode.cs" />
     <Compile Include="ServiceBus\ExternalNodeFixture.cs" />
     <Compile Include="ServiceBus\FubuTransportFixture.cs" />

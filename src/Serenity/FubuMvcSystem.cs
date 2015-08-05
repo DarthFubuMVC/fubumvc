@@ -25,7 +25,6 @@ namespace Serenity
         IEnumerable<RemoteSubSystem> RemoteSubSystems { get; }
     }
 
-
     public class FubuMvcSystem : ISystem, ISubSystem, IRemoteSubsystems
     {
         private readonly Func<FubuRuntime> _runtimeSource;
