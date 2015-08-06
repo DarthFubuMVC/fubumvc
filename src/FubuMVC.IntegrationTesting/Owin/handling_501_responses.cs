@@ -1,6 +1,5 @@
 using System;
 using System.Net;
-using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Owin
@@ -11,12 +10,12 @@ namespace FubuMVC.IntegrationTesting.Owin
         [Test]
         public void handle_the_exception_with_a_501_and_the_exception_message()
         {
-            var response = Harness.Endpoints.Get<ExceptionEndpoint>(x => x.get_exception());
-
-            response.StatusCode.ShouldBe(HttpStatusCode.InternalServerError);
-            var text = response.ReadAsText();
-
-            text.ShouldContain("I did not like this");
+            TestHost.Scenario(_ =>
+            {
+                _.Get.Action<ExceptionEndpoint>(x => x.get_exception());
+                _.StatusCodeShouldBe(HttpStatusCode.InternalServerError);
+                _.ContentShouldContain("I did not like this");
+            });
         }
     }
 

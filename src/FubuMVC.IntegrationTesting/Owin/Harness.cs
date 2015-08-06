@@ -38,11 +38,6 @@ namespace FubuMVC.IntegrationTesting.Owin
             get { return _server.BaseAddress; }
         }
 
-        public static EndpointDriver Endpoints
-        {
-            get { return _server.Endpoints; }
-        }
-
         public static void Start()
         {
             _server = FubuRuntime.Basic(_ =>

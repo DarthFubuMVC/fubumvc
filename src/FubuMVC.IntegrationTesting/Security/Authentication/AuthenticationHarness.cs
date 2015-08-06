@@ -1,11 +1,14 @@
+using System;
 using FubuMVC.Core;
 using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Http.Hosting;
+using FubuMVC.Core.Http.Scenarios;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Membership;
 using FubuMVC.Core.Urls;
 using NUnit.Framework;
+using Rhino.Mocks;
 using StructureMap;
 
 namespace FubuMVC.IntegrationTesting.Security.Authentication
@@ -37,7 +40,6 @@ namespace FubuMVC.IntegrationTesting.Security.Authentication
             configure(registry);
 
             registry.Features.Authentication.Enable(true);
-            registry.HostWith<Katana>();
 
             server = registry.ToRuntime();
             theContainer = server.Get<IContainer>();
@@ -45,9 +47,9 @@ namespace FubuMVC.IntegrationTesting.Security.Authentication
             beforeEach();
         }
 
-        protected EndpointDriver endpoints
+        public void Scenario(Action<Scenario> scenario)
         {
-            get { return server.Endpoints; }
+            server.Scenario(scenario);
         }
 
         [TearDown]

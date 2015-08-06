@@ -37,6 +37,16 @@ namespace FubuMVC.IntegrationTesting.Security.Authentication
 
             var cookie = writer.Cookie;
 
+            Scenario(_ =>
+            {
+                _.Get.Input<TargetModel>();
+                _.Request.Accepts("text/json").ContentType(MimeType.HttpFormMimetype);
+
+                _.Request.AppendCookie(cookie);
+
+                _.StatusCodeShouldBeOk();
+            });
+/*
             var response = endpoints.GetByInput(new TargetModel(), acceptType: "text/json", configure: r => {
                 var cookies = new CookieContainer();
                 cookies.Add(new System.Net.Cookie
@@ -53,7 +63,8 @@ namespace FubuMVC.IntegrationTesting.Security.Authentication
             });
 
             response.StatusCode.ShouldBe(HttpStatusCode.OK);
-        }
+            */
+             }
 
         #region Nested Type: CookieWriter
 

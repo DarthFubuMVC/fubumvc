@@ -1,5 +1,4 @@
 using FubuMVC.Core;
-using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Owin
@@ -10,14 +9,18 @@ namespace FubuMVC.IntegrationTesting.Owin
         [Test]
         public void can_bind_against_querystring_parameters()
         {
-            var model = new QueryStringModel
+            TestHost.Scenario(_ =>
             {
-                Color = "Green",
-                Direction = "South"
-            };
+                var model = new QueryStringModel
+                {
+                    Color = "Green",
+                    Direction = "South"
+                };
 
-            Harness.Endpoints.GetByInput(model).ReadAsText()
-                .ShouldBe(model.ToString());
+                _.Get.Input(model);
+                _.ContentShouldBe(model.ToString());
+            });
+
         }
     }
 

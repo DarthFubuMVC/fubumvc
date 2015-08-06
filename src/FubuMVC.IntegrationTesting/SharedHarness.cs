@@ -8,7 +8,6 @@ using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Scenarios;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Runtime;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting

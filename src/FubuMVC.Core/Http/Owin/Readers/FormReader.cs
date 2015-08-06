@@ -15,16 +15,21 @@ namespace FubuMVC.Core.Http.Owin.Readers
 
             environment.Add(OwinConstants.RequestFormKey, form);
             var mediaType = environment.Get<string>(OwinConstants.MediaTypeKey);
-            if (mediaType != MimeType.HttpFormMimetype && mediaType != MimeType.MultipartMimetype)  return; 
+            if (mediaType != MimeType.HttpFormMimetype && mediaType != MimeType.MultipartMimetype)  return;
 
-            string formValue;
-            var body = environment.Get<Stream>(OwinConstants.RequestBodyKey);
-            using (var reader = new StreamReader(body))
+            if (environment.ContainsKey(OwinConstants.RequestBodyKey))
             {
-                formValue = reader.ReadToEnd();
+                var body = environment.Get<Stream>(OwinConstants.RequestBodyKey);
+                string formValue;
+                using (var reader = new StreamReader(body))
+                {
+                    formValue = reader.ReadToEnd();
+                }
+
+                form.Add(HttpUtility.ParseQueryString(formValue));
             }
 
-            form.Add(HttpUtility.ParseQueryString(formValue));
+
         }
     }
 }

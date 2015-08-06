@@ -308,15 +308,18 @@ namespace FubuMVC.Core.Http.Owin
 
         public T ReadAsJson<T>()
         {
+            var json = ReadAsText();
+
             if (_environment.ContainsKey("scenario-support"))
             {
                 return
                     _environment.Get<IScenarioSupport>("scenario-support")
                         .Get<IJsonSerializer>()
-                        .Deserialize<T>(_stream);
+                        .Deserialize<T>(json);
             }
 
-            return JsonUtil.Get<T>(ReadAsText());
+            
+            return JsonUtil.Get<T>(json);
         }
     }
 

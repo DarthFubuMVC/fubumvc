@@ -1,6 +1,6 @@
 ﻿using System.Net;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Security.Authentication;
-using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Security.Authentication
@@ -11,11 +11,16 @@ namespace FubuMVC.IntegrationTesting.Security.Authentication
         [Test]
         public void redirects_to_login()
         {
-            var response = endpoints.GetByInput(new TargetModel(), acceptType: "text/html", configure: r => r.AllowAutoRedirect = false);
-            response.StatusCode.ShouldBe(HttpStatusCode.Redirect);
+            var loginUrl = Urls.UrlFor(new LoginRequest {Url = "some/authenticated/route"}, "GET");
 
-            var loginUrl = Urls.UrlFor(new LoginRequest { Url = "some/authenticated/route"}, "GET");
-            loginUrl.ShouldEndWith(response.ResponseHeaderFor(HttpResponseHeader.Location).TrimStart('/'));
+            Scenario(_ =>
+            {
+                _.Get.Input(new TargetModel());
+                _.Request.Accepts("text/html");
+
+                _.StatusCodeShouldBe(HttpStatusCode.Redirect);
+                _.Header(HttpResponseHeaders.Location).SingleValueShouldEqual(loginUrl);
+            });
         }
     }
 }

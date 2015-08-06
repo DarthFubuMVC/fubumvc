@@ -2,7 +2,9 @@ using System.Net;
 using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Endpoints;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.Authentication;
+using FubuMVC.Tests.Json;
 using Shouldly;
 using NUnit.Framework;
 
@@ -11,35 +13,33 @@ namespace FubuMVC.IntegrationTesting.Security.Authentication
     [TestFixture]
     public class unauthenticated_ajax_request_against_an_authenticated_route : AuthenticationHarness
     {
-        private HttpResponse theResponse;
-
-        protected override void beforeEach()
-        {
-            theResponse = endpoints.GetByInput(new TargetModel(), acceptType: "application/json", configure: r =>
-            {
-                r.AllowAutoRedirect = false;
-                r.Headers.Add(AjaxExtensions.XRequestedWithHeader, AjaxExtensions.XmlHttpRequestValue);
-            });
-        }
 
         [Test]
-        public void unauthorized_status_code()
+        public void execute()
         {
-            theResponse.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
-        }
-
-        [Test]
-        public void writes_the_navigate_continuation()
-        {
-            var continuation = theResponse.ReadAsJson<AjaxContinuation>();
-
-            continuation.Success.ShouldBeFalse();
-            var loginUrl = Urls.UrlFor(new LoginRequest
+            Scenario(_ =>
             {
-                Url = null
-            }, "GET");
+                _.Get.Input<TargetModel>();
+                _.Request.ContentType(MimeType.HttpFormMimetype).Accepts("application/json");
 
-            loginUrl.ShouldEndWith(continuation.NavigatePage);
+                _.Request.AppendHeader(AjaxExtensions.XRequestedWithHeader, AjaxExtensions.XmlHttpRequestValue);
+            
+            
+                _.StatusCodeShouldBe(HttpStatusCode.Unauthorized);
+
+                var continuation = _.Response.Body.ReadAsJson<AjaxContinuation>();
+
+                continuation.Success.ShouldBeFalse();
+                var loginUrl = Urls.UrlFor(new LoginRequest
+                {
+                    Url = null
+                }, "GET");
+
+                loginUrl.ShouldEndWith(continuation.NavigatePage);
+            }
+                
+            );
         }
+
     }
 }

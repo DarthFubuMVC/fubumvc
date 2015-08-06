@@ -10,8 +10,11 @@ namespace FubuMVC.IntegrationTesting.Owin
         [Test]
         public void get_response_for_non_existent_route()
         {
-            var response = Harness.Endpoints.Get(Harness.Root + "/nonexistent");
-            response.StatusCode.ShouldBe(HttpStatusCode.NotFound);
+            TestHost.Scenario(_ =>
+            {
+                _.Get.Url("nonexistent");
+                _.StatusCodeShouldBe(HttpStatusCode.NotFound);
+            });
         }
     }
 }
