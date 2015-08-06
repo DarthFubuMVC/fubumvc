@@ -28,18 +28,6 @@ namespace FubuMVC.IntegrationTesting.Owin
         }
     }
 
-    public class HarnessApplication
-    {
-
-        public static void Run(Action<EndpointDriver> action)
-        {
-            using (var server = FubuRuntime.For<IntegrationTesting.HarnessRegistry>())
-            {
-                action(server.Endpoints);
-            }
-        }
-    }
-
     public static class Harness
     {
         private static FubuRuntime _server;

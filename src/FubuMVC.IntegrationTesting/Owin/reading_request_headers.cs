@@ -1,6 +1,5 @@
 using System.Linq;
 using FubuMVC.Core.Http;
-using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Owin
@@ -11,24 +10,34 @@ namespace FubuMVC.IntegrationTesting.Owin
         [Test]
         public void read_build_in_header()
         {
-            HarnessApplication.Run(x =>
+            var message = new HeaderRequest
             {
-                x.GetByInput(new HeaderRequest
-                {
-                    Name = HttpRequestHeaders.IfNoneMatch
-                }, configure: req => req.Headers[HttpRequestHeaders.IfNoneMatch] = "A").ReadAsText().ShouldBe("A");
+                Name = HttpRequestHeaders.IfNoneMatch
+            };
+
+            TestHost.Scenario(_ =>
+            {
+                _.Get.Input(message);
+                _.Request.AppendHeader(HttpRequestHeaders.IfNoneMatch, "A");
+
+                _.ContentShouldBe("A");
             });
         }
 
         [Test]
         public void read_custom_header()
         {
-            HarnessApplication.Run(x =>
+            var message = new HeaderRequest
             {
-                x.GetByInput(new HeaderRequest
-                {
-                    Name = "x-1"
-                }, configure: req => req.Headers["x-1"] = "A").ReadAsText().ShouldBe("A");
+                Name = "x-1"
+            };
+
+            TestHost.Scenario(_ =>
+            {
+                _.Get.Input(message);
+                _.Request.AppendHeader("x-1", "A");
+
+                _.ContentShouldBe("A");
             });
         }
     }

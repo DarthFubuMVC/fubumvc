@@ -1,6 +1,3 @@
-using System.Net;
-using FubuMVC.Core.Runtime;
-using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Owin
@@ -11,10 +8,11 @@ namespace FubuMVC.IntegrationTesting.Owin
         [Test]
         public void can_write_strings_to_the_output()
         {
-            HarnessApplication.Run(endpoints =>
+            TestHost.Scenario(_ =>
             {
-                endpoints.Get<StringEndpoint>(x => x.get_hello()).ContentShouldBe(MimeType.Text, "Hello.")
-                    .StatusCode.ShouldBe(HttpStatusCode.OK);
+                _.Get.Action<StringEndpoint>(x => x.get_hello());
+                _.ContentTypeShouldBe("text/plain");
+                _.ContentShouldBe("Hello.");
             });
         }
     }

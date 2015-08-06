@@ -7,11 +7,15 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Serialization;
 using FubuCore;
 using FubuMVC.Core.Http.Compression;
 using FubuMVC.Core.Http.Cookies;
 using FubuMVC.Core.Http.Headers;
+using FubuMVC.Core.Http.Scenarios;
+using FubuMVC.Core.Json;
 using FubuMVC.Core.Runtime;
+using HtmlTags;
 using Cookie = FubuMVC.Core.Http.Cookies.Cookie;
 
 namespace FubuMVC.Core.Http.Owin
@@ -230,7 +234,7 @@ namespace FubuMVC.Core.Http.Owin
         {
             get
             {
-                return new HttpResponseBody(_environment.Get<Stream>(OwinConstants.ResponseBodyKey));
+                return new HttpResponseBody(_environment.Get<Stream>(OwinConstants.ResponseBodyKey), _environment);
             }
         }
 
@@ -260,10 +264,12 @@ namespace FubuMVC.Core.Http.Owin
     public class HttpResponseBody
     {
         private readonly Stream _stream;
+        private readonly IDictionary<string, object> _environment;
 
-        public HttpResponseBody(Stream stream)
+        public HttpResponseBody(Stream stream, IDictionary<string, object> environment)
         {
             _stream = stream;
+            _environment = environment;
         }
 
         public string ReadAsText()
@@ -291,6 +297,26 @@ namespace FubuMVC.Core.Http.Owin
             };
 
             return Read(read);
+        }
+
+        public T ReadAsXml<T>() where T : class
+        {
+            _stream.Position = 0;
+            var serializer = new XmlSerializer(typeof (T));
+            return serializer.Deserialize(_stream) as T;
+        }
+
+        public T ReadAsJson<T>()
+        {
+            if (_environment.ContainsKey("scenario-support"))
+            {
+                return
+                    _environment.Get<IScenarioSupport>("scenario-support")
+                        .Get<IJsonSerializer>()
+                        .Deserialize<T>(_stream);
+            }
+
+            return JsonUtil.Get<T>(ReadAsText());
         }
     }
 

@@ -1,5 +1,4 @@
 using FubuCore;
-using Shouldly;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Owin
@@ -10,14 +9,16 @@ namespace FubuMVC.IntegrationTesting.Owin
         [Test]
         public void bind_data_against_routing_data()
         {
-            HarnessApplication.Run(x =>
+            var input = new RouteInput
             {
-                x.GetByInput(new RouteInput
-                {
-                    Name = "Jeremy",
-                    Age = 38
-                }).ReadAsText()
-                    .ShouldBe("Name=Jeremy, Age=38");
+                Name = "Jeremy",
+                Age = 38
+            };
+
+            TestHost.Scenario(_ =>
+            {
+                _.Get.Input(input);
+                _.ContentShouldBe("Name=Jeremy, Age=38");
             });
         }
     }

@@ -52,5 +52,10 @@ namespace FubuMVC.Core.Json
 			var serializer = buildSerializer(true);
 			return serializer.Deserialize<T>(new JsonTextReader(new StringReader(input)));
 		}
+
+	    public T Deserialize<T>(Stream stream)
+	    {
+	        return buildSerializer(false).Deserialize<T>(new JsonTextReader(new StreamReader(stream)));
+	    }
 	}
 }

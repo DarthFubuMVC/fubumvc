@@ -1,9 +1,5 @@
-using System.IO;
-using System.Net;
-using System.Xml;
-using System.Xml.Serialization;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
 namespace FubuMVC.IntegrationTesting.Owin
 {
@@ -13,41 +9,36 @@ namespace FubuMVC.IntegrationTesting.Owin
         [Test]
         public void read_and_write_json()
         {
-            HarnessApplication.Run(x =>
+            var message = new Message
             {
-                var message = new Message
-                {
-                    Color = "Blue",
-                    Direction = "East"
-                };
+                Color = "Blue",
+                Direction = "East"
+            };
 
-                var response = x.PostJson(message, "text/json", "text/json");
-
-                response.StatusCodeShouldBe(HttpStatusCode.OK);
-                response.ContentType.ShouldBe("text/json");
-
-                response.ReadAsJson<Message>().ShouldBe(message);
+            TestHost.Scenario(_ =>
+            {
+                _.Post.Json(message).ContentType("text/json").Accepts("text/json");
+                _.StatusCodeShouldBeOk();
+                _.ContentTypeShouldBe("text/json");
             });
         }
 
         [Test]
         public void read_and_write_xml()
         {
-            HarnessApplication.Run(x =>
+            var message = new Message
             {
-                var message = new Message
-                {
-                    Color = "Blue",
-                    Direction = "East"
-                };
+                Color = "Blue",
+                Direction = "East"
+            };
 
-                var response = x.PostXml(message, "text/xml", "text/xml");
+            TestHost.Scenario(_ =>
+            {
+                _.Post.Xml(message).Accepts("text/xml").ContentType("text/xml");
+                _.ContentTypeShouldBe("text/xml");
 
-                response.StatusCodeShouldBe(HttpStatusCode.OK);
-                response.ContentType.ShouldBe("text/xml");
 
-                var serializer = new XmlSerializer(typeof (Message));
-                serializer.Deserialize(new XmlTextReader(new StringReader(response.ReadAsText()))).ShouldBe(message);
+                _.Response.Body.ReadAsXml<Message>().ShouldBe(message);
             });
         }
     }
