@@ -21,7 +21,6 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Files;
 using FubuMVC.Core.Security.Authorization;
-using FubuMVC.Core.Services;
 using FubuMVC.Core.StructureMap;
 using FubuMVC.Core.StructureMap.Settings;
 using FubuMVC.Core.Urls;

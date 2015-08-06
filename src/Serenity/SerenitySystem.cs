@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Runtime;
-using FubuMVC.Core.Services.Messaging.Tracking;
 using StoryTeller;
 using StoryTeller.Conversion;
 using StoryTeller.Engine;
@@ -24,8 +23,11 @@ namespace Serenity
      * 8.) Allow users to specify whether the browser is built lazily or eagerly
      * 9.) BrowserLifecycle can give you different browsers upon request for inline
      *     cross-browser testing
-     * 10. Kill IApplicationUnderTest
+     * DONE: 10. Kill IApplicationUnderTest
      * 11.) Figure out how to attach message tracking. Use 
+     * 12.) Allow users to supply an AfterNavigation
+     * 13.) Apply MessageContextualInfoProvider from FT testing
+     * 14.) Look closely at FubuTransportSystem and TestNodes
      */
 
     public class SerenitySystem<T> : ISystem where T : FubuRegistry, new()
@@ -35,10 +37,7 @@ namespace Serenity
 
         public FubuRuntime Runtime
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { throw new NotImplementedException(); }
         }
 
         /// <summary>
@@ -89,12 +88,12 @@ namespace Serenity
         IExecutionContext ISystem.CreateContext()
         {
             // NEED to push the scope
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         Task ISystem.Warmup()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         /* TODO -- figure out what to do here
@@ -103,7 +102,6 @@ namespace Serenity
             MessageHistory.StartListening(_remoteSubSystems.Select(x => x.Runner).ToArray());
         }
          */
-
 
 
         public class SerenityContext : IExecutionContext
@@ -131,15 +129,14 @@ namespace Serenity
             public void AfterExecution(ISpecContext context)
             {
                 var reporter = new RequestReporter(_parent.Runtime);
-                var requestLogs = GetService<IRequestHistoryCache>().RecentReports().Where(x => x.SessionTag == _sessionTag).ToArray();
+                var requestLogs =
+                    GetService<IRequestHistoryCache>().RecentReports().Where(x => x.SessionTag == _sessionTag).ToArray();
                 reporter.Append(requestLogs);
 
                 context.Reporting.Log(reporter);
 
                 // TODO --- needs to be the current scope
                 _parent.afterEach(null, context);
-
-                 
             }
 
             public TService GetService<TService>()
@@ -148,6 +145,4 @@ namespace Serenity
             }
         }
     }
-
-
 }

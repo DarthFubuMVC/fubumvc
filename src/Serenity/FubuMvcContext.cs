@@ -21,14 +21,11 @@ namespace Serenity
         {
         }
 
-        public IServiceLocator Services
-        {
-            get { return _system.Application.Services; }
-        }
 
         public T GetService<T>()
         {
-            return _system.Application.Services.GetInstance<T>();
+            throw new Exception();
+            //return _system.Application.Services.GetInstance<T>();
         }
 
         public virtual void AfterExecution(ISpecContext context)
@@ -46,8 +43,7 @@ namespace Serenity
 
         public void BeforeExecution(ISpecContext context)
         {
-            Services.GetInstance<IRequestHistoryCache>().CurrentSessionTag = _sessionTag;
-           _system.Application.Navigation.Logger = new ContextualNavigationLogger(context);
+            throw new Exception("no");
         }
     }
 }

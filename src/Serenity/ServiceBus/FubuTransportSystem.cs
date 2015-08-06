@@ -12,6 +12,7 @@ namespace Serenity.ServiceBus
 
         public FubuTransportSystem() : base(null)
         {
+            /*
             FubuTransport.SetupForTesting(); // Uses FubuMode.SetUpTestingMode();
 
             OnStartup<IMessagingSession>(x => FubuMVC.Core.Services.Messaging.EventAggregator.Messaging.AddListener(x));
@@ -31,11 +32,13 @@ namespace Serenity.ServiceBus
                 });
 
             OnContextCreation(TestNodes.Reset);
+             */
         }
-
+        /*
         public override void ApplyLogging(ISpecContext context)
         {
-            context.Reporting.Log(new MessageContextualInfoProvider(Application.Services.GetInstance<IMessagingSession>()));
+            //context.Reporting.Log(new MessageContextualInfoProvider(Application.Services.GetInstance<IMessagingSession>()));
         }
+         * */
     }
 }

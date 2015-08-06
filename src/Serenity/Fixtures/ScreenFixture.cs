@@ -20,7 +20,6 @@ namespace Serenity.Fixtures
 {
     public class ScreenFixture : Fixture
     {
-        private IApplicationUnderTest _application;
         private readonly Stack<ISearchContext> _searchContexts = new Stack<ISearchContext>();
 
         public ISearchContext SearchContext
@@ -56,37 +55,33 @@ namespace Serenity.Fixtures
 
         protected NavigationDriver Navigation
         {
-            get { return _application.Navigation; }
-        }
-
-        protected EndpointDriver Endpoints
-        {
-            get { return _application.Endpoints(); }
+            get { return Context.Service<NavigationDriver>(); }
         }
 
         protected internal IWebDriver Driver
         {
-            get { return _application.Driver; }
+            get { return Browser.Driver; }
         }
 
         protected IBrowserLifecycle Browser
         {
-            get { return _application.Browser; }
+            get { return Context.Service<IBrowserLifecycle>(); }
         }
 
         protected string RootUrl
         {
-            get { return _application.RootUrl; }
+            get { return Context.Service<FubuRuntime>().BaseAddress; }
         }
 
         protected IUrlRegistry Urls
         {
-            get { return _application.Urls; }
+            get { return Context.Service<IUrlRegistry>(); }
         }
 
         public override sealed void SetUp()
         {
-            _application = Context.Service<IApplicationUnderTest>();
+            // TODO -- optimize this a bit by finding IBrowserLifecycle early
+            
             _searchContexts.Clear();
 
             beforeRunning();
@@ -209,7 +204,7 @@ namespace Serenity.Fixtures
 
         protected IGrammar BrowserIsAt(Func<IUrlRegistry, string> toUrl, string title)
         {
-            return new FactGrammar(title, c => Driver.Url.Matches(toUrl(_application.Urls)));
+            return new FactGrammar(title, c => Driver.Url.Matches(toUrl(Urls)));
         }
     }
 
@@ -291,5 +286,37 @@ namespace Serenity.Fixtures
                 });
         }
 
+        protected bool AssertIsOnScreen<T>(T input)
+        {
+            var expected = Urls.UrlFor(input, "GET");
+            var actual = Driver.Url;
+
+            if (!expected.Matches(Driver.Url))
+            {
+                StoryTellerAssert.Fail("The actual Url of the browser is " + actual.Canonize());
+            }
+
+            return true;
+        }
+
+        protected bool AssertIsOnScreen(string expected)
+        {
+            var actual = Driver.Url;
+
+            if (!expected.Matches(Driver.Url))
+            {
+                StoryTellerAssert.Fail("The actual Url of the browser is " + actual.Canonize());
+            }
+
+            return true;
+        }
+
+        protected bool AssertIsNotOnScreen<T>(T input)
+        {
+            var actual = new Uri(Driver.Url).AbsolutePath;
+            var expected = Urls.UrlFor(input, "GET");
+
+            return !expected.Matches(actual);
+        }
     }
 }

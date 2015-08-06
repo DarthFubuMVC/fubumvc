@@ -30,8 +30,6 @@ namespace Serenity
         private readonly Func<FubuRuntime> _runtimeSource;
         private bool? _externalHosting;
 
-        private readonly IList<Action<IApplicationUnderTest>> _applicationAlterations =
-            new List<Action<IApplicationUnderTest>>();
 
         private readonly IList<ISubSystem> _subSystems = new List<ISubSystem>();
 
@@ -49,21 +47,6 @@ namespace Serenity
         public BrowserType? DefaultBrowser { get; set; }
 
         private readonly Cache<string, RemoteSubSystem> _remoteSubSystems = new Cache<string, RemoteSubSystem>();
-        protected IApplicationUnderTest _application;
-
-        /// <summary>
-        /// *IF* your underlying container is StructureMap, this is a convenience method
-        /// to modify the underlying container on Serenity system start up time
-        /// </summary>
-        /// <param name="configuration"></param>
-        public void ModifyContainer(Action<ConfigurationExpression> configuration)
-        {
-            _applicationAlterations.Add(app =>
-            {
-                var container = app.Services.GetInstance<IContainer>();
-                container.Configure(configuration);
-            });
-        }
 
         public RemoteSubSystem RemoteSubSystemFor(string name)
         {
@@ -104,46 +87,11 @@ namespace Serenity
             get { return _subSystems; }
         }
 
-        public IApplicationUnderTest Application
-        {
-            get { return _application; }
-        }
-
-        /// <summary>
-        /// Catch all method to call any service from the running application when
-        /// the application restarts
-        /// </summary>
-        /// <typeparam name="TService"></typeparam>
-        /// <param name="startup"></param>
-        public void OnStartup<TService>(Action<TService> startup)
-        {
-            _applicationAlterations.Add(app => startup(app.Services.GetInstance<TService>()));
-        }
-
-        /// <summary>
-        /// Catch all method to perform any action from the running application when 
-        /// the application restarts
-        /// </summary>
-        /// <param name="action"></param>
-        public void OnStartup(Action action)
-        {
-            _applicationAlterations.Add(app => action());
-        }
 
         public IEnumerable<RemoteSubSystem> RemoteSubSystems
         {
             get { return _subSystems.OfType<RemoteSubSystem>(); }
         }
-
-        /// <summary>
-        /// Register a policy about what to do after navigating the browser to handle issues
-        /// like being redirected to a login screen
-        /// </summary>
-        public IAfterNavigation AfterNavigation
-        {
-            set { _applicationAlterations.Add(aut => aut.Navigation.AfterNavigation = value); }
-        }
-
 
         /// <summary>
         /// Add an element handler to the ElementHandlers collection for driving
@@ -251,7 +199,6 @@ namespace Serenity
                 var browserLifecycle = WebDriverSettings.GetBrowserLifecyle(ChooseBrowserType());
                 SetupApplicationHost();
 
-                _applicationAlterations.ToArray().Each(x => x(_application));
 
                 throw new Exception("REDO");
                 /*
@@ -287,11 +234,6 @@ namespace Serenity
                     _runtime.SafeDispose();
                     _runtime = null;
                 }
-                if (_application != null)
-                {
-                    _application.Teardown();
-                    _application = null;
-                }
                 
             });
         }
@@ -301,32 +243,7 @@ namespace Serenity
         private FubuRuntime _runtime;
         private bool _isDisposed;
 
-        /// <summary>
-        /// Perform an action immediately after a new execution context
-        /// is created immediately before the test itself is executed
-        /// </summary>
-        /// <param name="action"></param>
-        public void OnContextCreation(Action action)
-        {
-            _contextCreationActions.Add(action);
-        }
 
-        /// <summary>
-        /// Perform an action using a service resolved from the application 
-        /// immediately after a new execution context
-        /// is created immediately before the test itself is executed
-        /// </summary>
-        /// <param name="action"></param>
-        public void OnContextCreation<T>(Action<T> action)
-        {
-            _contextCreationActions.Add(() => action(Application.Services.GetInstance<T>()));
-        }
-
-        // TODO -- remove this when both FT and FubuMVC are merged together
-        public virtual void ApplyLogging(ISpecContext context)
-        {
-            // nothing
-        }
     }
 
     public class FubuMvcSystem<T> : FubuMvcSystem where T : FubuRegistry, new()

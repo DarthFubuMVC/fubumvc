@@ -89,7 +89,6 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ApplicationUnderTest.cs" />
     <Compile Include="AssetTagsState.cs" />
     <Compile Include="BrowserLifecycle.cs" />
     <Compile Include="BrowserType.cs" />
@@ -150,7 +149,6 @@
     <Compile Include="WebDriver\SearchContextToJavaScriptExecutor.cs" />
     <Compile Include="FubuMvcContext.cs" />
     <Compile Include="FubuMvcSystem.cs" />
-    <Compile Include="IApplicationUnderTest.cs" />
     <Compile Include="IBrowserLifecycle.cs" />
     <Compile Include="IBrowserSessionInitializer.cs" />
     <Compile Include="InternetExplorerBrowser.cs" />

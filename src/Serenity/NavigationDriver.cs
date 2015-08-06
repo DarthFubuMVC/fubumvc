@@ -1,41 +1,41 @@
 using System;
 using System.Linq.Expressions;
 using FubuCore;
+using FubuMVC.Core;
 using FubuMVC.Core.Endpoints;
-using HtmlTags;
+using FubuMVC.Core.Urls;
 using OpenQA.Selenium;
 using StoryTeller;
-using StoryTeller.Results;
 
 namespace Serenity
 {
     public class NavigationDriver
     {
-        private readonly IApplicationUnderTest _application;
-        private IAfterNavigation _afterNavigation = new NulloAfterNavigation();
+        private readonly IBrowserLifecycle _browserLifecycle;
+        private readonly IUrlRegistry _urls;
+        private readonly IAfterNavigation _afterNavigation = new NulloAfterNavigation();
+        private readonly FubuRuntime _runtime;
 
-        public NavigationDriver(IApplicationUnderTest application)
+        public NavigationDriver(IBrowserLifecycle browserLifecycle, IUrlRegistry urls, IAfterNavigation afterNavigation,
+            FubuRuntime runtime)
         {
-            _application = application;
+            _browserLifecycle = browserLifecycle;
+            _urls = urls;
+            _afterNavigation = afterNavigation;
+            _runtime = runtime;
         }
 
         internal INavigationLogger Logger = new NulloNavigationLogger();
 
-        public IAfterNavigation AfterNavigation
-        {
-            get { return _afterNavigation; }
-            set { _afterNavigation = value; }
-        }
-
         public void NavigateTo<TInputModel>() where TInputModel : class
         {
-            var url = _application.Urls.UrlFor<TInputModel>();
+            var url = _urls.UrlFor<TInputModel>();
             NavigateToUrl(url);
         }
 
         public void NavigateTo(object target)
         {
-            var url = _application.Urls.UrlFor(target, categoryOrHttpMethod:"GET");
+            var url = _urls.UrlFor(target, "GET");
 
             NavigateToUrl(url);
         }
@@ -49,14 +49,14 @@ namespace Serenity
                 url = url.TrimStart('~');
             }
 
-            return _application.RootUrl.AppendUrl(url);
+            return _runtime.BaseAddress.AppendUrl(url);
         }
 
         public void NavigateToUrl(string url)
         {
             url = correctUrl(url);
 
-            var driver = _application.Driver;
+            var driver = _browserLifecycle.Driver;
 
             Logger.Navigating(url, () => driver.Navigate().GoToUrl(url));
 
@@ -72,13 +72,13 @@ namespace Serenity
 
         public void NavigateTo<T>(Expression<Action<T>> expression)
         {
-            var url = _application.Urls.UrlFor(expression, "GET");
+            var url = _urls.UrlFor(expression, "GET");
             NavigateToUrl(url);
         }
 
         public string AssetUrlFor(string file)
         {
-            return _application.RootUrl + ("/_content/" + file).Replace("//", "/");
+            return _runtime.BaseAddress + ("/_content/" + file).Replace("//", "/");
         }
 
         public string GetCurrentUrl()
@@ -88,22 +88,13 @@ namespace Serenity
 
         public void NavigateToHome()
         {
-            NavigateToUrl(_application.RootUrl);
+            NavigateToUrl(_runtime.BaseAddress);
         }
 
         // 
         public IWebDriver Driver
         {
-            get
-            {
-                return _application.Driver;
-            }
-        }
-
-        // TODO -- let's get rid of this
-        public EndpointDriver GetEndpointDriver()
-        {
-            return new EndpointDriver(_application.Urls);
+            get { return _browserLifecycle.Driver; }
         }
 
         public ScreenDriver GetCurrentScreen()
