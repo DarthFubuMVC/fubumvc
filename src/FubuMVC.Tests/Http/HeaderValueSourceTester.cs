@@ -27,7 +27,7 @@ namespace FubuMVC.Tests.Http
         {
             theSource.Has("a").ShouldBeFalse();
 
-            theRequest.Header("a", "1");
+            theRequest.AppendHeader("a", "1");
 
             theSource.Has("a").ShouldBeTrue();
         }
@@ -35,14 +35,14 @@ namespace FubuMVC.Tests.Http
         [Test]
         public void get_with_only_one_value()
         {
-            theRequest.Header("a", "1");
+            theRequest.AppendHeader("a", "1");
             theSource.Get("a").ShouldBe("1");
         }
 
         [Test]
         public void get_with_multiple_values()
         {
-            theRequest.Header("a", "1", "2", "3");
+            theRequest.AppendHeader("a", "1", "2", "3");
 
             theSource.Get("a").ShouldBe(new string[] { "1", "2", "3" });
         }
@@ -58,7 +58,7 @@ namespace FubuMVC.Tests.Http
         [Test]
         public void value_hit_with_only_one_value()
         {
-            theRequest.Header("a", "1");
+            theRequest.AppendHeader("a", "1");
             theSource.Value("a", v => {
                 v.RawKey.ShouldBe("a");
                 v.RawValue.ShouldBe("1");
@@ -70,7 +70,7 @@ namespace FubuMVC.Tests.Http
         [Test]
         public void value_hit_with_only_multiple_values()
         {
-            theRequest.Header("a", "1", "2", "3");
+            theRequest.AppendHeader("a", "1", "2", "3");
             theSource.Value("a", v =>
             {
                 v.RawKey.ShouldBe("a");
@@ -82,9 +82,9 @@ namespace FubuMVC.Tests.Http
         [Test]
         public void report_smoke_test()
         {
-            theRequest.Header("a", "1", "2", "3");
-            theRequest.Header("b", "4", "2", "3");
-            theRequest.Header("c", "7", "2", "3");
+            theRequest.AppendHeader("a", "1", "2", "3");
+            theRequest.AppendHeader("b", "4", "2", "3");
+            theRequest.AppendHeader("c", "7", "2", "3");
 
             var report = MockRepository.GenerateMock<IValueReport>();
             theSource.WriteReport(report);

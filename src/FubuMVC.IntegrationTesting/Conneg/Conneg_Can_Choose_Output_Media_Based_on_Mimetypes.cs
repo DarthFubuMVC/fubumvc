@@ -111,7 +111,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
         {
             TestHost.Scenario(_ =>
             {
-                _.XmlData(input);
+                _.Post.Xml(input);
                 _.Request.Accepts("text/xml");
 
                 _.ContentTypeShouldBe("text/xml");

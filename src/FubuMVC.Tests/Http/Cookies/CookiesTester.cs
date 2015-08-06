@@ -26,14 +26,14 @@ namespace FubuMVC.Tests.Http.Cookies
 		[Test]
 		public void single_cookie()
 		{
-		    theRequest.Header(HttpRequestHeaders.Cookie, "a=123;");
+		    theRequest.AppendHeader(HttpRequestHeaders.Cookie, "a=123;");
 			theCookies.Get("a").Value.ShouldBe("123");
 		}
 
 		[Test]
 		public void multiple_cookies()
 		{
-            theRequest.Header(HttpRequestHeaders.Cookie, "a=123;b=456;");
+            theRequest.AppendHeader(HttpRequestHeaders.Cookie, "a=123;b=456;");
 			theCookies.Get("a").Value.ShouldBe("123");
 			theCookies.Get("b").Value.ShouldBe("456");
 		}

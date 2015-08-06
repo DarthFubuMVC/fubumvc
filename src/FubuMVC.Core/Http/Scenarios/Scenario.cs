@@ -9,6 +9,7 @@ using System.Xml.Serialization;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Http.Owin;
+using FubuMVC.Core.Json;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.Urls;
@@ -121,32 +122,6 @@ namespace FubuMVC.Core.Http.Scenarios
             get { return _support.Get<SecuritySettings>(); }
         }
 
-        public void JsonData<T>(T input, string method = "POST", string contentType = "application/json")
-            where T : class
-        {
-            _request.HttpMethod(method);
-            this.As<IUrlExpression>().Input(input);
-            _request.Body.JsonInputIs(input);
-            _request.Header(HttpRequestHeaders.ContentType, contentType);
-        }
-
-        public void XmlData<T>(T input, string method = "POST", string contentType = "application/xml") where T : class
-        {
-            var writer = new StringWriter();
-
-            var serializer = new XmlSerializer(typeof (T));
-            serializer.Serialize(writer, input);
-
-            var bytes = Encoding.Default.GetBytes(writer.ToString());
-
-            Request.Input.Write(bytes, 0, bytes.Length);
-
-            Request.HttpMethod(method);
-            Request.ContentType(contentType);
-
-            this.As<IUrlExpression>().Input(input);
-        }
-
 
         public OwinHttpRequest Request
         {
@@ -210,6 +185,36 @@ namespace FubuMVC.Core.Http.Scenarios
                 : urls.UrlFor(input, _request.HttpMethod());
 
             _request.RelativeUrl(url);
+        }
+
+        SendExpression IUrlExpression.Json<T>(T input)
+        {
+            this.As<IUrlExpression>().Input(input);
+            _request.Body.JsonInputIs(_support.Get<IJsonSerializer>().Serialize(input));
+
+            _request.ContentType("application/json");
+            _request.Accepts("application/json");
+
+            return new SendExpression(_request);
+        }
+
+        SendExpression IUrlExpression.Xml<T>(T input)
+        {
+            var writer = new StringWriter();
+
+            var serializer = new XmlSerializer(typeof(T));
+            serializer.Serialize(writer, input);
+
+            var bytes = Encoding.Default.GetBytes(writer.ToString());
+
+            Request.Input.Write(bytes, 0, bytes.Length);
+
+            Request.ContentType("application/xml");
+            Request.Accepts("application/xml");
+
+            this.As<IUrlExpression>().Input(input);
+
+            return new SendExpression(_request);
         }
 
 

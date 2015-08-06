@@ -212,7 +212,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
 
             TestHost.Scenario(_ =>
             {
-                _.JsonData(query);
+                _.Post.Json(query);
 
                 _.StatusCodeShouldBeOk();
                 _.ContentTypeShouldBe("application/json");
@@ -253,7 +253,7 @@ namespace FubuMVC.IntegrationTesting.Aggregation
 
             TestHost.Scenario(_ =>
             {
-                _.JsonData(readQuery);
+                _.Post.Json(readQuery);
 
                 _.StatusCodeShouldBeOk();
                 _.ContentTypeShouldBe("application/json");

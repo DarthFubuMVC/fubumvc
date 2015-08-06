@@ -22,7 +22,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
                 {
                     x.Post.Input<SomeInput>();
                     x.Request
-                        .Header("x-name", "Jeremy")
+                        .AppendHeader("x-name", "Jeremy")
                         .ContentType("some/input")
                         .Accepts("some/output");
 
@@ -41,7 +41,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
                 {
                     x.Post.Input<SomeInput>();
                     x.Request
-                        .Header("x-name", "Jeremy")
+                        .AppendHeader("x-name", "Jeremy")
                         .ContentType("some/input")
                         .Accepts("some/json");
 

@@ -6,7 +6,6 @@ using System.Threading;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Http;
-using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Http.Scenarios;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View;

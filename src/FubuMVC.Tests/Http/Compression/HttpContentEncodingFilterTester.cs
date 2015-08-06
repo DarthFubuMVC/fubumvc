@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.Http.Compression
             MockFor<IHttpContentEncoders>().Stub(x => x.MatchFor(theAcceptedEncoding)).Return(theEncoding);
 
             var request = new OwinHttpRequest();
-            request.Header(HttpRequestHeaders.AcceptEncoding, theAcceptedEncoding);
+            request.AppendHeader(HttpRequestHeaders.AcceptEncoding, theAcceptedEncoding);
 
 
 

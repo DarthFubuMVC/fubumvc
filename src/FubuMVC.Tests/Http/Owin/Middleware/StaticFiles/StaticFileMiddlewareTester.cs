@@ -124,7 +124,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
             var file = theFiles.WriteFile("foo.css", "some contents");
             var differentEtag = file.Etag() + "!"; // just to make it different
 
-            theRequest.Header(HttpRequestHeaders.IfMatch, differentEtag);
+            theRequest.AppendHeader(HttpRequestHeaders.IfMatch, differentEtag);
 
             var continuation = forMethodAndFile("GET", "foo.css")
                 .ShouldBeOfType<WriteStatusCodeContinuation>();
@@ -137,7 +137,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
         {
             var file = theFiles.WriteFile("foo.css", "some contents");
 
-            theRequest.Header(HttpRequestHeaders.IfMatch, file.Etag());
+            theRequest.AppendHeader(HttpRequestHeaders.IfMatch, file.Etag());
 
             var continuation = forMethodAndFile("GET", "foo.css")
                 .ShouldBeOfType<WriteFileContinuation>();
@@ -151,7 +151,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
             var file = theFiles.WriteFile("foo.css", "some contents");
             var differentEtag = file.Etag() + "!"; // just to make it different
 
-            theRequest.Header(HttpRequestHeaders.IfNoneMatch, differentEtag);
+            theRequest.AppendHeader(HttpRequestHeaders.IfNoneMatch, differentEtag);
 
             var continuation = forMethodAndFile("GET", "foo.css")
                 .ShouldBeOfType<WriteFileContinuation>();
@@ -164,7 +164,7 @@ namespace FubuMVC.Tests.Http.Owin.Middleware.StaticFiles
         {
             var file = theFiles.WriteFile("foo.css", "some contents");
 
-            theRequest.Header(HttpRequestHeaders.IfNoneMatch, file.Etag());
+            theRequest.AppendHeader(HttpRequestHeaders.IfNoneMatch, file.Etag());
 
             var continuation = forMethodAndFile("GET", "foo.css")
                 .ShouldBeOfType<WriteFileHeadContinuation>();

@@ -15,8 +15,8 @@ namespace FubuMVC.Tests.Runtime
         public void bind_by_header()
         {
             var headers = OwinHttpRequest.ForTesting();
-            headers.Header("Last-Event-ID", "something");
-            headers.Header(HttpResponseHeaders.Warning, "oh no!");
+            headers.AppendHeader("Last-Event-ID", "something");
+            headers.AppendHeader(HttpResponseHeaders.Warning, "oh no!");
 
 
             var target = BindingScenario<HeaderValueTarget>.For(x => { x.Service<IHttpRequest>(headers); }).Model;

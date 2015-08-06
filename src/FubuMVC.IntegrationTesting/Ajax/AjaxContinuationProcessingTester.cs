@@ -14,7 +14,7 @@ namespace FubuMVC.IntegrationTesting.Ajax
         {
             TestHost.Scenario(_ =>
             {
-                _.JsonData(new CharacterInput
+                _.Post.Json(new CharacterInput
                 {
                     CharacterClass = "Ninja",
                     Race = "Troll"
@@ -30,7 +30,7 @@ namespace FubuMVC.IntegrationTesting.Ajax
         {
             TestHost.Scenario(_ =>
             {
-                _.JsonData(new CharacterInput
+                _.Post.Json(new CharacterInput
                 {
                     CharacterClass = "Paladin",
                     Race = "Ogre"

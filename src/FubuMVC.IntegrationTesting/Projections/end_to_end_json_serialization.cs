@@ -70,7 +70,7 @@ namespace FubuMVC.IntegrationTesting.Projections
                     Guids = guids,
                     ExpectedCount = 60000
                 };
-                x.JsonData(input);
+                x.Post.Json(input);
 
                 x.ContentShouldBe("{\"successful\":true}");
                 x.ContentTypeShouldBe(MimeType.Json);
@@ -93,7 +93,7 @@ namespace FubuMVC.IntegrationTesting.Projections
                     ExpectedCount = 10,
                     Guids = guids
                 };
-                x.JsonData(input);
+                x.Post.Json(input);
 
                 x.ContentShouldBe("{\"successful\":true}");
                 x.ContentTypeShouldBe(MimeType.Json);

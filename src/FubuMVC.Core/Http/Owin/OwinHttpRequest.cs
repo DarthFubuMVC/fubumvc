@@ -114,7 +114,7 @@ namespace FubuMVC.Core.Http.Owin
             }
             else
             {
-                Header(HttpRequestHeaders.Cookie, cookie.ToString());
+                AppendHeader(HttpRequestHeaders.Cookie, cookie.ToString());
             }
 
             
@@ -150,7 +150,7 @@ namespace FubuMVC.Core.Http.Owin
             var uri = new Uri(root);
             append(OwinConstants.RequestSchemeKey, uri.Scheme);
             append(OwinConstants.RequestPathBaseKey, string.Empty);
-            Header(HttpRequestHeaders.Host, uri.Host);
+            AppendHeader(HttpRequestHeaders.Host, uri.Host);
             append(OwinConstants.RequestPathKey, uri.AbsolutePath);
 
             if (parts.Length == 2)
@@ -241,7 +241,21 @@ namespace FubuMVC.Core.Http.Owin
             return this;
         }
 
-        public OwinHttpRequest Header(string key, params string[] values)
+        public OwinHttpRequest ReplaceHeader(string key, string value)
+        {
+            if (_headers.Value.ContainsKey(key))
+            {
+                _headers.Value[key] = new[] {value};
+            }
+            else
+            {
+                _headers.Value.Add(key, new []{value});
+            }
+
+            return this;
+        }
+
+        public OwinHttpRequest AppendHeader(string key, params string[] values)
         {
             values.Each(x => _headers.Value.AppendValue(key, x));
 
@@ -250,32 +264,32 @@ namespace FubuMVC.Core.Http.Owin
 
         public OwinHttpRequest ContentType(string contentType)
         {
-            return Header(HttpRequestHeaders.ContentType, contentType);
+            return ReplaceHeader(HttpRequestHeaders.ContentType, contentType);
         }
 
         public OwinHttpRequest Accepts(string accepts)
         {
-            return Header(HttpRequestHeaders.Accept, accepts);
+            return ReplaceHeader(HttpRequestHeaders.Accept, accepts);
         }
 
         public OwinHttpRequest IfNoneMatch(string etag)
         {
-            return Header(HttpRequestHeaders.IfNoneMatch, etag);
+            return AppendHeader(HttpRequestHeaders.IfNoneMatch, etag);
         }
 
         public OwinHttpRequest IfMatch(string etag)
         {
-            return Header(HttpRequestHeaders.IfMatch, etag);
+            return AppendHeader(HttpRequestHeaders.IfMatch, etag);
         }
 
         public OwinHttpRequest IfModifiedSince(DateTime time)
         {
-            return Header(HttpRequestHeaders.IfModifiedSince, time.ToUniversalTime().ToString("r"));
+            return AppendHeader(HttpRequestHeaders.IfModifiedSince, time.ToUniversalTime().ToString("r"));
         }
 
         public OwinHttpRequest IfUnModifiedSince(DateTime time)
         {
-            return Header(HttpRequestHeaders.IfUnmodifiedSince, time.ToUniversalTime().ToString("r"));
+            return AppendHeader(HttpRequestHeaders.IfUnmodifiedSince, time.ToUniversalTime().ToString("r"));
         }
 
         public bool HasHeader(string key)
