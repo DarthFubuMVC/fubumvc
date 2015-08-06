@@ -1,28 +1,42 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using System.Text;
-using System.Web.UI.WebControls;
 using System.Xml.Serialization;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Security;
 using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Http.Scenarios
 {
+    public interface IScenarioSupport
+    {
+        string RootUrl { get; }
+        T Get<T>();
+        OwinHttpResponse Send(OwinHttpRequest request);
+    }
+
+    public static class ScenarioSupportExtensions
+    {
+        public static OwinHttpResponse Send(this IScenarioSupport support, Action<OwinHttpRequest> configuration)
+        {
+            var scenario = new Scenario(support);
+            configuration(scenario.Request);
+
+            return scenario.Response;
+        }
+    }
+
     public class Scenario : IUrlExpression, IDisposable
     {
-        private readonly IUrlRegistry _urls;
+        private readonly IScenarioSupport _support;
         private readonly OwinHttpRequest _request;
-        private readonly SecuritySettings _security;
         private readonly Lazy<OwinHttpResponse> _response;
         private readonly Lazy<string> _bodyText;
         private readonly ScenarioAssertionException _assertion = new ScenarioAssertionException();
@@ -34,18 +48,23 @@ namespace FubuMVC.Core.Http.Scenarios
             _assertion.AssertValid();
         }
 
-        public Scenario(IUrlRegistry urls, OwinHttpRequest request, Func<OwinHttpRequest, OwinHttpResponse> runner, SecuritySettings security)
+        public Scenario(IScenarioSupport support)
         {
-            _urls = urls;
-            _request = request;
-            _security = security;
-            _response = new Lazy<OwinHttpResponse>(() => {
-                var response = runner(request);
+            _support = support;
+            _request = OwinHttpRequest.ForTesting();
+            _request.FullUrl(support.RootUrl);
+
+            support.Get<SecuritySettings>().Reset();
+
+            _response = new Lazy<OwinHttpResponse>(() =>
+            {
+                var response = _support.Send(_request);
 
                 var httpStatusCode = response.StatusCode;
                 if (httpStatusCode != _expectedStatusCode)
                 {
-                    _assertion.Add("Expected status code {0} ({1}), but was {2}", _expectedStatusCode, _expectedStatusReason, httpStatusCode);
+                    _assertion.Add("Expected status code {0} ({1}), but was {2}", _expectedStatusCode,
+                        _expectedStatusReason, httpStatusCode);
 
                     if (httpStatusCode >= 500)
                     {
@@ -67,8 +86,24 @@ namespace FubuMVC.Core.Http.Scenarios
                 return this;
             }
         }
-        public IUrlExpression Put { get; private set; }
-        public IUrlExpression Delete { get; private set; }
+
+        public IUrlExpression Put
+        {
+            get
+            {
+                _request.HttpMethod("PUT");
+                return this;
+            }
+        }
+
+        public IUrlExpression Delete
+        {
+            get
+            {
+                _request.HttpMethod("DELETE");
+                return this;
+            }
+        }
 
         public IUrlExpression Post
         {
@@ -83,10 +118,11 @@ namespace FubuMVC.Core.Http.Scenarios
 
         public SecuritySettings Security
         {
-            get { return _security; }
+            get { return _support.Get<SecuritySettings>(); }
         }
 
-        public void JsonData<T>(T input, string method = "POST", string contentType = "application/json") where T : class
+        public void JsonData<T>(T input, string method = "POST", string contentType = "application/json")
+            where T : class
         {
             _request.HttpMethod(method);
             this.As<IUrlExpression>().Input(input);
@@ -98,7 +134,7 @@ namespace FubuMVC.Core.Http.Scenarios
         {
             var writer = new StringWriter();
 
-            var serializer = new XmlSerializer(typeof(T));
+            var serializer = new XmlSerializer(typeof (T));
             serializer.Serialize(writer, input);
 
             var bytes = Encoding.Default.GetBytes(writer.ToString());
@@ -114,18 +150,12 @@ namespace FubuMVC.Core.Http.Scenarios
 
         public OwinHttpRequest Request
         {
-            get
-            {
-                return _request;
-            }
+            get { return _request; }
         }
 
         public OwinHttpResponse Response
         {
-            get
-            {
-                return _response.Value;
-            }
+            get { return _response.Value; }
         }
 
         public void ContentShouldContain(string text)
@@ -158,9 +188,14 @@ namespace FubuMVC.Core.Http.Scenarios
             }
         }
 
+        private IUrlRegistry urls
+        {
+            get { return _support.Get<IUrlRegistry>(); }
+        }
+
         void IUrlExpression.Action<T>(Expression<Action<T>> expression)
         {
-            _request.RelativeUrl(_urls.UrlFor(expression, _request.HttpMethod()));
+            _request.RelativeUrl(urls.UrlFor(expression, _request.HttpMethod()));
         }
 
         void IUrlExpression.Url(string relativeUrl)
@@ -171,8 +206,8 @@ namespace FubuMVC.Core.Http.Scenarios
         void IUrlExpression.Input<T>(T input)
         {
             var url = input == null
-                ? _urls.UrlFor<T>(_request.HttpMethod())
-                : _urls.UrlFor(input, _request.HttpMethod());
+                ? urls.UrlFor<T>(_request.HttpMethod())
+                : urls.UrlFor(input, _request.HttpMethod());
 
             _request.RelativeUrl(url);
         }
@@ -206,23 +241,28 @@ namespace FubuMVC.Core.Http.Scenarios
                 switch (values.Count())
                 {
                     case 0:
-                        _parent._assertion.Add("Expected a single header value of '{0}'='{1}', but no values were found on the response", _headerKey, expected);
+                        _parent._assertion.Add(
+                            "Expected a single header value of '{0}'='{1}', but no values were found on the response",
+                            _headerKey, expected);
                         break;
 
                     case 1:
                         var actual = values.Single();
                         if (actual != expected)
                         {
-                            _parent._assertion.Add("Expected a single header value of '{0}'='{1}', but the actual value was '{2}'", _headerKey, expected, actual);
+                            _parent._assertion.Add(
+                                "Expected a single header value of '{0}'='{1}', but the actual value was '{2}'",
+                                _headerKey, expected, actual);
                         }
                         break;
 
                     default:
                         var valueText = values.Select(x => "'" + x + "'").Join(", ");
-                        _parent._assertion.Add("Expected a single header value of '{0}'='{1}', but the actual values were {2}", _headerKey, expected, valueText);
+                        _parent._assertion.Add(
+                            "Expected a single header value of '{0}'='{1}', but the actual values were {2}", _headerKey,
+                            expected, valueText);
                         break;
                 }
-
 
 
                 return this;
@@ -234,14 +274,18 @@ namespace FubuMVC.Core.Http.Scenarios
                 switch (values.Count())
                 {
                     case 0:
-                        _parent._assertion.Add("Expected a single header value of '{0}', but no values were found on the response", _headerKey);
+                        _parent._assertion.Add(
+                            "Expected a single header value of '{0}', but no values were found on the response",
+                            _headerKey);
                         break;
                     case 1:
                         return this;
 
                     default:
                         var valueText = values.Select(x => "'" + x + "'").Join(", ");
-                        _parent._assertion.Add("Expected a single header value of '{0}', but found multiple values on the response: {1}", _headerKey, valueText);
+                        _parent._assertion.Add(
+                            "Expected a single header value of '{0}', but found multiple values on the response: {1}",
+                            _headerKey, valueText);
                         break;
                 }
 
@@ -255,7 +299,8 @@ namespace FubuMVC.Core.Http.Scenarios
                 if (values.Any())
                 {
                     var valueText = values.Select(x => "'" + x + "'").Join(", ");
-                    _parent._assertion.Add("Expected no value for header '{0}', but found values {1}", _headerKey, valueText);
+                    _parent._assertion.Add("Expected no value for header '{0}', but found values {1}", _headerKey,
+                        valueText);
                 }
             }
         }
@@ -272,22 +317,20 @@ namespace FubuMVC.Core.Http.Scenarios
         }
 
 
-
-
         public void ContentTypeShouldBe(string mimeType)
         {
             Header(HttpResponseHeaders.ContentType).SingleValueShouldEqual(mimeType);
         }
 
-        public void FormData<T>(T target, string method = "POST", string contentType = "application/x-www-form-urlencoded", string accept = "*/*") where T : class
+        public void FormData<T>(T target, string method = "POST",
+            string contentType = "application/x-www-form-urlencoded", string accept = "*/*") where T : class
         {
-            new TypeDescriptorCache().ForEachProperty(typeof(T), prop =>
+            new TypeDescriptorCache().ForEachProperty(typeof (T), prop =>
             {
                 var rawValue = prop.GetValue(target, null);
                 var httpValue = rawValue == null ? string.Empty : rawValue.ToString().UrlEncoded();
 
                 Request.Form[prop.Name] = httpValue;
-
             });
 
             Request.HttpMethod(method);

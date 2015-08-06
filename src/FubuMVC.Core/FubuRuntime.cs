@@ -33,7 +33,7 @@ namespace FubuMVC.Core
     /// <summary>
     /// Represents a running FubuMVC application, with access to the key parts of the application
     /// </summary>
-    public class FubuRuntime : IDisposable
+    public class FubuRuntime : IDisposable, IScenarioSupport
     {
         private readonly IServiceFactory _factory;
         private readonly IContainer _container;
@@ -342,17 +342,9 @@ namespace FubuMVC.Core
             return basePath;
         }
 
-        public OwinHttpResponse Send(Action<OwinHttpRequest> configuration)
-        {
-            var request = OwinHttpRequest.ForTesting();
-            request.FullUrl("http://memory");
 
-            configuration(request);
 
-            return Send(request);
-        }
-
-        public OwinHttpResponse Send(OwinHttpRequest request)
+        OwinHttpResponse IScenarioSupport.Send(OwinHttpRequest request)
         {
             // TODO -- make the wait be configurable?
             request.RewindData();
@@ -364,7 +356,7 @@ namespace FubuMVC.Core
 
         public OwinHttpResponse Scenario(Action<Scenario> configuration)
         {
-            var scenario = CreateScenario();
+            var scenario = new Scenario(this);
             using (scenario)
             {
                 configuration(scenario);
@@ -373,15 +365,9 @@ namespace FubuMVC.Core
             }
         }
 
-        public Scenario CreateScenario()
+        string IScenarioSupport.RootUrl
         {
-            var request = OwinHttpRequest.ForTesting();
-            request.FullUrl("http://memory");
-
-            var securitySettings = Get<SecuritySettings>();
-            securitySettings.Reset();
-            var scenario = new Scenario(Get<IUrlRegistry>(), request, Send, securitySettings);
-            return scenario;
+            get { return "http://memory"; }
         }
     }
 }

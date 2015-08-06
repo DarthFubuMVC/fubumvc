@@ -75,7 +75,7 @@ namespace FubuMVC.IntegrationTesting.Views
         [SetUp]
         public void SetUp()
         {
-            Scenario = _host.CreateScenario();
+            Scenario = new Scenario(_host);
         }
 
         [TearDown]

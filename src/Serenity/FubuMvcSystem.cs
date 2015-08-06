@@ -41,7 +41,7 @@ namespace Serenity
 
             _subSystems.Add(this);
 
-            OnContextCreation(StartListeningForMessages);
+            //OnContextCreation(StartListeningForMessages);
         }
 
         public BrowserType? DefaultBrowser { get; set; }
@@ -153,10 +153,12 @@ namespace Serenity
 
         public virtual IExecutionContext CreateContext()
         {
+            /*
             if (_application == null)
             {
                 startAll();
             }
+             */
 
             var context = new FubuMvcContext(this);
 

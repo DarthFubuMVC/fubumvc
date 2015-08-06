@@ -29,8 +29,11 @@ namespace FubuMVC.Tests.Http.Hosting
         [Test]
         public void invoke_a_simple_string_endpoint()
         {
-            host.Send(r => r.RelativeUrl("memory/hello"))
-                .Body.ReadAsText().ShouldBe("hello from the in memory host");
+            host.Scenario(_ =>
+            {
+                _.Get.Url("memory/hello");
+                _.ContentShouldBe("hello from the in memory host");
+            });
         }
 
         private ScenarioAssertionException fails(Action<Scenario> configuration)
