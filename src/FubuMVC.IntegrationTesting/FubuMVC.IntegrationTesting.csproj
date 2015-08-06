@@ -174,7 +174,6 @@
     <Compile Include="Querying\GraphQuery.cs" />
     <Compile Include="Querying\RemoteBehaviorGraph.cs" />
     <Compile Include="Querying\TypeToken.cs" />
-    <Compile Include="read_cookies_from_the_request.cs" />
     <Compile Include="Security\Authentication\authenticated_request_against_an_authenticated_route.cs" />
     <Compile Include="Security\Authentication\AuthenticationHarness.cs" />
     <Compile Include="Security\Authentication\SampleController.cs" />
@@ -189,8 +188,6 @@
     <Compile Include="Samples\FubuContinuationSamples.cs" />
     <Compile Include="Samples\IFubuRequestUsage.cs" />
     <Compile Include="SharedHarness.cs" />
-    <Compile Include="SharedHarnessContext.cs" />
-    <Compile Include="SelfHostHttpServerTester.cs" />
     <Compile Include="UI\FubuPageExtensions_FullStack_Tester.cs" />
     <Compile Include="Using_a_custom_routing_policy.cs" />
     <Compile Include="Views\Actionless_Views.cs" />

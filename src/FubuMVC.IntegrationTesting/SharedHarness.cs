@@ -91,87 +91,10 @@ namespace FubuMVC.IntegrationTesting
         [TearDown]
         public void TearDown()
         {
-            SelfHostHarness.Shutdown();
             TestHost.Shutdown();
         }
     }
 
-    public static class SelfHostHarness
-    {
-        private static FubuRuntime _host;
-
-        public static void Start()
-        {
-            Recycle();
-        }
-
-        public static string GetRootDirectory()
-        {
-            return AppDomain.CurrentDomain.BaseDirectory.ParentDirectory().ParentDirectory();
-        }
-
-
-        public static FubuRuntime Host
-        {
-            get
-            {
-                if (_host == null) Recycle();
-
-                return _host;
-            }
-        }
-
-        public static string Root
-        {
-            get
-            {
-                if (_host == null) Recycle();
-
-                return _host.BaseAddress;
-            }
-        }
-
-        public static EndpointDriver Endpoints
-        {
-            get
-            {
-                if (_host == null) Recycle();
-
-                return _host.Endpoints;
-            }
-        }
-
-        public static void Shutdown()
-        {
-            if (_host != null) _host.SafeDispose();
-        }
-
-        public static void Recycle()
-        {
-            if (_host != null)
-            {
-                _host.Dispose();
-            }
-
-            var runtime = bootstrapRuntime();
-
-            _host = runtime;
-        }
-
-        private static FubuRuntime bootstrapRuntime()
-        {
-            var registry = new HarnessRegistry {RootPath = GetRootDirectory()};
-            return registry.ToRuntime();
-        }
-    }
-
-    public class HarnessRegistry : FubuRegistry
-    {
-        public HarnessRegistry()
-        {
-            HostWith<Katana>();
-        }
-    }
 
     public class QuitEndpoint
     {

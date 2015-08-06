@@ -3,15 +3,18 @@ using System.IO;
 using System.Net;
 using System.Xml;
 using System.Xml.Serialization;
+using FubuMVC.Core.Json;
 using FubuMVC.Core.Runtime;
+using Newtonsoft.Json;
 using Shouldly;
 using HtmlTags;
 using NUnit.Framework;
+using Formatting = System.Xml.Formatting;
 
 namespace FubuMVC.IntegrationTesting.Conneg
 {
     [TestFixture]
-    public class conneg_with_endpoint_that_accepts_all_formatters_and_form_posts : SharedHarnessContext
+    public class conneg_with_endpoint_that_accepts_all_formatters_and_form_posts
     {
         private readonly XmlJsonHtmlMessage input;
         private readonly string expectedJson;
@@ -24,7 +27,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
                 Id = Guid.NewGuid()
             };
 
-            expectedJson = JsonUtil.ToJson(input);
+            expectedJson = TestHost.Service<IJsonSerializer>().Serialize(input);
 
             var writer = new StringWriter();
             var xmlWriter = new XmlTextWriter(writer)
@@ -38,72 +41,122 @@ namespace FubuMVC.IntegrationTesting.Conneg
         [Test]
         public void requesting_an_unsupported_media_type_returns_406()
         {
-            endpoints.PostJson(input, accept: "random/format").StatusCodeShouldBe(HttpStatusCode.NotAcceptable);
+            TestHost.Scenario(_ =>
+            {
+                
+                _.Post.Json(input).Accepts("random/format");
+                _.StatusCodeShouldBe(HttpStatusCode.NotAcceptable);
+            });
         }
 
         [Test]
         public void send_no_accept_header_but_treat_like_anything_is_accepted()
         {
-            endpoints.PostJson(input, accept: null)
-                .StatusCodeShouldBe(HttpStatusCode.OK)
-                .ContentTypeShouldBe(MimeType.Json)
-                .ReadAsJson<XmlJsonHtmlMessage>().Id.ShouldBe(input.Id);
+            TestHost.Scenario(_ =>
+            {
+                _.Post.Json(input);
+                _.ContentTypeShouldBe(MimeType.Json);
+                _.Response.Body.ReadAsJson<XmlJsonHtmlMessage>()
+                    .Id.ShouldBe(input.Id);
+            });
         }
 
         [Test]
         public void send_json_expecting_json()
         {
-            endpoints.PostJson(input, "text/json", "text/json")
-                .StatusCodeShouldBe(HttpStatusCode.OK)
-                .ContentShouldBe("text/json", expectedJson);
+            TestHost.Scenario(_ =>
+            {
+                _.Post.Json(input).ContentType("text/json").Accepts("text/json");
+                _.StatusCodeShouldBeOk();
+                _.ContentTypeShouldBe("text/json");
+                _.ContentShouldBe(expectedJson);
+            });
 
-            endpoints.PostJson(input, "application/json", "application/json")
-                .StatusCodeShouldBe(HttpStatusCode.OK)
-                .ContentShouldBe("application/json", expectedJson);
+            TestHost.Scenario(_ =>
+            {
+                _.Post.Json(input).ContentType("application/json").Accepts("application/json");
+                _.StatusCodeShouldBeOk();
+                _.ContentTypeShouldBe("application/json");
+                _.ContentShouldBe(expectedJson);
+            });
 
-            endpoints.PostJson(input, "application/json", "application/json,text/xml")
-                .StatusCodeShouldBe(HttpStatusCode.OK)
-                .ContentShouldBe("application/json", expectedJson);
+            TestHost.Scenario(_ =>
+            {
+                _.Post.Json(input).ContentType("application/json").Accepts("application/json,text/xml");
+                _.StatusCodeShouldBeOk();
+                _.ContentTypeShouldBe("application/json");
+                _.ContentShouldBe(expectedJson);
+            });
 
-            endpoints.PostJson(input, "text/json", "text/json,text/xml")
-                .StatusCodeShouldBe(HttpStatusCode.OK)
-                .ContentShouldBe("text/json", expectedJson);
+            TestHost.Scenario(_ =>
+            {
+                _.Post.Json(input).ContentType("text/json").Accepts("text/json,text/xml");
+                _.StatusCodeShouldBeOk();
+                _.ContentTypeShouldBe("text/json");
+                _.ContentShouldBe(expectedJson);
+            });
+
         }
 
         [Test]
         public void send_the_request_as_http_form_expect_json_back()
         {
-            endpoints.PostAsForm(input, accept: "text/json")
-                .StatusCodeShouldBe(HttpStatusCode.OK)
-                .ContentShouldBe("text/json", expectedJson);
+            TestHost.Scenario(_ =>
+            {
+                _.Post.FormData(input).Accepts("text/json");
+                _.StatusCodeShouldBeOk();
+                _.ContentTypeShouldBe("text/json");
+                _.ContentShouldBe(expectedJson);
+            });
+            
+            TestHost.Scenario(_ =>
+            {
+                _.Post.FormData(input).Accepts("application/json");
+                _.StatusCodeShouldBeOk();
+                _.ContentTypeShouldBe("application/json");
+                _.ContentShouldBe(expectedJson);
+            });
 
-            endpoints.PostAsForm(input, accept: "application/json")
-                .StatusCodeShouldBe(HttpStatusCode.OK)
-                .ContentShouldBe("application/json", expectedJson);
         }
 
         [Test]
         public void send_the_request_as_http_form_expect_xml_back()
         {
-            endpoints.PostAsForm(input, accept: "text/xml")
-                .StatusCodeShouldBe(HttpStatusCode.OK)
-                .ContentShouldBe("text/xml", expectedXml);
+            TestHost.Scenario(_ =>
+            {
+                _.Post.FormData(input).Accepts("text/xml");
+                _.StatusCodeShouldBeOk();
+                _.ContentTypeShouldBe("text/xml");
+                _.ContentShouldBe(expectedXml);
+            });
 
-            endpoints.PostAsForm(input, accept: "application/xml")
-                .StatusCodeShouldBe(HttpStatusCode.OK)
-                .ContentShouldBe("application/xml", expectedXml);
+            TestHost.Scenario(_ =>
+            {
+                _.Post.FormData(input).Accepts("application/xml");
+                _.StatusCodeShouldBeOk();
+                _.ContentTypeShouldBe("application/xml");
+                _.ContentShouldBe(expectedXml);
+            });
         }
 
         [Test]
         public void uses_json_for_global_accept()
         {
-            endpoints.PostJson(input, contentType: "text/json", accept: "*/*")
-                .StatusCodeShouldBe(HttpStatusCode.OK)
-                .ContentShouldBe("application/json", expectedJson);
+            TestHost.Scenario(_ =>
+            {
+                _.Post.Json(input).ContentType("text/json").Accepts("*/*");
+                _.StatusCodeShouldBeOk();
+                _.ContentTypeShouldBe("application/json");
+                _.ContentShouldBe(expectedJson);
+            });
 
-            endpoints.PostJson(input, "text/json", "something/weird,*/*")
-                .StatusCodeShouldBe(HttpStatusCode.OK)
-                .ContentShouldBe("application/json", expectedJson);
+            TestHost.Scenario(_ =>
+            {
+                _.Post.Json(input).ContentType("text/json").Accepts("something/weird,*/*");
+                _.StatusCodeShouldBeOk();
+                _.ContentTypeShouldBe("application/json");
+                _.ContentShouldBe(expectedJson);
+            });
         }
 
         [Test]

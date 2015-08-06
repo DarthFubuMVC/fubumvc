@@ -13,7 +13,7 @@ namespace FubuMVC.IntegrationTesting.Partials
         [Test]
         public void get_the_partial_as_html_if_requested()
         {
-            SelfHostHarness.Host.Scenario(_ =>
+            TestHost.Scenario(_ =>
             {
                 _.Get.Input(new InputModel2 {Name = "Jeremy"});
 

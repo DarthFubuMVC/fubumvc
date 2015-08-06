@@ -116,7 +116,14 @@ namespace FubuMVC.Core.Http.Scenarios
             }
         }
 
-        public IUrlExpression Head { get; private set; }
+        public IUrlExpression Head
+        {
+            get
+            {
+                _request.HttpMethod("HEAD");
+                return this;
+            }
+        }
 
         public SecuritySettings Security
         {
@@ -169,23 +176,27 @@ namespace FubuMVC.Core.Http.Scenarios
             get { return _support.Get<IUrlRegistry>(); }
         }
 
-        void IUrlExpression.Action<T>(Expression<Action<T>> expression)
+        SendExpression IUrlExpression.Action<T>(Expression<Action<T>> expression)
         {
             _request.RelativeUrl(urls.UrlFor(expression, _request.HttpMethod()));
+            return new SendExpression(_request);
         }
 
-        void IUrlExpression.Url(string relativeUrl)
+        SendExpression IUrlExpression.Url(string relativeUrl)
         {
             _request.RelativeUrl(relativeUrl);
+            return new SendExpression(_request);
         }
 
-        void IUrlExpression.Input<T>(T input)
+        SendExpression IUrlExpression.Input<T>(T input)
         {
             var url = input == null
                 ? urls.UrlFor<T>(_request.HttpMethod())
                 : urls.UrlFor(input, _request.HttpMethod());
 
             _request.RelativeUrl(url);
+
+            return new SendExpression(_request);
         }
 
         SendExpression IUrlExpression.Json<T>(T input)
@@ -214,6 +225,33 @@ namespace FubuMVC.Core.Http.Scenarios
             Request.Accepts("application/xml");
 
             this.As<IUrlExpression>().Input(input);
+
+            return new SendExpression(_request);
+        }
+
+        SendExpression IUrlExpression.FormData<T>(T input)
+        {
+            this.As<IUrlExpression>().Input(input);
+
+            _request.ContentType(MimeType.HttpFormMimetype);
+
+            var dictionary = new Dictionary<string, object>();
+            new TypeDescriptorCache().ForEachProperty(typeof(T), prop =>
+            {
+                var rawValue = prop.GetValue(input, null);
+                var httpValue = rawValue == null ? string.Empty : rawValue.ToString().UrlEncoded();
+
+                dictionary.Add(prop.Name, httpValue);
+            });
+
+            var post = dictionary.Select(x => "{0}={1}".ToFormat(x.Key, x.Value)).Join("&");
+            var stream = new MemoryStream();
+            var writer = new StreamWriter(stream);
+            writer.Write(post);
+            writer.Flush();
+            stream.Position = 0;
+
+            _request.Body.ReplaceBody(stream);
 
             return new SendExpression(_request);
         }

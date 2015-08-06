@@ -5,14 +5,16 @@ using NUnit.Framework;
 namespace FubuMVC.IntegrationTesting.Routing
 {
     [TestFixture]
-    public class end_to_end_route_alias_tester : SharedHarnessContext
+    public class end_to_end_route_alias_tester 
     {
         [Test]
         public void call_the_aliased_route()
         {
-            endpoints.Get(SelfHostHarness.Root + "/something/completely/different")
-                .ReadAsText()
-                .ShouldBe("Hey there");
+            TestHost.Scenario(_ =>
+            {
+                _.Get.Url("/something/completely/different");
+                _.ContentShouldBe("Hey there");
+            });
         }
     }
 

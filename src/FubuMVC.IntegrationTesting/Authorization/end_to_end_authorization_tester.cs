@@ -1,21 +1,20 @@
 ﻿using System.Net;
 using FubuMVC.Core;
 using FubuMVC.Core.Continuations;
-using FubuMVC.Core.Http.Hosting;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.Authorization;
 using NUnit.Framework;
-using Shouldly;
 
 namespace FubuMVC.IntegrationTesting.Authorization
 {
     [TestFixture]
-    public class end_to_end_authorization_tester : SharedHarnessContext
+    public class end_to_end_authorization_tester
     {
         [TearDown]
         public void TearDown()
         {
-            SelfHostHarness.Host.Get<SecuritySettings>().Reset();
+            TestHost.Service<SecuritySettings>().Reset();
         }
 
         [Test]
@@ -23,8 +22,11 @@ namespace FubuMVC.IntegrationTesting.Authorization
         {
             AuthorizationCheck.IsAuthorized = false;
 
-            endpoints.Get<AuthorizedEndpoint>(x => x.get_authorized_text())
-                .StatusCodeShouldBe(HttpStatusCode.Forbidden);
+            TestHost.Scenario(_ =>
+            {
+                _.Get.Action<AuthorizedEndpoint>(x => x.get_authorized_text());
+                _.StatusCodeShouldBe(HttpStatusCode.Forbidden);
+            });
         }
 
         [Test]
@@ -32,7 +34,7 @@ namespace FubuMVC.IntegrationTesting.Authorization
         {
             AuthorizationCheck.IsAuthorized = false;
 
-            SelfHostHarness.Host.Scenario(_ =>
+            TestHost.Scenario(_ =>
             {
                 _.Security.AuthorizationEnabled = false;
                 _.Get.Action<AuthorizedEndpoint>(x => x.get_authorized_text());
@@ -47,8 +49,11 @@ namespace FubuMVC.IntegrationTesting.Authorization
         {
             AuthorizationCheck.IsAuthorized = true;
 
-            endpoints.Get<AuthorizedEndpoint>(x => x.get_authorized_text())
-                .StatusCodeShouldBe(HttpStatusCode.OK);
+            TestHost.Scenario(_ =>
+            {
+                _.Get.Action<AuthorizedEndpoint>(x => x.get_authorized_text());
+                _.StatusCodeShouldBeOk();
+            });
         }
 
         [Test]
@@ -56,9 +61,13 @@ namespace FubuMVC.IntegrationTesting.Authorization
         {
             AuthorizationCheck.IsAuthorized = false;
 
-            endpoints.Get<AuthorizedEndpoint>(x => x.get_authorized_text_special())
-                .StatusCodeShouldBe(HttpStatusCode.Forbidden)
-                .ReadAsText().ShouldBe("you are forbidden!");
+            TestHost.Scenario(_ =>
+            {
+                _.Get.Action<AuthorizedEndpoint>(x => x.get_authorized_text_special());
+
+                _.StatusCodeShouldBe(HttpStatusCode.Redirect);
+                _.Header(HttpResponseHeaders.Location).SingleValueShouldEqual("/403");
+            });
         }
 
 
@@ -67,14 +76,16 @@ namespace FubuMVC.IntegrationTesting.Authorization
         {
             var registry = new FubuRegistry();
             registry.Services.ReplaceService<IAuthorizationFailureHandler, CustomAuthHandler>();
-            registry.HostWith<Katana>();
 
             AuthorizationCheck.IsAuthorized = false;
             using (var server = registry.ToRuntime())
             {
-                server.Endpoints.Get<AuthorizedEndpoint>(x => x.get_authorized_text())
-                    .StatusCodeShouldBe(HttpStatusCode.Forbidden)
-                    .ReadAsText().ShouldBe("you are forbidden!");
+                server.Scenario(_ =>
+                {
+                    _.Get.Action<AuthorizedEndpoint>(x => x.get_authorized_text());
+                    _.StatusCodeShouldBe(HttpStatusCode.Redirect);
+                    _.Header(HttpResponseHeaders.Location).SingleValueShouldEqual("/403");
+                });
             }
         }
 
@@ -82,7 +93,6 @@ namespace FubuMVC.IntegrationTesting.Authorization
         public void use_custom_auth_handler_on_only_one_endpoint()
         {
             var registry = new FubuRegistry();
-            registry.HostWith<Core.Http.Hosting.Nowin>();
 
             registry.Configure(
                 x =>
@@ -94,9 +104,13 @@ namespace FubuMVC.IntegrationTesting.Authorization
             AuthorizationCheck.IsAuthorized = false;
             using (var server = registry.ToRuntime())
             {
-                server.Endpoints.Get<AuthorizedEndpoint>(x => x.get_authorized_text())
-                    .StatusCodeShouldBe(HttpStatusCode.Forbidden)
-                    .ReadAsText().ShouldBe("you are forbidden!");
+                server.Scenario(_ =>
+                {
+                    _.Get.Action<AuthorizedEndpoint>(x => x.get_authorized_text());
+
+                    _.StatusCodeShouldBe(HttpStatusCode.Redirect);
+                    _.Header(HttpResponseHeaders.Location).SingleValueShouldEqual("/403");
+                });
             }
         }
     }

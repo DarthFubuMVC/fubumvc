@@ -6,12 +6,14 @@ namespace FubuMVC.Core.Http.Scenarios
 {
     public interface IUrlExpression
     {
-        void Action<T>(Expression<Action<T>> expression);
-        void Url(string relativeUrl);
-        void Input<T>(T input = null) where T : class;
+        SendExpression Action<T>(Expression<Action<T>> expression);
+        SendExpression Url(string relativeUrl);
+        SendExpression Input<T>(T input = null) where T : class;
 
         SendExpression Json<T>(T input) where T : class;
         SendExpression Xml<T>(T input) where T : class;
+
+        SendExpression FormData<T>(T input) where T : class;
     }
 
     public class SendExpression
