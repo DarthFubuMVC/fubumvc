@@ -38,7 +38,11 @@ namespace FubuMVC.IntegrationTesting.Async
         [Test]
         public void when_invoke_chain_with_earlyReturnBehavior_then_httpResponse_should_complete()
         {
-            var responseTask = Task.Factory.StartNew(() => _server.Endpoints.Get<AsyncAction>(x => x.AsyncCall()));
+            var responseTask = Task.Factory.StartNew(() => _server.Scenario(x =>
+            {
+                x.Get.Action<AsyncAction>(_ => _.AsyncCall());
+            }));
+
             responseTask.Wait(TimeSpan.FromSeconds(10)).ShouldBeTrue();
         }
     }

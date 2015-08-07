@@ -230,6 +230,12 @@ namespace FubuMVC.Core.Http.Owin
             Flush();
         }
 
+        public DateTime? LastModified()
+        {
+            var lastModifiedString = HeaderValueFor(HttpResponseHeaders.LastModified).SingleOrDefault();
+            return lastModifiedString.IsEmpty() ? (DateTime?)null : DateTime.ParseExact(lastModifiedString, "r", null);
+        }
+
         public HttpResponseBody Body
         {
             get

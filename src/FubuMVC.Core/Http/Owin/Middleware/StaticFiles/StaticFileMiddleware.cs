@@ -93,5 +93,6 @@ namespace FubuMVC.Core.Http.Owin.Middleware.StaticFiles
         {
             return request.IfMatch().EtagMatches(file.Etag()) == EtagMatch.No;
         }
+
     }
 }

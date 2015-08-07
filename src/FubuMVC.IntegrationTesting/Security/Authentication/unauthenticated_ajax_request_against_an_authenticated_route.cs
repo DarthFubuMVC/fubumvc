@@ -1,19 +1,16 @@
 using System.Net;
 using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
-using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.Authentication;
-using FubuMVC.Tests.Json;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
 namespace FubuMVC.IntegrationTesting.Security.Authentication
 {
     [TestFixture]
     public class unauthenticated_ajax_request_against_an_authenticated_route : AuthenticationHarness
     {
-
         [Test]
         public void execute()
         {
@@ -23,8 +20,8 @@ namespace FubuMVC.IntegrationTesting.Security.Authentication
                 _.Request.ContentType(MimeType.HttpFormMimetype).Accepts("application/json");
 
                 _.Request.AppendHeader(AjaxExtensions.XRequestedWithHeader, AjaxExtensions.XmlHttpRequestValue);
-            
-            
+
+
                 _.StatusCodeShouldBe(HttpStatusCode.Unauthorized);
 
                 var continuation = _.Response.Body.ReadAsJson<AjaxContinuation>();
@@ -37,9 +34,7 @@ namespace FubuMVC.IntegrationTesting.Security.Authentication
 
                 loginUrl.ShouldEndWith(continuation.NavigatePage);
             }
-                
-            );
+                );
         }
-
     }
 }

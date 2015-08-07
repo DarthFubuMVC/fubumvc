@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using FubuCore;
 using FubuCore.Reflection;
-using FubuLocalization;
 using FubuMVC.Core;
-using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Urls;
 using OpenQA.Selenium;
@@ -81,7 +78,7 @@ namespace Serenity.Fixtures
         public override sealed void SetUp()
         {
             // TODO -- optimize this a bit by finding IBrowserLifecycle early
-            
+
             _searchContexts.Clear();
 
             beforeRunning();
@@ -110,7 +107,7 @@ namespace Serenity.Fixtures
         protected IGrammar JQueryClick(string template, string id = null, string className = null, string css = null,
             string tagName = null)
         {
-            string command = buildJQuerySearch(css, id, className, tagName);
+            var command = buildJQuerySearch(css, id, className, tagName);
 
             return Do(template, c => { Retry.Twice(() => Driver.InjectJavascript(command)); });
         }
@@ -140,7 +137,7 @@ namespace Serenity.Fixtures
         protected void ClickWithJQuery(string id = null, string className = null, string css = null,
             string tagName = null)
         {
-            string command = buildJQuerySearch(css, id, className, tagName);
+            var command = buildJQuerySearch(css, id, className, tagName);
 
             Retry.Twice(() => Driver.InjectJavascript(command));
         }
@@ -238,7 +235,7 @@ namespace Serenity.Fixtures
 
 
         protected IGrammar EnterScreenValue(Expression<Func<T, object>> expression, string label = null,
-                                            string key = null)
+            string key = null)
         {
             var config = getGesture(expression, label, key);
 
@@ -249,7 +246,7 @@ namespace Serenity.Fixtures
         }
 
         protected IGrammar CheckScreenValue(Expression<Func<T, object>> expression, string label = null,
-                                            string key = null)
+            string key = null)
         {
             var config = getGesture(expression, label, key);
 
@@ -276,8 +273,10 @@ namespace Serenity.Fixtures
 
         protected void EditableElementsForAllImmediateProperties()
         {
-            typeof(T)
-                .GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(x => x.CanRead && x.CanWrite).Each(prop =>
+            typeof (T)
+                .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Where(x => x.CanRead && x.CanWrite)
+                .Each(prop =>
                 {
                     var accessor = new SingleProperty(prop);
                     var expression = accessor.ToExpression<T>();

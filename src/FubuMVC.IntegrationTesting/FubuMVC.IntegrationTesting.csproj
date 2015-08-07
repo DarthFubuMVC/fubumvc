@@ -135,8 +135,6 @@
     <Compile Include="Diagnostics\serving_up_embedded_diagnostic_assets.cs" />
     <Compile Include="EndpointServiceIntegratedSmokeTester.cs" />
     <Compile Include="FubuRegistry_using_parallel_folder_spec.cs" />
-    <Compile Include="HarnessBootstrapper.cs" />
-    <Compile Include="HttpResponseExtensions.cs" />
     <Compile Include="Http\partial_invocations.cs" />
     <Compile Include="Http\reading_and_writing_http_headers_and_responses_with_OWIN.cs" />
     <Compile Include="Http\compression_testing.cs" />
@@ -148,7 +146,6 @@
     <Compile Include="Owin\handling_501_responses.cs" />
     <Compile Include="Owin\handling_async_routes.cs" />
     <Compile Include="Owin\handling_a_404.cs" />
-    <Compile Include="Owin\Harness.cs" />
     <Compile Include="Owin\Middleware\HtmlHeadInjectionMiddlewareTester.cs" />
     <Compile Include="Owin\Owin_url_resolution_tester.cs" />
     <Compile Include="Owin\passing_the_FubuMode_into_the_OWIN_host.cs" />
@@ -168,13 +165,6 @@
     <Compile Include="Projections\adaptive_property_type_projection_Tester.cs" />
     <Compile Include="Projections\end_to_end_json_serialization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Querying\ActionToken.cs" />
-    <Compile Include="Querying\AssemblyToken.cs" />
-    <Compile Include="Querying\EndpointModel.cs" />
-    <Compile Include="Querying\EndpointToken.cs" />
-    <Compile Include="Querying\GraphQuery.cs" />
-    <Compile Include="Querying\RemoteBehaviorGraph.cs" />
-    <Compile Include="Querying\TypeToken.cs" />
     <Compile Include="QuitEndpoint.cs" />
     <Compile Include="Security\Authentication\authenticated_request_against_an_authenticated_route.cs" />
     <Compile Include="Security\Authentication\AuthenticationHarness.cs" />

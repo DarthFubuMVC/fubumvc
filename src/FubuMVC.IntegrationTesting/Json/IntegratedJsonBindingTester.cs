@@ -1,23 +1,15 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Net;
 using System.Reflection;
-using System.Text;
-using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Dates;
 using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
-using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Json;
-using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Urls;
-using Shouldly;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using Rhino.Mocks;
-using StructureMap;
+using Shouldly;
 
 namespace FubuMVC.IntegrationTesting.Json
 {
@@ -35,44 +27,29 @@ namespace FubuMVC.IntegrationTesting.Json
 
             using (var server = new IntegrationJsonBindingRegistry(recorder, time).ToRuntime())
             {
-                var url = server.Get<IUrlRegistry>().UrlFor(typeof (IntegratedJsonBindingTarget));
-                var response = post(url.ToAbsoluteUrl(server.BaseAddress),
-                    "{Name:'Josh',Child:{ChildName:'Joel'},DynamicData:{test:{name:'nested'}}}");
-
-                if (response.StatusCode != HttpStatusCode.OK)
+                server.Scenario(_ =>
                 {
-                    Debug.WriteLine(response.ReadAsText());
-                }
-                response.StatusCode.ShouldBe(HttpStatusCode.OK);
+                    _.Post.Input<IntegratedJsonBindingTarget>().ContentType("application/json");
+                    _.Request.Body.JsonInputIs(
+                        "{Name:'Josh',Child:{ChildName:'Joel'},DynamicData:{test:{name:'nested'}}}");
 
-                recorder.Target.Name.ShouldBe("Josh");
-                recorder.Target.Child.ChildName.ShouldBe("Joel");
-                recorder.Target.Child.CurrentTime.ShouldBe(now);
+                    _.StatusCodeShouldBeOk();
+                });
 
-                var child = recorder.Target.DynamicData.Value<JObject>("test");
+
+                Recorder.Target.Name.ShouldBe("Josh");
+                Recorder.Target.Child.ChildName.ShouldBe("Joel");
+                Recorder.Target.Child.CurrentTime.ShouldBe(now);
+
+                var child = Recorder.Target.DynamicData.Value<JObject>("test");
                 child["name"].ToString().ShouldBe("nested");
             }
         }
 
-        private HttpResponse post(string url, string json)
-        {
-            var request = WebRequest.Create(url);
-            request.ContentType = "application/json";
-            request.Method = "POST";
-            request.As<HttpWebRequest>().Accept = "application/json";
-            request.As<HttpWebRequest>().CookieContainer = new CookieContainer();
-            var requestStream = request.GetRequestStream();
-
-            var local_2 = Encoding.Default.GetBytes(json);
-            requestStream.Write(local_2, 0, local_2.Length);
-
-            requestStream.Close();
-            return request.ToHttpCall();
-        }
 
         public class Recorder
         {
-            public IntegratedJsonBindingTarget Target { get; private set; }
+            public static IntegratedJsonBindingTarget Target { get; private set; }
 
             public void Record(IntegratedJsonBindingTarget target)
             {
@@ -85,8 +62,6 @@ namespace FubuMVC.IntegrationTesting.Json
         {
             public IntegrationJsonBindingRegistry(Recorder recorder, ISystemTime time)
             {
-                HostWith<Katana>();
-
                 Services.For<Recorder>().Use(recorder);
 
                 Actions.IncludeType<IntegratedJsonBindingEndpoint>();

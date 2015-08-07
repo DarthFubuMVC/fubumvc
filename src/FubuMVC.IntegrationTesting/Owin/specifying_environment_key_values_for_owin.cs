@@ -1,4 +1,5 @@
-﻿using FubuCore;
+﻿using System.Net;
+using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Http.Owin;
@@ -16,11 +17,11 @@ namespace FubuMVC.IntegrationTesting.Owin
             using (var server = FubuRuntime
                 .For<OverriddenEnvironmentRegistry>())
             {
-                server.Endpoints.GetByInput(new KeyRequest {Key = "Foo"})
-                    .ReadAsText().ShouldBe("1");
-
-                server.Endpoints.GetByInput(new KeyRequest {Key = "Bar"})
-                    .ReadAsText().ShouldBe("2");
+                using (var client = new WebClient())
+                {
+                    client.DownloadString(server.BaseAddress.AppendUrl("/environment/Foo")).ShouldBe("1");
+                    client.DownloadString(server.BaseAddress.AppendUrl("/environment/Bar")).ShouldBe("2");
+                }
             }
         }
     }

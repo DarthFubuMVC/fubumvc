@@ -160,7 +160,7 @@ namespace FubuMVC.Tests.Http.Hosting
         {
             host.Scenario(x =>
             {
-                x.Post.Json(new HeaderInput {Key = "Foo", Value1 = "Bar"});
+                x.Post.Json(new HeaderInput {Key = "Foo", Value1 = "Bar"}).Accepts("text/plain");
 
                 x.Header("Foo").ShouldHaveOneNonNullValue()
                     .SingleValueShouldEqual("Bar");
@@ -222,7 +222,7 @@ namespace FubuMVC.Tests.Http.Hosting
         {
             host.Scenario(x =>
             {
-                x.Post.Json(new HeaderInput {Key = "Foo", Value1 = "Anything"});
+                x.Post.Json(new HeaderInput {Key = "Foo", Value1 = "Anything"}).Accepts("text/plain");
                 x.Header("Foo").ShouldHaveOneNonNullValue();
             });
         }
@@ -234,7 +234,7 @@ namespace FubuMVC.Tests.Http.Hosting
             {
                 host.Scenario(x =>
                 {
-                    x.Post.Json(new HeaderInput {Key = "Foo"});
+                    x.Post.Json(new HeaderInput {Key = "Foo"}).Accepts("text/plain");
                     x.Header("Foo").ShouldHaveOneNonNullValue();
                 });
             });
@@ -263,7 +263,7 @@ namespace FubuMVC.Tests.Http.Hosting
         {
             host.Scenario(x =>
             {
-                x.Post.Json(new HeaderInput {Key = "Foo"});
+                x.Post.Json(new HeaderInput {Key = "Foo"}).Accepts("text/plain");
                 x.Header("Foo").ShouldNotBeWritten();
             });
         }
@@ -275,7 +275,7 @@ namespace FubuMVC.Tests.Http.Hosting
             {
                 host.Scenario(x =>
                 {
-                    x.Post.Json(new HeaderInput {Key = "Foo", Value1 = "Bar1", Value2 = "Bar2"});
+                    x.Post.Json(new HeaderInput {Key = "Foo", Value1 = "Bar1", Value2 = "Bar2"}).Accepts("plain/text");
                     x.Header("Foo").ShouldNotBeWritten();
                 });
             });

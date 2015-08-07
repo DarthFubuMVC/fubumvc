@@ -28,19 +28,37 @@ namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
                 _.HostWith<Katana>();
             }))
             {
-                application.Endpoints.PostJson(new NamedEntity {Name = "Jeremy"}).StatusCode.ShouldBe(HttpStatusCode.OK);
-                application.Endpoints.PostJson(new NamedEntity {Name = "Josh"}).StatusCode.ShouldBe(HttpStatusCode.OK);
-                application.Endpoints.PostJson(new NamedEntity {Name = "Vyrak"}).StatusCode.ShouldBe(HttpStatusCode.OK);
-            
+                application.Scenario(_ =>
+                {
+                    _.Post.Json(new NamedEntity {Name = "Jeremy"});
+                });
+
+                application.Scenario(_ =>
+                {
+                    _.Post.Json(new NamedEntity { Name = "Josh" });
+                });
+
+                application.Scenario(_ =>
+                {
+                    _.Post.Json(new NamedEntity { Name = "Vyrak" });
+                });
+
+
+
+
                 application.Get<ITransaction>().Execute<IDocumentSession>(session => {
                     session.Query<NamedEntity>()
                            .Customize(x => x.WaitForNonStaleResults())
                            .Each(x => Debug.WriteLine(x.Name));
                 });
 
-                application.Endpoints.Get<FakeEntityEndpoint>(x => x.get_names()).ReadAsJson<NamesResponse>()
-                    .Names.ShouldHaveTheSameElementsAs("Jeremy", "Josh", "Vyrak");
-                    
+
+                application.Scenario(_ =>
+                {
+                    _.Get.Action<FakeEntityEndpoint>(x => x.get_names());
+                    _.Response.Body.ReadAsJson<NamesResponse>()
+                        .Names.ShouldHaveTheSameElementsAs("Jeremy", "Josh", "Vyrak");
+                });
             }
         }
     }

@@ -2,7 +2,6 @@ using System;
 using System.Linq.Expressions;
 using FubuCore;
 using FubuMVC.Core;
-using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Urls;
 using OpenQA.Selenium;
 using StoryTeller;

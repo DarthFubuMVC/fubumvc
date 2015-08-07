@@ -6,13 +6,11 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Hosting;
 using System.Web.Routing;
-using System.Web.UI.WebControls;
 using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Logging;
 using FubuCore.Reflection;
 using FubuMVC.Core.Diagnostics.Packaging;
-using FubuMVC.Core.Endpoints;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Http.Owin;
@@ -20,7 +18,6 @@ using FubuMVC.Core.Http.Scenarios;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Runtime.Files;
-using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.StructureMap;
 using FubuMVC.Core.StructureMap.Settings;
 using FubuMVC.Core.Urls;
@@ -45,11 +42,6 @@ namespace FubuMVC.Core
         private readonly Lazy<AppFunc> _appFunc;
         private IDisposable _server;
         private string _baseAddress;
-
-        private Lazy<EndpointDriver> _endpoints = new Lazy<EndpointDriver>(() =>
-        {
-            throw new InvalidOperationException("This FubuRuntime has no configured host");
-        }); 
 
 
         public static FubuRuntime Basic(Action<FubuRegistry> configure = null)
@@ -132,7 +124,6 @@ namespace FubuMVC.Core
             });
 
 
-
             Activate();
 
             _routes = routeTask.Result();
@@ -148,18 +139,11 @@ namespace FubuMVC.Core
             Restarted = DateTime.Now;
 
             _diagnostics.AssertNoFailures();
-
-
         }
 
         private void startHosting()
         {
             _baseAddress = "http://localhost:" + Port;
-
-            _endpoints = new Lazy<EndpointDriver>(() =>
-            {
-                return new EndpointDriver(Get<IUrlRegistry>(), _baseAddress);
-            });
 
             _perfTimer.Record("Starting up the embedded host at " + _baseAddress, () =>
             {
@@ -182,12 +166,6 @@ namespace FubuMVC.Core
         public int Port { get; private set; }
 
         public string Mode { get; set; }
-
-        public EndpointDriver Endpoints
-        {
-            get { return _endpoints.Value; }
-        }
-
 
         // Build route objects from route definitions on graph + add packaging routes
         private IList<RouteBase> buildRoutes(IServiceFactory factory, BehaviorGraph graph)
@@ -341,7 +319,6 @@ namespace FubuMVC.Core
 
             return basePath;
         }
-
 
 
         OwinHttpResponse IScenarioSupport.Send(OwinHttpRequest request)

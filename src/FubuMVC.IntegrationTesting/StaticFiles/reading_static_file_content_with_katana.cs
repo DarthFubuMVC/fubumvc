@@ -1,9 +1,8 @@
 ﻿using System.Net;
-using FubuMVC.Core;
-using FubuMVC.Core.Http.Hosting;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime.Files;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
 namespace FubuMVC.IntegrationTesting.StaticFiles
 {
@@ -15,67 +14,75 @@ namespace FubuMVC.IntegrationTesting.StaticFiles
         [Test]
         public void read_file_with_hit_on_etag()
         {
-            using (var server = FubuRuntime.Basic(_ => _.HostWith<Katana>()))
+            TestHost.Scenario(_ =>
             {
-                server.Endpoints.Get("Sample.js", etag: file.Etag())
-                    .StatusCodeShouldBe(HttpStatusCode.NotModified);
-            }
+                _.Get.Url("Sample.js").Etag(file.Etag());
+                _.StatusCodeShouldBe(HttpStatusCode.NotModified);
+            });
         }
 
         [Test]
         public void can_return_the_HEAD_for_a_file()
         {
-            using (var server = FubuRuntime.Basic(_ => _.HostWith<Katana>()))
+            TestHost.Scenario(_ =>
             {
-                server.Endpoints.Head("Sample.js")
-                    .StatusCodeShouldBe(HttpStatusCode.OK)
-                    .LastModifiedShouldBe(file.LastModified())
-                    .EtagShouldBe(file.Etag());
-            }
-             
+                _.Head.Url("Sample.js");
+
+                _.Header(HttpResponseHeaders.ETag).SingleValueShouldEqual("\"" + file.Etag() + "\"");
+
+                _.Response.LastModified().ShouldBe(file.LastModified());
+            });
         }
 
         [Test]
         public void can_return_the_text_of_a_txt_file()
         {
-            using (var server = FubuRuntime.Basic(_ => _.HostWith<Katana>()))
+            TestHost.Scenario(_ =>
             {
-                var response = server.Endpoints.Get("Sample.js");
-                response.StatusCodeShouldBe(HttpStatusCode.OK);
-                response.ReadAsText().ShouldContain("This is some sample data in a static file");
-            }
+                _.Get.Url("Sample.js");
+                _.StatusCodeShouldBeOk();
+                _.ContentShouldContain("This is some sample data in a static file");
+            });
         }
 
         [Test]
         public void can_return_the_text_of_a_txt_file_on_etag_miss()
         {
-            using (var server = FubuRuntime.Basic(_ => _.HostWith<Katana>()))
+            TestHost.Scenario(_ =>
             {
-                var response = server.Endpoints.Get("Sample.js", etag: file.Etag() + "!!!");
-                response.StatusCodeShouldBe(HttpStatusCode.OK);
-                response.ReadAsText().ShouldContain("This is some sample data in a static file");
-            }
+                _.Get.Url("Sample.js").Etag(file.Etag() + "!!!");
+                _.StatusCodeShouldBeOk();
+                _.ContentShouldContain("This is some sample data in a static file");
+            });
         }
 
         [Test]
         public void get_304_on_if_modified_since_pass()
         {
-            using (var server = FubuRuntime.Basic(_ => _.HostWith<Katana>()))
+            var lastModified = file.LastModified().ToUniversalTime().AddMinutes(10);
+
+            TestHost.Scenario(_ =>
             {
-                server.Endpoints.Get("Sample.js", ifModifiedSince: file.LastModified().ToUniversalTime().AddMinutes(10))
-                    .StatusCodeShouldBe(HttpStatusCode.NotModified);
-            }
+                _.Get.Url("Sample.js");
+                _.Request.AppendHeader(HttpRequestHeaders.IfModifiedSince, lastModified.ToString("R"));
+
+                _.StatusCodeShouldBe(HttpStatusCode.NotModified);
+            });
         }
 
         [Test]
         public void get_the_file_on_if_modified_since_and_has_been_modified()
         {
-            using (var server = FubuRuntime.Basic(_ => _.HostWith<Katana>()))
+            var ifModifiedSince = file.LastModified().ToUniversalTime().AddMinutes(-20);
+
+            TestHost.Scenario(_ =>
             {
-                server.Endpoints.Get("Sample.js", ifModifiedSince: file.LastModified().ToUniversalTime().AddMinutes(-20))
-                    .StatusCodeShouldBe(HttpStatusCode.OK)
-                    .ReadAsText().ShouldContain("This is some sample data in a static file");
-            }
+                _.Get.Url("Sample.js");
+                _.Request.AppendHeader(HttpRequestHeaders.IfModifiedSince, ifModifiedSince.ToString("R"));
+
+                _.StatusCodeShouldBeOk();
+                _.ContentShouldContain("This is some sample data in a static file");
+            });
         }
     }
 }

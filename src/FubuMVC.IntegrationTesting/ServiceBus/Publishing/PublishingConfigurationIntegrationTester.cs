@@ -62,13 +62,14 @@ namespace FubuMVC.IntegrationTesting.ServiceBus.Publishing
         [Test]
         public void end_to_end_test()
         {
-            var response = theRuntime.Endpoints.PostJson(new Message1Input());
+            theRuntime.Scenario(_ =>
+            {
+                _.Post.Json(new Message1Input());
+                _.StatusCodeShouldBeOk();
+                _.ContentShouldContain("\"success\":true");
+            });
 
             theServiceBus.AssertWasCalled(x => x.Send(new Message1()), x => x.IgnoreArguments());
-
-
-            response.StatusCode.ShouldBe(HttpStatusCode.OK);
-            response.ReadAsText().ShouldContain("\"success\":true");
         }
 
         [Test]

@@ -492,11 +492,6 @@
     <Compile Include="Diagnostics\Visualization\Visualizers\CommentTag.cs" />
     <Compile Include="Diagnostics\Visualization\Visualizers\StringMessageEndpoint.cs" />
     <Compile Include="Attributes\DoNotAutoImportAttribute.cs" />
-    <Compile Include="Endpoints\EndpointDriver.cs" />
-    <Compile Include="Endpoints\EndpointFormatting.cs" />
-    <Compile Include="Endpoints\EndpointInvocation.cs" />
-    <Compile Include="Endpoints\HttpResponse.cs" />
-    <Compile Include="Endpoints\WebRequestResponseExtensions.cs" />
     <Compile Include="Diagnostics\FubuApplicationDescriber.cs" />
     <Compile Include="Environment\CanWriteToFolder.cs" />
     <Compile Include="Environment\FileExists.cs" />

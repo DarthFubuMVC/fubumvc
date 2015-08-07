@@ -307,7 +307,6 @@
     <Compile Include="ServiceBus\Configuration\UriExtensionsTester.cs" />
     <Compile Include="ServiceBus\Diagnostics\MessageRecordListenerTester.cs" />
     <Compile Include="ServiceBus\Diagnostics\MessageRecordTester.cs" />
-    <Compile Include="ServiceBus\Diagnostics\Web_endpoints_integration_Smoke_Tester.cs" />
     <Compile Include="ServiceBus\Docs\Basics\ErrorHandlingSamples.cs" />
     <Compile Include="ServiceBus\Docs\Basics\PubSubSamples.cs" />
     <Compile Include="ServiceBus\Docs\Basics\ReceivingSamples.cs" />

@@ -29,8 +29,11 @@ namespace FubuMVC.IntegrationTesting.Owin
         {
             using (var server = serverFor(x => { x.AddMiddleware<JamesBondMiddleware>(); }))
             {
-                server.Endpoints.Get<MiddleWareInterceptedEndpoint>(x => x.get_middleware_result())
-                    .ShouldHaveHeaderValue("James", "Bond");
+                server.Scenario(_ =>
+                {
+                    _.Get.Action<MiddleWareInterceptedEndpoint>(x => x.get_middleware_result());
+                    _.Header("James").SingleValueShouldEqual("Bond");
+                });
             }
         }
 
@@ -40,14 +43,18 @@ namespace FubuMVC.IntegrationTesting.Owin
             AppFunc sillyHeader =
                 dict =>
                 {
-                    return Task.Factory.StartNew(() => { new OwinHttpResponse(dict).AppendHeader("silly", "string"); });
+                    return Task.Factory.StartNew(() => new OwinHttpResponse(dict).AppendHeader("silly", "string"));
                 };
 
             using (var server = serverFor(x => { x.AddMiddleware(sillyHeader); }))
             {
-                server.Endpoints.Get<MiddleWareInterceptedEndpoint>(x => x.get_middleware_result())
-                    .ShouldHaveHeaderValue("silly", "string")
-                    .ReadAsText().ShouldContain("I'm okay");
+                server.Scenario(_ =>
+                {
+                    _.Get.Action<MiddleWareInterceptedEndpoint>(x => x.get_middleware_result());
+                    _.Header("silly").SingleValueShouldEqual("string");
+
+                    _.ContentShouldContain("I'm okay");
+                });
             }
         }
 
@@ -70,10 +77,13 @@ namespace FubuMVC.IntegrationTesting.Owin
                 };
             };
 
-            using (var server = serverFor(x => { x.AddMiddleware(middleware); }))
+            using (var server = serverFor(x => x.AddMiddleware(middleware)))
             {
-                server.Endpoints.Get<MiddleWareInterceptedEndpoint>(x => x.get_middleware_result())
-                    .ReadAsText().ShouldContain("1-I'm okay-2");
+                server.Scenario(_ =>
+                {
+                    _.Get.Action<MiddleWareInterceptedEndpoint>(x => x.get_middleware_result());
+                    _.ContentShouldBe("1-I'm okay-2");
+                });
             }
         }
 
@@ -84,8 +94,11 @@ namespace FubuMVC.IntegrationTesting.Owin
 
             using (var server = serverFor(x => { node = x.AddMiddleware<SpecialDisposableMiddleware>(); }))
             {
-                server.Endpoints.Get<MiddleWareInterceptedEndpoint>(x => x.get_middleware_result())
-                    .ReadAsText().ShouldContain("I'm okay");
+                server.Scenario(_ =>
+                {
+                    _.Get.Action<MiddleWareInterceptedEndpoint>(x => x.get_middleware_result());
+                    _.ContentShouldContain("I'm okay");
+                });
             }
 
             node.Middleware.IWasDisposed.ShouldBeTrue();

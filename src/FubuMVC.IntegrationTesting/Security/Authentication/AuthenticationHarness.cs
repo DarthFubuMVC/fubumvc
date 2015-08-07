@@ -1,14 +1,11 @@
 using System;
 using FubuMVC.Core;
-using FubuMVC.Core.Endpoints;
-using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Http.Scenarios;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Security.Authentication;
 using FubuMVC.Core.Security.Authentication.Membership;
 using FubuMVC.Core.Urls;
 using NUnit.Framework;
-using Rhino.Mocks;
 using StructureMap;
 
 namespace FubuMVC.IntegrationTesting.Security.Authentication
@@ -21,7 +18,6 @@ namespace FubuMVC.IntegrationTesting.Security.Authentication
         protected virtual void configure(FubuRegistry registry)
         {
             registry.Actions.IncludeType<SampleController>();
-            
 
 
             registry.AlterSettings<AuthenticationSettings>(

@@ -1,6 +1,9 @@
-﻿using FubuMVC.Core;
+﻿using System.Net;
+using FubuCore;
+using FubuMVC.Core;
 using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Http.Owin;
+using FubuMVC.Core.Urls;
 using Shouldly;
 using NUnit.Framework;
 
@@ -19,9 +22,12 @@ namespace FubuMVC.IntegrationTesting.Owin
                 _.HostWith<Katana>();
             }))
             {
-                server.Endpoints.Get<OwinAppModeEndpoint>(x => x.get_owin_mode())
-                    .ReadAsText()
-                    .ShouldBe("reallyrandom");
+
+                var url = server.BaseAddress.AppendUrl(server.Get<IUrlRegistry>().UrlFor<OwinAppModeEndpoint>(x => x.get_owin_mode()));
+                
+
+                var client = new WebClient();
+                client.DownloadString(url).ShouldBe("reallyrandom");
             }
         }
     }

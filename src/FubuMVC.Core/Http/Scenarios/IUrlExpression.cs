@@ -36,6 +36,12 @@ namespace FubuMVC.Core.Http.Scenarios
             _request.Accepts(accepts);
             return this;
         }
+
+        public SendExpression Etag(string etag)
+        {
+            _request.ReplaceHeader(HttpRequestHeaders.IfNoneMatch, etag);
+            return this;
+        }
     }
 
 }

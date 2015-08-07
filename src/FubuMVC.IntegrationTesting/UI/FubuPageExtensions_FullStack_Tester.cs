@@ -1,20 +1,38 @@
 ﻿using System;
-using System.Net;
 using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
-using FubuMVC.Core.Http.Hosting;
-using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Security;
 using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.View;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
 namespace FubuMVC.IntegrationTesting.UI
 {
     [TestFixture]
-    public class FubuPageExtension_with_default_conventions_tester : FubuPageExtensionContext
+    public class FubuPageExtension_with_default_conventions_tester 
     {
+        [SetUp]
+        public void SetUp()
+        {
+            theResult = string.Empty;
+        }
+
+
+        protected string theResult;
+
+        protected void execute(Func<IFubuPage<ConventionTarget>, object> func)
+        {
+            ConventionEndpoint.Source = func;
+
+            var response = TestHost.Scenario(_ =>
+            {
+                _.Get.Action<ConventionEndpoint>(x => x.get_result());
+                _.StatusCodeShouldBeOk();
+            });
+
+            theResult = response.Body.ReadAsText();
+        }
+
         [Test]
         public void authorized_link_to_positive_directly_against_endpoint_service()
         {
@@ -142,49 +160,6 @@ namespace FubuMVC.IntegrationTesting.UI
         public DateTime? NullableNow { get; set; }
     }
 
-    [TestFixture]
-    public class FubuPageExtensionContext
-    {
-        [TestFixtureSetUp]
-        public void StartServer()
-        {
-            var port = PortFinder.FindPort(5500);
-
-            _server = FubuRuntime.Basic(_ => _.HostWith<Katana>());
-        }
-
-        [TestFixtureTearDown]
-        public void StopServer()
-        {
-            _server.Dispose();
-        }
-
-        [SetUp]
-        public void SetUp()
-        {
-            theResult = string.Empty;
-        }
-
-
-        protected string theResult;
-        private FubuRuntime _server;
-
-        public string BaseAddress
-        {
-            get { return _server.BaseAddress; }
-        }
-
-
-        protected void execute(Func<IFubuPage<ConventionTarget>, object> func)
-        {
-            ConventionEndpoint.Source = func;
-
-            var response = _server.Endpoints.Get<ConventionEndpoint>(x => x.get_result());
-            response.StatusCodeShouldBe(HttpStatusCode.OK);
-
-            theResult = response.ReadAsText();
-        }
-    }
 
     public class ConventionEndpoint
     {

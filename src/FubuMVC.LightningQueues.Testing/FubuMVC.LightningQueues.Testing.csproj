@@ -79,7 +79,6 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Diagnostic_endpoints_integration_Smoke_Tester.cs" />
     <Compile Include="FubuTransportRegistryActivationTester.cs" />
     <Compile Include="Full_end_to_end_delayed_message_processing_with_Lightning_Queues.cs">
       <SubType>Code</SubType>
