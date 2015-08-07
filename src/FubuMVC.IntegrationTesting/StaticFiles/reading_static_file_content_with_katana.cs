@@ -32,6 +32,7 @@ namespace FubuMVC.IntegrationTesting.StaticFiles
                     .LastModifiedShouldBe(file.LastModified())
                     .EtagShouldBe(file.Etag());
             }
+             
         }
 
         [Test]

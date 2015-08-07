@@ -74,6 +74,7 @@
     <Compile Include="AjaxExtensions.cs" />
     <Compile Include="Ajax\AjaxContinuationWriter.cs" />
     <Compile Include="Ajax\AjaxError.cs" />
+    <Compile Include="Attributes\CompressContentAttribute.cs" />
     <Compile Include="Attributes\ViewSubjectAttribute.cs" />
     <Compile Include="DeactivatorExecuted.cs" />
     <Compile Include="DiagnosticsExtensions.cs" />

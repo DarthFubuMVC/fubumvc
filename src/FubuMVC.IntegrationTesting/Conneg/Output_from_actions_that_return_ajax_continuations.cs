@@ -6,32 +6,39 @@ using NUnit.Framework;
 namespace FubuMVC.IntegrationTesting.Conneg
 {
     [TestFixture]
-    public class Output_from_actions_that_return_ajax_continuations : FubuRegistryHarness
+    public class Output_from_actions_that_return_ajax_continuations 
     {
-        protected override void configure(FubuRegistry registry)
-        {
-            registry.Actions.IncludeType<AjaxController>();
-        }
 
         [Test]
         public void get_output_from_continuation()
         {
-            endpoints.PostJson(new AjaxInput
+            TestHost.Scenario(_ =>
             {
-                Message = "something"
-            })
-                .ContentShouldBe(MimeType.Json, "{\"success\":true,\"refresh\":false,\"message\":\"something\"}");
+                _.Post.Json(new AjaxInput
+                {
+                    Message = "something"
+                });
+
+                _.ContentShouldBe("{\"success\":true,\"refresh\":false,\"message\":\"something\"}");
+                _.ContentTypeShouldBe(MimeType.Json);
+            });
         }
 
         [Test]
         public void get_output_from_custom_continuation()
         {
-            endpoints.PostJson(new SpecialInput {Name = "somebody"})
-                .ContentShouldBe(MimeType.Json, "{\"success\":false,\"refresh\":false,\"name\":\"somebody\"}");
+            var specialInput = new SpecialInput {Name = "somebody"};
+
+            TestHost.Scenario(_ =>
+            {
+                _.Post.Json(specialInput);
+                _.ContentShouldBe("{\"success\":false,\"refresh\":false,\"name\":\"somebody\"}");
+                _.ContentTypeShouldBe(MimeType.Json);
+            });
         }
     }
 
-    public class AjaxController
+    public class AjaxContinuationEndpoints
     {
         public AjaxContinuation post_input(AjaxInput input)
         {

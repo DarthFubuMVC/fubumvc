@@ -12,7 +12,7 @@ namespace FubuMVC.Core.Http.Compression
         {
             graph.Chains
                 .Where(chain => chain.Calls.Any(x => !x.HasAttribute<DoNotCompressAttribute>()))
-                .Each(chain => { chain.ApplyCompression(); });
+                .Each(chain => chain.ApplyCompression());
         }
     }
 }

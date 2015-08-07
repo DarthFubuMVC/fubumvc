@@ -2,23 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using FubuMVC.Core;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Runtime;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
 namespace FubuMVC.IntegrationTesting.Http
 {
     [TestFixture]
-    public class reading_and_writing_http_headers_and_responses_with_OWIN : FubuRegistryHarness
+    public class reading_and_writing_http_headers_and_responses_with_OWIN
     {
-        protected override void configure(FubuRegistry registry)
-        {
-            registry.Actions.IncludeType<ResponseController>();
-        }
-
         [Test]
         public void read_values_from_the_response()
         {
@@ -29,20 +23,27 @@ namespace FubuMVC.IntegrationTesting.Http
                 StatusDescription = "Weird"
             };
 
-            var response = endpoints.PostJson(request).ReadAsJson<OwinResponse>();
-            response.Description.ShouldBe(request.StatusDescription);
-            response.StatusCode.ShouldBe(request.StatusCode);
+            TestHost.Scenario(_ =>
+            {
+                _.Post.Json(request);
 
-            request.Headers.Each(x => { response.ResponseHeaders.ShouldContain(x); });
+                _.StatusCodeShouldBe(HttpStatusCode.Created);
+
+                var response = _.Response.Body.ReadAsJson<OwinResponse>();
+                response.Description.ShouldBe(request.StatusDescription);
+                response.StatusCode.ShouldBe(request.StatusCode);
+
+                request.Headers.Each(x => { response.ResponseHeaders.ShouldContain(x); });
+            });
         }
     }
 
-    public class ResponseController
+    public class ResponseEndpoints
     {
         private readonly IOutputWriter _writer;
         private readonly IHttpResponse _response;
 
-        public ResponseController(IOutputWriter writer, IHttpResponse response)
+        public ResponseEndpoints(IOutputWriter writer, IHttpResponse response)
         {
             _writer = writer;
             _response = response;

@@ -1,35 +1,36 @@
-﻿using System.Net;
-using FubuMVC.Core;
-using FubuMVC.Core.Http.Compression;
-using Shouldly;
+﻿using FubuMVC.Core;
+using FubuMVC.Core.Http;
 using NUnit.Framework;
 
 namespace FubuMVC.IntegrationTesting.Http
 {
     [TestFixture]
-    public class compression_testing : FubuRegistryHarness
+    public class compression_testing
     {
-        protected override void configure(FubuRegistry registry)
-        {
-            registry.Actions.IncludeType<CompressionController>();
-
-            registry.Policies.Local.Add<ApplyCompression>();
-        }
-
         [Test]
         public void retrieves_the_gzip_compressed_content()
         {
-            var response = endpoints.GetByInput(new CompressedInput(), acceptEncoding: "gzip");
+            TestHost.Scenario(_ =>
+            {
+                _.Get.Input<CompressedInput>();
 
-            response.ResponseHeaderFor(HttpResponseHeader.ContentEncoding).ShouldBe("gzip");
+                _.Request.AppendHeader(HttpRequestHeaders.AcceptEncoding, "gzip");
+
+                _.Header(HttpGeneralHeaders.ContentEncoding).SingleValueShouldEqual("gzip");
+            });
         }
 
         [Test]
         public void retrieves_the_deflate_compressed_content()
         {
-            var response = endpoints.GetByInput(new CompressedInput(), acceptEncoding: "deflate");
+            TestHost.Scenario(_ =>
+            {
+                _.Get.Input<CompressedInput>();
 
-            response.ResponseHeaderFor(HttpResponseHeader.ContentEncoding).ShouldBe("deflate");
+                _.Request.AppendHeader(HttpRequestHeaders.AcceptEncoding, "deflate");
+
+                _.Header(HttpGeneralHeaders.ContentEncoding).SingleValueShouldEqual("deflate");
+            });
         }
     }
 
@@ -37,8 +38,9 @@ namespace FubuMVC.IntegrationTesting.Http
     {
     }
 
-    public class CompressionController
+    public class CompressionEndpoint
     {
+        [CompressContent]
         public string get_compressed_content(CompressedInput input)
         {
             return "Hello, World!";

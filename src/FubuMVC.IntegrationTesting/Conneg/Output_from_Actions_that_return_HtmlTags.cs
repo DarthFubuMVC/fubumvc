@@ -1,4 +1,3 @@
-using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
 using HtmlTags;
 using NUnit.Framework;
@@ -6,29 +5,32 @@ using NUnit.Framework;
 namespace FubuMVC.IntegrationTesting.Conneg
 {
     [TestFixture]
-    public class Output_from_Actions_that_return_HtmlTags : FubuRegistryHarness
+    public class Output_from_Actions_that_return_HtmlTags
     {
-        protected override void configure(FubuRegistry registry)
-        {
-            registry.Actions.IncludeType<HtmlTagController>();
-        }
-
         [Test]
         public void getting_text_from_an_HtmlTag_action()
         {
-            endpoints.Get<HtmlTagController>(x => x.get_tag())
-                .ContentShouldBe(MimeType.Html, new HtmlTagController().get_tag().ToString());
+            TestHost.Scenario(_ =>
+            {
+                _.Get.Action<HtmlTagEndpoints>(x => x.get_tag());
+                _.ContentTypeShouldBe(MimeType.Html);
+                _.ContentShouldBe(new HtmlTagEndpoints().get_tag().ToString());
+            });
         }
 
         [Test]
         public void getting_text_from_an_HtmlDocument_action()
         {
-            endpoints.Get<HtmlTagController>(x => x.get_document())
-                .ContentShouldBe(MimeType.Html, new HtmlTagController().get_document().ToString());
+            TestHost.Scenario(_ =>
+            {
+                _.Get.Action<HtmlTagEndpoints>(x => x.get_document());
+                _.ContentTypeShouldBe(MimeType.Html);
+                _.ContentShouldBe(new HtmlTagEndpoints().get_document().ToString());
+            });
         }
     }
 
-    public class HtmlTagController
+    public class HtmlTagEndpoints
     {
         public HtmlTag get_tag()
         {

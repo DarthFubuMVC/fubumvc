@@ -134,8 +134,9 @@
     <Compile Include="Diagnostics\can_bring_up_the_diagnostics_home_page.cs" />
     <Compile Include="Diagnostics\serving_up_embedded_diagnostic_assets.cs" />
     <Compile Include="EndpointServiceIntegratedSmokeTester.cs" />
-    <Compile Include="FubuRegistryRunner.cs" />
     <Compile Include="FubuRegistry_using_parallel_folder_spec.cs" />
+    <Compile Include="HarnessBootstrapper.cs" />
+    <Compile Include="HttpResponseExtensions.cs" />
     <Compile Include="Http\partial_invocations.cs" />
     <Compile Include="Http\reading_and_writing_http_headers_and_responses_with_OWIN.cs" />
     <Compile Include="Http\compression_testing.cs" />
@@ -174,6 +175,7 @@
     <Compile Include="Querying\GraphQuery.cs" />
     <Compile Include="Querying\RemoteBehaviorGraph.cs" />
     <Compile Include="Querying\TypeToken.cs" />
+    <Compile Include="QuitEndpoint.cs" />
     <Compile Include="Security\Authentication\authenticated_request_against_an_authenticated_route.cs" />
     <Compile Include="Security\Authentication\AuthenticationHarness.cs" />
     <Compile Include="Security\Authentication\SampleController.cs" />
@@ -187,7 +189,7 @@
     <Compile Include="Samples\ConnegSamples.cs" />
     <Compile Include="Samples\FubuContinuationSamples.cs" />
     <Compile Include="Samples\IFubuRequestUsage.cs" />
-    <Compile Include="SharedHarness.cs" />
+    <Compile Include="TestHost.cs" />
     <Compile Include="UI\FubuPageExtensions_FullStack_Tester.cs" />
     <Compile Include="Using_a_custom_routing_policy.cs" />
     <Compile Include="Views\Actionless_Views.cs" />

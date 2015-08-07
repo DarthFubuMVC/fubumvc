@@ -9,15 +9,8 @@ using NUnit.Framework;
 namespace FubuMVC.IntegrationTesting.Conneg
 {
     [TestFixture]
-    public class AjaxInputModelBindingIntegrationTester : FubuRegistryHarness
+    public class AjaxInputModelBindingIntegrationTester 
     {
-        protected override void configure(FubuRegistry registry)
-        {
-            registry.Actions.IncludeType<JsonEndpoint>();
-            registry.Actions.IncludeType<XmlEndpoint>();
-            registry.Services.AddService<IPropertyBinder, TheAnswerBinder>();
-        }
-
 
         [Test]
         public void The_answer_should_be_model_bound_when_posting_json()
@@ -28,9 +21,14 @@ namespace FubuMVC.IntegrationTesting.Conneg
                 GoodThing2 = "Han Solo"
             };
 
-            var output = endpoints.PostJson(theInput)
-                .StatusCodeShouldBe(HttpStatusCode.OK)
-                .ReadAsJson<JsonInput>();
+            var output = TestHost.Scenario(_ =>
+            {
+                _.Post.Json(theInput);
+                _.StatusCodeShouldBeOk();
+
+             
+            })
+            .Body.ReadAsJson<JsonInput>();
 
             output.GoodThing1.ShouldBe("Obiwan");
             output.GoodThing2.ShouldBe("Han Solo");
@@ -46,9 +44,10 @@ namespace FubuMVC.IntegrationTesting.Conneg
                 BadThing2 = "Jabba"
             };
 
-            var output = endpoints.PostXml(theInput)
-                .StatusCodeShouldBe(HttpStatusCode.OK)
-                .ReadAsJson<XmlInput>();
+            var output = TestHost.Scenario(_ =>
+            {
+                _.Post.Xml(theInput);
+            }).Body.ReadAsXml<XmlInput>();
 
             output.BadThing1.ShouldBe("Vader");
             output.BadThing2.ShouldBe("Jabba");
@@ -65,9 +64,10 @@ namespace FubuMVC.IntegrationTesting.Conneg
                 TheAnswerToLifeTheUniverseAndEverything = 7
             };
 
-            var output = endpoints.PostJson(theInput)
-                .StatusCodeShouldBe(HttpStatusCode.OK)
-                .ReadAsJson<JsonInput>();
+            var output = TestHost.Scenario(_ =>
+            {
+                _.Post.Json(theInput);
+            }).Body.ReadAsJson<JsonInput>();
 
             output.TheAnswerToLifeTheUniverseAndEverything.ShouldBe(42);
         }
@@ -82,9 +82,10 @@ namespace FubuMVC.IntegrationTesting.Conneg
                 TheAnswerToLifeTheUniverseAndEverything = 13
             };
 
-            var output = endpoints.PostXml(theInput)
-                .StatusCodeShouldBe(HttpStatusCode.OK)
-                .ReadAsJson<XmlInput>();
+            var output = TestHost.Scenario(_ =>
+            {
+                _.Post.Xml(theInput);
+            }).Body.ReadAsXml<XmlInput>();
 
             output.TheAnswerToLifeTheUniverseAndEverything.ShouldBe(42);
         }

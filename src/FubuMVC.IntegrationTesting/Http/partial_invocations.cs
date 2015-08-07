@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Http.Cookies;
@@ -12,36 +13,37 @@ using NUnit.Framework;
 namespace FubuMVC.IntegrationTesting.Http
 {
     [TestFixture]
-    public class partial_invocations : FubuRegistryHarness
+    public class partial_invocations
     {
-        protected override void configure(FubuRegistry registry)
-        {
-            registry.Actions.IncludeType<PartialController>();
-        }
-
         [Test]
         public void add_their_cookies_to_the_parent_request()
         {
-            var response = endpoints.GetByInput(new NonPartialInput());
-            response.Cookies.Count.ShouldBe(1);
+            TestHost.Scenario(_ =>
+            {
+                _.Get.Input<NonPartialInput>();
+                _.Response.Cookies().Count().ShouldBe(1);
+            });
         }
 
         [Test]
         public void fast_invocation()
         {
-            endpoints.Get<PartialController>(x => x.get_fast_partial())
-                .ReadAsText().ShouldBe("The name was Malcolm Reynolds");
+            TestHost.Scenario(_ =>
+            {
+                _.Get.Action<PartialInvocationEndpoints>(x => x.get_fast_partial());
+                _.ContentShouldBe("The name was Malcolm Reynolds");
+            });
         }
     }
 
-    public class PartialController
+    public class PartialInvocationEndpoints
     {
         private readonly IPartialInvoker _partialInvoker;
         private readonly IOutputWriter _outputWriter;
         private readonly IFubuRequest _request;
         private readonly IChainResolver _resolver;
 
-        public PartialController(IPartialInvoker partialInvoker, IOutputWriter outputWriter, IFubuRequest request,
+        public PartialInvocationEndpoints(IPartialInvoker partialInvoker, IOutputWriter outputWriter, IFubuRequest request,
             IChainResolver resolver)
         {
             _partialInvoker = partialInvoker;
