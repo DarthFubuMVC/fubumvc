@@ -1,4 +1,5 @@
 ﻿using FubuCore;
+using FubuMVC.Core;
 using NUnit.Framework;
 using Serenity;
 using Shouldly;
@@ -123,14 +124,61 @@ namespace FubuMVC.IntegrationTesting.Serenity
                 scope3.Role.ShouldBe(ContainerRole.ProfileOrChild);
             }
         }
+
+        [Test]
+        public void after_each_is_called_as_context_is_finished()
+        {
+            using (var system = new FakeSerenitySystem())
+            {
+                system.AfterEachWasCalled.ShouldBe(0);
+
+                var context1 = system.As<ISystem>().CreateContext();
+                var scope1 = system.LastScope;
+
+                var specContext = SpecContext.ForTesting();
+
+                context1.AfterExecution(specContext);
+
+                // uses the same scope for the spec
+                system.LastScope.ShouldBeTheSameAs(scope1);
+                system.LastContext.ShouldBeSameAs(specContext);
+                system.AfterEachWasCalled.ShouldBe(1);
+            }
+        }
+
+        [Test]
+        public void after_all_is_called_as_the_system_is_disposed_if_the_runtime_has_been_created()
+        {
+            var system = new FakeSerenitySystem();
+            system.As<ISystem>().CreateContext();
+            system.AfterAllWasCalled.ShouldBe(0);
+
+            system.SafeDispose();
+
+            system.AfterAllWasCalled.ShouldBe(1);
+        }
+
+        [Test]
+        public void can_retrieve_services_from_the_serenity_context()
+        {
+            // just some paranoia here
+            using (var system = new FakeSerenitySystem())
+            {
+                system.As<ISystem>().CreateContext().GetService<FubuRuntime>()
+                    .ShouldBeTheSameAs(system.Runtime);
+            }
+        }
     }
 
     public class FakeSerenitySystem : SerenitySystem
     {
         public int BeforeAllWasCalled;
+        public int AfterAllWasCalled;
         public int BeforeEachWasCalled;
+        public int AfterEachWasCalled;
 
         public IContainer LastScope;
+        public ISpecContext LastContext;
 
         protected override void beforeAll()
         {
@@ -139,7 +187,9 @@ namespace FubuMVC.IntegrationTesting.Serenity
 
         protected override void afterEach(IContainer scope, ISpecContext context)
         {
-            base.afterEach(scope, context);
+            AfterEachWasCalled++;
+            LastScope = scope;
+            LastContext = context;
         }
 
         protected override void beforeEach(IContainer scope)
@@ -150,7 +200,7 @@ namespace FubuMVC.IntegrationTesting.Serenity
 
         protected override void afterAll()
         {
-            base.afterAll();
+            AfterAllWasCalled++;
         }
     }
 }

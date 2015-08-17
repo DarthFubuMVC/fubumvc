@@ -43,6 +43,11 @@ namespace Serenity
         private Task _warmup;
         private StructureMapServiceFactory _factory;
 
+        public SerenitySystem()
+        {
+            Registry.Features.Diagnostics.Enable(TraceLevel.Verbose);
+        }
+
         /// <summary>
         /// Register a policy about what to do after navigating the browser to handle issues
         /// like being redirected to a login screen
@@ -179,7 +184,7 @@ namespace Serenity
                 context.Reporting.Log(reporter);
 
                 // TODO --- needs to be the current scope
-                _parent.afterEach(null, context);
+                _parent.afterEach(_parent._factory.Container, context);
             }
 
             public TService GetService<TService>()
