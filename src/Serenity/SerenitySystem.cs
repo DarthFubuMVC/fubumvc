@@ -19,9 +19,9 @@ namespace Serenity
      * 1.) Subsystems for remote work, add to FubuRegistry
      * 2.) New IBrowserLifecycle that does everything about browsers. Browser different becomes a strategy pattern
      * 3.) Register NavigationDriver, IBrowserLifecycle
-     * 4.) Do the child container "scope" trick
-     * 5.) Actually build the FubuRuntime
-     * 6.) Allow users to specify to eagerly or lazily build the FubuRuntime
+     * DONE: 4.) Do the child container "scope" trick
+     * DONE: 5.) Actually build the FubuRuntime
+     * NOT DOING THIS: 6.) Allow users to specify to eagerly or lazily build the FubuRuntime
      * 7.) Allow users to specify the default browser
      * 8.) Allow users to specify whether the browser is built lazily or eagerly
      * 9.) BrowserLifecycle can give you different browsers upon request for inline
@@ -179,11 +179,11 @@ namespace Serenity
                 var reporter = new RequestReporter(_parent._runtime);
                 var requestLogs =
                     GetService<IRequestHistoryCache>().RecentReports().Where(x => x.SessionTag == _sessionTag).ToArray();
+                
                 reporter.Append(requestLogs);
 
                 context.Reporting.Log(reporter);
 
-                // TODO --- needs to be the current scope
                 _parent.afterEach(_parent._factory.Container, context);
             }
 
