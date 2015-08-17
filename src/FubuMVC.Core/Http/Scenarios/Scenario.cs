@@ -43,6 +43,7 @@ namespace FubuMVC.Core.Http.Scenarios
         private readonly ScenarioAssertionException _assertion = new ScenarioAssertionException();
         private int _expectedStatusCode = HttpStatusCode.OK.As<int>();
         private string _expectedStatusReason = "Ok";
+        private bool _ignoreStatusCode;
 
         void IDisposable.Dispose()
         {
@@ -62,22 +63,31 @@ namespace FubuMVC.Core.Http.Scenarios
             {
                 var response = _support.Send(_request);
 
-                var httpStatusCode = response.StatusCode;
-                if (httpStatusCode != _expectedStatusCode)
+                if (!_ignoreStatusCode)
                 {
-                    _assertion.Add("Expected status code {0} ({1}), but was {2}", _expectedStatusCode,
-                        _expectedStatusReason, httpStatusCode);
-
-                    if (httpStatusCode >= 500)
-                    {
-                        _assertion.Body = response.Body.ReadAsText();
-                    }
+                    validateStatusCode(response);
                 }
+
 
                 return response;
             });
 
             _bodyText = new Lazy<string>(() => _response.Value.Body.ReadAsText());
+        }
+
+        private void validateStatusCode(OwinHttpResponse response)
+        {
+            var httpStatusCode = response.StatusCode;
+            if (httpStatusCode != _expectedStatusCode)
+            {
+                _assertion.Add("Expected status code {0} ({1}), but was {2}", _expectedStatusCode,
+                    _expectedStatusReason, httpStatusCode);
+
+                if (httpStatusCode >= 500)
+                {
+                    _assertion.Body = response.Body.ReadAsText();
+                }
+            }
         }
 
         public IUrlExpression Get
@@ -263,6 +273,11 @@ namespace FubuMVC.Core.Http.Scenarios
             _expectedStatusReason = httpStatusCode.ToString();
         }
 
+        public void StatusCodeShouldBe(int statusCode)
+        {
+            _expectedStatusCode = statusCode;
+        }
+
         public HeaderExpectations Header(string headerKey)
         {
             return new HeaderExpectations(this, headerKey);
@@ -369,18 +384,17 @@ namespace FubuMVC.Core.Http.Scenarios
         public void FormData<T>(T target, string method = "POST",
             string contentType = "application/x-www-form-urlencoded", string accept = "*/*") where T : class
         {
-            new TypeDescriptorCache().ForEachProperty(typeof (T), prop =>
-            {
-                var rawValue = prop.GetValue(target, null);
-                var httpValue = rawValue == null ? string.Empty : rawValue.ToString().UrlEncoded();
-
-                Request.Form[prop.Name] = httpValue;
-            });
+            Request.Body.WriteFormData(target);
 
             Request.HttpMethod(method);
             Request.ContentType(contentType);
 
             this.As<IUrlExpression>().Input(target);
+        }
+
+        public void IgnoreStatusCode()
+        {
+            _ignoreStatusCode = true;
         }
     }
 }

@@ -1,14 +1,13 @@
 ﻿using System;
-using FubuMVC.Core;
-using FubuMVC.Core.Http.Hosting;
 using FubuMVC.Core.Runtime;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
 namespace FubuMVC.IntegrationTesting.Conneg
 {
+    [Obsolete("Remove this after the ST specs are done")]
     [TestFixture]
-    public class Conneg_can_be_corrected_with_querystring_parameters_for_JSON_and_XML 
+    public class Conneg_can_be_corrected_with_querystring_parameters_for_JSON_and_XML
     {
         [Test]
         public void force_to_json_with_querystring()
@@ -52,7 +51,6 @@ namespace FubuMVC.IntegrationTesting.Conneg
                 _.Get.Url("conneg/override/Foo?format=xml").Accepts("text/html");
                 _.ContentTypeShouldBe(MimeType.Xml);
             });
-
         }
     }
 

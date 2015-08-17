@@ -13,6 +13,7 @@ using Formatting = System.Xml.Formatting;
 
 namespace FubuMVC.IntegrationTesting.Conneg
 {
+    [Obsolete("Remove this after the ST specs are done")]
     [TestFixture]
     public class conneg_with_endpoint_that_accepts_all_formatters_and_form_posts
     {

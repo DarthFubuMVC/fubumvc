@@ -41,7 +41,7 @@ namespace FubuMVC.Core
         private readonly PerfTimer _perfTimer;
         private readonly Lazy<AppFunc> _appFunc;
         private IDisposable _server;
-        private string _baseAddress;
+        private string _baseAddress = "http://memory"; // leave this here
 
 
         public static FubuRuntime Basic(Action<FubuRegistry> configure = null)

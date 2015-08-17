@@ -1,0 +1,15 @@
+<Spec id="003e93ae-a8dc-44c7-9a83-b9c11e1efa0a" maxRetries="0" tags="" lifecycle="Regression" name="Default Conneg Rules">
+  <Conneg id="0be124b2-ce8c-4875-b01f-f27c5e3463fc">
+    <DefaultConnegRules>
+      <table id="70f40ac1-49c2-48d4-9449-8b808df50f78">
+        <DefaultConnegRules-row QueryString="NULL" format="Json" Accepts="*/*" ContentType="application/json" ResponseCode="200" />
+        <DefaultConnegRules-row QueryString="NULL" format="Json" Accepts="text/json" ContentType="text/json" ResponseCode="200" />
+        <DefaultConnegRules-row QueryString="NULL" format="Xml" Accepts="*/*" ContentType="application/json" ResponseCode="200" />
+        <DefaultConnegRules-row QueryString="NULL" format="Xml" Accepts="application/xml" ContentType="application/xml" ResponseCode="200" />
+        <DefaultConnegRules-row QueryString="NULL" format="Xml" Accepts="text/xml" ContentType="text/xml" ResponseCode="200" />
+        <DefaultConnegRules-row QueryString="NULL" format="Form Post" Accepts="*/*" ContentType="application/json" ResponseCode="200" />
+        <DefaultConnegRules-row QueryString="NULL" format="Json" Accepts="random/format" ContentType="text/plain" ResponseCode="406" />
+      </table>
+    </DefaultConnegRules>
+  </Conneg>
+</Spec>

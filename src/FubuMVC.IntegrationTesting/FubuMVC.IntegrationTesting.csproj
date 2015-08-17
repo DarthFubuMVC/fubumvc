@@ -135,6 +135,7 @@
     <Compile Include="CommandLine\Running\StartApplicationTester.cs" />
     <Compile Include="CommandLine\usage_graph_smoke_tester.cs" />
     <Compile Include="Conneg\AjaxInputModelBindingIntegrationTester.cs" />
+    <Compile Include="Conneg\ConnegFixture.cs" />
     <Compile Include="Conneg\Conneg_can_be_corrected_with_querystring_parameters_for_JSON_and_XML.cs" />
     <Compile Include="Conneg\Conneg_Can_Choose_Output_Media_Based_on_Mimetypes.cs" />
     <Compile Include="Conneg\Custom_mimetype_correction_policy_usage.cs" />
@@ -197,6 +198,7 @@
     <Compile Include="Samples\FubuContinuationSamples.cs" />
     <Compile Include="Samples\IFubuRequestUsage.cs" />
     <Compile Include="TestHost.cs" />
+    <Compile Include="TestSystem.cs" />
     <Compile Include="UI\FubuPageExtensions_FullStack_Tester.cs" />
     <Compile Include="Using_a_custom_routing_policy.cs" />
     <Compile Include="Views\Actionless_Views.cs" />
@@ -387,9 +389,6 @@
     <Content Include="Test.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Tests\Packaging\Environment\Environment Runner captures errors from the Environment setup.xml" />
-    <Content Include="Tests\Packaging\Environment\Execute Environment Happy Path.xml" />
-    <Content Include="Tests\Packaging\Environment\Logging installer failures.xml" />
     <None Include="test.map" />
     <None Include="Views\Razor\App.config" />
     <None Include="Views\Razor\Templates\A3.cshtml">
@@ -569,7 +568,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent></PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

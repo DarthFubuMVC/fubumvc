@@ -170,7 +170,7 @@ namespace FubuMVC.IntegrationTesting.Serenity
         }
     }
 
-    public class FakeSerenitySystem : SerenitySystem
+    internal class FakeSerenitySystem : SerenitySystem
     {
         public int BeforeAllWasCalled;
         public int AfterAllWasCalled;

@@ -112,6 +112,7 @@
     <Compile Include="Fixtures\Handlers\TextAreaElementHandler.cs" />
     <Compile Include="Fixtures\Handlers\TextboxElementHandler.cs" />
     <Compile Include="Fixtures\ScreenFixture.cs" />
+    <Compile Include="Fixtures\SerenityFixture.cs" />
     <Compile Include="Fixtures\WebDriverExtensions.cs" />
     <Compile Include="IAfterNavigation.cs" />
     <Compile Include="INavigationLogger.cs" />

@@ -15,7 +15,7 @@ using StoryTeller.Grammars;
 
 namespace Serenity.Fixtures
 {
-    public class ScreenFixture : Fixture
+    public class ScreenFixture : SerenityFixture
     {
         private readonly Stack<ISearchContext> _searchContexts = new Stack<ISearchContext>();
 

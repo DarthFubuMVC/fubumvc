@@ -8,7 +8,10 @@ using System.Threading;
 using System.Web;
 using System.Xml.Serialization;
 using FubuCore;
+using FubuCore.Reflection;
 using FubuMVC.Core.Http.Cookies;
+using FubuMVC.Core.Http.Scenarios;
+using FubuMVC.Core.Json;
 using HtmlTags;
 
 namespace FubuMVC.Core.Http.Owin
@@ -374,7 +377,20 @@ namespace FubuMVC.Core.Http.Owin
 
             public void JsonInputIs(object target)
             {
-                var json = JsonUtil.ToJson(target);
+                string json = null;
+
+                if (_parent.Environment.ContainsKey("scenario-support"))
+                {
+                    var serializer = _parent.Environment["scenario-support"]
+                        .As<IScenarioSupport>()
+                        .Get<IJsonSerializer>();
+
+                    json = serializer.Serialize(target);
+                }
+                else
+                {
+                    json = JsonUtil.ToJson(target);
+                }
 
                 JsonInputIs(json);
             }
@@ -386,6 +402,17 @@ namespace FubuMVC.Core.Http.Owin
                 writer.Flush();
 
                 _parent.Input.Position = 0;
+            }
+
+            public void WriteFormData<T>(T target) where T : class
+            {
+                new TypeDescriptorCache().ForEachProperty(typeof(T), prop =>
+                {
+                    var rawValue = prop.GetValue(target, null);
+                    var httpValue = rawValue == null ? string.Empty : rawValue.ToString().UrlEncoded();
+
+                    _parent.Form[prop.Name] = httpValue;
+                });
             }
 
             public void ReplaceBody(Stream stream)
@@ -418,7 +445,9 @@ namespace FubuMVC.Core.Http.Owin
             {
                 yield return "{0}={1}".ToFormat(key, HttpUtility.HtmlEncode(Form[key]));
             }
-        } 
+        }
+
+
 
     }
 }
