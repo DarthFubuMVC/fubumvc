@@ -1,5 +1,6 @@
 ﻿using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.Security.Authorization;
 using NUnit.Framework;
 using Serenity;
 using Shouldly;
@@ -166,6 +167,22 @@ namespace FubuMVC.IntegrationTesting.Serenity
             {
                 system.As<ISystem>().CreateContext().GetService<FubuRuntime>()
                     .ShouldBeTheSameAs(system.Runtime);
+            }
+        }
+
+        [Test]
+        public void security_settings_are_reset_on_each_test_run()
+        {
+            using (var system = new SerenitySystem())
+            {
+                system.As<ISystem>().CreateContext();
+                system.Runtime.Get<SecuritySettings>().AuthenticationEnabled = false;
+
+                // okay, now create a new context and the settings should go back to everything
+                // being enabled
+                system.As<ISystem>().CreateContext();
+                system.Runtime.Get<SecuritySettings>().AuthenticationEnabled.ShouldBeTrue();
+
             }
         }
     }

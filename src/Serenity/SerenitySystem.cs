@@ -5,6 +5,7 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.StructureMap;
 using StoryTeller;
 using StoryTeller.Conversion;
@@ -134,6 +135,7 @@ namespace Serenity
             }
 
             _factory.StartNewScope();
+            _factory.Get<SecuritySettings>().Reset();
             beforeEach(_factory.Container);
 
             return new SerenityContext(this);
