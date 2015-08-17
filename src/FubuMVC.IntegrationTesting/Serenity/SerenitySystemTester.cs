@@ -2,6 +2,7 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Security.Authorization;
 using NUnit.Framework;
+using OpenQA.Selenium;
 using Serenity;
 using Shouldly;
 using StoryTeller;
@@ -184,6 +185,41 @@ namespace FubuMVC.IntegrationTesting.Serenity
                 system.Runtime.Get<SecuritySettings>().AuthenticationEnabled.ShouldBeTrue();
 
             }
+        }
+
+        [Test]
+        public void can_create_a_navigation_driver_from_running_serenity_system_with_default_after_navigation()
+        {
+            using (var system = new FakeSerenitySystem())
+            {
+                system.As<ISystem>().Warmup().Wait();
+
+                system.Runtime.Get<NavigationDriver>()
+                    .AfterNavigation.ShouldBeOfType<NulloAfterNavigation>();
+
+            }
+        }
+
+        [Test]
+        public void can_create_a_navigation_driver_from_running_serenity_system_with_provided_after_navigation()
+        {
+            using (var system = new FakeSerenitySystem())
+            {
+                system.AfterNavigation<FakeAfterNavigation>();
+                system.As<ISystem>().Warmup().Wait();
+
+                system.Runtime.Get<NavigationDriver>()
+                    .AfterNavigation.ShouldBeOfType<FakeAfterNavigation>();
+
+            }
+        }
+    }
+
+    public class FakeAfterNavigation : IAfterNavigation
+    {
+        public void AfterNavigation(IWebDriver driver, string desiredUrl)
+        {
+            throw new System.NotImplementedException();
         }
     }
 

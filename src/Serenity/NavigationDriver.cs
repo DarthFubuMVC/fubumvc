@@ -100,5 +100,10 @@ namespace Serenity
         {
             return new ScreenDriver(Driver);
         }
+
+        public IAfterNavigation AfterNavigation
+        {
+            get { return _afterNavigation; }
+        }
     }
 }

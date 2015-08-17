@@ -47,7 +47,7 @@ namespace Serenity
         public SerenitySystem()
         {
             Registry.Features.Diagnostics.Enable(TraceLevel.Verbose);
-
+            Registry.Services.For<IAfterNavigation>().Use<NulloAfterNavigation>();
             Registry.Services.ForSingletonOf<IBrowserLifecycle>().Use("Browser Lifecycle", () =>
             {
                 var browserType = BrowserFactory.DetermineBrowserType(DefaultBrowser);
@@ -61,13 +61,9 @@ namespace Serenity
         /// Register a policy about what to do after navigating the browser to handle issues
         /// like being redirected to a login screen
         /// </summary>
-        public IAfterNavigation AfterNavigation
+        public void AfterNavigation<T>() where T : IAfterNavigation
         {
-            set
-            {
-                // TODO -- probably just register it in the container
-                throw new Exception("Capture it and figure out how to use it");
-            }
+            Registry.Services.ReplaceService<IAfterNavigation, T>();
         }
 
         public FubuRuntime Runtime
