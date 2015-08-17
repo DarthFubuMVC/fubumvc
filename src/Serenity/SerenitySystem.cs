@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Runtime;
+using FubuMVC.Core.Runtime;
+using FubuMVC.Core.StructureMap;
 using StoryTeller;
 using StoryTeller.Conversion;
 using StoryTeller.Engine;
@@ -30,15 +33,15 @@ namespace Serenity
      * 14.) Look closely at FubuTransportSystem and TestNodes
      */
 
+    public class SerenitySystem : SerenitySystem<FubuRegistry> { }
+
     public class SerenitySystem<T> : ISystem where T : FubuRegistry, new()
     {
         public readonly CellHandling CellHandling = new CellHandling(new EquivalenceChecker(), new Conversions());
         public readonly T Registry = new T();
-
-        public FubuRuntime Runtime
-        {
-            get { throw new NotImplementedException(); }
-        }
+        private FubuRuntime _runtime;
+        private Task _warmup;
+        private StructureMapServiceFactory _factory;
 
         /// <summary>
         /// Register a policy about what to do after navigating the browser to handle issues
@@ -50,6 +53,24 @@ namespace Serenity
             {
                 // TODO -- probably just register it in the container
                 throw new Exception("Capture it and figure out how to use it");
+            }
+        }
+
+        public FubuRuntime Runtime
+        {
+            get
+            {
+                if (_warmup != null)
+                {
+                    _warmup.Wait();
+                }
+
+                if (_runtime == null)
+                {
+                    throw new InvalidOperationException("This property is not available until Storyteller either \"warms up\" the system or until the first specification is executed");
+                }
+                
+                return _runtime;
             }
         }
 
@@ -76,8 +97,11 @@ namespace Serenity
 
         void IDisposable.Dispose()
         {
-            afterAll();
-            Runtime.Dispose();
+            if (_runtime != null)
+            {
+                afterAll();
+                _runtime.Dispose();
+            }
         }
 
         CellHandling ISystem.Start()
@@ -87,13 +111,32 @@ namespace Serenity
 
         IExecutionContext ISystem.CreateContext()
         {
-            // NEED to push the scope
-            throw new NotImplementedException();
+            if (_warmup != null)
+            {
+                _warmup.Wait();
+            }
+            else if (_runtime == null)
+            {
+                startAll();
+            }
+
+            _factory.StartNewScope();
+            beforeEach(_factory.Container);
+
+            return new SerenityContext(this);
+        }
+
+        private void startAll()
+        {
+            _runtime = new FubuRuntime(Registry);
+            _factory = _runtime.Get<IServiceFactory>().As<StructureMapServiceFactory>();
+            beforeAll();
         }
 
         Task ISystem.Warmup()
         {
-            throw new NotImplementedException();
+            _warmup = Task.Factory.StartNew(startAll);
+            return _warmup;
         }
 
         /* TODO -- figure out what to do here
@@ -128,7 +171,7 @@ namespace Serenity
 
             public void AfterExecution(ISpecContext context)
             {
-                var reporter = new RequestReporter(_parent.Runtime);
+                var reporter = new RequestReporter(_parent._runtime);
                 var requestLogs =
                     GetService<IRequestHistoryCache>().RecentReports().Where(x => x.SessionTag == _sessionTag).ToArray();
                 reporter.Append(requestLogs);
@@ -141,7 +184,7 @@ namespace Serenity
 
             public TService GetService<TService>()
             {
-                return _parent.Runtime.Get<TService>();
+                return _parent._runtime.Get<TService>();
             }
         }
     }

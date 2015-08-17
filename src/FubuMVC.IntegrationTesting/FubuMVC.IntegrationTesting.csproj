@@ -79,6 +79,10 @@
     <Reference Include="Spark">
       <HintPath>..\packages\Spark\lib\NET40\Spark.dll</HintPath>
     </Reference>
+    <Reference Include="StoryTeller, Version=3.0.0.199, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Storyteller\lib\net45\StoryTeller.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap\lib\net40\StructureMap.dll</HintPath>
     </Reference>
@@ -173,6 +177,7 @@
     <Compile Include="Security\Authentication\unauthenticated_request_against_an_authenticated_route.cs" />
     <Compile Include="Security\Authentication\unauthenticated_request_against_an_unauthenticated_route.cs" />
     <Compile Include="Security\Authorization\AuthorizationPreviewServiceIntegratedTester.cs" />
+    <Compile Include="Serenity\SerenitySystemTester.cs" />
     <Compile Include="ServiceBus\Publishing\PublishingConfigurationIntegrationTester.cs" />
     <Compile Include="StaticFiles\reading_static_file_content_with_katana.cs" />
     <Compile Include="Routing\end_to_end_route_alias_tester.cs" />
@@ -246,6 +251,10 @@
     <ProjectReference Include="..\OwinBottle\OwinBottle.csproj">
       <Project>{60b6139b-6bda-4860-a475-9675d47888f7}</Project>
       <Name>OwinBottle</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Serenity\Serenity.csproj">
+      <Project>{900a0419-3579-4dae-85be-71a3e4b34239}</Project>
+      <Name>Serenity</Name>
     </ProjectReference>
     <ProjectReference Include="..\TestPackage1\TestPackage1.csproj">
       <Project>{1F18D6EB-4D9C-407A-BD70-C5D525E377B6}</Project>
