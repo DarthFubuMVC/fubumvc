@@ -90,6 +90,7 @@
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AssetTagsState.cs" />
+    <Compile Include="BrowserFactory.cs" />
     <Compile Include="BrowserLifecycle.cs" />
     <Compile Include="BrowserType.cs" />
     <Compile Include="ChromeBrowser.cs" />
@@ -161,7 +162,6 @@
     <Compile Include="RemoteSubSystem.cs" />
     <Compile Include="Retry.cs" />
     <Compile Include="Wait.cs" />
-    <Compile Include="WebDriverSettings.cs" />
     <Compile Include="WebDriver\JavaScriptBuilders\StringJavaScriptBuilder.cs" />
     <Compile Include="WebElementExtensions.cs" />
   </ItemGroup>

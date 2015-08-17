@@ -52,7 +52,7 @@ namespace Serenity.Fixtures
 
         protected NavigationDriver Navigation
         {
-            get { return Context.Service<NavigationDriver>(); }
+            get { return Retrieve<NavigationDriver>(); }
         }
 
         protected internal IWebDriver Driver
@@ -62,7 +62,7 @@ namespace Serenity.Fixtures
 
         protected IBrowserLifecycle Browser
         {
-            get { return Context.Service<IBrowserLifecycle>(); }
+            get { return Retrieve<IBrowserLifecycle>(); }
         }
 
         protected string RootUrl

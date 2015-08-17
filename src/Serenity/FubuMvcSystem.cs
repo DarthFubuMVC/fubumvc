@@ -124,8 +124,8 @@ namespace Serenity
             }
 
             if (DefaultBrowser != null) return DefaultBrowser.Value;
-
-            return WebDriverSettings.Current.Browser;
+            throw new Exception("GONE");
+            //return WebDriverSettings.Current.Browser;
         }
 
         public void Dispose()
@@ -198,7 +198,7 @@ namespace Serenity
             {
                 _runtime = _runtimeSource();
 
-                var browserLifecycle = WebDriverSettings.GetBrowserLifecyle(ChooseBrowserType());
+                //var browserLifecycle = WebDriverSettings.GetBrowserLifecyle(ChooseBrowserType());
                 SetupApplicationHost();
 
 

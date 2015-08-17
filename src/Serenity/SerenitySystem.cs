@@ -46,7 +46,15 @@ namespace Serenity
         public SerenitySystem()
         {
             Registry.Features.Diagnostics.Enable(TraceLevel.Verbose);
+
+            Registry.Services.ForSingletonOf<IBrowserLifecycle>().Use("Browser Lifecycle", () =>
+            {
+                var browserType = BrowserFactory.DetermineBrowserType(DefaultBrowser);
+                return BrowserFactory.GetBrowserLifecyle(browserType);
+            });
         }
+
+        public BrowserType? DefaultBrowser { get; set; }
 
         /// <summary>
         /// Register a policy about what to do after navigating the browser to handle issues
