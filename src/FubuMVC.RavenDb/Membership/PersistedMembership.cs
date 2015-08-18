@@ -13,7 +13,7 @@ namespace FubuMVC.RavenDb.Membership
         {
             registry.Services.ReplaceService<IMembershipRepository, MembershipRepository<T>>();
             registry.Services.SetServiceIfNone<IPasswordHash, PasswordHash>();
-            registry.Services.SetServiceIfNone<ILoginAuditor, PersistedLoginAuditor>();
+            registry.Services.ReplaceService<ILoginAuditor, PersistedLoginAuditor>();
 
             registry.AlterSettings<AuthenticationSettings>(x =>
             {

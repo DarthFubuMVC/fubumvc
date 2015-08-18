@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FubuMVC.Core.Http.Hosting
 {
-    public class Nowin : IHost
+    public class NOWIN : IHost
     {
         public IDisposable Start(int port, Func<IDictionary<string, object>, Task> func, IDictionary<string, object> properties)
         {

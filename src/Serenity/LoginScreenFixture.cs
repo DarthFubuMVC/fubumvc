@@ -101,25 +101,26 @@ namespace Serenity
         public bool IsOnTheLoginScreen()
         {
             string url = Urls.UrlFor(new LoginRequest(), "GET");
-            string actualUrl = Driver.Url.Split('?').First();
-            if (new Uri(actualUrl).IsAbsoluteUri)
-            {
-                actualUrl = new Uri(actualUrl).LocalPath;
-            }
 
-            return actualUrl.EqualsIgnoreCase(url);
+
+            var actual = Driver.Url;
+
+            StoryTellerAssert.Fail(!actual.Matches(url), "The actual url was " + actual);
+
+            return true;
         }
 
         [FormatAs("Should have moved off the login screen")]
         public bool IsNotOnTheLoginScreen()
         {
-            return !IsOnTheLoginScreen();
+            string url = Urls.UrlFor(new LoginRequest(), "GET");
+            return !Driver.Url.Matches(url);
         }
 
         [FormatAs("The url should now be {url}")]
         public bool TheUrlIs(string url)
         {
-            StoryTellerAssert.Fail(Driver.Url.Split('?').First().Contains(url), "The actual url is " + url);
+            StoryTellerAssert.Fail(Driver.Url.Matches(url), "The actual url is " + url);
 
             return true;
         }
@@ -146,13 +147,10 @@ namespace Serenity
             OpenLoginScreen();
         }
 
-        [FormatAs("After {number} of minutes")]
+        [FormatAs("After {number} minutes")]
         public void AfterMinutes(int number)
         {
-            var clock = (Clock)Context.Service<IClock>();
-            var time = clock.UtcNow().AddMinutes(number).ToLocalTime();
-
-            clock.LocalNow(time);
+            AdvanceTheClock(number.Minutes());
         }
     }
 }

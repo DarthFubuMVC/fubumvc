@@ -1,0 +1,15 @@
+<Spec id="5565d562-fa61-455f-90aa-abaf9ccea155" maxRetries="0" tags="" lifecycle="Acceptance" name="Remember me">
+  <Comment id="df7a8473-8947-4dbc-8361-179698a19c13">This test is unreliable because of the cookie state.  Despite my efforts at cleaning up the existing cookie state, this test is only trustworthy after recycling the environment.</Comment>
+  <LoginScreen id="9096d60c-13fe-452b-a1ee-6f167ea3b0d1">
+    <OpenLoginScreen />
+    <CheckRememberMe />
+    <Login user="jeremy" password="jasper" />
+    <Logout />
+    <OpenLoginScreen />
+    <CheckUserName UserName="jeremy" />
+    <CheckRememberMe />
+    <Login user="logistics" password="L0gistics!" />
+    <Logout />
+    <CheckUserName UserName="logistics" />
+  </LoginScreen>
+</Spec>

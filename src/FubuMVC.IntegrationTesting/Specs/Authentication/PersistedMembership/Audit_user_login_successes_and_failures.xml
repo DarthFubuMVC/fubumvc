@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<Test name="Audit user login successes and failures" lifecycle="Regression">
+  <Model>
+    <UsersAre isStep="True">
+      <table>
+        <row isStep="True" UserName="jeremy" Password="jasper" />
+        <row isStep="True" UserName="rand" Password="tworivers" />
+      </table>
+    </UsersAre>
+    <SetAuthenticationSettings isStep="True" ExpireInMinutes="180" SlidingExpiration="True" MaximumNumberOfFailedAttempts="3" CooloffPeriodInMinutes="60" />
+  </Model>
+  <LoginScreen>
+    <OpenLoginScreen isStep="True" />
+    <Comment><![CDATA[Fail once, then succeed for 'jeremy']]></Comment>
+    <Login isStep="True" user="jeremy" password="alba" />
+    <Login isStep="True" user="jeremy" password="jasper" />
+    <Logout isStep="True" />
+    <Comment><![CDATA[Two failures, including one for a nonexistent user name]]></Comment>
+    <Login isStep="True" user="rand" password="andor" />
+    <Login isStep="True" user="thom" password="andor" />
+    <Comment><![CDATA[Successfully login as 'rand']]></Comment>
+    <Login isStep="True" user="rand" password="tworivers" />
+  </LoginScreen>
+  <LoginAuditing>
+    <TheAuditsAre isStep="True">
+      <rows>
+        <row isStep="True" Username="jeremy" Type="LoginFailure" />
+        <row isStep="True" Username="jeremy" Type="LoginSuccess" />
+        <row isStep="True" Username="rand" Type="LoginFailure" />
+        <row isStep="True" Username="thom" Type="LoginFailure" />
+        <row isStep="True" Username="rand" Type="LoginSuccess" />
+      </rows>
+    </TheAuditsAre>
+  </LoginAuditing>
+</Test>

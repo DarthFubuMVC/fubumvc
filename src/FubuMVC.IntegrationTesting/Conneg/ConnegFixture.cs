@@ -40,6 +40,7 @@ namespace FubuMVC.IntegrationTesting.Conneg
                     url = url.AppendUrl(QueryString);
                 }
 
+                _.Security.Disable();
                 _.IgnoreStatusCode();
                 _.Post.Url(url);
 

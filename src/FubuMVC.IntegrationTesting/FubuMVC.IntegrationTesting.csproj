@@ -48,6 +48,9 @@
     <Reference Include="HtmlTags">
       <HintPath>..\packages\HtmlTags\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CompilerServices.AsyncTargetingPack.Net45">
+      <HintPath>..\packages\Microsoft.CompilerServices.AsyncTargetingPack\lib\net45\Microsoft.CompilerServices.AsyncTargetingPack.Net45.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin">
       <HintPath>..\packages\Microsoft.Owin\lib\net45\Microsoft.Owin.dll</HintPath>
@@ -69,6 +72,12 @@
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Abstractions">
+      <HintPath>..\packages\RavenDB.Client\lib\net45\Raven.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Client.Lightweight">
+      <HintPath>..\packages\RavenDB.Client\lib\net45\Raven.Client.Lightweight.dll</HintPath>
     </Reference>
     <Reference Include="Rhino.Mocks">
       <HintPath>..\packages\RhinoMocks\lib\net\Rhino.Mocks.dll</HintPath>
@@ -150,7 +159,12 @@
     <Compile Include="Diagnostics\can_bring_up_the_diagnostics_home_page.cs" />
     <Compile Include="Diagnostics\serving_up_embedded_diagnostic_assets.cs" />
     <Compile Include="EndpointServiceIntegratedSmokeTester.cs" />
+    <Compile Include="Fixtures\LockedOutLogicFixture.cs" />
+    <Compile Include="Fixtures\LoginAuditingFixture.cs" />
+    <Compile Include="Fixtures\ModelFixture.cs" />
+    <Compile Include="Fixtures\OtherScreenFixture.cs" />
     <Compile Include="FubuRegistry_using_parallel_folder_spec.cs" />
+    <Compile Include="HomeEndpoint.cs" />
     <Compile Include="Http\partial_invocations.cs" />
     <Compile Include="Http\reading_and_writing_http_headers_and_responses_with_OWIN.cs" />
     <Compile Include="Http\compression_testing.cs" />
@@ -247,6 +261,10 @@
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.RavenDb\FubuMVC.RavenDb.csproj">
+      <Project>{02441e35-668b-4713-9279-bd51948b95eb}</Project>
+      <Name>FubuMVC.RavenDb</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Razor\FubuMVC.Razor.csproj">
       <Project>{a88246a6-2a7a-4964-902e-a5a7fdaaa9d4}</Project>
       <Name>FubuMVC.Razor</Name>
@@ -280,6 +298,21 @@
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="phantomjs.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Specs\Authentication\Logins\Cannot access the home page after logging out.xml" />
+    <Content Include="Specs\Authentication\Logins\Expiration\Sliding_expiration_success_and_failure.xml" />
+    <Content Include="Specs\Authentication\Logins\Lockout_Logic.xml" />
+    <Content Include="Specs\Authentication\Logins\Log in successfully.xml" />
+    <Content Include="Specs\Authentication\Logins\Log in unsuccessfully.xml" />
+    <Content Include="Specs\Authentication\Logins\Logging out redirects to the login page.xml" />
+    <Content Include="Specs\Authentication\Logins\Login_successfully_to_a_different_page_than_home.xml" />
+    <Content Include="Specs\Authentication\Logins\No messages on the initial attempt at logging in.xml" />
+    <Content Include="Specs\Authentication\Logins\Remember me.xml" />
+    <Content Include="Specs\Authentication\Logins\The_user_is_no_longer_frozen_after_the_lockout_period_is_over.xml" />
+    <Content Include="Specs\Authentication\PersistedMembership\Audit_user_login_successes_and_failures.xml" />
+    <Content Include="Specs\Content Negotiation\Default_Conneg_Rules.xml" />
     <Content Include="Views\Razor\Templates\App\fubu-packages\Package1\WebContent\Handlers\Shared\bindings.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -569,8 +602,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent></PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

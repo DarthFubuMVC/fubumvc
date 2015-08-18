@@ -1,0 +1,14 @@
+<Spec id="fde5e04e-f7db-44e8-9f5a-83cd9906c94e" maxRetries="0" tags="" lifecycle="Regression" name="Lockout Logic">
+  <LockedOutLogic id="6901c4a3-8947-431b-be84-26a07dcce1d0">
+    <Logic>
+      <table id="f8c32e94-b259-4886-871d-ce7164df3b28">
+        <Logic-row NumberOfTries="1" MaximumNumberOfFailedAttempts="3" CoolingOffPeriod="60" CurrentLockedOutTime="NONE" IsLockedOut="false" LockedOutUntil="NONE" />
+        <Logic-row NumberOfTries="2" MaximumNumberOfFailedAttempts="3" CoolingOffPeriod="60" CurrentLockedOutTime="NONE" IsLockedOut="false" LockedOutUntil="NONE" />
+        <Logic-row NumberOfTries="3" MaximumNumberOfFailedAttempts="3" CoolingOffPeriod="60" CurrentLockedOutTime="NONE" IsLockedOut="true" LockedOutUntil="NOW+60" />
+        <Logic-row NumberOfTries="0" MaximumNumberOfFailedAttempts="3" CoolingOffPeriod="60" CurrentLockedOutTime="NOW+1" IsLockedOut="true" LockedOutUntil="NOW+1" />
+        <Logic-row NumberOfTries="0" MaximumNumberOfFailedAttempts="3" CoolingOffPeriod="60" CurrentLockedOutTime="NOW-1" IsLockedOut="false" LockedOutUntil="NONE" />
+        <Logic-row NumberOfTries="5" MaximumNumberOfFailedAttempts="6" CoolingOffPeriod="60" CurrentLockedOutTime="NONE" IsLockedOut="false" LockedOutUntil="NONE" />
+      </table>
+    </Logic>
+  </LockedOutLogic>
+</Spec>

@@ -1,4 +1,6 @@
 ﻿using System;
+using FubuCore;
+using FubuCore.Dates;
 using FubuMVC.Core;
 using FubuMVC.Core.Security.Authorization;
 using StoryTeller;
@@ -9,8 +11,12 @@ namespace Serenity.Fixtures
     {
         protected void DisableAllSecurity()
         {
-            var settings = Runtime.Get<SecuritySettings>();
-            settings.AuthenticationEnabled = settings.AuthorizationEnabled = false;
+            Runtime.Get<SecuritySettings>().Disable();
+        }
+
+        protected void EnableAllSecurity()
+        {
+            Runtime.Get<SecuritySettings>().Reset();
         }
 
         protected FubuRuntime Runtime
@@ -21,6 +27,20 @@ namespace Serenity.Fixtures
 
                 return Retrieve<FubuRuntime>();
             }
-        }         
+        }
+
+        protected void ResetTheClock()
+        {
+            Runtime.Get<IClock>().As<Clock>().Live();
+        }
+
+
+        protected void AdvanceTheClock(TimeSpan timespan)
+        {
+            var clock = Runtime.Get<IClock>().As<Clock>();
+            var time = clock.UtcNow().Add(timespan).ToLocalTime();
+
+            clock.LocalNow(time);
+        }
     }
 }

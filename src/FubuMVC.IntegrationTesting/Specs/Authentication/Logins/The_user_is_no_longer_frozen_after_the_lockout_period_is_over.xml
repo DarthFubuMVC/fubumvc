@@ -1,0 +1,21 @@
+<Spec id="2cdcf7c0-4d3a-4edd-87c3-8a7ab6dd3011" maxRetries="0" tags="" lifecycle="Regression" name="The user is no longer frozen after the lockout period is over">
+  <Model id="8c1614e3-b949-41ca-aeec-07b5edf8cad6">
+    <SetAuthenticationSettings ExpireInMinutes="180" SlidingExpiration="True" MaximumNumberOfFailedAttempts="2" CooloffPeriodInMinutes="60" />
+    <UsersAre>
+      <table id="69525887-e025-4681-8b02-d2e49dd5ebb5">
+        <UsersAre-row UserName="bob" Password="pace" />
+      </table>
+    </UsersAre>
+  </Model>
+  <LoginScreen id="865d6039-e2a8-476a-a1bb-3e20e718f73e">
+    <OpenLoginScreen />
+    <Login user="bob" password="wrong" />
+    <Login user="bob" password="wrong" />
+    <TheLockedOutMessageShouldBeDisplayed />
+    <Comment id="de2ab06f-4b88-45d7-936c-d101f7c47728">If the user is no longer locked out, we should no longer see the locked out message when we first open the screen</Comment>
+    <ReopenTheLoginScreen number="70" />
+    <NoMessageIsShown />
+    <Login user="bob" password="pace" />
+    <IsNotOnTheLoginScreen />
+  </LoginScreen>
+</Spec>

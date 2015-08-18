@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using FubuCore.Dates;
 
 namespace FubuMVC.Core.Security.Authentication.Tickets
@@ -39,9 +40,12 @@ namespace FubuMVC.Core.Security.Authentication.Tickets
 
         public virtual bool IsExpired(AuthenticationTicket ticket)
         {
+            var now = _systemTime.UtcNow();
+            Debug.WriteLine("'Now' is " + now);
+
             return _settings.SlidingExpiration
-                       ? _systemTime.UtcNow().Subtract(ticket.LastAccessed).TotalMinutes >= _settings.ExpireInMinutes
-                       : _systemTime.UtcNow() >=
+                       ? now.Subtract(ticket.LastAccessed).TotalMinutes >= _settings.ExpireInMinutes
+                       : now >=
                          ticket.Expiration;
         }
 

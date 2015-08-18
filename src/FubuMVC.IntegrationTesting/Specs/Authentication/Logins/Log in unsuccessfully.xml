@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<Test name="Log in unsuccessfully" lifecycle="Regression">
+  <Model>
+    <UsersAre isStep="True">
+      <table>
+        <row isStep="True" UserName="jeremy" Password="jasper" />
+      </table>
+    </UsersAre>
+    <SetAuthenticationSettings isStep="True" ExpireInMinutes="180" SlidingExpiration="True" MaximumNumberOfFailedAttempts="3" CooloffPeriodInMinutes="60" />
+  </Model>
+  <LoginScreen>
+    <OpenLoginScreen isStep="True" />
+    <Login isStep="True" user="alba" password="wrong" />
+    <TheMessageShouldBe isStep="True" message="Incorrect credentials. Attempt 1 of 3" />
+    <Login isStep="True" user="alba" password="wrong" />
+    <TheMessageShouldBe isStep="True" message="Incorrect credentials. Attempt 2 of 3" />
+    <Comment><![CDATA[On the third attempt, we lock out the user until the cooling off period is done]]></Comment>
+    <Login isStep="True" user="alba" password="wrong" />
+    <TheMessageShouldBe isStep="True" message="This user is locked out because of too many failed login attempts. Try back later." />
+    <Login isStep="True" user="alba" password="wrong" />
+    <TheMessageShouldBe isStep="True" message="This user is locked out because of too many failed login attempts. Try back later." />
+  </LoginScreen>
+</Test>

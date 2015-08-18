@@ -24,8 +24,8 @@ namespace FubuMVC.RavenDb.InMemory
             For<IStorageFactory>().Use<StorageFactory>();
 
 
-
-            For<ICompleteReset>().Use<CompleteReset>();
+            // Needs to be resolved from the parent
+            ForSingletonOf<ICompleteReset>().Use<CompleteReset>();
             For<ILogger>().Use<Logger>();
         }
     }

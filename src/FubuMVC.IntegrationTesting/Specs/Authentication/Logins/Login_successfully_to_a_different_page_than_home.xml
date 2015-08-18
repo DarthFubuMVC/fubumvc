@@ -1,0 +1,16 @@
+<Spec id="20a7d4fe-bb85-4fdc-a211-1178f63638dd" maxRetries="0" tags="" lifecycle="Regression" name="Login successfully to a different page than home">
+  <Model id="b8c48c6e-80f5-4a24-9b7f-468116404448">
+    <UsersAre>
+      <table id="73e78972-4539-482c-b85f-c419af3dba81">
+        <UsersAre-row UserName="jeremy" Password="jasper" />
+      </table>
+    </UsersAre>
+  </Model>
+  <OtherScreen id="512971ad-2089-46c4-b104-ab65fa935a41">
+    <GoToDifferentPage name="jeremy" />
+    <IsOnTheLoginScreen />
+    <Login user="jeremy" password="jasper" />
+    <IsNotOnTheLoginScreen />
+    <ShouldBeOnTheDifferentPage name="jeremy" />
+  </OtherScreen>
+</Spec>

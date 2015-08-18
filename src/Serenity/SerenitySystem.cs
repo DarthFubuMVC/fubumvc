@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using FubuCore;
+using FubuCore.Dates;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Runtime;
@@ -18,18 +19,14 @@ namespace Serenity
     /* TODO
      * 
      * 1.) Subsystems for remote work, add to FubuRegistry
-     * 2.) New IBrowserLifecycle that does everything about browsers. Browser different becomes a strategy pattern
-     * 3.) Register NavigationDriver, IBrowserLifecycle
+     * DONE: 3.) Register NavigationDriver, IBrowserLifecycle
      * DONE: 4.) Do the child container "scope" trick
      * DONE: 5.) Actually build the FubuRuntime
-     * NOT DOING THIS: 6.) Allow users to specify to eagerly or lazily build the FubuRuntime
-     * 7.) Allow users to specify the default browser
-     * 8.) Allow users to specify whether the browser is built lazily or eagerly
-     * 9.) BrowserLifecycle can give you different browsers upon request for inline
-     *     cross-browser testing
+     * DONE: 7.) Allow users to specify the default browser
+
      * DONE: 10. Kill IApplicationUnderTest
      * 11.) Figure out how to attach message tracking. Use 
-     * 12.) Allow users to supply an AfterNavigation
+     * DONE: 12.) Allow users to supply an AfterNavigation
      * 13.) Apply MessageContextualInfoProvider from FT testing
      * 14.) Look closely at FubuTransportSystem and TestNodes
      */
@@ -46,7 +43,10 @@ namespace Serenity
 
         public SerenitySystem()
         {
+            Registry.Services.ReplaceService<ISystemTime, SystemTime>().Singleton();
+            Registry.Services.ReplaceService<IClock, Clock>().Singleton();
             Registry.Features.Diagnostics.Enable(TraceLevel.Verbose);
+            Registry.Services.ForSingletonOf<SecuritySettings>();
             Registry.Services.For<IAfterNavigation>().Use<NulloAfterNavigation>();
             Registry.Services.ForSingletonOf<IBrowserLifecycle>().Use("Browser Lifecycle", () =>
             {
@@ -130,8 +130,9 @@ namespace Serenity
                 startAll();
             }
 
-            _factory.StartNewScope();
+            Runtime.Get<IClock>().As<Clock>().Live();
             _factory.Get<SecuritySettings>().Reset();
+            _factory.StartNewScope();
             beforeEach(_factory.Container);
 
             return new SerenityContext(this);
@@ -141,6 +142,7 @@ namespace Serenity
         {
             _runtime = new FubuRuntime(Registry);
             _factory = _runtime.Get<IServiceFactory>().As<StructureMapServiceFactory>();
+            _factory.Get<SecuritySettings>().Reset(); // force it to be created from the parent
             beforeAll();
         }
 
@@ -191,6 +193,8 @@ namespace Serenity
                 context.Reporting.Log(reporter);
 
                 _parent.afterEach(_parent._factory.Container, context);
+
+                _parent._factory.TeardownScope();
             }
 
             public TService GetService<TService>()

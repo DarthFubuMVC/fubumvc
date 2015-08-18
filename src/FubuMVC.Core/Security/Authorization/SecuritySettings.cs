@@ -1,4 +1,6 @@
-﻿namespace FubuMVC.Core.Security.Authorization
+﻿using System.Diagnostics;
+
+namespace FubuMVC.Core.Security.Authorization
 {
     public class SecuritySettings
     {
@@ -13,6 +15,11 @@
         public void Reset()
         {
             AuthorizationEnabled = AuthenticationEnabled = true;
+        }
+
+        public void Disable()
+        {
+            AuthenticationEnabled = AuthorizationEnabled = false;
         }
     }
 }

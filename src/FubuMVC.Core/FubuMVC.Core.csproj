@@ -88,6 +88,7 @@
     <Compile Include="Registration\ActionlessViewChainSource.cs" />
     <Compile Include="Registration\SingletonAttribute.cs" />
     <Compile Include="Resources\Conneg\ViewAttachment.cs" />
+    <Compile Include="Security\Authentication\DefaultLoginRequestWriter.cs" />
     <Compile Include="ServiceBus\Async\AsyncChainExecutionContinuation.cs" />
     <Compile Include="ServiceBus\Async\AsyncHandlerInvoker.cs" />
     <Compile Include="ServiceBus\Async\AsyncHandling.cs" />
