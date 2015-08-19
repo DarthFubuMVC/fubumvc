@@ -158,13 +158,15 @@
     <Compile Include="debugger.cs" />
     <Compile Include="Diagnostics\can_bring_up_the_diagnostics_home_page.cs" />
     <Compile Include="Diagnostics\serving_up_embedded_diagnostic_assets.cs" />
+    <Compile Include="DifferentInput.cs" />
     <Compile Include="EndpointServiceIntegratedSmokeTester.cs" />
     <Compile Include="Fixtures\LockedOutLogicFixture.cs" />
     <Compile Include="Fixtures\LoginAuditingFixture.cs" />
     <Compile Include="Fixtures\ModelFixture.cs" />
     <Compile Include="Fixtures\OtherScreenFixture.cs" />
     <Compile Include="FubuRegistry_using_parallel_folder_spec.cs" />
-    <Compile Include="HomeEndpoint.cs" />
+    <Compile Include="HelloWorld.cs" />
+    <Compile Include="DifferentEndpoint.cs" />
     <Compile Include="Http\partial_invocations.cs" />
     <Compile Include="Http\reading_and_writing_http_headers_and_responses_with_OWIN.cs" />
     <Compile Include="Http\compression_testing.cs" />
@@ -602,7 +604,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent></PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
