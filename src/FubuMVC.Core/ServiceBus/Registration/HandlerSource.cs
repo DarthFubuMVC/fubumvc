@@ -12,7 +12,6 @@ using FubuCore.Util;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
 using FubuMVC.Core.ServiceBus.Sagas;
-using FubuMVC.Core.Services;
 using StructureMap;
 
 namespace FubuMVC.Core.ServiceBus.Registration
@@ -46,6 +45,8 @@ namespace FubuMVC.Core.ServiceBus.Registration
 
         Task<HandlerCall[]> IHandlerSource.FindCalls(Assembly applicationAssembly)
         {
+            if (applicationAssembly == null) throw new ArgumentNullException("applicationAssembly");
+
             var types = _assemblies.Any()
                 ? TypeRepository.FindTypes(_assemblies, TypeClassification.Concretes, _typeFilters.Matches)
                 : TypeRepository.FindTypes(applicationAssembly, TypeClassification.Concretes, _typeFilters.Matches);
