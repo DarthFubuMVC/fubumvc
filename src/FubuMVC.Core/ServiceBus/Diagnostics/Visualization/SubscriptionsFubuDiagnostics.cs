@@ -1,5 +1,6 @@
 ﻿using FubuCore.Descriptions;
 using FubuMVC.Core.ServiceBus.Subscriptions;
+using HtmlTags;
 
 namespace FubuMVC.Core.ServiceBus.Diagnostics.Visualization
 {
@@ -13,14 +14,20 @@ namespace FubuMVC.Core.ServiceBus.Diagnostics.Visualization
         }
 
         [System.ComponentModel.Description("Subscriptions:Visualizes the persisted subscriptions in this active node")]
-        public SubscriptionsViewModel get_subscriptions()
+        public HtmlTag get_subscriptions()
         {
-            return new SubscriptionsViewModel
-            {
-                Persistence = new DescriptionBodyTag(Description.For(_persistence)),
-                Nodes = new TransportNodeTableTag(_persistence.AllNodes()),
-                Subscriptions = new SubscriptionStorageTableTag(_persistence.AllSubscriptions())
-            };
+            var div = new HtmlTag("div");
+
+            div.Add("h3").Text("Subscription Persistence");
+            div.Append( new DescriptionBodyTag(Description.For(_persistence)));
+
+            div.Add("h3").Text("Nodes");
+            div.Append(new TransportNodeTableTag(_persistence.AllNodes()));
+
+            div.Add("h3").Text("Subscriptions");
+            div.Append(new SubscriptionStorageTableTag(_persistence.AllSubscriptions()));
+
+            return div;
         }
     }
 

@@ -59,6 +59,7 @@ _.assign(FubuDiagnostics, {
 require('./appdomain');
 require('./assets');
 require('./structuremap');
+require('./service-bus');
 
 
 FubuDiagnostics.addSection({    

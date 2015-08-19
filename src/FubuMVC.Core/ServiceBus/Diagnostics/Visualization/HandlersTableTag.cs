@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Descriptions;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.ErrorHandling;
@@ -12,7 +13,7 @@ namespace FubuMVC.Core.ServiceBus.Diagnostics.Visualization
 {
     public class HandlersTableTag : TableTag
     {
-        public HandlersTableTag(HandlerGraph handlers)
+        public HandlersTableTag(BehaviorGraph handlers)
         {
             AddClass("table");
             AddClass("handlers");
@@ -24,7 +25,7 @@ namespace FubuMVC.Core.ServiceBus.Diagnostics.Visualization
                 row.Header("Handlers");
             });
 
-            handlers.Where(x => !FubuCore.TypeExtensions.Closes(x.InputType(), typeof(JobRequest<>))).OrderBy(x => x.InputType().Name)
+            handlers.Handlers.Where(x => !FubuCore.TypeExtensions.Closes(x.InputType(), typeof(JobRequest<>))).OrderBy(x => x.InputType().Name)
                 .Each(chain => AddBodyRow(row => addRow(row, chain)));
         }
 

@@ -1101,7 +1101,6 @@
     <None Include="ripple.dependencies.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="ServiceBus\Diagnostics\Visualization\Subscriptions.spark" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="fubu-diagnostics\bootstrap.min.css" />

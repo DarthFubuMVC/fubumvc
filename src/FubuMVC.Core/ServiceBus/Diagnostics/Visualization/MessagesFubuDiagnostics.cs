@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.ServiceBus.Configuration;
 using HtmlTags;
 
@@ -6,9 +7,9 @@ namespace FubuMVC.Core.ServiceBus.Diagnostics.Visualization
 {
     public class MessagesFubuDiagnostics
     {
-        private readonly HandlerGraph _graph;
+        private readonly BehaviorGraph _graph;
 
-        public MessagesFubuDiagnostics(HandlerGraph graph)
+        public MessagesFubuDiagnostics(BehaviorGraph graph)
         {
             _graph = graph;
         }
