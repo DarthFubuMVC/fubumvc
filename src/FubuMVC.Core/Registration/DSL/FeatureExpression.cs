@@ -2,6 +2,7 @@
 using FubuMVC.Core.Localization;
 using FubuMVC.Core.Security.AntiForgery;
 using FubuMVC.Core.Security.Authentication;
+using FubuMVC.Core.ServerSentEvents;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.InMemory;
@@ -62,6 +63,17 @@ namespace FubuMVC.Core.Registration.DSL
                 return new Feature<AntiForgerySettings, bool>(_parent, (settings, enabled) => settings.Enabled = enabled);
             }
         }
+
+        /// <summary>
+        /// Enable the Server Sent Events feature
+        /// </summary>
+        public Feature<ServerSentEventsSettings, bool> ServerSentEvents
+        {
+            get
+            {
+                return new Feature<ServerSentEventsSettings, bool>(_parent, (x, enabled) => x.Enabled = enabled);
+            }
+        } 
 
     }
 

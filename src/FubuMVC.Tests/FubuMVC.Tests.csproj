@@ -172,6 +172,17 @@
     <Compile Include="Http\StreamExtensions.cs" />
     <Compile Include="Registration\ActionLessView_chain_source_specs.cs" />
     <Compile Include="Registration\RouteCollectionTester.cs" />
+    <Compile Include="ServerSentEvents\ChannelTester.cs" />
+    <Compile Include="ServerSentEvents\ChannelWriterTester.cs" />
+    <Compile Include="ServerSentEvents\DataFormatterTester.cs" />
+    <Compile Include="ServerSentEvents\EventPublisherTester.cs" />
+    <Compile Include="ServerSentEvents\EventQueryFactoryTester.cs" />
+    <Compile Include="ServerSentEvents\ServerEventWriterTester.cs" />
+    <Compile Include="ServerSentEvents\ServerSentEventExtensionIntegratedTester.cs" />
+    <Compile Include="ServerSentEvents\ServicesRegistrationTester.cs" />
+    <Compile Include="ServerSentEvents\SimpleEventQueueTester.cs" />
+    <Compile Include="ServerSentEvents\TopicChannelCacheTester.cs" />
+    <Compile Include="ServerSentEvents\TopicFamilyTester.cs" />
     <Compile Include="TestSupport\GenericVoidMethod.cs" />
     <Compile Include="TestSupport\InteractionContext.cs" />
     <Compile Include="Json\ComplexType.cs" />

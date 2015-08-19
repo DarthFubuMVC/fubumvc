@@ -45,14 +45,14 @@ namespace FubuMVC.Core.Registration.Conventions
                 }
                 else
                 {
-                    addBasicRouteInputs(call, route);
+                    AddBasicRouteInputs(call, route);
                 }
             }
 
             return route;
         }
 
-        private static void addBasicRouteInputs(ActionCall call, RouteDefinition route)
+        public static void AddBasicRouteInputs(ActionCall call, RouteDefinition route)
         {
             call.InputType()
                 .GetProperties()
