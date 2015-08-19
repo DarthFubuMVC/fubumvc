@@ -17,10 +17,10 @@ namespace FubuMVC.Tests.ServiceBus
 
                 var graph = runtime.Get<BehaviorGraph>();
 
-                graph.Chains.Count(x => typeof (Foo1) == x.InputType()).ShouldBe(1);
-                graph.Chains.Count(x => typeof (Foo2) == x.InputType()).ShouldBe(1);
-                graph.Chains.Count(x => typeof (Foo3) == x.InputType()).ShouldBe(1);
-                graph.Chains.Count(x => typeof (Foo4) == x.InputType()).ShouldBe(1);
+                graph.Chains.Count(x => typeof (Foo1) == x.InputType()).ShouldBeGreaterThanOrEqualTo(1);
+                graph.Chains.Count(x => typeof(Foo2) == x.InputType()).ShouldBeGreaterThanOrEqualTo(1);
+                graph.Chains.Count(x => typeof(Foo3) == x.InputType()).ShouldBeGreaterThanOrEqualTo(1);
+                graph.Chains.Count(x => typeof(Foo4) == x.InputType()).ShouldBeGreaterThanOrEqualTo(1);
             }
         }
 
@@ -32,10 +32,10 @@ namespace FubuMVC.Tests.ServiceBus
 
                 var graph = runtime.Get<BehaviorGraph>();
 
-                graph.Chains.Count(x => typeof(Foo1) == x.InputType()).ShouldBe(1);
-                graph.Chains.Count(x => typeof(Foo2) == x.InputType()).ShouldBe(1);
-                graph.Chains.Count(x => typeof(Foo3) == x.InputType()).ShouldBe(1);
-                graph.Chains.Count(x => typeof(Foo4) == x.InputType()).ShouldBe(1);
+                graph.Chains.Count(x => typeof(Foo1) == x.InputType()).ShouldBeGreaterThanOrEqualTo(1);
+                graph.Chains.Count(x => typeof(Foo2) == x.InputType()).ShouldBeGreaterThanOrEqualTo(1);
+                graph.Chains.Count(x => typeof(Foo3) == x.InputType()).ShouldBeGreaterThanOrEqualTo(1);
+                graph.Chains.Count(x => typeof(Foo4) == x.InputType()).ShouldBeGreaterThanOrEqualTo(1);
             }
         }
     }
