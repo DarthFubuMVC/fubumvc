@@ -148,7 +148,6 @@
     <Compile Include="ServiceBus\Diagnostics\MessagingSession.cs" />
     <Compile Include="ServiceBus\Diagnostics\Visualization\ChannelGraphFubuDiagnostics.cs" />
     <Compile Include="ServiceBus\Diagnostics\Visualization\ChannelsTableTag.cs" />
-    <Compile Include="ServiceBus\Diagnostics\Visualization\ChannelVisualization.cs" />
     <Compile Include="ServiceBus\Diagnostics\Visualization\ChildDescriptionTag.cs" />
     <Compile Include="ServiceBus\Diagnostics\Visualization\DescriptionBodyTag.cs" />
     <Compile Include="ServiceBus\Diagnostics\Visualization\DescriptionPropertyTag.cs" />
@@ -157,6 +156,7 @@
     <Compile Include="ServiceBus\Diagnostics\Visualization\HtmlTagExtensions.cs" />
     <Compile Include="ServiceBus\Diagnostics\Visualization\MessagesFubuDiagnostics.cs" />
     <Compile Include="ServiceBus\Diagnostics\Visualization\ScheduledJobsFubuDiagnostics.cs" />
+    <Compile Include="ServiceBus\Diagnostics\Visualization\SerializersTag.cs" />
     <Compile Include="ServiceBus\Diagnostics\Visualization\SubscriptionsFubuDiagnostics.cs" />
     <Compile Include="ServiceBus\Diagnostics\Visualization\SubscriptionsTableTag.cs" />
     <Compile Include="ServiceBus\Diagnostics\Visualization\TasksFubuDiagnostics.cs" />
@@ -1101,7 +1101,6 @@
     <None Include="ripple.dependencies.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="ServiceBus\Diagnostics\Visualization\ChannelVisualization.spark" />
     <None Include="ServiceBus\Diagnostics\Visualization\Subscriptions.spark" />
   </ItemGroup>
   <ItemGroup>

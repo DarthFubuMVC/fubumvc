@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 
-var React = FubuDiagnostics.React;
+var React = require('react');
 var Router = require('react-router');
 
 require('./settings');

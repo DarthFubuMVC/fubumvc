@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using FubuCore.Descriptions;
+using FubuCore;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime;
 using FubuMVC.Core.ServiceBus.Runtime.Serializers;
@@ -24,40 +24,28 @@ namespace FubuMVC.Core.ServiceBus.Diagnostics.Visualization
         }
 
         [System.ComponentModel.Description("Transports and Channels:Visualizes the active model of all the channels and transports in this application")]
-        public ChannelVisualization get_channels()
+        public HtmlTag get_channels()
         {
-            return new ChannelVisualization
-            {
-                Graph = _graph,
-                Transports = new TransportsTag(_transports),
-                Channels = new ChannelsTableTag(_graph),
-                Serializers = new SerializersTag(_serializers),
-                Subscriptions = new SubscriptionsTableTag(_cache.ActiveSubscriptions)
-            };            
-        }
-    }
+            var div = new HtmlTag("div");
 
-    public class SerializersTag : TableTag
-    {
-        public SerializersTag(IEnumerable<IMessageSerializer> serializers)
-        {
-            AddClass("table");
+            var header = "Channels and Transports for Node \"{0}\", Id \"{1}\"".ToFormat(_graph.Name, _graph.NodeId);
 
-            AddHeaderRow(row => {
-                row.Header("Serializer");
-                row.Header("Description");
-                row.Header("Content Type");
-            });
+            div.Add("h1").Text(header);
+            div.Add("br");
 
-            serializers.Each(x => {
-                var description = Description.For(x);
-                AddBodyRow(row =>
-                {
-                    row.Cell(description.Title).AddClass("title");
-                    row.Cell().AddClass("description").Text(description.ShortDescription);
-                    row.Cell(x.ContentType);
-                });
-            });
+            div.Add("h3").Text("Transports");
+            div.Append(new TransportsTag(_transports));
+
+            div.Add("h3").Text("Serializers");
+            div.Append(new SerializersTag(_serializers));
+
+            div.Add("h3").Text("Channels");
+            div.Append(new ChannelsTableTag(_graph));
+
+            div.Add("h3").Text("Subscriptions");
+            div.Append(new SubscriptionsTableTag(_cache.ActiveSubscriptions));
+
+            return div;
         }
     }
 }

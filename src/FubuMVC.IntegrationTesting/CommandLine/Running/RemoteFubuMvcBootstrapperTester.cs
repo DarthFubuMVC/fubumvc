@@ -33,7 +33,7 @@ namespace FubuMVC.IntegrationTesting.CommandLine.Running
         private void shouldHaveStartedApp<T>() where T : FubuRegistry
         {
             MockFor<IFubuMvcApplicationActivator>()
-                .AssertWasCalled(x => x.Initialize(typeof(T), startMessage.PortNumber, startMessage.PhysicalPath, startMessage.HtmlHeadInjectedText));
+                .AssertWasCalled(x => x.Initialize(typeof(T), startMessage));
         }
 
         [Test]

@@ -58,6 +58,7 @@ _.assign(FubuDiagnostics, {
 
 require('./appdomain');
 require('./assets');
+require('./structuremap');
 
 
 FubuDiagnostics.addSection({    

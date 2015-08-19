@@ -4,7 +4,7 @@ namespace Fubu.Running
 {
     public interface IFubuMvcApplicationActivator
     {
-        void Initialize(Type applicationType, int port, string physicalPath, string htmlHeadInjectedText);
+        void Initialize(Type applicationType, StartApplication message);
         void ShutDown();
         void Recycle();
     }

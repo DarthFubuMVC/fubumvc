@@ -29,7 +29,7 @@ namespace DiagnosticsHarness
 
             numbers.Each(x => _serviceBus.Send<NumberMessage>(x));
 
-            throw new NotImplementedException("Took instrementation out");
+            return FubuContinuation.RedirectTo("_fubu");
 
 //            return
 //                FubuContinuation.RedirectTo<FubuMVC.Instrumentation.Features.Instrumentation.InstrumentationFubuDiagnostics>(

@@ -1,11 +1,10 @@
 
 module.exports = {
   entry: {
-    "root": './javascript/root.jsx',
-    "structuremap": './javascript/structuremap.jsx'
+    "root": './javascript/root.jsx'
   },
   output: {
-    path: __dirname + '/src/TestHarnessApp/fubu-diagnostics',
+    path: __dirname + '/src/DiagnosticsHarness/fubu-diagnostics',
     //path: __dirname + '/src/FubuMVC.Core/fubu-diagnostics',
     filename: "[name].js",
     publicPath: '/client/public/javascript/',

@@ -15,17 +15,18 @@ namespace Fubu.Running
         private FubuRuntime _server = null;
         private FubuRegistry _registry;
 
-        public void Initialize(Type applicationType, int port, string physicalPath, string htmlHeadInjectedText)
+        public void Initialize(Type applicationType, StartApplication message)
         {
             _registry = Activator.CreateInstance(applicationType).As<FubuRegistry>();
-            _registry.RootPath = physicalPath;
-            _registry.Port = PortFinder.FindPort(port);
-            
+            _registry.RootPath = message.PhysicalPath;
+            _registry.Port = PortFinder.FindPort(message.PortNumber);
+            _registry.Mode = message.Mode;
+
             _registry.AlterSettings<OwinSettings>(owin =>
             {
                 owin.AddMiddleware<HtmlHeadInjectionMiddleware>().Arguments.With(new InjectionOptions
                 {
-                    Content = c => htmlHeadInjectedText
+                    Content = c => message.HtmlHeadInjectedText
                 });
             });
 

@@ -17,7 +17,7 @@ require 'fuburake'
 
 	#sln.integration_test = ['FubuMVC.IntegrationTesting', 'Serenity.Testing']
 	sln.integration_test = ['FubuMVC.IntegrationTesting']
-	sln.ci_steps = [:integration_test, :storyteller, :archive_gem]
+	sln.ci_steps = [:integration_test, :archive_gem]
 
 	sln.options[:nuget_publish_folder] = 'nupkgs'
 	sln.options[:nuget_publish_url] = 'https://www.myget.org/F/fubumvc-edge/'

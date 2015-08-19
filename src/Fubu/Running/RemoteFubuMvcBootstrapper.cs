@@ -44,7 +44,7 @@ namespace Fubu.Running
 
             var chooser = new FubuRegistryChooser(_typeFinder, _messaging);
             chooser.Find(message,
-                applicationType => _activator.Initialize(applicationType, message.PortNumber, message.PhysicalPath, message.HtmlHeadInjectedText));
+                applicationType => _activator.Initialize(applicationType, message));
         }
 
         public void Receive(RecycleApplication message)
