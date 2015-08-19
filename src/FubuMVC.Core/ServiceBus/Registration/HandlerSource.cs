@@ -35,7 +35,7 @@ namespace FubuMVC.Core.ServiceBus.Registration
 
         public void UseAssembly(Assembly assembly)
         {
-            if (assembly == null) throw new ArgumentNullException("assembly");
+            if (assembly == null) return;
 
             _assemblies.Add(assembly);
         }
