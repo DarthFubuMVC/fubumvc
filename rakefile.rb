@@ -67,7 +67,7 @@ end
 
 desc "Run the storyteller specifications"
 task :storyteller => [:compile] do
-	sh "src/packages/Storyteller/tools/st.exe run src/FubuMVC.IntegrationTesting --retries 3"
+	sh "src/packages/Storyteller/tools/st.exe run src/FubuMVC.IntegrationTesting --retries 3 --results-path artifacts/stresults.htm "
 end
 
 desc "Run the storyteller specifications"
