@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Security.Cryptography;
 using FubuMVC.Core.Registration.Nodes;
 
-namespace FubuMVC.Core.Diagnostics.NewDiagnostics
+namespace FubuMVC.Core.Diagnostics.Instrumentation
 {
     public class RequestStep
     {
@@ -108,22 +109,6 @@ namespace FubuMVC.Core.Diagnostics.NewDiagnostics
         double ExecutionTime { get; }
         bool HadException { get; }
 
-
-    }
-
-    public class PerformanceHistory
-    {
-        public void Read(IRequestLog log)
-        {
-            
-        }
-
-        public long HitCount { get; private set; }
-        public long ExceptionCount { get; private set; }
-
-
-        public double MaxTime { get; private set; }
-        public double MinTime { get; private set; }
 
     }
 

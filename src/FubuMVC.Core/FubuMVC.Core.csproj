@@ -78,7 +78,8 @@
     <Compile Include="Attributes\ViewSubjectAttribute.cs" />
     <Compile Include="DeactivatorExecuted.cs" />
     <Compile Include="DiagnosticsExtensions.cs" />
-    <Compile Include="Diagnostics\NewDiagnostics\DiagnosticsClasses.cs" />
+    <Compile Include="Diagnostics\Instrumentation\DiagnosticsClasses.cs" />
+    <Compile Include="Diagnostics\Instrumentation\PerformanceHistory.cs" />
     <Compile Include="FubuModeExtensions.cs" />
     <Compile Include="Http\Compression\ApplyCompression.cs" />
     <Compile Include="Http\Hosting\IHost.cs" />
