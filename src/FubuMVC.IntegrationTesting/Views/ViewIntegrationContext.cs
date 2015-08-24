@@ -53,8 +53,7 @@ namespace FubuMVC.IntegrationTesting.Views
 
             _views = new Lazy<ViewBag>(() =>
             {
-                var allViews = _host.Get<ConnegSettings>().Views.SelectMany(x => x.Views);
-                return new ViewBag(allViews);
+                return _host.Get<ConnegSettings>().Views;
             });
         }
 

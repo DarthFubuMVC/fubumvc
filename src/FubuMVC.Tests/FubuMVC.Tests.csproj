@@ -683,10 +683,7 @@
     <Compile Include="Urls\BasicUrlRegistrationScanningIntegrationTester.cs" />
     <Compile Include="Urls\ChainUrlResolverTester.cs" />
     <Compile Include="Urls\UrlRegistryIntegrationTester.cs" />
-    <Compile Include="View\Attachment\DefaultProfileTester.cs" />
-    <Compile Include="View\Attachment\ProfileViewTokenTester.cs" />
     <Compile Include="View\Attachment\ViewExclusionTester.cs" />
-    <Compile Include="View\Attachment\ViewTokenExtensionsTester.cs" />
     <Compile Include="View\AutoImportModelNamespacesConventionTester.cs" />
     <Compile Include="View\CommonViewNamespaces_is_registered.cs" />
     <Compile Include="View\FakeViews\Folder1\A.aspx.cs">

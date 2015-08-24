@@ -79,13 +79,9 @@ namespace FubuMVC.Core.Registration
             config.Settings.Each(x => x.Alter(graph.Settings));
 
             var viewSettings = graph.Settings.Get<ViewEngineSettings>();
-            
 
-            var views = viewSettings.BuildViewBag(graph, diagnostics, files)
-                .ContinueWith(t =>
-                {
-                    return viewSettings.Profiles(t.Result);
-                });
+
+            var views = viewSettings.BuildViewBag(graph, diagnostics, files);
 
             var conneg = graph.Settings.Get<ConnegSettings>();
             

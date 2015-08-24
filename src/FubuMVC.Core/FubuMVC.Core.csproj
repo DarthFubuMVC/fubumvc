@@ -606,7 +606,6 @@
     <Compile Include="Http\Owin\Readers\OwinRequestReader.cs" />
     <Compile Include="Services\JasperServiceConfiguration.cs" />
     <Compile Include="Services\JasperServiceRuntime.cs" />
-    <Compile Include="View\Attachment\ProfileViewBag.cs" />
     <Compile Include="View\ImageTag.cs" />
     <Compile Include="Runtime\IFubuRequestContext.cs" />
     <Compile Include="Projections\AccessorProjection.cs" />
@@ -1074,12 +1073,7 @@
     <Compile Include="Urls\IUrlRegistry.cs" />
     <Compile Include="Security\Authorization\IAuthenticationContext.cs" />
     <Compile Include="Security\Authorization\ISecurityContext.cs" />
-    <Compile Include="View\Attachment\DefaultProfile.cs" />
-    <Compile Include="View\Attachment\IViewProfile.cs" />
-    <Compile Include="View\Attachment\ProfileViewToken.cs" />
     <Compile Include="View\Attachment\ViewBag.cs" />
-    <Compile Include="View\Attachment\ViewProfile.cs" />
-    <Compile Include="View\Attachment\ViewTokenExtensions.cs" />
     <Compile Include="View\AutoImportModelNamespacesConvention.cs" />
     <Compile Include="View\CommonViewNamespaces.cs" />
     <Compile Include="View\IFubuView.cs" />
