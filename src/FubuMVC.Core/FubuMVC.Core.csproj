@@ -862,10 +862,8 @@
     <Compile Include="Resources\Conneg\FormatterReader.cs" />
     <Compile Include="Resources\Conneg\FormatterWriter.cs" />
     <Compile Include="Resources\Conneg\HtmlStringWriter.cs" />
-    <Compile Include="Resources\Conneg\IMedia.cs" />
     <Compile Include="Resources\Conneg\IMediaWriter.cs" />
     <Compile Include="Resources\Conneg\InputBehavior.cs" />
-    <Compile Include="Resources\Conneg\Media.cs" />
     <Compile Include="Resources\Conneg\ModelBindingReader.cs" />
     <Compile Include="Resources\Conneg\OutputBehavior.cs" />
     <Compile Include="Resources\Conneg\StringWriter.cs" />

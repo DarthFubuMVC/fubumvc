@@ -14,31 +14,28 @@ namespace FubuMVC.Core.Resources.Conneg
         /// Add an IFormatter strategy for writing with an optional condition
         /// </summary>
         /// <param name="formatter"></param>
-        /// <param name="condition"></param>
-        void Add(IFormatter formatter, IConditional condition = null);
+        void Add(IFormatter formatter);
 
         /// <summary>
         /// Add a media writer and optional condition by an open type
         /// of IMediaWriter<T> where T is the resource type
         /// </summary>
         /// <param name="mediaWriterType"></param>
-        /// <param name="condition"></param>
-        void Add(Type mediaWriterType, IConditional condition = null);
+        void Add(Type mediaWriterType);
 
         /// <summary>
         /// Explicitly register an IMediaWriter<T> where T is the resource type
         /// </summary>
         /// <param name="writer"></param>
-        /// <param name="condition"></param>
-        void Add(object writer, IConditional condition = null);
+        void Add(IMediaWriter writer);
 
         /// <summary>
         /// All the explicitly configured Media.
         /// </summary>
         /// <returns></returns>
-        IEnumerable<IMedia> Media();
+        IEnumerable<IMediaWriter> Media();
 
-        IEnumerable<IMedia<T>> Media<T>();
+        IEnumerable<IMediaWriter<T>> Media<T>();
             
             
             
@@ -76,7 +73,7 @@ namespace FubuMVC.Core.Resources.Conneg
         /// </summary>
         Instance ResourceNotFound { get; set; }
 
-        bool HasView(IConditional conditional);
+        bool HasView();
 
 
         IViewToken DefaultView();

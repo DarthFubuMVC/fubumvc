@@ -15,9 +15,9 @@ namespace FubuMVC.Core.Resources.Conneg
                 var candidates = profile.Views.Where(x => x.ViewModel == node.ResourceType).ToArray();
                 if (candidates.Count() == 1)
                 {
-                    if (!node.HasView(profile.Condition))
+                    if (!node.HasView())
                     {
-                        node.AddView(candidates.Single(), profile.Condition);
+                        node.AddView(candidates.Single());
                     }
                 }
             });

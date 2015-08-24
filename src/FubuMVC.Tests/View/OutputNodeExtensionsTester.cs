@@ -20,7 +20,7 @@ namespace FubuMVC.Tests.View
         public void has_view_is_false_when_it_is_empty()
         {
             var node = new OutputNode(typeof(Address));
-            node.HasView(Always.Flyweight).ShouldBeFalse();
+            node.HasView().ShouldBeFalse();
         }
 
         [Test]
@@ -28,21 +28,9 @@ namespace FubuMVC.Tests.View
         {
             var node = new OutputNode(typeof(Address));
             var viewToken = MockRepository.GenerateMock<ITemplateFile>();
-            node.AddView(viewToken, null);
+            node.AddView(viewToken);
 
-            node.HasView(Always.Flyweight).ShouldBeTrue();
-        }
-
-        [Test]
-        public void has_view_negative_when_there_is_a_view_but_it_has_different_conditions()
-        {
-            var condition = new FakeConditional();
-
-            var node = new OutputNode(typeof(Address));
-            var viewToken = MockRepository.GenerateMock<ITemplateFile>();
-            node.AddView(viewToken, condition);
-
-            node.HasView(Always.Flyweight).ShouldBeFalse();
+            node.HasView().ShouldBeTrue();
         }
 
         [Test]
@@ -52,9 +40,9 @@ namespace FubuMVC.Tests.View
 
             var node = new OutputNode(typeof(Address));
             var viewToken = MockRepository.GenerateMock<ITemplateFile>();
-            node.AddView(viewToken, condition);
+            node.AddView(viewToken);
 
-            node.HasView(condition).ShouldBeTrue();
+            node.HasView().ShouldBeTrue();
         }
        
 

@@ -3,9 +3,14 @@ using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
-    public interface IMediaWriter<T>
+    public interface IMediaWriter
+    {
+        IEnumerable<string> Mimetypes { get; }
+    }
+
+    public interface IMediaWriter<T> : IMediaWriter
     {
         void Write(string mimeType, IFubuRequestContext context, T resource);
-        IEnumerable<string> Mimetypes { get; }
+        
     }
 }

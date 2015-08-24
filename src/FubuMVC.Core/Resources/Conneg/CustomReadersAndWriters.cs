@@ -20,7 +20,7 @@ namespace FubuMVC.Core.Resources.Conneg
         protected override DoNext applyOutputs(IOutputNode node, BehaviorChain chain, ConnegSettings settings)
         {
             var graph = settings.Graph ?? new ConnegGraph();
-            graph.WriterTypesFor(node.ResourceType).Each(type => node.Add(Activator.CreateInstance(type)));
+            graph.WriterTypesFor(node.ResourceType).Each(type => node.Add((IMediaWriter) Activator.CreateInstance(type)));
 
             return DoNext.Continue;
         }

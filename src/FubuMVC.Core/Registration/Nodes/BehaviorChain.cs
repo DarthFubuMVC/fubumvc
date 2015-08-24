@@ -353,7 +353,6 @@ namespace FubuMVC.Core.Registration.Nodes
             {
                 var views =
                     Output.Media()
-                        .Select(x => x.Writer)
                         .OfType<IViewWriter>()
                         .Select(x => Description.For(x.View).Title);
                 return "View(s): " + views.Join("");
@@ -361,7 +360,7 @@ namespace FubuMVC.Core.Registration.Nodes
 
             if (HasOutput() && Output.Media().Any())
             {
-                return Output.Media().Select(x => Description.For(x.Writer).Title).Join(", ");
+                return Output.Media().Select(x => Description.For(x).Title).Join(", ");
             }
 
             if (InputType() != null)

@@ -75,16 +75,16 @@ namespace FubuMVC.Tests.Ajax
                 .Output;
 
 
-            outputNode.Media().OfType<Media<MySpecialContinuation>>()
-                .Any(x => x.Writer is AjaxContinuationWriter<MySpecialContinuation>)
+            outputNode.Media().OfType<AjaxContinuationWriter<MySpecialContinuation>>()
+                .Any()
                 .ShouldBeTrue();
         }
 
         [Test]
         public void should_be_a_behavior_on_actions_that_return_the_AjaxContinuation()
         {
-            chainFor(x => x.BasicContinuation(null)).Output.Media().OfType<Media<AjaxContinuation>>()
-                .Any(x => x.Writer is AjaxContinuationWriter<AjaxContinuation>)
+            chainFor(x => x.BasicContinuation(null)).Output.Media().OfType<AjaxContinuationWriter<AjaxContinuation>>()
+                .Any()
                 .ShouldBeTrue();
         }
 

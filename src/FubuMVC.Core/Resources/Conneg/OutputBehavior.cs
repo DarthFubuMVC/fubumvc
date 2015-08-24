@@ -88,7 +88,7 @@ namespace FubuMVC.Core.Resources.Conneg
             // Select the appropriate media writer
             // based on the mimetype and other runtime
             // conditions
-            var media = _media.SelectMedia(mimeTypes, _context);
+            var media = _media.SelectWriter(mimeTypes, _context);
 
             if (media == null)
             {
@@ -106,9 +106,9 @@ namespace FubuMVC.Core.Resources.Conneg
 
         // ENDSAMPLE
 
-        public IEnumerable<IMedia<T>> Media
+        public IEnumerable<IMediaWriter<T>> Media
         {
-            get { return _media.Media; }
+            get { return _media.Writers; }
         }
 
         public void WriteHeaders()

@@ -30,7 +30,7 @@ namespace FubuMVC.Tests.NewConneg
             var node = new OutputNode(typeof (Address));
             node.Add(new NewtonsoftJsonFormatter());
             node.Add(new XmlFormatter());
-            node.Add(new FakeAddressWriter(), new SomeConditional());
+            node.Add(new FakeAddressWriter());
 
             using (var runtime = FubuRuntime.Basic())
             {
@@ -57,38 +57,25 @@ namespace FubuMVC.Tests.NewConneg
         public void first_media_has_the_formatter()
         {
             theInputBehavior.Media.First()
-                .ShouldBeOfType<Media<Address>>()
-                .Writer.ShouldBeOfType<FormatterWriter<Address>>();
+                .ShouldBeOfType<FormatterWriter<Address>>();
         }
 
         [Test]
         public void second_media_has_the_xml_formatter()
         {
-            theInputBehavior.Media.ElementAt(1)
-                .ShouldBeOfType<Media<Address>>()
-                .Writer.ShouldBeOfType<FormatterWriter<Address>>();
+            theInputBehavior.Media.ElementAt(1).ShouldBeOfType<FormatterWriter<Address>>();
         }
 
         [Test]
         public void third_media_is_the_specific_writer_with_the_conditional()
         {
-            var media = theInputBehavior.Media.ElementAt(2)
-                .ShouldBeOfType<Media<Address>>();
-
-            media.Writer.ShouldBeOfType<FakeAddressWriter>();
-            media.Condition.ShouldBeOfType<SomeConditional>();
+            theInputBehavior.Media.ElementAt(2)
+                .ShouldBeOfType<FakeAddressWriter>();
         }
 
         #endregion
     }
 
-    public class SomeConditional : IConditional
-    {
-        public bool ShouldExecute(IFubuRequestContext context)
-        {
-            return true;
-        }
-    }
 
     public class FancyWriter<T> : IMediaWriter<T>
     {

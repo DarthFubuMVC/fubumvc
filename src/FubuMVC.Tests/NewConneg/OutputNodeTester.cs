@@ -19,7 +19,7 @@ using StructureMap.Pipeline;
 namespace FubuMVC.Tests.NewConneg
 {
     [TestFixture]
-    public class OutputNodeTester
+    public class OutputNodeTester : IMediaWriter<string>
     {
         [Test]
         public void ClearAll()
@@ -33,8 +33,11 @@ namespace FubuMVC.Tests.NewConneg
             node.Explicits.Any().ShouldBeFalse();
         }
 
-
-
+        public IEnumerable<string> Mimetypes { get; private set; }
+        public void Write(string mimeType, IFubuRequestContext context, string resource)
+        {
+            throw new NotImplementedException();
+        }
 
 
         [Test]
@@ -74,12 +77,7 @@ namespace FubuMVC.Tests.NewConneg
             var theFormatter = new NewtonsoftJsonFormatter();
             node.Add(theFormatter);
 
-            var media = node.Explicits.Single().ShouldBeOfType<Media<Address>>();
-
-            media.Writer.ShouldBeOfType<FormatterWriter<Address>>()
-                .Formatter.ShouldBeTheSameAs(theFormatter);
-
-            media.Condition.ShouldBeTheSameAs(Always.Flyweight);
+            node.Explicits.Single().ShouldBeOfType<FormatterWriter<Address>>();
 
         }
 
@@ -88,15 +86,9 @@ namespace FubuMVC.Tests.NewConneg
         {
             var node = new OutputNode(typeof(Address));
             var theFormatter = new NewtonsoftJsonFormatter();
-            var condition = new IsAjaxRequest();
-            node.Add(theFormatter, condition);
+            node.Add(theFormatter);
 
-            var media = node.Explicits.Single().ShouldBeOfType<Media<Address>>();
-
-            media.Writer.ShouldBeOfType<FormatterWriter<Address>>()
-                .Formatter.ShouldBeTheSameAs(theFormatter);
-
-            media.Condition.ShouldBeTheSameAs(condition);
+            node.Explicits.Single().ShouldBeOfType<FormatterWriter<Address>>();
 
         }
 
@@ -105,21 +97,16 @@ namespace FubuMVC.Tests.NewConneg
         {
             var node = new OutputNode(typeof(Address)) {typeof (FooWriter<>)};
 
-            var media = node.Explicits.Single().ShouldBeOfType<Media<Address>>();
-            media.Writer.ShouldBeOfType<FooWriter<Address>>();
-            media.Condition.ShouldBeTheSameAs(Always.Flyweight);
+            node.Explicits.Single().ShouldBeOfType<FooWriter<Address>>();
         }
 
         [Test]
         public void add_writer_happy_path_with_open_type_and_explicit_condition()
         {
-            var condition = new IsAjaxRequest();
             var node = new OutputNode(typeof (Address));
-            node.Add(typeof(FooWriter<>), condition);
+            node.Add(typeof(FooWriter<>));
 
-            var media = node.Explicits.Single().ShouldBeOfType<Media<Address>>();
-            media.Writer.ShouldBeOfType<FooWriter<Address>>();
-            media.Condition.ShouldBeTheSameAs(condition);
+            node.Explicits.Single().ShouldBeOfType<FooWriter<Address>>();
         }
 
         [Test]
@@ -138,30 +125,24 @@ namespace FubuMVC.Tests.NewConneg
             var node = new OutputNode(typeof (Address));
             node.Add(writer);
 
-            var media = node.Explicits.Single().ShouldBeOfType<Media<Address>>();
-            media.Writer.ShouldBeTheSameAs(writer);
-            media.Condition.ShouldBeTheSameAs(Always.Flyweight);
+            var media = node.Explicits.Single().ShouldBeTheSameAs(writer);
         }
 
         [Test]
         public void add_a_closed_writer_with_conditional()
         {
-            var condition = new IsAjaxRequest();
             var writer = new SpecialWriter();
             var node = new OutputNode(typeof(Address));
-            node.Add(writer, condition);
+            node.Add(writer);
 
-            var media = node.Explicits.Single().ShouldBeOfType<Media<Address>>();
-            media.Writer.ShouldBeTheSameAs(writer);
-            media.Condition.ShouldBeTheSameAs(condition);
+            node.Explicits.Single().ShouldBeTheSameAs(writer);
         }
 
         [Test]
         public void add_a_writer_by_object_sad_path()
         {
             Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() => {
-                new OutputNode(typeof(Address))
-                    .Add(this);
+                new OutputNode(typeof(Address)).Add(this);
             });
         }
     }

@@ -14,7 +14,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             var chain = new BehaviorChain();
             var node = new OutputNode(typeof (T));
-            node.Add(writer);
+            node.Add((IMediaWriter) writer);
 
             chain.AddToEnd(node);
 

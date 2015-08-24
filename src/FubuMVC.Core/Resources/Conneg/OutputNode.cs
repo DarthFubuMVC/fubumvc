@@ -16,10 +16,10 @@ namespace FubuMVC.Core.Resources.Conneg
     public class OutputNode : BehaviorNode, IMayHaveResourceType, DescribesItself, IOutputNode
     {
         private readonly Type _resourceType;
-        private readonly IList<IMedia> _media = new List<IMedia>();
+        private readonly IList<IMediaWriter> _media = new List<IMediaWriter>();
         private ConnegSettings _settings;
 
-        private readonly Lazy<IEnumerable<IMedia>> _allMedia; 
+        private readonly Lazy<IEnumerable<IMediaWriter>> _allMedia; 
 
         public OutputNode(Type resourceType)
         {
@@ -35,7 +35,7 @@ namespace FubuMVC.Core.Resources.Conneg
 
             _resourceType = resourceType;
 
-            _allMedia = new Lazy<IEnumerable<IMedia>>(() => {
+            _allMedia = new Lazy<IEnumerable<IMediaWriter>>(() => {
                 var settings = _settings ?? new ConnegSettings();
 
                 settings.ApplyRules(this);
@@ -44,59 +44,51 @@ namespace FubuMVC.Core.Resources.Conneg
             });
         }
 
-        public void Add(IFormatter formatter, IConditional condition = null)
+        public void Add(IFormatter formatter)
         {
-            var writer = typeof (FormatterWriter<>).CloseAndBuildAs<object>(formatter, _resourceType);
-            addWriter(condition, writer);
+            var writer = typeof (FormatterWriter<>).CloseAndBuildAs<object>(formatter, _resourceType).As<IMediaWriter>();
+            addWriter(writer);
         }
 
-        private void addWriter(IConditional condition, object writer)
+        private void addWriter(IMediaWriter writer)
         {
-            var mediaType = typeof(Media<>).MakeGenericType(_resourceType);
-            var media = Activator.CreateInstance(mediaType, writer, condition ?? Always.Flyweight).As<IMedia>();
-
-            _media.Add(media);
+            _media.Add(writer);
         }
 
-        public void Add(Type mediaWriterType, IConditional condition = null)
+        public void Add(Type mediaWriterType)
         {
-            if (!mediaWriterType.Closes(typeof (IMediaWriter<>)) || !mediaWriterType.IsConcreteWithDefaultCtor())
+            if (!mediaWriterType.IsOpenGeneric() || !mediaWriterType.Closes(typeof (IMediaWriter<>)) || !mediaWriterType.IsConcreteWithDefaultCtor())
             {
                 throw new ArgumentOutOfRangeException("mediaWriterType", "mediaWriterType must implement IMediaWriter<T> and have a default constructor");
             }
 
             var writerType = mediaWriterType.MakeGenericType(_resourceType);
-            var writer = Activator.CreateInstance(writerType);
             
-            addWriter(condition, writer);
+
+            var writer = Activator.CreateInstance(writerType).As<IMediaWriter>();
+            
+            addWriter(writer);
         }
 
-        public void Add(object writer, IConditional condition = null)
+        public void Add(IMediaWriter writer)
         {
-            var mediaType = typeof (IMedia<>).MakeGenericType(_resourceType);
-            if (writer.GetType().CanBeCastTo(mediaType))
-            {
-                _media.Add(writer.As<IMedia>());
-                return;
-            }
-
             var writerType = typeof(IMediaWriter<>).MakeGenericType(_resourceType);
-            if (!writerType.IsAssignableFrom(writer.GetType()))
+            if (!writerType.IsInstanceOfType(writer))
             {
                 throw new ArgumentOutOfRangeException("writer", "writer must implement " + writerType.GetFullName());
             }
 
-            addWriter(condition, writer);
+            addWriter(writer);
         }
 
 
 
-        public IEnumerable<IMedia> Media()
+        public IEnumerable<IMediaWriter> Media()
         {
             return _allMedia.Value;
         }
 
-        public IEnumerable<IMedia> Explicits
+        public IEnumerable<IMediaWriter> Explicits
         {
             get
             {
@@ -104,9 +96,9 @@ namespace FubuMVC.Core.Resources.Conneg
             }
         } 
 
-        public IEnumerable<IMedia<T>> Media<T>()
+        public IEnumerable<IMediaWriter<T>> Media<T>()
         {
-            return Media().OfType<IMedia<T>>();
+            return Media().OfType<IMediaWriter<T>>();
         }
 
         public override BehaviorCategory Category
@@ -114,16 +106,15 @@ namespace FubuMVC.Core.Resources.Conneg
             get { return BehaviorCategory.Output; }
         }
 
-        public bool HasView(IConditional conditional)
+        public bool HasView()
         {
-            return _media.Any(x => x.Condition == conditional && x.Writes(MimeType.Html));
+            return _media.Any(x => x.Mimetypes.Contains(MimeType.Html.Value));
         }
 
         public IViewToken DefaultView()
         {
             return
-                _media.Where(x => x.Condition == Always.Flyweight)
-                    .Select(x => x.Writer)
+                _media
                     .OfType<IViewWriter>()
                     .Select(x => x.View)
                     .FirstOrDefault();

@@ -6,7 +6,7 @@ namespace FubuMVC.Core.Resources.Conneg
 {
     public interface IMediaCollection<T> where T : class
     {
-        IMedia<T> SelectMedia(CurrentMimeType mimeTypes, IFubuRequestContext logger);
-        IEnumerable<IMedia<T>> Media { get; }
+        IMediaWriter<T> SelectWriter(CurrentMimeType mimeTypes, IFubuRequestContext logger);
+        IEnumerable<IMediaWriter<T>> Writers { get; }
     }
 }

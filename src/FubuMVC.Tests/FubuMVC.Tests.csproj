@@ -579,7 +579,6 @@
     <Compile Include="NewConneg\ModelBindingReaderTester.cs" />
     <Compile Include="NewConneg\StringWriterTester.cs" />
     <Compile Include="NewConneg\HtmlStringWriterTester.cs" />
-    <Compile Include="NewConneg\MediaTester.cs" />
     <Compile Include="NewConneg\OutputBehaviorTester.cs" />
     <Compile Include="NewConneg\OutputNodeTester.cs" />
     <Compile Include="Registration\ActionMethodFilterTester.cs" />

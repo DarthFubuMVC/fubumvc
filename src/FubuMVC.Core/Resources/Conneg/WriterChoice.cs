@@ -1,7 +1,6 @@
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuCore.Logging;
-using FubuMVC.Core.Runtime.Conditionals;
 
 namespace FubuMVC.Core.Resources.Conneg
 {
@@ -9,13 +8,11 @@ namespace FubuMVC.Core.Resources.Conneg
     {
         private readonly string _mimeType;
         private readonly Description _writer;
-        private readonly Description _condition;
 
-        public WriterChoice(string mimeType, object writer, IConditional condition)
+        public WriterChoice(string mimeType, object writer)
         {
             _mimeType = mimeType;
             _writer = Description.For(writer);
-            _condition = Description.For(condition);
         }
 
         public void Describe(Description description)
@@ -28,7 +25,6 @@ namespace FubuMVC.Core.Resources.Conneg
             }
             
             description.Properties["Mimetype"] = _mimeType;
-            description.Properties["Condition"] = _condition.Title;
         }
     }
 }
