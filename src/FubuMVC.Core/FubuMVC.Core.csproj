@@ -79,8 +79,10 @@
     <Compile Include="DeactivatorExecuted.cs" />
     <Compile Include="DiagnosticsExtensions.cs" />
     <Compile Include="Diagnostics\Instrumentation\Activity.cs" />
+    <Compile Include="Diagnostics\Instrumentation\BehaviorTracer.cs" />
     <Compile Include="Diagnostics\Instrumentation\ChainExecutionLog.cs" />
-    <Compile Include="Diagnostics\Instrumentation\IExecutionRecorder.cs" />
+    <Compile Include="Diagnostics\Instrumentation\IChainExecutionLog.cs" />
+    <Compile Include="Diagnostics\Instrumentation\IExecutionLogger.cs" />
     <Compile Include="Diagnostics\Instrumentation\IRequestLog.cs" />
     <Compile Include="Diagnostics\Instrumentation\ISubject.cs" />
     <Compile Include="Diagnostics\Instrumentation\PerformanceHistory.cs" />

@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace FubuMVC.Core.Diagnostics.Instrumentation
 {
-    public interface IExecutionRecorder
+    public interface IExecutionLogger
     {
         void Record(ChainExecutionLog log, IDictionary<string, object> http);
     }
 
 
-    public class NulloExecutionRecorder : IExecutionRecorder
+    public class NulloExecutionRecorder : IExecutionLogger
     {
         public void Record(ChainExecutionLog log, IDictionary<string, object> http)
         {
@@ -19,7 +19,7 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
         }
     }
 
-    public class VerboseExecutionRecorder : IExecutionRecorder
+    public class VerboseExecutionRecorder : IExecutionLogger
     {
         private readonly IExecutionLogStorage _storage;
 
@@ -34,7 +34,7 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
         }
     }
 
-    public class ProductionExecutionRecorder : IExecutionRecorder
+    public class ProductionExecutionRecorder : IExecutionLogger
     {
         private readonly IExecutionLogStorage _storage;
 

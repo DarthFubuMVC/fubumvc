@@ -7,7 +7,7 @@ using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Diagnostics.Instrumentation
 {
-    public class ChainExecutionLog :IRequestLog, ISubject
+    public class ChainExecutionLog :IRequestLog, ISubject, IChainExecutionLog
     {
         private readonly IDictionary<string, object> _request;
         private readonly Stopwatch _stopwatch = new Stopwatch();

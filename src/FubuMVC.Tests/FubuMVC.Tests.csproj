@@ -105,6 +105,7 @@
     <Compile Include="Diagnostics\DiagnosticSettings_TraceLevel_Registration_Tester.cs" />
     <Compile Include="Diagnostics\FakeFubuDiagnostics.cs" />
     <Compile Include="Diagnostics\Instrumentation\ActivityTester.cs" />
+    <Compile Include="Diagnostics\Instrumentation\BehaviorTracerTester.cs" />
     <Compile Include="Diagnostics\Instrumentation\ChainExecutionLogTester.cs" />
     <Compile Include="Diagnostics\Instrumentation\PerformanceHistoryTester.cs" />
     <Compile Include="Diagnostics\InteractionContextExtensions.cs" />
