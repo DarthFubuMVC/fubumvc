@@ -16,9 +16,9 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
         private readonly Stack<Activity> _activityStack = new Stack<Activity>(); 
         private readonly IList<Exception> _exceptions = new List<Exception>(); 
 
-        public ChainExecutionLog(IDictionary<string, object> request)
+        public ChainExecutionLog()
         {
-            _request = request;
+            _request = new Dictionary<string, object>();
             _stopwatch.Start();
             Id = Guid.NewGuid();
 

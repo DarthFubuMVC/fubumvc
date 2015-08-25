@@ -145,7 +145,7 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
         [Test]
         public void mark_finished()
         {
-            var log = new ChainExecutionLog(new Dictionary<string, object>());
+            var log = new ChainExecutionLog();
             log.MarkFinished(dict => dict.Add("A", 1));
 
             log.Request["A"].ShouldBe(1);
@@ -154,7 +154,7 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
 
     public class StubbedChainExecutionLog : ChainExecutionLog
     {
-        public StubbedChainExecutionLog() : base(new Dictionary<string, object>())
+        public StubbedChainExecutionLog() : base()
         {
         }
 
