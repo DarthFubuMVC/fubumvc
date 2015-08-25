@@ -95,6 +95,8 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
             get { return _request; }
         }
 
+        public string SessionTag { get; set; }
+
         public void AddLog(object log)
         {
             current.AppendLog(requestTime(), log);

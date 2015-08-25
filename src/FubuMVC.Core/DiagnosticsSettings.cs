@@ -7,9 +7,13 @@ using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Security.Authorization;
+using StructureMap.Configuration.DSL;
 
 namespace FubuMVC.Core
 {
+
+
+
     [Title("Diagnostic Tracing and Authorization Configuration")]
     public class DiagnosticsSettings : DescribesItself, IFeatureSettings
     {
@@ -17,10 +21,13 @@ namespace FubuMVC.Core
 
         public DiagnosticsSettings()
         {
-            MaxRequests = 200;
+            MaxRequests = 1000;
+            InstrumentationServices = new InMemoryInstrumentationServices();
         }
 
         public readonly IList<IAuthorizationPolicy> AuthorizationRights = new List<IAuthorizationPolicy>();
+
+        public Registry InstrumentationServices { get; set; }
 
         public void RestrictToRole(string role)
         {
@@ -60,7 +67,8 @@ namespace FubuMVC.Core
                 registry.Policies.ChainSource<DiagnosticChainsSource>();
                 registry.Services.IncludeRegistry<TracingServices>();
 
-                registry.Services.SetServiceIfNone<IExecutionLogStorage, PerformanceHistoryQueue>().Singleton();
+                registry.Services.IncludeRegistry(InstrumentationServices);
+
             }
 
             if (registry.Mode.InDevelopment() || TraceLevel == TraceLevel.Verbose)

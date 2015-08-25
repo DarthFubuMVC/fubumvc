@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Logging;
+using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Http.Owin;
 using NUnit.Framework;
@@ -195,6 +196,41 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
         protected override double requestTime()
         {
             return RequestTime;
+        }
+    }
+
+    [TestFixture]
+    public class ChainExecutionHistoryTester
+    {
+        [Test]
+        public void only_cache_up_to_the_setting_limit()
+        {
+            var settings = new DiagnosticsSettings
+            {
+                MaxRequests = 10
+            };
+
+            var cache = new ChainExecutionHistory(settings);
+
+            cache.Store(new ChainExecutionLog());
+            cache.Store(new ChainExecutionLog());
+            cache.Store(new ChainExecutionLog());
+            cache.Store(new ChainExecutionLog());
+            cache.Store(new ChainExecutionLog());
+            cache.Store(new ChainExecutionLog());
+            cache.Store(new ChainExecutionLog());
+            cache.Store(new ChainExecutionLog());
+            cache.Store(new ChainExecutionLog());
+
+            cache.RecentReports().Count().ShouldBe(9);
+
+            cache.Store(new ChainExecutionLog());
+            cache.Store(new ChainExecutionLog());
+            cache.Store(new ChainExecutionLog());
+            cache.Store(new ChainExecutionLog());
+            cache.Store(new ChainExecutionLog());
+
+            cache.RecentReports().Count().ShouldBe(settings.MaxRequests);
         }
     }
 }

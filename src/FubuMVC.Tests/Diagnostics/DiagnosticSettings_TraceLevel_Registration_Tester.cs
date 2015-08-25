@@ -65,6 +65,19 @@ namespace FubuMVC.Tests.Diagnostics
         }
 
         [Test]
+        public void default_in_memory_instrumentation_registrations()
+        {
+            withTraceLevel(TraceLevel.Production, c =>
+            {
+                c.DefaultSingletonIs<IExecutionLogStorage, InMemoryExecutionLogStorage>();
+
+                c.DefaultSingletonIs<IChainExecutionHistory, ChainExecutionHistory>();
+                c.ShouldHaveRegistration<IActivator, PerformanceHistoryQueueActivator>();
+                c.DefaultSingletonIs<IPerformanceHistoryQueue, PerformanceHistoryQueue>();
+            });
+        }
+
+        [Test]
         public void verbose_registrations()
         {
             withTraceLevel(TraceLevel.Verbose, c =>
@@ -76,8 +89,7 @@ namespace FubuMVC.Tests.Diagnostics
 
                 c.DefaultSingletonIs<IExecutionLogger, VerboseExecutionLogger>();
 
-                // default
-                c.DefaultSingletonIs<IExecutionLogStorage, PerformanceHistoryQueue>();
+
             });
         }
 
@@ -93,8 +105,6 @@ namespace FubuMVC.Tests.Diagnostics
 
                 c.DefaultSingletonIs<IExecutionLogger, ProductionExecutionLogger>();
 
-                // default
-                c.DefaultSingletonIs<IExecutionLogStorage, PerformanceHistoryQueue>();
             });
         }
 
