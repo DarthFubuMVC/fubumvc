@@ -112,5 +112,15 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
                 Duration = finish - start
             });
         }
+
+        public void RecordHeaders(IDictionary<string, object> env)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RecordBody(IDictionary<string, object> env)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

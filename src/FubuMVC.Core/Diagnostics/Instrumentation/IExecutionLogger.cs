@@ -7,51 +7,21 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
 {
     public interface IExecutionLogger
     {
-        void Record(ChainExecutionLog log, IDictionary<string, object> http);
+        void Record(IChainExecutionLog log, IDictionary<string, object> http);
     }
 
 
     public class NulloExecutionLogger : IExecutionLogger
     {
-        public void Record(ChainExecutionLog log, IDictionary<string, object> http)
+        public void Record(IChainExecutionLog log, IDictionary<string, object> http)
         {
             // no-op
         }
     }
 
-    public class VerboseExecutionLogger : IExecutionLogger
-    {
-        private readonly IExecutionLogStorage _storage;
-
-        public VerboseExecutionLogger(IExecutionLogStorage storage)
-        {
-            _storage = storage;
-        }
-
-        public void Record(ChainExecutionLog log, IDictionary<string, object> http)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class ProductionExecutionLogger : IExecutionLogger
-    {
-        private readonly IExecutionLogStorage _storage;
-
-        public ProductionExecutionLogger(IExecutionLogStorage storage)
-        {
-            _storage = storage;
-        }
-
-        public void Record(ChainExecutionLog log, IDictionary<string, object> http)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
     public interface IExecutionLogStorage
     {
-        void Store(ChainExecutionLog log);
+        void Store(IChainExecutionLog log);
         void Start();
     }
 
@@ -90,9 +60,9 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
             _readingTask = Task.Factory.StartNew(record);
         }
 
-        void IExecutionLogStorage.Store(ChainExecutionLog log)
+        void IExecutionLogStorage.Store(IChainExecutionLog log)
         {
-            Enqueue(log);
+            Enqueue((ChainExecutionLog) log);
         }
     }
 }

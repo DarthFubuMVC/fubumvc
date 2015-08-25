@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace FubuMVC.Core.Diagnostics.Instrumentation
 {
@@ -9,5 +10,7 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
         void LogException(Exception ex);
         void AddLog(object log);
         void Trace(string description, Action action);
+        void RecordHeaders(IDictionary<string, object> env);
+        void RecordBody(IDictionary<string, object> env);
     }
 }

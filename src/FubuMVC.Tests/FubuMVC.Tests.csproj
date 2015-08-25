@@ -108,6 +108,8 @@
     <Compile Include="Diagnostics\Instrumentation\BehaviorTracerTester.cs" />
     <Compile Include="Diagnostics\Instrumentation\ChainExecutionLogTester.cs" />
     <Compile Include="Diagnostics\Instrumentation\PerformanceHistoryTester.cs" />
+    <Compile Include="Diagnostics\Instrumentation\ProductionExecutionLoggerTester.cs" />
+    <Compile Include="Diagnostics\Instrumentation\VerboseExecutionLoggerTester.cs" />
     <Compile Include="Diagnostics\InteractionContextExtensions.cs" />
     <Compile Include="Diagnostics\PerfTimerSmokeTester.cs" />
     <Compile Include="Diagnostics\Routes\EndpointReportTester.cs" />

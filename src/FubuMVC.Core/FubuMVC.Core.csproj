@@ -86,8 +86,10 @@
     <Compile Include="Diagnostics\Instrumentation\IRequestLog.cs" />
     <Compile Include="Diagnostics\Instrumentation\ISubject.cs" />
     <Compile Include="Diagnostics\Instrumentation\PerformanceHistory.cs" />
+    <Compile Include="Diagnostics\Instrumentation\ProductionExecutionLogger.cs" />
     <Compile Include="Diagnostics\Instrumentation\RequestStep.cs" />
     <Compile Include="Diagnostics\Instrumentation\Trace.cs" />
+    <Compile Include="Diagnostics\Instrumentation\VerboseExecutionLogger.cs" />
     <Compile Include="FubuModeExtensions.cs" />
     <Compile Include="Http\Compression\ApplyCompression.cs" />
     <Compile Include="Http\Hosting\IHost.cs" />
