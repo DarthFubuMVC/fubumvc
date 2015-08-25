@@ -53,10 +53,14 @@ namespace FubuMVC.Core
 
         void IFeatureSettings.Apply(FubuRegistry registry)
         {
+            
+
             if (registry.Mode.InDevelopment() || TraceLevel != TraceLevel.None)
             {
                 registry.Policies.ChainSource<DiagnosticChainsSource>();
                 registry.Services.IncludeRegistry<TracingServices>();
+
+                registry.Services.SetServiceIfNone<IExecutionLogStorage, PerformanceHistoryQueue>().Singleton();
             }
 
             if (registry.Mode.InDevelopment() || TraceLevel == TraceLevel.Verbose)

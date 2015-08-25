@@ -85,6 +85,7 @@
     <Compile Include="Diagnostics\Instrumentation\IExecutionLogger.cs" />
     <Compile Include="Diagnostics\Instrumentation\IRequestLog.cs" />
     <Compile Include="Diagnostics\Instrumentation\ISubject.cs" />
+    <Compile Include="Diagnostics\Instrumentation\NulloExecutionLogger.cs" />
     <Compile Include="Diagnostics\Instrumentation\PerformanceHistory.cs" />
     <Compile Include="Diagnostics\Instrumentation\ProductionExecutionLogger.cs" />
     <Compile Include="Diagnostics\Instrumentation\RequestStep.cs" />

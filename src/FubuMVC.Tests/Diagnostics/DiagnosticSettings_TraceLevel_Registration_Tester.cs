@@ -75,6 +75,9 @@ namespace FubuMVC.Tests.Diagnostics
                 c.DefaultRegistrationIs<IBindingLogger, RecordingBindingLogger>();
 
                 c.DefaultSingletonIs<IExecutionLogger, VerboseExecutionLogger>();
+
+                // default
+                c.DefaultSingletonIs<IExecutionLogStorage, PerformanceHistoryQueue>();
             });
         }
 
@@ -89,6 +92,9 @@ namespace FubuMVC.Tests.Diagnostics
                 c.DefaultRegistrationIs<IBindingLogger, NulloBindingLogger>();
 
                 c.DefaultSingletonIs<IExecutionLogger, ProductionExecutionLogger>();
+
+                // default
+                c.DefaultSingletonIs<IExecutionLogStorage, PerformanceHistoryQueue>();
             });
         }
 
@@ -103,6 +109,8 @@ namespace FubuMVC.Tests.Diagnostics
                 c.DefaultRegistrationIs<IBindingLogger, NulloBindingLogger>();
 
                 c.DefaultSingletonIs<IExecutionLogger, NulloExecutionLogger>();
+
+
             });
         }
     }
