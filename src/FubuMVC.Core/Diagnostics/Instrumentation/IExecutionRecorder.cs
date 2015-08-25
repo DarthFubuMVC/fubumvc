@@ -1,50 +1,62 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using FubuMVC.Core.Diagnostics.Packaging;
 
 namespace FubuMVC.Core.Diagnostics.Instrumentation
 {
     public interface IExecutionRecorder
     {
-        void Record(ChainExecutionLog log);
+        void Record(ChainExecutionLog log, IDictionary<string, object> http);
     }
 
 
-    // This will need to be registered. 
-    public class InMemoryExecutionRecorder : IExecutionRecorder
+    public class NulloExecutionRecorder : IExecutionRecorder
     {
-        private readonly PerformanceHistoryQueue _queue;
-
-        public InMemoryExecutionRecorder(PerformanceHistoryQueue queue)
+        public void Record(ChainExecutionLog log, IDictionary<string, object> http)
         {
-            _queue = queue;
-        }
-
-        public void Record(ChainExecutionLog log)
-        {
-            _queue.Enqueue(log);
+            // no-op
         }
     }
 
-    // TODO -- this will need to be registered
-    public class PerformanceHistoryRecording : IActivator
+    public class VerboseExecutionRecorder : IExecutionRecorder
     {
-        private readonly PerformanceHistoryQueue _queue;
+        private readonly IExecutionLogStorage _storage;
 
-        public PerformanceHistoryRecording(PerformanceHistoryQueue queue)
+        public VerboseExecutionRecorder(IExecutionLogStorage storage)
         {
-            _queue = queue;
+            _storage = storage;
         }
 
-        public void Activate(IActivationLog log, IPerfTimer timer)
+        public void Record(ChainExecutionLog log, IDictionary<string, object> http)
         {
-            log.Trace("Starting the in memory performance tracking");
-            _queue.Start();
+            throw new NotImplementedException();
         }
     }
 
-    public class PerformanceHistoryQueue : IDisposable
+    public class ProductionExecutionRecorder : IExecutionRecorder
+    {
+        private readonly IExecutionLogStorage _storage;
+
+        public ProductionExecutionRecorder(IExecutionLogStorage storage)
+        {
+            _storage = storage;
+        }
+
+        public void Record(ChainExecutionLog log, IDictionary<string, object> http)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public interface IExecutionLogStorage
+    {
+        void Store(ChainExecutionLog log);
+        void Start();
+    }
+
+
+    public class PerformanceHistoryQueue : IExecutionLogStorage, IDisposable
     {
         private readonly BlockingCollection<ChainExecutionLog> _collection =
             new BlockingCollection<ChainExecutionLog>(new ConcurrentBag<ChainExecutionLog>());
@@ -74,6 +86,11 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
         public void Start()
         {
             _readingTask = Task.Factory.StartNew(record);
+        }
+
+        void IExecutionLogStorage.Store(ChainExecutionLog log)
+        {
+            Enqueue(log);
         }
     }
 }
