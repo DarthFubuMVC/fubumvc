@@ -11,7 +11,7 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
     }
 
 
-    public class NulloExecutionRecorder : IExecutionLogger
+    public class NulloExecutionLogger : IExecutionLogger
     {
         public void Record(ChainExecutionLog log, IDictionary<string, object> http)
         {
@@ -19,11 +19,11 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
         }
     }
 
-    public class VerboseExecutionRecorder : IExecutionLogger
+    public class VerboseExecutionLogger : IExecutionLogger
     {
         private readonly IExecutionLogStorage _storage;
 
-        public VerboseExecutionRecorder(IExecutionLogStorage storage)
+        public VerboseExecutionLogger(IExecutionLogStorage storage)
         {
             _storage = storage;
         }
@@ -34,11 +34,11 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
         }
     }
 
-    public class ProductionExecutionRecorder : IExecutionLogger
+    public class ProductionExecutionLogger : IExecutionLogger
     {
         private readonly IExecutionLogStorage _storage;
 
-        public ProductionExecutionRecorder(IExecutionLogStorage storage)
+        public ProductionExecutionLogger(IExecutionLogStorage storage)
         {
             _storage = storage;
         }
@@ -63,6 +63,8 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
 
         private Task _readingTask;
 
+
+
         public void Dispose()
         {
             _collection.CompleteAdding();
@@ -79,7 +81,7 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
         {
             foreach (var request in _collection.GetConsumingEnumerable())
             {
-                // TODO -- apply the history
+                throw new Exception("Do something here.");
             }
         }
 

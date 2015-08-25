@@ -6,6 +6,7 @@ using FubuCore.Binding.InMemory;
 using FubuCore.Logging;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration;
 using Shouldly;
@@ -68,12 +69,12 @@ namespace FubuMVC.Tests.Diagnostics
         {
             withTraceLevel(TraceLevel.Verbose, c =>
             {
-                Debug.WriteLine(c.WhatDoIHave());
-
                 c.ShouldHaveRegistration<ILogListener, RequestTraceListener>();
                 c.ShouldNotHaveRegistration<ILogListener, ProductionModeTraceListener>();
 
                 c.DefaultRegistrationIs<IBindingLogger, RecordingBindingLogger>();
+
+                c.DefaultSingletonIs<IExecutionLogger, VerboseExecutionLogger>();
             });
         }
 
@@ -86,6 +87,8 @@ namespace FubuMVC.Tests.Diagnostics
                 c.ShouldHaveRegistration<ILogListener, ProductionModeTraceListener>();
 
                 c.DefaultRegistrationIs<IBindingLogger, NulloBindingLogger>();
+
+                c.DefaultSingletonIs<IExecutionLogger, ProductionExecutionLogger>();
             });
         }
 
@@ -98,6 +101,8 @@ namespace FubuMVC.Tests.Diagnostics
                 c.ShouldNotHaveRegistration<ILogListener, ProductionModeTraceListener>();
 
                 c.DefaultRegistrationIs<IBindingLogger, NulloBindingLogger>();
+
+                c.DefaultSingletonIs<IExecutionLogger, NulloExecutionLogger>();
             });
         }
     }

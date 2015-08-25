@@ -3,6 +3,7 @@ using FubuCore.Binding.InMemory;
 using FubuCore.Descriptions;
 using FubuCore.Logging;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Security.Authorization;
@@ -63,10 +64,15 @@ namespace FubuMVC.Core
                 registry.Services.ReplaceService<IBindingLogger, RecordingBindingLogger>();
                 registry.Services.ReplaceService<IBindingHistory, BindingHistory>();
                 registry.Services.AddService<ILogListener, RequestTraceListener>();
+                registry.Services.ForSingletonOf<IExecutionLogger>().Use<VerboseExecutionLogger>();
             }
             else if (TraceLevel == TraceLevel.Production)
             {
                 registry.Services.IncludeRegistry<ProductionDiagnosticsServices>();
+            }
+            else
+            {
+                registry.Services.ForSingletonOf<IExecutionLogger>().Use<NulloExecutionLogger>();
             }
         }
     }
@@ -76,6 +82,7 @@ namespace FubuMVC.Core
         public ProductionDiagnosticsServices()
         {
             AddService<ILogListener, ProductionModeTraceListener>();
+            ForSingletonOf<IExecutionLogger>().Use<ProductionExecutionLogger>();
         }
     }
 
