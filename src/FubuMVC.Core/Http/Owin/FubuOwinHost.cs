@@ -23,6 +23,7 @@ namespace FubuMVC.Core.Http.Owin
             var host = new FubuOwinHost(runtime.Routes);
             AppFunc inner = host.Invoke;
             AppFunc appFunc = settings.BuildAppFunc(inner, runtime.Get<IServiceFactory>());
+
             return appFunc;
         }
 

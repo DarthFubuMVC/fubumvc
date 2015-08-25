@@ -328,20 +328,4 @@ namespace FubuMVC.Core.Http.Owin
             return JsonUtil.Get<T>(json);
         }
     }
-
-    public static class DictionaryExtensions
-    {
-        public static void Set<T>(this IDictionary<string, object> dict, string key, T value)
-        {
-            if (dict.ContainsKey(key))
-            {
-                dict[key] = value;
-            }
-            else
-            {
-                dict.Add(key, value);
-            }
-        }
-    }
-
 }
