@@ -59,6 +59,8 @@ namespace FubuMVC.Core.Registration.Nodes
             });
         }
 
+        public readonly PerformanceHistory Performance = new PerformanceHistory();
+
         public bool IsAsynchronous()
         {
             return Calls.Any(x => x.IsAsync);
