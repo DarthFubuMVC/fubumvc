@@ -11,8 +11,7 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
     }
 
 
-    // This will need to be registered. Will make it a singleton
-    // just to keep from making it over and over again
+    // This will need to be registered. 
     public class InMemoryExecutionRecorder : IExecutionRecorder
     {
         private readonly PerformanceHistoryQueue _queue;

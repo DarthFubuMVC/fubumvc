@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuMVC.Core.Continuations;
+using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
@@ -22,7 +23,7 @@ namespace FubuMVC.Core.Registration.Nodes
     ///   authorization rules
     ///   system
     /// </summary>
-    public class BehaviorChain : Chain<BehaviorNode, BehaviorChain>, IContainerModel
+    public class BehaviorChain : Chain<BehaviorNode, BehaviorChain>, IContainerModel, ISubject
     {
         public const string NoTracing = "NoTracing";
 
@@ -369,6 +370,11 @@ namespace FubuMVC.Core.Registration.Nodes
             }
 
             return "BehaviorChain " + UniqueId;
+        }
+
+        Guid ISubject.Id
+        {
+            get { return UniqueId; }
         }
 
         public override int GetHashCode()

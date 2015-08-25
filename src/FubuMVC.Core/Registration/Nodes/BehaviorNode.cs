@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Diagnostics.Instrumentation;
 using StructureMap.Pipeline;
 
 namespace FubuMVC.Core.Registration.Nodes
@@ -9,7 +10,7 @@ namespace FubuMVC.Core.Registration.Nodes
     /// <summary>
     ///   BehaviorNode models a single Behavior in the FubuMVC configuration model
     /// </summary>
-    public abstract class BehaviorNode : Node<BehaviorNode, BehaviorChain>, IContainerModel
+    public abstract class BehaviorNode : Node<BehaviorNode, BehaviorChain>, IContainerModel, ISubject
     {
         protected BehaviorNode()
         {
@@ -114,5 +115,14 @@ namespace FubuMVC.Core.Registration.Nodes
             return wrapper;
         }
 
+        string ISubject.Title()
+        {
+            return Description;
+        }
+
+        Guid ISubject.Id
+        {
+            get { return UniqueId; }
+        }
     }
 }
