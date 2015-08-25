@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using FubuCore.Logging;
+using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Diagnostics.Instrumentation
@@ -115,12 +116,12 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
 
         public void RecordHeaders(IDictionary<string, object> env)
         {
-            throw new NotImplementedException();
+            env.CopyTo(_request, "owin.RequestHeaders", "owin.RequestMethod", "owin.RequestPath", "owin.RequestPathBase", "owin.RequestProtocol", "owin.RequestQueryString", "owin.RequestScheme", "owin.ResponseHeaders", "owin.ResponseStatusCode", "owin.ResponseReasonPhrase");
         }
 
         public void RecordBody(IDictionary<string, object> env)
         {
-            throw new NotImplementedException();
+            // TODO -- will need to get the request body somehow
         }
     }
 }

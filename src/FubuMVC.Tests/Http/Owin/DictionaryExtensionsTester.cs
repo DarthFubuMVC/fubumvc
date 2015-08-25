@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Security.Cryptography;
 using FubuMVC.Core.Http.Owin;
 using NUnit.Framework;
 using Shouldly;

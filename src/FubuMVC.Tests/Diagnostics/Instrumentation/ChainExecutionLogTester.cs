@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Logging;
 using FubuMVC.Core.Diagnostics.Instrumentation;
+using FubuMVC.Core.Http.Owin;
 using NUnit.Framework;
 using Rhino.Mocks;
 using Shouldly;
@@ -149,6 +150,37 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
             log.MarkFinished(dict => dict.Add("A", 1));
 
             log.Request["A"].ShouldBe(1);
+        }
+
+        [Test]
+        public void record_headers_from_http_request()
+        {
+            var dict = new Dictionary<string, object>();
+            dict.Add("owin.RequestHeaders", 1);
+            dict.Add("owin.RequestMethod", 2);
+            dict.Add("owin.RequestPath", 3);
+            dict.Add("owin.RequestPathBase", 4);
+            dict.Add("owin.RequestProtocol", 5);
+            dict.Add("owin.RequestQueryString", 6);
+            dict.Add("owin.RequestScheme", 7);
+            dict.Add("owin.ResponseHeaders", 8);
+            dict.Add("owin.ResponseStatusCode", 9);
+            dict.Add("owin.ResponseReasonPhrase", 10);
+
+            var log = new ChainExecutionLog();
+
+            log.RecordHeaders(dict);
+
+            log.Request["owin.RequestHeaders"].ShouldBe(1);
+            log.Request["owin.RequestMethod"].ShouldBe(2);
+            log.Request["owin.RequestPath"].ShouldBe(3);
+            log.Request["owin.RequestPathBase"].ShouldBe(4);
+            log.Request["owin.RequestProtocol"].ShouldBe(5);
+            log.Request["owin.RequestQueryString"].ShouldBe(6);
+            log.Request["owin.RequestScheme"].ShouldBe(7);
+            log.Request["owin.ResponseHeaders"].ShouldBe(8);
+            log.Request["owin.ResponseStatusCode"].ShouldBe(9);
+            log.Request["owin.ResponseReasonPhrase"].ShouldBe(10);
         }
     }
 
