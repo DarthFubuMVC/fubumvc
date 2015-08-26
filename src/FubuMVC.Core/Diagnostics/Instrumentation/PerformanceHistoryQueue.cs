@@ -13,8 +13,6 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
 
         private Task _readingTask;
 
-
-
         public void Dispose()
         {
             _collection.CompleteAdding();
@@ -31,7 +29,14 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
         {
             foreach (var log in _collection.GetConsumingEnumerable())
             {
-                log.RootChain.Performance.Read(log);
+                try
+                {
+                    if (log.RootChain != null) log.RootChain.Performance.Read(log);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
             }
         }
 

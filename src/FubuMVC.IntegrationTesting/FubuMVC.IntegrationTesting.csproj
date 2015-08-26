@@ -157,6 +157,7 @@
     <Compile Include="Continuations\redirects_with_the_get.cs" />
     <Compile Include="debugger.cs" />
     <Compile Include="Diagnostics\can_bring_up_the_diagnostics_home_page.cs" />
+    <Compile Include="Diagnostics\end_to_end_execution_log_tracing_for_http_requests.cs" />
     <Compile Include="Diagnostics\serving_up_embedded_diagnostic_assets.cs" />
     <Compile Include="DifferentInput.cs" />
     <Compile Include="EndpointServiceIntegratedSmokeTester.cs" />

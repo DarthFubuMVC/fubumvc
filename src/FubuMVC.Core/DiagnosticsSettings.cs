@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using FubuCore.Binding.InMemory;
 using FubuCore.Descriptions;
 using FubuCore.Logging;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Diagnostics.Runtime;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Security.Authorization;
 using StructureMap.Configuration.DSL;
@@ -86,6 +89,24 @@ namespace FubuMVC.Core
             {
                 registry.Services.ForSingletonOf<IExecutionLogger>().Use<NulloExecutionLogger>();
             }
+        }
+
+        public Func<IDictionary<string, object>, Task> WrapAppFunc(FubuRuntime runtime, Func<IDictionary<string, object>, Task> inner)
+        {
+            if (TraceLevel == TraceLevel.None) return inner;
+
+            var logger = runtime.Get<IExecutionLogger>();
+
+            return env =>
+            {
+                var log = new ChainExecutionLog();
+                env.Log(log);
+
+                return inner(env).ContinueWith(t =>
+                {
+                    logger.Record(log, env);
+                });
+            };
         }
     }
 

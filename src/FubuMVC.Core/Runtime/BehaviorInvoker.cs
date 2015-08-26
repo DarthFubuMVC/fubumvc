@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Binding;
+using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
 
@@ -23,6 +24,11 @@ namespace FubuMVC.Core.Runtime
             var currentChain = new CurrentChain(_chain, routeValues);
             arguments.Set(typeof(ICurrentChain), currentChain);
             arguments.Set(typeof(IRequestCompletion), requestCompletion);
+
+            if (arguments.Has(typeof (IChainExecutionLog)))
+            {
+                arguments.Get<IChainExecutionLog>().RootChain = _chain;
+            }
 
             if (_chain.Filters.Any(filter => filter.Filter(arguments) == DoNext.Stop))
             {

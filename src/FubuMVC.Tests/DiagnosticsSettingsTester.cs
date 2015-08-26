@@ -1,4 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using FubuMVC.Core;
 using FubuMVC.Core.Security.Authorization;
 using Shouldly;
@@ -54,6 +58,15 @@ namespace FubuMVC.Tests
                 runtime.Get<DiagnosticsSettings>()
                     .TraceLevel.ShouldBe(TraceLevel.Verbose);
             }
+        }
+
+        [Test]
+        public void if_disabled_just_return_inner_app_func()
+        {
+            Func<IDictionary<string, object>, Task> inner = d => Task.Factory.StartNew(() => { });
+
+            var settings = new DiagnosticsSettings {TraceLevel = TraceLevel.None};
+            settings.WrapAppFunc(null, inner).ShouldBeSameAs(inner);
         }
     }
 }

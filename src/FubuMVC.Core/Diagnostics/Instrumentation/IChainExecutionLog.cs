@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Diagnostics.Instrumentation
 {
@@ -14,5 +15,6 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
         void RecordBody(IDictionary<string, object> env);
 
         Guid Id { get; }
+        BehaviorChain RootChain { get; set; }
     }
 }

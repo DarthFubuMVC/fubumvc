@@ -288,12 +288,30 @@ namespace FubuMVC.Core.Http
 
         public static string RequestId(this IDictionary<string, object> http)
         {
-            return (string) (http.ContainsKey(REQUEST_ID) ? http[REQUEST_ID] : null);
+            var raw = http.ResponseHeaders();
+
+            if (raw == null) return null;
+
+            if (raw.ContainsKey(REQUEST_ID))
+            {
+                return raw[REQUEST_ID].FirstOrDefault();
+            }
+
+            return null;
+
         }
 
         public static void RequestId(this IDictionary<string, object> http, string id)
         {
-            http.Set(REQUEST_ID, id);
+            http.ResponseHeaders().AppendValue(REQUEST_ID, id);
+        }
+
+        public static string RequestId(this IHttpResponse response)
+        {
+            var raw = response.HeaderValueFor(REQUEST_ID);
+            if (raw == null || !raw.Any()) return null;
+
+            return raw.First();
         }
 
         public static void CopyTo(this IDictionary<string, object> source, IDictionary<string, object> destination,
@@ -314,7 +332,7 @@ namespace FubuMVC.Core.Http
 
         public static void Log(this IDictionary<string, object> dict, IChainExecutionLog log)
         {
-            dict.RequestId(log.Id.ToString());
+            dict.ResponseHeaders().AppendValue(REQUEST_ID, log.Id.ToString());
             dict.Set(LOG_KEY, log);
         }
 

@@ -24,7 +24,8 @@ namespace FubuMVC.Core.Http.Owin
             AppFunc inner = host.Invoke;
             AppFunc appFunc = settings.BuildAppFunc(inner, runtime.Get<IServiceFactory>());
 
-            return appFunc;
+            var diagnostics = runtime.Get<DiagnosticsSettings>();
+            return diagnostics.WrapAppFunc(runtime, appFunc);
         }
 
 

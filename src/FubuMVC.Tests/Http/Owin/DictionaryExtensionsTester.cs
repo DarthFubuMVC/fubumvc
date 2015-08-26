@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using FubuCore;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Http;
 using NUnit.Framework;
@@ -52,7 +53,6 @@ namespace FubuMVC.Tests.Http.Owin
             dict.RequestId("abc");
 
             dict.RequestId().ShouldBe("abc");
-            dict["x-request-id"].ShouldBe("abc");
         }
 
 
