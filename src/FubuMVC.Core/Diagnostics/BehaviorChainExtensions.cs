@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using FubuMVC.Core.Diagnostics.Runtime;
+using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Diagnostics
@@ -14,7 +14,7 @@ namespace FubuMVC.Core.Diagnostics
 
         public static bool NonDiagnosticNodes(BehaviorNode node)
         {
-            if (node is DiagnosticNode || node is BehaviorTracerNode) return false;
+            if (node is BehaviorTracerNode) return false;
 
             return true;
         }

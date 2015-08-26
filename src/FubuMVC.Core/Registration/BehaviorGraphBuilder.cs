@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using FubuMVC.Core.Assets;
+using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Http;

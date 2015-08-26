@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Dates;
 using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.Authorization;
@@ -176,7 +177,7 @@ namespace Serenity
 
             public void BeforeExecution(ISpecContext context)
             {
-                GetService<IRequestHistoryCache>().CurrentSessionTag = _sessionTag;
+                GetService<IChainExecutionHistory>().CurrentSessionTag = _sessionTag;
 
                 // TODO -- figure out how to do this
                 //_system.Application.Navigation.Logger = new ContextualNavigationLogger(context);
@@ -186,7 +187,7 @@ namespace Serenity
             {
                 var reporter = new RequestReporter(_parent._runtime);
                 var requestLogs =
-                    GetService<IRequestHistoryCache>().RecentReports().Where(x => x.SessionTag == _sessionTag).ToArray();
+                    GetService<IChainExecutionHistory>().RecentReports().Where(x => x.SessionTag == _sessionTag).ToArray();
                 
                 reporter.Append(requestLogs);
 

@@ -1,12 +1,11 @@
 using System;
 using FubuCore;
 using FubuMVC.Core.Behaviors;
-using FubuMVC.Core.Diagnostics.Runtime;
-using FubuMVC.Core.Diagnostics.Runtime.Tracing;
+using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.StructureMap;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 using StructureMap.Pipeline;
 
 namespace FubuMVC.Tests.Diagnostics.Runtime
@@ -27,81 +26,24 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
             theOriginalGuid = action.UniqueId;
         }
 
-        private IConfiguredInstance toInstance()
-        {
-            return (IConfiguredInstance) theChain.As<IContainerModel>().ToInstance();
-        }
-
-        [Test]
-        public void when_in_diagnostic_mode_use_a_diagnostic_behavior_wrapping_the_whole_with_the_same_name()
-        {
-            new BehaviorTracerNode(theChain.Top);
-            new DiagnosticNode(theChain);
-
-            var instance = toInstance();
-            instance.PluggedType.ShouldBe(typeof(DiagnosticBehavior));
-
-
-            instance.FindDependencyDefinitionFor<IActionBehavior>()
-                .ReturnedType.ShouldBe(typeof(BehaviorTracer));
-
-            instance
-                .FindDependencyDefinitionFor<IActionBehavior>().As<IConfiguredInstance>()
-                .FindDependencyDefinitionFor<IActionBehavior>()
-                .ReturnedType.ShouldBe(typeof(OneInZeroOutActionInvoker<Controller1, Controller1.Input1>));
-
-        }
-
-
-        [Test]
-        public void behavior_tracers_deeper()
-        {
-            var node = Wrapper.For<SimpleBehavior>();
-            var chain = new RoutedChain("foo");
-            chain.AddToEnd(node);
-            node.AddAfter(Wrapper.For<DifferentBehavior>());
-
-            ApplyTracing.ApplyToChain(chain);
-            
-            
-
-            var instance = chain.As<IContainerModel>().ToInstance()
-                .As<IConfiguredInstance>()
-                .FindDependencyDefinitionFor<IActionBehavior>()
-                .As<IConfiguredInstance>();
-
-            instance.PluggedType.ShouldBe(typeof(BehaviorTracer));
-            var child1 = instance.FindDependencyDefinitionFor<IActionBehavior>().As<IConfiguredInstance>();
-            child1.PluggedType.ShouldBe(typeof(SimpleBehavior));
-
-            var child2 = child1.FindDependencyDefinitionFor<IActionBehavior>().As<IConfiguredInstance>();
-            child2.PluggedType.ShouldBe(typeof(BehaviorTracer));
-
-            var child3 = child2.FindDependencyDefinitionFor<IActionBehavior>();
-            child3.ReturnedType.ShouldBe(typeof(DifferentBehavior));
-        }
-
 
 
         [Test]
         public void creating_an_object_def_for_full_tracing_should_wrap_with_a_behavior_tracer()
         {
-            var node = new Wrapper(typeof(SimpleBehavior));
+            var node = new Wrapper(typeof (SimpleBehavior));
             var instance = new BehaviorTracerNode(node).As<IContainerModel>().ToInstance().As<IConfiguredInstance>();
 
-            instance.PluggedType.ShouldBe(typeof(BehaviorTracer));
+            instance.PluggedType.ShouldBe(typeof (BehaviorTracer));
             instance.FindDependencyDefinitionFor<IActionBehavior>()
-                .ReturnedType.ShouldBe(typeof(SimpleBehavior));
+                .ReturnedType.ShouldBe(typeof (SimpleBehavior));
         }
-
-
 
 
         public class SimpleBehavior : IActionBehavior
         {
             public void Invoke()
             {
-
             }
 
             public void InvokePartial()
@@ -109,17 +51,20 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
             }
         }
 
-        public class DifferentBehavior : SimpleBehavior { }
-    
+        public class DifferentBehavior : SimpleBehavior
+        {
+        }
 
 
         public class Controller1
         {
-            public void Go(Input1 input) { }
+            public void Go(Input1 input)
+            {
+            }
 
-            public class Input1 { }
+            public class Input1
+            {
+            }
         }
-
-
     }
 }

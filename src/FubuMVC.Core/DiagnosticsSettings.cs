@@ -63,16 +63,14 @@ namespace FubuMVC.Core
 
         void IFeatureSettings.Apply(FubuRegistry registry)
         {
-            
-
             if (registry.Mode.InDevelopment() || TraceLevel != TraceLevel.None)
             {
                 registry.Policies.ChainSource<DiagnosticChainsSource>();
-                registry.Services.IncludeRegistry<TracingServices>();
+                registry.Services.ReplaceService<IBindingHistory, BindingHistory>();
 
                 registry.Services.IncludeRegistry(InstrumentationServices);
 
-                registry.Services.AddService<ILogListener, ChainExecutionListener>();
+                
 
             }
 
@@ -80,8 +78,8 @@ namespace FubuMVC.Core
             {
                 registry.Services.ReplaceService<IBindingLogger, RecordingBindingLogger>();
                 registry.Services.ReplaceService<IBindingHistory, BindingHistory>();
-                registry.Services.AddService<ILogListener, RequestTraceListener>();
                 registry.Services.ForSingletonOf<IExecutionLogger>().Use<VerboseExecutionLogger>();
+                registry.Services.AddService<ILogListener, ChainExecutionListener>();
             }
             else if (TraceLevel == TraceLevel.Production)
             {

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Diagnostics.Runtime;
 using HtmlTags;
 using StoryTeller.Results;
@@ -9,7 +10,7 @@ namespace Serenity
     public class RequestReporter : Report
     {
         private readonly FubuRuntime _runtime;
-        private readonly List<RequestLog> _logs = new List<RequestLog>();
+        private readonly List<ChainExecutionLog> _logs = new List<ChainExecutionLog>();
 
         public RequestReporter(FubuRuntime runtime)
         {
@@ -50,10 +51,13 @@ namespace Serenity
                 {
                     row.Cell().Add("a").Text("Details").Attr("href", url).Attr("target", "_blank");
                     row.Cell(log.ExecutionTime.ToString()).Attr("align", "right");
+                    
+                    /*
                     row.Cell(log.HttpMethod);
                     row.Cell(log.Endpoint);
                     row.Cell(log.StatusCode.ToString());
                     row.Cell(log.ContentType);
+                     */
                 });
             });
 
@@ -66,7 +70,7 @@ namespace Serenity
             get { return "FubuMVC Requests During the Specification Execution"; }
         }
 
-        public void Append(RequestLog[] requests)
+        public void Append(ChainExecutionLog[] requests)
         {
             _logs.AddRange(requests);
         }

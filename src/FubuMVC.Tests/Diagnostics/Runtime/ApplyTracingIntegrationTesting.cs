@@ -1,12 +1,11 @@
 using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
-using FubuMVC.Core.Diagnostics.Runtime;
-using FubuMVC.Core.Diagnostics.Runtime.Tracing;
+using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using Shouldly;
 using NUnit.Framework;
+using Shouldly;
 
 namespace FubuMVC.Tests.Diagnostics.Runtime
 {
@@ -19,7 +18,7 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
         [SetUp]
         public void SetUp()
         {
-            var registry = new FubuRegistry();   
+            var registry = new FubuRegistry();
             registry.Configure(graph =>
             {
                 chain1 = new RoutedChain("something");
@@ -32,7 +31,6 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
                 chain2.AddToEnd(Wrapper.For<SimpleBehavior>());
                 chain2.AddToEnd(Wrapper.For<DifferentBehavior>());
                 graph.AddChain(chain2);
-
             });
 
             registry.Features.Diagnostics.Enable(TraceLevel.Verbose);
@@ -61,20 +59,17 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
             });
 
 
-
             var notTracedGraph = BehaviorGraph.BuildFrom(registry);
-            notTracedGraph.Chains.SelectMany(x => x).Any(x => x is DiagnosticBehavior).ShouldBeFalse();
             notTracedGraph.Chains.SelectMany(x => x).Any(x => x is BehaviorTracer).ShouldBeFalse();
         }
 
         [Test]
         public void full_chain()
         {
-            chain1.First().ShouldBeOfType<DiagnosticNode>();
-            chain1.ElementAt(1).ShouldBeOfType<BehaviorTracerNode>();
-            chain1.ElementAt(2).ShouldBeOfType<Wrapper>();
-            chain1.ElementAt(3).ShouldBeOfType<BehaviorTracerNode>();
-            chain1.ElementAt(4).ShouldBeOfType<Wrapper>();
+            chain1.ElementAt(0).ShouldBeOfType<BehaviorTracerNode>();
+            chain1.ElementAt(1).ShouldBeOfType<Wrapper>();
+            chain1.ElementAt(2).ShouldBeOfType<BehaviorTracerNode>();
+            chain1.ElementAt(3).ShouldBeOfType<Wrapper>();
         }
 
         [Test]
@@ -87,14 +82,10 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
         }
 
 
-
-
-
         public class SimpleBehavior : IActionBehavior
         {
             public void Invoke()
             {
-
             }
 
             public void InvokePartial()
@@ -102,6 +93,8 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
             }
         }
 
-        public class DifferentBehavior : SimpleBehavior { }
+        public class DifferentBehavior : SimpleBehavior
+        {
+        }
     }
 }

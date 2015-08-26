@@ -28,6 +28,8 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
             _activityStack.Push(_activity);
         }
 
+        public readonly DateTime Time = DateTime.UtcNow;
+
         public Activity Activity
         {
             get { return _activity; }

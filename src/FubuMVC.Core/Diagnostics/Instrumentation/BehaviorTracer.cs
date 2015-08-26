@@ -1,6 +1,5 @@
 using System;
 using FubuMVC.Core.Behaviors;
-using FubuMVC.Core.Diagnostics.Runtime.Tracing;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Diagnostics.Instrumentation

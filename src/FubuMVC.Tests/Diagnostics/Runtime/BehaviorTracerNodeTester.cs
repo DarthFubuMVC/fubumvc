@@ -1,13 +1,9 @@
 using System;
-using FubuCore;
 using FubuMVC.Core.Behaviors;
-using FubuMVC.Core.Diagnostics.Runtime;
-using FubuMVC.Core.Diagnostics.Runtime.Tracing;
+using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.StructureMap;
-using Shouldly;
 using NUnit.Framework;
-using StructureMap.Pipeline;
+using Shouldly;
 
 namespace FubuMVC.Tests.Diagnostics.Runtime
 {
@@ -39,17 +35,6 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
         public void category_has_to_be_instrumentation()
         {
             theNode.Category.ShouldBe(BehaviorCategory.Instrumentation);
-        }
-
-        [Test]
-        public void build_the_object_def()
-        {
-            var objectDef = theNode.As<IContainerModel>().ToInstance().As<IConfiguredInstance>();
-            objectDef.PluggedType.ShouldBe(typeof (BehaviorTracer));
-            var correlation = objectDef.FindDependencyValueFor<BehaviorCorrelation>();
-
-            correlation.Node.ShouldBe(inner);
-            correlation.ChainId.ShouldBe(chain.UniqueId);
         }
 
 

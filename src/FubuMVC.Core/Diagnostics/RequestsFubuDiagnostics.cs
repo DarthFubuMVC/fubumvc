@@ -1,135 +1,32 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using FubuCore;
-using FubuCore.Descriptions;
-using FubuCore.Logging;
-using FubuCore.Util;
-using FubuMVC.Core.Diagnostics.Runtime;
-using FubuMVC.Core.Diagnostics.Visualization;
-using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.Nodes;
-using HtmlTags;
+using FubuMVC.Core.Diagnostics.Instrumentation;
 
 namespace FubuMVC.Core.Diagnostics
 {
     public class RequestsFubuDiagnostics
     {
-        private readonly IRequestHistoryCache _cache;
-        private readonly BehaviorGraph _graph;
-        private readonly IVisualizer _visualizer;
+        private readonly IChainExecutionHistory _history;
 
-        public RequestsFubuDiagnostics(IRequestHistoryCache cache, BehaviorGraph graph, IVisualizer visualizer)
+        public RequestsFubuDiagnostics(IChainExecutionHistory history)
         {
-            _cache = cache;
-            _graph = graph;
-            _visualizer = visualizer;
+            _history = history;
         }
 
         public Dictionary<string, object> get_requests()
         {
             return new Dictionary<string, object>
             {
-                {"requests", _cache.RecentReports().OrderByDescending(x => x.Time).Select(x => x.ToDictionary()).ToArray()}
+                {"requests", _history.RecentReports().OrderByDescending(x => x.Time).ToArray()}
             };
         }
 
-        public HtmlTag VisualizeException(ExceptionReport report)
+        public ChainExecutionLog get_request_Id(ChainExecutionLog query)
         {
-            var tag = new HtmlTag("div");
-            tag.Add("p").Add("b").Text("Exception: " + report.ExceptionType);
-            tag.Add("pre").AddClass("text-warning").Text(report.ExceptionText);
+            var log = _history.Find(query.Id);
 
-            return tag;
+            return log ?? query;
         }
 
-        public Dictionary<string, object> get_request_Id(RequestLog query)
-        {
-            var dict = new Dictionary<string, object>();
-
-            var log = _cache.Find(query.Id);
-
-            if (log == null)
-            {
-                return dict;
-            }
-
-            var request = log.ToDictionary();
-            dict.Add("request", request);
-
-
-            if (log.RequestHeaders != null) request.AddHeaders("request-headers", log.RequestHeaders);
-            if (log.ResponseHeaders != null) request.AddHeaders("response-headers", log.ResponseHeaders);
-
-            var chain = _graph.Chains.FirstOrDefault(x => x.GetHashCode() == log.Hash);
-            request.Add("title", chain.Title());
-
-            if (log.QueryString != null) request.AddNameValues("querystring", log.QueryString);
-            if (log.FormData != null) request.AddNameValues("form", log.FormData);
-
-            request.Add("logs", buildLogs(log).ToArray());
-
-            return dict;
-        }
-
-        private IEnumerable<LogItem> buildLogs(RequestLog log)
-        {
-            var stack = new Stack<BehaviorNode>();
-            var titles = new Cache<BehaviorNode, string>(node => Description.For(node).Title);
-
-            var steps = log.AllSteps().ToArray();
-            foreach (var step in steps)
-            {
-                (step.Log as BehaviorStart).CallIfNotNull(x => stack.Push(x.Correlation.Node));
-
-
-
-
-                var node = findNode(step, stack, steps);
-                
-
-                yield return new LogItem
-                {
-                    behavior = node == null ? "Unknown" : titles[node],
-                    time = step.RequestTimeInMilliseconds,
-                    html = determineHtml(step.Log)
-                };
-
-                (step.Log as BehaviorFinish).CallIfNotNull(x =>
-                {
-                    if (stack.Any())
-                    {
-                        stack.Pop();
-                    }
-                    
-                });
-            }
-        }
-
-        private BehaviorNode findNode(RequestStep step, Stack<BehaviorNode> stack, RequestStep[] steps)
-        {
-            if (stack.Any()) return stack.Peek();
-
-            var index = Array.IndexOf(steps, step);
-
-            var last = steps.Select(x => x.Log).Take(index).OfType<BehaviorFinish>().LastOrDefault();
-            return last == null ? null : last.Correlation.Node;
-        }
-
-
-        private string determineHtml(object log)
-        {
-            if (log is BehaviorStart) return "Started";
-            if (log is BehaviorFinish) return "Finished";
-
-            return _visualizer.Visualize(log).ToString();
-        }
-
-        public class LogItem
-        {
-            public double time;
-            public string behavior;
-            public string html;
-        }
     }
 }

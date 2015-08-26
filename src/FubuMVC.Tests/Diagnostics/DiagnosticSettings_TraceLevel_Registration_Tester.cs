@@ -82,7 +82,6 @@ namespace FubuMVC.Tests.Diagnostics
         {
             withTraceLevel(TraceLevel.Verbose, c =>
             {
-                c.ShouldHaveRegistration<ILogListener, RequestTraceListener>();
                 c.ShouldNotHaveRegistration<ILogListener, ProductionModeTraceListener>();
 
                 c.DefaultRegistrationIs<IBindingLogger, RecordingBindingLogger>();
@@ -98,14 +97,13 @@ namespace FubuMVC.Tests.Diagnostics
         {
             withTraceLevel(TraceLevel.Production, c =>
             {
-                c.ShouldNotHaveRegistration<ILogListener, RequestTraceListener>();
                 c.ShouldHaveRegistration<ILogListener, ProductionModeTraceListener>();
 
                 c.DefaultRegistrationIs<IBindingLogger, NulloBindingLogger>();
 
                 c.DefaultSingletonIs<IExecutionLogger, ProductionExecutionLogger>();
 
-                c.ShouldHaveRegistration<ILogListener, ChainExecutionListener>();
+                c.ShouldNotHaveRegistration<ILogListener, ChainExecutionListener>();
 
             });
         }
@@ -115,7 +113,6 @@ namespace FubuMVC.Tests.Diagnostics
         {
             withTraceLevel(TraceLevel.None, c =>
             {
-                c.ShouldNotHaveRegistration<ILogListener, RequestTraceListener>();
                 c.ShouldNotHaveRegistration<ILogListener, ProductionModeTraceListener>();
 
                 c.DefaultRegistrationIs<IBindingLogger, NulloBindingLogger>();
