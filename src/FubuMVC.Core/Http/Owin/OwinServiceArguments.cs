@@ -12,6 +12,9 @@ namespace FubuMVC.Core.Http.Owin
             var httpRequest = new OwinHttpRequest(environment);
 
             var httpContextBase = new OwinHttpContext(environment);
+
+            With(environment);
+
             With<HttpContextBase>(httpContextBase);
 
             With(routeData);
@@ -21,6 +24,12 @@ namespace FubuMVC.Core.Http.Owin
             With<IHttpResponse>(new OwinHttpResponse(environment));
 
             With(new OwinContext(environment));
+
+            var log = environment.Log();
+            if (log != null)
+            {
+                With(log);
+            }
         }
     }
 }

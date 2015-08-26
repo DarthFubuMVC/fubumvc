@@ -172,6 +172,7 @@
     <Compile Include="Http\Owin\OwinHttpRequestTester.cs" />
     <Compile Include="Http\Owin\OwinCurrentHttpRequest_ClientConnectivityTester.cs" />
     <Compile Include="Http\Owin\OwinHttpResponseTester.cs" />
+    <Compile Include="Http\Owin\OwinServiceArgumentsTester.cs" />
     <Compile Include="Http\Owin\OwinSettingsTester.cs" />
     <Compile Include="Http\Owin\OwnCurrentHttpRequestTester.cs" />
     <Compile Include="Http\Owin\OwnHttpWriterTester.cs" />
