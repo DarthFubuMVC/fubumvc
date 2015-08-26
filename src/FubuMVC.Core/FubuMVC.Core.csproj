@@ -106,7 +106,6 @@
     <Compile Include="Http\Hosting\AdminRightsException.cs" />
     <Compile Include="Http\Hosting\Nowin.cs" />
     <Compile Include="Http\Hosting\ReflectionExtensions.cs" />
-    <Compile Include="Http\Owin\DictionaryExtensions.cs" />
     <Compile Include="Registration\ActionlessViewChainSource.cs" />
     <Compile Include="Registration\SingletonAttribute.cs" />
     <Compile Include="Resources\Conneg\ViewAttachment.cs" />
@@ -565,7 +564,7 @@
     <Compile Include="Http\Cookies\ICookies.cs" />
     <Compile Include="Http\Cookies\ICookieValue.cs" />
     <Compile Include="Http\Cookies\Segment.cs" />
-    <Compile Include="Http\CurrentHttpRequestExtensions.cs" />
+    <Compile Include="Http\HttpRequestExtensions.cs" />
     <Compile Include="Http\EtagMatch.cs" />
     <Compile Include="Http\FubuMvcRequestData.cs" />
     <Compile Include="Http\HeaderValueSource.cs" />
@@ -960,7 +959,6 @@
     <Compile Include="Http\Headers\IHaveHeaders.cs" />
     <Compile Include="Http\HttpGeneralHeaders.cs" />
     <Compile Include="Http\HttpHeaderNameExtensions.cs" />
-    <Compile Include="Http\HttpOutputWriterExtensions.cs" />
     <Compile Include="Http\HttpRequestHeaders.cs" />
     <Compile Include="Http\HttpResponseHeaders.cs" />
     <Compile Include="Http\ICurrentChain.cs" />

@@ -121,7 +121,6 @@
     <Compile Include="Diagnostics\Runtime\DiagnosticNodeTester.cs" />
     <Compile Include="Diagnostics\Runtime\DiagnosticsPackageTester.cs" />
     <Compile Include="Diagnostics\Runtime\DiagnosticsRegistryTester.cs" />
-    <Compile Include="Diagnostics\Runtime\DiagnosticsSettingsTester.cs" />
     <Compile Include="Diagnostics\Runtime\Diagnostic_tracing_attachment_filtering_Tester.cs" />
     <Compile Include="Diagnostics\Runtime\RequestHistoryCacheTester.cs" />
     <Compile Include="Diagnostics\Runtime\RequestLogTester.cs" />

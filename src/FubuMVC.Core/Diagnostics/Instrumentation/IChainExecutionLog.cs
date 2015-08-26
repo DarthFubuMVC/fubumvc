@@ -12,5 +12,7 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
         void Trace(string description, Action action);
         void RecordHeaders(IDictionary<string, object> env);
         void RecordBody(IDictionary<string, object> env);
+
+        Guid Id { get; }
     }
 }

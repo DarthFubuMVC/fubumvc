@@ -53,7 +53,7 @@ namespace FubuMVC.Core.Http.Owin
                 _environment.Add(OwinConstants.ResponseHeadersKey, new Dictionary<string, string[]>());
             }
 
-            var headers = _environment.Get<IDictionary<string, string[]>>(OwinConstants.ResponseHeadersKey);
+            var headers = _environment.ResponseHeaders();
             if (!_headerSettings.AllowMultiple(key))
             {
                 headers.Remove(key);

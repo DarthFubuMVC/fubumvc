@@ -3,9 +3,9 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
     public class InMemoryExecutionLogStorage : IExecutionLogStorage
     {
         private readonly IChainExecutionHistory _history;
-        private readonly PerformanceHistoryQueue _queue;
+        private readonly IPerformanceHistoryQueue _queue;
 
-        public InMemoryExecutionLogStorage(IChainExecutionHistory history, PerformanceHistoryQueue queue)
+        public InMemoryExecutionLogStorage(IChainExecutionHistory history, IPerformanceHistoryQueue queue)
         {
             _history = history;
             _queue = queue;

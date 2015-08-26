@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using FubuMVC.Core.Http.Owin;
+using FubuMVC.Core.Diagnostics.Instrumentation;
+using FubuMVC.Core.Http;
 using NUnit.Framework;
 using Shouldly;
 
@@ -40,6 +41,34 @@ namespace FubuMVC.Tests.Http.Owin
             destination["a"].ShouldBe(1);
             destination.ContainsKey("b").ShouldBeFalse();
             destination["c"].ShouldBe(3);
+        }
+
+        [Test]
+        public void set_and_read_request_id()
+        {
+            var dict = new Dictionary<string, object>();
+            dict.RequestId().ShouldBeNull();
+
+            dict.RequestId("abc");
+
+            dict.RequestId().ShouldBe("abc");
+            dict["x-request-id"].ShouldBe("abc");
+        }
+
+
+        [Test]
+        public void set_the_chain_execution_log()
+        {
+            var source = new Dictionary<string, object>();
+            source.Log().ShouldBeNull();
+
+            var log = new ChainExecutionLog();
+
+            source.Log(log);
+
+            source.RequestId().ShouldBe(log.Id.ToString());
+
+            source.Log().ShouldBeSameAs(log);
         }
     }
 }

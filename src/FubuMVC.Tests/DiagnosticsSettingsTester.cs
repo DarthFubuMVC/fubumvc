@@ -10,10 +10,10 @@ namespace FubuMVC.Tests
     public class DiagnosticsSettingsTester
     {
         [Test]
-        public void default_request_count_is_200()
+        public void default_request_count_is_1000()
         {
             new DiagnosticsSettings()
-                .MaxRequests.ShouldBe(200);
+                .MaxRequests.ShouldBe(1000);
         }
 
         [Test]
