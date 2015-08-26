@@ -9,6 +9,7 @@ using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.Authorization;
 using StructureMap.Configuration.DSL;
 
@@ -80,6 +81,8 @@ namespace FubuMVC.Core
                 registry.Services.ReplaceService<IBindingHistory, BindingHistory>();
                 registry.Services.ForSingletonOf<IExecutionLogger>().Use<VerboseExecutionLogger>();
                 registry.Services.AddService<ILogListener, ChainExecutionListener>();
+
+                registry.Services.ReplaceService<IPartialFactory, DiagnosticPartialFactory>();
             }
             else if (TraceLevel == TraceLevel.Production)
             {

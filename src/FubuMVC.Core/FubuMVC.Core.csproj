@@ -111,6 +111,7 @@
     <Compile Include="Registration\ActionlessViewChainSource.cs" />
     <Compile Include="Registration\SingletonAttribute.cs" />
     <Compile Include="Resources\Conneg\ViewAttachment.cs" />
+    <Compile Include="Runtime\DiagnosticPartialFactory.cs" />
     <Compile Include="Security\Authentication\DefaultLoginRequestWriter.cs" />
     <Compile Include="ServerSentEvents\AspNetShutDownDetector.cs" />
     <Compile Include="ServerSentEvents\Channel.cs" />

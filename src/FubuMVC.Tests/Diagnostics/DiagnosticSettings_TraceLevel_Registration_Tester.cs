@@ -9,6 +9,7 @@ using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Runtime;
 using Shouldly;
 using NUnit.Framework;
 using StructureMap;
@@ -74,6 +75,8 @@ namespace FubuMVC.Tests.Diagnostics
                 c.DefaultSingletonIs<IChainExecutionHistory, ChainExecutionHistory>();
                 c.ShouldHaveRegistration<IActivator, PerformanceHistoryQueueActivator>();
                 c.DefaultSingletonIs<IPerformanceHistoryQueue, PerformanceHistoryQueue>();
+
+                
             });
         }
 
@@ -89,6 +92,8 @@ namespace FubuMVC.Tests.Diagnostics
                 c.DefaultSingletonIs<IExecutionLogger, VerboseExecutionLogger>();
 
                 c.ShouldHaveRegistration<ILogListener, ChainExecutionListener>();
+
+                c.DefaultRegistrationIs<IPartialFactory, DiagnosticPartialFactory>();
             });
         }
 
@@ -105,6 +110,8 @@ namespace FubuMVC.Tests.Diagnostics
 
                 c.ShouldNotHaveRegistration<ILogListener, ChainExecutionListener>();
 
+                c.DefaultRegistrationIs<IPartialFactory, PartialFactory>();
+
             });
         }
 
@@ -120,6 +127,8 @@ namespace FubuMVC.Tests.Diagnostics
                 c.DefaultSingletonIs<IExecutionLogger, NulloExecutionLogger>();
 
                 c.ShouldNotHaveRegistration<ILogListener, ChainExecutionListener>();
+
+                c.DefaultRegistrationIs<IPartialFactory, PartialFactory>();
             });
         }
     }
