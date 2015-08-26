@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Logging;
-using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Http.Owin;
 using NUnit.Framework;
@@ -34,7 +33,7 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
             var log = new StubbedChainExecutionLog();
             log.RequestTime = 111;
 
-            log.AddLog(new object());
+            log.Log(new object());
 
             log.Activity.Steps.Single().RequestTime.ShouldBe(111);
             log.Activity.Steps.Single().Activity.ShouldBe(log.Activity);
@@ -81,19 +80,19 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
 
             var log = new StubbedChainExecutionLog();
             log.RequestTime = 1;
-            log.AddLog(x1);
+            log.Log(x1);
 
             log.StartSubject(subject1);
             log.RequestTime = 5;
-            log.AddLog(x2);
+            log.Log(x2);
 
             log.RequestTime = 10;
             log.StartSubject(subject2);
-            log.AddLog(x3);
+            log.Log(x3);
 
             log.RequestTime = 15;
             log.FinishSubject();
-            log.AddLog(x4);
+            log.Log(x4);
 
             var steps = log.Activity.AllSteps().OrderBy(x => x.RequestTime).ToArray();
 
@@ -196,41 +195,6 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
         protected override double requestTime()
         {
             return RequestTime;
-        }
-    }
-
-    [TestFixture]
-    public class ChainExecutionHistoryTester
-    {
-        [Test]
-        public void only_cache_up_to_the_setting_limit()
-        {
-            var settings = new DiagnosticsSettings
-            {
-                MaxRequests = 10
-            };
-
-            var cache = new ChainExecutionHistory(settings);
-
-            cache.Store(new ChainExecutionLog());
-            cache.Store(new ChainExecutionLog());
-            cache.Store(new ChainExecutionLog());
-            cache.Store(new ChainExecutionLog());
-            cache.Store(new ChainExecutionLog());
-            cache.Store(new ChainExecutionLog());
-            cache.Store(new ChainExecutionLog());
-            cache.Store(new ChainExecutionLog());
-            cache.Store(new ChainExecutionLog());
-
-            cache.RecentReports().Count().ShouldBe(9);
-
-            cache.Store(new ChainExecutionLog());
-            cache.Store(new ChainExecutionLog());
-            cache.Store(new ChainExecutionLog());
-            cache.Store(new ChainExecutionLog());
-            cache.Store(new ChainExecutionLog());
-
-            cache.RecentReports().Count().ShouldBe(settings.MaxRequests);
         }
     }
 }

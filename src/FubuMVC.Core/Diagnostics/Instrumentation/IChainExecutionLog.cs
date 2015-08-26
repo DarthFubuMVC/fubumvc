@@ -9,7 +9,7 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
         void StartSubject(ISubject subject);
         void FinishSubject();
         void LogException(Exception ex);
-        void AddLog(object log);
+        void Log(object log);
         void Trace(string description, Action action);
         void RecordHeaders(IDictionary<string, object> env);
         void RecordBody(IDictionary<string, object> env);

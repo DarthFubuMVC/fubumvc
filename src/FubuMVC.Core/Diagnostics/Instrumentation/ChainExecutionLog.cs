@@ -80,7 +80,7 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
 
             _exceptions.Add(ex);
             HadException = true;
-            AddLog(new ExceptionReport(ex));
+            Log(new ExceptionReport(ex));
         }
 
         public void MarkFinished(Action<IDictionary<string, object>> writeResponse)
@@ -98,7 +98,7 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
 
         public string SessionTag { get; set; }
 
-        public void AddLog(object log)
+        public void Log(object log)
         {
             current.AppendLog(requestTime(), log);
         }
@@ -110,7 +110,7 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
             action();
             var finish = requestTime();
 
-            AddLog(new Trace
+            Log(new Trace
             {
                 Description = description,
                 Duration = finish - start

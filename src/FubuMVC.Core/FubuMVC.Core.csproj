@@ -98,6 +98,7 @@
     <Compile Include="Diagnostics\Instrumentation\PerformanceHistoryQueueActivator.cs" />
     <Compile Include="Diagnostics\Instrumentation\ProductionExecutionLogger.cs" />
     <Compile Include="Diagnostics\Instrumentation\RequestStep.cs" />
+    <Compile Include="Diagnostics\Instrumentation\ChainExecutionListener.cs" />
     <Compile Include="Diagnostics\Instrumentation\Trace.cs" />
     <Compile Include="Diagnostics\Instrumentation\VerboseExecutionLogger.cs" />
     <Compile Include="FubuModeExtensions.cs" />

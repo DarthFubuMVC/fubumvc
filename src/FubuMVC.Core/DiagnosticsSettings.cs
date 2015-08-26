@@ -72,6 +72,8 @@ namespace FubuMVC.Core
 
                 registry.Services.IncludeRegistry(InstrumentationServices);
 
+                registry.Services.AddService<ILogListener, ChainExecutionListener>();
+
             }
 
             if (registry.Mode.InDevelopment() || TraceLevel == TraceLevel.Verbose)

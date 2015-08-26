@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Web.Routing;
+using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Registration;
 
@@ -16,6 +17,8 @@ namespace FubuMVC.Core.Http
             For<ICurrentChain>().Use(new CurrentChain(null, null));
             For<RouteData>().Use(new RouteData());
             For<IDictionary<string, object>>().Use(new Dictionary<string, object>());
+
+            For<IChainExecutionLog>().Use<ChainExecutionLog>();
         }
     }
 }

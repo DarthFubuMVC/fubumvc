@@ -89,7 +89,7 @@ namespace FubuMVC.Tests.Diagnostics
 
                 c.DefaultSingletonIs<IExecutionLogger, VerboseExecutionLogger>();
 
-
+                c.ShouldHaveRegistration<ILogListener, ChainExecutionListener>();
             });
         }
 
@@ -104,6 +104,8 @@ namespace FubuMVC.Tests.Diagnostics
                 c.DefaultRegistrationIs<IBindingLogger, NulloBindingLogger>();
 
                 c.DefaultSingletonIs<IExecutionLogger, ProductionExecutionLogger>();
+
+                c.ShouldHaveRegistration<ILogListener, ChainExecutionListener>();
 
             });
         }
@@ -120,7 +122,7 @@ namespace FubuMVC.Tests.Diagnostics
 
                 c.DefaultSingletonIs<IExecutionLogger, NulloExecutionLogger>();
 
-
+                c.ShouldNotHaveRegistration<ILogListener, ChainExecutionListener>();
             });
         }
     }
