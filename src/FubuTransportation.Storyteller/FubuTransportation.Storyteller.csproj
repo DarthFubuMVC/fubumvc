@@ -70,9 +70,6 @@
     <Reference Include="Selenium.WebDriverBackedSelenium">
       <HintPath>..\packages\Selenium.WebDriverBackedSelenium\lib\net40\Selenium.WebDriverBackedSelenium.dll</HintPath>
     </Reference>
-    <Reference Include="Serenity">
-      <HintPath>..\packages\Serenity\lib\net45\Serenity.dll</HintPath>
-    </Reference>
     <Reference Include="Spark">
       <HintPath>..\packages\Spark\lib\NET40\Spark.dll</HintPath>
     </Reference>
@@ -148,12 +145,16 @@
       <Name>FubuTransportation.LightningQueues</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuTransportation.Serenity\FubuTransportation.Serenity.csproj">
-      <Project>{7E7F5ADC-D27D-4BB9-BF03-E5909330A53C}</Project>
+      <Project>{7e7f5adc-d27d-4bb9-bf03-e5909330a53c}</Project>
       <Name>FubuTransportation.Serenity</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuTransportation\FubuTransportation.csproj">
       <Project>{23FDB1CE-1EC5-4D1B-B3E5-008A439CAA13}</Project>
       <Name>FubuTransportation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Serenity\Serenity.csproj">
+      <Project>{900a0419-3579-4dae-85be-71a3e4b34239}</Project>
+      <Name>Serenity</Name>
     </ProjectReference>
     <ProjectReference Include="..\ServiceNode\ServiceNode.csproj">
       <Project>{c71136ae-8197-4a9a-aa5f-9102f657c502}</Project>

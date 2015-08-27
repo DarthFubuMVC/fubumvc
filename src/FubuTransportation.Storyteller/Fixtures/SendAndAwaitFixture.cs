@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using FubuCore;
 using Serenity.Fixtures;
 using ServiceNode;
 using StoryTeller;
@@ -36,7 +37,7 @@ namespace FubuTransportation.Storyteller.Fixtures
             var sw = Stopwatch.StartNew();
             try
             {
-                _task.Wait(seconds.Seconds());
+                _task.Wait(TimeSpanExtensions.Seconds(seconds));
             }
             catch (Exception)
             {
