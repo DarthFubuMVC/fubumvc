@@ -124,7 +124,7 @@ namespace FubuMVC.Nowin
             settings.EnvironmentData.ToDictionary().Each(pair => owinBuilder.Properties.Add(pair));
 
             var host = new FubuOwinHost(_runtime.Routes);
-            owinBuilder.Run((context) => host.Invoke(context.Environment));
+            owinBuilder.Run((context) => settings.BuildAppFunc(env => host.Invoke(env), _runtime.Factory)(context.Environment));
 
             var builder = ServerBuilder.New().SetPort(port).SetOwinApp(owinBuilder.Build());
             _server = builder.Start();
