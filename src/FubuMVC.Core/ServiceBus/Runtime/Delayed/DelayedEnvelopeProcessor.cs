@@ -25,8 +25,6 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Delayed
         {
             var currentTime = _systemTime.UtcNow();
 
-            Debug.WriteLine("Running delayed envelopes at " + currentTime);
-
             _transports.Each(transport => {
                 DequeuFromTransport(transport, currentTime);
             });

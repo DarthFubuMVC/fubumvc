@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.Diagnostics.Instrumentation;
+using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Diagnostics
 {
@@ -13,12 +14,10 @@ namespace FubuMVC.Core.Diagnostics
             _history = history;
         }
 
-        public Dictionary<string, object> get_requests()
+        public HttpRequestSummaryItems get_requests()
         {
-            return new Dictionary<string, object>
-            {
-                {"requests", _history.RecentReports().OrderByDescending(x => x.Time).ToArray()}
-            };
+            var logs = _history.RecentReports().Where(x => x.RootChain is RoutedChain).OrderByDescending(x => x.Time);
+            return new HttpRequestSummaryItems(logs);
         }
 
         public ChainExecutionLog get_request_Id(ChainExecutionLog query)
@@ -28,5 +27,19 @@ namespace FubuMVC.Core.Diagnostics
             return log ?? query;
         }
 
+    }
+
+    public class HttpRequestSummaryItems
+    {
+        public HttpRequestSummaryItems()
+        {
+        }
+
+        public HttpRequestSummaryItems(IEnumerable<ChainExecutionLog> logs)
+        {
+            requests = logs.Select(x => new HttpRequestSummary(x)).ToArray();
+        }
+
+        public HttpRequestSummary[] requests { get; set; }
     }
 }

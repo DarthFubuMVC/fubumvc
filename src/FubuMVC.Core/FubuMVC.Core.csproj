@@ -78,6 +78,7 @@
     <Compile Include="Attributes\ViewSubjectAttribute.cs" />
     <Compile Include="DeactivatorExecuted.cs" />
     <Compile Include="DiagnosticsExtensions.cs" />
+    <Compile Include="Diagnostics\HttpRequestSummary.cs" />
     <Compile Include="Diagnostics\Instrumentation\Activity.cs" />
     <Compile Include="Diagnostics\Instrumentation\BehaviorTracer.cs" />
     <Compile Include="Diagnostics\Instrumentation\BehaviorTracerNode.cs" />
@@ -516,7 +517,6 @@
     <Compile Include="Diagnostics\TypeExtensions.cs" />
     <Compile Include="Diagnostics\Visualization\BehaviorNodeViewModel.cs" />
     <Compile Include="Diagnostics\Visualization\DescriptionVisualizationPolicy.cs" />
-    <Compile Include="Diagnostics\Visualization\DetailsTableBuilderExtensions.cs" />
     <Compile Include="Diagnostics\Visualization\IVisualizer.cs" />
     <Compile Include="Diagnostics\Visualization\VisualizationPageExtensions.cs" />
     <Compile Include="Diagnostics\Visualization\Visualizer.cs" />

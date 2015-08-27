@@ -45,7 +45,16 @@ namespace FubuMVC.Core.Http.Owin
             _environment = environment;
             _headers =
                 new Lazy<IDictionary<string, string[]>>(
-                    () => { return environment.Get<IDictionary<string, string[]>>(OwinConstants.RequestHeadersKey); });
+                    () =>
+                    {
+                        if (!environment.ContainsKey(OwinConstants.RequestHeadersKey))
+                        {
+                            environment.Add(OwinConstants.RequestHeadersKey, new Dictionary<string, string[]>());
+                        }
+                        
+                        
+                        return environment.Get<IDictionary<string, string[]>>(OwinConstants.RequestHeadersKey);
+                    });
 
             _querystring =
                 new Lazy<NameValueCollection>(

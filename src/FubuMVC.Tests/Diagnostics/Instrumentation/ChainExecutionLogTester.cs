@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using FubuCore.Logging;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Http.Owin;
@@ -147,9 +148,10 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
         public void mark_finished()
         {
             var log = new ChainExecutionLog();
-            log.MarkFinished(dict => dict.Add("A", 1));
+            Thread.Sleep(5);
+            log.MarkFinished();
 
-            log.Request["A"].ShouldBe(1);
+            log.ExecutionTime.ShouldBeGreaterThan(0);
         }
 
         [Test]

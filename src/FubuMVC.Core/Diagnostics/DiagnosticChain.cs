@@ -48,6 +48,8 @@ namespace FubuMVC.Core.Diagnostics
                 Route.ApplyInputType(call.InputType());
             }
 
+            Tags.Add(BehaviorChain.NoTracing);
+
             RouteName = call.HandlerType.Name.Replace("FubuDiagnostics", "") 
                 + ":" 
                 + call.Method.Name.Replace("get_", "").Replace("post_", "").Replace("{", "").Replace("}", "");

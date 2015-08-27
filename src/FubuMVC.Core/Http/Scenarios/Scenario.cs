@@ -56,6 +56,7 @@ namespace FubuMVC.Core.Http.Scenarios
             _request = OwinHttpRequest.ForTesting();
             _request.FullUrl(support.RootUrl);
             _request.Environment.Add("scenario-support", _support);
+            _request.Accepts("*/*");
 
             support.Get<SecuritySettings>().Reset();
 

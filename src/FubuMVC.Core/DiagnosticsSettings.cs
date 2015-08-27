@@ -9,6 +9,7 @@ using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.Authorization;
 using StructureMap.Configuration.DSL;
@@ -107,7 +108,12 @@ namespace FubuMVC.Core
 
                 return inner(env).ContinueWith(t =>
                 {
-                    logger.Record(log, env);
+                    log.MarkFinished();
+
+                    if (log.RootChain != null && ApplyTracing.ShouldApply(log.RootChain))
+                    {
+                        logger.Record(log, env);
+                    }
                 });
             };
         }

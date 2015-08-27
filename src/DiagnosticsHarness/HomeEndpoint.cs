@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
+using FubuMVC.Core;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.View;
@@ -14,12 +15,14 @@ namespace DiagnosticsHarness
         private readonly IServiceBus _serviceBus;
         private readonly INumberCache _cache;
         private readonly FubuHtmlDocument _document;
+        private readonly FubuRuntime _runtime;
 
-        public HomeEndpoint(IServiceBus serviceBus, INumberCache cache, FubuHtmlDocument document)
+        public HomeEndpoint(IServiceBus serviceBus, INumberCache cache, FubuHtmlDocument document, FubuRuntime runtime)
         {
             _serviceBus = serviceBus;
             _cache = cache;
             _document = document;
+            _runtime = runtime;
         }
 
         public FubuContinuation post_numbers(NumberPost input)
@@ -46,9 +49,49 @@ namespace DiagnosticsHarness
             _document.Title = "Diagnostics Harness";
 
             _document.Add("a").Attr("href", "/_fubu").Text("Diagnostics");
+            _document.Add("br");
 
+            _document.Add("a").Attr("href", "requests").Text("Run some fake Http Requests");
 
             return _document;
+        }
+
+        public FubuContinuation get_requests()
+        {
+            
+            _runtime.Scenario(_ => _.Get.Url("hello"));
+            _runtime.Scenario(_ =>
+            {
+                _.Get.Url("failure");
+                _.IgnoreStatusCode();
+            });
+            _runtime.Scenario(_ => _.Get.Url("team/favorite"));
+            _runtime.Scenario(_ =>
+            {
+                _.Get.Url("redirects");
+                _.StatusCodeShouldBe(302);
+            });
+             
+            
+            _runtime.Scenario(_ =>
+            {
+                _.Post.Json(new Team {City = "Denver", Mascot = "Broncos"}).Accepts("*/*");
+            });
+            
+            
+            _runtime.Scenario(_ =>
+            {
+                _.Delete.Json(new Team { City = "Denver", Mascot = "Broncos" }).Accepts("*/*");
+            });
+
+            _runtime.Scenario(_ =>
+            {
+                _.Put.Json(new Team { City = "Denver", Mascot = "Broncos" }).Accepts("*/*");
+            });
+            
+
+
+            return FubuContinuation.RedirectTo("_fubu");
         }
     }
 }

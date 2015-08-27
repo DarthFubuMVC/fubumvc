@@ -94,6 +94,7 @@ namespace FubuMVC.Core.Diagnostics
             });
         }
 
+        [NoDiagnostics]
         public void get__fubu_asset_Version_Name(DiagnosticAssetRequest request)
         {
             var file = _assets.For(request.Name);
@@ -106,6 +107,7 @@ namespace FubuMVC.Core.Diagnostics
             file.Write(_response);
         }
 
+        [NoDiagnostics]
         public void get__fubu_icon(Standin standin)
         {
             var file = _assets.For("fubumvc.png");

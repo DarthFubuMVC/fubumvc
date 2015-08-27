@@ -85,12 +85,11 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
             Log(new ExceptionReport(ex));
         }
 
-        public void MarkFinished(Action<IDictionary<string, object>> writeResponse)
+        public void MarkFinished()
         {
             _exceptions.Clear();
             _stopwatch.Stop();
             ExecutionTime = requestTime();
-            writeResponse(_request);
         }
 
         public IDictionary<string, object> Request

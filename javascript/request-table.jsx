@@ -6,17 +6,30 @@ var RequestRow = React.createClass({
 	render: function(){
 		var details = '#fubumvc/request-details/' + this.props.request.id;
 
+
+/*
+
+        public string id { get; set; }
+        public string time { get; set; }
+        public string url { get; set; }
+        public string method { get; set; }
+        public int status { get; set; }
+        public string description { get; set; }
+        public string contentType { get; set; }
+        public double duration { get; set; }
+
+*/
 	
 		return (
 			<tr>
 				<td><a href={details}>Details</a></td>
 				<td>{this.props.request.time}</td>
-				<td>{this.props.request.endpoint}</td>
+				<td>{this.props.request.url}</td>
 				<td>{this.props.request.method}</td>
 				<td>{this.props.request.status}</td>
 				<td>{this.props.request.description}</td>
-				<td>{this.props.request['content-type']}</td>
-				<td align="right">{this.props.request.duration}</td>
+				<td>{this.props.request.contentType}</td>
+				<td style={{textAlign: "right"}}>{this.props.request.duration}</td>
 			</tr>
 		);
 	}

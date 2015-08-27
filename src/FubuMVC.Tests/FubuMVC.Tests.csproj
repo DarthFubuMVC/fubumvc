@@ -104,6 +104,7 @@
     <Compile Include="Diagnostics\DiagnosticChainTester.cs" />
     <Compile Include="Diagnostics\DiagnosticSettings_TraceLevel_Registration_Tester.cs" />
     <Compile Include="Diagnostics\FakeFubuDiagnostics.cs" />
+    <Compile Include="Diagnostics\HttpRequestSummaryTester.cs" />
     <Compile Include="Diagnostics\Instrumentation\ActivityTester.cs" />
     <Compile Include="Diagnostics\Instrumentation\BehaviorTracerTester.cs" />
     <Compile Include="Diagnostics\Instrumentation\ChainExecutionHistoryTester.cs" />
