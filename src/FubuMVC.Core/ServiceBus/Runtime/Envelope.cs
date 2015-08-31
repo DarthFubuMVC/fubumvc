@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization.Formatters.Binary;
 using FubuCore;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.ServiceBus.Runtime.Headers;
@@ -11,8 +10,6 @@ namespace FubuMVC.Core.ServiceBus.Runtime
 {
     public class Envelope : HeaderWrapper
     {
-        private static readonly BinaryFormatter formatter = new BinaryFormatter();
-
         public static readonly string OriginalIdKey = "original-id";
         public static readonly string IdKey = "id";
         public static readonly string ParentIdKey = "parent-id";

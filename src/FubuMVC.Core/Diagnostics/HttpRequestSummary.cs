@@ -10,9 +10,10 @@ namespace FubuMVC.Core.Diagnostics
         // For serialization
         public HttpRequestSummary()
         {
+            type = "http";
         }
 
-        public HttpRequestSummary(ChainExecutionLog log)
+        public HttpRequestSummary(ChainExecutionLog log) : this()
         {
             var request = new OwinHttpRequest(log.Request);
             var response = new OwinHttpResponse(log.Request);
@@ -32,6 +33,8 @@ namespace FubuMVC.Core.Diagnostics
             contentType = response.ContentType();
             duration = log.ExecutionTime;
         }
+
+        public string type { get; set; }
 
         public string id { get; set; }
         public string time { get; set; }
