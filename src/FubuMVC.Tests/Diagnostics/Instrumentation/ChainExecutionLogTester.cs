@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Threading;
+using FubuCore;
 using FubuCore.Logging;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Http.Owin;
+using FubuMVC.Core.ServiceBus.Runtime;
 using NUnit.Framework;
 using Rhino.Mocks;
 using Shouldly;
@@ -183,6 +186,19 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
             log.Request["owin.ResponseHeaders"].ShouldBe(8);
             log.Request["owin.ResponseStatusCode"].ShouldBe(9);
             log.Request["owin.ResponseReasonPhrase"].ShouldBe(10);
+        }
+
+        [Test]
+        public void record_envelope_headers()
+        {
+            var envelope = new Envelope();
+            envelope.Headers["foo"] = "bar";
+
+            var log = new ChainExecutionLog();
+            log.RecordHeaders(envelope);
+
+            log.Request["Headers"].As<NameValueCollection>()["foo"]
+                .ShouldBe("bar");
         }
     }
 

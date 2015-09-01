@@ -6,9 +6,12 @@ using FubuCore.Logging;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.ServiceBus.Runtime;
 
 namespace FubuMVC.Core.Diagnostics.Instrumentation
 {
+    
+
     public class ChainExecutionLog :IRequestLog, ISubject, IChainExecutionLog
     {
         private readonly IDictionary<string, object> _request;
@@ -126,6 +129,16 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
         public void RecordBody(IDictionary<string, object> env)
         {
             // TODO -- will need to get the request body somehow
+        }
+
+        public void RecordHeaders(Envelope envelope)
+        {
+            _request.Add("Headers", envelope.Headers.ToNameValues()); 
+        }
+
+        public void RecordBody(Envelope envelope)
+        {
+            // TODO -- grab the message body if it isn't too big?
         }
     }
 }
