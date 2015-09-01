@@ -17,11 +17,4 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
         void Error(string correlationId, string message, Exception exception);
         void Retry(Envelope envelope);
     }
-
-    public interface IEnvelopeLifecycle
-    {
-        IEnvelopeContext StartNew(IHandlerPipeline pipeline);
-    }
-
-    
 }

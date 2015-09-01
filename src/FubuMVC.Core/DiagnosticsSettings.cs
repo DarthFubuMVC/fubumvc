@@ -12,6 +12,7 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.Authorization;
+using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using StructureMap.Configuration.DSL;
 
 namespace FubuMVC.Core
@@ -84,14 +85,18 @@ namespace FubuMVC.Core
                 registry.Services.AddService<ILogListener, ChainExecutionListener>();
 
                 registry.Services.ReplaceService<IPartialFactory, DiagnosticPartialFactory>();
+
+                registry.Services.For<IEnvelopeLifecycle>().Use<EnvelopeLifecycle<VerboseDiagnosticEnvelopeContext>>();
             }
             else if (TraceLevel == TraceLevel.Production)
             {
                 registry.Services.IncludeRegistry<ProductionDiagnosticsServices>();
+                registry.Services.For<IEnvelopeLifecycle>().Use<EnvelopeLifecycle<ProductionDiagnosticEnvelopeContext>>();
             }
             else
             {
                 registry.Services.ForSingletonOf<IExecutionLogger>().Use<NulloExecutionLogger>();
+                registry.Services.For<IEnvelopeLifecycle>().Use<EnvelopeLifecycle<EnvelopeContext>>();
             }
         }
 

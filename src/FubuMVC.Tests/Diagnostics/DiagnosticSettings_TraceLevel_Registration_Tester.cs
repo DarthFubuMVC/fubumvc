@@ -10,6 +10,7 @@ using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Diagnostics.Runtime;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using Shouldly;
 using NUnit.Framework;
 using StructureMap;
@@ -57,6 +58,7 @@ namespace FubuMVC.Tests.Diagnostics
         {
             var registry = new FubuRegistry();
             registry.Features.Diagnostics.Enable(level);
+            
 
             using (var runtime = registry.ToRuntime())
             {
@@ -96,6 +98,8 @@ namespace FubuMVC.Tests.Diagnostics
                 c.DefaultRegistrationIs<IPartialFactory, DiagnosticPartialFactory>();
 
                 c.DefaultRegistrationIs<IChainExecutionLog, NulloChainExecutionLog>();
+
+                c.DefaultRegistrationIs<IEnvelopeLifecycle, EnvelopeLifecycle<VerboseDiagnosticEnvelopeContext>>();
             });
         }
 
@@ -116,6 +120,7 @@ namespace FubuMVC.Tests.Diagnostics
 
                 c.DefaultRegistrationIs<IChainExecutionLog, NulloChainExecutionLog>();
 
+                c.DefaultRegistrationIs<IEnvelopeLifecycle, EnvelopeLifecycle<ProductionDiagnosticEnvelopeContext>>();
             });
         }
 
@@ -135,6 +140,8 @@ namespace FubuMVC.Tests.Diagnostics
                 c.DefaultRegistrationIs<IPartialFactory, PartialFactory>();
 
                 c.DefaultRegistrationIs<IChainExecutionLog, NulloChainExecutionLog>();
+
+                c.DefaultRegistrationIs<IEnvelopeLifecycle, EnvelopeLifecycle<EnvelopeContext>>();
             });
         }
     }
