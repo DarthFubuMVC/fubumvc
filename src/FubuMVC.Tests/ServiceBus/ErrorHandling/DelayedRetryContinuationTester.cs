@@ -12,7 +12,7 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
         public void do_as_a_delay_w_the_timespan_given()
         {
             var continuation = new DelayedRetryContinuation(5.Minutes());
-            var context = new TestContinuationContext();
+            var context = new TestEnvelopeContext();
 
             var envelope = ObjectMother.Envelope();
 

@@ -169,7 +169,7 @@ namespace Serenity.ServiceBus
             return true;
         }
 
-        public override void Execute(Envelope envelope, ContinuationContext context)
+        public override void Execute(Envelope envelope, IEnvelopeContext context)
         {
             envelope.Callback.MarkSuccessful();
         }

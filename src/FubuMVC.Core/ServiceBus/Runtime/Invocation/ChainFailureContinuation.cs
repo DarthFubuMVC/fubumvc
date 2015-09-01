@@ -13,18 +13,18 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
             _exception = exception;
         }
 
-        public void Execute(Envelope envelope, ContinuationContext context)
+        public void Execute(Envelope envelope, IEnvelopeContext context)
         {
             context.SendFailureAcknowledgement(envelope, "Chain execution failed");
             envelope.Callback.MarkFailed(_exception);
-            context.Logger.InfoMessage(() => new MessageFailed {Envelope = envelope.ToToken(), Exception = _exception});
+            context.InfoMessage(() => new MessageFailed {Envelope = envelope.ToToken(), Exception = _exception});
             if (envelope.Message == null)
             {
-                context.Logger.Error(envelope.CorrelationId, "Error trying to execute a message of type " + envelope.Headers[Envelope.MessageTypeKey], _exception);
+                context.Error(envelope.CorrelationId, "Error trying to execute a message of type " + envelope.Headers[Envelope.MessageTypeKey], _exception);
             }
             else
             {
-                context.Logger.Error(envelope.CorrelationId, envelope.Message.ToString(), _exception);
+                context.Error(envelope.CorrelationId, envelope.Message.ToString(), _exception);
             }
         }
 

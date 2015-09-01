@@ -13,7 +13,7 @@ namespace FubuMVC.Tests.ServiceBus.Async
         public void executing()
         {
             var envelope = ObjectMother.Envelope();
-            var context = new TestContinuationContext();
+            var context = new TestEnvelopeContext();
 
             var inner = MockRepository.GenerateMock<IContinuation>();
 

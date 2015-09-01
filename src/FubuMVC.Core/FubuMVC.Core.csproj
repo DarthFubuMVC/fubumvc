@@ -327,7 +327,7 @@
     <Compile Include="ServiceBus\Runtime\Invocation\ChainInvoker.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\ChainSuccessContinuation.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\CompositeContinuation.cs" />
-    <Compile Include="ServiceBus\Runtime\Invocation\ContinuationContext.cs" />
+    <Compile Include="ServiceBus\Runtime\Invocation\EnvelopeContext.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\DelayedEnvelopeHandler.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\DeserializationFailureContinuation.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\HandlerPipeline.cs" />

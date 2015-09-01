@@ -7,9 +7,9 @@ using Rhino.Mocks;
 
 namespace FubuMVC.Tests.ServiceBus
 {
-    public class TestContinuationContext : ContinuationContext
+    public class TestEnvelopeContext : EnvelopeContext
     {
-        public TestContinuationContext()
+        public TestEnvelopeContext()
             : base(
                 new RecordingLogger(), new SettableClock(), MockRepository.GenerateMock<IChainInvoker>(),
                 new RecordingEnvelopeSender())

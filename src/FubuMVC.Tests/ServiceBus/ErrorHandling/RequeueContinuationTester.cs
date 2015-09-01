@@ -12,7 +12,7 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
         {
             var envelope = ObjectMother.Envelope();
 
-            new RequeueContinuation().Execute(envelope, new TestContinuationContext());
+            new RequeueContinuation().Execute(envelope, new TestEnvelopeContext());
 
             envelope.Callback.AssertWasCalled(x => x.Requeue());
         }

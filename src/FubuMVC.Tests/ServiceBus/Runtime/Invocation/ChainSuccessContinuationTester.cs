@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
         private RecordingEnvelopeSender theSender;
         private ChainSuccessContinuation theContinuation;
         private RecordingLogger theLogger;
-        private TestContinuationContext theContinuationContext;
+        private TestEnvelopeContext theEnvelopeContext;
 
         [SetUp]
         public void SetUp()
@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             theEnvelope = ObjectMother.Envelope();
             theEnvelope.Message = new object();
 
-            theContinuationContext = new TestContinuationContext();
+            theEnvelopeContext = new TestEnvelopeContext();
 
             theContext = new FubuMVC.Core.ServiceBus.Runtime.Invocation.InvocationContext(theEnvelope, new HandlerChain());
 
@@ -43,7 +43,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 
             theLogger = new RecordingLogger();
 
-            theContinuation.Execute(theEnvelope, theContinuationContext);
+            theContinuation.Execute(theEnvelope, theEnvelopeContext);
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
         [Test]
         public void should_log_the_chain_success()
         {
-            theContinuationContext.RecordedLogs.InfoMessages.Single()
+            theEnvelopeContext.RecordedLogs.InfoMessages.Single()
                 .ShouldBe(new MessageSuccessful { Envelope = theEnvelope.ToToken() });
         }
     }
@@ -68,7 +68,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
         private RecordingEnvelopeSender theSender;
         private ChainSuccessContinuation theContinuation;
         private RecordingLogger theLogger;
-        private TestContinuationContext theContinuationContext;
+        private TestEnvelopeContext theEnvelopeContext;
         private Exception theException;
 
         [SetUp]
@@ -79,19 +79,19 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             theException = new Exception("Failure");
             theEnvelope.Callback.Stub(x => x.MarkSuccessful()).Throw(theException);
 
-            theContinuationContext = new TestContinuationContext();
+            theEnvelopeContext = new TestEnvelopeContext();
 
             theContext = new FubuMVC.Core.ServiceBus.Runtime.Invocation.InvocationContext(theEnvelope, new HandlerChain());
             theContext.EnqueueCascading(new object());
 
             theContinuation = new ChainSuccessContinuation(theContext);
-            theContinuation.Execute(theEnvelope, theContinuationContext);
+            theContinuation.Execute(theEnvelope, theEnvelopeContext);
         }
 
         [Test]
         public void should_not_log_success()
         {
-            theContinuationContext.RecordedLogs.InfoMessages.ShouldNotContain(
+            theEnvelopeContext.RecordedLogs.InfoMessages.ShouldNotContain(
                 new MessageSuccessful { Envelope = theEnvelope.ToToken() });
         }
 
@@ -104,7 +104,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
         [Test]
         public void should_log_the_exception()
         {
-            var report = theContinuationContext.RecordedLogs.ErrorMessages.Single()
+            var report = theEnvelopeContext.RecordedLogs.ErrorMessages.Single()
                 .As<ExceptionReport>();
 
             report.ExceptionText.ShouldBe(theException.ToString());
@@ -113,7 +113,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
         [Test]
         public void should_send_a_failure_ack()
         {
-            theContinuationContext.RecordedOutgoing.FailureAcknowledgementMessage
+            theEnvelopeContext.RecordedOutgoing.FailureAcknowledgementMessage
                 .ShouldBe("Sending cascading message failed: Failure");
         }
     }

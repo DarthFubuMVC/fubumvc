@@ -15,7 +15,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
             _continuations.AddRange(continuations);
         }
 
-        public void Execute(Envelope envelope, ContinuationContext context)
+        public void Execute(Envelope envelope, IEnvelopeContext context)
         {
             _continuations.Each(x => {
                 try
@@ -24,7 +24,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
                 }
                 catch (Exception e)
                 {
-                    context.Logger.Error("Failed trying to run continuation {0} as part of error handling".ToFormat(x), e);
+                    context.Error(envelope.CorrelationId, "Failed trying to run continuation {0} as part of error handling".ToFormat(x), e);
                 }
             });
         }

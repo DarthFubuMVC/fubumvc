@@ -33,7 +33,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
         public void handle()
         {
             // pretty simple.  Effectively just shuts things down.
-            var context = new TestContinuationContext();
+            var context = new TestEnvelopeContext();
 
                         var envelope = ObjectMother.Envelope();
             envelope.ResponseId = Guid.NewGuid().ToString();

@@ -9,13 +9,13 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
     [TestFixture]
     public class when_handling_a_message
     {
-        private TestContinuationContext theContext;
+        private TestEnvelopeContext theContext;
         private Envelope theEnvelope;
 
         [SetUp]
         public void SetUp()
         {
-            theContext = new TestContinuationContext();
+            theContext = new TestEnvelopeContext();
             theEnvelope = ObjectMother.Envelope();
 
             new NoSubscriberHandler().Execute(theEnvelope, theContext);

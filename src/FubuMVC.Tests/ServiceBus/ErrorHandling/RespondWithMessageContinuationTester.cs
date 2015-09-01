@@ -14,14 +14,14 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
         {
             _envelope = ObjectMother.Envelope();
             _message = new object();
-            _context = new TestContinuationContext();
+            _context = new TestEnvelopeContext();
 
             new RespondWithMessageContinuation(_message).Execute(_envelope, _context);
         }
 
         private Envelope _envelope;
         private object _message;
-        private TestContinuationContext _context;
+        private TestEnvelopeContext _context;
 
         [Test]
         public void should_send_the_message()

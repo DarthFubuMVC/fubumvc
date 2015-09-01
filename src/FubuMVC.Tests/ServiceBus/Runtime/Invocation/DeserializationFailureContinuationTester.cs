@@ -15,14 +15,14 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
     public class DeserializationFailureContinuationTester
     {
         private EnvelopeDeserializationException theException;
-        private TestContinuationContext theContext;
+        private TestEnvelopeContext theContext;
         private Envelope theEnvelope;
 
         [SetUp]
         public void SetUp()
         {
             theException = new EnvelopeDeserializationException("foo");
-            theContext = new TestContinuationContext();
+            theContext = new TestEnvelopeContext();
 
             theEnvelope = ObjectMother.EnvelopeWithSerializationError();
 

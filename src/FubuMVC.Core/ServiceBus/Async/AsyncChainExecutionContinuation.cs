@@ -17,7 +17,7 @@ namespace FubuMVC.Core.ServiceBus.Async
             _inner = inner;
         }
 
-        public void Execute(Envelope envelope, ContinuationContext context)
+        public void Execute(Envelope envelope, IEnvelopeContext context)
         {
             _task = Task.Factory.StartNew(() => {
                 var continuation = _inner();

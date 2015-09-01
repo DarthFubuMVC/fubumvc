@@ -7,14 +7,28 @@ using FubuMVC.Core.ServiceBus.Runtime.Cascading;
 
 namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
 {
-    public class ContinuationContext
+
+
+    public interface IEnvelopeContext
+    {
+        void SendOutgoingMessages(Envelope original, IEnumerable<object> cascadingMessages);
+        void SendFailureAcknowledgement(Envelope original, string message);
+        ISystemTime SystemTime { get; }
+        void InfoMessage<T>(Func<T> func) where T : class, LogTopic;
+        void InfoMessage<T>(T message) where T : LogTopic;
+
+        void Error(string correlationId, string message, Exception exception);
+        void Retry(Envelope envelope);
+    }
+
+    public class EnvelopeContext : IEnvelopeContext
     {
         private readonly ILogger _logger;
         private readonly ISystemTime _systemTime;
         private readonly IChainInvoker _invoker;
         private readonly IOutgoingSender _outgoing;
 
-        public ContinuationContext(ILogger logger, ISystemTime systemTime, IChainInvoker invoker, IOutgoingSender outgoing)
+        public EnvelopeContext(ILogger logger, ISystemTime systemTime, IChainInvoker invoker, IOutgoingSender outgoing)
         {
             _logger = logger;
             _systemTime = systemTime;
@@ -64,9 +78,24 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
             get { return _systemTime; }
         }
 
-        public IChainInvoker Invoker
+        public void InfoMessage<T>(Func<T> func) where T : class, LogTopic
         {
-            get { return _invoker; }
+            _logger.InfoMessage(func);
+        }
+
+        public void InfoMessage<T>(T message) where T : LogTopic
+        {
+            _logger.InfoMessage(message);
+        }
+
+        public void Error(string correlationId, string message, Exception exception)
+        {
+            _logger.Error(correlationId, message, exception);
+        }
+
+        public void Retry(Envelope envelope)
+        {
+            Pipeline.Invoke(envelope);
         }
     }
 }

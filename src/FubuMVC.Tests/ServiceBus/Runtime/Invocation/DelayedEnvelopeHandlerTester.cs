@@ -54,7 +54,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
         [Test]
         public void execute_happy_path()
         {
-            var context = new TestContinuationContext();
+            var context = new TestEnvelopeContext();
             var envelope = ObjectMother.Envelope();
             envelope.ExecutionTime = DateTime.Today;
 
@@ -69,7 +69,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
         [Test]
         public void execute_sad_path()
         {
-            var context = new TestContinuationContext();
+            var context = new TestEnvelopeContext();
             var envelope = ObjectMother.Envelope();
             envelope.ExecutionTime = DateTime.Today;
 

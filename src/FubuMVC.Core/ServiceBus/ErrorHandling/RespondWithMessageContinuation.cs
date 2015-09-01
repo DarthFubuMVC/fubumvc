@@ -19,7 +19,7 @@ namespace FubuMVC.Core.ServiceBus.ErrorHandling
             get { return _message; }
         }
 
-        public void Execute(Envelope envelope, ContinuationContext context)
+        public void Execute(Envelope envelope, IEnvelopeContext context)
         {
             context.SendOutgoingMessages(envelope, new[] { Message });
         }

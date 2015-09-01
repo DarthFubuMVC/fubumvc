@@ -2,6 +2,6 @@
 {
     public interface IContinuation
     {
-        void Execute(Envelope envelope, ContinuationContext context);
+        void Execute(Envelope envelope, IEnvelopeContext context);
     }
 }

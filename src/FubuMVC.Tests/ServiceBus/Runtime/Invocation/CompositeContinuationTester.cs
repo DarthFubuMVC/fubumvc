@@ -12,14 +12,14 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
     {
         private IContinuation[] inners;
         private Envelope envelope;
-        private TestContinuationContext theContext;
+        private TestEnvelopeContext theContext;
 
         protected override void beforeEach()
         {
             inners = Services.CreateMockArrayFor<IContinuation>(5);
 
             envelope = new Envelope();
-            theContext = new TestContinuationContext();
+            theContext = new TestEnvelopeContext();
 
             ClassUnderTest.Execute(envelope, theContext);
         }

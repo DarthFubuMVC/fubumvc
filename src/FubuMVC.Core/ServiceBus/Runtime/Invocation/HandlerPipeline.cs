@@ -11,10 +11,10 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
     public class HandlerPipeline : IHandlerPipeline
     {
         private readonly IEnvelopeSerializer _serializer;
-        private readonly ContinuationContext _context;
+        private readonly EnvelopeContext _context;
         private readonly IList<IEnvelopeHandler> _handlers = new List<IEnvelopeHandler>();
 
-        public HandlerPipeline(IEnvelopeSerializer serializer, ContinuationContext context,
+        public HandlerPipeline(IEnvelopeSerializer serializer, EnvelopeContext context,
             IEnumerable<IEnvelopeHandler> handlers)
         {
             _serializer = serializer;

@@ -7,7 +7,7 @@ namespace FubuMVC.Core.ServiceBus.ErrorHandling
     [Description("Requeue the envelope locally")]
     public class RequeueContinuation : IContinuation
     {
-        public void Execute(Envelope envelope, ContinuationContext context)
+        public void Execute(Envelope envelope, IEnvelopeContext context)
         {
             envelope.Callback.Requeue();
         }

@@ -59,7 +59,7 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
     {
         public static int Counter = 0;
 
-        public void Execute(Envelope envelope, ContinuationContext context)
+        public void Execute(Envelope envelope, IEnvelopeContext context)
         {
             ++Counter;
         }

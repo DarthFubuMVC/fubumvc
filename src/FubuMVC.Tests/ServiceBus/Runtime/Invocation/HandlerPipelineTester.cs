@@ -17,14 +17,14 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
     {
         private IContinuation theContinuation;
         private Envelope theEnvelope;
-        private TestContinuationContext theContext;
+        private TestEnvelopeContext theContext;
 
         protected override void beforeEach()
         {
             Services.Inject<IEnumerable<IEnvelopeHandler>>(new IEnvelopeHandler[0]);
 
-            theContext = new TestContinuationContext();
-            Services.Inject<ContinuationContext>(theContext);
+            theContext = new TestEnvelopeContext();
+            Services.Inject<EnvelopeContext>(theContext);
 
             theContinuation = MockFor<IContinuation>();
             theEnvelope = ObjectMother.Envelope();
@@ -62,14 +62,14 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
     public class when_invoking_an_envelope_with_serialization_error : InteractionContext<HandlerPipeline>
     {
         private Envelope theEnvelope;
-        private TestContinuationContext theContext;
+        private TestEnvelopeContext theContext;
 
         protected override void beforeEach()
         {
             Services.Inject<IEnumerable<IEnvelopeHandler>>(new IEnvelopeHandler[0]);
 
-            theContext = new TestContinuationContext();
-            Services.Inject<ContinuationContext>(theContext);
+            theContext = new TestEnvelopeContext();
+            Services.Inject<EnvelopeContext>(theContext);
 
             theEnvelope = ObjectMother.EnvelopeWithSerializationError();
             theEnvelope.Attempts = 1;
@@ -90,14 +90,14 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
     {
         private IContinuation theContinuation;
         private Envelope theEnvelope;
-        private TestContinuationContext theContext;
+        private TestEnvelopeContext theContext;
 
         protected override void beforeEach()
         {
             Services.Inject<IEnumerable<IEnvelopeHandler>>(new IEnvelopeHandler[0]);
 
-            theContext = new TestContinuationContext();
-            Services.Inject<ContinuationContext>(theContext);
+            theContext = new TestEnvelopeContext();
+            Services.Inject<EnvelopeContext>(theContext);
 
             theContinuation = MockFor<IContinuation>();
             theEnvelope = ObjectMother.Envelope();

@@ -10,7 +10,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
             return true;
         }
 
-        public override void Execute(Envelope envelope, ContinuationContext context)
+        public override void Execute(Envelope envelope, IEnvelopeContext context)
         {
             context.SendFailureAcknowledgement(envelope, "No subscriber");
             envelope.Callback.MarkSuccessful();

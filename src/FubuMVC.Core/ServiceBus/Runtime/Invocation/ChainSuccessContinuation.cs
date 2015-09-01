@@ -15,7 +15,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
             _context = context;
         }
 
-        public void Execute(Envelope envelope, ContinuationContext context)
+        public void Execute(Envelope envelope, IEnvelopeContext context)
         {
             try
             {
@@ -25,12 +25,12 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
 
                 var message = new MessageSuccessful { Envelope = envelope.ToToken() };
                 if (!message.Envelope.IsDelayedEnvelopePollingJobRelated())
-                    context.Logger.InfoMessage(message);
+                    context.InfoMessage(message);
             }
             catch (Exception ex)
             {
                 context.SendFailureAcknowledgement(envelope, "Sending cascading message failed: " + ex.Message);
-                context.Logger.Error(envelope.CorrelationId, ex.Message, ex);
+                context.Error(envelope.CorrelationId, ex.Message, ex);
                 envelope.Callback.MoveToErrors(new ErrorReport(envelope, ex));
             }
         }

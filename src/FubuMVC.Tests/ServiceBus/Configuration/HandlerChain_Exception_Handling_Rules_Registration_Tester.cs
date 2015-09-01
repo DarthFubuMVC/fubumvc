@@ -95,7 +95,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
 
     public class TellTheSenderHeSentSomethingWrong : IContinuation
     {
-        public void Execute(Envelope envelope, ContinuationContext context)
+        public void Execute(Envelope envelope, IEnvelopeContext context)
         {
             throw new NotImplementedException();
         }

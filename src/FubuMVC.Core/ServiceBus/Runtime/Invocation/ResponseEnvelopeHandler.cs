@@ -12,9 +12,9 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
             return envelope.ResponseId.IsNotEmpty();
         }
 
-        public override void Execute(Envelope envelope, ContinuationContext context)
+        public override void Execute(Envelope envelope, IEnvelopeContext context)
         {
-            context.Logger.InfoMessage(() => new MessageSuccessful { Envelope = envelope.ToToken() });
+            context.InfoMessage(() => new MessageSuccessful { Envelope = envelope.ToToken() });
             envelope.Callback.MarkSuccessful();
         }
 

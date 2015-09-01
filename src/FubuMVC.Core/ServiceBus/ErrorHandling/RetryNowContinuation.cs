@@ -7,9 +7,9 @@ namespace FubuMVC.Core.ServiceBus.ErrorHandling
     [Description("Retry the message through the handler chain without being re-queued")]
     public class RetryNowContinuation : IContinuation
     {
-        public void Execute(Envelope envelope, ContinuationContext context)
+        public void Execute(Envelope envelope, IEnvelopeContext context)
         {
-            context.Pipeline.Invoke(envelope);
+            context.Retry(envelope);
         }
     }
 }

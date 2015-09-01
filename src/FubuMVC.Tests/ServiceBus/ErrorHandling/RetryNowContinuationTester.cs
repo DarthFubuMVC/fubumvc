@@ -13,7 +13,7 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
         {
             var continuation = new RetryNowContinuation();
 
-            var context = new TestContinuationContext
+            var context = new TestEnvelopeContext
             {
                 Pipeline = MockRepository.GenerateMock<IHandlerPipeline>()
             };

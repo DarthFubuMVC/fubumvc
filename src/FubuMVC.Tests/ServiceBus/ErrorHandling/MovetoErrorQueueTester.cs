@@ -20,7 +20,7 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
 
             theLogger = MockRepository.GenerateMock<ILogger>();
 
-            theContext = new TestContinuationContext();
+            theContext = new TestEnvelopeContext();
 
             new MoveToErrorQueue(theException).Execute(theEnvelope, theContext);
         }
@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
         private Envelope theEnvelope;
         private NotImplementedException theException;
         private ILogger theLogger;
-        private TestContinuationContext theContext;
+        private TestEnvelopeContext theContext;
 
         [Test]
         public void should_add_a_new_error_report()

@@ -15,7 +15,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
         private Exception theException;
         private ChainFailureContinuation theContinuation;
         private Envelope theEnvelope;
-        private TestContinuationContext theContext;
+        private TestEnvelopeContext theContext;
 
         [SetUp]
         public void SetUp()
@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 
             theEnvelope = ObjectMother.Envelope();
 
-            theContext = new TestContinuationContext();
+            theContext = new TestEnvelopeContext();
 
             theContinuation.Execute(theEnvelope, theContext);
         }

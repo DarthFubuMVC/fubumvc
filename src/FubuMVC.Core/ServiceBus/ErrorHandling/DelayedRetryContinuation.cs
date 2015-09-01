@@ -15,7 +15,7 @@ namespace FubuMVC.Core.ServiceBus.ErrorHandling
             _delay = delay;
         }
 
-        public void Execute(Envelope envelope, ContinuationContext context)
+        public void Execute(Envelope envelope, IEnvelopeContext context)
         {
             envelope.Callback.MoveToDelayedUntil(context.SystemTime.UtcNow().Add(_delay));
         }

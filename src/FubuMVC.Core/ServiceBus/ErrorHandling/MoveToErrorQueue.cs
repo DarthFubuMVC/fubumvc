@@ -21,7 +21,7 @@ namespace FubuMVC.Core.ServiceBus.ErrorHandling
             get { return _exception; }
         }
 
-        public void Execute(Envelope envelope, ContinuationContext context)
+        public void Execute(Envelope envelope, IEnvelopeContext context)
         {
             context.SendFailureAcknowledgement(envelope, "Moved message {0} to the Error Queue.\n{1}".ToFormat(envelope.CorrelationId, _exception));
 

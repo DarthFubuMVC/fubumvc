@@ -9,6 +9,6 @@
 
         public abstract bool Matches(Envelope envelope);
 
-        public abstract void Execute(Envelope envelope, ContinuationContext context);
+        public abstract void Execute(Envelope envelope, IEnvelopeContext context);
     }
 }
