@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using FubuCore;
+using FubuCore.Logging;
 using FubuCore.Reflection;
 using FubuCore.Util;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
@@ -113,9 +114,9 @@ namespace FubuMVC.Core.ServiceBus.Configuration
             _channels.Each(x => x.ReadSettings(services));
         }
 
-        public virtual void StartReceiving(IHandlerPipeline pipeline)
+        public virtual void StartReceiving(IHandlerPipeline pipeline, ILogger logger)
         {
-            _channels.Where(x => x.Incoming).Each(node => node.StartReceiving(pipeline, this));
+            _channels.Where(x => x.Incoming).Each(node => node.StartReceiving(pipeline, logger, this));
         }
 
         public static string ToKey(Accessor accessor)

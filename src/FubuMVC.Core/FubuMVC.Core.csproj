@@ -210,7 +210,7 @@
     <Compile Include="ServiceBus\Events\IExpiringListener.cs" />
     <Compile Include="ServiceBus\Events\IListener.cs" />
     <Compile Include="ServiceBus\Events\SynchronousEventAggregator.cs" />
-    <Compile Include="ServiceBus\Runtime\Invocation\DiagnosticHandlerPipeline.cs" />
+    <Compile Include="ServiceBus\Runtime\Invocation\IEnvelopeContext.cs" />
     <Compile Include="ServiceBus\ServiceBusActivator.cs" />
     <Compile Include="ServiceBus\FubuTransportServiceRegistry.cs" />
     <Compile Include="ServiceBus\IFubuTransportActivator.cs" />

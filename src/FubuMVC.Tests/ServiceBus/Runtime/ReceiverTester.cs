@@ -85,8 +85,6 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
 
         public IList<object> Responses = new List<object>(); 
 
-        private readonly ILogger _logger = new RecordingLogger();
-        public ILogger Logger { get { return _logger; } }
 
         public void Invoke(Envelope envelope)
         {

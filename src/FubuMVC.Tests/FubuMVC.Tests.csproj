@@ -524,7 +524,7 @@
     <Compile Include="ServiceBus\Subscriptions\TransportNodeTester.cs" />
     <Compile Include="ServiceBus\Subscriptions\when_creating_grouped_subscriptions.cs" />
     <Compile Include="ServiceBus\Subscriptions\when_creating_local_subscriptions.cs" />
-    <Compile Include="ServiceBus\TestContinuationContext.cs" />
+    <Compile Include="ServiceBus\TestEnvelopeContext.cs" />
     <Compile Include="ServiceBus\TestingSupportClasses.cs" />
     <Compile Include="ServiceBus\TestSupport\MessageWatcherTester.cs" />
     <Compile Include="ServiceBus\TimeoutRunnerTester.cs" />

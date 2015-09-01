@@ -6,6 +6,5 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
     {
         void Invoke(Envelope envelope);
         void Receive(Envelope envelope);
-        ILogger Logger { get; }
     }
 }

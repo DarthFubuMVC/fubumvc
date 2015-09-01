@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
+using FubuCore.Logging;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.ServiceBus;
 using FubuMVC.Core.ServiceBus.Configuration;
@@ -48,7 +49,7 @@ namespace FubuMVC.Tests.ServiceBus
         [Test]
         public void should_start_receiving()
         {
-            theGraph.AssertWasCalled(x => x.StartReceiving(MockFor<IHandlerPipeline>()));
+            theGraph.AssertWasCalled(x => x.StartReceiving(MockFor<IHandlerPipeline>(), MockFor<ILogger>()));
         }
 
         [Test]
@@ -100,7 +101,7 @@ namespace FubuMVC.Tests.ServiceBus
                 Uri = "foo://2".ToUri()
             });
 
-            var subscriptions = new TransportActivator(graph, null, null,
+            var subscriptions = new TransportActivator(graph, null, null, new RecordingLogger(), 
                 new ITransport[] {new InMemoryTransport()},
                 Enumerable.Empty<IFubuTransportActivator>());
 

@@ -24,7 +24,7 @@ namespace FubuMVC.Tests.ServiceBus
 
         public RecordingLogger RecordedLogs
         {
-            get { return Logger.As<RecordingLogger>(); }
+            get { return logger.As<RecordingLogger>(); }
         }
     }
 }

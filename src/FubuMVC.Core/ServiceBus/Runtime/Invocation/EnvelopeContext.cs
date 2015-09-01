@@ -7,20 +7,6 @@ using FubuMVC.Core.ServiceBus.Runtime.Cascading;
 
 namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
 {
-
-
-    public interface IEnvelopeContext
-    {
-        void SendOutgoingMessages(Envelope original, IEnumerable<object> cascadingMessages);
-        void SendFailureAcknowledgement(Envelope original, string message);
-        ISystemTime SystemTime { get; }
-        void InfoMessage<T>(Func<T> func) where T : class, LogTopic;
-        void InfoMessage<T>(T message) where T : LogTopic;
-
-        void Error(string correlationId, string message, Exception exception);
-        void Retry(Envelope envelope);
-    }
-
     public class EnvelopeContext : IEnvelopeContext
     {
         private readonly ILogger _logger;
@@ -63,14 +49,14 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
             });
         }
 
+        protected ILogger logger
+        {
+            get { return _logger; }
+        }
+
         public void SendFailureAcknowledgement(Envelope original, string message)
         {
             _outgoing.SendFailureAcknowledgement(original, message);
-        }
-
-        public ILogger Logger
-        {
-            get { return _logger; }
         }
 
         public ISystemTime SystemTime
@@ -78,24 +64,34 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
             get { return _systemTime; }
         }
 
-        public void InfoMessage<T>(Func<T> func) where T : class, LogTopic
+        public virtual void InfoMessage<T>(Func<T> func) where T : class, LogTopic
         {
             _logger.InfoMessage(func);
         }
 
-        public void InfoMessage<T>(T message) where T : LogTopic
+        public virtual void DebugMessage<T>(Func<T> func) where T : class, LogTopic
+        {
+            _logger.DebugMessage(func);
+        }
+
+        public virtual void InfoMessage<T>(T message) where T : LogTopic
         {
             _logger.InfoMessage(message);
         }
 
-        public void Error(string correlationId, string message, Exception exception)
+        public virtual void Error(string correlationId, string message, Exception exception)
         {
             _logger.Error(correlationId, message, exception);
         }
 
-        public void Retry(Envelope envelope)
+        public virtual void Retry(Envelope envelope)
         {
             Pipeline.Invoke(envelope);
+        }
+
+        public virtual void Dispose()
+        {
+            // Nothing
         }
     }
 }

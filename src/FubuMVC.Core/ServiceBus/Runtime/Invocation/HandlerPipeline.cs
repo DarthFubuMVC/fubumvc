@@ -30,11 +30,6 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
             get { return _handlers; }
         }
 
-        public ILogger Logger
-        {
-            get { return _context.Logger; }
-        }
-
         // virtual for testing as usual
         public virtual IContinuation FindContinuation(Envelope envelope)
         {
@@ -43,7 +38,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
                 var continuation = handler.Handle(envelope);
                 if (continuation != null)
                 {
-                    _context.Logger.DebugMessage(() => new EnvelopeContinuationChosen
+                    _context.DebugMessage(() => new EnvelopeContinuationChosen
                     {
                         ContinuationType = continuation.GetType(),
                         HandlerType = handler.GetType(),
@@ -75,7 +70,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
             catch (Exception e)
             {
                 envelope.Callback.MarkFailed(e); // TODO -- watch this one.
-                _context.Logger.Error(envelope.CorrelationId,
+                _context.Error(envelope.CorrelationId,
                     "Failed while invoking message {0} with continuation {1}".ToFormat(envelope.Message ?? envelope,
                         (object)continuation ?? "could not find continuation"),
                     e);
@@ -85,7 +80,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
         public void Receive(Envelope envelope)
         {
             envelope.UseSerializer(_serializer);
-            _context.Logger.InfoMessage(() => new EnvelopeReceived { Envelope = envelope.ToToken() });
+            _context.InfoMessage(() => new EnvelopeReceived { Envelope = envelope.ToToken() });
 
             Invoke(envelope);
         }

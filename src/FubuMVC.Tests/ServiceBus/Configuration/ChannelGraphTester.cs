@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FubuCore;
+using FubuCore.Logging;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.ServiceBus.Configuration;
@@ -98,7 +99,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
 
                 graph.Each(x => x.Channel = new FakeChannel());
 
-                graph.StartReceiving(MockRepository.GenerateMock<IHandlerPipeline>());
+                graph.StartReceiving(MockRepository.GenerateMock<IHandlerPipeline>(), new RecordingLogger());
 
                 node1.Channel.As<FakeChannel>().ReceivedCount.ShouldBeGreaterThan(0);
                 node2.Channel.As<FakeChannel>().ReceivedCount.ShouldBe(0);

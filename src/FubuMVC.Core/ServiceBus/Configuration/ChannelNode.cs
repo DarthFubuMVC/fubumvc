@@ -90,11 +90,11 @@ namespace FubuMVC.Core.ServiceBus.Configuration
             Scheduler.Dispose();
         }
 
-        public void StartReceiving(IHandlerPipeline pipeline, ChannelGraph graph)
+        public void StartReceiving(IHandlerPipeline pipeline, ILogger logger, ChannelGraph graph)
         {
             if (Channel == null) throw new InvalidOperationException("Cannot receive on node {0} without a matching channel".ToFormat(SettingAddress));
             var receiver = new Receiver(pipeline, graph, this);
-            StartReceiving(receiver, pipeline.Logger);
+            StartReceiving(receiver, logger);
         }
 
         public void StartReceiving(IReceiver receiver, ILogger logger)

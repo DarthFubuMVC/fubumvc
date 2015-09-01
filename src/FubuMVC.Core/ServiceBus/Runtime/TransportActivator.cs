@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
+using FubuCore.Logging;
 using FubuMVC.Core.Diagnostics.Packaging;
 using FubuMVC.Core.ServiceBus.Configuration;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
@@ -15,14 +16,16 @@ namespace FubuMVC.Core.ServiceBus.Runtime
         private readonly ChannelGraph _graph;
         private readonly IServiceLocator _services;
         private readonly IHandlerPipeline _pipeline;
+        private readonly ILogger _logger;
         private readonly IEnumerable<ITransport> _transports;
         private readonly IEnumerable<IFubuTransportActivator> _fubuTransportActivators;
 
-        public TransportActivator(ChannelGraph graph, IServiceLocator services, IHandlerPipeline pipeline, IEnumerable<ITransport> transports, IEnumerable<IFubuTransportActivator> fubuTransportActivators)
+        public TransportActivator(ChannelGraph graph, IServiceLocator services, IHandlerPipeline pipeline, ILogger logger, IEnumerable<ITransport> transports, IEnumerable<IFubuTransportActivator> fubuTransportActivators)
         {
             _graph = graph;
             _services = services;
             _pipeline = pipeline;
+            _logger = logger;
             _transports = transports;
             _fubuTransportActivators = fubuTransportActivators;
         }
@@ -31,7 +34,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime
         {
             _graph.ReadSettings(_services);
             OpenChannels();
-            _graph.StartReceiving(_pipeline);
+            _graph.StartReceiving(_pipeline, _logger);
             ExecuteActivators();
         }
 
