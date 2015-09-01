@@ -4,22 +4,19 @@ using System.Diagnostics;
 using System.Linq;
 using FubuCore.Logging;
 using FubuMVC.Core.Http;
-using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.ServiceBus.Runtime;
 
 namespace FubuMVC.Core.Diagnostics.Instrumentation
 {
-    
-
-    public class ChainExecutionLog :IRequestLog, ISubject, IChainExecutionLog
+    public class ChainExecutionLog : IRequestLog, ISubject, IChainExecutionLog
     {
         private readonly IDictionary<string, object> _request;
         private readonly Stopwatch _stopwatch = new Stopwatch();
 
         private readonly Activity _activity;
-        private readonly Stack<Activity> _activityStack = new Stack<Activity>(); 
-        private readonly IList<Exception> _exceptions = new List<Exception>(); 
+        private readonly Stack<Activity> _activityStack = new Stack<Activity>();
+        private readonly IList<Exception> _exceptions = new List<Exception>();
 
         public ChainExecutionLog()
         {
@@ -65,7 +62,7 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
             }
         }
 
-        public BehaviorChain RootChain { get;set; }
+        public BehaviorChain RootChain { get; set; }
 
         public string Title()
         {
@@ -123,7 +120,9 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
 
         public void RecordHeaders(IDictionary<string, object> env)
         {
-            env.CopyTo(_request, "owin.RequestHeaders", "owin.RequestMethod", "owin.RequestPath", "owin.RequestPathBase", "owin.RequestProtocol", "owin.RequestQueryString", "owin.RequestScheme", "owin.ResponseHeaders", "owin.ResponseStatusCode", "owin.ResponseReasonPhrase");
+            env.CopyTo(_request, "owin.RequestHeaders", "owin.RequestMethod", "owin.RequestPath", "owin.RequestPathBase",
+                "owin.RequestProtocol", "owin.RequestQueryString", "owin.RequestScheme", "owin.ResponseHeaders",
+                "owin.ResponseStatusCode", "owin.ResponseReasonPhrase");
         }
 
         public void RecordBody(IDictionary<string, object> env)
@@ -133,7 +132,7 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
 
         public void RecordHeaders(Envelope envelope)
         {
-            _request.Add("Headers", envelope.Headers.ToNameValues()); 
+            _request.Add("Headers", envelope.Headers.ToNameValues());
         }
 
         public void RecordBody(Envelope envelope)

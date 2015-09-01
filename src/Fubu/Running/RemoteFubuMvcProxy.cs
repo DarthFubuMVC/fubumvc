@@ -59,7 +59,7 @@ namespace Fubu.Running
 
             _runner.SendRemotely(new StartApplication
             {
-                ApplicationName = _request.ApplicationFlag,
+                ApplicationName = _request.RegistryFlag,
                 PhysicalPath = _request.DirectoryFlag,
                 PortNumber = PortFinder.FindPort(_request.PortFlag),
                 Mode = _request.ModeFlag,

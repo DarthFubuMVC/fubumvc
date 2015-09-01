@@ -32,8 +32,8 @@ namespace Fubu.Running
         [Description("IP Port.  Default is 5500")]
         public int PortFlag { get; set; }
 
-        [Description("Specific name of an IApplicationSource class that builds this application")]
-        public string ApplicationFlag { get; set; } // this is optional
+        [Description("Specific name of a FubuRegistry class that builds this application")]
+        public string RegistryFlag { get; set; } // this is optional
 
         [Description("If set, overrides the name of the configuration file for the FubuMVC application AppDomain to use"
             )]

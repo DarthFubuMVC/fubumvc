@@ -36,6 +36,11 @@ FubuRake::MvcApp.new({:directory => 'src/DiagnosticsHarness', :name => 'harness'
 
 add_dependency 'ripple:publish', :integration_test
 
+desc "Launches the diagnostics harness for client side development"
+task :diagnostics => [:compile] do
+	sh 'start npm run watch'
+	sh "start src/Fubu/bin/#{@solution.compilemode}/fubu.exe run --directory src/DiagnosticsHarness -o -w --mode diagnostics"
+end
 
 desc "Unit and Integration Tests"
 task :full => [:default, :integration_test]
