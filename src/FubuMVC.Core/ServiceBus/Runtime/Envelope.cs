@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FubuCore;
+using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.ServiceBus.Runtime.Headers;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
@@ -30,8 +31,11 @@ namespace FubuMVC.Core.ServiceBus.Runtime
 
         [NonSerialized]
         private Lazy<object> _message;
-            
-            
+
+        /// <summary>
+        /// Used internally for logging
+        /// </summary>
+        [NonSerialized] internal ChainExecutionLog Log;
             
         public object Message
         {

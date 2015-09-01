@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FubuCore.Binding;
+using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.ServiceBus.Configuration;
@@ -17,6 +18,11 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
         public InvocationContext(Envelope envelope, HandlerChain chain)
         {
             if (envelope == null) throw new ArgumentNullException("envelope");
+
+            if (envelope.Log != null)
+            {
+                Set(typeof(IChainExecutionLog), envelope.Log);
+            }
 
             var currentChain = new CurrentChain(chain, _emptyDictionary);
             Set(typeof(ICurrentChain), currentChain);

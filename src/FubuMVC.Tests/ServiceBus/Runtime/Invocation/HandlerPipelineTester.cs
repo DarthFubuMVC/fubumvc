@@ -103,7 +103,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             ClassUnderTest.Expect(x => x.FindContinuation(theEnvelope, theContext))
                           .Return(theContinuation);
 
-            MockFor<IEnvelopeLifecycle>().Stub(x => x.StartNew(ClassUnderTest))
+            MockFor<IEnvelopeLifecycle>().Stub(x => x.StartNew(ClassUnderTest, theEnvelope))
                 .Return(theContext);
 
             ClassUnderTest.Receive(theEnvelope);

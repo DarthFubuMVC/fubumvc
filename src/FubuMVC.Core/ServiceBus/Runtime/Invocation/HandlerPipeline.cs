@@ -76,7 +76,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
         public void Receive(Envelope envelope)
         {
             envelope.UseSerializer(_serializer);
-            using (var context = _lifecycle.StartNew(this))
+            using (var context = _lifecycle.StartNew(this, envelope))
             {
                 context.InfoMessage(() => new EnvelopeReceived { Envelope = envelope.ToToken() });
                 Invoke(envelope, context);
@@ -87,7 +87,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
 
         public void InvokeNow(Envelope envelope)
         {
-            using (var context = _lifecycle.StartNew(this))
+            using (var context = _lifecycle.StartNew(this, envelope))
             {
                 Invoke(envelope, context);
             }

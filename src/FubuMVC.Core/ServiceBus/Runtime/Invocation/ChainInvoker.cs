@@ -51,6 +51,12 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
 
         public IInvocationContext ExecuteChain(Envelope envelope, HandlerChain chain)
         {
+            if (envelope.Log != null)
+            {
+                envelope.Log.RootChain = chain;
+                envelope.Log.StartSubject(chain);
+            }
+
             using (new ChainExecutionWatcher(_logger, chain, envelope))
             {
                 var context = new InvocationContext(envelope, chain);
@@ -63,6 +69,11 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
                 finally
                 {
                     (behavior as IDisposable).CallIfNotNull(x => x.SafeDispose());
+
+                    if (envelope.Log != null)
+                    {
+                        envelope.Log.FinishSubject();
+                    }
                 }
 
                 return context;

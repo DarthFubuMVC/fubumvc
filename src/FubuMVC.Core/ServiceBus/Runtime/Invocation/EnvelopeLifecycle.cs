@@ -13,9 +13,9 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
             _container = container;
         }
 
-        public IEnvelopeContext StartNew(IHandlerPipeline pipeline)
+        public IEnvelopeContext StartNew(IHandlerPipeline pipeline, Envelope envelope)
         {
-            return _container.With(pipeline).GetInstance<T>();
+            return _container.With(pipeline).With(envelope).GetInstance<T>();
         }
     }
 }

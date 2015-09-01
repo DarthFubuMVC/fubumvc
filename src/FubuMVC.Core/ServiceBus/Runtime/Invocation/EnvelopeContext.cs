@@ -83,7 +83,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
             _logger.Error(correlationId, message, exception);
         }
 
-        public virtual void Retry(Envelope envelope)
+        public void Retry(Envelope envelope)
         {
             _pipeline.Invoke(envelope, this);
         }
