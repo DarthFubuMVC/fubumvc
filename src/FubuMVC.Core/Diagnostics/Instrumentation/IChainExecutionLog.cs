@@ -21,4 +21,61 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
         Guid Id { get; }
         BehaviorChain RootChain { get; set; }
     }
+
+
+    public class NulloChainExecutionLog : IChainExecutionLog
+    {
+        public void StartSubject(ISubject subject)
+        {
+            // nothing
+        }
+
+        public void FinishSubject()
+        {
+            // nothing
+        }
+
+        public void LogException(Exception ex)
+        {
+            // nothing
+        }
+
+        public void Log(object log)
+        {
+            // nothing
+        }
+
+        public void Trace(string description, Action action)
+        {
+            // nothing
+            action();
+        }
+
+        public void RecordHeaders(IDictionary<string, object> env)
+        {
+            // nothing
+        }
+
+        public void RecordBody(IDictionary<string, object> env)
+        {
+            // nothing
+        }
+
+        public void RecordHeaders(Envelope envelope)
+        {
+            // nothing
+        }
+
+        public void RecordBody(Envelope envelope)
+        {
+            // nothing
+        }
+
+        public Guid Id
+        {
+            get { return Guid.Empty; }
+        }
+
+        public BehaviorChain RootChain { get; set; }
+    }
 }

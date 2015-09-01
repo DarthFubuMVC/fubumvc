@@ -18,7 +18,9 @@ namespace FubuMVC.Core.Http
             For<RouteData>().Use(new RouteData());
             For<IDictionary<string, object>>().Use(new Dictionary<string, object>());
 
-            For<IChainExecutionLog>().Use<ChainExecutionLog>();
+            // This is important, really needs to be the nullo to avoid
+            // hanging on to things we shouldn't
+            For<IChainExecutionLog>().Use<NulloChainExecutionLog>();
         }
     }
 }

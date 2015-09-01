@@ -94,6 +94,8 @@ namespace FubuMVC.Tests.Diagnostics
                 c.ShouldHaveRegistration<ILogListener, ChainExecutionListener>();
 
                 c.DefaultRegistrationIs<IPartialFactory, DiagnosticPartialFactory>();
+
+                c.DefaultRegistrationIs<IChainExecutionLog, NulloChainExecutionLog>();
             });
         }
 
@@ -112,6 +114,8 @@ namespace FubuMVC.Tests.Diagnostics
 
                 c.DefaultRegistrationIs<IPartialFactory, PartialFactory>();
 
+                c.DefaultRegistrationIs<IChainExecutionLog, NulloChainExecutionLog>();
+
             });
         }
 
@@ -129,6 +133,8 @@ namespace FubuMVC.Tests.Diagnostics
                 c.ShouldNotHaveRegistration<ILogListener, ChainExecutionListener>();
 
                 c.DefaultRegistrationIs<IPartialFactory, PartialFactory>();
+
+                c.DefaultRegistrationIs<IChainExecutionLog, NulloChainExecutionLog>();
             });
         }
     }
