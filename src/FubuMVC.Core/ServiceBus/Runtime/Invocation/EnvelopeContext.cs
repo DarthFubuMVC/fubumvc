@@ -13,22 +13,21 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
         private readonly ISystemTime _systemTime;
         private readonly IChainInvoker _invoker;
         private readonly IOutgoingSender _outgoing;
+        private readonly IHandlerPipeline _pipeline;
 
-        public EnvelopeContext(ILogger logger, ISystemTime systemTime, IChainInvoker invoker, IOutgoingSender outgoing)
+        public EnvelopeContext(ILogger logger, ISystemTime systemTime, IChainInvoker invoker, IOutgoingSender outgoing, IHandlerPipeline pipeline)
         {
             _logger = logger;
             _systemTime = systemTime;
             _invoker = invoker;
             _outgoing = outgoing;
+            _pipeline = pipeline;
         }
 
         protected IOutgoingSender Outgoing
         {
             get { return _outgoing; }
         }
-
-        // virtual for testing, setter to avoid bi-directional dependency problems
-        public virtual IHandlerPipeline Pipeline { get; set; }
 
         public void SendOutgoingMessages(Envelope original, IEnumerable<object> cascadingMessages)
         {
@@ -86,7 +85,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
 
         public virtual void Retry(Envelope envelope)
         {
-            Pipeline.Invoke(envelope);
+            _pipeline.Invoke(envelope, this);
         }
 
         public virtual void Dispose()

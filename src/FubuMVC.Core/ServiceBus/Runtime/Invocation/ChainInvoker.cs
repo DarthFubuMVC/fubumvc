@@ -39,7 +39,7 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
         {
             var envelope = new Envelope { Message = message };
             envelope.Callback = new InlineMessageCallback(message, _sender);
-            _pipeline().Invoke(envelope);
+            _pipeline().InvokeNow(envelope);
         }
 
         public virtual HandlerChain FindChain(Envelope envelope)

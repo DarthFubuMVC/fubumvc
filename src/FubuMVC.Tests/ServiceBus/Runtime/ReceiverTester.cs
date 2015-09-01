@@ -86,14 +86,19 @@ namespace FubuMVC.Tests.ServiceBus.Runtime
         public IList<object> Responses = new List<object>(); 
 
 
-        public void Invoke(Envelope envelope)
+        public void Invoke(Envelope envelope, IEnvelopeContext context)
         {
             Invoked.Add(envelope);
         }
 
         public void Receive(Envelope envelope)
         {
-            Invoke(envelope);
+            Invoke(envelope, null);
+        }
+
+        public void InvokeNow(Envelope envelope)
+        {
+            throw new NotImplementedException();
         }
 
         public void InvokeNow<T>(T message)

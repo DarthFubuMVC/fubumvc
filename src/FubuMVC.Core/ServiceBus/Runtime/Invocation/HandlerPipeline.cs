@@ -11,18 +11,14 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
     public class HandlerPipeline : IHandlerPipeline
     {
         private readonly IEnvelopeSerializer _serializer;
-        private readonly EnvelopeContext _context;
+        private readonly IEnvelopeLifecycle _lifecycle;
         private readonly IList<IEnvelopeHandler> _handlers = new List<IEnvelopeHandler>();
 
-        public HandlerPipeline(IEnvelopeSerializer serializer, EnvelopeContext context,
-            IEnumerable<IEnvelopeHandler> handlers)
+        public HandlerPipeline(IEnvelopeSerializer serializer, IEnvelopeLifecycle lifecycle, IEnumerable<IEnvelopeHandler> handlers)
         {
             _serializer = serializer;
-            _context = context;
+            _lifecycle = lifecycle;
             _handlers.AddRange(handlers);
-
-            // needs to be available to continuations
-            _context.Pipeline = this;
         }
 
         public IList<IEnvelopeHandler> Handlers
@@ -31,14 +27,14 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
         }
 
         // virtual for testing as usual
-        public virtual IContinuation FindContinuation(Envelope envelope)
+        public virtual IContinuation FindContinuation(Envelope envelope, IEnvelopeContext context)
         {
             foreach (var handler in _handlers)
             {
                 var continuation = handler.Handle(envelope);
                 if (continuation != null)
                 {
-                    _context.DebugMessage(() => new EnvelopeContinuationChosen
+                    context.DebugMessage(() => new EnvelopeContinuationChosen
                     {
                         ContinuationType = continuation.GetType(),
                         HandlerType = handler.GetType(),
@@ -53,24 +49,24 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
             return new MoveToErrorQueue(new NoHandlerException(envelope.Message.GetType()));
         }
 
-        public virtual void Invoke(Envelope envelope)
+        public virtual void Invoke(Envelope envelope, IEnvelopeContext context)
         {
             envelope.Attempts++; // needs to be done here.
             IContinuation continuation = null;
 
             try
             {
-                continuation = FindContinuation(envelope);
-                continuation.Execute(envelope, _context);
+                continuation = FindContinuation(envelope, context);
+                continuation.Execute(envelope, context);
             }
             catch (EnvelopeDeserializationException ex)
             {
-                new DeserializationFailureContinuation(ex).Execute(envelope, _context);
+                new DeserializationFailureContinuation(ex).Execute(envelope, context);
             }
             catch (Exception e)
             {
                 envelope.Callback.MarkFailed(e); // TODO -- watch this one.
-                _context.Error(envelope.CorrelationId,
+                context.Error(envelope.CorrelationId,
                     "Failed while invoking message {0} with continuation {1}".ToFormat(envelope.Message ?? envelope,
                         (object)continuation ?? "could not find continuation"),
                     e);
@@ -80,9 +76,21 @@ namespace FubuMVC.Core.ServiceBus.Runtime.Invocation
         public void Receive(Envelope envelope)
         {
             envelope.UseSerializer(_serializer);
-            _context.InfoMessage(() => new EnvelopeReceived { Envelope = envelope.ToToken() });
+            using (var context = _lifecycle.StartNew(this))
+            {
+                context.InfoMessage(() => new EnvelopeReceived { Envelope = envelope.ToToken() });
+                Invoke(envelope, context);
+            }
 
-            Invoke(envelope);
+
+        }
+
+        public void InvokeNow(Envelope envelope)
+        {
+            using (var context = _lifecycle.StartNew(this))
+            {
+                Invoke(envelope, context);
+            }
         }
     }
 }

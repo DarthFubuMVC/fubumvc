@@ -24,7 +24,7 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
                         )
             {
                 var pipeline = runtime.Get<IHandlerPipeline>();
-                pipeline.Invoke(new Envelope {Message = new MessageThatBombs(), Callback = MockRepository.GenerateMock<IMessageCallback>()});
+                pipeline.InvokeNow(new Envelope {Message = new MessageThatBombs(), Callback = MockRepository.GenerateMock<IMessageCallback>()});
             }
 
             MessageThatBombsHandler.Successful.ShouldNotBeNull();

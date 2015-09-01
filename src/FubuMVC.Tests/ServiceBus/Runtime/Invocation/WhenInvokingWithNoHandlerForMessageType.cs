@@ -34,7 +34,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
         {
             var envelope = ObjectMother.Envelope();
             envelope.Message = new Message1();
-            ClassUnderTest.Invoke(envelope); // we don't have a handler for this type
+            ClassUnderTest.Invoke(envelope, new TestEnvelopeContext()); // we don't have a handler for this type
 
             envelope.Callback.AssertWasCalled(x => x.MoveToErrors(
                 new ErrorReport(envelope, new NoHandlerException(typeof(Message1)))));

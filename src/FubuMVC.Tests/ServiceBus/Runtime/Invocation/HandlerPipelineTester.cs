@@ -33,22 +33,16 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             theEnvelope.Callback = MockFor<IMessageCallback>();
 
             Services.PartialMockTheClassUnderTest();
-            ClassUnderTest.Expect(x => x.FindContinuation(theEnvelope))
+            ClassUnderTest.Expect(x => x.FindContinuation(theEnvelope, theContext))
                           .Return(theContinuation);
 
-            ClassUnderTest.Invoke(theEnvelope );
+            ClassUnderTest.Invoke(theEnvelope, theContext);
         }
 
         [Test]
         public void should_have_incremented_the_attempt_count()
         {
             theEnvelope.Attempts.ShouldBe(2);
-        }
-
-        [Test]
-        public void should_set_itself_on_the_continuation_context_for_later()
-        {
-            theContext.Pipeline.ShouldBeTheSameAs(ClassUnderTest);
         }
 
         [Test]
@@ -80,7 +74,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
         [Test]
         public void exception_is_handled()
         {
-            ClassUnderTest.Invoke(theEnvelope);
+            ClassUnderTest.Invoke(theEnvelope, new TestEnvelopeContext());
             // Just testing that no exception bubbles up.
         }
     }
@@ -106,8 +100,11 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             theEnvelope.Callback = MockFor<IMessageCallback>();
 
             Services.PartialMockTheClassUnderTest();
-            ClassUnderTest.Expect(x => x.FindContinuation(theEnvelope))
+            ClassUnderTest.Expect(x => x.FindContinuation(theEnvelope, theContext))
                           .Return(theContinuation);
+
+            MockFor<IEnvelopeLifecycle>().Stub(x => x.StartNew(ClassUnderTest))
+                .Return(theContext);
 
             ClassUnderTest.Receive(theEnvelope);
         }
@@ -135,7 +132,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
         [Test]
         public void should_invoke()
         {
-            ClassUnderTest.AssertWasCalled(x => x.Invoke(theEnvelope));
+            ClassUnderTest.AssertWasCalled(x => x.Invoke(theEnvelope, theContext));
         }
     }
 
@@ -144,17 +141,14 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
     public class when_determining_the_continuation : InteractionContext<HandlerPipeline>
     {
         private IEnvelopeHandler[] theHandlers;
-        private RecordingLogger theLogger;
         private IContinuation theContinuation;
         private Envelope theEnvelope;
         private IContinuation theFoundContinuation;
+        private TestEnvelopeContext theContext;
 
         protected override void beforeEach()
         {
             theHandlers = Services.CreateMockArrayFor<IEnvelopeHandler>(5);
-
-            theLogger = new RecordingLogger();
-            Services.Inject<ILogger>(theLogger);
 
             theContinuation = MockFor<IContinuation>();
             theEnvelope = ObjectMother.Envelope();
@@ -165,7 +159,8 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             theHandlers[4].Stub(x => x.Handle(theEnvelope))
                           .Return(MockRepository.GenerateMock<IContinuation>());
 
-            theFoundContinuation = ClassUnderTest.FindContinuation(theEnvelope);
+            theContext = new TestEnvelopeContext();
+            theFoundContinuation = ClassUnderTest.FindContinuation(theEnvelope, theContext);
         }
 
         [Test]
@@ -177,7 +172,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
         [Test]
         public void should_debug_the_handler_and_continuation_used()
         {
-            var log = theLogger.DebugMessages.Single().ShouldBeOfType<EnvelopeContinuationChosen>();
+            var log = theContext.RecordedLogs.DebugMessages.Single().ShouldBeOfType<EnvelopeContinuationChosen>();
             log.Envelope.ShouldBe(theEnvelope.ToToken());
             log.ContinuationType.ShouldBe(theContinuation.GetType());
             log.HandlerType.ShouldBe(theHandlers[3].GetType());

@@ -439,7 +439,6 @@
     <Compile Include="ServiceBus\Runtime\Invocation\simplest_possible_invocation.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\StubServiceFactory.cs" />
     <Compile Include="ServiceBus\Runtime\Invocation\WhenInvokingWithNoHandlerForMessageType.cs" />
-    <Compile Include="ServiceBus\Runtime\Invocation\when_invoking_a_message_right_now_happy_path.cs" />
     <Compile Include="ServiceBus\Runtime\ReceiverTester.cs" />
     <Compile Include="ServiceBus\Runtime\ReplyListenerTester.cs" />
     <Compile Include="ServiceBus\Runtime\Routing\AssemblyRuleTester.cs" />

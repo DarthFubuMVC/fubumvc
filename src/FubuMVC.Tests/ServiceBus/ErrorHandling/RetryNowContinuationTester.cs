@@ -13,15 +13,13 @@ namespace FubuMVC.Tests.ServiceBus.ErrorHandling
         {
             var continuation = new RetryNowContinuation();
 
-            var context = new TestEnvelopeContext
-            {
-                Pipeline = MockRepository.GenerateMock<IHandlerPipeline>()
-            };
+            var handlerPipeline = MockRepository.GenerateMock<IHandlerPipeline>();
+            var context = new TestEnvelopeContext(handlerPipeline);
 
             var theEnvelope = ObjectMother.Envelope();
             continuation.Execute(theEnvelope, context);
 
-            context.Pipeline.AssertWasCalled(x => x.Invoke(theEnvelope));
+            handlerPipeline.AssertWasCalled(x => x.Invoke(theEnvelope, context));
         }
     }
 }
