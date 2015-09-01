@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using FubuMVC.Core.ServiceBus.Runtime;
 
 namespace FubuMVC.Core.Diagnostics.Instrumentation
 {
@@ -15,6 +16,14 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
         {
             log.RecordHeaders(http);
             log.RecordBody(http);
+
+            _storage.Store(log);
+        }
+
+        public void Record(IChainExecutionLog log, Envelope envelope)
+        {
+            log.RecordHeaders(envelope);
+            log.RecordBody(envelope);
 
             _storage.Store(log);
         }

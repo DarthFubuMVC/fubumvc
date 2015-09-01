@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.ServiceBus.Runtime;
 
 namespace FubuMVC.Core.Diagnostics.Instrumentation
 {
@@ -13,6 +14,9 @@ namespace FubuMVC.Core.Diagnostics.Instrumentation
         void Trace(string description, Action action);
         void RecordHeaders(IDictionary<string, object> env);
         void RecordBody(IDictionary<string, object> env);
+
+        void RecordHeaders(Envelope envelope);
+        void RecordBody(Envelope envelope);
 
         Guid Id { get; }
         BehaviorChain RootChain { get; set; }

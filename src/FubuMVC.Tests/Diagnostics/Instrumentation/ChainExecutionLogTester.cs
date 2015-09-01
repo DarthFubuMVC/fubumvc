@@ -148,16 +148,6 @@ namespace FubuMVC.Tests.Diagnostics.Instrumentation
         }
 
         [Test]
-        public void mark_finished()
-        {
-            var log = new ChainExecutionLog();
-            Thread.Sleep(5);
-            log.MarkFinished();
-
-            log.ExecutionTime.ShouldBeGreaterThan(0);
-        }
-
-        [Test]
         public void record_headers_from_http_request()
         {
             var dict = new Dictionary<string, object>();
