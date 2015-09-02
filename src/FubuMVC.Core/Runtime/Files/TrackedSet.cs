@@ -14,6 +14,11 @@ namespace FubuMVC.Core.Runtime.Files
             files.Each(x => _files[x.RelativePath] = x.ExactLastWriteTime());
         }
 
+        public IEnumerable<string> Files
+        {
+            get { return _files.GetAllKeys(); }
+        }
+
         public ChangeSet DetectChanges(IEnumerable<IFubuFile> files)
         {
             var changeSet = new ChangeSet();

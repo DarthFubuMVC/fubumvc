@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
 using FubuCore;
@@ -31,6 +33,16 @@ namespace FubuMVC.Core.Runtime.Files
         }
 
         public string Root { get; private set; }
+
+        public IEnumerable<string> CurrentFiles
+        {
+            get
+            {
+                if (_tracking == null) return Enumerable.Empty<string>();
+
+                return _tracking.Files.Select(x => _files.RootPath.AppendPath(x));
+            }
+        }
 
         private void _timer_Elapsed(object sender, ElapsedEventArgs e)
         {
