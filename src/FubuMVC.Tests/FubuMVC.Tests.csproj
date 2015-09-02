@@ -171,6 +171,9 @@
     <Compile Include="Http\StreamExtensions.cs" />
     <Compile Include="Registration\ActionLessView_chain_source_specs.cs" />
     <Compile Include="Registration\RouteCollectionTester.cs" />
+    <Compile Include="Runtime\Files\ChangeSetTester.cs" />
+    <Compile Include="Runtime\Files\StubFubuFile.cs" />
+    <Compile Include="Runtime\Files\TrackedSetTester.cs" />
     <Compile Include="ServerSentEvents\ChannelTester.cs" />
     <Compile Include="ServerSentEvents\ChannelWriterTester.cs" />
     <Compile Include="ServerSentEvents\DataFormatterTester.cs" />
