@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Runtime.Files;
+using FubuMVC.Core.Services.Remote;
 
 namespace FubuMVC.Core.Assets
 {
@@ -19,7 +20,8 @@ namespace FubuMVC.Core.Assets
         public readonly string ApplicationPath;
         public readonly string BinPath;
 
-        private readonly IList<FileSystemWatcher> _watchers = new List<FileSystemWatcher>();
+        private AppDomainFileChangeWatcher _appDomainWatcher;
+        private FileChangeWatcher _watcher;
 
         public FileWatcherManifest(string applicationPath, string binPath)
         {
@@ -29,125 +31,66 @@ namespace FubuMVC.Core.Assets
 
         public void Watch(bool refreshContent, IApplicationObserver observer)
         {
-            FileSystemEventHandler appDomain = (o, args) =>
-            {
-                StopWatching();
-                observer.RecycleAppDomain();
-            };
+            _appDomainWatcher = new AppDomainFileChangeWatcher(observer.RecycleAppDomain);
+            _appDomainWatcher.WatchBinariesAt(BinPath);
 
-            FileSystemEventHandler reload = (o, args) =>
-            {
-                var watcher = o.As<FileSystemWatcher>();
-
-                watcher.EnableRaisingEvents = false;
-
-                try
-                {
-                    observer.RefreshContent();
-                }
-                finally
-                {
-                    watcher.EnableRaisingEvents = true;
-                }
-            };
-
-            add(BinPath, "*.dll").OnChangeOrCreation(appDomain);
-            add(BinPath, "*.exe").OnChangeOrCreation(appDomain);
-
-            if (ConfigurationFile.IsNotEmpty())
-            {
-                add(ApplicationPath, ConfigurationFile).OnChangeOrCreation(appDomain);
-            }
 
             if (!refreshContent)
             {
                 return;
             }
 
-            if (PublicAssetFolder.IsNotEmpty())
-            {
-                add(PublicAssetFolder, "*.js").OnChange(reload);
-                add(PublicAssetFolder, "*.jsx").OnChange(reload);
-                add(PublicAssetFolder, "*.css").OnChange(reload);
-            }
-            else
-            {
-                add(ApplicationPath, "*.js").OnChange(reload);
-                add(ApplicationPath, "*.jsx").OnChange(reload);
-                add(ApplicationPath, "*.css").OnChange(reload);
-
-            }
-
+            var watchedDirectory = PublicAssetFolder.IsNotEmpty() ? PublicAssetFolder : ApplicationPath;
+            var pattern = "*.css;*.js";
             ContentMatches.Each(ext =>
             {
                 if (!ext.StartsWith("*")) ext = "*" + ext;
-
-                add(ApplicationPath, ext).OnChange(reload);
-
+                pattern += ";" + ext;
             });
+
+            var assetFileSet = FileSet.Deep(pattern);
+
+            _watcher = new FileChangeWatcher(watchedDirectory, assetFileSet, new ContentRefresher(observer));
         }
 
-        private FileSystemWatcher add(string directory, string pattern)
+        public class ContentRefresher : IChangeSetHandler
         {
-            Console.WriteLine("Watching {0} for changes to {1}", directory, pattern);
+            private readonly IApplicationObserver _observer;
 
-            var watcher = new FileSystemWatcher(directory, pattern)
+            public ContentRefresher(IApplicationObserver observer)
             {
-                NotifyFilter = NotifyFilters.LastWrite,
-                IncludeSubdirectories = true
-            };
+                _observer = observer;
+            }
 
-            _watchers.Add(watcher);
-
-            return watcher;
+            public void Handle(ChangeSet changes)
+            {
+                _observer.RefreshContent();
+            }
         }
+
 
         public bool IsWatching()
         {
-            return _watchers.Any(x => x.EnableRaisingEvents);
+            return _watcher.Enabled;
         }
 
         public void StopWatching()
         {
-            _watchers.Each(x => x.EnableRaisingEvents = false);
+            _appDomainWatcher.StopWatching();
+            _watcher.Stop();
         }
 
         public void StartWatching()
         {
-            _watchers.Each(x => x.EnableRaisingEvents = true);
+            _appDomainWatcher.StartWatching();
+            _watcher.Start();
         }
 
         public void Dispose()
         {
             StopWatching();
-            _watchers.Each(x => x.SafeDispose());
-            _watchers.Clear();
+            _watcher.Dispose();
         }
     }
 
-    public static class FileSystemWatcherExtensions
-    {
-        public static FileSystemWatcher OnCreation(this FileSystemWatcher watcher, FileSystemEventHandler handler)
-        {
-            watcher.Created += handler;
-
-            return watcher;
-        }
-
-        public static FileSystemWatcher OnChange(this FileSystemWatcher watcher, FileSystemEventHandler handler)
-        {
-            watcher.Changed += handler;
-
-            return watcher;
-        }
-
-        public static FileSystemWatcher OnChangeOrCreation(this FileSystemWatcher watcher,
-            FileSystemEventHandler handler)
-        {
-            watcher.Changed += handler;
-            watcher.Created += handler;
-
-            return watcher;
-        }
-    }
 }

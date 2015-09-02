@@ -11,7 +11,7 @@ namespace FubuMVC.Core.Runtime.Files
 
         public TrackedSet(IEnumerable<IFubuFile> files)
         {
-            files.Each(x => _files[x.RelativePath] = x.LastModified());
+            files.Each(x => _files[x.RelativePath] = x.ExactLastWriteTime());
         }
 
         public ChangeSet DetectChanges(IEnumerable<IFubuFile> files)
@@ -26,7 +26,7 @@ namespace FubuMVC.Core.Runtime.Files
             changeSet.Added.AddRange(files.Where(x => !_files.Has(x.RelativePath)));
 
 
-            var changed = files.Where(x => _files.Has(x.RelativePath) && _files[x.RelativePath] != x.LastModified());
+            var changed = files.Where(x => _files.Has(x.RelativePath) && _files[x.RelativePath] != x.ExactLastWriteTime());
             changeSet.Changed.AddRange(changed);
 
             return changeSet;

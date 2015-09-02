@@ -51,17 +51,6 @@ namespace FubuMVC.Tests.Runtime.Files
             set.DetectChanges(files2).Added.ShouldHaveTheSameElementsAs(file6, file7);
         }
 
-        [Test]
-        public void find_changes()
-        {
-            var files = new IFubuFile[] { file1, file2, file3, file4, file5 };
-
-            var set = new TrackedSet(files);
-
-            var files2 = new IFubuFile[] { file1, file2, file3, file4.ChangedVersion(), file5.ChangedVersion() };
-            set.DetectChanges(files2).Changed.ShouldHaveTheSameElementsAs(file4, file5);
-
-        }
 
     }
 }

@@ -32,6 +32,9 @@ namespace FubuMVC.Core.Runtime.Files
             return Changed.Any() || Added.Any() || Deleted.Any();
         }
 
-
+        public override string ToString()
+        {
+            return string.Format("changed: {0}, added: {1}, deleted: {2}", Changed.Select(x => x.RelativePath).Join(", "), Added.Select(x => x.RelativePath).Join(", "), Deleted.Join(", "));
+        }
     }
 }

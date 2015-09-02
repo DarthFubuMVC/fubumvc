@@ -27,6 +27,8 @@ namespace TestHarnessApp
     {
         public TestHarnessRegistry()
         {
+            Debug.WriteLine("Some really different stuff");
+
             AlterSettings<DiagnosticsSettings>(x => { x.TraceLevel = TraceLevel.Verbose; });
 
             AlterSettings<AssetSettings>(x =>

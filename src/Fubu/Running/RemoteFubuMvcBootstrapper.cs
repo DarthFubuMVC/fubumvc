@@ -9,16 +9,16 @@ namespace Fubu.Running
     public class RemoteFubuMvcBootstrapper : IApplicationLoader, IActivator, IListener<StartApplication>,
         IListener<RecycleApplication>, IDisposable
     {
-        private readonly IApplicationSourceFinder _typeFinder;
+        private readonly IFubuRegistryFinder _typeFinder;
         private readonly IFubuMvcApplicationActivator _activator;
         private readonly IMessaging _messaging;
 
         public RemoteFubuMvcBootstrapper()
-            : this(new ApplicationSourceFinder(), new FubuMvcApplicationActivator(), new Messaging())
+            : this(new FubuRegistryFinder(), new FubuMvcApplicationActivator(), new Messaging())
         {
         }
 
-        public RemoteFubuMvcBootstrapper(IApplicationSourceFinder typeFinder, IFubuMvcApplicationActivator activator,
+        public RemoteFubuMvcBootstrapper(IFubuRegistryFinder typeFinder, IFubuMvcApplicationActivator activator,
             IMessaging messaging)
         {
             _typeFinder = typeFinder;

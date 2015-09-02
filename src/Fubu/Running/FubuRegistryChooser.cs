@@ -6,10 +6,10 @@ namespace Fubu.Running
 {
     public class FubuRegistryChooser
     {
-        private readonly IApplicationSourceFinder _finder;
+        private readonly IFubuRegistryFinder _finder;
         private readonly IMessaging _messaging;
 
-        public FubuRegistryChooser(IApplicationSourceFinder finder, IMessaging messaging)
+        public FubuRegistryChooser(IFubuRegistryFinder finder, IMessaging messaging)
         {
             _finder = finder;
             _messaging = messaging;
@@ -26,7 +26,7 @@ namespace Fubu.Running
             {
                 _messaging.Send(new InvalidApplication
                 {
-                    Message = "Could not find any instance of IApplicationSource in any assembly in this directory"
+                    Message = "Could not find any instance of FubuRegistry in any assembly in this directory"
                 });
 
                 return;

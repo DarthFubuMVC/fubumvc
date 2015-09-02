@@ -92,4 +92,12 @@ namespace FubuMVC.Core.Runtime.Files
             return new FubuApplicationFiles(FubuRuntime.DefaultApplicationPath()).Find(relativePath);
         }
     }
+
+    public static class FubuFileExtensions
+    {
+        public static DateTime ExactLastWriteTime(this IFubuFile file)
+        {
+            return new FileInfo(file.Path).LastWriteTimeUtc;
+        }
+    }
 }

@@ -36,7 +36,7 @@ namespace FubuMVC.Core.Registration
             }
 
 
-            var files = new FileSystem().FindFiles(assemblyPath, FileSet.Deep("*.dll"));
+            var files = new FileSystem().FindFiles(assemblyPath, FileSet.Deep("*.dll;*.exe"));
             foreach (var file in files)
             {
                 var name = Path.GetFileNameWithoutExtension(file);

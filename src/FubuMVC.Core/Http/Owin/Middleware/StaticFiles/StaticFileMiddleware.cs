@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Runtime.Files;
-using FubuMVC.Core.Security;
 using FubuMVC.Core.Security.Authorization;
 
 namespace FubuMVC.Core.Http.Owin.Middleware.StaticFiles
@@ -24,7 +24,9 @@ namespace FubuMVC.Core.Http.Owin.Middleware.StaticFiles
         {
             if (request.IsNotHttpMethod("GET", "HEAD")) return MiddlewareContinuation.Continue();
 
-            var relativeUrl = request.RelativeUrl();
+            // TODO -- hokey. Get rid of this as we switch over to pure OWIN instead
+            // of the IHttp**** wrappers
+            var relativeUrl = request.RelativeUrl().Split('?').FirstOrDefault();
 
             // Gets around what I *think* is a Katana bug 
             if (relativeUrl.StartsWith("http:/")) return MiddlewareContinuation.Continue();

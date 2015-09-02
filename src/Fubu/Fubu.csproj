@@ -101,11 +101,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Running\FubuRegistryChooser.cs" />
     <Compile Include="Running\ApplicationStarted.cs" />
-    <Compile Include="Running\ApplicationSourceFinder.cs" />
+    <Compile Include="Running\FubuRegistryFinder.cs" />
     <Compile Include="Running\ApplicationRequest.cs" />
     <Compile Include="Running\BrowserDriver.cs" />
     <Compile Include="Running\FubuMvcApplicationActivator.cs" />
-    <Compile Include="Running\IApplicationSourceFinder.cs" />
+    <Compile Include="Running\IFubuRegistryFinder.cs" />
     <Compile Include="Running\IFubuMvcApplicationActivator.cs" />
     <Compile Include="Running\IMessaging.cs" />
     <Compile Include="Running\InvalidApplication.cs" />

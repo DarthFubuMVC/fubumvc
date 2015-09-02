@@ -26,7 +26,7 @@ namespace FubuMVC.IntegrationTesting.CommandLine.Running
 
         private void theFoundTypesAre(params Type[] types)
         {
-            MockFor<IApplicationSourceFinder>().Stub(x => x.Find())
+            MockFor<IFubuRegistryFinder>().Stub(x => x.Find())
                                                .Return(types);
         }
 
@@ -45,7 +45,7 @@ namespace FubuMVC.IntegrationTesting.CommandLine.Running
 
             var message = lastMessage<InvalidApplication>();
 
-            message.Message.ShouldBe("Could not find any instance of IApplicationSource in any assembly in this directory");
+            message.Message.ShouldBe("Could not find any instance of FubuRegistry in any assembly in this directory");
         }
 
         [Test]
@@ -100,7 +100,7 @@ namespace FubuMVC.IntegrationTesting.CommandLine.Running
             ClassUnderTest.Receive(startMessage);
 
             lastMessage<InvalidApplication>()
-                .Message.ShouldBe("Could not find any instance of IApplicationSource in any assembly in this directory");
+                .Message.ShouldBe("Could not find any instance of FubuRegistry in any assembly in this directory");
         }
 
         [Test]

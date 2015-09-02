@@ -114,7 +114,8 @@
     <Compile Include="Resources\Conneg\ViewAttachment.cs" />
     <Compile Include="Runtime\DiagnosticPartialFactory.cs" />
     <Compile Include="Runtime\Files\ChangeSet.cs" />
-    <Compile Include="Runtime\Files\FileWatchingClasses.cs" />
+    <Compile Include="Runtime\Files\FileChangeWatcher.cs" />
+    <Compile Include="Runtime\Files\IChangeSetHandler.cs" />
     <Compile Include="Runtime\Files\TrackedSet.cs" />
     <Compile Include="Security\Authentication\DefaultLoginRequestWriter.cs" />
     <Compile Include="ServerSentEvents\AspNetShutDownDetector.cs" />

@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
+using FubuCore;
+using FubuMVC.Core.Runtime.Files;
 
 namespace FubuMVC.Core.Services.Remote
 {
-    public class AppDomainFileChangeWatcher : IDisposable
+    public class AppDomainFileChangeWatcher : IDisposable, IChangeSetHandler
     {
         private readonly Action _callback;
-        private DateTime _lastUpdate;
-        private readonly IList<FileSystemWatcher> _watchers = new List<FileSystemWatcher>(); 
+        private FileChangeWatcher _watcher;
 
         public AppDomainFileChangeWatcher(Action callback)
         {
@@ -17,58 +16,38 @@ namespace FubuMVC.Core.Services.Remote
 
         public void WatchBinariesAt(string directory)
         {
-            cleanUpWatcher();
+            Console.WriteLine("Watching for binary and config file changes at " + directory);
 
-            addWatcher(directory, "*.dll");
-            addWatcher(directory, "*.config");
-
-            _lastUpdate = DateTime.Now;
-        }
-
-        private void addWatcher(string directory, string pattern)
-        {
-            var watcher = new FileSystemWatcher(directory, pattern);
-            watcher.Changed += fileChanged;
-            watcher.IncludeSubdirectories = true;
-            watcher.EnableRaisingEvents = true;
-            watcher.NotifyFilter = NotifyFilters.LastWrite;
-            
-
-            _watchers.Add(watcher);
-        }
-
-        private void fileChanged(object sender, FileSystemEventArgs e)
-        {
-            if (DateTime.Now.Subtract(_lastUpdate).TotalSeconds < 3)
+            _watcher = new FileChangeWatcher(directory, FileSet.Deep("*.dll;*.config;*.exe"), this)
             {
-                return;
-            }
+                ChangeBuffer = 500
+            };
 
-            Console.WriteLine("Detected change to file at " + e.FullPath);
-            _callback();
-            _lastUpdate = DateTime.Now;
+
+
+            _watcher.Start();
         }
 
-        private void cleanUpWatcher()
-        {
-            _watchers.Each(watcher => {
-                try
-                {
-                    watcher.Changed -= fileChanged;
-                    watcher.EnableRaisingEvents = false;
-                    watcher.Dispose();
-                }
-                catch (Exception)
-                {
-                }
-            });
-
-            _watchers.Clear();
-        }
 
         public void Dispose()
         {
-            cleanUpWatcher();
+            _watcher.Dispose();
+        }
+
+        void IChangeSetHandler.Handle(ChangeSet changes)
+        {
+            Console.WriteLine("Detected binary file changes at {0}: {1}", _watcher.Root, changes);
+            _callback();
+        }
+
+        public void StopWatching()
+        {
+            _watcher.Stop();
+        }
+
+        public void StartWatching()
+        {
+            _watcher.Start();
         }
     }
 }
