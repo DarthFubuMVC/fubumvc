@@ -1,0 +1,16 @@
+FubuCore
+FubuLocalization
+HtmlTags
+Microsoft.CompilerServices.AsyncTargetingPack
+Microsoft.Data.Edm
+Microsoft.Data.OData
+Microsoft.Data.Services.Client
+Microsoft.WindowsAzure.ConfigurationManager
+Newtonsoft.Json
+Owin
+RavenDB.Client
+RavenDb.Database
+RavenDB.Embedded
+StructureMap
+System.Spatial
+WindowsAzure.Storage

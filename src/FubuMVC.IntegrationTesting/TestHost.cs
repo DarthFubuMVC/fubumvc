@@ -16,13 +16,21 @@ namespace FubuMVC.IntegrationTesting
         private static readonly Lazy<FubuRuntime> _host =
             new Lazy<FubuRuntime>(() =>
             {
+
+
                 var registry = new FubuRegistry();
 
                 registry.Features.Diagnostics.Enable(TraceLevel.Verbose);
 
                 registry.Services.AddService<IPropertyBinder, TheAnswerBinder>();
 
-                return registry.ToRuntime();
+                var runtime = registry.ToRuntime();
+
+                AppDomain.CurrentDomain.DomainUnload += (s, e) => runtime.Dispose();
+
+
+
+                return runtime;
             });
 
         public static FubuRuntime Runtime

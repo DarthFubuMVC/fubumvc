@@ -1,3 +1,0 @@
-FubuMVC.Tests
-FubuMVC.RavenDb.Tests
-FubuMVC.LightningQueues.Testing

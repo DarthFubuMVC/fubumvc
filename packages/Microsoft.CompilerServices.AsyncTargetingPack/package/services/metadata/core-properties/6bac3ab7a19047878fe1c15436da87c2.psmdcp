@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?><coreProperties xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.openxmlformats.org/package/2006/metadata/core-properties"><dc:creator>Microsoft</dc:creator><dc:description>The "Async Targeting Pack for Visual Studio 11" enables projects targeting .NET Framework 4.0 or Silverlight 5 to use the Async language feature in C# and Visual Basic.
+                 This pack requires Visual Studio 11 and will not work with Visual Studio 2010.
+                 
+                 The pack contains the API support necessary to use the 'async' and 'await' keywords in C# 5.0 and Visual Basic 11, as well as a set of Task-based adapter APIs that allow using some of the existing asynchronous APIs with the new language keywords.
+                 
+                 This targeting pack is not required for projects targeting .NET Framework 4.5 or .NET for Metro style apps. It is only required for projects targeting Silverlight 5 and .NET Framework 4.0. Earlier platform releases are not supported.
+
+                 More info: http://go.microsoft.com/fwlink/?LinkId=250980.</dc:description><dc:identifier>Microsoft.CompilerServices.AsyncTargetingPack</dc:identifier><version>1.0.1</version><keywords>async await task asynchronous programming TAP .NET-4.0 Silverlight</keywords><dc:title>Async Targeting Pack for Visual Studio 11</dc:title></coreProperties>

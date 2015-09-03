@@ -1,0 +1,12 @@
+Castle.Core
+FubuCore
+FubuLocalization
+HtmlTags
+Newtonsoft.Json
+Owin
+Selenium.RC
+Selenium.Support
+Selenium.WebDriver
+Selenium.WebDriverBackedSelenium
+Storyteller
+structuremap

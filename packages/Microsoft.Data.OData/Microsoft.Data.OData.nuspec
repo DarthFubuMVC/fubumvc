@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Microsoft.Data.OData</id>
+    <version>5.6.0</version>
+    <title>ODataLib for OData v1-3</title>
+    <authors>Microsoft Corporation</authors>
+    <owners>Microsoft Corporation</owners>
+    <licenseUrl>http://go.microsoft.com/?linkid=9809688</licenseUrl>
+    <projectUrl>http://go.microsoft.com/fwlink/?LinkId=220868</projectUrl>
+    <iconUrl>http://static.tumblr.com/hgchgxz/9ualgdf98/icon.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Classes to serialize, deserialize and validate OData payloads. Enables construction of OData producers and consumers. Targets .NET 4.0, Silverlight 4.0 or .NET Portable Lib with support for .NET 4.0, SL 4.0, Win Phone 7, and Win 8. Localized for CHS, CHT, DEU, ESN, FRA, ITA, JPN, KOR and RUS.</description>
+    <releaseNotes>What is in the release:
+
+Visual Studio 2013 Support
+
+The WCF DS 5.6.0 tooling installer has support for Visual Studio 2013. If you are using Visual Studio 2013 and would like to consume OData services, you can use this tooling installer to get Add Service Reference support for OData. Should you need to use one of our prior runtimes, you can still do so using the normal NuGet package management commands (you will need to uninstall the installed WCF DS NuGet packages and install the older WCF DS NuGet packages).
+
+Portable Libraries
+
+All of our client-side libraries now have portable library support. This means that you can now use the new JSON format in Windows Phone and Windows Store apps. The core libraries have portable library support for .NET 4.0, Silverlight 5, Windows Phone 8 and Windows Store apps. The WCF DS client has portable library support for .NET 4.5, Silverlight 5, Windows Phone 8 and Windows Store apps. Please note that this version of the client does not have tombstoning, so if you need that feature for Windows Phone apps you will need to continue using the Windows Phone-specific tooling.
+
+URI Parser Integration
+
+The URI parser is now integrated into the WCF Data Services server bits, which means that the URI parser is capable of parsing any URL supported in WCF DS. We have also added support for parsing functions in the URI Parser.
+
+Public Provider Improvements - Reverted
+
+In the 5.5.0 release we started working on making our providers public. In this release we hoped to make it possible to override the behavior of included providers with respect to properties that don’t have native support in OData v3, for instance enum and spatial properties. Unfortunately we ran into some non-trivial bugs with $select and $orderby and needed to cut the feature for this release.
+
+Public Transport Layer
+
+In the 5.4.0 release we added the concept of a request and response pipeline to WCF Data Service Client. In this release we have made it possible for developers to directly handle the request and response streams themselves. This was built on top of ODataLib's IODataRequestMessage and IODataResponseMessage framework that specifies how requests and responses are sent and recieved. With this addition developers are able to tweak the request and response streams or even completely replace the HTTP layer if they so desire. We are working on a blog post and sample documenting how to use this functionality.
+
+Breaking Changes
+
+In this release we took a couple of breaking changes. As these bugs are tremendously unlikely to affect anyone, we opted not to increment the major version number but we wanted everyone to be aware of what they were:
+- Developers using the reading/writing pipeline must write to Entry rather than Entity on the WritingEntryArgs
+- Developers should no longer expect to be able to modify the navigation property source in OnNavigationLinkStarting and OnNavigationLinkEnding
+- Developers making use of the DisablePrimitiveTypeConversion knob may see a minor change in their JSON payloads; the knob previously only worked for the ATOM format
+
+Bug Fixes
+
+- Fixes a performance issue with models that have lots of navigation properties
+- Fixes a performance issue with the new JSON format when creating or deleting items
+- Fixes a bug where DisablePrimitiveTypeConversion would cause property type annotations to be ignored in the new JSON format
+- Fixes a bug where LoadProperty does not remove elements from a collection after deleting a link
+- Fixes an issue where the URI Parser would not properly bind an action to a collection of entities
+- Improves some error messages
+
+Known Issues
+
+The NuGet runtime in Visual Studio needs to be 2.0+ for Add Service Reference to work properly. If you are having issues with Add Service Reference in Visual Studio 2012, please ensure that NuGet is up-to-date.</releaseNotes>
+    <tags>wcf data services odata odatalib edmlib spatial ado.net ef entity framework open protocol wcfds wcfdataservices dataservices</tags>
+    <dependencies>
+      <dependency id="System.Spatial" version="[5.6.0]" />
+      <dependency id="Microsoft.Data.Edm" version="[5.6.0]" />
+    </dependencies>
+  </metadata>
+</package>

@@ -8,7 +8,7 @@ using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus
 {
-    [TestFixture]
+    [TestFixture, Explicit("Flaky from the command line")]
     public class TimeoutRunnerTester
     {
         [Test]

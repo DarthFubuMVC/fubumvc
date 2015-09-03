@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Fixie</id>
+    <version>1.0.0.29</version>
+    <title>Fixie</title>
+    <authors>Patrick Lioi</authors>
+    <owners>Patrick Lioi</owners>
+    <licenseUrl>https://github.com/fixie/fixie/blob/master/LICENSE.txt</licenseUrl>
+    <projectUrl>https://fixie.github.io</projectUrl>
+    <iconUrl>https://raw.github.com/fixie/fixie/master/img/fixie_256.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A convention-based test framework.</description>
+    <dependencies />
+    <references>
+      <reference file="Fixie.dll" />
+    </references>
+  </metadata>
+</package>

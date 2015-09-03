@@ -1,40 +1,83 @@
-require 'bundler/setup'
-require 'fuburake'
+COMPILE_TARGET = ENV['config'].nil? ? "debug" : ENV['config']
+RESULTS_DIR = "results"
+BUILD_VERSION = '3.0.0'
 
-@solution = FubuRake::Solution.new do |sln|
-	sln.compile = {
-		:solutionfile => 'src/FubuMVC.sln'
-	}
-				 
-	sln.assembly_info = {
-		:product_name => "FubuMVC",
-		:copyright => 'Copyright 2008-2014 Jeremy D. Miller, Joshua Arnold, Corey Kaylor, Joshua Flanagan, et al. All rights reserved.'
-	}
+tc_build_number = ENV["BUILD_NUMBER"]
+build_revision = tc_build_number || Time.new.strftime('5%H%M')
+build_number = "#{BUILD_VERSION}.#{build_revision}"
+BUILD_NUMBER = build_number 
 
-	sln.ripple_enabled = true
-	sln.fubudocs_enabled = false
-	sln.bottles_enabled = false # has to be all special in FubuMVC because of the zip package testing
+task :ci => [:default, :integration_test, :archive_gem, :pack]
 
-	#sln.integration_test = ['FubuMVC.IntegrationTesting', 'Serenity.Testing']
-	sln.integration_test = ['FubuMVC.IntegrationTesting']
-	sln.ci_steps = [:integration_test, :archive_gem]
+task :default => [:test]
 
-	sln.options[:nuget_publish_folder] = 'nupkgs'
-	sln.options[:nuget_publish_url] = 'https://www.myget.org/F/fubumvc-edge/'
+desc "Prepares the working directory for a new build"
+task :clean do
+	#TODO: do any other tasks required to clean/prepare the working directory
+	FileUtils.rm_rf RESULTS_DIR
+	FileUtils.rm_rf 'artifacts'
+
+	Dir.mkdir RESULTS_DIR
 end
 
+desc "Update the version information for the build"
+task :version do
+  asm_version = build_number
+  
+  begin
+    commit = `git log -1 --pretty=format:%H`
+  rescue
+    commit = "git unavailable"
+  end
+  puts "##teamcity[buildNumber '#{build_number}']" unless tc_build_number.nil?
+  puts "Version: #{build_number}" if tc_build_number.nil?
+  
+  options = {
+	:description => 'The .Net web framework and service bus that gets out of your way',
+	:product_name => 'StructureMap',
+	:copyright => 'Copyright 2009-2015 Jeremy D. Miller, Corey Kaylor, Joshua Arnold, et al. All rights reserved.',
+	:trademark => commit,
+	:version => asm_version,
+	:file_version => build_number,
+	:informational_version => asm_version
+	
+  }
+  
+  puts "Writing src/CommonAssemblyInfo.cs..."
+	File.open('src/CommonAssemblyInfo.cs', 'w') do |file|
+		file.write "using System.Reflection;\n"
+		file.write "using System.Runtime.InteropServices;\n"
+		file.write "[assembly: AssemblyDescription(\"#{options[:description]}\")]\n"
+		file.write "[assembly: AssemblyProduct(\"#{options[:product_name]}\")]\n"
+		file.write "[assembly: AssemblyCopyright(\"#{options[:copyright]}\")]\n"
+		file.write "[assembly: AssemblyTrademark(\"#{options[:trademark]}\")]\n"
+		file.write "[assembly: AssemblyVersion(\"#{options[:version]}\")]\n"
+		file.write "[assembly: AssemblyFileVersion(\"#{options[:file_version]}\")]\n"
+		file.write "[assembly: AssemblyInformationalVersion(\"#{options[:informational_version]}\")]\n"
+	end
+end
 
-FubuRake::BottleServices.new({
-  :dir => "src/DiagnosticsHarness/bin/#{@solution.compilemode}", 
-  :name => 'ft-harness', 
-  :local_service => true,
-  :manual => true
-})
+desc 'Compile the code'
+task :compile => [:npm, :clean, :version] do
+	sh "C:/Windows/Microsoft.NET/Framework/v4.0.30319/msbuild.exe src/FubuMVC.sln   /property:Configuration=#{COMPILE_TARGET} /v:m /t:rebuild /nr:False /maxcpucount:2"
+end
 
-FubuRake::MvcApp.new({:directory => 'src/DiagnosticsHarness', :name => 'harness'})
+desc 'Run the unit tests'
+task :test => [:compile] do
+	sh "packages/Fixie/lib/net45/Fixie.Console.exe src/FubuMVC.Tests/bin/#{COMPILE_TARGET}/FubuMVC.Tests.dll --NUnitXml results/TestResult.xml"
+end
 
+desc 'Run the integration tests'
+task :integration_test => [:compile] do
+    sh "packages/Fixie/lib/net45/Fixie.Console.exe src/FubuMVC.IntegrationTesting/bin/#{COMPILE_TARGET}/FubuMVC.IntegrationTesting.dll --NUnitXml results/IntegrationTestResult.xml"
+    sh "packages/Fixie/lib/net45/Fixie.Console.exe src/FubuMVC.RavenDb.Tests/bin/#{COMPILE_TARGET}/FubuMVC.RavenDb.Tests.dll --NUnitXml results/RavenDbTestResult.xml"
+    sh "packages/Fixie/lib/net45/Fixie.Console.exe src/FubuMVC.LightningQueues.Testing/bin/#{COMPILE_TARGET}/FubuMVC.LightningQueues.Testing.dll --NUnitXml results/LQTestResult.xml"
+end
 
-add_dependency 'ripple:publish', :integration_test
+desc 'Build Nuspec packages'
+task :pack => [:compile, :compile_signed] do
+	sh ".paket/paket.exe pack output artifacts version #{build_number}-alpha"
+end
 
 desc "Launches the diagnostics harness for client side development"
 task :diagnostics => [:compile] do
@@ -45,16 +88,11 @@ end
 desc "Unit and Integration Tests"
 task :full => [:default, :integration_test]
 
-desc "Target used for CI on Mono"
-task :mono_ci => [:compile, :unit_test, :integration_test]
-
 desc "Delegates to npm install and builds the javascript for diagnostics"
 task :npm do
 	sh 'npm install'
 	sh 'npm run build'
 end
-
-add_dependency :compile, :npm
 
 
 desc "Replaces the existing installed gem with the new version for local testing"
@@ -69,6 +107,10 @@ desc "Moves the gem to the archive folder"
 task :archive_gem => [:create_gem] do
 	copyOutputFiles "pkg", "*.gem", "artifacts"
 end
+
+
+# 'https://www.myget.org/F/fubumvc-edge/'
+# TODO -- need to add a set of tasks to test JasperService
 
 desc "Run the storyteller specifications"
 task :storyteller => [:compile] do
@@ -130,4 +172,9 @@ task :create_gem => [:compile] do
 	
 	FileUtils.mv "fubu-#{@solution.options[:build_number]}.alpha.gem", "pkg/fubu-#{@solution.options[:build_number]}.alpha.gem"
 	
+end
+
+desc "Launches VS to the FubuMVC solution file"
+task :sln do
+	sh "start src/FubuMVC.sln"
 end
