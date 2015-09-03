@@ -11,7 +11,6 @@ namespace FubuMVC.Tests.Security.Authentication
     [TestFixture]
     public class out_of_the_box_authentication_setup
     {
-        private BehaviorGraph theGraphWithBasicAuthentication;
 
         [Test]
         public void service_registrations()

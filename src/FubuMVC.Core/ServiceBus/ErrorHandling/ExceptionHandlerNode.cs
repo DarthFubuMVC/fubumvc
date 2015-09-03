@@ -14,7 +14,7 @@ namespace FubuMVC.Core.ServiceBus.ErrorHandling
             _chain = chain;
         }
 
-        public HandlerChain Chain
+        public new HandlerChain Chain
         {
             get { return _chain; }
         }

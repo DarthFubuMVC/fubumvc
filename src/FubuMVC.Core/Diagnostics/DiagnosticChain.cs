@@ -57,7 +57,7 @@ namespace FubuMVC.Core.Diagnostics
             AddToEnd(call);
         }
 
-        public static DiagnosticChain For<T>(Expression<Action<T>> method)
+        public new static DiagnosticChain For<T>(Expression<Action<T>> method)
         {
             var call = ActionCall.For(method);
             return new DiagnosticChain(call);

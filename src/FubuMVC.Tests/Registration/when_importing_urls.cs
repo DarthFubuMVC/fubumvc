@@ -68,9 +68,7 @@ namespace FubuMVC.Tests.Registration
 
         #endregion
 
-        private BehaviorGraph graph1;
         private BehaviorGraph graph2;
-        private BehaviorChain chain;
         private FubuRegistry registry1;
         private RegistryImport theImport;
 

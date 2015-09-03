@@ -16,7 +16,6 @@ namespace FubuMVC.Tests.Http.Compression
     {
         private IHttpContentEncoding theEncoding;
         private string theAcceptedEncoding;
-        private KeyValues theHeaders;
         private ServiceArguments theArguments;
 
         protected override void beforeEach()

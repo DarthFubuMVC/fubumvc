@@ -48,7 +48,7 @@ namespace SampleService
     {
         public IDisposable Load()
         {
-            ObjectFactory.Initialize(x => x.AddRegistry<SampleRegistry>());
+            //ObjectFactory.Initialize(x => x.AddRegistry<SampleRegistry>());
             EventAggregator.SendMessage(new ServiceStarted{ActivatorTypeName = typeof(SampleService).AssemblyQualifiedName});
             EventAggregator.SendMessage(new ServiceStarted{ActivatorTypeName = typeof(RemoteService).AssemblyQualifiedName});
 

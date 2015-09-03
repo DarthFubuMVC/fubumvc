@@ -16,7 +16,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
         {
             var registry = new Registry();
             registry.RavenDbConfiguration(store => {
-                store.Conventions.DefaultQueryingConsistency = ConsistencyOptions.QueryYourWrites;
+                store.Conventions.DefaultQueryingConsistency = ConsistencyOptions.AlwaysWaitForNonStaleResultsAsOfLastWrite;
             });
 
             var container = new Container(x => {
@@ -26,7 +26,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             });
 
             container.GetInstance<IDocumentStore>().Conventions
-                     .DefaultQueryingConsistency.ShouldBe(ConsistencyOptions.QueryYourWrites);
+                     .DefaultQueryingConsistency.ShouldBe(ConsistencyOptions.AlwaysWaitForNonStaleResultsAsOfLastWrite);
 
             container.Dispose();
         }
@@ -37,7 +37,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             var registry = new Registry();
             registry.RavenDbConfiguration(store =>
             {
-                store.Conventions.DefaultQueryingConsistency = ConsistencyOptions.MonotonicRead;
+                store.Conventions.DefaultQueryingConsistency = ConsistencyOptions.None;
             });
 
             var container = new Container(x =>
@@ -48,7 +48,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             });
 
             container.GetInstance<IDocumentStore>().Conventions
-                     .DefaultQueryingConsistency.ShouldBe(ConsistencyOptions.MonotonicRead);
+                     .DefaultQueryingConsistency.ShouldBe(ConsistencyOptions.None);
 
             container.Dispose();
         }

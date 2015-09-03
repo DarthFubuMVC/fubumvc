@@ -6,7 +6,7 @@ namespace FubuMVC.Core.Security.Authentication
 {
     public class AuthenticationFilterNode : ActionCallBase
     {
-        public static MethodInfo Method = ReflectionHelper.GetMethod<AuthenticationFilter>(x => x.Authenticate());
+        public new static MethodInfo Method = ReflectionHelper.GetMethod<AuthenticationFilter>(x => x.Authenticate());
 
         public AuthenticationFilterNode() : base(typeof (AuthenticationFilter), Method)
         {

@@ -509,7 +509,6 @@
     <Compile Include="Diagnostics\Visualization\BehaviorNodeViewModel.cs" />
     <Compile Include="Diagnostics\Visualization\DescriptionVisualizationPolicy.cs" />
     <Compile Include="Diagnostics\Visualization\IVisualizer.cs" />
-    <Compile Include="Diagnostics\Visualization\VisualizationPageExtensions.cs" />
     <Compile Include="Diagnostics\Visualization\Visualizer.cs" />
     <Compile Include="Diagnostics\Visualization\Visualizers\CommentTag.cs" />
     <Compile Include="Diagnostics\Visualization\Visualizers\StringMessageEndpoint.cs" />
@@ -917,7 +916,6 @@
     <Compile Include="View\Bootstrap\Tags\DetailTableBuilder.cs" />
     <Compile Include="View\Bootstrap\Tags\HtmlTagExtensions.cs" />
     <Compile Include="View\Bootstrap\Tags\OutlineTag.cs" />
-    <Compile Include="View\Bootstrap\BootstrapPageExtensions.cs" />
     <Compile Include="View\DisplayConversionRegistryActivator.cs" />
     <Compile Include="Http\AspNet\AspNetHttpResponse.cs" />
     <Compile Include="Http\AspNet\AspNetHttpRequest.cs" />
@@ -1082,9 +1080,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Diagnostics\Visualization\BehaviorNode.spark" />
-    <None Include="ripple.dependencies.config">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="fubu-diagnostics\bootstrap.min.css" />

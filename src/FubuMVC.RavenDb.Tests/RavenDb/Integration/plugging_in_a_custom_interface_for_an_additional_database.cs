@@ -20,7 +20,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
             {
                 x.ConnectToRavenDb<FourthDbSettings>(store =>
                 {
-                    store.Conventions.DefaultQueryingConsistency = ConsistencyOptions.MonotonicRead;
+                    store.Conventions.DefaultQueryingConsistency = ConsistencyOptions.None;
                 }).Using<IFourthDatabase, FourthDatabase>();
 
 

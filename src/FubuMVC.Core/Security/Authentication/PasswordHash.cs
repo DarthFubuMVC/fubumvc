@@ -29,7 +29,9 @@ namespace FubuMVC.Core.Security.Authentication
         public string CreateHash(string password)
         {
 
+#pragma warning disable 618
             return FormsAuthentication.HashPasswordForStoringInConfigFile(password, "sha1");
+#pragma warning restore 618
             // Generate a random salt
 //            RNGCryptoServiceProvider csprng = new RNGCryptoServiceProvider();
 //            byte[] salt = new byte[SALT_BYTES];

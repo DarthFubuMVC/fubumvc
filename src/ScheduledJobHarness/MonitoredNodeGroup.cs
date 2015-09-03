@@ -21,17 +21,16 @@ namespace ScheduledJobHarness
         private readonly Cache<string, MonitoredNode> _nodes = new Cache<string, MonitoredNode>();
 
         // TODO -- replace w/ RavenDb later
-        private readonly ISubscriptionPersistence _subscriptions;
-        private readonly ISchedulePersistence _schedules;
-        private readonly int _port;
-        private readonly FubuRuntime _runtime;
+        //private readonly ISubscriptionPersistence _subscriptions;
+        //private readonly ISchedulePersistence _schedules;
+        //private readonly FubuRuntime _runtime;
         private readonly ManualResetEvent _reset = new ManualResetEvent(false);
-        private readonly Container container;
-        private readonly IDocumentStore _store;
+        //private readonly Container container;
+        //private readonly IDocumentStore _store;
 
         public MonitoredNodeGroup()
         {
-            _port = PortFinder.FindPort(5500);
+            Port = PortFinder.FindPort(5500);
 
             throw new Exception("Change this below");
 
@@ -41,7 +40,7 @@ namespace ScheduledJobHarness
                 _.AutoHostingEnabled = true;
                 _.Port = _port;
             });
-             */
+             
 
             Services.ReplaceService<ISchedulePersistence, RavenDbSchedulePersistence>();
             Services.ReplaceService<ISubscriptionPersistence, RavenDbSubscriptionPersistence>();
@@ -64,6 +63,7 @@ namespace ScheduledJobHarness
             _subscriptions = _runtime.Get<ISubscriptionPersistence>();
             _schedules = _runtime.Get<ISchedulePersistence>();
             _store = _runtime.Get<IDocumentStore>();
+             * */
         }
 
         public IEnumerable<MonitoredNode> Nodes()
@@ -76,15 +76,10 @@ namespace ScheduledJobHarness
             _reset.Set();
         }
 
-        public int Port
-        {
-            get { return _port; }
-        }
-
         public void Add(string nodeId, Uri incoming)
         {
-            var node = new MonitoredNode(nodeId, incoming, _store);
-            _nodes[nodeId] = node;
+            //var node = new MonitoredNode(nodeId, incoming, _store);
+            //_nodes[nodeId] = node;
         }
 
         public MonitoredNode NodeFor(string id)
@@ -94,15 +89,15 @@ namespace ScheduledJobHarness
 
         public void Startup()
         {
-            _nodes.Each(node => node.Startup(_subscriptions, _schedules));
-            var jobs = _nodes.First.Jobs;
-            container.Configure(_ => _.For<ScheduledJobGraph>().Use(jobs));
+            //_nodes.Each(node => node.Startup(_subscriptions, _schedules));
+            //var jobs = _nodes.First.Jobs;
+            //container.Configure(_ => _.For<ScheduledJobGraph>().Use(jobs));
         }
 
         public void Dispose()
         {
             _nodes.Each(x => x.SafeDispose());
-            _runtime.Dispose();
+            //_runtime.Dispose();
         }
 
         public void ShutdownNode(string node)

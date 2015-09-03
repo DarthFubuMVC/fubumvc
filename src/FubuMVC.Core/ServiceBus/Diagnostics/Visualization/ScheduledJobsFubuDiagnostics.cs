@@ -20,7 +20,6 @@ namespace FubuMVC.Core.ServiceBus.Diagnostics.Visualization
         private readonly ChannelGraph _graph;
         private readonly ScheduledJobGraph _jobs;
         private readonly IScheduledJobController _controller;
-        private readonly IServiceBus _bus;
 
         public ScheduledJobsFubuDiagnostics(IUrlRegistry urls, ISchedulePersistence persistence, ChannelGraph graph, ScheduledJobGraph jobs, IScheduledJobController controller)
         {

@@ -62,9 +62,9 @@ namespace Serenity
         /// Register a policy about what to do after navigating the browser to handle issues
         /// like being redirected to a login screen
         /// </summary>
-        public void AfterNavigation<T>() where T : IAfterNavigation
+        public void AfterNavigation<TNavigation>() where TNavigation : IAfterNavigation
         {
-            Registry.Services.ReplaceService<IAfterNavigation, T>();
+            Registry.Services.ReplaceService<IAfterNavigation, TNavigation>();
         }
 
         public FubuRuntime Runtime

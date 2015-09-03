@@ -285,7 +285,7 @@ namespace Serenity.Fixtures
                 });
         }
 
-        protected bool AssertIsOnScreen<T>(T input)
+        protected bool AssertIsOnScreen<TInput>(TInput input)
         {
             var expected = Urls.UrlFor(input, "GET");
             var actual = Driver.Url;
@@ -310,7 +310,7 @@ namespace Serenity.Fixtures
             return true;
         }
 
-        protected bool AssertIsNotOnScreen<T>(T input)
+        protected bool AssertIsNotOnScreen<TInput>(TInput input)
         {
             var actual = new Uri(Driver.Url).AbsolutePath;
             var expected = Urls.UrlFor(input, "GET");

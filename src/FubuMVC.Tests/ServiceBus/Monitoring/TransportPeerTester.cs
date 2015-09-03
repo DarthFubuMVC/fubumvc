@@ -95,7 +95,6 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring
     {
         private readonly Uri theSubject = "subject://1".ToUri();
         private OwnershipStatus theStatus;
-        private string theOriginalOwner = "elsewhere";
 
         protected override void theContextIs()
         {

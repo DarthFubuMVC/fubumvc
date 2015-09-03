@@ -8,12 +8,16 @@ namespace FubuMVC.Core.Security.AntiForgery
     {
         public byte[] Decode(string value)
         {
+#pragma warning disable 618
             return MachineKey.Decode(Base64ToHex(value), MachineKeyProtection.All);
+#pragma warning restore 618
         }
 
         public string Encode(byte[] bytes)
         {
+#pragma warning disable 618
             return HexToBase64(MachineKey.Encode(bytes, MachineKeyProtection.All).ToUpperInvariant());
+#pragma warning restore 618
         }
 
         private static string Base64ToHex(string base64)

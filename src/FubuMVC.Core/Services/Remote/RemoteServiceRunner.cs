@@ -112,7 +112,7 @@ namespace FubuMVC.Core.Services.Remote
 
         public void SendRemotely<T>(T message)
         {
-            string json = MessagingHub.ToJson(message);
+            string json = JsonSerialization.ToJson(message);
             _proxy.SendJson(json);
         }
 

@@ -36,7 +36,7 @@ namespace FubuMVC.Core.Services.Messaging
             foreach (object o in _messages.GetConsumingEnumerable(_cancellationSource.Token))
             {
                 // TODO -- should this be async as well?  Or assume that the remote listener will handle it?
-                var json = MessagingHub.ToJson(o);
+                var json = JsonSerialization.ToJson(o);
                 _remoteListener.Send(json);
 
                 // TODO -- send to a local messaging hub?

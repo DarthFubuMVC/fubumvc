@@ -19,10 +19,10 @@ namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
         {
             theContainer = new Container(x => {
                 x.ConnectToRavenDb<SecondDbSettings>(store => {
-                    store.Conventions.DefaultQueryingConsistency = ConsistencyOptions.MonotonicRead;
+                    store.Conventions.DefaultQueryingConsistency = ConsistencyOptions.None;
                 });
                 x.ConnectToRavenDb<ThirdDbSettings>(store => {
-                    store.Conventions.DefaultQueryingConsistency = ConsistencyOptions.QueryYourWrites;
+                    store.Conventions.DefaultQueryingConsistency = ConsistencyOptions.AlwaysWaitForNonStaleResultsAsOfLastWrite;
                 });
 
                 x.IncludeRegistry<RavenDbRegistry>();
@@ -53,11 +53,11 @@ namespace FubuMVC.RavenDb.Tests.RavenDb.Integration
         {
             theContainer.GetInstance<IDocumentStore<SecondDbSettings>>()
                         .Conventions.DefaultQueryingConsistency
-                        .ShouldBe(ConsistencyOptions.MonotonicRead);
+                        .ShouldBe(ConsistencyOptions.None);
 
             theContainer.GetInstance<IDocumentStore<ThirdDbSettings>>()
                         .Conventions.DefaultQueryingConsistency
-                        .ShouldBe(ConsistencyOptions.QueryYourWrites);
+                        .ShouldBe(ConsistencyOptions.AlwaysWaitForNonStaleResultsAsOfLastWrite);
         }
 
         [Test]

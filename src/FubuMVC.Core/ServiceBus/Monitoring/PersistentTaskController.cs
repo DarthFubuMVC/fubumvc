@@ -232,8 +232,6 @@ namespace FubuMVC.Core.ServiceBus.Monitoring
                             }
                         });
                     }
-
-                    return _;
                 }, TaskContinuationOptions.AttachedToParent);
         }
 

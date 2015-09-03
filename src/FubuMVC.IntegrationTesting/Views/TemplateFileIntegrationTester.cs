@@ -22,8 +22,7 @@ namespace FubuMVC.IntegrationTesting.Views
             RazorView<ViewModel4>("Folder1/Folder2/View4");
         }
 
-        [SetUp]
-        public void SetUp()
+        protected override void beforeEach()
         {
             view1 = ViewForModel<ViewModel1>();
             view2 = ViewForModel<ViewModel2>();

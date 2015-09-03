@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core;
+﻿using System.Diagnostics;
+using FubuMVC.Core;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Localization
@@ -9,7 +10,10 @@ namespace FubuMVC.Tests.Localization
         [Test]
         public void smoke()
         {
-            using (FubuRuntime.Basic(_ => _.Features.Localization.Enable(true))) ;
+            using (FubuRuntime.Basic(_ => _.Features.Localization.Enable(true)))
+            {
+                Debug.WriteLine("Ok, can load localization just fine");  
+            } 
         }
     }
 }

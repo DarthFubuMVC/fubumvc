@@ -6,7 +6,6 @@ namespace FubuMVC.Core.View.Model
     // TODO -- look to see how much of this can be thinned down
     public interface ITemplateFile : IViewToken
     {
-        string FilePath { get;  }
         string ViewPath { get; }
 
         Parsing Parsing { get; }

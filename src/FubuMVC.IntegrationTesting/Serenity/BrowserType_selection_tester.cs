@@ -10,7 +10,6 @@ namespace FubuMVC.IntegrationTesting.Serenity
     [TestFixture]
     public class BrowserType_selection_tester
     {
-        private SerenitySystem theSystem;
 
         [Test]
         public void select_with_no_profile_or_default_should_be_chrome()

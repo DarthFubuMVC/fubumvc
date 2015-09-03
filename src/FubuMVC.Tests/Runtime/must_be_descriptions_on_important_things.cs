@@ -33,18 +33,6 @@ namespace FubuMVC.Tests.Runtime
 
 
         [Test]
-        public void must_be_a_description_on_all_IConfigurationAction_types()
-        {
-            var types = typeof (FubuRequest).Assembly.GetExportedTypes()
-                .Where(x => x.IsConcreteTypeOf<IConfigurationAction>())
-                .Where(x => !Description.HasExplicitDescription(x));
-
-            types.Each(x => Console.WriteLine(x.Name));
-
-            types.Any().ShouldBeFalse();
-        }
-
-        [Test]
         public void must_be_a_description_on_all_IUrlPolicy_types()
         {
             var types = typeof (FubuRequest).Assembly.GetExportedTypes()

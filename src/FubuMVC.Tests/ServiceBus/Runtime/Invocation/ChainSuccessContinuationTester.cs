@@ -65,9 +65,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
     {
         private Envelope theEnvelope;
         private FubuMVC.Core.ServiceBus.Runtime.Invocation.InvocationContext theContext;
-        private RecordingEnvelopeSender theSender;
         private ChainSuccessContinuation theContinuation;
-        private RecordingLogger theLogger;
         private TestEnvelopeContext theEnvelopeContext;
         private Exception theException;
 

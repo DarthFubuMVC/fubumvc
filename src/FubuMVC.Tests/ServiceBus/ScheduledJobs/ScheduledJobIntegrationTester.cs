@@ -19,7 +19,6 @@ namespace FubuMVC.Tests.ServiceBus.ScheduledJobs
     [TestFixture]
     public class ScheduledJobIntegrationTester
     {
-        private Container container;
         private FubuRuntime theRuntime;
 
         [TestFixtureSetUp]

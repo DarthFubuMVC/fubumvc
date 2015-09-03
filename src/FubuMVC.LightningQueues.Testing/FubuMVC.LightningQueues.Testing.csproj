@@ -33,28 +33,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Fixie.Console">
-      <HintPath>..\packages\Fixie\lib\net45\Fixie.Console.exe</HintPath>
-    </Reference>
-    <Reference Include="Fixie.Console.x86">
-      <HintPath>..\packages\Fixie\lib\net45\Fixie.Console.x86.exe</HintPath>
-    </Reference>
-    <Reference Include="Fixie.TestDriven">
-      <HintPath>..\packages\Fixie\lib\net45\Fixie.TestDriven.dll</HintPath>
-    </Reference>
-    <Reference Include="Fixie.VisualStudio.TestAdapter">
-      <HintPath>..\packages\Fixie\lib\net45\Fixie.VisualStudio.TestAdapter.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Mono.Cecil">
-      <HintPath>..\packages\Fixie\lib\net45\Mono.Cecil.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Pdb">
-      <HintPath>..\packages\Fixie\lib\net45\Mono.Cecil.Pdb.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Rocks">
-      <HintPath>..\packages\Fixie\lib\net45\Mono.Cecil.Rocks.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -62,9 +41,6 @@
     <Reference Include="System.Transactions" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="TestDriven.Framework">
-      <HintPath>..\packages\Fixie\lib\net45\TestDriven.Framework.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FixieConvention.cs" />
@@ -111,11 +87,6 @@
       <Project>{f151167c-4736-4c67-9697-7876574c05d0}</Project>
       <Name>FubuMVC.LightningQueues</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ripple.dependencies.config">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -5,7 +5,6 @@ using System.Reflection;
 using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Reflection;
-using FubuMVC.Core.Registration;
 using FubuMVC.Core.ServiceBus.Registration;
 using FubuMVC.Core.ServiceBus.Registration.Nodes;
 using FubuMVC.Core.ServiceBus.Runtime;
@@ -42,7 +41,7 @@ namespace FubuMVC.Core.ServiceBus.Configuration
         }
 
 
-        public new static FubuTransportRegistry<T> Empty()
+        public static FubuTransportRegistry<T> Empty()
         {
             return new FubuTransportRegistry<T>();
         }
@@ -79,7 +78,7 @@ namespace FubuMVC.Core.ServiceBus.Configuration
             /// <summary>
             /// Add an IEnvelopeModifier that will apply to only this channel
             /// </summary>
-            /// <typeparam name="T"></typeparam>
+            /// <typeparam name="TModifier"></typeparam>
             /// <returns></returns>
             public ChannelExpression ModifyWith<TModifier>() where TModifier : IEnvelopeModifier, new()
             {

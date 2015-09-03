@@ -74,6 +74,12 @@ namespace FubuMVC.IntegrationTesting.Views
         public void SetUp()
         {
             Scenario = new Scenario(_host);
+
+            beforeEach();
+        }
+
+        protected virtual void beforeEach()
+        {
         }
 
         [TearDown]

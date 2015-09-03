@@ -10,12 +10,6 @@ namespace FubuMVC.Core.Services.Messaging
 {
     public class MessagingHub : IMessagingHub
     {
-        [Obsolete("Use JsonSerialization.ToJson method instead")]
-        public static string ToJson(object o)
-        {
-            return JsonSerialization.ToJson(o);
-        }
-
         private readonly ReaderWriterLockSlim _lock = new ReaderWriterLockSlim();
         private readonly IList<object> _listeners = new List<object>();
         private readonly JsonSerializer _jsonSerializer = new JsonSerializer()

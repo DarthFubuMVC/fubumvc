@@ -36,28 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Accessibility" />
-    <Reference Include="Fixie.Console">
-      <HintPath>..\packages\Fixie\lib\net45\Fixie.Console.exe</HintPath>
-    </Reference>
-    <Reference Include="Fixie.Console.x86">
-      <HintPath>..\packages\Fixie\lib\net45\Fixie.Console.x86.exe</HintPath>
-    </Reference>
-    <Reference Include="Fixie.TestDriven">
-      <HintPath>..\packages\Fixie\lib\net45\Fixie.TestDriven.dll</HintPath>
-    </Reference>
-    <Reference Include="Fixie.VisualStudio.TestAdapter">
-      <HintPath>..\packages\Fixie\lib\net45\Fixie.VisualStudio.TestAdapter.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Mono.Cecil">
-      <HintPath>..\packages\Fixie\lib\net45\Mono.Cecil.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Pdb">
-      <HintPath>..\packages\Fixie\lib\net45\Mono.Cecil.Pdb.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Rocks">
-      <HintPath>..\packages\Fixie\lib\net45\Mono.Cecil.Rocks.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -68,9 +47,6 @@
       <HintPath>..\packages\Microsoft.AspNet.Razor\lib\net40\System.Web.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
-    <Reference Include="TestDriven.Framework">
-      <HintPath>..\packages\Fixie\lib\net45\TestDriven.Framework.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AboutEndpointIntegrationTester.cs" />

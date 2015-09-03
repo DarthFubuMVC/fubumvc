@@ -74,7 +74,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="ripple.dependencies.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="file-patterns.txt">

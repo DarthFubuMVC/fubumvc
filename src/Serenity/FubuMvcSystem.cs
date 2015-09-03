@@ -28,7 +28,6 @@ namespace Serenity
     public class FubuMvcSystem : ISystem, ISubSystem, IRemoteSubsystems
     {
         private readonly Func<FubuRuntime> _runtimeSource;
-        private bool? _externalHosting;
 
 
         private readonly IList<ISubSystem> _subSystems = new List<ISubSystem>();
@@ -55,6 +54,7 @@ namespace Serenity
 
         public void AddRemoteSubSystem(string name, Action<RemoteDomainExpression> configuration)
         {
+            /*
             var system = new RemoteSubSystem(() => new RemoteServiceRunner(x =>
             {
                 throw new Exception("REDO");
@@ -65,6 +65,8 @@ namespace Serenity
             _remoteSubSystems[name] = system;
 
             _subSystems.Add(system);
+        
+             */
         }
 
         public void AddSubSystem<T>() where T : ISubSystem, new()
@@ -174,9 +176,11 @@ namespace Serenity
 
         protected virtual void startAll()
         {
+            /*
             throw new Exception("REDO");
             //FubuMode.SetUpForDevelopmentMode();
             Task.WaitAll(_subSystems.Select(x => x.Start()).ToArray());
+             * */
         }
 
         ~FubuMvcSystem()

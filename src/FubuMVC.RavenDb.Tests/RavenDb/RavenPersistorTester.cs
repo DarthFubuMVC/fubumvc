@@ -30,7 +30,7 @@ namespace FubuMVC.RavenDb.Tests.RavenDb
             nested = container.GetNestedContainer();
 
             documents = nested.GetInstance<IDocumentStore>();
-            documents.Conventions.DefaultQueryingConsistency = ConsistencyOptions.QueryYourWrites;
+            documents.Conventions.DefaultQueryingConsistency = ConsistencyOptions.AlwaysWaitForNonStaleResultsAsOfLastWrite;
 
             persistor = nested.GetInstance<RavenPersistor>();
             boundary = nested.GetInstance<ISessionBoundary>();

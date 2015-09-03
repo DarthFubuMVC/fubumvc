@@ -60,7 +60,7 @@ namespace FubuMVC.Tests.Diagnostics.Runtime
 
 
             var notTracedGraph = BehaviorGraph.BuildFrom(registry);
-            notTracedGraph.Chains.SelectMany(x => x).Any(x => x is BehaviorTracer).ShouldBeFalse();
+            notTracedGraph.Chains.SelectMany(x => x).Any(x => x is BehaviorTracerNode).ShouldBeFalse();
         }
 
         [Test]
