@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -203,6 +204,13 @@ namespace Serenity.Fixtures
         {
             return new FactGrammar(title, c => Driver.Url.Matches(toUrl(Urls)));
         }
+
+        protected string[] JavascriptErrorsInBrowser()
+        {
+            return Driver
+                .InjectJavascript("return SerenityErrorCollector.errors")
+                .As<IEnumerable<object>>().Select(x => x.ToString()).ToArray();
+        } 
     }
 
     public class ScreenFixture<T> : ScreenFixture

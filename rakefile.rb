@@ -115,12 +115,12 @@ end
 
 desc "Run the storyteller specifications"
 task :storyteller => [:compile] do
-	sh "src/packages/Storyteller/tools/st.exe run src/FubuMVC.IntegrationTesting --retries 3 --results-path artifacts/stresults.htm "
+	sh "packages/Storyteller/tools/st.exe run src/FubuMVC.IntegrationTesting --retries 3 --results-path artifacts/stresults.htm "
 end
 
 desc "Run the storyteller specifications"
 task :open_st => [:compile] do
-	sh "src/packages/Storyteller/tools/st.exe open src/FubuMVC.IntegrationTesting"
+	sh "packages/Storyteller/tools/st.exe open src/FubuMVC.IntegrationTesting"
 end
 
 desc "Outputs the command line usage"

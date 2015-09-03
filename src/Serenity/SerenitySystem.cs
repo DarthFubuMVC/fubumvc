@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Dates;
 using FubuMVC.Core;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Diagnostics.Instrumentation;
 using FubuMVC.Core.Diagnostics.Runtime;
+using FubuMVC.Core.Http.Owin;
+using FubuMVC.Core.Http.Owin.Middleware;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.Authorization;
 using FubuMVC.Core.StructureMap;
+using HtmlTags;
 using StoryTeller;
 using StoryTeller.Conversion;
 using StoryTeller.Engine;
@@ -53,6 +58,21 @@ namespace Serenity
             {
                 var browserType = BrowserFactory.DetermineBrowserType(DefaultBrowser);
                 return BrowserFactory.GetBrowserLifecyle(browserType);
+            });
+
+            injectJavascriptErrorDetection();
+        }
+
+        private void injectJavascriptErrorDetection()
+        {
+            var js = Assembly.GetExecutingAssembly().GetManifestResourceStream(typeof(SerenitySystem),"errorCollector.js").ReadAllText();
+            var text = new HtmlTag("script").Attr("type", "text/javascript").Text("\n\n" + js + "\n\n").Encoded(false).ToString();
+            Registry.AlterSettings<OwinSettings>(owin =>
+            {
+                owin.AddMiddleware<HtmlHeadInjectionMiddleware>().Arguments.With(new InjectionOptions
+                {
+                    Content = c => text
+                });
             });
         }
 

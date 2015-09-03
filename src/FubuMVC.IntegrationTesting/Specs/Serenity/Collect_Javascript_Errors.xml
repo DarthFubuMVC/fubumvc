@@ -1,0 +1,5 @@
+<Spec id="d3baa3a5-498c-481a-bd0b-b249fa323713" maxRetries="0" tags="" lifecycle="Regression" name="Collect Javascript Errors" lastUpdated="Thursday, September 03, 2015" expirationPeriod="0">
+  <JavascriptError id="45390032-e660-4587-a43e-0740ed274692">
+    <HasError text="you stink!" />
+  </JavascriptError>
+</Spec>
