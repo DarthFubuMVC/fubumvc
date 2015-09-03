@@ -67,5 +67,4 @@
       <Paket>True</Paket>
     </Reference>
   </ItemGroup>
-  <Import Project="..\..\.paket\paket.targets" />
 </Project>
