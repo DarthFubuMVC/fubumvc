@@ -43,6 +43,21 @@
     <Reference Include="Esent.Interop">
       <HintPath>..\packages\RavenDB.Database\lib\net45\Esent.Interop.dll</HintPath>
     </Reference>
+    <Reference Include="Fixie">
+      <HintPath>..\packages\Fixie\lib\net45\Fixie.dll</HintPath>
+    </Reference>
+    <Reference Include="Fixie.Console">
+      <HintPath>..\packages\Fixie\lib\net45\Fixie.Console.exe</HintPath>
+    </Reference>
+    <Reference Include="Fixie.Console.x86">
+      <HintPath>..\packages\Fixie\lib\net45\Fixie.Console.x86.exe</HintPath>
+    </Reference>
+    <Reference Include="Fixie.TestDriven">
+      <HintPath>..\packages\Fixie\lib\net45\Fixie.TestDriven.dll</HintPath>
+    </Reference>
+    <Reference Include="Fixie.VisualStudio.TestAdapter">
+      <HintPath>..\packages\Fixie\lib\net45\Fixie.VisualStudio.TestAdapter.dll</HintPath>
+    </Reference>
     <Reference Include="FubuCore">
       <HintPath>..\packages\FubuCore\lib\FubuCore.dll</HintPath>
     </Reference>
@@ -104,14 +119,17 @@
     <Reference Include="Mono.Cecil">
       <HintPath>..\packages\RavenDB.Database\lib\net45\Mono.Cecil.dll</HintPath>
     </Reference>
+    <Reference Include="Mono.Cecil.Pdb">
+      <HintPath>..\packages\Fixie\lib\net45\Mono.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks">
+      <HintPath>..\packages\Fixie\lib\net45\Mono.Cecil.Rocks.dll</HintPath>
+    </Reference>
     <Reference Include="NetTopologySuite">
       <HintPath>..\packages\RavenDB.Database\lib\net45\NetTopologySuite.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin\lib\net40\Owin.dll</HintPath>
@@ -157,10 +175,14 @@
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="TestDriven.Framework">
+      <HintPath>..\packages\Fixie\lib\net45\TestDriven.Framework.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntityRepositoryTester.cs" />
     <Compile Include="FakeEntity.cs" />
+    <Compile Include="FixieConvention.cs" />
     <Compile Include="InMemory\InMemoryPersistentResetTester.cs" />
     <Compile Include="InMemory\InMemoryPersistorTester.cs" />
     <Compile Include="Membership\is_registering_the_persisted_login_auditor.cs" />
@@ -206,10 +228,6 @@
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{e18fd922-0e7a-49cd-b89f-473826077b9d}</Project>
       <Name>FubuMVC.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.Katana\FubuMVC.Katana.csproj">
-      <Project>{48bc51c2-b759-48db-aae1-f4686cd6d02a}</Project>
-      <Name>FubuMVC.Katana</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.RavenDb\FubuMVC.RavenDb.csproj">
       <Project>{02441E35-668B-4713-9279-BD51948B95EB}</Project>

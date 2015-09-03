@@ -82,7 +82,7 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
                 .Uri.ShouldBe(bus.Downstream);
         }
 
-        [Test, Ignore("Too flaky, too slow. Replace w/ ST tests?")]
+        [Test, Explicit("Too flaky, too slow. Replace w/ ST tests?")]
         public void start_receiving()
         {
             using (var graph = new ChannelGraph())

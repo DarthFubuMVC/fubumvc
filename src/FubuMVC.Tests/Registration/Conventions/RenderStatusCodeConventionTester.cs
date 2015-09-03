@@ -8,7 +8,7 @@ namespace FubuMVC.Tests.Registration.Conventions
     [TestFixture]
     public class RenderStatusCodeConventionTester
     {
-        [Test, Ignore("Just for now")]
+        [Test, Explicit("Just for now")]
         public void just_redo_all_of_this()
         {
             throw new NotImplementedException();

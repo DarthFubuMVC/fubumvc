@@ -31,7 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Esent.Interop">
-      <HintPath>..\packages\ManagedEsent\lib\net40\Esent.Interop.dll</HintPath>
+      <HintPath>..\packages\ManagedEsent\lib\net45\Esent.Interop.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
       <HintPath>..\packages\FubuCore\lib\FubuCore.dll</HintPath>

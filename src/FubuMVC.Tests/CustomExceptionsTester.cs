@@ -24,7 +24,7 @@ Additionally, if the custom exception has properties, you may want individual te
             var notMarkedSerializable = typesToCheck.Where(t => !t.GetCustomAttributes(typeof (SerializableAttribute), false).Any()).ToArray();
             if (notMarkedSerializable.Any())
             {
-                Assert.Fail(failureMessage, String.Join("\n\t", notMarkedSerializable.Select(t => t.FullName).ToArray()));
+                Assert.Fail(failureMessage + "\n" + String.Join("\n\t", notMarkedSerializable.Select(t => t.FullName).ToArray()));
             }
         }
 

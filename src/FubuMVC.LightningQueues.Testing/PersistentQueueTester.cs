@@ -15,7 +15,6 @@ namespace FubuMVC.LightningQueues.Testing
     public class PersistentQueueTester
     {
         [Test]
-        [Platform(Exclude = "Mono", Reason = "Esent won't work on linux / mono")]
         public void creates_queues_when_started()
         {
             using (var queues = new PersistentQueues(new RecordingLogger(), new DelayedMessageCache<MessageId>(), new LightningQueueSettings()))
@@ -34,7 +33,6 @@ namespace FubuMVC.LightningQueues.Testing
         }
 
         [Test]
-        [Platform(Exclude = "Mono", Reason = "Esent won't work on linux / mono")]
         public void default_settings_match_lightning_queues_default_configuration()
         {
             var defaultConfiguration = new QueueManagerConfiguration();
@@ -56,7 +54,6 @@ namespace FubuMVC.LightningQueues.Testing
         }
 
         [Test]
-        [Platform(Exclude = "Mono", Reason = "Esent won't work on linux / mono")]
         public void settings_that_are_changed_are_also_changed_in_queue_manager()
         {
             var settings = new LightningQueueSettings
@@ -86,7 +83,6 @@ namespace FubuMVC.LightningQueues.Testing
         }
 
         [Test]
-        [Platform(Exclude = "Mono", Reason = "Esent won't work on linux / mono")]
         public void recovers_delayed_messages_when_started()
         {
             using (var queues = new PersistentQueues(new RecordingLogger(), new DelayedMessageCache<MessageId>(), new LightningQueueSettings()))

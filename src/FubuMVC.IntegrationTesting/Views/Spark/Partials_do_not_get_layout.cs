@@ -89,7 +89,7 @@ namespace FubuMVC.IntegrationTesting.Views.Spark
             Scenario.ContentShouldContain("<div>Hello Native</div>");
         }
 
-        [Test, Ignore("This was broken in 2.0, but I'm not entirely sure that we care.")]
+        [Test, Explicit("This was broken in 2.0, but I'm not entirely sure that we care.")]
         public void partials_should_still_have_access_to_master_layout_content_areas()
         {
             Scenario.Get.Action<UsesPartialEndpoint>(x => x.Execute());

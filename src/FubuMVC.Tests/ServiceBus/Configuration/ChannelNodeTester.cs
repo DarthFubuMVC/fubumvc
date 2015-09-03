@@ -153,7 +153,11 @@ namespace FubuMVC.Tests.ServiceBus.Configuration
                 Scheduler = new FakeScheduler()
             };
 
-            Assert.Throws<ReceiveFailureException>(() => node.StartReceiving(receiver, logger));
+            Exception<ReceiveFailureException>.ShouldBeThrownBy(() =>
+            {
+                node.StartReceiving(receiver, logger);
+            });
+
         }
 
         [Test]

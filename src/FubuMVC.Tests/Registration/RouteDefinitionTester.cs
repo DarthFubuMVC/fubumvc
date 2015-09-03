@@ -663,7 +663,7 @@ namespace FubuMVC.Tests.Registration
 
             var route = parent.ToRoute();
 
-            Assert.IsFalse(Regex.Match(route.Url, @":\w+").Success);
+            Regex.Match(route.Url, @":\w+").Success.ShouldBeFalse();
         }
 
         [Test]

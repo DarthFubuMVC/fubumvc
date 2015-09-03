@@ -6,6 +6,7 @@ using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Tests.TestSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
+using Shouldly;
 
 namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 {
@@ -23,7 +24,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
             Services.PartialMockTheClassUnderTest();
 
             ClassUnderTest.TryExecute(fakeMessage, _ => consumerCalled = true);
-            Assert.IsTrue(consumerCalled);
+            consumerCalled.ShouldBeTrue();
             ClassUnderTest.AssertWasNotCalled(x => x.Execute(fakeMessage));
         }
 
@@ -45,7 +46,7 @@ namespace FubuMVC.Tests.ServiceBus.Runtime.Invocation
 
             ClassUnderTest.TryExecute(fakeMessage, _ => consumerCalled = true);
             
-            Assert.IsFalse(consumerCalled);
+            consumerCalled.ShouldBeFalse();
             ClassUnderTest.AssertWasCalled(x => x.Execute(fakeMessage));
         }
 

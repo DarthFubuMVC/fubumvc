@@ -15,7 +15,7 @@ namespace FubuMVC.Tests.Http.Owin
         private OwinHttpResponse response;
 
         [SetUp]
-        protected void beforeEach()
+        public void beforeEach()
         {
             environment = new Dictionary<string, object>();
             environment.Add(OwinConstants.ResponseBodyKey, new MemoryStream());

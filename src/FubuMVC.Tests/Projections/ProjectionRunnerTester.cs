@@ -18,17 +18,17 @@ namespace FubuMVC.Tests.Projections
         private Target theTarget;
         private DictionaryMediaNode theNode;
 
-        [SetUp]
-        public new void SetUp()
+        protected override void beforeEach()
         {
             theProjection = new TargetProjection();
             theTarget = new Target();
-        
+
             MockFor<IServiceLocator>().Stub(x => x.GetInstance<TargetProjection>())
                 .Return(theProjection);
 
             theNode = new DictionaryMediaNode();
         }
+
 
         [Test]
         public void run_by_the_projection_and_values()

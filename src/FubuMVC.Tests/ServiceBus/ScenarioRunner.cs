@@ -103,7 +103,7 @@ namespace FubuMVC.Tests.ServiceBus
                 Debug.WriteLine("Scenarios failed!");
                 failures.Each(x => Debug.WriteLine(x));
 
-                Assert.Fail();
+                Assert.Fail("Failed!");
             }
         }
 

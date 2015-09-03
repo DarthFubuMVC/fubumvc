@@ -68,7 +68,6 @@ namespace FubuMVC.LightningQueues.Testing
         }
 
         [Test]
-        [Platform(Exclude = "Mono", Reason = "Esent won't work on linux / mono")]
         public void send_a_message_and_get_it_back()
         {
             var envelope = new Envelope {Data = new byte[] {1, 2, 3, 4, 5}};

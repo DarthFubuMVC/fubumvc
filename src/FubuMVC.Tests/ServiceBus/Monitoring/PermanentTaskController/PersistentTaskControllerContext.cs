@@ -127,7 +127,7 @@ namespace FubuMVC.Tests.ServiceBus.Monitoring.PermanentTaskController
 
             if (inactive.Any())
             {
-                Assert.Fail("Tasks {0} have not been activated", inactive.Join(", "));
+                Assert.Fail("Tasks {0} have not been activated\n" + inactive.Join(", "));
             }
         }
 

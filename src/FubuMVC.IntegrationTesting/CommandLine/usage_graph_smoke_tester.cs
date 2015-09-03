@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore.CommandLine;
 using NUnit.Framework;
+using Shouldly;
 
 namespace FubuMVC.IntegrationTesting.CommandLine
 {
@@ -23,7 +24,8 @@ namespace FubuMVC.IntegrationTesting.CommandLine
                     var usageGraph = new UsageGraph(t);
                     usageGraph.WriteUsages("fubu");
 
-                    Assert.IsTrue(usageGraph.Usages.Any(), "Found usages for " + t.FullName);
+                    usageGraph.Usages.Any().ShouldBeTrue();
+
                 }
                 catch (Exception e)
                 {

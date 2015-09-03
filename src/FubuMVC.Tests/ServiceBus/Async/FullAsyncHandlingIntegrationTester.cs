@@ -8,6 +8,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.ServiceBus.Configuration;
+using FubuMVC.Core.ServiceBus.Registration;
 using FubuMVC.Core.ServiceBus.Runtime.Invocation;
 using FubuMVC.Tests.TestSupport;
 using NUnit.Framework;
@@ -18,7 +19,7 @@ namespace FubuMVC.Tests.ServiceBus.Async
     [TestFixture]
     public class FullAsyncHandlingIntegrationTester
     {
-        [Test, Ignore("Too unreliable. Not sure if it's functionality or the test")]
+        [Test, Explicit("Too unreliable. Not sure if it's functionality or the test")]
         public void ordered_the_way_we_expect_it_to_be()
         {
             AsyncWatcher.Clear();

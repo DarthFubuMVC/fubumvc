@@ -39,7 +39,10 @@ namespace FubuMVC.Tests.Runtime
         [Test]
         public void invoke_throws_an_exception()
         {
-            Assert.Throws<InvalidOperationException>(ClassUnderTest.Invoke);
+            Exception<InvalidOperationException>.ShouldBeThrownBy(() =>
+            {
+                ClassUnderTest.Invoke();
+            });
         }
     }
 }

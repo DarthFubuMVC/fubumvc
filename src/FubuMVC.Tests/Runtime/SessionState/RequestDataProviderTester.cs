@@ -110,20 +110,24 @@ namespace FubuMVC.Tests.SessionState
         }
 
         [Test]
-        [ExpectedException(typeof (KeyNotFoundException))]
         public void Should_return_should_throw_when_a_property_was_not_found_in_the_session()
         {
-            _httpContext.Stub(x => x.Session).Return(_sessionState);
-            _sessionState.Expect(c => c[RequestDataProvider.REQUESTDATA_PREFIX_KEY + "Property1"]).Return(
-                _flashViewModelForTesting.Property1);
+            Exception<KeyNotFoundException>.ShouldBeThrownBy(() =>
+            {
+                _httpContext.Stub(x => x.Session).Return(_sessionState);
+                _sessionState.Expect(c => c[RequestDataProvider.REQUESTDATA_PREFIX_KEY + "Property1"]).Return(
+                    _flashViewModelForTesting.Property1);
 
-            // Note kept here to show the difference this is commented out as part of the test
-            //_sessionState.Expect(c => c[RequestDataProvider.REQUESTDATA_PREFIX_KEY + "Property2"]).Return(_flashViewModelForTesting.Property2);
+                // Note kept here to show the difference this is commented out as part of the test
+                //_sessionState.Expect(c => c[RequestDataProvider.REQUESTDATA_PREFIX_KEY + "Property2"]).Return(_flashViewModelForTesting.Property2);
 
-            _sessionState.Expect(c => c[RequestDataProvider.REQUESTDATA_PREFIX_KEY + "Property3"]).Return(
-                _flashViewModelForTesting.Property3);
+                _sessionState.Expect(c => c[RequestDataProvider.REQUESTDATA_PREFIX_KEY + "Property3"]).Return(
+                    _flashViewModelForTesting.Property3);
 
-            new RequestDataProvider(_httpContext).Load<FlashViewModelForTesting>();
+                new RequestDataProvider(_httpContext).Load<FlashViewModelForTesting>();
+            });
+
+
         }
     }
 
