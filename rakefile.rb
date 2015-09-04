@@ -83,7 +83,7 @@ end
 desc "Launches the diagnostics harness for client side development"
 task :diagnostics => [:compile] do
 	sh 'start npm run watch'
-	sh "start src/Fubu/bin/#{COMPILE_TARGET}/fubu.exe run --directory src/DiagnosticsHarness -o -w --mode diagnostics"
+	sh "src/Fubu/bin/#{COMPILE_TARGET}/fubu.exe run --directory src/DiagnosticsHarness -o -w --mode diagnostics"
 end
 
 desc "Unit and Integration Tests"

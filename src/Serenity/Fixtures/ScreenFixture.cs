@@ -209,7 +209,16 @@ namespace Serenity.Fixtures
         {
             return Driver
                 .InjectJavascript("return SerenityErrorCollector.errors")
-                .As<IEnumerable<object>>().Select(x => x.ToString()).ToArray();
+                .As<IEnumerable<object>>().Select(x =>
+                {
+                    if (x is Dictionary<string, object>)
+                    {
+                        var dict = x.As<Dictionary<string, object>>();
+                        return dict.Select(pair => "{0} = '{1}'".ToFormat(pair.Key, pair.Value)).Join(", ");
+                    }
+
+                    return x.ToString();
+                }).ToArray();
         } 
     }
 

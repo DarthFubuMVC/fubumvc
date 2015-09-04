@@ -84,3 +84,4 @@ src/FubuMVC.IntegrationTesting/chromedriver.exe
 src/FubuMVC.IntegrationTesting/phantomjs.exe
 src/FubuMVC.IntegrationTesting/chromedriver.exe.version
 src/FubuMVC.IntegrationTesting/local.config
+packages

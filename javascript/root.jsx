@@ -19,9 +19,21 @@ _.assign(FubuDiagnostics, {
     // TODO -- cache if there are no params?
     get: function (key, params, callback) {
         var url = this.toUrl(key, params);
-        $.get(url, function(data){
-            var parsed = JSON.parse(JSON.stringify(data));
-            callback(parsed);
+        $.ajax({
+            method: 'GET',
+            url: url,
+            dataType: 'json',
+            success: function(data){
+                try {
+                    callback(data);
+                }
+                catch (e){
+                    console.error(e);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                console.error(errorThrown);
+            }
         });
     },
 

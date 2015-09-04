@@ -139,6 +139,7 @@
     <Compile Include="Serenity\App\AppErrorEndpoint.cs" />
     <Compile Include="Serenity\BrowserType_selection_tester.cs" />
     <Compile Include="Serenity\Fixtures\JavascriptErrorFixture.cs" />
+    <Compile Include="Serenity\Fixtures\OpenScreenFixture.cs" />
     <Compile Include="Serenity\SerenitySystemTester.cs" />
     <Compile Include="Serenity\WaitTester.cs" />
     <Compile Include="ServiceBus\end_to_end_diagnostics_specs.cs" />

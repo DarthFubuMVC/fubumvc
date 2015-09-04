@@ -1,0 +1,13 @@
+<Spec id="e6dd7628-455c-4ce8-a30e-a1e4c76092fd" maxRetries="0" tags="" lifecycle="Regression" name="Open StructureMap Diagnostics Screens" lastUpdated="Friday, September 04, 2015" expirationPeriod="0">
+  <OpenScreen id="3c4fc528-dbcf-406e-859d-77efcde0a28d">
+    <Comment id="60c46f2c-7800-4677-bf1f-8dd9db8f8029">Open all the urls listed below. Any javascript errors from React.js rendering problems will be listed in the results if a screen fails.</Comment>
+    <OpenScreens>
+      <table id="2ca8e325-9b35-4088-b18b-6c7a96dfd247">
+        <OpenScreens-row Url="_fubu#/structuremap/summary" />
+        <OpenScreens-row Url="_fubu#/structuremap/whatdoihave" />
+        <OpenScreens-row Url="_fubu#/structuremap/search-results/Assembly/FubuCore.dll" />
+        <OpenScreens-row Url="_fubu#/structuremap/search-results/Namespace/FubuCore" />
+      </table>
+    </OpenScreens>
+  </OpenScreen>
+</Spec>

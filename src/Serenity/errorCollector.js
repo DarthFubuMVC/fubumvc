@@ -34,8 +34,19 @@ var SerenityErrorCollector = (function (global, console) {
 
     global.onerror = decorateWithLog(global.onerror);
 
+    if (window.onerror) {
+        window.onerror = decorateWithLog(window.onerror);
+    }
+    else if (window) {
+        window.onerror = function(msg) {
+            log(msg);
+        }
+    }
+
     console.error = decorateWithLog(console.error);
-    console.warn = decorateWithLog(console.warn);
+
+    // TODO -- track warning separately
+    //console.warn = decorateWithLog(console.warn);
 
     return self;
 })(window, console);

@@ -26,7 +26,8 @@ var InstanceResults = React.createClass({
 	render: function(){
 		var items = this.props.instances.map(function(instance, i){
 			instance._key = instance.key;
-			return InstanceRow(instance);
+
+			return (<InstanceRow {...instance} />);
 		});
 		
 		return (

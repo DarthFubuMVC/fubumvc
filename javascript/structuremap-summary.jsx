@@ -53,11 +53,14 @@ var Summary = React.createClass({
 
 		var items = [];
 
-		this.state.assemblies.forEach(function(assem, i){		
-			items.push(AssemblySummaryItem(assem));
-			
+		this.state.assemblies.forEach(function(assem, i){	
+			var item = (<AssemblySummaryItem {...assem}/>);
+
+			items.push(item);
+
 			assem.namespaces.forEach(function(ns){
-				items.push(NamespaceSummaryItem(ns));
+				var assemItem = (<NamespaceSummaryItem {...ns} />);
+				items.push(assemItem);
 			});
 			
 		});

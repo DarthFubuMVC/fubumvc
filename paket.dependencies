@@ -11,7 +11,7 @@ nuget Microsoft.Owin 3.0.1.0
 nuget Microsoft.Owin.Host.HttpListener 3.0.1.0
 nuget Microsoft.Owin.Hosting 3.0.1.0
 nuget Newtonsoft.Json 5.0.8
-nuget NLog 2.1.0.0
+nuget NLog 2.1
 nuget Nowin 0.16.0.0
 nuget Owin 1.0
 nuget RavenDB.Client 2.5.2750
@@ -20,7 +20,7 @@ nuget RavenDB.Embedded 2.5.2750
 nuget RhinoMocks 3.6.1
 nuget Shouldly ~> 2.5.0
 nuget Spark 1.7.5.0
-nuget Storyteller 3.0.0.260-alpha
+nuget Storyteller 3.0.0.261-alpha
 nuget System.Spatial 5.6.0.0
 nuget WindowsAzure.Storage 3.0.1.0
 
@@ -47,4 +47,4 @@ nuget Selenium.Support
 nuget Selenium.WebDriver
 nuget Selenium.WebDriverBackedSelenium
 nuget TopShelf
-nuget structuremap 3.2.0.202
+nuget structuremap 3.2.0.221-alpha

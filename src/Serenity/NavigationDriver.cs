@@ -59,7 +59,19 @@ namespace Serenity
 
             Logger.Navigating(url, () => driver.Navigate().GoToUrl(url));
 
-            if (driver.Title == "Exception!")
+            string title = "";
+
+            try
+            {
+                title = driver.Title;
+            }
+            catch (Exception)
+            {
+                // don't throw here.
+            }
+            
+
+            if (title == "Exception!")
             {
                 var element = driver.FindElement(By.Id("error"));
                 StoryTellerAssert.Fail(element == null ? driver.PageSource : element.Text);
