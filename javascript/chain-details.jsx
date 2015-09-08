@@ -172,7 +172,10 @@ var EndpointDetails = React.createClass({
 		if (this.state.data.route != null){
 			var routeRow = (
 				<tr className="route-data">
-					<td colSpan="2"><DescriptionBody {...this.state.route} /></td>	
+					<th>
+						<p>{this.state.data.route.title}</p>
+					</th>
+					<td><DescriptionBody {...this.state.data.route} /></td>	
 				</tr>
 			);
 			rows.push(routeRow);
