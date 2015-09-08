@@ -14,7 +14,7 @@ var BuildPlanView = React.createClass({
 
 	componentDidMount: function(){
 		var params = this.getParams();
-		FubuDiagnostics.get('StructureMap:build_plan_PluginType_Name', params, data => {
+		FubuDiagnostics.getText('StructureMap:build_plan_PluginType_Name', params, data => {
 			this.setState({text: data, loading: false});
 		});
 	},

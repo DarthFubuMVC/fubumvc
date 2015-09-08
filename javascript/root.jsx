@@ -38,6 +38,27 @@ _.assign(FubuDiagnostics, {
         });
     },
 
+     getText: function (key, params, callback) {
+        var url = this.toUrl(key, params);
+        $.ajax({
+            method: 'GET',
+            url: url,
+            dataType: 'text',
+            accept: 'text/plain',
+            success: function(data){
+                try {
+                    callback(data);
+                }
+                catch (e){
+                    console.error(e);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                console.error(errorThrown);
+            }
+        });
+    },
+
     toUrl: function (key, params) {
         var route = this.routes[key];
         var url = route.url;
@@ -87,6 +108,7 @@ FubuDiagnostics.addSection({
 });
 
 require('./endpoint-explorer');
+require('./partial-explorer');
 require('./chain-details');
 require('./request-table.jsx');
 require('./request-details.jsx');

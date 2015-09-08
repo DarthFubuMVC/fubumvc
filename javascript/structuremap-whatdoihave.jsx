@@ -11,7 +11,7 @@ var WhatDoIHave = React.createClass({
 	},
 
 	componentDidMount: function(){
-		FubuDiagnostics.get('StructureMap:whatdoihave', {}, data => {
+		FubuDiagnostics.getText('StructureMap:whatdoihave', {}, data => {
 			this.setState({text: data, loading: false});
 		});
 	},

@@ -53,6 +53,7 @@
     <Compile Include="NumberHandler.cs" />
     <Compile Include="NumberMessage.cs" />
     <Compile Include="NumberPost.cs" />
+    <Compile Include="PartialEndpoints.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">

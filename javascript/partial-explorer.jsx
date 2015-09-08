@@ -2,7 +2,7 @@
 
 var React = require('react');
 
-var EndpointRow = React.createClass({
+var PartialRow = React.createClass({
 	render: function(){
 		var hash = '#fubumvc/chain-details/' + this.props.endpoint.hash;
 	
@@ -16,7 +16,7 @@ var EndpointRow = React.createClass({
 	}
 });
 
-var EndpointTable = React.createClass({
+var PartialTable = React.createClass({
 	getInitialState: function(){
 		return {
 			loading: true
@@ -24,7 +24,7 @@ var EndpointTable = React.createClass({
 	},
 
 	componentDidMount: function(){
-		FubuDiagnostics.get('EndpointExplorer:endpoints', {}, data => {
+		FubuDiagnostics.get('EndpointExplorer:partials', {}, data => {
 			_.assign(data, {loading: false});
 
 			this.setState(data);
@@ -38,14 +38,14 @@ var EndpointTable = React.createClass({
 
 		var rows = this.state.endpoints.map(function(e, i){
 			return (
-				<EndpointRow endpoint={e} />
+				<PartialRow endpoint={e} />
 			);
 		});
 	
 		return (
 			<div>
 
-			<h3>HTTP Endpoints</h3>
+			<h3>Partial Chains</h3>
 
 			<table className="table">
 				<thead>
@@ -66,8 +66,8 @@ var EndpointTable = React.createClass({
 });
 
 FubuDiagnostics.section('fubumvc').add({
-	title: 'Endpoints',
-	description: 'All the configured endpoint routes, partials, and message handlers in this application',
-	key: 'endpoints',
-	component: EndpointTable
+	title: 'Partials',
+	description: 'All the configured partial chains in this application',
+	key: 'partials',
+	component: PartialTable
 });

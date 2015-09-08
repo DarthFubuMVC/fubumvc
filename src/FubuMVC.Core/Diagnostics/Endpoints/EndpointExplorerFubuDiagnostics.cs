@@ -21,7 +21,20 @@ namespace FubuMVC.Core.Diagnostics.Endpoints
         {
             return new EndpointList
             {
-                endpoints = _graph.Chains
+                endpoints = _graph.Routes
+                    .Where(IsNotDiagnosticRoute)
+                    .Select(EndpointReport.ForChain)
+                    .OrderBy(x => x.Title)
+                    .Select(x => x.ToDictionary())
+                    .ToList()
+            };
+        }
+
+        public EndpointList get_partials()
+        {
+            return new EndpointList
+            {
+                endpoints = _graph.Chains.Where(x => x.IsPartialOnly && x.GetType() == typeof(BehaviorChain))
                     .Where(IsNotDiagnosticRoute)
                     .Select(EndpointReport.ForChain)
                     .OrderBy(x => x.Title)
