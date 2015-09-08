@@ -60,6 +60,7 @@
     <Compile Include="Attributes\ViewSubjectAttribute.cs" />
     <Compile Include="DeactivatorExecuted.cs" />
     <Compile Include="DiagnosticsExtensions.cs" />
+    <Compile Include="Diagnostics\DescriptionExtensions.cs" />
     <Compile Include="Diagnostics\HttpRequestSummary.cs" />
     <Compile Include="Diagnostics\Instrumentation\Activity.cs" />
     <Compile Include="Diagnostics\Instrumentation\BehaviorTracer.cs" />

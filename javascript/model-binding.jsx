@@ -3,9 +3,27 @@
 var React = require('react');
 var {Grid, Col, Row} = require('react-bootstrap');
 var HtmlScreen = require('./html-screen');
+var Description = require('./description');
 
 var ModelBinding = React.createClass({
+	getInitialState: function(){
+		return {
+			loading: true
+		}
+	},
+
+	componentDidMount: function(){
+		// TODO -- add parameters into this someday
+		FubuDiagnostics.get('ModelBinding:binding_all', {}, data => {
+			this.setState({description: data, loading: false});
+		});
+	},
+
 	render: function(){
+		if (this.state.loading){
+			return (<div>Loading...</div>);
+		}
+
 		return (
 			<Row>
 				<Col xs={3} md={2}>
@@ -26,7 +44,7 @@ var ModelBinding = React.createClass({
 			    </p>
 				</Col>
 				<Col xs={9} md={9}>
-					<HtmlScreen route="ModelBinding:binding_all" />
+					<Description {...this.state.description} />
 				</Col>
 			</Row>
 		);

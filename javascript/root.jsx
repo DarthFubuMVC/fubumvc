@@ -23,6 +23,7 @@ _.assign(FubuDiagnostics, {
             method: 'GET',
             url: url,
             dataType: 'json',
+            accept: 'application/json',
             success: function(data){
                 try {
                     callback(data);

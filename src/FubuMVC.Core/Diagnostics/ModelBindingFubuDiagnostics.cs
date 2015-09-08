@@ -19,11 +19,11 @@ namespace FubuMVC.Core.Diagnostics
             _bindingRegistry = bindingRegistry;
         }
 
-        public HtmlTag get_binding_all()
+        public Dictionary<string, object> get_binding_all()
         {
             var description = Description.For(_bindingRegistry);
 
-            return new DescriptionBodyTag(description);
+            return description.ToDictionary();
         }
 
         public HtmlTag VisualizePartial(ModelBindingLog log)

@@ -32,7 +32,7 @@ class FubuDiagnosticsView {
 
 		if (view.route){
 			var route = FubuDiagnostics.routes[view.route];
-			if (route.params.length > 0){
+			if (route.params && route.params.length > 0){
 				this.hasParameters = true;
 				route.params.forEach(x => {
 					this.url = this.url + '/:' + x.Name;

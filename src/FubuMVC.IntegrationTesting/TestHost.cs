@@ -1,18 +1,37 @@
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using FubuCore;
 using FubuCore.Binding;
+using FubuCore.Descriptions;
 using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Http.Scenarios;
 using FubuMVC.Core.Registration;
 using FubuMVC.IntegrationTesting.Conneg;
+using Newtonsoft.Json;
+using StoryTeller.Remotes.Messaging;
+using TraceLevel = FubuMVC.Core.TraceLevel;
 
 namespace FubuMVC.IntegrationTesting
 {
     public static class TestHost
     {
+        public static void tryit()
+        {
+            Runtime.Behaviors.Chains.Each(chain =>
+            {
+                var descriptions = chain.Select(x => Description.For(x).ToDictionary()).ToArray();
+
+                var json = JsonSerialization.ToIndentedJson(descriptions);
+                Debug.WriteLine(json);
+            });
+        }
+
         private static readonly Lazy<FubuRuntime> _host =
             new Lazy<FubuRuntime>(() =>
             {
