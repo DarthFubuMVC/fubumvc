@@ -4,6 +4,7 @@ var React = require('react');
 var _ = require('lodash');
 var Router = require('react-router');
 var {Grid, Col, Row} = require('react-bootstrap');
+var DescriptionBody = require('./description-body');
 
 var TypeDisplay = React.createClass({
 	render: function(){
@@ -118,7 +119,7 @@ function toBehaviorRow(node){
 				<p>{node.title}</p>
 				<p><small className="small">Category: {node.category}</small></p>
 			</th>
-			<td dangerouslySetInnerHTML={{__html: node.details}} />	
+			<td><DescriptionBody {...node} /></td>	
 		</tr>
 	);
 }
@@ -152,7 +153,9 @@ var EndpointDetails = React.createClass({
 			return (<h1>Chain not found!</h1>);
 		}
 
+
 		var detailCells = [
+			new Cell('Title', 'title'),
 			new Cell('Route', 'route'),
 			new Cell('Url Category', 'category'),
 			new Cell('Origin', 'origin'),
@@ -161,7 +164,6 @@ var EndpointDetails = React.createClass({
 			new ArrayCell('Accepts', 'accepts'),
 			new ArrayCell('Content-Type', 'content-type'),
 			new ArrayCell('Tags', 'tags'),
-		
 		];
 
 
@@ -169,11 +171,11 @@ var EndpointDetails = React.createClass({
 		var rows = toDetailRows(detailCells, this.state.data.details);
 		if (this.state.data.route != null){
 			var routeRow = (
-				<tr>
-					<th>Route: {this.state.data.details.route}</th>
-					<td dangerouslySetInnerHTML={{__html: this.state.data.route}} />	
+				<tr className="route-data">
+					<td colSpan="2"><DescriptionBody {...this.state.route} /></td>	
 				</tr>
 			);
+			rows.push(routeRow);
 		}
 
 		var behaviorHeader = (

@@ -11,13 +11,11 @@ namespace FubuMVC.Core.Diagnostics
 {
     public class ChainFubuDiagnostics
     {
-        private readonly IVisualizer _visualizer;
         private readonly BehaviorGraph _graph;
 
-        public ChainFubuDiagnostics(BehaviorGraph graph, IVisualizer visualizer)
+        public ChainFubuDiagnostics(BehaviorGraph graph)
         {
             _graph = graph;
-            _visualizer = visualizer;
         }
 
         public Dictionary<string, object> get_chain_details_Hash(ChainDetailsRequest request)
@@ -39,16 +37,16 @@ namespace FubuMVC.Core.Diagnostics
                 var description = Description.For(routed.Route);
 
 
-                dict.Add("route", new DescriptionBodyTag(description).ToString());
+                dict.Add("route", description.ToDictionary());
             }
 
-            var nodes = chain.NonDiagnosticNodes().Select(x => {
-                return new Dictionary<string, object>
-                {
-                    {"title", Description.For(x).Title},
-                    {"details", _visualizer.Visualize(x).ToString()},
-                    {"category", x.Category.ToString()}
-                };
+            var nodes = chain.NonDiagnosticNodes().Select(x =>
+            {
+                var details = x.ToDescriptiveDictionary();
+                details.Add("category", x.Category.ToString());
+
+
+                return details;
             });
 
             dict.Add("nodes", nodes);

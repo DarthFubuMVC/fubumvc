@@ -6,6 +6,7 @@ using HtmlTags;
 
 namespace FubuMVC.Core.Diagnostics.Visualization
 {
+    [Obsolete("Kill soon")]
     public interface IVisualizer
     {
         BehaviorNodeViewModel ToVisualizationSubject(BehaviorNode node);
